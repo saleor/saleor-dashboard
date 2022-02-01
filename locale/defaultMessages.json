@@ -611,18 +611,6 @@
     "context": "section header",
     "string": "About this app"
   },
-  "src_dot_apps_dot_components_dot_AppDetailsSettingsPage_dot_198187074": {
-    "context": "button",
-    "string": "Support/FAQ"
-  },
-  "src_dot_apps_dot_components_dot_AppDetailsSettingsPage_dot_3302125406": {
-    "context": "button",
-    "string": "My App"
-  },
-  "src_dot_apps_dot_components_dot_AppDetailsSettingsPage_dot_3662390044": {
-    "context": "button",
-    "string": "Dashboard"
-  },
   "src_dot_apps_dot_components_dot_AppInProgressDeleteDialog_dot_1462011531": {
     "context": "dialog header",
     "string": "Delete App"
@@ -670,6 +658,18 @@
   "src_dot_apps_dot_components_dot_AppInstallPage_dot_3916538164": {
     "context": "section header",
     "string": "App permissions"
+  },
+  "src_dot_apps_dot_components_dot_AppPage_dot_1636202177": {
+    "context": "button",
+    "string": "About"
+  },
+  "src_dot_apps_dot_components_dot_AppPage_dot_198187074": {
+    "context": "button",
+    "string": "Support/FAQ"
+  },
+  "src_dot_apps_dot_components_dot_AppPage_dot_3182672904": {
+    "context": "button",
+    "string": "App home page"
   },
   "src_dot_apps_dot_components_dot_AppsInProgress_dot_1675189051": {
     "context": "section header",
@@ -834,10 +834,6 @@
     "context": "delete token",
     "string": "Are you sure you want to delete token {token}?"
   },
-  "src_dot_apps_dot_views_dot_AppDetailsSettings_dot_2140018198": {
-    "context": "app settings error",
-    "string": "Failed to fetch app settings"
-  },
   "src_dot_apps_dot_views_dot_AppDetails_dot_2021043385": {
     "context": "snackbar text",
     "string": "App activated"
@@ -849,6 +845,14 @@
   "src_dot_apps_dot_views_dot_AppInstall_dot_2538706256": {
     "context": "window title",
     "string": "Install App"
+  },
+  "src_dot_apps_dot_views_dot_AppSettings_dot_2140018198": {
+    "context": "app settings error",
+    "string": "Failed to fetch app settings"
+  },
+  "src_dot_apps_dot_views_dot_App_dot_2140018198": {
+    "context": "app settings error",
+    "string": "Failed to fetch app settings"
   },
   "src_dot_apps_dot_views_dot_AppsList_dot_1180774955": {
     "context": "app has been installed",
@@ -3523,6 +3527,9 @@
   "src_dot_exchangeRates": {
     "context": "Manage and Update your warehouse information",
     "string": "Exchange Rates"
+  },
+  "src_dot_extensions": {
+    "string": "Extensions"
   },
   "src_dot_firstName": {
     "string": "First Name"
