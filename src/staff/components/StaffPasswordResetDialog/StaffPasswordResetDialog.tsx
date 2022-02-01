@@ -10,6 +10,7 @@ import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -26,7 +27,7 @@ interface StaffPasswordResetDialogFormData {
 export interface StaffPasswordResetDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: AccountErrorFragment[];
-  onSubmit: (data: StaffPasswordResetDialogFormData) => void;
+  onSubmit: (data: StaffPasswordResetDialogFormData) => SubmitPromise;
 }
 
 const initialForm: StaffPasswordResetDialogFormData = {

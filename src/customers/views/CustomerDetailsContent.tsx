@@ -3,7 +3,7 @@ import ActionDialog from "@saleor/components/ActionDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
-import { getStringOrPlaceholder } from "@saleor/misc";
+import { extractMutationErrors, getStringOrPlaceholder } from "@saleor/misc";
 import { MutationResultAdditionalProps } from "@saleor/types";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
@@ -69,22 +69,21 @@ export const CustomerDetailsContent: React.FC<CustomerDetailsContentProps> = ({
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
-  const updateData = async (data: CustomerDetailsPageFormData) => {
-    const result = await updateCustomer({
-      variables: {
-        id,
-        input: {
-          email: data.email,
-          firstName: data.firstName,
-          isActive: data.isActive,
-          lastName: data.lastName,
-          note: data.note
+  const updateData = async (data: CustomerDetailsPageFormData) =>
+    extractMutationErrors(
+      updateCustomer({
+        variables: {
+          id,
+          input: {
+            email: data.email,
+            firstName: data.firstName,
+            isActive: data.isActive,
+            lastName: data.lastName,
+            note: data.note
+          }
         }
-      }
-    });
-
-    return result.data.customerUpdate.errors;
-  };
+      })
+    );
 
   const handleSubmit = createMetadataUpdateHandler(
     user,

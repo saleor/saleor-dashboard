@@ -33,7 +33,7 @@ import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { getMutationState, maybe } from "../../misc";
+import { getMutationErrors, getMutationState, maybe } from "../../misc";
 import { productUrl } from "../../products/urls";
 import { CollectionInput } from "../../types/globalTypes";
 import CollectionDetailsPage from "../components/CollectionDetailsPage/CollectionDetailsPage";
@@ -53,6 +53,7 @@ import {
   CollectionUrlDialog,
   CollectionUrlQueryParams
 } from "../urls";
+import { COLLECTION_DETAILS_FORM_ID } from "./consts";
 
 interface CollectionDetailsProps {
   id: string;
@@ -196,10 +197,15 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
           isChannelsModalOpen,
           setCurrentChannels,
           toggleAllChannels
-        } = useChannels(collectionChannelsChoices, params?.action, {
-          closeModal,
-          openModal
-        });
+        } = useChannels(
+          collectionChannelsChoices,
+          params?.action,
+          {
+            closeModal,
+            openModal
+          },
+          { formId: COLLECTION_DETAILS_FORM_ID }
+        );
 
         const handleUpdate = async (formData: CollectionUpdateData) => {
           const input: CollectionInput = {
@@ -242,8 +248,9 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
             }
           });
 
-          return result.data.collectionUpdate.errors;
+          return getMutationErrors(result);
         };
+
         const handleSubmit = createMetadataUpdateHandler(
           data?.collection,
           handleUpdate,

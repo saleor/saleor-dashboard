@@ -79,6 +79,7 @@ import {
   productVariantEditUrl
 } from "../../urls";
 import { CHANNELS_AVAILIABILITY_MODAL_SELECTOR } from "./consts";
+import { PRODUCT_UPDATE_FORM_ID } from "./consts";
 import {
   createImageReorderHandler,
   createImageUploadHandler,
@@ -304,10 +305,15 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(productChannelsChoices, params?.action, {
-    closeModal,
-    openModal
-  });
+  } = useChannels(
+    productChannelsChoices,
+    params?.action,
+    {
+      closeModal,
+      openModal
+    },
+    { formId: PRODUCT_UPDATE_FORM_ID }
+  );
 
   const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate({
     onCompleted: data => {

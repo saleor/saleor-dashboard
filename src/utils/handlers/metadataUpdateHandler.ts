@@ -1,5 +1,6 @@
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import { MetadataErrorFragment } from "@saleor/fragments/types/MetadataErrorFragment";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { MetadataInput } from "@saleor/types/globalTypes";
 import { arrayDiff } from "@saleor/utils/arrays";
 import { MutationFetchResult } from "react-apollo";
@@ -22,7 +23,7 @@ interface ObjectWithMetadata {
 
 function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
   initial: ObjectWithMetadata,
-  update: (data: TData) => Promise<TError[]>,
+  update: (data: TData) => SubmitPromise<TError[]>,
   updateMetadata: (
     variables: UpdateMetadataVariables
   ) => Promise<MutationFetchResult<UpdateMetadata>>,

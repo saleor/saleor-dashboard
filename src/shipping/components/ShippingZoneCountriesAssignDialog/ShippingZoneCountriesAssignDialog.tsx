@@ -92,7 +92,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
                 <TextField
                   name="query"
                   value={data.query}
-                  onChange={event => change(event, () => fetch(data.query))}
+                  onChange={event => change(event)}
                   label={intl.formatMessage({
                     defaultMessage: "Search Countries"
                   })}

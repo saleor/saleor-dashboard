@@ -6,6 +6,7 @@ import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import Skeleton from "@saleor/components/Skeleton";
 import TablePagination from "@saleor/components/TablePagination";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
@@ -35,7 +36,10 @@ export interface TranslationFieldsProps {
   richTextResetKey: string; // temporary workaround TODO: fix rich text editor
   onEdit: (field: string) => void;
   onDiscard: () => void;
-  onSubmit: (field: TranslationField, data: string | OutputData) => void;
+  onSubmit: (
+    field: TranslationField,
+    data: string | OutputData
+  ) => SubmitPromise;
 }
 
 const useStyles = makeStyles(

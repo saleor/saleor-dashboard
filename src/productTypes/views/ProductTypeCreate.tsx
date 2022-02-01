@@ -10,7 +10,7 @@ import {
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { maybe } from "../../misc";
+import { getMutationErrors, maybe } from "../../misc";
 import ProductTypeCreatePage, {
   ProductTypeForm
 } from "../components/ProductTypeCreatePage";
@@ -74,8 +74,12 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({
             }
           });
 
-          return result.data?.productTypeCreate.productType?.id || null;
+          return {
+            id: result.data?.productTypeCreate.productType?.id || null,
+            errors: getMutationErrors(result)
+          };
         };
+
         const handleSubmit = createMetadataCreateHandler(
           handleCreate,
           updateMetadata,

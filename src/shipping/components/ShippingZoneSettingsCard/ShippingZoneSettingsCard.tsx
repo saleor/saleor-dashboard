@@ -6,7 +6,7 @@ import { FormChange } from "@saleor/hooks/useForm";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import { FormData } from "../../components/ShippingZoneDetailsPage/types";
+import { ShippingZoneUpdateFormData } from "../../components/ShippingZoneDetailsPage/types";
 import ChannelsSection from "./ChannelsSection";
 import WarehousesSection from "./WarehousesSection";
 
@@ -18,7 +18,7 @@ const messages = defineMessages({
 });
 
 export interface ShippingZoneSettingsCardProps {
-  formData: FormData;
+  formData: ShippingZoneUpdateFormData;
   warehousesDisplayValues: MultiAutocompleteChoiceType[];
   warehousesChoices: MultiAutocompleteChoiceType[];
   onWarehouseAdd: () => void;

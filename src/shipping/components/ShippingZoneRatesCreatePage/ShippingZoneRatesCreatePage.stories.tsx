@@ -41,6 +41,7 @@ const defaultChannels = [
 ];
 
 const props: ShippingZoneRatesCreatePageProps = {
+  formId: Symbol(),
   allChannelsCount: 3,
   channelErrors: [],
   disabled: false,

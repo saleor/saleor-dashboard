@@ -1,11 +1,11 @@
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import { extractMutationErrors } from "@saleor/misc";
 import OrderReturnPage from "@saleor/orders/components/OrderReturnPage";
 import { OrderReturnFormData } from "@saleor/orders/components/OrderReturnPage/form";
 import { useOrderReturnCreateMutation } from "@saleor/orders/mutations";
 import { useOrderQuery } from "@saleor/orders/queries";
-import { FulfillmentReturnProducts_orderFulfillmentReturnProducts } from "@saleor/orders/types/FulfillmentReturnProducts";
 import { orderUrl } from "@saleor/orders/urls";
 import { OrderErrorCode } from "@saleor/types/globalTypes";
 import React from "react";
@@ -85,20 +85,14 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
       return;
     }
 
-    const result = await returnCreate({
-      variables: {
-        id: data.order.id,
-        input: new ReturnFormDataParser(data.order, formData).getParsedData()
-      }
-    });
-
-    const {
-      data: {
-        orderFulfillmentReturnProducts = {} as FulfillmentReturnProducts_orderFulfillmentReturnProducts
-      } = {}
-    } = result || {};
-
-    return orderFulfillmentReturnProducts.errors;
+    return extractMutationErrors(
+      returnCreate({
+        variables: {
+          id: data.order.id,
+          input: new ReturnFormDataParser(data.order, formData).getParsedData()
+        }
+      })
+    );
   };
 
   const navigateToOrder = (id?: string) => navigate(orderUrl(id || orderId));

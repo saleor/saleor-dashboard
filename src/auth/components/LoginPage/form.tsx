@@ -1,6 +1,6 @@
 import { DEMO_MODE } from "@saleor/config";
 import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
-import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
+import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import React from "react";
 
 export interface LoginFormData {
@@ -12,7 +12,7 @@ export interface UseLoginFormResult {
   change: FormChange;
   data: LoginFormData;
   hasChanged: boolean;
-  submit: () => Promise<boolean>;
+  submit: () => SubmitPromise;
 }
 
 export interface LoginFormProps {
@@ -33,32 +33,18 @@ const getLoginFormData = () => {
 function useLoginForm(
   onSubmit: (data: LoginFormData) => SubmitPromise
 ): UseLoginFormResult {
-  const [changed, setChanged] = React.useState(false);
-  const triggerChange = () => setChanged(true);
-
   const form = useForm(getLoginFormData());
 
-  const handleChange: FormChange = (event, cb) => {
-    form.change(event, cb);
-    triggerChange();
-  };
+  const { change, hasChanged, data, setChanged } = form;
 
-  const data: LoginFormData = {
-    ...form.data
-  };
+  const handleFormSubmit = useHandleFormSubmit({ onSubmit, setChanged });
 
-  const handleSubmit = async (data: LoginFormData) => {
-    const errors = await onSubmit(data);
-
-    return errors;
-  };
-
-  const submit = async () => handleFormSubmit(data, handleSubmit, setChanged);
+  const submit = async () => handleFormSubmit(data);
 
   return {
-    change: handleChange,
+    change,
     data,
-    hasChanged: changed,
+    hasChanged,
     submit
   };
 }

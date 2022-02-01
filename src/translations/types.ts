@@ -1,5 +1,6 @@
 import { OutputData } from "@editorjs/editorjs";
 import { ShopInfo_shop_languages } from "@saleor/components/Shop/types/ShopInfo";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 
 export enum TranslationInputFieldName {
@@ -37,5 +38,8 @@ export interface TranslationsEntitiesPageProps {
   onEdit: (field: string) => void;
   onDiscard: () => void;
   onLanguageChange: (lang: string) => void;
-  onSubmit: (field: TranslationField, data: string | OutputData) => void;
+  onSubmit: (
+    field: TranslationField,
+    data: string | OutputData
+  ) => SubmitPromise<any[]>;
 }

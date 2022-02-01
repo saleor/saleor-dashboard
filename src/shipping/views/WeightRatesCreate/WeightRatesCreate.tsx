@@ -32,6 +32,8 @@ import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandl
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { WEIGHT_RATES_CREATE_FORM_ID } from "./consts";
+
 export interface WeightRatesCreateProps {
   id: string;
   params: ShippingRateCreateUrlQueryParams;
@@ -75,7 +77,12 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(shippingChannels, params?.action, { closeModal, openModal });
+  } = useChannels(
+    shippingChannels,
+    params?.action,
+    { closeModal, openModal },
+    { formId: WEIGHT_RATES_CREATE_FORM_ID }
+  );
 
   const [state, dispatch] = React.useReducer(postalCodesReducer, {
     codesToDelete: [],
@@ -151,6 +158,7 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
         />
       )}
       <ShippingZoneRatesCreatePage
+        formId={WEIGHT_RATES_CREATE_FORM_ID}
         allChannelsCount={allChannels?.length}
         shippingChannels={currentChannels}
         disabled={channelsLoading || status === "loading"}

@@ -1,7 +1,7 @@
 import { OrderSettingsFragment } from "@saleor/fragments/types/OrderSettingsFragment";
 import { ShopOrderSettingsFragment } from "@saleor/fragments/types/ShopOrderSettingsFragment";
 import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
-import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
+import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import React from "react";
 
 export interface OrderSettingsFormData {
@@ -15,7 +15,7 @@ export interface UseOrderSettingsFormResult {
   change: FormChange;
   data: OrderSettingsFormData;
   hasChanged: boolean;
-  submit: () => Promise<boolean>;
+  submit: () => SubmitPromise<any[]>;
 }
 
 export interface OrderSettingsFormProps {
@@ -45,20 +45,20 @@ function useOrderSettingsForm(
   onSubmit: (data: OrderSettingsFormData) => SubmitPromise
 ): UseOrderSettingsFormResult {
   const [changed, setChanged] = React.useState(false);
-  const triggerChange = () => setChanged(true);
 
-  const form = useForm(getOrderSeettingsFormData(orderSettings, shop));
+  const { data, handleChange, formId } = useForm(
+    getOrderSeettingsFormData(orderSettings, shop),
+    undefined,
+    { confirmLeave: true }
+  );
 
-  const handleChange: FormChange = (event, cb) => {
-    form.change(event, cb);
-    triggerChange();
-  };
+  const handleFormSubmit = useHandleFormSubmit({
+    formId,
+    onSubmit,
+    setChanged
+  });
 
-  const data: OrderSettingsFormData = {
-    ...form.data
-  };
-
-  const submit = () => handleFormSubmit(form.data, onSubmit, setChanged);
+  const submit = () => handleFormSubmit(data);
 
   return {
     change: handleChange,

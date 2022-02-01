@@ -6,9 +6,11 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
+import { extractMutationErrors } from "@saleor/misc";
 import { AddressInput } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
@@ -56,7 +58,7 @@ export interface CustomerCreatePageProps {
   errors: AccountErrorFragment[];
   saveButtonBar: ConfirmButtonTransitionState;
   onBack: () => void;
-  onSubmit: (data: CustomerCreatePageSubmitData) => void;
+  onSubmit: (data: CustomerCreatePageSubmitData) => SubmitPromise;
 }
 
 const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
@@ -117,20 +119,22 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
       .some(field => field !== "");
 
     if (areAddressInputFieldsModified) {
-      handleSubmitWithAddress(formData);
-    } else {
+      return handleSubmitWithAddress(formData);
+    }
+
+    return extractMutationErrors(
       onSubmit({
         address: null,
         customerFirstName: formData.customerFirstName,
         customerLastName: formData.customerLastName,
         email: formData.email,
         note: formData.note
-      });
-    }
+      })
+    );
   };
 
   return (
-    <Form initial={initialForm} onSubmit={handleSubmit} confirmLeave>
+    <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
       {({ change, data, hasChanged, submit }) => {
         const handleCountrySelect = createSingleAutocompleteSelectHandler(
           change,

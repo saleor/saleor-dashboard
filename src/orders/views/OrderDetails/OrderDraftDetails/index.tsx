@@ -22,7 +22,10 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { customerUrl } from "../../../../customers/urls";
-import { getStringOrPlaceholder } from "../../../../misc";
+import {
+  extractMutationErrors,
+  getStringOrPlaceholder
+} from "../../../../misc";
 import { productUrl } from "../../../../products/urls";
 import OrderDraftCancelDialog from "../../../components/OrderDraftCancelDialog/OrderDraftCancelDialog";
 import OrderDraftPage from "../../../components/OrderDraftPage";
@@ -172,10 +175,12 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
           <OrderDraftPage
             disabled={loading}
             onNoteAdd={variables =>
-              orderAddNote.mutate({
-                input: variables,
-                order: id
-              })
+              extractMutationErrors(
+                orderAddNote.mutate({
+                  input: variables,
+                  order: id
+                })
+              )
             }
             users={mapEdgesToItems(users?.data?.search)}
             hasMore={users?.data?.search?.pageInfo?.hasNextPage || false}
@@ -245,13 +250,15 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
         onFetch={variantSearch}
         onFetchMore={loadMore}
         onSubmit={variants =>
-          orderLinesAdd.mutate({
-            id,
-            input: variants.map(variant => ({
-              quantity: 1,
-              variantId: variant.id
-            }))
-          })
+          extractMutationErrors(
+            orderLinesAdd.mutate({
+              id,
+              input: variants.map(variant => ({
+                quantity: 1,
+                variantId: variant.id
+              }))
+            })
+          )
         }
       />
       <OrderCustomerChangeDialog

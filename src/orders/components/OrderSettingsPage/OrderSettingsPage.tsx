@@ -14,7 +14,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderFulfillmentSettings from "../OrderFulfillmentSettings";
 import OrderSettings from "../OrderSettings/OrderSettings";
-import OrderSettingsForm, { OrderSettingsFormData } from "./form";
+import OrderSettingsForm from "./form";
+import { OrderSettingsFormData } from "./types";
 
 export interface OrderSettingsPageProps {
   orderSettings: OrderSettingsFragment;

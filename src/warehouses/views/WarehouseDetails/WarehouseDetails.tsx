@@ -5,6 +5,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import {
+  extractMutationErrors,
   findValueInEnum,
   getMutationStatus,
   getStringOrPlaceholder
@@ -78,31 +79,31 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
     return <NotFoundPage onBack={() => navigate(warehouseListUrl())} />;
   }
 
-  const handleSubmit = async (data: WarehouseDetailsPageFormData) => {
-    const result = await updateWarehouse({
-      variables: {
-        id,
-        input: {
-          address: {
-            companyName: data.companyName,
-            city: data.city,
-            cityArea: data.cityArea,
-            country: findValueInEnum(data.country, CountryCode),
-            countryArea: data.countryArea,
-            phone: data.phone,
-            postalCode: data.postalCode,
-            streetAddress1: data.streetAddress1,
-            streetAddress2: data.streetAddress2
-          },
-          name: data.name,
-          isPrivate: data.isPrivate,
-          clickAndCollectOption: data.clickAndCollectOption
+  const handleSubmit = async (data: WarehouseDetailsPageFormData) =>
+    extractMutationErrors(
+      updateWarehouse({
+        variables: {
+          id,
+          input: {
+            address: {
+              companyName: data.companyName,
+              city: data.city,
+              cityArea: data.cityArea,
+              country: findValueInEnum(data.country, CountryCode),
+              countryArea: data.countryArea,
+              phone: data.phone,
+              postalCode: data.postalCode,
+              streetAddress1: data.streetAddress1,
+              streetAddress2: data.streetAddress2
+            },
+            name: data.name,
+            isPrivate: data.isPrivate,
+            clickAndCollectOption: data.clickAndCollectOption
+          }
         }
-      }
-    });
+      })
+    );
 
-    return result.data.updateWarehouse.errors;
-  };
   return (
     <>
       <WindowTitle title={data?.warehouse?.name} />

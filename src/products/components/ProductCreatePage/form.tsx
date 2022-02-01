@@ -14,15 +14,22 @@ import {
   AttributeInput,
   AttributeInputData
 } from "@saleor/components/Attributes";
+import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import useForm, { FormChange, FormErrors } from "@saleor/hooks/useForm";
+import useForm, {
+  CommonUseFormResultWithHandlers,
+  FormChange,
+  FormErrors,
+  SubmitPromise
+} from "@saleor/hooks/useForm";
 import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
+import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import { errorMessages } from "@saleor/intl";
 import { ProductType_productType } from "@saleor/products/types/ProductType";
 import {
@@ -38,6 +45,7 @@ import {
   validateCostPrice,
   validatePrice
 } from "@saleor/products/utils/validation";
+import { PRODUCT_CREATE_FORM_ID } from "@saleor/products/views/ProductCreate/consts";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
@@ -47,7 +55,7 @@ import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAu
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
-import React from "react";
+import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import { createPreorderEndDateChangeHandler } from "../../utils/handlers";
@@ -114,14 +122,13 @@ export interface ProductCreateHandlers
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
 }
-export interface UseProductCreateFormResult {
-  change: FormChange;
-  data: ProductCreateData;
-  formErrors: FormErrors<ProductCreateData>;
+export interface UseProductCreateFormResult
+  extends CommonUseFormResultWithHandlers<
+    ProductCreateData,
+    ProductCreateHandlers
+  > {
   disabled: boolean;
-  handlers: ProductCreateHandlers;
-  hasChanged: boolean;
-  submit: () => Promise<boolean>;
+  formErrors: FormErrors<ProductCreateData>;
 }
 
 export interface UseProductCreateFormOpts
@@ -153,12 +160,12 @@ export interface UseProductCreateFormOpts
 export interface ProductCreateFormProps extends UseProductCreateFormOpts {
   children: (props: UseProductCreateFormResult) => React.ReactNode;
   initial?: Partial<ProductCreateFormData>;
-  onSubmit: (data: ProductCreateData) => Promise<boolean>;
+  onSubmit: (data: ProductCreateData) => SubmitPromise;
 }
 
 function useProductCreateForm(
   initial: Partial<ProductCreateFormData>,
-  onSubmit: (data: ProductCreateData) => Promise<boolean>,
+  onSubmit: (data: ProductCreateData) => SubmitPromise,
   opts: UseProductCreateFormOpts
 ): UseProductCreateFormResult {
   const intl = useIntl();
@@ -190,13 +197,26 @@ function useProductCreateForm(
     hasPreorderEndDate: false,
     preorderEndDateTime: ""
   };
-  const [changed, setChanged] = React.useState(false);
-  const triggerChange = () => setChanged(true);
 
-  const form = useForm({
-    ...initial,
-    ...defaultInitialFormData
-  });
+  const form = useForm(
+    {
+      ...initial,
+      ...defaultInitialFormData
+    },
+    undefined,
+    { confirmLeave: true, formId: PRODUCT_CREATE_FORM_ID }
+  );
+
+  const {
+    triggerChange,
+    toggleValue,
+    handleChange,
+    hasChanged,
+    data: formData,
+    setChanged,
+    formId
+  } = form;
+
   const attributes = useFormset<AttributeInputData>(
     opts.selectedProductType
       ? getAttributeInputFromProductType(opts.selectedProductType)
@@ -209,16 +229,16 @@ function useProductCreateForm(
     triggerChange
   });
 
+  const { setExitDialogSubmitRef } = useExitFormDialog({
+    formId: PRODUCT_CREATE_FORM_ID
+  });
+
   const {
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
 
-  const handleChange: FormChange = (event, cb) => {
-    form.change(event, cb);
-    triggerChange();
-  };
   const handleCollectionSelect = createMultiAutocompleteSelectHandler(
-    form.toggleValue,
+    toggleValue,
     opts.setSelectedCollections,
     opts.selectedCollections,
     opts.collections
@@ -312,7 +332,7 @@ function useProductCreateForm(
   );
 
   const getData = (): ProductCreateData => ({
-    ...form.data,
+    ...formData,
     attributes: getAttributesDisplayData(
       attributes.data,
       attributesWithNewFileValue.data,
@@ -324,8 +344,18 @@ function useProductCreateForm(
     productType: opts.selectedProductType,
     stocks: stocks.data
   });
+
   const data = getData();
-  const submit = () => onSubmit(data);
+
+  const handleFormSubmit = useHandleFormSubmit({
+    formId,
+    onSubmit,
+    setChanged
+  });
+
+  const submit = () => handleFormSubmit(data);
+
+  useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   const shouldEnableSave = () => {
     if (!data.name || !data.productType) {
@@ -383,7 +413,7 @@ function useProductCreateForm(
       selectProductType: handleProductTypeSelect,
       selectTaxRate: handleTaxTypeSelect
     },
-    hasChanged: changed,
+    hasChanged,
     submit
   };
 }

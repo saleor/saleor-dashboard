@@ -44,7 +44,9 @@ export interface CustomAppDetailsPageProps {
   onTokenDelete: (id: string) => void;
   onTokenClose: () => void;
   onTokenCreate: () => void;
-  onSubmit: (data: CustomAppDetailsPageFormData) => SubmitPromise;
+  onSubmit: (
+    data: CustomAppDetailsPageFormData
+  ) => SubmitPromise<AppErrorFragment[]>;
   onWebhookCreate: () => void;
   onWebhookRemove: (id: string) => void;
   navigateToWebhookDetails: (id: string) => () => void;
@@ -94,7 +96,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
   };
 
   return (
-    <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ data, change, hasChanged, submit }) => (
         <Container>
           <Backlink onClick={onBack}>

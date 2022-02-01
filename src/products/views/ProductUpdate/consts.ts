@@ -7,3 +7,5 @@ export const initialChannelWithVariantData: ChannelWithVariantData = {
   variantsIdsToAdd: [],
   selectedVariantsIds: []
 };
+
+export const PRODUCT_UPDATE_FORM_ID = Symbol();

@@ -1,6 +1,7 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { getMutationErrors } from "@saleor/misc";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
   useMetadataUpdate,
@@ -61,8 +62,12 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
       }
     });
 
-    return result.data?.categoryCreate.category?.id || null;
+    return {
+      id: result.data?.categoryCreate.category?.id || null,
+      errors: getMutationErrors(result)
+    };
   };
+
   const handleSubmit = createMetadataCreateHandler(
     handleCreate,
     updateMetadata,

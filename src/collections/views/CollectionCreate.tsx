@@ -7,6 +7,7 @@ import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import { getMutationErrors } from "@saleor/misc";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
@@ -30,6 +31,7 @@ import {
   collectionListUrl,
   collectionUrl
 } from "../urls";
+import { COLLECTION_CREATE_FORM_ID } from "./consts";
 
 interface CollectionCreateProps {
   params: CollectionCreateUrlQueryParams;
@@ -72,7 +74,12 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(allChannels, params?.action, { closeModal, openModal });
+  } = useChannels(
+    allChannels,
+    params?.action,
+    { closeModal, openModal },
+    { formId: COLLECTION_CREATE_FORM_ID }
+  );
 
   const [createCollection, createCollectionOpts] = useCollectionCreateMutation({
     onCompleted: data => {
@@ -130,7 +137,7 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
       });
     }
 
-    return id;
+    return { id, errors: getMutationErrors(result) };
   };
 
   const handleSubmit = createMetadataCreateHandler(

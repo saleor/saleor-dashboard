@@ -10,6 +10,7 @@ import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { commonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
@@ -64,7 +65,7 @@ interface StaffAddMemberDialogProps extends SearchPageProps {
   fetchMorePermissionGroups: FetchMoreProps;
   open: boolean;
   onClose: () => void;
-  onConfirm: (data: AddMemberFormData) => void;
+  onConfirm: (data: AddMemberFormData) => SubmitPromise;
 }
 
 const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
