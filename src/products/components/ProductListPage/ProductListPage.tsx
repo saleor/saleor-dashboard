@@ -65,7 +65,9 @@ const useStyles = makeStyles(
       }
     },
     settings: {
-      marginRight: theme.spacing(2)
+      [theme.breakpoints.up("sm")]: {
+        marginRight: theme.spacing(2)
+      }
     }
   }),
   { name: "ProductListPage" }
@@ -135,20 +137,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   return (
     <Container>
       <PageHeader
-        title={intl.formatMessage(sectionNames.products)}
-        limitText={
-          hasLimits(limits, "productVariants") &&
-          intl.formatMessage(
-            {
-              defaultMessage: "{count}/{max} SKUs used",
-              description: "created products counter"
-            },
-            {
-              count: limits.currentUsage.productVariants,
-              max: limits.allowedUsage.productVariants
-            }
-          )
-        }
         cardMenu={
           <CardMenu
             className={classes.settings}
@@ -164,6 +152,20 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             ]}
             data-test="menu"
           />
+        }
+        title={intl.formatMessage(sectionNames.products)}
+        limitText={
+          hasLimits(limits, "productVariants") &&
+          intl.formatMessage(
+            {
+              defaultMessage: "{count}/{max} SKUs used",
+              description: "created products counter"
+            },
+            {
+              count: limits.currentUsage.productVariants,
+              max: limits.allowedUsage.productVariants
+            }
+          )
         }
       >
         <ColumnPicker
