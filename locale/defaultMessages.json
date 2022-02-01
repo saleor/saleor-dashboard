@@ -2020,25 +2020,29 @@
     "context": "select title",
     "string": "Select channels you want for {contentType} to be available on"
   },
-  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1043589445": {
-    "context": "product channel publication status",
-    "string": "hidden"
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_channel": {
+    "context": "Channel label",
+    "string": "Channel"
   },
-  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1702481199": {
-    "context": "product channel  publication date",
-    "string": "published since {date}"
-  },
-  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1944644572": {
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_dropdownLabel": {
     "context": "product status title",
-    "string": "{count}/{allCount} channels"
+    "string": "{channelCount} {channelCount,plural, =1 {Channel} other {Channels}}"
   },
-  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_3285520461": {
-    "context": "product channel publication date",
-    "string": "Will become available on {date}"
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_published": {
+    "context": "Status label when object is published in a channel",
+    "string": "Published"
   },
-  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_802058289": {
-    "context": "product status",
-    "string": "Available in {count} out of {allCount, plural, one {# channel} other {# channels}}"
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_scheduled": {
+    "context": "Status label when object is scheduled to publish in a channel",
+    "string": "Scheduled to publish"
+  },
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_status": {
+    "context": "Status label",
+    "string": "Status"
+  },
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_unpublished": {
+    "context": "Status label when object is unpublished in a channel",
+    "string": "Unpublished"
   },
   "src_dot_components_dot_ColumnPicker_dot_1483881697": {
     "context": "button",
@@ -2430,18 +2434,6 @@
   },
   "src_dot_components_dot_SingleSelectField_dot_4205644805": {
     "string": "No results found"
-  },
-  "src_dot_components_dot_StatusLabel_dot_active": {
-    "context": "status label active",
-    "string": "Active"
-  },
-  "src_dot_components_dot_StatusLabel_dot_deactivated": {
-    "context": "status label deactivated",
-    "string": "Deactivated"
-  },
-  "src_dot_components_dot_StatusLabel_dot_inactive": {
-    "context": "status label inactive",
-    "string": "Inactive"
   },
   "src_dot_components_dot_TableHead_dot_868570480": {
     "string": "Selected {number} items"
@@ -5292,17 +5284,25 @@
   "src_dot_plugins_dot_components_dot_PluginsList_dot_666641390": {
     "string": "No plugins found"
   },
+  "src_dot_plugins_dot_components_dot_PluginsList_dot_active": {
+    "context": "status label active",
+    "string": "Active"
+  },
   "src_dot_plugins_dot_components_dot_PluginsList_dot_channelLabel": {
     "context": "table header channel col label",
     "string": "Channel"
   },
   "src_dot_plugins_dot_components_dot_PluginsList_dot_channelTitle": {
     "context": "plugin channel availability status title",
-    "string": "Active in {activeChannelsCount}"
+    "string": "{activeChannelsCount,plural, =0 {Inactive} other {Active in {activeChannelsCount}}}"
   },
   "src_dot_plugins_dot_components_dot_PluginsList_dot_confLabel": {
     "context": "table header configuration col label",
     "string": "Configuration"
+  },
+  "src_dot_plugins_dot_components_dot_PluginsList_dot_deactivated": {
+    "context": "status label deactivated",
+    "string": "Deactivated"
   },
   "src_dot_plugins_dot_components_dot_PluginsList_dot_description": {
     "context": "global config plugin status popup description",
@@ -5311,6 +5311,10 @@
   "src_dot_plugins_dot_components_dot_PluginsList_dot_globalLabel": {
     "context": "PluginChannelConfigurationCell global title",
     "string": "Global"
+  },
+  "src_dot_plugins_dot_components_dot_PluginsList_dot_inactive": {
+    "context": "status label inactive",
+    "string": "Inactive"
   },
   "src_dot_plugins_dot_components_dot_PluginsList_dot_nameLabel": {
     "context": "table header name col label",
