@@ -1,3 +1,4 @@
+import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { AddressTypeInput } from "@saleor/customers/types";
 import {
@@ -15,7 +16,7 @@ export enum AddressInputOptionEnum {
 }
 
 export interface OrderCustomerAddressesEditFormData {
-  billingSameAsShipping: boolean;
+  cloneAddress: boolean;
   shippingAddressInputOption: AddressInputOptionEnum;
   billingAddressInputOption: AddressInputOptionEnum;
   customerShippingAddress: CustomerAddresses_user_defaultShippingAddress;
@@ -53,8 +54,10 @@ interface UseOrderCustomerAddressesEditFormResult {
 
 interface UseOrderCustomerAddressesEditFormOpts {
   countryChoices: SingleAutocompleteChoiceType[];
+  countries: ShopInfo_shop_countries[];
   defaultShippingAddress: CustomerAddresses_user_defaultShippingAddress;
   defaultBillingAddress: CustomerAddresses_user_defaultBillingAddress;
+  defaultCloneAddress: boolean;
 }
 
 export interface OrderCustomerAddressesEditFormProps
@@ -65,11 +68,11 @@ export interface OrderCustomerAddressesEditFormProps
 }
 
 function useOrderCustomerAddressesEditForm(
-  initial: Partial<OrderCustomerAddressesEditFormData>,
+  providedInitialFormData: Partial<OrderCustomerAddressesEditFormData>,
   onSubmit: (data: OrderCustomerAddressesEditData) => void,
   opts: UseOrderCustomerAddressesEditFormOpts
 ): UseOrderCustomerAddressesEditFormResult {
-  const initialAddress: AddressTypeInput = {
+  const emptyAddress: AddressTypeInput = {
     city: "",
     country: "",
     phone: "",
@@ -77,28 +80,36 @@ function useOrderCustomerAddressesEditForm(
     streetAddress1: ""
   };
   const defaultInitialFormData: OrderCustomerAddressesEditFormData = {
-    billingSameAsShipping: true,
+    cloneAddress: opts.defaultCloneAddress,
     shippingAddressInputOption: AddressInputOptionEnum.CUSTOMER_ADDRESS,
     billingAddressInputOption: AddressInputOptionEnum.CUSTOMER_ADDRESS,
     customerShippingAddress: opts.defaultShippingAddress,
     customerBillingAddress: opts.defaultBillingAddress,
-    shippingAddress: initialAddress,
-    billingAddress: initialAddress
+    shippingAddress: emptyAddress,
+    billingAddress: emptyAddress
+  };
+
+  const initialData = {
+    ...defaultInitialFormData,
+    ...providedInitialFormData
   };
 
   const form = useForm({
-    ...initial,
-    ...defaultInitialFormData
+    ...initialData
   });
 
   const [changed, setChanged] = useState(false);
   const triggerChange = () => setChanged(true);
 
   const [shippingCountryDisplayName, setShippingCountryDisplayName] = useState(
-    ""
+    opts.countries.find(
+      country => initialData.shippingAddress.country === country.code
+    )?.country
   );
   const [billingCountryDisplayName, setBillingCountryDisplayName] = useState(
-    ""
+    opts.countries.find(
+      country => initialData.billingAddress.country === country.code
+    )?.country
   );
 
   const handleChange: FormChange = (event, cb) => {

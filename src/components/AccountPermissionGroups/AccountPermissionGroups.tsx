@@ -59,7 +59,7 @@ const AccountPermissionGroups: React.FC<AccountPermissionGroupsProps> = props =>
         value={formData?.permissionGroups}
         onChange={onChange}
         fetchChoices={onSearchChange}
-        data-test="permissionGroups"
+        data-test-id="permission-groups"
         onFetchMore={onFetchMore}
         hasMore={hasMore}
         loading={loading}

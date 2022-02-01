@@ -4,6 +4,7 @@ import ColumnPicker, {
   ColumnPickerChoice
 } from "@saleor/components/ColumnPicker";
 import Container from "@saleor/components/Container";
+import { getByName } from "@saleor/components/Filter/utils";
 import FilterBar from "@saleor/components/FilterBar";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
@@ -108,6 +109,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
 
   const filterStructure = createFilterStructure(intl, filterOpts);
 
+  const filterDependency = filterStructure.find(getByName("channel"));
+
   const columns: ColumnPickerChoice[] = [
     {
       label: intl.formatMessage(columnsMessages.price),
@@ -159,7 +162,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               testId: "export"
             }
           ]}
-          data-test="menu"
+          data-test-id="menu"
         />
         <ColumnPicker
           className={classes.columnPicker}
@@ -179,7 +182,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           disabled={limitReached}
           onClick={onAdd}
           variant="primary"
-          data-test="add-product"
+          data-test-id="add-product"
         >
           <FormattedMessage
             defaultMessage="Create Product"
@@ -227,6 +230,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           channelsCount={channelsCount}
           selectedChannelId={selectedChannelId}
           onUpdateListSettings={onUpdateListSettings}
+          filterDependency={filterDependency}
         />
       </Card>
     </Container>

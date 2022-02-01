@@ -2,6 +2,7 @@
 // / <reference types="../support"/>
 
 import { LOGIN_SELECTORS } from "../elements/account/login-selectors";
+import { HOMEPAGE_SELECTORS } from "../elements/homePage/homePage-selectors";
 import { urlList } from "../fixtures/urlList";
 import filterTests from "../support/filterTests";
 
@@ -14,7 +15,7 @@ filterTests({ definedTags: ["all"] }, () => {
     it("should successfully log in an user", () => {
       cy.visit(urlList.homePage);
       cy.loginUser();
-      cy.get(LOGIN_SELECTORS.welcomePage);
+      cy.get(HOMEPAGE_SELECTORS.welcomeMessage);
     });
 
     it("should fail for wrong password", () => {
