@@ -2,9 +2,9 @@ import { OutputData } from "@editorjs/editorjs";
 import { ChannelShippingData } from "@saleor/channels/utils";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
-import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
+import { WithFormId } from "@saleor/components/Form/ExitFormDialogProvider";
 import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
@@ -12,6 +12,8 @@ import Savebar from "@saleor/components/Savebar";
 import { ShippingChannelsErrorFragment } from "@saleor/fragments/types/ShippingChannelsErrorFragment";
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
 import { ShippingMethodTypeFragment_postalCodeRules } from "@saleor/fragments/types/ShippingMethodTypeFragment";
+import { SubmitPromise } from "@saleor/hooks/useForm";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
 import OrderValue from "@saleor/shipping/components/OrderValue";
@@ -40,7 +42,8 @@ import { ShippingZoneRateUpdateFormData } from "./types";
 
 export interface ShippingZoneRatesPageProps
   extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">>,
-    ListActions {
+    ListActions,
+    WithFormId {
   allChannelsCount?: number;
   shippingChannels: ChannelShippingData[];
   disabled: boolean;
@@ -53,7 +56,7 @@ export interface ShippingZoneRatesPageProps
   postalCodeRules: ShippingZone_shippingZone_shippingMethods_postalCodeRules[];
   onBack: () => void;
   onDelete?: () => void;
-  onSubmit: (data: ShippingZoneRateUpdateFormData) => void;
+  onSubmit: (data: ShippingZoneRateUpdateFormData) => SubmitPromise;
   onPostalCodeInclusionChange: (
     inclusion: PostalCodeRuleInclusionTypeEnum
   ) => void;
@@ -90,6 +93,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   saveButtonBarState,
   postalCodeRules,
   variant,
+  formId,
   ...listProps
 }) => {
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
@@ -113,7 +117,12 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   } = useMetadataChangeTrigger();
 
   return (
-    <Form initial={initialForm} onSubmit={onSubmit}>
+    <Form
+      confirmLeave
+      initial={initialForm}
+      onSubmit={onSubmit}
+      formId={formId}
+    >
       {({ change, data, hasChanged, submit, set, triggerChange }) => {
         const handleChannelsChange = createChannelsChangeHandler(
           shippingChannels,

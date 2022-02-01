@@ -1,6 +1,6 @@
-export function updateMetadata(id, key, value) {
+export function updateMetadata(token, key, value) {
   const mutation = `mutation{
-    updateMetadata(id:"${id}" input:{
+    updateMetadata(id:"${token}" input:{
       key:"${key}",
       value:"${value}"
     }){
@@ -13,9 +13,9 @@ export function updateMetadata(id, key, value) {
   return cy.sendRequestWithQuery(mutation).its("body.data.updateMetadata");
 }
 
-export function updatePrivateMetadata(id, key, value) {
+export function updatePrivateMetadata(token, key, value) {
   const mutation = `mutation{
-    updatePrivateMetadata(id:"${id}" input:{
+    updatePrivateMetadata(id:"${token}" input:{
       key:"${key}",
       value:"${value}"
     }){

@@ -1,5 +1,4 @@
 import {
-  Button,
   Card,
   CardContent,
   CircularProgress,
@@ -7,7 +6,7 @@ import {
 } from "@material-ui/core";
 import useElementScroll from "@saleor/hooks/useElementScroll";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import { isSelected } from "@saleor/utils/lists";
 import classNames from "classnames";
@@ -39,6 +38,9 @@ const useStyles = makeStyles(
       justifyContent: "space-between"
     },
     actionBarContainer: {
+      "&&": {
+        padding: theme.spacing(2)
+      },
       boxShadow: `0px 0px 0px 0px ${theme.palette.background.paper}`,
       transition: theme.transitions.duration.short + "ms"
     },
@@ -54,7 +56,7 @@ const useStyles = makeStyles(
       },
       display: "grid",
       gridColumnGap: theme.spacing(3),
-      gridTemplateColumns: "repeat(3, 1fr)",
+      gridTemplateColumns: "repeat(3, 210px)",
       padding: theme.spacing(2, 3)
     },
     contentContainer: {
@@ -66,16 +68,20 @@ const useStyles = makeStyles(
     dropShadow: {
       boxShadow: `0px -5px 10px 0px ${theme.palette.divider}`
     },
+    label: {
+      "& span": {
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        textOverflow: "ellipsis"
+      },
+      marginRight: 0
+    },
     loadMoreLoaderContainer: {
       alignItems: "center",
       display: "flex",
       gridColumnEnd: "span 3",
       height: theme.spacing(3),
       justifyContent: "center"
-    },
-    root: {
-      boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-      overflow: "hidden"
     },
     titleContainer: {
       padding: theme.spacing(1.5, 3.5)
@@ -109,7 +115,7 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
       : false;
 
   return (
-    <Card className={classes.root}>
+    <Card elevation={8}>
       <CardContent className={classes.titleContainer}>
         <Typography color="textSecondary">
           <FormattedMessage
@@ -143,6 +149,7 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
           <div className={classes.content}>
             {columns.map(column => (
               <ControlledCheckbox
+                className={classes.label}
                 checked={isSelected(
                   column.value,
                   selectedColumns,
@@ -164,18 +171,19 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
         })}
       >
         <div className={classes.actionBar}>
-          <Button color="default" onClick={onReset}>
+          <Button variant="secondary" color="text" onClick={onReset}>
             <FormattedMessage defaultMessage="Reset" description="button" />
           </Button>
           <div>
             <Button
               className={classes.cancelButton}
-              color="default"
+              color="text"
+              variant="secondary"
               onClick={onCancel}
             >
               <FormattedMessage {...buttonMessages.cancel} />
             </Button>
-            <Button color="primary" variant="contained" onClick={onSave}>
+            <Button variant="primary" onClick={onSave}>
               <FormattedMessage {...buttonMessages.save} />
             </Button>
           </div>

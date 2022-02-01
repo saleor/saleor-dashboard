@@ -20,10 +20,15 @@ describe("useChannels", () => {
   it("properly toggles channels", () => {
     // Given
     const { result } = renderHook(() =>
-      useChannels(channels, "", {
-        closeModal: jest.fn,
-        openModal: jest.fn
-      })
+      useChannels(
+        channels,
+        "",
+        {
+          closeModal: jest.fn,
+          openModal: jest.fn
+        },
+        { formId: Symbol() }
+      )
     );
 
     // When
@@ -42,10 +47,15 @@ describe("useChannels", () => {
   it("properly removes channels", () => {
     // Given
     const { result } = renderHook(() =>
-      useChannels(channels, "", {
-        closeModal: jest.fn,
-        openModal: jest.fn
-      })
+      useChannels(
+        channels,
+        "",
+        {
+          closeModal: jest.fn,
+          openModal: jest.fn
+        },
+        { formId: Symbol() }
+      )
     );
 
     // When
@@ -68,10 +78,15 @@ describe("useChannels", () => {
   it("doesn't not save changes if closed without confirm", () => {
     // Given
     const { result } = renderHook(() =>
-      useChannels(channels, "", {
-        closeModal: jest.fn,
-        openModal: jest.fn
-      })
+      useChannels(
+        channels,
+        "",
+        {
+          closeModal: jest.fn,
+          openModal: jest.fn
+        },
+        { formId: Symbol() }
+      )
     );
 
     // When

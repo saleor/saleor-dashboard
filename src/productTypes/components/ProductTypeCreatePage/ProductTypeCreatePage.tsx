@@ -1,14 +1,14 @@
 import CardSpacer from "@saleor/components/CardSpacer";
-import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
-import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
+import { ChangeEvent, FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
 import { makeProductTypeKindChangeHandler } from "@saleor/productTypes/handlers";
 import { ProductTypeDetails_taxTypes } from "@saleor/productTypes/types/ProductTypeDetails";
@@ -43,7 +43,7 @@ export interface ProductTypeCreatePageProps {
   kind: ProductTypeKindEnum;
   onChangeKind: (kind: ProductTypeKindEnum) => void;
   onBack: () => void;
-  onSubmit: (data: ProductTypeForm) => void;
+  onSubmit: (data: ProductTypeForm) => SubmitPromise<any[]>;
 }
 
 const formInitialData: ProductTypeForm = {
@@ -92,7 +92,7 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
   };
 
   return (
-    <Form initial={initialData} onSubmit={onSubmit} confirmLeave>
+    <Form confirmLeave initial={initialData} onSubmit={onSubmit}>
       {({ change, data, hasChanged, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 

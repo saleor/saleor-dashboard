@@ -1,14 +1,15 @@
 import { Typography } from "@material-ui/core";
 import CardMenu from "@saleor/components/CardMenu";
 import CardSpacer from "@saleor/components/CardSpacer";
-import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { Container } from "@saleor/components/Container";
 import { DateTime } from "@saleor/components/Date";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
 import DraftOrderChannelSectionCard from "@saleor/orders/components/DraftOrderChannelSectionCard";
@@ -50,7 +51,7 @@ export interface OrderDraftPageProps
   onCustomerEdit: (data: CustomerEditData) => void;
   onDraftFinalize: () => void;
   onDraftRemove: () => void;
-  onNoteAdd: (data: HistoryFormData) => void;
+  onNoteAdd: (data: HistoryFormData) => SubmitPromise<any[]>;
   onOrderLineAdd: () => void;
   onOrderLineChange: (
     id: string,

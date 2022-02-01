@@ -124,8 +124,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
           <FormattedMessage {...buttonMessages.cancel} />
         </Button>
         <ConfirmButton
-          variant="contained"
-          color="primary"
+          variant="primary"
           transitionState="default"
           onClick={handleSelect}
         >

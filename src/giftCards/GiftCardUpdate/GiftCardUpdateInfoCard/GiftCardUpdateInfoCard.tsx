@@ -17,7 +17,7 @@ const GiftCardUpdateInfoCard: React.FC = () => {
     <Card>
       <CardTitle title={intl.formatMessage(messages.title)} />
       <CardContent>
-        <Skeleton>{!loading && <GiftCardUpdateInfoCardContent />}</Skeleton>
+        {loading ? <Skeleton /> : <GiftCardUpdateInfoCardContent />}
       </CardContent>
     </Card>
   );

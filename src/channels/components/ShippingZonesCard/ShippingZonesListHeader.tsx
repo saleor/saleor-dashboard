@@ -20,6 +20,7 @@ const useStyles = makeStyles(
       width: "100%",
       border: "none",
       marginRight: theme.spacing(1),
+      padding: 0,
       paddingBottom: theme.spacing(2),
       minHeight: 0,
 
@@ -28,7 +29,6 @@ const useStyles = makeStyles(
       }
     },
     content: {
-      paddingLeft: theme.spacing(1),
       margin: 0,
 
       "&$expanded": {
@@ -41,17 +41,19 @@ const useStyles = makeStyles(
 
 const messages = defineMessages({
   title: {
-    defaultMessage: "{zonesCount} Shipping Zones",
+    defaultMessage: "{zonesCount} / {totalCount} shipping zones",
     description: "title"
   }
 });
 
 interface ShippingZonesListHeaderProps {
   shippingZones: ChannelShippingZones;
+  totalCount: number;
 }
 
 const ShippingZonesListHeader: React.FC<ShippingZonesListHeaderProps> = ({
-  shippingZones
+  shippingZones,
+  totalCount
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
@@ -61,7 +63,8 @@ const ShippingZonesListHeader: React.FC<ShippingZonesListHeaderProps> = ({
       <AccordionSummary expandIcon={<IconChevronDown />} classes={classes}>
         <Typography variant="subtitle2" color="textSecondary">
           {intl.formatMessage(messages.title, {
-            zonesCount: shippingZones.length
+            zonesCount: shippingZones.length,
+            totalCount
           })}
         </Typography>
       </AccordionSummary>

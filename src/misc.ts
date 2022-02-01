@@ -1,10 +1,13 @@
-import { ThemeType } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState, ThemeType } from "@saleor/macaw-ui";
 import uniqBy from "lodash/uniqBy";
 import moment from "moment-timezone";
-import { MutationFunction, MutationResult } from "react-apollo";
+import {
+  MutationFetchResult,
+  MutationFunction,
+  MutationResult
+} from "react-apollo";
 import { IntlShape } from "react-intl";
 
-import { ConfirmButtonTransitionState } from "./components/ConfirmButton";
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
 import { StatusType } from "./components/StatusChip/types";
 import { StatusLabelProps } from "./components/StatusLabel";
@@ -238,21 +241,46 @@ export function getMutationState(
   return "default";
 }
 
-interface SaleorMutationResult {
-  errors?: UserError[];
+export interface SaleorMutationResult {
+  errors?: any[];
 }
-export function getMutationErrors<
-  TData extends Record<string, SaleorMutationResult>
->(data: TData): UserError[] {
-  return Object.values(data).reduce(
-    (acc: UserError[], mut) => [...acc, ...maybe(() => mut.errors, [])],
-    []
-  );
-}
+
+type InferPromiseResult<T> = T extends Promise<infer V> ? V : never;
+
+export const extractMutationErrors = async <
+  TData extends InferPromiseResult<TPromise>,
+  TPromise extends Promise<MutationFetchResult<TData>>,
+  TErrors extends ReturnType<typeof getMutationErrors>
+>(
+  submitPromise: TPromise
+): Promise<TErrors> => {
+  const result = await submitPromise;
+
+  const e = getMutationErrors(result);
+
+  return e as TErrors;
+};
+
+export const getMutationErrors = <
+  T extends MutationFetchResult<any>,
+  TData extends T["data"],
+  TErrors extends TData[keyof TData]["errors"]
+>(
+  result: T
+): TErrors[] => {
+  if (!result?.data) {
+    return [] as TErrors;
+  }
+  return Object.values(result.data).reduce(
+    (acc: TErrors[], mut: TData) => [...acc, ...(mut.errors || [])],
+    [] as TErrors[]
+  ) as TErrors;
+};
+
 export function getMutationStatus<
   TData extends Record<string, SaleorMutationResult | any>
 >(opts: MutationResult<TData>): ConfirmButtonTransitionState {
-  const errors = opts.data ? getMutationErrors(opts.data) : [];
+  const errors = getMutationErrors(opts);
 
   return getMutationState(opts.called, opts.loading, errors);
 }

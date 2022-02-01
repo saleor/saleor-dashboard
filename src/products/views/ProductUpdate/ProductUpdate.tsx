@@ -1,6 +1,5 @@
 import placeholderImg from "@assets/images/placeholder255x255.png";
-import { DialogContentText, IconButton } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
+import { DialogContentText } from "@material-ui/core";
 import { useAttributeValueDeleteMutation } from "@saleor/attributes/mutations";
 import ChannelsWithVariantsAvailabilityDialog from "@saleor/channels/components/ChannelsWithVariantsAvailabilityDialog";
 import {
@@ -29,6 +28,7 @@ import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
 import useShop from "@saleor/hooks/useShop";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages, errorMessages } from "@saleor/intl";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import ProductVariantCreateDialog from "@saleor/products/components/ProductVariantCreateDialog";
 import ProductVariantEndPreorderDialog from "@saleor/products/components/ProductVariantEndPreorderDialog";
 import {
@@ -79,6 +79,7 @@ import {
   productVariantEditUrl
 } from "../../urls";
 import { CHANNELS_AVAILIABILITY_MODAL_SELECTOR } from "./consts";
+import { PRODUCT_UPDATE_FORM_ID } from "./consts";
 import {
   createImageReorderHandler,
   createImageUploadHandler,
@@ -304,10 +305,15 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(productChannelsChoices, params?.action, {
-    closeModal,
-    openModal
-  });
+  } = useChannels(
+    productChannelsChoices,
+    params?.action,
+    {
+      closeModal,
+      openModal
+    },
+    { formId: PRODUCT_UPDATE_FORM_ID }
+  );
 
   const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate({
     onCompleted: data => {
@@ -367,6 +373,16 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     deleteAttributeValueOpts
   ] = useAttributeValueDeleteMutation({});
 
+  const onSetDefaultVariant = useOnSetDefaultVariant(
+    product ? product.id : null,
+    null
+  );
+
+  const [
+    reorderProductVariants,
+    reorderProductVariantsOpts
+  ] = useProductVariantReorderMutation({});
+
   const handleBack = () => navigate(productListUrl());
 
   if (product === null) {
@@ -403,11 +419,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const handleImageReorder = createImageReorderHandler(product, variables =>
     reorderProductImages({ variables })
   );
-
-  const [
-    reorderProductVariants,
-    reorderProductVariantsOpts
-  ] = useProductVariantReorderMutation({});
 
   const handleVariantReorder = createVariantReorderHandler(product, variables =>
     reorderProductVariants({ variables })
@@ -472,10 +483,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     ...(productVariantCreateOpts.data?.productVariantCreate.errors || [])
   ];
 
-  const onSetDefaultVariant = useOnSetDefaultVariant(
-    product ? product.id : null,
-    null
-  );
   const channelsErrors = [
     ...(updateChannelsOpts?.data?.productChannelListingUpdate?.errors || []),
     ...(updateVariantChannelsOpts?.data?.productVariantChannelListingUpdate
@@ -590,6 +597,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onImageDelete={handleImageDelete}
         toolbar={
           <IconButton
+            variant="secondary"
             color="primary"
             onClick={() =>
               openModal("remove-variants", {

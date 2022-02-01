@@ -1,19 +1,19 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   TextField
 } from "@material-ui/core";
-import ConfirmButton, {
-  ConfirmButtonTransitionState
-} from "@saleor/components/ConfirmButton";
+import BackButton from "@saleor/components/BackButton";
+import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { DialogProps } from "@saleor/types";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAccountErrorMessage from "@saleor/utils/errors/account";
@@ -27,7 +27,7 @@ interface StaffPasswordResetDialogFormData {
 export interface StaffPasswordResetDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: AccountErrorFragment[];
-  onSubmit: (data: StaffPasswordResetDialogFormData) => void;
+  onSubmit: (data: StaffPasswordResetDialogFormData) => SubmitPromise;
 }
 
 const initialForm: StaffPasswordResetDialogFormData = {
@@ -98,14 +98,10 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={onClose}>
-                <FormattedMessage {...buttonMessages.back} />
-              </Button>
+              <BackButton onClick={onClose} />
               <ConfirmButton
                 disabled={data.newPassword.length < 8}
                 transitionState={confirmButtonState}
-                color="primary"
-                variant="contained"
                 type="submit"
                 onClick={submit}
               >

@@ -2,7 +2,6 @@ import { Card, CardContent, Typography } from "@material-ui/core";
 import AccountPermissionGroups from "@saleor/components/AccountPermissionGroups";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
-import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
@@ -14,6 +13,7 @@ import { SubmitPromise } from "@saleor/hooks/useForm";
 import useLocale from "@saleor/hooks/useLocale";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
 import { getUserName } from "@saleor/misc";
 import { SearchPermissionGroups_search_edges_node } from "@saleor/searches/types/SearchPermissionGroups";
@@ -28,6 +28,7 @@ import StaffPassword from "../StaffPassword/StaffPassword";
 import StaffPreferences from "../StaffPreferences";
 import StaffProperties from "../StaffProperties/StaffProperties";
 import { staffDetailsPageMessages as messages } from "./messages";
+import useStyles from "./styles";
 
 export interface StaffDetailsFormData {
   email: string;
@@ -77,6 +78,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
   staffMember
 }: StaffDetailsPageProps) => {
   const intl = useIntl();
+  const classes = useStyles();
   const { locale, setLocale } = useLocale();
   const [
     permissionGroupsDisplayValues,
@@ -98,7 +100,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
   };
 
   return (
-    <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ data: formData, change, hasChanged, submit, toggleValue }) => {
         const permissionGroupsChange = createMultiAutocompleteSelectHandler(
           toggleValue,
@@ -135,7 +137,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                   </>
                 )}
               </div>
-              <div>
+              <div className={classes.noOverflow}>
                 {canEditPreferences && (
                   <StaffPreferences
                     locale={locale}

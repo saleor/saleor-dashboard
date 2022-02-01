@@ -1,7 +1,5 @@
-import { Button } from "@material-ui/core";
 import AccountPermissions from "@saleor/components/AccountPermissions";
 import CardSpacer from "@saleor/components/CardSpacer";
-import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
@@ -11,7 +9,8 @@ import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInf
 import { AppErrorFragment } from "@saleor/fragments/types/AppErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { Backlink } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { Backlink, Button } from "@saleor/macaw-ui";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAppErrorMessage from "@saleor/utils/errors/app";
@@ -45,7 +44,9 @@ export interface CustomAppDetailsPageProps {
   onTokenDelete: (id: string) => void;
   onTokenClose: () => void;
   onTokenCreate: () => void;
-  onSubmit: (data: CustomAppDetailsPageFormData) => SubmitPromise;
+  onSubmit: (
+    data: CustomAppDetailsPageFormData
+  ) => SubmitPromise<AppErrorFragment[]>;
   onWebhookCreate: () => void;
   onWebhookRemove: (id: string) => void;
   navigateToWebhookDetails: (id: string) => () => void;
@@ -95,7 +96,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
   };
 
   return (
-    <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ data, change, hasChanged, submit }) => (
         <Container>
           <Backlink onClick={onBack}>
@@ -103,8 +104,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
           </Backlink>
           <PageHeader title={app?.name}>
             <Button
-              variant="text"
-              color="primary"
+              variant="secondary"
               className={classes.activateButton}
               disableFocusRipple
               onClick={data.isActive ? onAppDeactivateOpen : onAppActivateOpen}

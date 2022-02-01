@@ -1,20 +1,15 @@
 import { OutputData } from "@editorjs/editorjs";
-import {
-  Button,
-  Card,
-  CardContent,
-  IconButton,
-  Typography
-} from "@material-ui/core";
+import { Card, CardContent, Typography } from "@material-ui/core";
 import ArrowIcon from "@material-ui/icons/ArrowDropDown";
 import CardTitle from "@saleor/components/CardTitle";
-import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import Skeleton from "@saleor/components/Skeleton";
 import TablePagination from "@saleor/components/TablePagination";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { TranslationField } from "@saleor/translations/types";
 import { ListProps } from "@saleor/types";
 import classNames from "classnames";
@@ -41,7 +36,10 @@ export interface TranslationFieldsProps {
   richTextResetKey: string; // temporary workaround TODO: fix rich text editor
   onEdit: (field: string) => void;
   onDiscard: () => void;
-  onSubmit: (field: TranslationField, data: string | OutputData) => void;
+  onSubmit: (
+    field: TranslationField,
+    data: string | OutputData
+  ) => SubmitPromise;
 }
 
 const useStyles = makeStyles(
@@ -135,7 +133,10 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
       <CardTitle
         title={title}
         toolbar={
-          <IconButton onClick={() => setExpandedState(!expanded)}>
+          <IconButton
+            variant="secondary"
+            onClick={() => setExpandedState(!expanded)}
+          >
             <ArrowIcon
               className={classNames({
                 [classes.rotate]: expanded
@@ -164,9 +165,8 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                 </Typography>
                 <div className={classes.editButtonContainer}>
                   <Button
-                    color="primary"
-                    onClick={() => onEdit(field.name)}
                     data-test-id={`edit-${field.name}`}
+                    onClick={() => onEdit(field.name)}
                   >
                     <FormattedMessage {...buttonMessages.edit} />
                   </Button>

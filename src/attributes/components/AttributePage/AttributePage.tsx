@@ -1,7 +1,6 @@
 import { AttributeDetails_attribute_choices } from "@saleor/attributes/types/AttributeDetails";
 import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@saleor/attributes/utils/data";
 import CardSpacer from "@saleor/components/CardSpacer";
-import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
@@ -12,7 +11,9 @@ import Savebar from "@saleor/components/Savebar";
 import { ListSettingsUpdate } from "@saleor/components/TablePagination";
 import { AttributeDetailsFragment } from "@saleor/fragments/types/AttributeDetailsFragment";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import { ListSettings, ReorderAction } from "@saleor/types";
@@ -41,7 +42,7 @@ export interface AttributePageProps {
   values: AttributeDetails_attribute_choices;
   onBack: () => void;
   onDelete: () => void;
-  onSubmit: (data: AttributePageFormData) => void;
+  onSubmit: (data: AttributePageFormData) => SubmitPromise;
   onValueAdd: () => void;
   onValueDelete: (id: string) => void;
   onValueReorder: ReorderAction;
@@ -156,7 +157,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
   };
 
   return (
-    <Form initial={initialForm} onSubmit={handleSubmit}>
+    <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
       {({
         change,
         set,

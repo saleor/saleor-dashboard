@@ -1,10 +1,9 @@
-import { IconButton, IconButtonProps } from "@material-ui/core";
-import TrashIcon from "@saleor/icons/Trash";
+import { DeleteIcon, IconButton, IconButtonProps } from "@saleor/macaw-ui";
 import React from "react";
 
 const DeleteIconButton: React.FC<IconButtonProps> = ({ onClick }) => (
-  <IconButton color="primary" onClick={onClick}>
-    <TrashIcon />
+  <IconButton variant="secondary" onClick={onClick}>
+    <DeleteIcon />
   </IconButton>
 );
 

@@ -9,7 +9,11 @@ import {
   VoucherCreate,
   VoucherCreateVariables
 } from "@saleor/discounts/types/VoucherCreate";
-import { joinDateTime } from "@saleor/misc";
+import {
+  extractMutationErrors,
+  getMutationErrors,
+  joinDateTime
+} from "@saleor/misc";
 import {
   DiscountValueTypeEnum,
   VoucherTypeEnum
@@ -53,15 +57,26 @@ export function createHandler(
       }
     });
 
-    if (!response.data.voucherCreate.errors.length) {
+    const errors = getMutationErrors(response);
+
+    if (errors.length > 0) {
+      return { errors };
+    }
+
+    const channelsUpdateErrors = await extractMutationErrors(
       updateChannels({
         variables: getChannelsVariables(
           response.data.voucherCreate.voucher.id,
           formData,
           formData.channelListings
         )
-      });
-      return response.data.voucherCreate.voucher.id;
+      })
+    );
+
+    if (channelsUpdateErrors.length > 0) {
+      return { errors: channelsUpdateErrors };
     }
+
+    return { id: response.data.voucherCreate.voucher.id };
   };
 }

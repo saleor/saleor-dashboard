@@ -12,7 +12,9 @@ import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
-import ProductCreatePage from "@saleor/products/components/ProductCreatePage";
+import ProductCreatePage, {
+  ProductCreateData
+} from "@saleor/products/components/ProductCreatePage";
 import {
   useProductChannelListingUpdate,
   useProductDeleteMutation,
@@ -48,6 +50,7 @@ import { warehouseAddPath } from "@saleor/warehouses/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { PRODUCT_CREATE_FORM_ID } from "./consts";
 import { createHandler } from "./handlers";
 
 interface ProductCreateProps {
@@ -148,10 +151,17 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(allChannels, params?.action, {
-    closeModal,
-    openModal
-  });
+  } = useChannels(
+    allChannels,
+    params?.action,
+    {
+      closeModal,
+      openModal
+    },
+    {
+      formId: PRODUCT_CREATE_FORM_ID
+    }
+  );
 
   const handleSuccess = (productId: string) => {
     notify({
@@ -194,10 +204,10 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     }
   });
 
-  const handleSubmit = async data => {
-    const result = await createMetadataCreateHandler(
+  const handleSubmit = async (data: ProductCreateData) => {
+    const errors = await createMetadataCreateHandler(
       createHandler(
-        selectedProductType.productType,
+        selectedProductType?.productType,
         variables => uploadFile({ variables }),
         variables => productCreate({ variables }),
         variables => productVariantCreate({ variables }),
@@ -209,9 +219,11 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
       updatePrivateMetadata
     )(data);
 
-    if (result) {
+    if (!errors?.length) {
       setProductCreateComplete(true);
     }
+
+    return errors;
   };
 
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>

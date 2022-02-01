@@ -4,10 +4,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 export const useStyles = makeStyles(
   theme => ({
     colActions: {
-      "&:last-child": {
-        paddingRight: 0
-      },
-      width: `calc(76px + ${theme.spacing(0.5)})`
+      width: `calc(76px + ${theme.spacing(1)})`
     },
     colName: {
       paddingLeft: 0,

@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -8,14 +7,15 @@ import {
   TextField,
   Typography
 } from "@material-ui/core";
+import BackButton from "@saleor/components/BackButton";
 import CardSpacer from "@saleor/components/CardSpacer";
-import ConfirmButton, {
-  ConfirmButtonTransitionState
-} from "@saleor/components/ConfirmButton";
+import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import { buttonMessages } from "@saleor/intl";
+import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -26,7 +26,7 @@ export interface TokenCreateDialogProps {
   open: boolean;
   token: string | undefined;
   onClose: () => void;
-  onCreate: (name: string) => void;
+  onCreate: (name: string) => SubmitPromise;
 }
 
 type TokenCreateStep = "form" | "summary";
@@ -94,7 +94,6 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                     </Typography>
                     <Button
                       className={classes.copy}
-                      color="primary"
                       onClick={() => handleCopy(token)}
                     >
                       <FormattedMessage
@@ -109,13 +108,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
             <DialogActions>
               {step === "form" ? (
                 <>
-                  <Button
-                    className={classes.cancel}
-                    color="primary"
-                    onClick={onClose}
-                  >
-                    <FormattedMessage {...buttonMessages.back} />
-                  </Button>
+                  <BackButton className={classes.cancel} onClick={onClose} />
                   <ConfirmButton
                     data-test="submit"
                     transitionState={confirmButtonState}
@@ -128,12 +121,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                   </ConfirmButton>
                 </>
               ) : (
-                <Button
-                  color="primary"
-                  variant="contained"
-                  onClick={onClose}
-                  data-test-id="done"
-                >
+                <Button variant="primary" onClick={onClose} data-test-id="done">
                   <FormattedMessage {...buttonMessages.done} />
                 </Button>
               )}

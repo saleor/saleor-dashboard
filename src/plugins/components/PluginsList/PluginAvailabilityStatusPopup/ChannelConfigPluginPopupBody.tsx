@@ -18,7 +18,7 @@ import ScrollableContent from "./ScrollableContent";
 const useStyles = makeStyles(
   theme => ({
     itemContainer: {
-      padding: theme.spacing(0, 1)
+      padding: theme.spacing(0, 4)
     }
   }),
   { name: "ChannelConfigPluginPopupBody" }

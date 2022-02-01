@@ -1,18 +1,17 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle
 } from "@material-ui/core";
-import ConfirmButton, {
-  ConfirmButtonTransitionState
-} from "@saleor/components/ConfirmButton";
+import BackButton from "@saleor/components/BackButton";
+import ConfirmButton from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -70,13 +69,10 @@ const OrderCancelDialog: React.FC<OrderCancelDialogProps> = props => {
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>
-          <FormattedMessage {...buttonMessages.back} />
-        </Button>
+        <BackButton onClick={onClose} />
         <ConfirmButton
           onClick={onSubmit}
           transitionState={confirmButtonState}
-          variant="contained"
           type="submit"
         >
           <FormattedMessage {...buttonMessages.accept} />

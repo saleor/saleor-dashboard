@@ -1,4 +1,3 @@
-import { Button } from "@material-ui/core";
 import { useUser } from "@saleor/auth";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
@@ -7,6 +6,8 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
+import { extractMutationErrors } from "@saleor/misc";
 import MembersErrorDialog from "@saleor/permissionGroups/components/MembersErrorDialog";
 import {
   arePermissionsExceeded,
@@ -134,20 +135,19 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
   );
   const disabled = loading || !isGroupEditable || permissionsExceeded;
 
-  const handleSubmit = async (formData: PermissionGroupDetailsPageFormData) => {
-    const result = await permissionGroupUpdate({
-      variables: {
-        id,
-        input: {
-          name: formData.name,
-          ...permissionsDiff(data?.permissionGroup, formData),
-          ...usersDiff(data?.permissionGroup, formData)
+  const handleSubmit = async (formData: PermissionGroupDetailsPageFormData) =>
+    extractMutationErrors(
+      permissionGroupUpdate({
+        variables: {
+          id,
+          input: {
+            name: formData.name,
+            ...permissionsDiff(data?.permissionGroup, formData),
+            ...usersDiff(data?.permissionGroup, formData)
+          }
         }
-      }
-    });
-
-    return result.data.permissionGroupUpdate.errors;
-  };
+      })
+    );
 
   return (
     <>
@@ -173,7 +173,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
         sort={getSortParams(params)}
         toolbar={
           <Button
-            color="primary"
+            variant="secondary"
             onClick={() => openModal("unassign", { ids: listElements })}
           >
             {intl.formatMessage({

@@ -28,13 +28,15 @@ const GiftCardUpdateDetailsBalanceSection: React.FC = () => {
         className={classNames(classes.labelsContainer, classes.wideContainer)}
       >
         <Typography>{intl.formatMessage(messages.cardBalanceLabel)}</Typography>
-        <div className={classes.labelsContainer}>
+        <Typography className={classes.labelsContainer}>
           <Money money={currentBalance} />
           <HorizontalSpacer />
           /
           <HorizontalSpacer />
-          <Money className={classes.balanceTotal} money={initialBalance} />
-        </div>
+          <Typography component="span" color="textSecondary">
+            <Money money={initialBalance} />
+          </Typography>
+        </Typography>
       </div>
       <CardSpacer />
       <div className={classes.balanceBar}>

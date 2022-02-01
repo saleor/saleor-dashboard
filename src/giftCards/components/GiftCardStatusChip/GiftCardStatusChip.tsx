@@ -1,9 +1,8 @@
-import StatusChip from "@saleor/components/StatusChip";
-import { StatusType } from "@saleor/components/StatusChip/types";
 import {
   ExtendedGiftCard,
   GiftCardBase
 } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
+import { Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -21,30 +20,29 @@ function GiftCardStatusChip<
   const { isExpired, isActive } = giftCard;
   const intl = useIntl();
 
-  const getStatusChipData = () => {
-    if (isExpired) {
-      return {
-        status: StatusType.NEUTRAL,
-        label: intl.formatMessage(giftCardStatusChipMessages.expiredStatusLabel)
-      };
-    }
+  if (isExpired) {
+    return (
+      <Pill
+        color="info"
+        label={intl.formatMessage(
+          giftCardStatusChipMessages.expiredStatusLabel
+        )}
+      />
+    );
+  }
 
-    if (!isActive) {
-      return {
-        status: StatusType.ERROR,
-        label: intl.formatMessage(
+  if (!isActive) {
+    return (
+      <Pill
+        color="error"
+        label={intl.formatMessage(
           giftCardStatusChipMessages.disabledStatusLabel
-        )
-      };
-    }
+        )}
+      />
+    );
+  }
 
-    return {
-      status: null,
-      label: null
-    };
-  };
-
-  return <StatusChip size="md" {...getStatusChipData()} />;
+  return null;
 }
 
 export default GiftCardStatusChip;

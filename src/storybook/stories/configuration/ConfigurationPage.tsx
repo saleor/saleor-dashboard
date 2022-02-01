@@ -33,7 +33,6 @@ const Story: React.FC<{ user: User }> = ({ user }) => {
   return (
     <ConfigurationPage
       menu={createConfigurationMenu(intl)}
-      onSectionClick={() => undefined}
       user={user}
       versionInfo={versions}
     />

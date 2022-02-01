@@ -1,6 +1,5 @@
 import CardSpacer from "@saleor/components/CardSpacer";
 import CompanyAddressInput from "@saleor/components/CompanyAddressInput";
-import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
@@ -10,8 +9,10 @@ import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo"
 import { AddressTypeInput } from "@saleor/customers/types";
 import { WarehouseErrorFragment } from "@saleor/fragments/types/WarehouseErrorFragment";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
@@ -29,7 +30,7 @@ export interface WarehouseCreatePageProps {
   errors: WarehouseErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
-  onSubmit: (data: WarehouseCreatePageFormData) => void;
+  onSubmit: (data: WarehouseCreatePageFormData) => SubmitPromise;
 }
 
 const initialForm: WarehouseCreatePageFormData = {
@@ -61,7 +62,7 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
   } = useAddressValidation(onSubmit);
 
   return (
-    <Form initial={initialForm} onSubmit={handleSubmit}>
+    <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
       {({ change, data, submit }) => {
         const countryChoices = mapCountriesToChoices(countries);
         const handleCountryChange = createSingleAutocompleteSelectHandler(

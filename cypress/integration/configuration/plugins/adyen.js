@@ -10,7 +10,10 @@ import {
 } from "../../../support/api/requests/Checkout";
 import { getOrder } from "../../../support/api/requests/Order";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
-import { addAdyenPayment } from "../../../support/api/utils/ordersUtils";
+import {
+  addAdyenPayment,
+  getShippingMethodIdFromCheckout
+} from "../../../support/api/utils/ordersUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
@@ -99,8 +102,12 @@ filterTests({ definedTags: ["stagedOnly"] }, () => {
         auth: "token"
       })
         .then(({ checkout: checkoutResp }) => {
+          const shippingMethodId = getShippingMethodIdFromCheckout(
+            checkoutResp,
+            shippingMethod.name
+          );
           checkout = checkoutResp;
-          addShippingMethod(checkout.id, shippingMethod.id);
+          addShippingMethod(checkout.id, shippingMethodId);
         })
         .then(({ checkout: checkoutResp }) => {
           addAdyenPayment(checkout.id, checkoutResp.totalPrice.gross.amount);

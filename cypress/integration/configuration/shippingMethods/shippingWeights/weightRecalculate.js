@@ -86,7 +86,10 @@ filterTests({ definedTags: ["all"] }, () => {
           );
           cy.waitForProgressBarToNotBeVisible();
           expect(rate.minimumOrderWeight.unit).to.eq("G");
-          cy.get(SHIPPING_RATE_DETAILS.minWeightInput).invoke("val");
+          cy.get(SHIPPING_RATE_DETAILS.restrictWeightLimitCheckbox)
+            .click()
+            .get(SHIPPING_RATE_DETAILS.minWeightInput)
+            .invoke("val");
         })
         .then(actualMinWeight => {
           expect(parseInt(actualMinWeight, 10)).to.eq(minWeightInG);

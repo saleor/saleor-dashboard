@@ -91,9 +91,6 @@
   "configurationMenuPageTypes": {
     "string": "Define types of content pages used in your store"
   },
-  "configurationMenuPages": {
-    "string": "Manage and add additional pages"
-  },
   "configurationMenuPermissionGroups": {
     "string": "Manage your permission groups and their permissions"
   },
@@ -765,13 +762,13 @@
     "context": "table actions",
     "string": "Actions"
   },
-  "src_dot_apps_dot_components_dot_CustomApps_dot_3152347892": {
-    "context": "custom apps content",
-    "string": "Your custom created apps will be shown here."
-  },
   "src_dot_apps_dot_components_dot_CustomApps_dot_3230241731": {
     "context": "create app button",
     "string": "Create App"
+  },
+  "src_dot_apps_dot_components_dot_CustomApps_dot_4044120866": {
+    "context": "custom apps content",
+    "string": "Your custom-created apps will be shown here."
   },
   "src_dot_apps_dot_components_dot_DeactivatedText_dot_3064552173": {
     "context": "app deactivated",
@@ -1227,24 +1224,24 @@
     "context": "deleted multiple attributes",
     "string": "Attributes successfully delete"
   },
-  "src_dot_auth_dot_components_dot_LoginPage_dot_109182747": {
+  "src_dot_auth_dot_components_dot_LoginPage_dot_1173110163": {
+    "context": "card header",
+    "string": "Sign In"
+  },
+  "src_dot_auth_dot_components_dot_LoginPage_dot_1405865627": {
     "context": "button",
-    "string": "Login"
+    "string": "Sign in"
   },
   "src_dot_auth_dot_components_dot_LoginPage_dot_2237029987": {
     "string": "Password"
   },
-  "src_dot_auth_dot_components_dot_LoginPage_dot_2981302356": {
-    "context": "link",
-    "string": "Use this link to recover it"
+  "src_dot_auth_dot_components_dot_LoginPage_dot_3242928626": {
+    "context": "description",
+    "string": "Forgot password?"
   },
   "src_dot_auth_dot_components_dot_LoginPage_dot_3762459576": {
     "context": "description",
     "string": "or login using"
-  },
-  "src_dot_auth_dot_components_dot_LoginPage_dot_599516345": {
-    "context": "description",
-    "string": "Forgot password? {resetPasswordLink}"
   },
   "src_dot_auth_dot_components_dot_LoginPage_dot_externalLoginError": {
     "context": "error message",
@@ -1261,9 +1258,6 @@
   "src_dot_auth_dot_components_dot_NewPasswordPage_dot_1254879564": {
     "string": "New Password"
   },
-  "src_dot_auth_dot_components_dot_NewPasswordPage_dot_1915811227": {
-    "string": "Please set up a new password."
-  },
   "src_dot_auth_dot_components_dot_NewPasswordPage_dot_2342634351": {
     "context": "button",
     "string": "Set new password"
@@ -1271,19 +1265,32 @@
   "src_dot_auth_dot_components_dot_NewPasswordPage_dot_2799926859": {
     "string": "Confirm Password"
   },
+  "src_dot_auth_dot_components_dot_NewPasswordPage_dot_3349581442": {
+    "string": "Please set up a new password for your account. Repeat your new password to make sure you will be able to remember it."
+  },
   "src_dot_auth_dot_components_dot_NewPasswordPage_dot_4253911811": {
     "string": "Passwords do not match"
   },
-  "src_dot_auth_dot_components_dot_ResetPasswordPage_dot_2370700732": {
-    "string": "Forgot your password? Don't worry, we'll reset it for you."
+  "src_dot_auth_dot_components_dot_NewPasswordPage_dot_533029895": {
+    "context": "page title",
+    "string": "Set up new password"
   },
-  "src_dot_auth_dot_components_dot_ResetPasswordPage_dot_3663311080": {
+  "src_dot_auth_dot_components_dot_ResetPasswordPage_dot_2422931690": {
     "context": "password reset, button",
-    "string": "Send Instructions"
+    "string": "Send an email with reset link"
+  },
+  "src_dot_auth_dot_components_dot_ResetPasswordPage_dot_2925394684": {
+    "string": "Reset password"
+  },
+  "src_dot_auth_dot_components_dot_ResetPasswordPage_dot_365271428": {
+    "string": "Provide us with an email - if we find it in our database we will send you a link to reset your password. You should be able to find it in your inbox in the next couple of minutes."
   },
   "src_dot_auth_dot_components_dot_ResetPasswordSuccessPage_dot_2245157344": {
     "context": "button",
     "string": "Back to login"
+  },
+  "src_dot_auth_dot_components_dot_ResetPasswordSuccessPage_dot_2925394684": {
+    "string": "Reset password"
   },
   "src_dot_auth_dot_components_dot_ResetPasswordSuccessPage_dot_4066297200": {
     "string": "Success! In a few minutes you’ll receive a message with instructions on how to reset your password."
@@ -1577,13 +1584,17 @@
     "context": "add shipping zone title",
     "string": "Add Shipping Zones"
   },
+  "src_dot_channels_dot_components_dot_ShippingZonesCard_dot_allSelectedMessage": {
+    "context": "all selected zones card message",
+    "string": "All available shipping zones have been selected"
+  },
   "src_dot_channels_dot_components_dot_ShippingZonesCard_dot_subtitle": {
     "context": "card subtitle",
-    "string": "Select Shipping Zones that will be supplied via this channel. You can assign Shipping Zones to multiple channels."
+    "string": "Select shipping zones that will be supplied via this channel. You can assign shipping zones to multiple channels."
   },
   "src_dot_channels_dot_components_dot_ShippingZonesCard_dot_title": {
     "context": "title",
-    "string": "{zonesCount} Shipping Zones"
+    "string": "{zonesCount} / {totalCount} shipping zones"
   },
   "src_dot_channels_dot_pages_dot_ChannelsListPage_dot_2754800034": {
     "context": "alert",
@@ -2124,21 +2135,23 @@
     "context": "header",
     "string": "Error"
   },
-  "src_dot_components_dot_ErrorPage_dot_1723676032": {
-    "context": "button",
-    "string": "Back to home"
+  "src_dot_components_dot_ErrorPage_dot_btnDashboard": {
+    "context": "button linking to dashboard",
+    "string": "Dashboard"
   },
-  "src_dot_components_dot_ErrorPage_dot_2736139139": {
-    "string": "Ooops!..."
+  "src_dot_components_dot_ErrorPage_dot_btnRefresh": {
+    "context": "button refreshing page",
+    "string": "Refresh page"
   },
-  "src_dot_components_dot_ErrorPage_dot_2845142593": {
-    "string": "Error"
+  "src_dot_components_dot_ErrorPage_dot_content": {
+    "string": "Don’t worry we will fix it soon. Try to refresh the page or go back to dashboard."
   },
-  "src_dot_components_dot_ErrorPage_dot_3090161573": {
-    "string": "Don't worry, everything is gonna be fine"
+  "src_dot_components_dot_ErrorPage_dot_header": {
+    "string": "We’ve encountered an unexpected error"
   },
-  "src_dot_components_dot_ErrorPage_dot_3182212440": {
-    "string": "We've encountered a problem..."
+  "src_dot_components_dot_ErrorPage_dot_or": {
+    "context": "conjunction, choice between going to dashboard or refreshing page",
+    "string": "or"
   },
   "src_dot_components_dot_FilterBar_dot_2173195312": {
     "context": "button",
@@ -2185,6 +2198,22 @@
     "context": "filters error messages value required",
     "string": "Choose a value"
   },
+  "src_dot_components_dot_Form_dot_cancelButton": {
+    "context": "ExitFormPrompt cancel button",
+    "string": "leave without saving"
+  },
+  "src_dot_components_dot_Form_dot_confirmButton": {
+    "context": "ExitFormPrompt confirm button",
+    "string": "save & continue"
+  },
+  "src_dot_components_dot_Form_dot_description": {
+    "context": "ExitFormPrompt description",
+    "string": "You have unsaved changes on this view. What would you like to do with them?"
+  },
+  "src_dot_components_dot_Form_dot_title": {
+    "context": "ExitFormPrompt title",
+    "string": "Are you sure you want to leave?"
+  },
   "src_dot_components_dot_ImageUpload_dot_1731007575": {
     "context": "image upload",
     "string": "Drop here to upload"
@@ -2205,17 +2234,17 @@
     "context": "header",
     "string": "Private Metadata"
   },
-  "src_dot_components_dot_Metadata_dot_2024779015": {
-    "context": "empty metadata text",
-    "string": "There is no private metadata created for this element."
-  },
-  "src_dot_components_dot_Metadata_dot_2087058956": {
-    "context": "empty metadata text",
-    "string": "There is no metadata created for this element."
+  "src_dot_components_dot_Metadata_dot_1827848527": {
+    "context": "number of metadata fields in model",
+    "string": "{number,plural,one{{number} string} other{{number} strings}}"
   },
   "src_dot_components_dot_Metadata_dot_2537046678": {
     "context": "metadata field name, header",
     "string": "Field"
+  },
+  "src_dot_components_dot_Metadata_dot_2741366539": {
+    "context": "empty metadata text",
+    "string": "No metadata created for this element. Use the button below to add new metadata field."
   },
   "src_dot_components_dot_Metadata_dot_3181473584": {
     "context": "add metadata field,button",
@@ -2224,14 +2253,6 @@
   "src_dot_components_dot_Metadata_dot_4190792473": {
     "context": "table action",
     "string": "Actions"
-  },
-  "src_dot_components_dot_Metadata_dot_549104951": {
-    "context": "number of metadata fields in model",
-    "string": "{number,plural,one{{number} Field} other{{number} Fields}}"
-  },
-  "src_dot_components_dot_Metadata_dot_553451245": {
-    "context": "empty metadata text",
-    "string": "Use the button below to add new metadata field"
   },
   "src_dot_components_dot_MoneyRange_dot_12301532": {
     "context": "money",
@@ -2468,6 +2489,10 @@
   },
   "src_dot_components_dot_TableHead_dot_868570480": {
     "string": "Selected {number} items"
+  },
+  "src_dot_components_dot_TablePagination_dot_noOfRows": {
+    "context": "pagination",
+    "string": "No. of rows"
   },
   "src_dot_components_dot_Timeline_dot_1359200231": {
     "context": "add order note, button",
@@ -3484,7 +3509,7 @@
     "string": "Edit"
   },
   "src_dot_email": {
-    "string": "E-mail Address"
+    "string": "Email address"
   },
   "src_dot_endDate": {
     "string": "End Date"
@@ -3657,49 +3682,53 @@
     "context": "gift card settings header",
     "string": "Gift Cards Settings"
   },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardActivated": {
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_activated": {
     "context": "gift card history message",
     "string": "Gift card was activated by {activatedBy}"
   },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardBalanceReset": {
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_activatedAnonymous": {
+    "context": "gift card history message",
+    "string": "Gift card was activated"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_balanceReset": {
     "context": "gift card history message",
     "string": "Gift card balance was reset by {resetBy}"
   },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardBought": {
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_balanceResetAnonymous": {
+    "context": "gift card history message",
+    "string": "Gift card balance was reset by {resetBy}"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_bought": {
     "context": "gift card history message",
     "string": "Gift card was bought in order {orderNumber}"
   },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardDeactivated": {
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_deactivated": {
     "context": "gift card history message",
     "string": "Gift card was deactivated by {deactivatedBy}"
   },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardExpiryDateUpdate": {
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_deactivatedAnonymous": {
+    "context": "gift card history message",
+    "string": "Gift card was deactivated"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_expiryDateUpdate": {
     "context": "gift card history message",
     "string": "Gift card expiry date was updated by {expiryUpdatedBy}"
   },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardIssued": {
-    "context": "dsc",
-    "string": "Gift card was issued by {issuedBy}"
-  },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardResent": {
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_expiryDateUpdateAnonymous": {
     "context": "gift card history message",
-    "string": "Gift card was resent"
-  },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardSentToCustomer": {
-    "context": "gift card history message",
-    "string": "Gift card was sent to customer"
-  },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardTagsUpdated": {
-    "context": "gift card history message",
-    "string": "Gift card tags were updated"
-  },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardUsedInOrder": {
-    "context": "gift card history message",
-    "string": "Gift card was used as a payment method on order {orderLink} <buyer>by</buyer>"
+    "string": "Gift card expiry date was updated"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_historyHeaderTitle": {
     "context": "section header title",
     "string": "Gift Card Timeline"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_issued": {
+    "context": "gift card history message",
+    "string": "Gift card was issued by {issuedBy}"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_issuedAnonymous": {
+    "context": "gift card history message",
+    "string": "Gift card was issued"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_noteAddError": {
     "context": "notifier message",
@@ -3708,6 +3737,26 @@
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_noteAddedSuccessfully": {
     "context": "notifier message",
     "string": "Note was added sucessfully"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_resent": {
+    "context": "gift card history message",
+    "string": "Gift card was resent"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_sentToCustomer": {
+    "context": "gift card history message",
+    "string": "Gift card was sent to customer"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_tagsUpdated": {
+    "context": "gift card history message",
+    "string": "Gift card tags were updated"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_usedInOrder": {
+    "context": "gift card history message",
+    "string": "Gift card was used as a payment method on order {orderLink} <buyer>by</buyer>"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_usedInOrderAnonymous": {
+    "context": "gift card history message",
+    "string": "Gift card was used as a payment method on order {orderLink}"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardResendCodeDialog_dot_consentCheckboxLabel": {
     "context": "consent to send gift card to different address checkbox label",
@@ -3759,7 +3808,7 @@
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateDetailsCard_dot_setBalanceButtonLabel": {
     "context": "set balance button label",
-    "string": "set balance"
+    "string": "Set Balance"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateDetailsCard_dot_tagInputLabel": {
     "context": "tag label",
@@ -5353,19 +5402,11 @@
   "src_dot_orders_dot_views_dot_OrderDetails_dot_4085755992": {
     "string": "Invoice email sent"
   },
-  "src_dot_orders_dot_views_dot_OrderDetails_dot_4207717971": {
-    "context": "snackbar title",
-    "string": "Could not generate invoice"
-  },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_55607988": {
     "string": "Invoice is Generating"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_617145655": {
     "string": "Shipping method successfully updated"
-  },
-  "src_dot_orders_dot_views_dot_OrderDetails_dot_811176136": {
-    "context": "error message",
-    "string": "No invoice plugin installed"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_927945225": {
     "string": "Fulfillment successfully cancelled"
@@ -5489,12 +5530,12 @@
   "src_dot_pageTypes_dot_components_dot_PageTypeDetails_dot_1631499902": {
     "string": "Content Type Name"
   },
-  "src_dot_pageTypes_dot_components_dot_PageTypeListPage_dot_1793515137": {
-    "context": "button",
-    "string": "create page type"
-  },
   "src_dot_pageTypes_dot_components_dot_PageTypeListPage_dot_1793828289": {
     "string": "Search Page Type"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeListPage_dot_4077151320": {
+    "context": "button",
+    "string": "Create page type"
   },
   "src_dot_pageTypes_dot_components_dot_PageTypeListPage_dot_464566131": {
     "context": "tab name",
@@ -5848,8 +5889,8 @@
     "context": "section header",
     "string": "Plugin Information and Status"
   },
-  "src_dot_plugins_dot_components_dot_PluginInfo_dot_4013064767": {
-    "string": "Set plugin as Active"
+  "src_dot_plugins_dot_components_dot_PluginInfo_dot_3954867850": {
+    "string": "Set plugin as active"
   },
   "src_dot_plugins_dot_components_dot_PluginSecretFieldDialog_dot_3032939398": {
     "context": "header",
@@ -6931,6 +6972,10 @@
     "context": "window title",
     "string": "Create Variants"
   },
+  "src_dot_products_dot_views_dot_variantCreatedSuccess": {
+    "context": "variant created success message",
+    "string": "Variant created"
+  },
   "src_dot_properties": {
     "string": "Properties"
   },
@@ -7594,17 +7639,17 @@
     "context": "section header",
     "string": "Preferences"
   },
+  "src_dot_staff_dot_components_dot_StaffProperties_dot_1473195966": {
+    "context": "avatar change button",
+    "string": "Change"
+  },
   "src_dot_staff_dot_components_dot_StaffProperties_dot_2650522200": {
     "context": "section header",
     "string": "Staff Member Information"
   },
-  "src_dot_staff_dot_components_dot_StaffProperties_dot_2771097267": {
-    "context": "button",
-    "string": "Change photo"
-  },
-  "src_dot_staff_dot_components_dot_StaffProperties_dot_457748370": {
-    "context": "button",
-    "string": "Delete photo"
+  "src_dot_staff_dot_components_dot_StaffProperties_dot_3645414921": {
+    "context": "avatar delete button",
+    "string": "Delete"
   },
   "src_dot_staff_dot_components_dot_UserStatus_dot_userDisableInstruction": {
     "string": "If you want to disable this User please uncheck the box below."
@@ -8337,6 +8382,18 @@
   "src_dot_webhooks_dot_components_dot_WebhookStatus_dot_webhookStatus": {
     "context": "section header",
     "string": "Webhook Status"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhooksDetailsPage_dot_header": {
+    "context": "header",
+    "string": "Unnamed Webhook Details"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhooksDetailsPage_dot_headerCreate": {
+    "context": "header",
+    "string": "Create Webhook"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhooksDetailsPage_dot_headerNamed": {
+    "context": "header",
+    "string": "{webhookName} Details"
   },
   "src_dot_webhooks_dot_components_dot_WebhooksList_dot_1153324159": {
     "string": "No webhooks found"

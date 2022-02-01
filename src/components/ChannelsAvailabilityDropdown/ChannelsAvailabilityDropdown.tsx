@@ -66,7 +66,7 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
         id="availability-menu"
         anchorEl={anchorEl}
         keepMounted
-        elevation={3}
+        elevation={8}
         open={Boolean(anchorEl)}
         onClose={handleClose}
         getContentAnchorEl={null}

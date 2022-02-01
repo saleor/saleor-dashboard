@@ -65,6 +65,7 @@ export function createDraftOrder({
       order{
         id
         number
+        token
       }
     }
   }`;
@@ -96,6 +97,7 @@ export function getOrder(orderId) {
   const query = `query getOrder{
     order(id:"${orderId}"){
       status
+      token
       paymentStatus
       isShippingRequired
       shippingMethod{

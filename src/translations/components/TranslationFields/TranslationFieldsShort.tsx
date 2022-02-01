@@ -1,6 +1,7 @@
 import { TextField, Typography } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
+import { SubmitPromise } from "@saleor/hooks/useForm";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -12,7 +13,7 @@ interface TranslationFieldsShortProps {
   initial: string;
   saveButtonState: ConfirmButtonTransitionState;
   onDiscard: () => void;
-  onSubmit: (data: string) => void;
+  onSubmit: (data: string) => SubmitPromise<any[]>;
 }
 
 const TranslationFieldsShort: React.FC<TranslationFieldsShortProps> = ({
@@ -27,6 +28,7 @@ const TranslationFieldsShort: React.FC<TranslationFieldsShortProps> = ({
 
   return edit ? (
     <Form
+      confirmLeave
       initial={{ translation: initial }}
       onSubmit={data => onSubmit(data.translation)}
     >
