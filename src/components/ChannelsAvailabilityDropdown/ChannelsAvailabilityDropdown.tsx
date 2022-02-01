@@ -1,4 +1,4 @@
-import { Menu } from "@material-ui/core";
+import { Card, Popper } from "@material-ui/core";
 import { Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -20,14 +20,15 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
   channels
 }) => {
   const intl = useIntl();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [isPopupOpen, setPopupOpen] = React.useState(false);
+  const anchor = React.useRef<HTMLDivElement>(null);
 
   const dropdownColor = React.useMemo(() => getDropdownColor(channels), [
     channels
   ]);
 
-  const handleClick = event => setAnchorEl(event.currentTarget);
-  const handleClose = () => setAnchorEl(null);
+  const handleMouseOver = () => setPopupOpen(true);
+  const handleMouseLeave = () => setPopupOpen(false);
 
   if (!channels || channels.length === 0) {
     return (
@@ -41,6 +42,9 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
         e.preventDefault();
         e.stopPropagation();
       }}
+      ref={anchor}
+      onMouseOver={handleMouseOver}
+      onMouseLeave={handleMouseLeave}
     >
       <div aria-controls="availability-menu" aria-haspopup="true" role="button">
         <Pill
@@ -48,32 +52,18 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
             channelCount: channels.length
           })}
           color={dropdownColor}
-          onClick={handleClick}
+          onClick={() => null} // required for dashed border
         />
       </div>
-      <Menu
-        id="availability-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        elevation={8}
-        open={!!anchorEl}
-        onClose={handleClose}
-        getContentAnchorEl={null}
-        anchorOrigin={{
-          horizontal: "center",
-          vertical: "bottom"
-        }}
-        transformOrigin={{
-          horizontal: "center",
-          vertical: "top"
-        }}
-      >
-        <ChannelsAvailabilityMenuContent
-          channels={channels}
-          labelFunction={getChannelAvailabilityLabel}
-          colorFunction={getChannelAvailabilityColor}
-        />
-      </Menu>
+      <Popper anchorEl={anchor.current} open={isPopupOpen} placement={"left"}>
+        <Card elevation={8}>
+          <ChannelsAvailabilityMenuContent
+            channels={channels}
+            labelFunction={getChannelAvailabilityLabel}
+            colorFunction={getChannelAvailabilityColor}
+          />
+        </Card>
+      </Popper>
     </div>
   );
 };
