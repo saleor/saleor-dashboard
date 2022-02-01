@@ -11,7 +11,6 @@ import Label, {
   LabelSizes
 } from "@saleor/orders/components/OrderHistory/Label";
 import { getArrowDirection } from "@saleor/utils/sort";
-import omit from "lodash/omit";
 import React from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 
@@ -75,8 +74,8 @@ const GiftCardsListTableHeader: React.FC<GiftCardsListTableHeaderProps> = ({
   ];
 
   const headerTooltipItem: HeaderItem & {
-    dependency: string;
     disabled: boolean;
+    tooltip: string | React.ReactNodeArray;
   } = {
     title: messages.giftCardsTableColumnBalanceTitle,
     options: {
@@ -86,8 +85,12 @@ const GiftCardsListTableHeader: React.FC<GiftCardsListTableHeaderProps> = ({
     onClick: () => onSort(GiftCardUrlSortField.balance),
     direction: getDirection(GiftCardUrlSortField.balance),
     disabled: !canBeSorted(GiftCardUrlSortField.balance, isCurrencySelected),
-    dependency: filterLabels.currencyLabel.defaultMessage
+    tooltip: intl.formatMessage(commonTooltipMessages.noFilterSelected, {
+      filterName: <b>{filterLabels.currencyLabel.defaultMessage}</b>
+    })
   };
+
+  const { title, ...headerTooltipItemProps } = headerTooltipItem;
 
   return (
     <>
@@ -123,12 +126,7 @@ const GiftCardsListTableHeader: React.FC<GiftCardsListTableHeaderProps> = ({
             <Label text={intl.formatMessage(title)} size={LabelSizes.md} />
           </TableCellHeader>
         ))}
-        <TooltipTableCellHeader
-          {...omit(headerTooltipItem, ["title"])}
-          tooltip={intl.formatMessage(commonTooltipMessages.noFilterSelected, {
-            filterName: <b>{headerTooltipItem.dependency}</b>
-          })}
-        >
+        <TooltipTableCellHeader {...headerTooltipItemProps}>
           <Label
             text={intl.formatMessage(headerTooltipItem.title)}
             size={LabelSizes.md}
