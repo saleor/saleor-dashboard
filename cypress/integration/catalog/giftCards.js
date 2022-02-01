@@ -3,7 +3,7 @@
 
 import faker from "faker";
 
-import { GIFT_CARD_UPDATE } from "../../elements/giftCard/giftCardUpdate";
+import { GIFT_CARD_UPDATE } from "../../elements/catalog/giftCard/giftCardUpdate";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { giftCardDetailsUrl } from "../../fixtures/urlList";
 import {

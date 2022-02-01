@@ -301,7 +301,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
             </Backlink>
             <PageHeader title={header}>
               {extensionMenuItems.length > 0 && (
-                <CardMenu menuItems={extensionMenuItems} data-test="menu" />
+                <CardMenu menuItems={extensionMenuItems} data-test-id="menu" />
               )}
             </PageHeader>
             <Grid>

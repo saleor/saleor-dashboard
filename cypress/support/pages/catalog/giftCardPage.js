@@ -1,6 +1,6 @@
-import { GIFT_CARD_DIALOG } from "../../../elements/giftCard/giftCardDialog";
-import { GIFT_CARD_LIST } from "../../../elements/giftCard/giftCardList";
-import { GIFT_CARD_UPDATE } from "../../../elements/giftCard/giftCardUpdate";
+import { GIFT_CARD_DIALOG } from "../../../elements/catalog/giftCard/giftCardDialog";
+import { GIFT_CARD_LIST } from "../../../elements/catalog/giftCard/giftCardList";
+import { GIFT_CARD_UPDATE } from "../../../elements/catalog/giftCard/giftCardUpdate";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { giftCardDetailsUrl, urlList } from "../../../fixtures/urlList";
 

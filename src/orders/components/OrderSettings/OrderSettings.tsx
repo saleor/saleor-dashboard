@@ -70,7 +70,7 @@ const OrderSettings: React.FC<OrderSettingsProps> = ({
           checked={data.automaticallyFulfillNonShippableGiftCard}
           onChange={onChange}
           disabled={disabled}
-          data-test="automaticallyFulfillNonShippableGiftCardsCheckbox"
+          data-test-id="automatically-fulfill-non-shippable-gift-cards-checkbox"
         />
       </CardContent>
     </Card>

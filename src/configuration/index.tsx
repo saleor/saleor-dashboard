@@ -100,7 +100,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           permissions: [PermissionEnum.MANAGE_STAFF],
           title: intl.formatMessage(sectionNames.staff),
           url: staffListUrl(),
-          testId: "configurationMenuStaff"
+          testId: "configuration-menu-staff"
         },
         {
           description: intl.formatMessage({

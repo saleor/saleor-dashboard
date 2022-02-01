@@ -150,8 +150,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
                   }
                   key={maybe(() => attribute.id)}
                   index={attributeIndex || 0}
-                  data-test="id"
-                  data-test-id={maybe(() => attribute.id)}
+                  data-test-id={"id" + maybe(() => attribute.id)}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox

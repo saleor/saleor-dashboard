@@ -129,7 +129,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
   }, []);
 
   return (
-    <Card data-test="variant-attributes">
+    <Card data-test-id="variant-attributes">
       <CardTitle
         title={intl.formatMessage({
           defaultMessage: "Variant Attributes",
@@ -220,8 +220,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                   }
                   key={maybe(() => attribute.id)}
                   index={attributeIndex || 0}
-                  data-test="id"
-                  data-test-id={maybe(() => attribute.id)}
+                  data-test-id={"id-" + +maybe(() => attribute.id)}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
@@ -231,10 +230,10 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                       onChange={() => toggle(attribute.id)}
                     />
                   </TableCell>
-                  <TableCell className={classes.colName} data-test="name">
+                  <TableCell className={classes.colName} data-test-id="name">
                     {attribute.name ?? <Skeleton />}
                   </TableCell>
-                  <TableCell className={classes.colSlug} data-test="slug">
+                  <TableCell className={classes.colSlug} data-test-id="slug">
                     {maybe(() => attribute.slug) ? (
                       attribute.slug
                     ) : (
@@ -243,7 +242,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                   </TableCell>
                   <TableCell
                     className={classes.colVariant}
-                    data-test="variant-selection"
+                    data-test-id="variant-selection"
                   >
                     <div className={classes.colVariantContent}>
                       <Checkbox

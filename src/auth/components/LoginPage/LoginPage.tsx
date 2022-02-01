@@ -111,6 +111,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
             className={classes.link}
             onClick={onPasswordRecovery}
             variant="body2"
+            data-test-id="reset-password-link"
           >
             <FormattedMessage
               defaultMessage="Forgot password?"
