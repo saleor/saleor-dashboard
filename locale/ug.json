@@ -202,7 +202,7 @@
   },
   "homeHeaderText": {
     "context": "header",
-    "string": "ياخشىمۇسىز ,{userName}"
+    "string": "ياخشىمۇسىز , {userName}"
   },
   "homeHeaderTextCaption": {
     "context": "subheader",
@@ -488,7 +488,7 @@
   },
   "published channel": {
     "context": "product label",
-    "string": "ئېلان قىلىندى"
+    "string": "ئېلان قىلىڭ"
   },
   "saleDetailsPageCategoriesQuantity": {
     "context": "number of categories",
@@ -1053,7 +1053,7 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeListPage_dot_3824684885": {
     "context": "button",
-    "string": "Create attribute"
+    "string": "تەپسىلات كىرگۈزۈڭ"
   },
   "src_dot_attributes_dot_components_dot_AttributeListPage_dot_3916653510": {
     "string": "Search Attribute"
@@ -1124,7 +1124,7 @@
   },
   "src_dot_attributes_dot_components_dot_AttributePage_dot_2855501559": {
     "context": "page title",
-    "string": "Create New Attribute"
+    "string": "يېڭى تەپسىلات كىرگۈزۈڭ"
   },
   "src_dot_attributes_dot_components_dot_AttributeProperties_dot_availableInGrid": {
     "context": "add attribute as column in product list table",
@@ -7168,7 +7168,7 @@
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_2460580333": {
     "context": "header",
-    "string": "غا تەرجىمە قىلىش {language}"
+    "string": "چىغا تەرجىمە قىلىش {language}"
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_2968663655": {
     "string": "مەھسۇلاتلار"
