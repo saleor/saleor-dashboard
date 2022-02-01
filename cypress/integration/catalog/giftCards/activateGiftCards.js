@@ -150,7 +150,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         });
     });
 
-    it("should not be able to disable gift card and use it in checkout. TC: SALEOR_1006", () => {
+    it("should not be able to disable gift card and use it in checkout. TC: SALEOR_1007", () => {
       giftCardData.tag = `${startsWith}${faker.datatype.number()}`;
       let giftCard;
 
