@@ -14,7 +14,7 @@ import {
   saveCredentials
 } from "@saleor/utils/credentialsManagement";
 import ApolloClient from "apollo-client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQuery } from "react-apollo";
 import { IntlShape } from "react-intl";
 import urlJoin from "url-join";
@@ -50,6 +50,7 @@ export function useAuthProvider({
   const navigate = useNavigator();
   const { authenticated, authenticating, user } = useAuthState();
   const [error, setError] = useState<UserContextError>();
+  const permitCredentialsAPI = useRef(true);
 
   useEffect(() => {
     if (authenticating && error) {
@@ -58,14 +59,22 @@ export function useAuthProvider({
   }, [authenticating]);
 
   useEffect(() => {
-    if (!authenticated && !authenticating) {
+    if (authenticated) {
+      permitCredentialsAPI.current = true;
+    }
+  }, [authenticated]);
+
+  useEffect(() => {
+    if (!authenticated && !authenticating && permitCredentialsAPI.current) {
+      permitCredentialsAPI.current = false;
       loginWithCredentialsManagementAPI(handleLogin);
     }
   }, [authenticated, authenticating]);
 
   const userDetails = useQuery<UserDetails>(userDetailsQuery, {
     client: apolloClient,
-    skip: !authenticated
+    skip: !authenticated,
+    fetchPolicy: "network-only"
   });
 
   const handleLogout = async () => {
@@ -82,6 +91,10 @@ export function useAuthProvider({
       navigator.credentials.preventSilentAccess();
     }
 
+    // Forget last logged in user data.
+    // On next login, user details query will be refetched due to cache-and-network fetch policy.
+    apolloClient.clearStore();
+
     const errors = result?.errors || [];
 
     const externalLogoutUrl = result
@@ -92,7 +105,7 @@ export function useAuthProvider({
       if (externalLogoutUrl) {
         window.location.href = externalLogoutUrl;
       } else {
-        navigate(path);
+        navigate("/");
       }
     }
 

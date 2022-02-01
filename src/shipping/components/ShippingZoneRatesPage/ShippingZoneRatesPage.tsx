@@ -11,7 +11,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { ShippingChannelsErrorFragment } from "@saleor/fragments/types/ShippingChannelsErrorFragment";
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
-import { ShippingMethodFragment_postalCodeRules } from "@saleor/fragments/types/ShippingMethodFragment";
+import { ShippingMethodTypeFragment_postalCodeRules } from "@saleor/fragments/types/ShippingMethodTypeFragment";
 import { Backlink } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
 import OrderValue from "@saleor/shipping/components/OrderValue";
@@ -58,7 +58,9 @@ export interface ShippingZoneRatesPageProps
     inclusion: PostalCodeRuleInclusionTypeEnum
   ) => void;
   onPostalCodeAssign: () => void;
-  onPostalCodeUnassign: (code: ShippingMethodFragment_postalCodeRules) => void;
+  onPostalCodeUnassign: (
+    code: ShippingMethodTypeFragment_postalCodeRules
+  ) => void;
   onChannelsChange: (data: ChannelShippingData[]) => void;
   openChannelsModal: () => void;
   onProductAssign: () => void;

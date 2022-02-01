@@ -100,7 +100,7 @@ export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMet
 }
 
 export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods {
-  __typename: "ShippingMethod";
+  __typename: "ShippingMethodType";
   id: string;
   postalCodeRules: (DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_postalCodeRules | null)[] | null;
   metadata: (DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_metadata | null)[];

@@ -47,7 +47,9 @@ function canHitNext(
   switch (step) {
     case ProductVariantCreatorStep.values:
       return (
-        data.attributes.every(attribute => attribute.values.length > 0) &&
+        data.attributes.every(
+          attribute => !attribute.valueRequired || attribute.values.length > 0
+        ) &&
         (variantsLeft === null || getVariantsNumber(data) <= variantsLeft)
       );
     case ProductVariantCreatorStep.prices:

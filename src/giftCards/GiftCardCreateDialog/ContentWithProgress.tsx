@@ -15,7 +15,7 @@ export const useStyles = makeStyles(
       justifyContent: "center",
       height: "100%",
       width: "100%",
-      padding: theme.spacing
+      padding: theme.spacing(3)
     }
   }),
   { name: "ContentWithProgress" }

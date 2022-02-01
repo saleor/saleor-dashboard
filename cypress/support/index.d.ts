@@ -49,5 +49,6 @@ declare namespace Cypress {
     findElementOnTable(elementName: string): Chainable<any>;
     searchInTable(query: string): Chainable<any>;
     waitForRequestAndCheckIfNoErrors(alias: string): Chainable<any>;
+    deleteElementWithReqAlias(alias: string): Chainable<any>;
   }
 }

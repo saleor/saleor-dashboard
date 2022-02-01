@@ -1,4 +1,7 @@
 import Link from "@saleor/components/Link";
+import { productAddUrl } from "@saleor/products/urls";
+import { productTypeAddUrl } from "@saleor/productTypes/urls";
+import { ProductTypeKindEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -8,17 +11,19 @@ import { useHeaderStyles as useStyles } from "../styles";
 interface GiftCardsListHeaderAlertContentProps {
   giftCardProductTypesExist: boolean;
   giftCardProductsExist: boolean;
-  handleCreateGiftCardProductType: () => void;
-  handleCreateGiftCardProduct: () => void;
 }
 
 const GiftCardsListHeaderAlertContent: React.FC<GiftCardsListHeaderAlertContentProps> = ({
   giftCardProductTypesExist,
-  giftCardProductsExist,
-  handleCreateGiftCardProductType,
-  handleCreateGiftCardProduct
+  giftCardProductsExist
 }) => {
   const classes = useStyles({});
+
+  const giftCardProductTypeUrl = productTypeAddUrl({
+    kind: ProductTypeKindEnum.GIFT_CARD
+  });
+
+  const giftCardCreateGiftCardProductUrl = productAddUrl();
 
   if (!giftCardProductTypesExist) {
     return (
@@ -26,10 +31,7 @@ const GiftCardsListHeaderAlertContent: React.FC<GiftCardsListHeaderAlertContentP
         {...messages.noGiftCardsProductTypes}
         values={{
           createGiftCardProductType: (
-            <Link
-              onClick={handleCreateGiftCardProductType}
-              className={classes.alertLink}
-            >
+            <Link href={giftCardProductTypeUrl} className={classes.alertLink}>
               <FormattedMessage {...messages.createGiftCardProductType} />
             </Link>
           )
@@ -45,7 +47,7 @@ const GiftCardsListHeaderAlertContent: React.FC<GiftCardsListHeaderAlertContentP
         values={{
           createGiftCardProduct: (
             <Link
-              onClick={handleCreateGiftCardProduct}
+              href={giftCardCreateGiftCardProductUrl}
               className={classes.alertLink}
             >
               <FormattedMessage {...messages.createGiftCardProduct} />

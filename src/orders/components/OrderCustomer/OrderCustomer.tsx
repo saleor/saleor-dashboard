@@ -19,7 +19,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { customerUrl } from "../../../customers/urls";
-import { createHref, maybe } from "../../../misc";
+import { maybe } from "../../../misc";
 import { OrderDetails_order } from "../../types/OrderDetails";
 import { WarehouseClickAndCollectOptionEnum } from "./../../../types/globalTypes";
 import messages from "./messages";
@@ -216,7 +216,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
               <div>
                 <Link
                   underline={false}
-                  href={createHref(customerUrl(user.id))}
+                  href={customerUrl(user.id)}
                   onClick={onProfileView}
                 >
                   <FormattedMessage

@@ -132,6 +132,7 @@ export interface ProductDetails_product_productType_variantAttributes {
   id: string;
   name: string | null;
   inputType: AttributeInputTypeEnum | null;
+  valueRequired: boolean;
   unit: MeasurementUnitsEnum | null;
   choices: ProductDetails_product_productType_variantAttributes_choices | null;
 }

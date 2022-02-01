@@ -31,7 +31,7 @@ import {
 const orderBase: OrderDetails_order = {
   __typename: "Order",
   actions: [],
-  availableShippingMethods: [],
+  shippingMethods: [],
   canFinalize: true,
   channel: null,
   billingAddress: {

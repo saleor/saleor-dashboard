@@ -53,6 +53,16 @@ export const productListFilterOpts: ProductListFilterOpts = {
       }
     ]
   },
+  productKind: {
+    active: false,
+    value: "NORMAL",
+    choices: [
+      {
+        value: "NORMAL",
+        label: "Normal"
+      }
+    ]
+  },
   collections: {
     ...fetchMoreProps,
     ...searchPageProps,

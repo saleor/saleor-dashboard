@@ -66,13 +66,39 @@ interface TimelineNoteProps {
   message: string | null;
   user: {
     email: string;
+    firstName?: string;
+    lastName?: string;
   };
 }
+
+interface NoteMessageProps {
+  message: string;
+}
+
+const NoteMessage: React.FC<NoteMessageProps> = ({ message }) => (
+  <>
+    {message.split("\n").map(string => {
+      if (string === "") {
+        return <br />;
+      }
+
+      return <Typography>{string}</Typography>;
+    })}
+  </>
+);
 
 export const TimelineNote: React.FC<TimelineNoteProps> = props => {
   const { date, user, message } = props;
 
   const classes = useStyles(props);
+
+  const getUserTitleOrEmail = () => {
+    if (user?.firstName && user?.lastName) {
+      return `${user.firstName} ${user.lastName}`;
+    }
+
+    return user?.email;
+  };
 
   return (
     <div className={classes.root}>
@@ -85,18 +111,14 @@ export const TimelineNote: React.FC<TimelineNoteProps> = props => {
         </Avatar>
       )}
       <div className={classes.title}>
-        <Typography>{user?.email}</Typography>
+        <Typography>{getUserTitleOrEmail()}</Typography>
         <Typography>
           <DateTime date={date} />
         </Typography>
       </div>
       <Card className={classes.card}>
         <CardContent className={classes.cardContent}>
-          <Typography
-            dangerouslySetInnerHTML={{
-              __html: message.replace(/\n/g, "<br />")
-            }}
-          />
+          <NoteMessage message={message} />
         </CardContent>
       </Card>
     </div>

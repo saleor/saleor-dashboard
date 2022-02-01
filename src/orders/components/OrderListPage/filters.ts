@@ -24,9 +24,15 @@ export enum OrderFilterKeys {
   customer = "customer",
   status = "status",
   paymentStatus = "paymentStatus",
-  channel = "channel",
   clickAndCollect = "clickAndCollect",
-  preorder = "preorder"
+  preorder = "preorder",
+  channel = "channel",
+  giftCard = "giftCard"
+}
+
+export enum OrderFilterGiftCard {
+  bought = "bought",
+  paid = "paid"
 }
 
 export interface OrderListFilterOpts {
@@ -37,6 +43,7 @@ export interface OrderListFilterOpts {
   channel?: FilterOpts<MultiAutocompleteChoiceType[]>;
   clickAndCollect: FilterOpts<boolean>;
   preorder: FilterOpts<boolean>;
+  giftCard: FilterOpts<OrderFilterGiftCard[]>;
 }
 
 const messages = defineMessages({
@@ -58,6 +65,18 @@ const messages = defineMessages({
   },
   placed: {
     defaultMessage: "Created",
+    description: "order"
+  },
+  giftCard: {
+    defaultMessage: "Gift Card",
+    description: "order"
+  },
+  giftCardPaid: {
+    defaultMessage: "Paid with Gift Card",
+    description: "order"
+  },
+  giftCardOrdered: {
+    defaultMessage: "Gift Card ordered",
     description: "order"
   }
 });
@@ -106,6 +125,25 @@ export function createFilterStructure(
         opts.created.value
       ),
       active: opts.created.active
+    },
+    {
+      ...createOptionsField(
+        OrderFilterKeys.giftCard,
+        intl.formatMessage(messages.giftCard),
+        opts.giftCard.value,
+        true,
+        [
+          {
+            label: intl.formatMessage(messages.giftCardOrdered),
+            value: OrderFilterGiftCard.bought
+          },
+          {
+            label: intl.formatMessage(messages.giftCardPaid),
+            value: OrderFilterGiftCard.paid
+          }
+        ]
+      ),
+      active: opts.giftCard.active
     },
     {
       ...createOptionsField(
