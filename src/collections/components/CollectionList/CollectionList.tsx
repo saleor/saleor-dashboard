@@ -194,8 +194,7 @@ const CollectionList: React.FC<CollectionListProps> = props => {
                   data-test-availability={!!collection?.channelListings?.length}
                 >
                   {(!collection && <Skeleton />) ||
-                    (!collection?.channelListings?.length && "-") ||
-                    (collection?.channelListings !== undefined && channel ? (
+                    (channel ? (
                       <Pill
                         label={intl.formatMessage(
                           getChannelAvailabilityLabel(channel)

@@ -13,6 +13,10 @@ export const messages = defineMessages({
     defaultMessage:
       "{channelCount} {channelCount,plural, =1 {Channel} other {Channels}}",
     description: "product status title"
+  },
+  noChannels: {
+    defaultMessage: "No channels",
+    description: "dropdown label when there are no channels assigned"
   }
 });
 

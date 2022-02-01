@@ -397,20 +397,18 @@ export const ProductList: React.FC<ProductListProps> = props => {
                         !!product?.channelListings?.length
                       }
                     >
-                      {(!product && <Skeleton />) ||
-                        (!product?.channelListings?.length && "-") ||
-                        (product?.channelListings !== undefined && channel ? (
-                          <Pill
-                            label={intl.formatMessage(
-                              getChannelAvailabilityLabel(channel)
-                            )}
-                            color={getChannelAvailabilityColor(channel)}
-                          />
-                        ) : (
-                          <ChannelsAvailabilityDropdown
-                            channels={product?.channelListings}
-                          />
-                        ))}
+                      {(!product && <Skeleton />) || channel ? (
+                        <Pill
+                          label={intl.formatMessage(
+                            getChannelAvailabilityLabel(channel)
+                          )}
+                          color={getChannelAvailabilityColor(channel)}
+                        />
+                      ) : (
+                        <ChannelsAvailabilityDropdown
+                          channels={product?.channelListings}
+                        />
+                      )}
                     </TableCell>
                   </DisplayColumn>
                   {gridAttributesFromSettings.map(gridAttribute => (

@@ -13,7 +13,7 @@ import {
 } from "./utils";
 
 export interface ChannelsAvailabilityDropdownProps {
-  channels: CollectionChannels[];
+  channels: CollectionChannels[] | null;
 }
 
 export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdownProps> = ({
@@ -28,6 +28,12 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
 
   const handleClick = event => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
+
+  if (!channels || channels.length === 0) {
+    return (
+      <Pill label={intl.formatMessage(messages.noChannels)} color="error" />
+    );
+  }
 
   return (
     <div
