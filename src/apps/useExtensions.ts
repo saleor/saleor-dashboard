@@ -1,4 +1,5 @@
 import { FilterableMenuItem } from "@saleor/components/AppLayout/menuStructure";
+import { SidebarMenuItem } from "@saleor/macaw-ui";
 import {
   AppExtensionMountEnum,
   PermissionEnum
@@ -68,7 +69,7 @@ export const mapToExtensionsItems = (
   const items: FilterableMenuItem[] = extensions.map(
     ({ label, id, appId, url, permissions, open }) => ({
       ariaLabel: id,
-      id,
+      id: `extension-${id}`,
       label,
       url: appDeepUrl(appId, url),
       onClick: open,
@@ -81,86 +82,52 @@ export const mapToExtensionsItems = (
   return items;
 };
 
-const useExtensionsItems = (
-  mount: AppExtensionMountEnum,
-  skip: (mount: AppExtensionMountEnum) => boolean,
-  openApp: (appData: AppData) => void
+export const getMenuItemExtension = (
+  extensions: Record<AppExtensionMountEnum, Extension[]>,
+  menuItem: SidebarMenuItem
 ) => {
+  const extensionsList = Object.values(extensions).reduce(
+    (list, extensions) => list.concat(extensions),
+    []
+  );
+  const extension = extensionsList.find(
+    extension => menuItem.id === `extension-${extension.id}`
+  );
+  return extension;
+};
+
+export const useExtensions = <T extends AppExtensionMountEnum>(
+  mountList: T[]
+): Record<T, Extension[]> => {
+  const { openApp } = useExternalApp();
+
   const { data } = useExtensionList({
     fetchPolicy: "cache-first",
     variables: {
       filter: {
-        mount: [mount]
+        mount: mountList
       }
-    },
-    skip: skip(mount)
+    }
   });
-  const extensions = mapEdgesToItems(data?.appExtensions) || [];
-  return filterAndMapToTarget(extensions, openApp);
-};
 
-export const useExtensions = (
-  mountList: AppExtensionMountEnum[]
-): Record<AppExtensionMountEnum, Extension[]> => {
-  const skip = (mount: AppExtensionMountEnum) => !mountList.includes(mount);
-
-  const { openApp } = useExternalApp();
-
-  const navigationCatalog = useExtensionsItems(
-    AppExtensionMountEnum.NAVIGATION_CATALOG,
-    skip,
-    openApp
-  );
-  const navigationCustomers = useExtensionsItems(
-    AppExtensionMountEnum.NAVIGATION_CUSTOMERS,
-    skip,
-    openApp
-  );
-  const navigationDiscounts = useExtensionsItems(
-    AppExtensionMountEnum.NAVIGATION_DISCOUNTS,
-    skip,
-    openApp
-  );
-  const navigationOrders = useExtensionsItems(
-    AppExtensionMountEnum.NAVIGATION_ORDERS,
-    skip,
-    openApp
-  );
-  const navigationPages = useExtensionsItems(
-    AppExtensionMountEnum.NAVIGATION_PAGES,
-    skip,
-    openApp
-  );
-  const navigationTranslations = useExtensionsItems(
-    AppExtensionMountEnum.NAVIGATION_TRANSLATIONS,
-    skip,
-    openApp
-  );
-  const productOverviewCreate = useExtensionsItems(
-    AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
-    skip,
-    openApp
-  );
-  const productOverviewMoreActions = useExtensionsItems(
-    AppExtensionMountEnum.PRODUCT_OVERVIEW_MORE_ACTIONS,
-    skip,
-    openApp
-  );
-  const productDetailsMoreActions = useExtensionsItems(
-    AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS,
-    skip,
+  const extensions = filterAndMapToTarget(
+    mapEdgesToItems(data?.appExtensions) || [],
     openApp
   );
 
-  return {
-    [AppExtensionMountEnum.NAVIGATION_CATALOG]: navigationCatalog,
-    [AppExtensionMountEnum.NAVIGATION_CUSTOMERS]: navigationCustomers,
-    [AppExtensionMountEnum.NAVIGATION_DISCOUNTS]: navigationDiscounts,
-    [AppExtensionMountEnum.NAVIGATION_ORDERS]: navigationOrders,
-    [AppExtensionMountEnum.NAVIGATION_PAGES]: navigationPages,
-    [AppExtensionMountEnum.NAVIGATION_TRANSLATIONS]: navigationTranslations,
-    [AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE]: productOverviewCreate,
-    [AppExtensionMountEnum.PRODUCT_OVERVIEW_MORE_ACTIONS]: productOverviewMoreActions,
-    [AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS]: productDetailsMoreActions
-  };
+  const extensionsMap = mountList.reduce(
+    (extensionsMap, mount) => ({ ...extensionsMap, [mount]: [] }),
+    {} as Record<T, Extension[]>
+  );
+
+  return extensions.reduce(
+    (prevExtensionsMap, extension) => ({
+      ...prevExtensionsMap,
+      [extension.mount]: [
+        ...(prevExtensionsMap[extension.mount] || []),
+        extension
+      ]
+    }),
+    extensionsMap
+  );
 };

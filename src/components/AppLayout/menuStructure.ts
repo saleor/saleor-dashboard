@@ -9,6 +9,7 @@ import pagesIcon from "@assets/images/menu-pages-icon.svg";
 import translationIcon from "@assets/images/menu-translation-icon.svg";
 import {
   extensionMountPoints,
+  getMenuItemExtension,
   mapToExtensionsItems,
   useExtensions
 } from "@saleor/apps/useExtensions";
@@ -16,6 +17,7 @@ import { configurationMenuUrl } from "@saleor/configuration";
 import { getConfigMenuItemsPermissions } from "@saleor/configuration/utils";
 import { User } from "@saleor/fragments/types/User";
 import { giftCardListUrl } from "@saleor/giftCards/urls";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { SidebarMenuItem } from "@saleor/macaw-ui";
 import { pageListPath } from "@saleor/pages/urls";
@@ -36,15 +38,21 @@ export interface FilterableMenuItem extends Omit<SidebarMenuItem, "children"> {
   permissions?: PermissionEnum[];
 }
 
-function useMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
-  const {
-    NAVIGATION_CATALOG,
-    NAVIGATION_CUSTOMERS,
-    NAVIGATION_DISCOUNTS,
-    NAVIGATION_ORDERS,
-    NAVIGATION_PAGES,
-    NAVIGATION_TRANSLATIONS
-  } = useExtensions(extensionMountPoints.NAVIGATION_SIDEBAR);
+function useMenuStructure(
+  intl: IntlShape,
+  user: User
+): [SidebarMenuItem[], (menuItem: SidebarMenuItem) => void] {
+  const navigate = useNavigator();
+  const extensions = useExtensions(extensionMountPoints.NAVIGATION_SIDEBAR);
+
+  const handleMenuItemClick = (menuItem: SidebarMenuItem) => {
+    const extension = getMenuItemExtension(extensions, menuItem);
+    if (extension) {
+      extension.open();
+      return;
+    }
+    navigate(menuItem.url, { resetScroll: true });
+  };
 
   const extenstionHeaderItem = {
     id: "extensions",
@@ -90,7 +98,10 @@ function useMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
           url: giftCardListUrl(),
           permissions: [PermissionEnum.MANAGE_GIFT_CARD]
         },
-        ...mapToExtensionsItems(NAVIGATION_CATALOG, extenstionHeaderItem)
+        ...mapToExtensionsItems(
+          extensions.NAVIGATION_CATALOG,
+          extenstionHeaderItem
+        )
       ],
       iconSrc: catalogIcon,
       label: intl.formatMessage(commonMessages.catalog),
@@ -117,7 +128,10 @@ function useMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
           id: "order drafts",
           url: orderDraftListUrl()
         },
-        ...mapToExtensionsItems(NAVIGATION_ORDERS, extenstionHeaderItem)
+        ...mapToExtensionsItems(
+          extensions.NAVIGATION_ORDERS,
+          extenstionHeaderItem
+        )
       ],
       iconSrc: ordersIcon,
       label: intl.formatMessage(sectionNames.orders),
@@ -126,7 +140,7 @@ function useMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
     },
     {
       ariaLabel: "customers",
-      children: NAVIGATION_CUSTOMERS.length > 0 && [
+      children: extensions.NAVIGATION_CUSTOMERS.length > 0 && [
         {
           ariaLabel: "customers",
           label: intl.formatMessage(sectionNames.customers),
@@ -134,7 +148,10 @@ function useMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
           id: "customers",
           url: customerListUrl()
         },
-        ...mapToExtensionsItems(NAVIGATION_CUSTOMERS, extenstionHeaderItem)
+        ...mapToExtensionsItems(
+          extensions.NAVIGATION_CUSTOMERS,
+          extenstionHeaderItem
+        )
       ],
       iconSrc: customerIcon,
       label: intl.formatMessage(sectionNames.customers),
@@ -158,7 +175,10 @@ function useMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
           id: "vouchers",
           url: voucherListUrl()
         },
-        ...mapToExtensionsItems(NAVIGATION_DISCOUNTS, extenstionHeaderItem)
+        ...mapToExtensionsItems(
+          extensions.NAVIGATION_DISCOUNTS,
+          extenstionHeaderItem
+        )
       ],
       iconSrc: discountsIcon,
       label: intl.formatMessage(commonMessages.discounts),
@@ -167,7 +187,7 @@ function useMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
     },
     {
       ariaLabel: "pages",
-      children: NAVIGATION_PAGES.length > 0 && [
+      children: extensions.NAVIGATION_PAGES.length > 0 && [
         {
           ariaLabel: "pages",
           label: intl.formatMessage(sectionNames.pages),
@@ -175,7 +195,10 @@ function useMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
           id: "pages",
           url: pageListPath
         },
-        ...mapToExtensionsItems(NAVIGATION_PAGES, extenstionHeaderItem)
+        ...mapToExtensionsItems(
+          extensions.NAVIGATION_PAGES,
+          extenstionHeaderItem
+        )
       ],
       iconSrc: pagesIcon,
       label: intl.formatMessage(sectionNames.pages),
@@ -193,7 +216,7 @@ function useMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
     },
     {
       ariaLabel: "translations",
-      children: NAVIGATION_TRANSLATIONS.length > 0 && [
+      children: extensions.NAVIGATION_TRANSLATIONS.length > 0 && [
         {
           ariaLabel: "translations",
           label: intl.formatMessage(sectionNames.translations),
@@ -201,7 +224,10 @@ function useMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
           id: "translations",
           url: languageListUrl
         },
-        ...mapToExtensionsItems(NAVIGATION_TRANSLATIONS, extenstionHeaderItem)
+        ...mapToExtensionsItems(
+          extensions.NAVIGATION_TRANSLATIONS,
+          extenstionHeaderItem
+        )
       ],
       iconSrc: translationIcon,
       label: intl.formatMessage(sectionNames.translations),
@@ -228,22 +254,25 @@ function useMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
   const getFilteredMenuItems = (menuItems: FilterableMenuItem[]) =>
     menuItems.filter(isMenuItemPermitted);
 
-  return menuItems.reduce(
-    (resultItems: FilterableMenuItem[], menuItem: FilterableMenuItem) => {
-      const { children } = menuItem;
+  return [
+    menuItems.reduce(
+      (resultItems: FilterableMenuItem[], menuItem: FilterableMenuItem) => {
+        const { children } = menuItem;
 
-      if (!isMenuItemPermitted(menuItem)) {
-        return resultItems;
-      }
+        if (!isMenuItemPermitted(menuItem)) {
+          return resultItems;
+        }
 
-      const filteredChildren = children
-        ? getFilteredMenuItems(children)
-        : undefined;
+        const filteredChildren = children
+          ? getFilteredMenuItems(children)
+          : undefined;
 
-      return [...resultItems, { ...menuItem, children: filteredChildren }];
-    },
-    [] as FilterableMenuItem[]
-  );
+        return [...resultItems, { ...menuItem, children: filteredChildren }];
+      },
+      [] as FilterableMenuItem[]
+    ),
+    handleMenuItemClick
+  ];
 }
 
 export default useMenuStructure;

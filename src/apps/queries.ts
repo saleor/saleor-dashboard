@@ -75,7 +75,7 @@ const appDetails = gql`
 
 export const extensionList = gql`
   query ExtensionList($filter: AppExtensionFilterInput!) {
-    appExtensions(filter: $filter, first: 20) {
+    appExtensions(filter: $filter, first: 100) {
       edges {
         node {
           id

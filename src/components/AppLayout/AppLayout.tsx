@@ -7,7 +7,6 @@ import {
   SaleorTheme,
   Sidebar,
   SidebarDrawer,
-  SidebarMenuItem,
   useActionBar,
   useBacklink,
   useTheme
@@ -142,13 +141,10 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     setChannel
   } = useAppChannel(false);
 
-  const menuStructure = useMenuStructure(intl, user);
+  const [menuStructure, handleMenuItemClick] = useMenuStructure(intl, user);
   const activeMenu = menuStructure.find(menuItem =>
     isMenuActive(location.pathname, menuItem)
   )?.id;
-
-  const handleMenuItemClick = (menuItem: SidebarMenuItem) =>
-    navigate(menuItem.url, { resetScroll: true });
 
   const reloadWindow = () => {
     window.location.reload();
