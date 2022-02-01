@@ -105,8 +105,11 @@ export function getProductType(productTypeId) {
       productAttributes{
         name
       }
-      variantAttributes{
-        name
+      assignedVariantAttributes{
+        attribute{
+          name
+        }
+        variantSelection
       }
     }
   }`;

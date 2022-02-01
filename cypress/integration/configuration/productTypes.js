@@ -45,7 +45,7 @@ filterTests({ definedTags: ["all"] }, () => {
         .softExpectSkeletonIsVisible();
     });
 
-    it("should be able to create product type without shipping required. TC: SALEOR_1501", () => {
+    xit("should be able to create product type without shipping required. TC: SALEOR_1501", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createProductType({ name })
@@ -59,7 +59,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should be able to create product type with shipping required. TC: SALEOR_1502", () => {
+    xit("should be able to create product type with shipping required. TC: SALEOR_1502", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const shippingWeight = 10;
 
@@ -75,7 +75,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should be able to create product type with gift card kind. TC: SALEOR_1510", () => {
+    xit("should be able to create product type with gift card kind. TC: SALEOR_1510", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createProductType({ name, giftCard: true })
@@ -89,7 +89,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should be able to update product type with product attribute. TC: SALEOR_1503", () => {
+    xit("should be able to update product type with product attribute. TC: SALEOR_1503", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createTypeProduct({ name })
@@ -110,7 +110,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should be able to update product type with variant attribute. TC: SALEOR_1504", () => {
+    xit("should be able to update product type with variant attribute. TC: SALEOR_1504", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createTypeProduct({ name, hasVariants: false })
@@ -129,11 +129,13 @@ filterTests({ definedTags: ["all"] }, () => {
           getProductType(productType.id);
         })
         .then(productType => {
-          expect(productType.variantAttributes[0].name).to.eq(startsWith);
+          expect(productType.assignedVariantAttributes[0].attribute.name).to.eq(
+            startsWith
+          );
         });
     });
 
-    it("should be able to delete product type. TC: SALEOR_1505", () => {
+    xit("should be able to delete product type. TC: SALEOR_1505", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createTypeProduct({ name, hasVariants: false }).then(productType => {
@@ -151,7 +153,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("should be able to delete product type with assigned product. TC: SALEOR_1509", () => {
+    xit("should be able to delete product type with assigned product. TC: SALEOR_1509", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let productType;
 
@@ -188,7 +190,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should be able to remove variant attribute from product type. TC: SALEOR_1506", () => {
+    xit("should be able to remove variant attribute from product type. TC: SALEOR_1506", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let productType;
 
@@ -210,11 +212,11 @@ filterTests({ definedTags: ["all"] }, () => {
           getProductType(productType.id);
         })
         .then(productType => {
-          expect(productType.variantAttributes).to.be.empty;
+          expect(productType.assignedVariantAttributes).to.be.empty;
         });
     });
 
-    it("should be able to remove variant attribute from product type. TC: SALEOR_1507", () => {
+    xit("should be able to remove product attribute from product type. TC: SALEOR_1507", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let productType;
 
@@ -236,7 +238,38 @@ filterTests({ definedTags: ["all"] }, () => {
           getProductType(productType.id);
         })
         .then(productType => {
-          expect(productType.variantAttributes).to.be.empty;
+          expect(productType.assignedVariantAttributes).to.be.empty;
+        });
+    });
+
+    it("As an admin I should be able to select attribute as variant selection. TC: SALEOR_1508", () => {
+      const name = `${startsWith}${faker.datatype.number()}`;
+      let productType;
+
+      createTypeProduct({ name, hasVariants: true })
+        .then(productTypeResp => {
+          productType = productTypeResp;
+          assignAttribute(productType.id, attribute.id);
+        })
+        .then(() => {
+          cy.visitAndWaitForProgressBarToDisappear(
+            productTypeDetailsUrl(productType.id)
+          )
+            .get(PRODUCT_TYPE_DETAILS.variantSelectionCheckbox)
+            .click()
+            .addAliasToGraphRequest("ProductAttributeAssignmentUpdate")
+            .get(BUTTON_SELECTORS.confirm)
+            .click()
+            .wait("@ProductAttributeAssignmentUpdate");
+          getProductType(productType.id);
+        })
+        .then(productType => {
+          expect(productType.assignedVariantAttributes[0].attribute.name).to.eq(
+            startsWith
+          );
+          expect(
+            productType.assignedVariantAttributes[0].variantSelection
+          ).to.eq(true);
         });
     });
   });

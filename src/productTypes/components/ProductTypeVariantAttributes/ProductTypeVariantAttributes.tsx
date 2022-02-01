@@ -243,10 +243,11 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                   </TableCell>
                   <TableCell
                     className={classes.colVariant}
-                    data-test="variant-selection"
+                    data-test-id="variant-selection"
                   >
                     <div className={classes.colVariantContent}>
                       <Checkbox
+                        data-test-id="variant-selection-checkbox"
                         checked={isSelected}
                         disabled={disabled || variantSelectionDisabled}
                         disableClickPropagation
