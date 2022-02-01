@@ -38,7 +38,7 @@ export function setVoucherDate({
 }) {
   cy.visit(voucherDetailsUrl(voucherId)).waitForProgressBarToNotBeVisible();
   if (startDate) {
-    cy.get(VOUCHERS_SELECTORS.startDate).type(startDate);
+    cy.get(VOUCHERS_SELECTORS.startDateInput).type(startDate);
   }
   if (endDate) {
     if (hasEndDate) {
