@@ -3,6 +3,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
+import { extractMutationErrors } from "@saleor/misc";
 import { stringifyQs } from "@saleor/utils/urls";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -71,18 +72,19 @@ const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({
         const handleSubmit = (
           { name: fieldName }: TranslationField<TranslationInputFieldName>,
           data: string | OutputData
-        ) => {
-          updateTranslations({
-            variables: {
-              id,
-              input: getParsedTranslationInputData({
-                data,
-                fieldName
-              }),
-              language: languageCode
-            }
-          });
-        };
+        ) =>
+          extractMutationErrors(
+            updateTranslations({
+              variables: {
+                id,
+                input: getParsedTranslationInputData({
+                  data,
+                  fieldName
+                }),
+                language: languageCode
+              }
+            })
+          );
 
         const translation = categoryTranslations?.data?.translation;
 

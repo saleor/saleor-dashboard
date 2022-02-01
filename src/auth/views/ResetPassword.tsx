@@ -1,6 +1,7 @@
 import { APP_MOUNT_URI } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { commonMessages } from "@saleor/intl";
+import { extractMutationErrors } from "@saleor/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";
@@ -38,16 +39,18 @@ const ResetPasswordView: React.FC = () => {
     <RequestPasswordResetMutation onCompleted={handleRequestPasswordReset}>
       {(requestPasswordReset, requestPasswordResetOpts) => {
         const handleSubmit = (data: ResetPasswordPageFormData) =>
-          requestPasswordReset({
-            variables: {
-              email: data.email,
-              redirectUrl: urlJoin(
-                window.location.origin,
-                APP_MOUNT_URI === "/" ? "" : APP_MOUNT_URI,
-                newPasswordUrl().replace(/\?/, "")
-              )
-            }
-          });
+          extractMutationErrors(
+            requestPasswordReset({
+              variables: {
+                email: data.email,
+                redirectUrl: urlJoin(
+                  window.location.origin,
+                  APP_MOUNT_URI === "/" ? "" : APP_MOUNT_URI,
+                  newPasswordUrl().replace(/\?/, "")
+                )
+              }
+            })
+          );
 
         return (
           <ResetPasswordPage

@@ -25,7 +25,7 @@ import { warehouseAddPath } from "@saleor/warehouses/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { weight } from "../../misc";
+import { getMutationErrors, weight } from "../../misc";
 import ProductVariantCreatePage from "../components/ProductVariantCreatePage";
 import { ProductVariantCreateData } from "../components/ProductVariantCreatePage/form";
 import {
@@ -152,10 +152,11 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         firstValues: 10
       }
     });
-    const id = result.data?.productVariantCreate?.productVariant?.id;
+    const id = result.data?.productVariantCreate?.productVariant?.id || null;
 
-    return id || null;
+    return { id, errors: getMutationErrors(result) };
   };
+
   const handleSubmit = createMetadataCreateHandler(
     handleCreate,
     updateMetadata,

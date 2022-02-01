@@ -3,10 +3,10 @@ import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
 import { giftCardUpdateFormMessages } from "@saleor/giftCards/GiftCardsList/messages";
 import { MutationResultWithOpts } from "@saleor/hooks/makeMutation";
 import useForm, { FormChange, UseFormResult } from "@saleor/hooks/useForm";
+import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
 import { getFormErrors } from "@saleor/utils/errors";
-import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
@@ -131,9 +131,22 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
     return result?.data?.giftCardUpdate?.errors;
   };
 
-  const formProps = useForm<GiftCardUpdateFormData>(getInitialData());
+  const formProps = useForm(getInitialData());
 
-  const { data, change, setChanged, hasChanged } = formProps;
+  const { data, change, setChanged, hasChanged, formId } = formProps;
+
+  const handleSubmit = createMetadataUpdateHandler(
+    giftCard,
+    submit,
+    variables => updateMetadata({ variables }),
+    variables => updatePrivateMetadata({ variables })
+  );
+
+  const handleFormSubmit = useHandleFormSubmit({
+    formId,
+    onSubmit: handleSubmit,
+    setChanged
+  });
 
   const {
     isMetadataModified,
@@ -148,15 +161,7 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
     ...getMetadata(data, isMetadataModified, isPrivateMetadataModified)
   };
 
-  const handleSubmit = createMetadataUpdateHandler(
-    giftCard,
-    submit,
-    variables => updateMetadata({ variables }),
-    variables => updatePrivateMetadata({ variables })
-  );
-
-  const formSubmit = () =>
-    handleFormSubmit(submitData, handleSubmit, setChanged);
+  const formSubmit = () => handleFormSubmit(submitData);
 
   const formErrors = getFormErrors(
     ["tags", "expiryDate"],

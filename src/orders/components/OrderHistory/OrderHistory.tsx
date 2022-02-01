@@ -9,6 +9,7 @@ import {
   TimelineEventProps,
   TimelineNote
 } from "@saleor/components/Timeline";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
 import { OrderDetails_order_events } from "@saleor/orders/types/OrderDetails";
 import {
@@ -295,7 +296,7 @@ const useStyles = makeStyles(
 interface OrderHistoryProps {
   history: OrderDetails_order_events[];
   orderCurrency: string;
-  onNoteAdd: (data: FormData) => void;
+  onNoteAdd: (data: FormData) => SubmitPromise;
 }
 
 const OrderHistory: React.FC<OrderHistoryProps> = props => {
@@ -331,7 +332,12 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
       <Hr />
       {history ? (
         <Timeline>
-          <Form initial={{ message: "" }} onSubmit={onNoteAdd} resetOnSubmit>
+          <Form
+            confirmLeave
+            initial={{ message: "" }}
+            onSubmit={onNoteAdd}
+            resetOnSubmit
+          >
             {({ change, data, reset, submit }) => (
               <TimelineAddNote
                 message={data.message}

@@ -13,26 +13,22 @@ import React from "react";
 
 const useStyles = makeStyles(
   theme => ({
-    colName: {
-      width: "auto"
-    },
+    colName: {},
     colNameLabel: {
       marginLeft: AVATAR_MARGIN
     },
     colPrice: {
-      width: 120
+      textAlign: "right"
     },
     colQuantity: {
-      textAlign: "center",
-      width: 120
+      textAlign: "center"
     },
     colSku: {
       textAlign: "right",
-      textOverflow: "ellipsis",
-      width: 120
+      textOverflow: "ellipsis"
     },
     colTotal: {
-      width: 120
+      textAlign: "right"
     },
     infoLabel: {
       display: "inline-block"
@@ -49,9 +45,6 @@ const useStyles = makeStyles(
     },
     statusBar: {
       paddingTop: 0
-    },
-    table: {
-      tableLayout: "fixed"
     }
   }),
   { name: "TableLine" }

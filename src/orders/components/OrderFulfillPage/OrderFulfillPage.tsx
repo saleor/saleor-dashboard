@@ -20,6 +20,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { ShopOrderSettingsFragment } from "@saleor/fragments/types/ShopOrderSettingsFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
 import { commonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -110,7 +111,7 @@ const useStyles = makeStyles(
 interface OrderFulfillFormData {
   sendInfo: boolean;
 }
-interface OrderFulfillSubmitData extends OrderFulfillFormData {
+export interface OrderFulfillSubmitData extends OrderFulfillFormData {
   items: FormsetData<null, OrderFulfillStockInput[]>;
 }
 export interface OrderFulfillPageProps {
@@ -121,7 +122,7 @@ export interface OrderFulfillPageProps {
   warehouses: WarehouseFragment[];
   shopSettings?: ShopOrderSettingsFragment;
   onBack: () => void;
-  onSubmit: (data: OrderFulfillSubmitData) => void;
+  onSubmit: (data: OrderFulfillSubmitData) => SubmitPromise;
 }
 
 const initialFormData: OrderFulfillFormData = {
@@ -220,7 +221,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
           orderNumber: order?.number
         })}
       />
-      <Form initial={initialFormData} onSubmit={handleSubmit}>
+      <Form confirmLeave initial={initialFormData} onSubmit={handleSubmit}>
         {({ change, data, submit }) => (
           <>
             <Card>

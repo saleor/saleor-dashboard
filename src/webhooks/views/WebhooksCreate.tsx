@@ -4,6 +4,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import { extractMutationErrors } from "@saleor/misc";
 import { WebhookEventTypeAsyncEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -40,23 +41,25 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = ({ id }) => {
   const handleBack = () => navigate(customAppUrl(id));
 
   const handleSubmit = (data: FormData) =>
-    webhookCreate({
-      variables: {
-        input: {
-          app: id,
-          syncEvents: data.syncEvents,
-          asyncEvents: data.asyncEvents.includes(
-            WebhookEventTypeAsyncEnum.ANY_EVENTS
-          )
-            ? [WebhookEventTypeAsyncEnum.ANY_EVENTS]
-            : data.asyncEvents,
-          isActive: data.isActive,
-          name: data.name,
-          secretKey: data.secretKey,
-          targetUrl: data.targetUrl
+    extractMutationErrors(
+      webhookCreate({
+        variables: {
+          input: {
+            app: id,
+            syncEvents: data.syncEvents,
+            asyncEvents: data.asyncEvents.includes(
+              WebhookEventTypeAsyncEnum.ANY_EVENTS
+            )
+              ? [WebhookEventTypeAsyncEnum.ANY_EVENTS]
+              : data.asyncEvents,
+            isActive: data.isActive,
+            name: data.name,
+            secretKey: data.secretKey,
+            targetUrl: data.targetUrl
+          }
         }
-      }
-    });
+      })
+    );
 
   return (
     <>

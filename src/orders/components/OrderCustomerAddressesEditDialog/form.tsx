@@ -1,3 +1,4 @@
+import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { AddressTypeInput } from "@saleor/customers/types";
 import {
@@ -5,9 +6,14 @@ import {
   CustomerAddresses_user_defaultBillingAddress,
   CustomerAddresses_user_defaultShippingAddress
 } from "@saleor/customers/types/CustomerAddresses";
-import useForm, { FormChange } from "@saleor/hooks/useForm";
+import useForm, {
+  CommonUseFormResultWithHandlers,
+  FormChange,
+  SubmitPromise
+} from "@saleor/hooks/useForm";
+import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export enum AddressInputOptionEnum {
   CUSTOMER_ADDRESS = "customerAddress",
@@ -43,12 +49,12 @@ export interface OrderCustomerAddressesEditHandlers {
   selectBillingCountry: FormChange;
 }
 
-interface UseOrderCustomerAddressesEditFormResult {
-  submit: (event: React.FormEvent<any>) => void;
-  change: FormChange;
-  hasChanged: boolean;
-  data: OrderCustomerAddressesEditData;
-  handlers: OrderCustomerAddressesEditHandlers;
+interface UseOrderCustomerAddressesEditFormResult
+  extends CommonUseFormResultWithHandlers<
+    OrderCustomerAddressesEditData,
+    OrderCustomerAddressesEditHandlers
+  > {
+  submit: (event: React.FormEvent<any>) => SubmitPromise<any[]>;
 }
 
 interface UseOrderCustomerAddressesEditFormOpts {
@@ -61,38 +67,46 @@ export interface OrderCustomerAddressesEditFormProps
   extends UseOrderCustomerAddressesEditFormOpts {
   children: (props: UseOrderCustomerAddressesEditFormResult) => React.ReactNode;
   initial?: Partial<OrderCustomerAddressesEditFormData>;
-  onSubmit: (data: OrderCustomerAddressesEditData) => void;
+  onSubmit: (data: OrderCustomerAddressesEditData) => SubmitPromise<any[]>;
 }
+
+const initialAddress: AddressTypeInput = {
+  city: "",
+  country: "",
+  phone: "",
+  postalCode: "",
+  streetAddress1: ""
+};
+
+const getDefaultInitialFormData = (
+  opts: UseOrderCustomerAddressesEditFormOpts
+): OrderCustomerAddressesEditFormData => ({
+  billingSameAsShipping: true,
+  shippingAddressInputOption: AddressInputOptionEnum.CUSTOMER_ADDRESS,
+  billingAddressInputOption: AddressInputOptionEnum.CUSTOMER_ADDRESS,
+  customerShippingAddress: opts.defaultShippingAddress,
+  customerBillingAddress: opts.defaultBillingAddress,
+  shippingAddress: initialAddress,
+  billingAddress: initialAddress
+});
 
 function useOrderCustomerAddressesEditForm(
   initial: Partial<OrderCustomerAddressesEditFormData>,
-  onSubmit: (data: OrderCustomerAddressesEditData) => void,
+  onSubmit: (data: OrderCustomerAddressesEditData) => SubmitPromise<any[]>,
   opts: UseOrderCustomerAddressesEditFormOpts
 ): UseOrderCustomerAddressesEditFormResult {
-  const initialAddress: AddressTypeInput = {
-    city: "",
-    country: "",
-    phone: "",
-    postalCode: "",
-    streetAddress1: ""
-  };
-  const defaultInitialFormData: OrderCustomerAddressesEditFormData = {
-    billingSameAsShipping: true,
-    shippingAddressInputOption: AddressInputOptionEnum.CUSTOMER_ADDRESS,
-    billingAddressInputOption: AddressInputOptionEnum.CUSTOMER_ADDRESS,
-    customerShippingAddress: opts.defaultShippingAddress,
-    customerBillingAddress: opts.defaultBillingAddress,
-    shippingAddress: initialAddress,
-    billingAddress: initialAddress
-  };
-
-  const form = useForm({
+  const {
+    handleChange,
+    hasChanged,
+    change,
+    data: formData,
+    setChanged
+  } = useForm({
     ...initial,
-    ...defaultInitialFormData
+    ...getDefaultInitialFormData(opts)
   });
 
-  const [changed, setChanged] = useState(false);
-  const triggerChange = () => setChanged(true);
+  const { setExitDialogSubmitRef } = useExitFormDialog();
 
   const [shippingCountryDisplayName, setShippingCountryDisplayName] = useState(
     ""
@@ -101,19 +115,15 @@ function useOrderCustomerAddressesEditForm(
     ""
   );
 
-  const handleChange: FormChange = (event, cb) => {
-    form.change(event, cb);
-    triggerChange();
-  };
   const handleFormAddressChange = (
     event: React.ChangeEvent<any>,
     addressType: "shippingAddress" | "billingAddress"
   ) =>
-    form.change({
+    change({
       target: {
         name: addressType,
         value: {
-          ...form.data[addressType],
+          ...formData[addressType],
           [event.target.name]: event.target.value
         }
       }
@@ -122,7 +132,7 @@ function useOrderCustomerAddressesEditForm(
     customerAddress: CustomerAddresses_user_addresses,
     addressType: "customerShippingAddress" | "customerBillingAddress"
   ) =>
-    form.change({
+    change({
       target: {
         name: addressType,
         value: customerAddress
@@ -130,11 +140,11 @@ function useOrderCustomerAddressesEditForm(
     });
   const handleShippingCountrySelect = createSingleAutocompleteSelectHandler(
     event =>
-      form.change({
+      change({
         target: {
           name: "shippingAddress",
           value: {
-            ...form.data.shippingAddress,
+            ...formData.shippingAddress,
             [event.target.name]: event.target.value
           }
         }
@@ -144,11 +154,11 @@ function useOrderCustomerAddressesEditForm(
   );
   const handleBillingCountrySelect = createSingleAutocompleteSelectHandler(
     event =>
-      form.change({
+      change({
         target: {
           name: "billingAddress",
           value: {
-            ...form.data.billingAddress,
+            ...formData.billingAddress,
             [event.target.name]: event.target.value
           }
         }
@@ -158,21 +168,30 @@ function useOrderCustomerAddressesEditForm(
   );
 
   const data = {
-    ...form.data,
+    ...formData,
     shippingCountryDisplayName,
     billingCountryDisplayName
   };
 
+  const handleFormSubmit = useHandleFormSubmit({
+    onSubmit,
+    setChanged
+  });
+
+  const handleSubmit = () => handleFormSubmit(data);
+
   const submit = (event: React.FormEvent<any>) => {
     event.stopPropagation();
     event.preventDefault();
-    return onSubmit(data);
+    return handleSubmit();
   };
+
+  useEffect(() => setExitDialogSubmitRef(submit), [handleSubmit]);
 
   return {
     change: handleChange,
     submit,
-    hasChanged: changed,
+    hasChanged,
     data,
     handlers: {
       changeCustomerAddress: handleCustomerAddressChange,

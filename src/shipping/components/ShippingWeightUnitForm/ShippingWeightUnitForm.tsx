@@ -2,6 +2,7 @@ import { Card, CardActions, CardContent } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import Form from "@saleor/components/Form";
 import SingleSelectField from "@saleor/components/SingleSelectField";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { buttonMessages, sectionNames } from "@saleor/intl";
 import { Button } from "@saleor/macaw-ui";
 import React from "react";
@@ -16,7 +17,7 @@ export interface FormData {
 export interface ShippingWeightUnitFormProps {
   defaultWeightUnit: WeightUnitsEnum;
   disabled: boolean;
-  onSubmit: (unit: WeightUnitsEnum) => void;
+  onSubmit: (unit: WeightUnitsEnum) => SubmitPromise;
 }
 
 const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
@@ -29,7 +30,11 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
     unit: defaultWeightUnit
   };
   return (
-    <Form initial={initialForm} onSubmit={formData => onSubmit(formData.unit)}>
+    <Form
+      confirmLeave
+      initial={initialForm}
+      onSubmit={formData => onSubmit(formData.unit)}
+    >
       {({ change, data, submit }) => (
         <Card>
           <CardTitle title={intl.formatMessage(sectionNames.configuration)} />

@@ -25,7 +25,8 @@ const baseProps = {
   fetchMoreShippingZones: {
     loading: false,
     hasMore: false,
-    onFetchMore: () => undefined
+    onFetchMore: () => undefined,
+    totalCount: 0
   },
   shippingZones: [],
   shippingZonesChoices: shippingZones as ChannelShippingZones

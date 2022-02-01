@@ -1,11 +1,15 @@
 import { OutputData } from "@editorjs/editorjs";
+import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
-import useForm, { FormChange } from "@saleor/hooks/useForm";
-import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
+import useForm, {
+  CommonUseFormResult,
+  FormChange
+} from "@saleor/hooks/useForm";
+import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
-import React from "react";
+import React, { useEffect } from "react";
 
 export interface CategoryCreateFormData extends MetadataFormData {
   name: string;
@@ -21,12 +25,9 @@ interface CategoryCreateHandlers {
   changeMetadata: FormChange;
   changeDescription: RichTextEditorChange;
 }
-export interface UseCategoryCreateFormResult {
-  change: FormChange;
-  data: CategoryCreateData;
+export interface UseCategoryCreateFormResult
+  extends CommonUseFormResult<CategoryCreateData> {
   handlers: CategoryCreateHandlers;
-  hasChanged: boolean;
-  submit: () => Promise<boolean>;
 }
 
 export interface CategoryCreateFormProps {
@@ -34,20 +35,37 @@ export interface CategoryCreateFormProps {
   onSubmit: (data: CategoryCreateData) => Promise<any[]>;
 }
 
+const initialData: CategoryCreateFormData = {
+  metadata: [],
+  name: "",
+  privateMetadata: [],
+  seoDescription: "",
+  seoTitle: "",
+  slug: ""
+};
+
 function useCategoryCreateForm(
   onSubmit: (data: CategoryCreateData) => Promise<any[]>
 ): UseCategoryCreateFormResult {
-  const [changed, setChanged] = React.useState(false);
-  const triggerChange = () => setChanged(true);
+  const {
+    handleChange,
+    data,
+    hasChanged,
+    triggerChange,
+    setChanged,
+    formId
+  } = useForm(initialData, undefined, { confirmLeave: true });
 
-  const form = useForm<CategoryCreateFormData>({
-    metadata: [],
-    name: "",
-    privateMetadata: [],
-    seoDescription: "",
-    seoTitle: "",
-    slug: ""
+  const handleFormSubmit = useHandleFormSubmit({
+    formId,
+    onSubmit,
+    setChanged
   });
+
+  const { setExitDialogSubmitRef } = useExitFormDialog({
+    formId
+  });
+
   const [description, changeDescription] = useRichText({
     initial: null,
     triggerChange
@@ -57,19 +75,17 @@ function useCategoryCreateForm(
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
 
-  const handleChange: FormChange = (event, cb) => {
-    form.change(event, cb);
-    triggerChange();
-  };
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 
   // Need to make it function to always have description.current up to date
   const getData = (): CategoryCreateData => ({
-    ...form.data,
+    ...data,
     description: description.current
   });
 
-  const submit = () => handleFormSubmit(getData(), onSubmit, setChanged);
+  const submit = () => handleFormSubmit(getData());
+
+  useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   return {
     change: handleChange,
@@ -78,7 +94,7 @@ function useCategoryCreateForm(
       changeDescription,
       changeMetadata
     },
-    hasChanged: changed,
+    hasChanged,
     submit
   };
 }

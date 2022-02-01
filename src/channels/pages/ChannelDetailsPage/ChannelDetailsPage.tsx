@@ -8,6 +8,7 @@ import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragme
 import { CountryFragment } from "@saleor/fragments/types/CountryFragment";
 import { SearchData } from "@saleor/hooks/makeTopLevelSearch";
 import { getParsedSearchData } from "@saleor/hooks/makeTopLevelSearch/utils";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import {
@@ -27,7 +28,7 @@ import { Channel_channel } from "../../types/Channel";
 import { ChannelShippingZones } from "./types";
 import { getUpdatedIdsWithNewId, getUpdatedIdsWithoutNewId } from "./utils";
 
-export interface ChannelDetailsPageProps {
+export interface ChannelDetailsPageProps<TErrors> {
   channel?: Channel_channel;
   currencyCodes?: SingleAutocompleteChoiceType[];
   disabled: boolean;
@@ -40,12 +41,12 @@ export interface ChannelDetailsPageProps {
   countries: CountryFragment[];
   onBack?: () => void;
   onDelete?: () => void;
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: FormData) => SubmitPromise<TErrors[]>;
   updateChannelStatus?: () => void;
   searchShippingZones: (query: string) => void;
 }
 
-export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
+const ChannelDetailsPage = function<TErrors>({
   channel,
   currencyCodes,
   disabled,
@@ -61,7 +62,7 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
   fetchMoreShippingZones,
   countries,
   channelShippingZones = []
-}) => {
+}: ChannelDetailsPageProps<TErrors>) {
   const [selectedCurrencyCode, setSelectedCurrencyCode] = useState("");
   const [
     selectedCountryDisplayName,
@@ -92,7 +93,7 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
     );
 
   return (
-    <Form onSubmit={onSubmit} initial={initialData}>
+    <Form confirmLeave onSubmit={onSubmit} initial={initialData}>
       {({ change, data, hasChanged, submit, set }) => {
         const handleCurrencyCodeSelect = createSingleAutocompleteSelectHandler(
           change,

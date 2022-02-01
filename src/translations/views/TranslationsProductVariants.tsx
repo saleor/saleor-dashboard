@@ -7,7 +7,7 @@ import { stringify as stringifyQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { maybe } from "../../misc";
+import { extractMutationErrors, maybe } from "../../misc";
 import { LanguageCodeEnum } from "../../types/globalTypes";
 import TranslationsProductVariantsPage from "../components/TranslationsProductVariantsPage";
 import {
@@ -84,31 +84,33 @@ const TranslationsProductVariants: React.FC<TranslationsProductVariantsProps> = 
             const handleSubmit = (
               { name: fieldName }: TranslationField<TranslationInputFieldName>,
               data: string
-            ) => {
-              updateTranslations({
-                variables: {
-                  id,
-                  input: getParsedTranslationInputData({
-                    data,
-                    fieldName
-                  }),
-                  language: languageCode
-                }
-              });
-            };
+            ) =>
+              extractMutationErrors(
+                updateTranslations({
+                  variables: {
+                    id,
+                    input: getParsedTranslationInputData({
+                      data,
+                      fieldName
+                    }),
+                    language: languageCode
+                  }
+                })
+              );
 
             const handleAttributeValueSubmit = (
               { id }: TranslationField<TranslationInputFieldName>,
               data: OutputData
-            ) => {
-              updateAttributeValueTranslations({
-                variables: {
-                  id,
-                  input: { richText: JSON.stringify(data) },
-                  language: languageCode
-                }
-              });
-            };
+            ) =>
+              extractMutationErrors(
+                updateAttributeValueTranslations({
+                  variables: {
+                    id,
+                    input: { richText: JSON.stringify(data) },
+                    language: languageCode
+                  }
+                })
+              );
 
             const translation = productVariantTranslations?.data?.translation;
 

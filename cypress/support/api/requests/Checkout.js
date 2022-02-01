@@ -141,6 +141,7 @@ export function completeCheckout(checkoutId, paymentData) {
   const mutation = `mutation{
     checkoutComplete(checkoutId:"${checkoutId}" ${paymentDataLine}){
       order{
+        userEmail
         id
         lines{
           id

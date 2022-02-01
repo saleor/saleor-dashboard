@@ -1584,13 +1584,17 @@
     "context": "add shipping zone title",
     "string": "Add Shipping Zones"
   },
+  "src_dot_channels_dot_components_dot_ShippingZonesCard_dot_allSelectedMessage": {
+    "context": "all selected zones card message",
+    "string": "All available shipping zones have been selected"
+  },
   "src_dot_channels_dot_components_dot_ShippingZonesCard_dot_subtitle": {
     "context": "card subtitle",
-    "string": "Select Shipping Zones that will be supplied via this channel. You can assign Shipping Zones to multiple channels."
+    "string": "Select shipping zones that will be supplied via this channel. You can assign shipping zones to multiple channels."
   },
   "src_dot_channels_dot_components_dot_ShippingZonesCard_dot_title": {
     "context": "title",
-    "string": "{zonesCount} Shipping Zones"
+    "string": "{zonesCount} / {totalCount} shipping zones"
   },
   "src_dot_channels_dot_pages_dot_ChannelsListPage_dot_2754800034": {
     "context": "alert",
@@ -2193,6 +2197,22 @@
   "src_dot_components_dot_Filter_dot_VALUE_REQUIRED": {
     "context": "filters error messages value required",
     "string": "Choose a value"
+  },
+  "src_dot_components_dot_Form_dot_cancelButton": {
+    "context": "ExitFormPrompt cancel button",
+    "string": "leave without saving"
+  },
+  "src_dot_components_dot_Form_dot_confirmButton": {
+    "context": "ExitFormPrompt confirm button",
+    "string": "save & continue"
+  },
+  "src_dot_components_dot_Form_dot_description": {
+    "context": "ExitFormPrompt description",
+    "string": "You have unsaved changes on this view. What would you like to do with them?"
+  },
+  "src_dot_components_dot_Form_dot_title": {
+    "context": "ExitFormPrompt title",
+    "string": "Are you sure you want to leave?"
   },
   "src_dot_components_dot_ImageUpload_dot_1731007575": {
     "context": "image upload",
@@ -5382,19 +5402,11 @@
   "src_dot_orders_dot_views_dot_OrderDetails_dot_4085755992": {
     "string": "Invoice email sent"
   },
-  "src_dot_orders_dot_views_dot_OrderDetails_dot_4207717971": {
-    "context": "snackbar title",
-    "string": "Could not generate invoice"
-  },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_55607988": {
     "string": "Invoice is Generating"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_617145655": {
     "string": "Shipping method successfully updated"
-  },
-  "src_dot_orders_dot_views_dot_OrderDetails_dot_811176136": {
-    "context": "error message",
-    "string": "No invoice plugin installed"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_927945225": {
     "string": "Fulfillment successfully cancelled"
@@ -7627,17 +7639,17 @@
     "context": "section header",
     "string": "Preferences"
   },
+  "src_dot_staff_dot_components_dot_StaffProperties_dot_1473195966": {
+    "context": "avatar change button",
+    "string": "Change"
+  },
   "src_dot_staff_dot_components_dot_StaffProperties_dot_2650522200": {
     "context": "section header",
     "string": "Staff Member Information"
   },
-  "src_dot_staff_dot_components_dot_StaffProperties_dot_2771097267": {
-    "context": "button",
-    "string": "Change photo"
-  },
-  "src_dot_staff_dot_components_dot_StaffProperties_dot_457748370": {
-    "context": "button",
-    "string": "Delete photo"
+  "src_dot_staff_dot_components_dot_StaffProperties_dot_3645414921": {
+    "context": "avatar delete button",
+    "string": "Delete"
   },
   "src_dot_staff_dot_components_dot_UserStatus_dot_userDisableInstruction": {
     "string": "If you want to disable this User please uncheck the box below."
@@ -8370,6 +8382,18 @@
   "src_dot_webhooks_dot_components_dot_WebhookStatus_dot_webhookStatus": {
     "context": "section header",
     "string": "Webhook Status"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhooksDetailsPage_dot_header": {
+    "context": "header",
+    "string": "Unnamed Webhook Details"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhooksDetailsPage_dot_headerCreate": {
+    "context": "header",
+    "string": "Create Webhook"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhooksDetailsPage_dot_headerNamed": {
+    "context": "header",
+    "string": "{webhookName} Details"
   },
   "src_dot_webhooks_dot_components_dot_WebhooksList_dot_1153324159": {
     "string": "No webhooks found"

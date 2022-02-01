@@ -13,7 +13,11 @@ import usePaginator, {
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import { getStringOrPlaceholder, maybe } from "@saleor/misc";
+import {
+  extractMutationErrors,
+  getStringOrPlaceholder,
+  maybe
+} from "@saleor/misc";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -152,9 +156,11 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
         }
         onRowClick={id => () => navigate(shippingZoneUrl(id))}
         onSubmit={unit =>
-          updateDefaultWeightUnit({
-            variables: { unit }
-          })
+          extractMutationErrors(
+            updateDefaultWeightUnit({
+              variables: { unit }
+            })
+          )
         }
         isChecked={isSelected}
         selected={listElements.length}

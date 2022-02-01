@@ -13,6 +13,12 @@ const useStyles = makeStyles(
       width: 40
     },
     table: {
+      "& td, & th": {
+        "&:not(:first-child):not(:last-child)": {
+          paddingLeft: theme.spacing(1),
+          paddingRight: theme.spacing(1)
+        }
+      },
       tableLayout: "fixed"
     },
     infoLabel: {

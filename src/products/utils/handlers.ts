@@ -145,8 +145,8 @@ export const createPreorderEndDateChangeHandler = (
   form: UseFormResult<{ preorderEndDateTime?: string }>,
   triggerChange: () => void,
   preorderPastDateErrorMessage: string
-): FormChange => (event, cb) => {
-  form.change(event, cb);
+): FormChange => event => {
+  form.change(event);
   if (moment(event.target.value).isSameOrBefore(Date.now())) {
     form.setError("preorderEndDateTime", preorderPastDateErrorMessage);
   } else {

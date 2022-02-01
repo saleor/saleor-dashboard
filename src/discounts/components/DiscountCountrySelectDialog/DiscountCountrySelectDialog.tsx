@@ -17,6 +17,7 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
 import { filter } from "fuzzaldrin";
@@ -37,7 +38,7 @@ export interface DiscountCountrySelectDialogProps {
   initial: string[];
   open: boolean;
   onClose: () => void;
-  onConfirm: (data: FormData) => void;
+  onConfirm: (data: FormData) => SubmitPromise;
 }
 
 const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = props => {
@@ -90,7 +91,9 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
                 <TextField
                   name="query"
                   value={data.query}
-                  onChange={event => change(event, () => fetch(data.query))}
+                  onChange={event =>
+                    change(event /* TO BE CHECKED: () => fetch(data.query)*/)
+                  }
                   label={intl.formatMessage({
                     defaultMessage: "Filter Countries",
                     description: "search box label"
