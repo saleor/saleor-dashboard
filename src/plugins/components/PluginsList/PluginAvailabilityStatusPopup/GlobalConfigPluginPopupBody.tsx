@@ -31,7 +31,9 @@ const GlobalConfigPluginPopupBody: React.FC<GlobalConfigPluginPopupBodyProps> = 
         <Pill
           color={active ? "success" : "error"}
           label={intl.formatMessage(
-            active ? pluginStatusMessages.active : pluginStatusMessages.inactive
+            active
+              ? pluginStatusMessages.active
+              : pluginStatusMessages.deactivated
           )}
         />
       </CardContent>

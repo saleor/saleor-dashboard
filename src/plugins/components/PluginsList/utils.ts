@@ -15,7 +15,7 @@ export const getPluginStatusLabel = (
 ) =>
   channelData.active
     ? pluginStatusMessages.active
-    : pluginStatusMessages.inactive;
+    : pluginStatusMessages.deactivated;
 export const getPluginStatusColor = (
   channelData: PluginConfigurationBaseFragment
 ) => (channelData.active ? "success" : "error");

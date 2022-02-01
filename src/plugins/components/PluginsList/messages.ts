@@ -3,7 +3,7 @@ import { defineMessages } from "react-intl";
 export const pluginAvailabilityStatusMessages = defineMessages({
   channelTitle: {
     defaultMessage:
-      "{activeChannelsCount,plural, =0 {Inactive} other {Active in {activeChannelsCount}}}",
+      "{activeChannelsCount,plural, =0 {Deactivated} other {Active in {activeChannelsCount}}}",
     description: "plugin channel availability status title"
   }
 });
@@ -60,10 +60,6 @@ export const pluginStatusMessages = defineMessages({
   active: {
     defaultMessage: "Active",
     description: "status label active"
-  },
-  inactive: {
-    defaultMessage: "Inactive",
-    description: "status label inactive"
   },
   deactivated: {
     defaultMessage: "Deactivated",

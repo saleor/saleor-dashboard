@@ -60,7 +60,7 @@ export function createFilterStructure(
             intl.formatMessage(messages.channelStatusSectionSubtitle),
             opts.isActive.value,
             {
-              negative: intl.formatMessage(pluginStatusMessages.inactive),
+              negative: intl.formatMessage(pluginStatusMessages.deactivated),
               positive: intl.formatMessage(pluginStatusMessages.active)
             }
           )
