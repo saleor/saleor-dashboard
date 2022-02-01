@@ -10,5 +10,7 @@ export const VOUCHERS_SELECTORS = {
   startDateInput: '[name="startDate"]',
   endDateInput: '[name="endDate"]',
   hasEndDateCheckbox: '[name="hasEndDate"]',
-  endTimeInput: '[name="endTime"]'
+  endTimeInput: '[name="endTime"]',
+  assignCountryButton: '[data-test-id="assign-country"]',
+  countriesDropdownIcon: '[data-test-id="countries-drop-down-icon"]'
 };

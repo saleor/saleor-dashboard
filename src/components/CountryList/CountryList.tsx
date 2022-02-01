@@ -122,6 +122,7 @@ const CountryList: React.FC<CountryListProps> = props => {
             >
               <IconButton variant="secondary">
                 <ArrowDropDownIcon
+                  data-test-id="countries-drop-down-icon"
                   className={classNames({
                     [classes.rotate]: !isCollapsed
                   })}
@@ -155,6 +156,7 @@ const CountryList: React.FC<CountryListProps> = props => {
                     className={classNames(classes.textRight, classes.iconCell)}
                   >
                     <IconButton
+                      data-test-id="delete-icon"
                       color="primary"
                       disabled={!country || disabled}
                       onClick={() => onCountryUnassign(country.code)}

@@ -14,6 +14,7 @@ function getPeriodValue(date, option) {
 export function formatTime(date) {
   const hour = getPeriodValue(date, { hour: "2-digit", hour12: false });
   const minute = getPeriodValue(date, { minute: "2-digit" });
+  const formattedMinute = minute.length === 1 ? `0${minute}` : minute;
 
-  return new Array(hour, minute).join(":");
+  return new Array(hour, formattedMinute).join(":");
 }

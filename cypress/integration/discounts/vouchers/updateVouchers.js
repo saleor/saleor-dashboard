@@ -205,5 +205,52 @@ filterTests({ definedTags: ["all"] }, () => {
           expect(addPromoCodeResp.checkoutErrors).to.be.empty;
         });
     });
+
+    it("should set country on voucher. TC: SALEOR_1914", () => {
+      const name = `${startsWith}${faker.datatype.number()}`;
+      const voucherValue = 50;
+
+      let voucher;
+
+      cy.clearSessionData().loginUserViaRequest();
+      createVoucherInChannel({
+        name,
+        productId: product.id,
+        channelId: defaultChannel.id,
+        value: voucherValue,
+        type: "SHIPPING",
+        country: "US"
+      })
+        .then(voucherResp => {
+          voucher = voucherResp;
+          expect(voucher.id).to.be.ok;
+          dataForCheckout.voucherCode = voucher.code;
+          createCheckoutWithVoucher(dataForCheckout);
+        })
+        .then(({ addPromoCodeResp }) => {
+          expect(addPromoCodeResp.checkoutErrors).to.be.empty;
+          cy.visit(voucherDetailsUrl(voucher.id))
+            .get(VOUCHERS_SELECTORS.shippingDiscountRadioButton)
+            .click()
+            .get(VOUCHERS_SELECTORS.countriesDropdownIcon)
+            .click()
+            .get(BUTTON_SELECTORS.deleteIcon)
+            .click()
+            .get(BUTTON_SELECTORS.deleteIcon)
+            .should("not.exist")
+            .get(VOUCHERS_SELECTORS.assignCountryButton)
+            .click()
+            .assignElements("Poland", false)
+            .addAliasToGraphRequest("VoucherUpdate")
+            .get(BUTTON_SELECTORS.confirm)
+            .click()
+            .wait("@VoucherUpdate");
+          createCheckoutWithVoucher(dataForCheckout);
+        })
+        .then(({ addPromoCodeResp }) => {
+          const errorField = addPromoCodeResp.checkoutErrors[0].field;
+          expect(errorField).to.be.eq("promoCode");
+        });
+    });
   });
 });
