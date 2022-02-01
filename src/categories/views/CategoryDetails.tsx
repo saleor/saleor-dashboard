@@ -252,6 +252,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
         subcategories={mapEdgesToItems(data?.category?.children)}
         subcategoryListToolbar={
           <IconButton
+            data-test-id="delete-icon"
             variant="secondary"
             color="primary"
             onClick={() =>

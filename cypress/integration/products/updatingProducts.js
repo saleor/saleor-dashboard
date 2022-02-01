@@ -67,7 +67,7 @@ filterTests({ definedTags: ["all"] }, () => {
       const updatedName = `${startsWith}${faker.random.number()}`;
       let updatedCategory;
       let updatedCollection;
-      createCategory(updatedName)
+      createCategory({ name: updatedName })
         .then(categoryResp => {
           updatedCategory = categoryResp;
           createCollection(updatedName);
