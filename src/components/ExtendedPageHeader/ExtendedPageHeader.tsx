@@ -6,10 +6,7 @@ import React from "react";
 const useStyles = makeStyles(
   theme => ({
     action: {
-      flex: "0 0 auto",
-      [theme.breakpoints.down("sm")]: {
-        marginTop: theme.spacing()
-      }
+      flex: "0 0 auto"
     },
     block: {
       [theme.breakpoints.down("xs")]: {
@@ -41,13 +38,10 @@ const useStyles = makeStyles(
       display: "flex",
       marginBottom: theme.spacing(2)
     },
-    title: {
-      flex: 1,
-      paddingBottom: theme.spacing(2)
-    },
     titleRow: {
-      display: "flex",
       flex: 1,
+      display: "flex",
+      flexDirection: "row",
       alignItems: "center",
       justifyContent: "space-between"
     }
@@ -64,7 +58,6 @@ interface ExtendedPageHeaderProps {
   inline?: boolean;
   underline?: boolean;
   title?: React.ReactNode;
-  cardMenu?: React.ReactNode;
   testId?: string;
 }
 
@@ -76,8 +69,7 @@ const ExtendedPageHeader: React.FC<ExtendedPageHeaderProps> = props => {
     inline,
     underline,
     title,
-    testId,
-    cardMenu
+    testId
   } = props;
 
   const classes = useStyles(props);
@@ -91,10 +83,7 @@ const ExtendedPageHeader: React.FC<ExtendedPageHeaderProps> = props => {
           [classes.underline]: underline
         })}
       >
-        <div className={classes.titleRow}>
-          {title}
-          {cardMenu}
-        </div>
+        <div className={classes.titleRow}>{title}</div>
         <div className={classNames(classes.action, childrenWrapperClassName)}>
           {children}
         </div>
