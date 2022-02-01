@@ -146,7 +146,6 @@ export const ProductList: React.FC<ProductListProps> = props => {
 
   const intl = useIntl();
   const classes = useStyles(props);
-  const intl = useIntl();
   const gridAttributesFromSettings = settings.columns.filter(
     isAttributeColumnValue
   );
