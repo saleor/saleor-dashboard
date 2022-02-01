@@ -107,11 +107,11 @@ export function getGiftCardWithId(id) {
   return cy.sendRequestWithQuery(query).its("body.data.giftCard");
 }
 
-export function createGiftCard({ tag, currency, amount }) {
+export function createGiftCard({ tag, currency, amount, isActive = true }) {
   const mutation = `mutation{
     giftCardCreate(input:{
       addTags:"${tag}"
-      isActive: true
+      isActive: ${isActive}
       balance: {
         currency: "${currency}"
         amount: ${amount}

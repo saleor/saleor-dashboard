@@ -51,7 +51,7 @@ const GiftCardsListHeader: React.FC = () => {
         <Button
           variant="primary"
           onClick={openCreateDialog}
-          data-test-id="issueCardButton"
+          data-test-id="issue-card-button"
         >
           {intl.formatMessage(messages.issueButtonLabel)}
         </Button>

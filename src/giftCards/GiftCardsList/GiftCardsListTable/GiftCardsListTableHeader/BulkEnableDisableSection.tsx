@@ -113,6 +113,7 @@ const BulkEnableDisableSection: React.FC = () => {
           onClick={handleActivateGiftCards}
           variant="secondary"
           transitionState={activateGiftCardsOpts?.status}
+          data-test-id="activate-gift-cards"
         >
           {intl.formatMessage(messages.enableLabel)}
         </ConfirmButton>
@@ -122,6 +123,7 @@ const BulkEnableDisableSection: React.FC = () => {
           onClick={handleDeactivateGiftCards}
           variant="secondary"
           transitionState={deactivateGiftCardsOpts?.status}
+          data-test-id="deactivate-gift-cards"
         >
           {intl.formatMessage(messages.disableLabel)}
         </ConfirmButton>

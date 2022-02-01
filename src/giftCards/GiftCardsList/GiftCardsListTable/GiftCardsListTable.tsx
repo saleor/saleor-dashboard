@@ -108,9 +108,11 @@ const GiftCardsListTable: React.FC = () => {
                   className={classes.row}
                   key={id}
                   hover={!!giftCard}
+                  data-test-id={"gift-card-row-" + id}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
+                      data-test-id="select-gift-card-checkbox"
                       disabled={!giftCard}
                       disableClickPropagation
                       checked={isSelected(id)}
