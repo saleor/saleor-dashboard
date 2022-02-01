@@ -18,7 +18,7 @@ import filterTests from "../../../../support/filterTests";
 import { changeWeightUnit } from "../../../../support/pages/shippingMethodPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Recalculate weights", () => {
+  describe("As a staff user I want to change shop default weight unit", () => {
     const startsWith = "RecalculateWeight";
     const name = `${startsWith}${faker.datatype.number()}`;
 
@@ -48,7 +48,7 @@ filterTests({ definedTags: ["all"] }, () => {
     });
 
     // Log in as user with shipping permissions after resolving SALEOR-3407 bug
-    it("should recalculate weight after changing shipping weight unit", () => {
+    it("should recalculate weight after changing shipping weight unit. TC: SALEOR_0901", () => {
       const rateName = `${startsWith}${faker.datatype.number()}`;
       const minWeightInKg = 1;
       const maxWeightInKg = 10;

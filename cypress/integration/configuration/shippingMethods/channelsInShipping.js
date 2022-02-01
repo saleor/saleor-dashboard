@@ -20,7 +20,7 @@ import { getFormattedCurrencyAmount } from "../../../support/formatData/formatCu
 import { enterHomePageChangeChannelAndReturn } from "../../../support/pages/channelsPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Channels in shippingMethod", () => {
+  describe("As a staff user I want have different shipping method prices for each channel", () => {
     const startsWith = "ChannelShippingMethod";
     let defaultChannel;
     let plAddress;
@@ -41,7 +41,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should display different price for each channel", () => {
+    it("should be able to display different price for each channel. TC: SALEOR_0805", () => {
       const shippingName = `${startsWith}${faker.datatype.number()}`;
       const defaultChannelPrice = 11;
       const createdChannelPrice = 7;

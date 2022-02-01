@@ -3,3 +3,6 @@ export const SHIPPING_ZONES_LIST = {
   unitSelect: "[id='mui-component-select-unit']",
   saveUnit: '[data-test-id="saveUnit"]'
 };
+
+export const SHIPPING_ZONE_CHECKBOX = shippingId =>
+  `[data-test-id="${shippingId}-checkbox"]`;

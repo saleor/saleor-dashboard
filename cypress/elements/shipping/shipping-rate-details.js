@@ -8,8 +8,8 @@ export const SHIPPING_RATE_DETAILS = {
     min: '[name="min"]',
     max: '[name="max"]'
   },
-  maxWeightInput: '[name*="maxValue"]',
-  minWeightInput: '[name*="minValue"]',
+  maxValueInput: '[name*="maxValue"]',
+  minValueInput: '[name*="minValue"]',
   minDeliveryTimeInput: '[name="minDays"]',
   maxDeliveryTimeInput: '[name="maxDays"]'
 };
