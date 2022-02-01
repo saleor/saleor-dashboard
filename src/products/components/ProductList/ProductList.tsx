@@ -144,7 +144,6 @@ export const ProductList: React.FC<ProductListProps> = props => {
     filterDependency
   } = props;
 
-  const intl = useIntl();
   const classes = useStyles(props);
   const gridAttributesFromSettings = settings.columns.filter(
     isAttributeColumnValue
