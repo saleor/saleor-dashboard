@@ -27,7 +27,9 @@ filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
     before(() => {
       cy.clearSessionData().loginUserViaRequest();
       deleteCategoriesStartsWith(startsWith);
-      createCategory(name).then(categoryResp => (category = categoryResp));
+      createCategory({ name: startsWith }).then(
+        categoryResp => (category = categoryResp)
+      );
     });
 
     beforeEach(() => {

@@ -79,7 +79,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
       createAttribute({ name })
         .then(attributeResp => {
           attribute = attributeResp;
-          createCategory(name);
+          createCategory({ name });
         })
         .then(categoryResp => {
           category = categoryResp;
