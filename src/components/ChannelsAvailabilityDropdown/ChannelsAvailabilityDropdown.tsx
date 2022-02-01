@@ -1,27 +1,25 @@
-import { Menu, Typography } from "@material-ui/core";
-import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
+import { Menu } from "@material-ui/core";
 import { Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import ChannelsAvailabilityMenuContent from "../ChannelsAvailabilityMenuContent";
 import { messages } from "./messages";
-import { useStyles } from "./styles";
 import {
-  Channels,
+  CollectionChannels,
   getChannelAvailabilityColor,
   getChannelAvailabilityLabel,
   getDropdownColor
 } from "./utils";
 
 export interface ChannelsAvailabilityDropdownProps {
-  channels: Channels[];
+  channels: CollectionChannels[];
 }
 
 export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdownProps> = ({
   channels
 }) => {
   const intl = useIntl();
-  const classes = useStyles({});
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const dropdownColor = React.useMemo(() => getDropdownColor(channels), [
@@ -64,28 +62,11 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
           vertical: "top"
         }}
       >
-        <div className={classes.menuContainer}>
-          <div className={classes.row}>
-            <Typography variant="caption" className={classes.caption}>
-              {intl.formatMessage(messages.channel)}
-            </Typography>
-            <Typography variant="caption" className={classes.caption}>
-              {intl.formatMessage(messages.status)}
-            </Typography>
-          </div>
-          {channels.map(channelData => (
-            <div key={channelData.channel.id} className={classes.row}>
-              <Typography>{channelData.channel.name}</Typography>
-              <HorizontalSpacer spacing={4} />
-              <Pill
-                label={intl.formatMessage(
-                  getChannelAvailabilityLabel(channelData)
-                )}
-                color={getChannelAvailabilityColor(channelData)}
-              />
-            </div>
-          ))}
-        </div>
+        <ChannelsAvailabilityMenuContent
+          channels={channels}
+          labelFunction={getChannelAvailabilityLabel}
+          colorFunction={getChannelAvailabilityColor}
+        />
       </Menu>
     </div>
   );

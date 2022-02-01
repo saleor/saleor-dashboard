@@ -2,16 +2,21 @@ import { CollectionList_collections_edges_node_channelListings } from "@saleor/c
 
 import { channelStatusMessages } from "./messages";
 
-export type Channels = Pick<
+export type CollectionChannels = Pick<
   CollectionList_collections_edges_node_channelListings,
   "isPublished" | "publicationDate" | "channel"
 >;
+export type Channels = Pick<
+  CollectionList_collections_edges_node_channelListings,
+  "channel"
+>;
 
-export const isActive = (channelData: Channels) => channelData?.isPublished;
-export const isScheduled = (channelData: Channels) =>
+export const isActive = (channelData: CollectionChannels) =>
+  channelData?.isPublished;
+export const isScheduled = (channelData: CollectionChannels) =>
   channelData?.publicationDate && !channelData?.isPublished;
 
-export const getDropdownColor = (channels: Channels[]) => {
+export const getDropdownColor = (channels: CollectionChannels[]) => {
   if (channels.some(isActive)) {
     return "success";
   }
@@ -21,7 +26,9 @@ export const getDropdownColor = (channels: Channels[]) => {
   return "error";
 };
 
-export const getChannelAvailabilityColor = (channelData: Channels) => {
+export const getChannelAvailabilityColor = (
+  channelData: CollectionChannels
+) => {
   if (isActive(channelData)) {
     return "success";
   }
@@ -31,7 +38,9 @@ export const getChannelAvailabilityColor = (channelData: Channels) => {
   return "error";
 };
 
-export const getChannelAvailabilityLabel = (channelData: Channels) => {
+export const getChannelAvailabilityLabel = (
+  channelData: CollectionChannels
+) => {
   if (isActive(channelData)) {
     return channelStatusMessages.published;
   }

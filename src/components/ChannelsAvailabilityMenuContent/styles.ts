@@ -32,5 +32,5 @@ export const useStyles = makeStyles(
       padding: theme.spacing(1, 2, 1, 2)
     }
   }),
-  { name: "ChannelsAvailabilityDropdown" }
+  { name: "ChannelsAvailabilityMenuContent" }
 );
