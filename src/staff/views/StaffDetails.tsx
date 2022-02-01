@@ -101,7 +101,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
 
   return (
     <TypedStaffMemberDetailsQuery displayLoader variables={{ id }}>
-      {({ data, loading }) => {
+      {({ data, loading, refetch }) => {
         const staffMember = data?.user;
 
         if (staffMember === null) {
@@ -123,6 +123,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
               status: "success",
               text: intl.formatMessage(commonMessages.savedChanges)
             });
+            refetch();
           } else {
             notify({
               status: "error",
@@ -138,6 +139,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
               text: intl.formatMessage(commonMessages.savedChanges)
             });
             navigate(staffMemberDetailsUrl(id));
+            refetch();
           }
         };
 
