@@ -515,6 +515,14 @@
     "context": "apps section name",
     "string": "Apps"
   },
+  "src_dot_apps_dot_appActivated": {
+    "context": "snackbar text",
+    "string": "App activated"
+  },
+  "src_dot_apps_dot_appDeactivated": {
+    "context": "snackbar text",
+    "string": "App deactivated"
+  },
   "src_dot_apps_dot_components_dot_AppActivateDialog_dot_1499521723": {
     "context": "dialog header",
     "string": "Activate App"
@@ -834,53 +842,33 @@
     "context": "delete token",
     "string": "Are you sure you want to delete token {token}?"
   },
-  "src_dot_apps_dot_views_dot_AppDetails_dot_2021043385": {
-    "context": "snackbar text",
-    "string": "App activated"
+  "src_dot_apps_dot_failedToFetchAppSettings": {
+    "context": "app settings error",
+    "string": "Failed to fetch app settings"
   },
-  "src_dot_apps_dot_views_dot_AppDetails_dot_3791371350": {
-    "context": "snackbar text",
-    "string": "App deactivated"
-  },
-  "src_dot_apps_dot_views_dot_AppInstall_dot_2538706256": {
+  "src_dot_apps_dot_views_dot_AppInstall_dot_installApp": {
     "context": "window title",
     "string": "Install App"
   },
-  "src_dot_apps_dot_views_dot_AppSettings_dot_2140018198": {
-    "context": "app settings error",
-    "string": "Failed to fetch app settings"
-  },
-  "src_dot_apps_dot_views_dot_App_dot_2140018198": {
-    "context": "app settings error",
-    "string": "Failed to fetch app settings"
-  },
-  "src_dot_apps_dot_views_dot_AppsList_dot_1180774955": {
-    "context": "app has been installed",
-    "string": "{name} is ready to be used"
-  },
-  "src_dot_apps_dot_views_dot_AppsList_dot_3076215778": {
-    "context": "app has been removed",
-    "string": "App successfully removed"
-  },
-  "src_dot_apps_dot_views_dot_AppsList_dot_539268521": {
+  "src_dot_apps_dot_views_dot_AppsList_dot_appCouldntInstall": {
     "context": "message title",
     "string": "Couldn’t Install {name}"
   },
-  "src_dot_apps_dot_views_dot_AppsList_dot_966773578": {
+  "src_dot_apps_dot_views_dot_AppsList_dot_appInstalled": {
     "context": "message title",
     "string": "App installed"
   },
-  "src_dot_apps_dot_views_dot_CustomAppCreate_dot_3230241731": {
+  "src_dot_apps_dot_views_dot_AppsList_dot_appReadyToUse": {
+    "context": "app has been installed",
+    "string": "{name} is ready to be used"
+  },
+  "src_dot_apps_dot_views_dot_AppsList_dot_appRemoved": {
+    "context": "app has been removed",
+    "string": "App successfully removed"
+  },
+  "src_dot_apps_dot_views_dot_CustomAppCreate_dot_createApp": {
     "context": "window title",
     "string": "Create App"
-  },
-  "src_dot_apps_dot_views_dot_CustomAppDetails_dot_2021043385": {
-    "context": "snackbar text",
-    "string": "App activated"
-  },
-  "src_dot_apps_dot_views_dot_CustomAppDetails_dot_3791371350": {
-    "context": "snackbar text",
-    "string": "App deactivated"
   },
   "src_dot_assign": {
     "context": "button",

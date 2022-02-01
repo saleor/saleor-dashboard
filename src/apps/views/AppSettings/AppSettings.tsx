@@ -1,3 +1,4 @@
+import { appMessages } from "@saleor/apps/messages";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -37,10 +38,7 @@ export const AppSettings: React.FC<AppSettingsProps> = ({ id }) => {
       onError={() =>
         notify({
           status: "error",
-          text: intl.formatMessage({
-            defaultMessage: "Failed to fetch app settings",
-            description: "app settings error"
-          })
+          text: intl.formatMessage(appMessages.failedToFetchAppSettings)
         })
       }
     />

@@ -13,6 +13,7 @@ import CustomAppCreatePage, {
 import { useAppCreateMutation } from "../../mutations";
 import { AppCreate } from "../../types/AppCreate";
 import { appsListUrl, customAppUrl } from "../../urls";
+import { messages } from "./messages";
 
 interface CustomAppCreateProps {
   setToken: (token: string) => void;
@@ -58,12 +59,7 @@ export const CustomAppCreate: React.FC<CustomAppCreateProps> = ({
 
   return (
     <>
-      <WindowTitle
-        title={intl.formatMessage({
-          defaultMessage: "Create App",
-          description: "window title"
-        })}
-      />
+      <WindowTitle title={intl.formatMessage(messages.createApp)} />
       <CustomAppCreatePage
         disabled={false}
         errors={createAppOpts.data?.appCreate.errors || []}

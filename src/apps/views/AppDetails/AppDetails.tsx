@@ -1,3 +1,4 @@
+import { appMessages } from "@saleor/apps/messages";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -45,10 +46,7 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
       if (errors?.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage({
-            defaultMessage: "App activated",
-            description: "snackbar text"
-          })
+          text: intl.formatMessage(appMessages.appActivated)
         });
         refetch();
         closeModal();
@@ -70,10 +68,7 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
       if (errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage({
-            defaultMessage: "App deactivated",
-            description: "snackbar text"
-          })
+          text: intl.formatMessage(appMessages.appDeactivated)
         });
         refetch();
         closeModal();
