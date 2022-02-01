@@ -45,7 +45,7 @@ filterTests({ definedTags: ["all"] }, () => {
         .softExpectSkeletonIsVisible();
     });
 
-    xit("should be able to create product type without shipping required. TC: SALEOR_1501", () => {
+    it("should be able to create product type without shipping required. TC: SALEOR_1501", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createProductType({ name })
@@ -59,7 +59,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    xit("should be able to create product type with shipping required. TC: SALEOR_1502", () => {
+    it("should be able to create product type with shipping required. TC: SALEOR_1502", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const shippingWeight = 10;
 
@@ -75,7 +75,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    xit("should be able to create product type with gift card kind. TC: SALEOR_1510", () => {
+    it("should be able to create product type with gift card kind. TC: SALEOR_1510", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createProductType({ name, giftCard: true })
@@ -89,7 +89,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    xit("should be able to update product type with product attribute. TC: SALEOR_1503", () => {
+    it("should be able to update product type with product attribute. TC: SALEOR_1503", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createTypeProduct({ name })
@@ -110,7 +110,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    xit("should be able to update product type with variant attribute. TC: SALEOR_1504", () => {
+    it("should be able to update product type with variant attribute. TC: SALEOR_1504", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createTypeProduct({ name, hasVariants: false })
@@ -135,7 +135,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    xit("should be able to delete product type. TC: SALEOR_1505", () => {
+    it("should be able to delete product type. TC: SALEOR_1505", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createTypeProduct({ name, hasVariants: false }).then(productType => {
@@ -153,7 +153,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    xit("should be able to delete product type with assigned product. TC: SALEOR_1509", () => {
+    it("should be able to delete product type with assigned product. TC: SALEOR_1509", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let productType;
 
@@ -190,7 +190,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    xit("should be able to remove variant attribute from product type. TC: SALEOR_1506", () => {
+    it("should be able to remove variant attribute from product type. TC: SALEOR_1506", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let productType;
 
@@ -216,7 +216,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    xit("should be able to remove product attribute from product type. TC: SALEOR_1507", () => {
+    it("should be able to remove product attribute from product type. TC: SALEOR_1507", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let productType;
 
