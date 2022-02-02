@@ -1,6 +1,11 @@
+import { appDeepUrl } from "@saleor/apps/urls";
+import { Extension } from "@saleor/apps/useExtensions";
 import { SidebarMenuItem } from "@saleor/macaw-ui";
 import { orderDraftListUrl, orderListUrl } from "@saleor/orders/urls";
+import { AppExtensionMountEnum } from "@saleor/types/globalTypes";
 import { matchPath } from "react-router";
+
+import { FilterableMenuItem } from "./menuStructure";
 
 export function isMenuActive(location: string, menuItem: SidebarMenuItem) {
   if (menuItem.children) {
@@ -25,3 +30,37 @@ export function isMenuActive(location: string, menuItem: SidebarMenuItem) {
         path: menuItemUrl
       });
 }
+
+export const mapToExtensionsItems = (
+  extensions: Extension[],
+  header: FilterableMenuItem
+) => {
+  const items: FilterableMenuItem[] = extensions.map(
+    ({ label, id, appId, url, permissions, open }) => ({
+      ariaLabel: id,
+      id: `extension-${id}`,
+      label,
+      url: appDeepUrl(appId, url),
+      onClick: open,
+      permissions
+    })
+  );
+  if (items.length) {
+    items.unshift(header);
+  }
+  return items;
+};
+
+export const getMenuItemExtension = (
+  extensions: Record<AppExtensionMountEnum, Extension[]>,
+  menuItem: SidebarMenuItem
+) => {
+  const extensionsList = Object.values(extensions).reduce(
+    (list, extensions) => list.concat(extensions),
+    []
+  );
+  const extension = extensionsList.find(
+    extension => menuItem.id === `extension-${extension.id}`
+  );
+  return extension;
+};

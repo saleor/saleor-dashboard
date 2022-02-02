@@ -9,8 +9,6 @@ import pagesIcon from "@assets/images/menu-pages-icon.svg";
 import translationIcon from "@assets/images/menu-translation-icon.svg";
 import {
   extensionMountPoints,
-  getMenuItemExtension,
-  mapToExtensionsItems,
   useExtensions
 } from "@saleor/apps/useExtensions";
 import { configurationMenuUrl } from "@saleor/configuration";
@@ -32,6 +30,7 @@ import { orderDraftListUrl, orderListUrl } from "../../orders/urls";
 import { productListUrl } from "../../products/urls";
 import { languageListUrl } from "../../translations/urls";
 import { PermissionEnum } from "../../types/globalTypes";
+import { getMenuItemExtension, mapToExtensionsItems } from "./utils";
 
 export interface FilterableMenuItem extends Omit<SidebarMenuItem, "children"> {
   children?: FilterableMenuItem[];

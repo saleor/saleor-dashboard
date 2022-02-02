@@ -71,18 +71,19 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
                 description="link"
               />
             </ExternalLink>
-            <ButtonBase
-              className={classes.headerLinkContainer}
-              disableRipple
-              onClick={navigateToAppSettings}
-            >
-              <SVG src={settingsIcon} />
-
-              <FormattedMessage
-                defaultMessage="Edit settings"
-                description="link"
-              />
-            </ButtonBase>
+            {data.configurationUrl && (
+              <ButtonBase
+                className={classes.headerLinkContainer}
+                disableRipple
+                onClick={navigateToAppSettings}
+              >
+                <SVG src={settingsIcon} />
+                <FormattedMessage
+                  defaultMessage="Edit settings"
+                  description="link"
+                />
+              </ButtonBase>
+            )}
             <ButtonBase
               className={classes.headerLinkContainer}
               disableRipple

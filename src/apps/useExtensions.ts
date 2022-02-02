@@ -1,5 +1,3 @@
-import { FilterableMenuItem } from "@saleor/components/AppLayout/menuStructure";
-import { SidebarMenuItem } from "@saleor/macaw-ui";
 import {
   AppExtensionMountEnum,
   PermissionEnum
@@ -9,9 +7,8 @@ import { mapEdgesToItems } from "@saleor/utils/maps";
 import { AppData, useExternalApp } from "./components/ExternalAppContext";
 import { useExtensionList } from "./queries";
 import { ExtensionList_appExtensions_edges_node } from "./types/ExtensionList";
-import { appDeepUrl } from "./urls";
 
-interface Extension {
+export interface Extension {
   id: string;
   appId: string;
   accessToken: string;
@@ -61,40 +58,6 @@ export const mapToMenuItems = (extensions: Extension[]) =>
     testId: `extension-${id}`,
     onSelect: open
   }));
-
-export const mapToExtensionsItems = (
-  extensions: Extension[],
-  header: FilterableMenuItem
-) => {
-  const items: FilterableMenuItem[] = extensions.map(
-    ({ label, id, appId, url, permissions, open }) => ({
-      ariaLabel: id,
-      id: `extension-${id}`,
-      label,
-      url: appDeepUrl(appId, url),
-      onClick: open,
-      permissions
-    })
-  );
-  if (items.length) {
-    items.unshift(header);
-  }
-  return items;
-};
-
-export const getMenuItemExtension = (
-  extensions: Record<AppExtensionMountEnum, Extension[]>,
-  menuItem: SidebarMenuItem
-) => {
-  const extensionsList = Object.values(extensions).reduce(
-    (list, extensions) => list.concat(extensions),
-    []
-  );
-  const extension = extensionsList.find(
-    extension => menuItem.id === `extension-${extension.id}`
-  );
-  return extension;
-};
 
 export const useExtensions = <T extends AppExtensionMountEnum>(
   mountList: T[]
