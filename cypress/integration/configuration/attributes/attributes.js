@@ -22,19 +22,32 @@ filterTests({ definedTags: ["all"] }, () => {
   describe("As an admin I want to create product attribute", () => {
     const startsWith = "AttrCreate";
     const attributesTypes = [
-      "DROPDOWN",
-      "MULTISELECT",
-      "FILE",
-      "RICH_TEXT",
-      "BOOLEAN",
-      "DATE",
-      "DATE_TIME"
+      { type: "DROPDOWN", testCase: "SALEOR_0501" },
+      { type: "MULTISELECT", testCase: "SALEOR_0502" },
+      { type: "FILE", testCase: "SALEOR_0503" },
+      { type: "RICH_TEXT", testCase: "SALEOR_0504" },
+      { type: "BOOLEAN", testCase: "SALEOR_0505" },
+      { type: "DATE", testCase: "SALEOR_0523" },
+      { type: "DATE_TIME", testCase: "SALEOR_0524" }
     ];
-    const attributeReferenceType = ["PRODUCT", "PAGE"];
+    const attributeReferenceType = [
+      { type: "PRODUCT", testCase: "SALEOR_0506" },
+      { type: "PAGE", testCase: "SALEOR_0507" }
+    ];
     const attributeNumericType = [
-      { unitSystem: "IMPERIAL", unitsOf: "DISTANCE", unit: "FT" },
-      { unitSystem: "METRIC", unitsOf: "VOLUME", unit: "CUBIC_CENTIMETER" },
-      { unitSystem: "without selecting unit" }
+      {
+        unitSystem: "IMPERIAL",
+        unitsOf: "DISTANCE",
+        unit: "FT",
+        testCase: "SALEOR_0508"
+      },
+      {
+        unitSystem: "METRIC",
+        unitsOf: "VOLUME",
+        unit: "CUBIC_CENTIMETER",
+        testCase: "SALEOR_0509"
+      },
+      { unitSystem: "without selecting unit", testCase: "SALEOR_0510" }
     ];
 
     before(() => {
@@ -51,31 +64,34 @@ filterTests({ definedTags: ["all"] }, () => {
     });
 
     attributesTypes.forEach(attributeType => {
-      it(`Admin should be able to create ${attributeType} attribute`, () => {
+      it(`should be able to create ${attributeType.type} attribute. TC:${attributeType.testCase}`, () => {
         const attributeName = `${startsWith}${faker.datatype.number()}`;
 
-        createAttributeWithInputType({ name: attributeName, attributeType })
+        createAttributeWithInputType({
+          name: attributeName,
+          attributeType: attributeType.type
+        })
           .then(({ attribute }) => {
             getAttribute(attribute.id);
           })
           .then(attribute => {
             expectCorrectDataInAttribute(attribute, {
               attributeName,
-              attributeType
+              attributeType: attributeType.type
             });
           });
       });
     });
 
     attributeReferenceType.forEach(entityType => {
-      it(`Admin should be able to create reference to ${entityType} attribute`, () => {
+      it(`should be able to create ${entityType.type} attribute. TC:${entityType.testCase}`, () => {
         const attributeType = "REFERENCE";
         const attributeName = `${startsWith}${faker.datatype.number()}`;
 
         createAttributeWithInputType({
           name: attributeName,
           attributeType,
-          entityType
+          entityType: entityType.type
         })
           .then(({ attribute }) => {
             getAttribute(attribute.id);
@@ -84,14 +100,14 @@ filterTests({ definedTags: ["all"] }, () => {
             expectCorrectDataInAttribute(attribute, {
               attributeName,
               attributeType,
-              entityType
+              entityType: entityType.type
             });
           });
       });
     });
 
     attributeNumericType.forEach(numericSystemType => {
-      it(`Admin should be able to create numeric ${numericSystemType.unitSystem} attribute`, () => {
+      it(`should be able to create numeric ${numericSystemType.unitSystem} attribute. TC:${numericSystemType.testCase}`, () => {
         const attributeType = "NUMERIC";
         const attributeName = `${startsWith}${faker.datatype.number()}`;
 
@@ -113,7 +129,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("Admin should be able to create attribute without require value", () => {
+    it("should be able to create attribute without require value. TC:SALEOR_0511", () => {
       const attributeType = "BOOLEAN";
       const attributeName = `${startsWith}${faker.datatype.number()}`;
 
@@ -134,7 +150,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("Admin should be able delete product attribute", () => {
+    it("should be able delete product attribute. TC:SALEOR_0525", () => {
       const attributeName = `${startsWith}${faker.datatype.number()}`;
 
       createAttribute({
@@ -151,7 +167,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("Admin should be able update product attribute", () => {
+    it("should be able update product attribute. TC:SALEOR_0526", () => {
       const attributeName = `${startsWith}${faker.datatype.number()}`;
       const attributeUpdatedName = `${startsWith}${faker.datatype.number()}`;
 
