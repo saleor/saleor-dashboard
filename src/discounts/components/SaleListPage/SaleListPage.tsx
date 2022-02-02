@@ -1,5 +1,6 @@
 import { Card } from "@material-ui/core";
 import Container from "@saleor/components/Container";
+import { getByName } from "@saleor/components/Filter/utils";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
 import { SaleListUrlSortField } from "@saleor/discounts/urls";
@@ -51,6 +52,8 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
   const intl = useIntl();
   const structure = createFilterStructure(intl, filterOpts);
 
+  const filterDependency = structure.find(getByName("channel"));
+
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.sales)}>
@@ -78,7 +81,7 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
           onTabDelete={onTabDelete}
           onTabSave={onTabSave}
         />
-        <SaleList {...listProps} />
+        <SaleList filterDependency={filterDependency} {...listProps} />
       </Card>
     </Container>
   );

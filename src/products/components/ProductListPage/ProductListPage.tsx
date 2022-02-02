@@ -6,6 +6,7 @@ import ColumnPicker, {
   ColumnPickerChoice
 } from "@saleor/components/ColumnPicker";
 import Container from "@saleor/components/Container";
+import { getByName } from "@saleor/components/Filter/utils";
 import FilterBar from "@saleor/components/FilterBar";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
@@ -113,6 +114,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     onUpdateListSettings("columns", columns);
 
   const filterStructure = createFilterStructure(intl, filterOpts);
+
+  const filterDependency = filterStructure.find(getByName("channel"));
 
   const columns: ColumnPickerChoice[] = [
     {
@@ -241,6 +244,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           channelsCount={channelsCount}
           selectedChannelId={selectedChannelId}
           onUpdateListSettings={onUpdateListSettings}
+          filterDependency={filterDependency}
         />
       </Card>
     </Container>
