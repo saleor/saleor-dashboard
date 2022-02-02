@@ -16,7 +16,7 @@ const WebhookCreate: React.FC<RouteComponentProps<any>> = ({ match }) => (
 const Component = () => (
   <>
     <Route exact path={webhookAddPath(":id")} component={WebhookCreate} />
-    <Route path={webhookPath(":id")} component={WebhookDetails} />
+    <Route exact path={webhookPath(":id")} component={WebhookDetails} />
   </>
 );
 

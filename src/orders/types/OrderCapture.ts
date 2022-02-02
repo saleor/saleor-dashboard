@@ -597,7 +597,7 @@ export interface OrderCapture_orderCapture_order {
   undiscountedTotal: OrderCapture_orderCapture_order_undiscountedTotal;
   user: OrderCapture_orderCapture_order_user | null;
   userEmail: string | null;
-  shippingMethods: OrderCapture_orderCapture_order_shippingMethods[];
+  shippingMethods: (OrderCapture_orderCapture_order_shippingMethods | null)[] | null;
   invoices: (OrderCapture_orderCapture_order_invoices | null)[] | null;
   channel: OrderCapture_orderCapture_order_channel;
 }

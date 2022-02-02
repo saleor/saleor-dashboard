@@ -597,7 +597,7 @@ export interface OrderLineDelete_orderLineDelete_order {
   undiscountedTotal: OrderLineDelete_orderLineDelete_order_undiscountedTotal;
   user: OrderLineDelete_orderLineDelete_order_user | null;
   userEmail: string | null;
-  shippingMethods: OrderLineDelete_orderLineDelete_order_shippingMethods[];
+  shippingMethods: (OrderLineDelete_orderLineDelete_order_shippingMethods | null)[] | null;
   invoices: (OrderLineDelete_orderLineDelete_order_invoices | null)[] | null;
   channel: OrderLineDelete_orderLineDelete_order_channel;
 }

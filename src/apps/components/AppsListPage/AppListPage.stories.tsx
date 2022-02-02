@@ -32,7 +32,7 @@ const props: AppsListPageProps = {
   onNextPage: () => undefined,
   onPreviousPage: () => undefined,
   onRowClick: () => undefined,
-  onSettingsRowClick: () => undefined
+  onRowAboutClick: () => undefined
 };
 
 storiesOf("Views / Apps / Apps list", module)

@@ -590,7 +590,7 @@ export interface OrderDetails_order {
   undiscountedTotal: OrderDetails_order_undiscountedTotal;
   user: OrderDetails_order_user | null;
   userEmail: string | null;
-  shippingMethods: OrderDetails_order_shippingMethods[];
+  shippingMethods: (OrderDetails_order_shippingMethods | null)[] | null;
   invoices: (OrderDetails_order_invoices | null)[] | null;
   channel: OrderDetails_order_channel;
 }

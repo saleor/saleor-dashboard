@@ -597,7 +597,7 @@ export interface OrderCancel_orderCancel_order {
   undiscountedTotal: OrderCancel_orderCancel_order_undiscountedTotal;
   user: OrderCancel_orderCancel_order_user | null;
   userEmail: string | null;
-  shippingMethods: OrderCancel_orderCancel_order_shippingMethods[];
+  shippingMethods: (OrderCancel_orderCancel_order_shippingMethods | null)[] | null;
   invoices: (OrderCancel_orderCancel_order_invoices | null)[] | null;
   channel: OrderCancel_orderCancel_order_channel;
 }

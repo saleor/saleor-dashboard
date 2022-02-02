@@ -89,7 +89,7 @@ export interface GiftCardActivate_giftCardActivate_giftCard {
   initialBalance: GiftCardActivate_giftCardActivate_giftCard_initialBalance | null;
   currentBalance: GiftCardActivate_giftCardActivate_giftCard_currentBalance | null;
   id: string;
-  tags: GiftCardActivate_giftCardActivate_giftCard_tags[] | null;
+  tags: GiftCardActivate_giftCardActivate_giftCard_tags[];
 }
 
 export interface GiftCardActivate_giftCardActivate {

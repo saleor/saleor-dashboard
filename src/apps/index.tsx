@@ -7,6 +7,7 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
+  appDetailsPath,
   AppDetailsUrlQueryParams,
   appInstallPath,
   AppInstallUrlQueryParams,
@@ -18,9 +19,10 @@ import {
   customAppPath,
   CustomAppUrlQueryParams
 } from "./urls";
+import AppView from "./views/App";
 import AppDetailsView from "./views/AppDetails";
-import AppDetailsSettingsView from "./views/AppDetailsSettings";
 import AppInstallView from "./views/AppInstall";
+import AppSettingsView from "./views/AppSettings";
 import AppsListView from "./views/AppsList";
 import CustomAppCreateView from "./views/CustomAppCreate";
 import CustomAppDetailsView from "./views/CustomAppDetails";
@@ -36,9 +38,13 @@ const AppDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
   );
 };
 
-const AppDetailsSettings: React.FC<RouteComponentProps<{ id: string }>> = ({
+const AppSettings: React.FC<RouteComponentProps<{ id: string }>> = ({
   match
-}) => <AppDetailsSettingsView id={decodeURIComponent(match.params.id)} />;
+}) => <AppSettingsView id={decodeURIComponent(match.params.id)} />;
+
+const App: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => (
+  <AppView id={decodeURIComponent(match.params.id)} />
+);
 
 const AppInstall: React.FC<RouteComponentProps> = props => {
   const qs = parseQs(location.search.substr(1));
@@ -96,12 +102,9 @@ const Component = () => {
           render={() => <CustomAppCreateView setToken={setToken} />}
         />
         <Route exact path={appInstallPath} component={AppInstall} />
-        <Route exact path={appPath(":id")} component={AppDetails} />
-        <Route
-          exact
-          path={appSettingsPath(":id")}
-          component={AppDetailsSettings}
-        />
+        <Route exact path={appDetailsPath(":id")} component={AppDetails} />
+        <Route exact path={appSettingsPath(":id")} component={AppSettings} />
+        <Route path={appPath(":id")} component={App} />
         <Route
           exact
           path={customAppPath(":id")}
@@ -113,7 +116,6 @@ const Component = () => {
             />
           )}
         />
-
         <WebhooksRoutes />
       </Switch>
     </>
