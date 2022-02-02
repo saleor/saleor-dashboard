@@ -9,7 +9,7 @@ export const GIFT_CARD_DIALOG = {
     expiryDateRadioButton: '[value="EXPIRY_DATE"]',
     expiryPeriodAmount: '[name="expiryPeriodAmount"]',
     expiryPeriodTypeButton: '[id*="select-expiryPeriodType"]',
-    expiryPeriodMonthType: '[data-test-id="MONTH"]',
+    expiryPeriodMonthType: '[data-test-id="select-field-option-MONTH"]',
     expiryDateInput: '[name="expiryDate"]'
   },
   noteInput: '[name="note"]',
