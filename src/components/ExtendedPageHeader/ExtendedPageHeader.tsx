@@ -61,18 +61,15 @@ const ExtendedPageHeader: React.FC<ExtendedPageHeaderProps> = props => {
   const classes = useStyles(props);
 
   return (
-    <>
-      <div
-        data-test-id={testId}
-        className={classNames(classes.root, className, {
-          [classes.block]: !inline
-        })}
-      >
-        <div className={classes.titleRow}>{title}</div>
-        <div className={classes.action}>{children}</div>
-      </div>
+    <div
+      data-test-id={testId}
+      className={classNames(classes.root, className, {
+        [classes.block]: !inline
+      })}
+    >
+      <div className={classes.titleRow}>{title}</div>
       <div className={classes.action}>{children}</div>
-    </>
+    </div>
   );
 };
 ExtendedPageHeader.displayName = "ExtendedPageHeader";
