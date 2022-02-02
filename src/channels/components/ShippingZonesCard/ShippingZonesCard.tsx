@@ -6,6 +6,7 @@ import {
   Typography
 } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -22,10 +23,23 @@ const messages = defineMessages({
   },
   subtitle: {
     defaultMessage:
-      "Select Shipping Zones that will be supplied via this channel. You can assign Shipping Zones to multiple channels.",
+      "Select shipping zones that will be supplied via this channel. You can assign shipping zones to multiple channels.",
     description: "card subtitle"
+  },
+  allSelectedMessage: {
+    defaultMessage: "All available shipping zones have been selected",
+    description: "all selected zones card message"
   }
 });
+
+const useStyles = makeStyles(
+  theme => ({
+    infoMessage: {
+      padding: theme.spacing(3)
+    }
+  }),
+  { name: "ShippingZonesCard" }
+);
 
 type ShippingZonesCardProps = ShippingZonesProps;
 
@@ -37,6 +51,7 @@ const ShippingZonesCard: React.FC<ShippingZonesCardProps> = props => {
   } = props;
 
   const expanderClasses = useExpanderStyles({});
+  const classes = useStyles();
   const intl = useIntl();
 
   const hasMoreZonesToBeSelected = totalCount !== shippingZones.length;
@@ -48,14 +63,25 @@ const ShippingZonesCard: React.FC<ShippingZonesCardProps> = props => {
         <Typography>{intl.formatMessage(messages.subtitle)}</Typography>
       </CardContent>
       <Accordion classes={expanderClasses}>
-        <ShippingZonesListHeader shippingZones={shippingZones} />
+        <ShippingZonesListHeader
+          shippingZones={shippingZones}
+          totalCount={totalCount}
+        />
         <Divider />
         {shippingZones.map(zone => (
           <ShippingZoneItem zone={zone} onDelete={removeShippingZone} />
         ))}
         {hasMoreZonesToBeSelected ? (
           <ShippingZonesCardListFooter {...props} />
-        ) : null}
+        ) : (
+          <Typography
+            color="textSecondary"
+            variant="subtitle1"
+            className={classes.infoMessage}
+          >
+            {intl.formatMessage(messages.allSelectedMessage)}
+          </Typography>
+        )}
       </Accordion>
     </Card>
   );

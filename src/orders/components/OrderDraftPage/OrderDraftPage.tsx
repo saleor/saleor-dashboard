@@ -139,7 +139,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
         </div>
         <div>
           <OrderCustomer
-            canEditAddresses={true}
+            canEditAddresses={!!order?.user}
             canEditCustomer={true}
             fetchUsers={fetchUsers}
             hasMore={hasMore}

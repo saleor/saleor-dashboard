@@ -42,7 +42,8 @@ const props: ChannelDetailsPageProps = {
   fetchMoreShippingZones: {
     loading: false,
     hasMore: false,
-    onFetchMore: () => undefined
+    onFetchMore: () => undefined,
+    totalCount: 0
   }
 };
 

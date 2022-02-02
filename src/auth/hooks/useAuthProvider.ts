@@ -1,5 +1,6 @@
 import { IMessageContext } from "@saleor/components/messages";
 import { APP_DEFAULT_URI, APP_MOUNT_URI, DEMO_MODE } from "@saleor/config";
+import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { commonMessages } from "@saleor/intl";
 import {
@@ -49,6 +50,10 @@ export function useAuthProvider({
   } = useAuth();
   const navigate = useNavigator();
   const { authenticated, authenticating, user } = useAuthState();
+  const [requestedExternalPluginId] = useLocalStorage(
+    "requestedExternalPluginId",
+    null
+  );
   const [error, setError] = useState<UserContextError>();
   const permitCredentialsAPI = useRef(true);
 
@@ -65,7 +70,12 @@ export function useAuthProvider({
   }, [authenticated]);
 
   useEffect(() => {
-    if (!authenticated && !authenticating && permitCredentialsAPI.current) {
+    if (
+      !authenticated &&
+      !authenticating &&
+      !requestedExternalPluginId &&
+      permitCredentialsAPI.current
+    ) {
       permitCredentialsAPI.current = false;
       loginWithCredentialsManagementAPI(handleLogin);
     }
