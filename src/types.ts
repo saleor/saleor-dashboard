@@ -1,5 +1,5 @@
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { MutationResult } from "react-apollo";
+import { MutationFetchResult, MutationResult } from "react-apollo";
 
 import { IFilter, IFilterElement } from "./components/Filter";
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
@@ -131,7 +131,7 @@ export interface PartialMutationProviderOutput<
   TVariables extends {} = {}
 > {
   opts: MutationResult<TData> & MutationResultAdditionalProps;
-  mutate: (variables: TVariables) => void;
+  mutate: (variables: TVariables) => Promise<MutationFetchResult<TData>>;
 }
 
 export interface Node {
