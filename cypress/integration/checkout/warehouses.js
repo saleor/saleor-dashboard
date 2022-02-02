@@ -17,14 +17,14 @@ import {
 import filterTests from "../../support/filterTests";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Warehouses in checkout", () => {
+  describe("Order product to country not listed in warehouse", () => {
     const startsWith = `CyWarehouseCheckout`;
     let defaultChannel;
     let usAddress;
     let plAddress;
     let warehouse;
 
-    it("should not be possible to buy product for country not listed in warehouse", () => {
+    it("should not be possible to buy product for country not listed in warehouse. TC: SALEOR_0408", () => {
       cy.clearSessionData().loginUserViaRequest();
       deleteShippingStartsWith(startsWith);
       deleteProductsStartsWith(startsWith);

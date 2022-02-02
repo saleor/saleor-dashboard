@@ -12,7 +12,10 @@ import {
   completeCheckout,
   createCheckout
 } from "../../support/api/requests/Checkout";
-import { getOrder } from "../../support/api/requests/Order";
+import {
+  getOrder,
+  updateOrdersSettings
+} from "../../support/api/requests/Order";
 import {
   createDigitalContent,
   createTypeProduct
@@ -35,7 +38,7 @@ import {
 import filterTests from "../../support/filterTests";
 
 filterTests({ definedTags: ["all", "critical"] }, () => {
-  describe("Purchase products with all products types", () => {
+  describe("Order physical and digital products", () => {
     const startsWith = `CyPurchaseByType`;
     const name = `${startsWith}${faker.datatype.number()}`;
     const email = `${startsWith}@example.com`;
@@ -54,6 +57,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
       deleteProductsStartsWith(startsWith);
       deleteShippingStartsWith(startsWith);
+      updateOrdersSettings();
       getDefaultChannel().then(channelResp => (defaultChannel = channelResp));
       cy.fixture("addresses")
         .then(addresses => {
@@ -96,7 +100,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
       };
     });
 
-    it("should purchase digital product", () => {
+    it("should purchase digital product. TC: SALEOR_0402", () => {
       const digitalName = `${startsWith}${faker.datatype.number()}`;
       let variants;
 
@@ -139,7 +143,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         });
     });
 
-    it("should purchase physical product", () => {
+    it("should purchase physical product. TC: SALEOR_0403", () => {
       const physicalName = `${startsWith}${faker.datatype.number()}`;
       createTypeProduct({
         name: physicalName,
@@ -172,7 +176,46 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         });
     });
 
-    it("should purchase multiple products with all product types", () => {
+    it("should purchase physical product as a logged in customer. TC: SALEOR_0409", () => {
+      const physicalName = `${startsWith}${faker.datatype.number()}`;
+      let variantsList;
+
+      createTypeProduct({
+        name: physicalName,
+        attributeId: attribute.id,
+        shippable: true
+      })
+        .then(productType => {
+          createProductData.name = physicalName;
+          createProductData.productTypeId = productType.id;
+          createProductInChannel(createProductData);
+        })
+        .then(({ variantsList: variantsListResp }) => {
+          variantsList = variantsListResp;
+          cy.loginInShop();
+        })
+        .then(() => {
+          createWaitingForCaptureOrder({
+            channelSlug: defaultChannel.slug,
+            email,
+            variantsList,
+            shippingMethodName: shippingMethod.name,
+            address
+          });
+        })
+        .then(({ order }) => {
+          getOrder(order.id);
+        })
+        .then(order => {
+          softExpect(
+            order.isShippingRequired,
+            "Check if is shipping required in order"
+          ).to.eq(true);
+          expect(order.status, testsMessage).to.be.eq("UNFULFILLED");
+        });
+    });
+
+    it("should purchase multiple products with all product types. TC: SALEOR_0404", () => {
       const physicalName = `${startsWith}${faker.datatype.number()}`;
       const digitalName = `${startsWith}${faker.datatype.number()}`;
       let digitalProductVariantsList;

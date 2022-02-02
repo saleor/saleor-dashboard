@@ -142,6 +142,7 @@ export function completeCheckout(checkoutId, paymentData) {
     checkoutComplete(checkoutId:"${checkoutId}" ${paymentDataLine}){
       order{
         id
+        status
         paymentStatus
         total{
           gross{

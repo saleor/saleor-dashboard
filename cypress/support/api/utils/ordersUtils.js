@@ -11,10 +11,10 @@ export function createWaitingForCaptureOrder({
   email,
   variantsList,
   shippingMethodName,
-  address
+  address,
+  auth = "token"
 }) {
   let checkout;
-  const auth = "token";
   cy.loginInShop();
   return checkoutRequest
     .createCheckout({
