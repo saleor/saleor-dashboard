@@ -67,18 +67,29 @@ const RichTextEditorContent: React.FC<RichTextEditorContentProps> = ({
   const editorContainer = React.useRef<HTMLDivElement>();
   React.useEffect(
     () => {
-      if (data) {
-        editor.current = new EditorJS({
+      if (data !== undefined && !editor.current) {
+        const editorjs = new EditorJS({
           data,
           holder: editorContainer.current,
           logLevel: "ERROR" as LogLevels,
-          onReady,
+          onReady: () => {
+            editor.current = editorjs;
+
+            if (onReady) {
+              onReady();
+            }
+          },
           readOnly: true,
           tools
         });
       }
 
-      return editor.current?.destroy;
+      return () => {
+        if (editor.current) {
+          editor.current.destroy();
+        }
+        editor.current = null;
+      };
     },
     // Rerender editor only if changed from undefined to defined state
     [data === undefined]
