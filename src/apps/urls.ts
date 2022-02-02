@@ -76,6 +76,18 @@ export const getAppCompleteUrlFromDashboardUrl = (
   const appCompleteUrl = urlJoin(appUrl, deepSubPath);
   return appCompleteUrl;
 };
+export const getDashboardUrFromAppCompleteUrl = (
+  appCompleteUrl: string,
+  appUrl?: string,
+  appId?: string
+) => {
+  if (!appUrl || !appId) {
+    return appUrl;
+  }
+  const deepSubPath = appCompleteUrl.replace(appUrl, "");
+  const dashboardUrl = urlJoin(appPath(encodeURIComponent(appId)), deepSubPath);
+  return dashboardUrl;
+};
 
 export const customAppUrl = (id: string, params?: CustomAppUrlQueryParams) =>
   customAppPath(encodeURIComponent(id)) + "?" + stringifyQs(params);

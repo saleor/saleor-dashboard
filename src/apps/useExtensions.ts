@@ -6,11 +6,14 @@ import { mapEdgesToItems } from "@saleor/utils/maps";
 
 import { AppData, useExternalApp } from "./components/ExternalAppContext";
 import { useExtensionList } from "./queries";
-import { ExtensionList_appExtensions_edges_node } from "./types/ExtensionList";
+import {
+  ExtensionList_appExtensions_edges_node,
+  ExtensionList_appExtensions_edges_node_app
+} from "./types/ExtensionList";
 
 export interface Extension {
   id: string;
-  appId: string;
+  app: ExtensionList_appExtensions_edges_node_app;
   accessToken: string;
   permissions: PermissionEnum[];
   label: string;
@@ -41,7 +44,7 @@ const filterAndMapToTarget = (
   extensions.map(
     ({ id, accessToken, permissions, url, label, mount, target, app }) => ({
       id,
-      appId: app.id,
+      app,
       accessToken,
       permissions: permissions.map(({ code }) => code),
       url,

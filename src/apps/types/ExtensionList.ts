@@ -17,6 +17,7 @@ export interface ExtensionList_appExtensions_edges_node_permissions {
 export interface ExtensionList_appExtensions_edges_node_app {
   __typename: "App";
   id: string;
+  appUrl: string | null;
 }
 
 export interface ExtensionList_appExtensions_edges_node {
