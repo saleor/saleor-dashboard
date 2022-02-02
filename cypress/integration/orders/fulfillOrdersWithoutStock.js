@@ -28,7 +28,7 @@ import filterTests from "../../support/filterTests";
 import {
   fulfillOrder,
   fulfillOrderWithInsufficientStock
-} from "../../support/pages/orderPage";
+} from "../../support/pages/orders/orderPage";
 
 filterTests({ definedTags: ["all"] }, () => {
   describe("Orders", () => {

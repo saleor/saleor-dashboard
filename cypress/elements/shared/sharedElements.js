@@ -3,7 +3,7 @@ export const SHARED_ELEMENTS = {
   progressBar: '[role="progressbar"]',
   circularProgress: '[class*="CircularProgress-circle"]',
   autocompleteCircle: '[class*="arrowInnerContainer"]',
-  skeleton: '[data-test-id="skeleton"]',
+  skeleton: '[data-test-id*="skeleton"]',
   table: 'table[class*="Table"]',
   tableRow: '[data-test-id*="id"], [class*="MuiTableRow"]',
   notificationSuccess: '[data-test="notification"][data-test-type="success"]',

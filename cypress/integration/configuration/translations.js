@@ -14,7 +14,7 @@ import { updateTranslationToCategory } from "../../support/pages/translationsPag
 
 filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
   describe("As an admin I want to manage translations", () => {
-    const startsWith = "Translations";
+    const startsWith = "TranslationsTests";
     const randomNumber = faker.datatype.number();
 
     let category;

@@ -440,7 +440,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                       transitionState={confirmButtonState}
                       variant="primary"
                       type="submit"
-                      data-test="submit"
+                      data-test-id="submit"
                     >
                       <FormattedMessage
                         {...(continueToSearchAddressesState(data)
