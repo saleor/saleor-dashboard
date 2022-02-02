@@ -9,12 +9,14 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import TooltipTableCellHeader from "@saleor/components/TooltipTableCellHeader";
+import { commonTooltipMessages } from "@saleor/components/TooltipTableCellHeader/messages";
 import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ChannelProps, ListActions, ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { CollectionList_collections_edges_node } from "../../types/CollectionList";
 import { messages } from "./messages";
@@ -73,10 +75,12 @@ const CollectionList: React.FC<CollectionListProps> = props => {
     selectedChannelId,
     toggle,
     toggleAll,
-    toolbar
+    toolbar,
+    filterDependency
   } = props;
 
   const classes = useStyles(props);
+  const intl = useIntl();
 
   return (
     <ResponsiveTable>
@@ -111,7 +115,7 @@ const CollectionList: React.FC<CollectionListProps> = props => {
         >
           <FormattedMessage defaultMessage="No. of Products" />
         </TableCellHeader>
-        <TableCellHeader
+        <TooltipTableCellHeader
           direction={
             sort.sort === CollectionListUrlSortField.available
               ? getArrowDirection(sort.asc)
@@ -125,12 +129,15 @@ const CollectionList: React.FC<CollectionListProps> = props => {
               !!selectedChannelId
             )
           }
+          tooltip={intl.formatMessage(commonTooltipMessages.noFilterSelected, {
+            filterName: filterDependency.label
+          })}
         >
           <FormattedMessage
             defaultMessage="Availability"
             description="collection availability"
           />
-        </TableCellHeader>
+        </TooltipTableCellHeader>
       </TableHead>
       <TableFooter>
         <TableRow>

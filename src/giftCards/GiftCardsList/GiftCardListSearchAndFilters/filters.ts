@@ -164,7 +164,7 @@ export function getFilterQueryParam(
   }
 }
 
-const messages = defineMessages({
+export const messages = defineMessages({
   balanceAmountLabel: {
     defaultMessage: "Amount",
     description: "amount filter label"
