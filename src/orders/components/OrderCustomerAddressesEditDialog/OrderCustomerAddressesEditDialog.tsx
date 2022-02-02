@@ -59,7 +59,9 @@ export interface OrderCustomerAddressesEditDialogProps {
   defaultShippingAddress?: CustomerAddresses_user_defaultShippingAddress;
   defaultBillingAddress?: CustomerAddresses_user_defaultBillingAddress;
   onClose();
-  onConfirm(data: Partial<OrderCustomerAddressesEditDialogOutput>): SubmitPromise<any[]>;
+  onConfirm(
+    data: Partial<OrderCustomerAddressesEditDialogOutput>
+  ): SubmitPromise<any[]>;
 }
 
 const defaultSearchState: OrderCustomerSearchAddressState = {
@@ -131,9 +133,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
       customerAddresses.find(getById(selectedCustomerAddressID))
     );
 
-  const handleAddressesSubmit = (
-    data: OrderCustomerAddressesEditFormData
-  ) => {
+  const handleAddressesSubmit = (data: OrderCustomerAddressesEditFormData) => {
     const shippingAddress =
       customerAddresses.length > 0 &&
       data.shippingAddressInputOption ===
@@ -146,7 +146,6 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
       data.billingAddressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS
         ? getCustomerAddress(data.customerBillingAddress.id)
         : handleBillingSubmit(data.billingAddress);
-
 
     if (variant === AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS) {
       return {
