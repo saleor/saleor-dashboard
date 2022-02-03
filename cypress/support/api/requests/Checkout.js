@@ -32,10 +32,12 @@ export function createCheckout({
   }`
   );
 
+  const emailLine = getValueWithDefault(email, `email: "${email}"`);
+
   const mutation = `mutation{
     checkoutCreate(input:{
       channel:"${channelSlug}"
-      email:"${email}"
+      ${emailLine}
       lines: [${lines.join()}]
       ${shippingAddress}
       ${billingAddressLines}
