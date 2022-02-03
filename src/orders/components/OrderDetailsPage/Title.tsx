@@ -2,7 +2,6 @@ import { makeStyles, Pill } from "@saleor/macaw-ui";
 import { transformOrderStatus } from "@saleor/misc";
 import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
 import React from "react";
-import { FormattedMessage } from "react-intl";
 import { useIntl } from "react-intl";
 
 export interface TitleProps {
