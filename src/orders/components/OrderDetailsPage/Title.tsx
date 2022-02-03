@@ -2,6 +2,7 @@ import { makeStyles, Pill } from "@saleor/macaw-ui";
 import { transformOrderStatus } from "@saleor/misc";
 import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 import { useIntl } from "react-intl";
 
 export interface TitleProps {
@@ -34,7 +35,10 @@ const Title: React.FC<TitleProps> = props => {
 
   return (
     <div className={classes.container}>
-      {`#${order.number}`}
+      {intl.formatMessage(
+        { defaultMessage: "Order #{orderNumber}" },
+        { orderNumber: order?.number }
+      )}
       <div className={classes.statusContainer}>
         <Pill label={localized} color={status} />
       </div>
