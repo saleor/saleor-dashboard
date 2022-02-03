@@ -2,6 +2,7 @@ import AttributePage, {
   AttributePageProps
 } from "@saleor/attributes/components/AttributePage";
 import { attribute } from "@saleor/attributes/fixtures";
+import { sectionNames } from "@saleor/intl";
 import {
   AttributeErrorCode,
   AttributeInputTypeEnum
@@ -30,7 +31,8 @@ const props: AttributePageProps = {
     hasPreviousPage: false
   },
   onNextPage: () => undefined,
-  onPreviousPage: () => undefined
+  onPreviousPage: () => undefined,
+  backlinkLabel: sectionNames.attributes
 };
 
 storiesOf("Views / Attributes / Attribute details", module)
