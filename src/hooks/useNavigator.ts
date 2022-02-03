@@ -26,12 +26,16 @@ function useNavigator(): UseNavigatorResult {
       return;
     }
 
+    const state = {
+      previousPage: history.location.pathname
+    };
+
     const targetUrl = preserveQs ? url + search : url;
 
     if (replace) {
-      history.replace(targetUrl);
+      history.replace(targetUrl, state);
     } else {
-      history.push(targetUrl);
+      history.push(targetUrl, state);
     }
     if (resetScroll) {
       window.scrollTo({ behavior: "smooth", top: 0 });

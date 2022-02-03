@@ -3,10 +3,12 @@ import useListSettings from "@saleor/hooks/useListSettings";
 import useLocalPaginator, {
   useLocalPaginationState
 } from "@saleor/hooks/useLocalPaginator";
+import useNavigatorLocation from "@saleor/hooks/useLocation";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { commonMessages } from "@saleor/intl";
+import { commonMessages, sectionNames } from "@saleor/intl";
 import { extractMutationErrors } from "@saleor/misc";
+import { getPreviousPathName } from "@saleor/navigation/utils";
 import { ListViews, ReorderEvent } from "@saleor/types";
 import getAttributeErrorMessage from "@saleor/utils/errors/attribute";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -49,10 +51,21 @@ interface AttributeDetailsProps {
 
 const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
+  const location = useNavigatorLocation();
+  const previousPage = location?.state?.previousPage;
+
   const notify = useNotifier();
   const intl = useIntl();
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+
+  const handleBack = () => {
+    if (previousPage && previousPage !== location.pathname) {
+      navigate(previousPage);
+    } else {
+      navigate(attributeListUrl());
+    }
+  };
 
   const [openModal, closeModal] = createDialogActionHandlers<
     AttributeUrlDialog,
@@ -241,7 +254,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
       attribute={data?.attribute}
       disabled={loading}
       errors={attributeUpdateOpts.data?.attributeUpdate.errors || []}
-      onBack={() => navigate(attributeListUrl())}
+      onBack={() => handleBack()}
       onDelete={() => openModal("remove")}
       onSubmit={handleSubmit}
       onValueAdd={() => openModal("add-value")}
@@ -263,6 +276,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
       pageInfo={pageInfo}
       onNextPage={loadNextPage}
       onPreviousPage={loadPreviousPage}
+      backlinkLabel={getPreviousPathName({
+        previousPage,
+        defaultName: sectionNames.attributes
+      })}
     >
       {attributeFormData => (
         <>

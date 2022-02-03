@@ -238,6 +238,17 @@ export const buttonMessages = defineMessages({
   }
 });
 
+export const pathNames = defineMessages({
+  productType: {
+    defaultMessage: "Product Type",
+    description: "product type page path name"
+  },
+  product: {
+    defaultMessage: "Product",
+    description: "product page path name"
+  }
+});
+
 export const sectionNames = defineMessages({
   apps: {
     defaultMessage: "Apps",

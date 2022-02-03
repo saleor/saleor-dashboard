@@ -12,7 +12,6 @@ import { ListSettingsUpdate } from "@saleor/components/TablePagination";
 import { AttributeDetailsFragment } from "@saleor/fragments/types/AttributeDetailsFragment";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
-import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
@@ -26,7 +25,7 @@ import {
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
-import { useIntl } from "react-intl";
+import { MessageDescriptor, useIntl } from "react-intl";
 import slugify from "slugify";
 
 import AttributeDetails from "../AttributeDetails";
@@ -56,6 +55,7 @@ export interface AttributePageProps {
   onNextPage: () => void;
   onPreviousPage: () => void;
   children: (data: AttributePageFormData) => React.ReactNode;
+  backlinkLabel: MessageDescriptor;
 }
 
 export interface AttributePageFormData extends MetadataFormData {
@@ -91,7 +91,8 @@ const AttributePage: React.FC<AttributePageProps> = ({
   pageInfo,
   onNextPage,
   onPreviousPage,
-  children
+  children,
+  backlinkLabel
 }) => {
   const intl = useIntl();
   const {
@@ -174,7 +175,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
           <>
             <Container>
               <Backlink onClick={onBack}>
-                {intl.formatMessage(sectionNames.attributes)}
+                {intl.formatMessage(backlinkLabel)}
               </Backlink>
               <PageHeader
                 title={

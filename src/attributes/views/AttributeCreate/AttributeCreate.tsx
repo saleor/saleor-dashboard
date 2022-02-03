@@ -1,9 +1,12 @@
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useLocalPageInfo, { getMaxPage } from "@saleor/hooks/useLocalPageInfo";
+import useNavigatorLocation from "@saleor/hooks/useLocation";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { sectionNames } from "@saleor/intl";
 import { getMutationErrors, getStringOrPlaceholder } from "@saleor/misc";
+import { getPreviousPathName } from "@saleor/navigation/utils";
 import { ListViews, ReorderEvent } from "@saleor/types";
 import { AttributeErrorCode } from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -60,6 +63,7 @@ function areValuesEqual(
 
 const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   const navigate = useNavigator();
+  const location = useNavigatorLocation();
   const notify = useNotifier();
   const intl = useIntl();
 
@@ -192,6 +196,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
           id
         })
       }
+      backlinkLabel={getPreviousPathName({
+        previousPage: location?.state?.previousPage,
+        defaultName: sectionNames.attributes
+      })}
       saveButtonBarState={attributeCreateOpts.status}
       values={{
         __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
