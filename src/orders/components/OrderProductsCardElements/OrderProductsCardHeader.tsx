@@ -14,20 +14,20 @@ const useStyles = makeStyles(
     },
     colPrice: {
       textAlign: "right",
-      width: 120
+      width: 150
     },
     colQuantity: {
       textAlign: "center",
-      width: 120
+      width: 110
     },
     colSku: {
       textAlign: "right",
       textOverflow: "ellipsis",
-      width: 120
+      width: 140
     },
     colTotal: {
       textAlign: "right",
-      width: 120
+      width: 150
     },
     infoLabel: {
       display: "inline-block"
@@ -56,40 +56,49 @@ const TableHeader = () => {
   const classes = useStyles({});
 
   return (
-    <TableHead>
-      <TableRow>
-        <TableCell className={classes.colName}>
-          <FormattedMessage
-            defaultMessage="Product"
-            description="product name"
-          />
-        </TableCell>
-        <TableCell className={classes.colSku}>
-          <FormattedMessage
-            defaultMessage="SKU"
-            description="ordered product sku"
-          />
-        </TableCell>
-        <TableCell className={classes.colQuantity}>
-          <FormattedMessage
-            defaultMessage="Quantity"
-            description="ordered product quantity"
-          />
-        </TableCell>
-        <TableCell className={classes.colPrice}>
-          <FormattedMessage
-            defaultMessage="Price"
-            description="product price"
-          />
-        </TableCell>
-        <TableCell className={classes.colTotal}>
-          <FormattedMessage
-            defaultMessage="Total"
-            description="order line total price"
-          />
-        </TableCell>
-      </TableRow>
-    </TableHead>
+    <>
+      <colgroup>
+        <col className={classes.colName} />
+        <col className={classes.colSku} />
+        <col className={classes.colQuantity} />
+        <col className={classes.colPrice} />
+        <col className={classes.colTotal} />
+      </colgroup>
+      <TableHead>
+        <TableRow>
+          <TableCell className={classes.colName}>
+            <FormattedMessage
+              defaultMessage="Product"
+              description="product name"
+            />
+          </TableCell>
+          <TableCell className={classes.colSku}>
+            <FormattedMessage
+              defaultMessage="SKU"
+              description="ordered product sku"
+            />
+          </TableCell>
+          <TableCell className={classes.colQuantity}>
+            <FormattedMessage
+              defaultMessage="Quantity"
+              description="ordered product quantity"
+            />
+          </TableCell>
+          <TableCell className={classes.colPrice}>
+            <FormattedMessage
+              defaultMessage="Price"
+              description="product price"
+            />
+          </TableCell>
+          <TableCell className={classes.colTotal}>
+            <FormattedMessage
+              defaultMessage="Total"
+              description="order line total price"
+            />
+          </TableCell>
+        </TableRow>
+      </TableHead>
+    </>
   );
 };
 

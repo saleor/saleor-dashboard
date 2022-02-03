@@ -268,7 +268,7 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
         )}
       </div>
       <CardActions className={classes.actions}>
-        <Button onClick={onItemAdd} data-test-id="createNewMenuItem">
+        <Button onClick={onItemAdd} data-test-id="create-new-menu-item">
           <FormattedMessage
             defaultMessage="Create new item"
             description="add new menu item"

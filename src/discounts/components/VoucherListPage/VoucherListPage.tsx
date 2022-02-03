@@ -1,5 +1,6 @@
 import { Card } from "@material-ui/core";
 import Container from "@saleor/components/Container";
+import { getByName } from "@saleor/components/Filter/utils";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
 import { VoucherListUrlSortField } from "@saleor/discounts/urls";
@@ -50,6 +51,8 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
   const intl = useIntl();
   const structure = createFilterStructure(intl, filterOpts);
 
+  const filterDependency = structure.find(getByName("channel"));
+
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.vouchers)}>
@@ -80,7 +83,7 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
           onTabDelete={onTabDelete}
           onTabSave={onTabSave}
         />
-        <VoucherList {...listProps} />
+        <VoucherList filterDependency={filterDependency} {...listProps} />
       </Card>
     </Container>
   );

@@ -115,8 +115,9 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
         <Button
           className={classes.setMaximalQuantityButton}
           onClick={onSetMaximalQuantities}
-          data-test="setMaximalQuantityFulfilledButton"
-          data-test-id={fulfillment?.id}
+          data-test-id={
+            "set-maximal-quantity-fulfilled-button-" + fulfillment?.id
+          }
         >
           <FormattedMessage
             defaultMessage="Set maximal quantities"
@@ -199,8 +200,7 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
                         type="number"
                         inputProps={{
                           className: classes.quantityInnerInput,
-                          "data-test": "quantityInput",
-                          "data-test-id": line?.id,
+                          "data-test-id": "quantityInput" + line?.id,
                           max: (line?.quantity).toString(),
                           min: 0,
                           style: { textAlign: "right" }

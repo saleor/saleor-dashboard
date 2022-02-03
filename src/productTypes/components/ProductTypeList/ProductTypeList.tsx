@@ -144,8 +144,7 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
                 key={productType ? productType.id : "skeleton"}
                 onClick={productType ? onRowClick(productType.id) : undefined}
                 selected={isSelected}
-                data-test="id"
-                data-test-id={maybe(() => productType.id)}
+                data-test-id={"id-" + maybe(() => productType.id)}
               >
                 <TableCell padding="checkbox">
                   <Checkbox
@@ -158,7 +157,7 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
                 <TableCell className={classes.colName}>
                   {productType ? (
                     <>
-                      <span data-test="name">{productType.name}</span>
+                      <span data-test-id="name">{productType.name}</span>
                       <Typography variant="caption">
                         {maybe(() => productType.hasVariants)
                           ? intl.formatMessage({

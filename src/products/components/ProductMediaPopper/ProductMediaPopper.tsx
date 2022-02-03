@@ -54,14 +54,14 @@ export const ProductMediaPopper = ({
               <Menu>
                 <MenuItem
                   onClick={() => imagesUploadRef.click()}
-                  data-test="uploadImages"
+                  data-test-id="upload-images"
                   key="upload-images"
                 >
                   {intl.formatMessage(messages.uploadImages)}
                 </MenuItem>
                 <MenuItem
                   onClick={openMediaUrlModal}
-                  data-test="uploadMediaUrl"
+                  data-test-id="upload-media-url"
                   key="upload-media-url"
                 >
                   {intl.formatMessage(messages.uploadUrl)}

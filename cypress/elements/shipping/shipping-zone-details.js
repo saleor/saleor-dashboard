@@ -9,8 +9,8 @@ export const SHIPPING_ZONE_DETAILS = {
   nameInput: "[name='name']",
   shippingRatePriceTableCell: "[data-test-id='shipping-rate-price']",
   autocompleteContentDialog:
-    "[data-test-id='multiautocomplete-select-content']",
-  option: "[data-test-id='multiautocomplete-select-option']",
+    "[data-test-id='multi-autocomplete-select-content']",
+  option: "[data-test-id='multi-autocomplete-select-option']",
   warehouseSelector: "[placeholder*='Warehouse']",
   channelSelector: "[placeholder*='Channel']",
   removeWarehouseButton: "[data-test-id='warehousesRemove']"

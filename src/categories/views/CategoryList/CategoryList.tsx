@@ -175,6 +175,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
           <IconButton
             variant="secondary"
             color="primary"
+            data-test-id="delete-icon"
             onClick={() =>
               openModal("delete", {
                 ids: listElements

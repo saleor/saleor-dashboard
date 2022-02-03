@@ -54,7 +54,7 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
                 categories: [categoryId]
               })}
             >
-              <Button variant="tertiary" data-test-id="viewProducts">
+              <Button variant="tertiary" data-test-id="view-products">
                 <FormattedMessage
                   defaultMessage="View products"
                   description="button"
@@ -65,7 +65,7 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
             <Button
               variant="tertiary"
               onClick={onAdd}
-              data-test-id="addProducts"
+              data-test-id="add-products"
             >
               <FormattedMessage
                 defaultMessage="Add product"

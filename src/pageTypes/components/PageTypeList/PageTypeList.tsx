@@ -104,8 +104,7 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
                 key={pageType ? pageType.id : "skeleton"}
                 onClick={pageType ? onRowClick(pageType.id) : undefined}
                 selected={isSelected}
-                data-test="id"
-                data-test-id={pageType?.id}
+                data-test-id={"id-" + pageType?.id}
               >
                 <TableCell padding="checkbox">
                   <Checkbox
@@ -117,7 +116,7 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
                 </TableCell>
                 <TableCell className={classes.colName}>
                   {pageType ? (
-                    <span data-test="name">{pageType.name}</span>
+                    <span data-test-id="name">{pageType.name}</span>
                   ) : (
                     <Skeleton />
                   )}

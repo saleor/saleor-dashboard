@@ -24,7 +24,7 @@ export const PERMISSIONS = {
     },
     permissionSelectors: [
       menuSelectors.DISCOUNTS_MENU_SELECTORS.sales,
-      menuSelectors.DISCOUNTS_MENU_SELECTORS.sales
+      menuSelectors.DISCOUNTS_MENU_SELECTORS.vouchers
     ]
   },
   order: {
