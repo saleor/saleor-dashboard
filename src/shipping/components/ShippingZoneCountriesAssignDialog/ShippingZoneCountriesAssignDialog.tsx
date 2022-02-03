@@ -80,7 +80,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
             countries,
             data.countries
           );
-          const restOfTheWorld = isRestWorldCountriesSelected(
+          const isRestOfTheWorldSelected = isRestWorldCountriesSelected(
             restWorldCountries,
             countrySelectionMap
           );
@@ -142,9 +142,11 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
                       >
                         <Checkbox
                           name="restOfTheWorld"
-                          checked={restOfTheWorld}
+                          checked={isRestOfTheWorldSelected}
                           onChange={() =>
-                            handleRestOfTheWorldChange(!restOfTheWorld)
+                            handleRestOfTheWorldChange(
+                              !isRestOfTheWorldSelected
+                            )
                           }
                         />
                       </TableCell>
