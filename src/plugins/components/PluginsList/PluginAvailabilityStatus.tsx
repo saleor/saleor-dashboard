@@ -43,6 +43,7 @@ const PluginAvailabilityStatus: React.FC<PluginAvailabilityStatusProps> = ({
             })
       }
       color={isStatusActive ? "success" : "error"}
+      onClick={() => null} // required for dashed border
     />
   );
 };
