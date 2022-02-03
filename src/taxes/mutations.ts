@@ -1,4 +1,5 @@
 import { countryFragment, shopTaxesFragment } from "@saleor/fragments/taxes";
+import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
@@ -22,7 +23,8 @@ const updateTaxSettings = gql`
     }
   }
 `;
-export const TypedUpdateTaxSettings = TypedMutation<
+
+export const useTaxSettingsUpdateMutation = makeMutation<
   UpdateTaxSettings,
   UpdateTaxSettingsVariables
 >(updateTaxSettings);

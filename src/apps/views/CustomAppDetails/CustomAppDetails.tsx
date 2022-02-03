@@ -2,6 +2,7 @@ import AppActivateDialog from "@saleor/apps/components/AppActivateDialog";
 import AppDeactivateDialog from "@saleor/apps/components/AppDeactivateDialog";
 import TokenCreateDialog from "@saleor/apps/components/TokenCreateDialog";
 import TokenDeleteDialog from "@saleor/apps/components/TokenDeleteDialog";
+import { appMessages } from "@saleor/apps/messages";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { API_URI } from "@saleor/config";
@@ -9,7 +10,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
-import { getStringOrPlaceholder } from "@saleor/misc";
+import { extractMutationErrors, getStringOrPlaceholder } from "@saleor/misc";
 import getAppErrorMessage from "@saleor/utils/errors/app";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import WebhookDeleteDialog from "@saleor/webhooks/components/WebhookDeleteDialog";
@@ -75,10 +76,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
       if (errors?.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage({
-            defaultMessage: "App activated",
-            description: "snackbar text"
-          })
+          text: intl.formatMessage(appMessages.appActivated)
         });
         refetch();
         closeModal();
@@ -98,10 +96,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
       if (errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage({
-            defaultMessage: "App deactivated",
-            description: "snackbar text"
-          })
+          text: intl.formatMessage(appMessages.appDeactivated)
         });
         refetch();
         closeModal();
@@ -181,21 +176,20 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
     onCompleted: onTokenDelete
   });
 
-  const handleSubmit = async (data: CustomAppDetailsPageFormData) => {
-    const result = await updateApp({
-      variables: {
-        id,
-        input: {
-          name: data.name,
-          permissions: data.hasFullAccess
-            ? shop.permissions.map(permission => permission.code)
-            : data.permissions
+  const handleSubmit = async (data: CustomAppDetailsPageFormData) =>
+    extractMutationErrors(
+      updateApp({
+        variables: {
+          id,
+          input: {
+            name: data.name,
+            permissions: data.hasFullAccess
+              ? shop.permissions.map(permission => permission.code)
+              : data.permissions
+          }
         }
-      }
-    });
-
-    return result.data.appUpdate.errors;
-  };
+      })
+    );
 
   const handleTokenCreate = (name: string) =>
     createToken({

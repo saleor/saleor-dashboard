@@ -26,8 +26,10 @@ filterTests({ definedTags: ["all"] }, () => {
             element.data.hasOwnProperty("products")
           ).data;
           const products = data.products.edges;
-          cy.get(PRODUCTS_LIST.productsList)
-            .find(PRODUCTS_LIST.productImage)
+          cy.softExpectSkeletonIsVisible()
+            .get(SHARED_ELEMENTS.skeleton)
+            .should("not.exist");
+          cy.get(PRODUCTS_LIST.productImage)
             .each($image => {
               cy.wrap($image)
                 .invoke("attr", "src")
@@ -49,7 +51,7 @@ filterTests({ definedTags: ["all"] }, () => {
     });
 
     it("Should display product image", () => {
-      getFirstProducts(1, demoProductsNames.appleJuice)
+      getFirstProducts(1, demoProductsNames.carrotJuice)
         .then(resp => {
           const product = resp[0].node;
           cy.visit(productDetailsUrl(product.id))

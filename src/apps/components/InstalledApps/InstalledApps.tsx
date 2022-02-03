@@ -1,15 +1,15 @@
 import {
-  Button,
-  IconButton,
+  Card,
   TableBody,
   TableCell,
   TableFooter,
   TableRow,
   Typography
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import CardTitle from "@saleor/components/CardTitle";
 import TablePagination from "@saleor/components/TablePagination";
+import { DeleteIcon, ResponsiveTable } from "@saleor/macaw-ui";
+import { Button, IconButton } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { ListProps } from "@saleor/types";
 import React from "react";
@@ -18,13 +18,12 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useStyles } from "../../styles";
 import { AppsList_apps_edges } from "../../types/AppsList";
 import AppsSkeleton from "../AppsSkeleton";
-import CardContainer from "../CardContainer";
 import DeactivatedText from "../DeactivatedText";
 
 export interface InstalledAppsProps extends ListProps {
   appsList: AppsList_apps_edges[];
   onRemove: (id: string) => void;
-  onSettingsRowClick: (id: string) => () => void;
+  onRowAboutClick: (id: string) => () => void;
 }
 const numberOfColumns = 2;
 
@@ -36,8 +35,8 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
   onNextPage,
   onPreviousPage,
   onRowClick,
+  onRowAboutClick,
   onUpdateListSettings,
-  onSettingsRowClick,
   pageInfo,
   ...props
 }) => {
@@ -45,17 +44,14 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
   const classes = useStyles(props);
 
   return (
-    <CardContainer
-      header={
-        <CardTitle
-          title={intl.formatMessage({
-            defaultMessage: "Third-party Apps",
-            description: "section header"
-          })}
-        />
-      }
-    >
-      <>
+    <Card className={classes.apps}>
+      <CardTitle
+        title={intl.formatMessage({
+          defaultMessage: "Third-party Apps",
+          description: "section header"
+        })}
+      />
+      <ResponsiveTable>
         <TableFooter>
           <TableRow>
             <TablePagination
@@ -79,7 +75,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                 <TableRow
                   key={app.node.id}
                   className={classes.tableRow}
-                  onClick={onSettingsRowClick(app.node.id)}
+                  onClick={onRowClick(app.node.id)}
                 >
                   <TableCell className={classes.colName}>
                     <span data-tc="name" className={classes.appName}>
@@ -93,8 +89,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                   </TableCell>
                   <TableCell className={classes.colAction}>
                     <Button
-                      color="primary"
-                      onClick={stopPropagation(onRowClick(app.node.id))}
+                      onClick={stopPropagation(onRowAboutClick(app.node.id))}
                     >
                       <FormattedMessage
                         defaultMessage="About"
@@ -102,6 +97,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                       />
                     </Button>
                     <IconButton
+                      variant="secondary"
                       color="primary"
                       onClick={stopPropagation(() => onRemove(app.node.id))}
                     >
@@ -126,8 +122,8 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
             )
           )}
         </TableBody>
-      </>
-    </CardContainer>
+      </ResponsiveTable>
+    </Card>
   );
 };
 

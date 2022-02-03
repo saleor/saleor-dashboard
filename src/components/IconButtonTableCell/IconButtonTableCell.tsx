@@ -1,5 +1,5 @@
-import { IconButton, TableCell } from "@material-ui/core";
-import { ICONBUTTON_SIZE, makeStyles } from "@saleor/macaw-ui";
+import { TableCell } from "@material-ui/core";
+import { IconButton, ICONBUTTON_SIZE, makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 
@@ -32,6 +32,7 @@ const IconButtonTableCell: React.FC<IconButtonTableCellProps> = props => {
   return (
     <TableCell className={classNames(classes.root, className)}>
       <IconButton
+        variant="secondary"
         color="primary"
         disabled={disabled}
         onClick={stopPropagation(onClick)}

@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -10,17 +9,16 @@ import {
   TextField,
   Typography
 } from "@material-ui/core";
+import BackButton from "@saleor/components/BackButton";
 import Checkbox from "@saleor/components/Checkbox";
-import ConfirmButton, {
-  ConfirmButtonTransitionState
-} from "@saleor/components/ConfirmButton";
+import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-// tslint:disable no-submodule-imports
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
-import { buttonMessages } from "@saleor/intl";
+import { SubmitPromise } from "@saleor/hooks/useForm";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
 import { filter } from "fuzzaldrin";
 import React from "react";
@@ -40,7 +38,7 @@ export interface DiscountCountrySelectDialogProps {
   initial: string[];
   open: boolean;
   onClose: () => void;
-  onConfirm: (data: FormData) => void;
+  onConfirm: (data: FormData) => SubmitPromise;
 }
 
 const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = props => {
@@ -93,7 +91,9 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
                 <TextField
                   name="query"
                   value={data.query}
-                  onChange={event => change(event, () => fetch(data.query))}
+                  onChange={event =>
+                    change(event /* TO BE CHECKED: () => fetch(data.query)*/)
+                  }
                   label={intl.formatMessage({
                     defaultMessage: "Filter Countries",
                     description: "search box label"
@@ -160,13 +160,9 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
                 </ResponsiveTable>
               </DialogContent>
               <DialogActions>
-                <Button onClick={onClose}>
-                  <FormattedMessage {...buttonMessages.back} />
-                </Button>
+                <BackButton onClick={onClose} />
                 <ConfirmButton
                   transitionState={confirmButtonState}
-                  color="primary"
-                  variant="contained"
                   type="submit"
                 >
                   <FormattedMessage

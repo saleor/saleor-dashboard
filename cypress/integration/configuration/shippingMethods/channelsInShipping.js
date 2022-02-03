@@ -3,7 +3,6 @@
 
 import faker from "faker";
 
-import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { SHIPPING_ZONE_DETAILS } from "../../../elements/shipping/shipping-zone-details";
 import { urlList } from "../../../fixtures/urlList";
@@ -17,6 +16,7 @@ import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
 import filterTests from "../../../support/filterTests";
 import { getCurrencyAndAmountInString } from "../../../support/formatData/formatCurrencyAmount";
+import { getFormattedCurrencyAmount } from "../../../support/formatData/formatCurrencyAmount";
 import { enterHomePageChangeChannelAndReturn } from "../../../support/pages/channelsPage";
 
 filterTests({ definedTags: ["all"] }, () => {
@@ -105,7 +105,7 @@ filterTests({ definedTags: ["all"] }, () => {
                 defaultChannelPrice,
                 defaultChannel.currencyCode
               );
-              expect(text).to.be.eq(expectedValue);
+              expect(text).to.eq(expectedValue);
 
               enterHomePageChangeChannelAndReturn(createdChannel.name);
               cy.waitForProgressBarToNotBeVisible()

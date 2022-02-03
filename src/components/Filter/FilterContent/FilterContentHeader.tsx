@@ -1,6 +1,6 @@
-import { Button, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -37,15 +37,15 @@ const FilterContentHeader: React.FC<FilterContentHeaderProps> = ({
         <FormattedMessage defaultMessage="Filters" />
       </Typography>
       <div>
-        <Button data-test="clear" className={classes.clear} onClick={onClear}>
+        <Button
+          data-test="clear"
+          variant="secondary"
+          className={classes.clear}
+          onClick={onClear}
+        >
           <FormattedMessage {...buttonMessages.clear} />
         </Button>
-        <Button
-          data-test="submit"
-          color="primary"
-          variant="contained"
-          type="submit"
-        >
+        <Button data-test="submit" variant="primary" type="submit">
           <FormattedMessage {...buttonMessages.done} />
         </Button>
       </div>

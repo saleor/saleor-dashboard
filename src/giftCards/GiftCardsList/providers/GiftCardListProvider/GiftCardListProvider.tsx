@@ -111,8 +111,7 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
     handleError: handleGiftCardListError
   });
 
-  const giftCards =
-    mapEdgesToItems(data?.giftCards)?.map(getExtendedGiftCard) || [];
+  const giftCards = mapEdgesToItems(data?.giftCards)?.map(getExtendedGiftCard);
 
   const providerValues: GiftCardsListConsumerProps = {
     onSort: handleSort,

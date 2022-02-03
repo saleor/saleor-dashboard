@@ -597,7 +597,7 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order {
   undiscountedTotal: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_undiscountedTotal;
   user: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_user | null;
   userEmail: string | null;
-  shippingMethods: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_shippingMethods[];
+  shippingMethods: (OrderLineDiscountUpdate_orderLineDiscountUpdate_order_shippingMethods | null)[] | null;
   invoices: (OrderLineDiscountUpdate_orderLineDiscountUpdate_order_invoices | null)[] | null;
   channel: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_channel;
 }

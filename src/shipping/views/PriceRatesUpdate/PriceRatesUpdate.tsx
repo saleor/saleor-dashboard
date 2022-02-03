@@ -1,4 +1,3 @@
-import { Button } from "@material-ui/core";
 import {
   createShippingChannelsFromRate,
   createSortedShippingChannels
@@ -16,6 +15,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { sectionNames } from "@saleor/intl";
 import { commonMessages } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import {
   getById,
   getByUnmatchingId
@@ -65,6 +65,8 @@ import {
 } from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+
+import { PRICE_RATES_UPDATE_FORM_ID } from "./consts";
 
 export interface PriceRatesUpdateProps {
   id: string;
@@ -158,7 +160,12 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(shippingChannels, params?.action, { closeModal, openModal });
+  } = useChannels(
+    shippingChannels,
+    params?.action,
+    { closeModal, openModal },
+    { formId: PRICE_RATES_UPDATE_FORM_ID }
+  );
 
   const [updateShippingRate, updateShippingRateOpts] = useShippingRateUpdate(
     {}
@@ -223,8 +230,11 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
         state.codesToDelete
       )
     });
+
     dispatch({ codesToDelete: [] });
+
     const errors = response.data.shippingPriceUpdate.errors;
+
     if (errors.length === 0) {
       handleSuccess();
       dispatch({ havePostalCodesChanged: false });
@@ -352,6 +362,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
         onSubmit={handleProductAssign}
       />
       <ShippingZoneRatesPage
+        formId={PRICE_RATES_UPDATE_FORM_ID}
         allChannelsCount={allChannels?.length}
         shippingChannels={currentChannels}
         disabled={
@@ -386,7 +397,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
         onPreviousPage={loadPreviousPage}
         pageInfo={pageInfo}
         toolbar={
-          <Button color="primary" onClick={() => openModal("unassign-product")}>
+          <Button onClick={() => openModal("unassign-product")}>
             <FormattedMessage
               defaultMessage="Unassign"
               description="unassign products from shipping method, button"

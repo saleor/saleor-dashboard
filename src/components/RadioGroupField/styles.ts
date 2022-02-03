@@ -8,6 +8,7 @@ export const useStyles = makeStyles(
       top: -6
     },
     formLabel: {
+      ...theme.typography.body1,
       marginBottom: theme.spacing(1)
     },
     radioGroupInline: {

@@ -597,7 +597,7 @@ export interface OrderLinesAdd_orderLinesCreate_order {
   undiscountedTotal: OrderLinesAdd_orderLinesCreate_order_undiscountedTotal;
   user: OrderLinesAdd_orderLinesCreate_order_user | null;
   userEmail: string | null;
-  shippingMethods: OrderLinesAdd_orderLinesCreate_order_shippingMethods[];
+  shippingMethods: (OrderLinesAdd_orderLinesCreate_order_shippingMethods | null)[] | null;
   invoices: (OrderLinesAdd_orderLinesCreate_order_invoices | null)[] | null;
   channel: OrderLinesAdd_orderLinesCreate_order_channel;
 }

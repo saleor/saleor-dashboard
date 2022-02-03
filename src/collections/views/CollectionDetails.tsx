@@ -1,4 +1,4 @@
-import { Button, DialogContentText } from "@material-ui/core";
+import { DialogContentText } from "@material-ui/core";
 import {
   createCollectionChannels,
   createCollectionChannelsData
@@ -19,6 +19,7 @@ import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages, errorMessages } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import { arrayDiff } from "@saleor/utils/arrays";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -32,7 +33,7 @@ import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { getMutationState, maybe } from "../../misc";
+import { getMutationErrors, getMutationState, maybe } from "../../misc";
 import { productUrl } from "../../products/urls";
 import { CollectionInput } from "../../types/globalTypes";
 import CollectionDetailsPage from "../components/CollectionDetailsPage/CollectionDetailsPage";
@@ -52,6 +53,7 @@ import {
   CollectionUrlDialog,
   CollectionUrlQueryParams
 } from "../urls";
+import { COLLECTION_DETAILS_FORM_ID } from "./consts";
 
 interface CollectionDetailsProps {
   id: string;
@@ -195,10 +197,15 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
           isChannelsModalOpen,
           setCurrentChannels,
           toggleAllChannels
-        } = useChannels(collectionChannelsChoices, params?.action, {
-          closeModal,
-          openModal
-        });
+        } = useChannels(
+          collectionChannelsChoices,
+          params?.action,
+          {
+            closeModal,
+            openModal
+          },
+          { formId: COLLECTION_DETAILS_FORM_ID }
+        );
 
         const handleUpdate = async (formData: CollectionUpdateData) => {
           const input: CollectionInput = {
@@ -241,8 +248,9 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
             }
           });
 
-          return result.data.collectionUpdate.errors;
+          return getMutationErrors(result);
         };
+
         const handleSubmit = createMetadataUpdateHandler(
           data?.collection,
           handleUpdate,
@@ -321,7 +329,6 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
               saveButtonBarState={formTransitionState}
               toolbar={
                 <Button
-                  color="primary"
                   onClick={() =>
                     openModal("unassign", {
                       ids: listElements

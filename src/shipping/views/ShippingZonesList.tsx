@@ -1,5 +1,4 @@
-import { DialogContentText, IconButton } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
+import { DialogContentText } from "@material-ui/core";
 import { useUser } from "@saleor/auth";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { configurationMenuUrl } from "@saleor/configuration";
@@ -13,7 +12,12 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
-import { getStringOrPlaceholder, maybe } from "@saleor/misc";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import {
+  extractMutationErrors,
+  getStringOrPlaceholder,
+  maybe
+} from "@saleor/misc";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -152,9 +156,11 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
         }
         onRowClick={id => () => navigate(shippingZoneUrl(id))}
         onSubmit={unit =>
-          updateDefaultWeightUnit({
-            variables: { unit }
-          })
+          extractMutationErrors(
+            updateDefaultWeightUnit({
+              variables: { unit }
+            })
+          )
         }
         isChecked={isSelected}
         selected={listElements.length}
@@ -162,6 +168,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
         toggleAll={toggleAll}
         toolbar={
           <IconButton
+            variant="secondary"
             color="primary"
             onClick={() =>
               openModal("remove-many", {

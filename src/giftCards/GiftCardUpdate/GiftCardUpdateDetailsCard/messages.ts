@@ -6,7 +6,7 @@ export const giftCardUpdateDetailsCardMessages = defineMessages({
     description: "details title"
   },
   setBalanceButtonLabel: {
-    defaultMessage: "set balance",
+    defaultMessage: "Set Balance",
     description: "set balance button label"
   },
   cardBalanceLabel: {

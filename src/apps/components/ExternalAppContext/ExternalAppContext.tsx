@@ -1,12 +1,17 @@
+import { appDeepUrl } from "@saleor/apps/urls";
+import useNavigator from "@saleor/hooks/useNavigator";
+import { AppExtensionTargetEnum } from "@saleor/types/globalTypes";
 import React from "react";
 
 import { AppDialog } from "../AppDialog";
 import { AppFrame } from "../AppFrame";
 
 export interface AppData {
+  id: string;
   appToken: string;
   src: string;
   label: string;
+  target: AppExtensionTargetEnum;
 }
 
 const ExternalAppContext = React.createContext<{
@@ -39,10 +44,15 @@ export const ExternalAppProvider: React.FC = ({ children }) => {
 
 export const useExternalApp = () => {
   const { open, setOpen, setAppData } = React.useContext(ExternalAppContext);
+  const navigate = useNavigator();
 
   const openApp = (appData: AppData) => {
-    setOpen(true);
-    setAppData(appData);
+    if (appData.target === AppExtensionTargetEnum.POPUP) {
+      setOpen(true);
+      setAppData(appData);
+    } else {
+      navigate(appDeepUrl(appData.id, appData.src), { resetScroll: true });
+    }
   };
 
   const closeApp = () => setOpen(false);

@@ -1,11 +1,16 @@
 import { Card } from "@material-ui/core";
-import { mapToMenuItems, useExtensions } from "@saleor/apps/useExtensions";
+import {
+  extensionMountPoints,
+  mapToMenuItems,
+  useExtensions
+} from "@saleor/apps/useExtensions";
 import { ButtonWithSelect } from "@saleor/components/ButtonWithSelect";
 import CardMenu from "@saleor/components/CardMenu";
 import ColumnPicker, {
   ColumnPickerChoice
 } from "@saleor/components/ColumnPicker";
 import Container from "@saleor/components/Container";
+import { getByName } from "@saleor/components/Filter/utils";
 import FilterBar from "@saleor/components/FilterBar";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
@@ -24,10 +29,6 @@ import {
   PageListProps,
   SortPage
 } from "@saleor/types";
-import {
-  AppExtensionTypeEnum,
-  AppExtensionViewEnum
-} from "@saleor/types/globalTypes";
 import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -114,6 +115,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
 
   const filterStructure = createFilterStructure(intl, filterOpts);
 
+  const filterDependency = filterStructure.find(getByName("channel"));
+
   const columns: ColumnPickerChoice[] = [
     {
       label: intl.formatMessage(columnsMessages.price),
@@ -134,13 +137,13 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   ];
 
   const limitReached = isLimitReached(limits, "productVariants");
-  const { create, moreActions } = useExtensions(
-    AppExtensionViewEnum.PRODUCT,
-    AppExtensionTypeEnum.OVERVIEW
-  );
+  const {
+    PRODUCT_OVERVIEW_CREATE,
+    PRODUCT_OVERVIEW_MORE_ACTIONS
+  } = useExtensions(extensionMountPoints.PRODUCT_LIST);
 
-  const extensionMenuItems = mapToMenuItems(moreActions);
-  const extensionCreateButtonItems = mapToMenuItems(create);
+  const extensionMenuItems = mapToMenuItems(PRODUCT_OVERVIEW_MORE_ACTIONS);
+  const extensionCreateButtonItems = mapToMenuItems(PRODUCT_OVERVIEW_CREATE);
 
   return (
     <Container>
@@ -241,6 +244,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           channelsCount={channelsCount}
           selectedChannelId={selectedChannelId}
           onUpdateListSettings={onUpdateListSettings}
+          filterDependency={filterDependency}
         />
       </Card>
     </Container>

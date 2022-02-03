@@ -4,7 +4,6 @@ import {
   TableRow,
   Typography
 } from "@material-ui/core";
-import { fade } from "@material-ui/core/styles/colorManipulator";
 import { TableHeadProps as MuiTableHeadProps } from "@material-ui/core/TableHead";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
@@ -27,10 +26,7 @@ export interface TableHeadProps extends MuiTableHeadProps {
 const useStyles = makeStyles(
   theme => ({
     cell: {
-      padding: 0
-    },
-    checkboxSelected: {
-      backgroundColor: fade(theme.palette.primary.main, 0.05)
+      height: 56
     },
     container: {
       alignItems: "center",
@@ -48,9 +44,8 @@ const useStyles = makeStyles(
       }
     },
     root: {
-      backgroundColor: fade(theme.palette.primary.main, 0.05),
       paddingLeft: 0,
-      paddingRight: 24
+      paddingRight: theme.spacing(4)
     },
     spacer: {
       flex: 1
@@ -58,7 +53,8 @@ const useStyles = makeStyles(
     toolbar: {
       "& > *": {
         marginLeft: theme.spacing(1)
-      }
+      },
+      marginRight: theme.spacing(1.5)
     }
   }),
   { name: "TableHead" }
@@ -89,18 +85,11 @@ const TableHead: React.FC<TableHeadProps> = props => {
   return (
     <MuiTableHead {...muiTableHeadProps}>
       <TableRow>
-        {dragRows && (items === undefined || items.length > 0) && (
-          <TableCell
-            className={classNames({
-              [classes.checkboxSelected]: selected
-            })}
-          />
-        )}
+        {dragRows && (items === undefined || items.length > 0) && <TableCell />}
         {(items === undefined || items.length > 0) && (
           <TableCell
             padding="checkbox"
-            className={classNames({
-              [classes.checkboxSelected]: selected,
+            className={classNames(classes.cell, {
               [classes.dragRows]: dragRows
             })}
           >
@@ -115,7 +104,7 @@ const TableHead: React.FC<TableHeadProps> = props => {
         {selected ? (
           <>
             <TableCell
-              className={classNames(classes.root)}
+              className={classNames(classes.cell, classes.root)}
               colSpan={getColSpan(colSpan, dragRows)}
             >
               <div className={classes.container}>

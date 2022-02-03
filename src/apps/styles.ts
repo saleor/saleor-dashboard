@@ -12,8 +12,8 @@ export const useStyles = makeStyles(
     alignRight: {
       textAlign: "right"
     },
-    appContainer: {
-      marginBottom: theme.spacing(3)
+    apps: {
+      marginBottom: theme.spacing(4)
     },
     appContent: {
       "&:last-child": {
@@ -37,7 +37,7 @@ export const useStyles = makeStyles(
     },
     colAction: {
       "&&": {
-        paddingRight: theme.spacing(1),
+        paddingRight: theme.spacing(3),
         textAlign: "right"
       },
       textAlign: "right"
@@ -58,6 +58,9 @@ export const useStyles = makeStyles(
       paddingLeft: theme.spacing(3),
       paddingRight: theme.spacing(2)
     },
+    customApps: {
+      marginBottom: theme.spacing(4)
+    },
     customTooltip: {
       "& > div": {
         backgroundColor: theme.palette.error.main,
@@ -77,10 +80,14 @@ export const useStyles = makeStyles(
       margin: theme.spacing(0, 1, 0.7, 0)
     },
     headerLinkContainer: {
+      "& svg": {
+        marginRight: theme.spacing()
+      },
       "& span": {
         fontWeight: 500
       },
       alignItems: "center",
+      color: theme.palette.text.primary,
       display: "flex",
       fontSize: theme.spacing(2),
       fontWeight: 500,
@@ -143,7 +150,8 @@ export const useStyles = makeStyles(
         color: theme.palette.primary.main,
         textDecoration: "none"
       },
-      color: theme.palette.text.hint
+      color: theme.palette.text.hint,
+      marginTop: theme.spacing(1)
     },
     installSaleorIcon: {
       backgroundColor: theme.palette.secondary.main,
@@ -193,11 +201,6 @@ export const useStyles = makeStyles(
     },
     text: {
       color: theme.palette.text.secondary
-    },
-    title: {
-      flex: 1,
-      fontWeight: 500,
-      lineHeight: 1
     },
     activateButton: {
       "& img": {

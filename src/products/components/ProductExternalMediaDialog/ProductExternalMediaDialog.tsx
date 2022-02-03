@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -7,9 +6,11 @@ import {
   TextField,
   Typography
 } from "@material-ui/core";
+import BackButton from "@saleor/components/BackButton";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
-import { buttonMessages } from "@saleor/intl";
+import { SubmitPromise } from "@saleor/hooks/useForm";
+import { Button } from "@saleor/macaw-ui";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
@@ -18,7 +19,7 @@ interface ProductExternalMediaDialogProps {
   product: ProductDetails_product;
   open: boolean;
   onClose: () => void;
-  onSubmit: (mediaUrl: string) => void;
+  onSubmit: (mediaUrl: string) => SubmitPromise;
 }
 
 interface FormValues {
@@ -73,9 +74,7 @@ const ProductExternalMediaDialog: React.FC<ProductExternalMediaDialogProps> = ({
             </DialogContent>
 
             <DialogActions>
-              <Button onClick={onClose}>
-                <FormattedMessage {...buttonMessages.back} />
-              </Button>
+              <BackButton onClick={onClose} />
               <Button onClick={submit}>
                 {intl.formatMessage(messages.buttonMessage)}
               </Button>

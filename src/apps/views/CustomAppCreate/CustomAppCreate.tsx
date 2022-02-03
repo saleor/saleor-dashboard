@@ -3,6 +3,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
+import { extractMutationErrors } from "@saleor/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -12,6 +13,7 @@ import CustomAppCreatePage, {
 import { useAppCreateMutation } from "../../mutations";
 import { AppCreate } from "../../types/AppCreate";
 import { appsListUrl, customAppUrl } from "../../urls";
+import { messages } from "./messages";
 
 interface CustomAppCreateProps {
   setToken: (token: string) => void;
@@ -41,26 +43,23 @@ export const CustomAppCreate: React.FC<CustomAppCreateProps> = ({
     onCompleted: onSubmit
   });
 
-  const handleSubmit = (data: CustomAppCreatePageFormData) =>
-    createApp({
-      variables: {
-        input: {
-          name: data.name,
-          permissions: data.hasFullAccess
-            ? shop.permissions.map(permission => permission.code)
-            : data.permissions
+  const handleSubmit = async (data: CustomAppCreatePageFormData) =>
+    extractMutationErrors(
+      createApp({
+        variables: {
+          input: {
+            name: data.name,
+            permissions: data.hasFullAccess
+              ? shop.permissions.map(permission => permission.code)
+              : data.permissions
+          }
         }
-      }
-    });
+      })
+    );
 
   return (
     <>
-      <WindowTitle
-        title={intl.formatMessage({
-          defaultMessage: "Create App",
-          description: "window title"
-        })}
-      />
+      <WindowTitle title={intl.formatMessage(messages.createApp)} />
       <CustomAppCreatePage
         disabled={false}
         errors={createAppOpts.data?.appCreate.errors || []}

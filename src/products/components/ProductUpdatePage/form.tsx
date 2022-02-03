@@ -15,11 +15,13 @@ import {
   ChannelPriceArgs
 } from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
+import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import useForm, {
+  CommonUseFormResultWithHandlers,
   FormChange,
   FormErrors,
   SubmitPromise
@@ -29,6 +31,7 @@ import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
+import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import { errorMessages } from "@saleor/intl";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import {
@@ -46,19 +49,19 @@ import {
   validateCostPrice,
   validatePrice
 } from "@saleor/products/utils/validation";
+import { PRODUCT_UPDATE_FORM_ID } from "@saleor/products/views/ProductUpdate/consts";
 import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import { FetchMoreProps, ReorderEvent } from "@saleor/types";
 import { arrayDiff } from "@saleor/utils/arrays";
-import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
-import React from "react";
+import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
@@ -147,14 +150,13 @@ export interface ProductUpdateHandlers
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
 }
-export interface UseProductUpdateFormResult {
-  change: FormChange;
-  data: ProductUpdateData;
-  formErrors: FormErrors<ProductUpdateSubmitData>;
+export interface UseProductUpdateFormResult
+  extends CommonUseFormResultWithHandlers<
+    ProductUpdateData,
+    ProductUpdateHandlers
+  > {
   disabled: boolean;
-  handlers: ProductUpdateHandlers;
-  hasChanged: boolean;
-  submit: () => Promise<boolean>;
+  formErrors: FormErrors<ProductUpdateSubmitData>;
 }
 
 export interface UseProductUpdateFormOpts
@@ -221,8 +223,6 @@ function useProductUpdateForm(
   opts: UseProductUpdateFormOpts
 ): UseProductUpdateFormResult {
   const intl = useIntl();
-  const [changed, setChanged] = React.useState(false);
-  const triggerChange = () => setChanged(true);
 
   const form = useForm(
     getProductUpdatePageFormData(
@@ -231,8 +231,20 @@ function useProductUpdateForm(
       opts.currentChannels,
       opts.channelsData,
       opts.channelsWithVariants
-    )
+    ),
+    undefined,
+    { confirmLeave: true, formId: PRODUCT_UPDATE_FORM_ID }
   );
+
+  const {
+    handleChange,
+    triggerChange,
+    toggleValue,
+    data: formData,
+    setChanged,
+    hasChanged
+  } = form;
+
   const attributes = useFormset(getAttributeInputFromProduct(product));
   const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset(getStockInputFromProduct(product));
@@ -241,18 +253,18 @@ function useProductUpdateForm(
     triggerChange
   });
 
+  const { setExitDialogSubmitRef } = useExitFormDialog({
+    formId: PRODUCT_UPDATE_FORM_ID
+  });
+
   const {
     isMetadataModified,
     isPrivateMetadataModified,
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
 
-  const handleChange: FormChange = (event, cb) => {
-    form.change(event, cb);
-    triggerChange();
-  };
   const handleCollectionSelect = createMultiAutocompleteSelectHandler(
-    event => form.toggleValue(event, triggerChange),
+    event => toggleValue(event),
     opts.setSelectedCollections,
     opts.selectedCollections,
     opts.collections
@@ -350,7 +362,7 @@ function useProductUpdateForm(
   );
 
   const data: ProductUpdateData = {
-    ...form.data,
+    ...formData,
     channelListings: opts.currentChannels,
     channelsData: opts.channelsData,
     attributes: getAttributesDisplayData(
@@ -383,8 +395,15 @@ function useProductUpdateForm(
     return errors;
   };
 
-  const submit = async () =>
-    handleFormSubmit(getSubmitData(), handleSubmit, setChanged);
+  const handleFormSubmit = useHandleFormSubmit({
+    formId: form.formId,
+    onSubmit: handleSubmit,
+    setChanged
+  });
+
+  const submit = async () => handleFormSubmit(getSubmitData());
+
+  useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   const shouldEnableSave = () => {
     if (!data.name) {
@@ -442,7 +461,7 @@ function useProductUpdateForm(
       selectCollection: handleCollectionSelect,
       selectTaxRate: handleTaxTypeSelect
     },
-    hasChanged: changed,
+    hasChanged,
     submit
   };
 }

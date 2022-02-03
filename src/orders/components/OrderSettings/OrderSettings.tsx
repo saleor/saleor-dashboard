@@ -5,7 +5,7 @@ import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { OrderSettingsFormData } from "../OrderSettingsPage/form";
+import { OrderSettingsFormData } from "../OrderSettingsPage/types";
 
 export interface OrderSettingsProps {
   data: OrderSettingsFormData;

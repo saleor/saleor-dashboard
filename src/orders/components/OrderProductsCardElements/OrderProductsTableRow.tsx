@@ -13,26 +13,22 @@ import React from "react";
 
 const useStyles = makeStyles(
   theme => ({
-    colName: {
-      width: "auto"
-    },
+    colName: {},
     colNameLabel: {
       marginLeft: AVATAR_MARGIN
     },
     colPrice: {
-      width: 120
+      textAlign: "right"
     },
     colQuantity: {
-      textAlign: "center",
-      width: 120
+      textAlign: "center"
     },
     colSku: {
       textAlign: "right",
-      textOverflow: "ellipsis",
-      width: 120
+      textOverflow: "ellipsis"
     },
     colTotal: {
-      width: 120
+      textAlign: "right"
     },
     infoLabel: {
       display: "inline-block"
@@ -49,9 +45,6 @@ const useStyles = makeStyles(
     },
     statusBar: {
       paddingTop: 0
-    },
-    table: {
-      tableLayout: "fixed"
     }
   }),
   { name: "TableLine" }
@@ -96,20 +89,19 @@ const TableLine: React.FC<TableLineProps> = ({
       <TableCell className={classes.colQuantity}>
         {quantityToDisplay || <Skeleton />}
       </TableCell>
-      <TableCell className={classes.colPrice}>
+      <TableCell className={classes.colPrice} align="right">
         {maybe(() => line.orderLine.unitPrice.gross) ? (
-          <Money money={line.orderLine.unitPrice.gross} align="right" />
+          <Money money={line.orderLine.unitPrice.gross} />
         ) : (
           <Skeleton />
         )}
       </TableCell>
-      <TableCell className={classes.colTotal}>
+      <TableCell className={classes.colTotal} align="right">
         <Money
           money={{
             amount: line.quantity * line.orderLine.unitPrice.gross.amount,
             currency: line.orderLine.unitPrice.gross.currency
           }}
-          align="right"
         />
       </TableCell>
     </TableRow>

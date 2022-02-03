@@ -11,6 +11,7 @@ import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/ut
 import useShop from "@saleor/hooks/useShop";
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
+import { extractMutationErrors } from "@saleor/misc";
 import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
 import currencyCodes from "currency-codes";
 import React from "react";
@@ -44,15 +45,17 @@ export const ChannelCreateView = ({}) => {
     currencyCode,
     ...rest
   }: FormData) =>
-    createChannel({
-      variables: {
-        input: {
-          ...rest,
-          currencyCode: currencyCode.toUpperCase(),
-          addShippingZones: shippingZonesIdsToAdd
+    extractMutationErrors(
+      createChannel({
+        variables: {
+          input: {
+            ...rest,
+            currencyCode: currencyCode.toUpperCase(),
+            addShippingZones: shippingZonesIdsToAdd
+          }
         }
-      }
-    });
+      })
+    );
 
   const {
     loadMore: fetchMoreShippingZones,

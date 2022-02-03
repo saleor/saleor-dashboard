@@ -4,9 +4,9 @@ import {
   InputLabel,
   MenuItem,
   OutlinedInput,
+  OutlinedInputProps,
   Select
 } from "@material-ui/core";
-import { InputProps } from "@material-ui/core/Input";
 import { SelectProps } from "@material-ui/core/Select";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
@@ -55,7 +55,7 @@ interface SingleSelectFieldProps {
   selectProps?: SelectProps;
   placeholder?: string;
   value?: string;
-  InputProps?: InputProps;
+  InputProps?: OutlinedInputProps;
   onChange(event: any);
 }
 
@@ -105,14 +105,15 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
         onChange={onChange}
         input={
           <OutlinedInput
-            classes={{
-              input: classNames({
-                [classes.noLabel]: !label
-              })
-            }}
             name={name}
             labelWidth={180}
             {...InputProps}
+            classes={{
+              ...(InputProps?.classes || {}),
+              input: classNames(InputProps?.classes?.input, {
+                [classes.noLabel]: !label
+              })
+            }}
           />
         }
         {...selectProps}

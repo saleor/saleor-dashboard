@@ -1,4 +1,4 @@
-import { Button, DialogContentText } from "@material-ui/core";
+import { DialogContentText } from "@material-ui/core";
 import {
   ChannelVoucherData,
   createChannelsDataWithDiscountPrice,
@@ -43,6 +43,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
@@ -62,6 +63,7 @@ import { collectionUrl } from "../../../collections/urls";
 import { maybe } from "../../../misc";
 import { productUrl } from "../../../products/urls";
 import { createUpdateHandler } from "./handlers";
+import { VOUCHER_UPDATE_FORM_ID } from "./types";
 
 interface VoucherDetailsProps {
   id: string;
@@ -151,10 +153,15 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(voucherChannelsChoices, params?.action, {
-    closeModal,
-    openModal
-  });
+  } = useChannels(
+    voucherChannelsChoices,
+    params?.action,
+    {
+      closeModal,
+      openModal
+    },
+    { formId: VOUCHER_UPDATE_FORM_ID }
+  );
 
   const [updateChannels, updateChannelsOpts] = useVoucherChannelListingUpdate(
     {}
@@ -390,7 +397,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                             saveButtonBarState={voucherUpdateOpts.status}
                             categoryListToolbar={
                               <Button
-                                color="primary"
                                 onClick={() =>
                                   openModal("unassign-category", {
                                     ids: listElements
@@ -406,7 +412,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                             }
                             collectionListToolbar={
                               <Button
-                                color="primary"
                                 onClick={() =>
                                   openModal("unassign-collection", {
                                     ids: listElements
@@ -422,7 +427,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                             }
                             productListToolbar={
                               <Button
-                                color="primary"
                                 onClick={() =>
                                   openModal("unassign-product", {
                                     ids: listElements

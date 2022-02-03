@@ -1,5 +1,4 @@
 import {
-  Button,
   Card,
   CardContent,
   Table,
@@ -15,7 +14,7 @@ import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { FormsetChange } from "@saleor/hooks/useFormset";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { OrderRefundData_order_fulfillments } from "@saleor/orders/types/OrderRefundData";
 import React from "react";
@@ -105,7 +104,6 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
       <CardContent className={classes.cartContent}>
         <Button
           className={classes.setMaximalQuantityButton}
-          color="primary"
           onClick={onSetMaximalQuantities}
           data-test="setMaximalQuantityFulfilledButton"
           data-test-id={fulfillment?.id}

@@ -62,7 +62,7 @@ const staffMemberUpdateMutation = gql`
     }
   }
 `;
-export const TypedStaffMemberUpdateMutation = TypedMutation<
+export const useStaffMemberUpdateMutation = makeMutation<
   StaffMemberUpdate,
   StaffMemberUpdateVariables
 >(staffMemberUpdateMutation);

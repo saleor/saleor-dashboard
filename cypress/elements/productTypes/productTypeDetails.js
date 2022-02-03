@@ -4,5 +4,6 @@ export const PRODUCT_TYPE_DETAILS = {
   assignProductAttributeButton: '[data-test-id="assignProductsAttributes"]',
   assignVariantAttributeButton: '[data-test-id="assignVariantsAttributes"]',
   hasVariantsButton: '[name="hasVariants"]',
-  shippingWeightInput: '[name="weight"]'
+  shippingWeightInput: '[name="weight"]',
+  giftCardKindCheckbox: '[data-test-id="product-type-kind-option-GIFT_CARD"]'
 };

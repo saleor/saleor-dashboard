@@ -1,5 +1,4 @@
-import { DialogContentText, IconButton } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
+import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -10,6 +9,7 @@ import useLocalPaginator, {
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages, errorMessages } from "@saleor/intl";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -22,7 +22,7 @@ import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { PAGINATE_BY } from "../../config";
-import { maybe } from "../../misc";
+import { extractMutationErrors, maybe } from "../../misc";
 import { useProductBulkDeleteMutation } from "../../products/mutations";
 import { productAddUrl, productUrl } from "../../products/urls";
 import { CategoryInput } from "../../types/globalTypes";
@@ -178,25 +178,25 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     paginationState
   );
 
-  const handleUpdate = async (formData: CategoryUpdateData) => {
-    const result = await updateCategory({
-      variables: {
-        id,
-        input: {
-          backgroundImageAlt: formData.backgroundImageAlt,
-          description: getParsedDataForJsonStringField(formData.description),
-          name: formData.name,
-          seo: {
-            description: formData.seoDescription,
-            title: formData.seoTitle
-          },
-          slug: formData.slug
+  const handleUpdate = async (formData: CategoryUpdateData) =>
+    extractMutationErrors(
+      updateCategory({
+        variables: {
+          id,
+          input: {
+            backgroundImageAlt: formData.backgroundImageAlt,
+            description: getParsedDataForJsonStringField(formData.description),
+            name: formData.name,
+            seo: {
+              description: formData.seoDescription,
+              title: formData.seoTitle
+            },
+            slug: formData.slug
+          }
         }
-      }
-    });
+      })
+    );
 
-    return result.data.categoryUpdate.errors;
-  };
   const handleSubmit = createMetadataUpdateHandler(
     data?.category,
     handleUpdate,
@@ -252,6 +252,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
         subcategories={mapEdgesToItems(data?.category?.children)}
         subcategoryListToolbar={
           <IconButton
+            variant="secondary"
             color="primary"
             onClick={() =>
               openModal("delete-categories", {

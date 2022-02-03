@@ -597,7 +597,7 @@ export interface OrderRefund_orderRefund_order {
   undiscountedTotal: OrderRefund_orderRefund_order_undiscountedTotal;
   user: OrderRefund_orderRefund_order_user | null;
   userEmail: string | null;
-  shippingMethods: OrderRefund_orderRefund_order_shippingMethods[];
+  shippingMethods: (OrderRefund_orderRefund_order_shippingMethods | null)[] | null;
   invoices: (OrderRefund_orderRefund_order_invoices | null)[] | null;
   channel: OrderRefund_orderRefund_order_channel;
 }

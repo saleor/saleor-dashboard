@@ -1,5 +1,6 @@
 import { OutputData } from "@editorjs/editorjs";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
+import isEqual from "lodash/isEqual";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
 
 function useRichText(opts: {
@@ -25,6 +26,10 @@ function useRichText(opts: {
   }, [opts.initial]);
 
   const change: RichTextEditorChange = newData => {
+    if (isEqual(data.current.blocks, newData.blocks)) {
+      return;
+    }
+
     opts.triggerChange();
     data.current = newData;
   };

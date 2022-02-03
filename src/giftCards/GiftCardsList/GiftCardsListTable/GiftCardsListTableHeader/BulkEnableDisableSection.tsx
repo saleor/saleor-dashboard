@@ -111,8 +111,9 @@ const BulkEnableDisableSection: React.FC = () => {
       {(areAllSelectedCardsDisabled || isSelectionMixed) && (
         <ConfirmButton
           onClick={handleActivateGiftCards}
-          variant="text"
+          variant="secondary"
           transitionState={activateGiftCardsOpts?.status}
+          data-test-id="activate-gift-cards"
         >
           {intl.formatMessage(messages.enableLabel)}
         </ConfirmButton>
@@ -120,8 +121,9 @@ const BulkEnableDisableSection: React.FC = () => {
       {(areAllSelectedCardsActive || isSelectionMixed) && (
         <ConfirmButton
           onClick={handleDeactivateGiftCards}
-          variant="text"
+          variant="secondary"
           transitionState={deactivateGiftCardsOpts?.status}
+          data-test-id="deactivate-gift-cards"
         >
           {intl.formatMessage(messages.disableLabel)}
         </ConfirmButton>

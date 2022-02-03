@@ -2,7 +2,6 @@ import {
   FormControl,
   FormControlLabel,
   FormHelperText,
-  FormLabel,
   MenuItem,
   Radio,
   RadioGroup
@@ -61,9 +60,7 @@ export const RadioGroupField: React.FC<RadioGroupFieldProps> = props => {
       error={error}
       disabled={disabled}
     >
-      {label ? (
-        <FormLabel className={classes.formLabel}>{label}</FormLabel>
-      ) : null}
+      {!!label && <label className={classes.formLabel}>{label}</label>}
       <RadioGroup
         aria-label={name}
         name={name}

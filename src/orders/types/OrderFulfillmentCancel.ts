@@ -597,7 +597,7 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order {
   undiscountedTotal: OrderFulfillmentCancel_orderFulfillmentCancel_order_undiscountedTotal;
   user: OrderFulfillmentCancel_orderFulfillmentCancel_order_user | null;
   userEmail: string | null;
-  shippingMethods: OrderFulfillmentCancel_orderFulfillmentCancel_order_shippingMethods[];
+  shippingMethods: (OrderFulfillmentCancel_orderFulfillmentCancel_order_shippingMethods | null)[] | null;
   invoices: (OrderFulfillmentCancel_orderFulfillmentCancel_order_invoices | null)[] | null;
   channel: OrderFulfillmentCancel_orderFulfillmentCancel_order_channel;
 }

@@ -1,9 +1,11 @@
-import { Button, Card } from "@material-ui/core";
+import { Card } from "@material-ui/core";
 import Container from "@saleor/components/Container";
+import { getByName } from "@saleor/components/Filter/utils";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
 import { VoucherListUrlSortField } from "@saleor/discounts/urls";
 import { sectionNames } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import {
   ChannelProps,
   FilterPageProps,
@@ -49,15 +51,12 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
   const intl = useIntl();
   const structure = createFilterStructure(intl, filterOpts);
 
+  const filterDependency = structure.find(getByName("channel"));
+
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.vouchers)}>
-        <Button
-          onClick={onAdd}
-          variant="contained"
-          color="primary"
-          data-test-id="create-voucher"
-        >
+        <Button onClick={onAdd} variant="primary" data-test-id="create-voucher">
           <FormattedMessage
             defaultMessage="Create voucher"
             description="button"
@@ -84,7 +83,7 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
           onTabDelete={onTabDelete}
           onTabSave={onTabSave}
         />
-        <VoucherList {...listProps} />
+        <VoucherList filterDependency={filterDependency} {...listProps} />
       </Card>
     </Container>
   );

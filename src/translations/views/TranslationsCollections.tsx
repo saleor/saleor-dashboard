@@ -6,7 +6,7 @@ import { stringifyQs } from "@saleor/utils/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { maybe } from "../../misc";
+import { extractMutationErrors, maybe } from "../../misc";
 import { LanguageCodeEnum } from "../../types/globalTypes";
 import TranslationsCollectionsPage from "../components/TranslationsCollectionsPage";
 import { TypedUpdateCollectionTranslations } from "../mutations";
@@ -72,18 +72,19 @@ const TranslationsCollections: React.FC<TranslationsCollectionsProps> = ({
         const handleSubmit = (
           { name: fieldName }: TranslationField<TranslationInputFieldName>,
           data: string
-        ) => {
-          updateTranslations({
-            variables: {
-              id,
-              input: getParsedTranslationInputData({
-                data,
-                fieldName
-              }),
-              language: languageCode
-            }
-          });
-        };
+        ) =>
+          extractMutationErrors(
+            updateTranslations({
+              variables: {
+                id,
+                input: getParsedTranslationInputData({
+                  data,
+                  fieldName
+                }),
+                language: languageCode
+              }
+            })
+          );
 
         return (
           <TranslationsCollectionsPage

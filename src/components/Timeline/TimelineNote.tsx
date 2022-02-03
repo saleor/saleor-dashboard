@@ -41,8 +41,7 @@ const useStyles = makeStyles(
     cardContent: {
       "&:last-child": {
         padding: 16
-      },
-      boxShadow: "0px 5px 10px rgba(0, 0, 0, 0.05)"
+      }
     },
     root: {
       position: "relative"
@@ -70,6 +69,22 @@ interface TimelineNoteProps {
     lastName?: string;
   };
 }
+
+interface NoteMessageProps {
+  message: string;
+}
+
+const NoteMessage: React.FC<NoteMessageProps> = ({ message }) => (
+  <>
+    {message.split("\n").map(string => {
+      if (string === "") {
+        return <br />;
+      }
+
+      return <Typography>{string}</Typography>;
+    })}
+  </>
+);
 
 export const TimelineNote: React.FC<TimelineNoteProps> = props => {
   const { date, user, message } = props;
@@ -100,13 +115,9 @@ export const TimelineNote: React.FC<TimelineNoteProps> = props => {
           <DateTime date={date} />
         </Typography>
       </div>
-      <Card className={classes.card}>
+      <Card className={classes.card} elevation={16}>
         <CardContent className={classes.cardContent}>
-          <Typography
-            dangerouslySetInnerHTML={{
-              __html: message.replace(/\n/g, "<br />")
-            }}
-          />
+          <NoteMessage message={message} />
         </CardContent>
       </Card>
     </div>

@@ -59,18 +59,20 @@ export const EditableTableCell: React.FC<EditableTableCellProps> = props => {
     defaultValue,
     focused,
     InputProps,
-    value,
-    onConfirm
+    value
+    // onConfirm
   } = props;
   const classes = useStyles(props);
 
-  const handleConfirm = (data: { value: string }) => {
-    disable();
-    onConfirm(data.value);
-  };
+  // const handleConfirm = (data: { value: string }) => {
+  //   disable();
+  //   onConfirm(data.value);
+  // };
 
   const [opened, setOpenStatus] = React.useState(focused);
-  const { change, data } = useForm({ value }, handleConfirm);
+  const { change, data } = useForm(
+    { value } /* commenting out temporarily handleConfirm */
+  );
   const enable = () => setOpenStatus(true);
   const disable = () => setOpenStatus(false);
 

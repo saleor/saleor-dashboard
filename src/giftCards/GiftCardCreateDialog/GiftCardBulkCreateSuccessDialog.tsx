@@ -1,11 +1,11 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   Typography
 } from "@material-ui/core";
+import { Button } from "@saleor/macaw-ui";
 import { DialogProps } from "@saleor/types";
 import React from "react";
 import { useState } from "react";
@@ -44,14 +44,10 @@ const GiftCardBulkCreateSuccessDialog: React.FC<GiftCardBulkCreateSuccessDialogP
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button
-            variant="outlined"
-            color="secondary"
-            onClick={() => setOpenEmailExport(true)}
-          >
+          <Button variant="secondary" onClick={() => setOpenEmailExport(true)}>
             <FormattedMessage {...messages.bulkCreateIssuedExportToEmail} />
           </Button>
-          <Button variant="contained" color="primary" onClick={onClose}>
+          <Button variant="primary" onClick={onClose}>
             <FormattedMessage {...messages.bulkCreateIssuedAccept} />
           </Button>
         </DialogActions>

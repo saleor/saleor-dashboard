@@ -1,19 +1,17 @@
 import {
-  IconButton,
   TableBody,
   TableCell,
   TableFooter,
   TableHead,
   TableRow
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
 import { WarehouseWithShippingFragment } from "@saleor/fragments/types/WarehouseWithShippingFragment";
-import { makeStyles } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { ListProps, SortPage } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -40,7 +38,7 @@ const useStyles = makeStyles(
       display: "flex",
       justifyContent: "flex-end",
       position: "relative",
-      right: theme.spacing(-2)
+      right: theme.spacing(-1.5)
     },
     colActions: {
       textAlign: "right"
@@ -150,10 +148,15 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
               </TableCell>
               <TableCell className={classes.colActions}>
                 <div className={classes.actions}>
-                  <IconButton color="primary" data-test="editButton">
+                  <IconButton
+                    variant="secondary"
+                    color="primary"
+                    data-test="editButton"
+                  >
                     <EditIcon />
                   </IconButton>
                   <IconButton
+                    variant="secondary"
                     color="primary"
                     onClick={stopPropagation(() => onRemove(warehouse.id))}
                   >

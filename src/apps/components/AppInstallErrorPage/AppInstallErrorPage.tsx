@@ -1,6 +1,7 @@
 import errorImg from "@assets/images/app-install-error.svg";
-import { Button, Grid, Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import Container from "@saleor/components/Container";
+import { Button } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -34,12 +35,7 @@ export const AppInstallErrorPage: React.FC<AppInstallErrorPageProps> = ({
               description="content"
             />
           </Typography>
-          <Button
-            className={classes.button}
-            color="primary"
-            variant="contained"
-            onClick={onBack}
-          >
+          <Button className={classes.button} variant="primary" onClick={onBack}>
             <FormattedMessage
               defaultMessage="Back to homepage"
               description="button"

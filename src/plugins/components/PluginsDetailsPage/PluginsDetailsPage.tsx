@@ -1,13 +1,13 @@
 import CardSpacer from "@saleor/components/CardSpacer";
-import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { PluginErrorFragment } from "@saleor/fragments/types/PluginErrorFragment";
-import { ChangeEvent } from "@saleor/hooks/useForm";
+import { ChangeEvent, SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { isSecretField } from "@saleor/plugins/utils";
@@ -35,7 +35,7 @@ export interface PluginsDetailsPageProps {
   onBack: () => void;
   onClear: (field: string) => void;
   onEdit: (field: string) => void;
-  onSubmit: (data: PluginDetailsPageFormData) => void;
+  onSubmit: (data: PluginDetailsPageFormData) => SubmitPromise;
   selectedConfig?: PluginConfiguration;
   setSelectedChannelId: (channelId: string) => void;
 }
@@ -70,6 +70,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
 
   return (
     <Form
+      confirmLeave
       initial={initialFormData()}
       onSubmit={onSubmit}
       key={selectedChannelId}

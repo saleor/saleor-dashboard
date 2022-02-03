@@ -146,7 +146,7 @@ export interface GiftCardDetails_giftCard {
   initialBalance: GiftCardDetails_giftCard_initialBalance | null;
   currentBalance: GiftCardDetails_giftCard_currentBalance | null;
   id: string;
-  tags: GiftCardDetails_giftCard_tags[] | null;
+  tags: GiftCardDetails_giftCard_tags[];
   events: GiftCardDetails_giftCard_events[];
 }
 

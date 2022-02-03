@@ -1,3 +1,3 @@
 export const demoProductsNames = {
-  appleJuice: "Apple Juice"
+  carrotJuice: "Carrot Juice"
 };

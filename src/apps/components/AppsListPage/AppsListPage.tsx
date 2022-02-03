@@ -1,3 +1,4 @@
+import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { sectionNames } from "@saleor/intl";
@@ -23,7 +24,7 @@ export interface AppsListPageProps extends ListProps {
   onCustomAppRemove: (id: string) => void;
   onAppInProgressRemove: (id: string) => void;
   onAppInstallRetry: (id: string) => void;
-  onSettingsRowClick: (id: string) => () => void;
+  onRowAboutClick: (id: string) => () => void;
 }
 
 const AppsListPage: React.FC<AppsListPageProps> = ({
@@ -37,7 +38,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
   onCustomAppRemove,
   onAppInProgressRemove,
   onAppInstallRetry,
-  onSettingsRowClick,
+  onRowAboutClick,
   ...listProps
 }) => {
   const intl = useIntl();
@@ -48,25 +49,30 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.apps)} />
       {!!appsInProgress?.length && (
-        <AppsInProgress
-          appsList={appsInProgress}
-          disabled={loadingAppsInProgress}
-          onAppInstallRetry={onAppInstallRetry}
-          onRemove={onAppInProgressRemove}
-        />
+        <>
+          <AppsInProgress
+            appsList={appsInProgress}
+            disabled={loadingAppsInProgress}
+            onAppInstallRetry={onAppInstallRetry}
+            onRemove={onAppInProgressRemove}
+          />
+          <CardSpacer />
+        </>
       )}
       <InstalledApps
         appsList={installedAppsList}
         onRemove={onInstalledAppRemove}
-        onSettingsRowClick={onSettingsRowClick}
+        onRowAboutClick={onRowAboutClick}
         {...listProps}
       />
+      <CardSpacer />
       <CustomApps
         appsList={customAppsList}
         navigateToCustomApp={navigateToCustomApp}
         navigateToCustomAppCreate={navigateToCustomAppCreate}
         onRemove={onCustomAppRemove}
       />
+      <CardSpacer />
       <Marketplace />
     </Container>
   );

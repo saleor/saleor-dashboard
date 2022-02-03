@@ -1,9 +1,9 @@
-import { IconButton, TextField, Typography } from "@material-ui/core";
+import { Popper, TextField, Typography } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import CloseIcon from "@material-ui/icons/Close";
 import Debounce, { DebounceProps } from "@saleor/components/Debounce";
 import ArrowDropdownIcon from "@saleor/icons/ArrowDropdown";
-import { makeStyles } from "@saleor/macaw-ui";
+import { IconButton, makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import Downshift, { ControllerStateAndHelpers } from "downshift";
 import { filter } from "fuzzaldrin";
@@ -128,6 +128,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
     ...rest
   } = props;
   const classes = useStyles(props);
+  const anchor = React.useRef<HTMLInputElement | null>(null);
 
   const handleSelect = (
     item: string,
@@ -196,7 +197,8 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                         if (fetchOnFocus) {
                           fetchChoices(inputValue);
                         }
-                      }
+                      },
+                      ref: anchor
                     }}
                     error={error}
                     helperText={helperText}
@@ -205,28 +207,38 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                     disabled={disabled}
                   />
                   {isOpen && (
-                    <MultiAutocompleteSelectFieldContent
-                      add={
-                        add && {
-                          ...add,
-                          onClick: () => {
-                            add.onClick();
-                            closeMenu();
+                    <Popper
+                      anchorEl={anchor.current}
+                      open={isOpen}
+                      style={{
+                        width: anchor.current.clientWidth,
+                        zIndex: 1301
+                      }}
+                      placement="bottom-end"
+                    >
+                      <MultiAutocompleteSelectFieldContent
+                        add={
+                          add && {
+                            ...add,
+                            onClick: () => {
+                              add.onClick();
+                              closeMenu();
+                            }
                           }
                         }
-                      }
-                      choices={choices.filter(
-                        choice => !value.includes(choice.value)
-                      )}
-                      displayCustomValue={displayCustomValue}
-                      displayValues={displayValues}
-                      getItemProps={getItemProps}
-                      hasMore={hasMore}
-                      highlightedIndex={highlightedIndex}
-                      loading={loading}
-                      inputValue={inputValue}
-                      onFetchMore={onFetchMore}
-                    />
+                        choices={choices.filter(
+                          choice => !value.includes(choice.value)
+                        )}
+                        displayCustomValue={displayCustomValue}
+                        displayValues={displayValues}
+                        getItemProps={getItemProps}
+                        hasMore={hasMore}
+                        highlightedIndex={highlightedIndex}
+                        loading={loading}
+                        inputValue={inputValue}
+                        onFetchMore={onFetchMore}
+                      />
+                    </Popper>
                   )}
                 </div>
               );
@@ -247,6 +259,8 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
               </Typography>
 
               <IconButton
+                hoverOutline={false}
+                variant="secondary"
                 data-test-id={testId ? `${testId}Remove` : "remove"}
                 className={classes.chipClose}
                 disabled={value.disabled}

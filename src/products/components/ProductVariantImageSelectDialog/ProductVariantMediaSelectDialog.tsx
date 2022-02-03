@@ -1,12 +1,11 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle
 } from "@material-ui/core";
+import BackButton from "@saleor/components/BackButton";
 import { ProductMediaFragment } from "@saleor/fragments/types/ProductMediaFragment";
-import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
@@ -101,9 +100,7 @@ const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogP
         </div>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>
-          <FormattedMessage {...buttonMessages.back} />
-        </Button>
+        <BackButton onClick={onClose} />
       </DialogActions>
     </Dialog>
   );

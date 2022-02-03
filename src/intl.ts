@@ -38,7 +38,7 @@ export const commonMessages = defineMessages({
     defaultMessage: "Drafts"
   },
   email: {
-    defaultMessage: "E-mail Address"
+    defaultMessage: "Email address"
   },
   endDate: {
     defaultMessage: "End Date"
@@ -48,6 +48,9 @@ export const commonMessages = defineMessages({
   },
   error: {
     defaultMessage: "Error"
+  },
+  extensions: {
+    defaultMessage: "Extensions"
   },
   firstName: {
     defaultMessage: "First Name"

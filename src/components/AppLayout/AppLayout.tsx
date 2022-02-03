@@ -26,7 +26,7 @@ import UserChip from "../UserChip";
 import useAppChannel from "./AppChannelContext";
 import AppChannelSelect from "./AppChannelSelect";
 import { appLoaderHeight } from "./consts";
-import createMenuStructure from "./menuStructure";
+import useMenuStructure from "./menuStructure";
 import { isMenuActive } from "./utils";
 
 const useStyles = makeStyles(
@@ -108,7 +108,7 @@ const useStyles = makeStyles(
       }
     },
     viewContainer: {
-      minHeight: `calc(100vh + ${appLoaderHeight + 70}px - ${theme.spacing(2)})`
+      minHeight: `calc(100vh - ${appLoaderHeight + 72}px - ${theme.spacing(4)})`
     }
   }),
   {
@@ -141,22 +141,24 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     setChannel
   } = useAppChannel(false);
 
-  const menuStructure = createMenuStructure(intl, user);
+  const [menuStructure, handleMenuItemClick] = useMenuStructure(intl, user);
   const activeMenu = menuStructure.find(menuItem =>
     isMenuActive(location.pathname, menuItem)
   )?.id;
 
-  const handleMenuItemClick = (url: string) =>
-    navigate(url, { resetScroll: true });
+  const reloadWindow = () => {
+    window.location.reload();
+  };
 
   const handleErrorBack = () => {
-    navigate("/");
+    navigate("/", { replace: true });
     dispatchAppState({
       payload: {
         error: null
       },
       type: "displayError"
     });
+    reloadWindow();
   };
 
   const toggleTheme = () => setTheme(isDarkTheme(themeType) ? "light" : "dark");
@@ -170,7 +172,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       <div className={classes.root}>
         {isMdUp && (
           <Sidebar
-            active={activeMenu}
+            activeId={activeMenu}
             menuItems={menuStructure}
             onMenuItemClick={handleMenuItemClick}
           />
@@ -190,7 +192,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                     {!isMdUp && (
                       <SidebarDrawer
                         menuItems={menuStructure}
-                        onMenuItemClick={navigate}
+                        onMenuItemClick={handleMenuItemClick}
                       />
                     )}
                     <div className={classes.spacer} />
@@ -226,6 +228,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                     <ErrorPage
                       id={appState.error.id}
                       onBack={handleErrorBack}
+                      onRefresh={() => window.location.reload()}
                     />
                   )
                 : children}

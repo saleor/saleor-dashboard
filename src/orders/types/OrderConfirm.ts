@@ -597,7 +597,7 @@ export interface OrderConfirm_orderConfirm_order {
   undiscountedTotal: OrderConfirm_orderConfirm_order_undiscountedTotal;
   user: OrderConfirm_orderConfirm_order_user | null;
   userEmail: string | null;
-  shippingMethods: OrderConfirm_orderConfirm_order_shippingMethods[];
+  shippingMethods: (OrderConfirm_orderConfirm_order_shippingMethods | null)[] | null;
   invoices: (OrderConfirm_orderConfirm_order_invoices | null)[] | null;
   channel: OrderConfirm_orderConfirm_order_channel;
 }

@@ -1,17 +1,9 @@
-import {
-  Button,
-  Card,
-  CardActions,
-  IconButton,
-  Paper,
-  Typography
-} from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
+import { Card, CardActions, Paper, Typography } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
 import { buttonMessages } from "@saleor/intl";
-import { useTheme } from "@saleor/macaw-ui";
+import { Button, DeleteIcon, IconButton, useTheme } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
@@ -39,6 +31,9 @@ export interface MenuItemsProps {
 const useStyles = makeStyles(
   theme => ({
     actions: {
+      "&&": {
+        padding: theme.spacing(2, 4)
+      },
       flexDirection: "row"
     },
     container: {
@@ -176,15 +171,15 @@ const Node: React.FC<NodeRendererProps> = props => {
           {node.title}
         </Typography>
         <div className={classes.spacer} />
-        <Button color="primary" onClick={node.onClick}>
+        <Button onClick={node.onClick}>
           <FormattedMessage {...buttonMessages.show} />
         </Button>
-        <IconButton color="primary" onClick={node.onEdit}>
+        <IconButton variant="secondary" onClick={node.onEdit}>
           <EditIcon />
         </IconButton>
         <IconButton
           className={classes.deleteButton}
-          color="primary"
+          variant="secondary"
           onClick={() =>
             node.onChange({
               id: node.id as any,
@@ -224,7 +219,7 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
           id: "menuItemsHeader"
         })}
         toolbar={
-          <Button color="primary" disabled={!canUndo} onClick={onUndo}>
+          <Button disabled={!canUndo} onClick={onUndo}>
             <FormattedMessage {...buttonMessages.undo} />
           </Button>
         }
@@ -273,11 +268,7 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
         )}
       </div>
       <CardActions className={classes.actions}>
-        <Button
-          color="primary"
-          onClick={onItemAdd}
-          data-test-id="createNewMenuItem"
-        >
+        <Button onClick={onItemAdd} data-test-id="createNewMenuItem">
           <FormattedMessage
             defaultMessage="Create new item"
             description="add new menu item"

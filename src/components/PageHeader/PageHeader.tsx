@@ -8,7 +8,7 @@ import Skeleton from "../Skeleton";
 const useStyles = makeStyles(
   theme => ({
     limit: {
-      marginRight: theme.spacing(3)
+      marginRight: theme.spacing(4)
     },
     root: {
       alignItems: "center",
@@ -33,7 +33,9 @@ const useStyles = makeStyles(
       fontWeight: 700,
       alignSelf: "flex-start",
       flex: 1,
-      fontSize: 48
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      textOverflow: "ellipsis"
     }
   }),
   { name: "PageHeader" }
@@ -60,7 +62,7 @@ const PageHeader: React.FC<PageHeaderProps> = props => {
       inline={inline}
       underline={underline}
       title={
-        <Typography className={classes.title} variant="h5">
+        <Typography className={classes.title} variant="h1">
           {title !== undefined ? title : <Skeleton style={{ width: "10em" }} />}
         </Typography>
       }

@@ -1,5 +1,6 @@
-import useForm, { FormChange } from "@saleor/hooks/useForm";
-import React, { useState } from "react";
+import useForm, { CommonUseFormResult } from "@saleor/hooks/useForm";
+import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
+import React from "react";
 
 export enum CustomerChangeActionEnum {
   KEEP_ADDRESS = "keepAddress",
@@ -10,12 +11,9 @@ export interface OrderCustomerChangeData {
   changeActionOption: CustomerChangeActionEnum;
 }
 
-interface UseOrderCustomerChangeFormResult {
-  submit: (event: React.FormEvent<any>) => void;
-  change: FormChange;
-  hasChanged: boolean;
-  data: OrderCustomerChangeData;
-}
+type UseOrderCustomerChangeFormResult = CommonUseFormResult<
+  OrderCustomerChangeData
+>;
 
 export interface OrderCustomerChangeFormProps {
   children: (props: UseOrderCustomerChangeFormResult) => React.ReactNode;
@@ -23,38 +21,37 @@ export interface OrderCustomerChangeFormProps {
   onSubmit: (data: OrderCustomerChangeData) => void;
 }
 
+const defaultInitialFormData: OrderCustomerChangeData = {
+  changeActionOption: CustomerChangeActionEnum.KEEP_ADDRESS
+};
+
 function useOrderCustomerChangeForm(
-  initial: Partial<OrderCustomerChangeData>,
+  initial: Partial<OrderCustomerChangeData> = {},
   onSubmit: (data: OrderCustomerChangeData) => void
 ): UseOrderCustomerChangeFormResult {
-  const defaultInitialFormData: OrderCustomerChangeData = {
-    changeActionOption: CustomerChangeActionEnum.KEEP_ADDRESS
-  };
-
-  const form = useForm({
+  const { handleChange, hasChanged, data, setChanged } = useForm({
     ...initial,
     ...defaultInitialFormData
   });
 
-  const [changed, setChanged] = useState(false);
-  const triggerChange = () => setChanged(true);
+  const handleFormSubmit = useHandleFormSubmit({
+    onSubmit,
+    setChanged
+  });
 
-  const handleChange: FormChange = (event, cb) => {
-    form.change(event, cb);
-    triggerChange();
-  };
+  const handleSubmit = () => handleFormSubmit(data);
 
   const submit = (event: React.FormEvent<any>) => {
     event.stopPropagation();
     event.preventDefault();
-    return onSubmit(form.data);
+    return handleSubmit();
   };
 
   return {
     change: handleChange,
     submit,
-    hasChanged: changed,
-    data: form.data
+    hasChanged,
+    data
   };
 }
 
@@ -63,7 +60,7 @@ const OrderCustomerChangeForm: React.FC<OrderCustomerChangeFormProps> = ({
   initial,
   onSubmit
 }) => {
-  const props = useOrderCustomerChangeForm(initial || {}, onSubmit);
+  const props = useOrderCustomerChangeForm(initial, onSubmit);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };

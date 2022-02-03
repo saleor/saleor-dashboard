@@ -11,7 +11,9 @@ import { useState } from "react";
 
 interface UseAddressValidation<TInput, TOutput> {
   errors: AccountErrorFragment[];
-  submit: (data: TInput & AddressTypeInput) => TOutput;
+  submit: (
+    data: TInput & AddressTypeInput
+  ) => TOutput | Promise<AccountErrorFragment[]>;
 }
 
 function useAddressValidation<TInput, TOutput>(
@@ -42,7 +44,10 @@ function useAddressValidation<TInput, TOutput>(
         );
         return onSubmit(transformFormToAddressInput(data));
       } catch {
-        setValidationErrors(add(countryRequiredError, validationErrors));
+        const errors = add(countryRequiredError, validationErrors);
+        setValidationErrors(errors);
+        // since every onSubmit must return Promise<error>
+        return Promise.resolve(errors);
       }
     }
   };

@@ -64,7 +64,8 @@ const props: ShippingZoneRatesPageProps = {
   toggle: () => undefined,
   toggleAll: () => undefined,
   toolbar: () => undefined,
-  variant: ShippingMethodTypeEnum.PRICE
+  variant: ShippingMethodTypeEnum.PRICE,
+  formId: Symbol()
 };
 
 storiesOf("Views / Shipping / Shipping rate", module)

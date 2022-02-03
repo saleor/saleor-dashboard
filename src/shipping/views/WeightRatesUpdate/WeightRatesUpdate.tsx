@@ -1,4 +1,3 @@
-import { Button } from "@material-ui/core";
 import {
   createShippingChannelsFromRate,
   createSortedShippingChannels
@@ -16,6 +15,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { sectionNames } from "@saleor/intl";
 import { commonMessages } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import {
   getById,
   getByUnmatchingId
@@ -65,6 +65,8 @@ import {
 } from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+
+import { WEIGHT_RATES_UPDATE_FORM_ID } from "./consts";
 
 export interface WeightRatesUpdateProps {
   id: string;
@@ -208,7 +210,12 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(shippingChannels, params?.action, { closeModal, openModal });
+  } = useChannels(
+    shippingChannels,
+    params?.action,
+    { closeModal, openModal },
+    { formId: WEIGHT_RATES_UPDATE_FORM_ID }
+  );
 
   const [updateShippingRate, updateShippingRateOpts] = useShippingRateUpdate(
     {}
@@ -351,6 +358,7 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
         onSubmit={handleProductAssign}
       />
       <ShippingZoneRatesPage
+        formId={WEIGHT_RATES_UPDATE_FORM_ID}
         allChannelsCount={allChannels?.length}
         shippingChannels={currentChannels}
         disabled={
@@ -386,7 +394,7 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
         postalCodeRules={state.postalCodeRules}
         pageInfo={pageInfo}
         toolbar={
-          <Button color="primary" onClick={() => openModal("unassign-product")}>
+          <Button onClick={() => openModal("unassign-product")}>
             <FormattedMessage
               defaultMessage="Unassign"
               description="unassign products from shipping method, button"
