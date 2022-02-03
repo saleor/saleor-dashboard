@@ -112,9 +112,11 @@ const CardTitle: React.FC<CardTitleProps> = ({
         fulfillmentName,
         quantity: totalQuantity
       })}
-      <Typography className={classes.orderNumber} variant="body1">
-        {fulfillmentName}
-      </Typography>
+      {fulfillmentName && (
+        <Typography className={classes.orderNumber} variant="body1">
+          {fulfillmentName}
+        </Typography>
+      )}
     </>
   );
 
