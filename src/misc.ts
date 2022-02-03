@@ -91,17 +91,17 @@ export const transformPaymentStatus = (
     case PaymentChargeStatusEnum.PARTIALLY_REFUNDED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.partiallyRefunded),
-        status: StatusType.ERROR
+        status: StatusType.INFO
       };
     case PaymentChargeStatusEnum.FULLY_REFUNDED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.refunded),
-        status: StatusType.SUCCESS
+        status: StatusType.INFO
       };
     case PaymentChargeStatusEnum.PENDING:
       return {
         localized: intl.formatMessage(paymentStatusMessages.pending),
-        status: StatusType.INFO
+        status: StatusType.WARNING
       };
     case PaymentChargeStatusEnum.REFUSED:
       return {
@@ -138,7 +138,7 @@ export const transformOrderStatus = (
     case OrderStatus.PARTIALLY_FULFILLED:
       return {
         localized: intl.formatMessage(orderStatusMessages.partiallyFulfilled),
-        status: StatusType.INFO
+        status: StatusType.WARNING
       };
     case OrderStatus.UNFULFILLED:
       return {
@@ -153,7 +153,7 @@ export const transformOrderStatus = (
     case OrderStatus.DRAFT:
       return {
         localized: intl.formatMessage(orderStatusMessages.draft),
-        status: StatusType.ERROR
+        status: StatusType.INFO
       };
     case OrderStatus.UNCONFIRMED:
       return {
