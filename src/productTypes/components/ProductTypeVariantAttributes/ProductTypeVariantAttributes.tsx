@@ -279,6 +279,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                   </TableCell>
                   <TableCell className={classes.colAction}>
                     <IconButton
+                      data-test-id="delete-icon"
                       onClick={stopPropagation(() =>
                         onAttributeUnassign(attribute.id)
                       )}
