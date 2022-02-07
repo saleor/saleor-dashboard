@@ -58,7 +58,7 @@ const ProductTaxes: React.FC<ProductTaxesProps> = ({
         <ControlledCheckbox
           checked={data.changeTaxCode}
           disabled={disabled}
-          data-test="override-tax-type"
+          data-test-id="override-tax-type"
           label={intl.formatMessage({
             defaultMessage: "Override the product type's tax rate",
             description: "checkbox"
@@ -70,7 +70,7 @@ const ProductTaxes: React.FC<ProductTaxesProps> = ({
         <ControlledCheckbox
           checked={data.chargeTaxes}
           disabled={disabled}
-          data-test="charge-taxes"
+          data-test-id="charge-taxes"
           label={intl.formatMessage({
             defaultMessage: "Charge taxes on this product",
             description: "checkbox"
@@ -83,7 +83,7 @@ const ProductTaxes: React.FC<ProductTaxesProps> = ({
             className={classes.select}
             disabled={disabled}
             displayValue={selectedTaxTypeDisplayName}
-            data-test="select-tax-type"
+            data-test-id="select-tax-type"
             label={intl.formatMessage({
               defaultMessage: "Tax Rate",
               description: "select tax ratte"

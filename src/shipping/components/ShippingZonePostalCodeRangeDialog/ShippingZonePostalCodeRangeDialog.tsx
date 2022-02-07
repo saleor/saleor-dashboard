@@ -89,7 +89,7 @@ const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDia
                 disabled={!hasChanged || !data.min}
                 transitionState={confirmButtonState}
                 type="submit"
-                data-test="submit"
+                data-test-id="submit"
               >
                 <FormattedMessage
                   defaultMessage="Add"

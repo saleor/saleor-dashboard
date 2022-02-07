@@ -4,6 +4,7 @@ import ColumnPicker, {
   ColumnPickerChoice
 } from "@saleor/components/ColumnPicker";
 import Container from "@saleor/components/Container";
+import { getByName } from "@saleor/components/Filter/utils";
 import FilterBar from "@saleor/components/FilterBar";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
@@ -64,7 +65,9 @@ const useStyles = makeStyles(
       }
     },
     settings: {
-      marginRight: theme.spacing(2)
+      [theme.breakpoints.up("sm")]: {
+        marginRight: theme.spacing(2)
+      }
     }
   }),
   { name: "ProductListPage" }
@@ -108,6 +111,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
 
   const filterStructure = createFilterStructure(intl, filterOpts);
 
+  const filterDependency = filterStructure.find(getByName("channel"));
+
   const columns: ColumnPickerChoice[] = [
     {
       label: intl.formatMessage(columnsMessages.price),
@@ -132,6 +137,22 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   return (
     <Container>
       <PageHeader
+        cardMenu={
+          <CardMenu
+            className={classes.settings}
+            menuItems={[
+              {
+                label: intl.formatMessage({
+                  defaultMessage: "Export Products",
+                  description: "export products to csv file, button"
+                }),
+                onSelect: onExport,
+                testId: "export"
+              }
+            ]}
+            data-test="menu"
+          />
+        }
         title={intl.formatMessage(sectionNames.products)}
         limitText={
           hasLimits(limits, "productVariants") &&
@@ -147,20 +168,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           )
         }
       >
-        <CardMenu
-          className={classes.settings}
-          menuItems={[
-            {
-              label: intl.formatMessage({
-                defaultMessage: "Export Products",
-                description: "export products to csv file, button"
-              }),
-              onSelect: onExport,
-              testId: "export"
-            }
-          ]}
-          data-test="menu"
-        />
         <ColumnPicker
           className={classes.columnPicker}
           columns={columns}
@@ -179,7 +186,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           disabled={limitReached}
           onClick={onAdd}
           variant="primary"
-          data-test="add-product"
+          data-test-id="add-product"
         >
           <FormattedMessage
             defaultMessage="Create Product"
@@ -227,6 +234,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           channelsCount={channelsCount}
           selectedChannelId={selectedChannelId}
           onUpdateListSettings={onUpdateListSettings}
+          filterDependency={filterDependency}
         />
       </Card>
     </Container>

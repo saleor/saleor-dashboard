@@ -211,7 +211,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
               <Accordion
                 key={filter.name}
                 classes={expanderClasses}
-                data-test="channel-availability-item"
+                data-test-id="channel-availability-item"
                 expanded={filter.name === openedFilter?.name}
               >
                 <AccordionSummary

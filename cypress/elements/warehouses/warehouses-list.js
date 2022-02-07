@@ -1,3 +1,3 @@
 export const WAREHOUSES_LIST = {
-  createNewButton: '[data-test-id="createWarehouse"]'
+  createNewButton: '[data-test-id="create-warehouse"]'
 };

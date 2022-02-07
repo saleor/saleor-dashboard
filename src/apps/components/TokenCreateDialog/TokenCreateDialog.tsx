@@ -88,7 +88,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                     <Typography variant="caption">
                       <FormattedMessage defaultMessage="Generated Token" />
                     </Typography>
-                    <Typography data-test-id="generatedToken">
+                    <Typography data-test-id="generated-token">
                       {token}
                     </Typography>
                     <Button
@@ -109,7 +109,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                 <>
                   <BackButton className={classes.cancel} onClick={onClose} />
                   <ConfirmButton
-                    data-test="submit"
+                    data-test-id="submit"
                     transitionState={confirmButtonState}
                     onClick={submit}
                   >

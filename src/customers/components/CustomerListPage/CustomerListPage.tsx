@@ -53,7 +53,11 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.customers)}>
-        <Button variant="primary" onClick={onAdd} data-test-id="createCustomer">
+        <Button
+          variant="primary"
+          onClick={onAdd}
+          data-test-id="create-customer"
+        >
           <FormattedMessage
             defaultMessage="Create customer"
             description="button"

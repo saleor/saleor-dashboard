@@ -1,6 +1,5 @@
 import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
-import { configurationMenuUrl } from "@saleor/configuration";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -120,7 +119,6 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
                 pages={mapEdgesToItems(data?.pages)}
                 pageInfo={pageInfo}
                 onAdd={() => navigate(pageCreateUrl())}
-                onBack={() => navigate(configurationMenuUrl)}
                 onNextPage={loadNextPage}
                 onPreviousPage={loadPreviousPage}
                 onUpdateListSettings={updateListSettings}

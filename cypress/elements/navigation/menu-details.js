@@ -1,8 +1,9 @@
 export const MENU_DETAILS = {
-  createNewMenuItemButton: '[data-test-id="createNewMenuItem"]',
+  createNewMenuItemButton: '[data-test-id="create-new-menu-item"]',
   newMenuItemForm: {
     nameInput: '[name="name"]',
-    autocompleteSelectReference: '[data-test-id="containerAutocompleteSelect"]',
+    autocompleteSelectReference:
+      '[data-test-id="container-autocomplete-select"]',
     categoryItem: '[data-test-id="category"]',
     collectionItem: '[data-test-id="collection"]',
     pageItem: '[data-test-id="page"]',

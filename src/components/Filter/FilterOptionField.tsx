@@ -54,14 +54,12 @@ const FilterOptionField: React.FC<FilterBaseFieldProps> = ({
             control={
               filterField.multiple ? (
                 <Checkbox
-                  data-test="filterOption"
-                  data-test-id={option.value}
+                  data-test-id={"filter-option-" + option.value}
                   checked={filterField.value.includes(option.value)}
                 />
               ) : (
                 <Radio
-                  data-test="filterOption"
-                  data-test-id={option.value}
+                  data-test-id={"filter-option-" + option.value}
                   checked={filterField.value[0] === option.value}
                   color="primary"
                 />

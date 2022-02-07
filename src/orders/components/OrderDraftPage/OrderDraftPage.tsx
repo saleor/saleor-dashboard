@@ -100,19 +100,20 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
         className={classes.header}
         inline
         title={order?.number ? "#" + order?.number : undefined}
-      >
-        <CardMenu
-          menuItems={[
-            {
-              label: intl.formatMessage({
-                defaultMessage: "Cancel order",
-                description: "button"
-              }),
-              onSelect: onDraftRemove
-            }
-          ]}
-        />
-      </PageHeader>
+        cardMenu={
+          <CardMenu
+            menuItems={[
+              {
+                label: intl.formatMessage({
+                  defaultMessage: "Cancel order",
+                  description: "button"
+                }),
+                onSelect: onDraftRemove
+              }
+            ]}
+          />
+        }
+      />
       <div className={classes.date}>
         {order && order.created ? (
           <Typography variant="body2">
@@ -139,7 +140,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
         </div>
         <div>
           <OrderCustomer
-            canEditAddresses={true}
+            canEditAddresses={!!order?.user}
             canEditCustomer={true}
             fetchUsers={fetchUsers}
             hasMore={hasMore}
