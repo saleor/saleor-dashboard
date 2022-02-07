@@ -85,7 +85,11 @@ const TypeDeleteWarningDialogContent: React.FC<TypeDeleteWarningDialogContentPro
             <HorizontalSpacer spacing={3} />
           </>
         )}
-        <DeleteButton onClick={onDelete} disabled={isDisbled} />
+        <DeleteButton
+          onClick={onDelete}
+          disabled={isDisbled}
+          data-test-id="confirm-delete-element"
+        />
       </div>
     </CardContent>
   );

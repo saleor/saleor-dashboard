@@ -157,12 +157,12 @@ filterTests({ definedTags: ["all"] }, () => {
             .click()
             .addAliasToGraphRequest("ProductTypeDelete")
             .get(SHARED_ELEMENTS.warningDialog)
-            .find(BUTTON_SELECTORS.confirmDeleteButton)
+            .find(BUTTON_SELECTORS.deleteButton)
             .should("not.be.enabled")
             .get(BUTTON_SELECTORS.deleteAssignedItemsConsentCheckbox)
             .click()
             .get(SHARED_ELEMENTS.warningDialog)
-            .find(BUTTON_SELECTORS.confirmDeleteButton)
+            .find(BUTTON_SELECTORS.deleteButton)
             .click()
             .waitForRequestAndCheckIfNoErrors("@ProductTypeDelete");
           getProductType(productType.id).should("be.null");
