@@ -303,7 +303,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
     selectedInventoryFields.length === inventoryFields.length;
 
   const handleSelectAllChannels = () =>
-    onSelectAllChannels(channels, channels.length);
+    onSelectAllChannels(selectedChannels, channels.length);
 
   return (
     <>
