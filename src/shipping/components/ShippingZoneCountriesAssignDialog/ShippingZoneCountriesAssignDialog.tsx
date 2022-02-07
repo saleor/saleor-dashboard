@@ -31,6 +31,7 @@ import {
   createCountryChangeHandler,
   createRestOfTheWorldChangeHandler
 } from "./handlers";
+import { messages } from "./messages";
 import { useStyles } from "./styles";
 
 interface FormData {
@@ -98,67 +99,67 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
           return (
             <>
               <DialogTitle>
-                <FormattedMessage
-                  defaultMessage="Assign Countries"
-                  description="dialog header"
-                />
+                <FormattedMessage {...messages.assignCountriesTitle} />
               </DialogTitle>
               <DialogContent>
                 <Typography>
-                  <FormattedMessage defaultMessage="Choose countries you want to add to shipping zone from list below" />
+                  <FormattedMessage {...messages.assignCountriesDescription} />
                 </Typography>
                 <FormSpacer />
                 <TextField
                   name="query"
                   value={data.query}
                   onChange={event => change(event)}
-                  label={intl.formatMessage({
-                    defaultMessage: "Search Countries"
-                  })}
-                  placeholder={intl.formatMessage({
-                    defaultMessage: "Search by country name"
-                  })}
+                  label={intl.formatMessage(messages.searchCountriesLabel)}
+                  placeholder={intl.formatMessage(
+                    messages.searchCountriesPlaceholder
+                  )}
                   fullWidth
                 />
                 <FormSpacer />
                 <Hr />
                 <FormSpacer />
+                {restWorldCountries.length > 0 && (
+                  <>
+                    <Typography variant="subtitle1">
+                      <FormattedMessage {...messages.quickPickSubtitle} />
+                    </Typography>
+                    <FormSpacer />
+                    <ResponsiveTable className={classes.table}>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell className={classes.wideCell}>
+                            <FormattedMessage
+                              {...messages.restOfTheWorldCheckbox}
+                            />
+                            <Typography variant="caption">
+                              <FormattedMessage
+                                {...messages.restOfTheWorldCheckboxDescription}
+                              />
+                            </Typography>
+                          </TableCell>
+                          <TableCell
+                            padding="checkbox"
+                            className={classes.checkboxCell}
+                          >
+                            <Checkbox
+                              name="restOfTheWorld"
+                              checked={isRestOfTheWorldSelected}
+                              onChange={() =>
+                                handleRestOfTheWorldChange(
+                                  !isRestOfTheWorldSelected
+                                )
+                              }
+                            />
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </ResponsiveTable>
+                    <FormSpacer />
+                  </>
+                )}
                 <Typography variant="subtitle1">
-                  <FormattedMessage defaultMessage="Quick Pick" />
-                </Typography>
-                <FormSpacer />
-                <ResponsiveTable className={classes.table}>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell className={classes.wideCell}>
-                        <FormattedMessage defaultMessage="Rest of the World" />
-                        <Typography variant="caption">
-                          <FormattedMessage defaultMessage="If selected, this will add all of the countries not selected to other shipping zones" />
-                        </Typography>
-                      </TableCell>
-                      <TableCell
-                        padding="checkbox"
-                        className={classes.checkboxCell}
-                      >
-                        <Checkbox
-                          name="restOfTheWorld"
-                          checked={isRestOfTheWorldSelected}
-                          onChange={() =>
-                            handleRestOfTheWorldChange(
-                              !isRestOfTheWorldSelected
-                            )
-                          }
-                        />
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </ResponsiveTable>
-                <FormSpacer />
-                <Typography variant="subtitle1">
-                  <FormattedMessage
-                    defaultMessage="Countries A to Z"
-                    description="country selection"
-                  />
+                  <FormattedMessage {...messages.countriesSubtitle} />
                 </Typography>
               </DialogContent>
               <DialogContent className={scrollableDialogClasses.scrollArea}>
@@ -197,10 +198,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
                   transitionState={confirmButtonState}
                   type="submit"
                 >
-                  <FormattedMessage
-                    defaultMessage="Assign countries"
-                    description="button"
-                  />
+                  <FormattedMessage {...messages.assignCountriesButton} />
                 </ConfirmButton>
               </DialogActions>
             </>

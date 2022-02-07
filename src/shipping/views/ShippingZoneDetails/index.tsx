@@ -73,7 +73,10 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
   const intl = useIntl();
   const shop = useShop();
 
-  const { data: restWorldCountries } = useShopCountries({
+  const {
+    data: restWorldCountries,
+    refetch: refetchRestWorldCountries
+  } = useShopCountries({
     variables: {
       filter: {
         attachedToShippingZones: false
@@ -133,6 +136,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
           text: intl.formatMessage(commonMessages.savedChanges)
         });
         closeModal();
+        refetchRestWorldCountries();
       }
     }
   });

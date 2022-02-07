@@ -24,4 +24,7 @@ const props: ShippingZoneCountriesAssignDialogProps = {
 
 storiesOf("Shipping / Assign countries", module)
   .addDecorator(Decorator)
-  .add("default", () => <ShippingZoneCountriesAssignDialog {...props} />);
+  .add("default", () => <ShippingZoneCountriesAssignDialog {...props} />)
+  .add("all countries in shipping zones", () => (
+    <ShippingZoneCountriesAssignDialog {...props} restWorldCountries={[]} />
+  ));
