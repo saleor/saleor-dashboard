@@ -4,7 +4,7 @@ import { ListSettings, ListViews, Pagination } from "./types";
 
 export const APP_MOUNT_URI = process.env.APP_MOUNT_URI || "/";
 export const APP_DEFAULT_URI = "/";
-export const API_URI = process.env.API_URI;
+export const API_URI = "https://master.staging.saleor.cloud/graphql/";
 export const SW_INTERVAL = parseInt(process.env.SW_INTERVAL, 0);
 export const IS_CLOUD_INSTANCE = process.env.IS_CLOUD_INSTANCE === "true";
 

@@ -1,3 +1,4 @@
+import { gql } from "@apollo/client";
 import {
   saleDetailsFragment,
   saleFragment,
@@ -6,7 +7,6 @@ import {
 } from "@saleor/fragments/discounts";
 import { discountErrorFragment } from "@saleor/fragments/errors";
 import makeMutation from "@saleor/hooks/makeMutation";
-import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
 import {

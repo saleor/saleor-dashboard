@@ -1,3 +1,4 @@
+import { FetchResult } from "@apollo/client";
 import {
   ChannelSaleFormData,
   SaleDetailsPageFormData
@@ -10,7 +11,6 @@ import {
 } from "@saleor/discounts/types/SaleUpdate";
 import { joinDateTime } from "@saleor/misc";
 import { DiscountValueTypeEnum, SaleType } from "@saleor/types/globalTypes";
-import { MutationFetchResult } from "react-apollo";
 
 function discountValueTypeEnum(type: SaleType): DiscountValueTypeEnum {
   return type.toString() === DiscountValueTypeEnum.FIXED
@@ -23,7 +23,7 @@ export function createUpdateHandler(
   saleChannelsChoices: ChannelSaleFormData[],
   updateSale: (
     variables: SaleUpdateVariables
-  ) => Promise<MutationFetchResult<SaleUpdate>>
+  ) => Promise<FetchResult<SaleUpdate>>
 ) {
   return async (formData: SaleDetailsPageFormData) => {
     const { id } = sale;

@@ -1,5 +1,5 @@
+import { gql } from "@apollo/client";
 import { shopFragment } from "@saleor/fragments/shop";
-import gql from "graphql-tag";
 
 import { TypedQuery } from "../queries";
 import { SiteSettings } from "./types/SiteSettings";

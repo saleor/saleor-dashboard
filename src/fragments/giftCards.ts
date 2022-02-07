@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import { gql } from "@apollo/client";
 
 export const fragmentGiftCardsSettings = gql`
   fragment GiftCardsSettingsFragment on GiftCardSettings {

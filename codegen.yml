@@ -6,4 +6,7 @@ generates:
       - fragment-matcher
     config:
       minify: false
-      apolloClientVersion: 2
+      apolloClientVersion: 3
+  ./src/type-policies.ts:
+    plugins:
+      - typescript-apollo-client-helpers

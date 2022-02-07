@@ -1,8 +1,8 @@
+import { useQuery } from "@apollo/client";
 import { APP_DEFAULT_URI, APP_MOUNT_URI } from "@saleor/config";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import React, { useEffect } from "react";
-import { useQuery } from "react-apollo";
 import urlJoin from "url-join";
 import useRouter from "use-react-router";
 

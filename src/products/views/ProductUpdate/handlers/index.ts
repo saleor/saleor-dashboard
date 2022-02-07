@@ -1,3 +1,4 @@
+import { FetchResult } from "@apollo/client";
 import {
   AttributeValueDelete,
   AttributeValueDeleteVariables
@@ -58,7 +59,6 @@ import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
 import { ReorderEvent } from "@saleor/types";
 import { move } from "@saleor/utils/lists";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
-import { MutationFetchResult } from "react-apollo";
 import { arrayMove } from "react-sortable-hoc";
 
 import {
@@ -83,25 +83,25 @@ export function createUpdateHandler(
   allChannels: ChannelData[],
   uploadFile: (
     variables: FileUploadVariables
-  ) => Promise<MutationFetchResult<FileUpload>>,
+  ) => Promise<FetchResult<FileUpload>>,
   updateProduct: (
     variables: ProductUpdateVariables
-  ) => Promise<MutationFetchResult<ProductUpdate>>,
+  ) => Promise<FetchResult<ProductUpdate>>,
   updateSimpleProduct: (
     variables: SimpleProductUpdateVariables
-  ) => Promise<MutationFetchResult<SimpleProductUpdate>>,
+  ) => Promise<FetchResult<SimpleProductUpdate>>,
   updateChannels: (options: {
     variables: ProductChannelListingUpdateVariables;
-  }) => Promise<MutationFetchResult<ProductChannelListingUpdate>>,
+  }) => Promise<FetchResult<ProductChannelListingUpdate>>,
   updateVariantChannels: (options: {
     variables: ProductVariantChannelListingUpdateVariables;
-  }) => Promise<MutationFetchResult<ProductVariantChannelListingUpdate>>,
+  }) => Promise<FetchResult<ProductVariantChannelListingUpdate>>,
   productVariantCreate: (options: {
     variables: VariantCreateVariables;
-  }) => Promise<MutationFetchResult<VariantCreate>>,
+  }) => Promise<FetchResult<VariantCreate>>,
   deleteAttributeValue: (
     variables: AttributeValueDeleteVariables
-  ) => Promise<MutationFetchResult<AttributeValueDelete>>
+  ) => Promise<FetchResult<AttributeValueDelete>>
 ) {
   return async (data: ProductUpdatePageSubmitData) => {
     let errors: SubmitErrors = [];

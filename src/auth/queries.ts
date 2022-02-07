@@ -1,5 +1,5 @@
+import { gql } from "@apollo/client";
 import { fragmentUser } from "@saleor/fragments/auth";
-import gql from "graphql-tag";
 
 export const availableExternalAuthentications = gql`
   query AvailableExternalAuthentications {

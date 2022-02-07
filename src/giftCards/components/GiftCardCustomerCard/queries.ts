@@ -1,6 +1,6 @@
+import { gql } from "@apollo/client";
 import { fragmentMoney } from "@saleor/fragments/products";
 import makeQuery from "@saleor/hooks/makeQuery";
-import gql from "graphql-tag";
 
 import {
   CustomerGiftCardList,

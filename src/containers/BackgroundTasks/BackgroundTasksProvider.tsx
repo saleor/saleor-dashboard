@@ -1,8 +1,7 @@
+import { ApolloClient, useApolloClient } from "@apollo/client";
 import { IMessageContext } from "@saleor/components/messages";
 import useNotifier from "@saleor/hooks/useNotifier";
-import ApolloClient from "apollo-client";
 import React from "react";
-import { useApolloClient } from "react-apollo";
 import { IntlShape, useIntl } from "react-intl";
 
 import BackgroundTasksContext from "./context";
@@ -18,7 +17,7 @@ import { QueuedTask, Task, TaskData, TaskStatus } from "./types";
 export const backgroundTasksRefreshTime = 15 * 1000;
 
 export function useBackgroundTasks(
-  apolloClient: ApolloClient<any>,
+  apolloClient: Pick<ApolloClient<any>, "query">,
   notify: IMessageContext,
   intl: IntlShape
 ) {

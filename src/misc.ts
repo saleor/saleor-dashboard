@@ -1,11 +1,7 @@
+import { FetchResult, MutationFunction, MutationResult } from "@apollo/client";
 import { ConfirmButtonTransitionState, ThemeType } from "@saleor/macaw-ui";
 import uniqBy from "lodash/uniqBy";
 import moment from "moment-timezone";
-import {
-  MutationFetchResult,
-  MutationFunction,
-  MutationResult
-} from "react-apollo";
 import { IntlShape } from "react-intl";
 
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
@@ -249,7 +245,7 @@ type InferPromiseResult<T> = T extends Promise<infer V> ? V : never;
 
 export const extractMutationErrors = async <
   TData extends InferPromiseResult<TPromise>,
-  TPromise extends Promise<MutationFetchResult<TData>>,
+  TPromise extends Promise<FetchResult<TData>>,
   TErrors extends ReturnType<typeof getMutationErrors>
 >(
   submitPromise: TPromise
@@ -262,7 +258,7 @@ export const extractMutationErrors = async <
 };
 
 export const getMutationErrors = <
-  T extends MutationFetchResult<any>,
+  T extends FetchResult<any>,
   TData extends T["data"],
   TErrors extends TData[keyof TData]["errors"]
 >(

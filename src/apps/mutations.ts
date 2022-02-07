@@ -1,8 +1,8 @@
+import { gql } from "@apollo/client";
 import { appFragment } from "@saleor/fragments/apps";
 import { appErrorFragment } from "@saleor/fragments/errors";
 import { webhooksFragment } from "@saleor/fragments/webhooks";
 import makeMutation from "@saleor/hooks/makeMutation";
-import gql from "graphql-tag";
 
 import { AppActivate, AppActivateVariables } from "./types/AppActivate";
 import { AppCreate, AppCreateVariables } from "./types/AppCreate";

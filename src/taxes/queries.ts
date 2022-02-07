@@ -1,10 +1,10 @@
+import { gql } from "@apollo/client";
 import {
   countryWithTaxesFragment,
   shopTaxesFragment,
   taxTypeFragment
 } from "@saleor/fragments/taxes";
 import makeQuery from "@saleor/hooks/makeQuery";
-import gql from "graphql-tag";
 
 import { TypedQuery } from "../queries";
 import { CountryList } from "./types/CountryList";

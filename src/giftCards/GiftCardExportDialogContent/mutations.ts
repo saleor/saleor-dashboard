@@ -1,6 +1,6 @@
+import { gql } from "@apollo/client";
 import { exportErrorFragment } from "@saleor/fragments/errors";
 import makeMutation from "@saleor/hooks/makeMutation";
-import gql from "graphql-tag";
 
 import {
   ExportGiftCards,

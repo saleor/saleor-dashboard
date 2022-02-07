@@ -1,6 +1,6 @@
+import { gql } from "@apollo/client";
 import { pluginErrorFragment } from "@saleor/fragments/errors";
 import { pluginsDetailsFragment } from "@saleor/fragments/plugins";
-import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
 import { PluginUpdate, PluginUpdateVariables } from "./types/PluginUpdate";

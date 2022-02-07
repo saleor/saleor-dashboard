@@ -1,7 +1,7 @@
+import { gql } from "@apollo/client";
 import { webhookErrorFragment } from "@saleor/fragments/errors";
 import { webhooksDetailsFragment } from "@saleor/fragments/webhooks";
 import makeMutation from "@saleor/hooks/makeMutation";
-import gql from "graphql-tag";
 
 import { WebhookCreate, WebhookCreateVariables } from "./types/WebhookCreate";
 import { WebhookDelete, WebhookDeleteVariables } from "./types/WebhookDelete";

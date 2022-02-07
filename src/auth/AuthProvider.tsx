@@ -1,6 +1,6 @@
+import { useApolloClient } from "@apollo/client";
 import useNotifier from "@saleor/hooks/useNotifier";
 import React from "react";
-import { useApolloClient } from "react-apollo";
 import { useIntl } from "react-intl";
 
 import { UserContext } from "./";

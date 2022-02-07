@@ -1,4 +1,4 @@
-import { ApolloError } from "apollo-client";
+import { ApolloError } from "@apollo/client";
 
 export enum GqlErrors {
   LimitReachedException = "LimitReachedException",

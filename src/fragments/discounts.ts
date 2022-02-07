@@ -1,6 +1,6 @@
+import { gql } from "@apollo/client";
 import { metadataFragment } from "@saleor/fragments/metadata";
 import { channelListingProductWithoutPricingFragment } from "@saleor/fragments/products";
-import gql from "graphql-tag";
 
 import { pageInfoFragment } from "./pageInfo";
 

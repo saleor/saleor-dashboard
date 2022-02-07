@@ -1,3 +1,4 @@
+import { gql } from "@apollo/client";
 import {
   bulkProductErrorFragment,
   bulkStockErrorFragment,
@@ -37,7 +38,6 @@ import {
   VariantMediaUnassign,
   VariantMediaUnassignVariables
 } from "@saleor/products/types/VariantMediaUnassign";
-import gql from "graphql-tag";
 
 import {
   productBulkDelete,
