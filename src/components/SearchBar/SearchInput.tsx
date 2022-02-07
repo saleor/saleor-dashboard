@@ -31,7 +31,7 @@ const SearchInput: React.FC<SearchInputProps> = props => {
   React.useEffect(() => setSearch(initialSearch), [initialSearch]);
 
   return (
-    <Debounce debounceFn={onSearchChange}>
+    <Debounce debounceFn={onSearchChange} time={500}>
       {debounceSearchChange => {
         const handleSearchChange = (event: React.ChangeEvent<any>) => {
           const value = event.target.value;
