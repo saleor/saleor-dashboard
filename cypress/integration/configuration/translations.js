@@ -31,7 +31,7 @@ filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("As an admin I want to create translation", () => {
+    it("should create translation", () => {
       const translatedName = `TranslatedName${randomNumber}`;
       const translatedDescription = `TranslatedDescription${randomNumber}`;
       const translatedSeoTitle = `TranslatedSeoTitle${randomNumber}`;
@@ -52,7 +52,7 @@ filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
       });
     });
 
-    it("As an admin I want to update translation", () => {
+    it("should update translation", () => {
       const randomNumber = faker.datatype.number();
       const startWithUpdate = `Translations_Update_${randomNumber}`;
       const seoTitleUpdate = `${startWithUpdate}_seoTitle`;

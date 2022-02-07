@@ -17,6 +17,7 @@ export function updateTranslationToCategory({
     .findElementOnTable(categoryName);
   cy.get(ELEMENT_TRANSLATION.editNameButton)
     .click()
+    // skeleton -> loading elements
     .get(SHARED_ELEMENTS.skeleton)
     .should("not.exist")
     .get(ELEMENT_TRANSLATION.translationInputField)
