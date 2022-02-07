@@ -3,10 +3,8 @@
 
 import faker from "faker";
 
-import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { SHIPPING_ZONE_DETAILS } from "../../../elements/shipping/shipping-zone-details";
-import { urlList } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
 import { createChannel } from "../../../support/api/requests/Channels";
 import {
@@ -18,6 +16,10 @@ import * as shippingUtils from "../../../support/api/utils/shippingUtils";
 import filterTests from "../../../support/filterTests";
 import { getFormattedCurrencyAmount } from "../../../support/formatData/formatCurrencyAmount";
 import { enterHomePageChangeChannelAndReturn } from "../../../support/pages/channelsPage";
+import {
+  enterAndSelectShippings,
+  enterShippingZone
+} from "../../../support/pages/shippingZones";
 
 filterTests({ definedTags: ["all"] }, () => {
   describe("As a staff user I want have different shipping method prices for each channel", () => {
@@ -84,22 +86,11 @@ filterTests({ definedTags: ["all"] }, () => {
           }
         )
         .then(() => {
-          cy.clearSessionData()
-            .loginUserViaRequest("auth", ONE_PERMISSION_USERS.shipping)
-            .visit(urlList.shippingMethods)
-            .get(SHARED_ELEMENTS.header)
-            .should("be.visible")
-            .waitForProgressBarToNotExist()
-            .addAliasToGraphRequest("ShippingZone")
-            .getTextFromElement(SHARED_ELEMENTS.table);
-        })
-        .then(tableText => {
-          if (!tableText.includes(shippingZone.name)) {
-            cy.get(BUTTON_SELECTORS.nextPaginationButton).click();
-          }
-          cy.contains(shippingZone.name)
-            .click()
-            .waitForRequestAndCheckIfNoErrors("@ShippingZone");
+          cy.clearSessionData().loginUserViaRequest(
+            "auth",
+            ONE_PERMISSION_USERS.shipping
+          );
+          enterAndSelectShippings(shippingZone.id, enterShippingZone);
           enterHomePageChangeChannelAndReturn(defaultChannel.name);
           cy.waitForProgressBarToNotBeVisible()
             .get(SHARED_ELEMENTS.skeleton)

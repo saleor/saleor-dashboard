@@ -111,7 +111,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
         toolbar={
           <Button
             onClick={onPostalCodeRangeAdd}
-            data-test="add-postal-code-range"
+            data-test-id="add-postal-code-range"
           >
             <FormattedMessage
               defaultMessage="Add postal code range"

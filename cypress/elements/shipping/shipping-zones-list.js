@@ -6,3 +6,6 @@ export const SHIPPING_ZONES_LIST = {
 
 export const SHIPPING_ZONE_CHECKBOX = shippingId =>
   `[data-test-id="${shippingId}-checkbox"]`;
+
+export const SHIPPING_ZONE_NAME = shippingId =>
+  `[data-test-id="${shippingId}-name"]`;
