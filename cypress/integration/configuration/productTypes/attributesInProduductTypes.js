@@ -134,7 +134,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("As an admin I should be able to select attribute as variant selection. TC: SALEOR_1508", () => {
+    it("should be able to select attribute as variant selection. TC: SALEOR_1508", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let productType;
 
