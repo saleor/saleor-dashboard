@@ -169,7 +169,7 @@ filterTests({ definedTags: ["all"] }, () => {
       dataForCheckout.voucherCode = randomName;
       createCheckoutWithVoucher(dataForCheckout).then(
         ({ addPromoCodeResp }) => {
-          const errorField = addPromoCodeResp.checkoutErrors[0].field;
+          const errorField = addPromoCodeResp.errors[0].field;
           expect(errorField).to.be.eq("promoCode");
         }
       );
@@ -189,7 +189,8 @@ filterTests({ definedTags: ["all"] }, () => {
         dataForCheckout,
         usageLimit
       })
-        .then(({ checkout }) => {
+        .then(({ checkout, addPromoCodeResp }) => {
+          expect(addPromoCodeResp.errors).to.be.empty;
           firstCheckout = checkout;
           dataForCheckout.voucherCode = voucherCode;
           addPayment(firstCheckout.id);
@@ -201,7 +202,7 @@ filterTests({ definedTags: ["all"] }, () => {
           createCheckoutWithVoucher(dataForCheckout);
         })
         .then(({ addPromoCodeResp }) => {
-          const errorField = addPromoCodeResp.checkoutErrors[0].field;
+          const errorField = addPromoCodeResp.errors[0].field;
           expect(errorField, "error in promo code should occur").to.be.eq(
             "promoCode"
           );
@@ -211,6 +212,7 @@ filterTests({ definedTags: ["all"] }, () => {
     it("should be able to create voucher with limit to one use per customer. TC: SALEOR_1908", () => {
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
       const voucherValue = 50;
+      dataForCheckout.auth = "token";
       let firstCheckout;
 
       loginAndCreateCheckoutForVoucherWithDiscount({
@@ -221,7 +223,9 @@ filterTests({ definedTags: ["all"] }, () => {
         dataForCheckout,
         applyOnePerCustomer: true
       })
-        .then(({ checkout }) => {
+        .then(({ checkout, addPromoCodeResp }) => {
+          expect(addPromoCodeResp.errors).to.be.empty;
+
           dataForCheckout.voucherCode = voucherCode;
           firstCheckout = checkout;
           addPayment(firstCheckout.id);
@@ -233,15 +237,19 @@ filterTests({ definedTags: ["all"] }, () => {
           createCheckoutWithVoucher(dataForCheckout);
         })
         .then(({ addPromoCodeResp }) => {
-          const errorField = addPromoCodeResp.checkoutErrors[0].field;
+          const errorField = addPromoCodeResp.errors[0].field;
           expect(errorField, "error in promo code should occur").to.be.eq(
             "promoCode"
           );
+
+          // Create new checkout as other not logged in customer - voucher should be available for other customer
+
           cy.clearSessionData();
+          dataForCheckout.email = "newUser@example.com";
           createCheckoutWithVoucher(dataForCheckout);
         })
         .then(({ addPromoCodeResp }) => {
-          const errorField = addPromoCodeResp.checkoutErrors;
+          const errorField = addPromoCodeResp.errors;
           expect(errorField, "No errors when adding promo code").to.be.empty;
         });
     });
@@ -249,6 +257,7 @@ filterTests({ definedTags: ["all"] }, () => {
     it("should be able to create voucher with limit to staff only. TC: SALEOR_1909", () => {
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
       const voucherValue = 50;
+      dataForCheckout.auth = "auth";
       let firstCheckout;
 
       loginAndCreateCheckoutForVoucherWithDiscount({
@@ -259,7 +268,8 @@ filterTests({ definedTags: ["all"] }, () => {
         dataForCheckout,
         onlyStaff: true
       })
-        .then(({ checkout }) => {
+        .then(({ checkout, addPromoCodeResp }) => {
+          expect(addPromoCodeResp.errors).to.be.empty;
           dataForCheckout.voucherCode = voucherCode;
           firstCheckout = checkout;
           addPayment(firstCheckout.id);
@@ -268,19 +278,14 @@ filterTests({ definedTags: ["all"] }, () => {
           completeCheckout(firstCheckout.id);
         })
         .then(() => {
+          dataForCheckout.auth = "token";
           createCheckoutWithVoucher(dataForCheckout);
         })
         .then(({ addPromoCodeResp }) => {
-          const errorField = addPromoCodeResp.checkoutErrors[0].field;
+          const errorField = addPromoCodeResp.errors[0].field;
           expect(errorField, "error in promo code should occur").to.be.eq(
             "promoCode"
           );
-          dataForCheckout.auth = "auth";
-          createCheckoutWithVoucher(dataForCheckout);
-        })
-        .then(({ addPromoCodeResp }) => {
-          const errorField = addPromoCodeResp.checkoutErrors;
-          expect(errorField, "No errors when adding promo code").to.be.empty;
         });
     });
 
@@ -300,7 +305,7 @@ filterTests({ definedTags: ["all"] }, () => {
         minOrderValue
       })
         .then(({ addPromoCodeResp }) => {
-          const errorField = addPromoCodeResp.checkoutErrors[0].field;
+          const errorField = addPromoCodeResp.errors[0].field;
           dataForCheckout.voucherCode = voucherCode;
 
           expect(errorField, "error in promo code should occur").to.be.eq(
@@ -311,7 +316,7 @@ filterTests({ definedTags: ["all"] }, () => {
         })
         .then(({ checkout: checkoutResp, addPromoCodeResp }) => {
           checkout = checkoutResp;
-          const errorField = addPromoCodeResp.checkoutErrors;
+          const errorField = addPromoCodeResp.errors;
           expect(errorField, "No errors when adding promo code").to.be.empty;
         });
     });
@@ -332,7 +337,7 @@ filterTests({ definedTags: ["all"] }, () => {
         minAmountOfItems
       })
         .then(({ addPromoCodeResp }) => {
-          const errorField = addPromoCodeResp.checkoutErrors[0].field;
+          const errorField = addPromoCodeResp.errors[0].field;
           dataForCheckout.voucherCode = voucherCode;
 
           expect(errorField, "error in promo code should occur").to.be.eq(
@@ -343,7 +348,7 @@ filterTests({ definedTags: ["all"] }, () => {
         })
         .then(({ checkout: checkoutResp, addPromoCodeResp }) => {
           checkout = checkoutResp;
-          const errorField = addPromoCodeResp.checkoutErrors;
+          const errorField = addPromoCodeResp.errors;
           expect(errorField, "No errors when adding promo code").to.be.empty;
         });
     });

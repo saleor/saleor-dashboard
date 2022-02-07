@@ -82,7 +82,7 @@ filterTests({ definedTags: ["all"] }, () => {
           createCheckoutForCreatedVoucher(voucher.code);
         })
         .then(({ addPromoCodeResp }) => {
-          const errorField = addPromoCodeResp.checkoutErrors[0].field;
+          const errorField = addPromoCodeResp.errors[0].field;
           expect(errorField).to.be.eq("promoCode");
         });
     });
