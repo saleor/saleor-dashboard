@@ -21,5 +21,7 @@ Cypress.Commands.add("findElementOnTable", (elementName, alias) => {
 Cypress.Commands.add("searchInTable", query => {
   cy.get(SHARED_ELEMENTS.searchInput)
     .type(query)
+    .get(SHARED_ELEMENTS.progressBar)
+    .should("be.visible")
     .waitForProgressBarToNotExist();
 });
