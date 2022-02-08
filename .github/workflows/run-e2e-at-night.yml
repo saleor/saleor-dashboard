@@ -3,6 +3,8 @@ name: Run e2e at night
 on:
   schedule:
     - cron: "40 16 * * *"
+  workflow_dispatch:
+    branches: ["3.0"]
 
 jobs:
   cypress-run-stable:
