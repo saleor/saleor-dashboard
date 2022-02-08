@@ -33,7 +33,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("Admin should be able delete content attribute", () => {
+    it("should be able delete content attribute. TC:SALEOR_0529", () => {
       cy.visit(attributeDetailsUrl(attribute.id))
         .get(BUTTON_SELECTORS.deleteButton)
         .click()
@@ -44,7 +44,7 @@ filterTests({ definedTags: ["all"] }, () => {
       getAttribute(attribute.id).should("be.null");
     });
 
-    it("Admin should be able update content attribute", () => {
+    it("should be able update content attribute. TC:SALEOR_0530", () => {
       const attributeUpdatedName = `${startsWith}${faker.datatype.number()}`;
 
       cy.visit(attributeDetailsUrl(attribute.id));

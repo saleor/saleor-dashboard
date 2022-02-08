@@ -63,7 +63,7 @@ filterTests({ definedTags: ["all"] }, () => {
     });
 
     attributesTypes.forEach(attributeType => {
-      it(`Admin should be able to create ${attributeType} attribute`, () => {
+      it(`should be able to create ${attributeType.type} attribute. TC:${attributeType.testCase}`, () => {
         const attributeName = `${startsWith}${faker.datatype.number()}`;
         createAttributeWithInputType({
           name: attributeName,
@@ -82,7 +82,7 @@ filterTests({ definedTags: ["all"] }, () => {
     });
 
     attributeReferenceType.forEach(entityType => {
-      it(`Admin should be able to create reference to ${entityType} attribute`, () => {
+      it(`should be able to create reference to ${entityType.type} attribute. TC:${entityType.testCase}`, () => {
         const attributeType = "REFERENCE";
         const attributeName = `${startsWith}${faker.datatype.number()}`;
         createAttributeWithInputType({
@@ -104,7 +104,7 @@ filterTests({ definedTags: ["all"] }, () => {
     });
 
     attributeNumericType.forEach(numericSystemType => {
-      it(`Admin should be able to create numeric ${numericSystemType.unitSystem} attribute`, () => {
+      it(`should be able to create numeric ${numericSystemType.unitSystem} attribute. TC: ${numericSystemType.testCase}`, () => {
         const attributeType = "NUMERIC";
         const attributeName = `${startsWith}${faker.datatype.number()}`;
         createAttributeWithInputType({
@@ -125,7 +125,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("Admin should be able to create attribute without require value", () => {
+    it("should be able to create attribute without require value TC:SALEOR_0522", () => {
       const attributeType = "BOOLEAN";
       const attributeName = `${startsWith}${faker.datatype.number()}`;
       createAttributeWithInputType({
