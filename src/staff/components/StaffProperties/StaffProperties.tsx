@@ -10,7 +10,7 @@ import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { getUserInitials, maybe } from "../../../misc";
+import { getUserInitials } from "../../../misc";
 import { StaffMemberDetails_user } from "../../types/StaffMemberDetails";
 
 const useStyles = makeStyles(
@@ -128,6 +128,8 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
   const clickImgInput = () => imgInputAnchor.current.click();
   const formErrors = getFormErrors(["id"], errors || []);
 
+  const hasAvatar = !!staffMember?.avatar?.url;
+
   return (
     <Card className={className}>
       <CardTitle
@@ -140,10 +142,10 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
         <div className={classes.root}>
           <div>
             <div className={classes.avatar}>
-              {maybe(() => staffMember.avatar.url) ? (
+              {hasAvatar ? (
                 <img
                   className={classes.avatarImage}
-                  src={maybe(() => staffMember.avatar.url)}
+                  src={staffMember.avatar.url}
                 />
               ) : (
                 <div className={classes.avatarDefault}>
@@ -158,19 +160,23 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
                     className={classes.avatarActionText}
                   >
                     <FormattedMessage
-                      defaultMessage="Change photo"
-                      description="button"
+                      defaultMessage="Change"
+                      description="avatar change button"
                     />
                   </Typography>
-                  <Typography
-                    onClick={onImageDelete}
-                    className={classes.avatarActionText}
-                  >
-                    <FormattedMessage
-                      defaultMessage="Delete photo"
-                      description="button"
-                    />
-                  </Typography>
+                  {hasAvatar && (
+                    <>
+                      <Typography
+                        onClick={onImageDelete}
+                        className={classes.avatarActionText}
+                      >
+                        <FormattedMessage
+                          defaultMessage="Delete"
+                          description="avatar delete button"
+                        />
+                      </Typography>
+                    </>
+                  )}
                   <input
                     className={classes.fileField}
                     id="fileUpload"

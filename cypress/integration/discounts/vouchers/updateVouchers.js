@@ -81,7 +81,7 @@ filterTests({ definedTags: ["all"] }, () => {
           createCheckoutWithVoucher(dataForCheckout);
         })
         .then(({ addPromoCodeResp }) => {
-          const errorField = addPromoCodeResp.checkoutErrors[0].field;
+          const errorField = addPromoCodeResp.errors[0].field;
           expect(errorField).to.be.eq("promoCode");
         });
     });
@@ -150,14 +150,14 @@ filterTests({ definedTags: ["all"] }, () => {
           createCheckoutWithVoucher(dataForCheckout);
         })
         .then(({ addPromoCodeResp }) => {
-          const errorField = addPromoCodeResp.checkoutErrors[0].field;
+          const errorField = addPromoCodeResp.errors[0].field;
           expect(errorField).to.be.eq("promoCode");
           setVoucherDate({ voucherId: voucher.id, startDate: todayDate });
           dataForCheckout.voucherCode = voucher.code;
           createCheckoutWithVoucher(dataForCheckout);
         })
         .then(({ addPromoCodeResp }) => {
-          expect(addPromoCodeResp.checkoutErrors).to.be.empty;
+          expect(addPromoCodeResp.errors).to.be.empty;
         });
     });
 
@@ -191,7 +191,7 @@ filterTests({ definedTags: ["all"] }, () => {
           createCheckoutWithVoucher(dataForCheckout);
         })
         .then(({ addPromoCodeResp }) => {
-          const errorField = addPromoCodeResp.checkoutErrors[0].field;
+          const errorField = addPromoCodeResp.errors[0].field;
           expect(errorField).to.be.eq("promoCode");
           setVoucherDate({
             voucherId: voucher.id,
@@ -202,7 +202,7 @@ filterTests({ definedTags: ["all"] }, () => {
           createCheckoutWithVoucher(dataForCheckout);
         })
         .then(({ addPromoCodeResp }) => {
-          expect(addPromoCodeResp.checkoutErrors).to.be.empty;
+          expect(addPromoCodeResp.errors).to.be.empty;
         });
     });
 
@@ -228,7 +228,7 @@ filterTests({ definedTags: ["all"] }, () => {
           createCheckoutWithVoucher(dataForCheckout);
         })
         .then(({ addPromoCodeResp }) => {
-          expect(addPromoCodeResp.checkoutErrors).to.be.empty;
+          expect(addPromoCodeResp.errors).to.be.empty;
           cy.visit(voucherDetailsUrl(voucher.id))
             .get(VOUCHERS_SELECTORS.shippingDiscountRadioButton)
             .click()
@@ -248,7 +248,7 @@ filterTests({ definedTags: ["all"] }, () => {
           createCheckoutWithVoucher(dataForCheckout);
         })
         .then(({ addPromoCodeResp }) => {
-          const errorField = addPromoCodeResp.checkoutErrors[0].field;
+          const errorField = addPromoCodeResp.errors[0].field;
           expect(errorField).to.be.eq("promoCode");
         });
     });

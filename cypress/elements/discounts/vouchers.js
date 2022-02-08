@@ -12,5 +12,17 @@ export const VOUCHERS_SELECTORS = {
   hasEndDateCheckbox: '[name="hasEndDate"]',
   endTimeInput: '[name="endTime"]',
   assignCountryButton: '[data-test-id="assign-country"]',
-  countriesDropdownIcon: '[data-test-id="countries-drop-down-icon"]'
+  countriesDropdownIcon: '[data-test-id="countries-drop-down-icon"]',
+  limits: {
+    usageLimitCheckbox: '[data-test-id="has-usage-limit"]',
+    usageLimitTextField: '[data-test-id="usage-limit"]',
+    applyOncePerCustomerCheckbox: '[data-test-id="apply-once-per-customer"]',
+    onlyForStaffCheckbox: '[data-test-id="only-for-staff"]'
+  },
+  requirements: {
+    minOrderValueCheckbox: '[name="requirementsPicker"][value="ORDER"]',
+    minAmountOfItemsCheckbox: '[name="requirementsPicker"][value="ITEM"]',
+    minCheckoutItemsQuantityInput: '[name="minCheckoutItemsQuantity"]',
+    minOrderValueInput: '[name="minSpent"]'
+  }
 };

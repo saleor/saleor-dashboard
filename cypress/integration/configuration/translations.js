@@ -21,8 +21,8 @@ filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
 
     before(() => {
       cy.clearSessionData().loginUserViaRequest();
-      deleteCategoriesStartsWith(`${startsWith}${randomNumber}`);
-      createCategory(`${startsWith}${randomNumber}`).then(
+      deleteCategoriesStartsWith(startsWith);
+      createCategory({ name: startsWith }).then(
         categoryResp => (category = categoryResp)
       );
     });
