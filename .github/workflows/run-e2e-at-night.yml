@@ -17,7 +17,7 @@ jobs:
       - name: Cypress nightly tests 🌃
         uses: cypress-io/github-action@v2
         env:
-          API_URI: https://qa.staging.saleor.cloud/graphql/
+          API_URI: https://stable.staging.saleor.cloud/graphql/
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
           CYPRESS_baseUrl: ${{ secrets.CYPRESS_BASEURL }}
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
@@ -26,7 +26,7 @@ jobs:
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
           CYPRESS_MAILHOG: ${{ secrets.CYPRESS_MAILHOG }}
         with:
-          command: npm run cy:run:qa
+          command: npm run cy:run:criticalStable
       - uses: actions/upload-artifact@v1
         if: ${{ failure() }}
         with:
