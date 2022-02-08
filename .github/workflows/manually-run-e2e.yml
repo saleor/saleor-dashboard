@@ -1,4 +1,4 @@
-name: E2E
+name: Manually run e2e
 
 on:
   pull_request:
