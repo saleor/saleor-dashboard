@@ -1,32 +1,18 @@
-name: Run e2e at night
-
+name: Cypress nightly tests
 on:
   pull_request:
     types: [reopened, synchronize, labeled, opened]
     branches: ["*"]
   workflow_dispatch:
     branches: ["*"]
-
+  schedule:
+    # runs tests every day at 4am
+    - cron: '0 4 * * *'
 jobs:
-  cypress-run-qa:
-    runs-on: ubuntu-latest
+  nightly:
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
-      - name: Cypress run full spec
+        uses: actions/checkout@v2
+      - name: Cypress nightly tests 🌃
         uses: cypress-io/github-action@v2
-        env:
-          API_URI: ${{ steps.api_uri.outputs.custom_api_uri }}
-          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
-          CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
-          CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
-          CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
-          CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
-          CYPRESS_MAILHOG: ${{ secrets.CYPRESS_MAILHOG }}
-        with:
-          command: npm run cy:run:qa
-      - uses: actions/upload-artifact@v1
-        if: ${{ failure() }}
-        with:
-          name: cypress-videos
-          path: cypress/videos
