@@ -16,7 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: SALEOR-5893-Run-e2e-at-night
+          ref: 'SALEOR-5893-Run-e2e-at-night'
     #   - name: Cypress run full spec
     #     uses: cypress-io/github-action@v2
     #     env:
