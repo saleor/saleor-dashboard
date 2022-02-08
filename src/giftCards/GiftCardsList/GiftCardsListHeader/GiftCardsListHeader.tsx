@@ -1,5 +1,4 @@
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
-import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import CardMenu, { CardMenuItem } from "@saleor/components/CardMenu";
 import PageHeader from "@saleor/components/PageHeader";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -45,8 +44,10 @@ const GiftCardsListHeader: React.FC = () => {
 
   return (
     <>
-      <PageHeader title={intl.formatMessage(sectionNames.giftCards)}>
-        <CardMenu menuItems={menuItems} data-test-id="menu" />
+      <PageHeader
+        title={intl.formatMessage(sectionNames.giftCards)}
+        cardMenu={<CardMenu menuItems={menuItems} data-test-id="menu" />}
+      >
         <HorizontalSpacer spacing={2} />
         <Button
           variant="primary"
@@ -57,7 +58,6 @@ const GiftCardsListHeader: React.FC = () => {
         </Button>
       </PageHeader>
       <GiftCardsListHeaderAlert />
-      <VerticalSpacer spacing={2} />
     </>
   );
 };

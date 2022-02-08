@@ -573,7 +573,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_channel {
 
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order {
   __typename: "Order";
-  shippingMethods: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMethods[];
+  shippingMethods: (OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMethods | null)[] | null;
   total: OrderShippingMethodUpdate_orderUpdateShipping_order_total;
   id: string;
   shippingMethod: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMethod | null;

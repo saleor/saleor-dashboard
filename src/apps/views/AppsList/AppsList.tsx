@@ -31,14 +31,15 @@ import { AppDeleteFailedInstallation } from "../../types/AppDeleteFailedInstalla
 import { AppsInstallations_appsInstallations } from "../../types/AppsInstallations";
 import { AppsList_apps_edges } from "../../types/AppsList";
 import {
+  appDetailsUrl,
   AppListUrlDialog,
   AppListUrlQueryParams,
-  appSettingsUrl,
   appsListUrl,
   appUrl,
   customAppAddUrl,
   customAppUrl
 } from "../../urls";
+import { messages } from "./messages";
 
 const getCurrentAppName = (id: string, collection?: AppsList_apps_edges[]) =>
   collection?.find(edge => edge.node.id === id)?.node?.name;
@@ -117,17 +118,8 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const installedAppNotify = (name: string) => {
     notify({
       status: "success",
-      text: intl.formatMessage(
-        {
-          defaultMessage: "{name} is ready to be used",
-          description: "app has been installed"
-        },
-        { name }
-      ),
-      title: intl.formatMessage({
-        defaultMessage: "App installed",
-        description: "message title"
-      })
+      text: intl.formatMessage(messages.appReadyToUse, { name }),
+      title: intl.formatMessage(messages.appInstalled)
     });
   };
   const [retryInstallApp] = useAppRetryInstallMutation({
@@ -209,13 +201,9 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
           notify({
             status: "error",
             text: item.message,
-            title: intl.formatMessage(
-              {
-                defaultMessage: "Couldn’t Install {name}",
-                description: "message title"
-              },
-              { name: item.appName }
-            )
+            title: intl.formatMessage(messages.appCouldntInstall, {
+              name: item.appName
+            })
           });
         }
       });
@@ -250,10 +238,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const removeAppNotify = () => {
     notify({
       status: "success",
-      text: intl.formatMessage({
-        defaultMessage: "App successfully removed",
-        description: "app has been removed"
-      })
+      text: intl.formatMessage(messages.appRemoved)
     });
   };
 
@@ -313,7 +298,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
         onRowClick={id => () => navigate(appUrl(id))}
-        onSettingsRowClick={id => () => navigate(appSettingsUrl(id))}
+        onRowAboutClick={id => () => navigate(appDetailsUrl(id))}
         onAppInstallRetry={onAppInstallRetry}
         navigateToCustomApp={id => () => navigate(customAppUrl(id))}
         navigateToCustomAppCreate={() => navigate(customAppAddUrl)}

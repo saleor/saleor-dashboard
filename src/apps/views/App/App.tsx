@@ -1,20 +1,25 @@
+import { appMessages } from "@saleor/apps/messages";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import React from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
-import AppDetailsSettingsPage from "../../components/AppDetailsSettingsPage";
+import AppPage from "../../components/AppPage";
 import { useAppDetails } from "../../queries";
-import { appsListPath, appUrl } from "../../urls";
+import {
+  appDetailsUrl,
+  appsListPath,
+  getAppCompleteUrlFromDashboardUrl
+} from "../../urls";
 
-interface AppDetailsSetttingsProps {
+interface AppProps {
   id: string;
 }
 
-export const AppDetailsSettings: React.FC<AppDetailsSetttingsProps> = ({
-  id
-}) => {
+export const App: React.FC<AppProps> = ({ id }) => {
+  const location = useLocation();
   const { data } = useAppDetails({
     displayLoader: true,
     variables: { id }
@@ -30,22 +35,26 @@ export const AppDetailsSettings: React.FC<AppDetailsSetttingsProps> = ({
     return <NotFoundPage onBack={() => navigate(appsListPath)} />;
   }
 
+  const appCompleteUrl = getAppCompleteUrlFromDashboardUrl(
+    location.pathname,
+    data?.app.appUrl,
+    id
+  );
+
   return (
-    <AppDetailsSettingsPage
+    <AppPage
       data={data?.app}
-      navigateToDashboard={() => navigate(appUrl(id))}
+      url={appCompleteUrl}
+      navigateToAbout={() => navigate(appDetailsUrl(id))}
       onBack={() => navigate(appsListPath)}
       onError={() =>
         notify({
           status: "error",
-          text: intl.formatMessage({
-            defaultMessage: "Failed to fetch app settings",
-            description: "app settings error"
-          })
+          text: intl.formatMessage(appMessages.failedToFetchAppSettings)
         })
       }
     />
   );
 };
 
-export default AppDetailsSettings;
+export default App;

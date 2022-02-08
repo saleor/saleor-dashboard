@@ -597,7 +597,7 @@ export interface OrderDraftFinalize_draftOrderComplete_order {
   undiscountedTotal: OrderDraftFinalize_draftOrderComplete_order_undiscountedTotal;
   user: OrderDraftFinalize_draftOrderComplete_order_user | null;
   userEmail: string | null;
-  shippingMethods: OrderDraftFinalize_draftOrderComplete_order_shippingMethods[];
+  shippingMethods: (OrderDraftFinalize_draftOrderComplete_order_shippingMethods | null)[] | null;
   invoices: (OrderDraftFinalize_draftOrderComplete_order_invoices | null)[] | null;
   channel: OrderDraftFinalize_draftOrderComplete_order_channel;
 }

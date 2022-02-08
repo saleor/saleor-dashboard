@@ -152,7 +152,7 @@ export interface GiftCardUpdate_giftCardUpdate_giftCard {
   initialBalance: GiftCardUpdate_giftCardUpdate_giftCard_initialBalance | null;
   currentBalance: GiftCardUpdate_giftCardUpdate_giftCard_currentBalance | null;
   id: string;
-  tags: GiftCardUpdate_giftCardUpdate_giftCard_tags[] | null;
+  tags: GiftCardUpdate_giftCardUpdate_giftCard_tags[];
   events: GiftCardUpdate_giftCardUpdate_giftCard_events[];
 }
 

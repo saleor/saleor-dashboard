@@ -535,6 +535,8 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_shippingM
   id: string;
   name: string;
   price: OrderFulfillmentApprove_orderFulfillmentApprove_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_invoices {

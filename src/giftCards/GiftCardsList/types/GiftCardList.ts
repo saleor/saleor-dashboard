@@ -41,7 +41,7 @@ export interface GiftCardList_giftCards_edges_node {
   isActive: boolean;
   expiryDate: any | null;
   product: GiftCardList_giftCards_edges_node_product | null;
-  tags: GiftCardList_giftCards_edges_node_tags[] | null;
+  tags: GiftCardList_giftCards_edges_node_tags[];
   usedBy: GiftCardList_giftCards_edges_node_usedBy | null;
   currentBalance: GiftCardList_giftCards_edges_node_currentBalance | null;
 }

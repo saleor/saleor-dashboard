@@ -176,6 +176,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
                   </TableCell>
                   <TableCell className={classes.colAction}>
                     <IconButton
+                      data-test-id="delete-icon"
                       disabled={disabled}
                       variant="secondary"
                       onClick={stopPropagation(() =>

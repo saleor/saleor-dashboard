@@ -19,6 +19,7 @@ import {
   appsListUrl,
   MANIFEST_ATTR
 } from "../../urls";
+import { messages } from "./messages";
 
 interface InstallAppCreateProps extends RouteComponentProps {
   params: AppInstallUrlQueryParams;
@@ -93,12 +94,7 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
 
   return (
     <>
-      <WindowTitle
-        title={intl.formatMessage({
-          defaultMessage: "Install App",
-          description: "window title"
-        })}
-      />
+      <WindowTitle title={intl.formatMessage(messages.installApp)} />
       {!!fetchManifestOpts.data?.appFetchManifest?.errors?.length ||
       !!fetchManifestOpts.error ? (
         <AppInstallErrorPage onBack={() => navigate("/")} />

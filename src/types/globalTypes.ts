@@ -64,18 +64,21 @@ export enum AppErrorCode {
   UNIQUE = "UNIQUE",
 }
 
+export enum AppExtensionMountEnum {
+  NAVIGATION_CATALOG = "NAVIGATION_CATALOG",
+  NAVIGATION_CUSTOMERS = "NAVIGATION_CUSTOMERS",
+  NAVIGATION_DISCOUNTS = "NAVIGATION_DISCOUNTS",
+  NAVIGATION_ORDERS = "NAVIGATION_ORDERS",
+  NAVIGATION_PAGES = "NAVIGATION_PAGES",
+  NAVIGATION_TRANSLATIONS = "NAVIGATION_TRANSLATIONS",
+  PRODUCT_DETAILS_MORE_ACTIONS = "PRODUCT_DETAILS_MORE_ACTIONS",
+  PRODUCT_OVERVIEW_CREATE = "PRODUCT_OVERVIEW_CREATE",
+  PRODUCT_OVERVIEW_MORE_ACTIONS = "PRODUCT_OVERVIEW_MORE_ACTIONS",
+}
+
 export enum AppExtensionTargetEnum {
-  CREATE = "CREATE",
-  MORE_ACTIONS = "MORE_ACTIONS",
-}
-
-export enum AppExtensionTypeEnum {
-  DETAILS = "DETAILS",
-  OVERVIEW = "OVERVIEW",
-}
-
-export enum AppExtensionViewEnum {
-  PRODUCT = "PRODUCT",
+  APP_PAGE = "APP_PAGE",
+  POPUP = "POPUP",
 }
 
 export enum AppSortField {
@@ -487,6 +490,8 @@ export enum FulfillmentStatus {
 
 export enum GiftCardErrorCode {
   ALREADY_EXISTS = "ALREADY_EXISTS",
+  DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
+  EXPIRED_GIFT_CARD = "EXPIRED_GIFT_CARD",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
@@ -523,7 +528,6 @@ export enum GiftCardSettingsExpiryTypeEnum {
 export enum GiftCardSortField {
   CURRENT_BALANCE = "CURRENT_BALANCE",
   PRODUCT = "PRODUCT",
-  TAG = "TAG",
   USED_BY = "USED_BY",
 }
 
@@ -1870,7 +1874,6 @@ export enum WebhookEventTypeAsyncEnum {
 export enum WebhookEventTypeEnum {
   ANY_EVENTS = "ANY_EVENTS",
   CHECKOUT_CREATED = "CHECKOUT_CREATED",
-  CHECKOUT_FILTER_SHIPPING_METHODS = "CHECKOUT_FILTER_SHIPPING_METHODS",
   CHECKOUT_UPDATED = "CHECKOUT_UPDATED",
   COLLECTION_CREATED = "COLLECTION_CREATED",
   COLLECTION_DELETED = "COLLECTION_DELETED",
@@ -1889,7 +1892,6 @@ export enum WebhookEventTypeEnum {
   ORDER_CANCELLED = "ORDER_CANCELLED",
   ORDER_CONFIRMED = "ORDER_CONFIRMED",
   ORDER_CREATED = "ORDER_CREATED",
-  ORDER_FILTER_SHIPPING_METHODS = "ORDER_FILTER_SHIPPING_METHODS",
   ORDER_FULFILLED = "ORDER_FULFILLED",
   ORDER_FULLY_PAID = "ORDER_FULLY_PAID",
   ORDER_UPDATED = "ORDER_UPDATED",
@@ -1953,8 +1955,7 @@ export interface AddressInput {
 }
 
 export interface AppExtensionFilterInput {
-  view?: AppExtensionViewEnum | null;
-  type?: AppExtensionTypeEnum | null;
+  mount?: (AppExtensionMountEnum | null)[] | null;
   target?: AppExtensionTargetEnum | null;
 }
 
@@ -2302,6 +2303,7 @@ export interface GiftCardFilterInput {
   tags?: (string | null)[] | null;
   products?: (string | null)[] | null;
   usedBy?: (string | null)[] | null;
+  used?: boolean | null;
   currency?: string | null;
   currentBalance?: PriceRangeInput | null;
   initialBalance?: PriceRangeInput | null;
@@ -2326,10 +2328,10 @@ export interface GiftCardSortingInput {
 
 export interface GiftCardUpdateInput {
   addTags?: string[] | null;
-  removeTags?: string[] | null;
   expiryDate?: any | null;
   startDate?: any | null;
   endDate?: any | null;
+  removeTags?: string[] | null;
   balanceAmount?: any | null;
 }
 

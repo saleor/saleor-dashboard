@@ -599,7 +599,7 @@ export interface FulfillOrder_orderFulfill_order {
   undiscountedTotal: FulfillOrder_orderFulfill_order_undiscountedTotal;
   user: FulfillOrder_orderFulfill_order_user | null;
   userEmail: string | null;
-  shippingMethods: FulfillOrder_orderFulfill_order_shippingMethods[];
+  shippingMethods: (FulfillOrder_orderFulfill_order_shippingMethods | null)[] | null;
   invoices: (FulfillOrder_orderFulfill_order_invoices | null)[] | null;
   channel: FulfillOrder_orderFulfill_order_channel;
 }

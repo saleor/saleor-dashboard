@@ -2,6 +2,7 @@ import AppActivateDialog from "@saleor/apps/components/AppActivateDialog";
 import AppDeactivateDialog from "@saleor/apps/components/AppDeactivateDialog";
 import TokenCreateDialog from "@saleor/apps/components/TokenCreateDialog";
 import TokenDeleteDialog from "@saleor/apps/components/TokenDeleteDialog";
+import { appMessages } from "@saleor/apps/messages";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { API_URI } from "@saleor/config";
@@ -75,10 +76,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
       if (errors?.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage({
-            defaultMessage: "App activated",
-            description: "snackbar text"
-          })
+          text: intl.formatMessage(appMessages.appActivated)
         });
         refetch();
         closeModal();
@@ -98,10 +96,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
       if (errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage({
-            defaultMessage: "App deactivated",
-            description: "snackbar text"
-          })
+          text: intl.formatMessage(appMessages.appDeactivated)
         });
         refetch();
         closeModal();

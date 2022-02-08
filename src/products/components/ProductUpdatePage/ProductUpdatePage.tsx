@@ -1,5 +1,9 @@
 import { OutputData } from "@editorjs/editorjs";
-import { mapToMenuItems, useExtensions } from "@saleor/apps/useExtensions";
+import {
+  extensionMountPoints,
+  mapToMenuItems,
+  useExtensions
+} from "@saleor/apps/useExtensions";
 import {
   getAttributeValuesFromReferences,
   mergeAttributeValues
@@ -42,11 +46,7 @@ import {
   ListActions,
   ReorderAction
 } from "@saleor/types";
-import {
-  AppExtensionTypeEnum,
-  AppExtensionViewEnum,
-  PermissionEnum
-} from "@saleor/types/globalTypes";
+import { PermissionEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -251,12 +251,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     onCloseDialog();
   };
 
-  const { moreActions } = useExtensions(
-    AppExtensionViewEnum.PRODUCT,
-    AppExtensionTypeEnum.DETAILS
+  const { PRODUCT_DETAILS_MORE_ACTIONS } = useExtensions(
+    extensionMountPoints.PRODUCT_DETAILS
   );
 
-  const extensionMenuItems = mapToMenuItems(moreActions);
+  const extensionMenuItems = mapToMenuItems(PRODUCT_DETAILS_MORE_ACTIONS);
 
   return (
     <ProductUpdateForm

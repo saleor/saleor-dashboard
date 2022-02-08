@@ -5,7 +5,7 @@ export const VARIANTS_SELECTORS = {
   warehouseCheckboxes: "[name*='warehouse:']",
   skuInput: "[ name='sku']",
   attributeOption:
-    "[data-test-type='option'], [data-test='multi-autocomplete-select-option']",
+    "[data-test-type='option'], [data-test-id='multi-autocomplete-select-option']",
   attributeSelector: "[data-test-id='attribute-value']",
   addWarehouseButton: "[data-test-id='add-warehouse']",
   warehouseOption: "[role='menuitem']",

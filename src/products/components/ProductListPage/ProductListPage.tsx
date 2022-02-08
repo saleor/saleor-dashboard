@@ -1,5 +1,9 @@
 import { Card } from "@material-ui/core";
-import { mapToMenuItems, useExtensions } from "@saleor/apps/useExtensions";
+import {
+  extensionMountPoints,
+  mapToMenuItems,
+  useExtensions
+} from "@saleor/apps/useExtensions";
 import { ButtonWithSelect } from "@saleor/components/ButtonWithSelect";
 import CardMenu from "@saleor/components/CardMenu";
 import ColumnPicker, {
@@ -25,10 +29,6 @@ import {
   PageListProps,
   SortPage
 } from "@saleor/types";
-import {
-  AppExtensionTypeEnum,
-  AppExtensionViewEnum
-} from "@saleor/types/globalTypes";
 import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -71,7 +71,9 @@ const useStyles = makeStyles(
       }
     },
     settings: {
-      marginRight: theme.spacing(2)
+      [theme.breakpoints.up("sm")]: {
+        marginRight: theme.spacing(2)
+      }
     }
   }),
   { name: "ProductListPage" }
@@ -137,17 +139,34 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   ];
 
   const limitReached = isLimitReached(limits, "productVariants");
-  const { create, moreActions } = useExtensions(
-    AppExtensionViewEnum.PRODUCT,
-    AppExtensionTypeEnum.OVERVIEW
-  );
+  const {
+    PRODUCT_OVERVIEW_CREATE,
+    PRODUCT_OVERVIEW_MORE_ACTIONS
+  } = useExtensions(extensionMountPoints.PRODUCT_LIST);
 
-  const extensionMenuItems = mapToMenuItems(moreActions);
-  const extensionCreateButtonItems = mapToMenuItems(create);
+  const extensionMenuItems = mapToMenuItems(PRODUCT_OVERVIEW_MORE_ACTIONS);
+  const extensionCreateButtonItems = mapToMenuItems(PRODUCT_OVERVIEW_CREATE);
 
   return (
     <Container>
       <PageHeader
+        cardMenu={
+          <CardMenu
+            className={classes.settings}
+            menuItems={[
+              {
+                label: intl.formatMessage({
+                  defaultMessage: "Export Products",
+                  description: "export products to csv file, button"
+                }),
+                onSelect: onExport,
+                testId: "export"
+              },
+              ...extensionMenuItems
+            ]}
+            data-test-id="menu"
+          />
+        }
         title={intl.formatMessage(sectionNames.products)}
         limitText={
           hasLimits(limits, "productVariants") &&
@@ -163,21 +182,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           )
         }
       >
-        <CardMenu
-          className={classes.settings}
-          menuItems={[
-            {
-              label: intl.formatMessage({
-                defaultMessage: "Export Products",
-                description: "export products to csv file, button"
-              }),
-              onSelect: onExport,
-              testId: "export"
-            },
-            ...extensionMenuItems
-          ]}
-          data-test-id="menu"
-        />
         <ColumnPicker
           className={classes.columnPicker}
           columns={columns}

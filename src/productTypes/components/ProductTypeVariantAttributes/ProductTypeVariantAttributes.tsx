@@ -246,6 +246,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                   >
                     <div className={classes.colVariantContent}>
                       <Checkbox
+                        data-test-id="variant-selection-checkbox"
                         checked={isSelected}
                         disabled={disabled || variantSelectionDisabled}
                         disableClickPropagation
@@ -277,6 +278,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                   </TableCell>
                   <TableCell className={classes.colAction}>
                     <IconButton
+                      data-test-id="delete-icon"
                       onClick={stopPropagation(() =>
                         onAttributeUnassign(attribute.id)
                       )}

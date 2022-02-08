@@ -14,16 +14,18 @@ import { AppFrame } from "../AppFrame";
 import { useStyles } from "./styles";
 import useSettingsBreadcrumbs from "./useSettingsBreadcrumbs";
 
-export interface AppDetailsSettingsPageProps {
+export interface AppPageProps {
   data: App_app;
-  navigateToDashboard: () => void;
+  url: string;
+  navigateToAbout: () => void;
   onBack: () => void;
   onError: () => void;
 }
 
-export const AppDetailsSettingsPage: React.FC<AppDetailsSettingsPageProps> = ({
+export const AppPage: React.FC<AppPageProps> = ({
   data,
-  navigateToDashboard,
+  url,
+  navigateToAbout,
   onBack,
   onError
 }) => {
@@ -61,8 +63,8 @@ export const AppDetailsSettingsPage: React.FC<AppDetailsSettingsPageProps> = ({
           </div>
         </div>
         <div className={classes.appSettingsHeader}>
-          <Button onClick={navigateToDashboard} variant="primary">
-            <FormattedMessage defaultMessage="Dashboard" description="button" />
+          <Button onClick={navigateToAbout} variant="primary">
+            <FormattedMessage defaultMessage="About" description="button" />
           </Button>
           <Button
             component="a"
@@ -71,7 +73,10 @@ export const AppDetailsSettingsPage: React.FC<AppDetailsSettingsPageProps> = ({
             data-tc="open-app"
             target="_blank"
           >
-            <FormattedMessage defaultMessage="My App" description="button" />
+            <FormattedMessage
+              defaultMessage="App home page"
+              description="button"
+            />
           </Button>
           <Button
             component="a"
@@ -93,12 +98,8 @@ export const AppDetailsSettingsPage: React.FC<AppDetailsSettingsPageProps> = ({
 
       <CardSpacer />
       <div className={classes.iframeContainer}>
-        {data && (
-          <AppFrame
-            src={data.configurationUrl}
-            appToken={data.accessToken}
-            onError={onError}
-          />
+        {url && (
+          <AppFrame src={url} appToken={data.accessToken} onError={onError} />
         )}
       </div>
       <CardSpacer />
@@ -106,5 +107,5 @@ export const AppDetailsSettingsPage: React.FC<AppDetailsSettingsPageProps> = ({
   );
 };
 
-AppDetailsSettingsPage.displayName = "AppDetailsSettingsPage";
-export default AppDetailsSettingsPage;
+AppPage.displayName = "AppPage";
+export default AppPage;
