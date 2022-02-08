@@ -5,6 +5,9 @@ on:
     - cron: "40 16 * * *"
   workflow_dispatch:
     branches: ["3.0"]
+  pull_request:
+    types: [reopened, opened]
+    branches: ["*"]
 
 jobs:
   cypress-run-stable:
