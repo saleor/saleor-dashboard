@@ -1,10 +1,10 @@
 name: Run e2e at night
 
 on:
-  workflow_dispatch:
-    branches: [reopened, synchronize, labeled, opened]
   pull_request:
-    types: [reopened, opened]
+    types: [reopened, synchronize, labeled, opened]
+    branches: ["*"]
+  workflow_dispatch:
     branches: ["*"]
 
 jobs:
@@ -30,28 +30,3 @@ jobs:
         with:
           name: cypress-videos
           path: cypress/videos
-
-  # cypress-run-qa:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v1
-  #       with:
-  #         ref: main
-  #     - name: Cypress run full spec
-  #       uses: cypress-io/github-action@v2
-  #       env:
-  #         API_URI: ${{ steps.api_uri.outputs.custom_api_uri }}
-  #         APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
-  #         CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
-  #         CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
-  #         CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
-  #         CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
-  #         CYPRESS_MAILHOG: ${{ secrets.CYPRESS_MAILHOG }}
-  #       with:
-  #         command: npm run cy:run:qa
-  #     - uses: actions/upload-artifact@v1
-  #       if: ${{ failure() }}
-  #       with:
-  #         name: cypress-videos
-  #         path: cypress/videos
