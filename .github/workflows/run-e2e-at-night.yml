@@ -1,8 +1,6 @@
 name: Run e2e at night
 
 on:
-  schedule:
-    - cron: "40 16 * * *"
   workflow_dispatch:
     branches: ["3.0"]
   pull_request:
@@ -15,25 +13,23 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Cypress run full spec
+        uses: cypress-io/github-action@v2
+        env:
+          API_URI: ${{ steps.api_uri.outputs.custom_api_uri }}
+          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
+          CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
+          CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
+          CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
+          CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          CYPRESS_MAILHOG: ${{ secrets.CYPRESS_MAILHOG }}
         with:
-          ref: 'SALEOR-5893-Run-e2e-at-night'
-    #   - name: Cypress run full spec
-    #     uses: cypress-io/github-action@v2
-    #     env:
-    #       API_URI: ${{ steps.api_uri.outputs.custom_api_uri }}
-    #       APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
-    #       CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
-    #       CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
-    #       CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
-    #       CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
-    #       CYPRESS_MAILHOG: ${{ secrets.CYPRESS_MAILHOG }}
-    #     with:
-    #       command: npm run cy:run:stable
-      # - uses: actions/upload-artifact@v1
-      #   if: ${{ failure() }}
-      #   with:
-      #     name: cypress-videos
-      #     path: cypress/videos
+          command: npm run cy:run:stable
+      - uses: actions/upload-artifact@v1
+        if: ${{ failure() }}
+        with:
+          name: cypress-videos
+          path: cypress/videos
 
   # cypress-run-qa:
   #   runs-on: ubuntu-latest
