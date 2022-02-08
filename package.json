@@ -256,7 +256,7 @@
     "cy:run:record": "npm run cy:run -- --record",
     "cy:open": "cypress open",
     "cy:run:stable": "cypress run --env tags=all --config baseUrl=https://stable.staging.saleor.cloud/dashboard/  --record --key 1fe833f5-fca4-4454-ac55-943815b91c6c",
-    "cy:run:qa": "cypress run --env tags=all --config baseUrl=https://qa.staging.saleor.cloud/dashboard/  --record --key 1fe833f5-fca4-4454-ac55-943815b91c6c",
+    "cy:run:qa": "cypress run --env tags=all --record --key 1fe833f5-fca4-4454-ac55-943815b91c6c",
     "cy:run:critical": "cypress run --env tags=critical --spec 'cypress/integration/navigation.js','cypress/integration/products/*.js','cypress/integration/checkout/*.js' --record --key 1fe833f5-fca4-4454-ac55-943815b91c6c",
     "cy:run:allEnv": "cypress run --env tags=all --record --key 1fe833f5-fca4-4454-ac55-943815b91c6c",
     "test:e2e:run": "start-server-and-test start http://localhost:9000 cy:run",
