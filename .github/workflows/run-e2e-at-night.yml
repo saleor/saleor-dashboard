@@ -2,17 +2,15 @@ name: Run e2e at night
 
 on:
   workflow_dispatch:
-    branches: ["3.0"]
+    branches: [reopened, synchronize, labeled, opened]
   pull_request:
     types: [reopened, opened]
     branches: ["*"]
 
 jobs:
-  cypress-run-stable:
+  cypress-run-qa:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
       - name: Cypress run full spec
         uses: cypress-io/github-action@v2
         env:
@@ -24,7 +22,7 @@ jobs:
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
           CYPRESS_MAILHOG: ${{ secrets.CYPRESS_MAILHOG }}
         with:
-          command: npm run cy:run:stable
+          command: npm run cy:run:qa
       - uses: actions/upload-artifact@v1
         if: ${{ failure() }}
         with:
