@@ -22,19 +22,32 @@ filterTests({ definedTags: ["all"] }, () => {
   describe("As an admin I want to create product attribute", () => {
     const startsWith = "AttrCreate";
     const attributesTypes = [
-      "DROPDOWN",
-      "MULTISELECT",
-      "FILE",
-      "RICH_TEXT",
-      "BOOLEAN",
-      "DATE",
-      "DATE_TIME"
+      { type: "DROPDOWN", testCase: "SALEOR_0501" },
+      { type: "MULTISELECT", testCase: "SALEOR_0502" },
+      { type: "FILE", testCase: "SALEOR_0503" },
+      { type: "RICH_TEXT", testCase: "SALEOR_0504" },
+      { type: "BOOLEAN", testCase: "SALEOR_0505" },
+      { type: "DATE", testCase: "SALEOR_0523" },
+      { type: "DATE_TIME", testCase: "SALEOR_0524" }
     ];
-    const attributeReferenceType = ["PRODUCT", "PAGE"];
+    const attributeReferenceType = [
+      { type: "PRODUCT", testCase: "SALEOR_0506" },
+      { type: "PAGE", testCase: "SALEOR_0507" }
+    ];
     const attributeNumericType = [
-      { unitSystem: "IMPERIAL", unitsOf: "DISTANCE", unit: "FT" },
-      { unitSystem: "METRIC", unitsOf: "VOLUME", unit: "CUBIC_CENTIMETER" },
-      { unitSystem: "without selecting unit" }
+      {
+        unitSystem: "IMPERIAL",
+        unitsOf: "DISTANCE",
+        unit: "FT",
+        testCase: "SALEOR_0508"
+      },
+      {
+        unitSystem: "METRIC",
+        unitsOf: "VOLUME",
+        unit: "CUBIC_CENTIMETER",
+        testCase: "SALEOR_0509"
+      },
+      { unitSystem: "without selecting unit", testCase: "SALEOR_0510" }
     ];
 
     before(() => {
@@ -54,14 +67,17 @@ filterTests({ definedTags: ["all"] }, () => {
       it(`Admin should be able to create ${attributeType} attribute`, () => {
         const attributeName = `${startsWith}${faker.datatype.number()}`;
 
-        createAttributeWithInputType({ name: attributeName, attributeType })
+        createAttributeWithInputType({
+          name: attributeName,
+          attributeType: attributeType.type
+        })
           .then(({ attribute }) => {
             getAttribute(attribute.id);
           })
           .then(attribute => {
             expectCorrectDataInAttribute(attribute, {
               attributeName,
-              attributeType
+              attributeType: attributeType.type
             });
           });
       });
@@ -75,7 +91,7 @@ filterTests({ definedTags: ["all"] }, () => {
         createAttributeWithInputType({
           name: attributeName,
           attributeType,
-          entityType
+          entityType: entityType.type
         })
           .then(({ attribute }) => {
             getAttribute(attribute.id);
@@ -84,7 +100,7 @@ filterTests({ definedTags: ["all"] }, () => {
             expectCorrectDataInAttribute(attribute, {
               attributeName,
               attributeType,
-              entityType
+              entityType: entityType.type
             });
           });
       });
