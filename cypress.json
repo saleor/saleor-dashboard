@@ -1,5 +1,5 @@
 {
-  "baseUrl": "http://localhost:9000/",
+  "baseUrl": "https://saleor-5141-update-data-test-id-attributes-for-3-1.dashboard.saleor.rocks/",
   "projectId": "k8be36",
   "chromeWebSecurity": false,
   "videoUploadOnPasses": false,

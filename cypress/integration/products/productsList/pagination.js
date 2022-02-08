@@ -19,8 +19,6 @@ filterTests({ definedTags: ["all"] }, () => {
 
     it("Should go to the next page", () => {
       cy.softExpectSkeletonIsVisible()
-        // cy.get(PRODUCTS_LIST.productsList)
-        //   .should("be.visible")
         .get(PRODUCTS_LIST.emptyProductRow)
         .should("not.exist")
         .get(PRODUCTS_LIST.previousPagePagination)
