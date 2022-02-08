@@ -1,7 +1,4 @@
-import {
-  createShippingChannels,
-  createSortedShippingChannels
-} from "@saleor/channels/utils";
+import { createSortedShippingChannels } from "@saleor/channels/utils";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useChannels from "@saleor/hooks/useChannels";
@@ -12,9 +9,9 @@ import ShippingZoneRatesCreatePage from "@saleor/shipping/components/ShippingZon
 import { useShippingRateCreator } from "@saleor/shipping/handlers";
 import { useShippingZoneChannels } from "@saleor/shipping/queries";
 import {
+  shippingRateCreateUrl,
   ShippingRateCreateUrlDialog,
   ShippingRateCreateUrlQueryParams,
-  shippingWeightRatesUrl,
   shippingZoneUrl
 } from "@saleor/shipping/urls";
 import postalCodesReducer from "@saleor/shipping/views/reducer";
@@ -24,27 +21,26 @@ import {
   getRuleObject
 } from "@saleor/shipping/views/utils";
 import { MinMax } from "@saleor/types";
-import {
-  PostalCodeRuleInclusionTypeEnum,
-  ShippingMethodTypeEnum
-} from "@saleor/types/globalTypes";
+import { PostalCodeRuleInclusionTypeEnum } from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { WEIGHT_RATES_CREATE_FORM_ID } from "./consts";
+const FORM_ID = Symbol();
 
-export interface WeightRatesCreateProps {
+export interface RateCreateProps {
   id: string;
   params: ShippingRateCreateUrlQueryParams;
 }
 
-export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
-  id,
-  params
-}) => {
+export const RateCreate: React.FC<RateCreateProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const intl = useIntl();
+
+  const [openModal, closeModal] = createDialogActionHandlers<
+    ShippingRateCreateUrlDialog,
+    ShippingRateCreateUrlQueryParams
+  >(navigate, params => shippingRateCreateUrl(id, params), params);
 
   const {
     data: shippingZoneData,
@@ -54,14 +50,6 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
     variables: { id }
   });
 
-  const [openModal, closeModal] = createDialogActionHandlers<
-    ShippingRateCreateUrlDialog,
-    ShippingRateCreateUrlQueryParams
-  >(navigate, params => shippingWeightRatesUrl(id, params), params);
-
-  const shippingChannels = createShippingChannels(
-    shippingZoneData?.shippingZone?.channels
-  );
   const allChannels = createSortedShippingChannels(
     shippingZoneData?.shippingZone?.channels
   );
@@ -78,10 +66,10 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
     setCurrentChannels,
     toggleAllChannels
   } = useChannels(
-    shippingChannels,
+    allChannels,
     params?.action,
     { closeModal, openModal },
-    { formId: WEIGHT_RATES_CREATE_FORM_ID }
+    { formId: FORM_ID }
   );
 
   const [state, dispatch] = React.useReducer(postalCodesReducer, {
@@ -99,7 +87,7 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
     status
   } = useShippingRateCreator(
     id,
-    ShippingMethodTypeEnum.WEIGHT,
+    params.type,
     state.postalCodeRules,
     state.inclusionType
   );
@@ -149,7 +137,7 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
           title={intl.formatMessage({
-            defaultMessage: "Manage Channels Availability"
+            defaultMessage: "Manage Channel Availability"
           })}
           confirmButtonState="default"
           selected={channelListElements.length}
@@ -157,8 +145,9 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
           toggleAll={toggleAllChannels}
         />
       )}
+
       <ShippingZoneRatesCreatePage
-        formId={WEIGHT_RATES_CREATE_FORM_ID}
+        formId={FORM_ID}
         allChannelsCount={allChannels?.length}
         shippingChannels={currentChannels}
         disabled={channelsLoading || status === "loading"}
@@ -173,7 +162,7 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
         onPostalCodeAssign={() => openModal("add-range")}
         onPostalCodeUnassign={onPostalCodeUnassign}
         onPostalCodeInclusionChange={onPostalCodeInclusionChange}
-        variant={ShippingMethodTypeEnum.WEIGHT}
+        variant={params.type}
       />
       <ShippingZonePostalCodeRangeDialog
         confirmButtonState="default"
@@ -185,4 +174,4 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
   );
 };
 
-export default WeightRatesCreate;
+export default RateCreate;
