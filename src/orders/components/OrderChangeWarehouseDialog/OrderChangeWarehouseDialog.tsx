@@ -168,7 +168,7 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
               );
               const allLinesAvailable = unavailableLines.length === 0;
               return (
-                <TableRow>
+                <TableRow key={warehouse.id}>
                   <TableCell className={classes.warehouseCell}>
                     <div>
                       <FormControlLabel

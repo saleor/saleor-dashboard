@@ -20,7 +20,7 @@ import useNotifier from "./useNotifier";
 const getPermissionKey = (permission: string) =>
   `PERMISSION_${permission}` as PrefixedPermissions;
 
-const allPermissions = Object.keys(PermissionEnum).reduce(
+export const allPermissions = Object.keys(PermissionEnum).reduce(
   (prev, code) => ({
     ...prev,
     [getPermissionKey(code)]: false
