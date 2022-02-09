@@ -37,8 +37,8 @@ export const collectionDetailsFragment = gql`
 
 // This fragment is used to make sure that product's fields that are returned
 // are always the same - fixes apollo cache
-// https://github.com/apollographql/@apollo/client/issues/2496
-// https://github.com/apollographql/@apollo/client/issues/3468
+// https://github.com/apollographql/apollo-client/issues/2496
+// https://github.com/apollographql/apollo-client/issues/3468
 export const collectionProductFragment = gql`
   ${channelListingProductWithoutPricingFragment}
   fragment CollectionProductFragment on Product {
