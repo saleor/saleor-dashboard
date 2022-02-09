@@ -4,6 +4,7 @@ import { useCustomerAddressesQuery } from "@saleor/customers/queries";
 import useNavigator from "@saleor/hooks/useNavigator";
 import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
 import OrderChangeWarehouseDialog from "@saleor/orders/components/OrderChangeWarehouseDialog";
+import { Warehouse } from "@saleor/orders/components/OrderChangeWarehouseDialog/types";
 import { OrderCustomerAddressesEditDialogOutput } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/types";
 import OrderFulfillmentApproveDialog from "@saleor/orders/components/OrderFulfillmentApproveDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
@@ -19,7 +20,6 @@ import {
 import { PartialMutationProviderOutput } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { useWarehouseList } from "@saleor/warehouses/queries";
-import { WarehouseList_warehouses_edges_node } from "@saleor/warehouses/types/WarehouseList";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -111,13 +111,13 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
 
   const warehouses = mapEdgesToItems(warehousesData?.warehouses);
 
-  // @TODO this is wip
-  // exact logic for determining default
-  // warehouse will be added in future PR
   const [fulfillmentWarehouse, setFulfillmentWarehouse] = React.useState<
-    WarehouseList_warehouses_edges_node
+    Warehouse
   >(null);
   React.useEffect(() => {
+    // @TODO this is wip
+    // exact logic for determining default
+    // warehouse will be added in future PR
     setFulfillmentWarehouse(warehouses?.[0]);
   }, [warehousesData, warehousesLoading]);
 

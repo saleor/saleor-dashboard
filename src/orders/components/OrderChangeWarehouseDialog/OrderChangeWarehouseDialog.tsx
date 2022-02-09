@@ -13,7 +13,6 @@ import {
 } from "@material-ui/core";
 import Debounce from "@saleor/components/Debounce";
 import Skeleton from "@saleor/components/Skeleton";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
 import {
   Button,
@@ -28,20 +27,20 @@ import {
 import { OrderDetails_order_lines } from "@saleor/orders/types/OrderDetails";
 import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
 import { mapEdgesToItems } from "@saleor/utils/maps";
-import { WarehouseList_warehouses_edges_node } from "@saleor/warehouses/types/WarehouseList";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getById } from "../OrderReturnPage/utils";
 import { changeWarehouseDialogMessages as messages } from "./messages";
 import { useStyles } from "./styles";
+import { Warehouse } from "./types";
 import { isLineAvailableInWarehouse } from "./utils";
 
 export interface OrderChangeWarehouseDialogProps {
   open: boolean;
   lines: OrderDetails_order_lines[];
-  currentWarehouse: WarehouseList_warehouses_edges_node;
-  onConfirm: (warehouse: WarehouseList_warehouses_edges_node) => void;
+  currentWarehouse: Warehouse;
+  onConfirm: (warehouse: Warehouse) => void;
   onClose();
 }
 
@@ -60,9 +59,9 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
   const bottomShadow = isScrolledToBottom(anchor, position, 20) === false;
 
   const [query, setQuery] = React.useState<string>("");
-  const [selectedWarehouseId, setSelectedWarehouseId] = useStateFromProps<
-    string
-  >(currentWarehouse?.id);
+  const [selectedWarehouseId, setSelectedWarehouseId] = React.useState<string>(
+    currentWarehouse?.id
+  );
   const { result: warehousesOpts, loadMore, search } = useWarehouseSearch({
     variables: {
       after: null,
@@ -79,7 +78,7 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
     const selectedWarehouse = filteredWarehouses.find(
       getById(selectedWarehouseId)
     );
-    onConfirm(selectedWarehouse as any);
+    onConfirm(selectedWarehouse);
     onClose();
   };
 
