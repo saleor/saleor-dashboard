@@ -4262,13 +4262,13 @@
     "context": "change warehouse dialog title",
     "string": "Change warehouse"
   },
+  "src_dot_orders_dot_components_dot_OrderChangeWarehouseDialog_dot_multipleProductsUnavailable": {
+    "context": "warehouse label when multiple products are unavailable",
+    "string": "{productCount} products are unavailable at this location"
+  },
   "src_dot_orders_dot_components_dot_OrderChangeWarehouseDialog_dot_productUnavailable": {
     "context": "warehouse label when one product is unavailable",
     "string": "{productName} is unavailable at this location"
-  },
-  "src_dot_orders_dot_components_dot_OrderChangeWarehouseDialog_dot_productsUnavailable": {
-    "context": "warehouse label when multiple products are unavailable",
-    "string": "{productCount} products are unavailable at this location"
   },
   "src_dot_orders_dot_components_dot_OrderChangeWarehouseDialog_dot_searchFieldPlaceholder": {
     "context": "change warehouse dialog search placeholder",

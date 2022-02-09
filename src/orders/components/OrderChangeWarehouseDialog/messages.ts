@@ -21,7 +21,7 @@ export const changeWarehouseDialogMessages = defineMessages({
     defaultMessage: "{productName} is unavailable at this location",
     description: "warehouse label when one product is unavailable"
   },
-  productsUnavailable: {
+  multipleProductsUnavailable: {
     defaultMessage: "{productCount} products are unavailable at this location",
     description: "warehouse label when multiple products are unavailable"
   },

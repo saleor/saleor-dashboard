@@ -163,7 +163,7 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
                                       }
                                     )
                                   : intl.formatMessage(
-                                      messages.productsUnavailable,
+                                      messages.multipleProductsUnavailable,
                                       { productCount: unavailableLines.length }
                                     )}
                               </Typography>
