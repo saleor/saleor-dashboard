@@ -1,6 +1,6 @@
-import { defineMessage } from "react-intl";
+import { defineMessages } from "react-intl";
 
-export const changeWarehouseDialogMessages = defineMessage({
+export const changeWarehouseDialogMessages = defineMessages({
   dialogTitle: {
     defaultMessage: "Change warehouse",
     description: "change warehouse dialog title"
