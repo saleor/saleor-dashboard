@@ -26,6 +26,7 @@ import {
   useElementScroll
 } from "@saleor/macaw-ui";
 import { OrderDetails_order_lines } from "@saleor/orders/types/OrderDetails";
+import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { WarehouseList_warehouses_edges_node } from "@saleor/warehouses/types/WarehouseList";
@@ -71,7 +72,10 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
   });
   const filteredWarehouses = mapEdgesToItems(warehousesOpts?.data?.search);
 
-  const isLineAvailableInWarehouse = (line, warehouse) => {
+  const isLineAvailableInWarehouse = (
+    line: OrderDetails_order_lines,
+    warehouse: SearchWarehouses_search_edges_node
+  ) => {
     if (
       line.variant.stocks.find(stock => stock.warehouse.id === warehouse.id)
     ) {
@@ -79,7 +83,10 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
     }
     return false;
   };
-  const getAvailableQuantity = (line, warehouse) => {
+  const getAvailableQuantity = (
+    line: OrderDetails_order_lines,
+    warehouse: SearchWarehouses_search_edges_node
+  ) => {
     const warehouseStock = line.variant?.stocks?.find(
       stock => stock.warehouse.id === warehouse.id
     );
