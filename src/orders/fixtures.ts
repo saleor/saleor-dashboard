@@ -3,6 +3,7 @@ import { InvoiceFragment } from "@saleor/fragments/types/InvoiceFragment";
 import { OrderSettingsFragment } from "@saleor/fragments/types/OrderSettingsFragment";
 import { ShopOrderSettingsFragment } from "@saleor/fragments/types/ShopOrderSettingsFragment";
 import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
+import { SearchWarehouses_search } from "@saleor/searches/types/SearchWarehouses";
 import { warehouseForPickup, warehouseList } from "@saleor/warehouses/fixtures";
 import { MessageDescriptor } from "react-intl";
 
@@ -1071,6 +1072,16 @@ export const order = (placeholder: string): OrderDetails_order => ({
             quantity: 2,
             quantityFulfilled: 2,
             quantityToFulfill: 0,
+            allocations: [
+              {
+                warehouse: {
+                  id:
+                    "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                  __typename: "Warehouse"
+                },
+                __typename: "Allocation"
+              }
+            ],
             thumbnail: {
               __typename: "Image" as "Image",
               url: placeholder
@@ -1114,7 +1125,29 @@ export const order = (placeholder: string): OrderDetails_order => ({
               __typename: "ProductVariant",
               id: "dsfsfuhb",
               quantityAvailable: 10,
-              preorder: null
+              preorder: null,
+              stocks: [
+                {
+                  warehouse: {
+                    id:
+                      "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                    __typename: "Warehouse"
+                  },
+                  quantity: 166,
+                  quantityAllocated: 0,
+                  __typename: "Stock"
+                },
+                {
+                  warehouse: {
+                    id:
+                      "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                    __typename: "Warehouse"
+                  },
+                  quantity: 166,
+                  quantityAllocated: 0,
+                  __typename: "Stock"
+                }
+              ]
             }
           },
           quantity: 1
@@ -1141,6 +1174,16 @@ export const order = (placeholder: string): OrderDetails_order => ({
             quantity: 2,
             quantityFulfilled: 2,
             quantityToFulfill: 0,
+            allocations: [
+              {
+                warehouse: {
+                  id:
+                    "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                  __typename: "Warehouse"
+                },
+                __typename: "Allocation"
+              }
+            ],
             thumbnail: {
               __typename: "Image" as "Image",
               url: placeholder
@@ -1184,7 +1227,29 @@ export const order = (placeholder: string): OrderDetails_order => ({
               __typename: "ProductVariant",
               id: "dsfsfuhb",
               quantityAvailable: 10,
-              preorder: null
+              preorder: null,
+              stocks: [
+                {
+                  warehouse: {
+                    id:
+                      "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                    __typename: "Warehouse"
+                  },
+                  quantity: 166,
+                  quantityAllocated: 0,
+                  __typename: "Stock"
+                },
+                {
+                  warehouse: {
+                    id:
+                      "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                    __typename: "Warehouse"
+                  },
+                  quantity: 166,
+                  quantityAllocated: 0,
+                  __typename: "Stock"
+                }
+              ]
             }
           },
           quantity: 1
@@ -1219,6 +1284,16 @@ export const order = (placeholder: string): OrderDetails_order => ({
       quantity: 3,
       quantityFulfilled: 0,
       quantityToFulfill: 3,
+      allocations: [
+        {
+          warehouse: {
+            id:
+              "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+            __typename: "Warehouse"
+          },
+          __typename: "Allocation"
+        }
+      ],
       thumbnail: {
         __typename: "Image" as "Image",
         url: placeholder
@@ -1262,7 +1337,29 @@ export const order = (placeholder: string): OrderDetails_order => ({
         __typename: "ProductVariant",
         id: "dsfsfuhb",
         quantityAvailable: 10,
-        preorder: null
+        preorder: null,
+        stocks: [
+          {
+            warehouse: {
+              id:
+                "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+              __typename: "Warehouse"
+            },
+            quantity: 166,
+            quantityAllocated: 0,
+            __typename: "Stock"
+          },
+          {
+            warehouse: {
+              id:
+                "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+              __typename: "Warehouse"
+            },
+            quantity: 166,
+            quantityAllocated: 0,
+            __typename: "Stock"
+          }
+        ]
       }
     },
     {
@@ -1274,6 +1371,16 @@ export const order = (placeholder: string): OrderDetails_order => ({
       quantity: 2,
       quantityFulfilled: 2,
       quantityToFulfill: 0,
+      allocations: [
+        {
+          warehouse: {
+            id:
+              "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+            __typename: "Warehouse"
+          },
+          __typename: "Allocation"
+        }
+      ],
       thumbnail: {
         __typename: "Image" as "Image",
         url: placeholder
@@ -1318,7 +1425,29 @@ export const order = (placeholder: string): OrderDetails_order => ({
         __typename: "ProductVariant",
         id: "dsfsfuhb",
         quantityAvailable: 10,
-        preorder: null
+        preorder: null,
+        stocks: [
+          {
+            warehouse: {
+              id:
+                "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+              __typename: "Warehouse"
+            },
+            quantity: 166,
+            quantityAllocated: 0,
+            __typename: "Stock"
+          },
+          {
+            warehouse: {
+              id:
+                "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+              __typename: "Warehouse"
+            },
+            quantity: 166,
+            quantityAllocated: 0,
+            __typename: "Stock"
+          }
+        ]
       }
     }
   ],
@@ -1469,6 +1598,16 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
       quantity: 2,
       quantityFulfilled: 0,
       quantityToFulfill: 2,
+      allocations: [
+        {
+          warehouse: {
+            id:
+              "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+            __typename: "Warehouse"
+          },
+          __typename: "Allocation"
+        }
+      ],
       thumbnail: {
         __typename: "Image" as "Image",
         url: placeholder
@@ -1512,7 +1651,29 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
         __typename: "ProductVariant",
         id: "dsfsfuhb",
         quantityAvailable: 10,
-        preorder: null
+        preorder: null,
+        stocks: [
+          {
+            warehouse: {
+              id:
+                "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+              __typename: "Warehouse"
+            },
+            quantity: 166,
+            quantityAllocated: 0,
+            __typename: "Stock"
+          },
+          {
+            warehouse: {
+              id:
+                "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+              __typename: "Warehouse"
+            },
+            quantity: 166,
+            quantityAllocated: 0,
+            __typename: "Stock"
+          }
+        ]
       }
     },
     {
@@ -1524,6 +1685,16 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
       quantity: 2,
       quantityFulfilled: 0,
       quantityToFulfill: 2,
+      allocations: [
+        {
+          warehouse: {
+            id:
+              "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+            __typename: "Warehouse"
+          },
+          __typename: "Allocation"
+        }
+      ],
       thumbnail: {
         __typename: "Image" as "Image",
         url: placeholder
@@ -1567,7 +1738,29 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
         __typename: "ProductVariant",
         id: "dsfsfuhb",
         quantityAvailable: 10,
-        preorder: null
+        preorder: null,
+        stocks: [
+          {
+            warehouse: {
+              id:
+                "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+              __typename: "Warehouse"
+            },
+            quantity: 166,
+            quantityAllocated: 0,
+            __typename: "Stock"
+          },
+          {
+            warehouse: {
+              id:
+                "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+              __typename: "Warehouse"
+            },
+            quantity: 166,
+            quantityAllocated: 0,
+            __typename: "Stock"
+          }
+        ]
       }
     }
   ],
@@ -2085,4 +2278,106 @@ export const shopOrderSettings: ShopOrderSettingsFragment = {
   __typename: "Shop",
   fulfillmentAutoApprove: true,
   fulfillmentAllowUnpaid: true
+};
+
+export const warehouseSearch: SearchWarehouses_search = {
+  edges: [
+    {
+      node: {
+        id: "V2FyZWhvdXNlOmJiZTEwZjk1LTQyYjAtNDRlMS04Yjc5LWU5MjllMmViYTRjMQ==",
+        name: "CyVou-97803",
+        __typename: "Warehouse"
+      },
+      __typename: "WarehouseCountableEdge"
+    },
+    {
+      node: {
+        id: "V2FyZWhvdXNlOjdhOGViNThhLTYwN2QtNGMxNC04ODVmLTBiMWU3ZDcyMTIyNQ==",
+        name: "CyWarehouse72715",
+        __typename: "Warehouse"
+      },
+      __typename: "WarehouseCountableEdge"
+    },
+    {
+      node: {
+        id: "V2FyZWhvdXNlOjY2NWIxZWFmLTU5MDYtNGE0Mi1iYWVkLTc1ODQ3YWNhMWI1NQ==",
+        name: "CyWarehouseCheckout70441",
+        __typename: "Warehouse"
+      },
+      __typename: "WarehouseCountableEdge"
+    },
+    {
+      node: {
+        id: "V2FyZWhvdXNlOjdkNmVmNmFkLWY4NTMtNGVmNS1iMzQ5LTUyY2I2N2U3NmIwZQ==",
+        name: "CyWeightRates-78849",
+        __typename: "Warehouse"
+      },
+      __typename: "WarehouseCountableEdge"
+    },
+    {
+      node: {
+        id: "V2FyZWhvdXNlOjcwZjMyYTUyLWVlODQtNGExYi1iMjgzLTgwYjllMzgyNDlkNg==",
+        name: "EditShipping-82885",
+        __typename: "Warehouse"
+      },
+      __typename: "WarehouseCountableEdge"
+    },
+    {
+      node: {
+        id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+        name: "Europe for click and collect",
+        __typename: "Warehouse"
+      },
+      __typename: "WarehouseCountableEdge"
+    },
+    {
+      node: {
+        id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+        name: "Oceania",
+        __typename: "Warehouse"
+      },
+      __typename: "WarehouseCountableEdge"
+    },
+    {
+      node: {
+        id: "V2FyZWhvdXNlOjNiZDM0YjEyLTllNDktNDMwZC1iM2QyLTRkYmRhMjM1MGUyOQ==",
+        name: "ProductsWithoutSkuInOrder",
+        __typename: "Warehouse"
+      },
+      __typename: "WarehouseCountableEdge"
+    },
+    {
+      node: {
+        id: "V2FyZWhvdXNlOmU4M2U2NjQ2LTFhYjctNGNmNC05N2M4LTFiZjI2NGE2NjQ4Yw==",
+        name: "StocksThreshold",
+        __typename: "Warehouse"
+      },
+      __typename: "WarehouseCountableEdge"
+    },
+    {
+      node: {
+        id: "V2FyZWhvdXNlOmJkMmQ1NDFjLWQwMjMtNDAwNi05YmRjLWZhZTA4OWZlNzZiYg==",
+        name: "UpdateProductsSku59844",
+        __typename: "Warehouse"
+      },
+      __typename: "WarehouseCountableEdge"
+    },
+    {
+      node: {
+        id: "V2FyZWhvdXNlOjgzNDMwMzI4LTI2YWItNDNkZS1hNzdhLTVmNGNhMTljMDJhNg==",
+        name: "WithoutShipmentCheckout-4505",
+        __typename: "Warehouse"
+      },
+      __typename: "WarehouseCountableEdge"
+    }
+  ],
+  pageInfo: {
+    endCursor:
+      "WyJXaXRob3V0U2hpcG1lbnRDaGVja291dC00NTA1IiwgIldpdGhvdXRTaGlwbWVudENoZWNrb3V0LTQ1MDUiXQ==",
+    hasNextPage: false,
+    hasPreviousPage: true,
+    startCursor: "WyJDeVZvdS05NzgwMyIsICJDeVZvdS05NzgwMyJd",
+    __typename: "PageInfo"
+  },
+  __typename: "WarehouseCountableConnection"
 };

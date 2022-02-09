@@ -215,9 +215,31 @@ export interface FulfillOrder_orderFulfill_order_events {
   lines: (FulfillOrder_orderFulfill_order_events_lines | null)[] | null;
 }
 
+export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_allocations_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_allocations {
+  __typename: "Allocation";
+  warehouse: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_allocations_warehouse;
+}
+
 export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_variant_preorder {
   __typename: "PreorderData";
   endDate: any | null;
+}
+
+export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_variant_stocks_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_variant_stocks {
+  __typename: "Stock";
+  warehouse: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_variant_stocks_warehouse;
+  quantity: number;
+  quantityAllocated: number;
 }
 
 export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_variant {
@@ -225,6 +247,7 @@ export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_va
   id: string;
   quantityAvailable: number | null;
   preorder: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_variant_preorder | null;
+  stocks: (FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_variant_stocks | null)[] | null;
 }
 
 export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_unitDiscount {
@@ -279,6 +302,7 @@ export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine {
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  allocations: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_allocations[] | null;
   variant: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_variant | null;
   productName: string;
   productSku: string | null;
@@ -317,9 +341,31 @@ export interface FulfillOrder_orderFulfill_order_fulfillments {
   warehouse: FulfillOrder_orderFulfill_order_fulfillments_warehouse | null;
 }
 
+export interface FulfillOrder_orderFulfill_order_lines_allocations_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_lines_allocations {
+  __typename: "Allocation";
+  warehouse: FulfillOrder_orderFulfill_order_lines_allocations_warehouse;
+}
+
 export interface FulfillOrder_orderFulfill_order_lines_variant_preorder {
   __typename: "PreorderData";
   endDate: any | null;
+}
+
+export interface FulfillOrder_orderFulfill_order_lines_variant_stocks_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_lines_variant_stocks {
+  __typename: "Stock";
+  warehouse: FulfillOrder_orderFulfill_order_lines_variant_stocks_warehouse;
+  quantity: number;
+  quantityAllocated: number;
 }
 
 export interface FulfillOrder_orderFulfill_order_lines_variant {
@@ -327,6 +373,7 @@ export interface FulfillOrder_orderFulfill_order_lines_variant {
   id: string;
   quantityAvailable: number | null;
   preorder: FulfillOrder_orderFulfill_order_lines_variant_preorder | null;
+  stocks: (FulfillOrder_orderFulfill_order_lines_variant_stocks | null)[] | null;
 }
 
 export interface FulfillOrder_orderFulfill_order_lines_unitDiscount {
@@ -381,6 +428,7 @@ export interface FulfillOrder_orderFulfill_order_lines {
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  allocations: FulfillOrder_orderFulfill_order_lines_allocations[] | null;
   variant: FulfillOrder_orderFulfill_order_lines_variant | null;
   productName: string;
   productSku: string | null;

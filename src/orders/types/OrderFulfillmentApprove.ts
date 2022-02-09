@@ -213,9 +213,31 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_events {
   lines: (OrderFulfillmentApprove_orderFulfillmentApprove_order_events_lines | null)[] | null;
 }
 
+export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillments_lines_orderLine_allocations_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillments_lines_orderLine_allocations {
+  __typename: "Allocation";
+  warehouse: OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillments_lines_orderLine_allocations_warehouse;
+}
+
 export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillments_lines_orderLine_variant_preorder {
   __typename: "PreorderData";
   endDate: any | null;
+}
+
+export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillments_lines_orderLine_variant_stocks_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillments_lines_orderLine_variant_stocks {
+  __typename: "Stock";
+  warehouse: OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillments_lines_orderLine_variant_stocks_warehouse;
+  quantity: number;
+  quantityAllocated: number;
 }
 
 export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillments_lines_orderLine_variant {
@@ -223,6 +245,7 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillme
   id: string;
   quantityAvailable: number | null;
   preorder: OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillments_lines_orderLine_variant_preorder | null;
+  stocks: (OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillments_lines_orderLine_variant_stocks | null)[] | null;
 }
 
 export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillments_lines_orderLine_unitDiscount {
@@ -277,6 +300,7 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillme
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  allocations: OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillments_lines_orderLine_allocations[] | null;
   variant: OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillments_lines_orderLine_variant | null;
   productName: string;
   productSku: string | null;
@@ -315,9 +339,31 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillme
   warehouse: OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillments_warehouse | null;
 }
 
+export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_lines_allocations_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_lines_allocations {
+  __typename: "Allocation";
+  warehouse: OrderFulfillmentApprove_orderFulfillmentApprove_order_lines_allocations_warehouse;
+}
+
 export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_lines_variant_preorder {
   __typename: "PreorderData";
   endDate: any | null;
+}
+
+export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_lines_variant_stocks_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_lines_variant_stocks {
+  __typename: "Stock";
+  warehouse: OrderFulfillmentApprove_orderFulfillmentApprove_order_lines_variant_stocks_warehouse;
+  quantity: number;
+  quantityAllocated: number;
 }
 
 export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_lines_variant {
@@ -325,6 +371,7 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_lines_var
   id: string;
   quantityAvailable: number | null;
   preorder: OrderFulfillmentApprove_orderFulfillmentApprove_order_lines_variant_preorder | null;
+  stocks: (OrderFulfillmentApprove_orderFulfillmentApprove_order_lines_variant_stocks | null)[] | null;
 }
 
 export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_lines_unitDiscount {
@@ -379,6 +426,7 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_lines {
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  allocations: OrderFulfillmentApprove_orderFulfillmentApprove_order_lines_allocations[] | null;
   variant: OrderFulfillmentApprove_orderFulfillmentApprove_order_lines_variant | null;
   productName: string;
   productSku: string | null;

@@ -9,9 +9,31 @@ import { DiscountValueTypeEnum, FulfillmentStatus } from "./../../types/globalTy
 // GraphQL fragment: FulfillmentFragment
 // ====================================================
 
+export interface FulfillmentFragment_lines_orderLine_allocations_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface FulfillmentFragment_lines_orderLine_allocations {
+  __typename: "Allocation";
+  warehouse: FulfillmentFragment_lines_orderLine_allocations_warehouse;
+}
+
 export interface FulfillmentFragment_lines_orderLine_variant_preorder {
   __typename: "PreorderData";
   endDate: any | null;
+}
+
+export interface FulfillmentFragment_lines_orderLine_variant_stocks_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface FulfillmentFragment_lines_orderLine_variant_stocks {
+  __typename: "Stock";
+  warehouse: FulfillmentFragment_lines_orderLine_variant_stocks_warehouse;
+  quantity: number;
+  quantityAllocated: number;
 }
 
 export interface FulfillmentFragment_lines_orderLine_variant {
@@ -19,6 +41,7 @@ export interface FulfillmentFragment_lines_orderLine_variant {
   id: string;
   quantityAvailable: number | null;
   preorder: FulfillmentFragment_lines_orderLine_variant_preorder | null;
+  stocks: (FulfillmentFragment_lines_orderLine_variant_stocks | null)[] | null;
 }
 
 export interface FulfillmentFragment_lines_orderLine_unitDiscount {
@@ -73,6 +96,7 @@ export interface FulfillmentFragment_lines_orderLine {
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  allocations: FulfillmentFragment_lines_orderLine_allocations[] | null;
   variant: FulfillmentFragment_lines_orderLine_variant | null;
   productName: string;
   productSku: string | null;

@@ -78,11 +78,23 @@ export const fragmentOrderLine = gql`
   fragment OrderLineFragment on OrderLine {
     id
     isShippingRequired
+    allocations {
+      warehouse {
+        id
+      }
+    }
     variant {
       id
       quantityAvailable
       preorder {
         endDate
+      }
+      stocks {
+        warehouse {
+          id
+        }
+        quantity
+        quantityAllocated
       }
     }
     productName
