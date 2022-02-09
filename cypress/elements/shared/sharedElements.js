@@ -9,7 +9,7 @@ export const SHARED_ELEMENTS = {
   notificationSuccess: '[data-test="notification"][data-test-type="success"]',
   dialog: '[role="dialog"]',
   searchInput: '[data-test-id="searchInput"]',
-  selectOption: '[data-test="selectFieldOption"]',
+  selectOption: '[data-test-id*="select-field-option"]',
   svgImage: "svg",
   fileInput: 'input[type="file"]',
   urlInput: 'input[type="url"]',

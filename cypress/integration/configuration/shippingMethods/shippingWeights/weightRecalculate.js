@@ -86,11 +86,11 @@ filterTests({ definedTags: ["all"] }, () => {
           );
           cy.waitForProgressBarToNotBeVisible();
           expect(rate.minimumOrderWeight.unit).to.eq("G");
-          cy.get(SHIPPING_RATE_DETAILS.minWeightInput).invoke("val");
+          cy.get(SHIPPING_RATE_DETAILS.minValueInput).invoke("val");
         })
         .then(actualMinWeight => {
           expect(parseInt(actualMinWeight, 10)).to.eq(minWeightInG);
-          cy.get(SHIPPING_RATE_DETAILS.maxWeightInput).invoke("val");
+          cy.get(SHIPPING_RATE_DETAILS.maxValueInput).invoke("val");
         })
         .then(actualMaxWeight => {
           expect(parseInt(actualMaxWeight, 10)).to.eq(maxWeightInG);

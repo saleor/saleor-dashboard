@@ -1,5 +1,5 @@
 {
-  "baseUrl": "http://localhost:9000/",
+  "baseUrl": "https://saleor-5502-update-tests-for-shipping-methods.dashboard.saleor.rocks/",
   "projectId": "k8be36",
   "chromeWebSecurity": false,
   "defaultCommandTimeout": 15000,

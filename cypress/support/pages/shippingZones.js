@@ -50,7 +50,7 @@ export function selectShippingsOnTable(
         return;
       }
       cy.get(BUTTON_SELECTORS.nextPaginationButton).click();
-      selectShippingsOnTable(notSelectedShippings, counter, actionFunction);
+      selectShippingsOnTable(notSelectedShippings, actionFunction, counter);
     });
 }
 
