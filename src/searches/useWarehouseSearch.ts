@@ -13,6 +13,7 @@ export const searchWarehouses = gql`
     search: warehouses(
       after: $after
       first: $first
+      sortBy: { direction: ASC, field: NAME }
       filter: { search: $query }
     ) {
       edges {
