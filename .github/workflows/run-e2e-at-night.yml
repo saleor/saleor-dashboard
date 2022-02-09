@@ -3,7 +3,7 @@ on:
   pull_request:
     types: [reopened, synchronize, labeled, opened]
   schedule:
-  - cron: '50 10 * * *'
+  - cron: '50 11 * * *'
     
 jobs:
   nightly:
