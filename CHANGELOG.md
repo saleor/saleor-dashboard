@@ -77,6 +77,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Improve auth flow, support token refreshing/expired tokens - #1593 by @orzechdev
 - Blue theme redesign - #1623 by @dominik-zeglen
 - Display error if no invoicing plugin is active - #1701 by @dominik-zeglen
+- Update rest of the world checkbox on shipping zone details - #1673 by @orzechdev
 
 
 # 2.11.1
