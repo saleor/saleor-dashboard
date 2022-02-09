@@ -149,9 +149,13 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
                       disabled={disabled}
                       disableClickPropagation
                       onChange={() => toggle(shippingZone.id)}
+                      data-test-id={maybe(() => shippingZone.id + "-checkbox")}
                     />
                   </TableCell>
-                  <TableCell className={classes.colName}>
+                  <TableCell
+                    className={classes.colName}
+                    data-test-id={maybe(() => shippingZone.id + "-name")}
+                  >
                     {maybe<React.ReactNode>(
                       () => shippingZone.name,
                       <Skeleton />

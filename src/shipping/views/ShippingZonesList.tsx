@@ -162,6 +162,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
         toggleAll={toggleAll}
         toolbar={
           <IconButton
+            data-test-id="delete-selected-elements-icon"
             variant="secondary"
             color="primary"
             onClick={() =>
