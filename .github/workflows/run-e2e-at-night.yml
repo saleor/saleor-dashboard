@@ -5,7 +5,7 @@ on:
   pull_request:
     types: [reopened, synchronize, labeled, opened]
   schedule:
-  - cron: '50 11 * * *'
+  - cron: 20 * * * *
     
 jobs:
   nightly:
@@ -27,7 +27,7 @@ jobs:
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
           CYPRESS_MAILHOG: ${{ secrets.CYPRESS_MAILHOG }}
         with:
-          command: npm run cy:run:criticalStable
+          command: npm run cy:run:stable
       - uses: actions/upload-artifact@v1
         if: ${{ failure() }}
         with:
