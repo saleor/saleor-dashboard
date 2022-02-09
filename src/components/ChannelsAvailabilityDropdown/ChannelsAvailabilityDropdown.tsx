@@ -27,10 +27,7 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
     channels
   ]);
 
-  const handleMouseOver = () => setPopupOpen(true);
-  const handleMouseLeave = () => setPopupOpen(false);
-
-  if (!channels || channels.length === 0) {
+  if (!channels?.length) {
     return (
       <Pill label={intl.formatMessage(messages.noChannels)} color="error" />
     );
@@ -43,8 +40,8 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
         e.stopPropagation();
       }}
       ref={anchor}
-      onMouseOver={handleMouseOver}
-      onMouseLeave={handleMouseLeave}
+      onMouseOver={() => setPopupOpen(true)}
+      onMouseLeave={() => setPopupOpen(false)}
     >
       <div aria-controls="availability-menu" aria-haspopup="true" role="button">
         <Pill
