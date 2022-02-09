@@ -2,18 +2,17 @@ name: Cypress nightly tests
 on:
   pull_request:
     types: [reopened, synchronize, labeled, opened]
-    branches: ["*"]
-  workflow_dispatch:
-    branches: ["*"]
   schedule:
-    # runs tests every day at 4am
-    - cron: '45 10 * * *'
+  - cron: '50 10 * * *'
+    
 jobs:
   nightly:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
         uses: actions/checkout@v1
+        with:
+          ref: Test-PR-run-cypress-nightly
       - name: Cypress nightly tests 🌃
         uses: cypress-io/github-action@v2
         env:
