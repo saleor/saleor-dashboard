@@ -3,9 +3,11 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import { useCustomerAddressesQuery } from "@saleor/customers/queries";
 import useNavigator from "@saleor/hooks/useNavigator";
 import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
+import OrderChangeWarehouseDialog from "@saleor/orders/components/OrderChangeWarehouseDialog";
 import { OrderCustomerAddressesEditDialogOutput } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/types";
 import OrderFulfillmentApproveDialog from "@saleor/orders/components/OrderFulfillmentApproveDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
+import { OrderDetails } from "@saleor/orders/types/OrderDetails";
 import {
   OrderFulfillmentApprove,
   OrderFulfillmentApproveVariables
@@ -17,6 +19,7 @@ import {
 import { PartialMutationProviderOutput } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { useWarehouseList } from "@saleor/warehouses/queries";
+import { WarehouseList_warehouses_edges_node } from "@saleor/warehouses/types/WarehouseList";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -49,7 +52,7 @@ import { isAnyAddressEditModalOpen } from "../OrderDraftDetails";
 interface OrderNormalDetailsProps {
   id: string;
   params: OrderUrlQueryParams;
-  data: any;
+  data: OrderDetails;
   orderAddNote: any;
   orderInvoiceRequest: any;
   handleSubmit: any;
@@ -97,12 +100,26 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   const navigate = useNavigator();
   const { user } = useUser();
 
-  const warehouses = useWarehouseList({
-    displayLoader: true,
-    variables: {
-      first: 30
+  const { data: warehousesData, loading: warehousesLoading } = useWarehouseList(
+    {
+      displayLoader: true,
+      variables: {
+        first: 30
+      }
     }
-  });
+  );
+
+  const warehouses = mapEdgesToItems(warehousesData?.warehouses);
+
+  // @TODO this is wip
+  // exact logic for determining default
+  // warehouse will be added in future PR
+  const [fulfillmentWarehouse, setFulfillmentWarehouse] = React.useState<
+    WarehouseList_warehouses_edges_node
+  >(null);
+  React.useEffect(() => {
+    setFulfillmentWarehouse(warehouses?.[0]);
+  }, [warehousesData, warehousesLoading]);
 
   const {
     data: customerAddresses,
@@ -295,7 +312,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
           orderFulfillmentCancel.opts.data?.orderFulfillmentCancel.errors || []
         }
         open={params.action === "cancel-fulfillment"}
-        warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
+        warehouses={warehouses || []}
         onConfirm={variables =>
           orderFulfillmentCancel.mutate({
             id: params.id,
@@ -325,6 +342,13 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
             }
           })
         }
+        onClose={closeModal}
+      />
+      <OrderChangeWarehouseDialog
+        open={params.action === "change-warehouse"}
+        lines={order?.lines}
+        currentWarehouse={fulfillmentWarehouse}
+        onConfirm={warehouse => setFulfillmentWarehouse(warehouse)}
         onClose={closeModal}
       />
       <OrderInvoiceEmailSendDialog
