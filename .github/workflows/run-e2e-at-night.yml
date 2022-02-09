@@ -1,4 +1,4 @@
-name: Cypress nightly tests
+name: Run e2e at night
 on:
   workflow_dispatch:
     branches: ["*"]
