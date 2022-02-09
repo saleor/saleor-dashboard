@@ -89,7 +89,7 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
   }, [bottomShadow]);
 
   return (
-    <Dialog fullWidth open={open}>
+    <Dialog fullWidth open={open} onClose={onClose}>
       <ScrollShadow variant="top" show={topShadow}>
         <DialogHeader onClose={onClose}>
           <FormattedMessage {...messages.dialogTitle} />
