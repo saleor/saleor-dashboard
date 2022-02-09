@@ -1,8 +1,5 @@
 name: Cypress nightly tests
 on:
-  pull_request:
-    types: [reopened, synchronize, labeled, opened]
-    branches: ["*"]
   schedule:
   - cron: '00 02 * * *'
     
