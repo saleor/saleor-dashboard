@@ -123,7 +123,6 @@ export interface ShippingZoneDetailsFragment {
   countries: (ShippingZoneDetailsFragment_countries | null)[] | null;
   name: string;
   description: string | null;
-  default: boolean;
   shippingMethods: (ShippingZoneDetailsFragment_shippingMethods | null)[] | null;
   warehouses: ShippingZoneDetailsFragment_warehouses[];
 }

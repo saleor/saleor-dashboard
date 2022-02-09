@@ -119,7 +119,6 @@ const createShippingZone = gql`
         countries {
           ...CountryFragment
         }
-        default
         id
         name
       }
@@ -143,7 +142,6 @@ const updateShippingZone = gql`
         countries {
           ...CountryFragment
         }
-        default
         id
         name
       }
