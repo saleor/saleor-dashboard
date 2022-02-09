@@ -1566,7 +1566,6 @@ export const shippingZone: ShippingZone_shippingZone = {
       country: "Wielka Brytania"
     }
   ],
-  default: false,
   description: "Shipping zone description",
   id: "U2hpcHBpbmdab25lOjE=",
   metadata: [],

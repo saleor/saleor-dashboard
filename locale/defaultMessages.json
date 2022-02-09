@@ -6409,35 +6409,41 @@
     "context": "header, dialog",
     "string": "Create New Warehouse"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_1003092716": {
-    "string": "Rest of the World"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_1440682557": {
-    "string": "Quick Pick"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_1585396479": {
-    "context": "dialog header",
-    "string": "Assign Countries"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_1818089229": {
-    "string": "If selected, this will add all of the countries not selected to other shipping zones"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_2110418881": {
-    "string": "Search by country name"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_2404264158": {
-    "string": "Choose countries you want to add to shipping zone from list below"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_2747492886": {
+  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_assignCountriesButton": {
     "context": "button",
     "string": "Assign countries"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_2777439857": {
+  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_assignCountriesDescription": {
+    "context": "dialog description",
+    "string": "Choose countries you want to add to shipping zone from list below"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_assignCountriesTitle": {
+    "context": "dialog header",
+    "string": "Assign Countries"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_countriesSubtitle": {
     "context": "country selection",
     "string": "Countries A to Z"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_3510295703": {
+  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_quickPickSubtitle": {
+    "context": "section title",
+    "string": "Quick Pick"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_restOfTheWorldCheckbox": {
+    "context": "checkbox label",
+    "string": "Rest of the World"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_restOfTheWorldCheckboxDescription": {
+    "context": "checkbox description",
+    "string": "If selected, this will add all of the countries not selected to other shipping zones"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_searchCountriesLabel": {
+    "context": "search label",
     "string": "Search Countries"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_searchCountriesPlaceholder": {
+    "context": "search placeholder",
+    "string": "Search by country name"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneCreatePage_dot_countries": {
     "context": "country list header",
@@ -6447,18 +6453,12 @@
     "context": "section header",
     "string": "Create New Shipping Zone"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneCreatePage_dot_defaultZone": {
-    "string": "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
-  },
   "src_dot_shipping_dot_components_dot_ShippingZoneCreatePage_dot_noCountriesAssigned": {
     "string": "Currently, there are no countries assigned to this shipping zone"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneDetailsPage_dot_countries": {
     "context": "country list header",
     "string": "Countries"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneDetailsPage_dot_defaultZone": {
-    "string": "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneDetailsPage_dot_noCountriesAssigned": {
     "string": "Currently, there are no countries assigned to this shipping zone"
