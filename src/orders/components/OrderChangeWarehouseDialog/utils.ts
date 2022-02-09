@@ -1,9 +1,10 @@
 import { OrderDetails_order_lines } from "@saleor/orders/types/OrderDetails";
-import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
+
+import { Warehouse } from "./types";
 
 export const isLineAvailableInWarehouse = (
   line: OrderDetails_order_lines,
-  warehouse: SearchWarehouses_search_edges_node
+  warehouse: Warehouse
 ) => {
   if (line.variant.stocks.find(stock => stock.warehouse.id === warehouse.id)) {
     return line.quantityToFulfill <= getAvailableQuantity(line, warehouse);
@@ -12,7 +13,7 @@ export const isLineAvailableInWarehouse = (
 };
 export const getAvailableQuantity = (
   line: OrderDetails_order_lines,
-  warehouse: SearchWarehouses_search_edges_node
+  warehouse: Warehouse
 ) => {
   const warehouseStock = line.variant?.stocks?.find(
     stock => stock.warehouse.id === warehouse.id
