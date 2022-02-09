@@ -1,5 +1,7 @@
 name: Cypress nightly tests
 on:
+  workflow_dispatch:
+    branches: ["*"]
   pull_request:
     types: [reopened, synchronize, labeled, opened]
   schedule:
