@@ -82,7 +82,11 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
     onClose();
   };
 
-  React.useEffect(loadMore, [!bottomShadow]);
+  React.useEffect(() => {
+    if (!bottomShadow) {
+      loadMore();
+    }
+  }, [bottomShadow]);
 
   return (
     <Dialog fullWidth open={open}>
