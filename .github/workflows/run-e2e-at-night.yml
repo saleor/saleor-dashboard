@@ -1,11 +1,11 @@
 name: Cypress nightly tests
 on:
-  schedule:
-  - cron: '*/10 * * * *'
+  workflow_dispatch:
+    branches: ["*"]
     
 jobs:
   nightly:
     runs-on: ubuntu-20.04
     steps:
       - name: Echo
-        run: echo Cron
+        run: echo "Cron"
