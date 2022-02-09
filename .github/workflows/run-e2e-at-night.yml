@@ -1,35 +1,11 @@
 name: Cypress nightly tests
 on:
-  workflow_dispatch:
-    branches: ["*"]
-  pull_request:
-    types: [reopened, synchronize, labeled, opened]
   schedule:
-  - cron: 20 * * * *
+  - cron: '*/10 * * * *'
     
 jobs:
   nightly:
     runs-on: ubuntu-20.04
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-        with:
-          ref: Test-PR-run-cypress-nightly
-      - name: Cypress nightly tests 🌃
-        uses: cypress-io/github-action@v2
-        env:
-          API_URI: https://stable.staging.saleor.cloud/graphql/
-          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
-          CYPRESS_baseUrl: ${{ secrets.CYPRESS_BASEURL }}
-          CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
-          CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
-          CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
-          CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
-          CYPRESS_MAILHOG: ${{ secrets.CYPRESS_MAILHOG }}
-        with:
-          command: npm run cy:run:stable
-      - uses: actions/upload-artifact@v1
-        if: ${{ failure() }}
-        with:
-          name: cypress-videos
-          path: cypress/videos
+      - name: Echo
+        run: echo Cron
