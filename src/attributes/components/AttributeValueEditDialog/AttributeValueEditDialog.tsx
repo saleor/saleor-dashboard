@@ -67,7 +67,7 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
           <>
             <DialogContent>
               <TextField
-                data-test-id="valueName"
+                data-test-id="value-name"
                 autoFocus
                 disabled={disabled}
                 error={!!formErrors.name}
@@ -88,7 +88,7 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
             <DialogActions>
               <BackButton onClick={onClose} />
               <ConfirmButton
-                data-test="submit"
+                data-test-id="submit"
                 transitionState={confirmButtonState}
                 onClick={submit}
               >

@@ -6,5 +6,5 @@ export const HOMEPAGE_SELECTORS = {
   ordersReadyToFulfill: "[data-test-id='orders-to-fulfill']",
   paymentsWaitingForCapture: "[data-test-id='orders-to-capture']",
   productsOutOfStock: "[data-test-id='products-out-of-stock']",
-  welcomeMessage: "[data-test='welcomeHeader']"
+  welcomeMessage: "[data-test-id='welcome-header']"
 };

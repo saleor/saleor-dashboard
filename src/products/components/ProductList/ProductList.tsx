@@ -185,7 +185,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
           toolbar={toolbar}
         >
           <TableCellHeader
-            data-test-id="colNameHeader"
+            data-test-id="col-name-header"
             arrowPosition="right"
             className={classNames(classes.colName, {
               [classes.colNameFixed]: settings.columns.length > 4
@@ -203,7 +203,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
           </TableCellHeader>
           <DisplayColumn column="productType" displayColumns={settings.columns}>
             <TableCellHeader
-              data-test-id="colTypeHeader"
+              data-test-id="col-type-header"
               className={classes.colType}
               direction={
                 sort.sort === ProductListUrlSortField.productType
@@ -220,7 +220,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
             displayColumns={settings.columns}
           >
             <TooltipTableCellHeader
-              data-test-id="colAvailabilityHeader"
+              data-test-id="col-availability-header"
               className={classes.colPublished}
               direction={
                 sort.sort === ProductListUrlSortField.status
@@ -273,7 +273,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
           })}
           <DisplayColumn column="date" displayColumns={settings.columns}>
             <TableCellHeader
-              data-test-id="colDateHeader"
+              data-test-id="col-date-header"
               className={classes.colDate}
               direction={
                 sort.sort === ProductListUrlSortField.date
@@ -287,7 +287,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
           </DisplayColumn>
           <DisplayColumn column="price" displayColumns={settings.columns}>
             <TooltipTableCellHeader
-              data-test-id="colPriceHeader"
+              data-test-id="col-price-header"
               className={classes.colPrice}
               direction={
                 sort.sort === ProductListUrlSortField.price
@@ -355,7 +355,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   >
                     {product?.productType ? (
                       <div className={classes.colNameWrapper}>
-                        <span data-test="name">{product.name}</span>
+                        <span data-test-id="name">{product.name}</span>
                         {product?.productType && (
                           <Typography variant="caption">
                             {product.productType.hasVariants ? (
@@ -382,7 +382,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   >
                     <TableCell
                       className={classes.colType}
-                      data-test="product-type"
+                      data-test-id="product-type"
                     >
                       {product?.productType?.name || <Skeleton />}
                     </TableCell>
@@ -393,7 +393,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   >
                     <TableCell
                       className={classes.colPublished}
-                      data-test="availability"
+                      data-test-id="availability"
                       data-test-availability={
                         !!product?.channelListings?.length
                       }
@@ -418,7 +418,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     <TableCell
                       className={classes.colAttribute}
                       key={gridAttribute}
-                      data-test="attribute"
+                      data-test-id="attribute"
                       data-test-attribute={getAttributeIdFromColumnValue(
                         gridAttribute
                       )}
@@ -442,7 +442,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     column="date"
                     displayColumns={settings.columns}
                   >
-                    <TableCell className={classes.colDate} data-test="date">
+                    <TableCell className={classes.colDate} data-test-id="date">
                       {product?.updatedAt ? (
                         <Date date={product.updatedAt} />
                       ) : (
@@ -454,7 +454,10 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     column="price"
                     displayColumns={settings.columns}
                   >
-                    <TableCell className={classes.colPrice} data-test="price">
+                    <TableCell
+                      className={classes.colPrice}
+                      data-test-id="price"
+                    >
                       {product?.channelListings ? (
                         <MoneyRange
                           from={channel?.pricing?.priceRange?.start?.net}

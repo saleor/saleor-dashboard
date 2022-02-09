@@ -33,7 +33,7 @@ const TableCellAvatar: React.FC<TableCellAvatarProps> = props => {
     <TableCell
       className={classNames(classes.root, className)}
       {...rest}
-      data-test-id="tableCellAvatar"
+      data-test-id="table-cell-avatar"
     >
       <Avatar badge={badge} {...rest} />
     </TableCell>

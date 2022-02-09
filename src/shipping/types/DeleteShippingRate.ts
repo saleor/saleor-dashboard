@@ -129,7 +129,6 @@ export interface DeleteShippingRate_shippingPriceDelete_shippingZone {
   countries: (DeleteShippingRate_shippingPriceDelete_shippingZone_countries | null)[] | null;
   name: string;
   description: string | null;
-  default: boolean;
   shippingMethods: (DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods | null)[] | null;
   warehouses: DeleteShippingRate_shippingPriceDelete_shippingZone_warehouses[];
 }

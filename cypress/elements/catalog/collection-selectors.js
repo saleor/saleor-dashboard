@@ -3,5 +3,5 @@ export const COLLECTION_SELECTORS = {
   nameInput: "[name='name']",
   saveButton: "[data-test='button-bar-confirm']",
   addProductButton: "[data-test-id='add-product']",
-  descriptionInput: '[data-test-id="description"]'
+  descriptionInput: '[data-test-id="rich-text-editor-description"]'
 };

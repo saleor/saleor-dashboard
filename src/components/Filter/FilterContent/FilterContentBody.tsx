@@ -35,7 +35,7 @@ const useStyles = makeStyles(
   { name: "FilterContentBody" }
 );
 
-const filterTestingContext = "filter-field";
+const filterTestingContext = "filter-field-";
 
 export interface FilterContentBodyProps<T extends string = string> {
   children?: React.ReactNode;
@@ -77,8 +77,7 @@ const FilterContentBody: React.FC<FilterContentBodyProps> = ({
       {children}
       {filter.type === FieldType.text && (
         <TextField
-          data-test={filterTestingContext}
-          data-test-id={filter.name}
+          data-test-id={filterTestingContext + filter.name}
           fullWidth
           name={filter.name}
           InputProps={{ classes: { input: commonClasses.input } }}
@@ -124,8 +123,7 @@ const FilterContentBody: React.FC<FilterContentBodyProps> = ({
 
       {filter.type === FieldType.options && (
         <FilterOptionField
-          data-test={filterTestingContext}
-          data-test-id={filter.name}
+          data-test-id={filterTestingContext + filter.name}
           filterField={filter}
           onFilterPropertyChange={onFilterPropertyChange}
         />
@@ -139,7 +137,7 @@ const FilterContentBody: React.FC<FilterContentBodyProps> = ({
             <FormControlLabel
               control={
                 <Radio
-                  data-test="filterBoolean"
+                  data-test-id="filter-boolean"
                   data-test-is-checked={filter.value[0] === option.value}
                   checked={filter.value[0] === option.value}
                   color="primary"
@@ -163,8 +161,7 @@ const FilterContentBody: React.FC<FilterContentBodyProps> = ({
         ))}
       {filter.type === FieldType.autocomplete && filter.multiple && (
         <FilterAutocompleteField
-          data-test={filterTestingContext}
-          data-test-id={filter.name}
+          data-test-id={filterTestingContext + filter.name}
           displayValues={autocompleteDisplayValues}
           filterField={filter}
           setDisplayValues={setAutocompleteDisplayValues}

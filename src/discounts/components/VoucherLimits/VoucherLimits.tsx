@@ -43,6 +43,7 @@ const VoucherLimits = ({
       <CardTitle title={intl.formatMessage(messages.usageLimitsTitle)} />
       <CardContent className={classes.cardContent}>
         <ControlledCheckbox
+          testId="has-usage-limit"
           checked={data.hasUsageLimit}
           label={intl.formatMessage(messages.hasUsageLimit)}
           name={"hasUsageLimit" as keyof VoucherDetailsPageFormData}
@@ -54,6 +55,7 @@ const VoucherLimits = ({
         {data.hasUsageLimit &&
           (isNewVoucher ? (
             <TextField
+              data-test-id="usage-limit"
               disabled={disabled}
               error={!!formErrors.usageLimit || data.usageLimit <= 0}
               helperText={getDiscountErrorMessage(formErrors.usageLimit, intl)}
@@ -70,6 +72,7 @@ const VoucherLimits = ({
           ) : (
             <Grid variant="uniform">
               <TextField
+                data-test-id="usage-limit"
                 disabled={disabled}
                 error={!!formErrors.usageLimit || data.usageLimit <= 0}
                 helperText={getDiscountErrorMessage(
@@ -94,12 +97,14 @@ const VoucherLimits = ({
             </Grid>
           ))}
         <ControlledCheckbox
+          testId="apply-once-per-customer"
           checked={data.applyOncePerCustomer}
           label={intl.formatMessage(messages.applyOncePerCustomer)}
           name={"applyOncePerCustomer" as keyof VoucherDetailsPageFormData}
           onChange={onChange}
         />
         <ControlledCheckbox
+          testId="only-for-staff"
           checked={data.onlyForStaff}
           label={intl.formatMessage(messages.onlyForStaff)}
           name={"onlyForStaff" as keyof VoucherDetailsPageFormData}

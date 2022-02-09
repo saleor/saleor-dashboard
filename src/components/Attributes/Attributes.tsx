@@ -146,7 +146,7 @@ const Attributes: React.FC<AttributesProps> = ({
             variant="secondary"
             className={classes.expansionBarButton}
             onClick={toggleExpansion}
-            data-test="attributes-expand"
+            data-test-id="attributes-expand"
           >
             <ArrowDropDownIcon
               className={classNames(classes.expansionBarButtonIcon, {

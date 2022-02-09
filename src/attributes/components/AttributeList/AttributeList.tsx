@@ -190,8 +190,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
                 key={attribute ? attribute.id : "skeleton"}
                 onClick={attribute && onRowClick(attribute.id)}
                 className={classes.link}
-                data-test="id"
-                data-test-id={maybe(() => attribute.id)}
+                data-test-id={"id-" + maybe(() => attribute.id)}
               >
                 <TableCell padding="checkbox">
                   <Checkbox
@@ -201,15 +200,15 @@ const AttributeList: React.FC<AttributeListProps> = ({
                     onChange={() => toggle(attribute.id)}
                   />
                 </TableCell>
-                <TableCell className={classes.colSlug} data-test="slug">
+                <TableCell className={classes.colSlug} data-test-id="slug">
                   {attribute ? attribute.slug : <Skeleton />}
                 </TableCell>
-                <TableCell className={classes.colName} data-test="name">
+                <TableCell className={classes.colName} data-test-id="name">
                   {attribute ? attribute.name : <Skeleton />}
                 </TableCell>
                 <TableCell
                   className={classes.colVisible}
-                  data-test="visible"
+                  data-test-id="visible"
                   data-test-visible={maybe(() => attribute.visibleInStorefront)}
                 >
                   {attribute ? (
@@ -220,7 +219,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
                 </TableCell>
                 <TableCell
                   className={classes.colSearchable}
-                  data-test="searchable"
+                  data-test-id="searchable"
                   data-test-searchable={maybe(
                     () => attribute.filterableInDashboard
                   )}
@@ -233,7 +232,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
                 </TableCell>
                 <TableCell
                   className={classes.colFaceted}
-                  data-test="use-in-faceted-search"
+                  data-test-id="use-in-faceted-search"
                   data-test-use-in-faceted-search={maybe(
                     () => attribute.filterableInStorefront
                   )}

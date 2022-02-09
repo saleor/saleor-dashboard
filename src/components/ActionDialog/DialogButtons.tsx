@@ -44,7 +44,6 @@ const DialogButtons: React.FC<DialogButtonsProps> = props => {
           onClick={onConfirm}
           error={variant === "delete"}
           data-test-id="submit"
-          data-test="submit"
         >
           {confirmButtonLabel ||
             (variant === "delete"

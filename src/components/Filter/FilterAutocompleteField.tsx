@@ -107,7 +107,7 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
   return (
     <div {...rest}>
       <TextField
-        data-test="filterFieldAutocompleteInput"
+        data-test-id="filter-field-autocomplete-input"
         className={classes.inputContainer}
         fullWidth
         name={filterField.name + "_autocomplete"}
@@ -123,8 +123,9 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
           <FormControlLabel
             control={
               <Checkbox
-                data-test="filterFieldAutocompleteSelected"
-                data-test-id={filterField.value}
+                data-test-id={
+                  "filter-field-autocompleteI-input-" + filterField.value
+                }
                 checked={filterField.value.includes(displayValue.value)}
               />
             }
@@ -137,7 +138,7 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
       {displayHr && <Hr className={classes.hr} />}
       {displayNoResults && (
         <Typography
-          data-test="filterFieldAutocompleteNoResults"
+          data-test-id="filter-fieldA-autocomplete-no-results"
           className={classes.noResults}
           color="textSecondary"
         >
@@ -148,13 +149,14 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
         <div
           className={classes.option}
           key={option.value}
-          data-test-id="filterOption"
+          data-test-id="filter-option"
         >
           <FormControlLabel
             control={
               <Checkbox
-                data-test="filterFieldAutocompleteOption"
-                data-test-id={filterField.value}
+                data-test-id={
+                  "filter-field-autocomplete-input-" + filterField.value
+                }
                 checked={filterField.value.includes(option.value)}
               />
             }
@@ -166,7 +168,7 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
       ))}
       {filterField.hasMore && (
         <Link
-          data-test="filterFieldAutocompleteHasMore"
+          data-test-id="filterFieldAutocompleteHasMore"
           className={classes.showMore}
           underline
           onClick={filterField.onFetchMore}

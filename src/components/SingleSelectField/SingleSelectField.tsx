@@ -116,7 +116,7 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
           choices.map(choice => (
             <MenuItem
               disabled={choice.disabled}
-              data-test-id={"select-field-option" + choice.value}
+              data-test-id={"select-field-option-" + choice.value}
               value={choice.value}
               key={choice.value}
             >
