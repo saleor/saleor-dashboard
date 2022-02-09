@@ -3,6 +3,11 @@
 All notable, unreleased changes to this project will be documented in this file. For the released changes, please visit the [Releases](https://github.com/saleor/saleor-dashboard/releases) page.
 
 ## [Unreleased]
+- Gift cards - #1366, $1632 by @Cloud11PL and @bmigirl
+- Exit form dialog - #1816 by @bmigirl
+- Preorders - #1426 by @JanChodorowski
+- Variant selection attributes - #1463 by @golota60
+- Add stock reservation settings - #1459 by @orzechdev
 
 ## 3.0
 
@@ -78,6 +83,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Blue theme redesign - #1623 by @dominik-zeglen
 - Display error if no invoicing plugin is active - #1701 by @dominik-zeglen
 - Update rest of the world checkbox on shipping zone details - #1673 by @orzechdev
+- Sales per variant - #1578 by @Bonifacy1
 
 
 # 2.11.1
