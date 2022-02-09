@@ -26,7 +26,6 @@ import {
   useElementScroll
 } from "@saleor/macaw-ui";
 import { OrderDetails_order_lines } from "@saleor/orders/types/OrderDetails";
-import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { WarehouseList_warehouses_edges_node } from "@saleor/warehouses/types/WarehouseList";
@@ -36,6 +35,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { getById } from "../OrderReturnPage/utils";
 import { changeWarehouseDialogMessages as messages } from "./messages";
 import { useStyles } from "./styles";
+import { isLineAvailableInWarehouse } from "./utils";
 
 export interface OrderChangeWarehouseDialogProps {
   open: boolean;
@@ -71,36 +71,6 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
     }
   });
   const filteredWarehouses = mapEdgesToItems(warehousesOpts?.data?.search);
-
-  const isLineAvailableInWarehouse = (
-    line: OrderDetails_order_lines,
-    warehouse: SearchWarehouses_search_edges_node
-  ) => {
-    if (
-      line.variant.stocks.find(stock => stock.warehouse.id === warehouse.id)
-    ) {
-      return line.quantityToFulfill <= getAvailableQuantity(line, warehouse);
-    }
-    return false;
-  };
-  const getAvailableQuantity = (
-    line: OrderDetails_order_lines,
-    warehouse: SearchWarehouses_search_edges_node
-  ) => {
-    const warehouseStock = line.variant?.stocks?.find(
-      stock => stock.warehouse.id === warehouse.id
-    );
-    const warehouseAllocation = line.allocations.find(
-      allocation => allocation.warehouse.id === warehouse.id
-    );
-    const allocatedQuantityForLine = warehouseAllocation?.quantity || 0;
-    const availableQuantity =
-      warehouseStock?.quantity -
-      warehouseStock?.quantityAllocated +
-      allocatedQuantityForLine;
-
-    return availableQuantity;
-  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedWarehouseId(e.target.value);
