@@ -16,6 +16,7 @@ export interface FulfillmentFragment_lines_orderLine_allocations_warehouse {
 
 export interface FulfillmentFragment_lines_orderLine_allocations {
   __typename: "Allocation";
+  quantity: number;
   warehouse: FulfillmentFragment_lines_orderLine_allocations_warehouse;
 }
 

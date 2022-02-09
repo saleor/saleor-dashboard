@@ -79,6 +79,7 @@ export const fragmentOrderLine = gql`
     id
     isShippingRequired
     allocations {
+      quantity
       warehouse {
         id
       }

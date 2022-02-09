@@ -220,6 +220,7 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillme
 
 export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillments_lines_orderLine_allocations {
   __typename: "Allocation";
+  quantity: number;
   warehouse: OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillments_lines_orderLine_allocations_warehouse;
 }
 
@@ -346,6 +347,7 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_lines_all
 
 export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_lines_allocations {
   __typename: "Allocation";
+  quantity: number;
   warehouse: OrderFulfillmentApprove_orderFulfillmentApprove_order_lines_allocations_warehouse;
 }
 

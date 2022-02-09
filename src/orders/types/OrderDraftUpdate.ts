@@ -220,6 +220,7 @@ export interface OrderDraftUpdate_draftOrderUpdate_order_fulfillments_lines_orde
 
 export interface OrderDraftUpdate_draftOrderUpdate_order_fulfillments_lines_orderLine_allocations {
   __typename: "Allocation";
+  quantity: number;
   warehouse: OrderDraftUpdate_draftOrderUpdate_order_fulfillments_lines_orderLine_allocations_warehouse;
 }
 
@@ -346,6 +347,7 @@ export interface OrderDraftUpdate_draftOrderUpdate_order_lines_allocations_wareh
 
 export interface OrderDraftUpdate_draftOrderUpdate_order_lines_allocations {
   __typename: "Allocation";
+  quantity: number;
   warehouse: OrderDraftUpdate_draftOrderUpdate_order_lines_allocations_warehouse;
 }
 

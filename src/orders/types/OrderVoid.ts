@@ -220,6 +220,7 @@ export interface OrderVoid_orderVoid_order_fulfillments_lines_orderLine_allocati
 
 export interface OrderVoid_orderVoid_order_fulfillments_lines_orderLine_allocations {
   __typename: "Allocation";
+  quantity: number;
   warehouse: OrderVoid_orderVoid_order_fulfillments_lines_orderLine_allocations_warehouse;
 }
 
@@ -346,6 +347,7 @@ export interface OrderVoid_orderVoid_order_lines_allocations_warehouse {
 
 export interface OrderVoid_orderVoid_order_lines_allocations {
   __typename: "Allocation";
+  quantity: number;
   warehouse: OrderVoid_orderVoid_order_lines_allocations_warehouse;
 }
 

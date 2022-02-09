@@ -220,6 +220,7 @@ export interface OrderUpdate_orderUpdate_order_fulfillments_lines_orderLine_allo
 
 export interface OrderUpdate_orderUpdate_order_fulfillments_lines_orderLine_allocations {
   __typename: "Allocation";
+  quantity: number;
   warehouse: OrderUpdate_orderUpdate_order_fulfillments_lines_orderLine_allocations_warehouse;
 }
 
@@ -346,6 +347,7 @@ export interface OrderUpdate_orderUpdate_order_lines_allocations_warehouse {
 
 export interface OrderUpdate_orderUpdate_order_lines_allocations {
   __typename: "Allocation";
+  quantity: number;
   warehouse: OrderUpdate_orderUpdate_order_lines_allocations_warehouse;
 }
 

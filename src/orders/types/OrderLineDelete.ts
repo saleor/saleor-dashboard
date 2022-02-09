@@ -220,6 +220,7 @@ export interface OrderLineDelete_orderLineDelete_order_fulfillments_lines_orderL
 
 export interface OrderLineDelete_orderLineDelete_order_fulfillments_lines_orderLine_allocations {
   __typename: "Allocation";
+  quantity: number;
   warehouse: OrderLineDelete_orderLineDelete_order_fulfillments_lines_orderLine_allocations_warehouse;
 }
 
@@ -346,6 +347,7 @@ export interface OrderLineDelete_orderLineDelete_order_lines_allocations_warehou
 
 export interface OrderLineDelete_orderLineDelete_order_lines_allocations {
   __typename: "Allocation";
+  quantity: number;
   warehouse: OrderLineDelete_orderLineDelete_order_lines_allocations_warehouse;
 }
 

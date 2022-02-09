@@ -220,6 +220,7 @@ export interface OrderDiscountDelete_orderDiscountDelete_order_fulfillments_line
 
 export interface OrderDiscountDelete_orderDiscountDelete_order_fulfillments_lines_orderLine_allocations {
   __typename: "Allocation";
+  quantity: number;
   warehouse: OrderDiscountDelete_orderDiscountDelete_order_fulfillments_lines_orderLine_allocations_warehouse;
 }
 
@@ -346,6 +347,7 @@ export interface OrderDiscountDelete_orderDiscountDelete_order_lines_allocations
 
 export interface OrderDiscountDelete_orderDiscountDelete_order_lines_allocations {
   __typename: "Allocation";
+  quantity: number;
   warehouse: OrderDiscountDelete_orderDiscountDelete_order_lines_allocations_warehouse;
 }
 

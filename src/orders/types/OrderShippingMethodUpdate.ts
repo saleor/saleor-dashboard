@@ -284,6 +284,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillment
 
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillments_lines_orderLine_allocations {
   __typename: "Allocation";
+  quantity: number;
   warehouse: OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillments_lines_orderLine_allocations_warehouse;
 }
 
@@ -410,6 +411,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_lines_alloc
 
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_lines_allocations {
   __typename: "Allocation";
+  quantity: number;
   warehouse: OrderShippingMethodUpdate_orderUpdateShipping_order_lines_allocations_warehouse;
 }
 

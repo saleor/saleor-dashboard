@@ -535,6 +535,7 @@ describe("Get the total value of all replaced products", () => {
                 "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
               __typename: "Warehouse"
             },
+            quantity: 1,
             __typename: "Allocation"
           }
         ],
@@ -623,6 +624,7 @@ describe("Get the total value of all replaced products", () => {
                 "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
               __typename: "Warehouse"
             },
+            quantity: 1,
             __typename: "Allocation"
           }
         ],
@@ -711,6 +713,7 @@ describe("Get the total value of all replaced products", () => {
                 "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
               __typename: "Warehouse"
             },
+            quantity: 1,
             __typename: "Allocation"
           }
         ],
@@ -805,6 +808,7 @@ describe("Get the total value of all replaced products", () => {
                   "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                 __typename: "Warehouse"
               },
+              quantity: 1,
               __typename: "Allocation"
             }
           ],
@@ -898,6 +902,7 @@ describe("Get the total value of all replaced products", () => {
                   "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                 __typename: "Warehouse"
               },
+              quantity: 1,
               __typename: "Allocation"
             }
           ],
@@ -991,6 +996,7 @@ describe("Get the total value of all replaced products", () => {
                   "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                 __typename: "Warehouse"
               },
+              quantity: 1,
               __typename: "Allocation"
             }
           ],
@@ -1084,6 +1090,7 @@ describe("Get the total value of all replaced products", () => {
                   "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                 __typename: "Warehouse"
               },
+              quantity: 1,
               __typename: "Allocation"
             }
           ],
@@ -1177,6 +1184,7 @@ describe("Get the total value of all replaced products", () => {
                   "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                 __typename: "Warehouse"
               },
+              quantity: 1,
               __typename: "Allocation"
             }
           ],
@@ -1404,6 +1412,7 @@ describe("Get the total value of all selected products", () => {
                 "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
               __typename: "Warehouse"
             },
+            quantity: 1,
             __typename: "Allocation"
           }
         ],
@@ -1492,6 +1501,7 @@ describe("Get the total value of all selected products", () => {
                 "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
               __typename: "Warehouse"
             },
+            quantity: 1,
             __typename: "Allocation"
           }
         ],
@@ -1580,6 +1590,7 @@ describe("Get the total value of all selected products", () => {
                 "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
               __typename: "Warehouse"
             },
+            quantity: 1,
             __typename: "Allocation"
           }
         ],
@@ -1674,6 +1685,7 @@ describe("Get the total value of all selected products", () => {
                   "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                 __typename: "Warehouse"
               },
+              quantity: 1,
               __typename: "Allocation"
             }
           ],
@@ -1767,6 +1779,7 @@ describe("Get the total value of all selected products", () => {
                   "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                 __typename: "Warehouse"
               },
+              quantity: 1,
               __typename: "Allocation"
             }
           ],
@@ -1860,6 +1873,7 @@ describe("Get the total value of all selected products", () => {
                   "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                 __typename: "Warehouse"
               },
+              quantity: 1,
               __typename: "Allocation"
             }
           ],
@@ -2081,6 +2095,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
                   "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                 __typename: "Warehouse"
               },
+              quantity: 1,
               __typename: "Allocation"
             }
           ],
@@ -2174,6 +2189,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
                   "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                 __typename: "Warehouse"
               },
+              quantity: 1,
               __typename: "Allocation"
             }
           ],
@@ -2267,6 +2283,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
                   "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                 __typename: "Warehouse"
               },
+              quantity: 1,
               __typename: "Allocation"
             }
           ],

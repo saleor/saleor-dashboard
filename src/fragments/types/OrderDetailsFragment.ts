@@ -213,6 +213,7 @@ export interface OrderDetailsFragment_fulfillments_lines_orderLine_allocations_w
 
 export interface OrderDetailsFragment_fulfillments_lines_orderLine_allocations {
   __typename: "Allocation";
+  quantity: number;
   warehouse: OrderDetailsFragment_fulfillments_lines_orderLine_allocations_warehouse;
 }
 
@@ -339,6 +340,7 @@ export interface OrderDetailsFragment_lines_allocations_warehouse {
 
 export interface OrderDetailsFragment_lines_allocations {
   __typename: "Allocation";
+  quantity: number;
   warehouse: OrderDetailsFragment_lines_allocations_warehouse;
 }
 

@@ -23,6 +23,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_f
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_allocations {
   __typename: "Allocation";
+  quantity: number;
   warehouse: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_allocations_warehouse;
 }
 
@@ -346,6 +347,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_allocations {
   __typename: "Allocation";
+  quantity: number;
   warehouse: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_allocations_warehouse;
 }
 
@@ -472,6 +474,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_allocations {
   __typename: "Allocation";
+  quantity: number;
   warehouse: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_allocations_warehouse;
 }
 

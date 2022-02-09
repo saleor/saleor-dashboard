@@ -1079,6 +1079,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
                     "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                   __typename: "Warehouse"
                 },
+                quantity: 1,
                 __typename: "Allocation"
               }
             ],
@@ -1181,6 +1182,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
                     "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                   __typename: "Warehouse"
                 },
+                quantity: 1,
                 __typename: "Allocation"
               }
             ],
@@ -1291,6 +1293,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
               "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
             __typename: "Warehouse"
           },
+          quantity: 1,
           __typename: "Allocation"
         }
       ],
@@ -1378,6 +1381,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
               "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
             __typename: "Warehouse"
           },
+          quantity: 1,
           __typename: "Allocation"
         }
       ],
@@ -1605,6 +1609,7 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
               "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
             __typename: "Warehouse"
           },
+          quantity: 1,
           __typename: "Allocation"
         }
       ],
@@ -1692,6 +1697,7 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
               "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
             __typename: "Warehouse"
           },
+          quantity: 1,
           __typename: "Allocation"
         }
       ],
