@@ -255,15 +255,16 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
             theme={{
               nodeContentRenderer: Node as any
             }}
-            onChange={newTree => {
-              const diff = getDiff(
-                items.map(item =>
-                  getNodeData(item, onChange, onItemClick, onItemEdit)
-                ),
-                newTree as TreeItem[]
-              );
-              onChange(diff);
-            }}
+            onChange={newTree =>
+              onChange(
+                getDiff(
+                  items.map(item =>
+                    getNodeData(item, onChange, onItemClick, onItemEdit)
+                  ),
+                  newTree as TreeItem[]
+                )
+              )
+            }
             placeholderRenderer={Placeholder as any}
           />
         )}
