@@ -5,7 +5,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { isPluginGlobal } from "@saleor/plugins/views/utils";
 import React from "react";
 
-import { getPluginStatusColor, getPluginStatusLabel } from "../utils";
+import { mapPluginsToPills } from "../utils";
 import GlobalConfigPluginPopupBody from "./GlobalConfigPluginPopupBody";
 
 const useStyles = makeStyles(
@@ -45,9 +45,7 @@ const PluginAvailabilityStatusPopup: React.FC<PluginAvailabilityStatusPopupProps
           <GlobalConfigPluginPopupBody plugin={plugin} />
         ) : (
           <ChannelsAvailabilityMenuContent
-            channels={plugin.channelConfigurations}
-            labelFunction={getPluginStatusLabel}
-            colorFunction={getPluginStatusColor}
+            pills={mapPluginsToPills(plugin.channelConfigurations)}
           />
         )}
       </Card>

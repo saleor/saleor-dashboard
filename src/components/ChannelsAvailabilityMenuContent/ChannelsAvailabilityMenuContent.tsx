@@ -1,5 +1,6 @@
 import { Typography } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
+import { CollectionList_collections_edges_node_channelListings_channel } from "@saleor/collections/types/CollectionList";
 import { Pill, PillColor } from "@saleor/macaw-ui";
 import ScrollableContent from "@saleor/plugins/components/PluginsList/PluginAvailabilityStatusPopup/ScrollableContent";
 import React from "react";
@@ -7,19 +8,19 @@ import { MessageDescriptor } from "react-intl";
 import { useIntl } from "react-intl";
 
 import { messages } from "../ChannelsAvailabilityDropdown/messages";
-import { Channels } from "../ChannelsAvailabilityDropdown/utils";
 import { useStyles } from "./styles";
 
 export interface ChannelsAvailabilityMenuContentProps {
-  channels: Channels[];
-  labelFunction: (channelData: unknown) => MessageDescriptor;
-  colorFunction: (channelData: unknown) => PillColor;
+  pills: Pill[];
+}
+export interface Pill {
+  channel: CollectionList_collections_edges_node_channelListings_channel;
+  color: PillColor;
+  label: MessageDescriptor;
 }
 
 export const ChannelsAvailabilityMenuContent: React.FC<ChannelsAvailabilityMenuContentProps> = ({
-  channels,
-  labelFunction,
-  colorFunction
+  pills
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -35,14 +36,11 @@ export const ChannelsAvailabilityMenuContent: React.FC<ChannelsAvailabilityMenuC
         </Typography>
       </div>
       <ScrollableContent>
-        {channels.map(channelData => (
-          <div key={channelData.channel.id} className={classes.row}>
-            <Typography>{channelData.channel.name}</Typography>
+        {pills.map(pill => (
+          <div key={pill.channel.id} className={classes.row}>
+            <Typography>{pill.channel.name}</Typography>
             <HorizontalSpacer spacing={4} />
-            <Pill
-              label={intl.formatMessage(labelFunction(channelData))}
-              color={colorFunction(channelData)}
-            />
+            <Pill label={intl.formatMessage(pill.label)} color={pill.color} />
           </div>
         ))}
       </ScrollableContent>

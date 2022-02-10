@@ -1,5 +1,8 @@
 import { CollectionList_collections_edges_node_channelListings } from "@saleor/collections/types/CollectionList";
+import { PillColor } from "@saleor/macaw-ui";
+import { MessageDescriptor } from "react-intl";
 
+import { Pill } from "../ChannelsAvailabilityMenuContent";
 import { channelStatusMessages } from "./messages";
 
 export type CollectionChannels = Pick<
@@ -28,7 +31,7 @@ export const getDropdownColor = (channels: CollectionChannels[]) => {
 
 export const getChannelAvailabilityColor = (
   channelData: CollectionChannels
-) => {
+): PillColor => {
   if (isActive(channelData)) {
     return "success";
   }
@@ -40,7 +43,7 @@ export const getChannelAvailabilityColor = (
 
 export const getChannelAvailabilityLabel = (
   channelData: CollectionChannels
-) => {
+): MessageDescriptor => {
   if (isActive(channelData)) {
     return channelStatusMessages.published;
   }
@@ -49,3 +52,10 @@ export const getChannelAvailabilityLabel = (
   }
   return channelStatusMessages.unpublished;
 };
+
+export const mapChannelsToPills = (channelData: CollectionChannels[]): Pill[] =>
+  channelData.map(channel => ({
+    channel: channel.channel,
+    color: getChannelAvailabilityColor(channel),
+    label: getChannelAvailabilityLabel(channel)
+  }));

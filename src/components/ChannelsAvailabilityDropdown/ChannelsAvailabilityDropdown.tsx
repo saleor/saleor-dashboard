@@ -7,9 +7,8 @@ import ChannelsAvailabilityMenuContent from "../ChannelsAvailabilityMenuContent"
 import { messages } from "./messages";
 import {
   CollectionChannels,
-  getChannelAvailabilityColor,
-  getChannelAvailabilityLabel,
-  getDropdownColor
+  getDropdownColor,
+  mapChannelsToPills
 } from "./utils";
 
 export interface ChannelsAvailabilityDropdownProps {
@@ -55,9 +54,7 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
       <Popper anchorEl={anchor.current} open={isPopupOpen} placement={"left"}>
         <Card elevation={8}>
           <ChannelsAvailabilityMenuContent
-            channels={channels}
-            labelFunction={getChannelAvailabilityLabel}
-            colorFunction={getChannelAvailabilityColor}
+            pills={mapChannelsToPills(channels)}
           />
         </Card>
       </Popper>
