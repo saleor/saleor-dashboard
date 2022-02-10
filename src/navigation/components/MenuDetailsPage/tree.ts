@@ -89,46 +89,51 @@ function removeNodeAndChildren(
   return removeNode(tree, sourcePath);
 }
 
-function permuteNode(
+function permuteRelativeNode(
   tree: MenuDetails_menu_items[],
   permutation: TreeOperation
 ): MenuDetails_menu_items[] {
   const sourcePath = findNode(tree, permutation.id);
   const node = getNode(tree, sourcePath);
 
+  const hasParent = !!permutation.parentId;
+
   const treeAfterRemoval = removeNode(tree, sourcePath);
 
-  const targetPath = permutation.parentId
+  const targetPath = hasParent
     ? findNode(treeAfterRemoval, permutation.parentId)
     : [];
+
+  const position = sourcePath[sourcePath.length - 1];
 
   const treeAfterInsertion = insertNode(
     treeAfterRemoval,
     targetPath,
     node,
-    permutation.sortOrder
+    position + permutation.sortOrder
   );
 
   return treeAfterInsertion;
 }
 
-function executeOperation(
+function executeRelativeOperation(
   tree: MenuDetails_menu_items[],
   operation: TreeOperation
 ): MenuDetails_menu_items[] {
   return operation.type === "move"
-    ? permuteNode(tree, operation)
+    ? permuteRelativeNode(tree, operation)
     : removeNodeAndChildren(tree, operation);
 }
 
-export function computeTree(
+export function computeRelativeTree(
   tree: MenuDetails_menu_items[],
   operations: TreeOperation[]
 ) {
   const newTree = operations.reduce(
-    (acc, operation) => executeOperation(acc, operation),
-    // FIXME: 😡
+    (acc, operation) => executeRelativeOperation(acc, operation),
+    // // FIXME: 😡
     JSON.parse(JSON.stringify(tree))
+    // tree
   );
   return newTree;
 }

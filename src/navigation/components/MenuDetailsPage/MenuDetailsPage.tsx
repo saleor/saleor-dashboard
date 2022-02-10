@@ -17,7 +17,7 @@ import { MenuDetails_menu } from "../../types/MenuDetails";
 import { MenuItemType } from "../MenuItemDialog";
 import MenuItems, { TreeOperation } from "../MenuItems";
 import MenuProperties from "../MenuProperties";
-import { computeTree } from "./tree";
+import { computeRelativeTree } from "./tree";
 
 export interface MenuDetailsFormData {
   name: string;
@@ -62,10 +62,13 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
     []
   );
 
+  const removeSimulatedMoves = (operations: TreeOperation[]) =>
+    operations.filter(operation => !operation.simulatedMove);
+
   const handleSubmit = async (data: MenuDetailsFormData) => {
     const result = await onSubmit({
       name: data.name,
-      operations: treeOperations
+      operations: removeSimulatedMoves(treeOperations)
     });
 
     if (result) {
@@ -75,9 +78,9 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
     return result;
   };
 
-  const handleChange = (operation: TreeOperation) => {
-    if (!!operation) {
-      setTreeOperations([...treeOperations, operation]);
+  const handleChange = (operations: TreeOperation[]) => {
+    if (!!operations) {
+      setTreeOperations([...treeOperations, ...operations]);
     }
   };
 
@@ -111,16 +114,21 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
               <MenuItems
                 canUndo={treeOperations.length > 0}
                 items={maybe(() =>
-                  computeTree(menu.items, [...treeOperations])
+                  computeRelativeTree(menu.items, [...treeOperations])
                 )}
                 onChange={handleChange}
                 onItemAdd={onItemAdd}
                 onItemClick={onItemClick}
                 onItemEdit={onItemEdit}
                 onUndo={() =>
-                  setTreeOperations(
-                    treeOperations.slice(0, treeOperations.length - 1)
-                  )
+                  setTreeOperations(operations => {
+                    if (operations.length > 1) {
+                      if (operations[operations.length - 2].simulatedMove) {
+                        return operations.slice(0, operations.length - 2);
+                      }
+                    }
+                    return operations.slice(0, operations.length - 1);
+                  })
                 }
               />
             </div>
