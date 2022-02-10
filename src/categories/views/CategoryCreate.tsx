@@ -1,4 +1,8 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import {
+  CategoryCreateMutation,
+  useCategoryCreateMutation
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getMutationErrors } from "@saleor/misc";
@@ -13,8 +17,6 @@ import { useIntl } from "react-intl";
 
 import CategoryCreatePage from "../components/CategoryCreatePage";
 import { CategoryCreateData } from "../components/CategoryCreatePage/form";
-import { useCategoryCreateMutation } from "../mutations";
-import { CategoryCreate } from "../types/CategoryCreate";
 import { categoryListUrl, categoryUrl } from "../urls";
 
 interface CategoryCreateViewProps {
@@ -30,7 +32,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
-  const handleSuccess = (data: CategoryCreate) => {
+  const handleSuccess = (data: CategoryCreateMutation) => {
     if (data.categoryCreate.errors.length === 0) {
       notify({
         status: "success",

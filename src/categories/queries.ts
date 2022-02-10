@@ -1,20 +1,6 @@
 import { gql } from "@apollo/client";
-import {
-  categoryDetailsFragment,
-  categoryFragment
-} from "@saleor/fragments/categories";
-import { pageInfoFragment } from "@saleor/fragments/pageInfo";
-import makeQuery from "@saleor/hooks/makeQuery";
-
-import {
-  CategoryDetails,
-  CategoryDetailsVariables
-} from "./types/CategoryDetails";
-import { RootCategories } from "./types/RootCategories";
 
 export const rootCategories = gql`
-  ${categoryFragment}
-  ${pageInfoFragment}
   query RootCategories(
     $first: Int
     $after: String
@@ -43,14 +29,8 @@ export const rootCategories = gql`
     }
   }
 `;
-export const useRootCategoriesQuery = makeQuery<RootCategories, {}>(
-  rootCategories
-);
 
 export const categoryDetails = gql`
-  ${categoryFragment}
-  ${categoryDetailsFragment}
-  ${pageInfoFragment}
   query CategoryDetails(
     $id: ID!
     $first: Int
@@ -88,7 +68,3 @@ export const categoryDetails = gql`
     }
   }
 `;
-export const useCategoryDetailsQuery = makeQuery<
-  CategoryDetails,
-  CategoryDetailsVariables
->(categoryDetails);

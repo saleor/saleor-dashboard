@@ -2,6 +2,15 @@ import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import {
+  CategoryBulkDeleteMutation,
+  CategoryDeleteMutation,
+  CategoryUpdateMutation,
+  useCategoryBulkDeleteMutation,
+  useCategoryDeleteMutation,
+  useCategoryDetailsQuery,
+  useCategoryUpdateMutation
+} from "@saleor/graphql";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useLocalPaginator, {
   useSectionLocalPaginationState
@@ -31,15 +40,6 @@ import {
   CategoryUpdatePage
 } from "../components/CategoryUpdatePage/CategoryUpdatePage";
 import { CategoryUpdateData } from "../components/CategoryUpdatePage/form";
-import {
-  useCategoryBulkDeleteMutation,
-  useCategoryDeleteMutation,
-  useCategoryUpdateMutation
-} from "../mutations";
-import { useCategoryDetailsQuery } from "../queries";
-import { CategoryBulkDelete } from "../types/CategoryBulkDelete";
-import { CategoryDelete } from "../types/CategoryDelete";
-import { CategoryUpdate } from "../types/CategoryUpdate";
 import {
   categoryAddUrl,
   categoryListUrl,
@@ -96,7 +96,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     return <NotFoundPage onBack={() => navigate(categoryListUrl())} />;
   }
 
-  const handleCategoryDelete = (data: CategoryDelete) => {
+  const handleCategoryDelete = (data: CategoryDeleteMutation) => {
     if (data.categoryDelete.errors.length === 0) {
       notify({
         status: "success",
@@ -112,7 +112,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     onCompleted: handleCategoryDelete
   });
 
-  const handleCategoryUpdate = (data: CategoryUpdate) => {
+  const handleCategoryUpdate = (data: CategoryUpdateMutation) => {
     if (data.categoryUpdate.errors.length > 0) {
       const backgroundImageError = data.categoryUpdate.errors.find(
         error => error.field === ("backgroundImage" as keyof CategoryInput)
@@ -131,7 +131,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     onCompleted: handleCategoryUpdate
   });
 
-  const handleBulkCategoryDelete = (data: CategoryBulkDelete) => {
+  const handleBulkCategoryDelete = (data: CategoryBulkDeleteMutation) => {
     if (data.categoryBulkDelete.errors.length === 0) {
       closeModal();
       notify({

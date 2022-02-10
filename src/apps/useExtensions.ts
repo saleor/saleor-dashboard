@@ -1,4 +1,5 @@
 import { ExtensionListQuery, useExtensionListQuery } from "@saleor/graphql";
+import { RelayToFlat } from "@saleor/types";
 import {
   AppExtensionMountEnum,
   PermissionEnum
@@ -9,7 +10,7 @@ import { AppData, useExternalApp } from "./components/ExternalAppContext";
 
 export interface Extension {
   id: string;
-  app: ExtensionListQuery["appExtensions"]["edges"][0]["node"]["app"];
+  app: RelayToFlat<ExtensionListQuery["appExtensions"]>[0]["app"];
   accessToken: string;
   permissions: PermissionEnum[];
   label: string;
@@ -34,7 +35,7 @@ export const extensionMountPoints = {
 };
 
 const filterAndMapToTarget = (
-  extensions: Array<ExtensionListQuery["appExtensions"]["edges"][0]["node"]>,
+  extensions: RelayToFlat<ExtensionListQuery["appExtensions"]>,
   openApp: (appData: AppData) => void
 ): Extension[] =>
   extensions.map(
