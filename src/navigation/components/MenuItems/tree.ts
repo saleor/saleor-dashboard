@@ -139,7 +139,7 @@ export function getNodeData(
     onChange,
     onClick: () => onClick(getItemId(item), getItemType(item)),
     onEdit: () => onEdit(item.id),
-    title: `${item.name} ${item.id}`
+    title: item.name
   };
 }
 
