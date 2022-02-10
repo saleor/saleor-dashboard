@@ -5,8 +5,8 @@ import {
   Typography
 } from "@material-ui/core";
 import { UserContextError } from "@saleor/auth/types";
-import { AvailableExternalAuthentications_shop_availableExternalAuthentications } from "@saleor/auth/types/AvailableExternalAuthentications";
 import { FormSpacer } from "@saleor/components/FormSpacer";
+import { AvailableExternalAuthenticationsQuery } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
 import { Button, EyeIcon, IconButton } from "@saleor/macaw-ui";
@@ -21,7 +21,7 @@ export interface LoginCardProps {
   error?: UserContextError;
   disabled: boolean;
   loading: boolean;
-  externalAuthentications?: AvailableExternalAuthentications_shop_availableExternalAuthentications[];
+  externalAuthentications?: AvailableExternalAuthenticationsQuery["shop"]["availableExternalAuthentications"];
   onExternalAuthentication: (pluginId: string) => void;
   onPasswordRecovery: () => void;
   onSubmit?: (event: LoginFormData) => SubmitPromise;
