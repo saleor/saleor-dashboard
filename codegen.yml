@@ -10,3 +10,25 @@ generates:
   ./src/type-policies.ts:
     plugins:
       - typescript-apollo-client-helpers
+  ./src/graphql.ts:
+    documents:
+      - ./src/**/queries.ts
+      - ./src/**/mutations.ts
+      - ./src/**/fragments/*.ts
+    config:
+      withHooks: true
+      apolloReactHooksImportFrom: "@saleor/hooks/graphql"
+      nonOptionalTypename: true
+      avoidOptionals:
+        field: true
+        inputValue: false
+        object: false
+        defaultValue: false
+      namingConvention:
+        enumValues: change-case-all#upperCase
+    plugins:
+      - add:
+          content: /* eslint-disable */
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo

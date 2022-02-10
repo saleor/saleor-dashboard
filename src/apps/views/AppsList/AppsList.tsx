@@ -1,3 +1,18 @@
+import {
+  AppDeleteFailedInstallationMutation,
+  AppDeleteMutation,
+  AppsInstallationsQuery,
+  AppsListQuery,
+  AppSortField,
+  AppTypeEnum,
+  JobStatusEnum,
+  OrderDirection,
+  useAppDeleteFailedInstallationMutation,
+  useAppDeleteMutation,
+  useAppRetryInstallMutation,
+  useAppsInstallationsQuery,
+  useAppsListQuery
+} from "@saleor/graphql";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -11,25 +26,9 @@ import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandl
 import React, { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 
-import {
-  AppSortField,
-  AppTypeEnum,
-  JobStatusEnum,
-  OrderDirection
-} from "../../../types/globalTypes";
 import AppDeleteDialog from "../../components/AppDeleteDialog";
 import AppInProgressDeleteDialog from "../../components/AppInProgressDeleteDialog";
 import AppsListPage from "../../components/AppsListPage";
-import {
-  useAppDeleteFailedInstallationMutation,
-  useAppDeleteMutation,
-  useAppRetryInstallMutation
-} from "../../mutations";
-import { useAppsInProgressListQuery, useAppsListQuery } from "../../queries";
-import { AppDelete } from "../../types/AppDelete";
-import { AppDeleteFailedInstallation } from "../../types/AppDeleteFailedInstallation";
-import { AppsInstallations_appsInstallations } from "../../types/AppsInstallations";
-import { AppsList_apps_edges } from "../../types/AppsList";
 import {
   appDetailsUrl,
   AppListUrlDialog,
@@ -41,12 +40,14 @@ import {
 } from "../../urls";
 import { messages } from "./messages";
 
-const getCurrentAppName = (id: string, collection?: AppsList_apps_edges[]) =>
-  collection?.find(edge => edge.node.id === id)?.node?.name;
+const getCurrentAppName = (
+  id: string,
+  collection?: AppsListQuery["apps"]["edges"]
+) => collection?.find(edge => edge.node.id === id)?.node?.name;
 
 const getAppInProgressName = (
   id: string,
-  collection?: AppsInstallations_appsInstallations[]
+  collection?: AppsInstallationsQuery["appsInstallations"]
 ) => collection?.find(app => app.id === id)?.appName;
 interface AppsListProps {
   params: AppListUrlQueryParams;
@@ -80,7 +81,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     data: appsInProgressData,
     loading: loadingAppsInProgress,
     refetch: appsInProgressRefetch
-  } = useAppsInProgressListQuery({
+  } = useAppsInstallationsQuery({
     displayLoader: false
   });
   const { data, loading, refetch } = useAppsListQuery({
@@ -143,7 +144,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     AppListUrlQueryParams
   >(navigate, appsListUrl, params);
 
-  const onAppRemove = (data: AppDelete) => {
+  const onAppRemove = (data: AppDeleteMutation) => {
     const errors = data.appDelete.errors;
     if (errors.length === 0) {
       if (data.appDelete.app.type === AppTypeEnum.LOCAL) {
@@ -242,7 +243,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     });
   };
 
-  const onAppInProgressRemove = (data: AppDeleteFailedInstallation) => {
+  const onAppInProgressRemove = (data: AppDeleteFailedInstallationMutation) => {
     const errors = data.appDeleteFailedInstallation.errors;
     if (errors.length === 0) {
       removeAppNotify();

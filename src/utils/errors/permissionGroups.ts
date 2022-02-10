@@ -1,5 +1,7 @@
-import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
-import { PermissionGroupErrorCode } from "@saleor/types/globalTypes";
+import {
+  PermissionGroupErrorCode,
+  PermissionGroupErrorFragmentFragment
+} from "@saleor/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";
@@ -23,7 +25,7 @@ const messages = defineMessages({
 });
 
 function getPermissionGroupErrorMessage(
-  err: PermissionGroupErrorFragment,
+  err: PermissionGroupErrorFragmentFragment,
   intl: IntlShape
 ): string {
   if (err) {

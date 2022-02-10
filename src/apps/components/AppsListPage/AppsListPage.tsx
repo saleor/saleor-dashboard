@@ -1,22 +1,21 @@
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
+import { AppsInstallationsQuery, AppsListQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { ListProps } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { AppsInstallations } from "../../types/AppsInstallations";
-import { AppsList_apps_edges } from "../../types/AppsList";
 import AppsInProgress from "../AppsInProgress/AppsInProgress";
 import CustomApps from "../CustomApps/CustomApps";
 import InstalledApps from "../InstalledApps/InstalledApps";
 import Marketplace from "../Marketplace";
 
 export interface AppsListPageProps extends ListProps {
-  installedAppsList: AppsList_apps_edges[];
-  customAppsList: AppsList_apps_edges[];
-  appsInProgressList?: AppsInstallations;
+  installedAppsList: AppsListQuery["apps"]["edges"];
+  customAppsList: AppsListQuery["apps"]["edges"];
+  appsInProgressList?: AppsInstallationsQuery;
   loadingAppsInProgress: boolean;
   navigateToCustomApp: (id: string) => () => void;
   navigateToCustomAppCreate: () => void;

@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import { limitFragment } from "@saleor/fragments/shop";
-import makeQuery, { UseQueryOpts } from "@saleor/hooks/makeQuery";
+import makeQuery, { QueryHookOptions } from "@saleor/hooks/makeQuery";
 
 import { TypedQuery } from "../../queries";
 import { RefreshLimits, RefreshLimitsVariables } from "./types/RefreshLimits";
@@ -81,7 +81,7 @@ const useBaseShopLimitsQuery = makeQuery<RefreshLimits, RefreshLimitsVariables>(
   limitInfo
 );
 export const useShopLimitsQuery = (
-  opts: UseQueryOpts<Partial<RefreshLimitsVariables>>
+  opts: QueryHookOptions<RefreshLimits, Partial<RefreshLimitsVariables>>
 ) =>
   useBaseShopLimitsQuery({
     ...opts,

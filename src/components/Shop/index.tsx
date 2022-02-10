@@ -6,7 +6,7 @@ import { useUser } from "@saleor/auth";
 import React from "react";
 import Helmet from "react-helmet";
 
-import { TypedShopInfoQuery } from "./query";
+import { TypedShopInfoQuery } from "./queries";
 import { ShopInfo_shop } from "./types/ShopInfo";
 
 type ShopContext = ShopInfo_shop;

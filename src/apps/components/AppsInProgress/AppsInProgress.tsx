@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import ErrorIcon from "@material-ui/icons/Error";
 import CardTitle from "@saleor/components/CardTitle";
+import { AppsInstallationsQuery } from "@saleor/graphql";
 import { DeleteIcon, ResponsiveTable } from "@saleor/macaw-ui";
 import { Button, IconButton } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
@@ -18,10 +19,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { JobStatusEnum } from "../../../types/globalTypes";
 import { useStyles } from "../../styles";
-import { AppsInstallations_appsInstallations } from "../../types/AppsInstallations";
 
 export interface AppsInProgressProps {
-  appsList: AppsInstallations_appsInstallations[];
+  appsList: AppsInstallationsQuery["appsInstallations"];
   disabled: boolean;
   onAppInstallRetry: (id: string) => void;
   onRemove: (id: string) => void;
