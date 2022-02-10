@@ -133,7 +133,6 @@ export function computeRelativeTree(
     (acc, operation) => executeRelativeOperation(acc, operation),
     // // FIXME: 😡
     JSON.parse(JSON.stringify(tree))
-    // tree
   );
   return newTree;
 }
