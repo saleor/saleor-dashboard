@@ -1,21 +1,6 @@
 import { gql } from "@apollo/client";
-import {
-  attributeDetailsFragment,
-  attributeFragment,
-  attributeValueListFragment
-} from "@saleor/fragments/attributes";
-import { pageInfoFragment } from "@saleor/fragments/pageInfo";
-import makeQuery from "@saleor/hooks/makeQuery";
 
-import {
-  AttributeDetails,
-  AttributeDetailsVariables
-} from "./types/AttributeDetails";
-import { AttributeList, AttributeListVariables } from "./types/AttributeList";
-
-const attributeDetails = gql`
-  ${attributeDetailsFragment}
-  ${attributeValueListFragment}
+export const attributeDetails = gql`
   query AttributeDetails(
     $id: ID!
     $firstValues: Int
@@ -36,14 +21,8 @@ const attributeDetails = gql`
     }
   }
 `;
-export const useAttributeDetailsQuery = makeQuery<
-  AttributeDetails,
-  AttributeDetailsVariables
->(attributeDetails);
 
-const attributeList = gql`
-  ${attributeFragment}
-  ${pageInfoFragment}
+export const attributeList = gql`
   query AttributeList(
     $filter: AttributeFilterInput
     $before: String
@@ -71,7 +50,3 @@ const attributeList = gql`
     }
   }
 `;
-export const useAttributeListQuery = makeQuery<
-  AttributeList,
-  AttributeListVariables
->(attributeList);

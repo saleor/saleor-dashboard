@@ -1,6 +1,6 @@
-import { useAppDetails } from "@saleor/apps/queries";
 import { customAppUrl } from "@saleor/apps/urls";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { useAppQuery } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
@@ -23,7 +23,7 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = ({ id }) => {
   const notify = useNotifier();
   const intl = useIntl();
 
-  const { data } = useAppDetails({ variables: { id } });
+  const { data } = useAppQuery({ variables: { id } });
 
   const onSubmit = (data: WebhookCreateData) => {
     if (data.webhookCreate.errors.length === 0) {

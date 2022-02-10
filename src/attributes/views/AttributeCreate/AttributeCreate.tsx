@@ -1,4 +1,7 @@
-import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
+import {
+  AttributeErrorFragmentFragment,
+  useAttributeCreateMutation
+} from "@saleor/graphql";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useLocalPageInfo, { getMaxPage } from "@saleor/hooks/useLocalPageInfo";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -28,7 +31,6 @@ import AttributePage, {
 } from "../../components/AttributePage";
 import AttributeValueDeleteDialog from "../../components/AttributeValueDeleteDialog";
 import AttributeValueEditDialog from "../../components/AttributeValueEditDialog";
-import { useAttributeCreateMutation } from "../../mutations";
 import {
   attributeAddUrl,
   AttributeAddUrlDialog,
@@ -45,7 +47,7 @@ interface AttributeDetailsProps {
   params: AttributeAddUrlQueryParams;
 }
 
-const attributeValueAlreadyExistsError: AttributeErrorFragment = {
+const attributeValueAlreadyExistsError: AttributeErrorFragmentFragment = {
   __typename: "AttributeError",
   code: AttributeErrorCode.ALREADY_EXISTS,
   field: "name",
@@ -68,7 +70,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     AttributeValueEditDialogFormData[]
   >([]);
   const [valueErrors, setValueErrors] = React.useState<
-    AttributeErrorFragment[]
+    AttributeErrorFragmentFragment[]
   >([]);
 
   const { updateListSettings, settings } = useListSettings(

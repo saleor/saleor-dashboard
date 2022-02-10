@@ -1,6 +1,5 @@
 import placeholderImg from "@assets/images/placeholder255x255.png";
 import { DialogContentText } from "@material-ui/core";
-import { useAttributeValueDeleteMutation } from "@saleor/attributes/mutations";
 import ChannelsWithVariantsAvailabilityDialog from "@saleor/channels/components/ChannelsWithVariantsAvailabilityDialog";
 import {
   ChannelData,
@@ -19,6 +18,7 @@ import {
   VALUES_PAGINATE_BY
 } from "@saleor/config";
 import { useFileUploadMutation } from "@saleor/files/mutations";
+import { useAttributeValueDeleteMutation } from "@saleor/graphql";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useChannels from "@saleor/hooks/useChannels";

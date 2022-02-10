@@ -8,6 +8,10 @@ import {
   FileUploadVariables
 } from "@saleor/files/types/FileUpload";
 import {
+  AttributeValueDeleteMutation,
+  AttributeValueDeleteMutationVariables
+} from "@saleor/graphql";
+import {
   FormsetAtomicData,
   FormsetChange,
   FormsetData
@@ -23,10 +27,6 @@ import {
 } from "@saleor/types/globalTypes";
 import { move, toggle } from "@saleor/utils/lists";
 
-import {
-  AttributeValueDelete,
-  AttributeValueDeleteVariables
-} from "../types/AttributeValueDelete";
 import { getFileValuesToUploadFromAttributes, isFileValueUnused } from "./data";
 
 export function createAttributeChangeHandler(
@@ -295,8 +295,8 @@ export const handleDeleteMultipleAttributeValues = async (
     | ProductVariantDetails_productVariant_nonSelectionAttributes
   >,
   deleteAttributeValue: (
-    variables: AttributeValueDeleteVariables
-  ) => Promise<FetchResult<AttributeValueDelete>>
+    variables: AttributeValueDeleteMutationVariables
+  ) => Promise<FetchResult<AttributeValueDeleteMutation>>
 ) =>
   Promise.all(
     attributes.map(existingAttribute => {

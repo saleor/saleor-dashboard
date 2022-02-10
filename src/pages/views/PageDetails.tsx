@@ -1,5 +1,4 @@
 import { DialogContentText } from "@material-ui/core";
-import { useAttributeValueDeleteMutation } from "@saleor/attributes/mutations";
 import {
   getAttributesAfterFileAttributesUpdate,
   mergeAttributeValueDeleteErrors,
@@ -21,6 +20,7 @@ import { useFileUploadMutation } from "@saleor/files/mutations";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
 import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
+import { useAttributeValueDeleteMutation } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";

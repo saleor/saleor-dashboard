@@ -1,4 +1,13 @@
 import { attributeValueFragmentToFormData } from "@saleor/attributes/utils/data";
+import {
+  useAttributeDeleteMutation,
+  useAttributeDetailsQuery,
+  useAttributeUpdateMutation,
+  useAttributeValueCreateMutation,
+  useAttributeValueDeleteMutation,
+  useAttributeValueReorderMutation,
+  useAttributeValueUpdateMutation
+} from "@saleor/graphql";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useLocalPaginator, {
   useLocalPaginationState
@@ -26,15 +35,6 @@ import AttributePage, {
 } from "../../components/AttributePage";
 import AttributeValueDeleteDialog from "../../components/AttributeValueDeleteDialog";
 import AttributeValueEditDialog from "../../components/AttributeValueEditDialog";
-import {
-  useAttributeDeleteMutation,
-  useAttributeUpdateMutation,
-  useAttributeValueCreateMutation,
-  useAttributeValueDeleteMutation,
-  useAttributeValueReorderMutation,
-  useAttributeValueUpdateMutation
-} from "../../mutations";
-import { useAttributeDetailsQuery } from "../../queries";
 import {
   attributeListUrl,
   attributeUrl,
@@ -178,6 +178,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
   const handleValueReorder = ({ newIndex, oldIndex }: ReorderEvent) =>
     attributeValueReorder({
       optimisticResponse: {
+        __typename: "Mutation",
         attributeReorderValues: {
           __typename: "AttributeReorderValues",
           attribute: {

@@ -9,16 +9,17 @@ import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFr
 import { SelectedVariantAttributeFragment } from "@saleor/fragments/types/SelectedVariantAttributeFragment";
 import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
 import { VariantAttributeFragment } from "@saleor/fragments/types/VariantAttributeFragment";
+import {
+  AttributeEntityTypeEnum,
+  AttributeInputTypeEnum,
+  AttributeValueDeleteMutation,
+  AttributeValueInput
+} from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { PageDetails_page_attributes } from "@saleor/pages/types/PageDetails";
 import { ProductDetails_product_attributes } from "@saleor/products/types/ProductDetails";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
-import {
-  AttributeEntityTypeEnum,
-  AttributeInputTypeEnum,
-  AttributeValueInput
-} from "@saleor/types/globalTypes";
 import {
   mapEdgesToItems,
   mapNodeToChoice,
@@ -26,8 +27,11 @@ import {
 } from "@saleor/utils/maps";
 
 import { AttributePageFormData } from "../components/AttributePage";
-import { AtributesOfFiles } from "../types/AttributeOfUploadedFile";
-import { AttributeValueDelete } from "../types/AttributeValueDelete";
+
+type AtributesOfFiles = Pick<
+  AttributeValueInput,
+  "file" | "id" | "values" | "contentType"
+>;
 
 export const ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES = [
   AttributeInputTypeEnum.DROPDOWN,
@@ -206,7 +210,7 @@ export const mergeFileUploadErrors = (
   }, []);
 
 export const mergeAttributeValueDeleteErrors = (
-  deleteAttributeValuesResult: Array<FetchResult<AttributeValueDelete>>
+  deleteAttributeValuesResult: Array<FetchResult<AttributeValueDeleteMutation>>
 ): AttributeErrorFragment[] =>
   deleteAttributeValuesResult.reduce((errors, deleteValueResult) => {
     const deleteErrors = deleteValueResult?.data?.attributeValueDelete?.errors;

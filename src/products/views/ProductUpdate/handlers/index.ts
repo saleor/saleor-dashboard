@@ -1,9 +1,5 @@
 import { FetchResult } from "@apollo/client";
 import {
-  AttributeValueDelete,
-  AttributeValueDeleteVariables
-} from "@saleor/attributes/types/AttributeValueDelete";
-import {
   getAttributesAfterFileAttributesUpdate,
   mergeAttributeValueDeleteErrors,
   mergeFileUploadErrors
@@ -25,6 +21,10 @@ import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/Prod
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { StockErrorFragment } from "@saleor/fragments/types/StockErrorFragment";
 import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
+import {
+  AttributeValueDeleteMutation,
+  AttributeValueDeleteMutationVariables
+} from "@saleor/graphql";
 import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
 import {
   ProductChannelListingUpdate,
@@ -100,8 +100,8 @@ export function createUpdateHandler(
     variables: VariantCreateVariables;
   }) => Promise<FetchResult<VariantCreate>>,
   deleteAttributeValue: (
-    variables: AttributeValueDeleteVariables
-  ) => Promise<FetchResult<AttributeValueDelete>>
+    variables: AttributeValueDeleteMutationVariables
+  ) => Promise<FetchResult<AttributeValueDeleteMutation>>
 ) {
   return async (data: ProductUpdatePageSubmitData) => {
     let errors: SubmitErrors = [];

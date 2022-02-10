@@ -1,11 +1,6 @@
 import { gql } from "@apollo/client";
 
-import { fileFragment } from "./file";
-import { metadataFragment } from "./metadata";
-import { pageInfoFragment } from "./pageInfo";
-
 export const attributeValueFragment = gql`
-  ${fileFragment}
   fragment AttributeValueFragment on AttributeValue {
     id
     name
@@ -44,8 +39,6 @@ export const attributeFragment = gql`
 `;
 
 export const attributeDetailsFragment = gql`
-  ${attributeFragment}
-  ${metadataFragment}
   fragment AttributeDetailsFragment on Attribute {
     ...AttributeFragment
     ...MetadataFragment
@@ -59,8 +52,6 @@ export const attributeDetailsFragment = gql`
 `;
 
 export const attributeValueListFragment = gql`
-  ${attributeValueDetailsFragment}
-  ${pageInfoFragment}
   fragment AttributeValueListFragment on AttributeValueCountableConnection {
     pageInfo {
       ...PageInfoFragment
