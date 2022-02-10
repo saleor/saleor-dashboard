@@ -1,4 +1,3 @@
-import { BaseChannels_channels } from "@saleor/channels/types/BaseChannels";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import CountryList from "@saleor/components/CountryList";
@@ -11,6 +10,7 @@ import Savebar from "@saleor/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
 import { ShippingZoneDetailsFragment_warehouses } from "@saleor/fragments/types/ShippingZoneDetailsFragment";
+import { ChannelFragmentFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -66,7 +66,7 @@ export interface ShippingZoneDetailsPageProps
   onWarehouseAdd: () => void;
   onWeightRateAdd: () => void;
   onWeightRateEdit: (id: string) => void;
-  allChannels?: BaseChannels_channels[];
+  allChannels?: ChannelFragmentFragment[];
 }
 
 function warehouseToChoice(

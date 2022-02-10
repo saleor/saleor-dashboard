@@ -1,15 +1,13 @@
 import { useUser } from "@saleor/auth";
-import { useBaseChannelsList } from "@saleor/channels/queries";
-import { BaseChannels_channels } from "@saleor/channels/types/BaseChannels";
-import { ChannelFragment } from "@saleor/fragments/types/ChannelFragment";
+import { ChannelFragmentFragment, useBaseChannelsQuery } from "@saleor/graphql";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { useSaleorConfig } from "@saleor/sdk";
 import React from "react";
 
 interface UseAppChannel {
-  availableChannels: ChannelFragment[];
-  channel: ChannelFragment;
+  availableChannels: ChannelFragmentFragment[];
+  channel: ChannelFragmentFragment;
   isPickerActive: boolean;
   refreshChannels: () => void;
   setChannel: (id: string) => void;
@@ -29,7 +27,7 @@ const AppChannelContext = React.createContext<AppChannelContextData>({
 
 const isValidChannel = (
   channelId: string,
-  channelList?: BaseChannels_channels[]
+  channelList?: ChannelFragmentFragment[]
 ) => {
   if (!channelId) {
     return false;
@@ -42,7 +40,7 @@ export const AppChannelProvider: React.FC = ({ children }) => {
   const { setChannel } = useSaleorConfig();
   const { authenticated } = useUser();
   const [selectedChannel, setSelectedChannel] = useLocalStorage("channel", "");
-  const { data: channelData, refetch } = useBaseChannelsList({
+  const { data: channelData, refetch } = useBaseChannelsQuery({
     skip: !authenticated
   });
 

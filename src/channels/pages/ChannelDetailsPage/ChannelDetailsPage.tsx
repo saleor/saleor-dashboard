@@ -6,6 +6,7 @@ import Savebar from "@saleor/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
 import { CountryFragment } from "@saleor/fragments/types/CountryFragment";
+import { ChannelDetailsFragmentFragment } from "@saleor/graphql";
 import { SearchData } from "@saleor/hooks/makeTopLevelSearch";
 import { getParsedSearchData } from "@saleor/hooks/makeTopLevelSearch/utils";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -24,12 +25,11 @@ import React, { useState } from "react";
 
 import { ChannelForm, FormData } from "../../components/ChannelForm";
 import { ChannelStatus } from "../../components/ChannelStatus/ChannelStatus";
-import { Channel_channel } from "../../types/Channel";
 import { ChannelShippingZones } from "./types";
 import { getUpdatedIdsWithNewId, getUpdatedIdsWithoutNewId } from "./utils";
 
 export interface ChannelDetailsPageProps<TErrors> {
-  channel?: Channel_channel;
+  channel?: ChannelDetailsFragmentFragment;
   currencyCodes?: SingleAutocompleteChoiceType[];
   disabled: boolean;
   disabledStatus?: boolean;

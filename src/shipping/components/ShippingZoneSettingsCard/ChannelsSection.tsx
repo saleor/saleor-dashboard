@@ -1,8 +1,8 @@
-import { BaseChannels_channels } from "@saleor/channels/types/BaseChannels";
 import CardSpacer from "@saleor/components/CardSpacer";
 import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType
 } from "@saleor/components/MultiAutocompleteSelectField";
+import { ChannelFragmentFragment } from "@saleor/graphql";
 import { useChannelsSearch } from "@saleor/hooks/useChannelsSearch";
 import { FormChange } from "@saleor/hooks/useForm";
 import { mapNodeToChoice } from "@saleor/utils/maps";
@@ -30,7 +30,7 @@ const messages = defineMessages({
 interface ChannelsSectionProps {
   onChange: FormChange;
   selectedChannels: string[];
-  allChannels?: BaseChannels_channels[];
+  allChannels?: ChannelFragmentFragment[];
   channelsDisplayValues: MultiAutocompleteChoiceType[];
 }
 

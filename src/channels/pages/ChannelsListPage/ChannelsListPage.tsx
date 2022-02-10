@@ -12,6 +12,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
+import { ChannelDetailsFragmentFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
@@ -19,11 +20,10 @@ import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { Channels_channels } from "../../types/Channels";
 import { useStyles } from "./styles";
 
 export interface ChannelsListPageProps {
-  channelsList: Channels_channels[] | undefined;
+  channelsList: ChannelDetailsFragmentFragment[] | undefined;
   limits: RefreshLimits_shop_limits;
   navigateToChannelCreate: () => void;
   onBack: () => void;

@@ -1,11 +1,11 @@
 import { CircularProgress, TextField, Typography } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
-import { useChannelsList } from "@saleor/channels/queries";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { useChannelsSearch } from "@saleor/components/ChannelsAvailabilityDialog/utils";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import { IMessage } from "@saleor/components/messages";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
+import { useChannelsQuery } from "@saleor/graphql";
 import useForm from "@saleor/hooks/useForm";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getBySlug } from "@saleor/products/components/ProductVariantCreatorPage/utils";
@@ -41,7 +41,7 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
 
   const [consentSelected, setConsentSelected] = useState(false);
 
-  const { data: channelsData, loading: loadingChannels } = useChannelsList({});
+  const { data: channelsData, loading: loadingChannels } = useChannelsQuery({});
 
   const channels = channelsData?.channels;
 
