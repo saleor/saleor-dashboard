@@ -12,6 +12,7 @@ import {
   AppUpdateMutation,
   useAppActivateMutation,
   useAppDeactivateMutation,
+  useAppQuery,
   useAppTokenCreateMutation,
   useAppTokenDeleteMutation,
   useAppUpdateMutation,
@@ -33,7 +34,6 @@ import { useIntl } from "react-intl";
 import CustomAppDetailsPage, {
   CustomAppDetailsPageFormData
 } from "../../components/CustomAppDetailsPage";
-import { useAppDetails } from "../../queries";
 import {
   appsListUrl,
   customAppUrl,
@@ -66,7 +66,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
     CustomAppUrlQueryParams
   >(navigate, params => customAppUrl(id, params), params);
 
-  const { data, loading, refetch } = useAppDetails({
+  const { data, loading, refetch } = useAppQuery({
     displayLoader: true,
     variables: { id }
   });

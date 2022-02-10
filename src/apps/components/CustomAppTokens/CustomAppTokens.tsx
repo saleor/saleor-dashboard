@@ -8,16 +8,16 @@ import {
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import { AppUpdateMutation } from "@saleor/graphql";
 import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { AppUpdate_appUpdate_app_tokens } from "../../types/AppUpdate";
 import { useStyles } from "./styles";
 
 export interface CustomAppTokensProps {
-  tokens: Array<AppUpdate_appUpdate_app_tokens | null> | null;
+  tokens: AppUpdateMutation["appUpdate"]["app"]["tokens"] | null;
   onCreate: () => void;
   onDelete: (id: string) => void;
 }
