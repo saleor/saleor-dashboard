@@ -1074,6 +1074,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
             quantityToFulfill: 0,
             allocations: [
               {
+                id: "allocation_test_id",
                 warehouse: {
                   id:
                     "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
@@ -1129,6 +1130,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
               preorder: null,
               stocks: [
                 {
+                  id: "stock_test_id1",
                   warehouse: {
                     id:
                       "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
@@ -1139,6 +1141,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
                   __typename: "Stock"
                 },
                 {
+                  id: "stock_test_id2",
                   warehouse: {
                     id:
                       "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
@@ -1177,6 +1180,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
             quantityToFulfill: 0,
             allocations: [
               {
+                id: "allocation_test_id",
                 warehouse: {
                   id:
                     "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
@@ -1232,6 +1236,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
               preorder: null,
               stocks: [
                 {
+                  id: "stock_test_id1",
                   warehouse: {
                     id:
                       "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
@@ -1242,6 +1247,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
                   __typename: "Stock"
                 },
                 {
+                  id: "stock_test_id2",
                   warehouse: {
                     id:
                       "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
@@ -1288,6 +1294,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       quantityToFulfill: 3,
       allocations: [
         {
+          id: "allocation_test_id",
           warehouse: {
             id:
               "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
@@ -1343,6 +1350,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
         preorder: null,
         stocks: [
           {
+            id: "stock_test_id1",
             warehouse: {
               id:
                 "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
@@ -1353,6 +1361,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
             __typename: "Stock"
           },
           {
+            id: "stock_test_id2",
             warehouse: {
               id:
                 "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
@@ -1376,6 +1385,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       quantityToFulfill: 0,
       allocations: [
         {
+          id: "allocation_test_id",
           warehouse: {
             id:
               "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
@@ -1432,6 +1442,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
         preorder: null,
         stocks: [
           {
+            id: "stock_test_id1",
             warehouse: {
               id:
                 "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
@@ -1442,6 +1453,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
             __typename: "Stock"
           },
           {
+            id: "stock_test_id2",
             warehouse: {
               id:
                 "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
@@ -1604,6 +1616,7 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
       quantityToFulfill: 2,
       allocations: [
         {
+          id: "allocation_test_id",
           warehouse: {
             id:
               "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
@@ -1659,6 +1672,7 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
         preorder: null,
         stocks: [
           {
+            id: "stock_test_id1",
             warehouse: {
               id:
                 "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
@@ -1669,6 +1683,7 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
             __typename: "Stock"
           },
           {
+            id: "stock_test_id2",
             warehouse: {
               id:
                 "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
@@ -1692,6 +1707,7 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
       quantityToFulfill: 2,
       allocations: [
         {
+          id: "allocation_test_id",
           warehouse: {
             id:
               "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
@@ -1747,6 +1763,7 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
         preorder: null,
         stocks: [
           {
+            id: "stock_test_id1",
             warehouse: {
               id:
                 "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
@@ -1757,6 +1774,7 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
             __typename: "Stock"
           },
           {
+            id: "stock_test_id2",
             warehouse: {
               id:
                 "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",

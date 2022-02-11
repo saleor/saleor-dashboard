@@ -220,6 +220,7 @@ export interface OrderDraftCancel_draftOrderDelete_order_fulfillments_lines_orde
 
 export interface OrderDraftCancel_draftOrderDelete_order_fulfillments_lines_orderLine_allocations {
   __typename: "Allocation";
+  id: string;
   quantity: number;
   warehouse: OrderDraftCancel_draftOrderDelete_order_fulfillments_lines_orderLine_allocations_warehouse;
 }
@@ -236,6 +237,7 @@ export interface OrderDraftCancel_draftOrderDelete_order_fulfillments_lines_orde
 
 export interface OrderDraftCancel_draftOrderDelete_order_fulfillments_lines_orderLine_variant_stocks {
   __typename: "Stock";
+  id: string;
   warehouse: OrderDraftCancel_draftOrderDelete_order_fulfillments_lines_orderLine_variant_stocks_warehouse;
   quantity: number;
   quantityAllocated: number;
@@ -347,6 +349,7 @@ export interface OrderDraftCancel_draftOrderDelete_order_lines_allocations_wareh
 
 export interface OrderDraftCancel_draftOrderDelete_order_lines_allocations {
   __typename: "Allocation";
+  id: string;
   quantity: number;
   warehouse: OrderDraftCancel_draftOrderDelete_order_lines_allocations_warehouse;
 }
@@ -363,6 +366,7 @@ export interface OrderDraftCancel_draftOrderDelete_order_lines_variant_stocks_wa
 
 export interface OrderDraftCancel_draftOrderDelete_order_lines_variant_stocks {
   __typename: "Stock";
+  id: string;
   warehouse: OrderDraftCancel_draftOrderDelete_order_lines_variant_stocks_warehouse;
   quantity: number;
   quantityAllocated: number;

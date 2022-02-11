@@ -79,6 +79,7 @@ export const fragmentOrderLine = gql`
     id
     isShippingRequired
     allocations {
+      id
       quantity
       warehouse {
         id
@@ -91,6 +92,7 @@ export const fragmentOrderLine = gql`
         endDate
       }
       stocks {
+        id
         warehouse {
           id
         }

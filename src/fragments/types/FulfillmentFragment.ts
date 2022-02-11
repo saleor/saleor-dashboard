@@ -16,6 +16,7 @@ export interface FulfillmentFragment_lines_orderLine_allocations_warehouse {
 
 export interface FulfillmentFragment_lines_orderLine_allocations {
   __typename: "Allocation";
+  id: string;
   quantity: number;
   warehouse: FulfillmentFragment_lines_orderLine_allocations_warehouse;
 }
@@ -32,6 +33,7 @@ export interface FulfillmentFragment_lines_orderLine_variant_stocks_warehouse {
 
 export interface FulfillmentFragment_lines_orderLine_variant_stocks {
   __typename: "Stock";
+  id: string;
   warehouse: FulfillmentFragment_lines_orderLine_variant_stocks_warehouse;
   quantity: number;
   quantityAllocated: number;

@@ -530,6 +530,7 @@ describe("Get the total value of all replaced products", () => {
         isShippingRequired: false,
         allocations: [
           {
+            id: "allocation_test_id",
             warehouse: {
               id:
                 "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
@@ -546,6 +547,7 @@ describe("Get the total value of all replaced products", () => {
           __typename: "ProductVariant",
           stocks: [
             {
+              id: "stock_test_id1",
               warehouse: {
                 id:
                   "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
@@ -556,6 +558,7 @@ describe("Get the total value of all replaced products", () => {
               __typename: "Stock"
             },
             {
+              id: "stock_test_id2",
               warehouse: {
                 id:
                   "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
@@ -619,6 +622,7 @@ describe("Get the total value of all replaced products", () => {
         isShippingRequired: false,
         allocations: [
           {
+            id: "allocation_test_id",
             warehouse: {
               id:
                 "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
@@ -634,6 +638,7 @@ describe("Get the total value of all replaced products", () => {
           preorder: null,
           stocks: [
             {
+              id: "stock_test_id1",
               warehouse: {
                 id:
                   "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
@@ -644,6 +649,7 @@ describe("Get the total value of all replaced products", () => {
               __typename: "Stock"
             },
             {
+              id: "stock_test_id2",
               warehouse: {
                 id:
                   "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
@@ -708,6 +714,7 @@ describe("Get the total value of all replaced products", () => {
         isShippingRequired: true,
         allocations: [
           {
+            id: "allocation_test_id",
             warehouse: {
               id:
                 "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
@@ -723,6 +730,7 @@ describe("Get the total value of all replaced products", () => {
           preorder: null,
           stocks: [
             {
+              id: "stock_test_id1",
               warehouse: {
                 id:
                   "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
@@ -733,6 +741,7 @@ describe("Get the total value of all replaced products", () => {
               __typename: "Stock"
             },
             {
+              id: "stock_test_id2",
               warehouse: {
                 id:
                   "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
@@ -803,6 +812,7 @@ describe("Get the total value of all replaced products", () => {
           isShippingRequired: false,
           allocations: [
             {
+              id: "allocation_test_id",
               warehouse: {
                 id:
                   "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
@@ -818,6 +828,7 @@ describe("Get the total value of all replaced products", () => {
             preorder: null,
             stocks: [
               {
+                id: "stock_test_id1",
                 warehouse: {
                   id:
                     "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
@@ -828,6 +839,7 @@ describe("Get the total value of all replaced products", () => {
                 __typename: "Stock"
               },
               {
+                id: "stock_test_id2",
                 warehouse: {
                   id:
                     "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
@@ -897,6 +909,7 @@ describe("Get the total value of all replaced products", () => {
           isShippingRequired: false,
           allocations: [
             {
+              id: "allocation_test_id",
               warehouse: {
                 id:
                   "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
@@ -912,6 +925,7 @@ describe("Get the total value of all replaced products", () => {
             preorder: null,
             stocks: [
               {
+                id: "stock_test_id1",
                 warehouse: {
                   id:
                     "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
@@ -922,6 +936,7 @@ describe("Get the total value of all replaced products", () => {
                 __typename: "Stock"
               },
               {
+                id: "stock_test_id2",
                 warehouse: {
                   id:
                     "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
@@ -991,6 +1006,7 @@ describe("Get the total value of all replaced products", () => {
           isShippingRequired: true,
           allocations: [
             {
+              id: "allocation_test_id",
               warehouse: {
                 id:
                   "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
@@ -1006,6 +1022,7 @@ describe("Get the total value of all replaced products", () => {
             preorder: null,
             stocks: [
               {
+                id: "stock_test_id1",
                 warehouse: {
                   id:
                     "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
@@ -1016,6 +1033,7 @@ describe("Get the total value of all replaced products", () => {
                 __typename: "Stock"
               },
               {
+                id: "stock_test_id2",
                 warehouse: {
                   id:
                     "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
@@ -1085,6 +1103,7 @@ describe("Get the total value of all replaced products", () => {
           isShippingRequired: false,
           allocations: [
             {
+              id: "allocation_test_id",
               warehouse: {
                 id:
                   "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
@@ -1100,6 +1119,7 @@ describe("Get the total value of all replaced products", () => {
             preorder: null,
             stocks: [
               {
+                id: "stock_test_id1",
                 warehouse: {
                   id:
                     "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
@@ -1110,6 +1130,7 @@ describe("Get the total value of all replaced products", () => {
                 __typename: "Stock"
               },
               {
+                id: "stock_test_id2",
                 warehouse: {
                   id:
                     "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
@@ -1179,6 +1200,7 @@ describe("Get the total value of all replaced products", () => {
           isShippingRequired: false,
           allocations: [
             {
+              id: "allocation_test_id",
               warehouse: {
                 id:
                   "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
@@ -1194,6 +1216,7 @@ describe("Get the total value of all replaced products", () => {
             preorder: null,
             stocks: [
               {
+                id: "stock_test_id1",
                 warehouse: {
                   id:
                     "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
@@ -1204,6 +1227,7 @@ describe("Get the total value of all replaced products", () => {
                 __typename: "Stock"
               },
               {
+                id: "stock_test_id2",
                 warehouse: {
                   id:
                     "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
@@ -1407,6 +1431,7 @@ describe("Get the total value of all selected products", () => {
         isShippingRequired: false,
         allocations: [
           {
+            id: "allocation_test_id",
             warehouse: {
               id:
                 "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
@@ -1422,6 +1447,7 @@ describe("Get the total value of all selected products", () => {
           preorder: null,
           stocks: [
             {
+              id: "stock_test_id1",
               warehouse: {
                 id:
                   "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
@@ -1432,6 +1458,7 @@ describe("Get the total value of all selected products", () => {
               __typename: "Stock"
             },
             {
+              id: "stock_test_id2",
               warehouse: {
                 id:
                   "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
@@ -1496,6 +1523,7 @@ describe("Get the total value of all selected products", () => {
         isShippingRequired: false,
         allocations: [
           {
+            id: "allocation_test_id",
             warehouse: {
               id:
                 "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
@@ -1511,6 +1539,7 @@ describe("Get the total value of all selected products", () => {
           preorder: null,
           stocks: [
             {
+              id: "stock_test_id1",
               warehouse: {
                 id:
                   "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
@@ -1521,6 +1550,7 @@ describe("Get the total value of all selected products", () => {
               __typename: "Stock"
             },
             {
+              id: "stock_test_id2",
               warehouse: {
                 id:
                   "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
@@ -1585,6 +1615,7 @@ describe("Get the total value of all selected products", () => {
         isShippingRequired: true,
         allocations: [
           {
+            id: "allocation_test_id",
             warehouse: {
               id:
                 "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
@@ -1600,6 +1631,7 @@ describe("Get the total value of all selected products", () => {
           preorder: null,
           stocks: [
             {
+              id: "stock_test_id1",
               warehouse: {
                 id:
                   "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
@@ -1610,6 +1642,7 @@ describe("Get the total value of all selected products", () => {
               __typename: "Stock"
             },
             {
+              id: "stock_test_id2",
               warehouse: {
                 id:
                   "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
@@ -1680,6 +1713,7 @@ describe("Get the total value of all selected products", () => {
           isShippingRequired: false,
           allocations: [
             {
+              id: "allocation_test_id",
               warehouse: {
                 id:
                   "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
@@ -1695,6 +1729,7 @@ describe("Get the total value of all selected products", () => {
             preorder: null,
             stocks: [
               {
+                id: "stock_test_id1",
                 warehouse: {
                   id:
                     "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
@@ -1705,6 +1740,7 @@ describe("Get the total value of all selected products", () => {
                 __typename: "Stock"
               },
               {
+                id: "stock_test_id2",
                 warehouse: {
                   id:
                     "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
@@ -1774,6 +1810,7 @@ describe("Get the total value of all selected products", () => {
           isShippingRequired: false,
           allocations: [
             {
+              id: "allocation_test_id",
               warehouse: {
                 id:
                   "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
@@ -1789,6 +1826,7 @@ describe("Get the total value of all selected products", () => {
             preorder: null,
             stocks: [
               {
+                id: "stock_test_id1",
                 warehouse: {
                   id:
                     "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
@@ -1799,6 +1837,7 @@ describe("Get the total value of all selected products", () => {
                 __typename: "Stock"
               },
               {
+                id: "stock_test_id2",
                 warehouse: {
                   id:
                     "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
@@ -1868,6 +1907,7 @@ describe("Get the total value of all selected products", () => {
           isShippingRequired: true,
           allocations: [
             {
+              id: "allocation_test_id",
               warehouse: {
                 id:
                   "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
@@ -1883,6 +1923,7 @@ describe("Get the total value of all selected products", () => {
             preorder: null,
             stocks: [
               {
+                id: "stock_test_id1",
                 warehouse: {
                   id:
                     "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
@@ -1893,6 +1934,7 @@ describe("Get the total value of all selected products", () => {
                 __typename: "Stock"
               },
               {
+                id: "stock_test_id2",
                 warehouse: {
                   id:
                     "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
@@ -2090,6 +2132,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           isShippingRequired: false,
           allocations: [
             {
+              id: "allocation_test_id",
               warehouse: {
                 id:
                   "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
@@ -2105,6 +2148,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             preorder: null,
             stocks: [
               {
+                id: "stock_test_id1",
                 warehouse: {
                   id:
                     "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
@@ -2115,6 +2159,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
                 __typename: "Stock"
               },
               {
+                id: "stock_test_id2",
                 warehouse: {
                   id:
                     "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
@@ -2184,6 +2229,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           isShippingRequired: false,
           allocations: [
             {
+              id: "allocation_test_id",
               warehouse: {
                 id:
                   "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
@@ -2199,6 +2245,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             preorder: null,
             stocks: [
               {
+                id: "stock_test_id1",
                 warehouse: {
                   id:
                     "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
@@ -2209,6 +2256,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
                 __typename: "Stock"
               },
               {
+                id: "stock_test_id2",
                 warehouse: {
                   id:
                     "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
@@ -2278,6 +2326,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           isShippingRequired: true,
           allocations: [
             {
+              id: "allocation_test_id",
               warehouse: {
                 id:
                   "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
@@ -2293,6 +2342,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             preorder: null,
             stocks: [
               {
+                id: "stock_test_id1",
                 warehouse: {
                   id:
                     "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
@@ -2303,6 +2353,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
                 __typename: "Stock"
               },
               {
+                id: "stock_test_id2",
                 warehouse: {
                   id:
                     "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",

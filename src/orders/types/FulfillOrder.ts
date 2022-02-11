@@ -222,6 +222,7 @@ export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_al
 
 export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_allocations {
   __typename: "Allocation";
+  id: string;
   quantity: number;
   warehouse: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_allocations_warehouse;
 }
@@ -238,6 +239,7 @@ export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_va
 
 export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_variant_stocks {
   __typename: "Stock";
+  id: string;
   warehouse: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_variant_stocks_warehouse;
   quantity: number;
   quantityAllocated: number;
@@ -349,6 +351,7 @@ export interface FulfillOrder_orderFulfill_order_lines_allocations_warehouse {
 
 export interface FulfillOrder_orderFulfill_order_lines_allocations {
   __typename: "Allocation";
+  id: string;
   quantity: number;
   warehouse: FulfillOrder_orderFulfill_order_lines_allocations_warehouse;
 }
@@ -365,6 +368,7 @@ export interface FulfillOrder_orderFulfill_order_lines_variant_stocks_warehouse 
 
 export interface FulfillOrder_orderFulfill_order_lines_variant_stocks {
   __typename: "Stock";
+  id: string;
   warehouse: FulfillOrder_orderFulfill_order_lines_variant_stocks_warehouse;
   quantity: number;
   quantityAllocated: number;
