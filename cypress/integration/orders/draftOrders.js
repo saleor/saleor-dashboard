@@ -86,7 +86,7 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("should move draft order to orders", () => {
+    it("should move draft order to orders. TC: SALEOR_2103", () => {
       cy.visit(urlList.orders);
       cy.softExpectSkeletonIsVisible();
       cy.get(ORDERS_SELECTORS.createOrder).click();
