@@ -63,7 +63,7 @@ export function createCheckoutWithDisabledGiftCard({
     voucherCode,
     auth
   }).then(({ addPromoCodeResp, checkout }) => {
-    expect(addPromoCodeResp.checkoutErrors[0].field).to.eq("promoCode");
+    expect(addPromoCodeResp.errors[0].field).to.eq("promoCode");
     return checkout;
   });
 }
