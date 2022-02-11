@@ -2,6 +2,7 @@
 /// <reference types="../support"/>
 
 import { LOGIN_SELECTORS } from "../elements/account/login-selectors";
+import { HOMEPAGE_SELECTORS } from "../elements/homePage/homePage-selectors";
 import { urlList } from "../fixtures/urlList";
 import filterTests from "../support/filterTests";
 

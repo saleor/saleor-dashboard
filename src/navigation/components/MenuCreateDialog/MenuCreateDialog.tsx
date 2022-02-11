@@ -77,7 +77,7 @@ const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
               <ConfirmButton
                 transitionState={confirmButtonState}
                 onClick={submit}
-                data-test="submit"
+                data-test-id="submit"
               >
                 <FormattedMessage {...buttonMessages.save} />
               </ConfirmButton>

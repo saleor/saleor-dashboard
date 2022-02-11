@@ -196,7 +196,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                 />
                 <CardSpacer />
                 <ProductTypeAttributes
-                  testId="assignProductsAttributes"
+                  testId="assign-products-attributes"
                   attributes={maybe(() => productType.productAttributes)}
                   disabled={disabled}
                   type={ProductAttributeType.PRODUCT}
@@ -223,7 +223,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                   <>
                     <CardSpacer />
                     <ProductTypeVariantAttributes
-                      testId="assignVariantsAttributes"
+                      testId="assign-variants-attributes"
                       assignedVariantAttributes={
                         productType?.assignedVariantAttributes
                       }

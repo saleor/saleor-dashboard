@@ -1,3 +1,5 @@
+import { getValueWithDefault } from "../utils/Utils";
+
 export function getVouchers(first, startsWith) {
   const query = `query getVouchers{
     vouchers(first:${first}, filter:{
@@ -28,9 +30,14 @@ export function deleteVouchers(voucherId) {
   return cy.sendRequestWithQuery(mutation);
 }
 
-export function createVoucher({ name, productId, code = name }) {
+export function createVoucher({ name, productId, code = name, type, country }) {
+  const discountTypeLines = getValueWithDefault(type, `type:${type}`);
+  const countryLine = getValueWithDefault(country, `countries:["${country}"]`);
+
   const mutation = `mutation{
     voucherCreate(input:{
+      ${discountTypeLines}
+      ${countryLine}
       name:"${name}",
       code:"${code}"
       products:["${productId}"]

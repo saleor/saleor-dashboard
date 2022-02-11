@@ -115,7 +115,7 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
 
               return (
                 <TableRow
-                  data-test-id="productRow"
+                  data-test-id="product-row"
                   selected={isSelected}
                   hover={!!product}
                   key={product ? product.id : "skeleton"}

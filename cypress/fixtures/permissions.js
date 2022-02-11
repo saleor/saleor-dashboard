@@ -24,7 +24,7 @@ export const PERMISSIONS = {
     },
     permissionSelectors: [
       menuSelectors.DISCOUNTS_MENU_SELECTORS.sales,
-      menuSelectors.DISCOUNTS_MENU_SELECTORS.sales
+      menuSelectors.DISCOUNTS_MENU_SELECTORS.vouchers
     ]
   },
   order: {
@@ -41,7 +41,7 @@ export const PERMISSIONS = {
     parent: configurationAsParent,
     permissionSelectors: [
       CONFIGURATION_SELECTORS.pageTypes,
-      CONFIGURATION_SELECTORS.pages
+      menuSelectors.LEFT_MENU_SELECTORS.pages
     ]
   },
   plugin: {

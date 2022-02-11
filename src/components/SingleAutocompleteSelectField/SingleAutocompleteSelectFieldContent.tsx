@@ -205,7 +205,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
       <div
         className={classes.content}
         ref={anchor}
-        data-test="autocomplete-dropdown"
+        data-test-id="autocomplete-dropdown"
       >
         {choices.length > 0 || displayCustomValue ? (
           <>
@@ -213,7 +213,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
               <MenuItem
                 className={classes.menuItem}
                 component="div"
-                data-test-id="singleautocomplete-select-option"
+                data-test-id="single-autocomplete-select-option"
                 data-test-type="empty"
                 {...emptyOptionProps}
               >
@@ -229,7 +229,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                 {...getItemProps({
                   item: inputValue
                 })}
-                data-test-id="singleautocomplete-select-option-add"
+                data-test-id="single-autocomplete-select-option-add"
                 data-test-type="add"
                 onClick={add.onClick}
               >
@@ -246,7 +246,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                 {...getItemProps({
                   item: inputValue
                 })}
-                data-test-id="singleautocomplete-select-option"
+                data-test-id="single-autocomplete-select-option"
                 data-test-type="custom"
               >
                 <FormattedMessage
@@ -284,7 +284,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                     index: choiceIndex,
                     item: suggestion.value
                   })}
-                  data-test-id="singleautocomplete-select-option"
+                  data-test-id="single-autocomplete-select-option"
                   data-test-value={suggestion.value}
                   data-test-type="option"
                 >
@@ -305,7 +305,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
           <MenuItem
             disabled={true}
             component="div"
-            data-test="singleautocomplete-select-no-options"
+            data-test-id="single-autocomplete-select-no-options"
           >
             <FormattedMessage defaultMessage="No results found" />
           </MenuItem>

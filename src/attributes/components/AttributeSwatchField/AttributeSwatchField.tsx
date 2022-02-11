@@ -88,7 +88,7 @@ const AttributeSwatchField: React.FC<AttributeSwatchFieldProps<
         name="swatch"
         value={type}
         onChange={event => setType(event.target.value)}
-        data-test="swatch-radio"
+        data-test-id="swatch-radio"
       />
       {type === "image" ? (
         <>

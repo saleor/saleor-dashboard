@@ -21,8 +21,7 @@ const FilterTextField: React.FC<FilterTextFieldProps> = ({
 
   return (
     <TextField
-      data-test={filterTestingContext}
-      data-test-id={filter.name}
+      data-test-id={filterTestingContext + filter.name}
       fullWidth
       name={filter.name}
       InputProps={{

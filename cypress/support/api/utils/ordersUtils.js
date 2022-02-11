@@ -66,6 +66,7 @@ export function createCheckoutWithVoucher({
   channelSlug,
   email = "email@example.com",
   variantsList,
+  productQuantity = 1,
   address,
   shippingMethodName,
   voucherCode,
@@ -75,6 +76,7 @@ export function createCheckoutWithVoucher({
   return checkoutRequest
     .createCheckout({
       channelSlug,
+      productQuantity,
       email,
       variantsList,
       address,

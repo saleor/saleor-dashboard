@@ -82,7 +82,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card data-test="product-attributes">
+    <Card data-test-id="product-attributes">
       <CardTitle
         title={intl.formatMessage({
           defaultMessage: "Product Attributes",
@@ -150,8 +150,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
                   }
                   key={maybe(() => attribute.id)}
                   index={attributeIndex || 0}
-                  data-test="id"
-                  data-test-id={maybe(() => attribute.id)}
+                  data-test-id={"id" + maybe(() => attribute.id)}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
@@ -161,14 +160,14 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
                       onChange={() => toggle(attribute.id)}
                     />
                   </TableCell>
-                  <TableCell className={classes.colName} data-test="name">
+                  <TableCell className={classes.colName} data-test-id="name">
                     {maybe(() => attribute.name) ? (
                       attribute.name
                     ) : (
                       <Skeleton />
                     )}
                   </TableCell>
-                  <TableCell className={classes.colSlug} data-test="slug">
+                  <TableCell className={classes.colSlug} data-test-id="slug">
                     {maybe(() => attribute.slug) ? (
                       attribute.slug
                     ) : (

@@ -256,7 +256,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
               disabled={limitReached}
               onClick={onVariantAdd}
               variant="tertiary"
-              data-test="button-add-variant"
+              data-test-id="button-add-variant"
             >
               <FormattedMessage
                 defaultMessage="Create variant"
@@ -268,7 +268,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
               disabled={limitReached}
               onClick={onVariantsAdd}
               variant="tertiary"
-              data-test="button-add-variants"
+              data-test-id="button-add-variants"
             >
               <FormattedMessage
                 defaultMessage="Create variants"
@@ -393,7 +393,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                       onChange={() => toggle(variant.id)}
                     />
                   </TableCell>
-                  <TableCell className={classes.colName} data-test="name">
+                  <TableCell className={classes.colName} data-test-id="name">
                     {variant ? variant.name || variant.sku : <Skeleton />}
                     {isDefault && (
                       <span className={classes.defaultVariant}>
@@ -404,11 +404,14 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                       </span>
                     )}
                   </TableCell>
-                  <TableCell className={classes.colSku} data-test="sku">
+                  <TableCell className={classes.colSku} data-test-id="sku">
                     {variant ? variant.sku : <Skeleton />}
                   </TableCell>
                   <Hidden smDown>
-                    <TableCell className={classes.colPrice} data-test="price">
+                    <TableCell
+                      className={classes.colPrice}
+                      data-test-id="price"
+                    >
                       {variant ? (
                         <Money money={channel?.price} />
                       ) : (
@@ -418,7 +421,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                   </Hidden>
                   <TableCell
                     className={classes.colInventory}
-                    data-test="inventory"
+                    data-test-id="inventory"
                   >
                     {numAvailable === null ? (
                       <Skeleton />
@@ -433,7 +436,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                   </TableCell>
                   <TableCell
                     className={classes.colActions}
-                    data-test="actions"
+                    data-test-id="actions"
                     onClick={e => e.stopPropagation()}
                   >
                     {variant?.id !== product?.defaultVariant?.id && (
