@@ -1,5 +1,7 @@
-import { CustomerAddresses_user } from "@saleor/customers/types/CustomerAddresses";
-import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
+import {
+  CustomerAddressesQuery,
+  OrderErrorFragmentFragment
+} from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { transformAddressToForm } from "@saleor/misc";
@@ -22,12 +24,12 @@ interface OrderAddressFieldsProps {
   action: string;
   isDraft: boolean;
   customerAddressesLoading: boolean;
-  customer: CustomerAddresses_user;
+  customer: CustomerAddressesQuery["user"];
   countries: OrderDetails_shop_countries[];
   onClose: () => void;
   onConfirm: (data: OrderCustomerAddressesEditDialogOutput) => SubmitPromise;
   confirmButtonState: ConfirmButtonTransitionState;
-  errors: OrderErrorFragment[];
+  errors: OrderErrorFragmentFragment[];
   orderShippingAddress: OrderDetails_order_shippingAddress;
   orderBillingAddress: OrderDetails_order_billingAddress;
 }

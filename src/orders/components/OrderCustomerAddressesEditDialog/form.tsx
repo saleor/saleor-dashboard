@@ -2,11 +2,7 @@ import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { AddressTypeInput } from "@saleor/customers/types";
-import {
-  CustomerAddresses_user_addresses,
-  CustomerAddresses_user_defaultBillingAddress,
-  CustomerAddresses_user_defaultShippingAddress
-} from "@saleor/customers/types/CustomerAddresses";
+import { AddressFragmentFragment, Node } from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
@@ -25,8 +21,8 @@ export interface OrderCustomerAddressesEditFormData {
   cloneAddress: boolean;
   shippingAddressInputOption: AddressInputOptionEnum;
   billingAddressInputOption: AddressInputOptionEnum;
-  customerShippingAddress: CustomerAddresses_user_defaultShippingAddress;
-  customerBillingAddress: CustomerAddresses_user_defaultBillingAddress;
+  customerShippingAddress: Node;
+  customerBillingAddress: Node;
   shippingAddress: AddressTypeInput;
   billingAddress: AddressTypeInput;
 }
@@ -43,7 +39,7 @@ export interface OrderCustomerAddressesEditHandlers {
     addressType: "shippingAddress" | "billingAddress"
   ) => void;
   changeCustomerAddress: (
-    customerAddress: CustomerAddresses_user_addresses,
+    customerAddress: AddressFragmentFragment,
     addressType: "customerShippingAddress" | "customerBillingAddress"
   ) => void;
   selectShippingCountry: FormChange;
@@ -61,8 +57,8 @@ interface UseOrderCustomerAddressesEditFormResult
 interface UseOrderCustomerAddressesEditFormOpts {
   countryChoices: SingleAutocompleteChoiceType[];
   countries: ShopInfo_shop_countries[];
-  defaultShippingAddress: CustomerAddresses_user_defaultShippingAddress;
-  defaultBillingAddress: CustomerAddresses_user_defaultBillingAddress;
+  defaultShippingAddress: Node;
+  defaultBillingAddress: Node;
   defaultCloneAddress: boolean;
 }
 
@@ -137,7 +133,7 @@ function useOrderCustomerAddressesEditForm(
       }
     });
   const handleCustomerAddressChange = (
-    customerAddress: CustomerAddresses_user_addresses,
+    customerAddress: AddressFragmentFragment,
     addressType: "customerShippingAddress" | "customerBillingAddress"
   ) =>
     change({

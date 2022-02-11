@@ -12,12 +12,8 @@ import ConfirmButton from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { AddressTypeInput } from "@saleor/customers/types";
-import {
-  CustomerAddresses_user_addresses,
-  CustomerAddresses_user_defaultBillingAddress,
-  CustomerAddresses_user_defaultShippingAddress
-} from "@saleor/customers/types/CustomerAddresses";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
+import { AddressFragmentFragment, Node } from "@saleor/graphql";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
@@ -55,9 +51,9 @@ export interface OrderCustomerAddressesEditDialogProps {
   orderShippingAddress?: AddressTypeInput;
   orderBillingAddress?: AddressTypeInput;
   countries?: ShopInfo_shop_countries[];
-  customerAddresses?: CustomerAddresses_user_addresses[];
-  defaultShippingAddress?: CustomerAddresses_user_defaultShippingAddress;
-  defaultBillingAddress?: CustomerAddresses_user_defaultBillingAddress;
+  customerAddresses?: AddressFragmentFragment[];
+  defaultShippingAddress?: Node;
+  defaultBillingAddress?: Node;
   onClose();
   onConfirm(
     data: Partial<OrderCustomerAddressesEditDialogOutput>

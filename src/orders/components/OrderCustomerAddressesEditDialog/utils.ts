@@ -1,10 +1,10 @@
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import {
-  CustomerAddresses_user_addresses,
-  CustomerAddresses_user_defaultShippingAddress
-} from "@saleor/customers/types/CustomerAddresses";
-import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
-import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
+  AccountErrorFragmentFragment,
+  AddressFragmentFragment,
+  Node,
+  OrderErrorFragmentFragment
+} from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
 import { flatten } from "@saleor/misc";
 import { AddressTypeEnum } from "@saleor/types/globalTypes";
@@ -21,11 +21,11 @@ interface AddressEditCommonProps {
   showCard: boolean;
   loading: boolean;
   countryChoices: SingleAutocompleteChoiceType[];
-  customerAddresses: CustomerAddresses_user_addresses[];
+  customerAddresses: AddressFragmentFragment[];
 }
 
 export const stringifyAddress = (
-  address: Partial<CustomerAddresses_user_addresses>
+  address: Partial<AddressFragmentFragment>
 ): string => {
   const { id, ...addressWithoutId } = address;
   return Object.values(flatten(addressWithoutId)).join(" ");
@@ -34,15 +34,13 @@ export const stringifyAddress = (
 export const parseQuery = (query: string) =>
   query.replace(/([.?*+\-=:^$\\[\]<>(){}|])/g, "\\$&");
 
-export function validateDefaultAddress<
-  T extends CustomerAddresses_user_defaultShippingAddress
->(
-  defaultAddress: CustomerAddresses_user_defaultShippingAddress,
+export function validateDefaultAddress<T extends AddressFragmentFragment>(
+  defaultAddress: Node,
   customerAddresses: T[]
-): CustomerAddresses_user_defaultShippingAddress {
+): Node {
   const fallbackAddress = {
     id: customerAddresses[0]?.id
-  } as CustomerAddresses_user_defaultShippingAddress;
+  } as AddressFragmentFragment;
   if (!defaultAddress) {
     return fallbackAddress;
   }
@@ -57,7 +55,9 @@ export const getAddressEditProps = (
   data: OrderCustomerAddressesEditData,
   handlers: OrderCustomerAddressesEditHandlers,
   change: FormChange,
-  dialogErrors: Array<OrderErrorFragment | AccountErrorFragment>,
+  dialogErrors: Array<
+    OrderErrorFragmentFragment | AccountErrorFragmentFragment
+  >,
   setAddressSearchState: React.Dispatch<
     React.SetStateAction<OrderCustomerSearchAddressState>
   >,

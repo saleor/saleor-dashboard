@@ -2,7 +2,10 @@ import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import Skeleton from "@saleor/components/Skeleton";
-import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
+import {
+  AccountErrorFragmentFragment,
+  CustomerDetailsQuery
+} from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import { getFormErrors } from "@saleor/utils/errors";
@@ -10,8 +13,6 @@ import getAccountErrorMessage from "@saleor/utils/errors/account";
 import moment from "moment-timezone";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { CustomerDetails_user } from "../../types/CustomerDetails";
 
 const useStyles = makeStyles(
   theme => ({
@@ -32,13 +33,13 @@ const useStyles = makeStyles(
 );
 
 export interface CustomerDetailsProps {
-  customer: CustomerDetails_user;
+  customer: CustomerDetailsQuery["user"];
   data: {
     isActive: boolean;
     note: string;
   };
   disabled: boolean;
-  errors: AccountErrorFragment[];
+  errors: AccountErrorFragmentFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
