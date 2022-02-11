@@ -128,7 +128,7 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
     <div>
       <div className={classes.hr} />
       <ControlledCheckbox
-        data-test="numeric-with-unit"
+        data-test-id="numeric-with-unit"
         name="selectUnit"
         label={formatMessage(M.messages.selectUnit)}
         checked={data.unit !== null}

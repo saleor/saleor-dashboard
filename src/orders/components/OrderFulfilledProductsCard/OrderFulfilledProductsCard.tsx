@@ -78,7 +78,7 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
                 variant="secondary"
                 className={classes.deleteIcon}
                 onClick={onOrderFulfillmentCancel}
-                data-test-id="cancelFulfillmentButton"
+                data-test-id="cancel-fulfillment-button"
               >
                 <TrashIcon />
               </IconButton>

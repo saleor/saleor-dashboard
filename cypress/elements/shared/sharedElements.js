@@ -5,11 +5,11 @@ export const SHARED_ELEMENTS = {
   autocompleteCircle: '[class*="arrowInnerContainer"]',
   skeleton: '[data-test-id="skeleton"]',
   table: 'table[class*="Table"]',
-  tableRow: '[data-test="id"], [class*="MuiTableRow"]',
+  tableRow: '[data-test-id*="id"], [class*="MuiTableRow"]',
   notificationSuccess: '[data-test="notification"][data-test-type="success"]',
   dialog: '[role="dialog"]',
-  searchInput: '[data-test-id="searchInput"]',
-  selectOption: '[data-test="selectFieldOption"]',
+  searchInput: '[data-test-id="search-input"]',
+  selectOption: '[data-test-id*="select-field-option"]',
   svgImage: "svg",
   fileInput: 'input[type="file"]',
   urlInput: 'input[type="url"]',
@@ -19,8 +19,8 @@ export const SHARED_ELEMENTS = {
   },
   contentEditable: '[contenteditable="true"]',
   filters: {
-    filterGroupActivateCheckbox: '[data-test="filterGroupActive"]',
-    filterRow: '[data-test="channel-availability-item"]'
+    filterGroupActivateCheckbox: '[data-test-id*="filter-group-active"]',
+    filterRow: '[data-test-id*="channel-availability-item"]'
   },
   warningDialog: '[data-test-id="warning-dialog"]'
 };
@@ -28,4 +28,4 @@ export const SHARED_ELEMENTS = {
 export const selectorWithDataValue = value => `[data-value="${value}"]`;
 
 export const getElementByDataTestId = dataTestId =>
-  `[data-test-id=${dataTestId}]`;
+  `[data-test-id*=${dataTestId}]`;

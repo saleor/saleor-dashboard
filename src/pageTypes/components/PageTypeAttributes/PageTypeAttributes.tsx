@@ -73,7 +73,7 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card data-test="page-attributes">
+    <Card data-test-id="page-attributes">
       <CardTitle
         title={intl.formatMessage({
           defaultMessage: "Content Attributes",
@@ -83,7 +83,7 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
           <Button
             variant="tertiary"
             onClick={() => onAttributeAssign(AttributeTypeEnum[type])}
-            data-test-id="assignAttributes"
+            data-test-id="assign-attributes"
           >
             <FormattedMessage
               defaultMessage="Assign attribute"
@@ -140,8 +140,7 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
                   }
                   key={attribute?.id}
                   index={attributeIndex || 0}
-                  data-test="id"
-                  data-test-id={attribute?.id}
+                  data-test-id={"id-" + attribute?.id}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
@@ -151,10 +150,10 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
                       onChange={() => toggle(attribute.id)}
                     />
                   </TableCell>
-                  <TableCell className={classes.colName} data-test="name">
+                  <TableCell className={classes.colName} data-test-id="name">
                     {attribute?.name || <Skeleton />}
                   </TableCell>
-                  <TableCell className={classes.colSlug} data-test="slug">
+                  <TableCell className={classes.colSlug} data-test-id="slug">
                     {attribute?.slug || <Skeleton />}
                   </TableCell>
                   <TableCell className={classes.colAction}>

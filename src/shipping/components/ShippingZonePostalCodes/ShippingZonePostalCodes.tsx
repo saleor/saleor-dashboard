@@ -111,7 +111,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
         toolbar={
           <Button
             onClick={onPostalCodeRangeAdd}
-            data-test="add-postal-code-range"
+            data-test-id="add-postal-code-range"
           >
             <FormattedMessage
               defaultMessage="Add postal code range"
@@ -212,8 +212,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
                       disabled={disabled}
                       color="primary"
                       onClick={() => onPostalCodeDelete(postalCodeRange)}
-                      data-test="delete-postal-code"
-                      data-test-id={postalCodeRange?.id}
+                      data-test-id={"delete-postal-code-" + postalCodeRange?.id}
                     >
                       <DeleteIcon />
                     </IconButton>

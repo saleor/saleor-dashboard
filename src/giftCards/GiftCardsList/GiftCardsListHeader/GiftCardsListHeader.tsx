@@ -46,7 +46,7 @@ const GiftCardsListHeader: React.FC = () => {
     <>
       <PageHeader
         title={intl.formatMessage(sectionNames.giftCards)}
-        cardMenu={<CardMenu menuItems={menuItems} data-test="menu" />}
+        cardMenu={<CardMenu menuItems={menuItems} data-test-id="menu" />}
       >
         <HorizontalSpacer spacing={2} />
         <Button

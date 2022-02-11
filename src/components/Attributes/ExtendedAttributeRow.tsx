@@ -38,23 +38,23 @@ const ExtendedAttributeRow: React.FC<ExtendedAttributeRowProps> = props => {
       <Grid className={classes.attributeSection} variant="uniform">
         <div
           className={classes.attributeSectionLabel}
-          data-test="attribute-label"
+          data-test-id="attribute-label"
         >
           <Typography>{label}</Typography>
         </div>
-        <div data-test="attribute-selector">
+        <div data-test-id="attribute-selector">
           <Button
             className={classes.attributeSectionButton}
             disabled={disabled}
             variant="tertiary"
-            data-test="button-attribute-selector"
+            data-test-id="button-attribute-selector"
             onClick={onSelect}
           >
             {selectLabel}
           </Button>
         </div>
       </Grid>
-      <div data-test="attribute-value">{children}</div>
+      <div data-test-id="attribute-value">{children}</div>
     </>
   );
 };

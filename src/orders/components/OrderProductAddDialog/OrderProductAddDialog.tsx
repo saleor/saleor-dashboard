@@ -255,7 +255,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
           description="dialog header"
         />
       </DialogTitle>
-      <DialogContent className={classes.topArea} data-test-id="searchQuery">
+      <DialogContent className={classes.topArea} data-test-id="search-query">
         <TextField
           name="query"
           value={query}

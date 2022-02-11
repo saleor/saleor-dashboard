@@ -45,7 +45,7 @@ const GiftCardSettingsExpirySelect: React.FC<GiftCardSettingsExpirySelectProps> 
         checked={expiryPeriodActive}
         onChange={change}
         disabled={disabled}
-        data-test="expiryPeriodActive"
+        data-test-id="expiry-period-active"
       />
 
       {expiryPeriodActive && (

@@ -165,7 +165,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
       <DialogActions>
         <BackButton onClick={onClose} />
         <ConfirmButton
-          data-test="submit"
+          data-test-id="submit"
           transitionState={confirmButtonState}
           type="submit"
           onClick={handleSubmit}
