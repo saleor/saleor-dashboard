@@ -1,16 +1,18 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
+import {
+  SaleDetailsFragmentFragment,
+  SaleFragmentFragment,
+  VoucherDetailsFragmentFragment,
+  VoucherFragmentFragment
+} from "@saleor/graphql";
 
 import {
   DiscountValueTypeEnum,
   SaleType,
   VoucherTypeEnum
 } from "../types/globalTypes";
-import { SaleDetails_sale } from "./types/SaleDetails";
-import { SaleList_sales_edges_node } from "./types/SaleList";
-import { VoucherDetails_voucher } from "./types/VoucherDetails";
-import { VoucherList_vouchers_edges_node } from "./types/VoucherList";
 
-export const saleList: SaleList_sales_edges_node[] = [
+export const saleList: SaleFragmentFragment[] = [
   {
     __typename: "Sale" as "Sale",
     metadata: [],
@@ -133,7 +135,7 @@ export const saleList: SaleList_sales_edges_node[] = [
   }
 ];
 
-export const voucherList: VoucherList_vouchers_edges_node[] = [
+export const voucherList: VoucherFragmentFragment[] = [
   {
     __typename: "Voucher" as "Voucher",
     metadata: [],
@@ -208,7 +210,7 @@ export const voucherList: VoucherList_vouchers_edges_node[] = [
   }
 ];
 
-export const sale: SaleDetails_sale = {
+export const sale: SaleDetailsFragmentFragment = {
   __typename: "Sale",
   metadata: [],
   privateMetadata: [],
@@ -569,7 +571,7 @@ export const sale: SaleDetails_sale = {
   type: "PERCENTAGE" as SaleType
 };
 
-export const voucherDetails: VoucherDetails_voucher = {
+export const voucherDetails: VoucherDetailsFragmentFragment = {
   __typename: "Voucher",
   metadata: [],
   privateMetadata: [],

@@ -1,24 +1,6 @@
 import { gql } from "@apollo/client";
-import {
-  saleDetailsFragment,
-  saleFragment,
-  voucherDetailsFragment,
-  voucherFragment
-} from "@saleor/fragments/discounts";
-import { pageInfoFragment } from "@saleor/fragments/pageInfo";
-import makeQuery from "@saleor/hooks/makeQuery";
-
-import { SaleDetails, SaleDetailsVariables } from "./types/SaleDetails";
-import { SaleList, SaleListVariables } from "./types/SaleList";
-import {
-  VoucherDetails,
-  VoucherDetailsVariables
-} from "./types/VoucherDetails";
-import { VoucherList, VoucherListVariables } from "./types/VoucherList";
 
 export const saleList = gql`
-  ${pageInfoFragment}
-  ${saleFragment}
   query SaleList(
     $after: String
     $before: String
@@ -48,13 +30,8 @@ export const saleList = gql`
     }
   }
 `;
-export const useSaleListQuery = makeQuery<SaleList, SaleListVariables>(
-  saleList
-);
 
 export const voucherList = gql`
-  ${pageInfoFragment}
-  ${voucherFragment}
   query VoucherList(
     $after: String
     $before: String
@@ -84,12 +61,8 @@ export const voucherList = gql`
     }
   }
 `;
-export const useVoucherListQuery = makeQuery<VoucherList, VoucherListVariables>(
-  voucherList
-);
 
 export const saleDetails = gql`
-  ${saleDetailsFragment}
   query SaleDetails(
     $id: ID!
     $after: String
@@ -102,12 +75,8 @@ export const saleDetails = gql`
     }
   }
 `;
-export const useSaleDetails = makeQuery<SaleDetails, SaleDetailsVariables>(
-  saleDetails
-);
 
-const voucherDetails = gql`
-  ${voucherDetailsFragment}
+export const voucherDetails = gql`
   query VoucherDetails(
     $id: ID!
     $after: String
@@ -120,7 +89,3 @@ const voucherDetails = gql`
     }
   }
 `;
-export const useVoucherDetails = makeQuery<
-  VoucherDetails,
-  VoucherDetailsVariables
->(voucherDetails);

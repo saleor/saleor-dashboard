@@ -2,12 +2,12 @@ import {
   ChannelSaleFormData,
   SaleDetailsPageFormData
 } from "@saleor/discounts/components/SaleDetailsPage";
-import { SaleDetails_sale } from "@saleor/discounts/types/SaleDetails";
-import { VoucherDetails_voucher } from "@saleor/discounts/types/VoucherDetails";
 import {
   ChannelDetailsFragmentFragment,
   ChannelFragmentFragment,
-  CollectionDetailsFragmentFragment
+  CollectionDetailsFragmentFragment,
+  SaleDetailsFragmentFragment,
+  VoucherDetailsFragmentFragment
 } from "@saleor/graphql";
 import { RequireOnlyOne } from "@saleor/misc";
 import {
@@ -155,7 +155,7 @@ export const createVariantChannels = (
 };
 
 export const createChannelsDataWithSaleDiscountPrice = (
-  saleData?: SaleDetails_sale,
+  saleData?: SaleDetailsFragmentFragment,
   data?: ChannelFragmentFragment[]
 ): ChannelSaleData[] => {
   if (data && saleData?.channelListings) {
@@ -168,7 +168,7 @@ export const createChannelsDataWithSaleDiscountPrice = (
 };
 
 export const createChannelsDataWithDiscountPrice = (
-  voucherData?: VoucherDetails_voucher,
+  voucherData?: VoucherDetailsFragmentFragment,
   data?: ChannelFragmentFragment[]
 ): ChannelVoucherData[] => {
   if (data && voucherData?.channelListings) {
@@ -262,7 +262,7 @@ export interface ChannelShippingData {
 }
 
 export const createChannelsDataFromVoucher = (
-  voucherData?: VoucherDetails_voucher
+  voucherData?: VoucherDetailsFragmentFragment
 ) =>
   voucherData?.channelListings?.map(option => ({
     currency: option.channel.currencyCode || option?.minSpent?.currency || "",
@@ -273,7 +273,7 @@ export const createChannelsDataFromVoucher = (
   })) || [];
 
 export const createChannelsDataFromSale = (
-  saleData?: SaleDetails_sale
+  saleData?: SaleDetailsFragmentFragment
 ): ChannelSaleFormData[] =>
   saleData?.channelListings?.map(option => ({
     currency: option.channel.currencyCode || "",
@@ -377,14 +377,14 @@ export const createSortedSaleData = (data?: ChannelFragmentFragment[]) =>
   );
 
 export const createSortedChannelsDataFromVoucher = (
-  data?: VoucherDetails_voucher
+  data?: VoucherDetailsFragmentFragment
 ) =>
   createChannelsDataFromVoucher(data)?.sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name)
   );
 
 export const createSortedChannelsDataFromSale = (
-  data?: SaleDetails_sale
+  data?: SaleDetailsFragmentFragment
 ): ChannelSaleFormData[] =>
   createChannelsDataFromSale(data)?.sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name)

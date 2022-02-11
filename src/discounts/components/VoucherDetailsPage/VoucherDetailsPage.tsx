@@ -16,6 +16,7 @@ import {
 } from "@saleor/discounts/handlers";
 import { DiscountTypeEnum, RequirementsPicker } from "@saleor/discounts/types";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
+import { VoucherDetailsFragmentFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
@@ -33,7 +34,6 @@ import {
   PermissionEnum,
   VoucherTypeEnum
 } from "../../../types/globalTypes";
-import { VoucherDetails_voucher } from "../../types/VoucherDetails";
 import DiscountCategories from "../DiscountCategories";
 import DiscountCollections from "../DiscountCollections";
 import DiscountDates from "../DiscountDates";
@@ -80,7 +80,7 @@ export interface VoucherDetailsPageProps
   activeTab: VoucherDetailsPageTab;
   errors: DiscountErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  voucher: VoucherDetails_voucher;
+  voucher: VoucherDetailsFragmentFragment;
   allChannelsCount: number;
   channelListings: ChannelVoucherData[];
   hasChannelChanged: boolean;

@@ -12,6 +12,7 @@ import TooltipTableCellHeader from "@saleor/components/TooltipTableCellHeader";
 import { commonTooltipMessages } from "@saleor/components/TooltipTableCellHeader/messages";
 import { SaleListUrlSortField } from "@saleor/discounts/urls";
 import { canBeSorted } from "@saleor/discounts/views/SaleList/sort";
+import { SaleFragmentFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ChannelProps, ListActions, ListProps, SortPage } from "@saleor/types";
@@ -21,14 +22,12 @@ import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { SaleList_sales_edges_node } from "../../types/SaleList";
-
 export interface SaleListProps
   extends ListProps,
     ListActions,
     SortPage<SaleListUrlSortField>,
     ChannelProps {
-  sales: SaleList_sales_edges_node[];
+  sales: SaleFragmentFragment[];
 }
 
 const useStyles = makeStyles(

@@ -2,13 +2,11 @@ import { FetchResult } from "@apollo/client";
 import { FormData } from "@saleor/discounts/components/SaleCreatePage";
 import { getSaleChannelsVariables } from "@saleor/discounts/handlers";
 import {
-  SaleChannelListingUpdate,
-  SaleChannelListingUpdateVariables
-} from "@saleor/discounts/types/SaleChannelListingUpdate";
-import {
-  SaleCreate,
-  SaleCreateVariables
-} from "@saleor/discounts/types/SaleCreate";
+  SaleChannelListingUpdateMutation,
+  SaleChannelListingUpdateMutationVariables,
+  SaleCreateMutation,
+  SaleCreateMutationVariables
+} from "@saleor/graphql";
 import {
   extractMutationErrors,
   getMutationErrors,
@@ -25,11 +23,11 @@ function discountValueTypeEnum(type: SaleType): DiscountValueTypeEnum {
 
 export function createHandler(
   createSale: (
-    variables: SaleCreateVariables
-  ) => Promise<FetchResult<SaleCreate>>,
+    variables: SaleCreateMutationVariables
+  ) => Promise<FetchResult<SaleCreateMutation>>,
   updateChannels: (options: {
-    variables: SaleChannelListingUpdateVariables;
-  }) => Promise<FetchResult<SaleChannelListingUpdate>>
+    variables: SaleChannelListingUpdateMutationVariables;
+  }) => Promise<FetchResult<SaleChannelListingUpdateMutation>>
 ) {
   return async (formData: FormData) => {
     const response = await createSale({

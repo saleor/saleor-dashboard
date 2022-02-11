@@ -4,14 +4,12 @@ import { VoucherDetailsPageFormData } from "@saleor/discounts/components/Voucher
 import { getChannelsVariables } from "@saleor/discounts/handlers";
 import { DiscountTypeEnum, RequirementsPicker } from "@saleor/discounts/types";
 import {
-  VoucherChannelListingUpdate,
-  VoucherChannelListingUpdateVariables
-} from "@saleor/discounts/types/VoucherChannelListingUpdate";
-import { VoucherDetails_voucher } from "@saleor/discounts/types/VoucherDetails";
-import {
-  VoucherUpdate,
-  VoucherUpdateVariables
-} from "@saleor/discounts/types/VoucherUpdate";
+  VoucherChannelListingUpdateMutation,
+  VoucherChannelListingUpdateMutationVariables,
+  VoucherDetailsFragmentFragment,
+  VoucherUpdateMutation,
+  VoucherUpdateMutationVariables
+} from "@saleor/graphql";
 import { joinDateTime } from "@saleor/misc";
 import {
   DiscountValueTypeEnum,
@@ -19,14 +17,14 @@ import {
 } from "@saleor/types/globalTypes";
 
 export function createUpdateHandler(
-  voucher: VoucherDetails_voucher,
+  voucher: VoucherDetailsFragmentFragment,
   voucherChannelsChoices: ChannelVoucherData[],
   updateVoucher: (
-    variables: VoucherUpdateVariables
-  ) => Promise<FetchResult<VoucherUpdate>>,
+    variables: VoucherUpdateMutationVariables
+  ) => Promise<FetchResult<VoucherUpdateMutation>>,
   updateChannels: (options: {
-    variables: VoucherChannelListingUpdateVariables;
-  }) => Promise<FetchResult<VoucherChannelListingUpdate>>
+    variables: VoucherChannelListingUpdateMutationVariables;
+  }) => Promise<FetchResult<VoucherChannelListingUpdateMutation>>
 ) {
   return async (formData: VoucherDetailsPageFormData) => {
     const { id } = voucher;

@@ -4,11 +4,11 @@ import {
   SaleDetailsPageFormData
 } from "@saleor/discounts/components/SaleDetailsPage";
 import { getSaleChannelsVariables } from "@saleor/discounts/handlers";
-import { SaleDetails_sale } from "@saleor/discounts/types/SaleDetails";
 import {
-  SaleUpdate,
-  SaleUpdateVariables
-} from "@saleor/discounts/types/SaleUpdate";
+  SaleDetailsFragmentFragment,
+  SaleUpdateMutation,
+  SaleUpdateMutationVariables
+} from "@saleor/graphql";
 import { joinDateTime } from "@saleor/misc";
 import { DiscountValueTypeEnum, SaleType } from "@saleor/types/globalTypes";
 
@@ -19,11 +19,11 @@ function discountValueTypeEnum(type: SaleType): DiscountValueTypeEnum {
 }
 
 export function createUpdateHandler(
-  sale: SaleDetails_sale,
+  sale: SaleDetailsFragmentFragment,
   saleChannelsChoices: ChannelSaleFormData[],
   updateSale: (
-    variables: SaleUpdateVariables
-  ) => Promise<FetchResult<SaleUpdate>>
+    variables: SaleUpdateMutationVariables
+  ) => Promise<FetchResult<SaleUpdateMutation>>
 ) {
   return async (formData: SaleDetailsPageFormData) => {
     const { id } = sale;
