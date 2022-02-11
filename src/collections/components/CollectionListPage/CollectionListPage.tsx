@@ -1,5 +1,4 @@
 import { Card } from "@material-ui/core";
-import { CollectionListUrlSortField } from "@saleor/collections/urls";
 import { Container } from "@saleor/components/Container";
 import { getByName } from "@saleor/components/Filter/utils";
 import FilterBar from "@saleor/components/FilterBar";
@@ -7,19 +6,17 @@ import PageHeader from "@saleor/components/PageHeader";
 import { sectionNames } from "@saleor/intl";
 import { Button } from "@saleor/macaw-ui";
 import {
-  ChannelProps,
   FilterPageProps,
-  ListActions,
   PageListProps,
   SearchPageProps,
-  SortPage,
   TabPageProps
 } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { CollectionList_collections_edges_node } from "../../types/CollectionList";
-import CollectionList from "../CollectionList/CollectionList";
+import CollectionList, {
+  CollectionListProps
+} from "../CollectionList/CollectionList";
 import {
   CollectionFilterKeys,
   CollectionListFilterOpts,
@@ -27,13 +24,10 @@ import {
 } from "./filters";
 export interface CollectionListPageProps
   extends PageListProps,
-    ListActions,
     SearchPageProps,
-    SortPage<CollectionListUrlSortField>,
     TabPageProps,
     FilterPageProps<CollectionFilterKeys, CollectionListFilterOpts>,
-    ChannelProps {
-  collections: CollectionList_collections_edges_node[];
+    CollectionListProps {
   channelsCount: number;
 }
 

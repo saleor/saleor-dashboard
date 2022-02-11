@@ -1,9 +1,9 @@
+import { CollectionDetailsQuery, CollectionListQuery } from "@saleor/graphql";
+import { RelayToFlat } from "@saleor/types";
 import { CollectionPublished } from "@saleor/types/globalTypes";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
 import { CollectionListFilterOpts } from "./components/CollectionListPage";
-import { CollectionDetails_collection } from "./types/CollectionDetails";
-import { CollectionList_collections_edges_node } from "./types/CollectionList";
 
 const content = richTextEditorFixtures.richTextEditor;
 
@@ -24,7 +24,7 @@ export const collectionListFilterOpts: CollectionListFilterOpts = {
   }
 };
 
-export const collections: CollectionList_collections_edges_node[] = [
+export const collections: RelayToFlat<CollectionListQuery["collections"]> = [
   {
     __typename: "Collection",
     channelListings: [
@@ -155,7 +155,7 @@ export const collections: CollectionList_collections_edges_node[] = [
 export const collection: (
   placeholderCollectionImage: string,
   placeholderProductImage: string
-) => CollectionDetails_collection = (
+) => CollectionDetailsQuery["collection"] = (
   placeholderCollectionImage,
   placeholderImage
 ) => ({

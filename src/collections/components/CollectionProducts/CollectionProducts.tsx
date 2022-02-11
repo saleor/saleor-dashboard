@@ -14,6 +14,7 @@ import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import { CollectionDetailsQuery } from "@saleor/graphql";
 import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
@@ -21,7 +22,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
 import { ListActions, PageListProps } from "../../../types";
-import { CollectionDetails_collection } from "../../types/CollectionDetails";
 
 const useStyles = makeStyles(
   theme => ({
@@ -53,7 +53,7 @@ const useStyles = makeStyles(
 );
 
 export interface CollectionProductsProps extends PageListProps, ListActions {
-  collection: CollectionDetails_collection;
+  collection: CollectionDetailsQuery["collection"];
   onProductUnassign: (id: string, event: React.MouseEvent<any>) => void;
 }
 

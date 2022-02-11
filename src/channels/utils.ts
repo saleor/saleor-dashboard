@@ -1,4 +1,3 @@
-import { CollectionDetails_collection } from "@saleor/collections/types/CollectionDetails";
 import {
   ChannelSaleFormData,
   SaleDetailsPageFormData
@@ -7,7 +6,8 @@ import { SaleDetails_sale } from "@saleor/discounts/types/SaleDetails";
 import { VoucherDetails_voucher } from "@saleor/discounts/types/VoucherDetails";
 import {
   ChannelDetailsFragmentFragment,
-  ChannelFragmentFragment
+  ChannelFragmentFragment,
+  CollectionDetailsFragmentFragment
 } from "@saleor/graphql";
 import { RequireOnlyOne } from "@saleor/misc";
 import {
@@ -239,7 +239,7 @@ export const createShippingChannelsFromRate = (
   })) || [];
 
 export const createCollectionChannelsData = (
-  collectionData?: CollectionDetails_collection
+  collectionData?: CollectionDetailsFragmentFragment
 ) => {
   if (collectionData?.channelListings) {
     const collectionDataArr = collectionData?.channelListings.map(listing => ({

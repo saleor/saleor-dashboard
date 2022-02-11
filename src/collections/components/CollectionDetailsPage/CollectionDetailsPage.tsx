@@ -9,6 +9,7 @@ import Savebar from "@saleor/components/Savebar";
 import SeoForm from "@saleor/components/SeoForm";
 import { CollectionChannelListingErrorFragment } from "@saleor/fragments/types/CollectionChannelListingErrorFragment";
 import { CollectionErrorFragment } from "@saleor/fragments/types/CollectionErrorFragment";
+import { CollectionDetailsQuery } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -18,7 +19,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { ChannelProps, ListActions, PageListProps } from "../../../types";
-import { CollectionDetails_collection } from "../../types/CollectionDetails";
 import CollectionDetails from "../CollectionDetails/CollectionDetails";
 import { CollectionImage } from "../CollectionImage/CollectionImage";
 import CollectionProducts from "../CollectionProducts/CollectionProducts";
@@ -30,7 +30,7 @@ export interface CollectionDetailsPageProps
     ChannelProps {
   channelsCount: number;
   channelsErrors: CollectionChannelListingErrorFragment[];
-  collection: CollectionDetails_collection;
+  collection: CollectionDetailsQuery["collection"];
   currentChannels: ChannelCollectionData[];
   errors: CollectionErrorFragment[];
   hasChannelChanged: boolean;

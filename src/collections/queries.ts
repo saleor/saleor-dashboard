@@ -1,23 +1,6 @@
 import { gql } from "@apollo/client";
-import {
-  collectionDetailsFragment,
-  collectionFragment,
-  collectionProductFragment
-} from "@saleor/fragments/collections";
-import makeQuery from "@saleor/hooks/makeQuery";
-
-import { TypedQuery } from "../queries";
-import {
-  CollectionDetails,
-  CollectionDetailsVariables
-} from "./types/CollectionDetails";
-import {
-  CollectionList,
-  CollectionListVariables
-} from "./types/CollectionList";
 
 export const collectionList = gql`
-  ${collectionFragment}
   query CollectionList(
     $first: Int
     $after: String
@@ -53,14 +36,8 @@ export const collectionList = gql`
     }
   }
 `;
-export const useCollectionListQuery = makeQuery<
-  CollectionList,
-  CollectionListVariables
->(collectionList);
 
 export const collectionDetails = gql`
-  ${collectionDetailsFragment}
-  ${collectionProductFragment}
   query CollectionDetails(
     $id: ID!
     $first: Int
@@ -86,7 +63,3 @@ export const collectionDetails = gql`
     }
   }
 `;
-export const TypedCollectionDetailsQuery = TypedQuery<
-  CollectionDetails,
-  CollectionDetailsVariables
->(collectionDetails);

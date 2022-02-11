@@ -1,11 +1,11 @@
 import { OutputData } from "@editorjs/editorjs";
 import { ChannelCollectionData } from "@saleor/channels/utils";
-import { CollectionDetails_collection } from "@saleor/collections/types/CollectionDetails";
 import { createChannelsChangeHandler } from "@saleor/collections/utils";
 import { COLLECTION_DETAILS_FORM_ID } from "@saleor/collections/views/consts";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
+import { CollectionDetailsFragmentFragment } from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange
@@ -44,14 +44,14 @@ export type UseCollectionUpdateFormResult = CommonUseFormResultWithHandlers<
 
 export interface CollectionUpdateFormProps {
   children: (props: UseCollectionUpdateFormResult) => React.ReactNode;
-  collection: CollectionDetails_collection;
+  collection: CollectionDetailsFragmentFragment;
   currentChannels: ChannelCollectionData[];
   setChannels: (data: ChannelCollectionData[]) => void;
   onSubmit: (data: CollectionUpdateData) => Promise<any[]>;
 }
 
 const getInitialData = (
-  collection: CollectionDetails_collection,
+  collection: CollectionDetailsFragmentFragment,
   currentChannels: ChannelCollectionData[]
 ): CollectionUpdateFormData => ({
   backgroundImageAlt: collection?.backgroundImage?.alt || "",
@@ -65,7 +65,7 @@ const getInitialData = (
 });
 
 function useCollectionUpdateForm(
-  collection: CollectionDetails_collection,
+  collection: CollectionDetailsFragmentFragment,
   currentChannels: ChannelCollectionData[],
   setChannels: (data: ChannelCollectionData[]) => void,
   onSubmit: (data: CollectionUpdateData) => Promise<any[]>

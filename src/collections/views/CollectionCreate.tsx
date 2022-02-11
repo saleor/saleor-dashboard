@@ -3,6 +3,10 @@ import { createCollectionChannels } from "@saleor/channels/utils";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import {
+  useCollectionChannelListingUpdateMutation,
+  useCreateCollectionMutation
+} from "@saleor/graphql";
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -21,10 +25,6 @@ import { useIntl } from "react-intl";
 import { CollectionCreateInput } from "../../types/globalTypes";
 import CollectionCreatePage from "../components/CollectionCreatePage/CollectionCreatePage";
 import { CollectionCreateData } from "../components/CollectionCreatePage/form";
-import {
-  useCollectionChannelListingUpdate,
-  useCollectionCreateMutation
-} from "../mutations";
 import {
   collectionAddUrl,
   CollectionCreateUrlQueryParams,
@@ -54,7 +54,7 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
   const [
     updateChannels,
     updateChannelsOpts
-  ] = useCollectionChannelListingUpdate({});
+  ] = useCollectionChannelListingUpdateMutation({});
   const { availableChannels } = useAppChannel(false);
 
   const allChannels = createCollectionChannels(
@@ -81,7 +81,7 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
     { formId: COLLECTION_CREATE_FORM_ID }
   );
 
-  const [createCollection, createCollectionOpts] = useCollectionCreateMutation({
+  const [createCollection, createCollectionOpts] = useCreateCollectionMutation({
     onCompleted: data => {
       if (data.collectionCreate.errors.length === 0) {
         notify({

@@ -14,14 +14,19 @@ import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import TooltipTableCellHeader from "@saleor/components/TooltipTableCellHeader";
 import { commonTooltipMessages } from "@saleor/components/TooltipTableCellHeader/messages";
+import { CollectionListQuery } from "@saleor/graphql";
 import { makeStyles, Pill } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
-import { ChannelProps, ListActions, ListProps, SortPage } from "@saleor/types";
+import {
+  ChannelProps,
+  ListActions,
+  ListProps,
+  RelayToFlat,
+  SortPage
+} from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { CollectionList_collections_edges_node } from "../../types/CollectionList";
 
 const useStyles = makeStyles(
   theme => ({
@@ -48,12 +53,12 @@ const useStyles = makeStyles(
   { name: "CollectionList" }
 );
 
-interface CollectionListProps
+export interface CollectionListProps
   extends ListProps,
     ListActions,
     SortPage<CollectionListUrlSortField>,
     ChannelProps {
-  collections: CollectionList_collections_edges_node[];
+  collections: RelayToFlat<CollectionListQuery["collections"]>;
 }
 
 const numberOfColumns = 4;
