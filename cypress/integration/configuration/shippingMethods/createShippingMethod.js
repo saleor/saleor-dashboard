@@ -6,8 +6,10 @@ import faker from "faker";
 import { urlList } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
 import { createCheckout } from "../../../support/api/requests/Checkout";
+import { createVariant } from "../../../support/api/requests/Product";
 import { createWarehouse } from "../../../support/api/requests/Warehouse";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
+import { createWaitingForCaptureOrder } from "../../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
 import { isShippingAvailableInCheckout } from "../../../support/api/utils/storeFront/checkoutUtils";
@@ -19,15 +21,21 @@ import {
 } from "../../../support/pages/shippingMethodPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Create shipping method", () => {
+  describe("As a staff user I want to create shipping zone and rate", () => {
     const startsWith = "CreateShippingMethods-";
     const name = `${startsWith}${faker.datatype.number()}`;
+    const secondName = `${startsWith}${faker.datatype.number()}`;
     const price = 8;
+    const secondVariantPrice = 2;
     const deliveryTime = { min: 2, max: 5 };
     let defaultChannel;
-    let plAddress;
+    let address;
     let variantsList;
+    let secondVariantsList;
     let warehouse;
+    let attribute;
+    let category;
+    let productType;
 
     before(() => {
       cy.clearSessionData().loginUserViaRequest();
@@ -41,8 +49,8 @@ filterTests({ definedTags: ["all"] }, () => {
           cy.fixture("addresses");
         })
         .then(addresses => {
-          plAddress = addresses.plAddress;
-          createWarehouse({ name, address: plAddress });
+          address = addresses.usAddress;
+          createWarehouse({ name, address });
         })
         .then(warehouseResp => {
           warehouse = warehouseResp;
@@ -56,6 +64,10 @@ filterTests({ definedTags: ["all"] }, () => {
             category: categoryResp,
             attribute: attributeResp
           }) => {
+            attribute = attributeResp;
+            category = categoryResp;
+            productType = productTypeResp;
+
             productsUtils.createProductInChannel({
               name,
               channelId: defaultChannel.id,
@@ -63,12 +75,27 @@ filterTests({ definedTags: ["all"] }, () => {
               attributeId: attributeResp.id,
               categoryId: categoryResp.id,
               warehouseId: warehouse.id,
-              quantityInWarehouse: 10
+              quantityInWarehouse: 10,
+              price
             });
           }
         )
-        .then(({ variantsList: variantsListResp }) => {
+        .then(({ variantsList: variantsListResp, product }) => {
           variantsList = variantsListResp;
+          createVariant({
+            productId: product.id,
+            sku: secondName,
+            attributeId: attribute.id,
+            attributeName: "value2",
+            warehouseId: warehouse.id,
+            quantityInWarehouse: 10,
+            channelId: defaultChannel.id,
+            price: secondVariantPrice,
+            weight: 10
+          });
+        })
+        .then(variantsListResp => {
+          secondVariantsList = variantsListResp;
         });
     });
 
@@ -76,7 +103,7 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("should create price based shipping method", () => {
+    it("should be able to create price based shipping method. TC: SALEOR_0803", () => {
       const shippingName = `${startsWith}${faker.datatype.number()}`;
       cy.clearSessionData().loginUserViaRequest(
         "auth",
@@ -86,32 +113,43 @@ filterTests({ definedTags: ["all"] }, () => {
       createShippingZone(
         shippingName,
         warehouse.name,
-        plAddress.countryFullName,
+        address.countryFullName,
         defaultChannel.name
       );
       createShippingRate({
         rateName: shippingName,
         price,
+        priceLimits: { min: price, max: 100 },
         rateOption: rateOptions.PRICE_OPTION,
         deliveryTime
       });
-
-      createCheckout({
+      createWaitingForCaptureOrder({
         channelSlug: defaultChannel.slug,
         email: "test@example.com",
         variantsList,
-        address: plAddress,
-        auth: "token"
-      }).then(({ checkout }) => {
-        const isShippingAvailable = isShippingAvailableInCheckout(
-          checkout,
-          shippingName
-        );
-        expect(isShippingAvailable).to.be.true;
-      });
+        address,
+        shippingMethodName: shippingName
+      })
+        .then(({ order }) => {
+          expect(order.id).to.be.ok;
+          createCheckout({
+            channelSlug: defaultChannel.slug,
+            email: "test@example.com",
+            variantsList: secondVariantsList,
+            address,
+            auth: "token"
+          });
+        })
+        .then(({ checkout }) => {
+          const isShippingAvailable = isShippingAvailableInCheckout(
+            checkout,
+            shippingName
+          );
+          expect(isShippingAvailable).to.be.false;
+        });
     });
 
-    it("should create weight based shipping method", () => {
+    it("should be able to create weight based shipping method. TC: SALEOR_0804", () => {
       const shippingName = `${startsWith}${faker.datatype.number()}`;
       cy.clearSessionData().loginUserViaRequest(
         "auth",
@@ -121,28 +159,40 @@ filterTests({ definedTags: ["all"] }, () => {
       createShippingZone(
         shippingName,
         warehouse.name,
-        plAddress.countryFullName,
+        address.countryFullName,
         defaultChannel.name
       );
       createShippingRate({
         rateName: shippingName,
         price,
         rateOption: rateOptions.WEIGHT_OPTION,
-        deliveryTime
+        deliveryTime,
+        weightLimits: { min: 5, max: 10 }
       });
-      createCheckout({
+      createWaitingForCaptureOrder({
         channelSlug: defaultChannel.slug,
         email: "test@example.com",
-        variantsList,
-        address: plAddress,
-        auth: "token"
-      }).then(({ checkout }) => {
-        const isShippingAvailable = isShippingAvailableInCheckout(
-          checkout,
-          shippingName
-        );
-        expect(isShippingAvailable).to.be.true;
-      });
+        variantsList: secondVariantsList,
+        address,
+        shippingMethodName: shippingName
+      })
+        .then(({ order }) => {
+          expect(order.id).to.be.ok;
+          createCheckout({
+            channelSlug: defaultChannel.slug,
+            email: "test@example.com",
+            variantsList,
+            address,
+            auth: "token"
+          });
+        })
+        .then(({ checkout }) => {
+          const isShippingAvailable = isShippingAvailableInCheckout(
+            checkout,
+            shippingName
+          );
+          expect(isShippingAvailable).to.be.false;
+        });
     });
   });
 });

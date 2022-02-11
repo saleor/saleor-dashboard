@@ -80,14 +80,16 @@ export function createShippingRate({
   price,
   rateOption,
   weightLimits,
-  deliveryTime
+  deliveryTime,
+  priceLimits
 }) {
   enterAndFillUpShippingRate({
     rateName,
     price,
     rateOption,
     weightLimits,
-    deliveryTime
+    deliveryTime,
+    priceLimits
   });
   return saveRate();
 }
@@ -97,6 +99,7 @@ export function enterAndFillUpShippingRate({
   price,
   rateOption,
   weightLimits,
+  priceLimits,
   deliveryTime
 }) {
   cy.get(rateOption).click();
@@ -104,6 +107,7 @@ export function enterAndFillUpShippingRate({
     rateName,
     price,
     weightLimits,
+    priceLimits,
     deliveryTime
   });
 }
@@ -112,6 +116,7 @@ export function fillUpShippingRate({
   rateName,
   price,
   weightLimits,
+  priceLimits,
   deliveryTime
 }) {
   cy.waitForProgressBarToNotBeVisible()
@@ -123,7 +128,10 @@ export function fillUpShippingRate({
     fillUpDeliveryTime(deliveryTime);
   }
   if (weightLimits) {
-    fillUpWeightLimits(weightLimits);
+    fillUpLimits(weightLimits);
+  }
+  if (priceLimits) {
+    fillUpLimits(priceLimits);
   }
   cy.get(SHIPPING_RATE_DETAILS.priceInput).each($priceInput => {
     cy.wrap($priceInput).clearAndType(price);
@@ -173,10 +181,10 @@ export function saveRateAfterUpdate() {
     .waitForRequestAndCheckIfNoErrors(`@ShippingMethodChannelListingUpdate`);
 }
 
-export function fillUpWeightLimits({ max, min }) {
-  cy.get(SHIPPING_RATE_DETAILS.minWeightInput)
+export function fillUpLimits({ max, min }) {
+  cy.get(SHIPPING_RATE_DETAILS.minValueInput)
     .type(min)
-    .get(SHIPPING_RATE_DETAILS.maxWeightInput)
+    .get(SHIPPING_RATE_DETAILS.maxValueInput)
     .type(max);
 }
 
