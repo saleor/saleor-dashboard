@@ -164,7 +164,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               },
               ...extensionMenuItems
             ]}
-            data-test="menu"
+            data-test-id="menu"
           />
         }
         title={intl.formatMessage(sectionNames.products)}
@@ -198,7 +198,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
         />
         <ButtonWithSelect
           options={extensionCreateButtonItems}
-          data-test="add-product"
+          data-test-id="add-product"
           disabled={limitReached}
           onClick={onAdd}
         >

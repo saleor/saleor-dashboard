@@ -25,7 +25,7 @@ const MaximalButton: React.FC<MaximalButtonProps> = ({ onClick }) => {
     <Button
       className={classes.button}
       onClick={onClick}
-      data-test="setMaximalQuantityUnfulfilledButton"
+      data-test-id="set-maximal-quantity-unfulfilled-button"
     >
       <FormattedMessage
         defaultMessage="Set maximal quantities"

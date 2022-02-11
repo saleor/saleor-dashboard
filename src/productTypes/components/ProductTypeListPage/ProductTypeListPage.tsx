@@ -58,7 +58,11 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.productTypes)}>
-        <Button variant="primary" onClick={onAdd} data-test-id="addProductType">
+        <Button
+          variant="primary"
+          onClick={onAdd}
+          data-test-id="add-product-type"
+        >
           <FormattedMessage
             defaultMessage="create product type"
             description="button"

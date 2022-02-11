@@ -25,7 +25,7 @@ const GiftCardExpirySettingsCard: React.FC<GiftCardExpirySettingsCardProps> = ({
   const intl = useIntl();
 
   return (
-    <Card data-test="giftCardSettings">
+    <Card data-test-id="gift-card-settings">
       <CardTitle title={intl.formatMessage(messages.expiryDateTitle)} />
       <CardContent>
         <GiftCardSettingsExpirySelect

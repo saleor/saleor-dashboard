@@ -41,8 +41,7 @@ export const FilterNumericField: React.FC<FilterNumericFieldProps> = ({
         </div>
         <TextField
           {...(isMultiple && { "data-test-range-type": "min" })}
-          data-test={filterTestingContext}
-          data-test-id={filter.name}
+          data-test-id={filterTestingContext + filter.name}
           fullWidth
           name={filter.name + (isMultiple ? "_min" : "")}
           InputProps={{
@@ -72,8 +71,7 @@ export const FilterNumericField: React.FC<FilterNumericFieldProps> = ({
           <div className={classes.inputRange}>
             <div className={classes.spacer} />
             <TextField
-              data-test={filterTestingContext}
-              data-test-id={filter.name}
+              data-test-id={filterTestingContext + filter.name}
               data-test-range-type="max"
               fullWidth
               name={filter.name + "_max"}

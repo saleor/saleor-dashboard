@@ -21,7 +21,7 @@ const OrderFulfillmentSettings: React.FC<OrderFulfillmentSettingsProps> = ({
   const intl = useIntl();
 
   return (
-    <Card data-test="OrderFulfillmentSettings">
+    <Card data-test-id="order-fulfillment-settings">
       <CardTitle
         title={intl.formatMessage({
           defaultMessage: "Fulfillment settings",
@@ -48,7 +48,7 @@ const OrderFulfillmentSettings: React.FC<OrderFulfillmentSettingsProps> = ({
           checked={data.fulfillmentAutoApprove}
           onChange={onChange}
           disabled={disabled}
-          data-test="fulfillmentAutoApproveCheckbox"
+          data-test-id="fulfillment-auto-approve-checkbox"
         />
         <FormSpacer />
         <ControlledCheckbox
@@ -70,7 +70,7 @@ const OrderFulfillmentSettings: React.FC<OrderFulfillmentSettingsProps> = ({
           checked={data.fulfillmentAllowUnpaid}
           onChange={onChange}
           disabled={disabled}
-          data-test="fulfillmentAllowUnpaidCheckbox"
+          data-test-id="fulfillment-allow-unpaid-checkbox"
         />
       </CardContent>
     </Card>

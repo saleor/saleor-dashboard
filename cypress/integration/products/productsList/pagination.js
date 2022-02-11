@@ -16,10 +16,9 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
       cy.visit(urlList.products);
     });
+
     it("Should go to the next page", () => {
-      cy.softExpectSkeletonIsVisible();
-      cy.get(PRODUCTS_LIST.productsList)
-        .should("be.visible")
+      cy.softExpectSkeletonIsVisible()
         .get(PRODUCTS_LIST.emptyProductRow)
         .should("not.exist")
         .get(PRODUCTS_LIST.previousPagePagination)

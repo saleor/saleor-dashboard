@@ -16,7 +16,12 @@ export function createVoucher({
   voucherCode,
   voucherValue,
   discountOption,
-  channelName
+  channelName,
+  usageLimit,
+  applyOnePerCustomer,
+  onlyStaff,
+  minOrderValue,
+  minAmountOfItems
 }) {
   cy.get(VOUCHERS_SELECTORS.createVoucherButton).click();
   selectChannelInDetailsPages(channelName);
@@ -26,6 +31,29 @@ export function createVoucher({
     .click();
   if (discountOption !== discountOptions.SHIPPING) {
     cy.get(VOUCHERS_SELECTORS.discountValueInputs).type(voucherValue);
+  }
+  if (usageLimit) {
+    cy.get(VOUCHERS_SELECTORS.limits.usageLimitCheckbox)
+      .click()
+      .type(usageLimit);
+  }
+  if (applyOnePerCustomer) {
+    cy.get(VOUCHERS_SELECTORS.limits.applyOncePerCustomerCheckbox).click();
+  }
+  if (onlyStaff) {
+    cy.get(VOUCHERS_SELECTORS.limits.onlyForStaffCheckbox).click();
+  }
+  if (minOrderValue) {
+    cy.get(VOUCHERS_SELECTORS.requirements.minOrderValueCheckbox)
+      .click()
+      .get(VOUCHERS_SELECTORS.requirements.minOrderValueInput)
+      .type(minOrderValue);
+  }
+  if (minAmountOfItems) {
+    cy.get(VOUCHERS_SELECTORS.requirements.minAmountOfItemsCheckbox)
+      .click()
+      .get(VOUCHERS_SELECTORS.requirements.minCheckoutItemsQuantityInput)
+      .type(minAmountOfItems);
   }
   cy.get(BUTTON_SELECTORS.confirm)
     .click()
