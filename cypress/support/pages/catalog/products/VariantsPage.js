@@ -72,6 +72,7 @@ export function createVariant({
   }
   cy.get(VARIANTS_SELECTORS.saveButton)
     .click()
+    .confirmationMessageShouldDisappear()
     .get(BUTTON_SELECTORS.back)
     .click()
     .addAliasToGraphRequest("ProductChannelListingUpdate");

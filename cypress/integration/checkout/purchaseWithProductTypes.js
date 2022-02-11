@@ -12,7 +12,10 @@ import {
   completeCheckout,
   createCheckout
 } from "../../support/api/requests/Checkout";
-import { getOrder } from "../../support/api/requests/Order";
+import {
+  getOrder,
+  updateOrdersSettings
+} from "../../support/api/requests/Order";
 import {
   createDigitalContent,
   createTypeProduct
@@ -54,6 +57,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
       deleteProductsStartsWith(startsWith);
       deleteShippingStartsWith(startsWith);
+      updateOrdersSettings();
       getDefaultChannel().then(channelResp => (defaultChannel = channelResp));
       cy.fixture("addresses")
         .then(addresses => {

@@ -10,5 +10,5 @@ export const VARIANTS_SELECTORS = {
   warehouseOption: "[role='menuitem']",
   saveButton: "[data-test='button-bar-confirm']",
   skuInputInAddVariant: "[name='sku']",
-  selectOption: "[data-test-id='multiautocomplete-select-option']"
+  selectOption: "[data-test-id='multi-autocomplete-select-option']"
 };

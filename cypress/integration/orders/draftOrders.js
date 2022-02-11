@@ -22,7 +22,7 @@ import { selectChannelInPicker } from "../../support/pages/channelsPage";
 import { finalizeDraftOrder } from "../../support/pages/draftOrderPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Draft orders", () => {
+  describe("As an admin I want to manage draft orders", () => {
     const startsWith = "CyDraftOrders-";
     const randomName = startsWith + faker.datatype.number();
 
@@ -86,7 +86,7 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("should move draft order to orders", () => {
+    it("should move draft order to orders. TC: SALEOR_2103", () => {
       cy.visit(urlList.orders);
       cy.softExpectSkeletonIsVisible();
       cy.get(ORDERS_SELECTORS.createOrder).click();

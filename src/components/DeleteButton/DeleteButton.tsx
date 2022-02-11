@@ -35,7 +35,7 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({
       variant="primary"
       onClick={onClick}
       className={classes.button}
-      data-test-id="button-bar-delete"
+      data-test="button-bar-delete"
       disabled={disabled}
     >
       {label || intl.formatMessage(buttonMessages.delete)}
