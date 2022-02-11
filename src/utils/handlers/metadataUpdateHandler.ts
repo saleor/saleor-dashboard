@@ -14,6 +14,7 @@ import {
   UpdatePrivateMetadataVariables
 } from "../metadata/types/UpdatePrivateMetadata";
 import { filterMetadataArray } from "./filterMetadataArray";
+import { areMetadataArraysEqual } from "./metadataUpdateHelpers";
 
 interface ObjectWithMetadata {
   id: string;
@@ -36,12 +37,21 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
   ): Promise<Array<MetadataErrorFragment | TError>> => {
     const errors = await update(data);
 
+    const hasMetadataChanged = !areMetadataArraysEqual(
+      initial.metadata,
+      data.metadata
+    );
+    const hasPrivateMetadataChanged = !areMetadataArraysEqual(
+      initial.privateMetadata,
+      data.privateMetadata
+    );
+
     if (errors.length > 0) {
       return errors;
     }
 
     if (errors.length === 0) {
-      if (data.metadata) {
+      if (data.metadata && hasMetadataChanged) {
         const initialKeys = initial.metadata.map(m => m.key);
         const modifiedKeys = data.metadata.map(m => m.key);
 
@@ -63,7 +73,7 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
         }
       }
 
-      if (data.privateMetadata) {
+      if (data.privateMetadata && hasPrivateMetadataChanged) {
         const initialKeys = initial.privateMetadata.map(m => m.key);
         const modifiedKeys = data.privateMetadata.map(m => m.key);
 
