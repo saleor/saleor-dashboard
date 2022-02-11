@@ -8,12 +8,12 @@ import {
   prepareAttributesInput
 } from "@saleor/attributes/utils/handlers";
 import { ChannelData } from "@saleor/channels/utils";
-import {
-  FileUpload,
-  FileUploadVariables
-} from "@saleor/files/types/FileUpload";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
+import {
+  FileUploadMutation,
+  FileUploadMutationVariables
+} from "@saleor/graphql";
 import { weight } from "@saleor/misc";
 import { ProductCreateData } from "@saleor/products/components/ProductCreatePage/form";
 import {
@@ -76,8 +76,8 @@ const getSimpleProductVariables = (
 export function createHandler(
   productType: ProductType_productType,
   uploadFile: (
-    variables: FileUploadVariables
-  ) => Promise<FetchResult<FileUpload>>,
+    variables: FileUploadMutationVariables
+  ) => Promise<FetchResult<FileUploadMutation>>,
   productCreate: (
     variables: ProductCreateVariables
   ) => Promise<FetchResult<ProductCreate>>,

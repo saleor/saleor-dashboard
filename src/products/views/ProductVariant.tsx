@@ -14,8 +14,10 @@ import { AttributeInput } from "@saleor/components/Attributes";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
-import { useFileUploadMutation } from "@saleor/files/mutations";
-import { useAttributeValueDeleteMutation } from "@saleor/graphql";
+import {
+  useAttributeValueDeleteMutation,
+  useFileUploadMutation
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";

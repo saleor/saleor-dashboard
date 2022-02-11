@@ -4,12 +4,10 @@ import {
   AttributeInputData
 } from "@saleor/components/Attributes";
 import {
-  FileUpload,
-  FileUploadVariables
-} from "@saleor/files/types/FileUpload";
-import {
   AttributeValueDeleteMutation,
-  AttributeValueDeleteMutationVariables
+  AttributeValueDeleteMutationVariables,
+  FileUploadMutation,
+  FileUploadMutationVariables
 } from "@saleor/graphql";
 import {
   FormsetAtomicData,
@@ -275,8 +273,8 @@ export const prepareAttributesInput = ({
 export const handleUploadMultipleFiles = async (
   attributesWithNewFileValue: FormsetData<null, File>,
   uploadFile: (
-    variables: FileUploadVariables
-  ) => Promise<FetchResult<FileUpload>>
+    variables: FileUploadMutationVariables
+  ) => Promise<FetchResult<FileUploadMutation>>
 ) =>
   Promise.all(
     getFileValuesToUploadFromAttributes(attributesWithNewFileValue).map(

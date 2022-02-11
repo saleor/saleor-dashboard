@@ -4,7 +4,7 @@ import { AttributeValueEditDialogFormData } from "@saleor/attributes/utils/data"
 import { ColorPicker } from "@saleor/components/ColorPicker";
 import FileUploadField from "@saleor/components/FileUploadField";
 import { RadioGroupField } from "@saleor/components/RadioGroupField";
-import { useFileUploadMutation } from "@saleor/files/mutations";
+import { useFileUploadMutation } from "@saleor/graphql";
 import { UseFormResult } from "@saleor/hooks/useForm";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { errorMessages } from "@saleor/intl";

@@ -11,10 +11,6 @@ import {
 } from "@saleor/attributes/utils/handlers";
 import { ChannelData } from "@saleor/channels/utils";
 import { VALUES_PAGINATE_BY } from "@saleor/config";
-import {
-  FileUpload,
-  FileUploadVariables
-} from "@saleor/files/types/FileUpload";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import { BulkStockErrorFragment } from "@saleor/fragments/types/BulkStockErrorFragment";
 import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
@@ -23,7 +19,9 @@ import { StockErrorFragment } from "@saleor/fragments/types/StockErrorFragment";
 import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
 import {
   AttributeValueDeleteMutation,
-  AttributeValueDeleteMutationVariables
+  AttributeValueDeleteMutationVariables,
+  FileUploadMutation,
+  FileUploadMutationVariables
 } from "@saleor/graphql";
 import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
 import {
@@ -82,8 +80,8 @@ export function createUpdateHandler(
   product: ProductDetails_product,
   allChannels: ChannelData[],
   uploadFile: (
-    variables: FileUploadVariables
-  ) => Promise<FetchResult<FileUpload>>,
+    variables: FileUploadMutationVariables
+  ) => Promise<FetchResult<FileUploadMutation>>,
   updateProduct: (
     variables: ProductUpdateVariables
   ) => Promise<FetchResult<ProductUpdate>>,

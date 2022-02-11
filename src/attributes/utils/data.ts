@@ -3,7 +3,6 @@ import {
   AttributeInput,
   AttributeInputData
 } from "@saleor/components/Attributes";
-import { FileUpload } from "@saleor/files/types/FileUpload";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
 import { SelectedVariantAttributeFragment } from "@saleor/fragments/types/SelectedVariantAttributeFragment";
@@ -13,7 +12,8 @@ import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
   AttributeValueDeleteMutation,
-  AttributeValueInput
+  AttributeValueInput,
+  FileUploadMutation
 } from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { PageDetails_page_attributes } from "@saleor/pages/types/PageDetails";
@@ -199,7 +199,7 @@ export const isFileValueUnused = (
 };
 
 export const mergeFileUploadErrors = (
-  uploadFilesResult: Array<FetchResult<FileUpload>>
+  uploadFilesResult: Array<FetchResult<FileUploadMutation>>
 ): UploadErrorFragment[] =>
   uploadFilesResult.reduce((errors, uploadFileResult) => {
     const uploadErrors = uploadFileResult?.data?.fileUpload?.errors;
@@ -266,7 +266,7 @@ export const getAttributesOfRemovedFiles = (
 
 export const getAttributesOfUploadedFiles = (
   fileValuesToUpload: FormsetData<null, File>,
-  uploadFilesResult: Array<FetchResult<FileUpload>>
+  uploadFilesResult: Array<FetchResult<FileUploadMutation>>
 ): AtributesOfFiles[] =>
   uploadFilesResult.map((uploadFileResult, index) => {
     const attribute = fileValuesToUpload[index];
@@ -281,7 +281,7 @@ export const getAttributesOfUploadedFiles = (
 
 export const getAttributesAfterFileAttributesUpdate = (
   attributesWithNewFileValue: FormsetData<null, File>,
-  uploadFilesResult: Array<FetchResult<FileUpload>>
+  uploadFilesResult: Array<FetchResult<FileUploadMutation>>
 ): AttributeValueInput[] => {
   const removedFileValues = getFileValuesRemovedFromAttributes(
     attributesWithNewFileValue

@@ -17,8 +17,10 @@ import {
   DEFAULT_INITIAL_SEARCH_DATA,
   VALUES_PAGINATE_BY
 } from "@saleor/config";
-import { useFileUploadMutation } from "@saleor/files/mutations";
-import { useAttributeValueDeleteMutation } from "@saleor/graphql";
+import {
+  useAttributeValueDeleteMutation,
+  useFileUploadMutation
+} from "@saleor/graphql";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useChannels from "@saleor/hooks/useChannels";
