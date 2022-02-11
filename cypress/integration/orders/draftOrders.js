@@ -22,7 +22,7 @@ import { selectChannelInPicker } from "../../support/pages/channelsPage";
 import { finalizeDraftOrder } from "../../support/pages/draftOrderPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Draft orders", () => {
+  describe("As an admin I want to manage draft orders", () => {
     const startsWith = "CyDraftOrders-";
     const randomName = startsWith + faker.datatype.number();
 

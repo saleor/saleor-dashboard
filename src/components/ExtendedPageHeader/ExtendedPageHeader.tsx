@@ -5,10 +5,7 @@ import React from "react";
 const useStyles = makeStyles(
   theme => ({
     action: {
-      flex: "0 0 auto",
-      [theme.breakpoints.down("sm")]: {
-        marginTop: theme.spacing()
-      }
+      flex: "0 0 auto"
     },
     block: {
       [theme.breakpoints.down("xs")]: {
@@ -37,9 +34,12 @@ const useStyles = makeStyles(
       display: "flex",
       marginBottom: theme.spacing(2)
     },
-    title: {
+    titleRow: {
       flex: 1,
-      paddingBottom: theme.spacing(2)
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between"
     }
   }),
   {
@@ -67,7 +67,7 @@ const ExtendedPageHeader: React.FC<ExtendedPageHeaderProps> = props => {
         [classes.block]: !inline
       })}
     >
-      {title}
+      <div className={classes.titleRow}>{title}</div>
       <div className={classes.action}>{children}</div>
     </div>
   );

@@ -226,9 +226,9 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         .then(() => {
           checkoutShippingMethodUpdate(checkout.id, shippingMethod.id);
         })
-        .then(({ checkoutErrors }) => {
+        .then(({ errors }) => {
           expect(
-            checkoutErrors,
+            errors,
             "Should be not possible to add shipping method without shipping address"
           ).to.have.lengthOf(1);
           checkoutShippingAddressUpdate(checkout.id, address);

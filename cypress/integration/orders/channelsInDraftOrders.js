@@ -17,7 +17,7 @@ import {
 } from "../../support/pages/channelsPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Channels in draft orders", () => {
+  describe("As an admin I want to manage channels in draft orders", () => {
     const startsWith = "CyChannelInDraftOrders-";
     const randomName = startsWith + faker.datatype.number();
 

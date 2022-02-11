@@ -33,7 +33,7 @@ import { selectChannelInPicker } from "../../support/pages/channelsPage";
 import { finalizeDraftOrder } from "../../support/pages/draftOrderPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Orders", () => {
+  describe("As an admin I want to manage orders", () => {
     const startsWith = "CyOrders-";
     const randomName = startsWith + faker.datatype.number();
 

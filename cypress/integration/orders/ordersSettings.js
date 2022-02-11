@@ -23,7 +23,7 @@ import filterTests from "../../support/filterTests";
 import { selectAutomaticcallyConfirmAllOrdersAndSave } from "../../support/pages/orders/ordersSettingsPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Orders", () => {
+  describe("As an admin I want to automatically confirm orders", () => {
     const startsWith = "CyOrders-";
     const randomName = startsWith + faker.datatype.number();
 
