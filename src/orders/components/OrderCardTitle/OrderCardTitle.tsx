@@ -1,6 +1,7 @@
 import { Typography } from "@material-ui/core";
+import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import DefaultCardTitle from "@saleor/components/CardTitle";
-import { makeStyles, Pill } from "@saleor/macaw-ui";
+import { CircleIndicator, makeStyles } from "@saleor/macaw-ui";
 import { StatusType } from "@saleor/types";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import camelCase from "lodash/camelCase";
@@ -32,6 +33,10 @@ const useStyles = makeStyles(
       lineHeight: "29px",
       letterSpacing: "0.02em",
       textAlign: "left"
+    },
+    indicator: {
+      display: "flex",
+      alignItems: "center"
     }
   }),
   { name: "OrderCardTitle" }
@@ -109,7 +114,7 @@ const selectStatus = (status: CardTitleStatus) => {
     case FulfillmentStatus.CANCELED:
       return StatusType.ERROR;
     default:
-      return StatusType.WARNING;
+      return StatusType.ERROR;
   }
 };
 
@@ -137,37 +142,21 @@ const OrderCardTitle: React.FC<OrderCardTitleProps> = ({
     0
   );
 
-  const title = (
-    <div className={classes.title}>
-      <Typography className={classes.cardHeader}>
-        {intl.formatMessage(messageForStatus, {
-          fulfillmentName,
-          quantity: totalQuantity
-        })}
-      </Typography>
-      {!!warehouseName && (
-        <Typography className={classes.warehouseName} variant="caption">
-          <FormattedMessage
-            {...messages.fulfilledFrom}
-            values={{
-              warehouseName
-            }}
-          />
-        </Typography>
-      )}
-    </div>
-  );
-
   return (
     <DefaultCardTitle
       toolbar={toolbar}
       title={
         <div className={classes.title}>
-          {withStatus ? (
-            <Pill label={title} color={selectStatus(status)} />
-          ) : (
-            title
-          )}
+          <div className={classes.indicator}>
+            {withStatus && <CircleIndicator color={selectStatus(status)}/>}
+          </div>
+          <HorizontalSpacer spacing={2} />
+          <Typography className={classes.cardHeader}>
+            {intl.formatMessage(messageForStatus, {
+              fulfillmentName,
+              quantity: totalQuantity
+            })}
+          </Typography>
           {!!warehouseName && (
             <Typography className={classes.warehouseName} variant="caption">
               <FormattedMessage
