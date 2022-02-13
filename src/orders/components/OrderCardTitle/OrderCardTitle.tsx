@@ -75,7 +75,7 @@ type CardTitleLines = Array<{
   quantity: number;
 }>;
 
-interface CardTitleProps {
+interface OrderCardTitleProps {
   lines?: CardTitleLines;
   fulfillmentOrder?: number;
   status: CardTitleStatus;
@@ -106,7 +106,7 @@ const selectStatus = (status: CardTitleStatus) => {
   }
 };
 
-const CardTitle: React.FC<CardTitleProps> = ({
+const OrderCardTitle: React.FC<OrderCardTitleProps> = ({
   lines = [],
   fulfillmentOrder,
   status,
@@ -170,4 +170,5 @@ const CardTitle: React.FC<CardTitleProps> = ({
   );
 };
 
-export default CardTitle;
+OrderCardTitle.displayName = "OrderCardTitle";
+export default OrderCardTitle;

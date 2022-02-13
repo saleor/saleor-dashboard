@@ -10,9 +10,9 @@ import React from "react";
 import { renderCollection } from "../../../misc";
 import { FulfillmentStatus } from "../../../types/globalTypes";
 import { OrderDetails_order_fulfillments } from "../../types/OrderDetails";
+import OrderCardTitle from "../OrderCardTitle";
 import TableHeader from "../OrderProductsCardElements/OrderProductsCardHeader";
 import TableLine from "../OrderProductsCardElements/OrderProductsTableRow";
-import CardTitle from "../OrderReturnPage/OrderReturnRefundItemsCard/CardTitle";
 import ActionButtons from "./ActionButtons";
 import ExtraInfoLines from "./ExtraInfoLines";
 import useStyles from "./styles";
@@ -65,7 +65,7 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
   return (
     <>
       <Card>
-        <CardTitle
+        <OrderCardTitle
           withStatus
           lines={fulfillment?.lines}
           fulfillmentOrder={fulfillment?.fulfillmentOrder}

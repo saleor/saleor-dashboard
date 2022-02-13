@@ -8,9 +8,9 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { OrderDetails_order_lines } from "../../types/OrderDetails";
+import OrderCardTitle from "../OrderCardTitle";
 import TableHeader from "../OrderProductsCardElements/OrderProductsCardHeader";
 import TableLine from "../OrderProductsCardElements/OrderProductsTableRow";
-import CardTitle from "../OrderReturnPage/OrderReturnRefundItemsCard/CardTitle";
 
 const useStyles = makeStyles(
   theme => ({
@@ -54,7 +54,7 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
   return (
     <>
       <Card>
-        <CardTitle withStatus status="unfulfilled" />
+        <OrderCardTitle withStatus status="unfulfilled" />
         <ResponsiveTable className={classes.table}>
           <TableHeader />
           <TableBody>
