@@ -54,7 +54,7 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
   return (
     <>
       <Card>
-        <OrderCardTitle withStatus status="unfulfilled" />
+        <OrderCardTitle lines={lines} withStatus status="unfulfilled" />
         <ResponsiveTable className={classes.table}>
           <TableHeader />
           <TableBody>

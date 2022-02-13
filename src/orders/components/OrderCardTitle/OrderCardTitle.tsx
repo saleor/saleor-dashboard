@@ -25,9 +25,16 @@ const useStyles = makeStyles(
       alignSelf: "center",
       color: theme.palette.text.secondary,
       margin: `auto ${theme.spacing(1)} auto auto`
+    },
+    cardHeader: {
+      fontSize: "24px",
+      fontWeight: 500,
+      lineHeight: "29px",
+      letterSpacing: "0.02em",
+      textAlign: "left"
     }
   }),
-  { name: "CardTitle" }
+  { name: "OrderCardTitle" }
 );
 
 const messages = defineMessages({
@@ -60,7 +67,7 @@ const messages = defineMessages({
     description: "unapproved fulfillment, section header"
   },
   unfulfilled: {
-    defaultMessage: "Unfulfilled",
+    defaultMessage: "Unfulfilled ({quantity})",
     description: "section header"
   },
   fulfilledFrom: {
@@ -131,17 +138,24 @@ const OrderCardTitle: React.FC<OrderCardTitleProps> = ({
   );
 
   const title = (
-    <>
-      {intl.formatMessage(messageForStatus, {
-        fulfillmentName,
-        quantity: totalQuantity
-      })}
-      {fulfillmentName && (
-        <Typography className={classes.orderNumber} variant="body1">
-          {fulfillmentName}
+    <div className={classes.title}>
+      <Typography className={classes.cardHeader}>
+        {intl.formatMessage(messageForStatus, {
+          fulfillmentName,
+          quantity: totalQuantity
+        })}
+      </Typography>
+      {!!warehouseName && (
+        <Typography className={classes.warehouseName} variant="caption">
+          <FormattedMessage
+            {...messages.fulfilledFrom}
+            values={{
+              warehouseName
+            }}
+          />
         </Typography>
       )}
-    </>
+    </div>
   );
 
   return (
