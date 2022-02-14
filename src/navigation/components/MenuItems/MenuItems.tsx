@@ -183,7 +183,7 @@ const Node: React.FC<NodeRendererProps> = props => {
           onClick={() =>
             node.onChange([
               {
-                id: node.id as any,
+                id: node.id,
                 type: "remove"
               }
             ])

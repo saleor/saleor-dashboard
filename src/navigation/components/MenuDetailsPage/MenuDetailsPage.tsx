@@ -12,7 +12,6 @@ import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe } from "../../../misc";
 import { MenuDetails_menu } from "../../types/MenuDetails";
 import { MenuItemType } from "../MenuItemDialog";
 import MenuItems, { TreeOperation } from "../MenuItems";
@@ -55,7 +54,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   const intl = useIntl();
 
   const initialForm: MenuDetailsFormData = {
-    name: maybe(() => menu.name, "")
+    name: menu?.name ?? ""
   };
 
   const [treeOperations, setTreeOperations] = React.useState<TreeOperation[]>(
@@ -79,9 +78,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   };
 
   const handleChange = (operations: TreeOperation[]) => {
-    if (!!operations) {
-      setTreeOperations([...treeOperations, ...operations]);
-    }
+    setTreeOperations([...treeOperations, ...operations]);
   };
 
   return (
@@ -113,9 +110,11 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
               <CardSpacer />
               <MenuItems
                 canUndo={treeOperations.length > 0}
-                items={maybe(() =>
-                  computeRelativeTree(menu.items, [...treeOperations])
-                )}
+                items={
+                  menu?.items
+                    ? computeRelativeTree(menu.items, treeOperations)
+                    : []
+                }
                 onChange={handleChange}
                 onItemAdd={onItemAdd}
                 onItemClick={onItemClick}
@@ -123,6 +122,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
                 onUndo={() =>
                   setTreeOperations(operations => {
                     if (operations.length > 1) {
+                      // Undo of a simulated move needs removal of 2 moves instead of one
                       if (operations[operations.length - 2].simulatedMove) {
                         return operations.slice(0, operations.length - 2);
                       }

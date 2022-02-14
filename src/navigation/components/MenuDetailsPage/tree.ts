@@ -45,23 +45,28 @@ function removeNode(
   return newTree;
 }
 
-function insertNode(
-  tree: MenuDetails_menu_items[],
-  path: number[],
-  node: MenuDetails_menu_items,
-  position: number
-): MenuDetails_menu_items[] {
+function insertNode({
+  tree,
+  path,
+  node,
+  position
+}: {
+  tree: MenuDetails_menu_items[];
+  path: number[];
+  node: MenuDetails_menu_items;
+  position: number;
+}): MenuDetails_menu_items[] {
   if (path.length === 0) {
     return [...tree.slice(0, position), node, ...tree.slice(position)];
   }
 
   if (path[0] in tree) {
-    tree[path[0]].children = insertNode(
-      tree[path[0]].children,
-      path.slice(1),
+    tree[path[0]].children = insertNode({
+      tree: tree[path[0]].children,
+      path: path.slice(1),
       node,
       position
-    );
+    });
   }
   return tree;
 }
@@ -106,12 +111,12 @@ function permuteRelativeNode(
 
   const position = sourcePath[sourcePath.length - 1];
 
-  const treeAfterInsertion = insertNode(
-    treeAfterRemoval,
-    targetPath,
+  const treeAfterInsertion = insertNode({
+    tree: treeAfterRemoval,
+    path: targetPath,
     node,
-    position + permutation.sortOrder
-  );
+    position: position + permutation.sortOrder
+  });
 
   return treeAfterInsertion;
 }
@@ -131,7 +136,6 @@ export function computeRelativeTree(
 ) {
   const newTree = operations.reduce(
     (acc, operation) => executeRelativeOperation(acc, operation),
-    // // FIXME: 😡
     JSON.parse(JSON.stringify(tree))
   );
   return newTree;
