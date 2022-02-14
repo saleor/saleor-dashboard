@@ -9,6 +9,7 @@ import { useCustomerDetails } from "@saleor/customers/hooks/useCustomerDetails";
 import GiftCardCreateDialogContent from "@saleor/giftCards/GiftCardCreateDialog/GiftCardCreateDialogContent";
 import { getExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
 import { giftCardListUrl } from "@saleor/giftCards/urls";
+import { useCustomerGiftCardListQuery } from "@saleor/graphql";
 import { Button } from "@saleor/macaw-ui";
 import { getFullName } from "@saleor/misc";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -18,10 +19,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import CustomerGiftCardsCardListItem from "./CustomerGiftCardsCardListItem";
 import { giftCardCustomerCardMessages as messages } from "./messages";
-import {
-  CUSTOMER_GIFT_CARD_LIST_QUERY,
-  useCustomerGiftCardQuery
-} from "./queries";
+import { CUSTOMER_GIFT_CARD_LIST_QUERY } from "./queries";
 import { useCardActionsStyles } from "./styles";
 
 const CustomerGiftCardsCard: React.FC = () => {
@@ -31,7 +29,7 @@ const CustomerGiftCardsCard: React.FC = () => {
   const customer = customerDetails?.customer?.user;
   const id = customer?.id;
 
-  const { data, loading } = useCustomerGiftCardQuery({
+  const { data, loading } = useCustomerGiftCardListQuery({
     variables: {
       first: 5,
       filter: {

@@ -1,4 +1,4 @@
-import { GIFT_CARD_LIST_QUERY } from "@saleor/giftCards/GiftCardsList/types";
+import { GIFT_CARD_LIST_QUERY } from "@saleor/giftCards/GiftCardsList/queries";
 import useGiftCardDetails from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import { GiftCardUpdateDialogsConsumerProps } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardUpdateDialogsProvider";
 import { DialogProps } from "@saleor/types";

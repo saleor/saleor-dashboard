@@ -15,6 +15,7 @@ generates:
       - ./src/**/queries.ts
       - ./src/**/mutations.ts
       - ./src/**/fragments/*.ts
+      - ./src/searches/*.ts
     config:
       withHooks: true
       apolloReactHooksImportFrom: "@saleor/hooks/graphql"

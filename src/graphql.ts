@@ -11916,6 +11916,12 @@ export type FileFragmentFragment = { __typename: 'File', url: string, contentTyp
 
 export type GiftCardsSettingsFragmentFragment = { __typename: 'GiftCardSettings', expiryType: GiftCardSettingsExpiryTypeEnum, expiryPeriod: { __typename: 'TimePeriod', type: TimePeriodTypeEnum, amount: number } | null };
 
+export type GiftCardEventFragment = { __typename: 'GiftCardEvent', expiryDate: any | null, oldExpiryDate: any | null, id: string, date: any | null, type: GiftCardEventsEnum | null, message: string | null, email: string | null, orderId: string | null, orderNumber: string | null, tags: Array<string> | null, oldTags: Array<string> | null, user: { __typename: 'User', email: string, id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null };
+
+export type GiftCardDataFragment = { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: any | null, lastUsedOn: any | null, isActive: boolean, id: string, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string } | null, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+
+export type CustomerGiftCardFragment = { __typename: 'GiftCard', id: string, last4CodeChars: string, expiryDate: any | null, isActive: boolean, currentBalance: { __typename: 'Money', amount: number, currency: string } | null };
+
 export type MetadataItemFragment = { __typename: 'MetadataItem', key: string, value: string };
 
 type MetadataFragment_App_Fragment = { __typename: 'App', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
@@ -12187,7 +12193,7 @@ export type GiftCardUpdateMutationVariables = Exact<{
 }>;
 
 
-export type GiftCardUpdateMutation = { __typename: 'Mutation', giftCardUpdate: { __typename: 'GiftCardUpdate', errors: Array<{ __typename: 'GiftCardError', code: GiftCardErrorCode, field: string | null, message: string | null }>, giftCard: { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: any | null, lastUsedOn: any | null, isActive: boolean, id: string, events: Array<{ __typename: 'GiftCardEvent', expiryDate: any | null, oldExpiryDate: any | null, id: string, date: any | null, type: GiftCardEventsEnum | null, message: string | null, email: string | null, orderId: string | null, orderNumber: string | null, tags: Array<string> | null, oldTags: Array<string> | null, user: { __typename: 'User', id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }>, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string } | null, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null } | null };
+export type GiftCardUpdateMutation = { __typename: 'Mutation', giftCardUpdate: { __typename: 'GiftCardUpdate', errors: Array<{ __typename: 'GiftCardError', code: GiftCardErrorCode, field: string | null, message: string | null }>, giftCard: { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: any | null, lastUsedOn: any | null, isActive: boolean, id: string, events: Array<{ __typename: 'GiftCardEvent', expiryDate: any | null, oldExpiryDate: any | null, id: string, date: any | null, type: GiftCardEventsEnum | null, message: string | null, email: string | null, orderId: string | null, orderNumber: string | null, tags: Array<string> | null, oldTags: Array<string> | null, user: { __typename: 'User', email: string, id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }>, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string } | null, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null } | null };
 
 export type GiftCardAddNoteMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -12195,18 +12201,14 @@ export type GiftCardAddNoteMutationVariables = Exact<{
 }>;
 
 
-export type GiftCardAddNoteMutation = { __typename: 'Mutation', giftCardAddNote: { __typename: 'GiftCardAddNote', errors: Array<{ __typename: 'GiftCardError', code: GiftCardErrorCode, field: string | null, message: string | null }>, giftCard: { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: any | null, lastUsedOn: any | null, isActive: boolean, id: string, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string } | null, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null, event: { __typename: 'GiftCardEvent', expiryDate: any | null, oldExpiryDate: any | null, id: string, date: any | null, type: GiftCardEventsEnum | null, message: string | null, email: string | null, orderId: string | null, orderNumber: string | null, tags: Array<string> | null, oldTags: Array<string> | null, user: { __typename: 'User', id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null } | null } | null };
-
-export type GiftCardDataFragment = { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: any | null, lastUsedOn: any | null, isActive: boolean, id: string, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string } | null, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+export type GiftCardAddNoteMutation = { __typename: 'Mutation', giftCardAddNote: { __typename: 'GiftCardAddNote', errors: Array<{ __typename: 'GiftCardError', code: GiftCardErrorCode, field: string | null, message: string | null }>, giftCard: { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: any | null, lastUsedOn: any | null, isActive: boolean, id: string, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string } | null, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null, event: { __typename: 'GiftCardEvent', expiryDate: any | null, oldExpiryDate: any | null, id: string, date: any | null, type: GiftCardEventsEnum | null, message: string | null, email: string | null, orderId: string | null, orderNumber: string | null, tags: Array<string> | null, oldTags: Array<string> | null, user: { __typename: 'User', email: string, id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null } | null } | null };
 
 export type GiftCardDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GiftCardDetailsQuery = { __typename: 'Query', giftCard: { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: any | null, lastUsedOn: any | null, isActive: boolean, id: string, events: Array<{ __typename: 'GiftCardEvent', expiryDate: any | null, oldExpiryDate: any | null, id: string, date: any | null, type: GiftCardEventsEnum | null, message: string | null, orderId: string | null, orderNumber: string | null, tags: Array<string> | null, oldTags: Array<string> | null, user: { __typename: 'User', email: string, id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }>, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string } | null, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null };
-
-export type GiftCardEventFragment = { __typename: 'GiftCardEvent', expiryDate: any | null, oldExpiryDate: any | null, id: string, date: any | null, type: GiftCardEventsEnum | null, message: string | null, email: string | null, orderId: string | null, orderNumber: string | null, tags: Array<string> | null, oldTags: Array<string> | null, user: { __typename: 'User', id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null };
+export type GiftCardDetailsQuery = { __typename: 'Query', giftCard: { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: any | null, lastUsedOn: any | null, isActive: boolean, id: string, events: Array<{ __typename: 'GiftCardEvent', expiryDate: any | null, oldExpiryDate: any | null, id: string, date: any | null, type: GiftCardEventsEnum | null, message: string | null, email: string | null, orderId: string | null, orderNumber: string | null, tags: Array<string> | null, oldTags: Array<string> | null, user: { __typename: 'User', email: string, id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }>, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string } | null, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null };
 
 export type GiftCardCurrenciesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -13281,6 +13283,137 @@ export type CreateMultipleVariantsDataQueryVariables = Exact<{
 
 
 export type CreateMultipleVariantsDataQuery = { __typename: 'Query', product: { __typename: 'Product', id: string, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, slug: string | null, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } | null> }>, productType: { __typename: 'ProductType', id: string, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null } | null> | null }, channelListings: Array<{ __typename: 'ProductChannelListing', channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null } | null, warehouses: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string } }> } | null };
+
+export type SearchAttributesQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int'];
+  query: Scalars['String'];
+}>;
+
+
+export type SearchAttributesQuery = { __typename: 'Query', search: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+
+export type SearchAttributeValuesQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int'];
+  query: Scalars['String'];
+}>;
+
+
+export type SearchAttributeValuesQuery = { __typename: 'Query', attribute: { __typename: 'Attribute', id: string, choices: { __typename: 'AttributeValueCountableConnection', edges: Array<{ __typename: 'AttributeValueCountableEdge', node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null } | null };
+
+export type SearchCategoriesQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int'];
+  query: Scalars['String'];
+}>;
+
+
+export type SearchCategoriesQuery = { __typename: 'Query', search: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+
+export type SearchCollectionsQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int'];
+  query: Scalars['String'];
+}>;
+
+
+export type SearchCollectionsQuery = { __typename: 'Query', search: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+
+export type SearchCustomersQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int'];
+  query: Scalars['String'];
+}>;
+
+
+export type SearchCustomersQuery = { __typename: 'Query', search: { __typename: 'UserCountableConnection', edges: Array<{ __typename: 'UserCountableEdge', node: { __typename: 'User', id: string, email: string, firstName: string, lastName: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+
+export type SearchGiftCardTagsQueryVariables = Exact<{
+  query: Scalars['String'];
+  first: Scalars['Int'];
+  after?: InputMaybe<Scalars['String']>;
+  last?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type SearchGiftCardTagsQuery = { __typename: 'Query', search: { __typename: 'GiftCardTagCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'GiftCardTagCountableEdge', node: { __typename: 'GiftCardTag', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+
+export type SearchPagesQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int'];
+  query: Scalars['String'];
+}>;
+
+
+export type SearchPagesQuery = { __typename: 'Query', search: { __typename: 'PageCountableConnection', edges: Array<{ __typename: 'PageCountableEdge', node: { __typename: 'Page', id: string, title: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+
+export type SearchPageTypesQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int'];
+  query: Scalars['String'];
+}>;
+
+
+export type SearchPageTypesQuery = { __typename: 'Query', search: { __typename: 'PageTypeCountableConnection', edges: Array<{ __typename: 'PageTypeCountableEdge', node: { __typename: 'PageType', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+
+export type SearchPermissionGroupsQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int'];
+  query: Scalars['String'];
+}>;
+
+
+export type SearchPermissionGroupsQuery = { __typename: 'Query', search: { __typename: 'GroupCountableConnection', edges: Array<{ __typename: 'GroupCountableEdge', node: { __typename: 'Group', id: string, name: string, userCanManage: boolean } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+
+export type SearchProductsQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int'];
+  query: Scalars['String'];
+}>;
+
+
+export type SearchProductsQuery = { __typename: 'Query', search: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, thumbnail: { __typename: 'Image', url: string } | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, channelListings: Array<{ __typename: 'ProductVariantChannelListing', channel: { __typename: 'Channel', id: string, isActive: boolean, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null }> | null } | null> | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+
+export type SearchProductTypesQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int'];
+  query: Scalars['String'];
+}>;
+
+
+export type SearchProductTypesQuery = { __typename: 'Query', search: { __typename: 'ProductTypeCountableConnection', edges: Array<{ __typename: 'ProductTypeCountableEdge', node: { __typename: 'ProductType', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+
+export type SearchShippingZonesQueryVariables = Exact<{
+  query: Scalars['String'];
+  first: Scalars['Int'];
+  after?: InputMaybe<Scalars['String']>;
+  last?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type SearchShippingZonesQuery = { __typename: 'Query', search: { __typename: 'ShippingZoneCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+
+export type SearchStaffMembersQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int'];
+  query: Scalars['String'];
+}>;
+
+
+export type SearchStaffMembersQuery = { __typename: 'Query', search: { __typename: 'UserCountableConnection', edges: Array<{ __typename: 'UserCountableEdge', node: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isActive: boolean, avatar: { __typename: 'Image', alt: string | null, url: string } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+
+export type SearchWarehousesQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int'];
+  query: Scalars['String'];
+}>;
+
+
+export type SearchWarehousesQuery = { __typename: 'Query', search: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type DeleteShippingZoneMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -14758,6 +14891,110 @@ export const GiftCardsSettingsFragmentFragmentDoc = gql`
   }
 }
     `;
+export const UserBaseFragmentDoc = gql`
+    fragment UserBase on User {
+  id
+  firstName
+  lastName
+}
+    `;
+export const MoneyFragmentDoc = gql`
+    fragment Money on Money {
+  amount
+  currency
+}
+    `;
+export const GiftCardEventFragmentDoc = gql`
+    fragment GiftCardEvent on GiftCardEvent {
+  expiryDate
+  oldExpiryDate
+  id
+  date
+  type
+  user {
+    ...UserBase
+    email
+  }
+  app {
+    id
+    name
+  }
+  message
+  email
+  orderId
+  orderNumber
+  tags
+  oldTags
+  balance {
+    initialBalance {
+      ...Money
+    }
+    currentBalance {
+      ...Money
+    }
+    oldInitialBalance {
+      ...Money
+    }
+    oldCurrentBalance {
+      ...Money
+    }
+  }
+}
+    ${UserBaseFragmentDoc}
+${MoneyFragmentDoc}`;
+export const GiftCardDataFragmentDoc = gql`
+    fragment GiftCardData on GiftCard {
+  ...MetadataFragment
+  last4CodeChars
+  boughtInChannel
+  createdBy {
+    ...UserBase
+  }
+  product {
+    id
+    name
+  }
+  createdBy {
+    ...UserBase
+  }
+  usedBy {
+    ...UserBase
+  }
+  usedByEmail
+  createdByEmail
+  app {
+    id
+    name
+  }
+  created
+  expiryDate
+  lastUsedOn
+  isActive
+  initialBalance {
+    ...Money
+  }
+  currentBalance {
+    ...Money
+  }
+  id
+  tags {
+    name
+  }
+}
+    ${MetadataFragmentFragmentDoc}
+${UserBaseFragmentDoc}
+${MoneyFragmentDoc}`;
+export const CustomerGiftCardFragmentDoc = gql`
+    fragment CustomerGiftCard on GiftCard {
+  id
+  last4CodeChars
+  expiryDate
+  isActive
+  currentBalance {
+    ...Money
+  }
+}
+    ${MoneyFragmentDoc}`;
 export const MenuFragmentFragmentDoc = gql`
     fragment MenuFragment on Menu {
   id
@@ -14819,12 +15056,6 @@ export const MenuDetailsFragmentFragmentDoc = gql`
   name
 }
     ${MenuItemNestedFragmentFragmentDoc}`;
-export const MoneyFragmentDoc = gql`
-    fragment Money on Money {
-  amount
-  currency
-}
-    `;
 export const RefundOrderLineFragmentFragmentDoc = gql`
     fragment RefundOrderLineFragment on OrderLine {
   id
@@ -16268,92 +16499,6 @@ export const WebhooksDetailsFragmentFragmentDoc = gql`
   ...WebhookFragment
 }
     ${WebhookFragmentFragmentDoc}`;
-export const UserBaseFragmentDoc = gql`
-    fragment UserBase on User {
-  id
-  firstName
-  lastName
-}
-    `;
-export const GiftCardDataFragmentDoc = gql`
-    fragment GiftCardData on GiftCard {
-  ...MetadataFragment
-  last4CodeChars
-  boughtInChannel
-  createdBy {
-    ...UserBase
-  }
-  product {
-    id
-    name
-  }
-  createdBy {
-    ...UserBase
-  }
-  usedBy {
-    ...UserBase
-  }
-  usedByEmail
-  createdByEmail
-  app {
-    id
-    name
-  }
-  created
-  expiryDate
-  lastUsedOn
-  isActive
-  initialBalance {
-    ...Money
-  }
-  currentBalance {
-    ...Money
-  }
-  id
-  tags {
-    name
-  }
-}
-    ${MetadataFragmentFragmentDoc}
-${UserBaseFragmentDoc}
-${MoneyFragmentDoc}`;
-export const GiftCardEventFragmentDoc = gql`
-    fragment GiftCardEvent on GiftCardEvent {
-  expiryDate
-  oldExpiryDate
-  id
-  date
-  type
-  user {
-    ...UserBase
-  }
-  app {
-    id
-    name
-  }
-  message
-  email
-  orderId
-  orderNumber
-  tags
-  oldTags
-  balance {
-    initialBalance {
-      ...Money
-    }
-    currentBalance {
-      ...Money
-    }
-    oldInitialBalance {
-      ...Money
-    }
-    oldCurrentBalance {
-      ...Money
-    }
-  }
-}
-    ${UserBaseFragmentDoc}
-${MoneyFragmentDoc}`;
 export const AppCreateDocument = gql`
     mutation AppCreate($input: AppInput!) {
   appCreate(input: $input) {
@@ -20496,44 +20641,12 @@ export const GiftCardDetailsDocument = gql`
   giftCard(id: $id) {
     ...GiftCardData
     events {
-      expiryDate
-      oldExpiryDate
-      id
-      date
-      type
-      user {
-        ...UserBase
-        email
-      }
-      app {
-        id
-        name
-      }
-      message
-      orderId
-      orderNumber
-      tags
-      oldTags
-      balance {
-        initialBalance {
-          ...Money
-        }
-        currentBalance {
-          ...Money
-        }
-        oldInitialBalance {
-          ...Money
-        }
-        oldCurrentBalance {
-          ...Money
-        }
-      }
+      ...GiftCardEvent
     }
   }
 }
     ${GiftCardDataFragmentDoc}
-${UserBaseFragmentDoc}
-${MoneyFragmentDoc}`;
+${GiftCardEventFragmentDoc}`;
 
 /**
  * __useGiftCardDetailsQuery__
@@ -20888,18 +21001,12 @@ export const CustomerGiftCardListDocument = gql`
   giftCards(first: $first, filter: $filter) {
     edges {
       node {
-        id
-        last4CodeChars
-        expiryDate
-        isActive
-        currentBalance {
-          ...Money
-        }
+        ...CustomerGiftCard
       }
     }
   }
 }
-    ${MoneyFragmentDoc}`;
+    ${CustomerGiftCardFragmentDoc}`;
 
 /**
  * __useCustomerGiftCardListQuery__
@@ -26399,6 +26506,688 @@ export function useCreateMultipleVariantsDataLazyQuery(baseOptions?: ApolloReact
 export type CreateMultipleVariantsDataQueryHookResult = ReturnType<typeof useCreateMultipleVariantsDataQuery>;
 export type CreateMultipleVariantsDataLazyQueryHookResult = ReturnType<typeof useCreateMultipleVariantsDataLazyQuery>;
 export type CreateMultipleVariantsDataQueryResult = Apollo.QueryResult<CreateMultipleVariantsDataQuery, CreateMultipleVariantsDataQueryVariables>;
+export const SearchAttributesDocument = gql`
+    query SearchAttributes($after: String, $first: Int!, $query: String!) {
+  search: attributes(after: $after, first: $first, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+    pageInfo {
+      ...PageInfoFragment
+    }
+  }
+}
+    ${PageInfoFragmentFragmentDoc}`;
+
+/**
+ * __useSearchAttributesQuery__
+ *
+ * To run a query within a React component, call `useSearchAttributesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchAttributesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchAttributesQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useSearchAttributesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SearchAttributesQuery, SearchAttributesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<SearchAttributesQuery, SearchAttributesQueryVariables>(SearchAttributesDocument, options);
+      }
+export function useSearchAttributesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SearchAttributesQuery, SearchAttributesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<SearchAttributesQuery, SearchAttributesQueryVariables>(SearchAttributesDocument, options);
+        }
+export type SearchAttributesQueryHookResult = ReturnType<typeof useSearchAttributesQuery>;
+export type SearchAttributesLazyQueryHookResult = ReturnType<typeof useSearchAttributesLazyQuery>;
+export type SearchAttributesQueryResult = Apollo.QueryResult<SearchAttributesQuery, SearchAttributesQueryVariables>;
+export const SearchAttributeValuesDocument = gql`
+    query SearchAttributeValues($id: ID, $after: String, $first: Int!, $query: String!) {
+  attribute(id: $id) {
+    id
+    choices(after: $after, first: $first, filter: {search: $query}) {
+      edges {
+        node {
+          ...AttributeValueDetailsFragment
+        }
+      }
+      pageInfo {
+        ...PageInfoFragment
+      }
+    }
+  }
+}
+    ${AttributeValueDetailsFragmentFragmentDoc}
+${PageInfoFragmentFragmentDoc}`;
+
+/**
+ * __useSearchAttributeValuesQuery__
+ *
+ * To run a query within a React component, call `useSearchAttributeValuesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchAttributeValuesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchAttributeValuesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useSearchAttributeValuesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SearchAttributeValuesQuery, SearchAttributeValuesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<SearchAttributeValuesQuery, SearchAttributeValuesQueryVariables>(SearchAttributeValuesDocument, options);
+      }
+export function useSearchAttributeValuesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SearchAttributeValuesQuery, SearchAttributeValuesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<SearchAttributeValuesQuery, SearchAttributeValuesQueryVariables>(SearchAttributeValuesDocument, options);
+        }
+export type SearchAttributeValuesQueryHookResult = ReturnType<typeof useSearchAttributeValuesQuery>;
+export type SearchAttributeValuesLazyQueryHookResult = ReturnType<typeof useSearchAttributeValuesLazyQuery>;
+export type SearchAttributeValuesQueryResult = Apollo.QueryResult<SearchAttributeValuesQuery, SearchAttributeValuesQueryVariables>;
+export const SearchCategoriesDocument = gql`
+    query SearchCategories($after: String, $first: Int!, $query: String!) {
+  search: categories(after: $after, first: $first, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+    pageInfo {
+      ...PageInfoFragment
+    }
+  }
+}
+    ${PageInfoFragmentFragmentDoc}`;
+
+/**
+ * __useSearchCategoriesQuery__
+ *
+ * To run a query within a React component, call `useSearchCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchCategoriesQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useSearchCategoriesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SearchCategoriesQuery, SearchCategoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<SearchCategoriesQuery, SearchCategoriesQueryVariables>(SearchCategoriesDocument, options);
+      }
+export function useSearchCategoriesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SearchCategoriesQuery, SearchCategoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<SearchCategoriesQuery, SearchCategoriesQueryVariables>(SearchCategoriesDocument, options);
+        }
+export type SearchCategoriesQueryHookResult = ReturnType<typeof useSearchCategoriesQuery>;
+export type SearchCategoriesLazyQueryHookResult = ReturnType<typeof useSearchCategoriesLazyQuery>;
+export type SearchCategoriesQueryResult = Apollo.QueryResult<SearchCategoriesQuery, SearchCategoriesQueryVariables>;
+export const SearchCollectionsDocument = gql`
+    query SearchCollections($after: String, $first: Int!, $query: String!) {
+  search: collections(after: $after, first: $first, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+    pageInfo {
+      ...PageInfoFragment
+    }
+  }
+}
+    ${PageInfoFragmentFragmentDoc}`;
+
+/**
+ * __useSearchCollectionsQuery__
+ *
+ * To run a query within a React component, call `useSearchCollectionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchCollectionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchCollectionsQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useSearchCollectionsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SearchCollectionsQuery, SearchCollectionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<SearchCollectionsQuery, SearchCollectionsQueryVariables>(SearchCollectionsDocument, options);
+      }
+export function useSearchCollectionsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SearchCollectionsQuery, SearchCollectionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<SearchCollectionsQuery, SearchCollectionsQueryVariables>(SearchCollectionsDocument, options);
+        }
+export type SearchCollectionsQueryHookResult = ReturnType<typeof useSearchCollectionsQuery>;
+export type SearchCollectionsLazyQueryHookResult = ReturnType<typeof useSearchCollectionsLazyQuery>;
+export type SearchCollectionsQueryResult = Apollo.QueryResult<SearchCollectionsQuery, SearchCollectionsQueryVariables>;
+export const SearchCustomersDocument = gql`
+    query SearchCustomers($after: String, $first: Int!, $query: String!) {
+  search: customers(after: $after, first: $first, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        email
+        firstName
+        lastName
+      }
+    }
+    pageInfo {
+      ...PageInfoFragment
+    }
+  }
+}
+    ${PageInfoFragmentFragmentDoc}`;
+
+/**
+ * __useSearchCustomersQuery__
+ *
+ * To run a query within a React component, call `useSearchCustomersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchCustomersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchCustomersQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useSearchCustomersQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SearchCustomersQuery, SearchCustomersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<SearchCustomersQuery, SearchCustomersQueryVariables>(SearchCustomersDocument, options);
+      }
+export function useSearchCustomersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SearchCustomersQuery, SearchCustomersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<SearchCustomersQuery, SearchCustomersQueryVariables>(SearchCustomersDocument, options);
+        }
+export type SearchCustomersQueryHookResult = ReturnType<typeof useSearchCustomersQuery>;
+export type SearchCustomersLazyQueryHookResult = ReturnType<typeof useSearchCustomersLazyQuery>;
+export type SearchCustomersQueryResult = Apollo.QueryResult<SearchCustomersQuery, SearchCustomersQueryVariables>;
+export const SearchGiftCardTagsDocument = gql`
+    query SearchGiftCardTags($query: String!, $first: Int!, $after: String, $last: Int, $before: String) {
+  search: giftCardTags(
+    filter: {search: $query}
+    first: $first
+    after: $after
+    last: $last
+    before: $before
+  ) {
+    totalCount
+    edges {
+      node {
+        id
+        name
+      }
+    }
+    pageInfo {
+      ...PageInfoFragment
+    }
+  }
+}
+    ${PageInfoFragmentFragmentDoc}`;
+
+/**
+ * __useSearchGiftCardTagsQuery__
+ *
+ * To run a query within a React component, call `useSearchGiftCardTagsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchGiftCardTagsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchGiftCardTagsQuery({
+ *   variables: {
+ *      query: // value for 'query'
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *      last: // value for 'last'
+ *      before: // value for 'before'
+ *   },
+ * });
+ */
+export function useSearchGiftCardTagsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SearchGiftCardTagsQuery, SearchGiftCardTagsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<SearchGiftCardTagsQuery, SearchGiftCardTagsQueryVariables>(SearchGiftCardTagsDocument, options);
+      }
+export function useSearchGiftCardTagsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SearchGiftCardTagsQuery, SearchGiftCardTagsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<SearchGiftCardTagsQuery, SearchGiftCardTagsQueryVariables>(SearchGiftCardTagsDocument, options);
+        }
+export type SearchGiftCardTagsQueryHookResult = ReturnType<typeof useSearchGiftCardTagsQuery>;
+export type SearchGiftCardTagsLazyQueryHookResult = ReturnType<typeof useSearchGiftCardTagsLazyQuery>;
+export type SearchGiftCardTagsQueryResult = Apollo.QueryResult<SearchGiftCardTagsQuery, SearchGiftCardTagsQueryVariables>;
+export const SearchPagesDocument = gql`
+    query SearchPages($after: String, $first: Int!, $query: String!) {
+  search: pages(after: $after, first: $first, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        title
+      }
+    }
+    pageInfo {
+      ...PageInfoFragment
+    }
+  }
+}
+    ${PageInfoFragmentFragmentDoc}`;
+
+/**
+ * __useSearchPagesQuery__
+ *
+ * To run a query within a React component, call `useSearchPagesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchPagesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchPagesQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useSearchPagesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SearchPagesQuery, SearchPagesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<SearchPagesQuery, SearchPagesQueryVariables>(SearchPagesDocument, options);
+      }
+export function useSearchPagesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SearchPagesQuery, SearchPagesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<SearchPagesQuery, SearchPagesQueryVariables>(SearchPagesDocument, options);
+        }
+export type SearchPagesQueryHookResult = ReturnType<typeof useSearchPagesQuery>;
+export type SearchPagesLazyQueryHookResult = ReturnType<typeof useSearchPagesLazyQuery>;
+export type SearchPagesQueryResult = Apollo.QueryResult<SearchPagesQuery, SearchPagesQueryVariables>;
+export const SearchPageTypesDocument = gql`
+    query SearchPageTypes($after: String, $first: Int!, $query: String!) {
+  search: pageTypes(after: $after, first: $first, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+    pageInfo {
+      ...PageInfoFragment
+    }
+  }
+}
+    ${PageInfoFragmentFragmentDoc}`;
+
+/**
+ * __useSearchPageTypesQuery__
+ *
+ * To run a query within a React component, call `useSearchPageTypesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchPageTypesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchPageTypesQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useSearchPageTypesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SearchPageTypesQuery, SearchPageTypesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<SearchPageTypesQuery, SearchPageTypesQueryVariables>(SearchPageTypesDocument, options);
+      }
+export function useSearchPageTypesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SearchPageTypesQuery, SearchPageTypesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<SearchPageTypesQuery, SearchPageTypesQueryVariables>(SearchPageTypesDocument, options);
+        }
+export type SearchPageTypesQueryHookResult = ReturnType<typeof useSearchPageTypesQuery>;
+export type SearchPageTypesLazyQueryHookResult = ReturnType<typeof useSearchPageTypesLazyQuery>;
+export type SearchPageTypesQueryResult = Apollo.QueryResult<SearchPageTypesQuery, SearchPageTypesQueryVariables>;
+export const SearchPermissionGroupsDocument = gql`
+    query SearchPermissionGroups($after: String, $first: Int!, $query: String!) {
+  search: permissionGroups(after: $after, first: $first, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        name
+        userCanManage
+      }
+    }
+    pageInfo {
+      ...PageInfoFragment
+    }
+  }
+}
+    ${PageInfoFragmentFragmentDoc}`;
+
+/**
+ * __useSearchPermissionGroupsQuery__
+ *
+ * To run a query within a React component, call `useSearchPermissionGroupsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchPermissionGroupsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchPermissionGroupsQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useSearchPermissionGroupsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SearchPermissionGroupsQuery, SearchPermissionGroupsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<SearchPermissionGroupsQuery, SearchPermissionGroupsQueryVariables>(SearchPermissionGroupsDocument, options);
+      }
+export function useSearchPermissionGroupsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SearchPermissionGroupsQuery, SearchPermissionGroupsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<SearchPermissionGroupsQuery, SearchPermissionGroupsQueryVariables>(SearchPermissionGroupsDocument, options);
+        }
+export type SearchPermissionGroupsQueryHookResult = ReturnType<typeof useSearchPermissionGroupsQuery>;
+export type SearchPermissionGroupsLazyQueryHookResult = ReturnType<typeof useSearchPermissionGroupsLazyQuery>;
+export type SearchPermissionGroupsQueryResult = Apollo.QueryResult<SearchPermissionGroupsQuery, SearchPermissionGroupsQueryVariables>;
+export const SearchProductsDocument = gql`
+    query SearchProducts($after: String, $first: Int!, $query: String!) {
+  search: products(after: $after, first: $first, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        name
+        thumbnail {
+          url
+        }
+        variants {
+          id
+          name
+          sku
+          channelListings {
+            channel {
+              id
+              isActive
+              name
+              currencyCode
+            }
+            price {
+              amount
+              currency
+            }
+          }
+        }
+      }
+    }
+    pageInfo {
+      ...PageInfoFragment
+    }
+  }
+}
+    ${PageInfoFragmentFragmentDoc}`;
+
+/**
+ * __useSearchProductsQuery__
+ *
+ * To run a query within a React component, call `useSearchProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchProductsQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useSearchProductsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SearchProductsQuery, SearchProductsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<SearchProductsQuery, SearchProductsQueryVariables>(SearchProductsDocument, options);
+      }
+export function useSearchProductsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SearchProductsQuery, SearchProductsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<SearchProductsQuery, SearchProductsQueryVariables>(SearchProductsDocument, options);
+        }
+export type SearchProductsQueryHookResult = ReturnType<typeof useSearchProductsQuery>;
+export type SearchProductsLazyQueryHookResult = ReturnType<typeof useSearchProductsLazyQuery>;
+export type SearchProductsQueryResult = Apollo.QueryResult<SearchProductsQuery, SearchProductsQueryVariables>;
+export const SearchProductTypesDocument = gql`
+    query SearchProductTypes($after: String, $first: Int!, $query: String!) {
+  search: productTypes(after: $after, first: $first, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+    pageInfo {
+      ...PageInfoFragment
+    }
+  }
+}
+    ${PageInfoFragmentFragmentDoc}`;
+
+/**
+ * __useSearchProductTypesQuery__
+ *
+ * To run a query within a React component, call `useSearchProductTypesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchProductTypesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchProductTypesQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useSearchProductTypesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SearchProductTypesQuery, SearchProductTypesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<SearchProductTypesQuery, SearchProductTypesQueryVariables>(SearchProductTypesDocument, options);
+      }
+export function useSearchProductTypesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SearchProductTypesQuery, SearchProductTypesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<SearchProductTypesQuery, SearchProductTypesQueryVariables>(SearchProductTypesDocument, options);
+        }
+export type SearchProductTypesQueryHookResult = ReturnType<typeof useSearchProductTypesQuery>;
+export type SearchProductTypesLazyQueryHookResult = ReturnType<typeof useSearchProductTypesLazyQuery>;
+export type SearchProductTypesQueryResult = Apollo.QueryResult<SearchProductTypesQuery, SearchProductTypesQueryVariables>;
+export const SearchShippingZonesDocument = gql`
+    query SearchShippingZones($query: String!, $first: Int!, $after: String, $last: Int, $before: String) {
+  search: shippingZones(
+    filter: {search: $query}
+    first: $first
+    after: $after
+    last: $last
+    before: $before
+  ) {
+    totalCount
+    edges {
+      node {
+        id
+        name
+      }
+    }
+    pageInfo {
+      ...PageInfoFragment
+    }
+  }
+}
+    ${PageInfoFragmentFragmentDoc}`;
+
+/**
+ * __useSearchShippingZonesQuery__
+ *
+ * To run a query within a React component, call `useSearchShippingZonesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchShippingZonesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchShippingZonesQuery({
+ *   variables: {
+ *      query: // value for 'query'
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *      last: // value for 'last'
+ *      before: // value for 'before'
+ *   },
+ * });
+ */
+export function useSearchShippingZonesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SearchShippingZonesQuery, SearchShippingZonesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<SearchShippingZonesQuery, SearchShippingZonesQueryVariables>(SearchShippingZonesDocument, options);
+      }
+export function useSearchShippingZonesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SearchShippingZonesQuery, SearchShippingZonesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<SearchShippingZonesQuery, SearchShippingZonesQueryVariables>(SearchShippingZonesDocument, options);
+        }
+export type SearchShippingZonesQueryHookResult = ReturnType<typeof useSearchShippingZonesQuery>;
+export type SearchShippingZonesLazyQueryHookResult = ReturnType<typeof useSearchShippingZonesLazyQuery>;
+export type SearchShippingZonesQueryResult = Apollo.QueryResult<SearchShippingZonesQuery, SearchShippingZonesQueryVariables>;
+export const SearchStaffMembersDocument = gql`
+    query SearchStaffMembers($after: String, $first: Int!, $query: String!) {
+  search: staffUsers(after: $after, first: $first, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        email
+        firstName
+        lastName
+        isActive
+        avatar {
+          alt
+          url
+        }
+      }
+    }
+    pageInfo {
+      ...PageInfoFragment
+    }
+  }
+}
+    ${PageInfoFragmentFragmentDoc}`;
+
+/**
+ * __useSearchStaffMembersQuery__
+ *
+ * To run a query within a React component, call `useSearchStaffMembersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchStaffMembersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchStaffMembersQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useSearchStaffMembersQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SearchStaffMembersQuery, SearchStaffMembersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<SearchStaffMembersQuery, SearchStaffMembersQueryVariables>(SearchStaffMembersDocument, options);
+      }
+export function useSearchStaffMembersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SearchStaffMembersQuery, SearchStaffMembersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<SearchStaffMembersQuery, SearchStaffMembersQueryVariables>(SearchStaffMembersDocument, options);
+        }
+export type SearchStaffMembersQueryHookResult = ReturnType<typeof useSearchStaffMembersQuery>;
+export type SearchStaffMembersLazyQueryHookResult = ReturnType<typeof useSearchStaffMembersLazyQuery>;
+export type SearchStaffMembersQueryResult = Apollo.QueryResult<SearchStaffMembersQuery, SearchStaffMembersQueryVariables>;
+export const SearchWarehousesDocument = gql`
+    query SearchWarehouses($after: String, $first: Int!, $query: String!) {
+  search: warehouses(after: $after, first: $first, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+    pageInfo {
+      ...PageInfoFragment
+    }
+  }
+}
+    ${PageInfoFragmentFragmentDoc}`;
+
+/**
+ * __useSearchWarehousesQuery__
+ *
+ * To run a query within a React component, call `useSearchWarehousesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchWarehousesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchWarehousesQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useSearchWarehousesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SearchWarehousesQuery, SearchWarehousesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<SearchWarehousesQuery, SearchWarehousesQueryVariables>(SearchWarehousesDocument, options);
+      }
+export function useSearchWarehousesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SearchWarehousesQuery, SearchWarehousesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<SearchWarehousesQuery, SearchWarehousesQueryVariables>(SearchWarehousesDocument, options);
+        }
+export type SearchWarehousesQueryHookResult = ReturnType<typeof useSearchWarehousesQuery>;
+export type SearchWarehousesLazyQueryHookResult = ReturnType<typeof useSearchWarehousesLazyQuery>;
+export type SearchWarehousesQueryResult = Apollo.QueryResult<SearchWarehousesQuery, SearchWarehousesQueryVariables>;
 export const DeleteShippingZoneDocument = gql`
     mutation DeleteShippingZone($id: ID!) {
   shippingZoneDelete(id: $id) {

@@ -4,6 +4,7 @@ import DialogButtons from "@saleor/components/ActionDialog/DialogButtons";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
 import GiftCardTagInput from "@saleor/giftCards/components/GiftCardTagInput";
+import { useGiftCardSettingsQuery } from "@saleor/graphql";
 import useForm from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -18,7 +19,6 @@ import { useIntl } from "react-intl";
 
 import GiftCardSendToCustomer from "../components/GiftCardSendToCustomer/GiftCardSendToCustomer";
 import { GiftCardCreateCommonFormData } from "../GiftCardBulkCreateDialog/types";
-import { useGiftCardSettingsQuery } from "../GiftCardSettings/queries";
 import GiftCardCreateExpirySelect from "./GiftCardCreateExpirySelect";
 import GiftCardCreateMoneyInput from "./GiftCardCreateMoneyInput";
 import GiftCardCreateRequiresActivationSection from "./GiftCardCreateRequiresActivationSection";

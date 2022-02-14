@@ -1,14 +1,12 @@
 import { gql } from "@apollo/client";
-import { pageInfoFragment } from "@saleor/fragments/pageInfo";
+import {
+  SearchGiftCardTagsDocument,
+  SearchGiftCardTagsQuery,
+  SearchGiftCardTagsQueryVariables
+} from "@saleor/graphql";
 import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
 
-import {
-  SearchGiftCardTags,
-  SearchGiftCardTagsVariables
-} from "./types/SearchGiftCardTags";
-
-const searchGiftCardTags = gql`
-  ${pageInfoFragment}
+export const searchGiftCardTags = gql`
   query SearchGiftCardTags(
     $query: String!
     $first: Int!
@@ -38,6 +36,6 @@ const searchGiftCardTags = gql`
 `;
 
 export default makeTopLevelSearch<
-  SearchGiftCardTags,
-  SearchGiftCardTagsVariables
->(searchGiftCardTags);
+  SearchGiftCardTagsQuery,
+  SearchGiftCardTagsQueryVariables
+>(SearchGiftCardTagsDocument);

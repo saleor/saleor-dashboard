@@ -2,6 +2,7 @@ import { TextField, Typography } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { IMessage } from "@saleor/components/messages";
+import { useGiftCardUpdateMutation } from "@saleor/graphql";
 import useForm from "@saleor/hooks/useForm";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { DialogProps } from "@saleor/types";
@@ -12,9 +13,7 @@ import { useIntl } from "react-intl";
 import { giftCardsListTableMessages as tableMessages } from "../../GiftCardsList/messages";
 import { useDialogFormReset } from "../GiftCardResendCodeDialog/utils";
 import { getGiftCardErrorMessage } from "../messages";
-import { useGiftCardUpdateMutation } from "../mutations";
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
-import { GiftCardUpdate } from "../types/GiftCardUpdate";
 import { giftCardUpdateBalanceDialogMessages as messages } from "./messages";
 import { useUpdateBalanceDialogStyles as useStyles } from "./styles";
 
@@ -41,31 +40,29 @@ const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({
     balanceAmount: amount
   };
 
-  const onCompleted = (data: GiftCardUpdate) => {
-    const errors = data?.giftCardUpdate?.errors;
-
-    const notifierData: IMessage = !!errors?.length
-      ? {
-          status: "error",
-          text: intl.formatMessage(commonErrorMessages.unknownError)
-        }
-      : {
-          status: "success",
-          text: intl.formatMessage(messages.updatedSuccessAlertTitle)
-        };
-
-    notify(notifierData);
-
-    if (!errors.length) {
-      onClose();
-    }
-  };
-
   const [
     updateGiftCardBalance,
     updateGiftCardBalanceOpts
   ] = useGiftCardUpdateMutation({
-    onCompleted
+    onCompleted: data => {
+      const errors = data?.giftCardUpdate?.errors;
+
+      const notifierData: IMessage = !!errors?.length
+        ? {
+            status: "error",
+            text: intl.formatMessage(commonErrorMessages.unknownError)
+          }
+        : {
+            status: "success",
+            text: intl.formatMessage(messages.updatedSuccessAlertTitle)
+          };
+
+      notify(notifierData);
+
+      if (!errors.length) {
+        onClose();
+      }
+    }
   });
 
   const handleSubmit = async ({

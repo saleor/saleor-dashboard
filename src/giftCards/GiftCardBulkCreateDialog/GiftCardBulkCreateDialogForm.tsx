@@ -8,6 +8,7 @@ import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import DialogButtons from "@saleor/components/ActionDialog/DialogButtons";
 import CardSpacer from "@saleor/components/CardSpacer";
 import GiftCardTagInput from "@saleor/giftCards/components/GiftCardTagInput";
+import { useGiftCardSettingsQuery } from "@saleor/graphql";
 import useForm from "@saleor/hooks/useForm";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import {
@@ -22,7 +23,6 @@ import GiftCardCreateMoneyInput from "../GiftCardCreateDialog/GiftCardCreateMone
 import GiftCardCreateRequiresActivationSection from "../GiftCardCreateDialog/GiftCardCreateRequiresActivationSection";
 import { giftCardCreateMessages as messages } from "../GiftCardCreateDialog/messages";
 import { useGiftCardCreateFormStyles as useStyles } from "../GiftCardCreateDialog/styles";
-import { useGiftCardSettingsQuery } from "../GiftCardSettings/queries";
 import { getGiftCardErrorMessage } from "../GiftCardUpdate/messages";
 import {
   GiftCardBulkCreateFormCommonProps,

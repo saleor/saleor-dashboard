@@ -1,6 +1,10 @@
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
 import { giftCardUpdateFormMessages } from "@saleor/giftCards/GiftCardsList/messages";
+import {
+  GiftCardUpdateMutation,
+  useGiftCardUpdateMutation
+} from "@saleor/graphql";
 import { MutationResultWithOpts } from "@saleor/hooks/makeMutation";
 import useForm, { FormChange, UseFormResult } from "@saleor/hooks/useForm";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
@@ -23,8 +27,6 @@ import {
   GiftCardCreateFormData,
   initialData as emptyFormData
 } from "../../../GiftCardCreateDialog/GiftCardCreateDialogForm";
-import { useGiftCardUpdateMutation } from "../../mutations";
-import { GiftCardUpdate } from "../../types/GiftCardUpdate";
 import useGiftCardDetails from "../GiftCardDetailsProvider/hooks/useGiftCardDetails";
 
 interface GiftCardUpdateFormProviderProps {
@@ -36,7 +38,7 @@ export type GiftCardUpdateFormData = MetadataFormData &
 
 export interface GiftCardUpdateFormConsumerData
   extends GiftCardUpdateFormErrors {
-  opts: MutationResultWithOpts<GiftCardUpdate>;
+  opts: MutationResultWithOpts<GiftCardUpdateMutation>;
 }
 
 export interface GiftCardUpdateFormErrors {
@@ -91,27 +93,25 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
     };
   };
 
-  const onSubmit = (data: GiftCardUpdate) => {
-    const errors = data.giftCardUpdate.errors;
-    const hasExpiryError = errors.some(error => error.field === "expiryDate");
-
-    notify(
-      hasExpiryError
-        ? {
-            title: intl.formatMessage(
-              giftCardUpdateFormMessages.giftCardInvalidExpiryDateHeader
-            ),
-            text: intl.formatMessage(
-              giftCardUpdateFormMessages.giftCardInvalidExpiryDateContent
-            ),
-            status: "error"
-          }
-        : getDefaultNotifierSuccessErrorData(errors, intl)
-    );
-  };
-
   const [updateGiftCard, updateGiftCardOpts] = useGiftCardUpdateMutation({
-    onCompleted: onSubmit
+    onCompleted: data => {
+      const errors = data.giftCardUpdate.errors;
+      const hasExpiryError = errors.some(error => error.field === "expiryDate");
+
+      notify(
+        hasExpiryError
+          ? {
+              title: intl.formatMessage(
+                giftCardUpdateFormMessages.giftCardInvalidExpiryDateHeader
+              ),
+              text: intl.formatMessage(
+                giftCardUpdateFormMessages.giftCardInvalidExpiryDateContent
+              ),
+              status: "error"
+            }
+          : getDefaultNotifierSuccessErrorData(errors, intl)
+      );
+    }
   });
 
   const submit = async ({ tags, expiryDate }: GiftCardUpdateFormData) => {

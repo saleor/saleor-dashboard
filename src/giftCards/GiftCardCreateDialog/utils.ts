@@ -1,4 +1,5 @@
 import { IMessage } from "@saleor/components/messages";
+import { GiftCardCreateMutation } from "@saleor/graphql";
 import { TimePeriodTypeEnum } from "@saleor/types/globalTypes";
 import commonErrorMessages from "@saleor/utils/errors/common";
 import moment from "moment-timezone";
@@ -7,7 +8,6 @@ import { IntlShape } from "react-intl";
 import { GiftCardCreateCommonFormData } from "../GiftCardBulkCreateDialog/types";
 import { giftCardUpdateFormMessages } from "../GiftCardsList/messages";
 import { giftCardCreateMessages as messages } from "./messages";
-import { GiftCardCreate_giftCardCreate_errors } from "./types/GiftCardCreate";
 
 const addToCurrentDate = (
   currentDate: number,
@@ -45,7 +45,7 @@ export const getGiftCardExpiryError = (intl: IntlShape): IMessage => ({
 });
 
 export const getGiftCardCreateOnCompletedMessage = (
-  errors: GiftCardCreate_giftCardCreate_errors[],
+  errors: GiftCardCreateMutation["giftCardCreate"]["errors"],
   intl: IntlShape,
   successMessage?: IMessage
 ): IMessage => {

@@ -3,6 +3,7 @@ import { bulkEnableDisableSectionMessages } from "@saleor/giftCards/GiftCardsLis
 import { giftCardsListTableMessages } from "@saleor/giftCards/GiftCardsList/messages";
 import useGiftCardActivateToggle from "@saleor/giftCards/GiftCardUpdate/GiftCardUpdatePageHeader/hooks/useGiftCardActivateToggle";
 import { ExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
+import { CustomerGiftCardFragment } from "@saleor/graphql";
 import * as React from "react";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
@@ -13,10 +14,9 @@ import useGiftCardSingleDelete from "../GiftCardDeleteDialog/useGiftCardSingleDe
 import GiftCardStatusChip from "../GiftCardStatusChip/GiftCardStatusChip";
 import { CUSTOMER_GIFT_CARD_LIST_QUERY } from "./queries";
 import { useListWrapperStyles } from "./styles";
-import { CustomerGiftCardList_giftCards_edges_node } from "./types/CustomerGiftCardList";
 
 interface CustomerGiftCardsCardListItemProps {
-  giftCard: ExtendedGiftCard<CustomerGiftCardList_giftCards_edges_node>;
+  giftCard: ExtendedGiftCard<CustomerGiftCardFragment>;
 }
 
 const CustomerGiftCardsCardListItem: React.FC<CustomerGiftCardsCardListItemProps> = ({
