@@ -132,7 +132,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
 
   const handleSelect = (
     item: string,
-    downshiftOpts?: ControllerStateAndHelpers
+    downshiftOpts?: ControllerStateAndHelpers<string>
   ) => {
     if (downshiftOpts) {
       downshiftOpts.reset({ inputValue: "", isOpen: true });
@@ -165,6 +165,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
               getItemProps,
               isOpen,
               toggleMenu,
+              getMenuProps,
               highlightedIndex,
               inputValue
             }) => {
@@ -180,10 +181,11 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
               return (
                 <div className={classes.container} {...rest}>
                   <TextField
-                    InputProps={{
+                    inputProps={{
                       ...getInputProps({
                         placeholder
                       }),
+                      ...getMenuProps(),
                       endAdornment: (
                         <div className={classes.adornment}>
                           {endAdornment}

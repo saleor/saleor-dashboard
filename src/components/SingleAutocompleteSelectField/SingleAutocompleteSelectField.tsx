@@ -4,9 +4,9 @@ import { ExtendedFormHelperTextProps } from "@saleor/channels/components/Channel
 import { makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import classNames from "classnames";
-import Downshift from "downshift";
+import Downshift, { GetInputPropsOptions } from "downshift";
 import { filter } from "fuzzaldrin";
-import React from "react";
+import React, { Ref } from "react";
 
 import ArrowDropdownIcon from "../../icons/ArrowDropdown";
 import Debounce, { DebounceProps } from "../Debounce";
@@ -105,7 +105,6 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
     <DebounceAutocomplete debounceFn={fetchChoices}>
       {debounceFn => (
         <Downshift
-          defaultInputValue={displayValue}
           itemToString={() => displayValue || ""}
           onInputValueChange={value => debounceFn(value)}
           onSelect={handleChange}
@@ -196,10 +195,17 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
               }
             };
 
+            // Downshift doesn't seem to be fully compatible with MUI
+            // https://github.com/downshift-js/downshift/issues/718
+            interface GetInputPropsOptionsRef extends GetInputPropsOptions {
+              ref?: Ref<HTMLInputElement>;
+              color?: "primary" | "secondary";
+            }
+
             const nakedInputProps = nakedInput
               ? {
                   "aria-label": "naked",
-                  ...commonInputProps,
+                  ...(commonInputProps as GetInputPropsOptionsRef),
                   autoFocus: true,
                   className: classes.nakedInput
                 }
@@ -212,7 +218,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
               >
                 <TextFieldComponent
                   {...nakedInputProps}
-                  InputProps={commonInputProps}
+                  inputProps={commonInputProps as GetInputPropsOptionsRef}
                   error={error}
                   disabled={disabled}
                   helperText={helperText}

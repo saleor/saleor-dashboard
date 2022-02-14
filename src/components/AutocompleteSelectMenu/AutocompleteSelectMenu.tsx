@@ -110,10 +110,7 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
   return (
     <DebounceAutocomplete debounceFn={onInputChange}>
       {debounceFn => (
-        <Downshift
-          itemToString={item => (item ? item.label : "")}
-          onSelect={handleChange}
-        >
+        <Downshift onSelect={handleChange}>
           {({ getItemProps, isOpen, openMenu, closeMenu, selectItem }) => (
             <div
               className={classes.container}
@@ -171,10 +168,10 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
                         : options
                       ).map((suggestion, index) => (
                         <MenuItem
-                          data-test-id={testIds[index]}
+                          data-test-id={!!testIds ? testIds[index] : ""}
                           key={suggestion.value}
                           component="div"
-                          {...getItemProps({ item: suggestion })}
+                          {...getItemProps({ item: suggestion.value })}
                           onClick={() =>
                             suggestion.value
                               ? selectItem(suggestion.value)
