@@ -1,9 +1,11 @@
 /* eslint-disable sort-keys */
 
-import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
+import { OrderRefundDataQuery } from "@saleor/graphql";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 
-export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
+export const orderToRefund = (
+  placeholder: string
+): OrderRefundDataQuery["order"] => ({
   __typename: "Order",
   id: "ifgdfuhdfdf",
   number: "22",

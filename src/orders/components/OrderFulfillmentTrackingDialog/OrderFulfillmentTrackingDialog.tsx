@@ -10,7 +10,7 @@ import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
-import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
+import { OrderErrorFragmentFragment } from "@saleor/graphql";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -25,7 +25,7 @@ export interface FormData {
 
 export interface OrderFulfillmentTrackingDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  errors: OrderErrorFragment[];
+  errors: OrderErrorFragmentFragment[];
   open: boolean;
   trackingNumber: string;
   onClose();

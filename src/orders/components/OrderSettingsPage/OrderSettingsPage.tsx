@@ -3,8 +3,10 @@ import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
-import { OrderSettingsFragment } from "@saleor/fragments/types/OrderSettingsFragment";
-import { ShopOrderSettingsFragment } from "@saleor/fragments/types/ShopOrderSettingsFragment";
+import {
+  OrderSettingsFragmentFragment,
+  ShopOrderSettingsFragmentFragment
+} from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -18,8 +20,8 @@ import OrderSettingsForm from "./form";
 import { OrderSettingsFormData } from "./types";
 
 export interface OrderSettingsPageProps {
-  orderSettings: OrderSettingsFragment;
-  shop: ShopOrderSettingsFragment;
+  orderSettings: OrderSettingsFragmentFragment;
+  shop: ShopOrderSettingsFragmentFragment;
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;

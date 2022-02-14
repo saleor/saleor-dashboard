@@ -6,13 +6,13 @@ import { IntlShape } from "react-intl";
 
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
 import { AddressType, AddressTypeInput } from "./customers/types";
+import { AddressFragmentFragment } from "./graphql";
 import {
   commonStatusMessages,
   errorMessages,
   orderStatusMessages,
   paymentStatusMessages
 } from "./intl";
-import { OrderDetails_order_shippingAddress } from "./orders/types/OrderDetails";
 import {
   MutationResultAdditionalProps,
   PartialMutationProviderOutput,
@@ -398,7 +398,7 @@ export function findInEnum<TEnum extends {}>(needle: string, haystack: TEnum) {
 }
 
 export function addressToAddressInput<T>(
-  address: T & OrderDetails_order_shippingAddress
+  address: T & AddressFragmentFragment
 ): AddressInput {
   const { id, __typename, ...rest } = address;
   return {

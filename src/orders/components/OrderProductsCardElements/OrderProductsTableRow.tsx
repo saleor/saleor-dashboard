@@ -3,12 +3,12 @@ import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
+import {
+  OrderDetailsFragmentFragment,
+  OrderLineFragmentFragment
+} from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
-import {
-  OrderDetails_order_fulfillments_lines,
-  OrderDetails_order_lines
-} from "@saleor/orders/types/OrderDetails";
 import React from "react";
 
 const useStyles = makeStyles(
@@ -51,7 +51,9 @@ const useStyles = makeStyles(
 );
 
 interface TableLineProps {
-  line: OrderDetails_order_fulfillments_lines | OrderDetails_order_lines;
+  line:
+    | OrderDetailsFragmentFragment["fulfillments"][0]["lines"][0]
+    | OrderLineFragmentFragment;
   isOrderLine?: boolean;
 }
 
@@ -60,7 +62,7 @@ const TableLine: React.FC<TableLineProps> = ({
   isOrderLine = false
 }) => {
   const classes = useStyles({});
-  const { quantity, quantityToFulfill } = lineData as OrderDetails_order_lines;
+  const { quantity, quantityToFulfill } = lineData as OrderLineFragmentFragment;
 
   if (!lineData) {
     return <Skeleton />;
@@ -70,8 +72,8 @@ const TableLine: React.FC<TableLineProps> = ({
     ? ({
         ...lineData,
         orderLine: lineData
-      } as OrderDetails_order_fulfillments_lines)
-    : (lineData as OrderDetails_order_fulfillments_lines);
+      } as OrderDetailsFragmentFragment["fulfillments"][0]["lines"][0])
+    : (lineData as OrderDetailsFragmentFragment["fulfillments"][0]["lines"][0]);
 
   const quantityToDisplay = isOrderLine ? quantityToFulfill : quantity;
 

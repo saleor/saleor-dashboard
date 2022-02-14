@@ -1,4 +1,9 @@
 /* eslint-disable sort-keys */
+import {
+  OrderDetailsFragmentFragment,
+  OrderLineFragmentFragment,
+  OrderRefundDataQuery
+} from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import {
   FulfillmentStatus,
@@ -7,15 +12,6 @@ import {
 } from "@saleor/types/globalTypes";
 
 import { LineItemData } from "../components/OrderReturnPage/form";
-import {
-  OrderDetails_order,
-  OrderDetails_order_fulfillments_lines,
-  OrderDetails_order_lines
-} from "../types/OrderDetails";
-import {
-  OrderRefundData_order_fulfillments,
-  OrderRefundData_order_lines
-} from "../types/OrderRefundData";
 import {
   getAllFulfillmentLinesPriceSum,
   getPreviouslyRefundedPrice,
@@ -28,7 +24,7 @@ import {
   OrderWithTotalAndTotalCaptured
 } from "./data";
 
-const orderBase: OrderDetails_order = {
+const orderBase: OrderDetailsFragmentFragment = {
   __typename: "Order",
   actions: [],
   shippingMethods: [],
@@ -165,7 +161,7 @@ describe("Get previously refunded price", () => {
 });
 
 describe("Get refunded lines price sum", () => {
-  const lines: OrderRefundData_order_lines[] = [
+  const lines: OrderRefundDataQuery["order"]["lines"] = [
     {
       __typename: "OrderLine",
       id: "1",
@@ -278,7 +274,7 @@ describe("Get refunded lines price sum", () => {
 });
 
 describe("Get get all fulfillment lines price sum", () => {
-  const fulfillments: OrderRefundData_order_fulfillments[] = [
+  const fulfillments: OrderRefundDataQuery["order"]["fulfillments"] = [
     {
       __typename: "Fulfillment",
       fulfillmentOrder: 1,
@@ -524,7 +520,7 @@ describe("Get get all fulfillment lines price sum", () => {
 
 describe("Get the total value of all replaced products", () => {
   it("sums up correctly", () => {
-    const unfulfilledLines: OrderDetails_order_lines[] = [
+    const unfulfilledLines: OrderLineFragmentFragment[] = [
       {
         id: "1",
         isShippingRequired: false,
@@ -695,7 +691,7 @@ describe("Get the total value of all replaced products", () => {
       }
     ];
 
-    const fulfilledLines: OrderDetails_order_fulfillments_lines[] = [
+    const fulfilledLines: OrderDetailsFragmentFragment["fulfillments"][0]["lines"] = [
       {
         id: "4",
         quantity: 1,
@@ -1137,7 +1133,7 @@ describe("Get the total value of all replaced products", () => {
 
 describe("Get the total value of all selected products", () => {
   it("sums up correctly", () => {
-    const unfulfilledLines: OrderDetails_order_lines[] = [
+    const unfulfilledLines: OrderLineFragmentFragment[] = [
       {
         id: "1",
         isShippingRequired: false,
@@ -1308,7 +1304,7 @@ describe("Get the total value of all selected products", () => {
       }
     ];
 
-    const fulfilledLines: OrderDetails_order_fulfillments_lines[] = [
+    const fulfilledLines: OrderDetailsFragmentFragment["fulfillments"][0]["lines"] = [
       {
         id: "4",
         quantity: 1,
@@ -1619,7 +1615,7 @@ describe("Get the total value of all selected products", () => {
 
 describe("Merge repeated order lines of fulfillment lines", () => {
   it("is able to merge repeated order lines and sum their quantities", () => {
-    const lines: OrderDetails_order_fulfillments_lines[] = [
+    const lines: OrderDetailsFragmentFragment["fulfillments"][0]["lines"] = [
       {
         id: "RnVsZmlsbG1lbnRMaW5lOjMx",
         quantity: 1,

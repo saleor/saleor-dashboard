@@ -1,14 +1,15 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import {
+  OrderFulfillDataQuery,
+  useFulfillOrderMutation,
+  useOrderFulfillDataQuery,
+  useOrderFulfillSettingsQuery,
+  WarehouseFragmentFragment
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { extractMutationErrors } from "@saleor/misc";
 import OrderFulfillPage from "@saleor/orders/components/OrderFulfillPage";
-import { useOrderFulfill } from "@saleor/orders/mutations";
-import {
-  useOrderFulfillData,
-  useOrderFulfillSettingsQuery
-} from "@saleor/orders/queries";
-import { OrderFulfillData_order } from "@saleor/orders/types/OrderFulfillData";
 import { orderUrl } from "@saleor/orders/urls";
 import { getWarehousesFromOrderLines } from "@saleor/orders/utils/data";
 import React from "react";
@@ -21,8 +22,8 @@ export interface OrderFulfillProps {
 }
 
 const resolveLocalFulfillment = (
-  order: OrderFulfillData_order,
-  orderLineWarehouses
+  order: OrderFulfillDataQuery["order"],
+  orderLineWarehouses: WarehouseFragmentFragment[]
 ) => {
   const deliveryMethod = order?.deliveryMethod;
   if (
@@ -47,7 +48,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
     loading: settingsLoading
   } = useOrderFulfillSettingsQuery({});
 
-  const { data, loading } = useOrderFulfillData({
+  const { data, loading } = useOrderFulfillDataQuery({
     displayLoader: true,
     variables: {
       orderId
@@ -56,7 +57,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
 
   const orderLinesWarehouses = getWarehousesFromOrderLines(data?.order?.lines);
 
-  const [fulfillOrder, fulfillOrderOpts] = useOrderFulfill({
+  const [fulfillOrder, fulfillOrderOpts] = useFulfillOrderMutation({
     onCompleted: data => {
       if (data.orderFulfill.errors.length === 0) {
         navigate(orderUrl(orderId), { replace: true });

@@ -10,10 +10,12 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";
-import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
+import { OrderErrorFragmentFragment } from "@saleor/graphql";
+import {
+  OrderDetailsFragmentFragment,
+  OrderRefundDataQuery
+} from "@saleor/graphql";
 import { Button, makeStyles } from "@saleor/macaw-ui";
-import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
-import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
@@ -81,11 +83,11 @@ const messages = defineMessages({
 
 interface OrderRefundAmountProps {
   data: OrderRefundFormData | OrderReturnFormData;
-  order: OrderRefundData_order | OrderDetails_order;
+  order: OrderRefundDataQuery["order"] | OrderDetailsFragmentFragment;
   disabled: boolean;
   disableSubmitButton?: boolean;
   isReturn?: boolean;
-  errors: OrderErrorFragment[];
+  errors: OrderErrorFragmentFragment[];
   amountData: OrderRefundAmountValuesProps;
   allowNoRefund?: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;

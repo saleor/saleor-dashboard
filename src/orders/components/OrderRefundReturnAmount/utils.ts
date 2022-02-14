@@ -1,7 +1,9 @@
 import { IMoney } from "@saleor/components/Money";
+import {
+  OrderDetailsFragmentFragment,
+  OrderRefundDataQuery
+} from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
-import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
-import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
 import {
   getAllFulfillmentLinesPriceSum,
   getPreviouslyRefundedPrice,
@@ -15,7 +17,7 @@ import { LineItemData, OrderReturnFormData } from "../OrderReturnPage/form";
 import { OrderRefundAmountValuesProps } from "./OrderRefundReturnAmountValues";
 
 export const getMiscellaneousAmountValues = (
-  order: OrderRefundData_order
+  order: OrderRefundDataQuery["order"]
 ): OrderRefundAmountValuesProps => {
   const authorizedAmount = order?.total?.gross;
   const previouslyRefunded = getPreviouslyRefundedPrice(order);
@@ -28,17 +30,18 @@ export const getMiscellaneousAmountValues = (
   };
 };
 
-const getAuthorizedAmount = (order: OrderRefundData_order) =>
+const getAuthorizedAmount = (order: OrderRefundDataQuery["order"]) =>
   order?.total?.gross;
 
-const getShipmentCost = (order: OrderRefundData_order) =>
+const getShipmentCost = (order: OrderRefundDataQuery["order"]) =>
   getAuthorizedAmount(order)?.currency &&
   (order?.shippingPrice?.gross || {
     amount: 0,
     currency: getAuthorizedAmount(order)?.currency
   });
 
-const getMaxRefund = (order: OrderRefundData_order) => order?.totalCaptured;
+const getMaxRefund = (order: OrderRefundDataQuery["order"]) =>
+  order?.totalCaptured;
 
 export const getProductsAmountValues = ({
   order,
@@ -47,7 +50,7 @@ export const getProductsAmountValues = ({
   unfulfilledItemsQuantities,
   refundShipmentCosts
 }: {
-  order: OrderRefundData_order;
+  order: OrderRefundDataQuery["order"];
   fulfilledItemsQuantities: FormsetData<null | LineItemData, string | number>;
   waitingItemsQuantities: FormsetData<null | LineItemData, string | number>;
   unfulfilledItemsQuantities: FormsetData<null | LineItemData, string | number>;
@@ -136,7 +139,7 @@ const getReturnTotalAmount = ({
   order,
   maxRefund
 }: {
-  order: OrderDetails_order;
+  order: OrderDetailsFragmentFragment;
   selectedProductsValue: IMoney;
   refundShipmentCosts: boolean;
   maxRefund: IMoney;
@@ -155,7 +158,7 @@ const getReturnTotalAmount = ({
 };
 
 export const getReturnProductsAmountValues = (
-  order: OrderDetails_order,
+  order: OrderDetailsFragmentFragment,
   formData: OrderReturnFormData
 ) => {
   const authorizedAmount = getAuthorizedAmount(order);
@@ -202,7 +205,7 @@ export const getReturnProductsAmountValues = (
 };
 
 export const getRefundProductsAmountValues = (
-  order: OrderRefundData_order,
+  order: OrderRefundDataQuery["order"],
   {
     refundedFulfilledProductQuantities,
     refundShipmentCosts,

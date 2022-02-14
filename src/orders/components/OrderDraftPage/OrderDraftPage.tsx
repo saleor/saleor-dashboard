@@ -7,6 +7,7 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
+import { OrderDetailsFragmentFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -18,7 +19,6 @@ import { FetchMoreProps } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { OrderDetails_order } from "../../types/OrderDetails";
 import OrderCustomer, { CustomerEditData } from "../OrderCustomer";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import { FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts";
@@ -39,7 +39,7 @@ const useStyles = makeStyles(
 
 export interface OrderDraftPageProps extends FetchMoreProps {
   disabled: boolean;
-  order: OrderDetails_order;
+  order: OrderDetailsFragmentFragment;
   users: SearchCustomers_search_edges_node[];
   usersLoading: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;

@@ -2,11 +2,11 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
-import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
+import { OrderErrorFragmentFragment } from "@saleor/graphql";
+import { OrderRefundDataQuery } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { Backlink } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -31,10 +31,10 @@ export const refundFulfilledStatuses = [
 ];
 
 export interface OrderRefundPageProps {
-  order: OrderRefundData_order;
+  order: OrderRefundDataQuery["order"];
   defaultType?: OrderRefundType;
   disabled: boolean;
-  errors: OrderErrorFragment[];
+  errors: OrderErrorFragmentFragment[];
   onBack: () => void;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }

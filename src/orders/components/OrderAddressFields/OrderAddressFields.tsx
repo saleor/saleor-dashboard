@@ -1,15 +1,12 @@
 import {
+  AddressFragmentFragment,
   CustomerAddressesQuery,
+  OrderDetailsQuery,
   OrderErrorFragmentFragment
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { transformAddressToForm } from "@saleor/misc";
-import {
-  OrderDetails_order_billingAddress,
-  OrderDetails_order_shippingAddress,
-  OrderDetails_shop_countries
-} from "@saleor/orders/types/OrderDetails";
 import React from "react";
 
 import OrderCustomerAddressesEditDialog, {
@@ -25,13 +22,13 @@ interface OrderAddressFieldsProps {
   isDraft: boolean;
   customerAddressesLoading: boolean;
   customer: CustomerAddressesQuery["user"];
-  countries: OrderDetails_shop_countries[];
+  countries: OrderDetailsQuery["shop"]["countries"];
   onClose: () => void;
   onConfirm: (data: OrderCustomerAddressesEditDialogOutput) => SubmitPromise;
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragmentFragment[];
-  orderShippingAddress: OrderDetails_order_shippingAddress;
-  orderBillingAddress: OrderDetails_order_billingAddress;
+  orderShippingAddress: AddressFragmentFragment;
+  orderBillingAddress: AddressFragmentFragment;
 }
 
 const OrderAddressFields: React.FC<OrderAddressFieldsProps> = ({

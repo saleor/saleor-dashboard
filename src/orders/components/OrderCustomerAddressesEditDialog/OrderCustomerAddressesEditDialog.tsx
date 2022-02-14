@@ -12,7 +12,7 @@ import ConfirmButton from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { AddressTypeInput } from "@saleor/customers/types";
-import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
+import { OrderErrorFragmentFragment } from "@saleor/graphql";
 import { AddressFragmentFragment, Node } from "@saleor/graphql";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -47,7 +47,7 @@ export interface OrderCustomerAddressesEditDialogProps {
   variant: AddressEditDialogVariant;
   loading: boolean;
   confirmButtonState: ConfirmButtonTransitionState;
-  errors: OrderErrorFragment[];
+  errors: OrderErrorFragmentFragment[];
   orderShippingAddress?: AddressTypeInput;
   orderBillingAddress?: AddressTypeInput;
   countries?: ShopInfo_shop_countries[];

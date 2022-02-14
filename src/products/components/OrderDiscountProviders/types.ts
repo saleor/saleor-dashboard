@@ -1,6 +1,6 @@
 import { Money } from "@saleor/fragments/types/Money";
+import { TaxedMoney } from "@saleor/graphql";
 import { OrderDiscountCommonInput } from "@saleor/orders/components/OrderDiscountCommonModal/types";
-import { OrderDetails_order_lines_undiscountedUnitPrice } from "@saleor/orders/types/OrderDetails";
 
 import { OrderLineDiscountContextConsumerProps } from "./OrderLineDiscountProvider";
 
@@ -14,7 +14,7 @@ export type GetOrderLineDiscountContextConsumerProps = (
 
 export interface OrderLineDiscountData extends OrderDiscountCommonInput {
   moneyValue: Money;
-  undiscountedPrice: OrderDetails_order_lines_undiscountedUnitPrice;
+  undiscountedPrice: Omit<TaxedMoney, "tax">;
 }
 
 export interface OrderDiscountConsumerCommonProps {

@@ -9,9 +9,9 @@ import {
   TimelineEventProps,
   TimelineNote
 } from "@saleor/components/Timeline";
+import { OrderEventFragmentFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
-import { OrderDetails_order_events } from "@saleor/orders/types/OrderDetails";
 import {
   OrderEventsEmailsEnum,
   OrderEventsEnum
@@ -24,7 +24,7 @@ import LinkedTimelineEvent from "./LinkedTimelineEvent";
 import { getEventSecondaryTitle, isTimelineEventOfType } from "./utils";
 
 export const getEventMessage = (
-  event: OrderDetails_order_events,
+  event: OrderEventFragmentFragment,
   intl: IntlShape
 ) => {
   const getUserOrApp = () => {
@@ -294,7 +294,7 @@ const useStyles = makeStyles(
 );
 
 interface OrderHistoryProps {
-  history: OrderDetails_order_events[];
+  history: OrderEventFragmentFragment[];
   orderCurrency: string;
   onNoteAdd: (data: FormData) => SubmitPromise;
 }
@@ -306,7 +306,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
   const intl = useIntl();
 
   const getTimelineEventTitleProps = (
-    event: OrderDetails_order_events
+    event: OrderEventFragmentFragment
   ): Partial<TimelineEventProps> => {
     const { type, message } = event;
 

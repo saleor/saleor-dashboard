@@ -1,8 +1,15 @@
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { InvoiceFragment } from "@saleor/fragments/types/InvoiceFragment";
-import { OrderSettingsFragment } from "@saleor/fragments/types/OrderSettingsFragment";
 import { ShopOrderSettingsFragment } from "@saleor/fragments/types/ShopOrderSettingsFragment";
+import { OrderSettingsFragmentFragment } from "@saleor/graphql";
+import {
+  OrderDetailsFragmentFragment,
+  OrderDetailsQuery,
+  OrderListQuery,
+  SearchOrderVariantQuery
+} from "@saleor/graphql";
 import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
+import { RelayToFlat } from "@saleor/types";
 import { warehouseForPickup, warehouseList } from "@saleor/warehouses/fixtures";
 import { MessageDescriptor } from "react-intl";
 
@@ -17,9 +24,6 @@ import {
   PaymentChargeStatusEnum,
   WeightUnitsEnum
 } from "../types/globalTypes";
-import { OrderDetails_order, OrderDetails_shop } from "./types/OrderDetails";
-import { OrderList_orders_edges_node } from "./types/OrderList";
-import { SearchOrderVariant_search_edges_node } from "./types/SearchOrderVariant";
 
 export const countries: ShopInfo_shop_countries[] = [
   { __typename: "CountryDisplay", code: "AF", country: "Afghanistan" },
@@ -28,7 +32,7 @@ export const countries: ShopInfo_shop_countries[] = [
   { __typename: "CountryDisplay", code: "DZ", country: "Algeria" },
   { __typename: "CountryDisplay", code: "AS", country: "American Samoa" }
 ];
-export const shop: OrderDetails_shop = {
+export const shop: OrderDetailsQuery["shop"] = {
   __typename: "Shop",
   countries,
   defaultWeightUnit: WeightUnitsEnum.KG,
@@ -66,7 +70,7 @@ export const clients: SearchCustomers_search_edges_node[] = [
     lastName: "Jonas"
   }
 ];
-export const orders: OrderList_orders_edges_node[] = [
+export const orders: RelayToFlat<OrderListQuery["orders"]> = [
   {
     __typename: "Order",
     billingAddress: {
@@ -770,7 +774,7 @@ export const orders: OrderList_orders_edges_node[] = [
     userEmail: "curtis.bailey@example.com"
   }
 ];
-export const order = (placeholder: string): OrderDetails_order => ({
+export const order = (placeholder: string): OrderDetailsFragmentFragment => ({
   __typename: "Order",
   giftCards: [],
   actions: [
@@ -1421,7 +1425,9 @@ export const order = (placeholder: string): OrderDetails_order => ({
   user: null,
   userEmail: "melissa.simon@example.com"
 });
-export const draftOrder = (placeholder: string): OrderDetails_order => ({
+export const draftOrder = (
+  placeholder: string
+): OrderDetailsFragmentFragment => ({
   __typename: "Order" as "Order",
   giftCards: [],
   actions: [OrderAction.CAPTURE],
@@ -1663,7 +1669,7 @@ export const shippingMethods = [
 ];
 export const orderLineSearch = (
   placeholderImage: string
-): SearchOrderVariant_search_edges_node[] => [
+): RelayToFlat<SearchOrderVariantQuery["search"]> => [
   {
     __typename: "Product" as "Product",
     id: "UHJvZHVjdDo3Mg==",
@@ -2075,7 +2081,7 @@ export const invoices: InvoiceFragment[] = [
   }
 ];
 
-export const orderSettings: OrderSettingsFragment = {
+export const orderSettings: OrderSettingsFragmentFragment = {
   __typename: "OrderSettings",
   automaticallyConfirmAllNewOrders: true,
   automaticallyFulfillNonShippableGiftCard: false

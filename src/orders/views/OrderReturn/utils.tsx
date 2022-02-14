@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/member-ordering */
+import { OrderDetailsFragmentFragment } from "@saleor/graphql";
 import { OrderRefundAmountCalculationMode } from "@saleor/orders/components/OrderRefundPage/form";
 import {
   FormsetQuantityData,
   OrderReturnFormData
 } from "@saleor/orders/components/OrderReturnPage/form";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
-import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
 import {
   OrderReturnFulfillmentLineInput,
   OrderReturnLineInput,
@@ -13,10 +13,13 @@ import {
 } from "@saleor/types/globalTypes";
 
 class ReturnFormDataParser {
-  private order: OrderDetails_order;
+  private order: OrderDetailsFragmentFragment;
   private formData: OrderReturnFormData;
 
-  constructor(order: OrderDetails_order, formData: OrderReturnFormData) {
+  constructor(
+    order: OrderDetailsFragmentFragment,
+    formData: OrderReturnFormData
+  ) {
     this.order = order;
     this.formData = formData;
   }

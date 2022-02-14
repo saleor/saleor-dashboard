@@ -1,4 +1,5 @@
 import { TableCell, TableRow, Typography } from "@material-ui/core";
+import { OrderDetailsFragmentFragment } from "@saleor/graphql";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import classNames from "classnames";
@@ -6,14 +7,13 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { FormattedMessage } from "react-intl";
 
-import { OrderDetails_order_fulfillments } from "../../types/OrderDetails";
 import { extraInfoMessages } from "./messages";
 import useStyles from "./styles";
 
 const NUMBER_OF_COLUMNS = 5;
 
 interface ExtraInfoLinesProps {
-  fulfillment?: OrderDetails_order_fulfillments;
+  fulfillment?: OrderDetailsFragmentFragment["fulfillments"][0];
 }
 
 const ExtraInfoLines: React.FC<ExtraInfoLinesProps> = ({ fulfillment }) => {

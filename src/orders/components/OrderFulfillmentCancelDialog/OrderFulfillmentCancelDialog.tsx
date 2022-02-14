@@ -10,8 +10,8 @@ import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
-import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
+import { OrderErrorFragmentFragment } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
@@ -40,7 +40,7 @@ const useStyles = makeStyles(
 
 export interface OrderFulfillmentCancelDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  errors: OrderErrorFragment[];
+  errors: OrderErrorFragmentFragment[];
   open: boolean;
   warehouses: WarehouseFragment[];
   onClose();

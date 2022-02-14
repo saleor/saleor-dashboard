@@ -8,6 +8,7 @@ import Link from "@saleor/components/Link";
 import RequirePermissions from "@saleor/components/RequirePermissions";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
+import { OrderDetailsFragmentFragment } from "@saleor/graphql";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
 import { Button, makeStyles } from "@saleor/macaw-ui";
@@ -20,7 +21,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { customerUrl } from "../../../customers/urls";
 import { maybe } from "../../../misc";
-import { OrderDetails_order } from "../../types/OrderDetails";
 import { WarehouseClickAndCollectOptionEnum } from "./../../../types/globalTypes";
 import messages from "./messages";
 
@@ -56,7 +56,7 @@ export interface CustomerEditData {
 }
 
 export interface OrderCustomerProps extends Partial<FetchMoreProps> {
-  order: OrderDetails_order;
+  order: OrderDetailsFragmentFragment;
   users?: SearchCustomers_search_edges_node[];
   loading?: boolean;
   canEditAddresses: boolean;

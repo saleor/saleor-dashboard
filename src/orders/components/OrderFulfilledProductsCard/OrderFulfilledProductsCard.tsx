@@ -1,7 +1,7 @@
 import { Card, TableBody } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import { OrderDetailsFragment } from "@saleor/fragments/types/OrderDetailsFragment";
+import { OrderDetailsFragmentFragment } from "@saleor/graphql";
 import TrashIcon from "@saleor/icons/Trash";
 import { IconButton } from "@saleor/macaw-ui";
 import { mergeRepeatedOrderLines } from "@saleor/orders/utils/data";
@@ -9,7 +9,6 @@ import React from "react";
 
 import { renderCollection } from "../../../misc";
 import { FulfillmentStatus } from "../../../types/globalTypes";
-import { OrderDetails_order_fulfillments } from "../../types/OrderDetails";
 import TableHeader from "../OrderProductsCardElements/OrderProductsCardHeader";
 import TableLine from "../OrderProductsCardElements/OrderProductsTableRow";
 import CardTitle from "../OrderReturnPage/OrderReturnRefundItemsCard/CardTitle";
@@ -18,9 +17,9 @@ import ExtraInfoLines from "./ExtraInfoLines";
 import useStyles from "./styles";
 
 interface OrderFulfilledProductsCardProps {
-  fulfillment: OrderDetails_order_fulfillments;
+  fulfillment: OrderDetailsFragmentFragment["fulfillments"][0];
   fulfillmentAllowUnpaid: boolean;
-  order?: OrderDetailsFragment;
+  order?: OrderDetailsFragmentFragment;
   onOrderFulfillmentApprove: () => void;
   onOrderFulfillmentCancel: () => void;
   onTrackingCodeAdd: () => void;

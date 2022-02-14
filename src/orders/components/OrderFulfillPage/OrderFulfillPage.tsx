@@ -20,6 +20,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { ShopOrderSettingsFragment } from "@saleor/fragments/types/ShopOrderSettingsFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
+import { FulfillOrderMutation, OrderFulfillDataQuery } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
 import { commonMessages } from "@saleor/intl";
@@ -27,11 +28,6 @@ import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import { FulfillOrder_orderFulfill_errors } from "@saleor/orders/types/FulfillOrder";
-import {
-  OrderFulfillData_order,
-  OrderFulfillData_order_lines
-} from "@saleor/orders/types/OrderFulfillData";
 import { getToFulfillOrderLines } from "@saleor/orders/utils/data";
 import { isStockError } from "@saleor/orders/utils/data";
 import { OrderFulfillStockInput } from "@saleor/types/globalTypes";
@@ -116,8 +112,8 @@ export interface OrderFulfillSubmitData extends OrderFulfillFormData {
 }
 export interface OrderFulfillPageProps {
   loading: boolean;
-  errors: FulfillOrder_orderFulfill_errors[];
-  order: OrderFulfillData_order;
+  errors: FulfillOrderMutation["orderFulfill"]["errors"];
+  order: OrderFulfillDataQuery["order"];
   saveButtonBar: ConfirmButtonTransitionState;
   warehouses: WarehouseFragment[];
   shopSettings?: ShopOrderSettingsFragment;
@@ -256,7 +252,10 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                 <TableBody>
                   {renderCollection(
                     getToFulfillOrderLines(order?.lines),
-                    (line: OrderFulfillData_order_lines, lineIndex) => {
+                    (
+                      line: OrderFulfillDataQuery["order"]["lines"][0],
+                      lineIndex
+                    ) => {
                       if (!line) {
                         return (
                           <TableRow key={lineIndex}>

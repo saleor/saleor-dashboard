@@ -1,5 +1,5 @@
 import { IMoney, subtractMoney } from "@saleor/components/Money";
-import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
+import { OrderDetailsFragmentFragment } from "@saleor/graphql";
 import {
   GiftCardEventsEnum,
   PaymentChargeStatusEnum
@@ -7,7 +7,7 @@ import {
 import compact from "lodash/compact";
 
 export const extractOrderGiftCardUsedAmount = (
-  order?: OrderDetails_order
+  order?: OrderDetailsFragmentFragment
 ): number | undefined => {
   if (!order) {
     return undefined;
@@ -37,12 +37,16 @@ export const extractOrderGiftCardUsedAmount = (
   }, 0);
 };
 
-export const extractOutstandingBalance = (order: OrderDetails_order): IMoney =>
+export const extractOutstandingBalance = (
+  order: OrderDetailsFragmentFragment
+): IMoney =>
   order?.totalCaptured &&
   order?.total?.gross &&
   subtractMoney(order.total.gross, order.totalCaptured);
 
-export const extractRefundedAmount = (order: OrderDetails_order): IMoney => {
+export const extractRefundedAmount = (
+  order: OrderDetailsFragmentFragment
+): IMoney => {
   if (order?.paymentStatus === PaymentChargeStatusEnum.FULLY_REFUNDED) {
     return order?.total?.gross;
   }
