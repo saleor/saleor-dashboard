@@ -13,7 +13,8 @@ const useStyles = makeStyles(
   theme => ({
     title: {
       width: "100%",
-      display: "flex"
+      display: "flex",
+      justifyContent: "space-between"
     },
     orderNumber: {
       display: "inline",
@@ -21,6 +22,7 @@ const useStyles = makeStyles(
     },
     warehouseName: {
       float: "right",
+      alignSelf: "center",
       color: theme.palette.text.secondary,
       margin: `auto ${theme.spacing(1)} auto auto`
     }
@@ -129,7 +131,7 @@ const CardTitle: React.FC<CardTitleProps> = ({
   );
 
   const title = (
-    <div className={classes.title}>
+    <>
       {intl.formatMessage(messageForStatus, {
         fulfillmentName,
         quantity: totalQuantity
@@ -139,14 +141,14 @@ const CardTitle: React.FC<CardTitleProps> = ({
           {fulfillmentName}
         </Typography>
       )}
-    </div>
+    </>
   );
 
   return (
     <DefaultCardTitle
       toolbar={toolbar}
       title={
-        <>
+        <div className={classes.title}>
           {withStatus ? (
             <Pill label={title} color={selectStatus(status)} />
           ) : (
@@ -162,7 +164,7 @@ const CardTitle: React.FC<CardTitleProps> = ({
               />
             </Typography>
           )}
-        </>
+        </div>
       }
     />
   );
