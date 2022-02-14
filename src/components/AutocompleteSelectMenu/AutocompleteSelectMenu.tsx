@@ -127,6 +127,7 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
                     closeMenu();
                     setMenuPath([]);
                     setInputValue(displayValue || "");
+                    debounceFn("");
                   },
                   onChange: event => {
                     debounceFn(event.target.value);
@@ -153,7 +154,7 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
                         <MenuItem
                           component="div"
                           {...getItemProps({
-                            item: null
+                            item: "Back"
                           })}
                           onClick={() =>
                             setMenuPath(menuPath.slice(0, menuPath.length - 2))
@@ -169,9 +170,9 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
                       ).map((suggestion, index) => (
                         <MenuItem
                           data-test-id={!!testIds ? testIds[index] : ""}
-                          key={suggestion.value}
+                          key={`${suggestion.value}:${index}`}
                           component="div"
-                          {...getItemProps({ item: suggestion.value })}
+                          {...getItemProps({ item: suggestion.value ?? "" })}
                           onClick={() =>
                             suggestion.value
                               ? selectItem(suggestion.value)

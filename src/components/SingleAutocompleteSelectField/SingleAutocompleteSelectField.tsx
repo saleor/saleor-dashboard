@@ -4,9 +4,9 @@ import { ExtendedFormHelperTextProps } from "@saleor/channels/components/Channel
 import { makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import classNames from "classnames";
-import Downshift, { GetInputPropsOptions } from "downshift";
+import Downshift from "downshift";
 import { filter } from "fuzzaldrin";
-import React, { Ref } from "react";
+import React from "react";
 
 import ArrowDropdownIcon from "../../icons/ArrowDropdown";
 import Debounce, { DebounceProps } from "../Debounce";
@@ -176,9 +176,6 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
 
             const commonInputProps = {
               ...InputProps,
-              ...getInputProps({
-                placeholder
-              }),
               endAdornment: (
                 <div className={classes.adornment}>
                   <ArrowDropdownIcon />
@@ -187,7 +184,6 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
               error,
               id: undefined,
               onBlur: handleBlur,
-              onClick: !disabled && toggleMenu,
               onFocus: () => {
                 if (fetchOnFocus) {
                   fetchChoices(inputValue);
@@ -195,17 +191,10 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
               }
             };
 
-            // Downshift doesn't seem to be fully compatible with MUI
-            // https://github.com/downshift-js/downshift/issues/718
-            interface GetInputPropsOptionsRef extends GetInputPropsOptions {
-              ref?: Ref<HTMLInputElement>;
-              color?: "primary" | "secondary";
-            }
-
             const nakedInputProps = nakedInput
               ? {
                   "aria-label": "naked",
-                  ...(commonInputProps as GetInputPropsOptionsRef),
+                  ...commonInputProps,
                   autoFocus: true,
                   className: classes.nakedInput
                 }
@@ -218,7 +207,15 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
               >
                 <TextFieldComponent
                   {...nakedInputProps}
-                  inputProps={commonInputProps as GetInputPropsOptionsRef}
+                  InputProps={commonInputProps}
+                  // Downshift doesn't seem to be fully compatible with MUI
+                  // https://github.com/downshift-js/downshift/issues/718
+                  inputProps={{
+                    ...getInputProps({
+                      placeholder,
+                      onClick: !disabled && toggleMenu
+                    })
+                  }}
                   error={error}
                   disabled={disabled}
                   helperText={helperText}

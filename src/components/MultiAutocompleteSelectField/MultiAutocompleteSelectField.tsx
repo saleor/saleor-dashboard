@@ -181,26 +181,28 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
               return (
                 <div className={classes.container} {...rest}>
                   <TextField
-                    inputProps={{
-                      ...getInputProps({
-                        placeholder
-                      }),
-                      ...getMenuProps(),
+                    InputProps={{
                       endAdornment: (
                         <div className={classes.adornment}>
                           {endAdornment}
                           <ArrowDropdownIcon />
                         </div>
                       ),
-                      id: undefined,
+                      ref: anchor,
                       onBlur,
-                      onClick: toggleMenu,
                       onFocus: () => {
                         if (fetchOnFocus) {
                           fetchChoices(inputValue);
                         }
-                      },
-                      ref: anchor
+                      }
+                    }}
+                    inputProps={{
+                      ...getInputProps({
+                        placeholder,
+                        id: undefined,
+                        onClick: toggleMenu
+                      }),
+                      ...getMenuProps()
                     }}
                     error={error}
                     helperText={helperText}
