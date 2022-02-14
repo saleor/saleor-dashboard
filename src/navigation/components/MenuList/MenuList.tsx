@@ -12,6 +12,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import { MenuFragmentFragment } from "@saleor/graphql";
 import { DeleteIcon, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
 import { MenuListUrlSortField } from "@saleor/navigation/urls";
@@ -21,13 +22,11 @@ import { getFooterColSpanWithBulkActions } from "@saleor/utils/tables";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { MenuList_menus_edges_node } from "../../types/MenuList";
-
 export interface MenuListProps
   extends ListProps,
     ListActions,
     SortPage<MenuListUrlSortField> {
-  menus: MenuList_menus_edges_node[];
+  menus: MenuFragmentFragment[];
   onDelete: (id: string) => void;
 }
 

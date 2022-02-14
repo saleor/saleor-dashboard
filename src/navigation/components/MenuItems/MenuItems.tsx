@@ -2,6 +2,7 @@ import { Card, CardActions, Paper, Typography } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
+import { MenuDetailsFragmentFragment } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
 import { Button, DeleteIcon, IconButton, useTheme } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -11,7 +12,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import SortableTree, { NodeRendererProps, TreeItem } from "react-sortable-tree";
 
 import Draggable from "../../../icons/Draggable";
-import { MenuDetails_menu_items } from "../../types/MenuDetails";
 import { MenuItemType } from "../MenuItemDialog";
 import { getDiff, getNodeData, getNodeQuantity, TreeOperation } from "./tree";
 
@@ -20,7 +20,7 @@ const NODE_MARGIN = 40;
 
 export interface MenuItemsProps {
   canUndo: boolean;
-  items: MenuDetails_menu_items[];
+  items: MenuDetailsFragmentFragment["items"];
   onChange: (operations: TreeOperation[]) => void;
   onItemAdd: () => void;
   onItemClick: (id: string, type: MenuItemType) => void;

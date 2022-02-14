@@ -1,7 +1,9 @@
-import { MenuDetails_menu } from "./types/MenuDetails";
-import { MenuList_menus_edges_node } from "./types/MenuList";
+import {
+  MenuDetailsFragmentFragment,
+  MenuFragmentFragment
+} from "@saleor/graphql";
 
-export const menuList: MenuList_menus_edges_node[] = [
+export const menuList: MenuFragmentFragment[] = [
   {
     __typename: "Menu",
     id: "TWVudTox",
@@ -23,7 +25,7 @@ export const menuList: MenuList_menus_edges_node[] = [
   }
 ];
 
-export const menu: MenuDetails_menu = {
+export const menu: MenuDetailsFragmentFragment = {
   __typename: "Menu",
   id: "TWVudTox",
   items: [
