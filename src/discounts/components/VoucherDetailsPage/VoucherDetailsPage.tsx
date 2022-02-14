@@ -350,7 +350,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                         onRowClick={onProductClick}
                         pageInfo={pageInfo}
                         products={mapEdgesToItems(voucher.products)}
-                        channelsCount={allChannelsCount}
                         isChecked={isChecked}
                         selected={selected}
                         toggle={toggle}
