@@ -10,10 +10,9 @@ import { DateTime } from "@saleor/components/Date";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
-import StatusLabel from "@saleor/components/StatusLabel";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles, Pill } from "@saleor/macaw-ui";
 import {
   maybe,
   renderCollection,
@@ -227,8 +226,8 @@ export const OrderList: React.FC<OrderListProps> = props => {
               <TableCell className={classes.colPayment}>
                 {maybe(() => order.paymentStatus.status) !== undefined ? (
                   order.paymentStatus.status === null ? null : (
-                    <StatusLabel
-                      status={order.paymentStatus.status}
+                    <Pill
+                      color={order.paymentStatus.status}
                       label={order.paymentStatus.localized}
                     />
                   )
@@ -238,8 +237,8 @@ export const OrderList: React.FC<OrderListProps> = props => {
               </TableCell>
               <TableCell className={classes.colFulfillment}>
                 {maybe(() => order.status) ? (
-                  <StatusLabel
-                    status={order.status.status}
+                  <Pill
+                    color={order.status.status}
                     label={order.status.localized}
                   />
                 ) : (

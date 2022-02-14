@@ -217,3 +217,10 @@ export interface AutocompleteFilterOpts
 }
 
 export type Ids = string[];
+
+export enum StatusType {
+  INFO = "info",
+  ERROR = "error",
+  WARNING = "warning",
+  SUCCESS = "success"
+}
