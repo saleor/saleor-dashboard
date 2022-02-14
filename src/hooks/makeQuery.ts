@@ -24,7 +24,9 @@ export { useLazyQuery, LazyQueryHookOptions } from "@apollo/client";
 const getPermissionKey = (permission: string) =>
   `PERMISSION_${permission}` as PrefixedPermissions;
 
-const allPermissions = Object.keys(PermissionEnum).reduce(
+const allPermissions: Record<PrefixedPermissions, boolean> = Object.keys(
+  PermissionEnum
+).reduce(
   (prev, code) => ({
     ...prev,
     [getPermissionKey(code)]: false
@@ -32,7 +34,9 @@ const allPermissions = Object.keys(PermissionEnum).reduce(
   {} as Record<PrefixedPermissions, boolean>
 );
 
-const getUserPermissions = (userPermissions: User_userPermissions[]) =>
+const getUserPermissions = (
+  userPermissions: User_userPermissions[]
+): Record<PrefixedPermissions, boolean> =>
   userPermissions.reduce(
     (prev, permission) => ({
       ...prev,
@@ -51,9 +55,10 @@ export interface LoadMore<TData, TVariables> {
 export type UseQueryResult<TData, TVariables> = QueryResult<TData, TVariables> &
   LoadMore<TData, TVariables>;
 export type QueryHookOptions<TData, TVariables> = Partial<
-  BaseQueryHookOptions<TData, TVariables> & {
+  Omit<BaseQueryHookOptions<TData, TVariables>, "variables"> & {
     displayLoader: boolean;
     handleError?: (error: ApolloError) => void | undefined;
+    variables?: Omit<TVariables, PrefixedPermissions>;
   }
 >;
 type UseQueryHook<TData, TVariables> = (
@@ -81,7 +86,7 @@ export function useQuery<TData, TVariables>(
     ...variables,
     ...allPermissions,
     ...userPermissions
-  };
+  } as TVariables & Record<PrefixedPermissions, boolean>;
 
   const queryData = useBaseQuery(query, {
     ...opts,
