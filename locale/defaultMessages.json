@@ -4957,6 +4957,10 @@
     "context": "order payment",
     "string": "Captured amount"
   },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_clickAndCollectShippingMethod": {
+    "context": "OrderPayment click&collect shipping method",
+    "string": "click&collect"
+  },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_discount": {
     "context": "order discount",
     "string": "Discount"
@@ -4968,14 +4972,6 @@
   "src_dot_orders_dot_components_dot_OrderPayment_dot_markAsPaid": {
     "context": "order, button",
     "string": "Mark as paid"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_orderPaymentClickAndCollectShippingMethod": {
-    "context": "OrderPayment click&collect shipping method",
-    "string": "click&collect"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_orderPaymentShippingDoesNotApply": {
-    "context": "OrderPayment does not require shipping",
-    "string": "does not apply"
   },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_outstanding": {
     "context": "order payment",
@@ -5004,6 +5000,10 @@
   "src_dot_orders_dot_components_dot_OrderPayment_dot_shipping": {
     "context": "order shipping method name",
     "string": "Shipping"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_shippingDoesNotApply": {
+    "context": "OrderPayment does not require shipping",
+    "string": "does not apply"
   },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_shippingNotApplicable": {
     "context": "order does not require shipping",

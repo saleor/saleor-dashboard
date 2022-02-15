@@ -1,11 +1,11 @@
 import { defineMessages } from "react-intl";
 
 export const orderPaymentMessages = defineMessages({
-  orderPaymentClickAndCollectShippingMethod: {
+  clickAndCollectShippingMethod: {
     defaultMessage: "click&collect",
     description: "OrderPayment click&collect shipping method"
   },
-  orderPaymentShippingDoesNotApply: {
+  shippingDoesNotApply: {
     defaultMessage: "does not apply",
     description: "OrderPayment does not require shipping"
   },

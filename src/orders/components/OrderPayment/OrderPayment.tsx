@@ -84,12 +84,10 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
 
     if (order.shippingMethodName === null) {
       return order.collectionPointName == null ? (
-        <FormattedMessage
-          {...orderPaymentMessages.orderPaymentShippingDoesNotApply}
-        />
+        <FormattedMessage {...orderPaymentMessages.shippingDoesNotApply} />
       ) : (
         <FormattedMessage
-          {...orderPaymentMessages.orderPaymentClickAndCollectShippingMethod}
+          {...orderPaymentMessages.clickAndCollectShippingMethod}
         />
       );
     }
