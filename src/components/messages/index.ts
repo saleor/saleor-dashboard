@@ -9,9 +9,10 @@ export interface IMessage {
   autohide?: number;
   expandText?: string;
   title?: string;
-  text: React.ReactNode;
+  text?: React.ReactNode;
   onUndo?: () => void;
   status?: Status;
+  apiMessage?: string;
 }
 
 export interface INotification {

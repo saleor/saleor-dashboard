@@ -1,10 +1,12 @@
 import { DEFAULT_NOTIFICATION_SHOW_TIME } from "@saleor/config";
 import { Notification } from "@saleor/macaw-ui";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useIntl } from "react-intl";
 import { TransitionGroup } from "react-transition-group";
 
 import { INotification, ITimer, MessageContext } from ".";
 import Container from "./Container";
+import { messages as notificationMessages } from "./messages";
 import { useStyles } from "./styles";
 import Transition from "./Transition";
 
@@ -12,6 +14,7 @@ const MessageManagerProvider = ({ children }) => {
   const classes = useStyles();
   const timersArr = useRef<ITimer[]>([]);
   const [notifications, setNotifications] = useState<INotification[]>([]);
+  const intl = useIntl();
 
   useEffect(() => {
     const timersArrRef = timersArr.current;
@@ -114,6 +117,17 @@ const MessageManagerProvider = ({ children }) => {
                 title={notification.message.title}
                 type={notification.message.status || "info"}
                 content={notification.message.text}
+                apiMessage={
+                  notification.message.apiMessage && {
+                    apiMessageContent: notification.message.apiMessage,
+                    hideApiLabel: intl.formatMessage(
+                      notificationMessages.hideError
+                    ),
+                    showApiLabel: intl.formatMessage(
+                      notificationMessages.seeError
+                    )
+                  }
+                }
                 {...(!!notification.message.actionBtn
                   ? {
                       action: {

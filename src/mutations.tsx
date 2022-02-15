@@ -41,7 +41,8 @@ export function TypedMutation<TData, TVariables>(
           if (err.networkError) {
             notify({
               status: "error",
-              text: intl.formatMessage(commonMessages.somethingWentWrong)
+              apiMessage: err.networkError.message,
+              title: intl.formatMessage(commonMessages.defaultErrorTitle)
             });
           }
           if (hasError(err, GqlErrors.ReadOnlyException)) {
@@ -58,7 +59,8 @@ export function TypedMutation<TData, TVariables>(
           } else if (!hasError(err, GqlErrors.LimitReachedException)) {
             notify({
               status: "error",
-              text: intl.formatMessage(commonMessages.somethingWentWrong)
+              apiMessage: err.networkError.message,
+              title: intl.formatMessage(commonMessages.defaultErrorTitle)
             });
           }
           if (onError) {

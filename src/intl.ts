@@ -96,6 +96,9 @@ export const commonMessages = defineMessages({
   somethingWentWrong: {
     defaultMessage: "Saleor ran into an unexpected problem"
   },
+  defaultErrorTitle: {
+    defaultMessage: "Something went wrong"
+  },
   startDate: {
     defaultMessage: "Start Date"
   },
