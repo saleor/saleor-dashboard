@@ -7,6 +7,7 @@ import Metadata from "@saleor/components/Metadata/Metadata";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
+import { ProductTypeDetailsQuery } from "@saleor/graphql";
 import { ChangeEvent, FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
@@ -24,10 +25,6 @@ import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTr
 import React from "react";
 import { useIntl } from "react-intl";
 
-import {
-  ProductTypeDetails_productType,
-  ProductTypeDetails_taxTypes
-} from "../../types/ProductTypeDetails";
 import ProductTypeAttributes from "../ProductTypeAttributes/ProductTypeAttributes";
 import ProductTypeDetails from "../ProductTypeDetails/ProductTypeDetails";
 import ProductTypeShipping from "../ProductTypeShipping/ProductTypeShipping";
@@ -52,13 +49,13 @@ export interface ProductTypeForm extends MetadataFormData {
 
 export interface ProductTypeDetailsPageProps {
   errors: UserError[];
-  productType: ProductTypeDetails_productType;
+  productType: ProductTypeDetailsQuery["productType"];
   defaultWeightUnit: WeightUnitsEnum;
   disabled: boolean;
   pageTitle: string;
   productAttributeList: ListActions;
   saveButtonBarState: ConfirmButtonTransitionState;
-  taxTypes: ProductTypeDetails_taxTypes[];
+  taxTypes: ProductTypeDetailsQuery["taxTypes"];
   variantAttributeList: ListActions;
   onAttributeAdd: (type: ProductAttributeType) => void;
   onAttributeClick: (id: string) => void;
@@ -74,7 +71,7 @@ export interface ProductTypeDetailsPageProps {
 
 function handleTaxTypeChange(
   event: ChangeEvent,
-  taxTypes: ProductTypeDetails_taxTypes[],
+  taxTypes: ProductTypeDetailsQuery["taxTypes"],
   formChange: FormChange,
   displayChange: (name: string) => void
 ) {

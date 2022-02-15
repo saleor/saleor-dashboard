@@ -9,6 +9,7 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
+import { ProductTypeDetailsQuery } from "@saleor/graphql";
 import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { ListActions, ReorderAction } from "@saleor/types";
@@ -16,11 +17,6 @@ import { ProductAttributeType } from "@saleor/types/globalTypes";
 import capitalize from "lodash/capitalize";
 import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import {
-  ProductTypeDetails_productType_assignedVariantAttributes,
-  ProductTypeDetails_productType_variantAttributes
-} from "../../types/ProductTypeDetails";
 
 const useStyles = makeStyles(
   {
@@ -64,7 +60,7 @@ const useStyles = makeStyles(
 );
 
 interface ProductTypeVariantAttributesProps extends ListActions {
-  assignedVariantAttributes: ProductTypeDetails_productType_assignedVariantAttributes[];
+  assignedVariantAttributes: ProductTypeDetailsQuery["productType"]["assignedVariantAttributes"];
   disabled: boolean;
   type: string;
   testId?: string;
@@ -163,9 +159,9 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
             disabled={disabled}
             dragRows
             selected={selected}
-            items={
-              (assignedVariantAttributes as unknown) as ProductTypeDetails_productType_variantAttributes[]
-            }
+            items={assignedVariantAttributes?.map(
+              selectedAttribute => selectedAttribute.attribute
+            )}
             toggleAll={toggleAll}
             toolbar={toolbar}
           >

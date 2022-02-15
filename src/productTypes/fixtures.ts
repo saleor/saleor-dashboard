@@ -1,4 +1,8 @@
-import { ProductTypeQuery } from "@saleor/graphql";
+import {
+  ProductTypeDetailsQuery,
+  ProductTypeListQuery,
+  ProductTypeQuery
+} from "@saleor/graphql";
 import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
 
 import {
@@ -7,8 +11,6 @@ import {
   ProductTypeKindEnum,
   WeightUnitsEnum
 } from "../types/globalTypes";
-import { ProductTypeDetails_productType } from "./types/ProductTypeDetails";
-import { ProductTypeList_productTypes_edges_node } from "./types/ProductTypeList";
 
 export const attributes: ProductTypeQuery["productType"]["productAttributes"] = [
   {
@@ -980,7 +982,7 @@ export const productTypeSearch: ProductTypeQuery["productType"] = {
 };
 
 export const productTypes: Array<SearchProductTypes_search_edges_node &
-  ProductTypeList_productTypes_edges_node> = [
+  ProductTypeListQuery["productTypes"]["edges"][0]["node"]> = [
   {
     __typename: "ProductType" as "ProductType",
     hasVariants: true,
@@ -1061,7 +1063,7 @@ export const productTypes: Array<SearchProductTypes_search_edges_node &
   ...productType
 }));
 
-export const productType: ProductTypeDetails_productType = {
+export const productType: ProductTypeDetailsQuery["productType"] = {
   __typename: "ProductType" as "ProductType",
   hasVariants: false,
   id: "UHJvZHVjdFR5cGU6NQ==",

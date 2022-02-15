@@ -1,8 +1,8 @@
 import { Card, CardContent } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
+import { ProductTypeDetailsQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { ProductTypeDetails_taxTypes } from "@saleor/productTypes/types/ProductTypeDetails";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -14,7 +14,7 @@ interface ProductTypeTaxesProps {
     taxType: string;
   };
   taxTypeDisplayName: string;
-  taxTypes: ProductTypeDetails_taxTypes[];
+  taxTypes: ProductTypeDetailsQuery["taxTypes"];
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
