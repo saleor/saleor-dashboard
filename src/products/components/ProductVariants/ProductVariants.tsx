@@ -33,6 +33,8 @@ import { maybe, renderCollection } from "../../../misc";
 import { ChannelProps, ListActions, ReorderAction } from "../../../types";
 import ProductVariantSetDefault from "../ProductVariantSetDefault";
 
+type Warehouse = ProductDetailsVariantFragment[][0]["stocks"][0]["warehouse"];
+
 function getWarehouseChoices(
   variants: ProductDetailsVariantFragment[],
   intl: IntlShape
@@ -46,14 +48,10 @@ function getWarehouseChoices(
       value: null
     },
     ...variants
-      .reduce<
-        Array<ProductDetailsVariantFragment[][0]["stocks"][0]["warehouse"]>
-      >(
+      .reduce<Warehouse[]>(
         (warehouses, variant) => [
           ...warehouses,
-          ...variant.stocks.reduce<
-            Array<ProductDetailsVariantFragment[][0]["stocks"][0]["warehouse"]>
-          >((variantStocks, stock) => {
+          ...variant.stocks.reduce<Warehouse[]>((variantStocks, stock) => {
             if (!!warehouses.find(w => w.id === stock.warehouse.id)) {
               return variantStocks;
             }
