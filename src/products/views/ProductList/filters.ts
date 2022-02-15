@@ -3,7 +3,15 @@ import {
   InitialProductFilterAttributesQuery,
   InitialProductFilterCategoriesQuery,
   InitialProductFilterCollectionsQuery,
-  InitialProductFilterProductTypesQuery
+  InitialProductFilterProductTypesQuery,
+  SearchAttributeValuesQuery,
+  SearchAttributeValuesQueryVariables,
+  SearchCategoriesQuery,
+  SearchCategoriesQueryVariables,
+  SearchCollectionsQuery,
+  SearchCollectionsQueryVariables,
+  SearchProductTypesQuery,
+  SearchProductTypesQueryVariables
 } from "@saleor/graphql";
 import { UseSearchResult } from "@saleor/hooks/makeSearch";
 import { findValueInEnum, maybe } from "@saleor/misc";
@@ -11,22 +19,6 @@ import {
   ProductFilterKeys,
   ProductListFilterOpts
 } from "@saleor/products/components/ProductListPage";
-import {
-  SearchAttributeValues,
-  SearchAttributeValuesVariables
-} from "@saleor/searches/types/SearchAttributeValues";
-import {
-  SearchCategories,
-  SearchCategoriesVariables
-} from "@saleor/searches/types/SearchCategories";
-import {
-  SearchCollections,
-  SearchCollectionsVariables
-} from "@saleor/searches/types/SearchCollections";
-import {
-  SearchProductTypes,
-  SearchProductTypesVariables
-} from "@saleor/searches/types/SearchProductTypes";
 import { RelayToFlat } from "@saleor/types";
 import {
   mapEdgesToItems,
@@ -66,20 +58,29 @@ export function getFilterOpts(
   params: ProductListUrlFilters,
   attributes: RelayToFlat<InitialProductFilterAttributesQuery["attributes"]>,
   focusedAttributeChoices: UseSearchResult<
-    SearchAttributeValues,
-    SearchAttributeValuesVariables
+    SearchAttributeValuesQuery,
+    SearchAttributeValuesQueryVariables
   >,
   categories: {
     initial: RelayToFlat<InitialProductFilterCategoriesQuery["categories"]>;
-    search: UseSearchResult<SearchCategories, SearchCategoriesVariables>;
+    search: UseSearchResult<
+      SearchCategoriesQuery,
+      SearchCategoriesQueryVariables
+    >;
   },
   collections: {
     initial: RelayToFlat<InitialProductFilterCollectionsQuery["collections"]>;
-    search: UseSearchResult<SearchCollections, SearchCollectionsVariables>;
+    search: UseSearchResult<
+      SearchCollectionsQuery,
+      SearchCollectionsQueryVariables
+    >;
   },
   productTypes: {
     initial: RelayToFlat<InitialProductFilterProductTypesQuery["productTypes"]>;
-    search: UseSearchResult<SearchProductTypes, SearchProductTypesVariables>;
+    search: UseSearchResult<
+      SearchProductTypesQuery,
+      SearchProductTypesQueryVariables
+    >;
   },
   productKind: SingleAutocompleteChoiceType[],
   channels: SingleAutocompleteChoiceType[]

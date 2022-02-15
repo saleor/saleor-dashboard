@@ -3,7 +3,8 @@ import {
   ProductTypeListQuery,
   ProductTypeQuery
 } from "@saleor/graphql";
-import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
+import { SearchProductTypesQuery } from "@saleor/graphql";
+import { RelayToFlat } from "@saleor/types";
 
 import {
   AttributeInputTypeEnum,
@@ -981,7 +982,9 @@ export const productTypeSearch: ProductTypeQuery["productType"] = {
   }
 };
 
-export const productTypes: Array<SearchProductTypes_search_edges_node &
+export const productTypes: Array<RelayToFlat<
+  SearchProductTypesQuery["search"]
+>[0] &
   ProductTypeListQuery["productTypes"]["edges"][0]["node"]> = [
   {
     __typename: "ProductType" as "ProductType",

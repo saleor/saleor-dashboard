@@ -23,7 +23,6 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({
       error
       variant="primary"
       onClick={onClick}
-      className={classes.button}
       data-test-id={testId ? "confirm-delete" : "button-bar-delete"}
       disabled={disabled}
     >

@@ -12,6 +12,9 @@ import { AttributeInput } from "@saleor/components/Attributes";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { ProductVariantCreateDataQuery } from "@saleor/graphql";
+import { SearchPagesQuery } from "@saleor/graphql";
+import { SearchProductsQuery } from "@saleor/graphql";
+import { SearchWarehousesQuery } from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
@@ -25,10 +28,7 @@ import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import { errorMessages } from "@saleor/intl";
 import { getVariantAttributeInputFromProduct } from "@saleor/products/utils/data";
 import { createPreorderEndDateChangeHandler } from "@saleor/products/utils/handlers";
-import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
-import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
-import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
-import { FetchMoreProps, ReorderEvent } from "@saleor/types";
+import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
@@ -53,9 +53,9 @@ export interface ProductVariantCreateData extends ProductVariantCreateFormData {
 }
 
 export interface UseProductVariantCreateFormOpts {
-  warehouses: SearchWarehouses_search_edges_node[];
-  referencePages: SearchPages_search_edges_node[];
-  referenceProducts: SearchProducts_search_edges_node[];
+  warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
+  referencePages: RelayToFlat<SearchPagesQuery["search"]>;
+  referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
   fetchReferencePages?: (data: string) => void;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchReferenceProducts?: (data: string) => void;

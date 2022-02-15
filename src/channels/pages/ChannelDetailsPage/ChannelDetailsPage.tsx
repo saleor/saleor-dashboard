@@ -7,6 +7,7 @@ import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompl
 import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
 import { CountryFragment } from "@saleor/fragments/types/CountryFragment";
 import { ChannelDetailsFragmentFragment } from "@saleor/graphql";
+import { SearchShippingZonesQuery } from "@saleor/graphql";
 import { SearchData } from "@saleor/hooks/makeTopLevelSearch";
 import { getParsedSearchData } from "@saleor/hooks/makeTopLevelSearch/utils";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -16,8 +17,7 @@ import {
   getById,
   getByUnmatchingId
 } from "@saleor/orders/components/OrderReturnPage/utils";
-import { SearchShippingZones_search_edges_node } from "@saleor/searches/types/SearchShippingZones";
-import { FetchMoreProps } from "@saleor/types";
+import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import { CountryCode } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
@@ -86,7 +86,7 @@ const ChannelDetailsPage = function<TErrors>({
     ...formData
   };
 
-  const getFilteredShippingZonesChoices = (): SearchShippingZones_search_edges_node[] =>
+  const getFilteredShippingZonesChoices = (): RelayToFlat<SearchShippingZonesQuery["search"]> =>
     getParsedSearchData({ data: searchShippingZonesData }).filter(
       ({ id: searchedZoneId }) =>
         !shippingZonesToDisplay.some(({ id }) => id === searchedZoneId)

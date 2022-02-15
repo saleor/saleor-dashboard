@@ -16,6 +16,9 @@ import { AttributeInput } from "@saleor/components/Attributes";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
+import { SearchPagesQuery } from "@saleor/graphql";
+import { SearchProductsQuery } from "@saleor/graphql";
+import { SearchWarehousesQuery } from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
@@ -40,10 +43,7 @@ import {
   validateCostPrice,
   validatePrice
 } from "@saleor/products/utils/validation";
-import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
-import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
-import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
-import { FetchMoreProps, ReorderEvent } from "@saleor/types";
+import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import { arrayDiff } from "@saleor/utils/arrays";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
@@ -86,10 +86,10 @@ export interface ProductVariantUpdateSubmitData
 }
 
 export interface UseProductVariantUpdateFormOpts {
-  warehouses: SearchWarehouses_search_edges_node[];
+  warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
   currentChannels: ChannelPriceAndPreorderData[];
-  referencePages: SearchPages_search_edges_node[];
-  referenceProducts: SearchProducts_search_edges_node[];
+  referencePages: RelayToFlat<SearchPagesQuery["search"]>;
+  referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
   fetchReferencePages?: (data: string) => void;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchReferenceProducts?: (data: string) => void;

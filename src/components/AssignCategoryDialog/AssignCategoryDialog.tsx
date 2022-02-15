@@ -1,4 +1,5 @@
-import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
+import { SearchCategoriesQuery } from "@saleor/graphql";
+import { RelayToFlat } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -9,7 +10,7 @@ import { messages } from "./messages";
 
 interface AssignCategoryDialogProps
   extends Omit<AssignContainerDialogProps, "containers" | "title" | "search"> {
-  categories: SearchCategories_search_edges_node[];
+  categories: RelayToFlat<SearchCategoriesQuery["search"]>;
 }
 
 const AssignCategoryDialog: React.FC<AssignCategoryDialogProps> = ({

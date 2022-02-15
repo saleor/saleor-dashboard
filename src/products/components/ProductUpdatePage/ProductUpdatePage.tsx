@@ -27,8 +27,13 @@ import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import {
   ProductDetailsVariantFragment,
-  ProductFragment
+  ProductFragment,
+  SearchAttributeValuesQuery
 } from "@saleor/graphql";
+import { SearchCategoriesQuery } from "@saleor/graphql";
+import { SearchCollectionsQuery } from "@saleor/graphql";
+import { SearchPagesQuery } from "@saleor/graphql";
+import { SearchProductsQuery } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -39,15 +44,11 @@ import { maybe } from "@saleor/misc";
 import ProductExternalMediaDialog from "@saleor/products/components/ProductExternalMediaDialog";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
 import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
-import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
-import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
-import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
-import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
-import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import {
   ChannelProps,
   FetchMoreProps,
   ListActions,
+  RelayToFlat,
   ReorderAction
 } from "@saleor/types";
 import { PermissionEnum } from "@saleor/types/globalTypes";
@@ -79,9 +80,11 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   defaultWeightUnit: string;
   errors: ProductErrorWithAttributesFragment[];
   placeholderImage: string;
-  collections: SearchCollections_search_edges_node[];
-  categories: SearchCategories_search_edges_node[];
-  attributeValues: SearchAttributeValues_attribute_choices_edges_node[];
+  collections: RelayToFlat<SearchCollectionsQuery["search"]>;
+  categories: RelayToFlat<SearchCategoriesQuery["search"]>;
+  attributeValues: RelayToFlat<
+    SearchAttributeValuesQuery["attribute"]["choices"]
+  >;
   disabled: boolean;
   fetchMoreCategories: FetchMoreProps;
   fetchMoreCollections: FetchMoreProps;
@@ -95,8 +98,8 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   warehouses: WarehouseFragment[];
   taxTypes: TaxTypeFragment[];
-  referencePages?: SearchPages_search_edges_node[];
-  referenceProducts?: SearchProducts_search_edges_node[];
+  referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
+  referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
   assignReferencesAttributeId?: string;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchMoreReferenceProducts?: FetchMoreProps;

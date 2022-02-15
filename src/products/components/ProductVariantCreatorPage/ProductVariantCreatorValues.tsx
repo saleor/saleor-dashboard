@@ -8,7 +8,8 @@ import MultiAutocompleteSelectField from "@saleor/components/MultiAutocompleteSe
 import Skeleton from "@saleor/components/Skeleton";
 import {
   AttributeValueFragmentFragment,
-  ProductVariantAttributesFragmentFragment
+  ProductVariantAttributesFragmentFragment,
+  SearchAttributeValuesQuery
 } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
@@ -16,8 +17,7 @@ import {
   getBasicAttributeValue,
   getBooleanAttributeValue
 } from "@saleor/products/components/ProductVariantCreatorPage/utils";
-import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
-import { FetchMoreProps } from "@saleor/types";
+import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import {
@@ -95,7 +95,9 @@ const getBooleanChoices = (
 
 export interface ProductVariantCreatorValuesProps {
   attributes: ProductVariantAttributesFragmentFragment["productType"]["variantAttributes"];
-  attributeValues: SearchAttributeValues_attribute_choices_edges_node[];
+  attributeValues: RelayToFlat<
+    SearchAttributeValuesQuery["attribute"]["choices"]
+  >;
   fetchAttributeValues: (query: string, attributeId: string) => void;
   fetchMoreAttributeValues?: FetchMoreProps;
   data: ProductVariantCreateFormData;

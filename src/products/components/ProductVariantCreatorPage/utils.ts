@@ -1,10 +1,11 @@
 import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
 import {
   AttributeValueFragmentFragment,
-  ProductVariantAttributesFragmentFragment
+  ProductVariantAttributesFragmentFragment,
+  SearchAttributeValuesQuery
 } from "@saleor/graphql";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
-import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
+import { RelayToFlat } from "@saleor/types";
 
 import { AttributeValue, ProductVariantCreateFormData } from "./form";
 
@@ -65,7 +66,9 @@ export const getBooleanAttributeValue = (
 export const getBasicAttributeValue = (
   attributeId: string,
   attributeValue: string,
-  attributeValues: SearchAttributeValues_attribute_choices_edges_node[],
+  attributeValues: RelayToFlat<
+    SearchAttributeValuesQuery["attribute"]["choices"]
+  >,
   data: ProductVariantCreateFormData
 ): AttributeValue<Partial<AttributeValueFragment>> => {
   const dataAttribute = data.attributes.find(getById(attributeId));

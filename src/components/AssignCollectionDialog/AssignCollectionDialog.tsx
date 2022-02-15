@@ -1,4 +1,5 @@
-import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
+import { SearchCollectionsQuery } from "@saleor/graphql";
+import { RelayToFlat } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -9,7 +10,7 @@ import { messages } from "./messages";
 
 interface AssignCollectionDialogProps
   extends Omit<AssignContainerDialogProps, "containers" | "title" | "search"> {
-  collections: SearchCollections_search_edges_node[];
+  collections: RelayToFlat<SearchCollectionsQuery["search"]>;
 }
 
 const AssignCollectionDialog: React.FC<AssignCollectionDialogProps> = ({

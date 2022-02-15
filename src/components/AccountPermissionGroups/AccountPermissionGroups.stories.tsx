@@ -1,6 +1,7 @@
 import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
-import { SearchPermissionGroups_search_edges_node } from "@saleor/searches/types/SearchPermissionGroups";
+import { SearchPermissionGroupsQuery } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
+import { RelayToFlat } from "@saleor/types";
 import { AccountErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -8,7 +9,7 @@ import React from "react";
 import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
 import AccountPermissionGroups, { AccountPermissionGroupsProps } from ".";
 
-const availablePermissionGroups: SearchPermissionGroups_search_edges_node[] = [
+const availablePermissionGroups: RelayToFlat<SearchPermissionGroupsQuery["search"]> = [
   {
     __typename: "Group",
     id: "R3JvdXA6MQ==",

@@ -20,6 +20,10 @@ import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocomplet
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { ProductTypeQuery } from "@saleor/graphql";
+import { SearchPagesQuery } from "@saleor/graphql";
+import { SearchProductsQuery } from "@saleor/graphql";
+import { SearchProductTypesQuery } from "@saleor/graphql";
+import { SearchWarehousesQuery } from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
@@ -46,11 +50,7 @@ import {
   validatePrice
 } from "@saleor/products/utils/validation";
 import { PRODUCT_CREATE_FORM_ID } from "@saleor/products/views/ProductCreate/consts";
-import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
-import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
-import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
-import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
-import { FetchMoreProps, ReorderEvent } from "@saleor/types";
+import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -143,11 +143,11 @@ export interface UseProductCreateFormOpts
   setSelectedTaxType: React.Dispatch<React.SetStateAction<string>>;
   setChannels: (channels: ChannelData[]) => void;
   selectedCollections: MultiAutocompleteChoiceType[];
-  productTypes: SearchProductTypes_search_edges_node[];
-  warehouses: SearchWarehouses_search_edges_node[];
+  productTypes: RelayToFlat<SearchProductTypesQuery["search"]>;
+  warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
   currentChannels: ChannelData[];
-  referencePages: SearchPages_search_edges_node[];
-  referenceProducts: SearchProducts_search_edges_node[];
+  referencePages: RelayToFlat<SearchPagesQuery["search"]>;
+  referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
   fetchReferencePages?: (data: string) => void;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchReferenceProducts?: (data: string) => void;

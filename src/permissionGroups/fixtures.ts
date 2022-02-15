@@ -4,8 +4,9 @@ import {
   PermissionGroupDetailsFragmentFragment,
   PermissionGroupFragmentFragment
 } from "@saleor/graphql";
-import { SearchStaffMembers_search_edges_node } from "@saleor/searches/types/SearchStaffMembers";
+import { SearchStaffMembersQuery } from "@saleor/graphql";
 import { StaffMemberDetails_user_permissionGroups } from "@saleor/staff/types/StaffMemberDetails";
+import { RelayToFlat } from "@saleor/types";
 /* eslint-disable sort-keys */
 import {
   PermissionEnum,
@@ -171,7 +172,7 @@ export const permissionGroup: PermissionGroupDetailsFragmentFragment = {
   ]
 };
 
-export const users: SearchStaffMembers_search_edges_node[] = [
+export const users: RelayToFlat<SearchStaffMembersQuery["search"]> = [
   {
     node: {
       id: "VXNlcjoyMQ==",

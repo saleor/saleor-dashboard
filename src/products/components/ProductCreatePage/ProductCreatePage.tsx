@@ -19,26 +19,26 @@ import {
   ProductChannelListingErrorFragmentFragment,
   ProductErrorWithAttributesFragmentFragment,
   ProductTypeQuery,
+  SearchAttributeValuesQuery,
   TaxTypeFragmentFragment
 } from "@saleor/graphql";
+import { SearchCategoriesQuery } from "@saleor/graphql";
+import { SearchCollectionsQuery } from "@saleor/graphql";
+import { SearchPagesQuery } from "@saleor/graphql";
+import { SearchProductsQuery } from "@saleor/graphql";
+import { SearchProductTypesQuery } from "@saleor/graphql";
+import { SearchWarehousesQuery } from "@saleor/graphql";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
 import { getChoices } from "@saleor/products/utils/data";
-import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
-import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
-import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
-import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
-import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
-import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
-import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { FetchMoreProps } from "../../../types";
+import { FetchMoreProps, RelayToFlat } from "../../../types";
 import ProductDetailsForm from "../ProductDetailsForm";
 import ProductOrganization from "../ProductOrganization";
 import ProductShipping from "../ProductShipping/ProductShipping";
@@ -55,22 +55,24 @@ interface ProductCreatePageProps {
   channelsErrors: ProductChannelListingErrorFragmentFragment[];
   allChannelsCount: number;
   currentChannels: ChannelData[];
-  collections: SearchCollections_search_edges_node[];
-  categories: SearchCategories_search_edges_node[];
-  attributeValues: SearchAttributeValues_attribute_choices_edges_node[];
+  collections: RelayToFlat<SearchCollectionsQuery["search"]>;
+  categories: RelayToFlat<SearchCategoriesQuery["search"]>;
+  attributeValues: RelayToFlat<
+    SearchAttributeValuesQuery["attribute"]["choices"]
+  >;
   loading: boolean;
   fetchMoreCategories: FetchMoreProps;
   fetchMoreCollections: FetchMoreProps;
   fetchMoreProductTypes: FetchMoreProps;
   fetchMoreAttributeValues?: FetchMoreProps;
   initial?: Partial<ProductCreateFormData>;
-  productTypes?: SearchProductTypes_search_edges_node[];
-  referencePages?: SearchPages_search_edges_node[];
-  referenceProducts?: SearchProducts_search_edges_node[];
+  productTypes?: RelayToFlat<SearchProductTypesQuery["search"]>;
+  referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
+  referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   weightUnit: string;
-  warehouses: SearchWarehouses_search_edges_node[];
+  warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
   taxTypes: TaxTypeFragmentFragment[];
   selectedProductType?: ProductTypeQuery["productType"];
   fetchCategories: (data: string) => void;

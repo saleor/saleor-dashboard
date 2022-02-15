@@ -14,6 +14,9 @@ import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { PageDetailsFragmentFragment } from "@saleor/graphql";
+import { SearchPagesQuery } from "@saleor/graphql";
+import { SearchPageTypesQuery } from "@saleor/graphql";
+import { SearchProductsQuery } from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
@@ -29,10 +32,7 @@ import {
   getAttributeInputFromPageType
 } from "@saleor/pages/utils/data";
 import { createPageTypeSelectHandler } from "@saleor/pages/utils/handlers";
-import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
-import { SearchPageTypes_search_edges_node } from "@saleor/searches/types/SearchPageTypes";
-import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
-import { FetchMoreProps, ReorderEvent } from "@saleor/types";
+import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import getPublicationData from "@saleor/utils/data/getPublicationData";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
@@ -79,9 +79,9 @@ export interface UsePageUpdateFormResult
 }
 
 export interface UsePageFormOpts {
-  pageTypes?: SearchPageTypes_search_edges_node[];
-  referencePages: SearchPages_search_edges_node[];
-  referenceProducts: SearchProducts_search_edges_node[];
+  pageTypes?: RelayToFlat<SearchPageTypesQuery["search"]>;
+  referencePages: RelayToFlat<SearchPagesQuery["search"]>;
+  referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
   fetchReferencePages?: (data: string) => void;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchReferenceProducts?: (data: string) => void;

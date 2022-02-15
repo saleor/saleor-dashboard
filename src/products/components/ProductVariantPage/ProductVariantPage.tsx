@@ -19,14 +19,14 @@ import {
   ProductChannelListingErrorFragmentFragment,
   ProductErrorWithAttributesFragmentFragment,
   ProductVariantFragment,
+  SearchAttributeValuesQuery,
   WarehouseFragmentFragment
 } from "@saleor/graphql";
+import { SearchPagesQuery } from "@saleor/graphql";
+import { SearchProductsQuery } from "@saleor/graphql";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
-import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
-import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
-import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
-import { FetchMoreProps, ReorderAction } from "@saleor/types";
+import { FetchMoreProps, RelayToFlat, ReorderAction } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -87,9 +87,11 @@ interface ProductVariantPageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   variant?: ProductVariantFragment;
   warehouses: WarehouseFragmentFragment[];
-  referencePages?: SearchPages_search_edges_node[];
-  referenceProducts?: SearchProducts_search_edges_node[];
-  attributeValues: SearchAttributeValues_attribute_choices_edges_node[];
+  referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
+  referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
+  attributeValues: RelayToFlat<
+    SearchAttributeValuesQuery["attribute"]["choices"]
+  >;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchMoreReferenceProducts?: FetchMoreProps;
   fetchMoreAttributeValues?: FetchMoreProps;

@@ -14,12 +14,14 @@ import {
   AttributeValueDeleteMutation,
   AttributeValueInput,
   FileUploadMutation,
+  Node,
   PageSelectedAttributeFragment,
   ProductFragment
 } from "@saleor/graphql";
+import { SearchPagesQuery } from "@saleor/graphql";
+import { SearchProductsQuery } from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
-import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
-import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
+import { RelayToFlat } from "@saleor/types";
 import {
   mapEdgesToItems,
   mapNodeToChoice,
@@ -320,7 +322,7 @@ export const getFileAttributeDisplayData = (
 
 export const getPageReferenceAttributeDisplayData = (
   attribute: AttributeInput,
-  referencePages: SearchPages_search_edges_node[]
+  referencePages: RelayToFlat<SearchPagesQuery["search"]>
 ) => ({
   ...attribute,
   data: {
@@ -341,7 +343,7 @@ export const getPageReferenceAttributeDisplayData = (
 
 export const getProductReferenceAttributeDisplayData = (
   attribute: AttributeInput,
-  referenceProducts: SearchProducts_search_edges_node[]
+  referenceProducts: RelayToFlat<SearchProductsQuery["search"]>
 ) => ({
   ...attribute,
   data: {
@@ -362,8 +364,8 @@ export const getProductReferenceAttributeDisplayData = (
 
 export const getReferenceAttributeDisplayData = (
   attribute: AttributeInput,
-  referencePages: SearchPages_search_edges_node[],
-  referenceProducts: SearchProducts_search_edges_node[]
+  referencePages: RelayToFlat<SearchPagesQuery["search"]>,
+  referenceProducts: RelayToFlat<SearchProductsQuery["search"]>
 ) => {
   if (attribute.data.entityType === AttributeEntityTypeEnum.PAGE) {
     return getPageReferenceAttributeDisplayData(attribute, referencePages);
@@ -378,8 +380,8 @@ export const getReferenceAttributeDisplayData = (
 export const getAttributesDisplayData = (
   attributes: AttributeInput[],
   attributesWithNewFileValue: FormsetData<null, File>,
-  referencePages: SearchPages_search_edges_node[],
-  referenceProducts: SearchProducts_search_edges_node[]
+  referencePages: RelayToFlat<SearchPagesQuery["search"]>,
+  referenceProducts: RelayToFlat<SearchProductsQuery["search"]>
 ) =>
   attributes.map(attribute => {
     if (attribute.data.inputType === AttributeInputTypeEnum.REFERENCE) {
@@ -395,11 +397,9 @@ export const getAttributesDisplayData = (
     return attribute;
   });
 
-export const getSelectedReferencesFromAttribute = <
-  Node extends SearchPages_search_edges_node | SearchProducts_search_edges_node
->(
+export const getSelectedReferencesFromAttribute = <T extends Node>(
   attribute?: AttributeInput,
-  references?: Node[]
+  references?: T[]
 ) =>
   references?.filter(
     value =>
@@ -409,8 +409,8 @@ export const getSelectedReferencesFromAttribute = <
 export const getAttributeValuesFromReferences = (
   attributeId: string,
   attributes?: AttributeInput[],
-  referencePages?: SearchPages_search_edges_node[],
-  referenceProducts?: SearchProducts_search_edges_node[]
+  referencePages?: RelayToFlat<SearchPagesQuery["search"]>,
+  referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>
 ) => {
   const attribute = attributes?.find(attribute => attribute.id === attributeId);
 

@@ -5,9 +5,9 @@ import {
   SingleAutocompleteChoiceType
 } from "@saleor/components/SingleAutocompleteSelectField";
 import { MetadataItem } from "@saleor/fragments/types/MetadataItem";
+import { SearchPagesQuery } from "@saleor/graphql";
 import { getFullName } from "@saleor/misc";
-import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
-import { Node, SlugNode, TagNode } from "@saleor/types";
+import { Node, RelayToFlat, SlugNode, TagNode } from "@saleor/types";
 import { MetadataInput } from "@saleor/types/globalTypes";
 
 interface Edge<T> {
@@ -36,7 +36,9 @@ export function mapCountriesToChoices(countries: ShopInfo_shop_countries[]) {
   }));
 }
 
-export function mapPagesToChoices(pages: SearchPages_search_edges_node[]) {
+export function mapPagesToChoices(
+  pages: RelayToFlat<SearchPagesQuery["search"]>
+) {
   return pages.map(page => ({
     label: page.title,
     value: page.id

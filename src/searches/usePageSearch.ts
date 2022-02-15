@@ -1,11 +1,12 @@
 import { gql } from "@apollo/client";
-import { pageInfoFragment } from "@saleor/fragments/pageInfo";
+import {
+  SearchPagesDocument,
+  SearchPagesQuery,
+  SearchPagesQueryVariables
+} from "@saleor/graphql";
 import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
 
-import { SearchPages, SearchPagesVariables } from "./types/SearchPages";
-
 export const searchPages = gql`
-  ${pageInfoFragment}
   query SearchPages($after: String, $first: Int!, $query: String!) {
     search: pages(after: $after, first: $first, filter: { search: $query }) {
       edges {
@@ -21,6 +22,6 @@ export const searchPages = gql`
   }
 `;
 
-export default makeTopLevelSearch<SearchPages, SearchPagesVariables>(
-  searchPages
+export default makeTopLevelSearch<SearchPagesQuery, SearchPagesQueryVariables>(
+  SearchPagesDocument
 );

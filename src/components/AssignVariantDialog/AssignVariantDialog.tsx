@@ -13,6 +13,7 @@ import ConfirmButton from "@saleor/components/ConfirmButton";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import { SearchProductsQuery } from "@saleor/graphql";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
@@ -20,12 +21,8 @@ import {
   getById,
   getByUnmatchingId
 } from "@saleor/orders/components/OrderReturnPage/utils";
-import {
-  SearchProducts_search_edges_node,
-  SearchProducts_search_edges_node_variants
-} from "@saleor/searches/types/SearchProducts";
 import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
-import { DialogProps, FetchMoreProps } from "@saleor/types";
+import { DialogProps, FetchMoreProps, RelayToFlat } from "@saleor/types";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -35,33 +32,35 @@ import Checkbox from "../Checkbox";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
-type SetVariantsAction = (
-  data: SearchProducts_search_edges_node_variants[]
-) => void;
+type SearchVariant = RelayToFlat<
+  SearchProductsQuery["search"]
+>[0]["variants"][0];
+
+type SetVariantsAction = (data: SearchVariant[]) => void;
 export interface AssignVariantDialogFormData {
-  products: SearchProducts_search_edges_node[];
+  products: RelayToFlat<SearchProductsQuery["search"]>;
   query: string;
 }
 export interface AssignVariantDialogProps extends FetchMoreProps, DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  products: SearchProducts_search_edges_node[];
+  products: RelayToFlat<SearchProductsQuery["search"]>;
   loading: boolean;
   onFetch: (value: string) => void;
-  onSubmit: (data: SearchProducts_search_edges_node_variants[]) => void;
+  onSubmit: (data: SearchVariant[]) => void;
 }
 
 function isVariantSelected(
-  variant: SearchProducts_search_edges_node_variants,
-  selectedVariantsToProductsMap: SearchProducts_search_edges_node_variants[]
+  variant: SearchVariant,
+  selectedVariantsToProductsMap: SearchVariant[]
 ): boolean {
   return !!selectedVariantsToProductsMap.find(getById(variant.id));
 }
 
 const handleProductAssign = (
-  product: SearchProducts_search_edges_node,
+  product: RelayToFlat<SearchProductsQuery["search"]>[0],
   productIndex: number,
   productsWithAllVariantsSelected: boolean[],
-  variants: SearchProducts_search_edges_node_variants[],
+  variants: SearchVariant[],
   setVariants: SetVariantsAction
 ) =>
   productsWithAllVariantsSelected[productIndex]
@@ -78,10 +77,10 @@ const handleProductAssign = (
       ]);
 
 const handleVariantAssign = (
-  variant: SearchProducts_search_edges_node_variants,
+  variant: SearchVariant,
   variantIndex: number,
   productIndex: number,
-  variants: SearchProducts_search_edges_node_variants[],
+  variants: SearchVariant[],
   selectedVariantsToProductsMap: boolean[][],
   setVariants: SetVariantsAction
 ) =>
@@ -90,8 +89,8 @@ const handleVariantAssign = (
     : setVariants([...variants, variant]);
 
 function hasAllVariantsSelected(
-  productVariants: SearchProducts_search_edges_node_variants[],
-  selectedVariantsToProductsMap: SearchProducts_search_edges_node_variants[]
+  productVariants: SearchVariant[],
+  selectedVariantsToProductsMap: SearchVariant[]
 ): boolean {
   return productVariants.reduce(
     (acc, productVariant) =>
@@ -119,9 +118,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
 
   const intl = useIntl();
   const [query, onQueryChange] = useSearchQuery(onFetch);
-  const [variants, setVariants] = React.useState<
-    SearchProducts_search_edges_node_variants[]
-  >([]);
+  const [variants, setVariants] = React.useState<SearchVariant[]>([]);
 
   const productChoices =
     products?.filter(product => product?.variants?.length > 0) || [];

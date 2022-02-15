@@ -10,14 +10,14 @@ import makeCreatorSteps, { Step } from "@saleor/components/CreatorSteps";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { ChannelFragment } from "@saleor/fragments/types/ChannelFragment";
 import { ExportErrorFragment } from "@saleor/fragments/types/ExportErrorFragment";
+import { SearchAttributesQuery } from "@saleor/graphql";
 import useForm, { FormChange } from "@saleor/hooks/useForm";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useWizard from "@saleor/hooks/useWizard";
 import { buttonMessages } from "@saleor/intl";
 import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { SearchAttributes_search_edges_node } from "@saleor/searches/types/SearchAttributes";
-import { DialogProps, FetchMoreProps } from "@saleor/types";
+import { DialogProps, FetchMoreProps, RelayToFlat } from "@saleor/types";
 import { ExportProductsInput } from "@saleor/types/globalTypes";
 import getExportErrorMessage from "@saleor/utils/errors/export";
 import { toggle } from "@saleor/utils/lists";
@@ -75,7 +75,7 @@ const initialForm: ExportProductsInput = {
 const ProductExportSteps = makeCreatorSteps<ProductExportStep>();
 
 export interface ProductExportDialogProps extends DialogProps, FetchMoreProps {
-  attributes: SearchAttributes_search_edges_node[];
+  attributes: RelayToFlat<SearchAttributesQuery["search"]>;
   channels: ChannelFragment[];
   confirmButtonState: ConfirmButtonTransitionState;
   errors: ExportErrorFragment[];

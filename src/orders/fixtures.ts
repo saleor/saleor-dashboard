@@ -8,7 +8,7 @@ import {
   OrderListQuery,
   SearchOrderVariantQuery
 } from "@saleor/graphql";
-import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
+import { SearchCustomersQuery } from "@saleor/graphql";
 import { RelayToFlat } from "@saleor/types";
 import { warehouseForPickup, warehouseList } from "@saleor/warehouses/fixtures";
 import { MessageDescriptor } from "react-intl";
@@ -40,7 +40,7 @@ export const shop: OrderDetailsQuery["shop"] = {
   fulfillmentAutoApprove: true
 };
 
-export const clients: SearchCustomers_search_edges_node[] = [
+export const clients: RelayToFlat<SearchCustomersQuery["search"]> = [
   {
     __typename: "User" as "User",
     email: "test.client1@example.com",

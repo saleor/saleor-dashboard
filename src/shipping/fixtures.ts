@@ -1,6 +1,7 @@
 import { ShippingZoneFragment } from "@saleor/fragments/types/ShippingZoneFragment";
-import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
+import { SearchProductsQuery } from "@saleor/graphql";
 import { ShippingZone_shippingZone } from "@saleor/shipping/types/ShippingZone";
+import { RelayToFlat } from "@saleor/types";
 
 import {
   PostalCodeRuleInclusionTypeEnum,
@@ -1864,7 +1865,7 @@ export const shippingZone: ShippingZone_shippingZone = {
   ]
 };
 
-export const products: SearchProducts_search_edges_node[] = [
+export const products: RelayToFlat<SearchProductsQuery["search"]> = [
   {
     __typename: "Product",
     id: "1",

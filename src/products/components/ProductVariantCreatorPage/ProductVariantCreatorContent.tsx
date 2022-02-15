@@ -2,10 +2,10 @@ import { ChannelPriceData } from "@saleor/channels/utils";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import {
   BulkProductErrorFragmentFragment,
-  ProductVariantAttributesFragmentFragment
+  ProductVariantAttributesFragmentFragment,
+  SearchAttributeValuesQuery
 } from "@saleor/graphql";
-import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
-import { FetchMoreProps } from "@saleor/types";
+import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import { isSelected } from "@saleor/utils/lists";
 import React from "react";
 
@@ -21,7 +21,9 @@ import { ProductVariantCreatorStep } from "./types";
 
 export interface ProductVariantCreatorContentProps {
   attributes: ProductVariantAttributesFragmentFragment["productType"]["variantAttributes"];
-  attributeValues: SearchAttributeValues_attribute_choices_edges_node[];
+  attributeValues: RelayToFlat<
+    SearchAttributeValuesQuery["attribute"]["choices"]
+  >;
   channelListings: ChannelPriceData[];
   data: ProductVariantCreateFormData;
   dispatchFormDataAction: React.Dispatch<ProductVariantCreateReducerAction>;
