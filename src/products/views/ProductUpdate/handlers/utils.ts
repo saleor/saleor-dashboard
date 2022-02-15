@@ -3,6 +3,7 @@ import {
   createSortedChannelsDataFromProduct
 } from "@saleor/channels/utils";
 import {
+  ProductDetailsVariantFragment,
   ProductFragment,
   ProductUpdateMutationVariables,
   SimpleProductUpdateMutation
@@ -94,19 +95,19 @@ const getParsedChannelsData = (
     )
   );
 
-const shouldRemoveChannel = (allVariants: ProductFragment["variants"]) => ({
+const shouldRemoveChannel = (allVariants: ProductDetailsVariantFragment[]) => ({
   removeVariants
 }: ProductChannelListingAddInput) =>
   isRemovingAllVariants(allVariants, removeVariants);
 
 const isRemovingAllVariants = (
-  allVariants: ProductFragment["variants"],
+  allVariants: ProductDetailsVariantFragment[],
   removeVariants: string[]
 ) => !!removeVariants.length && removeVariants.length === allVariants.length;
 
 const shouldUpdateChannel = (
   initialChannelWithVariantData,
-  allVariants: ProductFragment["variants"],
+  allVariants: ProductDetailsVariantFragment[],
   allChannels: ChannelData[]
 ) => ({
   removeVariants,

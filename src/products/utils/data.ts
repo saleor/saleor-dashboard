@@ -14,6 +14,7 @@ import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import { SelectedVariantAttributeFragment } from "@saleor/fragments/types/SelectedVariantAttributeFragment";
 import { VariantAttributeFragment } from "@saleor/fragments/types/VariantAttributeFragment";
 import {
+  ProductDetailsVariantFragment,
   ProductFragment,
   ProductTypeQuery,
   ProductVariantCreateDataQuery
@@ -234,7 +235,7 @@ export interface ProductUpdatePageFormData extends MetadataFormData {
 
 export function getProductUpdatePageFormData(
   product: ProductFragment,
-  variants: ProductFragment["variants"],
+  variants: ProductDetailsVariantFragment[],
   currentChannels: ChannelData[],
   channelsData: ChannelData[],
   channelsWithVariants: ChannelsWithVariantsData

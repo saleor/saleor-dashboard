@@ -6,6 +6,7 @@ import {
   ChannelDetailsFragmentFragment,
   ChannelFragmentFragment,
   CollectionDetailsFragmentFragment,
+  ProductDetailsVariantFragment,
   ProductFragment,
   ProductVariantDetailsQuery,
   SaleDetailsFragmentFragment,
@@ -326,7 +327,7 @@ export const createChannelsDataFromProduct = (productData?: ProductFragment) =>
   ) || [];
 
 export const extractVariantsIdsForChannel = (
-  productVariants: ProductFragment["variants"],
+  productVariants: ProductDetailsVariantFragment[],
   channelId: string
 ) =>
   productVariants

@@ -25,7 +25,10 @@ import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/Prod
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
-import { ProductFragment } from "@saleor/graphql";
+import {
+  ProductDetailsVariantFragment,
+  ProductFragment
+} from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -84,7 +87,7 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   fetchMoreCollections: FetchMoreProps;
   isMediaUrlModalVisible?: boolean;
   limits: RefreshLimits_shop_limits;
-  variants: ProductFragment["variants"];
+  variants: ProductDetailsVariantFragment[];
   media: ProductFragment["media"];
   hasChannelChanged: boolean;
   product: ProductFragment;
@@ -122,7 +125,7 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   onMediaUrlUpload(mediaUrl: string);
   onSeoClick?();
   onVariantAdd?();
-  onSetDefaultVariant(variant: ProductFragment["variants"][0]);
+  onSetDefaultVariant(variant: ProductDetailsVariantFragment);
   onWarehouseConfigure();
 }
 

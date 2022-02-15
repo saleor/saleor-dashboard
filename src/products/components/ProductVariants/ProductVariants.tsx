@@ -20,7 +20,10 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
-import { ProductFragment } from "@saleor/graphql";
+import {
+  ProductDetailsVariantFragment,
+  ProductFragment
+} from "@saleor/graphql";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import { isLimitReached } from "@saleor/utils/limits";
 import React from "react";
@@ -31,7 +34,7 @@ import { ChannelProps, ListActions, ReorderAction } from "../../../types";
 import ProductVariantSetDefault from "../ProductVariantSetDefault";
 
 function getWarehouseChoices(
-  variants: ProductFragment["variants"],
+  variants: ProductDetailsVariantFragment[],
   intl: IntlShape
 ): SingleAutocompleteChoiceType[] {
   return [
@@ -43,11 +46,13 @@ function getWarehouseChoices(
       value: null
     },
     ...variants
-      .reduce<Array<ProductFragment["variants"][0]["stocks"][0]["warehouse"]>>(
+      .reduce<
+        Array<ProductDetailsVariantFragment[][0]["stocks"][0]["warehouse"]>
+      >(
         (warehouses, variant) => [
           ...warehouses,
           ...variant.stocks.reduce<
-            Array<ProductFragment["variants"][0]["stocks"][0]["warehouse"]>
+            Array<ProductDetailsVariantFragment[][0]["stocks"][0]["warehouse"]>
           >((variantStocks, stock) => {
             if (!!warehouses.find(w => w.id === stock.warehouse.id)) {
               return variantStocks;
@@ -129,7 +134,7 @@ const useStyles = makeStyles(
 function getAvailabilityLabel(
   intl: IntlShape,
   warehouse: string,
-  variant: ProductFragment["variants"][0],
+  variant: ProductDetailsVariantFragment[][0],
   numAvailable: number
 ): string {
   if (variant.preorder) {
@@ -204,10 +209,10 @@ interface ProductVariantsProps extends ListActions, ChannelProps {
   disabled: boolean;
   limits: RefreshLimits_shop_limits;
   product: ProductFragment;
-  variants: ProductFragment["variants"];
+  variants: ProductDetailsVariantFragment[];
   onVariantReorder: ReorderAction;
   onRowClick: (id: string) => () => void;
-  onSetDefaultVariant(variant: ProductFragment["variants"][0]);
+  onSetDefaultVariant(variant: ProductDetailsVariantFragment[][0]);
   onVariantAdd?();
   onVariantsAdd?();
 }

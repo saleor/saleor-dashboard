@@ -1,7 +1,7 @@
 import { Accordion, AccordionSummary, Typography } from "@material-ui/core";
 import { ChannelData } from "@saleor/channels/utils";
 import { Messages } from "@saleor/components/ChannelsAvailabilityCard/types";
-import { ProductFragment } from "@saleor/graphql";
+import { ProductDetailsVariantFragment } from "@saleor/graphql";
 import IconChevronDown from "@saleor/icons/ChevronDown";
 import { makeStyles } from "@saleor/macaw-ui";
 import Label from "@saleor/orders/components/OrderHistory/Label";
@@ -82,7 +82,7 @@ const messages = defineMessages({
 });
 
 interface ChannelAvailabilityItemWrapperProps {
-  variants: ProductFragment["variants"];
+  variants: ProductDetailsVariantFragment[];
   channelId: string;
   channels: ChannelData[];
   channelsWithVariantsData: ChannelsWithVariantsData;
