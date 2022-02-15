@@ -1,5 +1,5 @@
-// / <reference types="cypress"/>
-// / <reference types="../../support"/>
+/// <reference types="cypress"/>
+/// <reference types="../../support"/>
 
 import faker from "faker";
 
@@ -17,7 +17,7 @@ import {
 } from "../../support/pages/channelsPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Channels in draft orders", () => {
+  describe("As an admin I want to manage channels in draft orders", () => {
     const startsWith = "CyChannelInDraftOrders-";
     const randomName = startsWith + faker.datatype.number();
 
@@ -42,7 +42,7 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("Draft order channel should be taken from global channel picker", () => {
+    it("Draft order channel should be taken from global channel picker. TC: SALEOR_2101", () => {
       let channelName;
       cy.visit(urlList.homePage);
       cy.getTextFromElement(HEADER_SELECTORS.channelSelect).then(
@@ -66,7 +66,7 @@ filterTests({ definedTags: ["all"] }, () => {
       );
     });
 
-    it("Draft order channel should be taken from global channel picker when changed", () => {
+    it("Draft order channel should be taken from global channel picker when changed. TC: SALEOR_2102", () => {
       cy.visit(urlList.homePage);
       selectChannelInHeader(otherChannel.name);
       cy.visit(urlList.orders);

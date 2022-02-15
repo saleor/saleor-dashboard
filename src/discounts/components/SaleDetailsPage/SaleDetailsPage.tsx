@@ -313,7 +313,6 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                     onRowClick={onProductClick}
                     pageInfo={pageInfo}
                     products={mapEdgesToItems(sale?.products)}
-                    channelsCount={allChannelsCount}
                     isChecked={isChecked}
                     selected={selected}
                     toggle={toggle}

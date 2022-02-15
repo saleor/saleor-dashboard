@@ -3,6 +3,7 @@
 
 import faker from "faker";
 
+import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { shippingZoneDetailsUrl } from "../../../fixtures/urlList";
 import {
   createShippingZone,
@@ -13,9 +14,10 @@ import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
 import filterTests from "../../../support/filterTests";
 import { fillUpShippingZoneData } from "../../../support/pages/shippingMethodPage";
+import { enterAndSelectShippings } from "../../../support/pages/shippingZones";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Edit shipping zone", () => {
+  describe("As a user I should be able to update and delete shipping zone", () => {
     const startsWith = "EditShipping-";
     const name = `${startsWith}${faker.datatype.number()}`;
 
@@ -49,7 +51,7 @@ filterTests({ definedTags: ["all"] }, () => {
       );
     });
 
-    it("Update shipping zone", () => {
+    it("should be able to update shipping zone. TC: SALEOR_0808", () => {
       const updatedName = `${startsWith}Updated`;
 
       cy.visit(shippingZoneDetailsUrl(shippingZone.id));
@@ -68,11 +70,30 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("Delete shipping zone", () => {
+    it("should be able to delete shipping zone. TC: SALEOR_0809", () => {
       cy.visit(
         shippingZoneDetailsUrl(shippingZone.id)
       ).deleteElementWithReqAlias("DeleteShippingZone");
       getShippingZone(shippingZone.id).should("be.null");
+    });
+
+    it("should be able to delete several shipping zones on shipping zones list page. TC: SALEOR_0810", () => {
+      let secondShippingZone;
+
+      createShippingZone(`${startsWith}Second`, "US", defaultChannel.id).then(
+        shippingZoneResp => {
+          secondShippingZone = shippingZoneResp;
+          enterAndSelectShippings([shippingZone.id, secondShippingZone.id]);
+          cy.get(BUTTON_SELECTORS.deleteSelectedElementsButton)
+            .click()
+            .addAliasToGraphRequest("BulkDeleteShippingZone")
+            .get(BUTTON_SELECTORS.submit)
+            .click()
+            .wait("@BulkDeleteShippingZone");
+          getShippingZone(shippingZone.id).should("be.null");
+          getShippingZone(secondShippingZone.id).should("be.null");
+        }
+      );
     });
   });
 });

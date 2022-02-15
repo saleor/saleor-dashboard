@@ -7,7 +7,6 @@ import { createAttribute } from "../../support/api/requests/Attribute";
 import { createCategory } from "../../support/api/requests/Category";
 import {
   checkoutShippingAddressUpdate,
-  checkoutShippingMethodUpdate,
   checkoutVariantsUpdate,
   completeCheckout,
   createCheckout
@@ -24,7 +23,9 @@ import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import {
   addPayment,
   createAndCompleteCheckoutWithoutShipping,
-  createWaitingForCaptureOrder
+  createWaitingForCaptureOrder,
+  getShippingMethodIdFromCheckout,
+  updateShippingInCheckout
 } from "../../support/api/utils/ordersUtils";
 import {
   addDigitalContentAndUpdateProductType,
@@ -263,13 +264,14 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
           checkoutVariantsUpdate(checkout.id, variantsList);
         })
         .then(() => {
-          checkoutShippingMethodUpdate(checkout.id, shippingMethod.id);
-        })
-        .then(({ checkoutErrors }) => {
+          const shippingMethodId = getShippingMethodIdFromCheckout(
+            checkout,
+            shippingMethod.name
+          );
           expect(
-            checkoutErrors,
+            shippingMethodId,
             "Should be not possible to add shipping method without shipping address"
-          ).to.have.lengthOf(1);
+          ).to.not.be.ok;
           checkoutShippingAddressUpdate(checkout.id, address);
         })
         .then(() => {
@@ -280,7 +282,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
             paymentErrors,
             "Should be not possible to add payment without shipping"
           ).to.have.lengthOf(1);
-          checkoutShippingMethodUpdate(checkout.id, shippingMethod.id);
+          updateShippingInCheckout(checkout.token, shippingMethod.name);
         })
         .then(() => {
           addPayment(checkout.id);

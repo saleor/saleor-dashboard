@@ -1,5 +1,5 @@
-// / <reference types="cypress"/>
-// / <reference types="../../support"/>
+/// <reference types="cypress"/>
+/// <reference types="../support"/>
 
 import faker from "faker";
 
@@ -7,14 +7,14 @@ import {
   createCategory,
   getCategory,
   updateCategoryTranslation
-} from "../../support/api/requests/Category";
-import { deleteCategoriesStartsWith } from "../../support/api/utils/catalog/categoryUtils";
-import filterTests from "../../support/filterTests";
-import { updateTranslationToCategory } from "../../support/pages/translationsPage";
+} from "../support/api/requests/Category";
+import { deleteCategoriesStartsWith } from "../support/api/utils/catalog/categoryUtils";
+import filterTests from "../support/filterTests";
+import { updateTranslationToCategory } from "../support/pages/translationsPage";
 
 filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
   describe("As an admin I want to manage translations", () => {
-    const startsWith = "Translations";
+    const startsWith = "TestTranslations";
     const randomNumber = faker.datatype.number();
 
     let category;
@@ -31,7 +31,7 @@ filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("As an admin I want to create translation", () => {
+    it("should be able to create new translation. TC:SALEOR_1701", () => {
       const translatedName = `TranslatedName${randomNumber}`;
       const translatedDescription = `TranslatedDescription${randomNumber}`;
       const translatedSeoTitle = `TranslatedSeoTitle${randomNumber}`;
@@ -52,7 +52,7 @@ filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
       });
     });
 
-    it("As an admin I want to update translation", () => {
+    it("should be able to update translation. TC:SALEOR_1702", () => {
       const randomNumber = faker.datatype.number();
       const startWithUpdate = `Translations_Update_${randomNumber}`;
       const seoTitleUpdate = `${startWithUpdate}_seoTitle`;

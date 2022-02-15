@@ -27,10 +27,9 @@ const useStyles = makeStyles(
     title: {
       [theme.breakpoints.down("sm")]: {
         fontSize: 20,
-        marginTop: theme.spacing(2),
         padding: 0
       },
-      alignSelf: "flex-start",
+      fontWeight: 700,
       flex: 1,
       whiteSpace: "nowrap",
       overflow: "hidden",
@@ -46,10 +45,11 @@ interface PageHeaderProps {
   inline?: boolean;
   limitText?: string;
   title?: React.ReactNode;
+  cardMenu?: React.ReactNode;
 }
 
 const PageHeader: React.FC<PageHeaderProps> = props => {
-  const { children, className, inline, limitText, title } = props;
+  const { children, className, inline, limitText, title, cardMenu } = props;
 
   const classes = useStyles(props);
 
@@ -59,9 +59,16 @@ const PageHeader: React.FC<PageHeaderProps> = props => {
       className={className}
       inline={inline}
       title={
-        <Typography className={classes.title} variant="h1">
-          {title !== undefined ? title : <Skeleton style={{ width: "10em" }} />}
-        </Typography>
+        <>
+          <Typography className={classes.title} variant="h1">
+            {title !== undefined ? (
+              title
+            ) : (
+              <Skeleton style={{ width: "10em" }} />
+            )}
+          </Typography>
+          {cardMenu}
+        </>
       }
     >
       <div className={classes.root}>

@@ -14,10 +14,12 @@ export function createVoucherInChannel({
   productId,
   channelId,
   value,
-  code = name
+  code = name,
+  type,
+  country
 }) {
   let voucher;
-  return createVoucher({ name, productId, code })
+  return createVoucher({ name, productId, code, type, country })
     .then(({ voucher: voucherResp }) => {
       voucher = voucherResp;
       addChannelToVoucher(voucher.id, channelId, value);

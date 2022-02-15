@@ -1,5 +1,5 @@
-// / <reference types="cypress"/>
-// / <reference types="../../support"/>
+/// <reference types="cypress"/>
+/// <reference types="../../support"/>
 
 import faker from "faker";
 
@@ -28,10 +28,10 @@ import filterTests from "../../support/filterTests";
 import {
   fulfillOrder,
   fulfillOrderWithInsufficientStock
-} from "../../support/pages/orderPage";
+} from "../../support/pages/orders/orderPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Orders", () => {
+  describe("As an admin I want to fulfill orders without stock", () => {
     const startsWith = "CyOrders-";
     const randomName = startsWith + faker.datatype.number();
 

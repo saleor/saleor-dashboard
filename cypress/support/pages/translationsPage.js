@@ -28,7 +28,7 @@ export function updateTranslationToCategory({
     .click()
     .get(SHARED_ELEMENTS.richTextEditor.loader)
     .should("not.exist")
-    .get(ELEMENT_TRANSLATION.translationInputField)
+    .get(ELEMENT_TRANSLATION.translationTextEditor)
     .clearAndType(translatedDescription)
     .wait(500)
     .get(BUTTON_SELECTORS.confirm)
