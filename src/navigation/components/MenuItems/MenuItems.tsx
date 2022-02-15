@@ -247,6 +247,7 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
                 marginLeft: NODE_MARGIN * (path.length - 1)
               }
             })}
+            maxDepth={5}
             isVirtualized={false}
             rowHeight={NODE_HEIGHT}
             treeData={items.map(item =>
