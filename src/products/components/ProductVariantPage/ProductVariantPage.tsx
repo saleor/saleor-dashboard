@@ -15,13 +15,14 @@ import { MetadataFormData } from "@saleor/components/Metadata";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
-import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
-import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
-import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
-import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
+import {
+  ProductChannelListingErrorFragmentFragment,
+  ProductErrorWithAttributesFragmentFragment,
+  ProductVariantFragment,
+  WarehouseFragmentFragment
+} from "@saleor/graphql";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
-import { VariantUpdate_productVariantUpdate_errors } from "@saleor/products/types/VariantUpdate";
 import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
@@ -77,17 +78,15 @@ interface ProductVariantPageProps {
   assignReferencesAttributeId?: string;
   defaultVariantId?: string;
   defaultWeightUnit: string;
-  errors:
-    | ProductErrorWithAttributesFragment[]
-    | VariantUpdate_productVariantUpdate_errors[];
+  errors: ProductErrorWithAttributesFragmentFragment[];
   header: string;
   channels: ChannelPriceData[];
-  channelErrors: ProductChannelListingErrorFragment[];
+  channelErrors: ProductChannelListingErrorFragmentFragment[];
   loading?: boolean;
   placeholderImage?: string;
   saveButtonBarState: ConfirmButtonTransitionState;
-  variant?: ProductVariant;
-  warehouses: WarehouseFragment[];
+  variant?: ProductVariantFragment;
+  warehouses: WarehouseFragmentFragment[];
   referencePages?: SearchPages_search_edges_node[];
   referenceProducts?: SearchProducts_search_edges_node[];
   attributeValues: SearchAttributeValues_attribute_choices_edges_node[];

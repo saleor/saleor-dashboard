@@ -1,9 +1,9 @@
 import {
   ChannelDetailsFragmentFragment,
   ChannelErrorCode,
-  ChannelErrorFragmentFragment
+  ChannelErrorFragmentFragment,
+  ProductFragment
 } from "@saleor/graphql";
-import { ProductDetails_product_channelListings } from "@saleor/products/types/ProductDetails";
 import { Money } from "@saleor/sdk/dist/apollo/types";
 
 export const channelCreateErrors: ChannelErrorFragmentFragment[] = [
@@ -131,8 +131,7 @@ export const channel: ChannelDetailsFragmentFragment = {
   }
 };
 
-interface ProductDetails_product_channelListingsWithPricing
-  extends ProductDetails_product_channelListings {
+type ProductChannelsWithPricing = ProductFragment["channelListings"][0] & {
   pricing: {
     priceRange: {
       start: {
@@ -143,9 +142,9 @@ interface ProductDetails_product_channelListingsWithPricing
       };
     };
   };
-}
+};
 
-export const productChannels: ProductDetails_product_channelListingsWithPricing[] = [
+export const productChannels: ProductChannelsWithPricing[] = [
   {
     __typename: "ProductChannelListing",
     availableForPurchase: null,

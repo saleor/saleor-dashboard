@@ -6,14 +6,16 @@ import CardTitle from "@saleor/components/CardTitle";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import MultiAutocompleteSelectField from "@saleor/components/MultiAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
-import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
+import {
+  AttributeValueFragmentFragment,
+  ProductVariantAttributesFragmentFragment
+} from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import {
   getBasicAttributeValue,
   getBooleanAttributeValue
 } from "@saleor/products/components/ProductVariantCreatorPage/utils";
-import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
 import { FetchMoreProps } from "@saleor/types";
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
@@ -47,7 +49,7 @@ export function getVariantsNumber(data: ProductVariantCreateFormData): number {
 
 export function getMultiValues(
   attributes: Attribute[],
-  attribute: ProductDetails_product_productType_variantAttributes
+  attribute: ProductVariantAttributesFragmentFragment["productType"]["variantAttributes"][0]
 ) {
   return attributes
     .find(getById(attribute.id))
@@ -56,7 +58,7 @@ export function getMultiValues(
 
 export function getMultiDisplayValues(
   attributes: Attribute[],
-  attribute: ProductDetails_product_productType_variantAttributes
+  attribute: ProductVariantAttributesFragmentFragment["productType"]["variantAttributes"][0]
 ) {
   return attributes.find(getById(attribute.id))?.values.map(value => ({
     label: value.value?.name,
@@ -66,7 +68,7 @@ export function getMultiDisplayValues(
 
 const getBooleanDisplayValues = (
   intl: IntlShape,
-  values: Array<AttributeValue<Partial<AttributeValueFragment>>>
+  values: Array<AttributeValue<Partial<AttributeValueFragmentFragment>>>
 ) => {
   if (!values.length) {
     return [];
@@ -80,7 +82,7 @@ const getBooleanDisplayValues = (
 
 const getBooleanChoices = (
   intl: IntlShape,
-  values?: Array<AttributeValue<Partial<AttributeValueFragment>>>
+  values?: Array<AttributeValue<Partial<AttributeValueFragmentFragment>>>
 ) => {
   const selectedValues = values?.map(({ value }) => value.boolean) ?? [];
   const choices = [
@@ -92,7 +94,7 @@ const getBooleanChoices = (
 };
 
 export interface ProductVariantCreatorValuesProps {
-  attributes: ProductDetails_product_productType_variantAttributes[];
+  attributes: ProductVariantAttributesFragmentFragment["productType"]["variantAttributes"];
   attributeValues: SearchAttributeValues_attribute_choices_edges_node[];
   fetchAttributeValues: (query: string, attributeId: string) => void;
   fetchMoreAttributeValues?: FetchMoreProps;
@@ -100,7 +102,7 @@ export interface ProductVariantCreatorValuesProps {
   variantsLeft: number | null;
   onValueClick: (
     attributeId: string,
-    value: AttributeValue<Partial<AttributeValueFragment>>
+    value: AttributeValue<Partial<AttributeValueFragmentFragment>>
   ) => void;
   onValueBlur: () => void;
 }

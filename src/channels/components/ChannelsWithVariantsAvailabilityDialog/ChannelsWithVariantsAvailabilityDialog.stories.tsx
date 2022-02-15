@@ -1,4 +1,4 @@
-import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
+import { ProductFragment } from "@saleor/graphql";
 import CommonDecorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -51,7 +51,7 @@ const props: ChannelsAvailabilityDialogProps = {
       name: "Variant C",
       media: []
     }
-  ] as ProductDetails_product_variants[],
+  ] as ProductFragment["variants"],
   onClose: () => undefined,
   onConfirm: () => undefined,
   open: true

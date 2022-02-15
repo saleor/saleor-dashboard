@@ -11,6 +11,7 @@ import {
 import { AttributeInput } from "@saleor/components/Attributes";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
+import { ProductVariantCreateDataQuery } from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
@@ -22,7 +23,6 @@ import useFormset, {
 } from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import { errorMessages } from "@saleor/intl";
-import { ProductVariantCreateData_product } from "@saleor/products/types/ProductVariantCreateData";
 import { getVariantAttributeInputFromProduct } from "@saleor/products/utils/data";
 import { createPreorderEndDateChangeHandler } from "@saleor/products/utils/handlers";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
@@ -90,7 +90,7 @@ export interface UseProductVariantCreateFormResult
 export interface ProductVariantCreateFormProps
   extends UseProductVariantCreateFormOpts {
   children: (props: UseProductVariantCreateFormResult) => React.ReactNode;
-  product: ProductVariantCreateData_product;
+  product: ProductVariantCreateDataQuery["product"];
   onSubmit: (data: ProductVariantCreateData) => void;
 }
 
@@ -109,7 +109,7 @@ const initial: ProductVariantCreateFormData = {
 };
 
 function useProductVariantCreateForm(
-  product: ProductVariantCreateData_product,
+  product: ProductVariantCreateDataQuery["product"],
   onSubmit: (data: ProductVariantCreateData) => void,
   opts: UseProductVariantCreateFormOpts
 ): UseProductVariantCreateFormResult {

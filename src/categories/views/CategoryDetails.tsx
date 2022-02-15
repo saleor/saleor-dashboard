@@ -9,7 +9,8 @@ import {
   useCategoryBulkDeleteMutation,
   useCategoryDeleteMutation,
   useCategoryDetailsQuery,
-  useCategoryUpdateMutation
+  useCategoryUpdateMutation,
+  useProductBulkDeleteMutation
 } from "@saleor/graphql";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useLocalPaginator, {
@@ -32,7 +33,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { PAGINATE_BY } from "../../config";
 import { extractMutationErrors, maybe } from "../../misc";
-import { useProductBulkDeleteMutation } from "../../products/mutations";
 import { productAddUrl, productUrl } from "../../products/urls";
 import { CategoryInput } from "../../types/globalTypes";
 import {

@@ -20,6 +20,7 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
+import { ProductFragment } from "@saleor/graphql";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import { isLimitReached } from "@saleor/utils/limits";
 import React from "react";
@@ -27,15 +28,10 @@ import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
 import { ChannelProps, ListActions, ReorderAction } from "../../../types";
-import {
-  ProductDetails_product,
-  ProductDetails_product_variants,
-  ProductDetails_product_variants_stocks_warehouse
-} from "../../types/ProductDetails";
 import ProductVariantSetDefault from "../ProductVariantSetDefault";
 
 function getWarehouseChoices(
-  variants: ProductDetails_product_variants[],
+  variants: ProductFragment["variants"],
   intl: IntlShape
 ): SingleAutocompleteChoiceType[] {
   return [
@@ -47,11 +43,11 @@ function getWarehouseChoices(
       value: null
     },
     ...variants
-      .reduce<ProductDetails_product_variants_stocks_warehouse[]>(
+      .reduce<Array<ProductFragment["variants"][0]["stocks"][0]["warehouse"]>>(
         (warehouses, variant) => [
           ...warehouses,
           ...variant.stocks.reduce<
-            ProductDetails_product_variants_stocks_warehouse[]
+            Array<ProductFragment["variants"][0]["stocks"][0]["warehouse"]>
           >((variantStocks, stock) => {
             if (!!warehouses.find(w => w.id === stock.warehouse.id)) {
               return variantStocks;
@@ -133,7 +129,7 @@ const useStyles = makeStyles(
 function getAvailabilityLabel(
   intl: IntlShape,
   warehouse: string,
-  variant: ProductDetails_product_variants,
+  variant: ProductFragment["variants"][0],
   numAvailable: number
 ): string {
   if (variant.preorder) {
@@ -207,11 +203,11 @@ function getAvailabilityLabel(
 interface ProductVariantsProps extends ListActions, ChannelProps {
   disabled: boolean;
   limits: RefreshLimits_shop_limits;
-  product: ProductDetails_product;
-  variants: ProductDetails_product_variants[];
+  product: ProductFragment;
+  variants: ProductFragment["variants"];
   onVariantReorder: ReorderAction;
   onRowClick: (id: string) => () => void;
-  onSetDefaultVariant(variant: ProductDetails_product_variants);
+  onSetDefaultVariant(variant: ProductFragment["variants"][0]);
   onVariantAdd?();
   onVariantsAdd?();
 }

@@ -1,7 +1,4 @@
-import {
-  ProductType_productType,
-  ProductType_productType_productAttributes
-} from "@saleor/products/types/ProductType";
+import { ProductTypeQuery } from "@saleor/graphql";
 import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
 
 import {
@@ -13,7 +10,7 @@ import {
 import { ProductTypeDetails_productType } from "./types/ProductTypeDetails";
 import { ProductTypeList_productTypes_edges_node } from "./types/ProductTypeList";
 
-export const attributes: ProductType_productType_productAttributes[] = [
+export const attributes: ProductTypeQuery["productType"]["productAttributes"] = [
   {
     node: {
       __typename: "Attribute" as "Attribute",
@@ -969,7 +966,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
   }
 ].map(edge => edge.node);
 
-export const productTypeSearch: ProductType_productType = {
+export const productTypeSearch: ProductTypeQuery["productType"] = {
   __typename: "ProductType" as "ProductType",
   hasVariants: true,
   id: "UHJvZHVjdFR5cGU6NA==",

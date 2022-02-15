@@ -14,10 +14,10 @@ import {
   AttributeValueDeleteMutation,
   AttributeValueInput,
   FileUploadMutation,
-  PageSelectedAttributeFragment
+  PageSelectedAttributeFragment,
+  ProductFragment
 } from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
-import { ProductDetails_product_attributes } from "@saleor/products/types/ProductDetails";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import {
@@ -150,7 +150,7 @@ export function getDefaultAttributeValues(attribute: VariantAttributeFragment) {
 export function getSelectedAttributeValues(
   attribute:
     | PageSelectedAttributeFragment
-    | ProductDetails_product_attributes
+    | ProductFragment["attributes"][0]
     | SelectedVariantAttributeFragment
 ) {
   switch (attribute.attribute.inputType) {
@@ -181,7 +181,7 @@ export const isFileValueUnused = (
   attributesWithNewFileValue: FormsetData<null, File>,
   existingAttribute:
     | PageSelectedAttributeFragment
-    | ProductDetails_product_attributes
+    | ProductFragment["attributes"][0]
     | SelectedVariantAttributeFragment
 ) => {
   if (existingAttribute.attribute.inputType !== AttributeInputTypeEnum.FILE) {
@@ -222,7 +222,7 @@ export const mergeAttributeValueDeleteErrors = (
 
 export const mergeChoicesWithValues = (
   attribute:
-    | ProductDetails_product_attributes
+    | ProductFragment["attributes"][0]
     | PageSelectedAttributeFragment
     | SelectedVariantAttributeFragment
 ) => {

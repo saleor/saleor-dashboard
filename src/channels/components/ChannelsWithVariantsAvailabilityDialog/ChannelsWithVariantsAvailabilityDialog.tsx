@@ -1,7 +1,7 @@
 import { ChannelData } from "@saleor/channels/utils";
 import ActionDialog from "@saleor/components/ActionDialog";
+import { ProductFragment } from "@saleor/graphql";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
-import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
 import { ChannelVariantListing } from "@saleor/products/views/ProductUpdate/types";
 import useChannelsWithProductVariants from "@saleor/products/views/ProductUpdate/useChannelsWithProductVariants";
 import {
@@ -28,7 +28,7 @@ const messages = defineMessages({
 export interface ChannelsAvailabilityDialogProps extends DialogProps {
   channels: ChannelData[];
   contentType?: string;
-  variants: ProductDetails_product_variants[];
+  variants: ProductFragment["variants"];
   onConfirm: (listings: ChannelVariantListing) => void;
 }
 

@@ -1,7 +1,7 @@
 import { ChannelPriceData } from "@saleor/channels/utils";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
-import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
+import { ProductVariantAttributesFragmentFragment } from "@saleor/graphql";
 import React from "react";
 
 import {
@@ -13,7 +13,7 @@ import ProductVariantCreatorStock from "./ProductVariantCreatorStock";
 
 export type PriceOrStock = "price" | "stock";
 export interface ProductVariantCreatorPriceAndSkuProps {
-  attributes: ProductDetails_product_productType_variantAttributes[];
+  attributes: ProductVariantAttributesFragmentFragment["productType"]["variantAttributes"];
   channelListings: ChannelPriceData[];
   data: ProductVariantCreateFormData;
   warehouses: WarehouseFragment[];

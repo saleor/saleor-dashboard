@@ -13,7 +13,10 @@ import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
-import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
+import {
+  ProductErrorWithAttributesFragmentFragment,
+  ProductVariantCreateDataQuery
+} from "@saleor/graphql";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
 import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
@@ -24,7 +27,6 @@ import { FetchMoreProps, ReorderAction } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import { ProductVariantCreateData_product } from "../../types/ProductVariantCreateData";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks from "../ProductStocks";
 import ProductVariantCheckoutSettings from "../ProductVariantCheckoutSettings/ProductVariantCheckoutSettings";
@@ -61,9 +63,9 @@ const messages = defineMessages({
 
 interface ProductVariantCreatePageProps {
   disabled: boolean;
-  errors: ProductErrorWithAttributesFragment[];
+  errors: ProductErrorWithAttributesFragmentFragment[];
   header: string;
-  product: ProductVariantCreateData_product;
+  product: ProductVariantCreateDataQuery["product"];
   saveButtonBarState: ConfirmButtonTransitionState;
   warehouses: SearchWarehouses_search_edges_node[];
   weightUnit: string;

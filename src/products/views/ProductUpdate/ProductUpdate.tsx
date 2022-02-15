@@ -18,8 +18,23 @@ import {
   VALUES_PAGINATE_BY
 } from "@saleor/config";
 import {
+  ProductMediaCreateMutationVariables,
+  ProductUpdateMutation,
   useAttributeValueDeleteMutation,
-  useFileUploadMutation
+  useFileUploadMutation,
+  useProductChannelListingUpdateMutation,
+  useProductDeleteMutation,
+  useProductDetailsQuery,
+  useProductMediaCreateMutation,
+  useProductMediaDeleteMutation,
+  useProductMediaReorderMutation,
+  useProductUpdateMutation,
+  useProductVariantBulkDeleteMutation,
+  useProductVariantChannelListingUpdateMutation,
+  useProductVariantPreorderDeactivateMutation,
+  useProductVariantReorderMutation,
+  useSimpleProductUpdateMutation,
+  useVariantCreateMutation
 } from "@saleor/graphql";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useBulkActions from "@saleor/hooks/useBulkActions";
@@ -33,20 +48,6 @@ import { commonMessages, errorMessages } from "@saleor/intl";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import ProductVariantCreateDialog from "@saleor/products/components/ProductVariantCreateDialog";
 import ProductVariantEndPreorderDialog from "@saleor/products/components/ProductVariantEndPreorderDialog";
-import {
-  useProductChannelListingUpdate,
-  useProductDeleteMutation,
-  useProductMediaCreateMutation,
-  useProductMediaDeleteMutation,
-  useProductMediaReorder,
-  useProductUpdateMutation,
-  useProductVariantBulkDeleteMutation,
-  useProductVariantChannelListingUpdate,
-  useProductVariantPreorderDeactivateMutation,
-  useProductVariantReorderMutation,
-  useSimpleProductUpdateMutation,
-  useVariantCreateMutation
-} from "@saleor/products/mutations";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import usePageSearch from "@saleor/searches/usePageSearch";
@@ -67,9 +68,6 @@ import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { getMutationState } from "../../../misc";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
-import { useProductDetails } from "../../queries";
-import { ProductMediaCreateVariables } from "../../types/ProductMediaCreate";
-import { ProductUpdate as ProductUpdateMutationResult } from "../../types/ProductUpdate";
 import {
   productImageUrl,
   productListUrl,
@@ -170,7 +168,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     productVariantCreateOpts
   ] = useVariantCreateMutation({});
 
-  const { data, loading, refetch } = useProductDetails({
+  const { data, loading, refetch } = useProductDetailsQuery({
     displayLoader: true,
     variables: {
       id,
@@ -190,7 +188,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
 
-  const handleUpdate = (data: ProductUpdateMutationResult) => {
+  const handleUpdate = (data: ProductUpdateMutation) => {
     if (data.productUpdate.errors.length === 0) {
       notify({
         status: "success",
@@ -211,7 +209,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const [
     reorderProductImages,
     reorderProductImagesOpts
-  ] = useProductMediaReorder({});
+  ] = useProductMediaReorderMutation({});
 
   const [deleteProduct, deleteProductOpts] = useProductDeleteMutation({
     onCompleted: () => {
@@ -231,7 +229,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   ] = useProductMediaCreateMutation({
     onCompleted: data => {
       const imageError = data.productMediaCreate.errors.find(
-        error => error.field === ("image" as keyof ProductMediaCreateVariables)
+        error =>
+          error.field === ("image" as keyof ProductMediaCreateMutationVariables)
       );
       if (imageError) {
         notify({
@@ -317,7 +316,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     { formId: PRODUCT_UPDATE_FORM_ID }
   );
 
-  const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate({
+  const [
+    updateChannels,
+    updateChannelsOpts
+  ] = useProductChannelListingUpdateMutation({
     onCompleted: data => {
       if (!!data.productChannelListingUpdate.errors.length) {
         data.productChannelListingUpdate.errors.forEach(error =>
@@ -333,7 +335,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const [
     updateVariantChannels,
     updateVariantChannelsOpts
-  ] = useProductVariantChannelListingUpdate({});
+  ] = useProductVariantChannelListingUpdateMutation({});
 
   const [
     createProductMedia,

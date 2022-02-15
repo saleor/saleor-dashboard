@@ -15,15 +15,17 @@ import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocomplet
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import SeoForm from "@saleor/components/SeoForm";
-import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
-import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
-import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
+import {
+  ProductChannelListingErrorFragmentFragment,
+  ProductErrorWithAttributesFragmentFragment,
+  ProductTypeQuery,
+  TaxTypeFragmentFragment
+} from "@saleor/graphql";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
-import { ProductType_productType } from "@saleor/products/types/ProductType";
 import { getChoices } from "@saleor/products/utils/data";
 import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
@@ -49,8 +51,8 @@ import ProductCreateForm, {
 } from "./form";
 
 interface ProductCreatePageProps {
-  errors: ProductErrorWithAttributesFragment[];
-  channelsErrors: ProductChannelListingErrorFragment[];
+  errors: ProductErrorWithAttributesFragmentFragment[];
+  channelsErrors: ProductChannelListingErrorFragmentFragment[];
   allChannelsCount: number;
   currentChannels: ChannelData[];
   collections: SearchCollections_search_edges_node[];
@@ -69,8 +71,8 @@ interface ProductCreatePageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   weightUnit: string;
   warehouses: SearchWarehouses_search_edges_node[];
-  taxTypes: TaxTypeFragment[];
-  selectedProductType?: ProductType_productType;
+  taxTypes: TaxTypeFragmentFragment[];
+  selectedProductType?: ProductTypeQuery["productType"];
   fetchCategories: (data: string) => void;
   fetchCollections: (data: string) => void;
   fetchProductTypes: (data: string) => void;

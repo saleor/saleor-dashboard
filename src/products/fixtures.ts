@@ -1,5 +1,11 @@
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import {
+  ProductFragment,
+  ProductListQuery,
+  ProductVariantCreateDataQuery
+} from "@saleor/graphql";
+import { RelayToFlat } from "@saleor/types";
+import {
   AttributeInputTypeEnum,
   ProductMediaType,
   WeightUnitsEnum
@@ -7,16 +13,13 @@ import {
 import { warehouseList } from "@saleor/warehouses/fixtures";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
-import { ProductDetails_product } from "./types/ProductDetails";
-import { ProductList_products_edges_node } from "./types/ProductList";
-import { ProductVariantCreateData_product } from "./types/ProductVariantCreateData";
 
 const content = richTextEditorFixtures.richTextEditor;
 
 export const product: (
   placeholderImage: string
-) => ProductDetails_product &
-  ProductVariantCreateData_product = placeholderImage => ({
+) => ProductFragment &
+  ProductVariantCreateDataQuery["product"] = placeholderImage => ({
   __typename: "Product" as "Product",
   attributes: [
     {
@@ -741,7 +744,7 @@ export const product: (
 });
 export const products = (
   placeholderImage: string
-): ProductList_products_edges_node[] => [
+): RelayToFlat<ProductListQuery["products"]> => [
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",

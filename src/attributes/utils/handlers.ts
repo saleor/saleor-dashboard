@@ -8,15 +8,15 @@ import {
   AttributeValueDeleteMutationVariables,
   FileUploadMutation,
   FileUploadMutationVariables,
-  PageSelectedAttributeFragment
+  PageSelectedAttributeFragment,
+  ProductFragment,
+  ProductVariantDetailsQuery
 } from "@saleor/graphql";
 import {
   FormsetAtomicData,
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
-import { ProductDetails_product_attributes } from "@saleor/products/types/ProductDetails";
-import { ProductVariantDetails_productVariant_nonSelectionAttributes } from "@saleor/products/types/ProductVariantDetails";
 import { FetchMoreProps, ReorderEvent } from "@saleor/types";
 import {
   AttributeEntityTypeEnum,
@@ -289,8 +289,8 @@ export const handleDeleteMultipleAttributeValues = async (
   attributesWithNewFileValue: FormsetData<null, File>,
   attributes: Array<
     | PageSelectedAttributeFragment
-    | ProductDetails_product_attributes
-    | ProductVariantDetails_productVariant_nonSelectionAttributes
+    | ProductFragment["attributes"][0]
+    | ProductVariantDetailsQuery["productVariant"]["nonSelectionAttributes"][0]
   >,
   deleteAttributeValue: (
     variables: AttributeValueDeleteMutationVariables

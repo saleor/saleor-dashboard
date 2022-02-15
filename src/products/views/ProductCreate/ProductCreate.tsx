@@ -7,7 +7,15 @@ import {
   DEFAULT_INITIAL_SEARCH_DATA,
   VALUES_PAGINATE_BY
 } from "@saleor/config";
-import { useFileUploadMutation } from "@saleor/graphql";
+import {
+  useFileUploadMutation,
+  useProductChannelListingUpdateMutation,
+  useProductCreateMutation,
+  useProductDeleteMutation,
+  useProductTypeQuery,
+  useProductVariantChannelListingUpdateMutation,
+  useVariantCreateMutation
+} from "@saleor/graphql";
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -15,14 +23,6 @@ import useShop from "@saleor/hooks/useShop";
 import ProductCreatePage, {
   ProductCreateData
 } from "@saleor/products/components/ProductCreatePage";
-import {
-  useProductChannelListingUpdate,
-  useProductDeleteMutation,
-  useProductVariantChannelListingUpdate,
-  useVariantCreateMutation
-} from "@saleor/products/mutations";
-import { useProductCreateMutation } from "@saleor/products/mutations";
-import { useProductTypeQuery } from "@saleor/products/queries";
 import {
   productAddUrl,
   ProductCreateUrlDialog,
@@ -175,13 +175,14 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
 
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
 
-  const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate(
-    {}
-  );
+  const [
+    updateChannels,
+    updateChannelsOpts
+  ] = useProductChannelListingUpdateMutation({});
   const [
     updateVariantChannels,
     updateVariantChannelsOpts
-  ] = useProductVariantChannelListingUpdate({});
+  ] = useProductVariantChannelListingUpdateMutation({});
 
   const handleBack = () => navigate(productListUrl());
 

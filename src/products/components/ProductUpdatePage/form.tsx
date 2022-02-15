@@ -20,6 +20,7 @@ import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
+import { ProductFragment } from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
@@ -33,7 +34,6 @@ import useFormset, {
 } from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import { errorMessages } from "@saleor/intl";
-import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import {
   getAttributeInputFromProduct,
   getProductUpdatePageFormData,
@@ -189,12 +189,12 @@ export interface UseProductUpdateFormOpts
 
 export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
   children: (props: UseProductUpdateFormResult) => React.ReactNode;
-  product: ProductDetails_product;
+  product: ProductFragment;
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise;
 }
 
 const getStocksData = (
-  product: ProductDetails_product,
+  product: ProductFragment,
   stocks: FormsetData<ProductStockFormsetData, string>
 ) => {
   if (product?.productType?.hasVariants) {
@@ -218,7 +218,7 @@ const getStocksData = (
 };
 
 function useProductUpdateForm(
-  product: ProductDetails_product,
+  product: ProductFragment,
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise,
   opts: UseProductUpdateFormOpts
 ): UseProductUpdateFormResult {

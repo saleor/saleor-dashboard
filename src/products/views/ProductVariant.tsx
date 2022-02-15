@@ -15,19 +15,24 @@ import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import {
+  ProductErrorWithAttributesFragmentFragment,
+  ProductVariantFragment,
   useAttributeValueDeleteMutation,
-  useFileUploadMutation
+  useFileUploadMutation,
+  useProductVariantChannelListingUpdateMutation,
+  useProductVariantDetailsQuery,
+  useProductVariantPreorderDeactivateMutation,
+  useProductVariantReorderMutation,
+  useVariantDeleteMutation,
+  useVariantMediaAssignMutation,
+  useVariantMediaUnassignMutation,
+  useVariantUpdateMutation
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
-import {
-  useProductVariantChannelListingUpdate,
-  useProductVariantPreorderDeactivateMutation
-} from "@saleor/products/mutations";
-import { ProductVariantDetails_productVariant } from "@saleor/products/types/ProductVariantDetails";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
@@ -47,15 +52,6 @@ import { extractMutationErrors, weight } from "../../misc";
 import ProductVariantDeleteDialog from "../components/ProductVariantDeleteDialog";
 import ProductVariantPage from "../components/ProductVariantPage";
 import { ProductVariantUpdateSubmitData } from "../components/ProductVariantPage/form";
-import {
-  useProductVariantReorderMutation,
-  useVariantDeleteMutation,
-  useVariantMediaAssignMutation,
-  useVariantMediaUnassignMutation,
-  useVariantUpdateMutation
-} from "../mutations";
-import { useProductVariantQuery } from "../queries";
-import { VariantUpdate_productVariantUpdate_errors } from "../types/VariantUpdate";
 import {
   productUrl,
   productVariantAddUrl,
@@ -82,7 +78,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   const notify = useNotifier();
   const intl = useIntl();
   const [errors, setErrors] = useState<
-    VariantUpdate_productVariantUpdate_errors[]
+    ProductErrorWithAttributesFragmentFragment[]
   >([]);
   useEffect(() => {
     setErrors([]);
@@ -95,7 +91,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     }
   });
 
-  const { data, loading } = useProductVariantQuery({
+  const { data, loading } = useProductVariantDetailsQuery({
     displayLoader: true,
     variables: {
       id: variantId,
@@ -108,7 +104,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   const [
     updateChannels,
     updateChannelsOpts
-  ] = useProductVariantChannelListingUpdate({});
+  ] = useProductVariantChannelListingUpdateMutation({});
 
   const [openModal] = createDialogActionHandlers<
     ProductVariantEditUrlDialog,
@@ -158,7 +154,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
 
   const handleSubmitChannels = async (
     data: ProductVariantUpdateSubmitData,
-    variant: ProductVariantDetails_productVariant
+    variant: ProductVariantFragment
   ) => {
     const channelsHaveChanged = data.channelListings.some(channel => {
       const variantChannel = variant.channelListings.find(

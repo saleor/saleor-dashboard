@@ -6,15 +6,12 @@ import {
   ChannelDetailsFragmentFragment,
   ChannelFragmentFragment,
   CollectionDetailsFragmentFragment,
+  ProductFragment,
+  ProductVariantDetailsQuery,
   SaleDetailsFragmentFragment,
   VoucherDetailsFragmentFragment
 } from "@saleor/graphql";
 import { RequireOnlyOne } from "@saleor/misc";
-import {
-  ProductDetails_product,
-  ProductDetails_product_variants
-} from "@saleor/products/types/ProductDetails";
-import { ProductVariantDetails_productVariant } from "@saleor/products/types/ProductVariantDetails";
 import { validatePrice } from "@saleor/products/utils/validation";
 import {
   ShippingZone_shippingZone_channels,
@@ -140,7 +137,7 @@ export const createSaleChannels = (data?: ChannelFragmentFragment[]) =>
   }));
 
 export const createVariantChannels = (
-  data?: ProductVariantDetails_productVariant
+  data?: ProductVariantDetailsQuery["productVariant"]
 ): ChannelPriceData[] => {
   if (data) {
     return data?.channelListings.map(listing => ({
@@ -198,7 +195,7 @@ export const createChannelsData = (
   })) || [];
 
 export const createChannelsDataWithPrice = (
-  productData?: ProductDetails_product,
+  productData?: ProductFragment,
   data?: ChannelFragmentFragment[]
 ): ChannelData[] => {
   if (data && productData?.channelListings) {
@@ -288,9 +285,7 @@ export const createChannelsDataFromSale = (
       saleData.type === SaleType.FIXED ? option.discountValue.toString() : ""
   })) || [];
 
-export const createChannelsDataFromProduct = (
-  productData?: ProductDetails_product
-) =>
+export const createChannelsDataFromProduct = (productData?: ProductFragment) =>
   productData?.channelListings?.map(
     ({
       channel,
@@ -331,7 +326,7 @@ export const createChannelsDataFromProduct = (
   ) || [];
 
 export const extractVariantsIdsForChannel = (
-  productVariants: ProductDetails_product_variants[],
+  productVariants: ProductFragment["variants"],
   channelId: string
 ) =>
   productVariants
@@ -341,7 +336,7 @@ export const extractVariantsIdsForChannel = (
     .map(({ id }) => id) || [];
 
 export const createSortedChannelsDataFromProduct = (
-  productData?: ProductDetails_product
+  productData?: ProductFragment
 ): ChannelData[] =>
   createChannelsDataFromProduct(productData).sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name)

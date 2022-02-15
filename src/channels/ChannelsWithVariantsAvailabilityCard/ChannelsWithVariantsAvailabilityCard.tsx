@@ -10,9 +10,9 @@ import {
   Messages
 } from "@saleor/components/ChannelsAvailabilityCard/types";
 import { getChannelsAvailabilityMessages } from "@saleor/components/ChannelsAvailabilityCard/utils";
+import { ProductFragment } from "@saleor/graphql";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
-import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
 import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
 import {
   areAnyChannelVariantsSelected,
@@ -36,7 +36,7 @@ export interface ChannelsWithVariantsAvailabilityCardProps
   extends CommonChannelsAvailabilityProps {
   channelsWithVariantsData: ChannelsWithVariantsData;
   channels: ChannelData[];
-  variants: ProductDetails_product_variants[];
+  variants: ProductFragment["variants"];
   errors?: ChannelsAvailabilityError[];
   messages: Messages;
   onChange: (id: string, data: ChannelOpts) => void;

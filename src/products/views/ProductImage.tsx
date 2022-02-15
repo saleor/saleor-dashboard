@@ -1,6 +1,11 @@
 import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
+import {
+  useProductMediaByIdQuery,
+  useProductMediaDeleteMutation,
+  useProductMediaUpdateMutation
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
@@ -8,11 +13,6 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductMediaPage from "../components/ProductMediaPage";
-import {
-  useProductMediaDeleteMutation,
-  useProductMediaUpdateMutation
-} from "../mutations";
-import { useProductMediaQuery } from "../queries";
 import {
   productImageUrl,
   ProductImageUrlQueryParams,
@@ -37,7 +37,7 @@ export const ProductImage: React.FC<ProductMediaProps> = ({
 
   const handleBack = () => navigate(productUrl(productId));
 
-  const { data, loading } = useProductMediaQuery({
+  const { data, loading } = useProductMediaByIdQuery({
     displayLoader: true,
     variables: {
       mediaId,

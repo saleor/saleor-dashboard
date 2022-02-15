@@ -2,16 +2,15 @@ import {
   ChannelData,
   createSortedChannelsDataFromProduct
 } from "@saleor/channels/utils";
+import {
+  ProductFragment,
+  ProductUpdateMutationVariables,
+  SimpleProductUpdateMutation
+} from "@saleor/graphql";
 import { weight } from "@saleor/misc";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
 import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/form";
-import {
-  ProductDetails_product,
-  ProductDetails_product_variants
-} from "@saleor/products/types/ProductDetails";
-import { ProductUpdateVariables } from "@saleor/products/types/ProductUpdate";
-import { SimpleProductUpdate } from "@saleor/products/types/SimpleProductUpdate";
 import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
 import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
 import { ProductChannelListingAddInput } from "@saleor/types/globalTypes";
@@ -22,7 +21,7 @@ import { ChannelsWithVariantsData, ChannelWithVariantData } from "../types";
 import { getParsedChannelsWithVariantsDataFromChannels } from "../utils";
 
 export const getSimpleProductVariables = (
-  productVariables: ProductUpdateVariables,
+  productVariables: ProductUpdateMutationVariables,
   data: ProductUpdatePageSubmitData,
   productId: string
 ) => ({
@@ -49,7 +48,7 @@ export const getSimpleProductVariables = (
   updateStocks: data.updateStocks.map(mapFormsetStockToStockInput)
 });
 
-export const getSimpleProductErrors = (data: SimpleProductUpdate) => [
+export const getSimpleProductErrors = (data: SimpleProductUpdateMutation) => [
   ...data.productUpdate.errors,
   ...data.productVariantStocksCreate.errors,
   ...data.productVariantStocksDelete.errors,
@@ -95,19 +94,19 @@ const getParsedChannelsData = (
     )
   );
 
-const shouldRemoveChannel = (
-  allVariants: ProductDetails_product_variants[]
-) => ({ removeVariants }: ProductChannelListingAddInput) =>
+const shouldRemoveChannel = (allVariants: ProductFragment["variants"]) => ({
+  removeVariants
+}: ProductChannelListingAddInput) =>
   isRemovingAllVariants(allVariants, removeVariants);
 
 const isRemovingAllVariants = (
-  allVariants: ProductDetails_product_variants[],
+  allVariants: ProductFragment["variants"],
   removeVariants: string[]
 ) => !!removeVariants.length && removeVariants.length === allVariants.length;
 
 const shouldUpdateChannel = (
   initialChannelWithVariantData,
-  allVariants: ProductDetails_product_variants[],
+  allVariants: ProductFragment["variants"],
   allChannels: ChannelData[]
 ) => ({
   removeVariants,
@@ -132,7 +131,7 @@ const shouldUpdateChannel = (
 };
 
 export const getChannelsVariables = (
-  { id, variants }: ProductDetails_product,
+  { id, variants }: ProductFragment,
   allChannels: ChannelData[],
   { channelsWithVariants, channelsData }: ProductUpdateSubmitData
 ) => {
@@ -169,7 +168,7 @@ export const getChannelsVariables = (
 
 export const getSimpleChannelsVariables = (
   data: ProductUpdatePageSubmitData,
-  product: ProductDetails_product
+  product: ProductFragment
 ) => {
   const productChannels = createSortedChannelsDataFromProduct(product);
   const existingChannelIDs = productChannels.map(channel => channel.id);
