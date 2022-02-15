@@ -7,14 +7,14 @@ import {
   AttributeValueDeleteMutation,
   AttributeValueDeleteMutationVariables,
   FileUploadMutation,
-  FileUploadMutationVariables
+  FileUploadMutationVariables,
+  PageSelectedAttributeFragment
 } from "@saleor/graphql";
 import {
   FormsetAtomicData,
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
-import { PageDetails_page_attributes } from "@saleor/pages/types/PageDetails";
 import { ProductDetails_product_attributes } from "@saleor/products/types/ProductDetails";
 import { ProductVariantDetails_productVariant_nonSelectionAttributes } from "@saleor/products/types/ProductVariantDetails";
 import { FetchMoreProps, ReorderEvent } from "@saleor/types";
@@ -288,7 +288,7 @@ export const handleUploadMultipleFiles = async (
 export const handleDeleteMultipleAttributeValues = async (
   attributesWithNewFileValue: FormsetData<null, File>,
   attributes: Array<
-    | PageDetails_page_attributes
+    | PageSelectedAttributeFragment
     | ProductDetails_product_attributes
     | ProductVariantDetails_productVariant_nonSelectionAttributes
   >,

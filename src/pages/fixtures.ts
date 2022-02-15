@@ -1,13 +1,15 @@
 /* eslint-disable sort-keys */
+import {
+  PageDetailsFragmentFragment,
+  PageFragmentFragment
+} from "@saleor/graphql";
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
-import { PageDetails_page } from "./types/PageDetails";
-import { PageList_pages_edges_node } from "./types/PageList";
 
 const content = richTextEditorFixtures.richTextEditor;
 
-export const pageList: PageList_pages_edges_node[] = [
+export const pageList: PageFragmentFragment[] = [
   {
     __typename: "Page",
     id: "Jzx123sEt==",
@@ -37,7 +39,7 @@ export const pageList: PageList_pages_edges_node[] = [
     title: "About"
   }
 ];
-export const page: PageDetails_page = {
+export const page: PageDetailsFragmentFragment = {
   __typename: "Page",
   attributes: [
     {

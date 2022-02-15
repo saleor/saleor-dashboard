@@ -13,6 +13,7 @@ import { AttributeInput } from "@saleor/components/Attributes";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
+import { PageDetailsFragmentFragment } from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
@@ -23,11 +24,6 @@ import useFormset, {
   FormsetData
 } from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
-import {
-  PageDetails_page,
-  PageDetails_page_pageType
-} from "@saleor/pages/types/PageDetails";
-import { PageType_pageType } from "@saleor/pages/types/PageType";
 import {
   getAttributeInputFromPage,
   getAttributeInputFromPageType
@@ -51,7 +47,7 @@ export interface PageFormData extends MetadataFormData {
   seoTitle: string;
   slug: string;
   title: string;
-  pageType: PageType_pageType | PageDetails_page_pageType;
+  pageType: PageDetailsFragmentFragment["pageType"];
 }
 export interface PageData extends PageFormData {
   attributes: AttributeInput[];
@@ -91,17 +87,19 @@ export interface UsePageFormOpts {
   fetchReferenceProducts?: (data: string) => void;
   fetchMoreReferenceProducts?: FetchMoreProps;
   assignReferencesAttributeId?: string;
-  selectedPageType?: PageType_pageType;
+  selectedPageType?: PageDetailsFragmentFragment["pageType"];
   onSelectPageType: (pageTypeId: string) => void;
 }
 
 export interface PageFormProps extends UsePageFormOpts {
   children: (props: UsePageUpdateFormResult) => React.ReactNode;
-  page: PageDetails_page;
+  page: PageDetailsFragmentFragment;
   onSubmit: (data: PageData) => SubmitPromise;
 }
 
-const getInitialFormData = (page?: PageDetails_page): PageFormData => ({
+const getInitialFormData = (
+  page?: PageDetailsFragmentFragment
+): PageFormData => ({
   isPublished: page?.isPublished,
   metadata: page?.metadata?.map(mapMetadataItemToInput) || [],
   pageType: null,
@@ -114,7 +112,7 @@ const getInitialFormData = (page?: PageDetails_page): PageFormData => ({
 });
 
 function usePageForm(
-  page: PageDetails_page,
+  page: PageDetailsFragmentFragment,
   onSubmit: (data: PageData) => SubmitPromise,
   opts: UsePageFormOpts
 ): UsePageUpdateFormResult {

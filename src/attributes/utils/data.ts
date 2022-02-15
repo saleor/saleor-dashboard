@@ -13,10 +13,10 @@ import {
   AttributeInputTypeEnum,
   AttributeValueDeleteMutation,
   AttributeValueInput,
-  FileUploadMutation
+  FileUploadMutation,
+  PageSelectedAttributeFragment
 } from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
-import { PageDetails_page_attributes } from "@saleor/pages/types/PageDetails";
 import { ProductDetails_product_attributes } from "@saleor/products/types/ProductDetails";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
@@ -149,7 +149,7 @@ export function getDefaultAttributeValues(attribute: VariantAttributeFragment) {
 
 export function getSelectedAttributeValues(
   attribute:
-    | PageDetails_page_attributes
+    | PageSelectedAttributeFragment
     | ProductDetails_product_attributes
     | SelectedVariantAttributeFragment
 ) {
@@ -180,7 +180,7 @@ export function getSelectedAttributeValues(
 export const isFileValueUnused = (
   attributesWithNewFileValue: FormsetData<null, File>,
   existingAttribute:
-    | PageDetails_page_attributes
+    | PageSelectedAttributeFragment
     | ProductDetails_product_attributes
     | SelectedVariantAttributeFragment
 ) => {
@@ -223,7 +223,7 @@ export const mergeAttributeValueDeleteErrors = (
 export const mergeChoicesWithValues = (
   attribute:
     | ProductDetails_product_attributes
-    | PageDetails_page_attributes
+    | PageSelectedAttributeFragment
     | SelectedVariantAttributeFragment
 ) => {
   const choices = mapEdgesToItems(attribute.attribute.choices) || [];
