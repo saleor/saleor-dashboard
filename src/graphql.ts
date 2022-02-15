@@ -12018,6 +12018,8 @@ export type PermissionGroupFragmentFragment = { __typename: 'Group', id: string,
 
 export type PermissionFragmentFragment = { __typename: 'Permission', code: PermissionEnum, name: string };
 
+export type PermissionGroupMemberFragment = { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null };
+
 export type PermissionGroupDetailsFragmentFragment = { __typename: 'Group', id: string, name: string, userCanManage: boolean, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string } | null> | null, users: Array<{ __typename: 'User', id: string, firstName: string, lastName: string, email: string, isActive: boolean, avatar: { __typename: 'Image', url: string } | null } | null> | null };
 
 export type ConfigurationItemFragmentFragment = { __typename: 'ConfigurationItem', name: string, value: string | null, type: ConfigurationTypeFieldEnum | null, helpText: string | null, label: string | null };
@@ -15540,6 +15542,14 @@ export const StaffMemberFragmentFragmentDoc = gql`
   lastName
 }
     `;
+export const PermissionGroupMemberFragmentDoc = gql`
+    fragment PermissionGroupMember on User {
+  ...StaffMemberFragment
+  avatar(size: 48) {
+    url
+  }
+}
+    ${StaffMemberFragmentFragmentDoc}`;
 export const PermissionGroupDetailsFragmentFragmentDoc = gql`
     fragment PermissionGroupDetailsFragment on Group {
   ...PermissionGroupFragment
@@ -15547,15 +15557,12 @@ export const PermissionGroupDetailsFragmentFragmentDoc = gql`
     ...PermissionFragment
   }
   users {
-    ...StaffMemberFragment
-    avatar(size: 48) {
-      url
-    }
+    ...PermissionGroupMember
   }
 }
     ${PermissionGroupFragmentFragmentDoc}
 ${PermissionFragmentFragmentDoc}
-${StaffMemberFragmentFragmentDoc}`;
+${PermissionGroupMemberFragmentDoc}`;
 export const PluginConfigurationBaseFragmentFragmentDoc = gql`
     fragment PluginConfigurationBaseFragment on PluginConfiguration {
   active

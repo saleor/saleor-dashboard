@@ -1,10 +1,12 @@
-import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
-import { User_userPermissions } from "@saleor/fragments/types/User";
-import { PermissionGroupDetails_user_userPermissions } from "@saleor/permissionGroups/types/PermissionGroupDetails";
+import {
+  PermissionGroupDetailsQuery,
+  ShopInfoQuery,
+  UserDetailsQuery
+} from "@saleor/graphql";
 
 export const getLastSourcesOfPermission = (
   groupId: string,
-  userPermissions: PermissionGroupDetails_user_userPermissions[]
+  userPermissions: PermissionGroupDetailsQuery["user"]["userPermissions"]
 ) =>
   userPermissions
     .filter(
@@ -15,8 +17,8 @@ export const getLastSourcesOfPermission = (
     .map(perm => perm.code);
 
 export const getPermissionsComponentChoices = (
-  userPermissions: User_userPermissions[],
-  shopPermissions: ShopInfo_shop_permissions[],
+  userPermissions: UserDetailsQuery["me"]["userPermissions"],
+  shopPermissions: ShopInfoQuery["shop"]["permissions"],
   lastSourcesOfPermissionIds: string[]
 ) => {
   const userCodes = userPermissions.map(p => p.code) || [];

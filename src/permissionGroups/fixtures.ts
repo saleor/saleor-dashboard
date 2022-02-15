@@ -1,5 +1,9 @@
 import * as avatarImg from "@assets/images/avatars/avatar1.png";
 import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
+import {
+  PermissionGroupDetailsFragmentFragment,
+  PermissionGroupFragmentFragment
+} from "@saleor/graphql";
 import { SearchStaffMembers_search_edges_node } from "@saleor/searches/types/SearchStaffMembers";
 import { StaffMemberDetails_user_permissionGroups } from "@saleor/staff/types/StaffMemberDetails";
 /* eslint-disable sort-keys */
@@ -8,10 +12,7 @@ import {
   PermissionGroupErrorCode
 } from "@saleor/types/globalTypes";
 
-import { PermissionGroupDetails_permissionGroup } from "./types/PermissionGroupDetails";
-import { PermissionGroupList_permissionGroups_edges_node } from "./types/PermissionGroupList";
-
-export const permissionGroups: PermissionGroupList_permissionGroups_edges_node[] = [
+export const permissionGroups: PermissionGroupFragmentFragment[] = [
   {
     node: {
       id: "R3JvdXA6Mg==",
@@ -106,7 +107,7 @@ export const userPermissionGroups: StaffMemberDetails_user_permissionGroups[] = 
   }
 ];
 
-export const emptyPermissionGroup: PermissionGroupDetails_permissionGroup = {
+export const emptyPermissionGroup: PermissionGroupDetailsFragmentFragment = {
   id: "R3JvdXA6Mw==",
   name: "Editors",
   userCanManage: true,
@@ -136,7 +137,7 @@ export const errorsOfPermissionGroupCreate: PermissionGroupErrorFragment[] = [
   }
 ];
 
-export const permissionGroup: PermissionGroupDetails_permissionGroup = {
+export const permissionGroup: PermissionGroupDetailsFragmentFragment = {
   id: "R3JvdXA6Mw==",
   name: "Editors",
   userCanManage: true,
