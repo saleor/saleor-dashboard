@@ -5,6 +5,7 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { PluginErrorFragment } from "@saleor/fragments/types/PluginErrorFragment";
+import { PluginsDetailsFragmentFragment } from "@saleor/graphql";
 import { ChangeEvent, SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -15,7 +16,6 @@ import { ConfigurationItemInput } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { Plugin_plugin } from "../../types/Plugin";
 import PluginAuthorization from "../PluginAuthorization";
 import PluginDetailsChannelsCard from "../PluginDetailsChannelsCard";
 import PluginInfo from "../PluginInfo";
@@ -30,7 +30,7 @@ export interface PluginDetailsPageFormData {
 export interface PluginsDetailsPageProps {
   disabled: boolean;
   errors: PluginErrorFragment[];
-  plugin?: Plugin_plugin;
+  plugin?: PluginsDetailsFragmentFragment;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onClear: (field: string) => void;

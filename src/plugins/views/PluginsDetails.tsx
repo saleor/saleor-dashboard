@@ -2,6 +2,7 @@ import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { PluginConfigurationFragment_configuration } from "@saleor/fragments/types/PluginConfigurationFragment";
+import { usePluginQuery, usePluginUpdateMutation } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -16,9 +17,6 @@ import PluginsDetailsPage, {
   PluginDetailsPageFormData
 } from "../components/PluginsDetailsPage";
 import PluginSecretFieldDialog from "../components/PluginSecretFieldDialog";
-import { TypedPluginUpdate } from "../mutations";
-import { usePluginDetails } from "../queries";
-import { PluginUpdate } from "../types/PluginUpdate";
 import {
   pluginListUrl,
   pluginUrl,
@@ -58,7 +56,7 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
   const notify = useNotifier();
   const intl = useIntl();
 
-  const { data: pluginData, loading } = usePluginDetails({
+  const { data: pluginData, loading } = usePluginQuery({
     displayLoader: true,
     variables: { id }
   });
@@ -85,114 +83,110 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
     PluginUrlQueryParams
   >(navigate, params => pluginUrl(id, params), params);
 
-  const handleUpdate = (data: PluginUpdate) => {
-    if (data.pluginUpdate.errors.length === 0) {
-      notify({
-        status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges)
-      });
-      closeModal();
+  const [pluginUpdate, pluginUpdateOpts] = usePluginUpdateMutation({
+    onCompleted: data => {
+      if (data.pluginUpdate.errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
+        closeModal();
+      }
     }
-  };
+  });
+
+  const formErrors = pluginUpdateOpts.data?.pluginUpdate.errors || [];
+
+  const handleFieldUpdate = (value: string) =>
+    pluginUpdate({
+      variables: {
+        channelId: selectedChannelId,
+        id,
+        input: {
+          configuration: [
+            {
+              name: params.id,
+              value
+            }
+          ]
+        }
+      }
+    });
+
+  const handleSubmit = async (formData: PluginDetailsPageFormData) =>
+    extractMutationErrors(
+      pluginUpdate({
+        variables: {
+          channelId: selectedChannelId,
+          id,
+          input: {
+            active: formData.active,
+            configuration: getConfigurationInput(
+              selectedConfig?.configuration,
+              formData.configuration
+            )
+          }
+        }
+      })
+    );
 
   return (
-    <TypedPluginUpdate onCompleted={handleUpdate}>
-      {(pluginUpdate, pluginUpdateOpts) => {
-        const formErrors = pluginUpdateOpts.data?.pluginUpdate.errors || [];
-
-        const handleFieldUpdate = (value: string) =>
-          pluginUpdate({
-            variables: {
-              channelId: selectedChannelId,
-              id,
-              input: {
-                configuration: [
-                  {
-                    name: params.id,
-                    value
-                  }
-                ]
-              }
+    <>
+      <WindowTitle title={plugin?.name} />
+      <PluginsDetailsPage
+        disabled={loading}
+        errors={formErrors}
+        saveButtonBarState={
+          !params.action ? pluginUpdateOpts.status : "default"
+        }
+        plugin={plugin}
+        onBack={() => navigate(pluginListUrl())}
+        onClear={id =>
+          openModal("clear", {
+            id
+          })
+        }
+        onEdit={id =>
+          openModal("edit", {
+            id
+          })
+        }
+        onSubmit={handleSubmit}
+        selectedConfig={selectedConfig}
+        setSelectedChannelId={setSelectedChannelId}
+      />
+      {selectedConfig && (
+        <>
+          <ActionDialog
+            confirmButtonState={
+              !!params.action ? pluginUpdateOpts.status : "default"
             }
-          });
-
-        const handleSubmit = async (formData: PluginDetailsPageFormData) =>
-          extractMutationErrors(
-            pluginUpdate({
-              variables: {
-                channelId: selectedChannelId,
-                id,
-                input: {
-                  active: formData.active,
-                  configuration: getConfigurationInput(
-                    selectedConfig?.configuration,
-                    formData.configuration
-                  )
-                }
-              }
-            })
-          );
-
-        return (
-          <>
-            <WindowTitle title={plugin?.name} />
-            <PluginsDetailsPage
-              disabled={loading}
-              errors={formErrors}
-              saveButtonBarState={
-                !params.action ? pluginUpdateOpts.status : "default"
-              }
-              plugin={plugin}
-              onBack={() => navigate(pluginListUrl())}
-              onClear={id =>
-                openModal("clear", {
-                  id
-                })
-              }
-              onEdit={id =>
-                openModal("edit", {
-                  id
-                })
-              }
-              onSubmit={handleSubmit}
-              selectedConfig={selectedConfig}
-              setSelectedChannelId={setSelectedChannelId}
-            />
-            {selectedConfig && (
-              <>
-                <ActionDialog
-                  confirmButtonState={
-                    !!params.action ? pluginUpdateOpts.status : "default"
-                  }
-                  onClose={closeModal}
-                  open={params.action === "clear" && !!params.id}
-                  title={intl.formatMessage({
-                    defaultMessage: "Authorization Field Delete",
-                    description: "header"
-                  })}
-                  onConfirm={() => handleFieldUpdate(null)}
-                >
-                  <DialogContentText>
-                    <FormattedMessage defaultMessage="The plugin may stop working after this field is cleared. Are you sure you want to proceed?" />
-                  </DialogContentText>
-                </ActionDialog>
-                <PluginSecretFieldDialog
-                  confirmButtonState={
-                    !!params.action ? pluginUpdateOpts.status : "default"
-                  }
-                  field={selectedConfig?.configuration.find(
-                    field => field.name === params.id
-                  )}
-                  onClose={closeModal}
-                  onConfirm={formData => handleFieldUpdate(formData.value)}
-                  open={params.action === "edit" && !!params.id}
-                />
-              </>
+            onClose={closeModal}
+            open={params.action === "clear" && !!params.id}
+            title={intl.formatMessage({
+              defaultMessage: "Authorization Field Delete",
+              description: "header"
+            })}
+            onConfirm={() => handleFieldUpdate(null)}
+          >
+            <DialogContentText>
+              <FormattedMessage defaultMessage="The plugin may stop working after this field is cleared. Are you sure you want to proceed?" />
+            </DialogContentText>
+          </ActionDialog>
+          <PluginSecretFieldDialog
+            confirmButtonState={
+              !!params.action ? pluginUpdateOpts.status : "default"
+            }
+            field={selectedConfig?.configuration.find(
+              field => field.name === params.id
             )}
-          </>
-        );
-      }}
-    </TypedPluginUpdate>
+            onClose={closeModal}
+            onConfirm={formData => handleFieldUpdate(formData.value)}
+            open={params.action === "edit" && !!params.id}
+          />
+        </>
+      )}
+    </>
   );
 };
 PluginsDetails.displayName = "PluginsDetails";
