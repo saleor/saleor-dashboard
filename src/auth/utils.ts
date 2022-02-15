@@ -31,7 +31,8 @@ export async function handleQueryAuthError(
     } else {
       notify({
         status: "error",
-        text: intl.formatMessage(commonMessages.somethingWentWrong)
+        apiMessage: error.networkError.message,
+        title: intl.formatMessage(commonMessages.defaultErrorTitle)
       });
     }
   } else if (
@@ -41,7 +42,8 @@ export async function handleQueryAuthError(
   ) {
     notify({
       status: "error",
-      text: intl.formatMessage(commonMessages.somethingWentWrong)
+      apiMessage: error.networkError.message,
+      title: intl.formatMessage(commonMessages.defaultErrorTitle)
     });
   }
 }
