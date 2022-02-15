@@ -1,13 +1,14 @@
 /* eslint-disable sort-keys */
 import {
+  PageTypeDetailsFragmentFragment,
+  PageTypeFragmentFragment
+} from "@saleor/graphql";
+import {
   AttributeInputTypeEnum,
   AttributeTypeEnum
 } from "@saleor/types/globalTypes";
 
-import { PageTypeDetails_pageType } from "./types/PageTypeDetails";
-import { PageTypeList_pageTypes_edges_node } from "./types/PageTypeList";
-
-export const pageTypes: PageTypeList_pageTypes_edges_node[] = [
+export const pageTypes: PageTypeFragmentFragment[] = [
   {
     id: "UGFnZVR5cGU6MQ==",
     name: "Blog",
@@ -28,7 +29,7 @@ export const pageTypes: PageTypeList_pageTypes_edges_node[] = [
   }
 ];
 
-export const pageType: PageTypeDetails_pageType = {
+export const pageType: PageTypeDetailsFragmentFragment = {
   id: "UGFnZVR5cGU6MQ==",
   __typename: "PageType",
   metadata: [

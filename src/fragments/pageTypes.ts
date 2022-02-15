@@ -7,6 +7,7 @@ export const pageTypeFragment = gql`
   fragment PageTypeFragment on PageType {
     id
     name
+    hasPages
   }
 `;
 

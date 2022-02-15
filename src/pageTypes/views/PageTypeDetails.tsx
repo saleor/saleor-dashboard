@@ -6,19 +6,20 @@ import NotFoundPage from "@saleor/components/NotFoundPage";
 import TypeDeleteWarningDialog from "@saleor/components/TypeDeleteWarningDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import {
+  useAssignPageAttributeMutation,
+  usePageTypeAttributeReorderMutation,
+  usePageTypeDeleteMutation,
+  usePageTypeDetailsQuery,
+  usePageTypeUpdateMutation,
+  useUnassignPageAttributeMutation
+} from "@saleor/graphql";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { Button } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
-import {
-  useAssignPageAttributeMutation,
-  usePageTypeAttributeReorderMutation,
-  usePageTypeDeleteMutation,
-  usePageTypeUpdateMutation,
-  useUnassignPageAttributeMutation
-} from "@saleor/pageTypes/mutations";
 import { ReorderEvent } from "@saleor/types";
 import getPageErrorMessage from "@saleor/utils/errors/page";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
@@ -35,7 +36,6 @@ import PageTypeDetailsPage, {
 } from "../components/PageTypeDetailsPage";
 import useAvailablePageAttributeSearch from "../hooks/useAvailablePageAttributeSearch";
 import usePageTypeDelete from "../hooks/usePageTypeDelete";
-import { usePageTypeDetailsQuery } from "../queries";
 import { pageTypeListUrl, pageTypeUrl, PageTypeUrlQueryParams } from "../urls";
 
 interface PageTypeDetailsProps {
@@ -107,6 +107,11 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
     }
   });
   const [reorderAttribute] = usePageTypeAttributeReorderMutation({});
+
+  const pageTypeDeleteData = usePageTypeDelete({
+    singleId: id,
+    params
+  });
 
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
@@ -185,11 +190,6 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
   );
 
   const loading = updatePageTypeOpts.loading || dataLoading;
-
-  const pageTypeDeleteData = usePageTypeDelete({
-    singleId: id,
-    params
-  });
 
   return (
     <>

@@ -12002,9 +12002,9 @@ export type ShopOrderSettingsFragmentFragment = { __typename: 'Shop', fulfillmen
 
 export type PageInfoFragmentFragment = { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null };
 
-export type PageTypeFragmentFragment = { __typename: 'PageType', id: string, name: string };
+export type PageTypeFragmentFragment = { __typename: 'PageType', id: string, name: string, hasPages: boolean | null };
 
-export type PageTypeDetailsFragmentFragment = { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+export type PageTypeDetailsFragmentFragment = { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
 export type PageFragmentFragment = { __typename: 'Page', id: string, title: string, slug: string, isPublished: boolean };
 
@@ -12646,14 +12646,14 @@ export type PageTypeUpdateMutationVariables = Exact<{
 }>;
 
 
-export type PageTypeUpdateMutation = { __typename: 'Mutation', pageTypeUpdate: { __typename: 'PageTypeUpdate', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null } | null };
+export type PageTypeUpdateMutation = { __typename: 'Mutation', pageTypeUpdate: { __typename: 'PageTypeUpdate', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null } | null };
 
 export type PageTypeCreateMutationVariables = Exact<{
   input: PageTypeCreateInput;
 }>;
 
 
-export type PageTypeCreateMutation = { __typename: 'Mutation', pageTypeCreate: { __typename: 'PageTypeCreate', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null } | null };
+export type PageTypeCreateMutation = { __typename: 'Mutation', pageTypeCreate: { __typename: 'PageTypeCreate', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null } | null };
 
 export type AssignPageAttributeMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -12661,7 +12661,7 @@ export type AssignPageAttributeMutationVariables = Exact<{
 }>;
 
 
-export type AssignPageAttributeMutation = { __typename: 'Mutation', pageAttributeAssign: { __typename: 'PageAttributeAssign', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null } | null };
+export type AssignPageAttributeMutation = { __typename: 'Mutation', pageAttributeAssign: { __typename: 'PageAttributeAssign', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null } | null };
 
 export type UnassignPageAttributeMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -12669,7 +12669,7 @@ export type UnassignPageAttributeMutationVariables = Exact<{
 }>;
 
 
-export type UnassignPageAttributeMutation = { __typename: 'Mutation', pageAttributeUnassign: { __typename: 'PageAttributeUnassign', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null } | null };
+export type UnassignPageAttributeMutation = { __typename: 'Mutation', pageAttributeUnassign: { __typename: 'PageAttributeUnassign', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null } | null };
 
 export type PageTypeDeleteMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -12691,7 +12691,7 @@ export type PageTypeAttributeReorderMutationVariables = Exact<{
 }>;
 
 
-export type PageTypeAttributeReorderMutation = { __typename: 'Mutation', pageTypeReorderAttributes: { __typename: 'PageTypeReorderAttributes', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null } | null };
+export type PageTypeAttributeReorderMutation = { __typename: 'Mutation', pageTypeReorderAttributes: { __typename: 'PageTypeReorderAttributes', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null } | null };
 
 export type PageTypeListQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
@@ -12703,14 +12703,55 @@ export type PageTypeListQueryVariables = Exact<{
 }>;
 
 
-export type PageTypeListQuery = { __typename: 'Query', pageTypes: { __typename: 'PageTypeCountableConnection', edges: Array<{ __typename: 'PageTypeCountableEdge', node: { __typename: 'PageType', hasPages: boolean | null, id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+export type PageTypeListQuery = { __typename: 'Query', pageTypes: { __typename: 'PageTypeCountableConnection', edges: Array<{ __typename: 'PageTypeCountableEdge', node: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type PageTypeDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type PageTypeDetailsQuery = { __typename: 'Query', pageType: { __typename: 'PageType', hasPages: boolean | null, id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null };
+export type PageTypeDetailsQuery = { __typename: 'Query', pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null };
+
+export type PageCreateMutationVariables = Exact<{
+  input: PageCreateInput;
+}>;
+
+
+export type PageCreateMutation = { __typename: 'Mutation', pageCreate: { __typename: 'PageCreate', errors: Array<{ __typename: 'PageError', attributes: Array<string> | null, code: PageErrorCode, field: string | null, message: string | null }>, page: { __typename: 'Page', id: string } | null } | null };
+
+export type PageUpdateMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: PageInput;
+  firstValues?: InputMaybe<Scalars['Int']>;
+  afterValues?: InputMaybe<Scalars['String']>;
+  lastValues?: InputMaybe<Scalars['Int']>;
+  beforeValues?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type PageUpdateMutation = { __typename: 'Mutation', pageUpdate: { __typename: 'PageUpdate', errors: Array<{ __typename: 'PageError', attributes: Array<string> | null, code: PageErrorCode, field: string | null, message: string | null }>, page: { __typename: 'Page', content: any | null, seoTitle: string | null, seoDescription: string | null, publicationDate: any | null, id: string, title: string, slug: string, isPublished: boolean, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, slug: string | null, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } | null> }>, pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null } | null> | null }, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null } | null };
+
+export type PageRemoveMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type PageRemoveMutation = { __typename: 'Mutation', pageDelete: { __typename: 'PageDelete', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }> } | null };
+
+export type PageBulkPublishMutationVariables = Exact<{
+  ids: Array<InputMaybe<Scalars['ID']>> | InputMaybe<Scalars['ID']>;
+  isPublished: Scalars['Boolean'];
+}>;
+
+
+export type PageBulkPublishMutation = { __typename: 'Mutation', pageBulkPublish: { __typename: 'PageBulkPublish', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }> } | null };
+
+export type PageBulkRemoveMutationVariables = Exact<{
+  ids: Array<InputMaybe<Scalars['ID']>> | InputMaybe<Scalars['ID']>;
+}>;
+
+
+export type PageBulkRemoveMutation = { __typename: 'Mutation', pageBulkDelete: { __typename: 'PageBulkDelete', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }> } | null };
 
 export type PageListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']>;
@@ -15344,6 +15385,7 @@ export const PageTypeFragmentFragmentDoc = gql`
     fragment PageTypeFragment on PageType {
   id
   name
+  hasPages
 }
     `;
 export const PageTypeDetailsFragmentFragmentDoc = gql`
@@ -23411,7 +23453,6 @@ export const PageTypeListDocument = gql`
     edges {
       node {
         ...PageTypeFragment
-        hasPages
       }
     }
     pageInfo {
@@ -23458,7 +23499,6 @@ export const PageTypeDetailsDocument = gql`
     query PageTypeDetails($id: ID!) {
   pageType(id: $id) {
     ...PageTypeDetailsFragment
-    hasPages
   }
 }
     ${PageTypeDetailsFragmentFragmentDoc}`;
@@ -23490,6 +23530,194 @@ export function usePageTypeDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQ
 export type PageTypeDetailsQueryHookResult = ReturnType<typeof usePageTypeDetailsQuery>;
 export type PageTypeDetailsLazyQueryHookResult = ReturnType<typeof usePageTypeDetailsLazyQuery>;
 export type PageTypeDetailsQueryResult = Apollo.QueryResult<PageTypeDetailsQuery, PageTypeDetailsQueryVariables>;
+export const PageCreateDocument = gql`
+    mutation PageCreate($input: PageCreateInput!) {
+  pageCreate(input: $input) {
+    errors {
+      ...PageErrorWithAttributesFragment
+    }
+    page {
+      id
+    }
+  }
+}
+    ${PageErrorWithAttributesFragmentFragmentDoc}`;
+export type PageCreateMutationFn = Apollo.MutationFunction<PageCreateMutation, PageCreateMutationVariables>;
+
+/**
+ * __usePageCreateMutation__
+ *
+ * To run a mutation, you first call `usePageCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePageCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [pageCreateMutation, { data, loading, error }] = usePageCreateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function usePageCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<PageCreateMutation, PageCreateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<PageCreateMutation, PageCreateMutationVariables>(PageCreateDocument, options);
+      }
+export type PageCreateMutationHookResult = ReturnType<typeof usePageCreateMutation>;
+export type PageCreateMutationResult = Apollo.MutationResult<PageCreateMutation>;
+export type PageCreateMutationOptions = Apollo.BaseMutationOptions<PageCreateMutation, PageCreateMutationVariables>;
+export const PageUpdateDocument = gql`
+    mutation PageUpdate($id: ID!, $input: PageInput!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
+  pageUpdate(id: $id, input: $input) {
+    errors {
+      ...PageErrorWithAttributesFragment
+    }
+    page {
+      ...PageDetailsFragment
+    }
+  }
+}
+    ${PageErrorWithAttributesFragmentFragmentDoc}
+${PageDetailsFragmentFragmentDoc}`;
+export type PageUpdateMutationFn = Apollo.MutationFunction<PageUpdateMutation, PageUpdateMutationVariables>;
+
+/**
+ * __usePageUpdateMutation__
+ *
+ * To run a mutation, you first call `usePageUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePageUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [pageUpdateMutation, { data, loading, error }] = usePageUpdateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *      firstValues: // value for 'firstValues'
+ *      afterValues: // value for 'afterValues'
+ *      lastValues: // value for 'lastValues'
+ *      beforeValues: // value for 'beforeValues'
+ *   },
+ * });
+ */
+export function usePageUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<PageUpdateMutation, PageUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<PageUpdateMutation, PageUpdateMutationVariables>(PageUpdateDocument, options);
+      }
+export type PageUpdateMutationHookResult = ReturnType<typeof usePageUpdateMutation>;
+export type PageUpdateMutationResult = Apollo.MutationResult<PageUpdateMutation>;
+export type PageUpdateMutationOptions = Apollo.BaseMutationOptions<PageUpdateMutation, PageUpdateMutationVariables>;
+export const PageRemoveDocument = gql`
+    mutation PageRemove($id: ID!) {
+  pageDelete(id: $id) {
+    errors {
+      ...PageErrorFragment
+    }
+  }
+}
+    ${PageErrorFragmentFragmentDoc}`;
+export type PageRemoveMutationFn = Apollo.MutationFunction<PageRemoveMutation, PageRemoveMutationVariables>;
+
+/**
+ * __usePageRemoveMutation__
+ *
+ * To run a mutation, you first call `usePageRemoveMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePageRemoveMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [pageRemoveMutation, { data, loading, error }] = usePageRemoveMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePageRemoveMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<PageRemoveMutation, PageRemoveMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<PageRemoveMutation, PageRemoveMutationVariables>(PageRemoveDocument, options);
+      }
+export type PageRemoveMutationHookResult = ReturnType<typeof usePageRemoveMutation>;
+export type PageRemoveMutationResult = Apollo.MutationResult<PageRemoveMutation>;
+export type PageRemoveMutationOptions = Apollo.BaseMutationOptions<PageRemoveMutation, PageRemoveMutationVariables>;
+export const PageBulkPublishDocument = gql`
+    mutation PageBulkPublish($ids: [ID]!, $isPublished: Boolean!) {
+  pageBulkPublish(ids: $ids, isPublished: $isPublished) {
+    errors {
+      ...PageBulkPublishErrorFragment
+    }
+  }
+}
+    ${PageBulkPublishErrorFragmentFragmentDoc}`;
+export type PageBulkPublishMutationFn = Apollo.MutationFunction<PageBulkPublishMutation, PageBulkPublishMutationVariables>;
+
+/**
+ * __usePageBulkPublishMutation__
+ *
+ * To run a mutation, you first call `usePageBulkPublishMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePageBulkPublishMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [pageBulkPublishMutation, { data, loading, error }] = usePageBulkPublishMutation({
+ *   variables: {
+ *      ids: // value for 'ids'
+ *      isPublished: // value for 'isPublished'
+ *   },
+ * });
+ */
+export function usePageBulkPublishMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<PageBulkPublishMutation, PageBulkPublishMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<PageBulkPublishMutation, PageBulkPublishMutationVariables>(PageBulkPublishDocument, options);
+      }
+export type PageBulkPublishMutationHookResult = ReturnType<typeof usePageBulkPublishMutation>;
+export type PageBulkPublishMutationResult = Apollo.MutationResult<PageBulkPublishMutation>;
+export type PageBulkPublishMutationOptions = Apollo.BaseMutationOptions<PageBulkPublishMutation, PageBulkPublishMutationVariables>;
+export const PageBulkRemoveDocument = gql`
+    mutation PageBulkRemove($ids: [ID]!) {
+  pageBulkDelete(ids: $ids) {
+    errors {
+      ...PageBulkRemoveErrorFragment
+    }
+  }
+}
+    ${PageBulkRemoveErrorFragmentFragmentDoc}`;
+export type PageBulkRemoveMutationFn = Apollo.MutationFunction<PageBulkRemoveMutation, PageBulkRemoveMutationVariables>;
+
+/**
+ * __usePageBulkRemoveMutation__
+ *
+ * To run a mutation, you first call `usePageBulkRemoveMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePageBulkRemoveMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [pageBulkRemoveMutation, { data, loading, error }] = usePageBulkRemoveMutation({
+ *   variables: {
+ *      ids: // value for 'ids'
+ *   },
+ * });
+ */
+export function usePageBulkRemoveMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<PageBulkRemoveMutation, PageBulkRemoveMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<PageBulkRemoveMutation, PageBulkRemoveMutationVariables>(PageBulkRemoveDocument, options);
+      }
+export type PageBulkRemoveMutationHookResult = ReturnType<typeof usePageBulkRemoveMutation>;
+export type PageBulkRemoveMutationResult = Apollo.MutationResult<PageBulkRemoveMutation>;
+export type PageBulkRemoveMutationOptions = Apollo.BaseMutationOptions<PageBulkRemoveMutation, PageBulkRemoveMutationVariables>;
 export const PageListDocument = gql`
     query PageList($first: Int, $after: String, $last: Int, $before: String, $sort: PageSortingInput) {
   pages(before: $before, after: $after, first: $first, last: $last, sortBy: $sort) {

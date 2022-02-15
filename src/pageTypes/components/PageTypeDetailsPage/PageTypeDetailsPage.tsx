@@ -9,11 +9,11 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
+import { PageTypeDetailsFragmentFragment } from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
-import { PageTypeDetails_pageType } from "@saleor/pageTypes/types/PageTypeDetails";
 import { ListActions, ReorderEvent } from "@saleor/types";
 import { AttributeTypeEnum } from "@saleor/types/globalTypes";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
@@ -31,7 +31,7 @@ export interface PageTypeForm extends MetadataFormData {
 
 export interface PageTypeDetailsPageProps {
   errors: PageErrorFragment[];
-  pageType: PageTypeDetails_pageType;
+  pageType: PageTypeDetailsFragmentFragment;
   disabled: boolean;
   pageTitle: string;
   attributeList: ListActions;

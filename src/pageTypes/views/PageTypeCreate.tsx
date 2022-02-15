@@ -1,4 +1,5 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { usePageTypeCreateMutation } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getMutationErrors } from "@saleor/misc";
@@ -13,8 +14,6 @@ import { useIntl } from "react-intl";
 import PageTypeCreatePage, {
   PageTypeForm
 } from "../components/PageTypeCreatePage";
-import { usePageTypeCreateMutation } from "../mutations";
-import { PageTypeCreate as PageTypeCreateMutation } from "../types/PageTypeCreate";
 import { pageTypeListUrl, pageTypeUrl } from "../urls";
 
 export const PageTypeCreate: React.FC = () => {
@@ -25,7 +24,7 @@ export const PageTypeCreate: React.FC = () => {
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
   const [createPageType, createPageTypeOpts] = usePageTypeCreateMutation({
-    onCompleted: (updateData: PageTypeCreateMutation) => {
+    onCompleted: updateData => {
       if (updateData.pageTypeCreate.errors.length === 0) {
         notify({
           status: "success",
