@@ -17,7 +17,7 @@ import {
 import filterTests from "../../support/filterTests";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Order product to country not listed in warehouse", () => {
+  describe("As a customer I want to try to order product to country not listed in warehouse", () => {
     const startsWith = `CyWarehouseCheckout`;
     let defaultChannel;
     let usAddress;

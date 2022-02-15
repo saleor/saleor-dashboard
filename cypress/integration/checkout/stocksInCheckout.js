@@ -22,7 +22,7 @@ import {
 import filterTests from "../../support/filterTests";
 
 filterTests({ definedTags: ["all", "critical"] }, () => {
-  describe("Manage products stocks in checkout", () => {
+  describe("As an admin I want to have correct products stocks after checkout", () => {
     const startsWith = "CyStocksCheckout-";
     const name = `${startsWith}${faker.datatype.number()}`;
 
@@ -73,7 +73,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
           }
         );
     });
-    it("should create checkout with last product in stock. TC: SALEOR_0404", () => {
+    it("should create checkout with last product in stock. TC: SALEOR_0419", () => {
       const productName = `${startsWith}${faker.datatype.number()}`;
 
       createOrderWithNewProduct({

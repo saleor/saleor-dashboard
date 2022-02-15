@@ -38,7 +38,7 @@ import {
 import filterTests from "../../support/filterTests";
 
 filterTests({ definedTags: ["all", "critical"] }, () => {
-  describe("Order physical and digital products", () => {
+  describe("As a customer I want to order physical and digital products", () => {
     const startsWith = `CyPurchaseByType`;
     const name = `${startsWith}${faker.datatype.number()}`;
     const email = `${startsWith}@example.com`;

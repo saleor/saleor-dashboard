@@ -22,7 +22,7 @@ import {
 import filterTests from "../../support/filterTests";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Order product without shipping option", () => {
+  describe("As a customer I want to try order product without shipping", () => {
     const startsWith = "WithoutShipmentCheckout-";
     const name = `${startsWith}${faker.datatype.number()}`;
     const nameProdWithoutShipping = `${startsWith}${faker.datatype.number()}`;
