@@ -1,3 +1,7 @@
+import {
+  useSaleTranslationDetailsQuery,
+  useUpdateSaleTranslationsMutation
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
@@ -9,10 +13,7 @@ import { useIntl } from "react-intl";
 
 import { LanguageCodeEnum } from "../../types/globalTypes";
 import TranslationsSalesPage from "../components/TranslationsSalesPage";
-import { TypedUpdateSaleTranslations } from "../mutations";
-import { useSaleTranslationDetails } from "../queries";
 import { TranslationField, TranslationInputFieldName } from "../types";
-import { UpdateSaleTranslations } from "../types/UpdateSaleTranslations";
 import {
   languageEntitiesUrl,
   languageEntityUrl,
@@ -39,8 +40,24 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({
   const shop = useShop();
   const intl = useIntl();
 
-  const saleTranslations = useSaleTranslationDetails({
+  const saleTranslations = useSaleTranslationDetailsQuery({
     variables: { id, language: languageCode }
+  });
+
+  const [
+    updateTranslations,
+    updateTranslationsOpts
+  ] = useUpdateSaleTranslationsMutation({
+    onCompleted: data => {
+      if (data.saleTranslate.errors.length === 0) {
+        saleTranslations.refetch();
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
+        navigate("?", { replace: true });
+      }
+    }
   });
 
   const onEdit = (field: string) =>
@@ -51,73 +68,56 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({
         }),
       { replace: true }
     );
-  const onUpdate = (data: UpdateSaleTranslations) => {
-    if (data.saleTranslate.errors.length === 0) {
-      saleTranslations.refetch();
-      notify({
-        status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges)
-      });
-      navigate("?", { replace: true });
-    }
-  };
+
   const onDiscard = () => {
     navigate("?", { replace: true });
   };
 
+  const handleSubmit = (
+    { name: fieldName }: TranslationField<TranslationInputFieldName>,
+    data: string
+  ) =>
+    extractMutationErrors(
+      updateTranslations({
+        variables: {
+          id,
+          input: getParsedTranslationInputData({
+            data,
+            fieldName
+          }),
+          language: languageCode
+        }
+      })
+    );
+
+  const translation = saleTranslations?.data?.translation;
+
   return (
-    <TypedUpdateSaleTranslations onCompleted={onUpdate}>
-      {(updateTranslations, updateTranslationsOpts) => {
-        const handleSubmit = (
-          { name: fieldName }: TranslationField<TranslationInputFieldName>,
-          data: string
-        ) =>
-          extractMutationErrors(
-            updateTranslations({
-              variables: {
-                id,
-                input: getParsedTranslationInputData({
-                  data,
-                  fieldName
-                }),
-                language: languageCode
-              }
-            })
-          );
-
-        const translation = saleTranslations?.data?.translation;
-
-        return (
-          <TranslationsSalesPage
-            activeField={params.activeField}
-            disabled={
-              saleTranslations.loading || updateTranslationsOpts.loading
-            }
-            languages={shop?.languages || []}
-            languageCode={languageCode}
-            saveButtonState={updateTranslationsOpts.status}
-            onBack={() =>
-              navigate(
-                languageEntitiesUrl(languageCode, {
-                  tab: TranslatableEntities.sales
-                })
-              )
-            }
-            onEdit={onEdit}
-            onDiscard={onDiscard}
-            onSubmit={handleSubmit}
-            onLanguageChange={lang =>
-              navigate(languageEntityUrl(lang, TranslatableEntities.sales, id))
-            }
-            data={
-              translation?.__typename === "SaleTranslatableContent"
-                ? translation
-                : null
-            }
-          />
-        );
-      }}
-    </TypedUpdateSaleTranslations>
+    <TranslationsSalesPage
+      activeField={params.activeField}
+      disabled={saleTranslations.loading || updateTranslationsOpts.loading}
+      languages={shop?.languages || []}
+      languageCode={languageCode}
+      saveButtonState={updateTranslationsOpts.status}
+      onBack={() =>
+        navigate(
+          languageEntitiesUrl(languageCode, {
+            tab: TranslatableEntities.sales
+          })
+        )
+      }
+      onEdit={onEdit}
+      onDiscard={onDiscard}
+      onSubmit={handleSubmit}
+      onLanguageChange={lang =>
+        navigate(languageEntityUrl(lang, TranslatableEntities.sales, id))
+      }
+      data={
+        translation?.__typename === "SaleTranslatableContent"
+          ? translation
+          : null
+      }
+    />
   );
 };
 TranslationsSales.displayName = "TranslationsSales";
