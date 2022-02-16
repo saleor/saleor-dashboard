@@ -1,6 +1,10 @@
 import { customAppUrl } from "@saleor/apps/urls";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { useAppQuery, WebhookEventTypeAsyncEnum } from "@saleor/graphql";
+import {
+  useAppQuery,
+  useWebhookCreateMutation,
+  WebhookEventTypeAsyncEnum
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
@@ -9,8 +13,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import WebhookDetailsPage, { FormData } from "../components/WebhookDetailsPage";
-import { useWebhookCreateMutation } from "../mutations";
-import { WebhookCreate as WebhookCreateData } from "../types/WebhookCreate";
 import { webhookUrl } from "../urls";
 
 export interface WebhooksCreateProps {
@@ -24,17 +26,16 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = ({ id }) => {
 
   const { data } = useAppQuery({ variables: { id } });
 
-  const onSubmit = (data: WebhookCreateData) => {
-    if (data.webhookCreate.errors.length === 0) {
-      notify({
-        status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges)
-      });
-      navigate(webhookUrl(data.webhookCreate.webhook.id));
-    }
-  };
   const [webhookCreate, webhookCreateOpts] = useWebhookCreateMutation({
-    onCompleted: onSubmit
+    onCompleted: data => {
+      if (data.webhookCreate.errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
+        navigate(webhookUrl(data.webhookCreate.webhook.id));
+      }
+    }
   });
 
   const handleBack = () => navigate(customAppUrl(id));
