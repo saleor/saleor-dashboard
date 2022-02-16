@@ -1,18 +1,6 @@
 import { gql } from "@apollo/client";
-import { fragmentAddress } from "@saleor/fragments/address";
-import { shopErrorFragment } from "@saleor/fragments/errors";
-import { shopFragment } from "@saleor/fragments/shop";
 
-import { TypedMutation } from "../mutations";
-import {
-  ShopSettingsUpdate,
-  ShopSettingsUpdateVariables
-} from "./types/ShopSettingsUpdate";
-
-const shopSettingsUpdate = gql`
-  ${shopErrorFragment}
-  ${shopFragment}
-  ${fragmentAddress}
+export const shopSettingsUpdate = gql`
   mutation ShopSettingsUpdate(
     $shopDomainInput: SiteDomainInput!
     $shopSettingsInput: ShopSettingsInput!
@@ -50,7 +38,3 @@ const shopSettingsUpdate = gql`
     }
   }
 `;
-export const TypedShopSettingsUpdate = TypedMutation<
-  ShopSettingsUpdate,
-  ShopSettingsUpdateVariables
->(shopSettingsUpdate);

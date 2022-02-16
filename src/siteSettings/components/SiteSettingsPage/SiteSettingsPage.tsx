@@ -7,6 +7,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import PageSectionHeader from "@saleor/components/PageSectionHeader";
 import Savebar from "@saleor/components/Savebar";
 import { ShopErrorFragment } from "@saleor/fragments/types/ShopErrorFragment";
+import { SiteSettingsQuery } from "@saleor/graphql";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -19,7 +20,6 @@ import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { SiteSettings_shop } from "../../types/SiteSettings";
 import SiteCheckoutSettingsCard from "../SiteCheckoutSettingsCard";
 import SiteSettingsDetailsCard from "../SiteDetailsSettingsCard";
 import { messages } from "./messages";
@@ -48,7 +48,7 @@ export interface SiteSettingsPageFormData
 export interface SiteSettingsPageProps {
   disabled: boolean;
   errors: ShopErrorFragment[];
-  shop: SiteSettings_shop;
+  shop: SiteSettingsQuery["shop"];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onSubmit: (data: SiteSettingsPageFormData) => SubmitPromise;
