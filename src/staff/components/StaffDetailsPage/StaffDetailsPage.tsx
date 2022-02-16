@@ -9,7 +9,10 @@ import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocomplet
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
-import { SearchPermissionGroupsQuery } from "@saleor/graphql";
+import {
+  SearchPermissionGroupsQuery,
+  StaffMemberDetailsFragmentFragment
+} from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useLocale from "@saleor/hooks/useLocale";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -23,7 +26,6 @@ import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAu
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { StaffMemberDetails_user } from "../../types/StaffMemberDetails";
 import StaffPassword from "../StaffPassword/StaffPassword";
 import StaffPreferences from "../StaffPreferences";
 import StaffProperties from "../StaffProperties/StaffProperties";
@@ -47,7 +49,7 @@ export interface StaffDetailsPageProps extends SearchPageProps {
   disabled: boolean;
   fetchMorePermissionGroups: FetchMoreProps;
   saveButtonBarState: ConfirmButtonTransitionState;
-  staffMember: StaffMemberDetails_user;
+  staffMember: StaffMemberDetailsFragmentFragment;
   errors: StaffErrorFragment[];
   onBack: () => void;
   onChangePassword: () => void;

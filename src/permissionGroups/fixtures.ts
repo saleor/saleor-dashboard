@@ -2,10 +2,10 @@ import * as avatarImg from "@assets/images/avatars/avatar1.png";
 import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
 import {
   PermissionGroupDetailsFragmentFragment,
-  PermissionGroupFragmentFragment
+  PermissionGroupFragmentFragment,
+  StaffMemberDetailsFragmentFragment
 } from "@saleor/graphql";
 import { SearchStaffMembersQuery } from "@saleor/graphql";
-import { StaffMemberDetails_user_permissionGroups } from "@saleor/staff/types/StaffMemberDetails";
 import { RelayToFlat } from "@saleor/types";
 /* eslint-disable sort-keys */
 import {
@@ -93,7 +93,7 @@ export const permissionGroups: PermissionGroupFragmentFragment[] = [
   }
 ].map(edge => edge.node);
 
-export const userPermissionGroups: StaffMemberDetails_user_permissionGroups[] = [
+export const userPermissionGroups: StaffMemberDetailsFragmentFragment["permissionGroups"] = [
   {
     id: "R3JvdXA6MQ==",
     name: "Full Access",
