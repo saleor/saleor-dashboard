@@ -340,7 +340,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   key={product ? product.id : "skeleton"}
                   onClick={product && onRowClick(product.id)}
                   className={classes.link}
-                  data-test-id={"id-" + (product ? product?.id : "skeleton")}
+                  data-test-id={product ? "id-" + product?.id : "skeleton"}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
