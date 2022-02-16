@@ -46,8 +46,7 @@ export function TypedMutation<TData, TVariables>(
           if (err.networkError) {
             notify({
               status: "error",
-              apiMessage: err.networkError.message,
-              title: intl.formatMessage(commonMessages.defaultErrorTitle)
+              apiMessage: err.networkError.message
             });
           }
           if (hasError(err, GqlErrors.ReadOnlyException)) {
@@ -62,10 +61,11 @@ export function TypedMutation<TData, TVariables>(
               text: intl.formatMessage(commonMessages.sessionExpired)
             });
           } else if (!hasError(err, GqlErrors.LimitReachedException)) {
-            notify({
-              status: "error",
-              apiMessage: err.networkError.message,
-              title: intl.formatMessage(commonMessages.defaultErrorTitle)
+            err.graphQLErrors.map(graphQLError => {
+              notify({
+                status: "error",
+                apiMessage: graphQLError.message
+              });
             });
           }
           if (onError) {

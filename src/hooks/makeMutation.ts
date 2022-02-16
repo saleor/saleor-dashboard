@@ -59,9 +59,11 @@ function makeMutation<TData, TVariables>(
             text: intl.formatMessage(commonMessages.sessionExpired)
           });
         } else if (!hasError(err, GqlErrors.LimitReachedException)) {
-          notify({
-            status: "error",
-            text: intl.formatMessage(commonMessages.somethingWentWrong)
+          err.graphQLErrors.map(graphQLError => {
+            notify({
+              status: "error",
+              apiMessage: graphQLError.message
+            });
           });
         }
         if (onError) {
