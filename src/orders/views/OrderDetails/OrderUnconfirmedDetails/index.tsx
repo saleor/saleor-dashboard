@@ -6,7 +6,8 @@ import {
   OrderFulfillmentApproveMutationVariables,
   OrderUpdateMutation,
   OrderUpdateMutationVariables,
-  useCustomerAddressesQuery
+  useCustomerAddressesQuery,
+  useWarehouseListQuery
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
@@ -18,7 +19,6 @@ import { OrderLineDiscountProvider } from "@saleor/products/components/OrderDisc
 import { useOrderVariantSearch } from "@saleor/searches/useOrderVariantSearch";
 import { PartialMutationProviderOutput } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
-import { useWarehouseList } from "@saleor/warehouses/queries";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -117,7 +117,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
   } = useOrderVariantSearch({
     variables: { ...DEFAULT_INITIAL_SEARCH_DATA, channel: order.channel.slug }
   });
-  const warehouses = useWarehouseList({
+  const warehouses = useWarehouseListQuery({
     displayLoader: true,
     variables: {
       first: 30

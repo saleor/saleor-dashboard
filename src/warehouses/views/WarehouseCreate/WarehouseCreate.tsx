@@ -1,5 +1,5 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { CountryCode } from "@saleor/graphql";
+import { CountryCode, useWarehouseCreateMutation } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
@@ -12,7 +12,6 @@ import {
 import WarehouseCreatePage, {
   WarehouseCreatePageFormData
 } from "@saleor/warehouses/components/WarehouseCreatePage";
-import { useWarehouseCreate } from "@saleor/warehouses/mutations";
 import { warehouseListUrl, warehouseUrl } from "@saleor/warehouses/urls";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -22,7 +21,7 @@ const WarehouseCreate: React.FC = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
-  const [createWarehouse, createWarehouseOpts] = useWarehouseCreate({
+  const [createWarehouse, createWarehouseOpts] = useWarehouseCreateMutation({
     onCompleted: data => {
       if (data.createWarehouse.errors.length === 0) {
         navigate(warehouseUrl(data.createWarehouse.warehouse.id));

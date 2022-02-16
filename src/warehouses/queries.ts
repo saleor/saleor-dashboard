@@ -1,20 +1,6 @@
 import { gql } from "@apollo/client";
-import { pageInfoFragment } from "@saleor/fragments/pageInfo";
-import {
-  warehouseDetailsFragment,
-  warehouseWithShippingFragment
-} from "@saleor/fragments/warehouses";
-import makeQuery from "@saleor/hooks/makeQuery";
 
-import {
-  WarehouseDetails,
-  WarehouseDetailsVariables
-} from "./types/WarehouseDetails";
-import { WarehouseList, WarehouseListVariables } from "./types/WarehouseList";
-
-const warehouseList = gql`
-  ${warehouseWithShippingFragment}
-  ${pageInfoFragment}
+export const warehouseList = gql`
   query WarehouseList(
     $first: Int
     $after: String
@@ -42,20 +28,11 @@ const warehouseList = gql`
     }
   }
 `;
-export const useWarehouseList = makeQuery<
-  WarehouseList,
-  WarehouseListVariables
->(warehouseList);
 
-const warehouseDetails = gql`
-  ${warehouseDetailsFragment}
+export const warehouseDetails = gql`
   query WarehouseDetails($id: ID!) {
     warehouse(id: $id) {
       ...WarehouseDetailsFragment
     }
   }
 `;
-export const useWarehouseDetails = makeQuery<
-  WarehouseDetails,
-  WarehouseDetailsVariables
->(warehouseDetails);

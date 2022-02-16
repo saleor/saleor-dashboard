@@ -26,7 +26,8 @@ import {
   useVariantDeleteMutation,
   useVariantMediaAssignMutation,
   useVariantMediaUnassignMutation,
-  useVariantUpdateMutation
+  useVariantUpdateMutation,
+  useWarehouseListQuery
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -43,7 +44,6 @@ import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
-import { useWarehouseList } from "@saleor/warehouses/queries";
 import { warehouseAddPath } from "@saleor/warehouses/urls";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
@@ -84,7 +84,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     setErrors([]);
   }, [variantId]);
 
-  const warehouses = useWarehouseList({
+  const warehouses = useWarehouseListQuery({
     displayLoader: true,
     variables: {
       first: 50

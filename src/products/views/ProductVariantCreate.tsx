@@ -11,7 +11,8 @@ import {
   useFileUploadMutation,
   useProductVariantCreateDataQuery,
   useProductVariantReorderMutation,
-  useVariantCreateMutation
+  useVariantCreateMutation,
+  useWarehouseListQuery
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -25,7 +26,6 @@ import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
-import { useWarehouseList } from "@saleor/warehouses/queries";
 import { warehouseAddPath } from "@saleor/warehouses/urls";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -57,7 +57,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
 
   const shop = useShop();
   const intl = useIntl();
-  const warehouses = useWarehouseList({
+  const warehouses = useWarehouseListQuery({
     displayLoader: true,
     variables: {
       first: 50

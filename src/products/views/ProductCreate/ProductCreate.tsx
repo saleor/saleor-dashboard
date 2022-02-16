@@ -15,7 +15,8 @@ import {
   useProductTypeQuery,
   useProductVariantChannelListingUpdateMutation,
   useTaxTypeListQuery,
-  useVariantCreateMutation
+  useVariantCreateMutation,
+  useWarehouseListQuery
 } from "@saleor/graphql";
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -45,7 +46,6 @@ import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
-import { useWarehouseList } from "@saleor/warehouses/queries";
 import { warehouseAddPath } from "@saleor/warehouses/urls";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -115,7 +115,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     result: searchAttributeValuesOpts,
     reset: searchAttributeReset
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
-  const warehouses = useWarehouseList({
+  const warehouses = useWarehouseListQuery({
     displayLoader: true,
     variables: {
       first: 50

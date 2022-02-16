@@ -34,7 +34,8 @@ import {
   useProductVariantPreorderDeactivateMutation,
   useProductVariantReorderMutation,
   useSimpleProductUpdateMutation,
-  useVariantCreateMutation
+  useVariantCreateMutation,
+  useWarehouseListQuery
 } from "@saleor/graphql";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useBulkActions from "@saleor/hooks/useBulkActions";
@@ -61,7 +62,6 @@ import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
-import { useWarehouseList } from "@saleor/warehouses/queries";
 import { warehouseAddPath } from "@saleor/warehouses/urls";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
@@ -156,7 +156,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     result: searchAttributeValuesOpts,
     reset: searchAttributeReset
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
-  const warehouses = useWarehouseList({
+  const warehouses = useWarehouseListQuery({
     displayLoader: true,
     variables: {
       first: 50

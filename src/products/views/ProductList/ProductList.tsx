@@ -24,7 +24,8 @@ import {
   useProductBulkDeleteMutation,
   useProductCountQuery,
   useProductExportMutation,
-  useProductListQuery
+  useProductListQuery,
+  useWarehouseListQuery
 } from "@saleor/graphql";
 import useBackgroundTask from "@saleor/hooks/useBackgroundTask";
 import useBulkActions from "@saleor/hooks/useBulkActions";
@@ -61,7 +62,6 @@ import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandl
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
 import { getSortUrlVariables } from "@saleor/utils/sort";
-import { useWarehouseList } from "@saleor/warehouses/queries";
 import React, { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -158,7 +158,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     },
     skip: !focusedAttribute
   });
-  const warehouses = useWarehouseList({
+  const warehouses = useWarehouseListQuery({
     variables: {
       first: 100
     },
