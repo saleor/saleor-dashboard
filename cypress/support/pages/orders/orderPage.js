@@ -1,6 +1,6 @@
-import { ORDER_FULFILL_SELECTORS } from "../../elements/orders/order-fulfill-selectors";
-import { ORDER_SELECTORS } from "../../elements/orders/order-selectors";
-import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
+import { ORDER_FULFILL_SELECTORS } from "../../../elements/orders/order-fulfill-selectors";
+import { ORDER_SELECTORS } from "../../../elements/orders/order-selectors";
+import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 
 export function fulfillOrder(quantityToFulfill = 1) {
   return cy

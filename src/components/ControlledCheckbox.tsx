@@ -9,6 +9,7 @@ interface ControlledCheckboxProps {
   indeterminate?: boolean;
   disabled?: boolean;
   checkedIcon?: React.ReactNode;
+  testId?: string;
   onChange(event: any);
 }
 
@@ -20,12 +21,14 @@ export const ControlledCheckbox: React.FC<ControlledCheckboxProps> = ({
   onChange,
   checkedIcon,
   indeterminate,
+  testId,
   ...props
 }) => (
   <FormControlLabel
     disabled={disabled}
     control={
       <Checkbox
+        data-test-id={testId}
         checkedIcon={checkedIcon}
         checked={!!checked}
         indeterminate={indeterminate}

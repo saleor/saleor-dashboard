@@ -1,5 +1,5 @@
-// / <reference types="cypress"/>
-// / <reference types="../../support"/>
+/// <reference types="cypress"/>
+/// <reference types="../../support"/>
 
 import faker from "faker";
 
@@ -156,13 +156,11 @@ filterTests({ definedTags: ["all"] }, () => {
             .get(BUTTON_SELECTORS.deleteButton)
             .click()
             .addAliasToGraphRequest("ProductTypeDelete")
-            .get(SHARED_ELEMENTS.warningDialog)
-            .find(BUTTON_SELECTORS.deleteButton)
+            .get(BUTTON_SELECTORS.confirmDeleteButton)
             .should("not.be.enabled")
             .get(BUTTON_SELECTORS.deleteAssignedItemsConsentCheckbox)
             .click()
-            .get(SHARED_ELEMENTS.warningDialog)
-            .find(BUTTON_SELECTORS.deleteButton)
+            .get(BUTTON_SELECTORS.confirmDeleteButton)
             .click()
             .waitForRequestAndCheckIfNoErrors("@ProductTypeDelete");
           getProductType(productType.id).should("be.null");

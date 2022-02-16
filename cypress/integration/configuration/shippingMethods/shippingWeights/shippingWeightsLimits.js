@@ -23,7 +23,7 @@ import {
 } from "../../../../support/pages/shippingMethodPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Shipping weight limits", () => {
+  describe("As a staff user I want to manage shipping weights", () => {
     const startsWith = "CyWeightRates-";
     const name = `${startsWith}${faker.datatype.number()}`;
 
@@ -83,7 +83,7 @@ filterTests({ definedTags: ["all"] }, () => {
         .visit(shippingZoneDetailsUrl(shippingZone.id));
     });
 
-    it("should be possible to buy product in a shipping weight limits", () => {
+    it("should be possible to buy product in a shipping weight limits. TC: SALEOR_0902", () => {
       const rateName = `${startsWith}${faker.datatype.number()}`;
 
       createShippingRate({
@@ -108,7 +108,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should not be possible to buy product not in a shipping weight limits", () => {
+    it("should not be possible to buy product not in a shipping weight limits. TC: SALEOR_0903", () => {
       const rateName = `${startsWith}${faker.datatype.number()}`;
 
       createShippingRate({

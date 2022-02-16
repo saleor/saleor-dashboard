@@ -18,7 +18,6 @@ import ShippingZoneInfo from "../ShippingZoneInfo";
 
 export interface FormData {
   countries: string[];
-  default: boolean;
   description: string;
   name: string;
 }
@@ -32,10 +31,6 @@ const messages = defineMessages({
     defaultMessage: "Create New Shipping Zone",
     description: "section header"
   },
-  defaultZone: {
-    defaultMessage:
-      "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
-  },
   noCountriesAssigned: {
     defaultMessage:
       "Currently, there are no countries assigned to this shipping zone"
@@ -44,6 +39,7 @@ const messages = defineMessages({
 
 export interface ShippingZoneCreatePageProps {
   countries: CountryFragment[];
+  restWorldCountries: string[];
   disabled: boolean;
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -53,6 +49,7 @@ export interface ShippingZoneCreatePageProps {
 
 const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
   countries,
+  restWorldCountries,
   disabled,
   errors,
   onBack,
@@ -65,7 +62,6 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
 
   const initialForm: FormData = {
     countries: [],
-    default: false,
     description: "",
     name: ""
   };
@@ -93,11 +89,7 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
                     countries.find(country => country.code === selectedCountry)
                   )}
                   disabled={disabled}
-                  emptyText={
-                    data.default
-                      ? intl.formatMessage(messages.defaultZone)
-                      : intl.formatMessage(messages.noCountriesAssigned)
-                  }
+                  emptyText={intl.formatMessage(messages.noCountriesAssigned)}
                   onCountryAssign={toggleModal}
                   onCountryUnassign={countryCode =>
                     change({
@@ -126,15 +118,15 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
               change({
                 target: {
                   name: "countries",
-                  value: formData.restOfTheWorld ? [] : formData.countries
+                  value: formData.countries
                 }
               } as any);
               toggleModal();
             }}
             confirmButtonState="default"
             countries={countries}
+            restWorldCountries={restWorldCountries}
             initial={data.countries}
-            isDefault={data.default}
             onClose={toggleModal}
           />
         </>

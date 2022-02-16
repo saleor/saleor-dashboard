@@ -88,7 +88,7 @@ const TypeDeleteWarningDialogContent: React.FC<TypeDeleteWarningDialogContentPro
         <DeleteButton
           onClick={onDelete}
           disabled={isDisbled}
-          data-test-id="confirm-delete-element"
+          testId="confirm-delete-element"
         />
       </div>
     </CardContent>

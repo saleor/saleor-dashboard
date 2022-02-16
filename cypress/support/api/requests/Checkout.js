@@ -151,7 +151,7 @@ export function completeCheckout(checkoutId, paymentData) {
       }
       confirmationNeeded
       confirmationData
-      checkoutErrors{
+      errors{
         field
         message
       }
@@ -165,7 +165,7 @@ export function addVoucher(checkoutId, voucherCode) {
     checkoutAddPromoCode(checkoutId:"${checkoutId}",
       promoCode:"${voucherCode}"
     ){
-      checkoutErrors{
+      errors{
         field
         message
       }
@@ -206,7 +206,7 @@ export function checkoutVariantsUpdate(checkoutId, variantsList) {
 export function checkoutShippingMethodUpdate(checkoutId, shippingMethodId) {
   const mutation = `mutation{
     checkoutShippingMethodUpdate(checkoutId:"${checkoutId}" shippingMethodId:"${shippingMethodId}"){
-      checkoutErrors{
+      errors{
         field
         message
       }
