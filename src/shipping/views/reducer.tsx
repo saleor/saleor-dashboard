@@ -1,12 +1,12 @@
-import { ShippingZone_shippingZone_shippingMethods_postalCodeRules } from "@saleor/shipping/types/ShippingZone";
+import { ShippingMethodWithPostalCodesFragmentFragment } from "@saleor/graphql";
 import { PostalCodeRuleInclusionTypeEnum } from "@saleor/types/globalTypes";
 
 export interface PostalCodesState {
   codesToDelete?: string[];
   havePostalCodesChanged?: boolean;
   inclusionType?: PostalCodeRuleInclusionTypeEnum;
-  originalCodes?: ShippingZone_shippingZone_shippingMethods_postalCodeRules[];
-  postalCodeRules?: ShippingZone_shippingZone_shippingMethods_postalCodeRules[];
+  originalCodes?: ShippingMethodWithPostalCodesFragmentFragment["postalCodeRules"];
+  postalCodeRules?: ShippingMethodWithPostalCodesFragmentFragment["postalCodeRules"];
 }
 
 function postalCodesReducer(

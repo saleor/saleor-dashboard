@@ -10,14 +10,11 @@ import {
   ProductFragment,
   ProductVariantDetailsQuery,
   SaleDetailsFragmentFragment,
+  ShippingZoneQuery,
   VoucherDetailsFragmentFragment
 } from "@saleor/graphql";
 import { RequireOnlyOne } from "@saleor/misc";
 import { validatePrice } from "@saleor/products/utils/validation";
-import {
-  ShippingZone_shippingZone_channels,
-  ShippingZone_shippingZone_shippingMethods_channelListings
-} from "@saleor/shipping/types/ShippingZone";
 import { SaleType } from "@saleor/types/globalTypes";
 import { mapNodeToChoice } from "@saleor/utils/maps";
 import uniqBy from "lodash/uniqBy";
@@ -209,7 +206,7 @@ export const createChannelsDataWithPrice = (
 };
 
 export const createShippingChannels = (
-  data?: ShippingZone_shippingZone_channels[]
+  data?: ShippingZoneQuery["shippingZone"]["channels"]
 ): ChannelShippingData[] =>
   data?.map(channel => ({
     currency: channel.currencyCode,
@@ -221,7 +218,7 @@ export const createShippingChannels = (
   })) || [];
 
 export const createShippingChannelsFromRate = (
-  data?: ShippingZone_shippingZone_shippingMethods_channelListings[]
+  data?: ShippingZoneQuery["shippingZone"]["shippingMethods"][0]["channelListings"]
 ): ChannelShippingData[] =>
   data?.map(channelData => ({
     currency: channelData.channel.currencyCode,
@@ -349,14 +346,14 @@ export const createSortedChannelsData = (data?: ChannelFragmentFragment[]) =>
   );
 
 export const createSortedShippingChannels = (
-  data?: ShippingZone_shippingZone_channels[]
+  data?: ShippingZoneQuery["shippingZone"]["channels"]
 ) =>
   createShippingChannels(data)?.sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name)
   );
 
 export const createSortedShippingChannelsFromRate = (
-  data?: ShippingZone_shippingZone_shippingMethods_channelListings[]
+  data?: ShippingZoneQuery["shippingZone"]["shippingMethods"][0]["channelListings"]
 ) =>
   createShippingChannelsFromRate(data)?.sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name)

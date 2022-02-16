@@ -16,12 +16,14 @@ import ConfirmButton from "@saleor/components/ConfirmButton";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
-import { SearchProductsQuery } from "@saleor/graphql";
+import {
+  SearchProductsQuery,
+  ShippingPriceExcludeProductMutation
+} from "@saleor/graphql";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import { ShippingPriceExcludeProduct } from "@saleor/shipping/types/ShippingPriceExcludeProduct";
 import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -71,7 +73,7 @@ export interface ShippingMethodProductsAddDialogProps extends FetchMoreProps {
   onFetch: (query: string) => void;
   onSubmit: (
     ids: string[]
-  ) => Promise<FetchResult<ShippingPriceExcludeProduct>>;
+  ) => Promise<FetchResult<ShippingPriceExcludeProductMutation>>;
 }
 
 const handleProductAssign = (

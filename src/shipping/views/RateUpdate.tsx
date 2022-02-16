@@ -6,6 +6,14 @@ import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityD
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { PAGINATE_BY } from "@saleor/config";
+import {
+  useDeleteShippingRateMutation,
+  useShippingMethodChannelListingUpdateMutation,
+  useShippingPriceExcludeProductMutation,
+  useShippingPriceRemoveProductFromExcludeMutation,
+  useShippingZoneQuery,
+  useUpdateShippingRateMutation
+} from "@saleor/graphql";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useChannels from "@saleor/hooks/useChannels";
 import useLocalPaginator, {
@@ -32,14 +40,6 @@ import {
   getUpdateShippingPriceRateVariables,
   getUpdateShippingWeightRateVariables
 } from "@saleor/shipping/handlers";
-import {
-  useShippingMethodChannelListingUpdate,
-  useShippingPriceExcludeProduct,
-  useShippingPriceRemoveProductsFromExclude,
-  useShippingRateDelete,
-  useShippingRateUpdate
-} from "@saleor/shipping/mutations";
-import { useShippingZone } from "@saleor/shipping/queries";
 import {
   shippingRateEditUrl,
   ShippingRateUrlDialog,
@@ -89,7 +89,7 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
   );
   const paginate = useLocalPaginator(setPaginationState);
 
-  const { data, loading, refetch } = useShippingZone({
+  const { data, loading, refetch } = useShippingZoneQuery({
     displayLoader: true,
     variables: { id, ...paginationState }
   });
@@ -121,12 +121,12 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
   const [
     updateShippingMethodChannelListing,
     updateShippingMethodChannelListingOpts
-  ] = useShippingMethodChannelListingUpdate({});
+  ] = useShippingMethodChannelListingUpdateMutation({});
 
   const [
     unassignProduct,
     unassignProductOpts
-  ] = useShippingPriceRemoveProductsFromExclude({
+  ] = useShippingPriceRemoveProductFromExcludeMutation({
     onCompleted: data => {
       if (data.shippingPriceRemoveProductFromExclude.errors.length === 0) {
         handleSuccess();
@@ -136,7 +136,10 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
     }
   });
 
-  const [assignProduct, assignProductOpts] = useShippingPriceExcludeProduct({
+  const [
+    assignProduct,
+    assignProductOpts
+  ] = useShippingPriceExcludeProductMutation({
     onCompleted: data => {
       if (data.shippingPriceExcludeProducts.errors.length === 0) {
         handleSuccess();
@@ -168,9 +171,10 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
     { formId: FORM_ID }
   );
 
-  const [updateShippingRate, updateShippingRateOpts] = useShippingRateUpdate(
-    {}
-  );
+  const [
+    updateShippingRate,
+    updateShippingRateOpts
+  ] = useUpdateShippingRateMutation({});
 
   const handleSuccess = () => {
     notify({
@@ -178,7 +182,10 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
       text: intl.formatMessage(commonMessages.savedChanges)
     });
   };
-  const [deleteShippingRate, deleteShippingRateOpts] = useShippingRateDelete({
+  const [
+    deleteShippingRate,
+    deleteShippingRateOpts
+  ] = useDeleteShippingRateMutation({
     onCompleted: data => {
       if (data.shippingPriceDelete.errors.length === 0) {
         handleSuccess();

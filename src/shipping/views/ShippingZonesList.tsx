@@ -2,6 +2,12 @@ import { DialogContentText } from "@material-ui/core";
 import { useUser } from "@saleor/auth";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { configurationMenuUrl } from "@saleor/configuration";
+import {
+  useBulkDeleteShippingZoneMutation,
+  useDeleteShippingZoneMutation,
+  useShippingZonesQuery,
+  useUpdateDefaultWeightUnitMutation
+} from "@saleor/graphql";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -26,12 +32,6 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ShippingZonesListPage from "../components/ShippingZonesListPage";
-import {
-  useDefaultWeightUnitUpdate,
-  useShippingZoneBulkDelete,
-  useShippingZoneDelete
-} from "../mutations";
-import { useShippingZoneList } from "../queries";
 import {
   shippingZoneAddUrl,
   shippingZonesListUrl,
@@ -77,12 +77,15 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
     ShippingZonesListUrlQueryParams
   >(navigate, shippingZonesListUrl, params);
 
-  const { data, loading, refetch } = useShippingZoneList({
+  const { data, loading, refetch } = useShippingZonesQuery({
     displayLoader: true,
     variables: queryVariables
   });
 
-  const [deleteShippingZone, deleteShippingZoneOpts] = useShippingZoneDelete({
+  const [
+    deleteShippingZone,
+    deleteShippingZoneOpts
+  ] = useDeleteShippingZoneMutation({
     onCompleted: data => {
       if (data.shippingZoneDelete.errors.length === 0) {
         notify({
@@ -98,7 +101,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
   const [
     updateDefaultWeightUnit,
     updateDefaultWeightUnitOpts
-  ] = useDefaultWeightUnitUpdate({
+  ] = useUpdateDefaultWeightUnitMutation({
     onCompleted: data => {
       if (data.shopSettingsUpdate.errors.length === 0) {
         notify({
@@ -112,7 +115,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
   const [
     bulkDeleteShippingZone,
     bulkDeleteShippingZoneOpts
-  ] = useShippingZoneBulkDelete({
+  ] = useBulkDeleteShippingZoneMutation({
     onCompleted: data => {
       if (data.shippingZoneBulkDelete.errors.length === 0) {
         notify({

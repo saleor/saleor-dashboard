@@ -13,6 +13,7 @@ import {
   useChannelDeactivateMutation,
   useChannelDeleteMutation,
   useChannelQuery,
+  useChannelShippingZonesQuery,
   useChannelsQuery,
   useChannelUpdateMutation
 } from "@saleor/graphql";
@@ -25,7 +26,6 @@ import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import { extractMutationErrors } from "@saleor/misc";
 import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
-import { useChannelShippingZones } from "@saleor/shipping/queries";
 import getChannelsErrorMessage from "@saleor/utils/errors/channels";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
@@ -161,7 +161,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
   const {
     data: channelShippingZonesData,
     loading: channelsShippingZonesLoading
-  } = useChannelShippingZones({
+  } = useChannelShippingZonesQuery({
     variables: {
       filter: {
         channels: [id]

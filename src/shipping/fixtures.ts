@@ -1,6 +1,5 @@
 import { ShippingZoneFragment } from "@saleor/fragments/types/ShippingZoneFragment";
-import { SearchProductsQuery } from "@saleor/graphql";
-import { ShippingZone_shippingZone } from "@saleor/shipping/types/ShippingZone";
+import { SearchProductsQuery, ShippingZoneQuery } from "@saleor/graphql";
 import { RelayToFlat } from "@saleor/types";
 
 import {
@@ -1303,7 +1302,7 @@ export const shippingZones: ShippingZoneFragment[] = [
   }
 ];
 
-export const shippingZone: ShippingZone_shippingZone = {
+export const shippingZone: ShippingZoneQuery["shippingZone"] = {
   __typename: "ShippingZone",
   channels: [
     { __typename: "Channel", id: "channel1", name: "GBP", currencyCode: "GBP" },

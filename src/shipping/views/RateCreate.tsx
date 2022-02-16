@@ -1,13 +1,13 @@
 import { createSortedShippingChannels } from "@saleor/channels/utils";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { useShippingZoneChannelsQuery } from "@saleor/graphql";
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import ShippingZonePostalCodeRangeDialog from "@saleor/shipping/components/ShippingZonePostalCodeRangeDialog";
 import ShippingZoneRatesCreatePage from "@saleor/shipping/components/ShippingZoneRatesCreatePage";
 import { useShippingRateCreator } from "@saleor/shipping/handlers";
-import { useShippingZoneChannels } from "@saleor/shipping/queries";
 import {
   shippingRateCreateUrl,
   ShippingRateCreateUrlDialog,
@@ -45,7 +45,7 @@ export const RateCreate: React.FC<RateCreateProps> = ({ id, params }) => {
   const {
     data: shippingZoneData,
     loading: channelsLoading
-  } = useShippingZoneChannels({
+  } = useShippingZoneChannelsQuery({
     displayLoader: true,
     variables: { id }
   });

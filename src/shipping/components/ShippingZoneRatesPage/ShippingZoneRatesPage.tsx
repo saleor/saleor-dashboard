@@ -12,6 +12,7 @@ import Savebar from "@saleor/components/Savebar";
 import { ShippingChannelsErrorFragment } from "@saleor/fragments/types/ShippingChannelsErrorFragment";
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
 import { ShippingMethodTypeFragment_postalCodeRules } from "@saleor/fragments/types/ShippingMethodTypeFragment";
+import { ShippingZoneQuery } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
@@ -22,10 +23,6 @@ import PricingCard from "@saleor/shipping/components/PricingCard";
 import ShippingMethodProducts from "@saleor/shipping/components/ShippingMethodProducts";
 import ShippingRateInfo from "@saleor/shipping/components/ShippingRateInfo";
 import { createChannelsChangeHandler } from "@saleor/shipping/handlers";
-import {
-  ShippingZone_shippingZone_shippingMethods,
-  ShippingZone_shippingZone_shippingMethods_postalCodeRules
-} from "@saleor/shipping/types/ShippingZone";
 import { ListActions, ListProps } from "@saleor/types";
 import {
   PermissionEnum,
@@ -49,11 +46,11 @@ export interface ShippingZoneRatesPageProps
   disabled: boolean;
   hasChannelChanged?: boolean;
   havePostalCodesChanged?: boolean;
-  rate: ShippingZone_shippingZone_shippingMethods;
+  rate: ShippingZoneQuery["shippingZone"]["shippingMethods"][0];
   channelErrors: ShippingChannelsErrorFragment[];
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  postalCodeRules: ShippingZone_shippingZone_shippingMethods_postalCodeRules[];
+  postalCodeRules: ShippingZoneQuery["shippingZone"]["shippingMethods"][0]["postalCodeRules"];
   onBack: () => void;
   onDelete?: () => void;
   onSubmit: (data: ShippingZoneRateUpdateFormData) => SubmitPromise;
