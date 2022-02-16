@@ -31,8 +31,7 @@ export async function handleQueryAuthError(
     } else {
       notify({
         status: "error",
-        apiMessage: error.networkError.message,
-        title: intl.formatMessage(commonMessages.defaultErrorTitle)
+        apiMessage: error.networkError.message
       });
     }
   } else if (
@@ -40,10 +39,11 @@ export async function handleQueryAuthError(
       err => err.extensions?.exception?.code === "PermissionDenied"
     )
   ) {
-    notify({
-      status: "error",
-      apiMessage: error.networkError.message,
-      title: intl.formatMessage(commonMessages.defaultErrorTitle)
+    error.graphQLErrors.map(graphQLError => {
+      notify({
+        status: "error",
+        apiMessage: graphQLError.message
+      });
     });
   }
 }

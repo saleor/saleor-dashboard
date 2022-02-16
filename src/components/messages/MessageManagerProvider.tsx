@@ -1,4 +1,5 @@
 import { DEFAULT_NOTIFICATION_SHOW_TIME } from "@saleor/config";
+import { commonMessages } from "@saleor/intl";
 import { Notification } from "@saleor/macaw-ui";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
@@ -114,7 +115,11 @@ const MessageManagerProvider = ({ children }) => {
                     }
                   : {})}
                 onClose={notification.close}
-                title={notification.message.title}
+                title={
+                  notification.message.apiMessage && !notification.message.title
+                    ? intl.formatMessage(commonMessages.defaultErrorTitle)
+                    : notification.message.title
+                }
                 type={notification.message.status || "info"}
                 content={notification.message.text}
                 apiMessage={
