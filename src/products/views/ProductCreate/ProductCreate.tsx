@@ -14,6 +14,7 @@ import {
   useProductDeleteMutation,
   useProductTypeQuery,
   useProductVariantChannelListingUpdateMutation,
+  useTaxTypeListQuery,
   useVariantCreateMutation
 } from "@saleor/graphql";
 import useChannels from "@saleor/hooks/useChannels";
@@ -35,7 +36,6 @@ import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
-import { useTaxTypeList } from "@saleor/taxes/queries";
 import { getProductErrorMessage } from "@saleor/utils/errors";
 import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -123,7 +123,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   });
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
-  const taxTypes = useTaxTypeList({});
+  const taxTypes = useTaxTypeListQuery({});
   const { data: selectedProductType } = useProductTypeQuery({
     variables: {
       id: selectedProductTypeId,

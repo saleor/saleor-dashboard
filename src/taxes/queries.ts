@@ -1,18 +1,6 @@
 import { gql } from "@apollo/client";
-import {
-  countryWithTaxesFragment,
-  shopTaxesFragment,
-  taxTypeFragment
-} from "@saleor/fragments/taxes";
-import makeQuery from "@saleor/hooks/makeQuery";
 
-import { TypedQuery } from "../queries";
-import { CountryList } from "./types/CountryList";
-import { TaxTypeList } from "./types/TaxTypeList";
-
-const countryList = gql`
-  ${countryWithTaxesFragment}
-  ${shopTaxesFragment}
+export const countryList = gql`
   query CountryList {
     shop {
       ...ShopTaxesFragment
@@ -22,14 +10,11 @@ const countryList = gql`
     }
   }
 `;
-export const TypedCountryListQuery = TypedQuery<CountryList, {}>(countryList);
 
-const taxTypeList = gql`
-  ${taxTypeFragment}
+export const taxTypeList = gql`
   query TaxTypeList {
     taxTypes {
       ...TaxTypeFragment
     }
   }
 `;
-export const useTaxTypeList = makeQuery<TaxTypeList, {}>(taxTypeList);
