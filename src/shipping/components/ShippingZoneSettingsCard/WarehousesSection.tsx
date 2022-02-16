@@ -5,8 +5,7 @@ import MultiAutocompleteSelectField, {
 import { FormChange } from "@saleor/hooks/useForm";
 import { FetchMoreProps, SearchProps } from "@saleor/types";
 import React from "react";
-import { useIntl } from "react-intl";
-import { defineMessages, FormattedMessage } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 const messages = defineMessages({
   subtitle: {

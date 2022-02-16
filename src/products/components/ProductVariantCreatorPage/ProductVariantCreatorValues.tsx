@@ -7,6 +7,7 @@ import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import MultiAutocompleteSelectField from "@saleor/components/MultiAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
 import {
+  AttributeInputTypeEnum,
   AttributeValueFragmentFragment,
   ProductVariantAttributesFragmentFragment,
   SearchAttributeValuesQuery
@@ -18,7 +19,6 @@ import {
   getBooleanAttributeValue
 } from "@saleor/products/components/ProductVariantCreatorPage/utils";
 import { FetchMoreProps, RelayToFlat } from "@saleor/types";
-import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import {
   defineMessages,

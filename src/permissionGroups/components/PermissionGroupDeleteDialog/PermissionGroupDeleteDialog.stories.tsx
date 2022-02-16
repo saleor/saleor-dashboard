@@ -1,9 +1,9 @@
 import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
+import { PermissionGroupErrorCode } from "@saleor/graphql";
 import PermissionGroupDeleteDialog, {
   PermissionDeleteDialogProps
 } from "@saleor/permissionGroups/components/PermissionGroupDeleteDialog";
 import Decorator from "@saleor/storybook/Decorator";
-import { PermissionGroupErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

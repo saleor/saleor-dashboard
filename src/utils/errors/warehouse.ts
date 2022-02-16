@@ -1,5 +1,5 @@
 import { WarehouseErrorFragment } from "@saleor/fragments/types/WarehouseErrorFragment";
-import { WarehouseErrorCode } from "@saleor/types/globalTypes";
+import { WarehouseErrorCode } from "@saleor/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";

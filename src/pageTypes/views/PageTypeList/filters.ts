@@ -1,4 +1,4 @@
-import { PageTypeFilterInput } from "@saleor/types/globalTypes";
+import { PageTypeFilterInput } from "@saleor/graphql";
 
 import {
   createFilterTabUtils,

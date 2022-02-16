@@ -9,13 +9,17 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
-import { PageTypeDetailsFragmentFragment } from "@saleor/graphql";
+import {
+  AttributeTypeEnum,
+  PageTypeDetailsFragmentFragment
+} from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
-import { makeStyles } from "@saleor/macaw-ui";
+import {
+  Backlink,
+  ConfirmButtonTransitionState,
+  makeStyles
+} from "@saleor/macaw-ui";
 import { ListActions, ReorderEvent } from "@saleor/types";
-import { AttributeTypeEnum } from "@saleor/types/globalTypes";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";

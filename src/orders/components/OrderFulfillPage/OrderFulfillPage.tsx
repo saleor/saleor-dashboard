@@ -20,17 +20,24 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { ShopOrderSettingsFragment } from "@saleor/fragments/types/ShopOrderSettingsFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
-import { FulfillOrderMutation, OrderFulfillDataQuery } from "@saleor/graphql";
+import {
+  FulfillOrderMutation,
+  OrderFulfillDataQuery,
+  OrderFulfillStockInput
+} from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
 import { commonMessages } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
-import { makeStyles } from "@saleor/macaw-ui";
+import {
+  Backlink,
+  ConfirmButtonTransitionState,
+  makeStyles
+} from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import { getToFulfillOrderLines } from "@saleor/orders/utils/data";
-import { isStockError } from "@saleor/orders/utils/data";
-import { OrderFulfillStockInput } from "@saleor/types/globalTypes";
+import {
+  getToFulfillOrderLines,
+  isStockError
+} from "@saleor/orders/utils/data";
 import { update } from "@saleor/utils/lists";
 import classNames from "classnames";
 import React from "react";

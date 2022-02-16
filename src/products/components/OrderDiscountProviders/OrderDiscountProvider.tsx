@@ -1,4 +1,3 @@
-/* eslint-disable sort-keys */
 import {
   OrderDetailsFragmentFragment,
   useOrderDiscountAddMutation,
@@ -13,8 +12,11 @@ import React, { createContext } from "react";
 import { useIntl } from "react-intl";
 
 import { OrderDiscountConsumerCommonProps, OrderDiscountData } from "./types";
-import { useDiscountDialog } from "./utils";
-import { getManualOrderDiscount, getParsedDiscountData } from "./utils";
+import {
+  getManualOrderDiscount,
+  getParsedDiscountData,
+  useDiscountDialog
+} from "./utils";
 
 export interface OrderDiscountContextConsumerProps
   extends OrderDiscountConsumerCommonProps {

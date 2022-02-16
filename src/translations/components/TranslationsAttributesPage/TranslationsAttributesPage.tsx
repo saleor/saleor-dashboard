@@ -4,6 +4,7 @@ import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
 import { ListSettingsUpdate } from "@saleor/components/TablePagination";
 import { AttributeTranslationDetailsFragment } from "@saleor/fragments/types/AttributeTranslationDetailsFragment";
+import { LanguageCodeEnum } from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
@@ -12,7 +13,6 @@ import { ListSettings } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { LanguageCodeEnum } from "../../../types/globalTypes";
 import { getTranslationFields } from "../../utils";
 import TranslationFields from "../TranslationFields";
 import { transtionsAttributesPageFieldsMessages as messages } from "./messages";

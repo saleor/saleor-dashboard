@@ -2,8 +2,10 @@ import { attributes } from "@saleor/attributes/fixtures";
 import { productChannels } from "@saleor/channels/fixtures";
 import Container from "@saleor/components/Container";
 import { fetchMoreProps, limitsReached } from "@saleor/fixtures";
-import { BulkProductErrorFragmentFragment } from "@saleor/graphql";
-import { ProductErrorCode } from "@saleor/types/globalTypes";
+import {
+  BulkProductErrorFragmentFragment,
+  ProductErrorCode
+} from "@saleor/graphql";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";

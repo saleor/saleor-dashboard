@@ -1,5 +1,5 @@
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
-import { ShippingErrorCode } from "@saleor/types/globalTypes";
+import { ShippingErrorCode } from "@saleor/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";

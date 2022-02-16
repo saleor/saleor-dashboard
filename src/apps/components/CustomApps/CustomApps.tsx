@@ -8,12 +8,15 @@ import {
 import CardTitle from "@saleor/components/CardTitle";
 import { AppsListQuery } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
-import { DeleteIcon, ResponsiveTable } from "@saleor/macaw-ui";
-import { Button, IconButton } from "@saleor/macaw-ui";
+import {
+  Button,
+  DeleteIcon,
+  IconButton,
+  ResponsiveTable
+} from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import React from "react";
-import { useIntl } from "react-intl";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "../../styles";
 import AppsSkeleton from "../AppsSkeleton";

@@ -1,8 +1,7 @@
-import { OrderEventFragmentFragment } from "@saleor/graphql";
+import { OrderEventFragmentFragment, OrderEventsEnum } from "@saleor/graphql";
 import { getFullName } from "@saleor/misc";
 import { orderUrl } from "@saleor/orders/urls";
 import { staffMemberDetailsUrl } from "@saleor/staff/urls";
-import { OrderEventsEnum } from "@saleor/types/globalTypes";
 import { MessageDescriptor } from "react-intl";
 
 export const getEventSecondaryTitle = (

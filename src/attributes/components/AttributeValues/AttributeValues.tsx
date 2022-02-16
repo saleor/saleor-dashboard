@@ -14,10 +14,10 @@ import {
 } from "@saleor/components/SortableTable";
 import TablePagination from "@saleor/components/TablePagination";
 import { AttributeValueListFragment_edges_node } from "@saleor/fragments/types/AttributeValueListFragment";
+import { AttributeInputTypeEnum } from "@saleor/graphql";
 import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { ListProps, ReorderAction } from "@saleor/types";
-import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

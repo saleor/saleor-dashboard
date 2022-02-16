@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderEventsEmailsEnum, DiscountValueTypeEnum, OrderEventsEnum } from "./../../types/globalTypes";
+import { OrderEventsEmailsEnum, DiscountValueTypeEnum, OrderEventsEnum } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL fragment: OrderEventFragment

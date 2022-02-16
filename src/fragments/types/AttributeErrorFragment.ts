@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AttributeErrorCode } from "./../../types/globalTypes";
+import { AttributeErrorCode } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL fragment: AttributeErrorFragment

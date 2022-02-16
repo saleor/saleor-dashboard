@@ -1,3 +1,5 @@
+import { PermissionEnum } from "@saleor/graphql";
+
 import { ShopInfo_shop_permissions } from "./components/Shop/types/ShopInfo";
 import { ShopLimitFragment_limits } from "./fragments/types/ShopLimitFragment";
 import { User_userPermissions } from "./fragments/types/User";
@@ -10,7 +12,6 @@ import {
   SortPage,
   TabPageProps
 } from "./types";
-import { PermissionEnum } from "./types/globalTypes";
 
 const pageInfo = {
   hasNextPage: true,

@@ -20,6 +20,8 @@ import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFr
 import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
 import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
 import {
+  AttributeValueInput,
+  PageInput,
   useAttributeValueDeleteMutation,
   useFileUploadMutation,
   usePageDetailsQuery,
@@ -43,7 +45,6 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getStringOrPlaceholder, maybe } from "../../misc";
-import { AttributeValueInput, PageInput } from "../../types/globalTypes";
 import PageDetailsPage from "../components/PageDetailsPage";
 import { PageData, PageSubmitData } from "../components/PageDetailsPage/form";
 import { pageListUrl, pageUrl, PageUrlQueryParams } from "../urls";

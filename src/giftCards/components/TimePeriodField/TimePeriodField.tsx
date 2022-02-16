@@ -1,6 +1,6 @@
 import TextWithSelectField from "@saleor/components/TextWithSelectField";
+import { TimePeriodTypeEnum } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
-import { TimePeriodTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 

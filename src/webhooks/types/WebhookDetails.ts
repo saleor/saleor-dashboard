@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { WebhookEventTypeSyncEnum, WebhookEventTypeAsyncEnum } from "./../../types/globalTypes";
+import { WebhookEventTypeSyncEnum, WebhookEventTypeAsyncEnum } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL query operation: WebhookDetails

@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { GiftCardSettingsExpiryTypeEnum, TimePeriodTypeEnum } from "./../../types/globalTypes";
+import { GiftCardSettingsExpiryTypeEnum, TimePeriodTypeEnum } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL fragment: GiftCardsSettingsFragment

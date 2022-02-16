@@ -1,14 +1,11 @@
 import { IFilterElement } from "@saleor/components/Filter";
+import { PluginConfigurationType, PluginFilterInput } from "@saleor/graphql";
 import { ChannelsWithLoadMoreProps } from "@saleor/hooks/useChannelsSearch";
 import { maybe, parseBoolean } from "@saleor/misc";
 import {
   PluginFilterKeys,
   PluginListFilterOpts
 } from "@saleor/plugins/components/PluginsListPage";
-import {
-  PluginConfigurationType,
-  PluginFilterInput
-} from "@saleor/types/globalTypes";
 import { mapNodeToChoice } from "@saleor/utils/maps";
 
 import {

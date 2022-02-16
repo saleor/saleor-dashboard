@@ -5,14 +5,15 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { PluginErrorFragment } from "@saleor/fragments/types/PluginErrorFragment";
-import { PluginsDetailsFragmentFragment } from "@saleor/graphql";
+import {
+  ConfigurationItemInput,
+  PluginsDetailsFragmentFragment
+} from "@saleor/graphql";
 import { ChangeEvent, SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { isSecretField } from "@saleor/plugins/utils";
-import { ConfigurationItemInput } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 

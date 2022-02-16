@@ -1,4 +1,3 @@
-/* eslint-disable sort-keys */
 import {
   OrderDetailsFragmentFragment,
   useOrderLineDiscountRemoveMutation,
@@ -18,8 +17,11 @@ import {
   OrderLineDiscountConsumerProps,
   OrderLineDiscountData
 } from "./types";
-import { useDiscountDialog } from "./utils";
-import { getOrderLineDiscount, getParsedDiscountData } from "./utils";
+import {
+  getOrderLineDiscount,
+  getParsedDiscountData,
+  useDiscountDialog
+} from "./utils";
 
 export interface OrderLineDiscountContextConsumerProps
   extends OrderDiscountConsumerCommonProps {

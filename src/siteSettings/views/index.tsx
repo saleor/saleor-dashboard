@@ -1,6 +1,7 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { IS_CLOUD_INSTANCE } from "@saleor/config";
 import {
+  CountryCode,
   useShopSettingsUpdateMutation,
   useSiteSettingsQuery
 } from "@saleor/graphql";
@@ -12,7 +13,6 @@ import { useIntl } from "react-intl";
 
 import { configurationMenuUrl } from "../../configuration";
 import { extractMutationErrors, findInEnum } from "../../misc";
-import { CountryCode } from "../../types/globalTypes";
 import SiteSettingsPage, {
   areAddressInputFieldsModified,
   SiteSettingsPageFormData

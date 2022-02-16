@@ -1,6 +1,7 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import {
+  FulfillmentStatus,
   OrderFulfillmentApproveMutation,
   OrderFulfillmentApproveMutationVariables,
   OrderUpdateMutation,
@@ -28,7 +29,6 @@ import {
   getStringOrPlaceholder
 } from "../../../../misc";
 import { productUrl } from "../../../../products/urls";
-import { FulfillmentStatus } from "../../../../types/globalTypes";
 import OrderAddressFields from "../../../components/OrderAddressFields/OrderAddressFields";
 import OrderCancelDialog from "../../../components/OrderCancelDialog";
 import OrderDetailsPage from "../../../components/OrderDetailsPage";

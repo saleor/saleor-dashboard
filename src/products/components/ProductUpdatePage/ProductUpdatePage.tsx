@@ -26,20 +26,20 @@ import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/Prod
 import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import {
+  PermissionEnum,
   ProductDetailsVariantFragment,
   ProductFragment,
-  SearchAttributeValuesQuery
+  SearchAttributeValuesQuery,
+  SearchCategoriesQuery,
+  SearchCollectionsQuery,
+  SearchPagesQuery,
+  SearchProductsQuery
 } from "@saleor/graphql";
-import { SearchCategoriesQuery } from "@saleor/graphql";
-import { SearchCollectionsQuery } from "@saleor/graphql";
-import { SearchPagesQuery } from "@saleor/graphql";
-import { SearchProductsQuery } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import ProductExternalMediaDialog from "@saleor/products/components/ProductExternalMediaDialog";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
@@ -51,7 +51,6 @@ import {
   RelayToFlat,
   ReorderAction
 } from "@saleor/types";
-import { PermissionEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 

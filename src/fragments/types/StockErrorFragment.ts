@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { StockErrorCode } from "./../../types/globalTypes";
+import { StockErrorCode } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL fragment: StockErrorFragment

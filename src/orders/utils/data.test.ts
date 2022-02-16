@@ -1,15 +1,12 @@
-/* eslint-disable sort-keys */
-import {
-  OrderDetailsFragmentFragment,
-  OrderLineFragmentFragment,
-  OrderRefundDataQuery
-} from "@saleor/graphql";
-import { FormsetData } from "@saleor/hooks/useFormset";
 import {
   FulfillmentStatus,
+  OrderDetailsFragmentFragment,
+  OrderLineFragmentFragment,
+  OrderRefundDataQuery,
   OrderStatus,
   PaymentChargeStatusEnum
-} from "@saleor/types/globalTypes";
+} from "@saleor/graphql";
+import { FormsetData } from "@saleor/hooks/useFormset";
 
 import { LineItemData } from "../components/OrderReturnPage/form";
 import {

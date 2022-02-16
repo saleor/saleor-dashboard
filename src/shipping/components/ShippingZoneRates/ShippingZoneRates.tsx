@@ -14,8 +14,12 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import WeightRange from "@saleor/components/WeightRange";
 import { ShippingZoneDetailsFragment_shippingMethods } from "@saleor/fragments/types/ShippingZoneDetailsFragment";
-import { Button, DeleteIcon, makeStyles } from "@saleor/macaw-ui";
-import { ICONBUTTON_SIZE } from "@saleor/macaw-ui";
+import {
+  Button,
+  DeleteIcon,
+  ICONBUTTON_SIZE,
+  makeStyles
+} from "@saleor/macaw-ui";
 import { ChannelProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

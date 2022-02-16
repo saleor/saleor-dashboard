@@ -1,8 +1,10 @@
 import { IFilter, IFilterElement } from "@saleor/components/Filter";
-import { SearchCustomersQuery } from "@saleor/graphql";
-import { SearchProductsQuery } from "@saleor/graphql";
+import {
+  GiftCardFilterInput,
+  SearchCustomersQuery,
+  SearchProductsQuery
+} from "@saleor/graphql";
 import { RelayToFlat } from "@saleor/types";
-import { GiftCardFilterInput } from "@saleor/types/globalTypes";
 import {
   createFilterTabUtils,
   createFilterUtils,

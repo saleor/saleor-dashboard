@@ -11,6 +11,7 @@ import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
 import {
+  CollectionInput,
   CollectionUpdateMutation,
   useCollectionAssignProductMutation,
   useCollectionChannelListingUpdateMutation,
@@ -44,7 +45,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { getMutationErrors, getMutationState, maybe } from "../../misc";
 import { productUrl } from "../../products/urls";
-import { CollectionInput } from "../../types/globalTypes";
 import CollectionDetailsPage from "../components/CollectionDetailsPage/CollectionDetailsPage";
 import { CollectionUpdateData } from "../components/CollectionDetailsPage/form";
 import {

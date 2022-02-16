@@ -78,8 +78,10 @@ import {
   productVariantCreatorUrl,
   productVariantEditUrl
 } from "../../urls";
-import { CHANNELS_AVAILIABILITY_MODAL_SELECTOR } from "./consts";
-import { PRODUCT_UPDATE_FORM_ID } from "./consts";
+import {
+  CHANNELS_AVAILIABILITY_MODAL_SELECTOR,
+  PRODUCT_UPDATE_FORM_ID
+} from "./consts";
 import {
   createImageReorderHandler,
   createImageUploadHandler,

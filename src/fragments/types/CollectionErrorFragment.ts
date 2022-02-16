@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { CollectionErrorCode } from "./../../types/globalTypes";
+import { CollectionErrorCode } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL fragment: CollectionErrorFragment

@@ -1,17 +1,14 @@
 import {
-  ProductTypeDetailsQuery,
-  ProductTypeListQuery,
-  ProductTypeQuery
-} from "@saleor/graphql";
-import { SearchProductTypesQuery } from "@saleor/graphql";
-import { RelayToFlat } from "@saleor/types";
-
-import {
   AttributeInputTypeEnum,
   AttributeTypeEnum,
+  ProductTypeDetailsQuery,
   ProductTypeKindEnum,
+  ProductTypeListQuery,
+  ProductTypeQuery,
+  SearchProductTypesQuery,
   WeightUnitsEnum
-} from "../types/globalTypes";
+} from "@saleor/graphql";
+import { RelayToFlat } from "@saleor/types";
 
 export const attributes: ProductTypeQuery["productType"]["productAttributes"] = [
   {

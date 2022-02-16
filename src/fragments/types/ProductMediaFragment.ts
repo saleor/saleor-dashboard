@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ProductMediaType } from "./../../types/globalTypes";
+import { ProductMediaType } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL fragment: ProductMediaFragment

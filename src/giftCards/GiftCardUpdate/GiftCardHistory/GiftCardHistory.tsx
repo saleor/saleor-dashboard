@@ -6,9 +6,11 @@ import Timeline, {
   TimelineAddNote,
   TimelineNote
 } from "@saleor/components/Timeline";
-import { useGiftCardAddNoteMutation } from "@saleor/graphql";
+import {
+  GiftCardEventsEnum,
+  useGiftCardAddNoteMutation
+} from "@saleor/graphql";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { GiftCardEventsEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

@@ -13,8 +13,7 @@ import {
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { MembersListUrlSortField } from "@saleor/permissionGroups/urls";
 import {
   extractPermissionCodes,

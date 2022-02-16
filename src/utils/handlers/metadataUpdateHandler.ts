@@ -1,8 +1,8 @@
 import { FetchResult } from "@apollo/client";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import { MetadataErrorFragment } from "@saleor/fragments/types/MetadataErrorFragment";
+import { MetadataInput } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
-import { MetadataInput } from "@saleor/types/globalTypes";
 import { arrayDiff } from "@saleor/utils/arrays";
 
 import {

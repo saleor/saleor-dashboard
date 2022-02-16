@@ -2,12 +2,14 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
-import { OrderErrorFragmentFragment } from "@saleor/graphql";
-import { OrderRefundDataQuery } from "@saleor/graphql";
+import {
+  FulfillmentStatus,
+  OrderErrorFragmentFragment,
+  OrderRefundDataQuery
+} from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { Backlink } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 

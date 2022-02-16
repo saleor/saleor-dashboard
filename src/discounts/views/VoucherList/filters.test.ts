@@ -1,10 +1,7 @@
 import { createFilterStructure } from "@saleor/discounts/components/VoucherListPage";
 import { VoucherListUrlFilters } from "@saleor/discounts/urls";
 import { date } from "@saleor/fixtures";
-import {
-  DiscountStatusEnum,
-  VoucherDiscountType
-} from "@saleor/types/globalTypes";
+import { DiscountStatusEnum, VoucherDiscountType } from "@saleor/graphql";
 import { getFilterQueryParams } from "@saleor/utils/filters";
 import { stringifyQs } from "@saleor/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";

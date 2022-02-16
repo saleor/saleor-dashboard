@@ -1,7 +1,4 @@
-/* eslint-disable sort-keys */
-
-import { OrderRefundDataQuery } from "@saleor/graphql";
-import { FulfillmentStatus } from "@saleor/types/globalTypes";
+import { FulfillmentStatus, OrderRefundDataQuery } from "@saleor/graphql";
 
 export const orderToRefund = (
   placeholder: string

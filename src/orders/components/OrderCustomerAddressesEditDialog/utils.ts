@@ -2,12 +2,12 @@ import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompl
 import {
   AccountErrorFragmentFragment,
   AddressFragmentFragment,
+  AddressTypeEnum,
   Node,
   OrderErrorFragmentFragment
 } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
 import { flatten } from "@saleor/misc";
-import { AddressTypeEnum } from "@saleor/types/globalTypes";
 
 import { getById } from "../OrderReturnPage/utils";
 import {

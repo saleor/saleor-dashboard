@@ -1,6 +1,4 @@
-import { HomeQuery } from "@saleor/graphql";
-
-import { OrderEventsEnum } from "../types/globalTypes";
+import { HomeQuery, OrderEventsEnum } from "@saleor/graphql";
 
 export const shop: (placeholderImage: string) => HomeQuery = (
   placeholderImage: string

@@ -1,4 +1,9 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
+import {
+  FulfillmentStatus,
+  OrderStatus,
+  PaymentChargeStatusEnum
+} from "@saleor/graphql";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -9,11 +14,6 @@ import {
   order as orderFixture,
   shop as shopFixture
 } from "../../../orders/fixtures";
-import {
-  FulfillmentStatus,
-  OrderStatus,
-  PaymentChargeStatusEnum
-} from "../../../types/globalTypes";
 import Decorator from "../../Decorator";
 
 const order = orderFixture(placeholderImage);

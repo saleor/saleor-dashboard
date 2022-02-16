@@ -2,10 +2,10 @@ import { ApolloQueryResult } from "@apollo/client";
 import { IMessageContext } from "@saleor/components/messages";
 import {
   CheckExportFileStatusQuery,
-  CheckOrderInvoicesStatusQuery
+  CheckOrderInvoicesStatusQuery,
+  JobStatusEnum
 } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
-import { JobStatusEnum } from "@saleor/types/globalTypes";
 import { IntlShape } from "react-intl";
 
 import messages from "./messages";

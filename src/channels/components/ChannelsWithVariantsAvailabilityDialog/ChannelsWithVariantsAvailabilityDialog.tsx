@@ -11,8 +11,7 @@ import {
 } from "@saleor/products/views/ProductUpdate/utils";
 import { DialogProps } from "@saleor/types";
 import React from "react";
-import { useIntl } from "react-intl";
-import { defineMessages } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 import { useChannelsSearch } from "../../../components/ChannelsAvailabilityDialog/utils";
 import ChannelsAvailabilityContentWrapper from "../../../components/ChannelsAvailabilityDialogWrapper/ChannelsAvailabilityDialogWrapper";

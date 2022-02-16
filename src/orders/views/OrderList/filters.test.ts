@@ -1,13 +1,10 @@
 import { date } from "@saleor/fixtures";
+import { OrderStatusFilter, PaymentChargeStatusEnum } from "@saleor/graphql";
 import {
   createFilterStructure,
   OrderFilterGiftCard
 } from "@saleor/orders/components/OrderListPage";
 import { OrderListUrlFilters } from "@saleor/orders/urls";
-import {
-  OrderStatusFilter,
-  PaymentChargeStatusEnum
-} from "@saleor/types/globalTypes";
 import { getFilterQueryParams } from "@saleor/utils/filters";
 import { stringifyQs } from "@saleor/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";

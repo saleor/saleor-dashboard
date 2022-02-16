@@ -20,12 +20,11 @@ import {
   ProductErrorWithAttributesFragmentFragment,
   ProductVariantFragment,
   SearchAttributeValuesQuery,
+  SearchPagesQuery,
+  SearchProductsQuery,
   WarehouseFragmentFragment
 } from "@saleor/graphql";
-import { SearchPagesQuery } from "@saleor/graphql";
-import { SearchProductsQuery } from "@saleor/graphql";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";

@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { DiscountErrorCode } from "./../../types/globalTypes";
+import { DiscountErrorCode } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL fragment: DiscountErrorFragment

@@ -1,4 +1,5 @@
 import {
+  OrderErrorCode,
   useFulfillmentReturnProductsMutation,
   useOrderDetailsQuery
 } from "@saleor/graphql";
@@ -9,10 +10,8 @@ import { extractMutationErrors } from "@saleor/misc";
 import OrderReturnPage from "@saleor/orders/components/OrderReturnPage";
 import { OrderReturnFormData } from "@saleor/orders/components/OrderReturnPage/form";
 import { orderUrl } from "@saleor/orders/urls";
-import { OrderErrorCode } from "@saleor/types/globalTypes";
 import React from "react";
-import { defineMessages } from "react-intl";
-import { useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 import ReturnFormDataParser from "./utils";
 

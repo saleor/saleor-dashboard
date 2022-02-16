@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { TimePeriodTypeEnum } from "./../../types/globalTypes";
+import { TimePeriodTypeEnum } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL fragment: TimePeriod

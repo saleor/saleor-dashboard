@@ -1,12 +1,9 @@
-/* eslint-disable sort-keys */
 import {
+  AttributeInputTypeEnum,
+  AttributeTypeEnum,
   PageTypeDetailsFragmentFragment,
   PageTypeFragmentFragment
 } from "@saleor/graphql";
-import {
-  AttributeInputTypeEnum,
-  AttributeTypeEnum
-} from "@saleor/types/globalTypes";
 
 export const pageTypes: PageTypeFragmentFragment[] = [
   {

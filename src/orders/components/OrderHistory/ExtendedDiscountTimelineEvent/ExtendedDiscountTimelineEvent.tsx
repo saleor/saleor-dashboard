@@ -3,9 +3,8 @@ import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { TimelineEvent } from "@saleor/components/Timeline";
 import { TitleElement } from "@saleor/components/Timeline/TimelineEventHeader";
-import { OrderEventFragmentFragment } from "@saleor/graphql";
+import { OrderEventFragmentFragment, OrderEventsEnum } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { OrderEventsEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 

@@ -1,7 +1,12 @@
 import { MetadataFormData } from "@saleor/components/Metadata";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { Task } from "@saleor/containers/BackgroundTasks/types";
-import { useOrderConfirmMutation, useOrderDetailsQuery } from "@saleor/graphql";
+import {
+  JobStatusEnum,
+  OrderStatus,
+  useOrderConfirmMutation,
+  useOrderDetailsQuery
+} from "@saleor/graphql";
 import useBackgroundTask from "@saleor/hooks/useBackgroundTask";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -16,7 +21,6 @@ import {
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { JobStatusEnum, OrderStatus } from "../../../types/globalTypes";
 import OrderOperations from "../../containers/OrderOperations";
 import {
   orderListUrl,

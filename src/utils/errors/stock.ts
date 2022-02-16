@@ -1,6 +1,6 @@
 import { BulkStockErrorFragment } from "@saleor/fragments/types/BulkStockErrorFragment";
 import { StockErrorFragment } from "@saleor/fragments/types/StockErrorFragment";
-import { StockErrorCode } from "@saleor/types/globalTypes";
+import { StockErrorCode } from "@saleor/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";

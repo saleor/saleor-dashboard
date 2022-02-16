@@ -4,8 +4,11 @@ import {
   AttributeInputData
 } from "@saleor/components/Attributes";
 import {
+  AttributeEntityTypeEnum,
+  AttributeInputTypeEnum,
   AttributeValueDeleteMutation,
   AttributeValueDeleteMutationVariables,
+  AttributeValueInput,
   FileUploadMutation,
   FileUploadMutationVariables,
   PageSelectedAttributeFragment,
@@ -18,11 +21,6 @@ import {
   FormsetData
 } from "@saleor/hooks/useFormset";
 import { FetchMoreProps, ReorderEvent } from "@saleor/types";
-import {
-  AttributeEntityTypeEnum,
-  AttributeInputTypeEnum,
-  AttributeValueInput
-} from "@saleor/types/globalTypes";
 import { move, toggle } from "@saleor/utils/lists";
 
 import { getFileValuesToUploadFromAttributes, isFileValueUnused } from "./data";

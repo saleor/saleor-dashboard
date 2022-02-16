@@ -1,6 +1,6 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
 import { adminUserPermissions } from "@saleor/fixtures";
-import { PermissionEnum } from "@saleor/types/globalTypes";
+import { PermissionEnum } from "@saleor/graphql";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { storiesOf } from "@storybook/react";
 import React from "react";

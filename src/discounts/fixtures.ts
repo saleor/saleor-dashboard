@@ -1,16 +1,13 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
 import {
+  DiscountValueTypeEnum,
   SaleDetailsFragmentFragment,
   SaleFragmentFragment,
-  VoucherDetailsFragmentFragment,
-  VoucherFragmentFragment
-} from "@saleor/graphql";
-
-import {
-  DiscountValueTypeEnum,
   SaleType,
+  VoucherDetailsFragmentFragment,
+  VoucherFragmentFragment,
   VoucherTypeEnum
-} from "../types/globalTypes";
+} from "@saleor/graphql";
 
 export const saleList: SaleFragmentFragment[] = [
   {

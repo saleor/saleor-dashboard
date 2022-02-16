@@ -12,10 +12,14 @@ import Savebar from "@saleor/components/Savebar";
 import { ShippingChannelsErrorFragment } from "@saleor/fragments/types/ShippingChannelsErrorFragment";
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
 import { ShippingMethodTypeFragment_postalCodeRules } from "@saleor/fragments/types/ShippingMethodTypeFragment";
-import { ShippingZoneQuery } from "@saleor/graphql";
+import {
+  PermissionEnum,
+  PostalCodeRuleInclusionTypeEnum,
+  ShippingMethodTypeEnum,
+  ShippingZoneQuery
+} from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
 import OrderValue from "@saleor/shipping/components/OrderValue";
 import OrderWeight from "@saleor/shipping/components/OrderWeight";
@@ -24,11 +28,6 @@ import ShippingMethodProducts from "@saleor/shipping/components/ShippingMethodPr
 import ShippingRateInfo from "@saleor/shipping/components/ShippingRateInfo";
 import { createChannelsChangeHandler } from "@saleor/shipping/handlers";
 import { ListActions, ListProps } from "@saleor/types";
-import {
-  PermissionEnum,
-  PostalCodeRuleInclusionTypeEnum,
-  ShippingMethodTypeEnum
-} from "@saleor/types/globalTypes";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";

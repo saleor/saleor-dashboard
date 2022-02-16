@@ -10,19 +10,18 @@ import Savebar from "@saleor/components/Savebar";
 import { ListSettingsUpdate } from "@saleor/components/TablePagination";
 import { AttributeDetailsFragment } from "@saleor/fragments/types/AttributeDetailsFragment";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
-import { AttributeDetailsQuery } from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
-import { maybe } from "@saleor/misc";
-import { ListSettings, ReorderAction } from "@saleor/types";
 import {
+  AttributeDetailsQuery,
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
   AttributeTypeEnum,
   MeasurementUnitsEnum
-} from "@saleor/types/globalTypes";
+} from "@saleor/graphql";
+import { SubmitPromise } from "@saleor/hooks/useForm";
+import { sectionNames } from "@saleor/intl";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { maybe } from "@saleor/misc";
+import { ListSettings, ReorderAction } from "@saleor/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";

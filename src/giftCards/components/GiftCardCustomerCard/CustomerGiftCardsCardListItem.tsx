@@ -6,8 +6,7 @@ import { ExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/Gif
 import { CustomerGiftCardFragment } from "@saleor/graphql";
 import * as React from "react";
 import { useState } from "react";
-import { FormattedMessage } from "react-intl";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import GiftCardDeleteDialogContent from "../GiftCardDeleteDialog/GiftCardDeleteDialogContent";
 import useGiftCardSingleDelete from "../GiftCardDeleteDialog/useGiftCardSingleDelete";

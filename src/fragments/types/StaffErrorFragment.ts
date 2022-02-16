@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AccountErrorCode } from "./../../types/globalTypes";
+import { AccountErrorCode } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL fragment: StaffErrorFragment

@@ -4,6 +4,7 @@ import {
   useFulfillOrderMutation,
   useOrderFulfillDataQuery,
   useOrderFulfillSettingsQuery,
+  WarehouseClickAndCollectOptionEnum,
   WarehouseFragmentFragment
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -14,8 +15,6 @@ import { orderUrl } from "@saleor/orders/urls";
 import { getWarehousesFromOrderLines } from "@saleor/orders/utils/data";
 import React from "react";
 import { useIntl } from "react-intl";
-
-import { WarehouseClickAndCollectOptionEnum } from "../../../types/globalTypes";
 
 export interface OrderFulfillProps {
   orderId: string;

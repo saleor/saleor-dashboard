@@ -1,4 +1,5 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { CountryCode } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
@@ -8,7 +9,6 @@ import {
   findValueInEnum,
   getMutationStatus
 } from "@saleor/misc";
-import { CountryCode } from "@saleor/types/globalTypes";
 import WarehouseCreatePage, {
   WarehouseCreatePageFormData
 } from "@saleor/warehouses/components/WarehouseCreatePage";

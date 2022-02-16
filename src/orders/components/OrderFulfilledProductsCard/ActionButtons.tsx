@@ -1,7 +1,7 @@
 import { CardActions, Typography } from "@material-ui/core";
+import { FulfillmentStatus } from "@saleor/graphql";
 import { buttonMessages, commonMessages } from "@saleor/intl";
 import { Button } from "@saleor/macaw-ui";
-import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

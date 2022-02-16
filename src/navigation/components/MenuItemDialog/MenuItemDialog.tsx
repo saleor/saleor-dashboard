@@ -11,9 +11,11 @@ import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { MenuErrorFragment } from "@saleor/fragments/types/MenuErrorFragment";
-import { SearchCategoriesQuery } from "@saleor/graphql";
-import { SearchCollectionsQuery } from "@saleor/graphql";
-import { SearchPagesQuery } from "@saleor/graphql";
+import {
+  SearchCategoriesQuery,
+  SearchCollectionsQuery,
+  SearchPagesQuery
+} from "@saleor/graphql";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";

@@ -1,4 +1,4 @@
-import { WarehouseFilterInput } from "@saleor/types/globalTypes";
+import { WarehouseFilterInput } from "@saleor/graphql";
 
 import {
   createFilterTabUtils,

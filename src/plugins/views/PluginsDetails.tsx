@@ -2,13 +2,16 @@ import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { PluginConfigurationFragment_configuration } from "@saleor/fragments/types/PluginConfigurationFragment";
-import { usePluginQuery, usePluginUpdateMutation } from "@saleor/graphql";
+import {
+  ConfigurationItemInput,
+  usePluginQuery,
+  usePluginUpdateMutation
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages } from "@saleor/intl";
 import { extractMutationErrors } from "@saleor/misc";
-import { ConfigurationItemInput } from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -24,8 +27,7 @@ import {
   PluginUrlQueryParams
 } from "../urls";
 import { isSecretField } from "../utils";
-import { isPluginGlobal } from "./utils";
-import { getConfigByChannelId } from "./utils";
+import { getConfigByChannelId, isPluginGlobal } from "./utils";
 
 export interface PluginsDetailsProps {
   id: string;

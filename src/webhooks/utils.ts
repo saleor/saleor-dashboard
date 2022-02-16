@@ -3,7 +3,7 @@ import { WebhookFragment } from "@saleor/fragments/types/WebhookFragment";
 import {
   WebhookEventTypeAsyncEnum,
   WebhookEventTypeSyncEnum
-} from "@saleor/types/globalTypes";
+} from "@saleor/graphql";
 
 export function isUnnamed(webhook: WebhookFragment): boolean {
   return ["", null].includes(webhook?.name);

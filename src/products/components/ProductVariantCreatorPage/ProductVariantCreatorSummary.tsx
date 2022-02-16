@@ -11,10 +11,10 @@ import PriceField from "@saleor/components/PriceField";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import {
   BulkProductErrorFragmentFragment,
-  ProductFragment
+  ProductFragment,
+  ProductVariantBulkCreateInput
 } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import { ProductVariantBulkCreateInput } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import { getBulkProductErrorMessage } from "@saleor/utils/errors/product";
 import classNames from "classnames";

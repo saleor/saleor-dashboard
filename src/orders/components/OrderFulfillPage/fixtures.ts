@@ -1,5 +1,3 @@
-/* eslint-disable sort-keys */
-
 import * as placeholderImage from "@assets/images/sample-product.jpg";
 import { OrderFulfillDataQuery } from "@saleor/graphql";
 import { warehouseList } from "@saleor/warehouses/fixtures";

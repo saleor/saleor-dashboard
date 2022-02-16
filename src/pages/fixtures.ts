@@ -1,9 +1,8 @@
-/* eslint-disable sort-keys */
 import {
+  AttributeInputTypeEnum,
   PageDetailsFragmentFragment,
   PageFragmentFragment
 } from "@saleor/graphql";
-import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
 

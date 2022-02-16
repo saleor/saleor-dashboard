@@ -33,10 +33,10 @@ import {
   Button,
   DeleteIcon,
   IconButton,
+  ICONBUTTON_SIZE,
   makeStyles,
   PlusIcon
 } from "@saleor/macaw-ui";
-import { ICONBUTTON_SIZE } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 import createNonNegativeValueChangeHandler from "@saleor/utils/handlers/nonNegativeValueChangeHandler";

@@ -16,9 +16,11 @@ import { AttributeInput } from "@saleor/components/Attributes";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
-import { SearchPagesQuery } from "@saleor/graphql";
-import { SearchProductsQuery } from "@saleor/graphql";
-import { SearchWarehousesQuery } from "@saleor/graphql";
+import {
+  SearchPagesQuery,
+  SearchProductsQuery,
+  SearchWarehousesQuery
+} from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,

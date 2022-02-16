@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { InvoiceErrorCode } from "./../../types/globalTypes";
+import { InvoiceErrorCode } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL fragment: InvoiceErrorFragment

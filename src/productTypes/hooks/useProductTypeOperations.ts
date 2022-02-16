@@ -1,16 +1,17 @@
 import { ProductTypeDetailsFragment_productAttributes } from "@saleor/fragments/types/ProductTypeDetailsFragment";
 import {
   AssignProductAttributeMutation,
+  ProductAttributeType,
   ProductTypeAttributeReorderMutation,
   ProductTypeDeleteMutation,
   ProductTypeDetailsFragmentFragment,
+  ReorderInput,
   UnassignProductAttributeMutation,
   useAssignProductAttributeMutation,
   useProductTypeAttributeReorderMutation,
   useProductTypeDeleteMutation,
   useUnassignProductAttributeMutation
 } from "@saleor/graphql";
-import { ProductAttributeType, ReorderInput } from "@saleor/types/globalTypes";
 
 import { getMutationProviderData } from "../../misc";
 

@@ -1,15 +1,13 @@
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import {
+  AttributeInputTypeEnum,
   ProductFragment,
   ProductListQuery,
-  ProductVariantCreateDataQuery
+  ProductMediaType,
+  ProductVariantCreateDataQuery,
+  WeightUnitsEnum
 } from "@saleor/graphql";
 import { RelayToFlat } from "@saleor/types";
-import {
-  AttributeInputTypeEnum,
-  ProductMediaType,
-  WeightUnitsEnum
-} from "@saleor/types/globalTypes";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";

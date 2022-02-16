@@ -1,7 +1,7 @@
 import { address } from "@saleor/fixtures";
+import { WarehouseClickAndCollectOptionEnum } from "@saleor/graphql";
 
 import { shippingZones } from "../shipping/fixtures";
-import { WarehouseClickAndCollectOptionEnum } from "./../types/globalTypes";
 import { WarehouseDetails_warehouse } from "./types/WarehouseDetails";
 import { WarehouseList_warehouses_edges_node } from "./types/WarehouseList";
 

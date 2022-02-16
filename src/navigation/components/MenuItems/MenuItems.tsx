@@ -4,8 +4,13 @@ import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
 import { MenuDetailsFragmentFragment } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
-import { Button, DeleteIcon, IconButton, useTheme } from "@saleor/macaw-ui";
-import { makeStyles } from "@saleor/macaw-ui";
+import {
+  Button,
+  DeleteIcon,
+  IconButton,
+  makeStyles,
+  useTheme
+} from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

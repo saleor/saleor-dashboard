@@ -1,11 +1,11 @@
 import { AddressTypeInput } from "@saleor/customers/types";
 import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
-import { transformFormToAddressInput } from "@saleor/misc";
 import {
   AccountErrorCode,
   AddressInput,
   AddressTypeEnum
-} from "@saleor/types/globalTypes";
+} from "@saleor/graphql";
+import { transformFormToAddressInput } from "@saleor/misc";
 import { add, remove } from "@saleor/utils/lists";
 import { useState } from "react";
 

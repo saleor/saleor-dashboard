@@ -1,10 +1,7 @@
 import { IFilter } from "@saleor/components/Filter";
+import { ProductTypeConfigurable, ProductTypeEnum } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { FilterOpts } from "@saleor/types";
-import {
-  ProductTypeConfigurable,
-  ProductTypeEnum
-} from "@saleor/types/globalTypes";
 import { createOptionsField } from "@saleor/utils/filters/fields";
 import { defineMessages, IntlShape } from "react-intl";
 

@@ -10,9 +10,9 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";
-import { OrderErrorFragmentFragment } from "@saleor/graphql";
 import {
   OrderDetailsFragmentFragment,
+  OrderErrorFragmentFragment,
   OrderRefundDataQuery
 } from "@saleor/graphql";
 import { Button, makeStyles } from "@saleor/macaw-ui";

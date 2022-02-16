@@ -15,16 +15,15 @@ import VisibilityCard from "@saleor/components/VisibilityCard";
 import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
 import {
   PageDetailsFragmentFragment,
-  SearchAttributeValuesQuery
+  SearchAttributeValuesQuery,
+  SearchPagesQuery,
+  SearchPageTypesQuery,
+  SearchProductsQuery
 } from "@saleor/graphql";
-import { SearchPagesQuery } from "@saleor/graphql";
-import { SearchPageTypesQuery } from "@saleor/graphql";
-import { SearchProductsQuery } from "@saleor/graphql";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import { mapNodeToChoice } from "@saleor/utils/maps";
 import React from "react";

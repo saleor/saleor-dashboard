@@ -1,10 +1,10 @@
 import { customAppUrl } from "@saleor/apps/urls";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { WebhookEventTypeAsyncEnum } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import { WebhookEventTypeAsyncEnum } from "@saleor/types/globalTypes";
 import { WebhookUpdate } from "@saleor/webhooks/types/WebhookUpdate";
 import React from "react";
 import { useIntl } from "react-intl";

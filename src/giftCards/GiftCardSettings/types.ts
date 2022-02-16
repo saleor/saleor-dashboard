@@ -1,4 +1,4 @@
-import { TimePeriodTypeEnum } from "@saleor/types/globalTypes";
+import { TimePeriodTypeEnum } from "@saleor/graphql";
 
 export interface GiftCardSettingsFormData {
   expiryPeriodActive: boolean;

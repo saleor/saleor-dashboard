@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { MetadataInput, MetadataErrorCode } from "./../../../types/globalTypes";
+import { MetadataInput, MetadataErrorCode } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL mutation operation: UpdatePrivateMetadata

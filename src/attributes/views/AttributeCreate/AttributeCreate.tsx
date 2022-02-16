@@ -1,4 +1,5 @@
 import {
+  AttributeErrorCode,
   AttributeErrorFragmentFragment,
   useAttributeCreateMutation
 } from "@saleor/graphql";
@@ -8,7 +9,6 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getMutationErrors, getStringOrPlaceholder } from "@saleor/misc";
 import { ListViews, ReorderEvent } from "@saleor/types";
-import { AttributeErrorCode } from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {

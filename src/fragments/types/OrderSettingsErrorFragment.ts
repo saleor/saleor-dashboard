@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderSettingsErrorCode } from "./../../types/globalTypes";
+import { OrderSettingsErrorCode } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL fragment: OrderSettingsErrorFragment

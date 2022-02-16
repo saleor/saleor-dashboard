@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { PageErrorCode } from "./../../types/globalTypes";
+import { PageErrorCode } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL fragment: PageErrorFragment

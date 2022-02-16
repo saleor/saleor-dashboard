@@ -1,12 +1,12 @@
 import { ShippingZoneFragment } from "@saleor/fragments/types/ShippingZoneFragment";
-import { SearchProductsQuery, ShippingZoneQuery } from "@saleor/graphql";
-import { RelayToFlat } from "@saleor/types";
-
 import {
   PostalCodeRuleInclusionTypeEnum,
+  SearchProductsQuery,
   ShippingMethodTypeEnum,
+  ShippingZoneQuery,
   WeightUnitsEnum
-} from "../types/globalTypes";
+} from "@saleor/graphql";
+import { RelayToFlat } from "@saleor/types";
 
 export const shippingZones: ShippingZoneFragment[] = [
   {

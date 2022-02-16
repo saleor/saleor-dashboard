@@ -9,8 +9,7 @@ import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
 import { areAllChannelVariantsSelected } from "@saleor/products/views/ProductUpdate/utils";
 import React from "react";
-import { useIntl } from "react-intl";
-import { defineMessages } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 const useExpanderStyles = makeStyles(
   theme => ({

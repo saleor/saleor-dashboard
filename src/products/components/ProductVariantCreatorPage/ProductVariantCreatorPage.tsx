@@ -3,6 +3,7 @@ import Container from "@saleor/components/Container";
 import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
 import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
+import { ProductVariantBulkCreateInput } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useWizard from "@saleor/hooks/useWizard";
 import { Button, makeStyles } from "@saleor/macaw-ui";
@@ -10,7 +11,6 @@ import { validatePrice } from "@saleor/products/utils/validation";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
-import { ProductVariantBulkCreateInput } from "../../../types/globalTypes";
 import { createInitialForm, ProductVariantCreateFormData } from "./form";
 import ProductVariantCreatorContent, {
   ProductVariantCreatorContentProps

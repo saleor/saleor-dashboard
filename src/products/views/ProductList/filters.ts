@@ -4,6 +4,7 @@ import {
   InitialProductFilterCategoriesQuery,
   InitialProductFilterCollectionsQuery,
   InitialProductFilterProductTypesQuery,
+  ProductFilterInput,
   SearchAttributeValuesQuery,
   SearchAttributeValuesQueryVariables,
   SearchCategoriesQuery,
@@ -11,7 +12,8 @@ import {
   SearchCollectionsQuery,
   SearchCollectionsQueryVariables,
   SearchProductTypesQuery,
-  SearchProductTypesQueryVariables
+  SearchProductTypesQueryVariables,
+  StockAvailability
 } from "@saleor/graphql";
 import { UseSearchResult } from "@saleor/hooks/makeSearch";
 import { findValueInEnum, maybe } from "@saleor/misc";
@@ -29,10 +31,6 @@ import isArray from "lodash/isArray";
 import moment from "moment-timezone";
 
 import { IFilterElement } from "../../../components/Filter";
-import {
-  ProductFilterInput,
-  StockAvailability
-} from "../../../types/globalTypes";
 import {
   createFilterTabUtils,
   createFilterUtils,

@@ -20,8 +20,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import { PillLink } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { productUrl } from "@saleor/products/urls";
-import React from "react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link as RouterLink } from "react-router-dom";
 

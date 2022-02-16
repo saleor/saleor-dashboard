@@ -11,13 +11,12 @@ import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragme
 import CustomerGiftCardsCard from "@saleor/giftCards/components/GiftCardCustomerCard/CustomerGiftCardsCard";
 import {
   AccountErrorFragmentFragment,
-  CustomerDetailsQuery
+  CustomerDetailsQuery,
+  PermissionEnum
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
-import { PermissionEnum } from "@saleor/types/globalTypes";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";

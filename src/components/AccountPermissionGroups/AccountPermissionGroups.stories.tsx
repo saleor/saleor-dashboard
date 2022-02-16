@@ -1,8 +1,7 @@
 import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
-import { SearchPermissionGroupsQuery } from "@saleor/graphql";
+import { AccountErrorCode, SearchPermissionGroupsQuery } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
 import { RelayToFlat } from "@saleor/types";
-import { AccountErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

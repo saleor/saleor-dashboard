@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { WarehouseFilterInput, WarehouseSortingInput } from "./../../types/globalTypes";
+import { WarehouseFilterInput, WarehouseSortingInput } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL query operation: WarehouseList

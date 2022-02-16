@@ -9,15 +9,18 @@ import {
 } from "@material-ui/core";
 import ErrorIcon from "@material-ui/icons/Error";
 import CardTitle from "@saleor/components/CardTitle";
-import { AppsInstallationsQuery } from "@saleor/graphql";
-import { DeleteIcon, ResponsiveTable } from "@saleor/macaw-ui";
-import { Button, IconButton } from "@saleor/macaw-ui";
+import { AppsInstallationsQuery, JobStatusEnum } from "@saleor/graphql";
+import {
+  Button,
+  DeleteIcon,
+  IconButton,
+  ResponsiveTable
+} from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { JobStatusEnum } from "../../../types/globalTypes";
 import { useStyles } from "../../styles";
 
 export interface AppsInProgressProps {

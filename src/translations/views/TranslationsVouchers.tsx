@@ -1,4 +1,5 @@
 import {
+  LanguageCodeEnum,
   useUpdateVoucherTranslationsMutation,
   useVoucherTranslationDetailsQuery
 } from "@saleor/graphql";
@@ -11,7 +12,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, maybe } from "../../misc";
-import { LanguageCodeEnum } from "../../types/globalTypes";
 import TranslationsVouchersPage from "../components/TranslationsVouchersPage";
 import { TranslationField, TranslationInputFieldName } from "../types";
 import {

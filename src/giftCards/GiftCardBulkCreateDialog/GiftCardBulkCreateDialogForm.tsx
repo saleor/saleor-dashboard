@@ -8,13 +8,13 @@ import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import DialogButtons from "@saleor/components/ActionDialog/DialogButtons";
 import CardSpacer from "@saleor/components/CardSpacer";
 import GiftCardTagInput from "@saleor/giftCards/components/GiftCardTagInput";
-import { useGiftCardSettingsQuery } from "@saleor/graphql";
-import useForm from "@saleor/hooks/useForm";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import {
   GiftCardSettingsExpiryTypeEnum,
-  TimePeriodTypeEnum
-} from "@saleor/types/globalTypes";
+  TimePeriodTypeEnum,
+  useGiftCardSettingsQuery
+} from "@saleor/graphql";
+import useForm from "@saleor/hooks/useForm";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 

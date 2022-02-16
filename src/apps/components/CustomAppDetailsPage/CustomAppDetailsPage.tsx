@@ -13,8 +13,11 @@ import {
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink, Button } from "@saleor/macaw-ui";
+import {
+  Backlink,
+  Button,
+  ConfirmButtonTransitionState
+} from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAppErrorMessage from "@saleor/utils/errors/app";
 import WebhooksList from "@saleor/webhooks/components/WebhooksList";

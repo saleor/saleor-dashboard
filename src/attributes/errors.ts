@@ -1,5 +1,5 @@
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
-import { AttributeErrorCode } from "@saleor/types/globalTypes";
+import { AttributeErrorCode } from "@saleor/graphql";
 import getAttributeErrorMessage from "@saleor/utils/errors/attribute";
 import { defineMessages, IntlShape } from "react-intl";
 

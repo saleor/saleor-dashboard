@@ -1,9 +1,10 @@
 import { ChannelPriceData } from "@saleor/channels/utils";
 import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
-import { ProductVariantAttributesFragmentFragment } from "@saleor/graphql";
-
-import { ProductVariantBulkCreateInput } from "../../../types/globalTypes";
+import {
+  ProductVariantAttributesFragmentFragment,
+  ProductVariantBulkCreateInput
+} from "@saleor/graphql";
 
 export interface ChannelPrice {
   channelId: string;

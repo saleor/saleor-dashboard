@@ -1,7 +1,5 @@
-import { HomeQuery } from "@saleor/graphql";
+import { HomeQuery, OrderEventsEnum } from "@saleor/graphql";
 import { defineMessages, IntlShape } from "react-intl";
-
-import { OrderEventsEnum } from "../../../types/globalTypes";
 
 const messages = defineMessages({
   draft: {

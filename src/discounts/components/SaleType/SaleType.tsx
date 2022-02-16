@@ -3,9 +3,9 @@ import CardTitle from "@saleor/components/CardTitle";
 import RadioGroupField, {
   RadioGroupFieldChoice
 } from "@saleor/components/RadioGroupField";
+import { SaleType as SaleTypeEnum } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
-import { SaleType as SaleTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 

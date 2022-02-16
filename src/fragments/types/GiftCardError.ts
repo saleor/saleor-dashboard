@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { GiftCardErrorCode } from "./../../types/globalTypes";
+import { GiftCardErrorCode } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL fragment: GiftCardError

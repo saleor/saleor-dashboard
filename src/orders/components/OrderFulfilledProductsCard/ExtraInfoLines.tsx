@@ -1,11 +1,12 @@
 import { TableCell, TableRow, Typography } from "@material-ui/core";
-import { OrderDetailsFragmentFragment } from "@saleor/graphql";
+import {
+  FulfillmentStatus,
+  OrderDetailsFragmentFragment
+} from "@saleor/graphql";
 import { getStringOrPlaceholder } from "@saleor/misc";
-import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import classNames from "classnames";
 import React from "react";
-import { useIntl } from "react-intl";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { extraInfoMessages } from "./messages";
 import useStyles from "./styles";

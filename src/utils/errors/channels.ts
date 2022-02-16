@@ -1,5 +1,5 @@
 import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
-import { ChannelErrorCode } from "@saleor/types/globalTypes";
+import { ChannelErrorCode } from "@saleor/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";

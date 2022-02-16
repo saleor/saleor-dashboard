@@ -9,7 +9,7 @@ import {
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import { ConfirmButton } from "@saleor/components/ConfirmButton";
 import CustomerAddressChoiceCard from "@saleor/customers/components/CustomerAddressChoiceCard";
-import { AddressFragmentFragment } from "@saleor/graphql";
+import { AddressFragmentFragment, AddressTypeEnum } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
 import { buttonMessages } from "@saleor/intl";
 import {
@@ -17,7 +17,6 @@ import {
   ConfirmButtonTransitionState,
   SearchIcon
 } from "@saleor/macaw-ui";
-import { AddressTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

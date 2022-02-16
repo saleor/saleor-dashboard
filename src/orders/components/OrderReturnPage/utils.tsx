@@ -1,6 +1,8 @@
-import { OrderDetailsFragmentFragment } from "@saleor/graphql";
+import {
+  FulfillmentStatus,
+  OrderDetailsFragmentFragment
+} from "@saleor/graphql";
 import { Node } from "@saleor/types";
-import { FulfillmentStatus } from "@saleor/types/globalTypes";
 
 import { LineItemOptions } from "./form";
 

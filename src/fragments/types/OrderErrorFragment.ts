@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode, AddressTypeEnum } from "./../../types/globalTypes";
+import { OrderErrorCode, AddressTypeEnum } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL fragment: OrderErrorFragment

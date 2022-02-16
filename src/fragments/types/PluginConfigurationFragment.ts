@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ConfigurationTypeFieldEnum } from "./../../types/globalTypes";
+import { ConfigurationTypeFieldEnum } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL fragment: PluginConfigurationFragment

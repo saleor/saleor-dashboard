@@ -5,6 +5,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import {
   CategoryBulkDeleteMutation,
   CategoryDeleteMutation,
+  CategoryInput,
   CategoryUpdateMutation,
   useCategoryBulkDeleteMutation,
   useCategoryDeleteMutation,
@@ -34,7 +35,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { PAGINATE_BY } from "../../config";
 import { extractMutationErrors, maybe } from "../../misc";
 import { productAddUrl, productUrl } from "../../products/urls";
-import { CategoryInput } from "../../types/globalTypes";
 import {
   CategoryPageTab,
   CategoryUpdatePage

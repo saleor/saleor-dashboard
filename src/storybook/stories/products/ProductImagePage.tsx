@@ -1,5 +1,5 @@
 import placeholder from "@assets/images/placeholder1080x1080.png";
-import { ProductMediaType } from "@saleor/types/globalTypes";
+import { ProductMediaType } from "@saleor/graphql";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

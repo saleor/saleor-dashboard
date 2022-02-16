@@ -1,8 +1,5 @@
+import { ProductTypeConfigurable, ProductTypeEnum } from "@saleor/graphql";
 import { ProductTypeListUrlSortField } from "@saleor/productTypes/urls";
-import {
-  ProductTypeConfigurable,
-  ProductTypeEnum
-} from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

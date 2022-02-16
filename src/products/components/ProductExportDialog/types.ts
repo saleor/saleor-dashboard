@@ -1,4 +1,4 @@
-import { ExportScope, FileTypesEnum } from "@saleor/types/globalTypes";
+import { ExportScope, FileTypesEnum } from "@saleor/graphql";
 
 export interface ExportSettingsInput {
   scope: ExportScope;

@@ -1,5 +1,6 @@
 import { OutputData } from "@editorjs/editorjs";
 import {
+  LanguageCodeEnum,
   usePageTranslationDetailsQuery,
   useUpdateAttributeValueTranslationsMutation,
   useUpdatePageTranslationsMutation
@@ -13,7 +14,6 @@ import { stringifyQs } from "@saleor/utils/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { LanguageCodeEnum } from "../../types/globalTypes";
 import TranslationsPagesPage from "../components/TranslationsPagesPage";
 import { PageTranslationInputFieldName, TranslationField } from "../types";
 import {

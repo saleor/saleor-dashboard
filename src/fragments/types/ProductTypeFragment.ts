@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ProductTypeKindEnum } from "./../../types/globalTypes";
+import { ProductTypeKindEnum } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL fragment: ProductTypeFragment

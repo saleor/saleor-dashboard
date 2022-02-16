@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { VoucherTypeEnum, DiscountValueTypeEnum } from "./../../types/globalTypes";
+import { VoucherTypeEnum, DiscountValueTypeEnum } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL fragment: VoucherFragment

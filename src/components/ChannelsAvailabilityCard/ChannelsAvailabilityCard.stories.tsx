@@ -1,9 +1,9 @@
 import { createChannelsDataFromProduct } from "@saleor/channels/utils";
 import { User } from "@saleor/fragments/types/User";
+import { PermissionEnum } from "@saleor/graphql";
 import { product } from "@saleor/products/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
 import UserDecorator from "@saleor/storybook/UserDecorator";
-import { PermissionEnum } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

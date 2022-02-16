@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { DiscountValueTypeEnum } from "./../../types/globalTypes";
+import { DiscountValueTypeEnum } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL fragment: OrderLineFragment

@@ -5,13 +5,13 @@ import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
 import SingleSelectField from "@saleor/components/SingleSelectField";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
-import { UseFormResult } from "@saleor/hooks/useForm";
-import { commonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum
-} from "@saleor/types/globalTypes";
+} from "@saleor/graphql";
+import { UseFormResult } from "@saleor/hooks/useForm";
+import { commonMessages } from "@saleor/intl";
+import { makeStyles } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAttributeErrorMessage from "@saleor/utils/errors/attribute";
 import React from "react";

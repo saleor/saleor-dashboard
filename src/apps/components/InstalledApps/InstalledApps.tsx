@@ -9,8 +9,12 @@ import {
 import CardTitle from "@saleor/components/CardTitle";
 import TablePagination from "@saleor/components/TablePagination";
 import { AppsListQuery } from "@saleor/graphql";
-import { DeleteIcon, ResponsiveTable } from "@saleor/macaw-ui";
-import { Button, IconButton } from "@saleor/macaw-ui";
+import {
+  Button,
+  DeleteIcon,
+  IconButton,
+  ResponsiveTable
+} from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { ListProps } from "@saleor/types";
 import React from "react";

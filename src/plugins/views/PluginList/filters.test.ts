@@ -1,9 +1,9 @@
+import { PluginConfigurationType } from "@saleor/graphql";
 import {
   createFilterStructure,
   PluginFilterKeys
 } from "@saleor/plugins/components/PluginsListPage";
 import { PluginListUrlFilters } from "@saleor/plugins/urls";
-import { PluginConfigurationType } from "@saleor/types/globalTypes";
 import { getFilterQueryParams } from "@saleor/utils/filters";
 import { stringifyQs } from "@saleor/utils/urls";
 import { getExistingKeys } from "@test/filters";

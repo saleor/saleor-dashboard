@@ -1,5 +1,6 @@
 import { OutputData } from "@editorjs/editorjs";
 import {
+  LanguageCodeEnum,
   useCategoryTranslationDetailsQuery,
   useUpdateCategoryTranslationsMutation
 } from "@saleor/graphql";
@@ -12,7 +13,6 @@ import { stringifyQs } from "@saleor/utils/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { LanguageCodeEnum } from "../../types/globalTypes";
 import TranslationsCategoriesPage from "../components/TranslationsCategoriesPage";
 import { TranslationField, TranslationInputFieldName } from "../types";
 import {

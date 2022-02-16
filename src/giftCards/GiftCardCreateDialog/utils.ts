@@ -1,6 +1,5 @@
 import { IMessage } from "@saleor/components/messages";
-import { GiftCardCreateMutation } from "@saleor/graphql";
-import { TimePeriodTypeEnum } from "@saleor/types/globalTypes";
+import { GiftCardCreateMutation, TimePeriodTypeEnum } from "@saleor/graphql";
 import commonErrorMessages from "@saleor/utils/errors/common";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";

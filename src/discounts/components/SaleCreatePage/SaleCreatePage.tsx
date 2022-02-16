@@ -10,18 +10,14 @@ import Savebar from "@saleor/components/Savebar";
 import { createSaleChannelsChangeHandler } from "@saleor/discounts/handlers";
 import { SALE_CREATE_FORM_ID } from "@saleor/discounts/views/SaleCreate/consts";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
+import { PermissionEnum, SaleType as SaleTypeEnum } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import {
-  PermissionEnum,
-  SaleType as SaleTypeEnum
-} from "../../../types/globalTypes";
 import DiscountDates from "../DiscountDates";
 import { ChannelSaleFormData } from "../SaleDetailsPage";
 import SaleInfo from "../SaleInfo";

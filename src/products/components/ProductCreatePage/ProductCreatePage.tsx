@@ -16,25 +16,24 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import SeoForm from "@saleor/components/SeoForm";
 import {
+  PermissionEnum,
   ProductChannelListingErrorFragmentFragment,
   ProductErrorWithAttributesFragmentFragment,
   ProductTypeQuery,
   SearchAttributeValuesQuery,
+  SearchCategoriesQuery,
+  SearchCollectionsQuery,
+  SearchPagesQuery,
+  SearchProductsQuery,
+  SearchProductTypesQuery,
+  SearchWarehousesQuery,
   TaxTypeFragmentFragment
 } from "@saleor/graphql";
-import { SearchCategoriesQuery } from "@saleor/graphql";
-import { SearchCollectionsQuery } from "@saleor/graphql";
-import { SearchPagesQuery } from "@saleor/graphql";
-import { SearchProductsQuery } from "@saleor/graphql";
-import { SearchProductTypesQuery } from "@saleor/graphql";
-import { SearchWarehousesQuery } from "@saleor/graphql";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
 import { getChoices } from "@saleor/products/utils/data";
-import { PermissionEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 

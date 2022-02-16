@@ -1,9 +1,10 @@
-import { ExtensionListQuery, useExtensionListQuery } from "@saleor/graphql";
-import { RelayToFlat } from "@saleor/types";
 import {
   AppExtensionMountEnum,
-  PermissionEnum
-} from "@saleor/types/globalTypes";
+  ExtensionListQuery,
+  PermissionEnum,
+  useExtensionListQuery
+} from "@saleor/graphql";
+import { RelayToFlat } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 
 import { AppData, useExternalApp } from "./components/ExternalAppContext";

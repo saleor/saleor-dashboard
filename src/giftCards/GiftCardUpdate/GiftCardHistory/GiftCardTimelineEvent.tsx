@@ -2,13 +2,11 @@ import { appPath } from "@saleor/apps/urls";
 import Link from "@saleor/components/Link";
 import { TimelineEvent } from "@saleor/components/Timeline";
 import { customerPath } from "@saleor/customers/urls";
-import { GiftCardEventFragment } from "@saleor/graphql";
+import { GiftCardEventFragment, GiftCardEventsEnum } from "@saleor/graphql";
 import { orderUrl } from "@saleor/orders/urls";
 import { staffMemberDetailsUrl } from "@saleor/staff/urls";
-import { GiftCardEventsEnum } from "@saleor/types/globalTypes";
 import React from "react";
-import { useIntl } from "react-intl";
-import { IntlShape } from "react-intl";
+import { IntlShape, useIntl } from "react-intl";
 
 import { giftCardHistoryTimelineMessages as timelineMessages } from "./messages";
 

@@ -8,6 +8,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import {
   AssignProductAttributeMutation,
+  ProductAttributeType,
   ProductTypeDeleteMutation,
   UnassignProductAttributeMutation,
   useProductAttributeAssignmentUpdateMutation,
@@ -23,7 +24,6 @@ import { getStringOrPlaceholder, maybe } from "@saleor/misc";
 import useProductTypeDelete from "@saleor/productTypes/hooks/useProductTypeDelete";
 import useProductTypeOperations from "@saleor/productTypes/hooks/useProductTypeOperations";
 import { ReorderEvent } from "@saleor/types";
-import { ProductAttributeType } from "@saleor/types/globalTypes";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import {

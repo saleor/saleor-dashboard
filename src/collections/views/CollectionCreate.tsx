@@ -4,6 +4,7 @@ import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import {
+  CollectionCreateInput,
   useCollectionChannelListingUpdateMutation,
   useCreateCollectionMutation
 } from "@saleor/graphql";
@@ -22,7 +23,6 @@ import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { CollectionCreateInput } from "../../types/globalTypes";
 import CollectionCreatePage from "../components/CollectionCreatePage/CollectionCreatePage";
 import { CollectionCreateData } from "../components/CollectionCreatePage/form";
 import {

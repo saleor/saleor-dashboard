@@ -3,8 +3,8 @@ import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import { GiftCardSettingsErrorFragment } from "@saleor/fragments/types/GiftCardSettingsErrorFragment";
 import { getGiftCardSettingsErrorMessage } from "@saleor/giftCards/GiftCardSettings/messages";
+import { TimePeriodTypeEnum } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
-import { TimePeriodTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

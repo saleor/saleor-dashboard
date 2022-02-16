@@ -3,6 +3,7 @@ import {
   createSortedChannelsDataFromProduct
 } from "@saleor/channels/utils";
 import {
+  ProductChannelListingAddInput,
   ProductDetailsVariantFragment,
   ProductFragment,
   ProductUpdateMutationVariables,
@@ -14,7 +15,6 @@ import { ProductUpdatePageSubmitData } from "@saleor/products/components/Product
 import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/form";
 import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
 import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
-import { ProductChannelListingAddInput } from "@saleor/types/globalTypes";
 import { arrayDiff } from "@saleor/utils/arrays";
 import isEqual from "lodash/isEqual";
 

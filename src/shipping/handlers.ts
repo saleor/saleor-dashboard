@@ -3,7 +3,10 @@ import { CountryFragment } from "@saleor/fragments/types/CountryFragment";
 import { ShippingMethodTypeFragment_postalCodeRules } from "@saleor/fragments/types/ShippingMethodTypeFragment";
 import {
   CreateShippingRateMutationVariables,
+  PostalCodeRuleInclusionTypeEnum,
   ShippingMethodChannelListingUpdateMutationVariables,
+  ShippingMethodTypeEnum,
+  ShippingPostalCodeRulesCreateInputRange,
   UpdateShippingRateMutationVariables,
   useCreateShippingRateMutation,
   useDeleteShippingRateMutation,
@@ -13,11 +16,6 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { extractMutationErrors, getMutationState } from "@saleor/misc";
-import {
-  PostalCodeRuleInclusionTypeEnum,
-  ShippingMethodTypeEnum,
-  ShippingPostalCodeRulesCreateInputRange
-} from "@saleor/types/globalTypes";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
 import differenceBy from "lodash/differenceBy";
 import { useIntl } from "react-intl";

@@ -1,5 +1,5 @@
 import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
-import { GiftCardErrorCode } from "@saleor/types/globalTypes";
+import { GiftCardErrorCode } from "@saleor/graphql";
 import commonErrorMessages, {
   getCommonFormFieldErrorMessage
 } from "@saleor/utils/errors/common";

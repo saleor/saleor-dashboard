@@ -10,12 +10,12 @@ import {
   ProductFragment,
   ProductVariantDetailsQuery,
   SaleDetailsFragmentFragment,
+  SaleType,
   ShippingZoneQuery,
   VoucherDetailsFragmentFragment
 } from "@saleor/graphql";
 import { RequireOnlyOne } from "@saleor/misc";
 import { validatePrice } from "@saleor/products/utils/validation";
-import { SaleType } from "@saleor/types/globalTypes";
 import { mapNodeToChoice } from "@saleor/utils/maps";
 import uniqBy from "lodash/uniqBy";
 

@@ -12,10 +12,10 @@ import ConfirmButton from "@saleor/components/ConfirmButton";
 import PriceField from "@saleor/components/PriceField";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import { Money } from "@saleor/fragments/types/Money";
+import { DiscountValueTypeEnum } from "@saleor/graphql";
 import { useUpdateEffect } from "@saleor/hooks/useUpdateEffect";
 import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
-import { DiscountValueTypeEnum } from "@saleor/types/globalTypes";
 import React, {
   ChangeEvent,
   MutableRefObject,
@@ -23,8 +23,7 @@ import React, {
   useRef,
   useState
 } from "react";
-import { useIntl } from "react-intl";
-import { defineMessages } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 import ModalTitle from "./ModalTitle";
 import {

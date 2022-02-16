@@ -1,4 +1,5 @@
 import {
+  LanguageCodeEnum,
   useSaleTranslationDetailsQuery,
   useUpdateSaleTranslationsMutation
 } from "@saleor/graphql";
@@ -11,7 +12,6 @@ import { stringifyQs } from "@saleor/utils/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { LanguageCodeEnum } from "../../types/globalTypes";
 import TranslationsSalesPage from "../components/TranslationsSalesPage";
 import { TranslationField, TranslationInputFieldName } from "../types";
 import {

@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { WarehouseCreateInput, WarehouseErrorCode, WarehouseClickAndCollectOptionEnum } from "./../../types/globalTypes";
+import { WarehouseCreateInput, WarehouseErrorCode, WarehouseClickAndCollectOptionEnum } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL mutation operation: WarehouseCreate

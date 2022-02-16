@@ -1,29 +1,27 @@
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { InvoiceFragment } from "@saleor/fragments/types/InvoiceFragment";
 import { ShopOrderSettingsFragment } from "@saleor/fragments/types/ShopOrderSettingsFragment";
-import { OrderSettingsFragmentFragment } from "@saleor/graphql";
 import {
+  FulfillmentStatus,
+  JobStatusEnum,
+  OrderAction,
   OrderDetailsFragmentFragment,
   OrderDetailsQuery,
+  OrderEventsEmailsEnum,
+  OrderEventsEnum,
   OrderListQuery,
-  SearchOrderVariantQuery
+  OrderSettingsFragmentFragment,
+  OrderStatus,
+  PaymentChargeStatusEnum,
+  SearchCustomersQuery,
+  SearchOrderVariantQuery,
+  WeightUnitsEnum
 } from "@saleor/graphql";
-import { SearchCustomersQuery } from "@saleor/graphql";
 import { RelayToFlat } from "@saleor/types";
 import { warehouseForPickup, warehouseList } from "@saleor/warehouses/fixtures";
 import { MessageDescriptor } from "react-intl";
 
 import { transformOrderStatus, transformPaymentStatus } from "../misc";
-import {
-  FulfillmentStatus,
-  JobStatusEnum,
-  OrderAction,
-  OrderEventsEmailsEnum,
-  OrderEventsEnum,
-  OrderStatus,
-  PaymentChargeStatusEnum,
-  WeightUnitsEnum
-} from "../types/globalTypes";
 
 export const countries: ShopInfo_shop_countries[] = [
   { __typename: "CountryDisplay", code: "AF", country: "Afghanistan" },

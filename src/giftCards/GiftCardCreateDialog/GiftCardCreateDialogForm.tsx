@@ -4,15 +4,15 @@ import DialogButtons from "@saleor/components/ActionDialog/DialogButtons";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
 import GiftCardTagInput from "@saleor/giftCards/components/GiftCardTagInput";
-import { useGiftCardSettingsQuery } from "@saleor/graphql";
+import {
+  GiftCardSettingsExpiryTypeEnum,
+  TimePeriodTypeEnum,
+  useGiftCardSettingsQuery
+} from "@saleor/graphql";
 import useForm from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import Label from "@saleor/orders/components/OrderHistory/Label";
-import {
-  GiftCardSettingsExpiryTypeEnum,
-  TimePeriodTypeEnum
-} from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";

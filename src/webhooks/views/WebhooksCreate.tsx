@@ -1,11 +1,10 @@
 import { customAppUrl } from "@saleor/apps/urls";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { useAppQuery } from "@saleor/graphql";
+import { useAppQuery, WebhookEventTypeAsyncEnum } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { extractMutationErrors } from "@saleor/misc";
-import { WebhookEventTypeAsyncEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 

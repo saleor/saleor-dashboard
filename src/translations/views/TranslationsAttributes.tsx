@@ -1,5 +1,6 @@
 import { OutputData } from "@editorjs/editorjs";
 import {
+  LanguageCodeEnum,
   useAttributeTranslationDetailsQuery,
   useUpdateAttributeTranslationsMutation,
   useUpdateAttributeValueTranslationsMutation
@@ -18,7 +19,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, getMutationState, maybe } from "../../misc";
-import { LanguageCodeEnum } from "../../types/globalTypes";
 import TranslationsAttributesPage, {
   fieldNames
 } from "../components/TranslationsAttributesPage";

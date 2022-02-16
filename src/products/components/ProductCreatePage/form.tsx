@@ -19,11 +19,13 @@ import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import { ProductTypeQuery } from "@saleor/graphql";
-import { SearchPagesQuery } from "@saleor/graphql";
-import { SearchProductsQuery } from "@saleor/graphql";
-import { SearchProductTypesQuery } from "@saleor/graphql";
-import { SearchWarehousesQuery } from "@saleor/graphql";
+import {
+  ProductTypeQuery,
+  SearchPagesQuery,
+  SearchProductsQuery,
+  SearchProductTypesQuery,
+  SearchWarehousesQuery
+} from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,

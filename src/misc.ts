@@ -1,4 +1,11 @@
 import { FetchResult, MutationFunction, MutationResult } from "@apollo/client";
+import {
+  AddressInput,
+  CountryCode,
+  DateRangeInput,
+  OrderStatus,
+  PaymentChargeStatusEnum
+} from "@saleor/graphql";
 import { ConfirmButtonTransitionState, ThemeType } from "@saleor/macaw-ui";
 import uniqBy from "lodash/uniqBy";
 import moment from "moment-timezone";
@@ -19,13 +26,6 @@ import {
   StatusType,
   UserError
 } from "./types";
-import {
-  AddressInput,
-  CountryCode,
-  DateRangeInput,
-  OrderStatus,
-  PaymentChargeStatusEnum
-} from "./types/globalTypes";
 
 export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<
   T,

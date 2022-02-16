@@ -1,17 +1,14 @@
 import * as avatarImg from "@assets/images/avatars/avatar1.png";
 import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
 import {
+  PermissionEnum,
   PermissionGroupDetailsFragmentFragment,
+  PermissionGroupErrorCode,
   PermissionGroupFragmentFragment,
+  SearchStaffMembersQuery,
   StaffMemberDetailsFragmentFragment
 } from "@saleor/graphql";
-import { SearchStaffMembersQuery } from "@saleor/graphql";
 import { RelayToFlat } from "@saleor/types";
-/* eslint-disable sort-keys */
-import {
-  PermissionEnum,
-  PermissionGroupErrorCode
-} from "@saleor/types/globalTypes";
 
 export const permissionGroups: PermissionGroupFragmentFragment[] = [
   {

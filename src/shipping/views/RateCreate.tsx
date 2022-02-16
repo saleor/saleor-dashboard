@@ -1,7 +1,10 @@
 import { createSortedShippingChannels } from "@saleor/channels/utils";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { useShippingZoneChannelsQuery } from "@saleor/graphql";
+import {
+  PostalCodeRuleInclusionTypeEnum,
+  useShippingZoneChannelsQuery
+} from "@saleor/graphql";
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
@@ -21,7 +24,6 @@ import {
   getRuleObject
 } from "@saleor/shipping/views/utils";
 import { MinMax } from "@saleor/types";
-import { PostalCodeRuleInclusionTypeEnum } from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";

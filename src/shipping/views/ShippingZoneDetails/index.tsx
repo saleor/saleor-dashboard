@@ -2,13 +2,15 @@ import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import NotFoundPage from "@saleor/components/NotFoundPage";
-import { useShopCountries } from "@saleor/components/Shop/query";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
-import { PAGINATE_BY } from "@saleor/config";
+import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
 import {
+  CountryCode,
+  ShippingMethodTypeEnum,
+  ShippingZoneUpdateInput,
   useDeleteShippingRateMutation,
   useDeleteShippingZoneMutation,
   useShippingZoneQuery,
+  useShopCountriesQuery,
   useUpdateShippingZoneMutation,
   useWarehouseCreateMutation
 } from "@saleor/graphql";
@@ -42,11 +44,6 @@ import {
   findValueInEnum,
   getStringOrPlaceholder
 } from "../../../misc";
-import {
-  CountryCode,
-  ShippingMethodTypeEnum,
-  ShippingZoneUpdateInput
-} from "../../../types/globalTypes";
 import ShippingZoneDetailsPage from "../../components/ShippingZoneDetailsPage";
 import { ShippingZoneUpdateFormData } from "../../components/ShippingZoneDetailsPage/types";
 import {
@@ -75,7 +72,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
   const {
     data: restWorldCountries,
     refetch: refetchRestWorldCountries
-  } = useShopCountries({
+  } = useShopCountriesQuery({
     variables: {
       filter: {
         attachedToShippingZones: false

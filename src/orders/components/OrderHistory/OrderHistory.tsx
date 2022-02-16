@@ -9,13 +9,13 @@ import {
   TimelineEventProps,
   TimelineNote
 } from "@saleor/components/Timeline";
-import { OrderEventFragmentFragment } from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import { makeStyles } from "@saleor/macaw-ui";
 import {
+  OrderEventFragmentFragment,
   OrderEventsEmailsEnum,
   OrderEventsEnum
-} from "@saleor/types/globalTypes";
+} from "@saleor/graphql";
+import { SubmitPromise } from "@saleor/hooks/useForm";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 

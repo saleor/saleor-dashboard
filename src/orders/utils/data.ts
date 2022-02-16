@@ -1,20 +1,18 @@
 import { IMoney, subtractMoney } from "@saleor/components/Money";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import {
+  AddressInput,
+  CountryCode,
+  FulfillmentStatus,
   FulfillOrderMutation,
   OrderDetailsFragmentFragment,
+  OrderErrorCode,
   OrderFulfillDataQuery,
   OrderLineFragmentFragment,
   OrderRefundDataQuery
 } from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { addressToAddressInput } from "@saleor/misc";
-import {
-  AddressInput,
-  CountryCode,
-  FulfillmentStatus,
-  OrderErrorCode
-} from "@saleor/types/globalTypes";
 
 import {
   LineItemData,

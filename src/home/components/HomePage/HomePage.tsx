@@ -4,10 +4,9 @@ import Grid from "@saleor/components/Grid";
 import Money from "@saleor/components/Money";
 import RequirePermissions from "@saleor/components/RequirePermissions";
 import Skeleton from "@saleor/components/Skeleton";
-import { HomeQuery } from "@saleor/graphql";
+import { HomeQuery, PermissionEnum } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { RelayToFlat } from "@saleor/types";
-import { PermissionEnum } from "@saleor/types/globalTypes";
 import React from "react";
 
 import Orders from "../../../icons/Orders";

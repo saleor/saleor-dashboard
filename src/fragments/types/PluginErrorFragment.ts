@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { PluginErrorCode } from "./../../types/globalTypes";
+import { PluginErrorCode } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL fragment: PluginErrorFragment

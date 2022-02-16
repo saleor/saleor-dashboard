@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { PermissionGroupErrorCode } from "./../../types/globalTypes";
+import { PermissionGroupErrorCode } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL fragment: PermissionGroupErrorFragment

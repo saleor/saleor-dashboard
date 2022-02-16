@@ -10,7 +10,7 @@ import {
   Messages
 } from "@saleor/components/ChannelsAvailabilityCard/types";
 import { getChannelsAvailabilityMessages } from "@saleor/components/ChannelsAvailabilityCard/utils";
-import { ProductDetailsVariantFragment } from "@saleor/graphql";
+import { PermissionEnum, ProductDetailsVariantFragment } from "@saleor/graphql";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
@@ -18,7 +18,6 @@ import {
   areAnyChannelVariantsSelected,
   getTotalSelectedChannelsCount
 } from "@saleor/products/views/ProductUpdate/utils";
-import { PermissionEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 

@@ -11,8 +11,11 @@ import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragme
 import { CategoryDetailsQuery } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink, Button } from "@saleor/macaw-ui";
+import {
+  Backlink,
+  Button,
+  ConfirmButtonTransitionState
+} from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

@@ -1,11 +1,11 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import {
+  ProductTypeKindEnum,
   useProductTypeCreateDataQuery,
   useProductTypeCreateMutation
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { ProductTypeKindEnum } from "@saleor/types/globalTypes";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
   useMetadataUpdate,

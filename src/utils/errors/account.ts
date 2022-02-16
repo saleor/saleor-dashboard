@@ -1,5 +1,5 @@
+import { AccountErrorCode } from "@saleor/graphql";
 import { SetPasswordData } from "@saleor/sdk";
-import { AccountErrorCode } from "@saleor/types/globalTypes";
 import { defineMessages, IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";

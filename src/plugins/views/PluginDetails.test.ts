@@ -1,9 +1,9 @@
 import { PluginConfigurationFragment_configuration } from "@saleor/fragments/types/PluginConfigurationFragment";
-
 import {
   ConfigurationItemInput,
   ConfigurationTypeFieldEnum
-} from "../../types/globalTypes";
+} from "@saleor/graphql";
+
 import { getConfigurationInput } from "./PluginsDetails";
 
 const baseConfig: Omit<

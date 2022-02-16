@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AttributeInputTypeEnum } from "./../../types/globalTypes";
+import { AttributeInputTypeEnum } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL fragment: AttributeValueTranslatableContentFragment

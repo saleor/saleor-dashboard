@@ -5,18 +5,17 @@ import Grid from "@saleor/components/Grid";
 import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
-import { ProductTypeDetailsQuery } from "@saleor/graphql";
+import {
+  ProductTypeDetailsQuery,
+  ProductTypeKindEnum,
+  WeightUnitsEnum
+} from "@saleor/graphql";
 import { ChangeEvent, FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { makeProductTypeKindChangeHandler } from "@saleor/productTypes/handlers";
 import { UserError } from "@saleor/types";
-import {
-  ProductTypeKindEnum,
-  WeightUnitsEnum
-} from "@saleor/types/globalTypes";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { useIntl } from "react-intl";

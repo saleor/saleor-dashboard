@@ -4,9 +4,10 @@ import {
 } from "@saleor/channels/utils";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
-import { PAGINATE_BY } from "@saleor/config";
+import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
 import {
+  PostalCodeRuleInclusionTypeEnum,
+  ShippingMethodTypeEnum,
   useDeleteShippingRateMutation,
   useShippingMethodChannelListingUpdateMutation,
   useShippingPriceExcludeProductMutation,
@@ -21,8 +22,7 @@ import useLocalPaginator, {
 } from "@saleor/hooks/useLocalPaginator";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { sectionNames } from "@saleor/intl";
-import { commonMessages } from "@saleor/intl";
+import { commonMessages, sectionNames } from "@saleor/intl";
 import { Button } from "@saleor/macaw-ui";
 import {
   getById,
@@ -53,10 +53,6 @@ import {
   getRuleObject
 } from "@saleor/shipping/views/utils";
 import { MinMax } from "@saleor/types";
-import {
-  PostalCodeRuleInclusionTypeEnum,
-  ShippingMethodTypeEnum
-} from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";

@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { WebhookCreateInput, WebhookErrorCode } from "./../../types/globalTypes";
+import { WebhookCreateInput, WebhookErrorCode } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL mutation operation: WebhookCreate

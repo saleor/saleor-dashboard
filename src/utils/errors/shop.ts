@@ -1,5 +1,5 @@
 import { ShopErrorFragment } from "@saleor/fragments/types/ShopErrorFragment";
-import { ShopErrorCode } from "@saleor/types/globalTypes";
+import { ShopErrorCode } from "@saleor/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";

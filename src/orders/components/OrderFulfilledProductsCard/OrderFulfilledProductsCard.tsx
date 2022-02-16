@@ -1,14 +1,16 @@
 import { Card, TableBody } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import { OrderDetailsFragmentFragment } from "@saleor/graphql";
+import {
+  FulfillmentStatus,
+  OrderDetailsFragmentFragment
+} from "@saleor/graphql";
 import TrashIcon from "@saleor/icons/Trash";
 import { IconButton } from "@saleor/macaw-ui";
 import { mergeRepeatedOrderLines } from "@saleor/orders/utils/data";
 import React from "react";
 
 import { renderCollection } from "../../../misc";
-import { FulfillmentStatus } from "../../../types/globalTypes";
 import TableHeader from "../OrderProductsCardElements/OrderProductsCardHeader";
 import TableLine from "../OrderProductsCardElements/OrderProductsTableRow";
 import CardTitle from "../OrderReturnPage/OrderReturnRefundItemsCard/CardTitle";

@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AppTypeEnum } from "./../../types/globalTypes";
+import { AppTypeEnum } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL fragment: AppFragment

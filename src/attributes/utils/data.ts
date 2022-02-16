@@ -16,10 +16,10 @@ import {
   FileUploadMutation,
   Node,
   PageSelectedAttributeFragment,
-  ProductFragment
+  ProductFragment,
+  SearchPagesQuery,
+  SearchProductsQuery
 } from "@saleor/graphql";
-import { SearchPagesQuery } from "@saleor/graphql";
-import { SearchProductsQuery } from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { RelayToFlat } from "@saleor/types";
 import {

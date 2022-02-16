@@ -2,11 +2,13 @@ import { Typography } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import Link from "@saleor/components/Link";
 import Money from "@saleor/components/Money";
-import { OrderDetailsFragmentFragment } from "@saleor/graphql";
+import {
+  DiscountValueTypeEnum,
+  OrderDetailsFragmentFragment
+} from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { OrderDiscountContextConsumerProps } from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderDiscountData } from "@saleor/products/components/OrderDiscountProviders/types";
-import { DiscountValueTypeEnum } from "@saleor/types/globalTypes";
 import React, { useRef } from "react";
 import { useIntl } from "react-intl";
 

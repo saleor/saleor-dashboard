@@ -1,13 +1,13 @@
 import { Dialog, DialogTitle } from "@material-ui/core";
 import { IMessage } from "@saleor/components/messages";
 import {
+  GiftCardBulkCreateInput,
   useChannelCurrenciesQuery,
   useGiftCardBulkCreateMutation
 } from "@saleor/graphql";
 import useCurrentDate from "@saleor/hooks/useCurrentDate";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { DialogProps } from "@saleor/types";
-import { GiftCardBulkCreateInput } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";

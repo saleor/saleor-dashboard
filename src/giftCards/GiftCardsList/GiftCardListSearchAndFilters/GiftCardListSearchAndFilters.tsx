@@ -31,8 +31,10 @@ import {
   getFilterTabs,
   saveFilterTab
 } from "./filters";
-import { giftCardListFilterErrorMessages as errorMessages } from "./messages";
-import { giftCardListSearchAndFiltersMessages as messages } from "./messages";
+import {
+  giftCardListFilterErrorMessages as errorMessages,
+  giftCardListSearchAndFiltersMessages as messages
+} from "./messages";
 
 const GiftCardListSearchAndFilters: React.FC = () => {
   const navigate = useNavigator();

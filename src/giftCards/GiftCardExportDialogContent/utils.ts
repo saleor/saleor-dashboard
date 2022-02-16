@@ -1,5 +1,5 @@
+import { ExportScope } from "@saleor/graphql";
 import { ExportSettingsFormData } from "@saleor/products/components/ProductExportDialog/types";
-import { ExportScope } from "@saleor/types/globalTypes";
 
 interface ExportGiftCardsInputProps {
   ids: string[] | null;

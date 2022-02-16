@@ -7,8 +7,7 @@ import { useChannelsSearch } from "@saleor/hooks/useChannelsSearch";
 import { FormChange } from "@saleor/hooks/useForm";
 import { mapNodeToChoice } from "@saleor/utils/maps";
 import React from "react";
-import { useIntl } from "react-intl";
-import { defineMessages, FormattedMessage } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 const messages = defineMessages({
   subtitle: {

@@ -6,8 +6,11 @@ import Savebar from "@saleor/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
 import { CountryFragment } from "@saleor/fragments/types/CountryFragment";
-import { ChannelDetailsFragmentFragment } from "@saleor/graphql";
-import { SearchShippingZonesQuery } from "@saleor/graphql";
+import {
+  ChannelDetailsFragmentFragment,
+  CountryCode,
+  SearchShippingZonesQuery
+} from "@saleor/graphql";
 import { SearchData } from "@saleor/hooks/makeTopLevelSearch";
 import { getParsedSearchData } from "@saleor/hooks/makeTopLevelSearch/utils";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -18,7 +21,6 @@ import {
   getByUnmatchingId
 } from "@saleor/orders/components/OrderReturnPage/utils";
 import { FetchMoreProps, RelayToFlat } from "@saleor/types";
-import { CountryCode } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React, { useState } from "react";

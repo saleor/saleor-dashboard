@@ -1,4 +1,5 @@
 import {
+  LanguageCodeEnum,
   useCollectionTranslationDetailsQuery,
   useUpdateCollectionTranslationsMutation
 } from "@saleor/graphql";
@@ -11,7 +12,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, maybe } from "../../misc";
-import { LanguageCodeEnum } from "../../types/globalTypes";
 import TranslationsCollectionsPage from "../components/TranslationsCollectionsPage";
 import { TranslationField, TranslationInputFieldName } from "../types";
 import {

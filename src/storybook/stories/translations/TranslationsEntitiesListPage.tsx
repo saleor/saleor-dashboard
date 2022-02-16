@@ -1,3 +1,4 @@
+import { LanguageCodeEnum } from "@saleor/graphql";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -6,7 +7,6 @@ import TranslationsEntitiesList from "../../../translations/components/Translati
 import TranslationsEntitiesListPage, {
   TranslationsEntitiesListPageProps
 } from "../../../translations/components/TranslationsEntitiesListPage";
-import { LanguageCodeEnum } from "../../../types/globalTypes";
 import Decorator from "../../Decorator";
 
 const props: TranslationsEntitiesListPageProps = {

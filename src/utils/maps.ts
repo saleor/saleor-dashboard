@@ -5,10 +5,9 @@ import {
   SingleAutocompleteChoiceType
 } from "@saleor/components/SingleAutocompleteSelectField";
 import { MetadataItem } from "@saleor/fragments/types/MetadataItem";
-import { SearchPagesQuery } from "@saleor/graphql";
+import { MetadataInput, SearchPagesQuery } from "@saleor/graphql";
 import { getFullName } from "@saleor/misc";
 import { Node, RelayToFlat, SlugNode, TagNode } from "@saleor/types";
-import { MetadataInput } from "@saleor/types/globalTypes";
 
 interface Edge<T> {
   node: T;

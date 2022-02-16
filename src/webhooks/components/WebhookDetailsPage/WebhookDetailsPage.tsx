@@ -5,11 +5,11 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { WebhookErrorFragment } from "@saleor/fragments/types/WebhookErrorFragment";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import {
   WebhookEventTypeAsyncEnum,
   WebhookEventTypeSyncEnum
-} from "@saleor/types/globalTypes";
+} from "@saleor/graphql";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import WebhookEvents from "@saleor/webhooks/components/WebhookEvents";
 import WebhookInfo from "@saleor/webhooks/components/WebhookInfo";
 import WebhookStatus from "@saleor/webhooks/components/WebhookStatus";

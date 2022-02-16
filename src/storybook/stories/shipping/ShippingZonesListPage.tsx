@@ -1,3 +1,4 @@
+import { WeightUnitsEnum } from "@saleor/graphql";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -10,7 +11,6 @@ import ShippingZonesListPage, {
   ShippingZonesListPageProps
 } from "../../../shipping/components/ShippingZonesListPage";
 import { shippingZones } from "../../../shipping/fixtures";
-import { WeightUnitsEnum } from "../../../types/globalTypes";
 import Decorator from "../../Decorator";
 
 const props: ShippingZonesListPageProps = {

@@ -12,19 +12,22 @@ import ConfirmButton from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { AddressTypeInput } from "@saleor/customers/types";
-import { OrderErrorFragmentFragment } from "@saleor/graphql";
-import { AddressFragmentFragment, Node } from "@saleor/graphql";
+import {
+  AddressFragmentFragment,
+  AddressInput,
+  AddressTypeEnum,
+  Node,
+  OrderErrorFragmentFragment
+} from "@saleor/graphql";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState, DialogHeader } from "@saleor/macaw-ui";
 import { transformAddressToAddressInput } from "@saleor/misc";
-import { AddressInput, AddressTypeEnum } from "@saleor/types/globalTypes";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React from "react";
-import { MessageDescriptor } from "react-intl";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 
 import { getById } from "../OrderReturnPage/utils";
 import OrderCustomerAddressesEditForm, {

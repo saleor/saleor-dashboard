@@ -1,9 +1,6 @@
+import { ProductTypeConfigurable, ProductTypeEnum } from "@saleor/graphql";
 import { createFilterStructure } from "@saleor/productTypes/components/ProductTypeListPage";
 import { ProductTypeListUrlFilters } from "@saleor/productTypes/urls";
-import {
-  ProductTypeConfigurable,
-  ProductTypeEnum
-} from "@saleor/types/globalTypes";
 import { getFilterQueryParams } from "@saleor/utils/filters";
 import { stringifyQs } from "@saleor/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";

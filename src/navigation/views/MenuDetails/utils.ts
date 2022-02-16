@@ -1,10 +1,10 @@
-import { MenuItemFragmentFragment } from "@saleor/graphql";
-
 import {
   MenuItemCreateInput,
+  MenuItemFragmentFragment,
   MenuItemInput,
   MenuItemMoveInput
-} from "../../../types/globalTypes";
+} from "@saleor/graphql";
+
 import { MenuDetailsSubmitData } from "../../components/MenuDetailsPage";
 import { MenuItemDialogFormData } from "../../components/MenuItemDialog";
 import { unknownTypeError } from "../../components/MenuItems";

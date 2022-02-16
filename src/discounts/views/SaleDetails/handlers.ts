@@ -5,12 +5,13 @@ import {
 } from "@saleor/discounts/components/SaleDetailsPage";
 import { getSaleChannelsVariables } from "@saleor/discounts/handlers";
 import {
+  DiscountValueTypeEnum,
   SaleDetailsFragmentFragment,
+  SaleType,
   SaleUpdateMutation,
   SaleUpdateMutationVariables
 } from "@saleor/graphql";
 import { joinDateTime } from "@saleor/misc";
-import { DiscountValueTypeEnum, SaleType } from "@saleor/types/globalTypes";
 
 function discountValueTypeEnum(type: SaleType): DiscountValueTypeEnum {
   return type.toString() === DiscountValueTypeEnum.FIXED

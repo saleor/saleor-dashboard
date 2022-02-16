@@ -1,5 +1,5 @@
 import { InvoiceErrorFragment } from "@saleor/fragments/types/InvoiceErrorFragment";
-import { InvoiceErrorCode } from "@saleor/types/globalTypes";
+import { InvoiceErrorCode } from "@saleor/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";

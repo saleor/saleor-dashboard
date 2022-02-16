@@ -5,8 +5,8 @@ import {
   QueryResult,
   useQuery as useBaseQuery
 } from "@apollo/client";
-import { handleQueryAuthError } from "@saleor/auth";
-import { useUser } from "@saleor/auth";
+import { handleQueryAuthError, useUser } from "@saleor/auth";
+import { PermissionEnum } from "@saleor/graphql";
 import { RequireAtLeastOne } from "@saleor/misc";
 import { ServerErrorWithName } from "@saleor/types";
 import { DocumentNode } from "graphql";
@@ -16,7 +16,6 @@ import { useIntl } from "react-intl";
 
 import { User_userPermissions } from "../fragments/types/User";
 import { PrefixedPermissions } from "../graphql";
-import { PermissionEnum } from "../types/globalTypes";
 import useAppState from "./useAppState";
 import useNotifier from "./useNotifier";
 export { useLazyQuery, LazyQueryHookOptions } from "@apollo/client";

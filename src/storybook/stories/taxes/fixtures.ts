@@ -2715,7 +2715,6 @@ export const countries: CountryList = [
   }
 ].filter(country => country.vat);
 
-/* eslint-disable sort-keys */
 export const taxTypes: TaxTypeFragment[] = [
   {
     description: "accommodation",

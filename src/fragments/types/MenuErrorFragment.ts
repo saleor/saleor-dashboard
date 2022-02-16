@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { MenuErrorCode } from "./../../types/globalTypes";
+import { MenuErrorCode } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL fragment: MenuErrorFragment

@@ -4,17 +4,15 @@ import { VoucherDetailsPageFormData } from "@saleor/discounts/components/Voucher
 import { getChannelsVariables } from "@saleor/discounts/handlers";
 import { DiscountTypeEnum, RequirementsPicker } from "@saleor/discounts/types";
 import {
+  DiscountValueTypeEnum,
   VoucherChannelListingUpdateMutation,
   VoucherChannelListingUpdateMutationVariables,
   VoucherDetailsFragmentFragment,
+  VoucherTypeEnum,
   VoucherUpdateMutation,
   VoucherUpdateMutationVariables
 } from "@saleor/graphql";
 import { joinDateTime } from "@saleor/misc";
-import {
-  DiscountValueTypeEnum,
-  VoucherTypeEnum
-} from "@saleor/types/globalTypes";
 
 export function createUpdateHandler(
   voucher: VoucherDetailsFragmentFragment,

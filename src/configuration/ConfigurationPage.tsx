@@ -3,9 +3,9 @@ import { IconProps } from "@material-ui/core/Icon";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { User } from "@saleor/fragments/types/User";
+import { PermissionEnum } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { NavigationCard } from "@saleor/macaw-ui";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles, NavigationCard } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
@@ -14,7 +14,6 @@ import { hasAnyPermissions } from "../auth/misc";
 import Container from "../components/Container";
 import PageHeader from "../components/PageHeader";
 import VersionInfo from "../components/VersionInfo";
-import { PermissionEnum } from "../types/globalTypes";
 
 export interface MenuItem {
   description: string;

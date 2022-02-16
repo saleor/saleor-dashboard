@@ -10,11 +10,11 @@ import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import Skeleton from "@saleor/components/Skeleton";
 import { PluginConfigurationFragment_configuration } from "@saleor/fragments/types/PluginConfigurationFragment";
+import { ConfigurationTypeFieldEnum } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import { DialogProps } from "@saleor/types";
-import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

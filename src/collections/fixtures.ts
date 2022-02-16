@@ -1,6 +1,9 @@
-import { CollectionDetailsQuery, CollectionListQuery } from "@saleor/graphql";
+import {
+  CollectionDetailsQuery,
+  CollectionListQuery,
+  CollectionPublished
+} from "@saleor/graphql";
 import { RelayToFlat } from "@saleor/types";
-import { CollectionPublished } from "@saleor/types/globalTypes";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
 import { CollectionListFilterOpts } from "./components/CollectionListPage";

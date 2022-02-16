@@ -13,10 +13,12 @@ import { AttributeInput } from "@saleor/components/Attributes";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
-import { PageDetailsFragmentFragment } from "@saleor/graphql";
-import { SearchPagesQuery } from "@saleor/graphql";
-import { SearchPageTypesQuery } from "@saleor/graphql";
-import { SearchProductsQuery } from "@saleor/graphql";
+import {
+  PageDetailsFragmentFragment,
+  SearchPagesQuery,
+  SearchPageTypesQuery,
+  SearchProductsQuery
+} from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,

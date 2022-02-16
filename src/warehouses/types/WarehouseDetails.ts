@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { WarehouseClickAndCollectOptionEnum } from "./../../types/globalTypes";
+import { WarehouseClickAndCollectOptionEnum } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL query operation: WarehouseDetails

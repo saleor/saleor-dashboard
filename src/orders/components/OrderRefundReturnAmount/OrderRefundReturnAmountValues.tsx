@@ -4,8 +4,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import reduce from "lodash/reduce";
 import React from "react";
-import { useIntl } from "react-intl";
-import { defineMessages } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({

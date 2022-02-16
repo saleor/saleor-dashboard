@@ -1,6 +1,6 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
 import { createVariantChannels } from "@saleor/channels/utils";
-import { ProductErrorCode } from "@saleor/types/globalTypes";
+import { ProductErrorCode } from "@saleor/graphql";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";

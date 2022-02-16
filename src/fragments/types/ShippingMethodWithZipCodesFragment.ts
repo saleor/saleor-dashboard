@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { PostalCodeRuleInclusionTypeEnum } from "./../../types/globalTypes";
+import { PostalCodeRuleInclusionTypeEnum } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL fragment: ShippingMethodWithZipCodesFragment

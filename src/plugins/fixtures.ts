@@ -1,8 +1,8 @@
 import {
+  ConfigurationTypeFieldEnum,
   PluginBaseFragmentFragment,
   PluginsDetailsFragmentFragment
 } from "@saleor/graphql";
-import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
 
 export const pluginList: PluginBaseFragmentFragment[] = [
   {

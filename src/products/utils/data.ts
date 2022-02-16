@@ -17,11 +17,11 @@ import {
   ProductDetailsVariantFragment,
   ProductFragment,
   ProductTypeQuery,
-  ProductVariantCreateDataQuery
+  ProductVariantCreateDataQuery,
+  StockInput
 } from "@saleor/graphql";
 import { FormsetAtomicData } from "@saleor/hooks/useFormset";
 import { maybe } from "@saleor/misc";
-import { StockInput } from "@saleor/types/globalTypes";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import moment from "moment";
 

@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { WeightUnitsEnum, LanguageCodeEnum, PermissionEnum } from "./../../../types/globalTypes";
+import { WeightUnitsEnum, LanguageCodeEnum, PermissionEnum } from "@saleor/graphql";
 
 // ====================================================
 // GraphQL query operation: ShopInfo
