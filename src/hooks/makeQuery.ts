@@ -15,7 +15,7 @@ import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import { User_userPermissions } from "../fragments/types/User";
-import { PrefixedPermissions } from "../types/extendedTypes";
+import { PrefixedPermissions } from "../graphql";
 import { PermissionEnum } from "../types/globalTypes";
 import useAppState from "./useAppState";
 import useNotifier from "./useNotifier";

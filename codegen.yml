@@ -1,16 +1,20 @@
 overwrite: true
 schema: ./schema.graphql
 generates:
-  fragmentTypes.json:
+  ./src/graphql/fragmentTypes.generated.ts:
     plugins:
+      - add:
+          content: /* eslint-disable */
       - fragment-matcher
     config:
       minify: false
       apolloClientVersion: 3
-  ./src/type-policies.ts:
+  ./src/graphql/typePolicies.generated.ts:
     plugins:
+      - add:
+          content: /* eslint-disable */
       - typescript-apollo-client-helpers
-  ./src/graphql.ts:
+  ./src/graphql/types.generated.ts:
     documents:
       - ./src/**/queries.ts
       - ./src/**/mutations.ts

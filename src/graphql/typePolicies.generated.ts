@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { FieldPolicy, FieldReadFunction, TypePolicies, TypePolicy } from '@apollo/client/cache';
 export type AccountAddressCreateKeySpecifier = ('user' | 'accountErrors' | 'errors' | 'address' | AccountAddressCreateKeySpecifier)[];
 export type AccountAddressCreateFieldPolicy = {

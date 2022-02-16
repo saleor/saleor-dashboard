@@ -1,4 +1,11 @@
-{
+/* eslint-disable */
+
+      export interface PossibleTypesResultData {
+        possibleTypes: {
+          [key: string]: string[]
+        }
+      }
+      const result: PossibleTypesResultData = {
   "possibleTypes": {
     "DeliveryMethod": [
       "Warehouse",
@@ -146,4 +153,6 @@
       "PageType"
     ]
   }
-}
+};
+      export default result;
+    
