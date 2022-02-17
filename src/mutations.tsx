@@ -9,7 +9,7 @@ import { DocumentNode } from "graphql";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { useUser } from "./auth";
+import { showAllErrors, useUser } from "./auth";
 import { isJwtError } from "./auth/errors";
 import useNotifier from "./hooks/useNotifier";
 import { commonMessages } from "./intl";
@@ -42,13 +42,8 @@ export function TypedMutation<TData, TVariables>(
       <Mutation
         mutation={mutation}
         onCompleted={onCompleted}
+        errorPolicy="all"
         onError={(err: ApolloError) => {
-          if (err.networkError) {
-            notify({
-              status: "error",
-              apiMessage: err.networkError.message
-            });
-          }
           if (hasError(err, GqlErrors.ReadOnlyException)) {
             notify({
               status: "error",
@@ -60,14 +55,10 @@ export function TypedMutation<TData, TVariables>(
               status: "error",
               text: intl.formatMessage(commonMessages.sessionExpired)
             });
-          } else if (!hasError(err, GqlErrors.LimitReachedException)) {
-            err.graphQLErrors.map(graphQLError => {
-              notify({
-                status: "error",
-                apiMessage: graphQLError.message
-              });
-            });
+          } else {
+            showAllErrors({ notify, error: err });
           }
+
           if (onError) {
             onError(err);
           }
