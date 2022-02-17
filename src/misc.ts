@@ -507,3 +507,6 @@ export const combinedMultiAutocompleteChoices = (
   selected: MultiAutocompleteChoiceType[],
   choices: MultiAutocompleteChoiceType[]
 ) => uniqBy([...selected, ...choices], "value");
+
+export type WithOptional<T, K extends keyof T> = Omit<T, K> &
+  Partial<Pick<T, K>>;

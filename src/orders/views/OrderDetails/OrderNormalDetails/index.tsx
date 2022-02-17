@@ -3,9 +3,12 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import { useCustomerAddressesQuery } from "@saleor/customers/queries";
 import useNavigator from "@saleor/hooks/useNavigator";
 import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
+import OrderChangeWarehouseDialog from "@saleor/orders/components/OrderChangeWarehouseDialog";
+import { Warehouse } from "@saleor/orders/components/OrderChangeWarehouseDialog/types";
 import { OrderCustomerAddressesEditDialogOutput } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/types";
 import OrderFulfillmentApproveDialog from "@saleor/orders/components/OrderFulfillmentApproveDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
+import { OrderDetails } from "@saleor/orders/types/OrderDetails";
 import {
   OrderFulfillmentApprove,
   OrderFulfillmentApproveVariables
@@ -49,7 +52,7 @@ import { isAnyAddressEditModalOpen } from "../OrderDraftDetails";
 interface OrderNormalDetailsProps {
   id: string;
   params: OrderUrlQueryParams;
-  data: any;
+  data: OrderDetails;
   orderAddNote: any;
   orderInvoiceRequest: any;
   handleSubmit: any;
@@ -97,12 +100,26 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   const navigate = useNavigator();
   const { user } = useUser();
 
-  const warehouses = useWarehouseList({
-    displayLoader: true,
-    variables: {
-      first: 30
+  const { data: warehousesData, loading: warehousesLoading } = useWarehouseList(
+    {
+      displayLoader: true,
+      variables: {
+        first: 30
+      }
     }
-  });
+  );
+
+  const warehouses = mapEdgesToItems(warehousesData?.warehouses);
+
+  const [fulfillmentWarehouse, setFulfillmentWarehouse] = React.useState<
+    Warehouse
+  >(null);
+  React.useEffect(() => {
+    // @TODO this is wip
+    // exact logic for determining default
+    // warehouse will be added in future PR
+    setFulfillmentWarehouse(warehouses?.[0]);
+  }, [warehousesData, warehousesLoading]);
 
   const {
     data: customerAddresses,
@@ -295,7 +312,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
           orderFulfillmentCancel.opts.data?.orderFulfillmentCancel.errors || []
         }
         open={params.action === "cancel-fulfillment"}
-        warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
+        warehouses={warehouses || []}
         onConfirm={variables =>
           orderFulfillmentCancel.mutate({
             id: params.id,
@@ -325,6 +342,13 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
             }
           })
         }
+        onClose={closeModal}
+      />
+      <OrderChangeWarehouseDialog
+        open={params.action === "change-warehouse"}
+        lines={order?.lines}
+        currentWarehouse={fulfillmentWarehouse}
+        onConfirm={warehouse => setFulfillmentWarehouse(warehouse)}
         onClose={closeModal}
       />
       <OrderInvoiceEmailSendDialog

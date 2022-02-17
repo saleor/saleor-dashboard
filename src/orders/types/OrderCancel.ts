@@ -213,9 +213,34 @@ export interface OrderCancel_orderCancel_order_events {
   lines: (OrderCancel_orderCancel_order_events_lines | null)[] | null;
 }
 
+export interface OrderCancel_orderCancel_order_fulfillments_lines_orderLine_allocations_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderCancel_orderCancel_order_fulfillments_lines_orderLine_allocations {
+  __typename: "Allocation";
+  id: string;
+  quantity: number;
+  warehouse: OrderCancel_orderCancel_order_fulfillments_lines_orderLine_allocations_warehouse;
+}
+
 export interface OrderCancel_orderCancel_order_fulfillments_lines_orderLine_variant_preorder {
   __typename: "PreorderData";
   endDate: any | null;
+}
+
+export interface OrderCancel_orderCancel_order_fulfillments_lines_orderLine_variant_stocks_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderCancel_orderCancel_order_fulfillments_lines_orderLine_variant_stocks {
+  __typename: "Stock";
+  id: string;
+  warehouse: OrderCancel_orderCancel_order_fulfillments_lines_orderLine_variant_stocks_warehouse;
+  quantity: number;
+  quantityAllocated: number;
 }
 
 export interface OrderCancel_orderCancel_order_fulfillments_lines_orderLine_variant {
@@ -223,6 +248,7 @@ export interface OrderCancel_orderCancel_order_fulfillments_lines_orderLine_vari
   id: string;
   quantityAvailable: number | null;
   preorder: OrderCancel_orderCancel_order_fulfillments_lines_orderLine_variant_preorder | null;
+  stocks: (OrderCancel_orderCancel_order_fulfillments_lines_orderLine_variant_stocks | null)[] | null;
 }
 
 export interface OrderCancel_orderCancel_order_fulfillments_lines_orderLine_unitDiscount {
@@ -277,6 +303,7 @@ export interface OrderCancel_orderCancel_order_fulfillments_lines_orderLine {
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  allocations: OrderCancel_orderCancel_order_fulfillments_lines_orderLine_allocations[] | null;
   variant: OrderCancel_orderCancel_order_fulfillments_lines_orderLine_variant | null;
   productName: string;
   productSku: string | null;
@@ -315,9 +342,34 @@ export interface OrderCancel_orderCancel_order_fulfillments {
   warehouse: OrderCancel_orderCancel_order_fulfillments_warehouse | null;
 }
 
+export interface OrderCancel_orderCancel_order_lines_allocations_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderCancel_orderCancel_order_lines_allocations {
+  __typename: "Allocation";
+  id: string;
+  quantity: number;
+  warehouse: OrderCancel_orderCancel_order_lines_allocations_warehouse;
+}
+
 export interface OrderCancel_orderCancel_order_lines_variant_preorder {
   __typename: "PreorderData";
   endDate: any | null;
+}
+
+export interface OrderCancel_orderCancel_order_lines_variant_stocks_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderCancel_orderCancel_order_lines_variant_stocks {
+  __typename: "Stock";
+  id: string;
+  warehouse: OrderCancel_orderCancel_order_lines_variant_stocks_warehouse;
+  quantity: number;
+  quantityAllocated: number;
 }
 
 export interface OrderCancel_orderCancel_order_lines_variant {
@@ -325,6 +377,7 @@ export interface OrderCancel_orderCancel_order_lines_variant {
   id: string;
   quantityAvailable: number | null;
   preorder: OrderCancel_orderCancel_order_lines_variant_preorder | null;
+  stocks: (OrderCancel_orderCancel_order_lines_variant_stocks | null)[] | null;
 }
 
 export interface OrderCancel_orderCancel_order_lines_unitDiscount {
@@ -379,6 +432,7 @@ export interface OrderCancel_orderCancel_order_lines {
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  allocations: OrderCancel_orderCancel_order_lines_allocations[] | null;
   variant: OrderCancel_orderCancel_order_lines_variant | null;
   productName: string;
   productSku: string | null;

@@ -277,9 +277,34 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_events {
   lines: (OrderShippingMethodUpdate_orderUpdateShipping_order_events_lines | null)[] | null;
 }
 
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillments_lines_orderLine_allocations_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillments_lines_orderLine_allocations {
+  __typename: "Allocation";
+  id: string;
+  quantity: number;
+  warehouse: OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillments_lines_orderLine_allocations_warehouse;
+}
+
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillments_lines_orderLine_variant_preorder {
   __typename: "PreorderData";
   endDate: any | null;
+}
+
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillments_lines_orderLine_variant_stocks_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillments_lines_orderLine_variant_stocks {
+  __typename: "Stock";
+  id: string;
+  warehouse: OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillments_lines_orderLine_variant_stocks_warehouse;
+  quantity: number;
+  quantityAllocated: number;
 }
 
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillments_lines_orderLine_variant {
@@ -287,6 +312,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillment
   id: string;
   quantityAvailable: number | null;
   preorder: OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillments_lines_orderLine_variant_preorder | null;
+  stocks: (OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillments_lines_orderLine_variant_stocks | null)[] | null;
 }
 
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillments_lines_orderLine_unitDiscount {
@@ -341,6 +367,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillment
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  allocations: OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillments_lines_orderLine_allocations[] | null;
   variant: OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillments_lines_orderLine_variant | null;
   productName: string;
   productSku: string | null;
@@ -379,9 +406,34 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillment
   warehouse: OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillments_warehouse | null;
 }
 
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_lines_allocations_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_lines_allocations {
+  __typename: "Allocation";
+  id: string;
+  quantity: number;
+  warehouse: OrderShippingMethodUpdate_orderUpdateShipping_order_lines_allocations_warehouse;
+}
+
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_lines_variant_preorder {
   __typename: "PreorderData";
   endDate: any | null;
+}
+
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_lines_variant_stocks_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_lines_variant_stocks {
+  __typename: "Stock";
+  id: string;
+  warehouse: OrderShippingMethodUpdate_orderUpdateShipping_order_lines_variant_stocks_warehouse;
+  quantity: number;
+  quantityAllocated: number;
 }
 
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_lines_variant {
@@ -389,6 +441,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_lines_varia
   id: string;
   quantityAvailable: number | null;
   preorder: OrderShippingMethodUpdate_orderUpdateShipping_order_lines_variant_preorder | null;
+  stocks: (OrderShippingMethodUpdate_orderUpdateShipping_order_lines_variant_stocks | null)[] | null;
 }
 
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_lines_unitDiscount {
@@ -443,6 +496,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_lines {
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  allocations: OrderShippingMethodUpdate_orderUpdateShipping_order_lines_allocations[] | null;
   variant: OrderShippingMethodUpdate_orderUpdateShipping_order_lines_variant | null;
   productName: string;
   productSku: string | null;

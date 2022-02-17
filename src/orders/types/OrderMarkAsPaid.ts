@@ -213,9 +213,34 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_events {
   lines: (OrderMarkAsPaid_orderMarkAsPaid_order_events_lines | null)[] | null;
 }
 
+export interface OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_allocations_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_allocations {
+  __typename: "Allocation";
+  id: string;
+  quantity: number;
+  warehouse: OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_allocations_warehouse;
+}
+
 export interface OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_variant_preorder {
   __typename: "PreorderData";
   endDate: any | null;
+}
+
+export interface OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_variant_stocks_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_variant_stocks {
+  __typename: "Stock";
+  id: string;
+  warehouse: OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_variant_stocks_warehouse;
+  quantity: number;
+  quantityAllocated: number;
 }
 
 export interface OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_variant {
@@ -223,6 +248,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderL
   id: string;
   quantityAvailable: number | null;
   preorder: OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_variant_preorder | null;
+  stocks: (OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_variant_stocks | null)[] | null;
 }
 
 export interface OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_unitDiscount {
@@ -277,6 +303,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderL
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  allocations: OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_allocations[] | null;
   variant: OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_variant | null;
   productName: string;
   productSku: string | null;
@@ -315,9 +342,34 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments {
   warehouse: OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_warehouse | null;
 }
 
+export interface OrderMarkAsPaid_orderMarkAsPaid_order_lines_allocations_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderMarkAsPaid_orderMarkAsPaid_order_lines_allocations {
+  __typename: "Allocation";
+  id: string;
+  quantity: number;
+  warehouse: OrderMarkAsPaid_orderMarkAsPaid_order_lines_allocations_warehouse;
+}
+
 export interface OrderMarkAsPaid_orderMarkAsPaid_order_lines_variant_preorder {
   __typename: "PreorderData";
   endDate: any | null;
+}
+
+export interface OrderMarkAsPaid_orderMarkAsPaid_order_lines_variant_stocks_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderMarkAsPaid_orderMarkAsPaid_order_lines_variant_stocks {
+  __typename: "Stock";
+  id: string;
+  warehouse: OrderMarkAsPaid_orderMarkAsPaid_order_lines_variant_stocks_warehouse;
+  quantity: number;
+  quantityAllocated: number;
 }
 
 export interface OrderMarkAsPaid_orderMarkAsPaid_order_lines_variant {
@@ -325,6 +377,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_lines_variant {
   id: string;
   quantityAvailable: number | null;
   preorder: OrderMarkAsPaid_orderMarkAsPaid_order_lines_variant_preorder | null;
+  stocks: (OrderMarkAsPaid_orderMarkAsPaid_order_lines_variant_stocks | null)[] | null;
 }
 
 export interface OrderMarkAsPaid_orderMarkAsPaid_order_lines_unitDiscount {
@@ -379,6 +432,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_lines {
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  allocations: OrderMarkAsPaid_orderMarkAsPaid_order_lines_allocations[] | null;
   variant: OrderMarkAsPaid_orderMarkAsPaid_order_lines_variant | null;
   productName: string;
   productSku: string | null;

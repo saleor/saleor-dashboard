@@ -213,9 +213,34 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_events {
   lines: (OrderLineDiscountRemove_orderLineDiscountRemove_order_events_lines | null)[] | null;
 }
 
+export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillments_lines_orderLine_allocations_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillments_lines_orderLine_allocations {
+  __typename: "Allocation";
+  id: string;
+  quantity: number;
+  warehouse: OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillments_lines_orderLine_allocations_warehouse;
+}
+
 export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillments_lines_orderLine_variant_preorder {
   __typename: "PreorderData";
   endDate: any | null;
+}
+
+export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillments_lines_orderLine_variant_stocks_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillments_lines_orderLine_variant_stocks {
+  __typename: "Stock";
+  id: string;
+  warehouse: OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillments_lines_orderLine_variant_stocks_warehouse;
+  quantity: number;
+  quantityAllocated: number;
 }
 
 export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillments_lines_orderLine_variant {
@@ -223,6 +248,7 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillme
   id: string;
   quantityAvailable: number | null;
   preorder: OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillments_lines_orderLine_variant_preorder | null;
+  stocks: (OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillments_lines_orderLine_variant_stocks | null)[] | null;
 }
 
 export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillments_lines_orderLine_unitDiscount {
@@ -277,6 +303,7 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillme
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  allocations: OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillments_lines_orderLine_allocations[] | null;
   variant: OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillments_lines_orderLine_variant | null;
   productName: string;
   productSku: string | null;
@@ -315,9 +342,34 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillme
   warehouse: OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillments_warehouse | null;
 }
 
+export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_lines_allocations_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_lines_allocations {
+  __typename: "Allocation";
+  id: string;
+  quantity: number;
+  warehouse: OrderLineDiscountRemove_orderLineDiscountRemove_order_lines_allocations_warehouse;
+}
+
 export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_lines_variant_preorder {
   __typename: "PreorderData";
   endDate: any | null;
+}
+
+export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_lines_variant_stocks_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_lines_variant_stocks {
+  __typename: "Stock";
+  id: string;
+  warehouse: OrderLineDiscountRemove_orderLineDiscountRemove_order_lines_variant_stocks_warehouse;
+  quantity: number;
+  quantityAllocated: number;
 }
 
 export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_lines_variant {
@@ -325,6 +377,7 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_lines_var
   id: string;
   quantityAvailable: number | null;
   preorder: OrderLineDiscountRemove_orderLineDiscountRemove_order_lines_variant_preorder | null;
+  stocks: (OrderLineDiscountRemove_orderLineDiscountRemove_order_lines_variant_stocks | null)[] | null;
 }
 
 export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_lines_unitDiscount {
@@ -379,6 +432,7 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_lines {
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  allocations: OrderLineDiscountRemove_orderLineDiscountRemove_order_lines_allocations[] | null;
   variant: OrderLineDiscountRemove_orderLineDiscountRemove_order_lines_variant | null;
   productName: string;
   productSku: string | null;

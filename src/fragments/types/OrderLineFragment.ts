@@ -9,9 +9,34 @@ import { DiscountValueTypeEnum } from "./../../types/globalTypes";
 // GraphQL fragment: OrderLineFragment
 // ====================================================
 
+export interface OrderLineFragment_allocations_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderLineFragment_allocations {
+  __typename: "Allocation";
+  id: string;
+  quantity: number;
+  warehouse: OrderLineFragment_allocations_warehouse;
+}
+
 export interface OrderLineFragment_variant_preorder {
   __typename: "PreorderData";
   endDate: any | null;
+}
+
+export interface OrderLineFragment_variant_stocks_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderLineFragment_variant_stocks {
+  __typename: "Stock";
+  id: string;
+  warehouse: OrderLineFragment_variant_stocks_warehouse;
+  quantity: number;
+  quantityAllocated: number;
 }
 
 export interface OrderLineFragment_variant {
@@ -19,6 +44,7 @@ export interface OrderLineFragment_variant {
   id: string;
   quantityAvailable: number | null;
   preorder: OrderLineFragment_variant_preorder | null;
+  stocks: (OrderLineFragment_variant_stocks | null)[] | null;
 }
 
 export interface OrderLineFragment_unitDiscount {
@@ -73,6 +99,7 @@ export interface OrderLineFragment {
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  allocations: OrderLineFragment_allocations[] | null;
   variant: OrderLineFragment_variant | null;
   productName: string;
   productSku: string | null;

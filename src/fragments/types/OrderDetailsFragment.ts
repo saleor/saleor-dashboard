@@ -206,9 +206,34 @@ export interface OrderDetailsFragment_events {
   lines: (OrderDetailsFragment_events_lines | null)[] | null;
 }
 
+export interface OrderDetailsFragment_fulfillments_lines_orderLine_allocations_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderDetailsFragment_fulfillments_lines_orderLine_allocations {
+  __typename: "Allocation";
+  id: string;
+  quantity: number;
+  warehouse: OrderDetailsFragment_fulfillments_lines_orderLine_allocations_warehouse;
+}
+
 export interface OrderDetailsFragment_fulfillments_lines_orderLine_variant_preorder {
   __typename: "PreorderData";
   endDate: any | null;
+}
+
+export interface OrderDetailsFragment_fulfillments_lines_orderLine_variant_stocks_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderDetailsFragment_fulfillments_lines_orderLine_variant_stocks {
+  __typename: "Stock";
+  id: string;
+  warehouse: OrderDetailsFragment_fulfillments_lines_orderLine_variant_stocks_warehouse;
+  quantity: number;
+  quantityAllocated: number;
 }
 
 export interface OrderDetailsFragment_fulfillments_lines_orderLine_variant {
@@ -216,6 +241,7 @@ export interface OrderDetailsFragment_fulfillments_lines_orderLine_variant {
   id: string;
   quantityAvailable: number | null;
   preorder: OrderDetailsFragment_fulfillments_lines_orderLine_variant_preorder | null;
+  stocks: (OrderDetailsFragment_fulfillments_lines_orderLine_variant_stocks | null)[] | null;
 }
 
 export interface OrderDetailsFragment_fulfillments_lines_orderLine_unitDiscount {
@@ -270,6 +296,7 @@ export interface OrderDetailsFragment_fulfillments_lines_orderLine {
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  allocations: OrderDetailsFragment_fulfillments_lines_orderLine_allocations[] | null;
   variant: OrderDetailsFragment_fulfillments_lines_orderLine_variant | null;
   productName: string;
   productSku: string | null;
@@ -308,9 +335,34 @@ export interface OrderDetailsFragment_fulfillments {
   warehouse: OrderDetailsFragment_fulfillments_warehouse | null;
 }
 
+export interface OrderDetailsFragment_lines_allocations_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderDetailsFragment_lines_allocations {
+  __typename: "Allocation";
+  id: string;
+  quantity: number;
+  warehouse: OrderDetailsFragment_lines_allocations_warehouse;
+}
+
 export interface OrderDetailsFragment_lines_variant_preorder {
   __typename: "PreorderData";
   endDate: any | null;
+}
+
+export interface OrderDetailsFragment_lines_variant_stocks_warehouse {
+  __typename: "Warehouse";
+  id: string;
+}
+
+export interface OrderDetailsFragment_lines_variant_stocks {
+  __typename: "Stock";
+  id: string;
+  warehouse: OrderDetailsFragment_lines_variant_stocks_warehouse;
+  quantity: number;
+  quantityAllocated: number;
 }
 
 export interface OrderDetailsFragment_lines_variant {
@@ -318,6 +370,7 @@ export interface OrderDetailsFragment_lines_variant {
   id: string;
   quantityAvailable: number | null;
   preorder: OrderDetailsFragment_lines_variant_preorder | null;
+  stocks: (OrderDetailsFragment_lines_variant_stocks | null)[] | null;
 }
 
 export interface OrderDetailsFragment_lines_unitDiscount {
@@ -372,6 +425,7 @@ export interface OrderDetailsFragment_lines {
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
+  allocations: OrderDetailsFragment_lines_allocations[] | null;
   variant: OrderDetailsFragment_lines_variant | null;
   productName: string;
   productSku: string | null;
