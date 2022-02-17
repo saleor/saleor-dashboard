@@ -15,7 +15,7 @@ const useStyles = makeStyles(
     title: {
       width: "100%",
       display: "flex",
-      justifyContent: "space-between"
+      justifyContent: "flex-start"
     },
     orderNumber: {
       display: "inline",
@@ -148,7 +148,7 @@ const OrderCardTitle: React.FC<OrderCardTitleProps> = ({
       title={
         <div className={classes.title}>
           <div className={classes.indicator}>
-            {withStatus && <CircleIndicator color={selectStatus(status)}/>}
+            {withStatus && <CircleIndicator color={selectStatus(status)} />}
           </div>
           <HorizontalSpacer spacing={2} />
           <Typography className={classes.cardHeader}>
