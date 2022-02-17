@@ -21,8 +21,6 @@ generates:
       - ./src/**/fragments/*.ts
       - ./src/searches/*.ts
     config:
-      withHooks: true
-      apolloReactHooksImportFrom: "@saleor/hooks/graphql"
       nonOptionalTypename: true
       avoidOptionals:
         field: true
@@ -37,4 +35,19 @@ generates:
           content: /* eslint-disable */
       - typescript
       - typescript-operations
+  ./src/graphql/hooks.generated.ts:
+    documents:
+      - ./src/**/queries.ts
+      - ./src/**/mutations.ts
+      - ./src/**/fragments/*.ts
+      - ./src/searches/*.ts
+    preset: import-types
+    presetConfig:
+      typesPath: ./types.generated
+    config:
+      withHooks: true
+      apolloReactHooksImportFrom: "@saleor/hooks/graphql"
+    plugins:
+      - add:
+          content: /* eslint-disable */
       - typescript-react-apollo
