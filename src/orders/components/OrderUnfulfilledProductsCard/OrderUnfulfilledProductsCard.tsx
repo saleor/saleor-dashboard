@@ -95,9 +95,9 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
           </TableBody>
         </ResponsiveTable>
         {showFulfillmentAction && (
-          <CardActions>
+          <CardActions className={classes.actions}>
             <Button
-              variant="tertiary"
+              variant="primary"
               onClick={onFulfill}
               disabled={notAllowedToFulfillUnpaid}
             >
