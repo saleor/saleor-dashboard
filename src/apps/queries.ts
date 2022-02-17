@@ -51,7 +51,7 @@ export const appsInProgressList = gql`
 export const appDetails = gql`
   query App($id: ID!) {
     app(id: $id) {
-      ...AppFragment
+      ...App
       aboutApp
       permissions {
         code

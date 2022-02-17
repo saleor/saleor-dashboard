@@ -4,8 +4,7 @@ import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import Savebar from "@saleor/components/Savebar";
-import { MenuErrorFragment } from "@saleor/fragments/types/MenuErrorFragment";
-import { MenuDetailsFragmentFragment } from "@saleor/graphql";
+import { MenuDetailsFragment, MenuErrorFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -29,7 +28,7 @@ export interface MenuDetailsPageProps {
   saveButtonState: ConfirmButtonTransitionState;
   disabled: boolean;
   errors: MenuErrorFragment[];
-  menu: MenuDetailsFragmentFragment;
+  menu: MenuDetailsFragment;
   onBack: () => void;
   onDelete: () => void;
   onItemAdd: () => void;

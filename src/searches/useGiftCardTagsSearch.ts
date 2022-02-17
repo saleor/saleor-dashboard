@@ -29,7 +29,7 @@ export const searchGiftCardTags = gql`
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }

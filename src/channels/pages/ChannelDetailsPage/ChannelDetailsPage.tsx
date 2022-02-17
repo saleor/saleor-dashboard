@@ -4,11 +4,11 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import Savebar from "@saleor/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
-import { CountryFragment } from "@saleor/fragments/types/CountryFragment";
 import {
-  ChannelDetailsFragmentFragment,
+  ChannelDetailsFragment,
+  ChannelErrorFragment,
   CountryCode,
+  CountryFragment,
   SearchShippingZonesQuery
 } from "@saleor/graphql";
 import { SearchData } from "@saleor/hooks/makeTopLevelSearch";
@@ -31,7 +31,7 @@ import { ChannelShippingZones } from "./types";
 import { getUpdatedIdsWithNewId, getUpdatedIdsWithoutNewId } from "./utils";
 
 export interface ChannelDetailsPageProps<TErrors> {
-  channel?: ChannelDetailsFragmentFragment;
+  channel?: ChannelDetailsFragment;
   currencyCodes?: SingleAutocompleteChoiceType[];
   disabled: boolean;
   disabledStatus?: boolean;

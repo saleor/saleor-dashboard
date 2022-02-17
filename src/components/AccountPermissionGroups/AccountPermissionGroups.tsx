@@ -1,6 +1,8 @@
 import { Typography } from "@material-ui/core";
-import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
-import { SearchPermissionGroupsQuery } from "@saleor/graphql";
+import {
+  SearchPermissionGroupsQuery,
+  StaffErrorFragment
+} from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
 import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@saleor/types";
 import { getFormErrors } from "@saleor/utils/errors";

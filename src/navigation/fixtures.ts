@@ -1,9 +1,6 @@
-import {
-  MenuDetailsFragmentFragment,
-  MenuFragmentFragment
-} from "@saleor/graphql";
+import { MenuDetailsFragment, MenuFragment } from "@saleor/graphql";
 
-export const menuList: MenuFragmentFragment[] = [
+export const menuList: MenuFragment[] = [
   {
     __typename: "Menu",
     id: "TWVudTox",
@@ -25,7 +22,7 @@ export const menuList: MenuFragmentFragment[] = [
   }
 ];
 
-export const menu: MenuDetailsFragmentFragment = {
+export const menu: MenuDetailsFragment = {
   __typename: "Menu",
   id: "TWVudTox",
   items: [

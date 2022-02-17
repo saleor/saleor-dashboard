@@ -1,14 +1,14 @@
 import {
   PostalCodeRuleInclusionTypeEnum,
-  ShippingMethodWithPostalCodesFragmentFragment
+  ShippingMethodWithPostalCodesFragment
 } from "@saleor/graphql";
 
 export interface PostalCodesState {
   codesToDelete?: string[];
   havePostalCodesChanged?: boolean;
   inclusionType?: PostalCodeRuleInclusionTypeEnum;
-  originalCodes?: ShippingMethodWithPostalCodesFragmentFragment["postalCodeRules"];
-  postalCodeRules?: ShippingMethodWithPostalCodesFragmentFragment["postalCodeRules"];
+  originalCodes?: ShippingMethodWithPostalCodesFragment["postalCodeRules"];
+  postalCodeRules?: ShippingMethodWithPostalCodesFragment["postalCodeRules"];
 }
 
 function postalCodesReducer(

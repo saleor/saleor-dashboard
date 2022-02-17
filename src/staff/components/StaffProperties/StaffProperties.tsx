@@ -1,8 +1,10 @@
 import photoIcon from "@assets/images/photo-icon.svg";
 import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
-import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
-import { StaffMemberDetailsFragmentFragment } from "@saleor/graphql";
+import {
+  StaffErrorFragment,
+  StaffMemberDetailsFragment
+} from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
@@ -103,7 +105,7 @@ interface StaffPropertiesProps {
   };
   errors: StaffErrorFragment[];
   disabled: boolean;
-  staffMember: StaffMemberDetailsFragmentFragment;
+  staffMember: StaffMemberDetailsFragment;
   onChange: (event: React.ChangeEvent<any>) => void;
   onImageDelete: () => void;
   onImageUpload: (file: File) => void;

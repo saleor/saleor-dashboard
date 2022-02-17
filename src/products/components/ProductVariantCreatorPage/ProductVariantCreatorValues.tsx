@@ -8,8 +8,8 @@ import MultiAutocompleteSelectField from "@saleor/components/MultiAutocompleteSe
 import Skeleton from "@saleor/components/Skeleton";
 import {
   AttributeInputTypeEnum,
-  AttributeValueFragmentFragment,
-  ProductVariantAttributesFragmentFragment,
+  AttributeValueFragment,
+  ProductVariantAttributesFragment,
   SearchAttributeValuesQuery
 } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
@@ -49,7 +49,7 @@ export function getVariantsNumber(data: ProductVariantCreateFormData): number {
 
 export function getMultiValues(
   attributes: Attribute[],
-  attribute: ProductVariantAttributesFragmentFragment["productType"]["variantAttributes"][0]
+  attribute: ProductVariantAttributesFragment["productType"]["variantAttributes"][0]
 ) {
   return attributes
     .find(getById(attribute.id))
@@ -58,7 +58,7 @@ export function getMultiValues(
 
 export function getMultiDisplayValues(
   attributes: Attribute[],
-  attribute: ProductVariantAttributesFragmentFragment["productType"]["variantAttributes"][0]
+  attribute: ProductVariantAttributesFragment["productType"]["variantAttributes"][0]
 ) {
   return attributes.find(getById(attribute.id))?.values.map(value => ({
     label: value.value?.name,
@@ -68,7 +68,7 @@ export function getMultiDisplayValues(
 
 const getBooleanDisplayValues = (
   intl: IntlShape,
-  values: Array<AttributeValue<Partial<AttributeValueFragmentFragment>>>
+  values: Array<AttributeValue<Partial<AttributeValueFragment>>>
 ) => {
   if (!values.length) {
     return [];
@@ -82,7 +82,7 @@ const getBooleanDisplayValues = (
 
 const getBooleanChoices = (
   intl: IntlShape,
-  values?: Array<AttributeValue<Partial<AttributeValueFragmentFragment>>>
+  values?: Array<AttributeValue<Partial<AttributeValueFragment>>>
 ) => {
   const selectedValues = values?.map(({ value }) => value.boolean) ?? [];
   const choices = [
@@ -94,7 +94,7 @@ const getBooleanChoices = (
 };
 
 export interface ProductVariantCreatorValuesProps {
-  attributes: ProductVariantAttributesFragmentFragment["productType"]["variantAttributes"];
+  attributes: ProductVariantAttributesFragment["productType"]["variantAttributes"];
   attributeValues: RelayToFlat<
     SearchAttributeValuesQuery["attribute"]["choices"]
   >;
@@ -104,7 +104,7 @@ export interface ProductVariantCreatorValuesProps {
   variantsLeft: number | null;
   onValueClick: (
     attributeId: string,
-    value: AttributeValue<Partial<AttributeValueFragmentFragment>>
+    value: AttributeValue<Partial<AttributeValueFragment>>
   ) => void;
   onValueBlur: () => void;
 }

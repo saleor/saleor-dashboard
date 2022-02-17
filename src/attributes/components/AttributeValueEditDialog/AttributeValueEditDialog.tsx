@@ -9,8 +9,10 @@ import { getAttributeValueErrorMessage } from "@saleor/attributes/errors";
 import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
-import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
-import { AttributeInputTypeEnum } from "@saleor/graphql";
+import {
+  AttributeErrorFragment,
+  AttributeInputTypeEnum
+} from "@saleor/graphql";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";

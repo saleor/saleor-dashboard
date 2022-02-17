@@ -16,7 +16,7 @@ import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
+import { CountryWithCodeFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
@@ -34,7 +34,7 @@ interface FormData {
 
 export interface DiscountCountrySelectDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  countries: ShopInfo_shop_countries[];
+  countries: CountryWithCodeFragment[];
   initial: string[];
   open: boolean;
   onClose: () => void;

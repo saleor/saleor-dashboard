@@ -4,9 +4,9 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
-import { WebhookErrorFragment } from "@saleor/fragments/types/WebhookErrorFragment";
 import {
   WebhookDetailsQuery,
+  WebhookErrorFragment,
   WebhookEventTypeAsyncEnum,
   WebhookEventTypeSyncEnum
 } from "@saleor/graphql";

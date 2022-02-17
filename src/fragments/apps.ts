@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const appFragment = gql`
-  fragment AppFragment on App {
+  fragment App on App {
     id
     name
     created
@@ -27,7 +27,7 @@ export const appFragment = gql`
       name
     }
     webhooks {
-      ...WebhookFragment
+      ...Webhook
     }
   }
 `;

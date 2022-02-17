@@ -7,7 +7,7 @@ export const updateTaxSettings = gql`
         ...ShopSettingsUpdateErrorFragment
       }
       shop {
-        ...ShopTaxesFragment
+        ...ShopTaxes
       }
     }
   }
@@ -21,7 +21,7 @@ export const fetchTaxes = gql`
       }
       shop {
         countries {
-          ...CountryFragment
+          ...Country
         }
       }
     }

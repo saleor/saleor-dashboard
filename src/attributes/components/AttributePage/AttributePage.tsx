@@ -8,11 +8,11 @@ import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { ListSettingsUpdate } from "@saleor/components/TablePagination";
-import { AttributeDetailsFragment } from "@saleor/fragments/types/AttributeDetailsFragment";
-import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import {
+  AttributeDetailsFragment,
   AttributeDetailsQuery,
   AttributeEntityTypeEnum,
+  AttributeErrorFragment,
   AttributeInputTypeEnum,
   AttributeTypeEnum,
   MeasurementUnitsEnum

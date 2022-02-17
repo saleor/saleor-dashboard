@@ -13,7 +13,9 @@ import {
   UnassignProductAttributeMutation,
   useProductAttributeAssignmentUpdateMutation,
   useProductTypeDetailsQuery,
-  useProductTypeUpdateMutation
+  useProductTypeUpdateMutation,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation
 } from "@saleor/graphql";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -23,20 +25,16 @@ import { Button } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder, maybe } from "@saleor/misc";
 import useProductTypeDelete from "@saleor/productTypes/hooks/useProductTypeDelete";
 import useProductTypeOperations from "@saleor/productTypes/hooks/useProductTypeOperations";
+import useAvailableProductAttributeSearch from "@saleor/searches/useAvailableProductAttributeSearch";
 import { ReorderEvent } from "@saleor/types";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductTypeDetailsPage, {
   ProductTypeForm
 } from "../../components/ProductTypeDetailsPage";
-import useAvailableProductAttributeSearch from "../../hooks/useAvailableProductAttributeSearch";
 import {
   productTypeListUrl,
   productTypeUrl,
@@ -110,8 +108,8 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
     }
   });
 
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   const handleBack = () => navigate(productTypeListUrl());
   const [

@@ -7,7 +7,7 @@ import {
   DiscountValueTypeEnum,
   VoucherChannelListingUpdateMutation,
   VoucherChannelListingUpdateMutationVariables,
-  VoucherDetailsFragmentFragment,
+  VoucherDetailsFragment,
   VoucherTypeEnum,
   VoucherUpdateMutation,
   VoucherUpdateMutationVariables
@@ -15,7 +15,7 @@ import {
 import { joinDateTime } from "@saleor/misc";
 
 export function createUpdateHandler(
-  voucher: VoucherDetailsFragmentFragment,
+  voucher: VoucherDetailsFragment,
   voucherChannelsChoices: ChannelVoucherData[],
   updateVoucher: (
     variables: VoucherUpdateMutationVariables

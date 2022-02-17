@@ -4,10 +4,10 @@ export const orderCancelMutation = gql`
   mutation OrderCancel($id: ID!) {
     orderCancel(id: $id) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
       order {
-        ...OrderDetailsFragment
+        ...OrderDetails
       }
     }
   }
@@ -18,10 +18,10 @@ export const orderDiscountAddMutation = gql`
   mutation OrderDiscountAdd($input: OrderDiscountCommonInput!, $orderId: ID!) {
     orderDiscountAdd(input: $input, orderId: $orderId) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
       order {
-        ...OrderDetailsFragment
+        ...OrderDetails
       }
     }
   }
@@ -31,10 +31,10 @@ export const orderDiscountDeleteMutation = gql`
   mutation OrderDiscountDelete($discountId: ID!) {
     orderDiscountDelete(discountId: $discountId) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
       order {
-        ...OrderDetailsFragment
+        ...OrderDetails
       }
     }
   }
@@ -44,10 +44,10 @@ export const orderLineDiscountRemoveMutation = gql`
   mutation OrderLineDiscountRemove($orderLineId: ID!) {
     orderLineDiscountRemove(orderLineId: $orderLineId) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
       order {
-        ...OrderDetailsFragment
+        ...OrderDetails
       }
     }
   }
@@ -60,10 +60,10 @@ export const orderLineDiscountUpdateMutation = gql`
   ) {
     orderLineDiscountUpdate(input: $input, orderLineId: $orderLineId) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
       order {
-        ...OrderDetailsFragment
+        ...OrderDetails
       }
     }
   }
@@ -76,10 +76,10 @@ export const orderDiscountUpdateMutation = gql`
   ) {
     orderDiscountUpdate(input: $input, discountId: $discountId) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
       order {
-        ...OrderDetailsFragment
+        ...OrderDetails
       }
     }
   }
@@ -91,10 +91,10 @@ export const orderDraftCancelMutation = gql`
   mutation OrderDraftCancel($id: ID!) {
     draftOrderDelete(id: $id) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
       order {
-        ...OrderDetailsFragment
+        ...OrderDetails
       }
     }
   }
@@ -104,7 +104,7 @@ export const orderDraftBulkCancelMutation = gql`
   mutation OrderDraftBulkCancel($ids: [ID]!) {
     draftOrderBulkDelete(ids: $ids) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
     }
   }
@@ -114,10 +114,10 @@ export const orderConfirmMutation = gql`
   mutation OrderConfirm($id: ID!) {
     orderConfirm(id: $id) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
       order {
-        ...OrderDetailsFragment
+        ...OrderDetails
       }
     }
   }
@@ -127,10 +127,10 @@ export const orderDraftFinalizeMutation = gql`
   mutation OrderDraftFinalize($id: ID!) {
     draftOrderComplete(id: $id) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
       order {
-        ...OrderDetailsFragment
+        ...OrderDetails
       }
     }
   }
@@ -143,7 +143,7 @@ export const orderReturnCreateMutation = gql`
   ) {
     orderFulfillmentReturnProducts(input: $input, order: $id) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
       order {
         id
@@ -159,10 +159,10 @@ export const orderRefundMutation = gql`
   mutation OrderRefund($id: ID!, $amount: PositiveDecimal!) {
     orderRefund(id: $id, amount: $amount) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
       order {
-        ...OrderDetailsFragment
+        ...OrderDetails
       }
     }
   }
@@ -175,13 +175,13 @@ export const orderFulfillmentRefundProductsMutation = gql`
   ) {
     orderFulfillmentRefundProducts(input: $input, order: $order) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
       fulfillment {
-        ...FulfillmentFragment
+        ...Fulfillment
       }
       order {
-        ...OrderDetailsFragment
+        ...OrderDetails
       }
     }
   }
@@ -191,10 +191,10 @@ export const orderVoidMutation = gql`
   mutation OrderVoid($id: ID!) {
     orderVoid(id: $id) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
       order {
-        ...OrderDetailsFragment
+        ...OrderDetails
       }
     }
   }
@@ -204,10 +204,10 @@ export const orderMarkAsPaidMutation = gql`
   mutation OrderMarkAsPaid($id: ID!, $transactionReference: String) {
     orderMarkAsPaid(id: $id, transactionReference: $transactionReference) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
       order {
-        ...OrderDetailsFragment
+        ...OrderDetails
       }
     }
   }
@@ -217,10 +217,10 @@ export const orderCaptureMutation = gql`
   mutation OrderCapture($id: ID!, $amount: PositiveDecimal!) {
     orderCapture(id: $id, amount: $amount) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
       order {
-        ...OrderDetailsFragment
+        ...OrderDetails
       }
     }
   }
@@ -233,10 +233,10 @@ export const orderFulfillmentUpdateTrackingMutation = gql`
   ) {
     orderFulfillmentUpdateTracking(id: $id, input: $input) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
       order {
-        ...OrderDetailsFragment
+        ...OrderDetails
       }
     }
   }
@@ -246,10 +246,10 @@ export const orderFulfillmentApproveMutation = gql`
   mutation OrderFulfillmentApprove($id: ID!, $notifyCustomer: Boolean!) {
     orderFulfillmentApprove(id: $id, notifyCustomer: $notifyCustomer) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
       order {
-        ...OrderDetailsFragment
+        ...OrderDetails
       }
     }
   }
@@ -259,10 +259,10 @@ export const orderFulfillmentCancelMutation = gql`
   mutation OrderFulfillmentCancel($id: ID!, $input: FulfillmentCancelInput!) {
     orderFulfillmentCancel(id: $id, input: $input) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
       order {
-        ...OrderDetailsFragment
+        ...OrderDetails
       }
     }
   }
@@ -272,12 +272,12 @@ export const orderAddNoteMutation = gql`
   mutation OrderAddNote($order: ID!, $input: OrderAddNoteInput!) {
     orderAddNote(order: $order, input: $input) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
       order {
         id
         events {
-          ...OrderEventFragment
+          ...OrderEvent
         }
       }
     }
@@ -288,10 +288,10 @@ export const orderUpdateMutation = gql`
   mutation OrderUpdate($id: ID!, $input: OrderUpdateInput!) {
     orderUpdate(id: $id, input: $input) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
       order {
-        ...OrderDetailsFragment
+        ...OrderDetails
       }
     }
   }
@@ -301,10 +301,10 @@ export const orderDraftUpdateMutation = gql`
   mutation OrderDraftUpdate($id: ID!, $input: DraftOrderInput!) {
     draftOrderUpdate(id: $id, input: $input) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
       order {
-        ...OrderDetailsFragment
+        ...OrderDetails
       }
     }
   }
@@ -317,7 +317,7 @@ export const orderShippingMethodUpdateMutation = gql`
   ) {
     orderUpdateShipping(order: $id, input: $input) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
       order {
         shippingMethods {
@@ -350,7 +350,7 @@ export const orderShippingMethodUpdateMutation = gql`
             currency
           }
         }
-        ...OrderDetailsFragment
+        ...OrderDetails
       }
     }
   }
@@ -360,7 +360,7 @@ export const orderDraftCreateMutation = gql`
   mutation OrderDraftCreate($input: DraftOrderCreateInput!) {
     draftOrderCreate(input: $input) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
       order {
         id
@@ -373,10 +373,10 @@ export const orderLineDeleteMutation = gql`
   mutation OrderLineDelete($id: ID!) {
     orderLineDelete(id: $id) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
       order {
-        ...OrderDetailsFragment
+        ...OrderDetails
       }
     }
   }
@@ -386,10 +386,10 @@ export const orderLinesAddMutation = gql`
   mutation OrderLinesAdd($id: ID!, $input: [OrderLineCreateInput]!) {
     orderLinesCreate(id: $id, input: $input) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
       order {
-        ...OrderDetailsFragment
+        ...OrderDetails
       }
     }
   }
@@ -399,10 +399,10 @@ export const orderLineUpdateMutation = gql`
   mutation OrderLineUpdate($id: ID!, $input: OrderLineInput!) {
     orderLineUpdate(id: $id, input: $input) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
       }
       order {
-        ...OrderDetailsFragment
+        ...OrderDetails
       }
     }
   }
@@ -412,12 +412,12 @@ export const fulfillOrder = gql`
   mutation FulfillOrder($orderId: ID!, $input: OrderFulfillInput!) {
     orderFulfill(order: $orderId, input: $input) {
       errors {
-        ...OrderErrorFragment
+        ...OrderError
         warehouse
         orderLines
       }
       order {
-        ...OrderDetailsFragment
+        ...OrderDetails
       }
     }
   }
@@ -427,15 +427,15 @@ export const invoiceRequestMutation = gql`
   mutation InvoiceRequest($orderId: ID!) {
     invoiceRequest(orderId: $orderId) {
       errors {
-        ...InvoiceErrorFragment
+        ...InvoiceError
       }
       invoice {
-        ...InvoiceFragment
+        ...Invoice
       }
       order {
         id
         invoices {
-          ...InvoiceFragment
+          ...Invoice
         }
       }
     }
@@ -446,10 +446,10 @@ export const invoiceEmailSendMutation = gql`
   mutation InvoiceEmailSend($id: ID!) {
     invoiceSendNotification(id: $id) {
       errors {
-        ...InvoiceErrorFragment
+        ...InvoiceError
       }
       invoice {
-        ...InvoiceFragment
+        ...Invoice
       }
     }
   }
@@ -462,18 +462,18 @@ export const orderSettingsUpdateMutation = gql`
   ) {
     orderSettingsUpdate(input: $orderSettingsInput) {
       errors {
-        ...OrderSettingsErrorFragment
+        ...OrderSettingsError
       }
       orderSettings {
-        ...OrderSettingsFragment
+        ...OrderSettings
       }
     }
     shopSettingsUpdate(input: $shopSettingsInput) {
       errors {
-        ...ShopErrorFragment
+        ...ShopError
       }
       shop {
-        ...ShopOrderSettingsFragment
+        ...ShopOrderSettings
       }
     }
   }

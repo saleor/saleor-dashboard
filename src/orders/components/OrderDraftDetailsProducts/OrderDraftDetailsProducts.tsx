@@ -1,7 +1,7 @@
 import { TableBody, TableCell, TableHead, TableRow } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
-import { OrderLineFragmentFragment } from "@saleor/graphql";
+import { OrderLineFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import {
   OrderLineDiscountConsumer,
@@ -58,7 +58,7 @@ const useStyles = makeStyles(
 );
 
 interface OrderDraftDetailsProductsProps {
-  lines: OrderLineFragmentFragment[];
+  lines: OrderLineFragment[];
   onOrderLineChange: (id: string, data: FormData) => void;
   onOrderLineRemove: (id: string) => void;
 }

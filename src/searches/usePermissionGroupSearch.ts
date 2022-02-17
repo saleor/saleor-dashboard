@@ -21,7 +21,7 @@ export const searchPermissionGroups = gql`
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }

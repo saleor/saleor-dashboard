@@ -1,9 +1,11 @@
 import { MetadataFormData } from "@saleor/components/Metadata";
-import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
 import { giftCardUpdateFormMessages } from "@saleor/giftCards/GiftCardsList/messages";
 import {
+  GiftCardErrorFragment,
   GiftCardUpdateMutation,
-  useGiftCardUpdateMutation
+  useGiftCardUpdateMutation,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation
 } from "@saleor/graphql";
 import { MutationResultWithOpts } from "@saleor/hooks/makeMutation";
 import useForm, { FormChange, UseFormResult } from "@saleor/hooks/useForm";
@@ -14,10 +16,6 @@ import { getFormErrors } from "@saleor/utils/errors";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import difference from "lodash/difference";
 import React, { createContext } from "react";
@@ -42,7 +40,7 @@ export interface GiftCardUpdateFormConsumerData
 }
 
 export interface GiftCardUpdateFormErrors {
-  formErrors: Record<"tags" | "expiryDate", GiftCardError>;
+  formErrors: Record<"tags" | "expiryDate", GiftCardErrorFragment>;
   handlers: { changeMetadata: FormChange };
 }
 
@@ -73,8 +71,8 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
 }) => {
   const notify = useNotifier();
   const intl = useIntl();
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   const { loading: loadingGiftCard, giftCard } = useGiftCardDetails();
 

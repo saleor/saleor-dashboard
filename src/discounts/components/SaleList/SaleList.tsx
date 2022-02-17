@@ -12,7 +12,7 @@ import TooltipTableCellHeader from "@saleor/components/TooltipTableCellHeader";
 import { commonTooltipMessages } from "@saleor/components/TooltipTableCellHeader/messages";
 import { SaleListUrlSortField } from "@saleor/discounts/urls";
 import { canBeSorted } from "@saleor/discounts/views/SaleList/sort";
-import { SaleFragmentFragment, SaleType } from "@saleor/graphql";
+import { SaleFragment, SaleType } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ChannelProps, ListActions, ListProps, SortPage } from "@saleor/types";
@@ -26,7 +26,7 @@ export interface SaleListProps
     ListActions,
     SortPage<SaleListUrlSortField>,
     ChannelProps {
-  sales: SaleFragmentFragment[];
+  sales: SaleFragment[];
 }
 
 const useStyles = makeStyles(

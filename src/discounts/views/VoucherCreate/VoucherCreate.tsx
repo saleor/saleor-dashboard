@@ -7,6 +7,8 @@ import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import {
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation,
   useVoucherChannelListingUpdateMutation,
   useVoucherCreateMutation
 } from "@saleor/graphql";
@@ -16,10 +18,6 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { sectionNames } from "@saleor/intl";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -42,8 +40,8 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
   const notify = useNotifier();
   const intl = useIntl();
 
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [openModal, closeModal] = createDialogActionHandlers<
     ChannelsAction,
     VoucherCreateUrlQueryParams

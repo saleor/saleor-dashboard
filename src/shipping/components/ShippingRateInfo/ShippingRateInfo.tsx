@@ -5,7 +5,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import RichTextEditor, {
   RichTextEditorChange
 } from "@saleor/components/RichTextEditor";
-import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
+import { ShippingErrorFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";

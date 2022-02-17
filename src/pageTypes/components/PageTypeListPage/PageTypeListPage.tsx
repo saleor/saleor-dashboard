@@ -2,7 +2,7 @@ import { Card } from "@material-ui/core";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
-import { PageTypeFragmentFragment } from "@saleor/graphql";
+import { PageTypeFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, Button } from "@saleor/macaw-ui";
 import { PageTypeListUrlSortField } from "@saleor/pageTypes/urls";
@@ -24,7 +24,7 @@ export interface PageTypeListPageProps
     SearchPageProps,
     SortPage<PageTypeListUrlSortField>,
     TabPageProps {
-  pageTypes: PageTypeFragmentFragment[];
+  pageTypes: PageTypeFragment[];
   onBack: () => void;
 }
 

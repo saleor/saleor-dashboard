@@ -1,17 +1,14 @@
 import { gql } from "@apollo/client";
 
-import { fragmentAddress } from "./address";
-
 export const warehouseFragment = gql`
-  fragment WarehouseFragment on Warehouse {
+  fragment Warehouse on Warehouse {
     id
     name
   }
 `;
 export const warehouseWithShippingFragment = gql`
-  ${warehouseFragment}
-  fragment WarehouseWithShippingFragment on Warehouse {
-    ...WarehouseFragment
+  fragment WarehouseWithShipping on Warehouse {
+    ...Warehouse
     shippingZones(first: 100) {
       edges {
         node {
@@ -24,14 +21,12 @@ export const warehouseWithShippingFragment = gql`
 `;
 
 export const warehouseDetailsFragment = gql`
-  ${fragmentAddress}
-  ${warehouseWithShippingFragment}
-  fragment WarehouseDetailsFragment on Warehouse {
+  fragment WarehouseDetails on Warehouse {
     isPrivate
     clickAndCollectOption
-    ...WarehouseWithShippingFragment
+    ...WarehouseWithShipping
     address {
-      ...AddressFragment
+      ...Address
     }
   }
 `;

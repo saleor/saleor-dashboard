@@ -20,7 +20,7 @@ export const searchWarehouses = gql`
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }

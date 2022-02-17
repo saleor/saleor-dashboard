@@ -17,7 +17,7 @@ export const pageList = gql`
     ) {
       edges {
         node {
-          ...PageFragment
+          ...Page
         }
       }
       pageInfo {
@@ -39,7 +39,7 @@ export const pageDetails = gql`
     $beforeValues: String
   ) {
     page(id: $id) {
-      ...PageDetailsFragment
+      ...PageDetails
     }
   }
 `;
@@ -68,7 +68,7 @@ export const pageTypeQuery = gql`
           last: $lastValues
           before: $beforeValues
         ) {
-          ...AttributeValueListFragment
+          ...AttributeValueList
         }
       }
     }

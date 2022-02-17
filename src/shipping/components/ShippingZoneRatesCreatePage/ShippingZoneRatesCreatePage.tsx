@@ -8,13 +8,13 @@ import { WithFormId } from "@saleor/components/Form/ExitFormDialogProvider";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
-import { ShippingChannelsErrorFragment } from "@saleor/fragments/types/ShippingChannelsErrorFragment";
-import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
-import { ShippingMethodTypeFragment_postalCodeRules } from "@saleor/fragments/types/ShippingMethodTypeFragment";
 import {
   PermissionEnum,
   PostalCodeRuleInclusionTypeEnum,
-  ShippingMethodTypeEnum
+  ShippingChannelsErrorFragment,
+  ShippingErrorFragment,
+  ShippingMethodTypeEnum,
+  ShippingMethodTypeFragment
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -35,7 +35,7 @@ export interface ShippingZoneRatesCreatePageProps extends WithFormId {
   shippingChannels: ChannelShippingData[];
   disabled: boolean;
   hasChannelChanged?: boolean;
-  postalCodes?: ShippingMethodTypeFragment_postalCodeRules[];
+  postalCodes?: ShippingMethodTypeFragment["postalCodeRules"];
   channelErrors: ShippingChannelsErrorFragment[];
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;

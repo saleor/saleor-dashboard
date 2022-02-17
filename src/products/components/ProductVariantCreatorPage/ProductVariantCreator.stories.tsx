@@ -2,10 +2,7 @@ import { attributes } from "@saleor/attributes/fixtures";
 import { productChannels } from "@saleor/channels/fixtures";
 import Container from "@saleor/components/Container";
 import { fetchMoreProps, limitsReached } from "@saleor/fixtures";
-import {
-  BulkProductErrorFragmentFragment,
-  ProductErrorCode
-} from "@saleor/graphql";
+import { BulkProductErrorFragment, ProductErrorCode } from "@saleor/graphql";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -70,7 +67,7 @@ const dataAttributes = selectedAttributes.map(attribute => ({
     .filter((_, valueIndex) => valueIndex % 2 !== 1)
 }));
 
-const errors: BulkProductErrorFragmentFragment[] = [
+const errors: BulkProductErrorFragment[] = [
   {
     __typename: "BulkProductError",
     channels: [channels[0].channelId],

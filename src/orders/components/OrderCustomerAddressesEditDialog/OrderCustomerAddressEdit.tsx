@@ -7,9 +7,9 @@ import Skeleton from "@saleor/components/Skeleton";
 import CustomerAddressChoiceCard from "@saleor/customers/components/CustomerAddressChoiceCard";
 import { AddressTypeInput } from "@saleor/customers/types";
 import {
-  AccountErrorFragmentFragment,
-  AddressFragmentFragment,
-  OrderErrorFragmentFragment
+  AccountErrorFragment,
+  AddressFragment,
+  OrderErrorFragment
 } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
 import React from "react";
@@ -22,7 +22,7 @@ import { useStyles } from "./styles";
 
 export interface OrderCustomerAddressEditProps {
   loading: boolean;
-  customerAddresses: AddressFragmentFragment[];
+  customerAddresses: AddressFragment[];
   countryChoices: SingleAutocompleteChoiceType[];
   addressInputOption: AddressInputOptionEnum;
   addressInputName: string;
@@ -30,7 +30,7 @@ export interface OrderCustomerAddressEditProps {
   selectedCustomerAddressId: string;
   formAddress: AddressTypeInput;
   formAddressCountryDisplayName: string;
-  formErrors: Array<AccountErrorFragmentFragment | OrderErrorFragmentFragment>;
+  formErrors: Array<AccountErrorFragment | OrderErrorFragment>;
   onChangeFormAddress: (event: React.ChangeEvent<any>) => void;
   onChangeFormAddressCountry: (event: React.ChangeEvent<any>) => void;
   onEdit?: () => void;

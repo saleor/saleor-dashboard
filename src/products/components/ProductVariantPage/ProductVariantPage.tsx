@@ -16,13 +16,13 @@ import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import {
-  ProductChannelListingErrorFragmentFragment,
-  ProductErrorWithAttributesFragmentFragment,
+  ProductChannelListingErrorFragment,
+  ProductErrorWithAttributesFragment,
   ProductVariantFragment,
   SearchAttributeValuesQuery,
   SearchPagesQuery,
   SearchProductsQuery,
-  WarehouseFragmentFragment
+  WarehouseFragment
 } from "@saleor/graphql";
 import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@saleor/types";
@@ -77,15 +77,15 @@ interface ProductVariantPageProps {
   assignReferencesAttributeId?: string;
   defaultVariantId?: string;
   defaultWeightUnit: string;
-  errors: ProductErrorWithAttributesFragmentFragment[];
+  errors: ProductErrorWithAttributesFragment[];
   header: string;
   channels: ChannelPriceData[];
-  channelErrors: ProductChannelListingErrorFragmentFragment[];
+  channelErrors: ProductChannelListingErrorFragment[];
   loading?: boolean;
   placeholderImage?: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   variant?: ProductVariantFragment;
-  warehouses: WarehouseFragmentFragment[];
+  warehouses: WarehouseFragment[];
   referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
   attributeValues: RelayToFlat<

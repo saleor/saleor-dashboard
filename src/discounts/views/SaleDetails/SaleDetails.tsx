@@ -29,7 +29,9 @@ import {
   useSaleCataloguesRemoveMutation,
   useSaleDeleteMutation,
   useSaleDetailsQuery,
-  useSaleUpdateMutation
+  useSaleUpdateMutation,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation
 } from "@saleor/graphql";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useChannels from "@saleor/hooks/useChannels";
@@ -49,10 +51,6 @@ import useProductSearch from "@saleor/searches/useProductSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -66,8 +64,8 @@ interface SaleDetailsProps {
 }
 
 export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const navigate = useNavigator();
   const notify = useNotifier();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(

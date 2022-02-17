@@ -1,20 +1,20 @@
-import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
-import { InvoiceFragment } from "@saleor/fragments/types/InvoiceFragment";
-import { ShopOrderSettingsFragment } from "@saleor/fragments/types/ShopOrderSettingsFragment";
 import {
+  CountryWithCodeFragment,
   FulfillmentStatus,
+  InvoiceFragment,
   JobStatusEnum,
   OrderAction,
-  OrderDetailsFragmentFragment,
+  OrderDetailsFragment,
   OrderDetailsQuery,
   OrderEventsEmailsEnum,
   OrderEventsEnum,
   OrderListQuery,
-  OrderSettingsFragmentFragment,
+  OrderSettingsFragment,
   OrderStatus,
   PaymentChargeStatusEnum,
   SearchCustomersQuery,
   SearchOrderVariantQuery,
+  ShopOrderSettingsFragment,
   WeightUnitsEnum
 } from "@saleor/graphql";
 import { RelayToFlat } from "@saleor/types";
@@ -23,7 +23,7 @@ import { MessageDescriptor } from "react-intl";
 
 import { transformOrderStatus, transformPaymentStatus } from "../misc";
 
-export const countries: ShopInfo_shop_countries[] = [
+export const countries: CountryWithCodeFragment[] = [
   { __typename: "CountryDisplay", code: "AF", country: "Afghanistan" },
   { __typename: "CountryDisplay", code: "AX", country: "Åland Islands" },
   { __typename: "CountryDisplay", code: "AL", country: "Albania" },
@@ -772,7 +772,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     userEmail: "curtis.bailey@example.com"
   }
 ];
-export const order = (placeholder: string): OrderDetailsFragmentFragment => ({
+export const order = (placeholder: string): OrderDetailsFragment => ({
   __typename: "Order",
   giftCards: [],
   actions: [
@@ -1423,9 +1423,7 @@ export const order = (placeholder: string): OrderDetailsFragmentFragment => ({
   user: null,
   userEmail: "melissa.simon@example.com"
 });
-export const draftOrder = (
-  placeholder: string
-): OrderDetailsFragmentFragment => ({
+export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
   __typename: "Order" as "Order",
   giftCards: [],
   actions: [OrderAction.CAPTURE],
@@ -2079,7 +2077,7 @@ export const invoices: InvoiceFragment[] = [
   }
 ];
 
-export const orderSettings: OrderSettingsFragmentFragment = {
+export const orderSettings: OrderSettingsFragment = {
   __typename: "OrderSettings",
   automaticallyConfirmAllNewOrders: true,
   automaticallyFulfillNonShippableGiftCard: false

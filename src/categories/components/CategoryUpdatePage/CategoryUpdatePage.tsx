@@ -7,8 +7,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import SeoForm from "@saleor/components/SeoForm";
 import { Tab, TabContainer } from "@saleor/components/Tab";
-import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
-import { CategoryDetailsQuery } from "@saleor/graphql";
+import { CategoryDetailsQuery, ProductErrorFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import {

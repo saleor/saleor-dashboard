@@ -9,14 +9,14 @@ export const attributeDetails = gql`
     $beforeValues: String
   ) {
     attribute(id: $id) {
-      ...AttributeDetailsFragment
+      ...AttributeDetails
       choices(
         first: $firstValues
         after: $afterValues
         last: $lastValues
         before: $beforeValues
       ) {
-        ...AttributeValueListFragment
+        ...AttributeValueList
       }
     }
   }
@@ -41,11 +41,11 @@ export const attributeList = gql`
     ) {
       edges {
         node {
-          ...AttributeFragment
+          ...Attribute
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }

@@ -1,4 +1,4 @@
-import { ChannelDetailsFragmentFragment } from "@saleor/graphql";
+import { ChannelDetailsFragment } from "@saleor/graphql";
 import CentralPlacementDecorator from "@saleor/storybook/CentralPlacementDecorator";
 import CommonDecorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
@@ -44,7 +44,7 @@ const props: ShippingZoneSettingsCardProps = {
     { __typename: "Channel", id: "channel1", name: "GBP" },
     { __typename: "Channel", id: "channel2", name: "PLN" },
     { __typename: "Channel", id: "channel3", name: "USD" }
-  ] as ChannelDetailsFragmentFragment[],
+  ] as ChannelDetailsFragment[],
   channelsDisplayValues: [
     {
       value: "channel1",

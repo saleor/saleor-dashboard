@@ -12,7 +12,6 @@ import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import LinkChoice from "@saleor/components/LinkChoice";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
 import {
@@ -22,7 +21,8 @@ import {
 import TableHead from "@saleor/components/TableHead";
 import {
   ProductDetailsVariantFragment,
-  ProductFragment
+  ProductFragment,
+  RefreshLimitsQuery
 } from "@saleor/graphql";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import { isLimitReached } from "@saleor/utils/limits";
@@ -205,7 +205,7 @@ function getAvailabilityLabel(
 
 interface ProductVariantsProps extends ListActions, ChannelProps {
   disabled: boolean;
-  limits: RefreshLimits_shop_limits;
+  limits: RefreshLimitsQuery["shop"]["limits"];
   product: ProductFragment;
   variants: ProductDetailsVariantFragment[];
   onVariantReorder: ReorderAction;

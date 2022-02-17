@@ -13,10 +13,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import {
-  SaleDetailsFragmentFragment,
-  VoucherDetailsFragmentFragment
-} from "@saleor/graphql";
+import { SaleDetailsFragment, VoucherDetailsFragment } from "@saleor/graphql";
 import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -28,8 +25,8 @@ import { useStyles } from "./styles";
 
 export interface SaleProductsProps extends ListProps, ListActions {
   products:
-    | RelayToFlat<SaleDetailsFragmentFragment["products"]>
-    | RelayToFlat<VoucherDetailsFragmentFragment["products"]>;
+    | RelayToFlat<SaleDetailsFragment["products"]>
+    | RelayToFlat<VoucherDetailsFragment["products"]>;
   channelsCount: number;
   onProductAssign: () => void;
   onProductUnassign: (id: string) => void;

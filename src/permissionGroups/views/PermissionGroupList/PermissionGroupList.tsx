@@ -1,6 +1,6 @@
 import { configurationMenuUrl } from "@saleor/configuration";
-import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
 import {
+  PermissionGroupErrorFragment,
   usePermissionGroupDeleteMutation,
   usePermissionGroupListQuery
 } from "@saleor/graphql";

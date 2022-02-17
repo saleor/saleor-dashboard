@@ -1,4 +1,4 @@
-import { OrderDetailsFragmentFragment } from "@saleor/graphql";
+import { OrderDetailsFragment } from "@saleor/graphql";
 
 import {
   getFulfilledFulfillemnts,
@@ -6,9 +6,7 @@ import {
   getWaitingFulfillments
 } from "../OrderReturnPage/utils";
 
-export const hasAnyItemsReplaceable = (
-  order?: OrderDetailsFragmentFragment
-) => {
+export const hasAnyItemsReplaceable = (order?: OrderDetailsFragment) => {
   if (!order) {
     return false;
   }

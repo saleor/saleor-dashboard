@@ -4,10 +4,10 @@ export const pluginUpdate = gql`
   mutation PluginUpdate($channelId: ID, $id: ID!, $input: PluginUpdateInput!) {
     pluginUpdate(channelId: $channelId, id: $id, input: $input) {
       errors {
-        ...PluginErrorFragment
+        ...PluginError
       }
       plugin {
-        ...PluginsDetailsFragment
+        ...PluginsDetails
       }
     }
   }

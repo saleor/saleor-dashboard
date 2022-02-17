@@ -12,7 +12,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import { MenuFragmentFragment } from "@saleor/graphql";
+import { MenuFragment } from "@saleor/graphql";
 import { DeleteIcon, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
 import { MenuListUrlSortField } from "@saleor/navigation/urls";
@@ -26,7 +26,7 @@ export interface MenuListProps
   extends ListProps,
     ListActions,
     SortPage<MenuListUrlSortField> {
-  menus: MenuFragmentFragment[];
+  menus: MenuFragment[];
   onDelete: (id: string) => void;
 }
 

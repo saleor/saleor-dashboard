@@ -22,7 +22,7 @@ export const searchCustomers = gql`
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }

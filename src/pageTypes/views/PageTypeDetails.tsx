@@ -12,7 +12,9 @@ import {
   usePageTypeDeleteMutation,
   usePageTypeDetailsQuery,
   usePageTypeUpdateMutation,
-  useUnassignPageAttributeMutation
+  useUnassignPageAttributeMutation,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation
 } from "@saleor/graphql";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -24,17 +26,13 @@ import { ReorderEvent } from "@saleor/types";
 import getPageErrorMessage from "@saleor/utils/errors/page";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import useAvailablePageAttributeSearch from "../../searches/useAvailablePageAttributesSearch";
 import PageTypeDetailsPage, {
   PageTypeForm
 } from "../components/PageTypeDetailsPage";
-import useAvailablePageAttributeSearch from "../hooks/useAvailablePageAttributeSearch";
 import usePageTypeDelete from "../hooks/usePageTypeDelete";
 import { pageTypeListUrl, pageTypeUrl, PageTypeUrlQueryParams } from "../urls";
 
@@ -113,8 +111,8 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
     params
   });
 
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   const handleBack = () => navigate(pageTypeListUrl());
 

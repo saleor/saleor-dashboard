@@ -29,7 +29,7 @@ export const searchShippingZones = gql`
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }

@@ -1,11 +1,11 @@
-import { StaffMemberFragmentFragment } from "@saleor/graphql";
+import { StaffMemberFragment } from "@saleor/graphql";
 import { getUserName } from "@saleor/misc";
 
 import { MembersListUrlSortField } from "./urls";
 
 export const sortMembers = (sort: string, asc: boolean) => (
-  a: StaffMemberFragmentFragment,
-  b: StaffMemberFragmentFragment
+  a: StaffMemberFragment,
+  b: StaffMemberFragment
 ) => {
   let valueA;
   let valueB;

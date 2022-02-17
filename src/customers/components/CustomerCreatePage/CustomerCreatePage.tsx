@@ -4,8 +4,11 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
-import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
-import { AddressInput, CustomerCreateDataQuery } from "@saleor/graphql";
+import {
+  AccountErrorFragment,
+  AddressInput,
+  CustomerCreateDataQuery
+} from "@saleor/graphql";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";

@@ -1,10 +1,10 @@
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import {
-  AccountErrorFragmentFragment,
-  AddressFragmentFragment,
+  AccountErrorFragment,
+  AddressFragment,
   AddressTypeEnum,
   Node,
-  OrderErrorFragmentFragment
+  OrderErrorFragment
 } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
 import { flatten } from "@saleor/misc";
@@ -21,12 +21,10 @@ interface AddressEditCommonProps {
   showCard: boolean;
   loading: boolean;
   countryChoices: SingleAutocompleteChoiceType[];
-  customerAddresses: AddressFragmentFragment[];
+  customerAddresses: AddressFragment[];
 }
 
-export const stringifyAddress = (
-  address: Partial<AddressFragmentFragment>
-): string => {
+export const stringifyAddress = (address: Partial<AddressFragment>): string => {
   const { id, ...addressWithoutId } = address;
   return Object.values(flatten(addressWithoutId)).join(" ");
 };
@@ -34,13 +32,13 @@ export const stringifyAddress = (
 export const parseQuery = (query: string) =>
   query.replace(/([.?*+\-=:^$\\[\]<>(){}|])/g, "\\$&");
 
-export function validateDefaultAddress<T extends AddressFragmentFragment>(
+export function validateDefaultAddress<T extends AddressFragment>(
   defaultAddress: Node,
   customerAddresses: T[]
 ): Node {
   const fallbackAddress = {
     id: customerAddresses[0]?.id
-  } as AddressFragmentFragment;
+  } as AddressFragment;
   if (!defaultAddress) {
     return fallbackAddress;
   }
@@ -55,9 +53,7 @@ export const getAddressEditProps = (
   data: OrderCustomerAddressesEditData,
   handlers: OrderCustomerAddressesEditHandlers,
   change: FormChange,
-  dialogErrors: Array<
-    OrderErrorFragmentFragment | AccountErrorFragmentFragment
-  >,
+  dialogErrors: Array<OrderErrorFragment | AccountErrorFragment>,
   setAddressSearchState: React.Dispatch<
     React.SetStateAction<OrderCustomerSearchAddressState>
   >,

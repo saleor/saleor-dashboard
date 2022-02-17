@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
-import { OrderDetailsFragmentFragment } from "@saleor/graphql";
+import { OrderDetailsFragment } from "@saleor/graphql";
 import { Button } from "@saleor/macaw-ui";
 import {
   OrderDiscountContext,
@@ -16,7 +16,7 @@ import OrderDraftDetailsProducts, {
 import OrderDraftDetailsSummary from "../OrderDraftDetailsSummary";
 
 interface OrderDraftDetailsProps {
-  order: OrderDetailsFragmentFragment;
+  order: OrderDetailsFragment;
   onOrderLineAdd: () => void;
   onOrderLineChange: (
     id: string,

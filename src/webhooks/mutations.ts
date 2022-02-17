@@ -4,10 +4,10 @@ export const webhookCreate = gql`
   mutation WebhookCreate($input: WebhookCreateInput!) {
     webhookCreate(input: $input) {
       errors {
-        ...WebhookErrorFragment
+        ...WebhookError
       }
       webhook {
-        ...WebhooksDetailsFragment
+        ...WebhooksDetails
       }
     }
   }
@@ -17,10 +17,10 @@ export const webhookUpdate = gql`
   mutation WebhookUpdate($id: ID!, $input: WebhookUpdateInput!) {
     webhookUpdate(id: $id, input: $input) {
       errors {
-        ...WebhookErrorFragment
+        ...WebhookError
       }
       webhook {
-        ...WebhooksDetailsFragment
+        ...WebhooksDetails
       }
     }
   }
@@ -30,7 +30,7 @@ export const webhookDelete = gql`
   mutation WebhookDelete($id: ID!) {
     webhookDelete(id: $id) {
       errors {
-        ...WebhookErrorFragment
+        ...WebhookError
       }
     }
   }

@@ -15,7 +15,7 @@ import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import {
-  ProductErrorWithAttributesFragmentFragment,
+  ProductErrorWithAttributesFragment,
   ProductVariantFragment,
   useAttributeValueDeleteMutation,
   useFileUploadMutation,
@@ -23,6 +23,8 @@ import {
   useProductVariantDetailsQuery,
   useProductVariantPreorderDeactivateMutation,
   useProductVariantReorderMutation,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation,
   useVariantDeleteMutation,
   useVariantMediaAssignMutation,
   useVariantMediaUnassignMutation,
@@ -40,10 +42,6 @@ import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValu
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import { warehouseAddPath } from "@saleor/warehouses/urls";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
@@ -77,9 +75,9 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const [errors, setErrors] = useState<
-    ProductErrorWithAttributesFragmentFragment[]
-  >([]);
+  const [errors, setErrors] = useState<ProductErrorWithAttributesFragment[]>(
+    []
+  );
   useEffect(() => {
     setErrors([]);
   }, [variantId]);
@@ -98,8 +96,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       firstValues: 10
     }
   });
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   const [
     updateChannels,

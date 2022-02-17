@@ -12,9 +12,9 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
-import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
 import {
-  PageDetailsFragmentFragment,
+  PageDetailsFragment,
+  PageErrorWithAttributesFragment,
   SearchAttributeValuesQuery,
   SearchPagesQuery,
   SearchPageTypesQuery,
@@ -36,13 +36,13 @@ import PageForm, { PageData, PageUpdateHandlers } from "./form";
 export interface PageDetailsPageProps {
   loading: boolean;
   errors: PageErrorWithAttributesFragment[];
-  page: PageDetailsFragmentFragment;
+  page: PageDetailsFragment;
   pageTypes?: RelayToFlat<SearchPageTypesQuery["search"]>;
   referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
   allowEmptySlug?: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
-  selectedPageType?: PageDetailsFragmentFragment["pageType"];
+  selectedPageType?: PageDetailsFragment["pageType"];
   attributeValues: RelayToFlat<
     SearchAttributeValuesQuery["attribute"]["choices"]
   >;

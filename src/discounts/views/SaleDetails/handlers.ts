@@ -6,7 +6,7 @@ import {
 import { getSaleChannelsVariables } from "@saleor/discounts/handlers";
 import {
   DiscountValueTypeEnum,
-  SaleDetailsFragmentFragment,
+  SaleDetailsFragment,
   SaleType,
   SaleUpdateMutation,
   SaleUpdateMutationVariables
@@ -20,7 +20,7 @@ function discountValueTypeEnum(type: SaleType): DiscountValueTypeEnum {
 }
 
 export function createUpdateHandler(
-  sale: SaleDetailsFragmentFragment,
+  sale: SaleDetailsFragment,
   saleChannelsChoices: ChannelSaleFormData[],
   updateSale: (
     variables: SaleUpdateMutationVariables

@@ -8,10 +8,7 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
-import {
-  AttributeFragmentFragment,
-  ProductAttributeType
-} from "@saleor/graphql";
+import { AttributeFragment, ProductAttributeType } from "@saleor/graphql";
 import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { ListActions, ReorderAction } from "@saleor/types";
@@ -44,7 +41,7 @@ const useStyles = makeStyles(
 );
 
 interface ProductTypeAttributesProps extends ListActions {
-  attributes: AttributeFragmentFragment[];
+  attributes: AttributeFragment[];
   disabled: boolean;
   type: string;
   testId?: string;

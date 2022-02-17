@@ -13,7 +13,9 @@ import {
 } from "@saleor/discounts/urls";
 import {
   useSaleChannelListingUpdateMutation,
-  useSaleCreateMutation
+  useSaleCreateMutation,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation
 } from "@saleor/graphql";
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -21,10 +23,6 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { sectionNames } from "@saleor/intl";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -40,8 +38,8 @@ export const SaleCreateView: React.FC<SaleCreateProps> = ({ params }) => {
   const pushMessage = useNotifier();
   const intl = useIntl();
 
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [openModal, closeModal] = createDialogActionHandlers<
     ChannelsAction,
     SaleCreateUrlQueryParams

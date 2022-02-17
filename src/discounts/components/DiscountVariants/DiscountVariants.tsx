@@ -12,7 +12,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import { SaleDetailsFragmentFragment } from "@saleor/graphql";
+import { SaleDetailsFragment } from "@saleor/graphql";
 import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -24,7 +24,7 @@ import { useStyles } from "./styles";
 export interface SaleVariantsProps
   extends Omit<ListProps, "onRowClick">,
     ListActions {
-  variants: RelayToFlat<SaleDetailsFragmentFragment["variants"]> | null;
+  variants: RelayToFlat<SaleDetailsFragment["variants"]> | null;
   onVariantAssign: () => void;
   onRowClick: (productId: string, variantId: string) => () => void;
   onVariantUnassign: (id: string) => void;

@@ -8,12 +8,12 @@ import {
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import makeCreatorSteps, { Step } from "@saleor/components/CreatorSteps";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import { ChannelFragment } from "@saleor/fragments/types/ChannelFragment";
-import { ExportErrorFragment } from "@saleor/fragments/types/ExportErrorFragment";
 import {
+  ChannelFragment,
+  ExportErrorFragment,
   ExportProductsInput,
   SearchAttributesQuery,
-  WarehouseFragmentFragment
+  WarehouseFragment
 } from "@saleor/graphql";
 import useForm, { FormChange } from "@saleor/hooks/useForm";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
@@ -83,7 +83,7 @@ export interface ProductExportDialogProps extends DialogProps, FetchMoreProps {
   errors: ExportErrorFragment[];
   productQuantity: ExportItemsQuantity;
   selectedProducts: number;
-  warehouses: WarehouseFragmentFragment[];
+  warehouses: WarehouseFragment[];
   onFetch: (query: string) => void;
   onSubmit: (data: ExportProductsInput) => void;
 }

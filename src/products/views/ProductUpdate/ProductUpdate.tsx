@@ -34,6 +34,8 @@ import {
   useProductVariantPreorderDeactivateMutation,
   useProductVariantReorderMutation,
   useSimpleProductUpdateMutation,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation,
   useVariantCreateMutation,
   useWarehouseListQuery
 } from "@saleor/graphql";
@@ -58,10 +60,6 @@ import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValu
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import { warehouseAddPath } from "@saleor/warehouses/urls";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
@@ -163,8 +161,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     }
   });
   const shop = useShop();
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [
     productVariantCreate,
     productVariantCreateOpts

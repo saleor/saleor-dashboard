@@ -9,15 +9,15 @@ export const shopSettingsUpdate = gql`
   ) {
     shopSettingsUpdate(input: $shopSettingsInput) {
       errors {
-        ...ShopErrorFragment
+        ...ShopError
       }
       shop {
-        ...ShopFragment
+        ...Shop
       }
     }
     shopDomainUpdate(input: $shopDomainInput) @skip(if: $isCloudInstance) {
       errors {
-        ...ShopErrorFragment
+        ...ShopError
       }
       shop {
         domain {
@@ -28,11 +28,11 @@ export const shopSettingsUpdate = gql`
     }
     shopAddressUpdate(input: $addressInput) {
       errors {
-        ...ShopErrorFragment
+        ...ShopError
       }
       shop {
         companyAddress {
-          ...AddressFragment
+          ...Address
         }
       }
     }

@@ -4,9 +4,8 @@ import { DateTime } from "@saleor/components/Date";
 import { Hr } from "@saleor/components/Hr";
 import RequirePermissions from "@saleor/components/RequirePermissions";
 import Skeleton from "@saleor/components/Skeleton";
-import { CustomerDetailsQuery } from "@saleor/graphql";
+import { CustomerDetailsQuery, PermissionEnum } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { PermissionEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

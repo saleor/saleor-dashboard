@@ -4,10 +4,10 @@ export const giftCardSettingsUpdate = gql`
   mutation GiftCardSettingsUpdate($input: GiftCardSettingsUpdateInput!) {
     giftCardSettingsUpdate(input: $input) {
       errors {
-        ...GiftCardSettingsErrorFragment
+        ...GiftCardSettingsError
       }
       giftCardSettings {
-        ...GiftCardsSettingsFragment
+        ...GiftCardsSettings
       }
     }
   }

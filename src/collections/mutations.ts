@@ -4,10 +4,10 @@ export const collectionUpdate = gql`
   mutation CollectionUpdate($id: ID!, $input: CollectionInput!) {
     collectionUpdate(id: $id, input: $input) {
       collection {
-        ...CollectionDetailsFragment
+        ...CollectionDetails
       }
       errors {
-        ...CollectionErrorFragment
+        ...CollectionError
       }
     }
   }
@@ -28,7 +28,7 @@ export const assignCollectionProduct = gql`
         products(first: $first, after: $after, before: $before, last: $last) {
           edges {
             node {
-              ...CollectionProductFragment
+              ...CollectionProduct
             }
           }
           pageInfo {
@@ -40,7 +40,7 @@ export const assignCollectionProduct = gql`
         }
       }
       errors {
-        ...CollectionErrorFragment
+        ...CollectionError
       }
     }
   }
@@ -50,10 +50,10 @@ export const createCollection = gql`
   mutation CreateCollection($input: CollectionCreateInput!) {
     collectionCreate(input: $input) {
       collection {
-        ...CollectionDetailsFragment
+        ...CollectionDetails
       }
       errors {
-        ...CollectionErrorFragment
+        ...CollectionError
       }
     }
   }
@@ -63,7 +63,7 @@ export const removeCollection = gql`
   mutation RemoveCollection($id: ID!) {
     collectionDelete(id: $id) {
       errors {
-        ...CollectionErrorFragment
+        ...CollectionError
       }
     }
   }
@@ -107,7 +107,7 @@ export const unassignCollectionProduct = gql`
         }
       }
       errors {
-        ...CollectionErrorFragment
+        ...CollectionError
       }
     }
   }
@@ -117,7 +117,7 @@ export const collectionBulkDelete = gql`
   mutation CollectionBulkDelete($ids: [ID]!) {
     collectionBulkDelete(ids: $ids) {
       errors {
-        ...CollectionErrorFragment
+        ...CollectionError
       }
     }
   }
@@ -130,7 +130,7 @@ export const collectionChannelListingUpdate = gql`
   ) {
     collectionChannelListingUpdate(id: $id, input: $input) {
       errors {
-        ...CollectionChannelListingErrorFragment
+        ...CollectionChannelListingError
       }
     }
   }

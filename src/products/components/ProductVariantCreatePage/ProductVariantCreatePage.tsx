@@ -14,7 +14,7 @@ import Metadata from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import {
-  ProductErrorWithAttributesFragmentFragment,
+  ProductErrorWithAttributesFragment,
   ProductVariantCreateDataQuery,
   SearchAttributeValuesQuery,
   SearchPagesQuery,
@@ -62,7 +62,7 @@ const messages = defineMessages({
 
 interface ProductVariantCreatePageProps {
   disabled: boolean;
-  errors: ProductErrorWithAttributesFragmentFragment[];
+  errors: ProductErrorWithAttributesFragment[];
   header: string;
   product: ProductVariantCreateDataQuery["product"];
   saveButtonBarState: ConfirmButtonTransitionState;

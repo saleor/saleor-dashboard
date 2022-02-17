@@ -15,8 +15,8 @@ import {
 import { AttributeInput } from "@saleor/components/Attributes";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
-import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import {
+  ProductVariantFragment,
   SearchPagesQuery,
   SearchProductsQuery,
   SearchWarehousesQuery
@@ -129,12 +129,12 @@ export interface UseProductVariantUpdateFormResult
 export interface ProductVariantUpdateFormProps
   extends UseProductVariantUpdateFormOpts {
   children: (props: UseProductVariantUpdateFormResult) => React.ReactNode;
-  variant: ProductVariant;
+  variant: ProductVariantFragment;
   onSubmit: (data: ProductVariantUpdateSubmitData) => SubmitPromise;
 }
 
 function useProductVariantUpdateForm(
-  variant: ProductVariant,
+  variant: ProductVariantFragment,
   onSubmit: (data: ProductVariantUpdateSubmitData) => SubmitPromise,
   opts: UseProductVariantUpdateFormOpts
 ): UseProductVariantUpdateFormResult {

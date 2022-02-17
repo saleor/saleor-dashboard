@@ -4,7 +4,7 @@ export const menuCreate = gql`
   mutation MenuCreate($input: MenuCreateInput!) {
     menuCreate(input: $input) {
       errors {
-        ...MenuErrorFragment
+        ...MenuError
       }
       menu {
         id
@@ -17,7 +17,7 @@ export const menuBulkDelete = gql`
   mutation MenuBulkDelete($ids: [ID]!) {
     menuBulkDelete(ids: $ids) {
       errors {
-        ...MenuErrorFragment
+        ...MenuError
       }
     }
   }
@@ -27,7 +27,7 @@ export const menuDelete = gql`
   mutation MenuDelete($id: ID!) {
     menuDelete(id: $id) {
       errors {
-        ...MenuErrorFragment
+        ...MenuError
       }
     }
   }
@@ -37,13 +37,13 @@ export const menuItemCreate = gql`
   mutation MenuItemCreate($input: MenuItemCreateInput!) {
     menuItemCreate(input: $input) {
       errors {
-        ...MenuErrorFragment
+        ...MenuError
       }
       menuItem {
         menu {
           id
           items {
-            ...MenuItemNestedFragment
+            ...MenuItemNested
           }
         }
       }
@@ -60,19 +60,19 @@ export const menuUpdate = gql`
   ) {
     menuUpdate(id: $id, input: { name: $name }) {
       errors {
-        ...MenuErrorFragment
+        ...MenuError
       }
     }
 
     menuItemMove(menu: $id, moves: $moves) {
       errors {
-        ...MenuErrorFragment
+        ...MenuError
       }
     }
 
     menuItemBulkDelete(ids: $removeIds) {
       errors {
-        ...MenuErrorFragment
+        ...MenuError
       }
     }
   }
@@ -82,10 +82,10 @@ export const menuItemUpdate = gql`
   mutation MenuItemUpdate($id: ID!, $input: MenuItemInput!) {
     menuItemUpdate(id: $id, input: $input) {
       errors {
-        ...MenuErrorFragment
+        ...MenuError
       }
       menuItem {
-        ...MenuItemFragment
+        ...MenuItem
       }
     }
   }

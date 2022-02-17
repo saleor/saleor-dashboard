@@ -2,8 +2,10 @@ import { Typography } from "@material-ui/core";
 import Container from "@saleor/components/Container";
 import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
-import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
-import { ProductVariantBulkCreateInput } from "@saleor/graphql";
+import {
+  ProductVariantBulkCreateInput,
+  RefreshLimitsQuery
+} from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useWizard from "@saleor/hooks/useWizard";
 import { Button, makeStyles } from "@saleor/macaw-ui";
@@ -91,7 +93,7 @@ export interface ProductVariantCreatePageProps
     ProductVariantCreatorContentProps,
     "data" | "dispatchFormDataAction" | "step" | "variantsLeft" | "onStepClick"
   > {
-  limits: RefreshLimits_shop_limits;
+  limits: RefreshLimitsQuery["shop"]["limits"];
   onSubmit: (data: ProductVariantBulkCreateInput[]) => SubmitPromise;
 }
 

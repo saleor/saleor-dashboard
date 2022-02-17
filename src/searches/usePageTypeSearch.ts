@@ -20,7 +20,7 @@ export const searchPageTypes = gql`
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }

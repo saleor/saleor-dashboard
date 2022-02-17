@@ -8,11 +8,11 @@ import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocomplet
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
-import { ShippingZoneDetailsFragment_warehouses } from "@saleor/fragments/types/ShippingZoneDetailsFragment";
 import {
-  ChannelFragmentFragment,
+  ChannelFragment,
+  ShippingErrorFragment,
   ShippingMethodTypeEnum,
+  ShippingZoneDetailsFragment,
   ShippingZoneQuery
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -55,7 +55,7 @@ export interface ShippingZoneDetailsPageProps
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   shippingZone: ShippingZoneQuery["shippingZone"];
-  warehouses: ShippingZoneDetailsFragment_warehouses[];
+  warehouses: ShippingZoneDetailsFragment["warehouses"];
   onBack: () => void;
   onCountryAdd: () => void;
   onCountryRemove: (code: string) => void;
@@ -67,7 +67,7 @@ export interface ShippingZoneDetailsPageProps
   onWarehouseAdd: () => void;
   onWeightRateAdd: () => void;
   onWeightRateEdit: (id: string) => void;
-  allChannels?: ChannelFragmentFragment[];
+  allChannels?: ChannelFragment[];
 }
 
 function warehouseToChoice(

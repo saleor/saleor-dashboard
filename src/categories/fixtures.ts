@@ -1,5 +1,4 @@
-import { CategoryFragment } from "@saleor/fragments/types/CategoryFragment";
-import { CategoryDetailsQuery } from "@saleor/graphql";
+import { CategoryDetailsQuery, CategoryFragment } from "@saleor/graphql";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
 

@@ -2,8 +2,7 @@ import { Card } from "@material-ui/core";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
-import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
-import { OrderDraftListQuery } from "@saleor/graphql";
+import { OrderDraftListQuery, RefreshLimitsQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Button } from "@saleor/macaw-ui";
 import { OrderDraftListUrlSortField } from "@saleor/orders/urls";
@@ -33,7 +32,7 @@ export interface OrderDraftListPageProps
     FilterPageProps<OrderDraftFilterKeys, OrderDraftListFilterOpts>,
     SortPage<OrderDraftListUrlSortField>,
     TabPageProps {
-  limits: RefreshLimits_shop_limits;
+  limits: RefreshLimitsQuery["shop"]["limits"];
   orders: RelayToFlat<OrderDraftListQuery["draftOrders"]>;
 }
 

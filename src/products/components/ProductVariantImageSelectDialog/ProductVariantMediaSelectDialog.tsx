@@ -5,7 +5,7 @@ import {
   DialogTitle
 } from "@material-ui/core";
 import BackButton from "@saleor/components/BackButton";
-import { ProductMediaFragment } from "@saleor/fragments/types/ProductMediaFragment";
+import { ProductMediaFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";

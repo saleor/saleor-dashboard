@@ -18,11 +18,11 @@ export const searchAttributeValues = gql`
       choices(after: $after, first: $first, filter: { search: $query }) {
         edges {
           node {
-            ...AttributeValueDetailsFragment
+            ...AttributeValueDetails
           }
         }
         pageInfo {
-          ...PageInfoFragment
+          ...PageInfo
         }
       }
     }

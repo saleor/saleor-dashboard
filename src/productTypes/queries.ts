@@ -19,11 +19,11 @@ export const productTypeListQuery = gql`
     ) {
       edges {
         node {
-          ...ProductTypeFragment
+          ...ProductType
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }
@@ -32,7 +32,7 @@ export const productTypeListQuery = gql`
 export const productTypeDetailsQuery = gql`
   query ProductTypeDetails($id: ID!) {
     productType(id: $id) {
-      ...ProductTypeDetailsFragment
+      ...ProductTypeDetails
     }
     shop {
       defaultWeightUnit

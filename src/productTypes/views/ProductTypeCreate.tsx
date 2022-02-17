@@ -2,15 +2,13 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import {
   ProductTypeKindEnum,
   useProductTypeCreateDataQuery,
-  useProductTypeCreateMutation
+  useProductTypeCreateMutation,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -35,8 +33,8 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   const handleChangeKind = (kind: ProductTypeKindEnum) =>
     navigate(

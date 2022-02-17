@@ -2,7 +2,7 @@ import { Card, CardActions, Paper, Typography } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
-import { MenuDetailsFragmentFragment } from "@saleor/graphql";
+import { MenuDetailsFragment } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
 import {
   Button,
@@ -25,7 +25,7 @@ const NODE_MARGIN = 40;
 
 export interface MenuItemsProps {
   canUndo: boolean;
-  items: MenuDetailsFragmentFragment["items"];
+  items: MenuDetailsFragment["items"];
   onChange: (operations: TreeOperation[]) => void;
   onItemAdd: () => void;
   onItemClick: (id: string, type: MenuItemType) => void;

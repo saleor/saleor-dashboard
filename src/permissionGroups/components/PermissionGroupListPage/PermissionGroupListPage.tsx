@@ -1,7 +1,7 @@
 import { Card } from "@material-ui/core";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
-import { PermissionGroupFragmentFragment } from "@saleor/graphql";
+import { PermissionGroupFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, Button } from "@saleor/macaw-ui";
 import React from "react";
@@ -14,7 +14,7 @@ import PermissionGroupList from "../PermissionGroupList";
 export interface PermissionGroupListPageProps
   extends PageListProps,
     SortPage<PermissionGroupListUrlSortField> {
-  permissionGroups: PermissionGroupFragmentFragment[];
+  permissionGroups: PermissionGroupFragment[];
   onBack: () => void;
   onDelete: (id: string) => void;
   onRowClick: (id: string) => () => void;

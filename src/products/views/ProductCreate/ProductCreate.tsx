@@ -15,6 +15,8 @@ import {
   useProductTypeQuery,
   useProductVariantChannelListingUpdateMutation,
   useTaxTypeListQuery,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation,
   useVariantCreateMutation,
   useWarehouseListQuery
 } from "@saleor/graphql";
@@ -42,10 +44,6 @@ import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValu
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import { warehouseAddPath } from "@saleor/warehouses/urls";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -121,8 +119,8 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
       first: 50
     }
   });
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const taxTypes = useTaxTypeListQuery({});
   const { data: selectedProductType } = useProductTypeQuery({
     variables: {

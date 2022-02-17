@@ -20,7 +20,7 @@ export const searchProductTypes = gql`
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }

@@ -1,5 +1,7 @@
-import { ShopOrderSettingsFragment } from "@saleor/fragments/types/ShopOrderSettingsFragment";
-import { OrderSettingsFragmentFragment } from "@saleor/graphql";
+import {
+  OrderSettingsFragment,
+  ShopOrderSettingsFragment
+} from "@saleor/graphql";
 import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import React from "react";
@@ -20,13 +22,13 @@ export interface UseOrderSettingsFormResult {
 
 export interface OrderSettingsFormProps {
   children: (props: UseOrderSettingsFormResult) => React.ReactNode;
-  orderSettings: OrderSettingsFragmentFragment;
+  orderSettings: OrderSettingsFragment;
   shop: ShopOrderSettingsFragment;
   onSubmit: (data: OrderSettingsFormData) => SubmitPromise;
 }
 
 function getOrderSeettingsFormData(
-  orderSettings: OrderSettingsFragmentFragment,
+  orderSettings: OrderSettingsFragment,
   shop: ShopOrderSettingsFragment
 ): OrderSettingsFormData {
   return {
@@ -40,7 +42,7 @@ function getOrderSeettingsFormData(
 }
 
 function useOrderSettingsForm(
-  orderSettings: OrderSettingsFragmentFragment,
+  orderSettings: OrderSettingsFragment,
   shop: ShopOrderSettingsFragment,
   onSubmit: (data: OrderSettingsFormData) => SubmitPromise
 ): UseOrderSettingsFormResult {

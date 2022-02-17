@@ -1,8 +1,6 @@
-import { LanguageCodeEnum } from "@saleor/graphql";
+import { LanguageCodeEnum, LanguageFragment } from "@saleor/graphql";
 
-import { ShopInfo_shop_languages } from "../components/Shop/types/ShopInfo";
-
-export const languages: ShopInfo_shop_languages[] = [
+export const languages: LanguageFragment[] = [
   {
     __typename: "LanguageDisplay",
     code: LanguageCodeEnum.DE,

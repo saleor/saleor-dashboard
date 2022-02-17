@@ -2,8 +2,7 @@ import { Typography } from "@material-ui/core";
 import { IconProps } from "@material-ui/core/Icon";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { User } from "@saleor/fragments/types/User";
-import { PermissionEnum } from "@saleor/graphql";
+import { PermissionEnum, UserFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { makeStyles, NavigationCard } from "@saleor/macaw-ui";
 import React from "react";
@@ -81,7 +80,7 @@ const useStyles = makeStyles(
 
 export interface ConfigurationPageProps {
   menu: MenuSection[];
-  user: User;
+  user: UserFragment;
   versionInfo: VersionInfo;
 }
 

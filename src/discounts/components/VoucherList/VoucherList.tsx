@@ -12,10 +12,7 @@ import TooltipTableCellHeader from "@saleor/components/TooltipTableCellHeader";
 import { commonTooltipMessages } from "@saleor/components/TooltipTableCellHeader/messages";
 import { VoucherListUrlSortField } from "@saleor/discounts/urls";
 import { canBeSorted } from "@saleor/discounts/views/VoucherList/sort";
-import {
-  DiscountValueTypeEnum,
-  VoucherFragmentFragment
-} from "@saleor/graphql";
+import { DiscountValueTypeEnum, VoucherFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ChannelProps, ListActions, ListProps, SortPage } from "@saleor/types";
@@ -30,7 +27,7 @@ export interface VoucherListProps
     ListActions,
     SortPage<VoucherListUrlSortField>,
     ChannelProps {
-  vouchers: VoucherFragmentFragment[];
+  vouchers: VoucherFragment[];
 }
 
 const useStyles = makeStyles(

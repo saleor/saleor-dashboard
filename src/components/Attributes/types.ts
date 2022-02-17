@@ -1,6 +1,8 @@
-import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
-import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
-import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
+import {
+  AttributeValueFragment,
+  PageErrorWithAttributesFragment,
+  ProductErrorWithAttributesFragment
+} from "@saleor/graphql";
 import { FormsetChange } from "@saleor/hooks/useFormset";
 import { FetchMoreProps, ReorderEvent } from "@saleor/types";
 

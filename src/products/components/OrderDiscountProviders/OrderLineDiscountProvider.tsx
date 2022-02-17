@@ -1,5 +1,5 @@
 import {
-  OrderDetailsFragmentFragment,
+  OrderDetailsFragment,
   useOrderLineDiscountRemoveMutation,
   useOrderLineDiscountUpdateMutation
 } from "@saleor/graphql";
@@ -34,7 +34,7 @@ export interface OrderLineDiscountContextConsumerProps
 
 interface DiscountProviderProps {
   children: React.ReactNode;
-  order: OrderDetailsFragmentFragment;
+  order: OrderDetailsFragment;
 }
 
 export const OrderLineDiscountContext = createContext<

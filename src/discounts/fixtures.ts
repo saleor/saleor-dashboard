@@ -1,15 +1,15 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
 import {
   DiscountValueTypeEnum,
-  SaleDetailsFragmentFragment,
-  SaleFragmentFragment,
+  SaleDetailsFragment,
+  SaleFragment,
   SaleType,
-  VoucherDetailsFragmentFragment,
-  VoucherFragmentFragment,
+  VoucherDetailsFragment,
+  VoucherFragment,
   VoucherTypeEnum
 } from "@saleor/graphql";
 
-export const saleList: SaleFragmentFragment[] = [
+export const saleList: SaleFragment[] = [
   {
     __typename: "Sale" as "Sale",
     metadata: [],
@@ -132,7 +132,7 @@ export const saleList: SaleFragmentFragment[] = [
   }
 ];
 
-export const voucherList: VoucherFragmentFragment[] = [
+export const voucherList: VoucherFragment[] = [
   {
     __typename: "Voucher" as "Voucher",
     metadata: [],
@@ -207,7 +207,7 @@ export const voucherList: VoucherFragmentFragment[] = [
   }
 ];
 
-export const sale: SaleDetailsFragmentFragment = {
+export const sale: SaleDetailsFragment = {
   __typename: "Sale",
   metadata: [],
   privateMetadata: [],
@@ -568,7 +568,7 @@ export const sale: SaleDetailsFragmentFragment = {
   type: "PERCENTAGE" as SaleType
 };
 
-export const voucherDetails: VoucherDetailsFragmentFragment = {
+export const voucherDetails: VoucherDetailsFragment = {
   __typename: "Voucher",
   metadata: [],
   privateMetadata: [],

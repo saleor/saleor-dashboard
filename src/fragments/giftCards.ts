@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const fragmentGiftCardsSettings = gql`
-  fragment GiftCardsSettingsFragment on GiftCardSettings {
+  fragment GiftCardsSettings on GiftCardSettings {
     expiryType
     expiryPeriod {
       type
@@ -50,7 +50,7 @@ export const giftCardEventsFragment = gql`
 
 export const giftCardDataFragment = gql`
   fragment GiftCardData on GiftCard {
-    ...MetadataFragment
+    ...Metadata
     last4CodeChars
     boughtInChannel
     createdBy {

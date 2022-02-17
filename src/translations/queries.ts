@@ -17,11 +17,11 @@ export const categoryTranslations = gql`
     ) {
       edges {
         node {
-          ...CategoryTranslationFragment
+          ...CategoryTranslation
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }
@@ -44,11 +44,11 @@ export const collectionTranslations = gql`
     ) {
       edges {
         node {
-          ...CollectionTranslationFragment
+          ...CollectionTranslation
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }
@@ -71,11 +71,11 @@ export const productTranslations = gql`
     ) {
       edges {
         node {
-          ...ProductTranslationFragment
+          ...ProductTranslation
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }
@@ -98,11 +98,11 @@ export const pageTranslations = gql`
     ) {
       edges {
         node {
-          ...PageTranslationFragment
+          ...PageTranslation
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }
@@ -125,11 +125,11 @@ export const voucherTranslations = gql`
     ) {
       edges {
         node {
-          ...VoucherTranslationFragment
+          ...VoucherTranslation
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }
@@ -152,11 +152,11 @@ export const saleTranslations = gql`
     ) {
       edges {
         node {
-          ...SaleTranslationFragment
+          ...SaleTranslation
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }
@@ -179,11 +179,11 @@ export const attributeTranslations = gql`
     ) {
       edges {
         node {
-          ...AttributeTranslationFragment
+          ...AttributeTranslation
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }
@@ -206,11 +206,11 @@ export const shippingMethodTranslations = gql`
     ) {
       edges {
         node {
-          ...ShippingMethodTranslationFragment
+          ...ShippingMethodTranslation
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }
@@ -219,7 +219,7 @@ export const shippingMethodTranslations = gql`
 export const productTranslationDetails = gql`
   query ProductTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
     translation(kind: PRODUCT, id: $id) {
-      ...ProductTranslationFragment
+      ...ProductTranslation
     }
   }
 `;
@@ -243,7 +243,7 @@ export const productVariantTranslationDetails = gql`
     $language: LanguageCodeEnum!
   ) {
     translation(kind: VARIANT, id: $id) {
-      ...ProductVariantTranslationFragment
+      ...ProductVariantTranslation
     }
   }
 `;
@@ -251,7 +251,7 @@ export const productVariantTranslationDetails = gql`
 export const categoryTranslationDetails = gql`
   query CategoryTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
     translation(kind: CATEGORY, id: $id) {
-      ...CategoryTranslationFragment
+      ...CategoryTranslation
     }
   }
 `;
@@ -259,7 +259,7 @@ export const categoryTranslationDetails = gql`
 export const collectionTranslationDetails = gql`
   query CollectionTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
     translation(id: $id, kind: COLLECTION) {
-      ...CollectionTranslationFragment
+      ...CollectionTranslation
     }
   }
 `;
@@ -267,7 +267,7 @@ export const collectionTranslationDetails = gql`
 export const pageTranslationDetails = gql`
   query PageTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
     translation(id: $id, kind: PAGE) {
-      ...PageTranslationFragment
+      ...PageTranslation
     }
   }
 `;
@@ -275,7 +275,7 @@ export const pageTranslationDetails = gql`
 export const saleTranslationDetails = gql`
   query SaleTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
     translation(kind: SALE, id: $id) {
-      ...SaleTranslationFragment
+      ...SaleTranslation
     }
   }
 `;
@@ -283,7 +283,7 @@ export const saleTranslationDetails = gql`
 export const voucherTranslationDetails = gql`
   query VoucherTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
     translation(kind: VOUCHER, id: $id) {
-      ...VoucherTranslationFragment
+      ...VoucherTranslation
     }
   }
 `;
@@ -298,7 +298,7 @@ export const attributeTranslationDetails = gql`
     $beforeValues: String
   ) {
     translation(kind: ATTRIBUTE, id: $id) {
-      ...AttributeTranslationDetailsFragment
+      ...AttributeTranslationDetails
     }
   }
 `;
@@ -309,7 +309,7 @@ export const shippingMethodTranslationDetails = gql`
     $language: LanguageCodeEnum!
   ) {
     translation(kind: SHIPPING_METHOD, id: $id) {
-      ...ShippingMethodTranslationFragment
+      ...ShippingMethodTranslation
     }
   }
 `;

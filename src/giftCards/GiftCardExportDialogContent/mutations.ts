@@ -4,7 +4,7 @@ export const exportGiftCards = gql`
   mutation ExportGiftCards($input: ExportGiftCardsInput!) {
     exportGiftCards(input: $input) {
       errors {
-        ...ExportErrorFragment
+        ...ExportError
       }
       exportFile {
         id

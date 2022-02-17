@@ -1,5 +1,5 @@
 import { OutputData } from "@editorjs/editorjs";
-import { ShopInfo_shop_languages } from "@saleor/components/Shop/types/ShopInfo";
+import { LanguageFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 
@@ -32,7 +32,7 @@ export interface TranslationsEntitiesPageProps {
   activeField: string;
   disabled: boolean;
   languageCode: string;
-  languages: ShopInfo_shop_languages[];
+  languages: LanguageFragment[];
   saveButtonState: ConfirmButtonTransitionState;
   onBack: () => void;
   onEdit: (field: string) => void;

@@ -2,8 +2,11 @@ import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import RequirePermissions from "@saleor/components/RequirePermissions";
-import { ShippingZoneFragment } from "@saleor/fragments/types/ShippingZoneFragment";
-import { PermissionEnum, WeightUnitsEnum } from "@saleor/graphql";
+import {
+  PermissionEnum,
+  ShippingZoneFragment,
+  WeightUnitsEnum
+} from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";

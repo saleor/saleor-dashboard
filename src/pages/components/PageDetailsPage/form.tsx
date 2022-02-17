@@ -14,7 +14,7 @@ import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import {
-  PageDetailsFragmentFragment,
+  PageDetailsFragment,
   SearchPagesQuery,
   SearchPageTypesQuery,
   SearchProductsQuery
@@ -49,7 +49,7 @@ export interface PageFormData extends MetadataFormData {
   seoTitle: string;
   slug: string;
   title: string;
-  pageType: PageDetailsFragmentFragment["pageType"];
+  pageType: PageDetailsFragment["pageType"];
 }
 export interface PageData extends PageFormData {
   attributes: AttributeInput[];
@@ -89,19 +89,17 @@ export interface UsePageFormOpts {
   fetchReferenceProducts?: (data: string) => void;
   fetchMoreReferenceProducts?: FetchMoreProps;
   assignReferencesAttributeId?: string;
-  selectedPageType?: PageDetailsFragmentFragment["pageType"];
+  selectedPageType?: PageDetailsFragment["pageType"];
   onSelectPageType: (pageTypeId: string) => void;
 }
 
 export interface PageFormProps extends UsePageFormOpts {
   children: (props: UsePageUpdateFormResult) => React.ReactNode;
-  page: PageDetailsFragmentFragment;
+  page: PageDetailsFragment;
   onSubmit: (data: PageData) => SubmitPromise;
 }
 
-const getInitialFormData = (
-  page?: PageDetailsFragmentFragment
-): PageFormData => ({
+const getInitialFormData = (page?: PageDetailsFragment): PageFormData => ({
   isPublished: page?.isPublished,
   metadata: page?.metadata?.map(mapMetadataItemToInput) || [],
   pageType: null,
@@ -114,7 +112,7 @@ const getInitialFormData = (
 });
 
 function usePageForm(
-  page: PageDetailsFragmentFragment,
+  page: PageDetailsFragment,
   onSubmit: (data: PageData) => SubmitPromise,
   opts: UsePageFormOpts
 ): UsePageUpdateFormResult {

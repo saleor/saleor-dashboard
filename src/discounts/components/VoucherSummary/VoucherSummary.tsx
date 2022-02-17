@@ -7,10 +7,7 @@ import Hr from "@saleor/components/Hr";
 import Money from "@saleor/components/Money";
 import Percent from "@saleor/components/Percent";
 import Skeleton from "@saleor/components/Skeleton";
-import {
-  DiscountValueTypeEnum,
-  VoucherDetailsFragmentFragment
-} from "@saleor/graphql";
+import { DiscountValueTypeEnum, VoucherDetailsFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { ChannelProps } from "@saleor/types";
 import React from "react";
@@ -21,7 +18,7 @@ import { translateVoucherTypes } from "../../translations";
 import useStyles from "./styles";
 
 export interface VoucherSummaryProps extends ChannelProps {
-  voucher: VoucherDetailsFragmentFragment;
+  voucher: VoucherDetailsFragment;
 }
 
 const VoucherSummary: React.FC<VoucherSummaryProps> = ({

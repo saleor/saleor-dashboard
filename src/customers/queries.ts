@@ -20,7 +20,7 @@ export const customerList = gql`
     ) {
       edges {
         node {
-          ...CustomerFragment
+          ...Customer
           orders @include(if: $PERMISSION_MANAGE_ORDERS) {
             totalCount
           }
@@ -39,7 +39,7 @@ export const customerList = gql`
 export const customerDetails = gql`
   query CustomerDetails($id: ID!, $PERMISSION_MANAGE_ORDERS: Boolean!) {
     user(id: $id) {
-      ...CustomerDetailsFragment
+      ...CustomerDetails
       orders(last: 5) @include(if: $PERMISSION_MANAGE_ORDERS) {
         edges {
           node {
@@ -71,7 +71,7 @@ export const customerDetails = gql`
 export const customerAddresses = gql`
   query CustomerAddresses($id: ID!) {
     user(id: $id) {
-      ...CustomerAddressesFragment
+      ...CustomerAddresses
     }
   }
 `;

@@ -9,7 +9,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
-import { PermissionGroupFragmentFragment } from "@saleor/graphql";
+import { PermissionGroupFragment } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { PermissionGroupListUrlSortField } from "@saleor/permissionGroups/urls";
@@ -55,7 +55,7 @@ const numberOfColumns = 3;
 interface PermissionGroupListProps
   extends ListProps,
     SortPage<PermissionGroupListUrlSortField> {
-  permissionGroups: PermissionGroupFragmentFragment[];
+  permissionGroups: PermissionGroupFragment[];
   onDelete: (id: string) => void;
 }
 

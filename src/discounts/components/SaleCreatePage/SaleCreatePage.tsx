@@ -9,8 +9,11 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { createSaleChannelsChangeHandler } from "@saleor/discounts/handlers";
 import { SALE_CREATE_FORM_ID } from "@saleor/discounts/views/SaleCreate/consts";
-import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
-import { PermissionEnum, SaleType as SaleTypeEnum } from "@saleor/graphql";
+import {
+  DiscountErrorFragment,
+  PermissionEnum,
+  SaleType as SaleTypeEnum
+} from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";

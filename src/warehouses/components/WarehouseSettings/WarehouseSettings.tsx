@@ -8,7 +8,7 @@ import { RadioGroupField } from "@saleor/components/RadioGroupField";
 import Skeleton from "@saleor/components/Skeleton";
 import {
   WarehouseClickAndCollectOptionEnum,
-  WarehouseWithShippingFragmentFragment
+  WarehouseWithShippingFragment
 } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
@@ -20,7 +20,7 @@ import { WarehouseDetailsPageFormData } from "./../WarehouseDetailsPage";
 import messages from "./messages";
 
 export interface WarehouseSettingsProps {
-  zones: RelayToFlat<WarehouseWithShippingFragmentFragment["shippingZones"]>;
+  zones: RelayToFlat<WarehouseWithShippingFragment["shippingZones"]>;
   disabled: boolean;
   data: WarehouseDetailsPageFormData;
   onShippingZoneClick: (id: string) => void;

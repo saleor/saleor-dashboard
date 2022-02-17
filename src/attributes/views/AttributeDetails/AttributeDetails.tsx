@@ -6,7 +6,9 @@ import {
   useAttributeValueCreateMutation,
   useAttributeValueDeleteMutation,
   useAttributeValueReorderMutation,
-  useAttributeValueUpdateMutation
+  useAttributeValueUpdateMutation,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation
 } from "@saleor/graphql";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useLocalPaginator, {
@@ -21,10 +23,6 @@ import getAttributeErrorMessage from "@saleor/utils/errors/attribute";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { move } from "@saleor/utils/lists";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import omit from "lodash/omit";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -51,8 +49,8 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   const [openModal, closeModal] = createDialogActionHandlers<
     AttributeUrlDialog,

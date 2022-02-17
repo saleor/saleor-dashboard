@@ -12,8 +12,11 @@ import {
   createDiscountTypeChangeHandler
 } from "@saleor/discounts/handlers";
 import { VOUCHER_CREATE_FORM_ID } from "@saleor/discounts/views/VoucherCreate/types";
-import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
-import { PermissionEnum, VoucherTypeEnum } from "@saleor/graphql";
+import {
+  DiscountErrorFragment,
+  PermissionEnum,
+  VoucherTypeEnum
+} from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";

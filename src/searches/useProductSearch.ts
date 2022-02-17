@@ -36,7 +36,7 @@ export const searchProducts = gql`
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }

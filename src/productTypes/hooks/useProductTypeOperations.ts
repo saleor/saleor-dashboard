@@ -1,10 +1,9 @@
-import { ProductTypeDetailsFragment_productAttributes } from "@saleor/fragments/types/ProductTypeDetailsFragment";
 import {
   AssignProductAttributeMutation,
   ProductAttributeType,
   ProductTypeAttributeReorderMutation,
   ProductTypeDeleteMutation,
-  ProductTypeDetailsFragmentFragment,
+  ProductTypeDetailsFragment,
   ReorderInput,
   UnassignProductAttributeMutation,
   useAssignProductAttributeMutation,
@@ -16,7 +15,7 @@ import {
 import { getMutationProviderData } from "../../misc";
 
 function moveAttribute(
-  attributes: ProductTypeDetailsFragment_productAttributes[],
+  attributes: ProductTypeDetailsFragment["productAttributes"],
   move: ReorderInput
 ) {
   const attributeIndex = attributes.findIndex(
@@ -37,7 +36,7 @@ function moveAttribute(
 }
 
 interface ProductTypeOperationsProps {
-  productType: ProductTypeDetailsFragmentFragment;
+  productType: ProductTypeDetailsFragment;
   onAssignAttribute: (data: AssignProductAttributeMutation) => void;
   onUnassignAttribute: (data: UnassignProductAttributeMutation) => void;
   onProductTypeAttributeReorder: (

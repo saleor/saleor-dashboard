@@ -14,7 +14,7 @@ export const checkOrderInvoicesStatus = gql`
     order(id: $id) {
       id
       invoices {
-        ...InvoiceFragment
+        ...Invoice
       }
     }
   }

@@ -14,12 +14,12 @@ import { getByName } from "@saleor/components/Filter/utils";
 import FilterBar from "@saleor/components/FilterBar";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
-import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { ProductListColumns } from "@saleor/config";
 import {
   AvailableInGridAttributesQuery,
   GridAttributesQuery,
-  ProductListQuery
+  ProductListQuery,
+  RefreshLimitsQuery
 } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -59,7 +59,7 @@ export interface ProductListPageProps
   channelsCount: number;
   currencySymbol: string;
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
-  limits: RefreshLimits_shop_limits;
+  limits: RefreshLimitsQuery["shop"]["limits"];
   totalGridAttributes: number;
   products: RelayToFlat<ProductListQuery["products"]>;
   onExport: () => void;

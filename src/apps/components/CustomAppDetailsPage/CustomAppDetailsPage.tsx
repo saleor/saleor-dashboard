@@ -6,7 +6,7 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import {
-  AppErrorFragmentFragment,
+  AppErrorFragment,
   AppUpdateMutation,
   PermissionEnum,
   ShopInfoQuery
@@ -39,7 +39,7 @@ export interface CustomAppDetailsPageFormData {
 export interface CustomAppDetailsPageProps {
   apiUri: string;
   disabled: boolean;
-  errors: AppErrorFragmentFragment[];
+  errors: AppErrorFragment[];
   permissions: ShopInfoQuery["shop"]["permissions"];
   saveButtonBarState: ConfirmButtonTransitionState;
   app: AppUpdateMutation["appUpdate"]["app"];
@@ -51,7 +51,7 @@ export interface CustomAppDetailsPageProps {
   onTokenCreate: () => void;
   onSubmit: (
     data: CustomAppDetailsPageFormData
-  ) => SubmitPromise<AppErrorFragmentFragment[]>;
+  ) => SubmitPromise<AppErrorFragment[]>;
   onWebhookCreate: () => void;
   onWebhookRemove: (id: string) => void;
   navigateToWebhookDetails: (id: string) => () => void;

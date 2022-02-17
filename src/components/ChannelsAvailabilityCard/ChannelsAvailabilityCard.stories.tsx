@@ -1,6 +1,5 @@
 import { createChannelsDataFromProduct } from "@saleor/channels/utils";
-import { User } from "@saleor/fragments/types/User";
-import { PermissionEnum } from "@saleor/graphql";
+import { PermissionEnum, UserFragment } from "@saleor/graphql";
 import { product } from "@saleor/products/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
 import UserDecorator from "@saleor/storybook/UserDecorator";
@@ -11,7 +10,7 @@ import ChannelsAvailabilityCard, {
   ChannelsAvailabilityCardProps
 } from "./ChannelsAvailabilityCard";
 
-const user: User = {
+const user: UserFragment = {
   __typename: "User",
   avatar: null,
   email: "email@example.com",

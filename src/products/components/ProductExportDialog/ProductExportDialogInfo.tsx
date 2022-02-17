@@ -13,8 +13,11 @@ import Checkbox from "@saleor/components/Checkbox";
 import Chip from "@saleor/components/Chip";
 import Hr from "@saleor/components/Hr";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import { ChannelFragment } from "@saleor/fragments/types/ChannelFragment";
-import { ExportProductsInput, ProductFieldEnum } from "@saleor/graphql";
+import {
+  ChannelFragment,
+  ExportProductsInput,
+  ProductFieldEnum
+} from "@saleor/graphql";
 import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { sectionNames } from "@saleor/intl";

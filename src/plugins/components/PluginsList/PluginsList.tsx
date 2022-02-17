@@ -2,7 +2,7 @@ import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TablePagination from "@saleor/components/TablePagination";
-import { PluginBaseFragmentFragment } from "@saleor/graphql";
+import { PluginBaseFragment } from "@saleor/graphql";
 import { EditIcon, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { PluginListUrlSortField } from "@saleor/plugins/urls";
@@ -26,7 +26,7 @@ export const useStyles = makeStyles(
 export interface PluginListProps
   extends ListProps,
     SortPage<PluginListUrlSortField> {
-  plugins: PluginBaseFragmentFragment[];
+  plugins: PluginBaseFragment[];
 }
 
 const totalColSpan = 10;

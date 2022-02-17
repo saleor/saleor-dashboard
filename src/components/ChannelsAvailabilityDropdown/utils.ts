@@ -1,4 +1,4 @@
-import { CollectionFragmentFragment } from "@saleor/graphql";
+import { CollectionFragment } from "@saleor/graphql";
 import { PillColor } from "@saleor/macaw-ui";
 import { MessageDescriptor } from "react-intl";
 
@@ -6,11 +6,11 @@ import { Pill } from "../ChannelsAvailabilityMenuContent";
 import { channelStatusMessages } from "./messages";
 
 export type CollectionChannels = Pick<
-  CollectionFragmentFragment["channelListings"][0],
+  CollectionFragment["channelListings"][0],
   "isPublished" | "publicationDate" | "channel"
 >;
 export type Channels = Pick<
-  CollectionFragmentFragment["channelListings"][0],
+  CollectionFragment["channelListings"][0],
   "channel"
 >;
 

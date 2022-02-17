@@ -1,9 +1,9 @@
-import { MenuDetailsFragmentFragment } from "@saleor/graphql";
+import { MenuDetailsFragment } from "@saleor/graphql";
 
 import { TreeOperation } from "../MenuItems";
 
 export function findNode(
-  tree: MenuDetailsFragmentFragment["items"],
+  tree: MenuDetailsFragment["items"],
   id: string
 ): number[] {
   const foundNodeIndex = tree.findIndex(node => node.id === id);
@@ -21,9 +21,9 @@ export function findNode(
 }
 
 export function getNode(
-  tree: MenuDetailsFragmentFragment["items"],
+  tree: MenuDetailsFragment["items"],
   path: number[]
-): MenuDetailsFragmentFragment["items"][0] {
+): MenuDetailsFragment["items"][0] {
   if (path.length === 1) {
     return tree[path[0]];
   }
@@ -31,9 +31,9 @@ export function getNode(
 }
 
 function removeNode(
-  tree: MenuDetailsFragmentFragment["items"],
+  tree: MenuDetailsFragment["items"],
   path: number[]
-): MenuDetailsFragmentFragment["items"] {
+): MenuDetailsFragment["items"] {
   const removeIndex = path[0];
 
   if (path.length === 1) {
@@ -50,9 +50,9 @@ function removeNode(
 }
 
 interface InsertNodeInput {
-  tree: MenuDetailsFragmentFragment["items"];
+  tree: MenuDetailsFragment["items"];
   path: number[];
-  node: MenuDetailsFragmentFragment["items"][0];
+  node: MenuDetailsFragment["items"][0];
   position: number;
 }
 
@@ -61,7 +61,7 @@ function insertNode({
   path,
   node,
   position
-}: InsertNodeInput): MenuDetailsFragmentFragment["items"] {
+}: InsertNodeInput): MenuDetailsFragment["items"] {
   if (path.length === 0) {
     return [...tree.slice(0, position), node, ...tree.slice(position)];
   }
@@ -78,9 +78,9 @@ function insertNode({
 }
 
 function removeNodeAndChildren(
-  tree: MenuDetailsFragmentFragment["items"],
+  tree: MenuDetailsFragment["items"],
   operation: TreeOperation
-): MenuDetailsFragmentFragment["items"] {
+): MenuDetailsFragment["items"] {
   const sourcePath = findNode(tree, operation.id);
   const node = getNode(tree, sourcePath);
 
@@ -101,9 +101,9 @@ function removeNodeAndChildren(
 }
 
 function permuteRelativeNode(
-  tree: MenuDetailsFragmentFragment["items"],
+  tree: MenuDetailsFragment["items"],
   permutation: TreeOperation
-): MenuDetailsFragmentFragment["items"] {
+): MenuDetailsFragment["items"] {
   const sourcePath = findNode(tree, permutation.id);
   const node = getNode(tree, sourcePath);
 
@@ -128,16 +128,16 @@ function permuteRelativeNode(
 }
 
 function executeRelativeOperation(
-  tree: MenuDetailsFragmentFragment["items"],
+  tree: MenuDetailsFragment["items"],
   operation: TreeOperation
-): MenuDetailsFragmentFragment["items"] {
+): MenuDetailsFragment["items"] {
   return operation.type === "move"
     ? permuteRelativeNode(tree, operation)
     : removeNodeAndChildren(tree, operation);
 }
 
 export function computeRelativeTree(
-  tree: MenuDetailsFragmentFragment["items"],
+  tree: MenuDetailsFragment["items"],
   operations: TreeOperation[]
 ) {
   const newTree = operations.reduce(

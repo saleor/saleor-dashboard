@@ -1,16 +1,12 @@
 import { gql } from "@apollo/client";
-import { availableAttributeFragment } from "@saleor/fragments/attributes";
-import { pageInfoFragment } from "@saleor/fragments/pageInfo";
+import {
+  SearchAvailablePageAttributesDocument,
+  SearchAvailablePageAttributesQuery,
+  SearchAvailablePageAttributesQueryVariables
+} from "@saleor/graphql";
 import makeSearch from "@saleor/hooks/makeSearch";
 
-import {
-  SearchAvailablePageAttributes,
-  SearchAvailablePageAttributesVariables
-} from "./types/SearchAvailablePageAttributes";
-
 export const searchPageAttributes = gql`
-  ${pageInfoFragment}
-  ${availableAttributeFragment}
   query SearchAvailablePageAttributes(
     $id: ID!
     $after: String
@@ -26,11 +22,11 @@ export const searchPageAttributes = gql`
       ) {
         edges {
           node {
-            ...AvailableAttributeFragment
+            ...AvailableAttribute
           }
         }
         pageInfo {
-          ...PageInfoFragment
+          ...PageInfo
         }
       }
     }
@@ -38,9 +34,9 @@ export const searchPageAttributes = gql`
 `;
 
 export default makeSearch<
-  SearchAvailablePageAttributes,
-  SearchAvailablePageAttributesVariables
->(searchPageAttributes, result =>
+  SearchAvailablePageAttributesQuery,
+  SearchAvailablePageAttributesQueryVariables
+>(SearchAvailablePageAttributesDocument, result =>
   result.loadMore(
     (prev, next) => {
       if (

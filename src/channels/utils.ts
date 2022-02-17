@@ -3,16 +3,16 @@ import {
   SaleDetailsPageFormData
 } from "@saleor/discounts/components/SaleDetailsPage";
 import {
-  ChannelDetailsFragmentFragment,
-  ChannelFragmentFragment,
-  CollectionDetailsFragmentFragment,
+  ChannelDetailsFragment,
+  ChannelFragment,
+  CollectionDetailsFragment,
   ProductDetailsVariantFragment,
   ProductFragment,
   ProductVariantDetailsQuery,
-  SaleDetailsFragmentFragment,
+  SaleDetailsFragment,
   SaleType,
   ShippingZoneQuery,
-  VoucherDetailsFragmentFragment
+  VoucherDetailsFragment
 } from "@saleor/graphql";
 import { RequireOnlyOne } from "@saleor/misc";
 import { validatePrice } from "@saleor/products/utils/validation";
@@ -107,7 +107,7 @@ export interface ChannelCollectionData {
   publicationDate: string | null;
 }
 
-export const createCollectionChannels = (data?: ChannelFragmentFragment[]) =>
+export const createCollectionChannels = (data?: ChannelFragment[]) =>
   data?.map(channel => ({
     id: channel.id,
     isPublished: false,
@@ -115,7 +115,7 @@ export const createCollectionChannels = (data?: ChannelFragmentFragment[]) =>
     publicationDate: null
   }));
 
-export const createVoucherChannels = (data?: ChannelFragmentFragment[]) =>
+export const createVoucherChannels = (data?: ChannelFragment[]) =>
   data?.map(channel => ({
     currency: channel.currencyCode,
     discountValue: "",
@@ -124,7 +124,7 @@ export const createVoucherChannels = (data?: ChannelFragmentFragment[]) =>
     name: channel.name
   }));
 
-export const createSaleChannels = (data?: ChannelFragmentFragment[]) =>
+export const createSaleChannels = (data?: ChannelFragment[]) =>
   data?.map(channel => ({
     currency: channel.currencyCode,
     discountValue: "",
@@ -150,8 +150,8 @@ export const createVariantChannels = (
 };
 
 export const createChannelsDataWithSaleDiscountPrice = (
-  saleData?: SaleDetailsFragmentFragment,
-  data?: ChannelFragmentFragment[]
+  saleData?: SaleDetailsFragment,
+  data?: ChannelFragment[]
 ): ChannelSaleData[] => {
   if (data && saleData?.channelListings) {
     const dataArr = createSaleChannels(data);
@@ -163,8 +163,8 @@ export const createChannelsDataWithSaleDiscountPrice = (
 };
 
 export const createChannelsDataWithDiscountPrice = (
-  voucherData?: VoucherDetailsFragmentFragment,
-  data?: ChannelFragmentFragment[]
+  voucherData?: VoucherDetailsFragment,
+  data?: ChannelFragment[]
 ): ChannelVoucherData[] => {
   if (data && voucherData?.channelListings) {
     const dataArr = createVoucherChannels(data);
@@ -175,9 +175,7 @@ export const createChannelsDataWithDiscountPrice = (
   return [];
 };
 
-export const createChannelsData = (
-  data?: ChannelFragmentFragment[]
-): ChannelData[] =>
+export const createChannelsData = (data?: ChannelFragment[]): ChannelData[] =>
   data?.map(channel => ({
     availableForPurchase: null,
     costPrice: "",
@@ -194,7 +192,7 @@ export const createChannelsData = (
 
 export const createChannelsDataWithPrice = (
   productData?: ProductFragment,
-  data?: ChannelFragmentFragment[]
+  data?: ChannelFragment[]
 ): ChannelData[] => {
   if (data && productData?.channelListings) {
     const dataArr = createChannelsData(data);
@@ -234,7 +232,7 @@ export const createShippingChannelsFromRate = (
   })) || [];
 
 export const createCollectionChannelsData = (
-  collectionData?: CollectionDetailsFragmentFragment
+  collectionData?: CollectionDetailsFragment
 ) => {
   if (collectionData?.channelListings) {
     const collectionDataArr = collectionData?.channelListings.map(listing => ({
@@ -257,7 +255,7 @@ export interface ChannelShippingData {
 }
 
 export const createChannelsDataFromVoucher = (
-  voucherData?: VoucherDetailsFragmentFragment
+  voucherData?: VoucherDetailsFragment
 ) =>
   voucherData?.channelListings?.map(option => ({
     currency: option.channel.currencyCode || option?.minSpent?.currency || "",
@@ -268,7 +266,7 @@ export const createChannelsDataFromVoucher = (
   })) || [];
 
 export const createChannelsDataFromSale = (
-  saleData?: SaleDetailsFragmentFragment
+  saleData?: SaleDetailsFragment
 ): ChannelSaleFormData[] =>
   saleData?.channelListings?.map(option => ({
     currency: option.channel.currencyCode || "",
@@ -340,7 +338,7 @@ export const createSortedChannelsDataFromProduct = (
     channel.name.localeCompare(nextChannel.name)
   );
 
-export const createSortedChannelsData = (data?: ChannelFragmentFragment[]) =>
+export const createSortedChannelsData = (data?: ChannelFragment[]) =>
   createChannelsData(data)?.sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name)
   );
@@ -359,25 +357,25 @@ export const createSortedShippingChannelsFromRate = (
     channel.name.localeCompare(nextChannel.name)
   );
 
-export const createSortedVoucherData = (data?: ChannelFragmentFragment[]) =>
+export const createSortedVoucherData = (data?: ChannelFragment[]) =>
   createVoucherChannels(data)?.sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name)
   );
 
-export const createSortedSaleData = (data?: ChannelFragmentFragment[]) =>
+export const createSortedSaleData = (data?: ChannelFragment[]) =>
   createSaleChannels(data)?.sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name)
   );
 
 export const createSortedChannelsDataFromVoucher = (
-  data?: VoucherDetailsFragmentFragment
+  data?: VoucherDetailsFragment
 ) =>
   createChannelsDataFromVoucher(data)?.sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name)
   );
 
 export const createSortedChannelsDataFromSale = (
-  data?: SaleDetailsFragmentFragment
+  data?: SaleDetailsFragment
 ): ChannelSaleFormData[] =>
   createChannelsDataFromSale(data)?.sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name)
@@ -385,8 +383,8 @@ export const createSortedChannelsDataFromSale = (
 
 export const getChannelsCurrencyChoices = (
   id: string,
-  selectedChannel: ChannelDetailsFragmentFragment,
-  channelsList: ChannelDetailsFragmentFragment[]
+  selectedChannel: ChannelDetailsFragment,
+  channelsList: ChannelDetailsFragment[]
 ) =>
   id
     ? mapNodeToChoice(

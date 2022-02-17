@@ -1,8 +1,8 @@
-import { ShippingZoneFragment } from "@saleor/fragments/types/ShippingZoneFragment";
 import {
   PostalCodeRuleInclusionTypeEnum,
   SearchProductsQuery,
   ShippingMethodTypeEnum,
+  ShippingZoneFragment,
   ShippingZoneQuery,
   WeightUnitsEnum
 } from "@saleor/graphql";

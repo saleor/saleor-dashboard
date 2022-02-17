@@ -10,11 +10,11 @@ export const shippingZones = gql`
     shippingZones(first: $first, after: $after, last: $last, before: $before) {
       edges {
         node {
-          ...ShippingZoneFragment
+          ...ShippingZone
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }
@@ -29,9 +29,10 @@ export const shippingZone = gql`
     $last: Int
   ) {
     shippingZone(id: $id) {
-      ...ShippingZoneFragment
+      ...ShippingZone
+      default
       shippingMethods {
-        ...ShippingMethodWithExcludedProductsFragment
+        ...ShippingMethodWithExcludedProducts
       }
       channels {
         id

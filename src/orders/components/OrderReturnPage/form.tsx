@@ -1,8 +1,5 @@
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
-import {
-  FulfillmentStatus,
-  OrderDetailsFragmentFragment
-} from "@saleor/graphql";
+import { FulfillmentStatus, OrderDetailsFragment } from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   SubmitPromise
@@ -68,7 +65,7 @@ export type UseOrderRefundFormResult = CommonUseFormResultWithHandlers<
 
 interface OrderReturnProps {
   children: (props: UseOrderRefundFormResult) => React.ReactNode;
-  order: OrderDetailsFragmentFragment;
+  order: OrderDetailsFragment;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }
 
@@ -79,7 +76,7 @@ const getOrderRefundPageFormData = (): OrderReturnData => ({
 });
 
 function useOrderReturnForm(
-  order: OrderDetailsFragmentFragment,
+  order: OrderDetailsFragment,
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise
 ): UseOrderRefundFormResult {
   const {

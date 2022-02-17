@@ -1,8 +1,5 @@
 import { IMoney } from "@saleor/components/Money";
-import {
-  OrderDetailsFragmentFragment,
-  OrderRefundDataQuery
-} from "@saleor/graphql";
+import { OrderDetailsFragment, OrderRefundDataQuery } from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import {
   getAllFulfillmentLinesPriceSum,
@@ -139,7 +136,7 @@ const getReturnTotalAmount = ({
   order,
   maxRefund
 }: {
-  order: OrderDetailsFragmentFragment;
+  order: OrderDetailsFragment;
   selectedProductsValue: IMoney;
   refundShipmentCosts: boolean;
   maxRefund: IMoney;
@@ -158,7 +155,7 @@ const getReturnTotalAmount = ({
 };
 
 export const getReturnProductsAmountValues = (
-  order: OrderDetailsFragmentFragment,
+  order: OrderDetailsFragment,
   formData: OrderReturnFormData
 ) => {
   const authorizedAmount = getAuthorizedAmount(order);

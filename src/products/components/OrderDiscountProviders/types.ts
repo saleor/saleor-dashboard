@@ -1,5 +1,4 @@
-import { Money } from "@saleor/fragments/types/Money";
-import { TaxedMoney } from "@saleor/graphql";
+import { Money, TaxedMoney } from "@saleor/graphql";
 import { OrderDiscountCommonInput } from "@saleor/orders/components/OrderDiscountCommonModal/types";
 
 import { OrderLineDiscountContextConsumerProps } from "./OrderLineDiscountProvider";

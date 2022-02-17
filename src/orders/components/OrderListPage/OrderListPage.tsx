@@ -3,8 +3,7 @@ import CardMenu from "@saleor/components/CardMenu";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
-import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
-import { OrderListQuery } from "@saleor/graphql";
+import { OrderListQuery, RefreshLimitsQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import { OrderListUrlSortField } from "@saleor/orders/urls";
@@ -30,7 +29,7 @@ export interface OrderListPageProps
   extends PageListProps,
     FilterPageProps<OrderFilterKeys, OrderListFilterOpts>,
     SortPage<OrderListUrlSortField> {
-  limits: RefreshLimits_shop_limits;
+  limits: RefreshLimitsQuery["shop"]["limits"];
   orders: RelayToFlat<OrderListQuery["orders"]>;
   onSettingsOpen: () => void;
 }

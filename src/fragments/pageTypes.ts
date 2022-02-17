@@ -1,10 +1,7 @@
 import { gql } from "@apollo/client";
 
-import { attributeFragment } from "./attributes";
-import { metadataFragment } from "./metadata";
-
 export const pageTypeFragment = gql`
-  fragment PageTypeFragment on PageType {
+  fragment PageType on PageType {
     id
     name
     hasPages
@@ -12,14 +9,11 @@ export const pageTypeFragment = gql`
 `;
 
 export const pageTypeDetailsFragment = gql`
-  ${attributeFragment}
-  ${pageTypeFragment}
-  ${metadataFragment}
-  fragment PageTypeDetailsFragment on PageType {
-    ...PageTypeFragment
-    ...MetadataFragment
+  fragment PageTypeDetails on PageType {
+    ...PageType
+    ...Metadata
     attributes {
-      ...AttributeFragment
+      ...Attribute
     }
   }
 `;

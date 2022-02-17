@@ -1,6 +1,6 @@
 import {
   MenuItemCreateInput,
-  MenuItemFragmentFragment,
+  MenuItemFragment,
   MenuItemInput,
   MenuItemMoveInput
 } from "@saleor/graphql";
@@ -71,7 +71,7 @@ export function getMenuItemCreateInputData(
   return variables;
 }
 
-export function getInitialDisplayValue(item: MenuItemFragmentFragment): string {
+export function getInitialDisplayValue(item: MenuItemFragment): string {
   if (!item) {
     return "...";
   }

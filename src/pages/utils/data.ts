@@ -3,11 +3,11 @@ import {
   mergeChoicesWithValues
 } from "@saleor/attributes/utils/data";
 import { AttributeInput } from "@saleor/components/Attributes";
-import { PageDetailsFragmentFragment } from "@saleor/graphql";
+import { PageDetailsFragment } from "@saleor/graphql";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 
 export function getAttributeInputFromPage(
-  page: PageDetailsFragmentFragment
+  page: PageDetailsFragment
 ): AttributeInput[] {
   return page?.attributes.map(attribute => ({
     data: {
@@ -25,7 +25,7 @@ export function getAttributeInputFromPage(
 }
 
 export function getAttributeInputFromPageType(
-  pageType: PageDetailsFragmentFragment["pageType"]
+  pageType: PageDetailsFragment["pageType"]
 ): AttributeInput[] {
   return pageType?.attributes.map(attribute => ({
     data: {

@@ -17,11 +17,11 @@ export const menuList = gql`
     ) {
       edges {
         node {
-          ...MenuFragment
+          ...Menu
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }
@@ -30,7 +30,7 @@ export const menuList = gql`
 export const menuDetails = gql`
   query MenuDetails($id: ID!) {
     menu(id: $id) {
-      ...MenuDetailsFragment
+      ...MenuDetails
     }
   }
 `;

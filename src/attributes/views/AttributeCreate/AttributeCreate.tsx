@@ -1,7 +1,9 @@
 import {
   AttributeErrorCode,
-  AttributeErrorFragmentFragment,
-  useAttributeCreateMutation
+  AttributeErrorFragment,
+  useAttributeCreateMutation,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation
 } from "@saleor/graphql";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useLocalPageInfo, { getMaxPage } from "@saleor/hooks/useLocalPageInfo";
@@ -18,10 +20,6 @@ import {
   remove,
   updateAtIndex
 } from "@saleor/utils/lists";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";
@@ -47,7 +45,7 @@ interface AttributeDetailsProps {
   params: AttributeAddUrlQueryParams;
 }
 
-const attributeValueAlreadyExistsError: AttributeErrorFragmentFragment = {
+const attributeValueAlreadyExistsError: AttributeErrorFragment = {
   __typename: "AttributeError",
   code: AttributeErrorCode.ALREADY_EXISTS,
   field: "name",
@@ -70,7 +68,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     AttributeValueEditDialogFormData[]
   >([]);
   const [valueErrors, setValueErrors] = React.useState<
-    AttributeErrorFragmentFragment[]
+    AttributeErrorFragment[]
   >([]);
 
   const { updateListSettings, settings } = useListSettings(
@@ -98,8 +96,8 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
       }
     }
   });
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   const id = params.id
     ? parseInt(params.id, 0) + pageInfo.startCursor

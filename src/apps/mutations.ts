@@ -5,10 +5,10 @@ export const appCreateMutation = gql`
     appCreate(input: $input) {
       authToken
       app {
-        ...AppFragment
+        ...App
       }
       errors {
-        ...AppErrorFragment
+        ...AppError
       }
     }
   }
@@ -18,10 +18,10 @@ export const appDeleteMutation = gql`
   mutation AppDelete($id: ID!) {
     appDelete(id: $id) {
       app {
-        ...AppFragment
+        ...App
       }
       errors {
-        ...AppErrorFragment
+        ...AppError
       }
     }
   }
@@ -37,7 +37,7 @@ export const appDeleteFailedInstallationMutation = gql`
         message
       }
       errors {
-        ...AppErrorFragment
+        ...AppError
       }
     }
   }
@@ -64,7 +64,7 @@ export const appFetchMutation = gql`
         }
       }
       errors {
-        ...AppErrorFragment
+        ...AppError
       }
     }
   }
@@ -80,7 +80,7 @@ export const appInstallMutation = gql`
         manifestUrl
       }
       errors {
-        ...AppErrorFragment
+        ...AppError
       }
     }
   }
@@ -96,7 +96,7 @@ export const appRetryInstallMutation = gql`
         manifestUrl
       }
       errors {
-        ...AppErrorFragment
+        ...AppError
       }
     }
   }
@@ -106,14 +106,14 @@ export const appUpdateMutation = gql`
   mutation AppUpdate($id: ID!, $input: AppInput!) {
     appUpdate(id: $id, input: $input) {
       app {
-        ...AppFragment
+        ...App
         permissions {
           code
           name
         }
       }
       errors {
-        ...AppErrorFragment
+        ...AppError
         message
         permissions
       }
@@ -131,7 +131,7 @@ export const appTokenCreateMutation = gql`
       }
       authToken
       errors {
-        ...AppErrorFragment
+        ...AppError
       }
     }
   }
@@ -146,7 +146,7 @@ export const appTokenDeleteMutation = gql`
         id
       }
       errors {
-        ...AppErrorFragment
+        ...AppError
       }
     }
   }
@@ -156,7 +156,7 @@ export const appActivateMutation = gql`
   mutation AppActivate($id: ID!) {
     appActivate(id: $id) {
       errors {
-        ...AppErrorFragment
+        ...AppError
       }
     }
   }
@@ -166,7 +166,7 @@ export const appDeactivateMutation = gql`
   mutation AppDeactivate($id: ID!) {
     appDeactivate(id: $id) {
       errors {
-        ...AppErrorFragment
+        ...AppError
       }
     }
   }

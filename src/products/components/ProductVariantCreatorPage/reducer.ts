@@ -1,5 +1,4 @@
-import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
-import { StockInput } from "@saleor/graphql";
+import { AttributeValueFragment, StockInput } from "@saleor/graphql";
 import {
   add,
   remove,

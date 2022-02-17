@@ -1,5 +1,5 @@
 import {
-  OrderDetailsFragmentFragment,
+  OrderDetailsFragment,
   OrderReturnFulfillmentLineInput,
   OrderReturnLineInput,
   OrderReturnProductsInput
@@ -12,13 +12,10 @@ import {
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 
 class ReturnFormDataParser {
-  private order: OrderDetailsFragmentFragment;
+  private order: OrderDetailsFragment;
   private formData: OrderReturnFormData;
 
-  constructor(
-    order: OrderDetailsFragmentFragment,
-    formData: OrderReturnFormData
-  ) {
+  constructor(order: OrderDetailsFragment, formData: OrderReturnFormData) {
     this.order = order;
     this.formData = formData;
   }

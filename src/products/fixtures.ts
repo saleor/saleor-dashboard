@@ -1,10 +1,10 @@
-import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import {
   AttributeInputTypeEnum,
   ProductFragment,
   ProductListQuery,
   ProductMediaType,
   ProductVariantCreateDataQuery,
+  ProductVariantFragment,
   WeightUnitsEnum
 } from "@saleor/graphql";
 import { RelayToFlat } from "@saleor/types";
@@ -2940,7 +2940,7 @@ export const products = (
   }
 ];
 
-export const variant = (placeholderImage: string): ProductVariant => ({
+export const variant = (placeholderImage: string): ProductVariantFragment => ({
   __typename: "ProductVariant",
   channelListings: [
     {

@@ -1,6 +1,6 @@
 import { IMoney } from "@saleor/components/Money";
 import PriceField from "@saleor/components/PriceField";
-import { OrderErrorFragmentFragment } from "@saleor/graphql";
+import { OrderErrorFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
@@ -45,7 +45,7 @@ interface RefundAmountInputProps {
   amountTooSmall: boolean;
   amountTooBig: boolean;
   disabled: boolean;
-  errors: OrderErrorFragmentFragment[];
+  errors: OrderErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 

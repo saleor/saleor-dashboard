@@ -18,7 +18,9 @@ import {
   useCollectionDetailsQuery,
   useCollectionUpdateMutation,
   useRemoveCollectionMutation,
-  useUnassignCollectionProductMutation
+  useUnassignCollectionProductMutation,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation
 } from "@saleor/graphql";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useChannels from "@saleor/hooks/useChannels";
@@ -35,10 +37,6 @@ import { arrayDiff } from "@saleor/utils/arrays";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -78,8 +76,8 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
     CollectionUrlQueryParams
   >(navigate, params => collectionUrl(id, params), params);
 
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   const [
     updateChannels,

@@ -19,7 +19,7 @@ export const pluginsList = gql`
     ) {
       edges {
         node {
-          ...PluginBaseFragment
+          ...PluginBase
         }
       }
       pageInfo {
@@ -35,7 +35,7 @@ export const pluginsList = gql`
 export const pluginsDetails = gql`
   query Plugin($id: ID!) {
     plugin(id: $id) {
-      ...PluginsDetailsFragment
+      ...PluginsDetails
     }
   }
 `;

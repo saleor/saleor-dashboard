@@ -1,13 +1,13 @@
 import { address } from "@saleor/fixtures";
 import {
   WarehouseClickAndCollectOptionEnum,
-  WarehouseDetailsFragmentFragment,
-  WarehouseWithShippingFragmentFragment
+  WarehouseDetailsFragment,
+  WarehouseWithShippingFragment
 } from "@saleor/graphql";
 
 import { shippingZones } from "../shipping/fixtures";
 
-export const warehouseList: WarehouseWithShippingFragmentFragment[] = [
+export const warehouseList: WarehouseWithShippingFragment[] = [
   {
     __typename: "Warehouse",
     id: "V2FyZWhvdXNlOmEzMThmMGZlLTcwMmYtNDNjYy1hYmFjLWZmZmMzN2Y3ZTliYw==",
@@ -58,14 +58,14 @@ export const warehouseList: WarehouseWithShippingFragmentFragment[] = [
   }
 ];
 
-export const warehouse: WarehouseDetailsFragmentFragment = {
+export const warehouse: WarehouseDetailsFragment = {
   ...warehouseList[0],
   isPrivate: true,
   clickAndCollectOption: WarehouseClickAndCollectOptionEnum.DISABLED,
   address
 };
 
-export const warehouseForPickup: WarehouseDetailsFragmentFragment = {
+export const warehouseForPickup: WarehouseDetailsFragment = {
   ...warehouseList[0],
   isPrivate: false,
   clickAndCollectOption: WarehouseClickAndCollectOptionEnum.ALL,

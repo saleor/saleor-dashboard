@@ -1,14 +1,9 @@
-import { MutationFunction } from "@apollo/client";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
+import {
+  UpdateMetadataMutationFn,
+  UpdatePrivateMetadataMutationFn
+} from "@saleor/graphql";
 
-import {
-  UpdateMetadata,
-  UpdateMetadataVariables
-} from "../metadata/types/UpdateMetadata";
-import {
-  UpdatePrivateMetadata,
-  UpdatePrivateMetadataVariables
-} from "../metadata/types/UpdatePrivateMetadata";
 import { filterMetadataArray } from "./filterMetadataArray";
 
 export interface CreateMetadataHandlerFunctionResult<TError> {
@@ -18,11 +13,8 @@ export interface CreateMetadataHandlerFunctionResult<TError> {
 
 function createMetadataCreateHandler<T extends MetadataFormData, TError>(
   create: (data: T) => Promise<CreateMetadataHandlerFunctionResult<TError>>,
-  setMetadata: MutationFunction<UpdateMetadata, UpdateMetadataVariables>,
-  setPrivateMetadata: MutationFunction<
-    UpdatePrivateMetadata,
-    UpdatePrivateMetadataVariables
-  >
+  setMetadata: UpdateMetadataMutationFn,
+  setPrivateMetadata: UpdatePrivateMetadataMutationFn
 ) {
   return async (data: T) => {
     const { id, errors } = await create(data);

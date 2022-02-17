@@ -12,7 +12,7 @@ import {
   TabActionDialog
 } from "../types";
 
-const pageTypeSection = "/page-types/";
+const pageTypeSection = "@saleor/graphql";
 
 export const pageTypeListPath = pageTypeSection;
 export enum PageTypeListUrlFiltersEnum {

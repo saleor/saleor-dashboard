@@ -3,7 +3,7 @@ import { gql } from "@apollo/client";
 export const channelsListBase = gql`
   query BaseChannels {
     channels {
-      ...ChannelFragment
+      ...Channel
     }
   }
 `;
@@ -11,7 +11,7 @@ export const channelsListBase = gql`
 export const channelsList = gql`
   query Channels {
     channels {
-      ...ChannelDetailsFragment
+      ...ChannelDetails
     }
   }
 `;
@@ -19,7 +19,7 @@ export const channelsList = gql`
 export const channelDetails = gql`
   query Channel($id: ID!) {
     channel(id: $id) {
-      ...ChannelDetailsFragment
+      ...ChannelDetails
     }
   }
 `;

@@ -8,11 +8,11 @@ import { ChannelPriceData } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
 import PriceField from "@saleor/components/PriceField";
-import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import {
-  BulkProductErrorFragmentFragment,
+  BulkProductErrorFragment,
   ProductFragment,
-  ProductVariantBulkCreateInput
+  ProductVariantBulkCreateInput,
+  WarehouseFragment
 } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
@@ -27,7 +27,7 @@ export interface ProductVariantCreatorSummaryProps {
   attributes: ProductFragment["productType"]["variantAttributes"];
   channelListings: ChannelPriceData[];
   data: ProductVariantCreateFormData;
-  errors: BulkProductErrorFragmentFragment[];
+  errors: BulkProductErrorFragment[];
   warehouses: WarehouseFragment[];
   onVariantSkuChange: (variantIndex: number, value: string) => void;
   onVariantStockDataChange: (

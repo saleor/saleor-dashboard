@@ -1,5 +1,7 @@
-import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
-import { PermissionGroupErrorCode } from "@saleor/graphql";
+import {
+  PermissionGroupErrorCode,
+  PermissionGroupErrorFragment
+} from "@saleor/graphql";
 import PermissionGroupDeleteDialog, {
   PermissionDeleteDialogProps
 } from "@saleor/permissionGroups/components/PermissionGroupDeleteDialog";

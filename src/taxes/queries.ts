@@ -3,9 +3,9 @@ import { gql } from "@apollo/client";
 export const countryList = gql`
   query CountryList {
     shop {
-      ...ShopTaxesFragment
+      ...ShopTaxes
       countries {
-        ...CountryWithTaxesFragment
+        ...CountryWithTaxes
       }
     }
   }
@@ -14,7 +14,7 @@ export const countryList = gql`
 export const taxTypeList = gql`
   query TaxTypeList {
     taxTypes {
-      ...TaxTypeFragment
+      ...TaxType
     }
   }
 `;

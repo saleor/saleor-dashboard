@@ -7,9 +7,11 @@ import Metadata from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import SeoForm from "@saleor/components/SeoForm";
-import { CollectionChannelListingErrorFragment } from "@saleor/fragments/types/CollectionChannelListingErrorFragment";
-import { CollectionErrorFragment } from "@saleor/fragments/types/CollectionErrorFragment";
-import { PermissionEnum } from "@saleor/graphql";
+import {
+  CollectionChannelListingErrorFragment,
+  CollectionErrorFragment,
+  PermissionEnum
+} from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";

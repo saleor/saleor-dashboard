@@ -1,8 +1,7 @@
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
-import { SaleTranslationFragment } from "@saleor/fragments/types/SaleTranslationFragment";
-import { LanguageCodeEnum } from "@saleor/graphql";
+import { LanguageCodeEnum, SaleTranslationFragment } from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";

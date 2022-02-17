@@ -1,22 +1,19 @@
 import { gql } from "@apollo/client";
-import { limitFragment } from "@saleor/fragments/shop";
-import makeQuery, { QueryHookOptions } from "@saleor/hooks/makeQuery";
+import {
+  RefreshLimitsQuery,
+  RefreshLimitsQueryVariables,
+  useRefreshLimitsQuery
+} from "@saleor/graphql";
+import { QueryHookOptions } from "@saleor/hooks/graphql";
 
-import { TypedQuery } from "../../queries";
-import { RefreshLimits, RefreshLimitsVariables } from "./types/RefreshLimits";
-import { ShopCountries, ShopCountriesVariables } from "./types/ShopCountries";
-import { ShopInfo } from "./types/ShopInfo";
-
-const shopInfo = gql`
+export const shopInfo = gql`
   query ShopInfo {
     shop {
       countries {
-        country
-        code
+        ...CountryWithCode
       }
       defaultCountry {
-        code
-        country
+        ...CountryWithCode
       }
       defaultWeightUnit
       displayGrossPrices
@@ -25,8 +22,7 @@ const shopInfo = gql`
         url
       }
       languages {
-        code
-        language
+        ...Language
       }
       includeTaxesInPrices
       name
@@ -39,9 +35,8 @@ const shopInfo = gql`
     }
   }
 `;
-export const TypedShopInfoQuery = TypedQuery<ShopInfo, {}>(shopInfo);
 
-const shopCountries = gql`
+export const shopCountries = gql`
   query ShopCountries($filter: CountryFilterInput) {
     shop {
       countries(filter: $filter) {
@@ -51,20 +46,16 @@ const shopCountries = gql`
     }
   }
 `;
-export const useShopCountries = makeQuery<
-  ShopCountries,
-  ShopCountriesVariables
->(shopCountries);
 
-const limitVariables: Record<keyof RefreshLimitsVariables, boolean> = {
+const limitVariables: Record<keyof RefreshLimitsQueryVariables, boolean> = {
   channels: false,
   orders: false,
   productVariants: false,
   staffUsers: false,
   warehouses: false
 };
-const limitInfo = gql`
-  ${limitFragment}
+
+export const limitInfo = gql`
   query RefreshLimits(
     $channels: Boolean!
     $orders: Boolean!
@@ -73,17 +64,17 @@ const limitInfo = gql`
     $warehouses: Boolean!
   ) {
     shop {
-      ...ShopLimitFragment
+      ...ShopLimit
     }
   }
 `;
-const useBaseShopLimitsQuery = makeQuery<RefreshLimits, RefreshLimitsVariables>(
-  limitInfo
-);
 export const useShopLimitsQuery = (
-  opts: QueryHookOptions<RefreshLimits, Partial<RefreshLimitsVariables>>
+  opts: QueryHookOptions<
+    RefreshLimitsQuery,
+    Partial<RefreshLimitsQueryVariables>
+  >
 ) =>
-  useBaseShopLimitsQuery({
+  useRefreshLimitsQuery({
     ...opts,
     variables: {
       ...limitVariables,

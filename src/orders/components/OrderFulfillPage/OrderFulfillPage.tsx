@@ -18,12 +18,12 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
-import { ShopOrderSettingsFragment } from "@saleor/fragments/types/ShopOrderSettingsFragment";
-import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import {
   FulfillOrderMutation,
   OrderFulfillDataQuery,
-  OrderFulfillStockInput
+  OrderFulfillStockInput,
+  ShopOrderSettingsFragment,
+  WarehouseFragment
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useFormset, { FormsetData } from "@saleor/hooks/useFormset";

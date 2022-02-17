@@ -1,15 +1,15 @@
 import { IMoney, subtractMoney } from "@saleor/components/Money";
-import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import {
   AddressInput,
   CountryCode,
   FulfillmentStatus,
   FulfillOrderMutation,
-  OrderDetailsFragmentFragment,
+  OrderDetailsFragment,
   OrderErrorCode,
   OrderFulfillDataQuery,
-  OrderLineFragmentFragment,
-  OrderRefundDataQuery
+  OrderLineFragment,
+  OrderRefundDataQuery,
+  WarehouseFragment
 } from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { addressToAddressInput } from "@saleor/misc";
@@ -72,7 +72,7 @@ const getItemPriceAndQuantity = ({
   itemsQuantities,
   id
 }: {
-  orderLines: OrderLineFragmentFragment[];
+  orderLines: OrderLineFragment[];
   itemsQuantities: FormsetData<LineItemData, number>;
   id: string;
 }) => {
@@ -91,7 +91,7 @@ const getFulfillmentByFulfillmentLineId = (order, fulfillmentLineId) => {
 };
 
 const selectItemPriceAndQuantity = (
-  order: OrderDetailsFragmentFragment,
+  order: OrderDetailsFragment,
   {
     fulfilledItemsQuantities,
     waitingItemsQuantities,
@@ -122,7 +122,7 @@ const selectItemPriceAndQuantity = (
 };
 
 export const getReplacedProductsAmount = (
-  order: OrderDetailsFragmentFragment,
+  order: OrderDetailsFragment,
   {
     itemsToBeReplaced,
     unfulfilledItemsQuantities,
@@ -161,7 +161,7 @@ export const getReplacedProductsAmount = (
 };
 
 export const getReturnSelectedProductsAmount = (
-  order: OrderDetailsFragmentFragment,
+  order: OrderDetailsFragment,
   {
     itemsToBeReplaced,
     waitingItemsQuantities,
@@ -201,7 +201,7 @@ const getPartialProductsValue = ({
 }: {
   itemsToBeReplaced: FormsetData<LineItemData, boolean>;
   itemsQuantities: FormsetData<LineItemData, number>;
-  orderLines: OrderLineFragmentFragment[];
+  orderLines: OrderLineFragment[];
 }) =>
   itemsQuantities.reduce(
     (resultAmount, { id, value: quantity, data: { isRefunded } }) => {
@@ -253,7 +253,7 @@ export function getAllFulfillmentLinesPriceSum(
 }
 
 export function mergeRepeatedOrderLines(
-  fulfillmentLines: OrderDetailsFragmentFragment["fulfillments"][0]["lines"]
+  fulfillmentLines: OrderDetailsFragment["fulfillments"][0]["lines"]
 ) {
   return fulfillmentLines.reduce((prev, curr) => {
     const existingOrderLineIndex = prev.findIndex(
@@ -272,7 +272,7 @@ export function mergeRepeatedOrderLines(
     }
 
     return prev;
-  }, Array<OrderDetailsFragmentFragment["fulfillments"][0]["lines"][0]>());
+  }, Array<OrderDetailsFragment["fulfillments"][0]["lines"][0]>());
 }
 
 export const isStockError = (
@@ -301,7 +301,7 @@ export const isStockError = (
 };
 
 export const getVariantSearchAddress = (
-  order: OrderDetailsFragmentFragment
+  order: OrderDetailsFragment
 ): AddressInput => {
   if (order.shippingAddress) {
     return addressToAddressInput(order.shippingAddress);

@@ -1,15 +1,17 @@
-import { PluginBaseFragmentFragment } from "@saleor/graphql";
+import { PluginBaseFragment } from "@saleor/graphql";
 import { Pill } from "@saleor/macaw-ui";
 import { isPluginGlobal } from "@saleor/plugins/views/utils";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { pluginStatusMessages } from "./messages";
-import { pluginAvailabilityStatusMessages as messages } from "./messages";
+import {
+  pluginAvailabilityStatusMessages as messages,
+  pluginStatusMessages
+} from "./messages";
 import { getActiveChannelConfigsCount } from "./utils";
 
 interface PluginAvailabilityStatusProps {
-  plugin: PluginBaseFragmentFragment;
+  plugin: PluginBaseFragment;
 }
 
 const PluginAvailabilityStatus: React.FC<PluginAvailabilityStatusProps> = ({

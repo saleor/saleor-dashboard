@@ -1,14 +1,14 @@
 import {
   AttributeInputTypeEnum,
-  PageDetailsFragmentFragment,
-  PageFragmentFragment
+  PageDetailsFragment,
+  PageFragment
 } from "@saleor/graphql";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
 
 const content = richTextEditorFixtures.richTextEditor;
 
-export const pageList: PageFragmentFragment[] = [
+export const pageList: PageFragment[] = [
   {
     __typename: "Page",
     id: "Jzx123sEt==",
@@ -38,7 +38,7 @@ export const pageList: PageFragmentFragment[] = [
     title: "About"
   }
 ];
-export const page: PageDetailsFragmentFragment = {
+export const page: PageDetailsFragment = {
   __typename: "Page",
   attributes: [
     {

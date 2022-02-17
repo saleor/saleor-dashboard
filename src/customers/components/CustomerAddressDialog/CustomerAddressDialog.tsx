@@ -8,9 +8,12 @@ import AddressEdit from "@saleor/components/AddressEdit";
 import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
-import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
-import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
-import { AddressFragmentFragment, AddressInput } from "@saleor/graphql";
+import {
+  AccountErrorFragment,
+  AddressFragment,
+  AddressInput,
+  CountryWithCodeFragment
+} from "@saleor/graphql";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -24,9 +27,9 @@ import { FormattedMessage } from "react-intl";
 import { AddressTypeInput } from "../../types";
 
 export interface CustomerAddressDialogProps {
-  address: AddressFragmentFragment;
+  address: AddressFragment;
   confirmButtonState: ConfirmButtonTransitionState;
-  countries: ShopInfo_shop_countries[];
+  countries: CountryWithCodeFragment[];
   errors: AccountErrorFragment[];
   open: boolean;
   variant: "create" | "edit";

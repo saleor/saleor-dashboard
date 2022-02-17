@@ -10,7 +10,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import {
-  OrderDetailsFragmentFragment,
+  OrderDetailsFragment,
   OrderDetailsQuery,
   OrderStatus
 } from "@saleor/graphql";
@@ -57,7 +57,7 @@ const useStyles = makeStyles(
 );
 
 export interface OrderDetailsPageProps {
-  order: OrderDetailsFragmentFragment;
+  order: OrderDetailsFragment;
   shop: OrderDetailsQuery["shop"];
   shippingMethods?: Array<{
     id: string;

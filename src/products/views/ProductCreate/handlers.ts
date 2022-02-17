@@ -8,9 +8,8 @@ import {
   prepareAttributesInput
 } from "@saleor/attributes/utils/handlers";
 import { ChannelData } from "@saleor/channels/utils";
-import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
-import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
 import {
+  AttributeErrorFragment,
   FileUploadMutation,
   FileUploadMutationVariables,
   ProductChannelListingUpdateMutation,
@@ -22,6 +21,7 @@ import {
   ProductTypeQuery,
   ProductVariantChannelListingUpdateMutation,
   ProductVariantChannelListingUpdateMutationVariables,
+  UploadErrorFragment,
   VariantCreateMutation,
   VariantCreateMutationVariables
 } from "@saleor/graphql";

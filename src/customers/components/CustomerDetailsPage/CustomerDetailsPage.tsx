@@ -7,10 +7,9 @@ import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
 import RequirePermissions from "@saleor/components/RequirePermissions";
 import Savebar from "@saleor/components/Savebar";
-import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
 import CustomerGiftCardsCard from "@saleor/giftCards/components/GiftCardCustomerCard/CustomerGiftCardsCard";
 import {
-  AccountErrorFragmentFragment,
+  AccountErrorFragment,
   CustomerDetailsQuery,
   PermissionEnum
 } from "@saleor/graphql";
@@ -45,7 +44,7 @@ export interface CustomerDetailsPageProps {
   onBack: () => void;
   onSubmit: (
     data: CustomerDetailsPageFormData
-  ) => SubmitPromise<AccountErrorFragmentFragment[]>;
+  ) => SubmitPromise<AccountErrorFragment[]>;
   onViewAllOrdersClick: () => void;
   onRowClick: (id: string) => void;
   onAddressManageClick: () => void;

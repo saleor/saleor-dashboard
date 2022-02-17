@@ -1,7 +1,7 @@
 import { Card, CardActions, TableBody, Typography } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import { OrderLineFragmentFragment } from "@saleor/graphql";
+import { OrderLineFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
@@ -34,7 +34,7 @@ const useStyles = makeStyles(
 interface OrderUnfulfilledProductsCardProps {
   showFulfillmentAction: boolean;
   notAllowedToFulfillUnpaid: boolean;
-  lines: OrderLineFragmentFragment[];
+  lines: OrderLineFragment[];
   onFulfill: () => void;
 }
 

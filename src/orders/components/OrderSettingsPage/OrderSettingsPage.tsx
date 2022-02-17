@@ -4,8 +4,8 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import {
-  OrderSettingsFragmentFragment,
-  ShopOrderSettingsFragmentFragment
+  OrderSettingsFragment,
+  ShopOrderSettingsFragment
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
@@ -19,8 +19,8 @@ import OrderSettingsForm from "./form";
 import { OrderSettingsFormData } from "./types";
 
 export interface OrderSettingsPageProps {
-  orderSettings: OrderSettingsFragmentFragment;
-  shop: ShopOrderSettingsFragmentFragment;
+  orderSettings: OrderSettingsFragment;
+  shop: ShopOrderSettingsFragment;
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;

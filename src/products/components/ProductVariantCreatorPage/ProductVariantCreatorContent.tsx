@@ -1,9 +1,9 @@
 import { ChannelPriceData } from "@saleor/channels/utils";
-import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import {
-  BulkProductErrorFragmentFragment,
-  ProductVariantAttributesFragmentFragment,
-  SearchAttributeValuesQuery
+  BulkProductErrorFragment,
+  ProductVariantAttributesFragment,
+  SearchAttributeValuesQuery,
+  WarehouseFragment
 } from "@saleor/graphql";
 import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import { isSelected } from "@saleor/utils/lists";
@@ -20,14 +20,14 @@ import {
 import { ProductVariantCreatorStep } from "./types";
 
 export interface ProductVariantCreatorContentProps {
-  attributes: ProductVariantAttributesFragmentFragment["productType"]["variantAttributes"];
+  attributes: ProductVariantAttributesFragment["productType"]["variantAttributes"];
   attributeValues: RelayToFlat<
     SearchAttributeValuesQuery["attribute"]["choices"]
   >;
   channelListings: ChannelPriceData[];
   data: ProductVariantCreateFormData;
   dispatchFormDataAction: React.Dispatch<ProductVariantCreateReducerAction>;
-  errors: BulkProductErrorFragmentFragment[];
+  errors: BulkProductErrorFragment[];
   step: ProductVariantCreatorStep;
   variantsLeft: number | null;
   warehouses: WarehouseFragment[];

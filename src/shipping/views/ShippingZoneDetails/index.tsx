@@ -11,6 +11,8 @@ import {
   useDeleteShippingZoneMutation,
   useShippingZoneQuery,
   useShopCountriesQuery,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation,
   useUpdateShippingZoneMutation,
   useWarehouseCreateMutation
 } from "@saleor/graphql";
@@ -31,10 +33,6 @@ import {
   mapCountriesToCountriesCodes,
   mapEdgesToItems
 } from "@saleor/utils/maps";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import { diff } from "fast-array-diff";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -158,8 +156,8 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     }
   });
 
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   const getParsedUpdateInput = (
     submitData: ShippingZoneUpdateFormData

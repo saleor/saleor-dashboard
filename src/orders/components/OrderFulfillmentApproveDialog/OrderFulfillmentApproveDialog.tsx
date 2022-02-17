@@ -9,7 +9,7 @@ import ConfirmButton from "@saleor/components/ConfirmButton";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
-import { OrderErrorFragmentFragment } from "@saleor/graphql";
+import { OrderErrorFragment } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
 import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
@@ -24,7 +24,7 @@ export interface OrderFulfillmentAcceptDialogFormData {
 
 export interface OrderFulfillmentAcceptDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  errors: OrderErrorFragmentFragment[];
+  errors: OrderErrorFragment[];
   open: boolean;
   onClose(): void;
   onConfirm(data: OrderFulfillmentAcceptDialogFormData): void;

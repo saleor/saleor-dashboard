@@ -19,11 +19,11 @@ export const warehouseList = gql`
     ) {
       edges {
         node {
-          ...WarehouseWithShippingFragment
+          ...WarehouseWithShipping
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }
@@ -32,7 +32,7 @@ export const warehouseList = gql`
 export const warehouseDetails = gql`
   query WarehouseDetails($id: ID!) {
     warehouse(id: $id) {
-      ...WarehouseDetailsFragment
+      ...WarehouseDetails
     }
   }
 `;

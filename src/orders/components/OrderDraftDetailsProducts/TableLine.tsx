@@ -3,7 +3,7 @@ import Link from "@saleor/components/Link";
 import Money from "@saleor/components/Money";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
-import { OrderLineFragmentFragment } from "@saleor/graphql";
+import { OrderLineFragment } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { OrderLineDiscountContextConsumerProps } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import React, { useRef } from "react";
@@ -51,7 +51,7 @@ const useStyles = makeStyles(
 );
 
 interface TableLineProps extends OrderLineDiscountContextConsumerProps {
-  line: OrderLineFragmentFragment;
+  line: OrderLineFragment;
   onOrderLineChange: (id: string, data: FormData) => void;
   onOrderLineRemove: (id: string) => void;
 }

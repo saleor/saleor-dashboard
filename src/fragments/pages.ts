@@ -1,13 +1,7 @@
 import { gql } from "@apollo/client";
 
-import {
-  attributeValueDetailsFragment,
-  attributeValueListFragment
-} from "./attributes";
-import { metadataFragment } from "./metadata";
-
 export const pageFragment = gql`
-  fragment PageFragment on Page {
+  fragment Page on Page {
     id
     title
     slug
@@ -31,19 +25,17 @@ export const pageSelectedAttribute = gql`
         last: $lastValues
         before: $beforeValues
       ) {
-        ...AttributeValueListFragment
+        ...AttributeValueList
       }
     }
     values {
-      ...AttributeValueDetailsFragment
+      ...AttributeValueDetails
     }
   }
 `;
 
 export const pageAttributesFragment = gql`
-  ${attributeValueDetailsFragment}
-  ${attributeValueListFragment}
-  fragment PageAttributesFragment on Page {
+  fragment PageAttributes on Page {
     attributes {
       ...PageSelectedAttribute
     }
@@ -62,7 +54,7 @@ export const pageAttributesFragment = gql`
           last: $lastValues
           before: $beforeValues
         ) {
-          ...AttributeValueListFragment
+          ...AttributeValueList
         }
       }
     }
@@ -70,13 +62,10 @@ export const pageAttributesFragment = gql`
 `;
 
 export const pageDetailsFragment = gql`
-  ${pageFragment}
-  ${pageAttributesFragment}
-  ${metadataFragment}
-  fragment PageDetailsFragment on Page {
-    ...PageFragment
-    ...PageAttributesFragment
-    ...MetadataFragment
+  fragment PageDetails on Page {
+    ...Page
+    ...PageAttributes
+    ...Metadata
     content
     seoTitle
     seoDescription

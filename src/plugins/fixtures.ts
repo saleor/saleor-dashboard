@@ -1,10 +1,10 @@
 import {
   ConfigurationTypeFieldEnum,
-  PluginBaseFragmentFragment,
-  PluginsDetailsFragmentFragment
+  PluginBaseFragment,
+  PluginsDetailsFragment
 } from "@saleor/graphql";
 
-export const pluginList: PluginBaseFragmentFragment[] = [
+export const pluginList: PluginBaseFragment[] = [
   {
     __typename: "Plugin",
     globalConfiguration: null,
@@ -46,7 +46,7 @@ export const pluginList: PluginBaseFragmentFragment[] = [
     name: "VatLayer"
   }
 ];
-export const plugin: PluginsDetailsFragmentFragment = {
+export const plugin: PluginsDetailsFragment = {
   __typename: "Plugin",
   globalConfiguration: null,
   channelConfigurations: [

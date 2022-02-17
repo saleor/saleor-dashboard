@@ -23,6 +23,8 @@ import {
   VoucherUrlQueryParams
 } from "@saleor/discounts/urls";
 import {
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation,
   useVoucherCataloguesAddMutation,
   useVoucherCataloguesRemoveMutation,
   useVoucherChannelListingUpdateMutation,
@@ -47,10 +49,6 @@ import { arrayDiff } from "@saleor/utils/arrays";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import React, { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -98,8 +96,8 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
   } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   const [activeTab, setActiveTab] = useState<VoucherDetailsPageTab>(
     VoucherDetailsPageTab.categories

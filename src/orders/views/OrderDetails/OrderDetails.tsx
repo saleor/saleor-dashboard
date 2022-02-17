@@ -5,7 +5,9 @@ import {
   JobStatusEnum,
   OrderStatus,
   useOrderConfirmMutation,
-  useOrderDetailsQuery
+  useOrderDetailsQuery,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation
 } from "@saleor/graphql";
 import useBackgroundTask from "@saleor/hooks/useBackgroundTask";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -14,10 +16,6 @@ import { commonMessages } from "@saleor/intl";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -43,11 +41,11 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
 
   const { queue } = useBackgroundTask();
   const intl = useIntl();
-  const [updateMetadata, updateMetadataOpts] = useMetadataUpdate({});
+  const [updateMetadata, updateMetadataOpts] = useUpdateMetadataMutation({});
   const [
     updatePrivateMetadata,
     updatePrivateMetadataOpts
-  ] = usePrivateMetadataUpdate({});
+  ] = useUpdatePrivateMetadataMutation({});
   const notify = useNotifier();
 
   const [openModal, closeModal] = createDialogActionHandlers<

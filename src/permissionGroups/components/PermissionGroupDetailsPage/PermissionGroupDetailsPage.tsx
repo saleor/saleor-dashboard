@@ -7,9 +7,9 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import {
   PermissionEnum,
-  PermissionFragmentFragment,
-  PermissionGroupDetailsFragmentFragment,
-  PermissionGroupErrorFragmentFragment
+  PermissionGroupDetailsFragment,
+  PermissionGroupErrorFragment,
+  UserPermissionFragment
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
@@ -33,10 +33,11 @@ export interface PermissionGroupDetailsPageFormData {
   hasFullAccess: boolean;
   isActive: boolean;
   permissions: PermissionEnum[];
-  users: PermissionGroupDetailsFragmentFragment["users"];
+  users: PermissionGroupDetailsFragment["users"];
 }
 
-export interface PermissionData extends PermissionFragmentFragment {
+export interface PermissionData
+  extends Omit<UserPermissionFragment, "__typename"> {
   lastSource?: boolean;
   disabled?: boolean;
 }
@@ -45,10 +46,10 @@ export interface PermissionGroupDetailsPageProps
   extends ListActions,
     SortPage<MembersListUrlSortField> {
   disabled: boolean;
-  errors: PermissionGroupErrorFragmentFragment[];
-  members: PermissionGroupDetailsFragmentFragment["users"];
+  errors: PermissionGroupErrorFragment[];
+  members: PermissionGroupDetailsFragment["users"];
   membersModified: boolean;
-  permissionGroup: PermissionGroupDetailsFragmentFragment;
+  permissionGroup: PermissionGroupDetailsFragment;
   permissions: PermissionData[];
   permissionsExceeded: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;

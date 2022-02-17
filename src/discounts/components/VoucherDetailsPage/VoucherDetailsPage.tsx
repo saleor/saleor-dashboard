@@ -15,11 +15,11 @@ import {
   createDiscountTypeChangeHandler
 } from "@saleor/discounts/handlers";
 import { DiscountTypeEnum, RequirementsPicker } from "@saleor/discounts/types";
-import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import {
+  DiscountErrorFragment,
   DiscountValueTypeEnum,
   PermissionEnum,
-  VoucherDetailsFragmentFragment,
+  VoucherDetailsFragment,
   VoucherTypeEnum
 } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
@@ -78,7 +78,7 @@ export interface VoucherDetailsPageProps
   activeTab: VoucherDetailsPageTab;
   errors: DiscountErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  voucher: VoucherDetailsFragmentFragment;
+  voucher: VoucherDetailsFragment;
   allChannelsCount: number;
   channelListings: ChannelVoucherData[];
   hasChannelChanged: boolean;

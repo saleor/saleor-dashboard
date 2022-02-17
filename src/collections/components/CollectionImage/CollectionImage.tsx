@@ -4,7 +4,7 @@ import Hr from "@saleor/components/Hr";
 import ImageUpload from "@saleor/components/ImageUpload";
 import MediaTile from "@saleor/components/MediaTile";
 import Skeleton from "@saleor/components/Skeleton";
-import { CollectionDetailsFragmentFragment } from "@saleor/graphql";
+import { CollectionDetailsFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -51,7 +51,7 @@ export interface CollectionImageProps {
   data: {
     backgroundImageAlt: string;
   };
-  image: CollectionDetailsFragmentFragment["backgroundImage"];
+  image: CollectionDetailsFragment["backgroundImage"];
   onChange: (event: React.ChangeEvent<any>) => void;
   onImageDelete: () => void;
   onImageUpload: (file: File) => void;

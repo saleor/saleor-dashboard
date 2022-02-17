@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const pageInfoFragment = gql`
-  fragment PageInfoFragment on PageInfo {
+  fragment PageInfo on PageInfo {
     endCursor
     hasNextPage
     hasPreviousPage

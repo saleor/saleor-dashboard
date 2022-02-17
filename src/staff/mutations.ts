@@ -4,10 +4,10 @@ export const staffMemberAddMutation = gql`
   mutation StaffMemberAdd($input: StaffCreateInput!) {
     staffCreate(input: $input) {
       errors {
-        ...StaffErrorFragment
+        ...StaffError
       }
       user {
-        ...StaffMemberDetailsFragment
+        ...StaffMemberDetails
       }
     }
   }
@@ -17,10 +17,10 @@ export const staffMemberUpdateMutation = gql`
   mutation StaffMemberUpdate($id: ID!, $input: StaffUpdateInput!) {
     staffUpdate(id: $id, input: $input) {
       errors {
-        ...StaffErrorFragment
+        ...StaffError
       }
       user {
-        ...StaffMemberDetailsFragment
+        ...StaffMemberDetails
       }
     }
   }
@@ -30,7 +30,7 @@ export const staffMemberDeleteMutation = gql`
   mutation StaffMemberDelete($id: ID!) {
     staffDelete(id: $id) {
       errors {
-        ...StaffErrorFragment
+        ...StaffError
       }
     }
   }
@@ -40,7 +40,7 @@ export const staffAvatarUpdateMutation = gql`
   mutation StaffAvatarUpdate($image: Upload!) {
     userAvatarUpdate(image: $image) {
       errors {
-        ...AccountErrorFragment
+        ...AccountError
       }
       user {
         id
@@ -56,7 +56,7 @@ export const staffAvatarDeleteMutation = gql`
   mutation StaffAvatarDelete {
     userAvatarDelete {
       errors {
-        ...AccountErrorFragment
+        ...AccountError
       }
       user {
         id
@@ -72,7 +72,7 @@ export const changeStaffPassword = gql`
   mutation ChangeStaffPassword($newPassword: String!, $oldPassword: String!) {
     passwordChange(newPassword: $newPassword, oldPassword: $oldPassword) {
       errors {
-        ...AccountErrorFragment
+        ...AccountError
       }
     }
   }

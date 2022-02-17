@@ -1,11 +1,11 @@
-import { OrderEventFragmentFragment, OrderEventsEnum } from "@saleor/graphql";
+import { OrderEventFragment, OrderEventsEnum } from "@saleor/graphql";
 import { getFullName } from "@saleor/misc";
 import { orderUrl } from "@saleor/orders/urls";
 import { staffMemberDetailsUrl } from "@saleor/staff/urls";
 import { MessageDescriptor } from "react-intl";
 
 export const getEventSecondaryTitle = (
-  event: OrderEventFragmentFragment
+  event: OrderEventFragment
 ): [MessageDescriptor, any?] => {
   switch (event.type) {
     case OrderEventsEnum.ORDER_MARKED_AS_PAID: {
@@ -70,7 +70,7 @@ const selectEmployeeName = ({
   firstName,
   lastName,
   email
-}: OrderEventFragmentFragment["user"]) => {
+}: OrderEventFragment["user"]) => {
   if (!!firstName) {
     return getFullName({ firstName, lastName }).trim();
   }
@@ -78,7 +78,7 @@ const selectEmployeeName = ({
   return email;
 };
 
-export const getEmployeeNameLink = (event: OrderEventFragmentFragment) => {
+export const getEmployeeNameLink = (event: OrderEventFragment) => {
   if (!hasEnsuredOrderEventFields(event, ["user"])) {
     return null;
   }
@@ -94,12 +94,12 @@ export const getEmployeeNameLink = (event: OrderEventFragmentFragment) => {
 export const hasOrderLineDiscountWithNoPreviousValue = ({
   type,
   lines
-}: OrderEventFragmentFragment) =>
+}: OrderEventFragment) =>
   type === OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED &&
   lines?.[0]?.discount &&
   !lines?.[0].discount?.oldValue;
 
-export const getOrderNumberLink = (event: OrderEventFragmentFragment) => {
+export const getOrderNumberLink = (event: OrderEventFragment) => {
   if (!hasEnsuredOrderEventFields(event, ["relatedOrder"])) {
     return null;
   }
@@ -110,9 +110,9 @@ export const getOrderNumberLink = (event: OrderEventFragmentFragment) => {
 };
 
 const hasEnsuredOrderEventFields = (
-  event: OrderEventFragmentFragment,
-  fields: Array<keyof OrderEventFragmentFragment>
-) => !fields.some((field: keyof OrderEventFragmentFragment) => !event[field]);
+  event: OrderEventFragment,
+  fields: Array<keyof OrderEventFragment>
+) => !fields.some((field: keyof OrderEventFragment) => !event[field]);
 
 export const getOrderNumberLinkObject = ({
   id,

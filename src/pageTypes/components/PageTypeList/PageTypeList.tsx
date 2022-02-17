@@ -5,7 +5,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import { PageTypeFragmentFragment } from "@saleor/graphql";
+import { PageTypeFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { PageTypeListUrlSortField } from "@saleor/pageTypes/urls";
 import { getArrowDirection } from "@saleor/utils/sort";
@@ -31,7 +31,7 @@ interface PageTypeListProps
   extends ListProps,
     ListActions,
     SortPage<PageTypeListUrlSortField> {
-  pageTypes: PageTypeFragmentFragment[];
+  pageTypes: PageTypeFragment[];
 }
 
 const PageTypeList: React.FC<PageTypeListProps> = props => {

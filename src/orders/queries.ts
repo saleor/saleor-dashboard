@@ -21,7 +21,7 @@ export const orderListQuery = gql`
         node {
           __typename
           billingAddress {
-            ...AddressFragment
+            ...Address
           }
           created
           id
@@ -69,7 +69,7 @@ export const orderDraftListQuery = gql`
         node {
           __typename
           billingAddress {
-            ...AddressFragment
+            ...Address
           }
           created
           id
@@ -100,7 +100,7 @@ export const orderDraftListQuery = gql`
 export const orderDetailsQuery = gql`
   query OrderDetails($id: ID!) {
     order(id: $id) {
-      ...OrderDetailsFragment
+      ...OrderDetails
     }
     shop {
       countries {
@@ -158,7 +158,7 @@ export const orderFulfillData = gql`
           stocks {
             id
             warehouse {
-              ...WarehouseFragment
+              ...Warehouse
             }
             quantity
             quantityAllocated
@@ -177,7 +177,7 @@ export const orderFulfillData = gql`
 export const orderFulfillSettingsQuery = gql`
   query OrderFulfillSettings {
     shop {
-      ...ShopOrderSettingsFragment
+      ...ShopOrderSettings
     }
   }
 `;
@@ -185,10 +185,10 @@ export const orderFulfillSettingsQuery = gql`
 export const orderSettingsQuery = gql`
   query OrderSettings {
     orderSettings {
-      ...OrderSettingsFragment
+      ...OrderSettings
     }
     shop {
-      ...ShopOrderSettingsFragment
+      ...ShopOrderSettings
     }
   }
 `;
@@ -211,7 +211,7 @@ export const orderRefundData = gql`
         }
       }
       lines {
-        ...RefundOrderLineFragment
+        ...RefundOrderLine
         quantityToFulfill
       }
       fulfillments {
@@ -222,7 +222,7 @@ export const orderRefundData = gql`
           id
           quantity
           orderLine {
-            ...RefundOrderLineFragment
+            ...RefundOrderLine
           }
         }
       }

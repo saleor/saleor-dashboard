@@ -1,7 +1,7 @@
 import { CardContent, Typography } from "@material-ui/core";
 import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
 import Skeleton from "@saleor/components/Skeleton";
-import { PluginsDetailsFragmentFragment } from "@saleor/graphql";
+import { PluginsDetailsFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { isPluginGlobal } from "@saleor/plugins/views/utils";
 import React from "react";
@@ -29,7 +29,7 @@ const useStyles = makeStyles(
 export interface PluginDetailsChannelsCardProps {
   setSelectedChannelId: (channelId: string) => void;
   selectedChannelId: string;
-  plugin: PluginsDetailsFragmentFragment;
+  plugin: PluginsDetailsFragment;
 }
 
 const PluginDetailsChannelsCardContent: React.FC<PluginDetailsChannelsCardProps> = ({

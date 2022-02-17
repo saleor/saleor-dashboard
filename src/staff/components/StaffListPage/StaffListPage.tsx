@@ -3,8 +3,7 @@ import { Container } from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
-import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
-import { StaffListQuery } from "@saleor/graphql";
+import { RefreshLimitsQuery, StaffListQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, Button } from "@saleor/macaw-ui";
 import { StaffListUrlSortField } from "@saleor/staff/urls";
@@ -31,7 +30,7 @@ export interface StaffListPageProps
     FilterPageProps<StaffFilterKeys, StaffListFilterOpts>,
     SortPage<StaffListUrlSortField>,
     TabPageProps {
-  limits: RefreshLimits_shop_limits;
+  limits: RefreshLimitsQuery["shop"]["limits"];
   staffMembers: RelayToFlat<StaffListQuery["staffUsers"]>;
   onAdd: () => void;
   onBack: () => void;

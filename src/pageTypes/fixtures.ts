@@ -1,11 +1,11 @@
 import {
   AttributeInputTypeEnum,
   AttributeTypeEnum,
-  PageTypeDetailsFragmentFragment,
-  PageTypeFragmentFragment
+  PageTypeDetailsFragment,
+  PageTypeFragment
 } from "@saleor/graphql";
 
-export const pageTypes: PageTypeFragmentFragment[] = [
+export const pageTypes: PageTypeFragment[] = [
   {
     id: "UGFnZVR5cGU6MQ==",
     name: "Blog",
@@ -26,7 +26,7 @@ export const pageTypes: PageTypeFragmentFragment[] = [
   }
 ];
 
-export const pageType: PageTypeDetailsFragmentFragment = {
+export const pageType: PageTypeDetailsFragment = {
   id: "UGFnZVR5cGU6MQ==",
   __typename: "PageType",
   metadata: [

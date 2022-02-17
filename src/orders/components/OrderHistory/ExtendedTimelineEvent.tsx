@@ -1,7 +1,7 @@
 import { Typography } from "@material-ui/core";
 import Money from "@saleor/components/Money";
 import { TimelineEvent } from "@saleor/components/Timeline";
-import { OrderEventFragmentFragment, OrderEventsEnum } from "@saleor/graphql";
+import { OrderEventFragment, OrderEventsEnum } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import camelCase from "lodash/camelCase";
 import React from "react";
@@ -140,7 +140,7 @@ export const messages = defineMessages({
 });
 
 interface ExtendedTimelineEventProps {
-  event: OrderEventFragmentFragment;
+  event: OrderEventFragment;
   orderCurrency: string;
 }
 

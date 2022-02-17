@@ -1,5 +1,5 @@
 import {
-  OrderDetailsFragmentFragment,
+  OrderDetailsFragment,
   useOrderDiscountAddMutation,
   useOrderDiscountDeleteMutation,
   useOrderDiscountUpdateMutation
@@ -29,7 +29,7 @@ export interface OrderDiscountContextConsumerProps
 
 interface OrderDiscountProviderProps {
   children: React.ReactNode;
-  order?: OrderDetailsFragmentFragment;
+  order?: OrderDetailsFragment;
 }
 
 export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({

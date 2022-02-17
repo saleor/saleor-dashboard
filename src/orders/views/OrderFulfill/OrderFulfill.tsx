@@ -5,7 +5,7 @@ import {
   useOrderFulfillDataQuery,
   useOrderFulfillSettingsQuery,
   WarehouseClickAndCollectOptionEnum,
-  WarehouseFragmentFragment
+  WarehouseFragment
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -22,7 +22,7 @@ export interface OrderFulfillProps {
 
 const resolveLocalFulfillment = (
   order: OrderFulfillDataQuery["order"],
-  orderLineWarehouses: WarehouseFragmentFragment[]
+  orderLineWarehouses: WarehouseFragment[]
 ) => {
   const deliveryMethod = order?.deliveryMethod;
   if (

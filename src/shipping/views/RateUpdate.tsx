@@ -13,6 +13,8 @@ import {
   useShippingPriceExcludeProductMutation,
   useShippingPriceRemoveProductFromExcludeMutation,
   useShippingZoneQuery,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation,
   useUpdateShippingRateMutation
 } from "@saleor/graphql";
 import useBulkActions from "@saleor/hooks/useBulkActions";
@@ -56,10 +58,6 @@ import { MinMax } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -190,8 +188,8 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
     }
   });
 
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   const [state, dispatch] = React.useReducer(postalCodesReducer, {
     codesToDelete: [],

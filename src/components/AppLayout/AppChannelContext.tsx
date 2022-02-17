@@ -1,13 +1,13 @@
 import { useUser } from "@saleor/auth";
-import { ChannelFragmentFragment, useBaseChannelsQuery } from "@saleor/graphql";
+import { ChannelFragment, useBaseChannelsQuery } from "@saleor/graphql";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { useSaleorConfig } from "@saleor/sdk";
 import React from "react";
 
 interface UseAppChannel {
-  availableChannels: ChannelFragmentFragment[];
-  channel: ChannelFragmentFragment;
+  availableChannels: ChannelFragment[];
+  channel: ChannelFragment;
   isPickerActive: boolean;
   refreshChannels: () => void;
   setChannel: (id: string) => void;
@@ -25,10 +25,7 @@ const AppChannelContext = React.createContext<AppChannelContextData>({
   setPickerActive: () => undefined
 });
 
-const isValidChannel = (
-  channelId: string,
-  channelList?: ChannelFragmentFragment[]
-) => {
+const isValidChannel = (channelId: string, channelList?: ChannelFragment[]) => {
   if (!channelId) {
     return false;
   }

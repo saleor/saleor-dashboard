@@ -11435,10 +11435,25 @@ export type CollectionDetailsQueryVariables = Exact<{
 
 export type CollectionDetailsQuery = { __typename: 'Query', collection: { __typename: 'Collection', slug: string, description: any | null, seoDescription: string | null, seoTitle: string | null, id: string, name: string, products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, productType: { __typename: 'ProductType', id: string, name: string }, thumbnail: { __typename: 'Image', url: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', isPublished: boolean, publicationDate: any | null, isAvailableForPurchase: boolean | null, availableForPurchase: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, channelListings: Array<{ __typename: 'CollectionChannelListing', isPublished: boolean, publicationDate: any | null, channel: { __typename: 'Channel', id: string, name: string } }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null };
 
+export type CheckIfOrderExistsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type CheckIfOrderExistsQuery = { __typename: 'Query', order: { __typename: 'Order', id: string, status: OrderStatus } | null };
+
+export type SearchCatalogQueryVariables = Exact<{
+  first: Scalars['Int'];
+  query: Scalars['String'];
+}>;
+
+
+export type SearchCatalogQuery = { __typename: 'Query', categories: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null, collections: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, channelListings: Array<{ __typename: 'CollectionChannelListing', isPublished: boolean, publicationDate: any | null, channel: { __typename: 'Channel', id: string, name: string } }> | null } }> } | null, products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, category: { __typename: 'Category', id: string, name: string } | null } }> } | null };
+
 export type ShopInfoQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ShopInfoQuery = { __typename: 'Query', shop: { __typename: 'Shop', defaultWeightUnit: WeightUnitsEnum | null, displayGrossPrices: boolean, includeTaxesInPrices: boolean, name: string, trackInventoryByDefault: boolean | null, version: string, countries: Array<{ __typename: 'CountryDisplay', country: string, code: string }>, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string } | null, domain: { __typename: 'Domain', host: string, url: string }, languages: Array<{ __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } | null>, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string } | null> } };
+export type ShopInfoQuery = { __typename: 'Query', shop: { __typename: 'Shop', defaultWeightUnit: WeightUnitsEnum | null, displayGrossPrices: boolean, includeTaxesInPrices: boolean, name: string, trackInventoryByDefault: boolean | null, version: string, countries: Array<{ __typename: 'CountryDisplay', country: string, code: string }>, defaultCountry: { __typename: 'CountryDisplay', country: string, code: string } | null, domain: { __typename: 'Domain', host: string, url: string }, languages: Array<{ __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } | null>, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string } | null> } };
 
 export type ShopCountriesQueryVariables = Exact<{
   filter?: InputMaybe<CountryFilterInput>;
@@ -11744,117 +11759,119 @@ export type FileUploadMutationVariables = Exact<{
 
 export type FileUploadMutation = { __typename: 'Mutation', fileUpload: { __typename: 'FileUpload', uploadedFile: { __typename: 'File', url: string, contentType: string | null } | null, errors: Array<{ __typename: 'UploadError', code: UploadErrorCode, field: string | null, message: string | null }> } | null };
 
-export type AddressFragmentFragment = { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } };
+export type AddressFragment = { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } };
 
-export type AppFragmentFragment = { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, configurationUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, tokens: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null } | null> | null, webhooks: Array<{ __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } } | null> | null };
+export type AppFragment = { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, configurationUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, tokens: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null } | null> | null, webhooks: Array<{ __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } } | null> | null };
 
-export type AttributeValueFragmentFragment = { __typename: 'AttributeValue', id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null };
+export type AttributeValueFragment = { __typename: 'AttributeValue', id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null };
 
-export type AttributeValueDetailsFragmentFragment = { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null };
+export type AttributeValueDetailsFragment = { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null };
 
-export type AttributeFragmentFragment = { __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null };
+export type AttributeFragment = { __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null };
 
-export type AttributeDetailsFragmentFragment = { __typename: 'Attribute', availableInGrid: boolean, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, unit: MeasurementUnitsEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+export type AttributeDetailsFragment = { __typename: 'Attribute', availableInGrid: boolean, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, unit: MeasurementUnitsEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-export type AttributeValueListFragmentFragment = { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> };
+export type AttributeValueListFragment = { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> };
 
-export type AvailableAttributeFragmentFragment = { __typename: 'Attribute', id: string, name: string | null, slug: string | null };
+export type AvailableAttributeFragment = { __typename: 'Attribute', id: string, name: string | null, slug: string | null };
+
+export type UserPermissionFragment = { __typename: 'UserPermission', code: PermissionEnum, name: string };
 
 export type UserFragment = { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string } | null> | null, avatar: { __typename: 'Image', url: string } | null };
 
 export type UserBaseFragment = { __typename: 'User', id: string, firstName: string, lastName: string };
 
-export type CategoryFragmentFragment = { __typename: 'Category', id: string, name: string, children: { __typename: 'CategoryCountableConnection', totalCount: number | null } | null, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null };
+export type CategoryFragment = { __typename: 'Category', id: string, name: string, children: { __typename: 'CategoryCountableConnection', totalCount: number | null } | null, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null };
 
-export type CategoryDetailsFragmentFragment = { __typename: 'Category', id: string, name: string, slug: string, description: any | null, seoDescription: string | null, seoTitle: string | null, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, parent: { __typename: 'Category', id: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+export type CategoryDetailsFragment = { __typename: 'Category', id: string, name: string, slug: string, description: any | null, seoDescription: string | null, seoTitle: string | null, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, parent: { __typename: 'Category', id: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-export type ChannelErrorFragmentFragment = { __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null };
+export type ChannelErrorFragment = { __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null };
 
-export type ChannelFragmentFragment = { __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string } };
+export type ChannelFragment = { __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string } };
 
-export type ChannelDetailsFragmentFragment = { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string } };
+export type ChannelDetailsFragment = { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string } };
 
-export type CollectionFragmentFragment = { __typename: 'Collection', id: string, name: string, channelListings: Array<{ __typename: 'CollectionChannelListing', isPublished: boolean, publicationDate: any | null, channel: { __typename: 'Channel', id: string, name: string } }> | null };
+export type CollectionFragment = { __typename: 'Collection', id: string, name: string, channelListings: Array<{ __typename: 'CollectionChannelListing', isPublished: boolean, publicationDate: any | null, channel: { __typename: 'Channel', id: string, name: string } }> | null };
 
-export type CollectionDetailsFragmentFragment = { __typename: 'Collection', slug: string, description: any | null, seoDescription: string | null, seoTitle: string | null, id: string, name: string, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, channelListings: Array<{ __typename: 'CollectionChannelListing', isPublished: boolean, publicationDate: any | null, channel: { __typename: 'Channel', id: string, name: string } }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+export type CollectionDetailsFragment = { __typename: 'Collection', slug: string, description: any | null, seoDescription: string | null, seoTitle: string | null, id: string, name: string, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, channelListings: Array<{ __typename: 'CollectionChannelListing', isPublished: boolean, publicationDate: any | null, channel: { __typename: 'Channel', id: string, name: string } }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-export type CollectionProductFragmentFragment = { __typename: 'Product', id: string, name: string, productType: { __typename: 'ProductType', id: string, name: string }, thumbnail: { __typename: 'Image', url: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', isPublished: boolean, publicationDate: any | null, isAvailableForPurchase: boolean | null, availableForPurchase: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null };
+export type CollectionProductFragment = { __typename: 'Product', id: string, name: string, productType: { __typename: 'ProductType', id: string, name: string }, thumbnail: { __typename: 'Image', url: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', isPublished: boolean, publicationDate: any | null, isAvailableForPurchase: boolean | null, availableForPurchase: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null };
 
-export type CustomerFragmentFragment = { __typename: 'User', id: string, email: string, firstName: string, lastName: string };
+export type CustomerFragment = { __typename: 'User', id: string, email: string, firstName: string, lastName: string };
 
-export type CustomerDetailsFragmentFragment = { __typename: 'User', dateJoined: any, lastLogin: any | null, note: string | null, isActive: boolean, id: string, email: string, firstName: string, lastName: string, defaultShippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+export type CustomerDetailsFragment = { __typename: 'User', dateJoined: any, lastLogin: any | null, note: string | null, isActive: boolean, id: string, email: string, firstName: string, lastName: string, defaultShippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-export type CustomerAddressesFragmentFragment = { __typename: 'User', id: string, email: string, firstName: string, lastName: string, addresses: Array<{ __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null> | null, defaultBillingAddress: { __typename: 'Address', id: string } | null, defaultShippingAddress: { __typename: 'Address', id: string } | null };
+export type CustomerAddressesFragment = { __typename: 'User', id: string, email: string, firstName: string, lastName: string, addresses: Array<{ __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null> | null, defaultBillingAddress: { __typename: 'Address', id: string } | null, defaultShippingAddress: { __typename: 'Address', id: string } | null };
 
-export type SaleFragmentFragment = { __typename: 'Sale', id: string, name: string, type: SaleType, startDate: any, endDate: any | null, channelListings: Array<{ __typename: 'SaleChannelListing', id: string, discountValue: number, currency: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+export type SaleFragment = { __typename: 'Sale', id: string, name: string, type: SaleType, startDate: any, endDate: any | null, channelListings: Array<{ __typename: 'SaleChannelListing', id: string, discountValue: number, currency: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-export type SaleDetailsFragmentFragment = { __typename: 'Sale', id: string, name: string, type: SaleType, startDate: any, endDate: any | null, variants: { __typename: 'ProductVariantCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, name: string, product: { __typename: 'Product', id: string, name: string, thumbnail: { __typename: 'Image', url: string } | null, productType: { __typename: 'ProductType', id: string, name: string }, channelListings: Array<{ __typename: 'ProductChannelListing', isPublished: boolean, publicationDate: any | null, isAvailableForPurchase: boolean | null, availableForPurchase: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null } } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, products: { __typename: 'ProductCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, productType: { __typename: 'ProductType', id: string, name: string }, thumbnail: { __typename: 'Image', url: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', isPublished: boolean, publicationDate: any | null, isAvailableForPurchase: boolean | null, availableForPurchase: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, categories: { __typename: 'CategoryCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, collections: { __typename: 'CollectionCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, channelListings: Array<{ __typename: 'SaleChannelListing', id: string, discountValue: number, currency: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+export type SaleDetailsFragment = { __typename: 'Sale', id: string, name: string, type: SaleType, startDate: any, endDate: any | null, variants: { __typename: 'ProductVariantCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, name: string, product: { __typename: 'Product', id: string, name: string, thumbnail: { __typename: 'Image', url: string } | null, productType: { __typename: 'ProductType', id: string, name: string }, channelListings: Array<{ __typename: 'ProductChannelListing', isPublished: boolean, publicationDate: any | null, isAvailableForPurchase: boolean | null, availableForPurchase: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null } } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, products: { __typename: 'ProductCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, productType: { __typename: 'ProductType', id: string, name: string }, thumbnail: { __typename: 'Image', url: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', isPublished: boolean, publicationDate: any | null, isAvailableForPurchase: boolean | null, availableForPurchase: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, categories: { __typename: 'CategoryCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, collections: { __typename: 'CollectionCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, channelListings: Array<{ __typename: 'SaleChannelListing', id: string, discountValue: number, currency: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-export type VoucherFragmentFragment = { __typename: 'Voucher', id: string, code: string, startDate: any, endDate: any | null, usageLimit: number | null, type: VoucherTypeEnum, discountValueType: DiscountValueTypeEnum, minCheckoutItemsQuantity: number | null, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string } | null> | null, channelListings: Array<{ __typename: 'VoucherChannelListing', id: string, discountValue: number, currency: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, minSpent: { __typename: 'Money', amount: number, currency: string } | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+export type VoucherFragment = { __typename: 'Voucher', id: string, code: string, startDate: any, endDate: any | null, usageLimit: number | null, type: VoucherTypeEnum, discountValueType: DiscountValueTypeEnum, minCheckoutItemsQuantity: number | null, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string } | null> | null, channelListings: Array<{ __typename: 'VoucherChannelListing', id: string, discountValue: number, currency: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, minSpent: { __typename: 'Money', amount: number, currency: string } | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-export type VoucherDetailsFragmentFragment = { __typename: 'Voucher', code: string, usageLimit: number | null, used: number, applyOncePerOrder: boolean, applyOncePerCustomer: boolean, onlyForStaff: boolean, id: string, startDate: any, endDate: any | null, type: VoucherTypeEnum, discountValueType: DiscountValueTypeEnum, minCheckoutItemsQuantity: number | null, products: { __typename: 'ProductCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, productType: { __typename: 'ProductType', id: string, name: string }, thumbnail: { __typename: 'Image', url: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', isPublished: boolean, publicationDate: any | null, isAvailableForPurchase: boolean | null, availableForPurchase: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, collections: { __typename: 'CollectionCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, categories: { __typename: 'CategoryCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string } | null> | null, channelListings: Array<{ __typename: 'VoucherChannelListing', id: string, discountValue: number, currency: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, minSpent: { __typename: 'Money', amount: number, currency: string } | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+export type VoucherDetailsFragment = { __typename: 'Voucher', code: string, usageLimit: number | null, used: number, applyOncePerOrder: boolean, applyOncePerCustomer: boolean, onlyForStaff: boolean, id: string, startDate: any, endDate: any | null, type: VoucherTypeEnum, discountValueType: DiscountValueTypeEnum, minCheckoutItemsQuantity: number | null, products: { __typename: 'ProductCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, productType: { __typename: 'ProductType', id: string, name: string }, thumbnail: { __typename: 'Image', url: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', isPublished: boolean, publicationDate: any | null, isAvailableForPurchase: boolean | null, availableForPurchase: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, collections: { __typename: 'CollectionCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, categories: { __typename: 'CategoryCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string } | null> | null, channelListings: Array<{ __typename: 'VoucherChannelListing', id: string, discountValue: number, currency: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, minSpent: { __typename: 'Money', amount: number, currency: string } | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-export type AttributeErrorFragmentFragment = { __typename: 'AttributeError', code: AttributeErrorCode, field: string | null, message: string | null };
+export type AttributeErrorFragment = { __typename: 'AttributeError', code: AttributeErrorCode, field: string | null, message: string | null };
 
-export type ProductErrorFragmentFragment = { __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null };
+export type ProductErrorFragment = { __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null };
 
-export type ProductErrorWithAttributesFragmentFragment = { __typename: 'ProductError', attributes: Array<string> | null, code: ProductErrorCode, field: string | null, message: string | null };
+export type ProductErrorWithAttributesFragment = { __typename: 'ProductError', attributes: Array<string> | null, code: ProductErrorCode, field: string | null, message: string | null };
 
-export type ProductChannelListingErrorFragmentFragment = { __typename: 'ProductChannelListingError', code: ProductErrorCode, field: string | null, message: string | null, channels: Array<string> | null };
+export type ProductChannelListingErrorFragment = { __typename: 'ProductChannelListingError', code: ProductErrorCode, field: string | null, message: string | null, channels: Array<string> | null };
 
-export type CollectionChannelListingErrorFragmentFragment = { __typename: 'CollectionChannelListingError', code: ProductErrorCode, field: string | null, message: string | null, channels: Array<string> | null };
+export type CollectionChannelListingErrorFragment = { __typename: 'CollectionChannelListingError', code: ProductErrorCode, field: string | null, message: string | null, channels: Array<string> | null };
 
-export type AccountErrorFragmentFragment = { __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null };
+export type AccountErrorFragment = { __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null };
 
-export type DiscountErrorFragmentFragment = { __typename: 'DiscountError', code: DiscountErrorCode, field: string | null, channels: Array<string> | null, message: string | null };
+export type DiscountErrorFragment = { __typename: 'DiscountError', code: DiscountErrorCode, field: string | null, channels: Array<string> | null, message: string | null };
 
-export type MenuErrorFragmentFragment = { __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null };
+export type MenuErrorFragment = { __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null };
 
-export type OrderErrorFragmentFragment = { __typename: 'OrderError', code: OrderErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null };
+export type OrderErrorFragment = { __typename: 'OrderError', code: OrderErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null };
 
-export type OrderSettingsErrorFragmentFragment = { __typename: 'OrderSettingsError', code: OrderSettingsErrorCode, field: string | null, message: string | null };
+export type OrderSettingsErrorFragment = { __typename: 'OrderSettingsError', code: OrderSettingsErrorCode, field: string | null, message: string | null };
 
-export type PageErrorFragmentFragment = { __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null };
+export type PageErrorFragment = { __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null };
 
-export type PageErrorWithAttributesFragmentFragment = { __typename: 'PageError', attributes: Array<string> | null, code: PageErrorCode, field: string | null, message: string | null };
+export type PageErrorWithAttributesFragment = { __typename: 'PageError', attributes: Array<string> | null, code: PageErrorCode, field: string | null, message: string | null };
 
-export type PermissionGroupErrorFragmentFragment = { __typename: 'PermissionGroupError', code: PermissionGroupErrorCode, field: string | null, message: string | null };
+export type PermissionGroupErrorFragment = { __typename: 'PermissionGroupError', code: PermissionGroupErrorCode, field: string | null, message: string | null };
 
-export type BulkProductErrorFragmentFragment = { __typename: 'BulkProductError', field: string | null, code: ProductErrorCode, index: number | null, channels: Array<string> | null, message: string | null };
+export type BulkProductErrorFragment = { __typename: 'BulkProductError', field: string | null, code: ProductErrorCode, index: number | null, channels: Array<string> | null, message: string | null };
 
-export type BulkStockErrorFragmentFragment = { __typename: 'BulkStockError', code: ProductErrorCode, field: string | null, index: number | null, message: string | null };
+export type BulkStockErrorFragment = { __typename: 'BulkStockError', code: ProductErrorCode, field: string | null, index: number | null, message: string | null };
 
-export type StockErrorFragmentFragment = { __typename: 'StockError', code: StockErrorCode, field: string | null, message: string | null };
+export type StockErrorFragment = { __typename: 'StockError', code: StockErrorCode, field: string | null, message: string | null };
 
-export type ShippingChannelsErrorFragmentFragment = { __typename: 'ShippingError', code: ShippingErrorCode, field: string | null, channels: Array<string> | null, message: string | null };
+export type ShippingChannelsErrorFragment = { __typename: 'ShippingError', code: ShippingErrorCode, field: string | null, channels: Array<string> | null, message: string | null };
 
-export type ShippingErrorFragmentFragment = { __typename: 'ShippingError', code: ShippingErrorCode, field: string | null, message: string | null };
+export type ShippingErrorFragment = { __typename: 'ShippingError', code: ShippingErrorCode, field: string | null, message: string | null };
 
-export type ShopErrorFragmentFragment = { __typename: 'ShopError', code: ShopErrorCode, field: string | null, message: string | null };
+export type ShopErrorFragment = { __typename: 'ShopError', code: ShopErrorCode, field: string | null, message: string | null };
 
-export type StaffErrorFragmentFragment = { __typename: 'StaffError', code: AccountErrorCode, field: string | null, message: string | null };
+export type StaffErrorFragment = { __typename: 'StaffError', code: AccountErrorCode, field: string | null, message: string | null };
 
-export type WarehouseErrorFragmentFragment = { __typename: 'WarehouseError', code: WarehouseErrorCode, field: string | null, message: string | null };
+export type WarehouseErrorFragment = { __typename: 'WarehouseError', code: WarehouseErrorCode, field: string | null, message: string | null };
 
-export type WebhookErrorFragmentFragment = { __typename: 'WebhookError', code: WebhookErrorCode, field: string | null, message: string | null };
+export type WebhookErrorFragment = { __typename: 'WebhookError', code: WebhookErrorCode, field: string | null, message: string | null };
 
-export type InvoiceErrorFragmentFragment = { __typename: 'InvoiceError', code: InvoiceErrorCode, field: string | null, message: string | null };
+export type InvoiceErrorFragment = { __typename: 'InvoiceError', code: InvoiceErrorCode, field: string | null, message: string | null };
 
-export type AppErrorFragmentFragment = { __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null };
+export type AppErrorFragment = { __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null };
 
-export type ExportErrorFragmentFragment = { __typename: 'ExportError', code: ExportErrorCode, field: string | null, message: string | null };
+export type ExportErrorFragment = { __typename: 'ExportError', code: ExportErrorCode, field: string | null, message: string | null };
 
-export type PluginErrorFragmentFragment = { __typename: 'PluginError', code: PluginErrorCode, field: string | null, message: string | null };
+export type PluginErrorFragment = { __typename: 'PluginError', code: PluginErrorCode, field: string | null, message: string | null };
 
-export type MetadataErrorFragmentFragment = { __typename: 'MetadataError', code: MetadataErrorCode, field: string | null, message: string | null };
+export type MetadataErrorFragment = { __typename: 'MetadataError', code: MetadataErrorCode, field: string | null, message: string | null };
 
-export type CollectionErrorFragmentFragment = { __typename: 'CollectionError', code: CollectionErrorCode, field: string | null, message: string | null };
+export type CollectionErrorFragment = { __typename: 'CollectionError', code: CollectionErrorCode, field: string | null, message: string | null };
 
-export type UploadErrorFragmentFragment = { __typename: 'UploadError', code: UploadErrorCode, field: string | null, message: string | null };
+export type UploadErrorFragment = { __typename: 'UploadError', code: UploadErrorCode, field: string | null, message: string | null };
 
 export type GiftCardErrorFragment = { __typename: 'GiftCardError', code: GiftCardErrorCode, field: string | null, message: string | null };
 
-export type GiftCardSettingsErrorFragmentFragment = { __typename: 'GiftCardSettingsError', code: GiftCardSettingsErrorCode, field: string | null, message: string | null };
+export type GiftCardSettingsErrorFragment = { __typename: 'GiftCardSettingsError', code: GiftCardSettingsErrorCode, field: string | null, message: string | null };
 
 export type SaleBulkDeleteErrorFragment = { __typename: 'DiscountError', code: DiscountErrorCode, field: string | null, message: string | null };
 
@@ -11870,7 +11887,7 @@ export type PageBulkRemoveErrorFragmentFragment = { __typename: 'PageError', cod
 
 export type PageTypeDeleteErrorFragmentFragment = { __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null };
 
-export type ProductVariantStocksDeleteErrorFragmentFragment = { __typename: 'StockError', code: StockErrorCode, field: string | null, message: string | null };
+export type ProductVariantStocksDeleteErrorFragment = { __typename: 'StockError', code: StockErrorCode, field: string | null, message: string | null };
 
 export type ProductTypeDeleteErrorFragmentFragment = { __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null };
 
@@ -11912,9 +11929,9 @@ export type AttributeValueTranslateErrorFragmentFragment = { __typename: 'Transl
 
 export type ShippingPriceTranslateErrorFragmentFragment = { __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null };
 
-export type FileFragmentFragment = { __typename: 'File', url: string, contentType: string | null };
+export type FileFragment = { __typename: 'File', url: string, contentType: string | null };
 
-export type GiftCardsSettingsFragmentFragment = { __typename: 'GiftCardSettings', expiryType: GiftCardSettingsExpiryTypeEnum, expiryPeriod: { __typename: 'TimePeriod', type: TimePeriodTypeEnum, amount: number } | null };
+export type GiftCardsSettingsFragment = { __typename: 'GiftCardSettings', expiryType: GiftCardSettingsExpiryTypeEnum, expiryPeriod: { __typename: 'TimePeriod', type: TimePeriodTypeEnum, amount: number } | null };
 
 export type GiftCardEventFragment = { __typename: 'GiftCardEvent', expiryDate: any | null, oldExpiryDate: any | null, id: string, date: any | null, type: GiftCardEventsEnum | null, message: string | null, email: string | null, orderId: string | null, orderNumber: string | null, tags: Array<string> | null, oldTags: Array<string> | null, user: { __typename: 'User', email: string, id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null };
 
@@ -11924,215 +11941,221 @@ export type CustomerGiftCardFragment = { __typename: 'GiftCard', id: string, las
 
 export type MetadataItemFragment = { __typename: 'MetadataItem', key: string, value: string };
 
-type MetadataFragment_App_Fragment = { __typename: 'App', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+type Metadata_App_Fragment = { __typename: 'App', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-type MetadataFragment_Attribute_Fragment = { __typename: 'Attribute', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+type Metadata_Attribute_Fragment = { __typename: 'Attribute', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-type MetadataFragment_Category_Fragment = { __typename: 'Category', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+type Metadata_Category_Fragment = { __typename: 'Category', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-type MetadataFragment_Checkout_Fragment = { __typename: 'Checkout', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+type Metadata_Checkout_Fragment = { __typename: 'Checkout', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-type MetadataFragment_Collection_Fragment = { __typename: 'Collection', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+type Metadata_Collection_Fragment = { __typename: 'Collection', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-type MetadataFragment_DigitalContent_Fragment = { __typename: 'DigitalContent', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+type Metadata_DigitalContent_Fragment = { __typename: 'DigitalContent', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-type MetadataFragment_Fulfillment_Fragment = { __typename: 'Fulfillment', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+type Metadata_Fulfillment_Fragment = { __typename: 'Fulfillment', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-type MetadataFragment_GiftCard_Fragment = { __typename: 'GiftCard', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+type Metadata_GiftCard_Fragment = { __typename: 'GiftCard', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-type MetadataFragment_Invoice_Fragment = { __typename: 'Invoice', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+type Metadata_Invoice_Fragment = { __typename: 'Invoice', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-type MetadataFragment_Menu_Fragment = { __typename: 'Menu', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+type Metadata_Menu_Fragment = { __typename: 'Menu', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-type MetadataFragment_MenuItem_Fragment = { __typename: 'MenuItem', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+type Metadata_MenuItem_Fragment = { __typename: 'MenuItem', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-type MetadataFragment_Order_Fragment = { __typename: 'Order', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+type Metadata_Order_Fragment = { __typename: 'Order', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-type MetadataFragment_Page_Fragment = { __typename: 'Page', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+type Metadata_Page_Fragment = { __typename: 'Page', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-type MetadataFragment_PageType_Fragment = { __typename: 'PageType', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+type Metadata_PageType_Fragment = { __typename: 'PageType', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-type MetadataFragment_Payment_Fragment = { __typename: 'Payment', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+type Metadata_Payment_Fragment = { __typename: 'Payment', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-type MetadataFragment_Product_Fragment = { __typename: 'Product', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+type Metadata_Product_Fragment = { __typename: 'Product', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-type MetadataFragment_ProductType_Fragment = { __typename: 'ProductType', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+type Metadata_ProductType_Fragment = { __typename: 'ProductType', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-type MetadataFragment_ProductVariant_Fragment = { __typename: 'ProductVariant', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+type Metadata_ProductVariant_Fragment = { __typename: 'ProductVariant', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-type MetadataFragment_Sale_Fragment = { __typename: 'Sale', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+type Metadata_Sale_Fragment = { __typename: 'Sale', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-type MetadataFragment_ShippingMethod_Fragment = { __typename: 'ShippingMethod', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+type Metadata_ShippingMethod_Fragment = { __typename: 'ShippingMethod', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-type MetadataFragment_ShippingMethodType_Fragment = { __typename: 'ShippingMethodType', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+type Metadata_ShippingMethodType_Fragment = { __typename: 'ShippingMethodType', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-type MetadataFragment_ShippingZone_Fragment = { __typename: 'ShippingZone', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+type Metadata_ShippingZone_Fragment = { __typename: 'ShippingZone', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-type MetadataFragment_User_Fragment = { __typename: 'User', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+type Metadata_User_Fragment = { __typename: 'User', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-type MetadataFragment_Voucher_Fragment = { __typename: 'Voucher', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+type Metadata_Voucher_Fragment = { __typename: 'Voucher', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-type MetadataFragment_Warehouse_Fragment = { __typename: 'Warehouse', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+type Metadata_Warehouse_Fragment = { __typename: 'Warehouse', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-export type MetadataFragmentFragment = MetadataFragment_App_Fragment | MetadataFragment_Attribute_Fragment | MetadataFragment_Category_Fragment | MetadataFragment_Checkout_Fragment | MetadataFragment_Collection_Fragment | MetadataFragment_DigitalContent_Fragment | MetadataFragment_Fulfillment_Fragment | MetadataFragment_GiftCard_Fragment | MetadataFragment_Invoice_Fragment | MetadataFragment_Menu_Fragment | MetadataFragment_MenuItem_Fragment | MetadataFragment_Order_Fragment | MetadataFragment_Page_Fragment | MetadataFragment_PageType_Fragment | MetadataFragment_Payment_Fragment | MetadataFragment_Product_Fragment | MetadataFragment_ProductType_Fragment | MetadataFragment_ProductVariant_Fragment | MetadataFragment_Sale_Fragment | MetadataFragment_ShippingMethod_Fragment | MetadataFragment_ShippingMethodType_Fragment | MetadataFragment_ShippingZone_Fragment | MetadataFragment_User_Fragment | MetadataFragment_Voucher_Fragment | MetadataFragment_Warehouse_Fragment;
+export type MetadataFragment = Metadata_App_Fragment | Metadata_Attribute_Fragment | Metadata_Category_Fragment | Metadata_Checkout_Fragment | Metadata_Collection_Fragment | Metadata_DigitalContent_Fragment | Metadata_Fulfillment_Fragment | Metadata_GiftCard_Fragment | Metadata_Invoice_Fragment | Metadata_Menu_Fragment | Metadata_MenuItem_Fragment | Metadata_Order_Fragment | Metadata_Page_Fragment | Metadata_PageType_Fragment | Metadata_Payment_Fragment | Metadata_Product_Fragment | Metadata_ProductType_Fragment | Metadata_ProductVariant_Fragment | Metadata_Sale_Fragment | Metadata_ShippingMethod_Fragment | Metadata_ShippingMethodType_Fragment | Metadata_ShippingZone_Fragment | Metadata_User_Fragment | Metadata_Voucher_Fragment | Metadata_Warehouse_Fragment;
 
-export type MenuFragmentFragment = { __typename: 'Menu', id: string, name: string, items: Array<{ __typename: 'MenuItem', id: string } | null> | null };
+export type MenuFragment = { __typename: 'Menu', id: string, name: string, items: Array<{ __typename: 'MenuItem', id: string } | null> | null };
 
-export type MenuItemFragmentFragment = { __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null };
+export type MenuItemFragment = { __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null };
 
-export type MenuItemNestedFragmentFragment = { __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null };
+export type MenuItemNestedFragment = { __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null };
 
-export type MenuDetailsFragmentFragment = { __typename: 'Menu', id: string, name: string, items: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null> | null };
+export type MenuDetailsFragment = { __typename: 'Menu', id: string, name: string, items: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null> | null };
 
-export type OrderEventFragmentFragment = { __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string | null } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string } | null } | null> | null };
+export type OrderEventFragment = { __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string | null } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string } | null } | null> | null };
 
-export type OrderLineFragmentFragment = { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, variant: { __typename: 'ProductVariant', id: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null } | null, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, thumbnail: { __typename: 'Image', url: string } | null };
+export type OrderLineFragment = { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, variant: { __typename: 'ProductVariant', id: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null } | null, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, thumbnail: { __typename: 'Image', url: string } | null };
 
-export type RefundOrderLineFragmentFragment = { __typename: 'OrderLine', id: string, productName: string, quantity: number, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, thumbnail: { __typename: 'Image', url: string } | null };
+export type RefundOrderLineFragment = { __typename: 'OrderLine', id: string, productName: string, quantity: number, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, thumbnail: { __typename: 'Image', url: string } | null };
 
-export type FulfillmentFragmentFragment = { __typename: 'Fulfillment', id: string, fulfillmentOrder: number, status: FulfillmentStatus, trackingNumber: string, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, variant: { __typename: 'ProductVariant', id: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null } | null, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, thumbnail: { __typename: 'Image', url: string } | null } | null } | null> | null, warehouse: { __typename: 'Warehouse', id: string, name: string } | null };
+export type FulfillmentFragment = { __typename: 'Fulfillment', id: string, fulfillmentOrder: number, status: FulfillmentStatus, trackingNumber: string, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, variant: { __typename: 'ProductVariant', id: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null } | null, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, thumbnail: { __typename: 'Image', url: string } | null } | null } | null> | null, warehouse: { __typename: 'Warehouse', id: string, name: string } | null };
 
-export type InvoiceFragmentFragment = { __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum };
+export type InvoiceFragment = { __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum };
 
-export type OrderDetailsFragmentFragment = { __typename: 'Order', id: string, token: string, isShippingRequired: boolean, canFinalize: boolean, created: any, customerNote: string, number: string | null, isPaid: boolean, paymentStatus: PaymentChargeStatusEnum, shippingMethodName: string | null, collectionPointName: string | null, status: OrderStatus, actions: Array<OrderAction | null>, userEmail: string | null, billingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, giftCards: Array<{ __typename: 'GiftCard', events: Array<{ __typename: 'GiftCardEvent', id: string, type: GiftCardEventsEnum | null, orderId: string | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }> } | null> | null, discounts: Array<{ __typename: 'OrderDiscount', id: string, type: OrderDiscountType, value: any, reason: string | null, calculationMode: DiscountValueTypeEnum, amount: { __typename: 'Money', amount: number, currency: string } }> | null, events: Array<{ __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string | null } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string } | null } | null> | null } | null> | null, fulfillments: Array<{ __typename: 'Fulfillment', id: string, fulfillmentOrder: number, status: FulfillmentStatus, trackingNumber: string, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, variant: { __typename: 'ProductVariant', id: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null } | null, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, thumbnail: { __typename: 'Image', url: string } | null } | null } | null> | null, warehouse: { __typename: 'Warehouse', id: string, name: string } | null } | null>, lines: Array<{ __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, variant: { __typename: 'ProductVariant', id: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null } | null, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, thumbnail: { __typename: 'Image', url: string } | null } | null>, shippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, deliveryMethod: { __typename: 'Warehouse', id: string, clickAndCollectOption: WarehouseClickAndCollectOptionEnum } | { __typename: 'ShippingMethod', id: string } | null, shippingMethod: { __typename: 'ShippingMethod', id: string } | null, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, subtotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, totalAuthorized: { __typename: 'Money', amount: number, currency: string }, totalCaptured: { __typename: 'Money', amount: number, currency: string }, undiscountedTotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, user: { __typename: 'User', id: string, email: string } | null, shippingMethods: Array<{ __typename: 'ShippingMethod', id: string, name: string, active: boolean, message: string | null, price: { __typename: 'Money', amount: number, currency: string } } | null> | null, invoices: Array<{ __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum } | null> | null, channel: { __typename: 'Channel', isActive: boolean, id: string, name: string, currencyCode: string, slug: string, defaultCountry: { __typename: 'CountryDisplay', code: string } }, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+export type OrderDetailsFragment = { __typename: 'Order', id: string, token: string, isShippingRequired: boolean, canFinalize: boolean, created: any, customerNote: string, number: string | null, isPaid: boolean, paymentStatus: PaymentChargeStatusEnum, shippingMethodName: string | null, collectionPointName: string | null, status: OrderStatus, actions: Array<OrderAction | null>, userEmail: string | null, billingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, giftCards: Array<{ __typename: 'GiftCard', events: Array<{ __typename: 'GiftCardEvent', id: string, type: GiftCardEventsEnum | null, orderId: string | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }> } | null> | null, discounts: Array<{ __typename: 'OrderDiscount', id: string, type: OrderDiscountType, value: any, reason: string | null, calculationMode: DiscountValueTypeEnum, amount: { __typename: 'Money', amount: number, currency: string } }> | null, events: Array<{ __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string | null } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string } | null } | null> | null } | null> | null, fulfillments: Array<{ __typename: 'Fulfillment', id: string, fulfillmentOrder: number, status: FulfillmentStatus, trackingNumber: string, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, variant: { __typename: 'ProductVariant', id: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null } | null, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, thumbnail: { __typename: 'Image', url: string } | null } | null } | null> | null, warehouse: { __typename: 'Warehouse', id: string, name: string } | null } | null>, lines: Array<{ __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, variant: { __typename: 'ProductVariant', id: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null } | null, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, thumbnail: { __typename: 'Image', url: string } | null } | null>, shippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, deliveryMethod: { __typename: 'Warehouse', id: string, clickAndCollectOption: WarehouseClickAndCollectOptionEnum } | { __typename: 'ShippingMethod', id: string } | null, shippingMethod: { __typename: 'ShippingMethod', id: string } | null, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, subtotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, totalAuthorized: { __typename: 'Money', amount: number, currency: string }, totalCaptured: { __typename: 'Money', amount: number, currency: string }, undiscountedTotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, user: { __typename: 'User', id: string, email: string } | null, shippingMethods: Array<{ __typename: 'ShippingMethod', id: string, name: string, active: boolean, message: string | null, price: { __typename: 'Money', amount: number, currency: string } } | null> | null, invoices: Array<{ __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum } | null> | null, channel: { __typename: 'Channel', isActive: boolean, id: string, name: string, currencyCode: string, slug: string, defaultCountry: { __typename: 'CountryDisplay', code: string } }, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-export type OrderSettingsFragmentFragment = { __typename: 'OrderSettings', automaticallyConfirmAllNewOrders: boolean, automaticallyFulfillNonShippableGiftCard: boolean };
+export type OrderSettingsFragment = { __typename: 'OrderSettings', automaticallyConfirmAllNewOrders: boolean, automaticallyFulfillNonShippableGiftCard: boolean };
 
-export type ShopOrderSettingsFragmentFragment = { __typename: 'Shop', fulfillmentAutoApprove: boolean, fulfillmentAllowUnpaid: boolean };
+export type ShopOrderSettingsFragment = { __typename: 'Shop', fulfillmentAutoApprove: boolean, fulfillmentAllowUnpaid: boolean };
 
-export type PageInfoFragmentFragment = { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null };
+export type PageInfoFragment = { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null };
 
-export type PageTypeFragmentFragment = { __typename: 'PageType', id: string, name: string, hasPages: boolean | null };
+export type PageTypeFragment = { __typename: 'PageType', id: string, name: string, hasPages: boolean | null };
 
-export type PageTypeDetailsFragmentFragment = { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+export type PageTypeDetailsFragment = { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-export type PageFragmentFragment = { __typename: 'Page', id: string, title: string, slug: string, isPublished: boolean };
+export type PageFragment = { __typename: 'Page', id: string, title: string, slug: string, isPublished: boolean };
 
 export type PageSelectedAttributeFragment = { __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, slug: string | null, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } | null> };
 
-export type PageAttributesFragmentFragment = { __typename: 'Page', attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, slug: string | null, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } | null> }>, pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null } | null> | null } };
+export type PageAttributesFragment = { __typename: 'Page', attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, slug: string | null, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } | null> }>, pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null } | null> | null } };
 
-export type PageDetailsFragmentFragment = { __typename: 'Page', content: any | null, seoTitle: string | null, seoDescription: string | null, publicationDate: any | null, id: string, title: string, slug: string, isPublished: boolean, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, slug: string | null, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } | null> }>, pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null } | null> | null }, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+export type PageDetailsFragment = { __typename: 'Page', content: any | null, seoTitle: string | null, seoDescription: string | null, publicationDate: any | null, id: string, title: string, slug: string, isPublished: boolean, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, slug: string | null, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } | null> }>, pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null } | null> | null }, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-export type PermissionGroupFragmentFragment = { __typename: 'Group', id: string, name: string, userCanManage: boolean, users: Array<{ __typename: 'User', id: string, firstName: string, lastName: string } | null> | null };
+export type PermissionGroupFragment = { __typename: 'Group', id: string, name: string, userCanManage: boolean, users: Array<{ __typename: 'User', id: string, firstName: string, lastName: string } | null> | null };
 
-export type PermissionFragmentFragment = { __typename: 'Permission', code: PermissionEnum, name: string };
+export type PermissionFragment = { __typename: 'Permission', code: PermissionEnum, name: string };
 
 export type PermissionGroupMemberFragment = { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null };
 
-export type PermissionGroupDetailsFragmentFragment = { __typename: 'Group', id: string, name: string, userCanManage: boolean, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string } | null> | null, users: Array<{ __typename: 'User', id: string, firstName: string, lastName: string, email: string, isActive: boolean, avatar: { __typename: 'Image', url: string } | null } | null> | null };
+export type PermissionGroupDetailsFragment = { __typename: 'Group', id: string, name: string, userCanManage: boolean, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string } | null> | null, users: Array<{ __typename: 'User', id: string, firstName: string, lastName: string, email: string, isActive: boolean, avatar: { __typename: 'Image', url: string } | null } | null> | null };
 
-export type ConfigurationItemFragmentFragment = { __typename: 'ConfigurationItem', name: string, value: string | null, type: ConfigurationTypeFieldEnum | null, helpText: string | null, label: string | null };
+export type ConfigurationItemFragment = { __typename: 'ConfigurationItem', name: string, value: string | null, type: ConfigurationTypeFieldEnum | null, helpText: string | null, label: string | null };
 
-export type PluginConfigurationBaseFragmentFragment = { __typename: 'PluginConfiguration', active: boolean, channel: { __typename: 'Channel', id: string, name: string, slug: string } | null };
+export type PluginConfigurationBaseFragment = { __typename: 'PluginConfiguration', active: boolean, channel: { __typename: 'Channel', id: string, name: string, slug: string } | null };
 
-export type PluginConfigurationExtendedFragmentFragment = { __typename: 'PluginConfiguration', active: boolean, configuration: Array<{ __typename: 'ConfigurationItem', name: string, value: string | null, type: ConfigurationTypeFieldEnum | null, helpText: string | null, label: string | null } | null> | null, channel: { __typename: 'Channel', id: string, name: string, slug: string } | null };
+export type PluginConfigurationExtendedFragment = { __typename: 'PluginConfiguration', active: boolean, configuration: Array<{ __typename: 'ConfigurationItem', name: string, value: string | null, type: ConfigurationTypeFieldEnum | null, helpText: string | null, label: string | null } | null> | null, channel: { __typename: 'Channel', id: string, name: string, slug: string } | null };
 
-export type PluginBaseFragmentFragment = { __typename: 'Plugin', id: string, name: string, description: string, channelConfigurations: Array<{ __typename: 'PluginConfiguration', active: boolean, channel: { __typename: 'Channel', id: string, name: string, slug: string } | null }>, globalConfiguration: { __typename: 'PluginConfiguration', active: boolean, channel: { __typename: 'Channel', id: string, name: string, slug: string } | null } | null };
+export type PluginBaseFragment = { __typename: 'Plugin', id: string, name: string, description: string, channelConfigurations: Array<{ __typename: 'PluginConfiguration', active: boolean, channel: { __typename: 'Channel', id: string, name: string, slug: string } | null }>, globalConfiguration: { __typename: 'PluginConfiguration', active: boolean, channel: { __typename: 'Channel', id: string, name: string, slug: string } | null } | null };
 
-export type PluginsDetailsFragmentFragment = { __typename: 'Plugin', id: string, name: string, description: string, globalConfiguration: { __typename: 'PluginConfiguration', active: boolean, configuration: Array<{ __typename: 'ConfigurationItem', name: string, value: string | null, type: ConfigurationTypeFieldEnum | null, helpText: string | null, label: string | null } | null> | null, channel: { __typename: 'Channel', id: string, name: string, slug: string } | null } | null, channelConfigurations: Array<{ __typename: 'PluginConfiguration', active: boolean, configuration: Array<{ __typename: 'ConfigurationItem', name: string, value: string | null, type: ConfigurationTypeFieldEnum | null, helpText: string | null, label: string | null } | null> | null, channel: { __typename: 'Channel', id: string, name: string, slug: string } | null }> };
+export type PluginsDetailsFragment = { __typename: 'Plugin', id: string, name: string, description: string, globalConfiguration: { __typename: 'PluginConfiguration', active: boolean, configuration: Array<{ __typename: 'ConfigurationItem', name: string, value: string | null, type: ConfigurationTypeFieldEnum | null, helpText: string | null, label: string | null } | null> | null, channel: { __typename: 'Channel', id: string, name: string, slug: string } | null } | null, channelConfigurations: Array<{ __typename: 'PluginConfiguration', active: boolean, configuration: Array<{ __typename: 'ConfigurationItem', name: string, value: string | null, type: ConfigurationTypeFieldEnum | null, helpText: string | null, label: string | null } | null> | null, channel: { __typename: 'Channel', id: string, name: string, slug: string } | null }> };
 
-export type ProductTypeFragmentFragment = { __typename: 'ProductType', id: string, name: string, kind: ProductTypeKindEnum, hasVariants: boolean, isShippingRequired: boolean, taxType: { __typename: 'TaxType', description: string | null, taxCode: string | null } | null };
+export type ProductTypeFragment = { __typename: 'ProductType', id: string, name: string, kind: ProductTypeKindEnum, hasVariants: boolean, isShippingRequired: boolean, taxType: { __typename: 'TaxType', description: string | null, taxCode: string | null } | null };
 
-export type ProductTypeDetailsFragmentFragment = { __typename: 'ProductType', id: string, name: string, kind: ProductTypeKindEnum, hasVariants: boolean, isShippingRequired: boolean, productAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } | null> | null, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } | null> | null, assignedVariantAttributes: Array<{ __typename: 'AssignedVariantAttribute', variantSelection: boolean, attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } } | null> | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxType: { __typename: 'TaxType', description: string | null, taxCode: string | null } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+export type ProductTypeDetailsFragment = { __typename: 'ProductType', id: string, name: string, kind: ProductTypeKindEnum, hasVariants: boolean, isShippingRequired: boolean, productAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } | null> | null, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } | null> | null, assignedVariantAttributes: Array<{ __typename: 'AssignedVariantAttribute', variantSelection: boolean, attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } } | null> | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxType: { __typename: 'TaxType', description: string | null, taxCode: string | null } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-export type StockFragmentFragment = { __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } };
+export type StockFragment = { __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } };
 
 export type MoneyFragment = { __typename: 'Money', amount: number, currency: string };
 
-export type PreorderFragmentFragment = { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null };
+export type PreorderFragment = { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null };
 
-export type PriceRangeFragmentFragment = { __typename: 'TaxedMoneyRange', start: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string } } | null, stop: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string } } | null };
+export type PriceRangeFragment = { __typename: 'TaxedMoneyRange', start: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string } } | null, stop: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string } } | null };
 
-export type ProductMediaFragmentFragment = { __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: any };
+export type ProductMediaFragment = { __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: any };
 
-export type ChannelListingProductWithoutPricingFragmentFragment = { __typename: 'ProductChannelListing', isPublished: boolean, publicationDate: any | null, isAvailableForPurchase: boolean | null, availableForPurchase: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } };
+export type ChannelListingProductWithoutPricingFragment = { __typename: 'ProductChannelListing', isPublished: boolean, publicationDate: any | null, isAvailableForPurchase: boolean | null, availableForPurchase: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } };
 
-export type ChannelListingProductVariantFragmentFragment = { __typename: 'ProductVariantChannelListing', channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null };
+export type ChannelListingProductFragment = { __typename: 'ProductChannelListing', isPublished: boolean, publicationDate: any | null, isAvailableForPurchase: boolean | null, availableForPurchase: any | null, visibleInListings: boolean, pricing: { __typename: 'ProductPricingInfo', priceRange: { __typename: 'TaxedMoneyRange', start: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string } } | null, stop: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string } } | null } | null } | null, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } };
 
-export type ProductFragmentFragment = { __typename: 'Product', id: string, name: string, thumbnail: { __typename: 'Image', url: string } | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean }, channelListings: Array<{ __typename: 'ProductChannelListing', isPublished: boolean, publicationDate: any | null, isAvailableForPurchase: boolean | null, availableForPurchase: any | null, visibleInListings: boolean, pricing?: { __typename: 'ProductPricingInfo', priceRange: { __typename: 'TaxedMoneyRange', start: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string } } | null, stop: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string } } | null } | null } | null, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null };
+export type ChannelListingProductVariantFragment = { __typename: 'ProductVariantChannelListing', channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null };
 
-export type ProductVariantAttributesFragmentFragment = { __typename: 'Product', id: string, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, slug: string | null, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } | null> }>, productType: { __typename: 'ProductType', id: string, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null } | null> | null }, channelListings: Array<{ __typename: 'ProductChannelListing', channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null };
+export type ProductWithChannelListingsFragment = { __typename: 'Product', id: string, name: string, thumbnail: { __typename: 'Image', url: string } | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean }, channelListings: Array<{ __typename: 'ProductChannelListing', isPublished: boolean, publicationDate: any | null, isAvailableForPurchase: boolean | null, availableForPurchase: any | null, visibleInListings: boolean, pricing?: { __typename: 'ProductPricingInfo', priceRange: { __typename: 'TaxedMoneyRange', start: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string } } | null, stop: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string } } | null } | null } | null, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null };
+
+export type ProductVariantAttributesFragment = { __typename: 'Product', id: string, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, slug: string | null, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } | null> }>, productType: { __typename: 'ProductType', id: string, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null } | null> | null }, channelListings: Array<{ __typename: 'ProductChannelListing', channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null };
 
 export type ProductDetailsVariantFragment = { __typename: 'ProductVariant', id: string, sku: string | null, name: string, margin: number | null, trackInventory: boolean, quantityLimitPerCustomer: number | null, media: Array<{ __typename: 'ProductMedia', url: string }> | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } } | null> | null, preorder: { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null } | null, channelListings: Array<{ __typename: 'ProductVariantChannelListing', channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null }> | null };
 
 export type ProductFragment = { __typename: 'Product', name: string, slug: string, description: any | null, seoTitle: string | null, seoDescription: string | null, rating: number | null, chargeTaxes: boolean, isAvailable: boolean | null, id: string, defaultVariant: { __typename: 'ProductVariant', id: string } | null, category: { __typename: 'Category', id: string, name: string } | null, collections: Array<{ __typename: 'Collection', id: string, name: string } | null> | null, channelListings: Array<{ __typename: 'ProductChannelListing', isPublished: boolean, publicationDate: any | null, isAvailableForPurchase: boolean | null, availableForPurchase: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: any }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, sku: string | null, name: string, margin: number | null, trackInventory: boolean, quantityLimitPerCustomer: number | null, media: Array<{ __typename: 'ProductMedia', url: string }> | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } } | null> | null, preorder: { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null } | null, channelListings: Array<{ __typename: 'ProductVariantChannelListing', channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null }> | null } | null> | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean, taxType: { __typename: 'TaxType', description: string | null, taxCode: string | null } | null, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null } | null> | null }, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxType: { __typename: 'TaxType', description: string | null, taxCode: string | null } | null, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, slug: string | null, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } | null> }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-export type VariantAttributeFragmentFragment = { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null };
+export type VariantAttributeFragment = { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null };
 
-export type SelectedVariantAttributeFragmentFragment = { __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } | null> };
+export type SelectedVariantAttributeFragment = { __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } | null> };
 
 export type ProductVariantFragment = { __typename: 'ProductVariant', id: string, name: string, sku: string | null, trackInventory: boolean, quantityLimitPerCustomer: number | null, selectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } | null> }>, nonSelectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } | null> }>, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: any }> | null, product: { __typename: 'Product', id: string, name: string, defaultVariant: { __typename: 'ProductVariant', id: string } | null, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: any }> | null, thumbnail: { __typename: 'Image', url: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', publicationDate: any | null, isPublished: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: any }> | null } | null> | null }, channelListings: Array<{ __typename: 'ProductVariantChannelListing', channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null }> | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } } | null> | null, preorder: { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null } | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-export type ExportFileFragmentFragment = { __typename: 'ExportFile', id: string, status: JobStatusEnum, url: string | null };
+export type ExportFileFragment = { __typename: 'ExportFile', id: string, status: JobStatusEnum, url: string | null };
 
-export type ShippingZoneFragmentFragment = { __typename: 'ShippingZone', id: string, name: string, description: string | null, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+export type ShippingZoneFragment = { __typename: 'ShippingZone', id: string, name: string, description: string | null, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-export type ShippingMethodWithPostalCodesFragmentFragment = { __typename: 'ShippingMethodType', id: string, postalCodeRules: Array<{ __typename: 'ShippingMethodPostalCodeRule', id: string, inclusionType: PostalCodeRuleInclusionTypeEnum | null, start: string | null, end: string | null } | null> | null };
+export type ShippingMethodWithPostalCodesFragment = { __typename: 'ShippingMethodType', id: string, postalCodeRules: Array<{ __typename: 'ShippingMethodPostalCodeRule', id: string, inclusionType: PostalCodeRuleInclusionTypeEnum | null, start: string | null, end: string | null } | null> | null };
 
-export type ShippingMethodTypeFragmentFragment = { __typename: 'ShippingMethodType', minimumDeliveryDays: number | null, maximumDeliveryDays: number | null, name: string, description: any | null, type: ShippingMethodTypeEnum | null, id: string, minimumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, maximumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, channelListings: Array<{ __typename: 'ShippingMethodChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, minimumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null, maximumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null }> | null, postalCodeRules: Array<{ __typename: 'ShippingMethodPostalCodeRule', id: string, inclusionType: PostalCodeRuleInclusionTypeEnum | null, start: string | null, end: string | null } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+export type ShippingMethodTypeFragment = { __typename: 'ShippingMethodType', minimumDeliveryDays: number | null, maximumDeliveryDays: number | null, name: string, description: any | null, type: ShippingMethodTypeEnum | null, id: string, minimumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, maximumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, channelListings: Array<{ __typename: 'ShippingMethodChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, minimumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null, maximumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null }> | null, postalCodeRules: Array<{ __typename: 'ShippingMethodPostalCodeRule', id: string, inclusionType: PostalCodeRuleInclusionTypeEnum | null, start: string | null, end: string | null } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-export type ShippingMethodWithExcludedProductsFragmentFragment = { __typename: 'ShippingMethodType', minimumDeliveryDays: number | null, maximumDeliveryDays: number | null, name: string, description: any | null, type: ShippingMethodTypeEnum | null, id: string, excludedProducts: { __typename: 'ProductCountableConnection', pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null, startCursor: string | null }, edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, thumbnail: { __typename: 'Image', url: string } | null } }> } | null, minimumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, maximumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, channelListings: Array<{ __typename: 'ShippingMethodChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, minimumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null, maximumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null }> | null, postalCodeRules: Array<{ __typename: 'ShippingMethodPostalCodeRule', id: string, inclusionType: PostalCodeRuleInclusionTypeEnum | null, start: string | null, end: string | null } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+export type ShippingMethodWithExcludedProductsFragment = { __typename: 'ShippingMethodType', minimumDeliveryDays: number | null, maximumDeliveryDays: number | null, name: string, description: any | null, type: ShippingMethodTypeEnum | null, id: string, excludedProducts: { __typename: 'ProductCountableConnection', pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null, startCursor: string | null }, edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, thumbnail: { __typename: 'Image', url: string } | null } }> } | null, minimumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, maximumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, channelListings: Array<{ __typename: 'ShippingMethodChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, minimumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null, maximumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null }> | null, postalCodeRules: Array<{ __typename: 'ShippingMethodPostalCodeRule', id: string, inclusionType: PostalCodeRuleInclusionTypeEnum | null, start: string | null, end: string | null } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-export type ShippingZoneDetailsFragmentFragment = { __typename: 'ShippingZone', id: string, name: string, description: string | null, shippingMethods: Array<{ __typename: 'ShippingMethodType', minimumDeliveryDays: number | null, maximumDeliveryDays: number | null, name: string, description: any | null, type: ShippingMethodTypeEnum | null, id: string, minimumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, maximumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, channelListings: Array<{ __typename: 'ShippingMethodChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, minimumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null, maximumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null }> | null, postalCodeRules: Array<{ __typename: 'ShippingMethodPostalCodeRule', id: string, inclusionType: PostalCodeRuleInclusionTypeEnum | null, start: string | null, end: string | null } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null> | null, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
+export type ShippingZoneDetailsFragment = { __typename: 'ShippingZone', id: string, name: string, description: string | null, shippingMethods: Array<{ __typename: 'ShippingMethodType', minimumDeliveryDays: number | null, maximumDeliveryDays: number | null, name: string, description: any | null, type: ShippingMethodTypeEnum | null, id: string, minimumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, maximumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, channelListings: Array<{ __typename: 'ShippingMethodChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, minimumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null, maximumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null }> | null, postalCodeRules: Array<{ __typename: 'ShippingMethodPostalCodeRule', id: string, inclusionType: PostalCodeRuleInclusionTypeEnum | null, start: string | null, end: string | null } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null> | null, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> };
 
-export type LimitInfoFragmentFragment = { __typename: 'Limits', channels?: number | null, orders?: number | null, productVariants?: number | null, staffUsers?: number | null, warehouses?: number | null };
+export type CountryWithCodeFragment = { __typename: 'CountryDisplay', country: string, code: string };
 
-export type ShopLimitFragmentFragment = { __typename: 'Shop', limits: { __typename: 'LimitInfo', currentUsage: { __typename: 'Limits', channels?: number | null, orders?: number | null, productVariants?: number | null, staffUsers?: number | null, warehouses?: number | null }, allowedUsage: { __typename: 'Limits', channels?: number | null, orders?: number | null, productVariants?: number | null, staffUsers?: number | null, warehouses?: number | null } } };
+export type LanguageFragment = { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string };
 
-export type ShopFragmentFragment = { __typename: 'Shop', customerSetPasswordUrl: string | null, defaultMailSenderAddress: string | null, defaultMailSenderName: string | null, description: string | null, name: string, reserveStockDurationAnonymousUser: number | null, reserveStockDurationAuthenticatedUser: number | null, limitQuantityPerCheckout: number | null, companyAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }>, domain: { __typename: 'Domain', host: string } };
+export type LimitInfoFragment = { __typename: 'Limits', channels?: number | null, orders?: number | null, productVariants?: number | null, staffUsers?: number | null, warehouses?: number | null };
 
-export type StaffMemberFragmentFragment = { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string };
+export type ShopLimitFragment = { __typename: 'Shop', limits: { __typename: 'LimitInfo', currentUsage: { __typename: 'Limits', channels?: number | null, orders?: number | null, productVariants?: number | null, staffUsers?: number | null, warehouses?: number | null }, allowedUsage: { __typename: 'Limits', channels?: number | null, orders?: number | null, productVariants?: number | null, staffUsers?: number | null, warehouses?: number | null } } };
 
-export type StaffMemberDetailsFragmentFragment = { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, permissionGroups: Array<{ __typename: 'Group', id: string, name: string, userCanManage: boolean } | null> | null, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string } | null> | null, avatar: { __typename: 'Image', url: string } | null };
+export type ShopFragment = { __typename: 'Shop', customerSetPasswordUrl: string | null, defaultMailSenderAddress: string | null, defaultMailSenderName: string | null, description: string | null, name: string, reserveStockDurationAnonymousUser: number | null, reserveStockDurationAuthenticatedUser: number | null, limitQuantityPerCheckout: number | null, companyAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }>, domain: { __typename: 'Domain', host: string } };
 
-export type CountryFragmentFragment = { __typename: 'CountryDisplay', country: string, code: string };
+export type StaffMemberFragment = { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string };
 
-export type CountryWithTaxesFragmentFragment = { __typename: 'CountryDisplay', country: string, code: string, vat: { __typename: 'VAT', standardRate: number | null, reducedRates: Array<{ __typename: 'ReducedRate', rateType: string, rate: number } | null> } | null };
+export type StaffMemberDetailsFragment = { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, permissionGroups: Array<{ __typename: 'Group', id: string, name: string, userCanManage: boolean } | null> | null, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string } | null> | null, avatar: { __typename: 'Image', url: string } | null };
 
-export type ShopTaxesFragmentFragment = { __typename: 'Shop', chargeTaxesOnShipping: boolean, includeTaxesInPrices: boolean, displayGrossPrices: boolean };
+export type CountryFragment = { __typename: 'CountryDisplay', country: string, code: string };
 
-export type TaxTypeFragmentFragment = { __typename: 'TaxType', description: string | null, taxCode: string | null };
+export type CountryWithTaxesFragment = { __typename: 'CountryDisplay', country: string, code: string, vat: { __typename: 'VAT', standardRate: number | null, reducedRates: Array<{ __typename: 'ReducedRate', rateType: string, rate: number } | null> } | null };
+
+export type ShopTaxesFragment = { __typename: 'Shop', chargeTaxesOnShipping: boolean, includeTaxesInPrices: boolean, displayGrossPrices: boolean };
+
+export type TaxTypeFragment = { __typename: 'TaxType', description: string | null, taxCode: string | null };
 
 export type TimePeriodFragment = { __typename: 'TimePeriod', amount: number, type: TimePeriodTypeEnum };
 
-export type CategoryTranslationFragmentFragment = { __typename: 'CategoryTranslatableContent', translation: { __typename: 'CategoryTranslation', id: string, description: any | null, name: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null, category: { __typename: 'Category', id: string, name: string, description: any | null, seoDescription: string | null, seoTitle: string | null } | null };
+export type CategoryTranslationFragment = { __typename: 'CategoryTranslatableContent', translation: { __typename: 'CategoryTranslation', id: string, description: any | null, name: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null, category: { __typename: 'Category', id: string, name: string, description: any | null, seoDescription: string | null, seoTitle: string | null } | null };
 
-export type CollectionTranslationFragmentFragment = { __typename: 'CollectionTranslatableContent', collection: { __typename: 'Collection', id: string, name: string, description: any | null, seoDescription: string | null, seoTitle: string | null } | null, translation: { __typename: 'CollectionTranslation', id: string, description: any | null, name: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null };
+export type CollectionTranslationFragment = { __typename: 'CollectionTranslatableContent', collection: { __typename: 'Collection', id: string, name: string, description: any | null, seoDescription: string | null, seoTitle: string | null } | null, translation: { __typename: 'CollectionTranslation', id: string, description: any | null, name: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null };
 
-export type ProductTranslationFragmentFragment = { __typename: 'ProductTranslatableContent', product: { __typename: 'Product', id: string, name: string, description: any | null, seoDescription: string | null, seoTitle: string | null } | null, translation: { __typename: 'ProductTranslation', id: string, seoTitle: string | null, seoDescription: string | null, name: string | null, description: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, richText: any | null, attributeValue: { __typename: 'AttributeValue', id: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, richText: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> };
+export type ProductTranslationFragment = { __typename: 'ProductTranslatableContent', product: { __typename: 'Product', id: string, name: string, description: any | null, seoDescription: string | null, seoTitle: string | null } | null, translation: { __typename: 'ProductTranslation', id: string, seoTitle: string | null, seoDescription: string | null, name: string | null, description: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, richText: any | null, attributeValue: { __typename: 'AttributeValue', id: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, richText: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> };
 
-export type ProductVariantTranslationFragmentFragment = { __typename: 'ProductVariantTranslatableContent', name: string, productVariant: { __typename: 'ProductVariant', id: string } | null, translation: { __typename: 'ProductVariantTranslation', id: string, name: string, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, richText: any | null, attributeValue: { __typename: 'AttributeValue', id: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, richText: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> };
+export type ProductVariantTranslationFragment = { __typename: 'ProductVariantTranslatableContent', name: string, productVariant: { __typename: 'ProductVariant', id: string } | null, translation: { __typename: 'ProductVariantTranslation', id: string, name: string, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, richText: any | null, attributeValue: { __typename: 'AttributeValue', id: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, richText: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> };
 
-export type SaleTranslationFragmentFragment = { __typename: 'SaleTranslatableContent', sale: { __typename: 'Sale', id: string, name: string } | null, translation: { __typename: 'SaleTranslation', id: string, name: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null };
+export type SaleTranslationFragment = { __typename: 'SaleTranslatableContent', sale: { __typename: 'Sale', id: string, name: string } | null, translation: { __typename: 'SaleTranslation', id: string, name: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null };
 
-export type VoucherTranslationFragmentFragment = { __typename: 'VoucherTranslatableContent', name: string | null, voucher: { __typename: 'Voucher', id: string, name: string | null } | null, translation: { __typename: 'VoucherTranslation', id: string, name: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null };
+export type VoucherTranslationFragment = { __typename: 'VoucherTranslatableContent', name: string | null, voucher: { __typename: 'Voucher', id: string, name: string | null } | null, translation: { __typename: 'VoucherTranslation', id: string, name: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null };
 
-export type ShippingMethodTranslationFragmentFragment = { __typename: 'ShippingMethodTranslatableContent', id: string, name: string, description: any | null, shippingMethod: { __typename: 'ShippingMethodType', id: string } | null, translation: { __typename: 'ShippingMethodTranslation', id: string, name: string | null, description: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null };
+export type ShippingMethodTranslationFragment = { __typename: 'ShippingMethodTranslatableContent', id: string, name: string, description: any | null, shippingMethod: { __typename: 'ShippingMethodType', id: string } | null, translation: { __typename: 'ShippingMethodTranslation', id: string, name: string | null, description: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null };
 
-export type PageTranslationFragmentFragment = { __typename: 'PageTranslatableContent', page: { __typename: 'Page', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string } | null, translation: { __typename: 'PageTranslation', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, richText: any | null, attributeValue: { __typename: 'AttributeValue', id: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, richText: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> };
+export type PageTranslationFragment = { __typename: 'PageTranslatableContent', page: { __typename: 'Page', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string } | null, translation: { __typename: 'PageTranslation', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, richText: any | null, attributeValue: { __typename: 'AttributeValue', id: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, richText: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> };
 
-export type PageTranslatableFragmentFragment = { __typename: 'PageTranslatableContent', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string, translation: { __typename: 'PageTranslation', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null };
+export type PageTranslatableFragment = { __typename: 'PageTranslatableContent', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string, translation: { __typename: 'PageTranslation', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null };
 
-export type AttributeChoicesTranslationFragmentFragment = { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', id: string, name: string | null, richText: any | null, inputType: AttributeInputTypeEnum | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, richText: any | null } | null } }> };
+export type AttributeChoicesTranslationFragment = { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', id: string, name: string | null, richText: any | null, inputType: AttributeInputTypeEnum | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, richText: any | null } | null } }> };
 
-export type AttributeTranslationFragmentFragment = { __typename: 'AttributeTranslatableContent', id: string, name: string, translation: { __typename: 'AttributeTranslation', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null } | null };
+export type AttributeTranslationFragment = { __typename: 'AttributeTranslatableContent', id: string, name: string, translation: { __typename: 'AttributeTranslation', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null } | null };
 
-export type AttributeTranslationDetailsFragmentFragment = { __typename: 'AttributeTranslatableContent', translation: { __typename: 'AttributeTranslation', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null, withChoices: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', id: string, name: string | null, richText: any | null, inputType: AttributeInputTypeEnum | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, richText: any | null } | null } }> } | null } | null };
+export type AttributeTranslationDetailsFragment = { __typename: 'AttributeTranslatableContent', translation: { __typename: 'AttributeTranslation', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null, withChoices: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', id: string, name: string | null, richText: any | null, inputType: AttributeInputTypeEnum | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, richText: any | null } | null } }> } | null } | null };
 
-export type AttributeValueTranslatableContentFragmentFragment = { __typename: 'AttributeTranslatableContent', translation: { __typename: 'AttributeTranslation', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', id: string, name: string | null, richText: any | null, inputType: AttributeInputTypeEnum | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, richText: any | null } | null } }> } | null } | null };
+export type AttributeValueTranslatableContentFragment = { __typename: 'AttributeTranslatableContent', translation: { __typename: 'AttributeTranslation', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', id: string, name: string | null, richText: any | null, inputType: AttributeInputTypeEnum | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, richText: any | null } | null } }> } | null } | null };
 
-export type WarehouseFragmentFragment = { __typename: 'Warehouse', id: string, name: string };
+export type WarehouseFragment = { __typename: 'Warehouse', id: string, name: string };
 
-export type WarehouseWithShippingFragmentFragment = { __typename: 'Warehouse', id: string, name: string, shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string } }> } };
+export type WarehouseWithShippingFragment = { __typename: 'Warehouse', id: string, name: string, shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string } }> } };
 
-export type WarehouseDetailsFragmentFragment = { __typename: 'Warehouse', isPrivate: boolean, clickAndCollectOption: WarehouseClickAndCollectOptionEnum, id: string, name: string, address: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }, shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string } }> } };
+export type WarehouseDetailsFragment = { __typename: 'Warehouse', isPrivate: boolean, clickAndCollectOption: WarehouseClickAndCollectOptionEnum, id: string, name: string, address: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }, shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string } }> } };
 
-export type WebhookFragmentFragment = { __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } };
+export type WebhookFragment = { __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } };
 
-export type WebhooksDetailsFragmentFragment = { __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } };
+export type WebhooksDetailsFragment = { __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } };
 
-export type WeightFragmentFragment = { __typename: 'Weight', unit: WeightUnitsEnum, value: number };
+export type WeightFragment = { __typename: 'Weight', unit: WeightUnitsEnum, value: number };
 
 export type GiftCardBulkCreateMutationVariables = Exact<{
   input: GiftCardBulkCreateInput;
@@ -13298,6 +13321,26 @@ export type SearchAttributeValuesQueryVariables = Exact<{
 
 export type SearchAttributeValuesQuery = { __typename: 'Query', attribute: { __typename: 'Attribute', id: string, choices: { __typename: 'AttributeValueCountableConnection', edges: Array<{ __typename: 'AttributeValueCountableEdge', node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null } | null };
 
+export type SearchAvailablePageAttributesQueryVariables = Exact<{
+  id: Scalars['ID'];
+  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int'];
+  query: Scalars['String'];
+}>;
+
+
+export type SearchAvailablePageAttributesQuery = { __typename: 'Query', pageType: { __typename: 'PageType', id: string, availableAttributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string | null, slug: string | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null } | null };
+
+export type SearchAvailableProductAttributesQueryVariables = Exact<{
+  id: Scalars['ID'];
+  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int'];
+  query: Scalars['String'];
+}>;
+
+
+export type SearchAvailableProductAttributesQuery = { __typename: 'Query', productType: { __typename: 'ProductType', id: string, availableAttributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string | null, slug: string | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null } | null };
+
 export type SearchCategoriesQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
   first: Scalars['Int'];
@@ -13529,7 +13572,7 @@ export type ShippingZoneQueryVariables = Exact<{
 }>;
 
 
-export type ShippingZoneQuery = { __typename: 'Query', shippingZone: { __typename: 'ShippingZone', id: string, name: string, description: string | null, shippingMethods: Array<{ __typename: 'ShippingMethodType', minimumDeliveryDays: number | null, maximumDeliveryDays: number | null, name: string, description: any | null, type: ShippingMethodTypeEnum | null, id: string, excludedProducts: { __typename: 'ProductCountableConnection', pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null, startCursor: string | null }, edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, thumbnail: { __typename: 'Image', url: string } | null } }> } | null, minimumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, maximumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, channelListings: Array<{ __typename: 'ShippingMethodChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, minimumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null, maximumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null }> | null, postalCodeRules: Array<{ __typename: 'ShippingMethodPostalCodeRule', id: string, inclusionType: PostalCodeRuleInclusionTypeEnum | null, start: string | null, end: string | null } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null> | null, channels: Array<{ __typename: 'Channel', id: string, name: string, currencyCode: string }>, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null };
+export type ShippingZoneQuery = { __typename: 'Query', shippingZone: { __typename: 'ShippingZone', default: boolean, id: string, name: string, description: string | null, shippingMethods: Array<{ __typename: 'ShippingMethodType', minimumDeliveryDays: number | null, maximumDeliveryDays: number | null, name: string, description: any | null, type: ShippingMethodTypeEnum | null, id: string, excludedProducts: { __typename: 'ProductCountableConnection', pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null, startCursor: string | null }, edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, thumbnail: { __typename: 'Image', url: string } | null } }> } | null, minimumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, maximumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, channelListings: Array<{ __typename: 'ShippingMethodChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, minimumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null, maximumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null }> | null, postalCodeRules: Array<{ __typename: 'ShippingMethodPostalCodeRule', id: string, inclusionType: PostalCodeRuleInclusionTypeEnum | null, start: string | null, end: string | null } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null> | null, channels: Array<{ __typename: 'Channel', id: string, name: string, currencyCode: string }>, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string } | null> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null };
 
 export type ShippingZoneChannelsQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -13904,6 +13947,24 @@ export type ShippingMethodTranslationDetailsQueryVariables = Exact<{
 
 export type ShippingMethodTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'ProductTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent', id: string, name: string, description: any | null, shippingMethod: { __typename: 'ShippingMethodType', id: string } | null, translation: { __typename: 'ShippingMethodTranslation', id: string, name: string | null, description: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null } | { __typename: 'SaleTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | null };
 
+export type UpdateMetadataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: Array<MetadataInput> | MetadataInput;
+  keysToDelete: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+
+export type UpdateMetadataMutation = { __typename: 'Mutation', updateMetadata: { __typename: 'UpdateMetadata', errors: Array<{ __typename: 'MetadataError', code: MetadataErrorCode, field: string | null, message: string | null }>, item: { __typename: 'App', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Attribute', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Category', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Checkout', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Collection', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'DigitalContent', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Fulfillment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'GiftCard', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Invoice', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Menu', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'MenuItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Order', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Page', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'PageType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Payment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Product', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'ProductType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'ProductVariant', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Sale', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'ShippingMethod', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'ShippingMethodType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'ShippingZone', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'User', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Voucher', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Warehouse', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null } | null, deleteMetadata: { __typename: 'DeleteMetadata', errors: Array<{ __typename: 'MetadataError', code: MetadataErrorCode, field: string | null, message: string | null }>, item: { __typename: 'App', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Attribute', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Category', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Checkout', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Collection', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'DigitalContent', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Fulfillment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'GiftCard', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Invoice', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Menu', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'MenuItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Order', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Page', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'PageType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Payment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Product', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'ProductType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'ProductVariant', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Sale', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'ShippingMethod', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'ShippingMethodType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'ShippingZone', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'User', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Voucher', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Warehouse', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null } | null };
+
+export type UpdatePrivateMetadataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: Array<MetadataInput> | MetadataInput;
+  keysToDelete: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+
+export type UpdatePrivateMetadataMutation = { __typename: 'Mutation', updatePrivateMetadata: { __typename: 'UpdatePrivateMetadata', errors: Array<{ __typename: 'MetadataError', code: MetadataErrorCode, field: string | null, message: string | null }>, item: { __typename: 'App', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Attribute', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Category', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Checkout', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Collection', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'DigitalContent', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Fulfillment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'GiftCard', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Invoice', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Menu', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'MenuItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Order', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Page', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'PageType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Payment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Product', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'ProductType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'ProductVariant', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Sale', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'ShippingMethod', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'ShippingMethodType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'ShippingZone', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'User', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Voucher', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Warehouse', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null } | null, deletePrivateMetadata: { __typename: 'DeletePrivateMetadata', errors: Array<{ __typename: 'MetadataError', code: MetadataErrorCode, field: string | null, message: string | null }>, item: { __typename: 'App', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Attribute', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Category', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Checkout', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Collection', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'DigitalContent', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Fulfillment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'GiftCard', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Invoice', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Menu', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'MenuItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Order', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Page', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'PageType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Payment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Product', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'ProductType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'ProductVariant', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Sale', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'ShippingMethod', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'ShippingMethodType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'ShippingZone', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'User', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Voucher', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | { __typename: 'Warehouse', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string } | null> } | null } | null };
+
 export type WarehouseDeleteMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -13974,8 +14035,8 @@ export type WebhookDetailsQueryVariables = Exact<{
 
 export type WebhookDetailsQuery = { __typename: 'Query', webhook: { __typename: 'Webhook', secretKey: string | null, targetUrl: string, id: string, name: string, isActive: boolean, syncEvents: Array<{ __typename: 'WebhookEventSync', eventType: WebhookEventTypeSyncEnum }>, asyncEvents: Array<{ __typename: 'WebhookEventAsync', eventType: WebhookEventTypeAsyncEnum }>, app: { __typename: 'App', id: string, name: string | null } } | null };
 
-export const WebhookFragmentFragmentDoc = gql`
-    fragment WebhookFragment on Webhook {
+export const WebhookFragmentDoc = gql`
+    fragment Webhook on Webhook {
   id
   name
   isActive
@@ -13985,8 +14046,8 @@ export const WebhookFragmentFragmentDoc = gql`
   }
 }
     `;
-export const AppFragmentFragmentDoc = gql`
-    fragment AppFragment on App {
+export const AppFragmentDoc = gql`
+    fragment App on App {
   id
   name
   created
@@ -14012,12 +14073,12 @@ export const AppFragmentFragmentDoc = gql`
     name
   }
   webhooks {
-    ...WebhookFragment
+    ...Webhook
   }
 }
-    ${WebhookFragmentFragmentDoc}`;
-export const AttributeFragmentFragmentDoc = gql`
-    fragment AttributeFragment on Attribute {
+    ${WebhookFragmentDoc}`;
+export const AttributeFragmentDoc = gql`
+    fragment Attribute on Attribute {
   id
   name
   slug
@@ -14035,8 +14096,8 @@ export const MetadataItemFragmentDoc = gql`
   value
 }
     `;
-export const MetadataFragmentFragmentDoc = gql`
-    fragment MetadataFragment on ObjectWithMetadata {
+export const MetadataFragmentDoc = gql`
+    fragment Metadata on ObjectWithMetadata {
   metadata {
     ...MetadataItem
   }
@@ -14045,10 +14106,10 @@ export const MetadataFragmentFragmentDoc = gql`
   }
 }
     ${MetadataItemFragmentDoc}`;
-export const AttributeDetailsFragmentFragmentDoc = gql`
-    fragment AttributeDetailsFragment on Attribute {
-  ...AttributeFragment
-  ...MetadataFragment
+export const AttributeDetailsFragmentDoc = gql`
+    fragment AttributeDetails on Attribute {
+  ...Attribute
+  ...Metadata
   availableInGrid
   inputType
   entityType
@@ -14056,13 +14117,19 @@ export const AttributeDetailsFragmentFragmentDoc = gql`
   storefrontSearchPosition
   valueRequired
 }
-    ${AttributeFragmentFragmentDoc}
-${MetadataFragmentFragmentDoc}`;
-export const AvailableAttributeFragmentFragmentDoc = gql`
-    fragment AvailableAttributeFragment on Attribute {
+    ${AttributeFragmentDoc}
+${MetadataFragmentDoc}`;
+export const AvailableAttributeFragmentDoc = gql`
+    fragment AvailableAttribute on Attribute {
   id
   name
   slug
+}
+    `;
+export const UserPermissionFragmentDoc = gql`
+    fragment UserPermission on UserPermission {
+  code
+  name
 }
     `;
 export const UserFragmentDoc = gql`
@@ -14073,16 +14140,15 @@ export const UserFragmentDoc = gql`
   lastName
   isStaff
   userPermissions {
-    code
-    name
+    ...UserPermission
   }
   avatar {
     url
   }
 }
-    `;
-export const CategoryFragmentFragmentDoc = gql`
-    fragment CategoryFragment on Category {
+    ${UserPermissionFragmentDoc}`;
+export const CategoryFragmentDoc = gql`
+    fragment Category on Category {
   id
   name
   children {
@@ -14093,10 +14159,10 @@ export const CategoryFragmentFragmentDoc = gql`
   }
 }
     `;
-export const CategoryDetailsFragmentFragmentDoc = gql`
-    fragment CategoryDetailsFragment on Category {
+export const CategoryDetailsFragmentDoc = gql`
+    fragment CategoryDetails on Category {
   id
-  ...MetadataFragment
+  ...Metadata
   backgroundImage {
     alt
     url
@@ -14110,16 +14176,16 @@ export const CategoryDetailsFragmentFragmentDoc = gql`
     id
   }
 }
-    ${MetadataFragmentFragmentDoc}`;
-export const ChannelErrorFragmentFragmentDoc = gql`
-    fragment ChannelErrorFragment on ChannelError {
+    ${MetadataFragmentDoc}`;
+export const ChannelErrorFragmentDoc = gql`
+    fragment ChannelError on ChannelError {
   code
   field
   message
 }
     `;
-export const ChannelFragmentFragmentDoc = gql`
-    fragment ChannelFragment on Channel {
+export const ChannelFragmentDoc = gql`
+    fragment Channel on Channel {
   id
   isActive
   name
@@ -14131,14 +14197,14 @@ export const ChannelFragmentFragmentDoc = gql`
   }
 }
     `;
-export const ChannelDetailsFragmentFragmentDoc = gql`
-    fragment ChannelDetailsFragment on Channel {
-  ...ChannelFragment
+export const ChannelDetailsFragmentDoc = gql`
+    fragment ChannelDetails on Channel {
+  ...Channel
   hasOrders
 }
-    ${ChannelFragmentFragmentDoc}`;
-export const CollectionFragmentFragmentDoc = gql`
-    fragment CollectionFragment on Collection {
+    ${ChannelFragmentDoc}`;
+export const CollectionFragmentDoc = gql`
+    fragment Collection on Collection {
   id
   name
   channelListings {
@@ -14151,10 +14217,10 @@ export const CollectionFragmentFragmentDoc = gql`
   }
 }
     `;
-export const CollectionDetailsFragmentFragmentDoc = gql`
-    fragment CollectionDetailsFragment on Collection {
-  ...CollectionFragment
-  ...MetadataFragment
+export const CollectionDetailsFragmentDoc = gql`
+    fragment CollectionDetails on Collection {
+  ...Collection
+  ...Metadata
   backgroundImage {
     alt
     url
@@ -14164,10 +14230,10 @@ export const CollectionDetailsFragmentFragmentDoc = gql`
   seoDescription
   seoTitle
 }
-    ${CollectionFragmentFragmentDoc}
-${MetadataFragmentFragmentDoc}`;
-export const ChannelListingProductWithoutPricingFragmentFragmentDoc = gql`
-    fragment ChannelListingProductWithoutPricingFragment on ProductChannelListing {
+    ${CollectionFragmentDoc}
+${MetadataFragmentDoc}`;
+export const ChannelListingProductWithoutPricingFragmentDoc = gql`
+    fragment ChannelListingProductWithoutPricing on ProductChannelListing {
   isPublished
   publicationDate
   isAvailableForPurchase
@@ -14180,8 +14246,8 @@ export const ChannelListingProductWithoutPricingFragmentFragmentDoc = gql`
   }
 }
     `;
-export const CollectionProductFragmentFragmentDoc = gql`
-    fragment CollectionProductFragment on Product {
+export const CollectionProductFragmentDoc = gql`
+    fragment CollectionProduct on Product {
   id
   name
   productType {
@@ -14192,20 +14258,20 @@ export const CollectionProductFragmentFragmentDoc = gql`
     url
   }
   channelListings {
-    ...ChannelListingProductWithoutPricingFragment
+    ...ChannelListingProductWithoutPricing
   }
 }
-    ${ChannelListingProductWithoutPricingFragmentFragmentDoc}`;
-export const CustomerFragmentFragmentDoc = gql`
-    fragment CustomerFragment on User {
+    ${ChannelListingProductWithoutPricingFragmentDoc}`;
+export const CustomerFragmentDoc = gql`
+    fragment Customer on User {
   id
   email
   firstName
   lastName
 }
     `;
-export const AddressFragmentFragmentDoc = gql`
-    fragment AddressFragment on Address {
+export const AddressFragmentDoc = gql`
+    fragment Address on Address {
   city
   cityArea
   companyName
@@ -14224,29 +14290,29 @@ export const AddressFragmentFragmentDoc = gql`
   streetAddress2
 }
     `;
-export const CustomerDetailsFragmentFragmentDoc = gql`
-    fragment CustomerDetailsFragment on User {
-  ...CustomerFragment
-  ...MetadataFragment
+export const CustomerDetailsFragmentDoc = gql`
+    fragment CustomerDetails on User {
+  ...Customer
+  ...Metadata
   dateJoined
   lastLogin
   defaultShippingAddress {
-    ...AddressFragment
+    ...Address
   }
   defaultBillingAddress {
-    ...AddressFragment
+    ...Address
   }
   note
   isActive
 }
-    ${CustomerFragmentFragmentDoc}
-${MetadataFragmentFragmentDoc}
-${AddressFragmentFragmentDoc}`;
-export const CustomerAddressesFragmentFragmentDoc = gql`
-    fragment CustomerAddressesFragment on User {
-  ...CustomerFragment
+    ${CustomerFragmentDoc}
+${MetadataFragmentDoc}
+${AddressFragmentDoc}`;
+export const CustomerAddressesFragmentDoc = gql`
+    fragment CustomerAddresses on User {
+  ...Customer
   addresses {
-    ...AddressFragment
+    ...Address
   }
   defaultBillingAddress {
     id
@@ -14255,11 +14321,11 @@ export const CustomerAddressesFragmentFragmentDoc = gql`
     id
   }
 }
-    ${CustomerFragmentFragmentDoc}
-${AddressFragmentFragmentDoc}`;
-export const SaleFragmentFragmentDoc = gql`
-    fragment SaleFragment on Sale {
-  ...MetadataFragment
+    ${CustomerFragmentDoc}
+${AddressFragmentDoc}`;
+export const SaleFragmentDoc = gql`
+    fragment Sale on Sale {
+  ...Metadata
   id
   name
   type
@@ -14276,18 +14342,18 @@ export const SaleFragmentFragmentDoc = gql`
     currency
   }
 }
-    ${MetadataFragmentFragmentDoc}`;
-export const PageInfoFragmentFragmentDoc = gql`
-    fragment PageInfoFragment on PageInfo {
+    ${MetadataFragmentDoc}`;
+export const PageInfoFragmentDoc = gql`
+    fragment PageInfo on PageInfo {
   endCursor
   hasNextPage
   hasPreviousPage
   startCursor
 }
     `;
-export const SaleDetailsFragmentFragmentDoc = gql`
-    fragment SaleDetailsFragment on Sale {
-  ...SaleFragment
+export const SaleDetailsFragmentDoc = gql`
+    fragment SaleDetails on Sale {
+  ...Sale
   variants(after: $after, before: $before, first: $first, last: $last) {
     edges {
       node {
@@ -14304,13 +14370,13 @@ export const SaleDetailsFragmentFragmentDoc = gql`
             name
           }
           channelListings {
-            ...ChannelListingProductWithoutPricingFragment
+            ...ChannelListingProductWithoutPricing
           }
         }
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
     totalCount
   }
@@ -14327,12 +14393,12 @@ export const SaleDetailsFragmentFragmentDoc = gql`
           url
         }
         channelListings {
-          ...ChannelListingProductWithoutPricingFragment
+          ...ChannelListingProductWithoutPricing
         }
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
     totalCount
   }
@@ -14347,7 +14413,7 @@ export const SaleDetailsFragmentFragmentDoc = gql`
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
     totalCount
   }
@@ -14362,17 +14428,17 @@ export const SaleDetailsFragmentFragmentDoc = gql`
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
     totalCount
   }
 }
-    ${SaleFragmentFragmentDoc}
-${ChannelListingProductWithoutPricingFragmentFragmentDoc}
-${PageInfoFragmentFragmentDoc}`;
-export const VoucherFragmentFragmentDoc = gql`
-    fragment VoucherFragment on Voucher {
-  ...MetadataFragment
+    ${SaleFragmentDoc}
+${ChannelListingProductWithoutPricingFragmentDoc}
+${PageInfoFragmentDoc}`;
+export const VoucherFragmentDoc = gql`
+    fragment Voucher on Voucher {
+  ...Metadata
   id
   code
   startDate
@@ -14400,10 +14466,10 @@ export const VoucherFragmentFragmentDoc = gql`
     }
   }
 }
-    ${MetadataFragmentFragmentDoc}`;
-export const VoucherDetailsFragmentFragmentDoc = gql`
-    fragment VoucherDetailsFragment on Voucher {
-  ...VoucherFragment
+    ${MetadataFragmentDoc}`;
+export const VoucherDetailsFragmentDoc = gql`
+    fragment VoucherDetails on Voucher {
+  ...Voucher
   code
   usageLimit
   used
@@ -14423,13 +14489,13 @@ export const VoucherDetailsFragmentFragmentDoc = gql`
           url
         }
         channelListings {
-          ...ChannelListingProductWithoutPricingFragment
+          ...ChannelListingProductWithoutPricing
         }
       }
     }
     totalCount
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
   collections(after: $after, before: $before, first: $first, last: $last) {
@@ -14444,7 +14510,7 @@ export const VoucherDetailsFragmentFragmentDoc = gql`
     }
     totalCount
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
   categories(after: $after, before: $before, first: $first, last: $last) {
@@ -14459,109 +14525,109 @@ export const VoucherDetailsFragmentFragmentDoc = gql`
     }
     totalCount
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${VoucherFragmentFragmentDoc}
-${ChannelListingProductWithoutPricingFragmentFragmentDoc}
-${PageInfoFragmentFragmentDoc}`;
-export const AttributeErrorFragmentFragmentDoc = gql`
-    fragment AttributeErrorFragment on AttributeError {
+    ${VoucherFragmentDoc}
+${ChannelListingProductWithoutPricingFragmentDoc}
+${PageInfoFragmentDoc}`;
+export const AttributeErrorFragmentDoc = gql`
+    fragment AttributeError on AttributeError {
   code
   field
   message
 }
     `;
-export const ProductErrorFragmentFragmentDoc = gql`
-    fragment ProductErrorFragment on ProductError {
+export const ProductErrorFragmentDoc = gql`
+    fragment ProductError on ProductError {
   code
   field
   message
 }
     `;
-export const ProductErrorWithAttributesFragmentFragmentDoc = gql`
-    fragment ProductErrorWithAttributesFragment on ProductError {
-  ...ProductErrorFragment
+export const ProductErrorWithAttributesFragmentDoc = gql`
+    fragment ProductErrorWithAttributes on ProductError {
+  ...ProductError
   attributes
 }
-    ${ProductErrorFragmentFragmentDoc}`;
-export const ProductChannelListingErrorFragmentFragmentDoc = gql`
-    fragment ProductChannelListingErrorFragment on ProductChannelListingError {
+    ${ProductErrorFragmentDoc}`;
+export const ProductChannelListingErrorFragmentDoc = gql`
+    fragment ProductChannelListingError on ProductChannelListingError {
   code
   field
   message
   channels
 }
     `;
-export const CollectionChannelListingErrorFragmentFragmentDoc = gql`
-    fragment CollectionChannelListingErrorFragment on CollectionChannelListingError {
+export const CollectionChannelListingErrorFragmentDoc = gql`
+    fragment CollectionChannelListingError on CollectionChannelListingError {
   code
   field
   message
   channels
 }
     `;
-export const AccountErrorFragmentFragmentDoc = gql`
-    fragment AccountErrorFragment on AccountError {
+export const AccountErrorFragmentDoc = gql`
+    fragment AccountError on AccountError {
   code
   field
   addressType
   message
 }
     `;
-export const DiscountErrorFragmentFragmentDoc = gql`
-    fragment DiscountErrorFragment on DiscountError {
+export const DiscountErrorFragmentDoc = gql`
+    fragment DiscountError on DiscountError {
   code
   field
   channels
   message
 }
     `;
-export const MenuErrorFragmentFragmentDoc = gql`
-    fragment MenuErrorFragment on MenuError {
+export const MenuErrorFragmentDoc = gql`
+    fragment MenuError on MenuError {
   code
   field
   message
 }
     `;
-export const OrderErrorFragmentFragmentDoc = gql`
-    fragment OrderErrorFragment on OrderError {
+export const OrderErrorFragmentDoc = gql`
+    fragment OrderError on OrderError {
   code
   field
   addressType
   message
 }
     `;
-export const OrderSettingsErrorFragmentFragmentDoc = gql`
-    fragment OrderSettingsErrorFragment on OrderSettingsError {
+export const OrderSettingsErrorFragmentDoc = gql`
+    fragment OrderSettingsError on OrderSettingsError {
   code
   field
   message
 }
     `;
-export const PageErrorFragmentFragmentDoc = gql`
-    fragment PageErrorFragment on PageError {
+export const PageErrorFragmentDoc = gql`
+    fragment PageError on PageError {
   code
   field
   message
 }
     `;
-export const PageErrorWithAttributesFragmentFragmentDoc = gql`
-    fragment PageErrorWithAttributesFragment on PageError {
-  ...PageErrorFragment
+export const PageErrorWithAttributesFragmentDoc = gql`
+    fragment PageErrorWithAttributes on PageError {
+  ...PageError
   attributes
 }
-    ${PageErrorFragmentFragmentDoc}`;
-export const PermissionGroupErrorFragmentFragmentDoc = gql`
-    fragment PermissionGroupErrorFragment on PermissionGroupError {
+    ${PageErrorFragmentDoc}`;
+export const PermissionGroupErrorFragmentDoc = gql`
+    fragment PermissionGroupError on PermissionGroupError {
   code
   field
   message
 }
     `;
-export const BulkProductErrorFragmentFragmentDoc = gql`
-    fragment BulkProductErrorFragment on BulkProductError {
+export const BulkProductErrorFragmentDoc = gql`
+    fragment BulkProductError on BulkProductError {
   field
   code
   index
@@ -14569,109 +14635,109 @@ export const BulkProductErrorFragmentFragmentDoc = gql`
   message
 }
     `;
-export const BulkStockErrorFragmentFragmentDoc = gql`
-    fragment BulkStockErrorFragment on BulkStockError {
+export const BulkStockErrorFragmentDoc = gql`
+    fragment BulkStockError on BulkStockError {
   code
   field
   index
   message
 }
     `;
-export const StockErrorFragmentFragmentDoc = gql`
-    fragment StockErrorFragment on StockError {
+export const StockErrorFragmentDoc = gql`
+    fragment StockError on StockError {
   code
   field
   message
 }
     `;
-export const ShippingChannelsErrorFragmentFragmentDoc = gql`
-    fragment ShippingChannelsErrorFragment on ShippingError {
+export const ShippingChannelsErrorFragmentDoc = gql`
+    fragment ShippingChannelsError on ShippingError {
   code
   field
   channels
   message
 }
     `;
-export const ShippingErrorFragmentFragmentDoc = gql`
-    fragment ShippingErrorFragment on ShippingError {
+export const ShippingErrorFragmentDoc = gql`
+    fragment ShippingError on ShippingError {
   code
   field
   message
 }
     `;
-export const ShopErrorFragmentFragmentDoc = gql`
-    fragment ShopErrorFragment on ShopError {
+export const ShopErrorFragmentDoc = gql`
+    fragment ShopError on ShopError {
   code
   field
   message
 }
     `;
-export const StaffErrorFragmentFragmentDoc = gql`
-    fragment StaffErrorFragment on StaffError {
+export const StaffErrorFragmentDoc = gql`
+    fragment StaffError on StaffError {
   code
   field
   message
 }
     `;
-export const WarehouseErrorFragmentFragmentDoc = gql`
-    fragment WarehouseErrorFragment on WarehouseError {
+export const WarehouseErrorFragmentDoc = gql`
+    fragment WarehouseError on WarehouseError {
   code
   field
   message
 }
     `;
-export const WebhookErrorFragmentFragmentDoc = gql`
-    fragment WebhookErrorFragment on WebhookError {
+export const WebhookErrorFragmentDoc = gql`
+    fragment WebhookError on WebhookError {
   code
   field
   message
 }
     `;
-export const InvoiceErrorFragmentFragmentDoc = gql`
-    fragment InvoiceErrorFragment on InvoiceError {
+export const InvoiceErrorFragmentDoc = gql`
+    fragment InvoiceError on InvoiceError {
   code
   field
   message
 }
     `;
-export const AppErrorFragmentFragmentDoc = gql`
-    fragment AppErrorFragment on AppError {
+export const AppErrorFragmentDoc = gql`
+    fragment AppError on AppError {
   field
   message
   code
   permissions
 }
     `;
-export const ExportErrorFragmentFragmentDoc = gql`
-    fragment ExportErrorFragment on ExportError {
+export const ExportErrorFragmentDoc = gql`
+    fragment ExportError on ExportError {
   code
   field
   message
 }
     `;
-export const PluginErrorFragmentFragmentDoc = gql`
-    fragment PluginErrorFragment on PluginError {
+export const PluginErrorFragmentDoc = gql`
+    fragment PluginError on PluginError {
   code
   field
   message
 }
     `;
-export const MetadataErrorFragmentFragmentDoc = gql`
-    fragment MetadataErrorFragment on MetadataError {
+export const MetadataErrorFragmentDoc = gql`
+    fragment MetadataError on MetadataError {
   code
   field
   message
 }
     `;
-export const CollectionErrorFragmentFragmentDoc = gql`
-    fragment CollectionErrorFragment on CollectionError {
+export const CollectionErrorFragmentDoc = gql`
+    fragment CollectionError on CollectionError {
   code
   field
   message
 }
     `;
-export const UploadErrorFragmentFragmentDoc = gql`
-    fragment UploadErrorFragment on UploadError {
+export const UploadErrorFragmentDoc = gql`
+    fragment UploadError on UploadError {
   code
   field
   message
@@ -14684,8 +14750,8 @@ export const GiftCardErrorFragmentDoc = gql`
   message
 }
     `;
-export const GiftCardSettingsErrorFragmentFragmentDoc = gql`
-    fragment GiftCardSettingsErrorFragment on GiftCardSettingsError {
+export const GiftCardSettingsErrorFragmentDoc = gql`
+    fragment GiftCardSettingsError on GiftCardSettingsError {
   code
   field
   message
@@ -14740,8 +14806,8 @@ export const PageTypeDeleteErrorFragmentFragmentDoc = gql`
   message
 }
     `;
-export const ProductVariantStocksDeleteErrorFragmentFragmentDoc = gql`
-    fragment ProductVariantStocksDeleteErrorFragment on StockError {
+export const ProductVariantStocksDeleteErrorFragmentDoc = gql`
+    fragment ProductVariantStocksDeleteError on StockError {
   code
   field
   message
@@ -14888,8 +14954,8 @@ export const ShippingPriceTranslateErrorFragmentFragmentDoc = gql`
   message
 }
     `;
-export const GiftCardsSettingsFragmentFragmentDoc = gql`
-    fragment GiftCardsSettingsFragment on GiftCardSettings {
+export const GiftCardsSettingsFragmentDoc = gql`
+    fragment GiftCardsSettings on GiftCardSettings {
   expiryType
   expiryPeriod {
     type
@@ -14950,7 +15016,7 @@ export const GiftCardEventFragmentDoc = gql`
 ${MoneyFragmentDoc}`;
 export const GiftCardDataFragmentDoc = gql`
     fragment GiftCardData on GiftCard {
-  ...MetadataFragment
+  ...Metadata
   last4CodeChars
   boughtInChannel
   createdBy {
@@ -14987,7 +15053,7 @@ export const GiftCardDataFragmentDoc = gql`
     name
   }
 }
-    ${MetadataFragmentFragmentDoc}
+    ${MetadataFragmentDoc}
 ${UserBaseFragmentDoc}
 ${MoneyFragmentDoc}`;
 export const CustomerGiftCardFragmentDoc = gql`
@@ -15001,8 +15067,8 @@ export const CustomerGiftCardFragmentDoc = gql`
   }
 }
     ${MoneyFragmentDoc}`;
-export const MenuFragmentFragmentDoc = gql`
-    fragment MenuFragment on Menu {
+export const MenuFragmentDoc = gql`
+    fragment Menu on Menu {
   id
   name
   items {
@@ -15010,8 +15076,8 @@ export const MenuFragmentFragmentDoc = gql`
   }
 }
     `;
-export const MenuItemFragmentFragmentDoc = gql`
-    fragment MenuItemFragment on MenuItem {
+export const MenuItemFragmentDoc = gql`
+    fragment MenuItem on MenuItem {
   category {
     id
     name
@@ -15030,21 +15096,21 @@ export const MenuItemFragmentFragmentDoc = gql`
   url
 }
     `;
-export const MenuItemNestedFragmentFragmentDoc = gql`
-    fragment MenuItemNestedFragment on MenuItem {
-  ...MenuItemFragment
+export const MenuItemNestedFragmentDoc = gql`
+    fragment MenuItemNested on MenuItem {
+  ...MenuItem
   children {
-    ...MenuItemFragment
+    ...MenuItem
     children {
-      ...MenuItemFragment
+      ...MenuItem
       children {
-        ...MenuItemFragment
+        ...MenuItem
         children {
-          ...MenuItemFragment
+          ...MenuItem
           children {
-            ...MenuItemFragment
+            ...MenuItem
             children {
-              ...MenuItemFragment
+              ...MenuItem
             }
           }
         }
@@ -15052,18 +15118,18 @@ export const MenuItemNestedFragmentFragmentDoc = gql`
     }
   }
 }
-    ${MenuItemFragmentFragmentDoc}`;
-export const MenuDetailsFragmentFragmentDoc = gql`
-    fragment MenuDetailsFragment on Menu {
+    ${MenuItemFragmentDoc}`;
+export const MenuDetailsFragmentDoc = gql`
+    fragment MenuDetails on Menu {
   id
   items {
-    ...MenuItemNestedFragment
+    ...MenuItemNested
   }
   name
 }
-    ${MenuItemNestedFragmentFragmentDoc}`;
-export const RefundOrderLineFragmentFragmentDoc = gql`
-    fragment RefundOrderLineFragment on OrderLine {
+    ${MenuItemNestedFragmentDoc}`;
+export const RefundOrderLineFragmentDoc = gql`
+    fragment RefundOrderLine on OrderLine {
   id
   productName
   quantity
@@ -15077,8 +15143,8 @@ export const RefundOrderLineFragmentFragmentDoc = gql`
   }
 }
     ${MoneyFragmentDoc}`;
-export const OrderEventFragmentFragmentDoc = gql`
-    fragment OrderEventFragment on OrderEvent {
+export const OrderEventFragmentDoc = gql`
+    fragment OrderEvent on OrderEvent {
   id
   amount
   shippingCostsIncluded
@@ -15146,8 +15212,8 @@ export const OrderEventFragmentFragmentDoc = gql`
   }
 }
     `;
-export const OrderLineFragmentFragmentDoc = gql`
-    fragment OrderLineFragment on OrderLine {
+export const OrderLineFragmentDoc = gql`
+    fragment OrderLine on OrderLine {
   id
   isShippingRequired
   variant {
@@ -15195,14 +15261,14 @@ export const OrderLineFragmentFragmentDoc = gql`
   }
 }
     `;
-export const FulfillmentFragmentFragmentDoc = gql`
-    fragment FulfillmentFragment on Fulfillment {
+export const FulfillmentFragmentDoc = gql`
+    fragment Fulfillment on Fulfillment {
   id
   lines {
     id
     quantity
     orderLine {
-      ...OrderLineFragment
+      ...OrderLine
     }
   }
   fulfillmentOrder
@@ -15213,9 +15279,9 @@ export const FulfillmentFragmentFragmentDoc = gql`
     name
   }
 }
-    ${OrderLineFragmentFragmentDoc}`;
-export const InvoiceFragmentFragmentDoc = gql`
-    fragment InvoiceFragment on Invoice {
+    ${OrderLineFragmentDoc}`;
+export const InvoiceFragmentDoc = gql`
+    fragment Invoice on Invoice {
   id
   number
   createdAt
@@ -15223,13 +15289,13 @@ export const InvoiceFragmentFragmentDoc = gql`
   status
 }
     `;
-export const OrderDetailsFragmentFragmentDoc = gql`
-    fragment OrderDetailsFragment on Order {
+export const OrderDetailsFragmentDoc = gql`
+    fragment OrderDetails on Order {
   id
   token
-  ...MetadataFragment
+  ...Metadata
   billingAddress {
-    ...AddressFragment
+    ...Address
   }
   giftCards {
     events {
@@ -15267,19 +15333,19 @@ export const OrderDetailsFragmentFragmentDoc = gql`
     }
   }
   events {
-    ...OrderEventFragment
+    ...OrderEvent
   }
   fulfillments {
-    ...FulfillmentFragment
+    ...Fulfillment
   }
   lines {
-    ...OrderLineFragment
+    ...OrderLine
   }
   number
   isPaid
   paymentStatus
   shippingAddress {
-    ...AddressFragment
+    ...Address
   }
   deliveryMethod {
     __typename
@@ -15352,7 +15418,7 @@ export const OrderDetailsFragmentFragmentDoc = gql`
     message
   }
   invoices {
-    ...InvoiceFragment
+    ...Invoice
   }
   channel {
     isActive
@@ -15366,64 +15432,64 @@ export const OrderDetailsFragmentFragmentDoc = gql`
   }
   isPaid
 }
-    ${MetadataFragmentFragmentDoc}
-${AddressFragmentFragmentDoc}
+    ${MetadataFragmentDoc}
+${AddressFragmentDoc}
 ${MoneyFragmentDoc}
-${OrderEventFragmentFragmentDoc}
-${FulfillmentFragmentFragmentDoc}
-${OrderLineFragmentFragmentDoc}
-${InvoiceFragmentFragmentDoc}`;
-export const OrderSettingsFragmentFragmentDoc = gql`
-    fragment OrderSettingsFragment on OrderSettings {
+${OrderEventFragmentDoc}
+${FulfillmentFragmentDoc}
+${OrderLineFragmentDoc}
+${InvoiceFragmentDoc}`;
+export const OrderSettingsFragmentDoc = gql`
+    fragment OrderSettings on OrderSettings {
   automaticallyConfirmAllNewOrders
   automaticallyFulfillNonShippableGiftCard
 }
     `;
-export const ShopOrderSettingsFragmentFragmentDoc = gql`
-    fragment ShopOrderSettingsFragment on Shop {
+export const ShopOrderSettingsFragmentDoc = gql`
+    fragment ShopOrderSettings on Shop {
   fulfillmentAutoApprove
   fulfillmentAllowUnpaid
 }
     `;
-export const PageTypeFragmentFragmentDoc = gql`
-    fragment PageTypeFragment on PageType {
+export const PageTypeFragmentDoc = gql`
+    fragment PageType on PageType {
   id
   name
   hasPages
 }
     `;
-export const PageTypeDetailsFragmentFragmentDoc = gql`
-    fragment PageTypeDetailsFragment on PageType {
-  ...PageTypeFragment
-  ...MetadataFragment
+export const PageTypeDetailsFragmentDoc = gql`
+    fragment PageTypeDetails on PageType {
+  ...PageType
+  ...Metadata
   attributes {
-    ...AttributeFragment
+    ...Attribute
   }
 }
-    ${PageTypeFragmentFragmentDoc}
-${MetadataFragmentFragmentDoc}
-${AttributeFragmentFragmentDoc}`;
-export const PageFragmentFragmentDoc = gql`
-    fragment PageFragment on Page {
+    ${PageTypeFragmentDoc}
+${MetadataFragmentDoc}
+${AttributeFragmentDoc}`;
+export const PageFragmentDoc = gql`
+    fragment Page on Page {
   id
   title
   slug
   isPublished
 }
     `;
-export const FileFragmentFragmentDoc = gql`
-    fragment FileFragment on File {
+export const FileFragmentDoc = gql`
+    fragment File on File {
   url
   contentType
 }
     `;
-export const AttributeValueFragmentFragmentDoc = gql`
-    fragment AttributeValueFragment on AttributeValue {
+export const AttributeValueFragmentDoc = gql`
+    fragment AttributeValue on AttributeValue {
   id
   name
   slug
   file {
-    ...FileFragment
+    ...File
   }
   reference
   boolean
@@ -15431,27 +15497,27 @@ export const AttributeValueFragmentFragmentDoc = gql`
   dateTime
   value
 }
-    ${FileFragmentFragmentDoc}`;
-export const AttributeValueDetailsFragmentFragmentDoc = gql`
-    fragment AttributeValueDetailsFragment on AttributeValue {
-  ...AttributeValueFragment
+    ${FileFragmentDoc}`;
+export const AttributeValueDetailsFragmentDoc = gql`
+    fragment AttributeValueDetails on AttributeValue {
+  ...AttributeValue
   richText
 }
-    ${AttributeValueFragmentFragmentDoc}`;
-export const AttributeValueListFragmentFragmentDoc = gql`
-    fragment AttributeValueListFragment on AttributeValueCountableConnection {
+    ${AttributeValueFragmentDoc}`;
+export const AttributeValueListFragmentDoc = gql`
+    fragment AttributeValueList on AttributeValueCountableConnection {
   pageInfo {
-    ...PageInfoFragment
+    ...PageInfo
   }
   edges {
     cursor
     node {
-      ...AttributeValueDetailsFragment
+      ...AttributeValueDetails
     }
   }
 }
-    ${PageInfoFragmentFragmentDoc}
-${AttributeValueDetailsFragmentFragmentDoc}`;
+    ${PageInfoFragmentDoc}
+${AttributeValueDetailsFragmentDoc}`;
 export const PageSelectedAttributeFragmentDoc = gql`
     fragment PageSelectedAttribute on SelectedAttribute {
   attribute {
@@ -15468,17 +15534,17 @@ export const PageSelectedAttributeFragmentDoc = gql`
       last: $lastValues
       before: $beforeValues
     ) {
-      ...AttributeValueListFragment
+      ...AttributeValueList
     }
   }
   values {
-    ...AttributeValueDetailsFragment
+    ...AttributeValueDetails
   }
 }
-    ${AttributeValueListFragmentFragmentDoc}
-${AttributeValueDetailsFragmentFragmentDoc}`;
-export const PageAttributesFragmentFragmentDoc = gql`
-    fragment PageAttributesFragment on Page {
+    ${AttributeValueListFragmentDoc}
+${AttributeValueDetailsFragmentDoc}`;
+export const PageAttributesFragmentDoc = gql`
+    fragment PageAttributes on Page {
   attributes {
     ...PageSelectedAttribute
   }
@@ -15497,28 +15563,28 @@ export const PageAttributesFragmentFragmentDoc = gql`
         last: $lastValues
         before: $beforeValues
       ) {
-        ...AttributeValueListFragment
+        ...AttributeValueList
       }
     }
   }
 }
     ${PageSelectedAttributeFragmentDoc}
-${AttributeValueListFragmentFragmentDoc}`;
-export const PageDetailsFragmentFragmentDoc = gql`
-    fragment PageDetailsFragment on Page {
-  ...PageFragment
-  ...PageAttributesFragment
-  ...MetadataFragment
+${AttributeValueListFragmentDoc}`;
+export const PageDetailsFragmentDoc = gql`
+    fragment PageDetails on Page {
+  ...Page
+  ...PageAttributes
+  ...Metadata
   content
   seoTitle
   seoDescription
   publicationDate
 }
-    ${PageFragmentFragmentDoc}
-${PageAttributesFragmentFragmentDoc}
-${MetadataFragmentFragmentDoc}`;
-export const PermissionGroupFragmentFragmentDoc = gql`
-    fragment PermissionGroupFragment on Group {
+    ${PageFragmentDoc}
+${PageAttributesFragmentDoc}
+${MetadataFragmentDoc}`;
+export const PermissionGroupFragmentDoc = gql`
+    fragment PermissionGroup on Group {
   id
   name
   userCanManage
@@ -15529,14 +15595,14 @@ export const PermissionGroupFragmentFragmentDoc = gql`
   }
 }
     `;
-export const PermissionFragmentFragmentDoc = gql`
-    fragment PermissionFragment on Permission {
+export const PermissionFragmentDoc = gql`
+    fragment Permission on Permission {
   code
   name
 }
     `;
-export const StaffMemberFragmentFragmentDoc = gql`
-    fragment StaffMemberFragment on User {
+export const StaffMemberFragmentDoc = gql`
+    fragment StaffMember on User {
   id
   email
   firstName
@@ -15546,27 +15612,27 @@ export const StaffMemberFragmentFragmentDoc = gql`
     `;
 export const PermissionGroupMemberFragmentDoc = gql`
     fragment PermissionGroupMember on User {
-  ...StaffMemberFragment
+  ...StaffMember
   avatar(size: 48) {
     url
   }
 }
-    ${StaffMemberFragmentFragmentDoc}`;
-export const PermissionGroupDetailsFragmentFragmentDoc = gql`
-    fragment PermissionGroupDetailsFragment on Group {
-  ...PermissionGroupFragment
+    ${StaffMemberFragmentDoc}`;
+export const PermissionGroupDetailsFragmentDoc = gql`
+    fragment PermissionGroupDetails on Group {
+  ...PermissionGroup
   permissions {
-    ...PermissionFragment
+    ...Permission
   }
   users {
     ...PermissionGroupMember
   }
 }
-    ${PermissionGroupFragmentFragmentDoc}
-${PermissionFragmentFragmentDoc}
+    ${PermissionGroupFragmentDoc}
+${PermissionFragmentDoc}
 ${PermissionGroupMemberFragmentDoc}`;
-export const PluginConfigurationBaseFragmentFragmentDoc = gql`
-    fragment PluginConfigurationBaseFragment on PluginConfiguration {
+export const PluginConfigurationBaseFragmentDoc = gql`
+    fragment PluginConfigurationBase on PluginConfiguration {
   active
   channel {
     id
@@ -15575,21 +15641,21 @@ export const PluginConfigurationBaseFragmentFragmentDoc = gql`
   }
 }
     `;
-export const PluginBaseFragmentFragmentDoc = gql`
-    fragment PluginBaseFragment on Plugin {
+export const PluginBaseFragmentDoc = gql`
+    fragment PluginBase on Plugin {
   id
   name
   description
   channelConfigurations {
-    ...PluginConfigurationBaseFragment
+    ...PluginConfigurationBase
   }
   globalConfiguration {
-    ...PluginConfigurationBaseFragment
+    ...PluginConfigurationBase
   }
 }
-    ${PluginConfigurationBaseFragmentFragmentDoc}`;
-export const ConfigurationItemFragmentFragmentDoc = gql`
-    fragment ConfigurationItemFragment on ConfigurationItem {
+    ${PluginConfigurationBaseFragmentDoc}`;
+export const ConfigurationItemFragmentDoc = gql`
+    fragment ConfigurationItem on ConfigurationItem {
   name
   value
   type
@@ -15597,30 +15663,30 @@ export const ConfigurationItemFragmentFragmentDoc = gql`
   label
 }
     `;
-export const PluginConfigurationExtendedFragmentFragmentDoc = gql`
-    fragment PluginConfigurationExtendedFragment on PluginConfiguration {
-  ...PluginConfigurationBaseFragment
+export const PluginConfigurationExtendedFragmentDoc = gql`
+    fragment PluginConfigurationExtended on PluginConfiguration {
+  ...PluginConfigurationBase
   configuration {
-    ...ConfigurationItemFragment
+    ...ConfigurationItem
   }
 }
-    ${PluginConfigurationBaseFragmentFragmentDoc}
-${ConfigurationItemFragmentFragmentDoc}`;
-export const PluginsDetailsFragmentFragmentDoc = gql`
-    fragment PluginsDetailsFragment on Plugin {
+    ${PluginConfigurationBaseFragmentDoc}
+${ConfigurationItemFragmentDoc}`;
+export const PluginsDetailsFragmentDoc = gql`
+    fragment PluginsDetails on Plugin {
   id
   name
   description
   globalConfiguration {
-    ...PluginConfigurationExtendedFragment
+    ...PluginConfigurationExtended
   }
   channelConfigurations {
-    ...PluginConfigurationExtendedFragment
+    ...PluginConfigurationExtended
   }
 }
-    ${PluginConfigurationExtendedFragmentFragmentDoc}`;
-export const ProductTypeFragmentFragmentDoc = gql`
-    fragment ProductTypeFragment on ProductType {
+    ${PluginConfigurationExtendedFragmentDoc}`;
+export const ProductTypeFragmentDoc = gql`
+    fragment ProductType on ProductType {
   id
   name
   kind
@@ -15632,19 +15698,19 @@ export const ProductTypeFragmentFragmentDoc = gql`
   }
 }
     `;
-export const ProductTypeDetailsFragmentFragmentDoc = gql`
-    fragment ProductTypeDetailsFragment on ProductType {
-  ...ProductTypeFragment
-  ...MetadataFragment
+export const ProductTypeDetailsFragmentDoc = gql`
+    fragment ProductTypeDetails on ProductType {
+  ...ProductType
+  ...Metadata
   productAttributes {
-    ...AttributeFragment
+    ...Attribute
   }
   variantAttributes {
-    ...AttributeFragment
+    ...Attribute
   }
   assignedVariantAttributes {
     attribute {
-      ...AttributeFragment
+      ...Attribute
     }
     variantSelection
   }
@@ -15653,11 +15719,11 @@ export const ProductTypeDetailsFragmentFragmentDoc = gql`
     value
   }
 }
-    ${ProductTypeFragmentFragmentDoc}
-${MetadataFragmentFragmentDoc}
-${AttributeFragmentFragmentDoc}`;
-export const PriceRangeFragmentFragmentDoc = gql`
-    fragment PriceRangeFragment on TaxedMoneyRange {
+    ${ProductTypeFragmentDoc}
+${MetadataFragmentDoc}
+${AttributeFragmentDoc}`;
+export const PriceRangeFragmentDoc = gql`
+    fragment PriceRange on TaxedMoneyRange {
   start {
     net {
       ...Money
@@ -15670,8 +15736,19 @@ export const PriceRangeFragmentFragmentDoc = gql`
   }
 }
     ${MoneyFragmentDoc}`;
-export const ProductFragmentFragmentDoc = gql`
-    fragment ProductFragment on Product {
+export const ChannelListingProductFragmentDoc = gql`
+    fragment ChannelListingProduct on ProductChannelListing {
+  ...ChannelListingProductWithoutPricing
+  pricing {
+    priceRange {
+      ...PriceRange
+    }
+  }
+}
+    ${ChannelListingProductWithoutPricingFragmentDoc}
+${PriceRangeFragmentDoc}`;
+export const ProductWithChannelListingsFragmentDoc = gql`
+    fragment ProductWithChannelListings on Product {
   id
   name
   thumbnail {
@@ -15683,18 +15760,18 @@ export const ProductFragmentFragmentDoc = gql`
     hasVariants
   }
   channelListings {
-    ...ChannelListingProductWithoutPricingFragment
+    ...ChannelListingProductWithoutPricing
     pricing @include(if: $hasChannel) {
       priceRange {
-        ...PriceRangeFragment
+        ...PriceRange
       }
     }
   }
 }
-    ${ChannelListingProductWithoutPricingFragmentFragmentDoc}
-${PriceRangeFragmentFragmentDoc}`;
-export const ProductVariantAttributesFragmentFragmentDoc = gql`
-    fragment ProductVariantAttributesFragment on Product {
+    ${ChannelListingProductWithoutPricingFragmentDoc}
+${PriceRangeFragmentDoc}`;
+export const ProductVariantAttributesFragmentDoc = gql`
+    fragment ProductVariantAttributes on Product {
   id
   attributes {
     attribute {
@@ -15711,11 +15788,11 @@ export const ProductVariantAttributesFragmentFragmentDoc = gql`
         last: $lastValues
         before: $beforeValues
       ) {
-        ...AttributeValueListFragment
+        ...AttributeValueList
       }
     }
     values {
-      ...AttributeValueDetailsFragment
+      ...AttributeValueDetails
     }
   }
   productType {
@@ -15732,7 +15809,7 @@ export const ProductVariantAttributesFragmentFragmentDoc = gql`
         last: $lastValues
         before: $beforeValues
       ) {
-        ...AttributeValueListFragment
+        ...AttributeValueList
       }
     }
   }
@@ -15744,10 +15821,10 @@ export const ProductVariantAttributesFragmentFragmentDoc = gql`
     }
   }
 }
-    ${AttributeValueListFragmentFragmentDoc}
-${AttributeValueDetailsFragmentFragmentDoc}`;
-export const ProductMediaFragmentFragmentDoc = gql`
-    fragment ProductMediaFragment on ProductMedia {
+    ${AttributeValueListFragmentDoc}
+${AttributeValueDetailsFragmentDoc}`;
+export const ProductMediaFragmentDoc = gql`
+    fragment ProductMedia on ProductMedia {
   id
   alt
   sortOrder
@@ -15756,8 +15833,8 @@ export const ProductMediaFragmentFragmentDoc = gql`
   oembedData
 }
     `;
-export const StockFragmentFragmentDoc = gql`
-    fragment StockFragment on Stock {
+export const StockFragmentDoc = gql`
+    fragment Stock on Stock {
   id
   quantity
   quantityAllocated
@@ -15767,15 +15844,15 @@ export const StockFragmentFragmentDoc = gql`
   }
 }
     `;
-export const PreorderFragmentFragmentDoc = gql`
-    fragment PreorderFragment on PreorderData {
+export const PreorderFragmentDoc = gql`
+    fragment Preorder on PreorderData {
   globalThreshold
   globalSoldUnits
   endDate
 }
     `;
-export const ChannelListingProductVariantFragmentFragmentDoc = gql`
-    fragment ChannelListingProductVariantFragment on ProductVariantChannelListing {
+export const ChannelListingProductVariantFragmentDoc = gql`
+    fragment ChannelListingProductVariant on ProductVariantChannelListing {
   channel {
     id
     name
@@ -15803,36 +15880,36 @@ export const ProductDetailsVariantFragmentDoc = gql`
     url(size: 200)
   }
   stocks {
-    ...StockFragment
+    ...Stock
   }
   trackInventory
   preorder {
-    ...PreorderFragment
+    ...Preorder
   }
   channelListings {
-    ...ChannelListingProductVariantFragment
+    ...ChannelListingProductVariant
   }
   quantityLimitPerCustomer
 }
-    ${StockFragmentFragmentDoc}
-${PreorderFragmentFragmentDoc}
-${ChannelListingProductVariantFragmentFragmentDoc}`;
-export const TaxTypeFragmentFragmentDoc = gql`
-    fragment TaxTypeFragment on TaxType {
+    ${StockFragmentDoc}
+${PreorderFragmentDoc}
+${ChannelListingProductVariantFragmentDoc}`;
+export const TaxTypeFragmentDoc = gql`
+    fragment TaxType on TaxType {
   description
   taxCode
 }
     `;
-export const WeightFragmentFragmentDoc = gql`
-    fragment WeightFragment on Weight {
+export const WeightFragmentDoc = gql`
+    fragment Weight on Weight {
   unit
   value
 }
     `;
 export const ProductFragmentDoc = gql`
     fragment Product on Product {
-  ...ProductVariantAttributesFragment
-  ...MetadataFragment
+  ...ProductVariantAttributes
+  ...Metadata
   name
   slug
   description
@@ -15852,10 +15929,10 @@ export const ProductFragmentDoc = gql`
   }
   chargeTaxes
   channelListings {
-    ...ChannelListingProductWithoutPricingFragment
+    ...ChannelListingProductWithoutPricing
   }
   media {
-    ...ProductMediaFragment
+    ...ProductMedia
   }
   isAvailable
   variants {
@@ -15866,25 +15943,25 @@ export const ProductFragmentDoc = gql`
     name
     hasVariants
     taxType {
-      ...TaxTypeFragment
+      ...TaxType
     }
   }
   weight {
-    ...WeightFragment
+    ...Weight
   }
   taxType {
-    ...TaxTypeFragment
+    ...TaxType
   }
 }
-    ${ProductVariantAttributesFragmentFragmentDoc}
-${MetadataFragmentFragmentDoc}
-${ChannelListingProductWithoutPricingFragmentFragmentDoc}
-${ProductMediaFragmentFragmentDoc}
+    ${ProductVariantAttributesFragmentDoc}
+${MetadataFragmentDoc}
+${ChannelListingProductWithoutPricingFragmentDoc}
+${ProductMediaFragmentDoc}
 ${ProductDetailsVariantFragmentDoc}
-${TaxTypeFragmentFragmentDoc}
-${WeightFragmentFragmentDoc}`;
-export const VariantAttributeFragmentFragmentDoc = gql`
-    fragment VariantAttributeFragment on Attribute {
+${TaxTypeFragmentDoc}
+${WeightFragmentDoc}`;
+export const VariantAttributeFragmentDoc = gql`
+    fragment VariantAttribute on Attribute {
   id
   name
   slug
@@ -15898,30 +15975,30 @@ export const VariantAttributeFragmentFragmentDoc = gql`
     last: $lastValues
     before: $beforeValues
   ) {
-    ...AttributeValueListFragment
+    ...AttributeValueList
   }
 }
-    ${AttributeValueListFragmentFragmentDoc}`;
-export const SelectedVariantAttributeFragmentFragmentDoc = gql`
-    fragment SelectedVariantAttributeFragment on SelectedAttribute {
+    ${AttributeValueListFragmentDoc}`;
+export const SelectedVariantAttributeFragmentDoc = gql`
+    fragment SelectedVariantAttribute on SelectedAttribute {
   attribute {
-    ...VariantAttributeFragment
+    ...VariantAttribute
   }
   values {
-    ...AttributeValueDetailsFragment
+    ...AttributeValueDetails
   }
 }
-    ${VariantAttributeFragmentFragmentDoc}
-${AttributeValueDetailsFragmentFragmentDoc}`;
+    ${VariantAttributeFragmentDoc}
+${AttributeValueDetailsFragmentDoc}`;
 export const ProductVariantFragmentDoc = gql`
     fragment ProductVariant on ProductVariant {
   id
-  ...MetadataFragment
+  ...Metadata
   selectionAttributes: attributes(variantSelection: VARIANT_SELECTION) {
-    ...SelectedVariantAttributeFragment
+    ...SelectedVariantAttribute
   }
   nonSelectionAttributes: attributes(variantSelection: NOT_VARIANT_SELECTION) {
-    ...SelectedVariantAttributeFragment
+    ...SelectedVariantAttribute
   }
   media {
     id
@@ -15936,7 +16013,7 @@ export const ProductVariantFragmentDoc = gql`
       id
     }
     media {
-      ...ProductMediaFragment
+      ...ProductMedia
     }
     name
     thumbnail {
@@ -15967,37 +16044,37 @@ export const ProductVariantFragmentDoc = gql`
     }
   }
   channelListings {
-    ...ChannelListingProductVariantFragment
+    ...ChannelListingProductVariant
   }
   sku
   stocks {
-    ...StockFragment
+    ...Stock
   }
   trackInventory
   preorder {
-    ...PreorderFragment
+    ...Preorder
   }
   weight {
-    ...WeightFragment
+    ...Weight
   }
   quantityLimitPerCustomer
 }
-    ${MetadataFragmentFragmentDoc}
-${SelectedVariantAttributeFragmentFragmentDoc}
-${ProductMediaFragmentFragmentDoc}
-${ChannelListingProductVariantFragmentFragmentDoc}
-${StockFragmentFragmentDoc}
-${PreorderFragmentFragmentDoc}
-${WeightFragmentFragmentDoc}`;
-export const ExportFileFragmentFragmentDoc = gql`
-    fragment ExportFileFragment on ExportFile {
+    ${MetadataFragmentDoc}
+${SelectedVariantAttributeFragmentDoc}
+${ProductMediaFragmentDoc}
+${ChannelListingProductVariantFragmentDoc}
+${StockFragmentDoc}
+${PreorderFragmentDoc}
+${WeightFragmentDoc}`;
+export const ExportFileFragmentDoc = gql`
+    fragment ExportFile on ExportFile {
   id
   status
   url
 }
     `;
-export const ShippingMethodWithPostalCodesFragmentFragmentDoc = gql`
-    fragment ShippingMethodWithPostalCodesFragment on ShippingMethodType {
+export const ShippingMethodWithPostalCodesFragmentDoc = gql`
+    fragment ShippingMethodWithPostalCodes on ShippingMethodType {
   id
   postalCodeRules {
     id
@@ -16007,10 +16084,10 @@ export const ShippingMethodWithPostalCodesFragmentFragmentDoc = gql`
   }
 }
     `;
-export const ShippingMethodTypeFragmentFragmentDoc = gql`
-    fragment ShippingMethodTypeFragment on ShippingMethodType {
-  ...ShippingMethodWithPostalCodesFragment
-  ...MetadataFragment
+export const ShippingMethodTypeFragmentDoc = gql`
+    fragment ShippingMethodType on ShippingMethodType {
+  ...ShippingMethodWithPostalCodes
+  ...Metadata
   minimumOrderWeight {
     unit
     value
@@ -16042,12 +16119,12 @@ export const ShippingMethodTypeFragmentFragmentDoc = gql`
     }
   }
 }
-    ${ShippingMethodWithPostalCodesFragmentFragmentDoc}
-${MetadataFragmentFragmentDoc}
+    ${ShippingMethodWithPostalCodesFragmentDoc}
+${MetadataFragmentDoc}
 ${MoneyFragmentDoc}`;
-export const ShippingMethodWithExcludedProductsFragmentFragmentDoc = gql`
-    fragment ShippingMethodWithExcludedProductsFragment on ShippingMethodType {
-  ...ShippingMethodTypeFragment
+export const ShippingMethodWithExcludedProductsFragmentDoc = gql`
+    fragment ShippingMethodWithExcludedProducts on ShippingMethodType {
+  ...ShippingMethodType
   excludedProducts(before: $before, after: $after, first: $first, last: $last) {
     pageInfo {
       hasNextPage
@@ -16066,10 +16143,10 @@ export const ShippingMethodWithExcludedProductsFragmentFragmentDoc = gql`
     }
   }
 }
-    ${ShippingMethodTypeFragmentFragmentDoc}`;
-export const ShippingZoneFragmentFragmentDoc = gql`
-    fragment ShippingZoneFragment on ShippingZone {
-  ...MetadataFragment
+    ${ShippingMethodTypeFragmentDoc}`;
+export const ShippingZoneFragmentDoc = gql`
+    fragment ShippingZone on ShippingZone {
+  ...Metadata
   id
   countries {
     code
@@ -16078,22 +16155,34 @@ export const ShippingZoneFragmentFragmentDoc = gql`
   name
   description
 }
-    ${MetadataFragmentFragmentDoc}`;
-export const ShippingZoneDetailsFragmentFragmentDoc = gql`
-    fragment ShippingZoneDetailsFragment on ShippingZone {
-  ...ShippingZoneFragment
+    ${MetadataFragmentDoc}`;
+export const ShippingZoneDetailsFragmentDoc = gql`
+    fragment ShippingZoneDetails on ShippingZone {
+  ...ShippingZone
   shippingMethods {
-    ...ShippingMethodTypeFragment
+    ...ShippingMethodType
   }
   warehouses {
     id
     name
   }
 }
-    ${ShippingZoneFragmentFragmentDoc}
-${ShippingMethodTypeFragmentFragmentDoc}`;
-export const LimitInfoFragmentFragmentDoc = gql`
-    fragment LimitInfoFragment on Limits {
+    ${ShippingZoneFragmentDoc}
+${ShippingMethodTypeFragmentDoc}`;
+export const CountryWithCodeFragmentDoc = gql`
+    fragment CountryWithCode on CountryDisplay {
+  country
+  code
+}
+    `;
+export const LanguageFragmentDoc = gql`
+    fragment Language on LanguageDisplay {
+  code
+  language
+}
+    `;
+export const LimitInfoFragmentDoc = gql`
+    fragment LimitInfo on Limits {
   channels @include(if: $channels)
   orders @include(if: $orders)
   productVariants @include(if: $productVariants)
@@ -16101,22 +16190,22 @@ export const LimitInfoFragmentFragmentDoc = gql`
   warehouses @include(if: $warehouses)
 }
     `;
-export const ShopLimitFragmentFragmentDoc = gql`
-    fragment ShopLimitFragment on Shop {
+export const ShopLimitFragmentDoc = gql`
+    fragment ShopLimit on Shop {
   limits {
     currentUsage {
-      ...LimitInfoFragment
+      ...LimitInfo
     }
     allowedUsage {
-      ...LimitInfoFragment
+      ...LimitInfo
     }
   }
 }
-    ${LimitInfoFragmentFragmentDoc}`;
-export const ShopFragmentFragmentDoc = gql`
-    fragment ShopFragment on Shop {
+    ${LimitInfoFragmentDoc}`;
+export const ShopFragmentDoc = gql`
+    fragment Shop on Shop {
   companyAddress {
-    ...AddressFragment
+    ...Address
   }
   countries {
     code
@@ -16134,10 +16223,10 @@ export const ShopFragmentFragmentDoc = gql`
   reserveStockDurationAuthenticatedUser
   limitQuantityPerCheckout
 }
-    ${AddressFragmentFragmentDoc}`;
-export const StaffMemberDetailsFragmentFragmentDoc = gql`
-    fragment StaffMemberDetailsFragment on User {
-  ...StaffMemberFragment
+    ${AddressFragmentDoc}`;
+export const StaffMemberDetailsFragmentDoc = gql`
+    fragment StaffMemberDetails on User {
+  ...StaffMember
   permissionGroups {
     id
     name
@@ -16151,16 +16240,16 @@ export const StaffMemberDetailsFragmentFragmentDoc = gql`
     url
   }
 }
-    ${StaffMemberFragmentFragmentDoc}`;
-export const CountryFragmentFragmentDoc = gql`
-    fragment CountryFragment on CountryDisplay {
+    ${StaffMemberFragmentDoc}`;
+export const CountryFragmentDoc = gql`
+    fragment Country on CountryDisplay {
   country
   code
 }
     `;
-export const CountryWithTaxesFragmentFragmentDoc = gql`
-    fragment CountryWithTaxesFragment on CountryDisplay {
-  ...CountryFragment
+export const CountryWithTaxesFragmentDoc = gql`
+    fragment CountryWithTaxes on CountryDisplay {
+  ...Country
   vat {
     standardRate
     reducedRates {
@@ -16169,9 +16258,9 @@ export const CountryWithTaxesFragmentFragmentDoc = gql`
     }
   }
 }
-    ${CountryFragmentFragmentDoc}`;
-export const ShopTaxesFragmentFragmentDoc = gql`
-    fragment ShopTaxesFragment on Shop {
+    ${CountryFragmentDoc}`;
+export const ShopTaxesFragmentDoc = gql`
+    fragment ShopTaxes on Shop {
   chargeTaxesOnShipping
   includeTaxesInPrices
   displayGrossPrices
@@ -16183,8 +16272,8 @@ export const TimePeriodFragmentDoc = gql`
   type
 }
     `;
-export const CategoryTranslationFragmentFragmentDoc = gql`
-    fragment CategoryTranslationFragment on CategoryTranslatableContent {
+export const CategoryTranslationFragmentDoc = gql`
+    fragment CategoryTranslation on CategoryTranslatableContent {
   translation(languageCode: $language) {
     id
     description
@@ -16204,8 +16293,8 @@ export const CategoryTranslationFragmentFragmentDoc = gql`
   }
 }
     `;
-export const CollectionTranslationFragmentFragmentDoc = gql`
-    fragment CollectionTranslationFragment on CollectionTranslatableContent {
+export const CollectionTranslationFragmentDoc = gql`
+    fragment CollectionTranslation on CollectionTranslatableContent {
   collection {
     id
     name
@@ -16225,8 +16314,8 @@ export const CollectionTranslationFragmentFragmentDoc = gql`
   }
 }
     `;
-export const ProductTranslationFragmentFragmentDoc = gql`
-    fragment ProductTranslationFragment on ProductTranslatableContent {
+export const ProductTranslationFragmentDoc = gql`
+    fragment ProductTranslation on ProductTranslatableContent {
   product {
     id
     name
@@ -16264,8 +16353,8 @@ export const ProductTranslationFragmentFragmentDoc = gql`
   }
 }
     `;
-export const ProductVariantTranslationFragmentFragmentDoc = gql`
-    fragment ProductVariantTranslationFragment on ProductVariantTranslatableContent {
+export const ProductVariantTranslationFragmentDoc = gql`
+    fragment ProductVariantTranslation on ProductVariantTranslatableContent {
   productVariant {
     id
   }
@@ -16297,8 +16386,8 @@ export const ProductVariantTranslationFragmentFragmentDoc = gql`
   }
 }
     `;
-export const SaleTranslationFragmentFragmentDoc = gql`
-    fragment SaleTranslationFragment on SaleTranslatableContent {
+export const SaleTranslationFragmentDoc = gql`
+    fragment SaleTranslation on SaleTranslatableContent {
   sale {
     id
     name
@@ -16313,8 +16402,8 @@ export const SaleTranslationFragmentFragmentDoc = gql`
   }
 }
     `;
-export const VoucherTranslationFragmentFragmentDoc = gql`
-    fragment VoucherTranslationFragment on VoucherTranslatableContent {
+export const VoucherTranslationFragmentDoc = gql`
+    fragment VoucherTranslation on VoucherTranslatableContent {
   name
   voucher {
     id
@@ -16330,8 +16419,8 @@ export const VoucherTranslationFragmentFragmentDoc = gql`
   }
 }
     `;
-export const ShippingMethodTranslationFragmentFragmentDoc = gql`
-    fragment ShippingMethodTranslationFragment on ShippingMethodTranslatableContent {
+export const ShippingMethodTranslationFragmentDoc = gql`
+    fragment ShippingMethodTranslation on ShippingMethodTranslatableContent {
   id
   name
   description
@@ -16349,8 +16438,8 @@ export const ShippingMethodTranslationFragmentFragmentDoc = gql`
   }
 }
     `;
-export const PageTranslationFragmentFragmentDoc = gql`
-    fragment PageTranslationFragment on PageTranslatableContent {
+export const PageTranslationFragmentDoc = gql`
+    fragment PageTranslation on PageTranslatableContent {
   page {
     id
     content
@@ -16388,8 +16477,8 @@ export const PageTranslationFragmentFragmentDoc = gql`
   }
 }
     `;
-export const PageTranslatableFragmentFragmentDoc = gql`
-    fragment PageTranslatableFragment on PageTranslatableContent {
+export const PageTranslatableFragmentDoc = gql`
+    fragment PageTranslatable on PageTranslatableContent {
   id
   content
   seoDescription
@@ -16408,8 +16497,8 @@ export const PageTranslatableFragmentFragmentDoc = gql`
   }
 }
     `;
-export const AttributeTranslationFragmentFragmentDoc = gql`
-    fragment AttributeTranslationFragment on AttributeTranslatableContent {
+export const AttributeTranslationFragmentDoc = gql`
+    fragment AttributeTranslation on AttributeTranslatableContent {
   id
   name
   translation(languageCode: $language) {
@@ -16423,10 +16512,10 @@ export const AttributeTranslationFragmentFragmentDoc = gql`
   }
 }
     `;
-export const AttributeChoicesTranslationFragmentFragmentDoc = gql`
-    fragment AttributeChoicesTranslationFragment on AttributeValueCountableConnection {
+export const AttributeChoicesTranslationFragmentDoc = gql`
+    fragment AttributeChoicesTranslation on AttributeValueCountableConnection {
   pageInfo {
-    ...PageInfoFragment
+    ...PageInfo
   }
   edges {
     cursor
@@ -16443,9 +16532,9 @@ export const AttributeChoicesTranslationFragmentFragmentDoc = gql`
     }
   }
 }
-    ${PageInfoFragmentFragmentDoc}`;
-export const AttributeTranslationDetailsFragmentFragmentDoc = gql`
-    fragment AttributeTranslationDetailsFragment on AttributeTranslatableContent {
+    ${PageInfoFragmentDoc}`;
+export const AttributeTranslationDetailsFragmentDoc = gql`
+    fragment AttributeTranslationDetails on AttributeTranslatableContent {
   translation(languageCode: $language) {
     id
     name
@@ -16461,13 +16550,13 @@ export const AttributeTranslationDetailsFragmentFragmentDoc = gql`
       last: $lastValues
       before: $beforeValues
     ) {
-      ...AttributeChoicesTranslationFragment
+      ...AttributeChoicesTranslation
     }
   }
 }
-    ${AttributeChoicesTranslationFragmentFragmentDoc}`;
-export const AttributeValueTranslatableContentFragmentFragmentDoc = gql`
-    fragment AttributeValueTranslatableContentFragment on AttributeTranslatableContent {
+    ${AttributeChoicesTranslationFragmentDoc}`;
+export const AttributeValueTranslatableContentFragmentDoc = gql`
+    fragment AttributeValueTranslatableContent on AttributeTranslatableContent {
   translation(languageCode: $language) {
     id
     name
@@ -16482,20 +16571,20 @@ export const AttributeValueTranslatableContentFragmentFragmentDoc = gql`
       last: $lastValues
       before: $beforeValues
     ) {
-      ...AttributeChoicesTranslationFragment
+      ...AttributeChoicesTranslation
     }
   }
 }
-    ${AttributeChoicesTranslationFragmentFragmentDoc}`;
-export const WarehouseFragmentFragmentDoc = gql`
-    fragment WarehouseFragment on Warehouse {
+    ${AttributeChoicesTranslationFragmentDoc}`;
+export const WarehouseFragmentDoc = gql`
+    fragment Warehouse on Warehouse {
   id
   name
 }
     `;
-export const WarehouseWithShippingFragmentFragmentDoc = gql`
-    fragment WarehouseWithShippingFragment on Warehouse {
-  ...WarehouseFragment
+export const WarehouseWithShippingFragmentDoc = gql`
+    fragment WarehouseWithShipping on Warehouse {
+  ...Warehouse
   shippingZones(first: 100) {
     edges {
       node {
@@ -16505,37 +16594,37 @@ export const WarehouseWithShippingFragmentFragmentDoc = gql`
     }
   }
 }
-    ${WarehouseFragmentFragmentDoc}`;
-export const WarehouseDetailsFragmentFragmentDoc = gql`
-    fragment WarehouseDetailsFragment on Warehouse {
+    ${WarehouseFragmentDoc}`;
+export const WarehouseDetailsFragmentDoc = gql`
+    fragment WarehouseDetails on Warehouse {
   isPrivate
   clickAndCollectOption
-  ...WarehouseWithShippingFragment
+  ...WarehouseWithShipping
   address {
-    ...AddressFragment
+    ...Address
   }
 }
-    ${WarehouseWithShippingFragmentFragmentDoc}
-${AddressFragmentFragmentDoc}`;
-export const WebhooksDetailsFragmentFragmentDoc = gql`
-    fragment WebhooksDetailsFragment on Webhook {
-  ...WebhookFragment
+    ${WarehouseWithShippingFragmentDoc}
+${AddressFragmentDoc}`;
+export const WebhooksDetailsFragmentDoc = gql`
+    fragment WebhooksDetails on Webhook {
+  ...Webhook
 }
-    ${WebhookFragmentFragmentDoc}`;
+    ${WebhookFragmentDoc}`;
 export const AppCreateDocument = gql`
     mutation AppCreate($input: AppInput!) {
   appCreate(input: $input) {
     authToken
     app {
-      ...AppFragment
+      ...App
     }
     errors {
-      ...AppErrorFragment
+      ...AppError
     }
   }
 }
-    ${AppFragmentFragmentDoc}
-${AppErrorFragmentFragmentDoc}`;
+    ${AppFragmentDoc}
+${AppErrorFragmentDoc}`;
 export type AppCreateMutationFn = Apollo.MutationFunction<AppCreateMutation, AppCreateMutationVariables>;
 
 /**
@@ -16566,15 +16655,15 @@ export const AppDeleteDocument = gql`
     mutation AppDelete($id: ID!) {
   appDelete(id: $id) {
     app {
-      ...AppFragment
+      ...App
     }
     errors {
-      ...AppErrorFragment
+      ...AppError
     }
   }
 }
-    ${AppFragmentFragmentDoc}
-${AppErrorFragmentFragmentDoc}`;
+    ${AppFragmentDoc}
+${AppErrorFragmentDoc}`;
 export type AppDeleteMutationFn = Apollo.MutationFunction<AppDeleteMutation, AppDeleteMutationVariables>;
 
 /**
@@ -16611,11 +16700,11 @@ export const AppDeleteFailedInstallationDocument = gql`
       message
     }
     errors {
-      ...AppErrorFragment
+      ...AppError
     }
   }
 }
-    ${AppErrorFragmentFragmentDoc}`;
+    ${AppErrorFragmentDoc}`;
 export type AppDeleteFailedInstallationMutationFn = Apollo.MutationFunction<AppDeleteFailedInstallationMutation, AppDeleteFailedInstallationMutationVariables>;
 
 /**
@@ -16663,11 +16752,11 @@ export const AppFetchDocument = gql`
       }
     }
     errors {
-      ...AppErrorFragment
+      ...AppError
     }
   }
 }
-    ${AppErrorFragmentFragmentDoc}`;
+    ${AppErrorFragmentDoc}`;
 export type AppFetchMutationFn = Apollo.MutationFunction<AppFetchMutation, AppFetchMutationVariables>;
 
 /**
@@ -16704,11 +16793,11 @@ export const AppInstallDocument = gql`
       manifestUrl
     }
     errors {
-      ...AppErrorFragment
+      ...AppError
     }
   }
 }
-    ${AppErrorFragmentFragmentDoc}`;
+    ${AppErrorFragmentDoc}`;
 export type AppInstallMutationFn = Apollo.MutationFunction<AppInstallMutation, AppInstallMutationVariables>;
 
 /**
@@ -16745,11 +16834,11 @@ export const AppRetryInstallDocument = gql`
       manifestUrl
     }
     errors {
-      ...AppErrorFragment
+      ...AppError
     }
   }
 }
-    ${AppErrorFragmentFragmentDoc}`;
+    ${AppErrorFragmentDoc}`;
 export type AppRetryInstallMutationFn = Apollo.MutationFunction<AppRetryInstallMutation, AppRetryInstallMutationVariables>;
 
 /**
@@ -16780,21 +16869,21 @@ export const AppUpdateDocument = gql`
     mutation AppUpdate($id: ID!, $input: AppInput!) {
   appUpdate(id: $id, input: $input) {
     app {
-      ...AppFragment
+      ...App
       permissions {
         code
         name
       }
     }
     errors {
-      ...AppErrorFragment
+      ...AppError
       message
       permissions
     }
   }
 }
-    ${AppFragmentFragmentDoc}
-${AppErrorFragmentFragmentDoc}`;
+    ${AppFragmentDoc}
+${AppErrorFragmentDoc}`;
 export type AppUpdateMutationFn = Apollo.MutationFunction<AppUpdateMutation, AppUpdateMutationVariables>;
 
 /**
@@ -16832,11 +16921,11 @@ export const AppTokenCreateDocument = gql`
     }
     authToken
     errors {
-      ...AppErrorFragment
+      ...AppError
     }
   }
 }
-    ${AppErrorFragmentFragmentDoc}`;
+    ${AppErrorFragmentDoc}`;
 export type AppTokenCreateMutationFn = Apollo.MutationFunction<AppTokenCreateMutation, AppTokenCreateMutationVariables>;
 
 /**
@@ -16872,11 +16961,11 @@ export const AppTokenDeleteDocument = gql`
       id
     }
     errors {
-      ...AppErrorFragment
+      ...AppError
     }
   }
 }
-    ${AppErrorFragmentFragmentDoc}`;
+    ${AppErrorFragmentDoc}`;
 export type AppTokenDeleteMutationFn = Apollo.MutationFunction<AppTokenDeleteMutation, AppTokenDeleteMutationVariables>;
 
 /**
@@ -16907,11 +16996,11 @@ export const AppActivateDocument = gql`
     mutation AppActivate($id: ID!) {
   appActivate(id: $id) {
     errors {
-      ...AppErrorFragment
+      ...AppError
     }
   }
 }
-    ${AppErrorFragmentFragmentDoc}`;
+    ${AppErrorFragmentDoc}`;
 export type AppActivateMutationFn = Apollo.MutationFunction<AppActivateMutation, AppActivateMutationVariables>;
 
 /**
@@ -16942,11 +17031,11 @@ export const AppDeactivateDocument = gql`
     mutation AppDeactivate($id: ID!) {
   appDeactivate(id: $id) {
     errors {
-      ...AppErrorFragment
+      ...AppError
     }
   }
 }
-    ${AppErrorFragmentFragmentDoc}`;
+    ${AppErrorFragmentDoc}`;
 export type AppDeactivateMutationFn = Apollo.MutationFunction<AppDeactivateMutation, AppDeactivateMutationVariables>;
 
 /**
@@ -17075,7 +17164,7 @@ export type AppsInstallationsQueryResult = Apollo.QueryResult<AppsInstallationsQ
 export const AppDocument = gql`
     query App($id: ID!) {
   app(id: $id) {
-    ...AppFragment
+    ...App
     aboutApp
     permissions {
       code
@@ -17085,7 +17174,7 @@ export const AppDocument = gql`
     dataPrivacyUrl
   }
 }
-    ${AppFragmentFragmentDoc}`;
+    ${AppFragmentDoc}`;
 
 /**
  * __useAppQuery__
@@ -17169,11 +17258,11 @@ export const AttributeBulkDeleteDocument = gql`
     mutation AttributeBulkDelete($ids: [ID!]!) {
   attributeBulkDelete(ids: $ids) {
     errors {
-      ...AttributeErrorFragment
+      ...AttributeError
     }
   }
 }
-    ${AttributeErrorFragmentFragmentDoc}`;
+    ${AttributeErrorFragmentDoc}`;
 export type AttributeBulkDeleteMutationFn = Apollo.MutationFunction<AttributeBulkDeleteMutation, AttributeBulkDeleteMutationVariables>;
 
 /**
@@ -17204,11 +17293,11 @@ export const AttributeDeleteDocument = gql`
     mutation AttributeDelete($id: ID!) {
   attributeDelete(id: $id) {
     errors {
-      ...AttributeErrorFragment
+      ...AttributeError
     }
   }
 }
-    ${AttributeErrorFragmentFragmentDoc}`;
+    ${AttributeErrorFragmentDoc}`;
 export type AttributeDeleteMutationFn = Apollo.MutationFunction<AttributeDeleteMutation, AttributeDeleteMutationVariables>;
 
 /**
@@ -17239,15 +17328,15 @@ export const AttributeUpdateDocument = gql`
     mutation AttributeUpdate($id: ID!, $input: AttributeUpdateInput!) {
   attributeUpdate(id: $id, input: $input) {
     attribute {
-      ...AttributeDetailsFragment
+      ...AttributeDetails
     }
     errors {
-      ...AttributeErrorFragment
+      ...AttributeError
     }
   }
 }
-    ${AttributeDetailsFragmentFragmentDoc}
-${AttributeErrorFragmentFragmentDoc}`;
+    ${AttributeDetailsFragmentDoc}
+${AttributeErrorFragmentDoc}`;
 export type AttributeUpdateMutationFn = Apollo.MutationFunction<AttributeUpdateMutation, AttributeUpdateMutationVariables>;
 
 /**
@@ -17286,16 +17375,16 @@ export const AttributeValueDeleteDocument = gql`
         last: $lastValues
         before: $beforeValues
       ) {
-        ...AttributeValueListFragment
+        ...AttributeValueList
       }
     }
     errors {
-      ...AttributeErrorFragment
+      ...AttributeError
     }
   }
 }
-    ${AttributeValueListFragmentFragmentDoc}
-${AttributeErrorFragmentFragmentDoc}`;
+    ${AttributeValueListFragmentDoc}
+${AttributeErrorFragmentDoc}`;
 export type AttributeValueDeleteMutationFn = Apollo.MutationFunction<AttributeValueDeleteMutation, AttributeValueDeleteMutationVariables>;
 
 /**
@@ -17337,16 +17426,16 @@ export const AttributeValueUpdateDocument = gql`
         last: $lastValues
         before: $beforeValues
       ) {
-        ...AttributeValueListFragment
+        ...AttributeValueList
       }
     }
     errors {
-      ...AttributeErrorFragment
+      ...AttributeError
     }
   }
 }
-    ${AttributeValueListFragmentFragmentDoc}
-${AttributeErrorFragmentFragmentDoc}`;
+    ${AttributeValueListFragmentDoc}
+${AttributeErrorFragmentDoc}`;
 export type AttributeValueUpdateMutationFn = Apollo.MutationFunction<AttributeValueUpdateMutation, AttributeValueUpdateMutationVariables>;
 
 /**
@@ -17389,16 +17478,16 @@ export const AttributeValueCreateDocument = gql`
         last: $lastValues
         before: $beforeValues
       ) {
-        ...AttributeValueListFragment
+        ...AttributeValueList
       }
     }
     errors {
-      ...AttributeErrorFragment
+      ...AttributeError
     }
   }
 }
-    ${AttributeValueListFragmentFragmentDoc}
-${AttributeErrorFragmentFragmentDoc}`;
+    ${AttributeValueListFragmentDoc}
+${AttributeErrorFragmentDoc}`;
 export type AttributeValueCreateMutationFn = Apollo.MutationFunction<AttributeValueCreateMutation, AttributeValueCreateMutationVariables>;
 
 /**
@@ -17437,11 +17526,11 @@ export const AttributeCreateDocument = gql`
       id
     }
     errors {
-      ...AttributeErrorFragment
+      ...AttributeError
     }
   }
 }
-    ${AttributeErrorFragmentFragmentDoc}`;
+    ${AttributeErrorFragmentDoc}`;
 export type AttributeCreateMutationFn = Apollo.MutationFunction<AttributeCreateMutation, AttributeCreateMutationVariables>;
 
 /**
@@ -17480,7 +17569,7 @@ export const AttributeValueReorderDocument = gql`
         before: $beforeValues
       ) {
         pageInfo {
-          ...PageInfoFragment
+          ...PageInfo
         }
         edges {
           cursor
@@ -17491,12 +17580,12 @@ export const AttributeValueReorderDocument = gql`
       }
     }
     errors {
-      ...AttributeErrorFragment
+      ...AttributeError
     }
   }
 }
-    ${PageInfoFragmentFragmentDoc}
-${AttributeErrorFragmentFragmentDoc}`;
+    ${PageInfoFragmentDoc}
+${AttributeErrorFragmentDoc}`;
 export type AttributeValueReorderMutationFn = Apollo.MutationFunction<AttributeValueReorderMutation, AttributeValueReorderMutationVariables>;
 
 /**
@@ -17531,19 +17620,19 @@ export type AttributeValueReorderMutationOptions = Apollo.BaseMutationOptions<At
 export const AttributeDetailsDocument = gql`
     query AttributeDetails($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   attribute(id: $id) {
-    ...AttributeDetailsFragment
+    ...AttributeDetails
     choices(
       first: $firstValues
       after: $afterValues
       last: $lastValues
       before: $beforeValues
     ) {
-      ...AttributeValueListFragment
+      ...AttributeValueList
     }
   }
 }
-    ${AttributeDetailsFragmentFragmentDoc}
-${AttributeValueListFragmentFragmentDoc}`;
+    ${AttributeDetailsFragmentDoc}
+${AttributeValueListFragmentDoc}`;
 
 /**
  * __useAttributeDetailsQuery__
@@ -17588,16 +17677,16 @@ export const AttributeListDocument = gql`
   ) {
     edges {
       node {
-        ...AttributeFragment
+        ...Attribute
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${AttributeFragmentFragmentDoc}
-${PageInfoFragmentFragmentDoc}`;
+    ${AttributeFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useAttributeListQuery__
@@ -17635,11 +17724,11 @@ export const RequestPasswordResetDocument = gql`
     mutation RequestPasswordReset($email: String!, $redirectUrl: String!) {
   requestPasswordReset(email: $email, redirectUrl: $redirectUrl) {
     errors {
-      ...AccountErrorFragment
+      ...AccountError
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}`;
+    ${AccountErrorFragmentDoc}`;
 export type RequestPasswordResetMutationFn = Apollo.MutationFunction<RequestPasswordResetMutation, RequestPasswordResetMutationVariables>;
 
 /**
@@ -17742,11 +17831,11 @@ export const CategoryDeleteDocument = gql`
     mutation CategoryDelete($id: ID!) {
   categoryDelete(id: $id) {
     errors {
-      ...ProductErrorFragment
+      ...ProductError
     }
   }
 }
-    ${ProductErrorFragmentFragmentDoc}`;
+    ${ProductErrorFragmentDoc}`;
 export type CategoryDeleteMutationFn = Apollo.MutationFunction<CategoryDeleteMutation, CategoryDeleteMutationVariables>;
 
 /**
@@ -17777,15 +17866,15 @@ export const CategoryCreateDocument = gql`
     mutation CategoryCreate($parent: ID, $input: CategoryInput!) {
   categoryCreate(parent: $parent, input: $input) {
     category {
-      ...CategoryDetailsFragment
+      ...CategoryDetails
     }
     errors {
-      ...ProductErrorFragment
+      ...ProductError
     }
   }
 }
-    ${CategoryDetailsFragmentFragmentDoc}
-${ProductErrorFragmentFragmentDoc}`;
+    ${CategoryDetailsFragmentDoc}
+${ProductErrorFragmentDoc}`;
 export type CategoryCreateMutationFn = Apollo.MutationFunction<CategoryCreateMutation, CategoryCreateMutationVariables>;
 
 /**
@@ -17817,15 +17906,15 @@ export const CategoryUpdateDocument = gql`
     mutation CategoryUpdate($id: ID!, $input: CategoryInput!) {
   categoryUpdate(id: $id, input: $input) {
     category {
-      ...CategoryDetailsFragment
+      ...CategoryDetails
     }
     errors {
-      ...ProductErrorFragment
+      ...ProductError
     }
   }
 }
-    ${CategoryDetailsFragmentFragmentDoc}
-${ProductErrorFragmentFragmentDoc}`;
+    ${CategoryDetailsFragmentDoc}
+${ProductErrorFragmentDoc}`;
 export type CategoryUpdateMutationFn = Apollo.MutationFunction<CategoryUpdateMutation, CategoryUpdateMutationVariables>;
 
 /**
@@ -17857,11 +17946,11 @@ export const CategoryBulkDeleteDocument = gql`
     mutation CategoryBulkDelete($ids: [ID]!) {
   categoryBulkDelete(ids: $ids) {
     errors {
-      ...ProductErrorFragment
+      ...ProductError
     }
   }
 }
-    ${ProductErrorFragmentFragmentDoc}`;
+    ${ProductErrorFragmentDoc}`;
 export type CategoryBulkDeleteMutationFn = Apollo.MutationFunction<CategoryBulkDeleteMutation, CategoryBulkDeleteMutationVariables>;
 
 /**
@@ -17901,16 +17990,16 @@ export const RootCategoriesDocument = gql`
   ) {
     edges {
       node {
-        ...CategoryFragment
+        ...Category
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${CategoryFragmentFragmentDoc}
-${PageInfoFragmentFragmentDoc}`;
+    ${CategoryFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useRootCategoriesQuery__
@@ -17947,20 +18036,20 @@ export type RootCategoriesQueryResult = Apollo.QueryResult<RootCategoriesQuery, 
 export const CategoryDetailsDocument = gql`
     query CategoryDetails($id: ID!, $first: Int, $after: String, $last: Int, $before: String) {
   category(id: $id) {
-    ...CategoryDetailsFragment
+    ...CategoryDetails
     children(first: $first, after: $after, last: $last, before: $before) {
       edges {
         node {
-          ...CategoryFragment
+          ...Category
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
     products(first: $first, after: $after, last: $last, before: $before) {
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
       edges {
         cursor
@@ -17975,9 +18064,9 @@ export const CategoryDetailsDocument = gql`
     }
   }
 }
-    ${CategoryDetailsFragmentFragmentDoc}
-${CategoryFragmentFragmentDoc}
-${PageInfoFragmentFragmentDoc}`;
+    ${CategoryDetailsFragmentDoc}
+${CategoryFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useCategoryDetailsQuery__
@@ -18014,15 +18103,15 @@ export const ChannelCreateDocument = gql`
     mutation ChannelCreate($input: ChannelCreateInput!) {
   channelCreate(input: $input) {
     channel {
-      ...ChannelDetailsFragment
+      ...ChannelDetails
     }
     errors {
-      ...ChannelErrorFragment
+      ...ChannelError
     }
   }
 }
-    ${ChannelDetailsFragmentFragmentDoc}
-${ChannelErrorFragmentFragmentDoc}`;
+    ${ChannelDetailsFragmentDoc}
+${ChannelErrorFragmentDoc}`;
 export type ChannelCreateMutationFn = Apollo.MutationFunction<ChannelCreateMutation, ChannelCreateMutationVariables>;
 
 /**
@@ -18053,15 +18142,15 @@ export const ChannelUpdateDocument = gql`
     mutation ChannelUpdate($id: ID!, $input: ChannelUpdateInput!) {
   channelUpdate(id: $id, input: $input) {
     channel {
-      ...ChannelDetailsFragment
+      ...ChannelDetails
     }
     errors {
-      ...ChannelErrorFragment
+      ...ChannelError
     }
   }
 }
-    ${ChannelDetailsFragmentFragmentDoc}
-${ChannelErrorFragmentFragmentDoc}`;
+    ${ChannelDetailsFragmentDoc}
+${ChannelErrorFragmentDoc}`;
 export type ChannelUpdateMutationFn = Apollo.MutationFunction<ChannelUpdateMutation, ChannelUpdateMutationVariables>;
 
 /**
@@ -18093,11 +18182,11 @@ export const ChannelDeleteDocument = gql`
     mutation ChannelDelete($id: ID!, $input: ChannelDeleteInput) {
   channelDelete(id: $id, input: $input) {
     errors {
-      ...ChannelErrorFragment
+      ...ChannelError
     }
   }
 }
-    ${ChannelErrorFragmentFragmentDoc}`;
+    ${ChannelErrorFragmentDoc}`;
 export type ChannelDeleteMutationFn = Apollo.MutationFunction<ChannelDeleteMutation, ChannelDeleteMutationVariables>;
 
 /**
@@ -18129,15 +18218,15 @@ export const ChannelActivateDocument = gql`
     mutation ChannelActivate($id: ID!) {
   channelActivate(id: $id) {
     channel {
-      ...ChannelDetailsFragment
+      ...ChannelDetails
     }
     errors {
-      ...ChannelErrorFragment
+      ...ChannelError
     }
   }
 }
-    ${ChannelDetailsFragmentFragmentDoc}
-${ChannelErrorFragmentFragmentDoc}`;
+    ${ChannelDetailsFragmentDoc}
+${ChannelErrorFragmentDoc}`;
 export type ChannelActivateMutationFn = Apollo.MutationFunction<ChannelActivateMutation, ChannelActivateMutationVariables>;
 
 /**
@@ -18168,15 +18257,15 @@ export const ChannelDeactivateDocument = gql`
     mutation ChannelDeactivate($id: ID!) {
   channelDeactivate(id: $id) {
     channel {
-      ...ChannelDetailsFragment
+      ...ChannelDetails
     }
     errors {
-      ...ChannelErrorFragment
+      ...ChannelError
     }
   }
 }
-    ${ChannelDetailsFragmentFragmentDoc}
-${ChannelErrorFragmentFragmentDoc}`;
+    ${ChannelDetailsFragmentDoc}
+${ChannelErrorFragmentDoc}`;
 export type ChannelDeactivateMutationFn = Apollo.MutationFunction<ChannelDeactivateMutation, ChannelDeactivateMutationVariables>;
 
 /**
@@ -18206,10 +18295,10 @@ export type ChannelDeactivateMutationOptions = Apollo.BaseMutationOptions<Channe
 export const BaseChannelsDocument = gql`
     query BaseChannels {
   channels {
-    ...ChannelFragment
+    ...Channel
   }
 }
-    ${ChannelFragmentFragmentDoc}`;
+    ${ChannelFragmentDoc}`;
 
 /**
  * __useBaseChannelsQuery__
@@ -18240,10 +18329,10 @@ export type BaseChannelsQueryResult = Apollo.QueryResult<BaseChannelsQuery, Base
 export const ChannelsDocument = gql`
     query Channels {
   channels {
-    ...ChannelDetailsFragment
+    ...ChannelDetails
   }
 }
-    ${ChannelDetailsFragmentFragmentDoc}`;
+    ${ChannelDetailsFragmentDoc}`;
 
 /**
  * __useChannelsQuery__
@@ -18274,10 +18363,10 @@ export type ChannelsQueryResult = Apollo.QueryResult<ChannelsQuery, ChannelsQuer
 export const ChannelDocument = gql`
     query Channel($id: ID!) {
   channel(id: $id) {
-    ...ChannelDetailsFragment
+    ...ChannelDetails
   }
 }
-    ${ChannelDetailsFragmentFragmentDoc}`;
+    ${ChannelDetailsFragmentDoc}`;
 
 /**
  * __useChannelQuery__
@@ -18310,15 +18399,15 @@ export const CollectionUpdateDocument = gql`
     mutation CollectionUpdate($id: ID!, $input: CollectionInput!) {
   collectionUpdate(id: $id, input: $input) {
     collection {
-      ...CollectionDetailsFragment
+      ...CollectionDetails
     }
     errors {
-      ...CollectionErrorFragment
+      ...CollectionError
     }
   }
 }
-    ${CollectionDetailsFragmentFragmentDoc}
-${CollectionErrorFragmentFragmentDoc}`;
+    ${CollectionDetailsFragmentDoc}
+${CollectionErrorFragmentDoc}`;
 export type CollectionUpdateMutationFn = Apollo.MutationFunction<CollectionUpdateMutation, CollectionUpdateMutationVariables>;
 
 /**
@@ -18354,7 +18443,7 @@ export const CollectionAssignProductDocument = gql`
       products(first: $first, after: $after, before: $before, last: $last) {
         edges {
           node {
-            ...CollectionProductFragment
+            ...CollectionProduct
           }
         }
         pageInfo {
@@ -18366,12 +18455,12 @@ export const CollectionAssignProductDocument = gql`
       }
     }
     errors {
-      ...CollectionErrorFragment
+      ...CollectionError
     }
   }
 }
-    ${CollectionProductFragmentFragmentDoc}
-${CollectionErrorFragmentFragmentDoc}`;
+    ${CollectionProductFragmentDoc}
+${CollectionErrorFragmentDoc}`;
 export type CollectionAssignProductMutationFn = Apollo.MutationFunction<CollectionAssignProductMutation, CollectionAssignProductMutationVariables>;
 
 /**
@@ -18407,15 +18496,15 @@ export const CreateCollectionDocument = gql`
     mutation CreateCollection($input: CollectionCreateInput!) {
   collectionCreate(input: $input) {
     collection {
-      ...CollectionDetailsFragment
+      ...CollectionDetails
     }
     errors {
-      ...CollectionErrorFragment
+      ...CollectionError
     }
   }
 }
-    ${CollectionDetailsFragmentFragmentDoc}
-${CollectionErrorFragmentFragmentDoc}`;
+    ${CollectionDetailsFragmentDoc}
+${CollectionErrorFragmentDoc}`;
 export type CreateCollectionMutationFn = Apollo.MutationFunction<CreateCollectionMutation, CreateCollectionMutationVariables>;
 
 /**
@@ -18446,11 +18535,11 @@ export const RemoveCollectionDocument = gql`
     mutation RemoveCollection($id: ID!) {
   collectionDelete(id: $id) {
     errors {
-      ...CollectionErrorFragment
+      ...CollectionError
     }
   }
 }
-    ${CollectionErrorFragmentFragmentDoc}`;
+    ${CollectionErrorFragmentDoc}`;
 export type RemoveCollectionMutationFn = Apollo.MutationFunction<RemoveCollectionMutation, RemoveCollectionMutationVariables>;
 
 /**
@@ -18505,11 +18594,11 @@ export const UnassignCollectionProductDocument = gql`
       }
     }
     errors {
-      ...CollectionErrorFragment
+      ...CollectionError
     }
   }
 }
-    ${CollectionErrorFragmentFragmentDoc}`;
+    ${CollectionErrorFragmentDoc}`;
 export type UnassignCollectionProductMutationFn = Apollo.MutationFunction<UnassignCollectionProductMutation, UnassignCollectionProductMutationVariables>;
 
 /**
@@ -18545,11 +18634,11 @@ export const CollectionBulkDeleteDocument = gql`
     mutation CollectionBulkDelete($ids: [ID]!) {
   collectionBulkDelete(ids: $ids) {
     errors {
-      ...CollectionErrorFragment
+      ...CollectionError
     }
   }
 }
-    ${CollectionErrorFragmentFragmentDoc}`;
+    ${CollectionErrorFragmentDoc}`;
 export type CollectionBulkDeleteMutationFn = Apollo.MutationFunction<CollectionBulkDeleteMutation, CollectionBulkDeleteMutationVariables>;
 
 /**
@@ -18580,11 +18669,11 @@ export const CollectionChannelListingUpdateDocument = gql`
     mutation CollectionChannelListingUpdate($id: ID!, $input: CollectionChannelListingUpdateInput!) {
   collectionChannelListingUpdate(id: $id, input: $input) {
     errors {
-      ...CollectionChannelListingErrorFragment
+      ...CollectionChannelListingError
     }
   }
 }
-    ${CollectionChannelListingErrorFragmentFragmentDoc}`;
+    ${CollectionChannelListingErrorFragmentDoc}`;
 export type CollectionChannelListingUpdateMutationFn = Apollo.MutationFunction<CollectionChannelListingUpdateMutation, CollectionChannelListingUpdateMutationVariables>;
 
 /**
@@ -18625,7 +18714,7 @@ export const CollectionListDocument = gql`
   ) {
     edges {
       node {
-        ...CollectionFragment
+        ...Collection
         products {
           totalCount
         }
@@ -18639,7 +18728,7 @@ export const CollectionListDocument = gql`
     }
   }
 }
-    ${CollectionFragmentFragmentDoc}`;
+    ${CollectionFragmentDoc}`;
 
 /**
  * __useCollectionListQuery__
@@ -18677,11 +18766,11 @@ export type CollectionListQueryResult = Apollo.QueryResult<CollectionListQuery, 
 export const CollectionDetailsDocument = gql`
     query CollectionDetails($id: ID!, $first: Int, $after: String, $last: Int, $before: String) {
   collection(id: $id) {
-    ...CollectionDetailsFragment
+    ...CollectionDetails
     products(first: $first, after: $after, before: $before, last: $last) {
       edges {
         node {
-          ...CollectionProductFragment
+          ...CollectionProduct
         }
       }
       pageInfo {
@@ -18693,8 +18782,8 @@ export const CollectionDetailsDocument = gql`
     }
   }
 }
-    ${CollectionDetailsFragmentFragmentDoc}
-${CollectionProductFragmentFragmentDoc}`;
+    ${CollectionDetailsFragmentDoc}
+${CollectionProductFragmentDoc}`;
 
 /**
  * __useCollectionDetailsQuery__
@@ -18727,16 +18816,110 @@ export function useCollectionDetailsLazyQuery(baseOptions?: ApolloReactHooks.Laz
 export type CollectionDetailsQueryHookResult = ReturnType<typeof useCollectionDetailsQuery>;
 export type CollectionDetailsLazyQueryHookResult = ReturnType<typeof useCollectionDetailsLazyQuery>;
 export type CollectionDetailsQueryResult = Apollo.QueryResult<CollectionDetailsQuery, CollectionDetailsQueryVariables>;
+export const CheckIfOrderExistsDocument = gql`
+    query CheckIfOrderExists($id: ID!) {
+  order(id: $id) {
+    id
+    status
+  }
+}
+    `;
+
+/**
+ * __useCheckIfOrderExistsQuery__
+ *
+ * To run a query within a React component, call `useCheckIfOrderExistsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCheckIfOrderExistsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCheckIfOrderExistsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useCheckIfOrderExistsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<CheckIfOrderExistsQuery, CheckIfOrderExistsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<CheckIfOrderExistsQuery, CheckIfOrderExistsQueryVariables>(CheckIfOrderExistsDocument, options);
+      }
+export function useCheckIfOrderExistsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<CheckIfOrderExistsQuery, CheckIfOrderExistsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<CheckIfOrderExistsQuery, CheckIfOrderExistsQueryVariables>(CheckIfOrderExistsDocument, options);
+        }
+export type CheckIfOrderExistsQueryHookResult = ReturnType<typeof useCheckIfOrderExistsQuery>;
+export type CheckIfOrderExistsLazyQueryHookResult = ReturnType<typeof useCheckIfOrderExistsLazyQuery>;
+export type CheckIfOrderExistsQueryResult = Apollo.QueryResult<CheckIfOrderExistsQuery, CheckIfOrderExistsQueryVariables>;
+export const SearchCatalogDocument = gql`
+    query SearchCatalog($first: Int!, $query: String!) {
+  categories(first: $first, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+  collections(first: $first, filter: {search: $query}) {
+    edges {
+      node {
+        ...Collection
+      }
+    }
+  }
+  products(first: $first, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        category {
+          id
+          name
+        }
+        name
+      }
+    }
+  }
+}
+    ${CollectionFragmentDoc}`;
+
+/**
+ * __useSearchCatalogQuery__
+ *
+ * To run a query within a React component, call `useSearchCatalogQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchCatalogQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchCatalogQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useSearchCatalogQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SearchCatalogQuery, SearchCatalogQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<SearchCatalogQuery, SearchCatalogQueryVariables>(SearchCatalogDocument, options);
+      }
+export function useSearchCatalogLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SearchCatalogQuery, SearchCatalogQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<SearchCatalogQuery, SearchCatalogQueryVariables>(SearchCatalogDocument, options);
+        }
+export type SearchCatalogQueryHookResult = ReturnType<typeof useSearchCatalogQuery>;
+export type SearchCatalogLazyQueryHookResult = ReturnType<typeof useSearchCatalogLazyQuery>;
+export type SearchCatalogQueryResult = Apollo.QueryResult<SearchCatalogQuery, SearchCatalogQueryVariables>;
 export const ShopInfoDocument = gql`
     query ShopInfo {
   shop {
     countries {
-      country
-      code
+      ...CountryWithCode
     }
     defaultCountry {
-      code
-      country
+      ...CountryWithCode
     }
     defaultWeightUnit
     displayGrossPrices
@@ -18745,8 +18928,7 @@ export const ShopInfoDocument = gql`
       url
     }
     languages {
-      code
-      language
+      ...Language
     }
     includeTaxesInPrices
     name
@@ -18758,7 +18940,8 @@ export const ShopInfoDocument = gql`
     version
   }
 }
-    `;
+    ${CountryWithCodeFragmentDoc}
+${LanguageFragmentDoc}`;
 
 /**
  * __useShopInfoQuery__
@@ -18827,10 +19010,10 @@ export type ShopCountriesQueryResult = Apollo.QueryResult<ShopCountriesQuery, Sh
 export const RefreshLimitsDocument = gql`
     query RefreshLimits($channels: Boolean!, $orders: Boolean!, $productVariants: Boolean!, $staffUsers: Boolean!, $warehouses: Boolean!) {
   shop {
-    ...ShopLimitFragment
+    ...ShopLimit
   }
 }
-    ${ShopLimitFragmentFragmentDoc}`;
+    ${ShopLimitFragmentDoc}`;
 
 /**
  * __useRefreshLimitsQuery__
@@ -18904,11 +19087,11 @@ export const CheckOrderInvoicesStatusDocument = gql`
   order(id: $id) {
     id
     invoices {
-      ...InvoiceFragment
+      ...Invoice
     }
   }
 }
-    ${InvoiceFragmentFragmentDoc}`;
+    ${InvoiceFragmentDoc}`;
 
 /**
  * __useCheckOrderInvoicesStatusQuery__
@@ -18941,15 +19124,15 @@ export const UpdateCustomerDocument = gql`
     mutation UpdateCustomer($id: ID!, $input: CustomerInput!) {
   customerUpdate(id: $id, input: $input) {
     errors {
-      ...AccountErrorFragment
+      ...AccountError
     }
     user {
-      ...CustomerDetailsFragment
+      ...CustomerDetails
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}
-${CustomerDetailsFragmentFragmentDoc}`;
+    ${AccountErrorFragmentDoc}
+${CustomerDetailsFragmentDoc}`;
 export type UpdateCustomerMutationFn = Apollo.MutationFunction<UpdateCustomerMutation, UpdateCustomerMutationVariables>;
 
 /**
@@ -18981,14 +19164,14 @@ export const CreateCustomerDocument = gql`
     mutation CreateCustomer($input: UserCreateInput!) {
   customerCreate(input: $input) {
     errors {
-      ...AccountErrorFragment
+      ...AccountError
     }
     user {
       id
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}`;
+    ${AccountErrorFragmentDoc}`;
 export type CreateCustomerMutationFn = Apollo.MutationFunction<CreateCustomerMutation, CreateCustomerMutationVariables>;
 
 /**
@@ -19019,11 +19202,11 @@ export const RemoveCustomerDocument = gql`
     mutation RemoveCustomer($id: ID!) {
   customerDelete(id: $id) {
     errors {
-      ...AccountErrorFragment
+      ...AccountError
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}`;
+    ${AccountErrorFragmentDoc}`;
 export type RemoveCustomerMutationFn = Apollo.MutationFunction<RemoveCustomerMutation, RemoveCustomerMutationVariables>;
 
 /**
@@ -19054,15 +19237,15 @@ export const SetCustomerDefaultAddressDocument = gql`
     mutation SetCustomerDefaultAddress($addressId: ID!, $userId: ID!, $type: AddressTypeEnum!) {
   addressSetDefault(addressId: $addressId, userId: $userId, type: $type) {
     errors {
-      ...AccountErrorFragment
+      ...AccountError
     }
     user {
-      ...CustomerAddressesFragment
+      ...CustomerAddresses
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}
-${CustomerAddressesFragmentFragmentDoc}`;
+    ${AccountErrorFragmentDoc}
+${CustomerAddressesFragmentDoc}`;
 export type SetCustomerDefaultAddressMutationFn = Apollo.MutationFunction<SetCustomerDefaultAddressMutation, SetCustomerDefaultAddressMutationVariables>;
 
 /**
@@ -19095,19 +19278,19 @@ export const CreateCustomerAddressDocument = gql`
     mutation CreateCustomerAddress($id: ID!, $input: AddressInput!) {
   addressCreate(userId: $id, input: $input) {
     errors {
-      ...AccountErrorFragment
+      ...AccountError
     }
     address {
-      ...AddressFragment
+      ...Address
     }
     user {
-      ...CustomerAddressesFragment
+      ...CustomerAddresses
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}
-${AddressFragmentFragmentDoc}
-${CustomerAddressesFragmentFragmentDoc}`;
+    ${AccountErrorFragmentDoc}
+${AddressFragmentDoc}
+${CustomerAddressesFragmentDoc}`;
 export type CreateCustomerAddressMutationFn = Apollo.MutationFunction<CreateCustomerAddressMutation, CreateCustomerAddressMutationVariables>;
 
 /**
@@ -19139,15 +19322,15 @@ export const UpdateCustomerAddressDocument = gql`
     mutation UpdateCustomerAddress($id: ID!, $input: AddressInput!) {
   addressUpdate(id: $id, input: $input) {
     errors {
-      ...AccountErrorFragment
+      ...AccountError
     }
     address {
-      ...AddressFragment
+      ...Address
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}
-${AddressFragmentFragmentDoc}`;
+    ${AccountErrorFragmentDoc}
+${AddressFragmentDoc}`;
 export type UpdateCustomerAddressMutationFn = Apollo.MutationFunction<UpdateCustomerAddressMutation, UpdateCustomerAddressMutationVariables>;
 
 /**
@@ -19179,15 +19362,15 @@ export const RemoveCustomerAddressDocument = gql`
     mutation RemoveCustomerAddress($id: ID!) {
   addressDelete(id: $id) {
     errors {
-      ...AccountErrorFragment
+      ...AccountError
     }
     user {
-      ...CustomerAddressesFragment
+      ...CustomerAddresses
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}
-${CustomerAddressesFragmentFragmentDoc}`;
+    ${AccountErrorFragmentDoc}
+${CustomerAddressesFragmentDoc}`;
 export type RemoveCustomerAddressMutationFn = Apollo.MutationFunction<RemoveCustomerAddressMutation, RemoveCustomerAddressMutationVariables>;
 
 /**
@@ -19218,11 +19401,11 @@ export const BulkRemoveCustomersDocument = gql`
     mutation BulkRemoveCustomers($ids: [ID]!) {
   customerBulkDelete(ids: $ids) {
     errors {
-      ...AccountErrorFragment
+      ...AccountError
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}`;
+    ${AccountErrorFragmentDoc}`;
 export type BulkRemoveCustomersMutationFn = Apollo.MutationFunction<BulkRemoveCustomersMutation, BulkRemoveCustomersMutationVariables>;
 
 /**
@@ -19261,7 +19444,7 @@ export const ListCustomersDocument = gql`
   ) {
     edges {
       node {
-        ...CustomerFragment
+        ...Customer
         orders @include(if: $PERMISSION_MANAGE_ORDERS) {
           totalCount
         }
@@ -19275,7 +19458,7 @@ export const ListCustomersDocument = gql`
     }
   }
 }
-    ${CustomerFragmentFragmentDoc}`;
+    ${CustomerFragmentDoc}`;
 
 /**
  * __useListCustomersQuery__
@@ -19313,7 +19496,7 @@ export type ListCustomersQueryResult = Apollo.QueryResult<ListCustomersQuery, Li
 export const CustomerDetailsDocument = gql`
     query CustomerDetails($id: ID!, $PERMISSION_MANAGE_ORDERS: Boolean!) {
   user(id: $id) {
-    ...CustomerDetailsFragment
+    ...CustomerDetails
     orders(last: 5) @include(if: $PERMISSION_MANAGE_ORDERS) {
       edges {
         node {
@@ -19340,7 +19523,7 @@ export const CustomerDetailsDocument = gql`
     }
   }
 }
-    ${CustomerDetailsFragmentFragmentDoc}`;
+    ${CustomerDetailsFragmentDoc}`;
 
 /**
  * __useCustomerDetailsQuery__
@@ -19373,10 +19556,10 @@ export type CustomerDetailsQueryResult = Apollo.QueryResult<CustomerDetailsQuery
 export const CustomerAddressesDocument = gql`
     query CustomerAddresses($id: ID!) {
   user(id: $id) {
-    ...CustomerAddressesFragment
+    ...CustomerAddresses
   }
 }
-    ${CustomerAddressesFragmentFragmentDoc}`;
+    ${CustomerAddressesFragmentDoc}`;
 
 /**
  * __useCustomerAddressesQuery__
@@ -19446,20 +19629,20 @@ export const SaleUpdateDocument = gql`
     mutation SaleUpdate($input: SaleInput!, $id: ID!, $channelInput: SaleChannelListingInput!) {
   saleUpdate(id: $id, input: $input) {
     errors {
-      ...DiscountErrorFragment
+      ...DiscountError
     }
   }
   saleChannelListingUpdate(id: $id, input: $channelInput) {
     errors {
-      ...DiscountErrorFragment
+      ...DiscountError
     }
     sale {
-      ...SaleFragment
+      ...Sale
     }
   }
 }
-    ${DiscountErrorFragmentFragmentDoc}
-${SaleFragmentFragmentDoc}`;
+    ${DiscountErrorFragmentDoc}
+${SaleFragmentDoc}`;
 export type SaleUpdateMutationFn = Apollo.MutationFunction<SaleUpdateMutation, SaleUpdateMutationVariables>;
 
 /**
@@ -19492,15 +19675,15 @@ export const SaleCataloguesAddDocument = gql`
     mutation SaleCataloguesAdd($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
   saleCataloguesAdd(id: $id, input: $input) {
     errors {
-      ...DiscountErrorFragment
+      ...DiscountError
     }
     sale {
-      ...SaleDetailsFragment
+      ...SaleDetails
     }
   }
 }
-    ${DiscountErrorFragmentFragmentDoc}
-${SaleDetailsFragmentFragmentDoc}`;
+    ${DiscountErrorFragmentDoc}
+${SaleDetailsFragmentDoc}`;
 export type SaleCataloguesAddMutationFn = Apollo.MutationFunction<SaleCataloguesAddMutation, SaleCataloguesAddMutationVariables>;
 
 /**
@@ -19536,15 +19719,15 @@ export const SaleCataloguesRemoveDocument = gql`
     mutation SaleCataloguesRemove($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
   saleCataloguesRemove(id: $id, input: $input) {
     errors {
-      ...DiscountErrorFragment
+      ...DiscountError
     }
     sale {
-      ...SaleDetailsFragment
+      ...SaleDetails
     }
   }
 }
-    ${DiscountErrorFragmentFragmentDoc}
-${SaleDetailsFragmentFragmentDoc}`;
+    ${DiscountErrorFragmentDoc}
+${SaleDetailsFragmentDoc}`;
 export type SaleCataloguesRemoveMutationFn = Apollo.MutationFunction<SaleCataloguesRemoveMutation, SaleCataloguesRemoveMutationVariables>;
 
 /**
@@ -19580,15 +19763,15 @@ export const SaleCreateDocument = gql`
     mutation SaleCreate($input: SaleInput!) {
   saleCreate(input: $input) {
     errors {
-      ...DiscountErrorFragment
+      ...DiscountError
     }
     sale {
-      ...SaleFragment
+      ...Sale
     }
   }
 }
-    ${DiscountErrorFragmentFragmentDoc}
-${SaleFragmentFragmentDoc}`;
+    ${DiscountErrorFragmentDoc}
+${SaleFragmentDoc}`;
 export type SaleCreateMutationFn = Apollo.MutationFunction<SaleCreateMutation, SaleCreateMutationVariables>;
 
 /**
@@ -19619,11 +19802,11 @@ export const SaleDeleteDocument = gql`
     mutation SaleDelete($id: ID!) {
   saleDelete(id: $id) {
     errors {
-      ...DiscountErrorFragment
+      ...DiscountError
     }
   }
 }
-    ${DiscountErrorFragmentFragmentDoc}`;
+    ${DiscountErrorFragmentDoc}`;
 export type SaleDeleteMutationFn = Apollo.MutationFunction<SaleDeleteMutation, SaleDeleteMutationVariables>;
 
 /**
@@ -19689,15 +19872,15 @@ export const SaleChannelListingUpdateDocument = gql`
     mutation SaleChannelListingUpdate($id: ID!, $input: SaleChannelListingInput!) {
   saleChannelListingUpdate(id: $id, input: $input) {
     errors {
-      ...DiscountErrorFragment
+      ...DiscountError
     }
     sale {
-      ...SaleFragment
+      ...Sale
     }
   }
 }
-    ${DiscountErrorFragmentFragmentDoc}
-${SaleFragmentFragmentDoc}`;
+    ${DiscountErrorFragmentDoc}
+${SaleFragmentDoc}`;
 export type SaleChannelListingUpdateMutationFn = Apollo.MutationFunction<SaleChannelListingUpdateMutation, SaleChannelListingUpdateMutationVariables>;
 
 /**
@@ -19729,15 +19912,15 @@ export const VoucherChannelListingUpdateDocument = gql`
     mutation VoucherChannelListingUpdate($id: ID!, $input: VoucherChannelListingInput!) {
   voucherChannelListingUpdate(id: $id, input: $input) {
     errors {
-      ...DiscountErrorFragment
+      ...DiscountError
     }
     voucher {
-      ...VoucherFragment
+      ...Voucher
     }
   }
 }
-    ${DiscountErrorFragmentFragmentDoc}
-${VoucherFragmentFragmentDoc}`;
+    ${DiscountErrorFragmentDoc}
+${VoucherFragmentDoc}`;
 export type VoucherChannelListingUpdateMutationFn = Apollo.MutationFunction<VoucherChannelListingUpdateMutation, VoucherChannelListingUpdateMutationVariables>;
 
 /**
@@ -19769,15 +19952,15 @@ export const VoucherUpdateDocument = gql`
     mutation VoucherUpdate($input: VoucherInput!, $id: ID!) {
   voucherUpdate(id: $id, input: $input) {
     errors {
-      ...DiscountErrorFragment
+      ...DiscountError
     }
     voucher {
-      ...VoucherFragment
+      ...Voucher
     }
   }
 }
-    ${DiscountErrorFragmentFragmentDoc}
-${VoucherFragmentFragmentDoc}`;
+    ${DiscountErrorFragmentDoc}
+${VoucherFragmentDoc}`;
 export type VoucherUpdateMutationFn = Apollo.MutationFunction<VoucherUpdateMutation, VoucherUpdateMutationVariables>;
 
 /**
@@ -19809,15 +19992,15 @@ export const VoucherCataloguesAddDocument = gql`
     mutation VoucherCataloguesAdd($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
   voucherCataloguesAdd(id: $id, input: $input) {
     errors {
-      ...DiscountErrorFragment
+      ...DiscountError
     }
     voucher {
-      ...VoucherDetailsFragment
+      ...VoucherDetails
     }
   }
 }
-    ${DiscountErrorFragmentFragmentDoc}
-${VoucherDetailsFragmentFragmentDoc}`;
+    ${DiscountErrorFragmentDoc}
+${VoucherDetailsFragmentDoc}`;
 export type VoucherCataloguesAddMutationFn = Apollo.MutationFunction<VoucherCataloguesAddMutation, VoucherCataloguesAddMutationVariables>;
 
 /**
@@ -19853,15 +20036,15 @@ export const VoucherCataloguesRemoveDocument = gql`
     mutation VoucherCataloguesRemove($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
   voucherCataloguesRemove(id: $id, input: $input) {
     errors {
-      ...DiscountErrorFragment
+      ...DiscountError
     }
     voucher {
-      ...VoucherDetailsFragment
+      ...VoucherDetails
     }
   }
 }
-    ${DiscountErrorFragmentFragmentDoc}
-${VoucherDetailsFragmentFragmentDoc}`;
+    ${DiscountErrorFragmentDoc}
+${VoucherDetailsFragmentDoc}`;
 export type VoucherCataloguesRemoveMutationFn = Apollo.MutationFunction<VoucherCataloguesRemoveMutation, VoucherCataloguesRemoveMutationVariables>;
 
 /**
@@ -19897,15 +20080,15 @@ export const VoucherCreateDocument = gql`
     mutation VoucherCreate($input: VoucherInput!) {
   voucherCreate(input: $input) {
     errors {
-      ...DiscountErrorFragment
+      ...DiscountError
     }
     voucher {
-      ...VoucherFragment
+      ...Voucher
     }
   }
 }
-    ${DiscountErrorFragmentFragmentDoc}
-${VoucherFragmentFragmentDoc}`;
+    ${DiscountErrorFragmentDoc}
+${VoucherFragmentDoc}`;
 export type VoucherCreateMutationFn = Apollo.MutationFunction<VoucherCreateMutation, VoucherCreateMutationVariables>;
 
 /**
@@ -19936,11 +20119,11 @@ export const VoucherDeleteDocument = gql`
     mutation VoucherDelete($id: ID!) {
   voucherDelete(id: $id) {
     errors {
-      ...DiscountErrorFragment
+      ...DiscountError
     }
   }
 }
-    ${DiscountErrorFragmentFragmentDoc}`;
+    ${DiscountErrorFragmentDoc}`;
 export type VoucherDeleteMutationFn = Apollo.MutationFunction<VoucherDeleteMutation, VoucherDeleteMutationVariables>;
 
 /**
@@ -20015,16 +20198,16 @@ export const SaleListDocument = gql`
   ) {
     edges {
       node {
-        ...SaleFragment
+        ...Sale
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${SaleFragmentFragmentDoc}
-${PageInfoFragmentFragmentDoc}`;
+    ${SaleFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useSaleListQuery__
@@ -20072,16 +20255,16 @@ export const VoucherListDocument = gql`
   ) {
     edges {
       node {
-        ...VoucherFragment
+        ...Voucher
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${VoucherFragmentFragmentDoc}
-${PageInfoFragmentFragmentDoc}`;
+    ${VoucherFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useVoucherListQuery__
@@ -20119,10 +20302,10 @@ export type VoucherListQueryResult = Apollo.QueryResult<VoucherListQuery, Vouche
 export const SaleDetailsDocument = gql`
     query SaleDetails($id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
   sale(id: $id) {
-    ...SaleDetailsFragment
+    ...SaleDetails
   }
 }
-    ${SaleDetailsFragmentFragmentDoc}`;
+    ${SaleDetailsFragmentDoc}`;
 
 /**
  * __useSaleDetailsQuery__
@@ -20158,10 +20341,10 @@ export type SaleDetailsQueryResult = Apollo.QueryResult<SaleDetailsQuery, SaleDe
 export const VoucherDetailsDocument = gql`
     query VoucherDetails($id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
   voucher(id: $id) {
-    ...VoucherDetailsFragment
+    ...VoucherDetails
   }
 }
-    ${VoucherDetailsFragmentFragmentDoc}`;
+    ${VoucherDetailsFragmentDoc}`;
 
 /**
  * __useVoucherDetailsQuery__
@@ -20198,15 +20381,15 @@ export const FileUploadDocument = gql`
     mutation FileUpload($file: Upload!) {
   fileUpload(file: $file) {
     uploadedFile {
-      ...FileFragment
+      ...File
     }
     errors {
-      ...UploadErrorFragment
+      ...UploadError
     }
   }
 }
-    ${FileFragmentFragmentDoc}
-${UploadErrorFragmentFragmentDoc}`;
+    ${FileFragmentDoc}
+${UploadErrorFragmentDoc}`;
 export type FileUploadMutationFn = Apollo.MutationFunction<FileUploadMutation, FileUploadMutationVariables>;
 
 /**
@@ -20347,14 +20530,14 @@ export const ExportGiftCardsDocument = gql`
     mutation ExportGiftCards($input: ExportGiftCardsInput!) {
   exportGiftCards(input: $input) {
     errors {
-      ...ExportErrorFragment
+      ...ExportError
     }
     exportFile {
       id
     }
   }
 }
-    ${ExportErrorFragmentFragmentDoc}`;
+    ${ExportErrorFragmentDoc}`;
 export type ExportGiftCardsMutationFn = Apollo.MutationFunction<ExportGiftCardsMutation, ExportGiftCardsMutationVariables>;
 
 /**
@@ -20385,15 +20568,15 @@ export const GiftCardSettingsUpdateDocument = gql`
     mutation GiftCardSettingsUpdate($input: GiftCardSettingsUpdateInput!) {
   giftCardSettingsUpdate(input: $input) {
     errors {
-      ...GiftCardSettingsErrorFragment
+      ...GiftCardSettingsError
     }
     giftCardSettings {
-      ...GiftCardsSettingsFragment
+      ...GiftCardsSettings
     }
   }
 }
-    ${GiftCardSettingsErrorFragmentFragmentDoc}
-${GiftCardsSettingsFragmentFragmentDoc}`;
+    ${GiftCardSettingsErrorFragmentDoc}
+${GiftCardsSettingsFragmentDoc}`;
 export type GiftCardSettingsUpdateMutationFn = Apollo.MutationFunction<GiftCardSettingsUpdateMutation, GiftCardSettingsUpdateMutationVariables>;
 
 /**
@@ -20423,10 +20606,10 @@ export type GiftCardSettingsUpdateMutationOptions = Apollo.BaseMutationOptions<G
 export const GiftCardSettingsDocument = gql`
     query GiftCardSettings {
   giftCardSettings {
-    ...GiftCardsSettingsFragment
+    ...GiftCardsSettings
   }
 }
-    ${GiftCardsSettingsFragmentFragmentDoc}`;
+    ${GiftCardsSettingsFragmentDoc}`;
 
 /**
  * __useGiftCardSettingsQuery__
@@ -21167,14 +21350,14 @@ export const MenuCreateDocument = gql`
     mutation MenuCreate($input: MenuCreateInput!) {
   menuCreate(input: $input) {
     errors {
-      ...MenuErrorFragment
+      ...MenuError
     }
     menu {
       id
     }
   }
 }
-    ${MenuErrorFragmentFragmentDoc}`;
+    ${MenuErrorFragmentDoc}`;
 export type MenuCreateMutationFn = Apollo.MutationFunction<MenuCreateMutation, MenuCreateMutationVariables>;
 
 /**
@@ -21205,11 +21388,11 @@ export const MenuBulkDeleteDocument = gql`
     mutation MenuBulkDelete($ids: [ID]!) {
   menuBulkDelete(ids: $ids) {
     errors {
-      ...MenuErrorFragment
+      ...MenuError
     }
   }
 }
-    ${MenuErrorFragmentFragmentDoc}`;
+    ${MenuErrorFragmentDoc}`;
 export type MenuBulkDeleteMutationFn = Apollo.MutationFunction<MenuBulkDeleteMutation, MenuBulkDeleteMutationVariables>;
 
 /**
@@ -21240,11 +21423,11 @@ export const MenuDeleteDocument = gql`
     mutation MenuDelete($id: ID!) {
   menuDelete(id: $id) {
     errors {
-      ...MenuErrorFragment
+      ...MenuError
     }
   }
 }
-    ${MenuErrorFragmentFragmentDoc}`;
+    ${MenuErrorFragmentDoc}`;
 export type MenuDeleteMutationFn = Apollo.MutationFunction<MenuDeleteMutation, MenuDeleteMutationVariables>;
 
 /**
@@ -21275,20 +21458,20 @@ export const MenuItemCreateDocument = gql`
     mutation MenuItemCreate($input: MenuItemCreateInput!) {
   menuItemCreate(input: $input) {
     errors {
-      ...MenuErrorFragment
+      ...MenuError
     }
     menuItem {
       menu {
         id
         items {
-          ...MenuItemNestedFragment
+          ...MenuItemNested
         }
       }
     }
   }
 }
-    ${MenuErrorFragmentFragmentDoc}
-${MenuItemNestedFragmentFragmentDoc}`;
+    ${MenuErrorFragmentDoc}
+${MenuItemNestedFragmentDoc}`;
 export type MenuItemCreateMutationFn = Apollo.MutationFunction<MenuItemCreateMutation, MenuItemCreateMutationVariables>;
 
 /**
@@ -21319,21 +21502,21 @@ export const MenuUpdateDocument = gql`
     mutation MenuUpdate($id: ID!, $name: String!, $moves: [MenuItemMoveInput]!, $removeIds: [ID]!) {
   menuUpdate(id: $id, input: {name: $name}) {
     errors {
-      ...MenuErrorFragment
+      ...MenuError
     }
   }
   menuItemMove(menu: $id, moves: $moves) {
     errors {
-      ...MenuErrorFragment
+      ...MenuError
     }
   }
   menuItemBulkDelete(ids: $removeIds) {
     errors {
-      ...MenuErrorFragment
+      ...MenuError
     }
   }
 }
-    ${MenuErrorFragmentFragmentDoc}`;
+    ${MenuErrorFragmentDoc}`;
 export type MenuUpdateMutationFn = Apollo.MutationFunction<MenuUpdateMutation, MenuUpdateMutationVariables>;
 
 /**
@@ -21367,15 +21550,15 @@ export const MenuItemUpdateDocument = gql`
     mutation MenuItemUpdate($id: ID!, $input: MenuItemInput!) {
   menuItemUpdate(id: $id, input: $input) {
     errors {
-      ...MenuErrorFragment
+      ...MenuError
     }
     menuItem {
-      ...MenuItemFragment
+      ...MenuItem
     }
   }
 }
-    ${MenuErrorFragmentFragmentDoc}
-${MenuItemFragmentFragmentDoc}`;
+    ${MenuErrorFragmentDoc}
+${MenuItemFragmentDoc}`;
 export type MenuItemUpdateMutationFn = Apollo.MutationFunction<MenuItemUpdateMutation, MenuItemUpdateMutationVariables>;
 
 /**
@@ -21408,16 +21591,16 @@ export const MenuListDocument = gql`
   menus(first: $first, after: $after, before: $before, last: $last, sortBy: $sort) {
     edges {
       node {
-        ...MenuFragment
+        ...Menu
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${MenuFragmentFragmentDoc}
-${PageInfoFragmentFragmentDoc}`;
+    ${MenuFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useMenuListQuery__
@@ -21453,10 +21636,10 @@ export type MenuListQueryResult = Apollo.QueryResult<MenuListQuery, MenuListQuer
 export const MenuDetailsDocument = gql`
     query MenuDetails($id: ID!) {
   menu(id: $id) {
-    ...MenuDetailsFragment
+    ...MenuDetails
   }
 }
-    ${MenuDetailsFragmentFragmentDoc}`;
+    ${MenuDetailsFragmentDoc}`;
 
 /**
  * __useMenuDetailsQuery__
@@ -21489,15 +21672,15 @@ export const OrderCancelDocument = gql`
     mutation OrderCancel($id: ID!) {
   orderCancel(id: $id) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
     order {
-      ...OrderDetailsFragment
+      ...OrderDetails
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}
-${OrderDetailsFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderCancelMutationFn = Apollo.MutationFunction<OrderCancelMutation, OrderCancelMutationVariables>;
 
 /**
@@ -21528,15 +21711,15 @@ export const OrderDiscountAddDocument = gql`
     mutation OrderDiscountAdd($input: OrderDiscountCommonInput!, $orderId: ID!) {
   orderDiscountAdd(input: $input, orderId: $orderId) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
     order {
-      ...OrderDetailsFragment
+      ...OrderDetails
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}
-${OrderDetailsFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderDiscountAddMutationFn = Apollo.MutationFunction<OrderDiscountAddMutation, OrderDiscountAddMutationVariables>;
 
 /**
@@ -21568,15 +21751,15 @@ export const OrderDiscountDeleteDocument = gql`
     mutation OrderDiscountDelete($discountId: ID!) {
   orderDiscountDelete(discountId: $discountId) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
     order {
-      ...OrderDetailsFragment
+      ...OrderDetails
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}
-${OrderDetailsFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderDiscountDeleteMutationFn = Apollo.MutationFunction<OrderDiscountDeleteMutation, OrderDiscountDeleteMutationVariables>;
 
 /**
@@ -21607,15 +21790,15 @@ export const OrderLineDiscountRemoveDocument = gql`
     mutation OrderLineDiscountRemove($orderLineId: ID!) {
   orderLineDiscountRemove(orderLineId: $orderLineId) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
     order {
-      ...OrderDetailsFragment
+      ...OrderDetails
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}
-${OrderDetailsFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderLineDiscountRemoveMutationFn = Apollo.MutationFunction<OrderLineDiscountRemoveMutation, OrderLineDiscountRemoveMutationVariables>;
 
 /**
@@ -21646,15 +21829,15 @@ export const OrderLineDiscountUpdateDocument = gql`
     mutation OrderLineDiscountUpdate($input: OrderDiscountCommonInput!, $orderLineId: ID!) {
   orderLineDiscountUpdate(input: $input, orderLineId: $orderLineId) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
     order {
-      ...OrderDetailsFragment
+      ...OrderDetails
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}
-${OrderDetailsFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderLineDiscountUpdateMutationFn = Apollo.MutationFunction<OrderLineDiscountUpdateMutation, OrderLineDiscountUpdateMutationVariables>;
 
 /**
@@ -21686,15 +21869,15 @@ export const OrderDiscountUpdateDocument = gql`
     mutation OrderDiscountUpdate($input: OrderDiscountCommonInput!, $discountId: ID!) {
   orderDiscountUpdate(input: $input, discountId: $discountId) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
     order {
-      ...OrderDetailsFragment
+      ...OrderDetails
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}
-${OrderDetailsFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderDiscountUpdateMutationFn = Apollo.MutationFunction<OrderDiscountUpdateMutation, OrderDiscountUpdateMutationVariables>;
 
 /**
@@ -21726,15 +21909,15 @@ export const OrderDraftCancelDocument = gql`
     mutation OrderDraftCancel($id: ID!) {
   draftOrderDelete(id: $id) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
     order {
-      ...OrderDetailsFragment
+      ...OrderDetails
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}
-${OrderDetailsFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderDraftCancelMutationFn = Apollo.MutationFunction<OrderDraftCancelMutation, OrderDraftCancelMutationVariables>;
 
 /**
@@ -21765,11 +21948,11 @@ export const OrderDraftBulkCancelDocument = gql`
     mutation OrderDraftBulkCancel($ids: [ID]!) {
   draftOrderBulkDelete(ids: $ids) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}`;
 export type OrderDraftBulkCancelMutationFn = Apollo.MutationFunction<OrderDraftBulkCancelMutation, OrderDraftBulkCancelMutationVariables>;
 
 /**
@@ -21800,15 +21983,15 @@ export const OrderConfirmDocument = gql`
     mutation OrderConfirm($id: ID!) {
   orderConfirm(id: $id) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
     order {
-      ...OrderDetailsFragment
+      ...OrderDetails
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}
-${OrderDetailsFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderConfirmMutationFn = Apollo.MutationFunction<OrderConfirmMutation, OrderConfirmMutationVariables>;
 
 /**
@@ -21839,15 +22022,15 @@ export const OrderDraftFinalizeDocument = gql`
     mutation OrderDraftFinalize($id: ID!) {
   draftOrderComplete(id: $id) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
     order {
-      ...OrderDetailsFragment
+      ...OrderDetails
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}
-${OrderDetailsFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderDraftFinalizeMutationFn = Apollo.MutationFunction<OrderDraftFinalizeMutation, OrderDraftFinalizeMutationVariables>;
 
 /**
@@ -21878,7 +22061,7 @@ export const FulfillmentReturnProductsDocument = gql`
     mutation FulfillmentReturnProducts($id: ID!, $input: OrderReturnProductsInput!) {
   orderFulfillmentReturnProducts(input: $input, order: $id) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
     order {
       id
@@ -21888,7 +22071,7 @@ export const FulfillmentReturnProductsDocument = gql`
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}`;
 export type FulfillmentReturnProductsMutationFn = Apollo.MutationFunction<FulfillmentReturnProductsMutation, FulfillmentReturnProductsMutationVariables>;
 
 /**
@@ -21920,15 +22103,15 @@ export const OrderRefundDocument = gql`
     mutation OrderRefund($id: ID!, $amount: PositiveDecimal!) {
   orderRefund(id: $id, amount: $amount) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
     order {
-      ...OrderDetailsFragment
+      ...OrderDetails
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}
-${OrderDetailsFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderRefundMutationFn = Apollo.MutationFunction<OrderRefundMutation, OrderRefundMutationVariables>;
 
 /**
@@ -21960,19 +22143,19 @@ export const OrderFulfillmentRefundProductsDocument = gql`
     mutation OrderFulfillmentRefundProducts($input: OrderRefundProductsInput!, $order: ID!) {
   orderFulfillmentRefundProducts(input: $input, order: $order) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
     fulfillment {
-      ...FulfillmentFragment
+      ...Fulfillment
     }
     order {
-      ...OrderDetailsFragment
+      ...OrderDetails
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}
-${FulfillmentFragmentFragmentDoc}
-${OrderDetailsFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${FulfillmentFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderFulfillmentRefundProductsMutationFn = Apollo.MutationFunction<OrderFulfillmentRefundProductsMutation, OrderFulfillmentRefundProductsMutationVariables>;
 
 /**
@@ -22004,15 +22187,15 @@ export const OrderVoidDocument = gql`
     mutation OrderVoid($id: ID!) {
   orderVoid(id: $id) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
     order {
-      ...OrderDetailsFragment
+      ...OrderDetails
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}
-${OrderDetailsFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderVoidMutationFn = Apollo.MutationFunction<OrderVoidMutation, OrderVoidMutationVariables>;
 
 /**
@@ -22043,15 +22226,15 @@ export const OrderMarkAsPaidDocument = gql`
     mutation OrderMarkAsPaid($id: ID!, $transactionReference: String) {
   orderMarkAsPaid(id: $id, transactionReference: $transactionReference) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
     order {
-      ...OrderDetailsFragment
+      ...OrderDetails
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}
-${OrderDetailsFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderMarkAsPaidMutationFn = Apollo.MutationFunction<OrderMarkAsPaidMutation, OrderMarkAsPaidMutationVariables>;
 
 /**
@@ -22083,15 +22266,15 @@ export const OrderCaptureDocument = gql`
     mutation OrderCapture($id: ID!, $amount: PositiveDecimal!) {
   orderCapture(id: $id, amount: $amount) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
     order {
-      ...OrderDetailsFragment
+      ...OrderDetails
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}
-${OrderDetailsFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderCaptureMutationFn = Apollo.MutationFunction<OrderCaptureMutation, OrderCaptureMutationVariables>;
 
 /**
@@ -22123,15 +22306,15 @@ export const OrderFulfillmentUpdateTrackingDocument = gql`
     mutation OrderFulfillmentUpdateTracking($id: ID!, $input: FulfillmentUpdateTrackingInput!) {
   orderFulfillmentUpdateTracking(id: $id, input: $input) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
     order {
-      ...OrderDetailsFragment
+      ...OrderDetails
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}
-${OrderDetailsFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderFulfillmentUpdateTrackingMutationFn = Apollo.MutationFunction<OrderFulfillmentUpdateTrackingMutation, OrderFulfillmentUpdateTrackingMutationVariables>;
 
 /**
@@ -22163,15 +22346,15 @@ export const OrderFulfillmentApproveDocument = gql`
     mutation OrderFulfillmentApprove($id: ID!, $notifyCustomer: Boolean!) {
   orderFulfillmentApprove(id: $id, notifyCustomer: $notifyCustomer) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
     order {
-      ...OrderDetailsFragment
+      ...OrderDetails
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}
-${OrderDetailsFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderFulfillmentApproveMutationFn = Apollo.MutationFunction<OrderFulfillmentApproveMutation, OrderFulfillmentApproveMutationVariables>;
 
 /**
@@ -22203,15 +22386,15 @@ export const OrderFulfillmentCancelDocument = gql`
     mutation OrderFulfillmentCancel($id: ID!, $input: FulfillmentCancelInput!) {
   orderFulfillmentCancel(id: $id, input: $input) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
     order {
-      ...OrderDetailsFragment
+      ...OrderDetails
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}
-${OrderDetailsFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderFulfillmentCancelMutationFn = Apollo.MutationFunction<OrderFulfillmentCancelMutation, OrderFulfillmentCancelMutationVariables>;
 
 /**
@@ -22243,18 +22426,18 @@ export const OrderAddNoteDocument = gql`
     mutation OrderAddNote($order: ID!, $input: OrderAddNoteInput!) {
   orderAddNote(order: $order, input: $input) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
     order {
       id
       events {
-        ...OrderEventFragment
+        ...OrderEvent
       }
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}
-${OrderEventFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderEventFragmentDoc}`;
 export type OrderAddNoteMutationFn = Apollo.MutationFunction<OrderAddNoteMutation, OrderAddNoteMutationVariables>;
 
 /**
@@ -22286,15 +22469,15 @@ export const OrderUpdateDocument = gql`
     mutation OrderUpdate($id: ID!, $input: OrderUpdateInput!) {
   orderUpdate(id: $id, input: $input) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
     order {
-      ...OrderDetailsFragment
+      ...OrderDetails
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}
-${OrderDetailsFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderUpdateMutationFn = Apollo.MutationFunction<OrderUpdateMutation, OrderUpdateMutationVariables>;
 
 /**
@@ -22326,15 +22509,15 @@ export const OrderDraftUpdateDocument = gql`
     mutation OrderDraftUpdate($id: ID!, $input: DraftOrderInput!) {
   draftOrderUpdate(id: $id, input: $input) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
     order {
-      ...OrderDetailsFragment
+      ...OrderDetails
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}
-${OrderDetailsFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderDraftUpdateMutationFn = Apollo.MutationFunction<OrderDraftUpdateMutation, OrderDraftUpdateMutationVariables>;
 
 /**
@@ -22366,7 +22549,7 @@ export const OrderShippingMethodUpdateDocument = gql`
     mutation OrderShippingMethodUpdate($id: ID!, $input: OrderUpdateShippingInput!) {
   orderUpdateShipping(order: $id, input: $input) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
     order {
       shippingMethods {
@@ -22399,12 +22582,12 @@ export const OrderShippingMethodUpdateDocument = gql`
           currency
         }
       }
-      ...OrderDetailsFragment
+      ...OrderDetails
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}
-${OrderDetailsFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderShippingMethodUpdateMutationFn = Apollo.MutationFunction<OrderShippingMethodUpdateMutation, OrderShippingMethodUpdateMutationVariables>;
 
 /**
@@ -22436,14 +22619,14 @@ export const OrderDraftCreateDocument = gql`
     mutation OrderDraftCreate($input: DraftOrderCreateInput!) {
   draftOrderCreate(input: $input) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
     order {
       id
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}`;
 export type OrderDraftCreateMutationFn = Apollo.MutationFunction<OrderDraftCreateMutation, OrderDraftCreateMutationVariables>;
 
 /**
@@ -22474,15 +22657,15 @@ export const OrderLineDeleteDocument = gql`
     mutation OrderLineDelete($id: ID!) {
   orderLineDelete(id: $id) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
     order {
-      ...OrderDetailsFragment
+      ...OrderDetails
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}
-${OrderDetailsFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderLineDeleteMutationFn = Apollo.MutationFunction<OrderLineDeleteMutation, OrderLineDeleteMutationVariables>;
 
 /**
@@ -22513,15 +22696,15 @@ export const OrderLinesAddDocument = gql`
     mutation OrderLinesAdd($id: ID!, $input: [OrderLineCreateInput]!) {
   orderLinesCreate(id: $id, input: $input) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
     order {
-      ...OrderDetailsFragment
+      ...OrderDetails
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}
-${OrderDetailsFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderLinesAddMutationFn = Apollo.MutationFunction<OrderLinesAddMutation, OrderLinesAddMutationVariables>;
 
 /**
@@ -22553,15 +22736,15 @@ export const OrderLineUpdateDocument = gql`
     mutation OrderLineUpdate($id: ID!, $input: OrderLineInput!) {
   orderLineUpdate(id: $id, input: $input) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
     }
     order {
-      ...OrderDetailsFragment
+      ...OrderDetails
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}
-${OrderDetailsFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderLineUpdateMutationFn = Apollo.MutationFunction<OrderLineUpdateMutation, OrderLineUpdateMutationVariables>;
 
 /**
@@ -22593,17 +22776,17 @@ export const FulfillOrderDocument = gql`
     mutation FulfillOrder($orderId: ID!, $input: OrderFulfillInput!) {
   orderFulfill(order: $orderId, input: $input) {
     errors {
-      ...OrderErrorFragment
+      ...OrderError
       warehouse
       orderLines
     }
     order {
-      ...OrderDetailsFragment
+      ...OrderDetails
     }
   }
 }
-    ${OrderErrorFragmentFragmentDoc}
-${OrderDetailsFragmentFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type FulfillOrderMutationFn = Apollo.MutationFunction<FulfillOrderMutation, FulfillOrderMutationVariables>;
 
 /**
@@ -22635,21 +22818,21 @@ export const InvoiceRequestDocument = gql`
     mutation InvoiceRequest($orderId: ID!) {
   invoiceRequest(orderId: $orderId) {
     errors {
-      ...InvoiceErrorFragment
+      ...InvoiceError
     }
     invoice {
-      ...InvoiceFragment
+      ...Invoice
     }
     order {
       id
       invoices {
-        ...InvoiceFragment
+        ...Invoice
       }
     }
   }
 }
-    ${InvoiceErrorFragmentFragmentDoc}
-${InvoiceFragmentFragmentDoc}`;
+    ${InvoiceErrorFragmentDoc}
+${InvoiceFragmentDoc}`;
 export type InvoiceRequestMutationFn = Apollo.MutationFunction<InvoiceRequestMutation, InvoiceRequestMutationVariables>;
 
 /**
@@ -22680,15 +22863,15 @@ export const InvoiceEmailSendDocument = gql`
     mutation InvoiceEmailSend($id: ID!) {
   invoiceSendNotification(id: $id) {
     errors {
-      ...InvoiceErrorFragment
+      ...InvoiceError
     }
     invoice {
-      ...InvoiceFragment
+      ...Invoice
     }
   }
 }
-    ${InvoiceErrorFragmentFragmentDoc}
-${InvoiceFragmentFragmentDoc}`;
+    ${InvoiceErrorFragmentDoc}
+${InvoiceFragmentDoc}`;
 export type InvoiceEmailSendMutationFn = Apollo.MutationFunction<InvoiceEmailSendMutation, InvoiceEmailSendMutationVariables>;
 
 /**
@@ -22719,25 +22902,25 @@ export const OrderSettingsUpdateDocument = gql`
     mutation OrderSettingsUpdate($orderSettingsInput: OrderSettingsUpdateInput!, $shopSettingsInput: ShopSettingsInput!) {
   orderSettingsUpdate(input: $orderSettingsInput) {
     errors {
-      ...OrderSettingsErrorFragment
+      ...OrderSettingsError
     }
     orderSettings {
-      ...OrderSettingsFragment
+      ...OrderSettings
     }
   }
   shopSettingsUpdate(input: $shopSettingsInput) {
     errors {
-      ...ShopErrorFragment
+      ...ShopError
     }
     shop {
-      ...ShopOrderSettingsFragment
+      ...ShopOrderSettings
     }
   }
 }
-    ${OrderSettingsErrorFragmentFragmentDoc}
-${OrderSettingsFragmentFragmentDoc}
-${ShopErrorFragmentFragmentDoc}
-${ShopOrderSettingsFragmentFragmentDoc}`;
+    ${OrderSettingsErrorFragmentDoc}
+${OrderSettingsFragmentDoc}
+${ShopErrorFragmentDoc}
+${ShopOrderSettingsFragmentDoc}`;
 export type OrderSettingsUpdateMutationFn = Apollo.MutationFunction<OrderSettingsUpdateMutation, OrderSettingsUpdateMutationVariables>;
 
 /**
@@ -22779,7 +22962,7 @@ export const OrderListDocument = gql`
       node {
         __typename
         billingAddress {
-          ...AddressFragment
+          ...Address
         }
         created
         id
@@ -22805,7 +22988,7 @@ export const OrderListDocument = gql`
     }
   }
 }
-    ${AddressFragmentFragmentDoc}`;
+    ${AddressFragmentDoc}`;
 
 /**
  * __useOrderListQuery__
@@ -22853,7 +23036,7 @@ export const OrderDraftListDocument = gql`
       node {
         __typename
         billingAddress {
-          ...AddressFragment
+          ...Address
         }
         created
         id
@@ -22879,7 +23062,7 @@ export const OrderDraftListDocument = gql`
     }
   }
 }
-    ${AddressFragmentFragmentDoc}`;
+    ${AddressFragmentDoc}`;
 
 /**
  * __useOrderDraftListQuery__
@@ -22916,7 +23099,7 @@ export type OrderDraftListQueryResult = Apollo.QueryResult<OrderDraftListQuery, 
 export const OrderDetailsDocument = gql`
     query OrderDetails($id: ID!) {
   order(id: $id) {
-    ...OrderDetailsFragment
+    ...OrderDetails
   }
   shop {
     countries {
@@ -22928,7 +23111,7 @@ export const OrderDetailsDocument = gql`
     fulfillmentAutoApprove
   }
 }
-    ${OrderDetailsFragmentFragmentDoc}`;
+    ${OrderDetailsFragmentDoc}`;
 
 /**
  * __useOrderDetailsQuery__
@@ -23001,7 +23184,7 @@ export const OrderFulfillDataDocument = gql`
         stocks {
           id
           warehouse {
-            ...WarehouseFragment
+            ...Warehouse
           }
           quantity
           quantityAllocated
@@ -23015,7 +23198,7 @@ export const OrderFulfillDataDocument = gql`
     number
   }
 }
-    ${WarehouseFragmentFragmentDoc}`;
+    ${WarehouseFragmentDoc}`;
 
 /**
  * __useOrderFulfillDataQuery__
@@ -23047,10 +23230,10 @@ export type OrderFulfillDataQueryResult = Apollo.QueryResult<OrderFulfillDataQue
 export const OrderFulfillSettingsDocument = gql`
     query OrderFulfillSettings {
   shop {
-    ...ShopOrderSettingsFragment
+    ...ShopOrderSettings
   }
 }
-    ${ShopOrderSettingsFragmentFragmentDoc}`;
+    ${ShopOrderSettingsFragmentDoc}`;
 
 /**
  * __useOrderFulfillSettingsQuery__
@@ -23081,14 +23264,14 @@ export type OrderFulfillSettingsQueryResult = Apollo.QueryResult<OrderFulfillSet
 export const OrderSettingsDocument = gql`
     query OrderSettings {
   orderSettings {
-    ...OrderSettingsFragment
+    ...OrderSettings
   }
   shop {
-    ...ShopOrderSettingsFragment
+    ...ShopOrderSettings
   }
 }
-    ${OrderSettingsFragmentFragmentDoc}
-${ShopOrderSettingsFragmentFragmentDoc}`;
+    ${OrderSettingsFragmentDoc}
+${ShopOrderSettingsFragmentDoc}`;
 
 /**
  * __useOrderSettingsQuery__
@@ -23135,7 +23318,7 @@ export const OrderRefundDataDocument = gql`
       }
     }
     lines {
-      ...RefundOrderLineFragment
+      ...RefundOrderLine
       quantityToFulfill
     }
     fulfillments {
@@ -23146,14 +23329,14 @@ export const OrderRefundDataDocument = gql`
         id
         quantity
         orderLine {
-          ...RefundOrderLineFragment
+          ...RefundOrderLine
         }
       }
     }
   }
 }
     ${MoneyFragmentDoc}
-${RefundOrderLineFragmentFragmentDoc}`;
+${RefundOrderLineFragmentDoc}`;
 
 /**
  * __useOrderRefundDataQuery__
@@ -23186,15 +23369,15 @@ export const PageTypeUpdateDocument = gql`
     mutation PageTypeUpdate($id: ID!, $input: PageTypeUpdateInput!) {
   pageTypeUpdate(id: $id, input: $input) {
     errors {
-      ...PageErrorFragment
+      ...PageError
     }
     pageType {
-      ...PageTypeDetailsFragment
+      ...PageTypeDetails
     }
   }
 }
-    ${PageErrorFragmentFragmentDoc}
-${PageTypeDetailsFragmentFragmentDoc}`;
+    ${PageErrorFragmentDoc}
+${PageTypeDetailsFragmentDoc}`;
 export type PageTypeUpdateMutationFn = Apollo.MutationFunction<PageTypeUpdateMutation, PageTypeUpdateMutationVariables>;
 
 /**
@@ -23226,15 +23409,15 @@ export const PageTypeCreateDocument = gql`
     mutation PageTypeCreate($input: PageTypeCreateInput!) {
   pageTypeCreate(input: $input) {
     errors {
-      ...PageErrorFragment
+      ...PageError
     }
     pageType {
-      ...PageTypeDetailsFragment
+      ...PageTypeDetails
     }
   }
 }
-    ${PageErrorFragmentFragmentDoc}
-${PageTypeDetailsFragmentFragmentDoc}`;
+    ${PageErrorFragmentDoc}
+${PageTypeDetailsFragmentDoc}`;
 export type PageTypeCreateMutationFn = Apollo.MutationFunction<PageTypeCreateMutation, PageTypeCreateMutationVariables>;
 
 /**
@@ -23265,15 +23448,15 @@ export const AssignPageAttributeDocument = gql`
     mutation AssignPageAttribute($id: ID!, $ids: [ID!]!) {
   pageAttributeAssign(pageTypeId: $id, attributeIds: $ids) {
     errors {
-      ...PageErrorFragment
+      ...PageError
     }
     pageType {
-      ...PageTypeDetailsFragment
+      ...PageTypeDetails
     }
   }
 }
-    ${PageErrorFragmentFragmentDoc}
-${PageTypeDetailsFragmentFragmentDoc}`;
+    ${PageErrorFragmentDoc}
+${PageTypeDetailsFragmentDoc}`;
 export type AssignPageAttributeMutationFn = Apollo.MutationFunction<AssignPageAttributeMutation, AssignPageAttributeMutationVariables>;
 
 /**
@@ -23305,15 +23488,15 @@ export const UnassignPageAttributeDocument = gql`
     mutation UnassignPageAttribute($id: ID!, $ids: [ID!]!) {
   pageAttributeUnassign(pageTypeId: $id, attributeIds: $ids) {
     errors {
-      ...PageErrorFragment
+      ...PageError
     }
     pageType {
-      ...PageTypeDetailsFragment
+      ...PageTypeDetails
     }
   }
 }
-    ${PageErrorFragmentFragmentDoc}
-${PageTypeDetailsFragmentFragmentDoc}`;
+    ${PageErrorFragmentDoc}
+${PageTypeDetailsFragmentDoc}`;
 export type UnassignPageAttributeMutationFn = Apollo.MutationFunction<UnassignPageAttributeMutation, UnassignPageAttributeMutationVariables>;
 
 /**
@@ -23418,15 +23601,15 @@ export const PageTypeAttributeReorderDocument = gql`
     mutation PageTypeAttributeReorder($move: ReorderInput!, $pageTypeId: ID!) {
   pageTypeReorderAttributes(moves: [$move], pageTypeId: $pageTypeId) {
     errors {
-      ...PageErrorFragment
+      ...PageError
     }
     pageType {
-      ...PageTypeDetailsFragment
+      ...PageTypeDetails
     }
   }
 }
-    ${PageErrorFragmentFragmentDoc}
-${PageTypeDetailsFragmentFragmentDoc}`;
+    ${PageErrorFragmentDoc}
+${PageTypeDetailsFragmentDoc}`;
 export type PageTypeAttributeReorderMutationFn = Apollo.MutationFunction<PageTypeAttributeReorderMutation, PageTypeAttributeReorderMutationVariables>;
 
 /**
@@ -23466,16 +23649,16 @@ export const PageTypeListDocument = gql`
   ) {
     edges {
       node {
-        ...PageTypeFragment
+        ...PageType
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${PageTypeFragmentFragmentDoc}
-${PageInfoFragmentFragmentDoc}`;
+    ${PageTypeFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __usePageTypeListQuery__
@@ -23512,10 +23695,10 @@ export type PageTypeListQueryResult = Apollo.QueryResult<PageTypeListQuery, Page
 export const PageTypeDetailsDocument = gql`
     query PageTypeDetails($id: ID!) {
   pageType(id: $id) {
-    ...PageTypeDetailsFragment
+    ...PageTypeDetails
   }
 }
-    ${PageTypeDetailsFragmentFragmentDoc}`;
+    ${PageTypeDetailsFragmentDoc}`;
 
 /**
  * __usePageTypeDetailsQuery__
@@ -23548,14 +23731,14 @@ export const PageCreateDocument = gql`
     mutation PageCreate($input: PageCreateInput!) {
   pageCreate(input: $input) {
     errors {
-      ...PageErrorWithAttributesFragment
+      ...PageErrorWithAttributes
     }
     page {
       id
     }
   }
 }
-    ${PageErrorWithAttributesFragmentFragmentDoc}`;
+    ${PageErrorWithAttributesFragmentDoc}`;
 export type PageCreateMutationFn = Apollo.MutationFunction<PageCreateMutation, PageCreateMutationVariables>;
 
 /**
@@ -23586,15 +23769,15 @@ export const PageUpdateDocument = gql`
     mutation PageUpdate($id: ID!, $input: PageInput!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   pageUpdate(id: $id, input: $input) {
     errors {
-      ...PageErrorWithAttributesFragment
+      ...PageErrorWithAttributes
     }
     page {
-      ...PageDetailsFragment
+      ...PageDetails
     }
   }
 }
-    ${PageErrorWithAttributesFragmentFragmentDoc}
-${PageDetailsFragmentFragmentDoc}`;
+    ${PageErrorWithAttributesFragmentDoc}
+${PageDetailsFragmentDoc}`;
 export type PageUpdateMutationFn = Apollo.MutationFunction<PageUpdateMutation, PageUpdateMutationVariables>;
 
 /**
@@ -23630,11 +23813,11 @@ export const PageRemoveDocument = gql`
     mutation PageRemove($id: ID!) {
   pageDelete(id: $id) {
     errors {
-      ...PageErrorFragment
+      ...PageError
     }
   }
 }
-    ${PageErrorFragmentFragmentDoc}`;
+    ${PageErrorFragmentDoc}`;
 export type PageRemoveMutationFn = Apollo.MutationFunction<PageRemoveMutation, PageRemoveMutationVariables>;
 
 /**
@@ -23737,7 +23920,7 @@ export const PageListDocument = gql`
   pages(before: $before, after: $after, first: $first, last: $last, sortBy: $sort) {
     edges {
       node {
-        ...PageFragment
+        ...Page
       }
     }
     pageInfo {
@@ -23748,7 +23931,7 @@ export const PageListDocument = gql`
     }
   }
 }
-    ${PageFragmentFragmentDoc}`;
+    ${PageFragmentDoc}`;
 
 /**
  * __usePageListQuery__
@@ -23784,10 +23967,10 @@ export type PageListQueryResult = Apollo.QueryResult<PageListQuery, PageListQuer
 export const PageDetailsDocument = gql`
     query PageDetails($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   page(id: $id) {
-    ...PageDetailsFragment
+    ...PageDetails
   }
 }
-    ${PageDetailsFragmentFragmentDoc}`;
+    ${PageDetailsFragmentDoc}`;
 
 /**
  * __usePageDetailsQuery__
@@ -23838,12 +24021,12 @@ export const PageTypeDocument = gql`
         last: $lastValues
         before: $beforeValues
       ) {
-        ...AttributeValueListFragment
+        ...AttributeValueList
       }
     }
   }
 }
-    ${AttributeValueListFragmentFragmentDoc}`;
+    ${AttributeValueListFragmentDoc}`;
 
 /**
  * __usePageTypeQuery__
@@ -23915,11 +24098,11 @@ export const PermissionGroupDeleteDocument = gql`
     mutation PermissionGroupDelete($id: ID!) {
   permissionGroupDelete(id: $id) {
     errors {
-      ...PermissionGroupErrorFragment
+      ...PermissionGroupError
     }
   }
 }
-    ${PermissionGroupErrorFragmentFragmentDoc}`;
+    ${PermissionGroupErrorFragmentDoc}`;
 export type PermissionGroupDeleteMutationFn = Apollo.MutationFunction<PermissionGroupDeleteMutation, PermissionGroupDeleteMutationVariables>;
 
 /**
@@ -23950,15 +24133,15 @@ export const PermissionGroupCreateDocument = gql`
     mutation PermissionGroupCreate($input: PermissionGroupCreateInput!) {
   permissionGroupCreate(input: $input) {
     errors {
-      ...PermissionGroupErrorFragment
+      ...PermissionGroupError
     }
     group {
-      ...PermissionGroupDetailsFragment
+      ...PermissionGroupDetails
     }
   }
 }
-    ${PermissionGroupErrorFragmentFragmentDoc}
-${PermissionGroupDetailsFragmentFragmentDoc}`;
+    ${PermissionGroupErrorFragmentDoc}
+${PermissionGroupDetailsFragmentDoc}`;
 export type PermissionGroupCreateMutationFn = Apollo.MutationFunction<PermissionGroupCreateMutation, PermissionGroupCreateMutationVariables>;
 
 /**
@@ -23989,15 +24172,15 @@ export const PermissionGroupUpdateDocument = gql`
     mutation PermissionGroupUpdate($id: ID!, $input: PermissionGroupUpdateInput!) {
   permissionGroupUpdate(id: $id, input: $input) {
     errors {
-      ...PermissionGroupErrorFragment
+      ...PermissionGroupError
     }
     group {
-      ...PermissionGroupDetailsFragment
+      ...PermissionGroupDetails
     }
   }
 }
-    ${PermissionGroupErrorFragmentFragmentDoc}
-${PermissionGroupDetailsFragmentFragmentDoc}`;
+    ${PermissionGroupErrorFragmentDoc}
+${PermissionGroupDetailsFragmentDoc}`;
 export type PermissionGroupUpdateMutationFn = Apollo.MutationFunction<PermissionGroupUpdateMutation, PermissionGroupUpdateMutationVariables>;
 
 /**
@@ -24037,16 +24220,16 @@ export const PermissionGroupListDocument = gql`
   ) {
     edges {
       node {
-        ...PermissionGroupFragment
+        ...PermissionGroup
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${PermissionGroupFragmentFragmentDoc}
-${PageInfoFragmentFragmentDoc}`;
+    ${PermissionGroupFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __usePermissionGroupListQuery__
@@ -24083,7 +24266,7 @@ export type PermissionGroupListQueryResult = Apollo.QueryResult<PermissionGroupL
 export const PermissionGroupDetailsDocument = gql`
     query PermissionGroupDetails($id: ID!, $userId: ID!) {
   permissionGroup(id: $id) {
-    ...PermissionGroupDetailsFragment
+    ...PermissionGroupDetails
   }
   user(id: $userId) {
     editableGroups {
@@ -24097,7 +24280,7 @@ export const PermissionGroupDetailsDocument = gql`
     }
   }
 }
-    ${PermissionGroupDetailsFragmentFragmentDoc}`;
+    ${PermissionGroupDetailsFragmentDoc}`;
 
 /**
  * __usePermissionGroupDetailsQuery__
@@ -24131,15 +24314,15 @@ export const PluginUpdateDocument = gql`
     mutation PluginUpdate($channelId: ID, $id: ID!, $input: PluginUpdateInput!) {
   pluginUpdate(channelId: $channelId, id: $id, input: $input) {
     errors {
-      ...PluginErrorFragment
+      ...PluginError
     }
     plugin {
-      ...PluginsDetailsFragment
+      ...PluginsDetails
     }
   }
 }
-    ${PluginErrorFragmentFragmentDoc}
-${PluginsDetailsFragmentFragmentDoc}`;
+    ${PluginErrorFragmentDoc}
+${PluginsDetailsFragmentDoc}`;
 export type PluginUpdateMutationFn = Apollo.MutationFunction<PluginUpdateMutation, PluginUpdateMutationVariables>;
 
 /**
@@ -24180,7 +24363,7 @@ export const PluginsDocument = gql`
   ) {
     edges {
       node {
-        ...PluginBaseFragment
+        ...PluginBase
       }
     }
     pageInfo {
@@ -24191,7 +24374,7 @@ export const PluginsDocument = gql`
     }
   }
 }
-    ${PluginBaseFragmentFragmentDoc}`;
+    ${PluginBaseFragmentDoc}`;
 
 /**
  * __usePluginsQuery__
@@ -24228,10 +24411,10 @@ export type PluginsQueryResult = Apollo.QueryResult<PluginsQuery, PluginsQueryVa
 export const PluginDocument = gql`
     query Plugin($id: ID!) {
   plugin(id: $id) {
-    ...PluginsDetailsFragment
+    ...PluginsDetails
   }
 }
-    ${PluginsDetailsFragmentFragmentDoc}`;
+    ${PluginsDetailsFragmentDoc}`;
 
 /**
  * __usePluginQuery__
@@ -24340,12 +24523,12 @@ export const ProductTypeUpdateDocument = gql`
       ...ProductTypeBulkUpdateErrorFragment
     }
     productType {
-      ...ProductTypeDetailsFragment
+      ...ProductTypeDetails
     }
   }
 }
     ${ProductTypeBulkUpdateErrorFragmentFragmentDoc}
-${ProductTypeDetailsFragmentFragmentDoc}`;
+${ProductTypeDetailsFragmentDoc}`;
 export type ProductTypeUpdateMutationFn = Apollo.MutationFunction<ProductTypeUpdateMutation, ProductTypeUpdateMutationVariables>;
 
 /**
@@ -24380,12 +24563,12 @@ export const AssignProductAttributeDocument = gql`
       ...ProductAttributeAssignErrorFragment
     }
     productType {
-      ...ProductTypeDetailsFragment
+      ...ProductTypeDetails
     }
   }
 }
     ${ProductAttributeAssignErrorFragmentFragmentDoc}
-${ProductTypeDetailsFragmentFragmentDoc}`;
+${ProductTypeDetailsFragmentDoc}`;
 export type AssignProductAttributeMutationFn = Apollo.MutationFunction<AssignProductAttributeMutation, AssignProductAttributeMutationVariables>;
 
 /**
@@ -24420,12 +24603,12 @@ export const UnassignProductAttributeDocument = gql`
       ...ProductAttributeUnassignErrorFragment
     }
     productType {
-      ...ProductTypeDetailsFragment
+      ...ProductTypeDetails
     }
   }
 }
     ${ProductAttributeUnassignErrorFragmentFragmentDoc}
-${ProductTypeDetailsFragmentFragmentDoc}`;
+${ProductTypeDetailsFragmentDoc}`;
 export type UnassignProductAttributeMutationFn = Apollo.MutationFunction<UnassignProductAttributeMutation, UnassignProductAttributeMutationVariables>;
 
 /**
@@ -24460,12 +24643,12 @@ export const ProductTypeCreateDocument = gql`
       ...ProductTypeCreateErrorFragment
     }
     productType {
-      ...ProductTypeDetailsFragment
+      ...ProductTypeDetails
     }
   }
 }
     ${ProductTypeCreateErrorFragmentFragmentDoc}
-${ProductTypeDetailsFragmentFragmentDoc}`;
+${ProductTypeDetailsFragmentDoc}`;
 export type ProductTypeCreateMutationFn = Apollo.MutationFunction<ProductTypeCreateMutation, ProductTypeCreateMutationVariables>;
 
 /**
@@ -24503,12 +24686,12 @@ export const ProductTypeAttributeReorderDocument = gql`
       ...ProductTypeReorderAttributesErrorFragment
     }
     productType {
-      ...ProductTypeDetailsFragment
+      ...ProductTypeDetails
     }
   }
 }
     ${ProductTypeReorderAttributesErrorFragmentFragmentDoc}
-${ProductTypeDetailsFragmentFragmentDoc}`;
+${ProductTypeDetailsFragmentDoc}`;
 export type ProductTypeAttributeReorderMutationFn = Apollo.MutationFunction<ProductTypeAttributeReorderMutation, ProductTypeAttributeReorderMutationVariables>;
 
 /**
@@ -24547,12 +24730,12 @@ export const ProductAttributeAssignmentUpdateDocument = gql`
       ...ProductAttributeAssignmentUpdateErrorFragment
     }
     productType {
-      ...ProductTypeDetailsFragment
+      ...ProductTypeDetails
     }
   }
 }
     ${ProductAttributeAssignmentUpdateErrorFragmentFragmentDoc}
-${ProductTypeDetailsFragmentFragmentDoc}`;
+${ProductTypeDetailsFragmentDoc}`;
 export type ProductAttributeAssignmentUpdateMutationFn = Apollo.MutationFunction<ProductAttributeAssignmentUpdateMutation, ProductAttributeAssignmentUpdateMutationVariables>;
 
 /**
@@ -24592,16 +24775,16 @@ export const ProductTypeListDocument = gql`
   ) {
     edges {
       node {
-        ...ProductTypeFragment
+        ...ProductType
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${ProductTypeFragmentFragmentDoc}
-${PageInfoFragmentFragmentDoc}`;
+    ${ProductTypeFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useProductTypeListQuery__
@@ -24638,7 +24821,7 @@ export type ProductTypeListQueryResult = Apollo.QueryResult<ProductTypeListQuery
 export const ProductTypeDetailsDocument = gql`
     query ProductTypeDetails($id: ID!) {
   productType(id: $id) {
-    ...ProductTypeDetailsFragment
+    ...ProductTypeDetails
   }
   shop {
     defaultWeightUnit
@@ -24648,7 +24831,7 @@ export const ProductTypeDetailsDocument = gql`
     description
   }
 }
-    ${ProductTypeDetailsFragmentFragmentDoc}`;
+    ${ProductTypeDetailsFragmentDoc}`;
 
 /**
  * __useProductTypeDetailsQuery__
@@ -24721,18 +24904,18 @@ export const ProductMediaCreateDocument = gql`
     input: {alt: $alt, image: $image, product: $product, mediaUrl: $mediaUrl}
   ) {
     errors {
-      ...ProductErrorFragment
+      ...ProductError
     }
     product {
       id
       media {
-        ...ProductMediaFragment
+        ...ProductMedia
       }
     }
   }
 }
-    ${ProductErrorFragmentFragmentDoc}
-${ProductMediaFragmentFragmentDoc}`;
+    ${ProductErrorFragmentDoc}
+${ProductMediaFragmentDoc}`;
 export type ProductMediaCreateMutationFn = Apollo.MutationFunction<ProductMediaCreateMutation, ProductMediaCreateMutationVariables>;
 
 /**
@@ -24766,14 +24949,14 @@ export const ProductDeleteDocument = gql`
     mutation ProductDelete($id: ID!) {
   productDelete(id: $id) {
     errors {
-      ...ProductErrorFragment
+      ...ProductError
     }
     product {
       id
     }
   }
 }
-    ${ProductErrorFragmentFragmentDoc}`;
+    ${ProductErrorFragmentDoc}`;
 export type ProductDeleteMutationFn = Apollo.MutationFunction<ProductDeleteMutation, ProductDeleteMutationVariables>;
 
 /**
@@ -24804,7 +24987,7 @@ export const ProductMediaReorderDocument = gql`
     mutation ProductMediaReorder($productId: ID!, $mediaIds: [ID]!) {
   productMediaReorder(productId: $productId, mediaIds: $mediaIds) {
     errors {
-      ...ProductErrorFragment
+      ...ProductError
     }
     product {
       id
@@ -24817,7 +25000,7 @@ export const ProductMediaReorderDocument = gql`
     }
   }
 }
-    ${ProductErrorFragmentFragmentDoc}`;
+    ${ProductErrorFragmentDoc}`;
 export type ProductMediaReorderMutationFn = Apollo.MutationFunction<ProductMediaReorderMutation, ProductMediaReorderMutationVariables>;
 
 /**
@@ -24849,7 +25032,7 @@ export const ProductVariantSetDefaultDocument = gql`
     mutation ProductVariantSetDefault($productId: ID!, $variantId: ID!) {
   productVariantSetDefault(productId: $productId, variantId: $variantId) {
     errors {
-      ...ProductErrorFragment
+      ...ProductError
     }
     product {
       id
@@ -24864,7 +25047,7 @@ export const ProductVariantSetDefaultDocument = gql`
     }
   }
 }
-    ${ProductErrorFragmentFragmentDoc}`;
+    ${ProductErrorFragmentDoc}`;
 export type ProductVariantSetDefaultMutationFn = Apollo.MutationFunction<ProductVariantSetDefaultMutation, ProductVariantSetDefaultMutationVariables>;
 
 /**
@@ -24896,14 +25079,14 @@ export const ProductUpdateDocument = gql`
     mutation ProductUpdate($id: ID!, $input: ProductInput!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   productUpdate(id: $id, input: $input) {
     errors {
-      ...ProductErrorWithAttributesFragment
+      ...ProductErrorWithAttributes
     }
     product {
       ...Product
     }
   }
 }
-    ${ProductErrorWithAttributesFragmentFragmentDoc}
+    ${ProductErrorWithAttributesFragmentDoc}
 ${ProductFragmentDoc}`;
 export type ProductUpdateMutationFn = Apollo.MutationFunction<ProductUpdateMutation, ProductUpdateMutationVariables>;
 
@@ -24940,7 +25123,7 @@ export const SimpleProductUpdateDocument = gql`
     mutation SimpleProductUpdate($id: ID!, $input: ProductInput!, $productVariantId: ID!, $productVariantInput: ProductVariantInput!, $addStocks: [StockInput!]!, $deleteStocks: [ID!]!, $updateStocks: [StockInput!]!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   productUpdate(id: $id, input: $input) {
     errors {
-      ...ProductErrorWithAttributesFragment
+      ...ProductErrorWithAttributes
     }
     product {
       ...Product
@@ -24948,7 +25131,7 @@ export const SimpleProductUpdateDocument = gql`
   }
   productVariantUpdate(id: $productVariantId, input: $productVariantInput) {
     errors {
-      ...ProductErrorWithAttributesFragment
+      ...ProductErrorWithAttributes
     }
     productVariant {
       ...ProductVariant
@@ -24956,7 +25139,7 @@ export const SimpleProductUpdateDocument = gql`
   }
   productVariantStocksCreate(stocks: $addStocks, variantId: $productVariantId) {
     errors {
-      ...BulkStockErrorFragment
+      ...BulkStockError
     }
     productVariant {
       ...ProductVariant
@@ -24967,7 +25150,7 @@ export const SimpleProductUpdateDocument = gql`
     variantId: $productVariantId
   ) {
     errors {
-      ...StockErrorFragment
+      ...StockError
     }
     productVariant {
       ...ProductVariant
@@ -24975,18 +25158,18 @@ export const SimpleProductUpdateDocument = gql`
   }
   productVariantStocksUpdate(stocks: $updateStocks, variantId: $productVariantId) {
     errors {
-      ...BulkStockErrorFragment
+      ...BulkStockError
     }
     productVariant {
       ...ProductVariant
     }
   }
 }
-    ${ProductErrorWithAttributesFragmentFragmentDoc}
+    ${ProductErrorWithAttributesFragmentDoc}
 ${ProductFragmentDoc}
 ${ProductVariantFragmentDoc}
-${BulkStockErrorFragmentFragmentDoc}
-${StockErrorFragmentFragmentDoc}`;
+${BulkStockErrorFragmentDoc}
+${StockErrorFragmentDoc}`;
 export type SimpleProductUpdateMutationFn = Apollo.MutationFunction<SimpleProductUpdateMutation, SimpleProductUpdateMutationVariables>;
 
 /**
@@ -25027,14 +25210,14 @@ export const ProductCreateDocument = gql`
     mutation ProductCreate($input: ProductCreateInput!) {
   productCreate(input: $input) {
     errors {
-      ...ProductErrorWithAttributesFragment
+      ...ProductErrorWithAttributes
     }
     product {
       id
     }
   }
 }
-    ${ProductErrorWithAttributesFragmentFragmentDoc}`;
+    ${ProductErrorWithAttributesFragmentDoc}`;
 export type ProductCreateMutationFn = Apollo.MutationFunction<ProductCreateMutation, ProductCreateMutationVariables>;
 
 /**
@@ -25065,14 +25248,14 @@ export const VariantDeleteDocument = gql`
     mutation VariantDelete($id: ID!) {
   productVariantDelete(id: $id) {
     errors {
-      ...ProductErrorFragment
+      ...ProductError
     }
     productVariant {
       id
     }
   }
 }
-    ${ProductErrorFragmentFragmentDoc}`;
+    ${ProductErrorFragmentDoc}`;
 export type VariantDeleteMutationFn = Apollo.MutationFunction<VariantDeleteMutation, VariantDeleteMutationVariables>;
 
 /**
@@ -25106,7 +25289,7 @@ export const VariantUpdateDocument = gql`
     input: {attributes: $attributes, sku: $sku, trackInventory: $trackInventory, preorder: $preorder, weight: $weight, quantityLimitPerCustomer: $quantityLimitPerCustomer}
   ) {
     errors {
-      ...ProductErrorWithAttributesFragment
+      ...ProductErrorWithAttributes
     }
     productVariant {
       ...ProductVariant
@@ -25114,7 +25297,7 @@ export const VariantUpdateDocument = gql`
   }
   productVariantStocksUpdate(stocks: $stocks, variantId: $id) {
     errors {
-      ...BulkStockErrorFragment
+      ...BulkStockError
     }
     productVariant {
       ...ProductVariant
@@ -25122,32 +25305,32 @@ export const VariantUpdateDocument = gql`
   }
   productVariantStocksCreate(stocks: $addStocks, variantId: $id) {
     errors {
-      ...BulkStockErrorFragment
+      ...BulkStockError
     }
     productVariant {
       id
       stocks {
-        ...StockFragment
+        ...Stock
       }
     }
   }
   productVariantStocksDelete(warehouseIds: $removeStocks, variantId: $id) {
     errors {
-      ...ProductVariantStocksDeleteErrorFragment
+      ...ProductVariantStocksDeleteError
     }
     productVariant {
       id
       stocks {
-        ...StockFragment
+        ...Stock
       }
     }
   }
 }
-    ${ProductErrorWithAttributesFragmentFragmentDoc}
+    ${ProductErrorWithAttributesFragmentDoc}
 ${ProductVariantFragmentDoc}
-${BulkStockErrorFragmentFragmentDoc}
-${StockFragmentFragmentDoc}
-${ProductVariantStocksDeleteErrorFragmentFragmentDoc}`;
+${BulkStockErrorFragmentDoc}
+${StockFragmentDoc}
+${ProductVariantStocksDeleteErrorFragmentDoc}`;
 export type VariantUpdateMutationFn = Apollo.MutationFunction<VariantUpdateMutation, VariantUpdateMutationVariables>;
 
 /**
@@ -25191,14 +25374,14 @@ export const VariantCreateDocument = gql`
     mutation VariantCreate($input: ProductVariantCreateInput!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   productVariantCreate(input: $input) {
     errors {
-      ...ProductErrorWithAttributesFragment
+      ...ProductErrorWithAttributes
     }
     productVariant {
       ...ProductVariant
     }
   }
 }
-    ${ProductErrorWithAttributesFragmentFragmentDoc}
+    ${ProductErrorWithAttributesFragmentDoc}
 ${ProductVariantFragmentDoc}`;
 export type VariantCreateMutationFn = Apollo.MutationFunction<VariantCreateMutation, VariantCreateMutationVariables>;
 
@@ -25234,7 +25417,7 @@ export const ProductMediaDeleteDocument = gql`
     mutation ProductMediaDelete($id: ID!) {
   productMediaDelete(id: $id) {
     errors {
-      ...ProductErrorFragment
+      ...ProductError
     }
     product {
       id
@@ -25244,7 +25427,7 @@ export const ProductMediaDeleteDocument = gql`
     }
   }
 }
-    ${ProductErrorFragmentFragmentDoc}`;
+    ${ProductErrorFragmentDoc}`;
 export type ProductMediaDeleteMutationFn = Apollo.MutationFunction<ProductMediaDeleteMutation, ProductMediaDeleteMutationVariables>;
 
 /**
@@ -25275,18 +25458,18 @@ export const ProductMediaUpdateDocument = gql`
     mutation ProductMediaUpdate($id: ID!, $alt: String!) {
   productMediaUpdate(id: $id, input: {alt: $alt}) {
     errors {
-      ...ProductErrorFragment
+      ...ProductError
     }
     product {
       id
       media {
-        ...ProductMediaFragment
+        ...ProductMedia
       }
     }
   }
 }
-    ${ProductErrorFragmentFragmentDoc}
-${ProductMediaFragmentFragmentDoc}`;
+    ${ProductErrorFragmentDoc}
+${ProductMediaFragmentDoc}`;
 export type ProductMediaUpdateMutationFn = Apollo.MutationFunction<ProductMediaUpdateMutation, ProductMediaUpdateMutationVariables>;
 
 /**
@@ -25318,32 +25501,32 @@ export const VariantMediaAssignDocument = gql`
     mutation VariantMediaAssign($variantId: ID!, $mediaId: ID!) {
   variantMediaAssign(variantId: $variantId, mediaId: $mediaId) {
     errors {
-      ...ProductErrorFragment
+      ...ProductError
     }
     productVariant {
       id
       media {
-        ...ProductMediaFragment
+        ...ProductMedia
       }
       product {
         id
         media {
-          ...ProductMediaFragment
+          ...ProductMedia
         }
         variants {
           id
           name
           sku
           media {
-            ...ProductMediaFragment
+            ...ProductMedia
           }
         }
       }
     }
   }
 }
-    ${ProductErrorFragmentFragmentDoc}
-${ProductMediaFragmentFragmentDoc}`;
+    ${ProductErrorFragmentDoc}
+${ProductMediaFragmentDoc}`;
 export type VariantMediaAssignMutationFn = Apollo.MutationFunction<VariantMediaAssignMutation, VariantMediaAssignMutationVariables>;
 
 /**
@@ -25375,32 +25558,32 @@ export const VariantMediaUnassignDocument = gql`
     mutation VariantMediaUnassign($variantId: ID!, $mediaId: ID!) {
   variantMediaUnassign(variantId: $variantId, mediaId: $mediaId) {
     errors {
-      ...ProductErrorFragment
+      ...ProductError
     }
     productVariant {
       id
       media {
-        ...ProductMediaFragment
+        ...ProductMedia
       }
       product {
         id
         media {
-          ...ProductMediaFragment
+          ...ProductMedia
         }
         variants {
           id
           name
           sku
           media {
-            ...ProductMediaFragment
+            ...ProductMedia
           }
         }
       }
     }
   }
 }
-    ${ProductErrorFragmentFragmentDoc}
-${ProductMediaFragmentFragmentDoc}`;
+    ${ProductErrorFragmentDoc}
+${ProductMediaFragmentDoc}`;
 export type VariantMediaUnassignMutationFn = Apollo.MutationFunction<VariantMediaUnassignMutation, VariantMediaUnassignMutationVariables>;
 
 /**
@@ -25432,11 +25615,11 @@ export const ProductBulkDeleteDocument = gql`
     mutation productBulkDelete($ids: [ID!]!) {
   productBulkDelete(ids: $ids) {
     errors {
-      ...ProductErrorFragment
+      ...ProductError
     }
   }
 }
-    ${ProductErrorFragmentFragmentDoc}`;
+    ${ProductErrorFragmentDoc}`;
 export type ProductBulkDeleteMutationFn = Apollo.MutationFunction<ProductBulkDeleteMutation, ProductBulkDeleteMutationVariables>;
 
 /**
@@ -25467,11 +25650,11 @@ export const ProductVariantBulkCreateDocument = gql`
     mutation ProductVariantBulkCreate($id: ID!, $inputs: [ProductVariantBulkCreateInput]!) {
   productVariantBulkCreate(product: $id, variants: $inputs) {
     errors {
-      ...BulkProductErrorFragment
+      ...BulkProductError
     }
   }
 }
-    ${BulkProductErrorFragmentFragmentDoc}`;
+    ${BulkProductErrorFragmentDoc}`;
 export type ProductVariantBulkCreateMutationFn = Apollo.MutationFunction<ProductVariantBulkCreateMutation, ProductVariantBulkCreateMutationVariables>;
 
 /**
@@ -25503,11 +25686,11 @@ export const ProductVariantBulkDeleteDocument = gql`
     mutation ProductVariantBulkDelete($ids: [ID!]!) {
   productVariantBulkDelete(ids: $ids) {
     errors {
-      ...ProductErrorFragment
+      ...ProductError
     }
   }
 }
-    ${ProductErrorFragmentFragmentDoc}`;
+    ${ProductErrorFragmentDoc}`;
 export type ProductVariantBulkDeleteMutationFn = Apollo.MutationFunction<ProductVariantBulkDeleteMutation, ProductVariantBulkDeleteMutationVariables>;
 
 /**
@@ -25538,15 +25721,15 @@ export const ProductExportDocument = gql`
     mutation ProductExport($input: ExportProductsInput!) {
   exportProducts(input: $input) {
     exportFile {
-      ...ExportFileFragment
+      ...ExportFile
     }
     errors {
-      ...ExportErrorFragment
+      ...ExportError
     }
   }
 }
-    ${ExportFileFragmentFragmentDoc}
-${ExportErrorFragmentFragmentDoc}`;
+    ${ExportFileFragmentDoc}
+${ExportErrorFragmentDoc}`;
 export type ProductExportMutationFn = Apollo.MutationFunction<ProductExportMutation, ProductExportMutationVariables>;
 
 /**
@@ -25579,23 +25762,23 @@ export const ProductChannelListingUpdateDocument = gql`
     product {
       id
       channelListings {
-        ...ChannelListingProductWithoutPricingFragment
+        ...ChannelListingProductWithoutPricing
       }
       variants {
         id
         channelListings {
-          ...ChannelListingProductVariantFragment
+          ...ChannelListingProductVariant
         }
       }
     }
     errors {
-      ...ProductChannelListingErrorFragment
+      ...ProductChannelListingError
     }
   }
 }
-    ${ChannelListingProductWithoutPricingFragmentFragmentDoc}
-${ChannelListingProductVariantFragmentFragmentDoc}
-${ProductChannelListingErrorFragmentFragmentDoc}`;
+    ${ChannelListingProductWithoutPricingFragmentDoc}
+${ChannelListingProductVariantFragmentDoc}
+${ProductChannelListingErrorFragmentDoc}`;
 export type ProductChannelListingUpdateMutationFn = Apollo.MutationFunction<ProductChannelListingUpdateMutation, ProductChannelListingUpdateMutationVariables>;
 
 /**
@@ -25627,7 +25810,7 @@ export const ProductVariantReorderDocument = gql`
     mutation ProductVariantReorder($move: ReorderInput!, $productId: ID!) {
   productVariantReorder(moves: [$move], productId: $productId) {
     errors {
-      ...ProductErrorFragment
+      ...ProductError
     }
     product {
       id
@@ -25637,7 +25820,7 @@ export const ProductVariantReorderDocument = gql`
     }
   }
 }
-    ${ProductErrorFragmentFragmentDoc}`;
+    ${ProductErrorFragmentDoc}`;
 export type ProductVariantReorderMutationFn = Apollo.MutationFunction<ProductVariantReorderMutation, ProductVariantReorderMutationVariables>;
 
 /**
@@ -25671,23 +25854,23 @@ export const ProductVariantChannelListingUpdateDocument = gql`
     variant {
       id
       channelListings {
-        ...ChannelListingProductVariantFragment
+        ...ChannelListingProductVariant
       }
       product {
         id
         channelListings {
-          ...ChannelListingProductWithoutPricingFragment
+          ...ChannelListingProductWithoutPricing
         }
       }
     }
     errors {
-      ...ProductChannelListingErrorFragment
+      ...ProductChannelListingError
     }
   }
 }
-    ${ChannelListingProductVariantFragmentFragmentDoc}
-${ChannelListingProductWithoutPricingFragmentFragmentDoc}
-${ProductChannelListingErrorFragmentFragmentDoc}`;
+    ${ChannelListingProductVariantFragmentDoc}
+${ChannelListingProductWithoutPricingFragmentDoc}
+${ProductChannelListingErrorFragmentDoc}`;
 export type ProductVariantChannelListingUpdateMutationFn = Apollo.MutationFunction<ProductVariantChannelListingUpdateMutation, ProductVariantChannelListingUpdateMutationVariables>;
 
 /**
@@ -25721,16 +25904,16 @@ export const ProductVariantPreorderDeactivateDocument = gql`
     productVariant {
       id
       preorder {
-        ...PreorderFragment
+        ...Preorder
       }
     }
     errors {
-      ...ProductErrorFragment
+      ...ProductError
     }
   }
 }
-    ${PreorderFragmentFragmentDoc}
-${ProductErrorFragmentFragmentDoc}`;
+    ${PreorderFragmentDoc}
+${ProductErrorFragmentDoc}`;
 export type ProductVariantPreorderDeactivateMutationFn = Apollo.MutationFunction<ProductVariantPreorderDeactivateMutation, ProductVariantPreorderDeactivateMutationVariables>;
 
 /**
@@ -25934,14 +26117,14 @@ export const ProductListDocument = gql`
   ) {
     edges {
       node {
-        ...ProductFragment
+        ...ProductWithChannelListings
         updatedAt
         attributes @include(if: $hasSelectedAttributes) {
           attribute {
             id
           }
           values {
-            ...AttributeValueFragment
+            ...AttributeValue
           }
         }
       }
@@ -25955,8 +26138,8 @@ export const ProductListDocument = gql`
     totalCount
   }
 }
-    ${ProductFragmentFragmentDoc}
-${AttributeValueFragmentFragmentDoc}`;
+    ${ProductWithChannelListingsFragmentDoc}
+${AttributeValueFragmentDoc}`;
 
 /**
  * __useProductListQuery__
@@ -26035,11 +26218,11 @@ export const ProductDetailsDocument = gql`
     ...Product
   }
   taxTypes {
-    ...TaxTypeFragment
+    ...TaxType
   }
 }
     ${ProductFragmentDoc}
-${TaxTypeFragmentFragmentDoc}`;
+${TaxTypeFragmentDoc}`;
 
 /**
  * __useProductDetailsQuery__
@@ -26093,16 +26276,16 @@ export const ProductTypeDocument = gql`
         last: $lastValues
         before: $beforeValues
       ) {
-        ...AttributeValueListFragment
+        ...AttributeValueList
       }
     }
     taxType {
-      ...TaxTypeFragment
+      ...TaxType
     }
   }
 }
-    ${AttributeValueListFragmentFragmentDoc}
-${TaxTypeFragmentFragmentDoc}`;
+    ${AttributeValueListFragmentDoc}
+${TaxTypeFragmentDoc}`;
 
 /**
  * __useProductTypeQuery__
@@ -26196,12 +26379,12 @@ export const ProductVariantCreateDataDocument = gql`
       selectionVariantAttributes: variantAttributes(
         variantSelection: VARIANT_SELECTION
       ) {
-        ...VariantAttributeFragment
+        ...VariantAttribute
       }
       nonSelectionVariantAttributes: variantAttributes(
         variantSelection: NOT_VARIANT_SELECTION
       ) {
-        ...VariantAttributeFragment
+        ...VariantAttribute
       }
     }
     thumbnail {
@@ -26219,7 +26402,7 @@ export const ProductVariantCreateDataDocument = gql`
     }
   }
 }
-    ${VariantAttributeFragmentFragmentDoc}`;
+    ${VariantAttributeFragmentDoc}`;
 
 /**
  * __useProductVariantCreateDataQuery__
@@ -26317,12 +26500,12 @@ export const AvailableInGridAttributesDocument = gql`
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
     totalCount
   }
 }
-    ${PageInfoFragmentFragmentDoc}`;
+    ${PageInfoFragmentDoc}`;
 
 /**
  * __useAvailableInGridAttributesQuery__
@@ -26395,18 +26578,18 @@ export type GridAttributesQueryResult = Apollo.QueryResult<GridAttributesQuery, 
 export const CreateMultipleVariantsDataDocument = gql`
     query CreateMultipleVariantsData($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   product(id: $id) {
-    ...ProductVariantAttributesFragment
+    ...ProductVariantAttributes
   }
   warehouses(first: 20) {
     edges {
       node {
-        ...WarehouseFragment
+        ...Warehouse
       }
     }
   }
 }
-    ${ProductVariantAttributesFragmentFragmentDoc}
-${WarehouseFragmentFragmentDoc}`;
+    ${ProductVariantAttributesFragmentDoc}
+${WarehouseFragmentDoc}`;
 
 /**
  * __useCreateMultipleVariantsDataQuery__
@@ -26449,11 +26632,11 @@ export const SearchAttributesDocument = gql`
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${PageInfoFragmentFragmentDoc}`;
+    ${PageInfoFragmentDoc}`;
 
 /**
  * __useSearchAttributesQuery__
@@ -26491,17 +26674,17 @@ export const SearchAttributeValuesDocument = gql`
     choices(after: $after, first: $first, filter: {search: $query}) {
       edges {
         node {
-          ...AttributeValueDetailsFragment
+          ...AttributeValueDetails
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }
 }
-    ${AttributeValueDetailsFragmentFragmentDoc}
-${PageInfoFragmentFragmentDoc}`;
+    ${AttributeValueDetailsFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useSearchAttributeValuesQuery__
@@ -26533,6 +26716,104 @@ export function useSearchAttributeValuesLazyQuery(baseOptions?: ApolloReactHooks
 export type SearchAttributeValuesQueryHookResult = ReturnType<typeof useSearchAttributeValuesQuery>;
 export type SearchAttributeValuesLazyQueryHookResult = ReturnType<typeof useSearchAttributeValuesLazyQuery>;
 export type SearchAttributeValuesQueryResult = Apollo.QueryResult<SearchAttributeValuesQuery, SearchAttributeValuesQueryVariables>;
+export const SearchAvailablePageAttributesDocument = gql`
+    query SearchAvailablePageAttributes($id: ID!, $after: String, $first: Int!, $query: String!) {
+  pageType(id: $id) {
+    id
+    availableAttributes(after: $after, first: $first, filter: {search: $query}) {
+      edges {
+        node {
+          ...AvailableAttribute
+        }
+      }
+      pageInfo {
+        ...PageInfo
+      }
+    }
+  }
+}
+    ${AvailableAttributeFragmentDoc}
+${PageInfoFragmentDoc}`;
+
+/**
+ * __useSearchAvailablePageAttributesQuery__
+ *
+ * To run a query within a React component, call `useSearchAvailablePageAttributesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchAvailablePageAttributesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchAvailablePageAttributesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useSearchAvailablePageAttributesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SearchAvailablePageAttributesQuery, SearchAvailablePageAttributesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<SearchAvailablePageAttributesQuery, SearchAvailablePageAttributesQueryVariables>(SearchAvailablePageAttributesDocument, options);
+      }
+export function useSearchAvailablePageAttributesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SearchAvailablePageAttributesQuery, SearchAvailablePageAttributesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<SearchAvailablePageAttributesQuery, SearchAvailablePageAttributesQueryVariables>(SearchAvailablePageAttributesDocument, options);
+        }
+export type SearchAvailablePageAttributesQueryHookResult = ReturnType<typeof useSearchAvailablePageAttributesQuery>;
+export type SearchAvailablePageAttributesLazyQueryHookResult = ReturnType<typeof useSearchAvailablePageAttributesLazyQuery>;
+export type SearchAvailablePageAttributesQueryResult = Apollo.QueryResult<SearchAvailablePageAttributesQuery, SearchAvailablePageAttributesQueryVariables>;
+export const SearchAvailableProductAttributesDocument = gql`
+    query SearchAvailableProductAttributes($id: ID!, $after: String, $first: Int!, $query: String!) {
+  productType(id: $id) {
+    id
+    availableAttributes(after: $after, first: $first, filter: {search: $query}) {
+      edges {
+        node {
+          ...AvailableAttribute
+        }
+      }
+      pageInfo {
+        ...PageInfo
+      }
+    }
+  }
+}
+    ${AvailableAttributeFragmentDoc}
+${PageInfoFragmentDoc}`;
+
+/**
+ * __useSearchAvailableProductAttributesQuery__
+ *
+ * To run a query within a React component, call `useSearchAvailableProductAttributesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchAvailableProductAttributesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchAvailableProductAttributesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useSearchAvailableProductAttributesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SearchAvailableProductAttributesQuery, SearchAvailableProductAttributesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<SearchAvailableProductAttributesQuery, SearchAvailableProductAttributesQueryVariables>(SearchAvailableProductAttributesDocument, options);
+      }
+export function useSearchAvailableProductAttributesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SearchAvailableProductAttributesQuery, SearchAvailableProductAttributesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<SearchAvailableProductAttributesQuery, SearchAvailableProductAttributesQueryVariables>(SearchAvailableProductAttributesDocument, options);
+        }
+export type SearchAvailableProductAttributesQueryHookResult = ReturnType<typeof useSearchAvailableProductAttributesQuery>;
+export type SearchAvailableProductAttributesLazyQueryHookResult = ReturnType<typeof useSearchAvailableProductAttributesLazyQuery>;
+export type SearchAvailableProductAttributesQueryResult = Apollo.QueryResult<SearchAvailableProductAttributesQuery, SearchAvailableProductAttributesQueryVariables>;
 export const SearchCategoriesDocument = gql`
     query SearchCategories($after: String, $first: Int!, $query: String!) {
   search: categories(after: $after, first: $first, filter: {search: $query}) {
@@ -26543,11 +26824,11 @@ export const SearchCategoriesDocument = gql`
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${PageInfoFragmentFragmentDoc}`;
+    ${PageInfoFragmentDoc}`;
 
 /**
  * __useSearchCategoriesQuery__
@@ -26588,11 +26869,11 @@ export const SearchCollectionsDocument = gql`
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${PageInfoFragmentFragmentDoc}`;
+    ${PageInfoFragmentDoc}`;
 
 /**
  * __useSearchCollectionsQuery__
@@ -26635,11 +26916,11 @@ export const SearchCustomersDocument = gql`
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${PageInfoFragmentFragmentDoc}`;
+    ${PageInfoFragmentDoc}`;
 
 /**
  * __useSearchCustomersQuery__
@@ -26687,11 +26968,11 @@ export const SearchGiftCardTagsDocument = gql`
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${PageInfoFragmentFragmentDoc}`;
+    ${PageInfoFragmentDoc}`;
 
 /**
  * __useSearchGiftCardTagsQuery__
@@ -26822,11 +27103,11 @@ export const SearchPagesDocument = gql`
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${PageInfoFragmentFragmentDoc}`;
+    ${PageInfoFragmentDoc}`;
 
 /**
  * __useSearchPagesQuery__
@@ -26867,11 +27148,11 @@ export const SearchPageTypesDocument = gql`
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${PageInfoFragmentFragmentDoc}`;
+    ${PageInfoFragmentDoc}`;
 
 /**
  * __useSearchPageTypesQuery__
@@ -26913,11 +27194,11 @@ export const SearchPermissionGroupsDocument = gql`
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${PageInfoFragmentFragmentDoc}`;
+    ${PageInfoFragmentDoc}`;
 
 /**
  * __useSearchPermissionGroupsQuery__
@@ -26978,11 +27259,11 @@ export const SearchProductsDocument = gql`
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${PageInfoFragmentFragmentDoc}`;
+    ${PageInfoFragmentDoc}`;
 
 /**
  * __useSearchProductsQuery__
@@ -27023,11 +27304,11 @@ export const SearchProductTypesDocument = gql`
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${PageInfoFragmentFragmentDoc}`;
+    ${PageInfoFragmentDoc}`;
 
 /**
  * __useSearchProductTypesQuery__
@@ -27075,11 +27356,11 @@ export const SearchShippingZonesDocument = gql`
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${PageInfoFragmentFragmentDoc}`;
+    ${PageInfoFragmentDoc}`;
 
 /**
  * __useSearchShippingZonesQuery__
@@ -27129,11 +27410,11 @@ export const SearchStaffMembersDocument = gql`
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${PageInfoFragmentFragmentDoc}`;
+    ${PageInfoFragmentDoc}`;
 
 /**
  * __useSearchStaffMembersQuery__
@@ -27174,11 +27455,11 @@ export const SearchWarehousesDocument = gql`
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${PageInfoFragmentFragmentDoc}`;
+    ${PageInfoFragmentDoc}`;
 
 /**
  * __useSearchWarehousesQuery__
@@ -27213,11 +27494,11 @@ export const DeleteShippingZoneDocument = gql`
     mutation DeleteShippingZone($id: ID!) {
   shippingZoneDelete(id: $id) {
     errors {
-      ...ShippingErrorFragment
+      ...ShippingError
     }
   }
 }
-    ${ShippingErrorFragmentFragmentDoc}`;
+    ${ShippingErrorFragmentDoc}`;
 export type DeleteShippingZoneMutationFn = Apollo.MutationFunction<DeleteShippingZoneMutation, DeleteShippingZoneMutationVariables>;
 
 /**
@@ -27248,11 +27529,11 @@ export const BulkDeleteShippingZoneDocument = gql`
     mutation BulkDeleteShippingZone($ids: [ID]!) {
   shippingZoneBulkDelete(ids: $ids) {
     errors {
-      ...ShippingErrorFragment
+      ...ShippingError
     }
   }
 }
-    ${ShippingErrorFragmentFragmentDoc}`;
+    ${ShippingErrorFragmentDoc}`;
 export type BulkDeleteShippingZoneMutationFn = Apollo.MutationFunction<BulkDeleteShippingZoneMutation, BulkDeleteShippingZoneMutationVariables>;
 
 /**
@@ -27321,19 +27602,19 @@ export const CreateShippingZoneDocument = gql`
     mutation CreateShippingZone($input: ShippingZoneCreateInput!) {
   shippingZoneCreate(input: $input) {
     errors {
-      ...ShippingErrorFragment
+      ...ShippingError
     }
     shippingZone {
       countries {
-        ...CountryFragment
+        ...Country
       }
       id
       name
     }
   }
 }
-    ${ShippingErrorFragmentFragmentDoc}
-${CountryFragmentFragmentDoc}`;
+    ${ShippingErrorFragmentDoc}
+${CountryFragmentDoc}`;
 export type CreateShippingZoneMutationFn = Apollo.MutationFunction<CreateShippingZoneMutation, CreateShippingZoneMutationVariables>;
 
 /**
@@ -27364,19 +27645,19 @@ export const UpdateShippingZoneDocument = gql`
     mutation UpdateShippingZone($id: ID!, $input: ShippingZoneUpdateInput!) {
   shippingZoneUpdate(id: $id, input: $input) {
     errors {
-      ...ShippingErrorFragment
+      ...ShippingError
     }
     shippingZone {
       countries {
-        ...CountryFragment
+        ...Country
       }
       id
       name
     }
   }
 }
-    ${ShippingErrorFragmentFragmentDoc}
-${CountryFragmentFragmentDoc}`;
+    ${ShippingErrorFragmentDoc}
+${CountryFragmentDoc}`;
 export type UpdateShippingZoneMutationFn = Apollo.MutationFunction<UpdateShippingZoneMutation, UpdateShippingZoneMutationVariables>;
 
 /**
@@ -27408,15 +27689,15 @@ export const UpdateShippingRateDocument = gql`
     mutation UpdateShippingRate($id: ID!, $input: ShippingPriceInput!) {
   shippingPriceUpdate(id: $id, input: $input) {
     errors {
-      ...ShippingErrorFragment
+      ...ShippingError
     }
     shippingMethod {
-      ...ShippingMethodTypeFragment
+      ...ShippingMethodType
     }
   }
 }
-    ${ShippingErrorFragmentFragmentDoc}
-${ShippingMethodTypeFragmentFragmentDoc}`;
+    ${ShippingErrorFragmentDoc}
+${ShippingMethodTypeFragmentDoc}`;
 export type UpdateShippingRateMutationFn = Apollo.MutationFunction<UpdateShippingRateMutation, UpdateShippingRateMutationVariables>;
 
 /**
@@ -27448,19 +27729,19 @@ export const CreateShippingRateDocument = gql`
     mutation CreateShippingRate($input: ShippingPriceInput!) {
   shippingPriceCreate(input: $input) {
     errors {
-      ...ShippingErrorFragment
+      ...ShippingError
     }
     shippingZone {
-      ...ShippingZoneDetailsFragment
+      ...ShippingZoneDetails
     }
     shippingMethod {
-      ...ShippingMethodTypeFragment
+      ...ShippingMethodType
     }
   }
 }
-    ${ShippingErrorFragmentFragmentDoc}
-${ShippingZoneDetailsFragmentFragmentDoc}
-${ShippingMethodTypeFragmentFragmentDoc}`;
+    ${ShippingErrorFragmentDoc}
+${ShippingZoneDetailsFragmentDoc}
+${ShippingMethodTypeFragmentDoc}`;
 export type CreateShippingRateMutationFn = Apollo.MutationFunction<CreateShippingRateMutation, CreateShippingRateMutationVariables>;
 
 /**
@@ -27491,15 +27772,15 @@ export const DeleteShippingRateDocument = gql`
     mutation DeleteShippingRate($id: ID!) {
   shippingPriceDelete(id: $id) {
     errors {
-      ...ShippingErrorFragment
+      ...ShippingError
     }
     shippingZone {
-      ...ShippingZoneDetailsFragment
+      ...ShippingZoneDetails
     }
   }
 }
-    ${ShippingErrorFragmentFragmentDoc}
-${ShippingZoneDetailsFragmentFragmentDoc}`;
+    ${ShippingErrorFragmentDoc}
+${ShippingZoneDetailsFragmentDoc}`;
 export type DeleteShippingRateMutationFn = Apollo.MutationFunction<DeleteShippingRateMutation, DeleteShippingRateMutationVariables>;
 
 /**
@@ -27530,11 +27811,11 @@ export const BulkDeleteShippingRateDocument = gql`
     mutation BulkDeleteShippingRate($ids: [ID]!) {
   shippingPriceBulkDelete(ids: $ids) {
     errors {
-      ...ShippingErrorFragment
+      ...ShippingError
     }
   }
 }
-    ${ShippingErrorFragmentFragmentDoc}`;
+    ${ShippingErrorFragmentDoc}`;
 export type BulkDeleteShippingRateMutationFn = Apollo.MutationFunction<BulkDeleteShippingRateMutation, BulkDeleteShippingRateMutationVariables>;
 
 /**
@@ -27565,15 +27846,15 @@ export const ShippingMethodChannelListingUpdateDocument = gql`
     mutation ShippingMethodChannelListingUpdate($id: ID!, $input: ShippingMethodChannelListingInput!) {
   shippingMethodChannelListingUpdate(id: $id, input: $input) {
     shippingMethod {
-      ...ShippingMethodTypeFragment
+      ...ShippingMethodType
     }
     errors {
-      ...ShippingChannelsErrorFragment
+      ...ShippingChannelsError
     }
   }
 }
-    ${ShippingMethodTypeFragmentFragmentDoc}
-${ShippingChannelsErrorFragmentFragmentDoc}`;
+    ${ShippingMethodTypeFragmentDoc}
+${ShippingChannelsErrorFragmentDoc}`;
 export type ShippingMethodChannelListingUpdateMutationFn = Apollo.MutationFunction<ShippingMethodChannelListingUpdateMutation, ShippingMethodChannelListingUpdateMutationVariables>;
 
 /**
@@ -27605,11 +27886,11 @@ export const ShippingPriceExcludeProductDocument = gql`
     mutation ShippingPriceExcludeProduct($id: ID!, $input: ShippingPriceExcludeProductsInput!) {
   shippingPriceExcludeProducts(id: $id, input: $input) {
     errors {
-      ...ShippingErrorFragment
+      ...ShippingError
     }
   }
 }
-    ${ShippingErrorFragmentFragmentDoc}`;
+    ${ShippingErrorFragmentDoc}`;
 export type ShippingPriceExcludeProductMutationFn = Apollo.MutationFunction<ShippingPriceExcludeProductMutation, ShippingPriceExcludeProductMutationVariables>;
 
 /**
@@ -27641,11 +27922,11 @@ export const ShippingPriceRemoveProductFromExcludeDocument = gql`
     mutation ShippingPriceRemoveProductFromExclude($id: ID!, $products: [ID]!) {
   shippingPriceRemoveProductFromExclude(id: $id, products: $products) {
     errors {
-      ...ShippingErrorFragment
+      ...ShippingError
     }
   }
 }
-    ${ShippingErrorFragmentFragmentDoc}`;
+    ${ShippingErrorFragmentDoc}`;
 export type ShippingPriceRemoveProductFromExcludeMutationFn = Apollo.MutationFunction<ShippingPriceRemoveProductFromExcludeMutation, ShippingPriceRemoveProductFromExcludeMutationVariables>;
 
 /**
@@ -27678,16 +27959,16 @@ export const ShippingZonesDocument = gql`
   shippingZones(first: $first, after: $after, last: $last, before: $before) {
     edges {
       node {
-        ...ShippingZoneFragment
+        ...ShippingZone
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${ShippingZoneFragmentFragmentDoc}
-${PageInfoFragmentFragmentDoc}`;
+    ${ShippingZoneFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useShippingZonesQuery__
@@ -27722,9 +28003,10 @@ export type ShippingZonesQueryResult = Apollo.QueryResult<ShippingZonesQuery, Sh
 export const ShippingZoneDocument = gql`
     query ShippingZone($id: ID!, $before: String, $after: String, $first: Int, $last: Int) {
   shippingZone(id: $id) {
-    ...ShippingZoneFragment
+    ...ShippingZone
+    default
     shippingMethods {
-      ...ShippingMethodWithExcludedProductsFragment
+      ...ShippingMethodWithExcludedProducts
     }
     channels {
       id
@@ -27737,8 +28019,8 @@ export const ShippingZoneDocument = gql`
     }
   }
 }
-    ${ShippingZoneFragmentFragmentDoc}
-${ShippingMethodWithExcludedProductsFragmentFragmentDoc}`;
+    ${ShippingZoneFragmentDoc}
+${ShippingMethodWithExcludedProductsFragmentDoc}`;
 
 /**
  * __useShippingZoneQuery__
@@ -27855,15 +28137,15 @@ export const ShopSettingsUpdateDocument = gql`
     mutation ShopSettingsUpdate($shopDomainInput: SiteDomainInput!, $shopSettingsInput: ShopSettingsInput!, $addressInput: AddressInput, $isCloudInstance: Boolean!) {
   shopSettingsUpdate(input: $shopSettingsInput) {
     errors {
-      ...ShopErrorFragment
+      ...ShopError
     }
     shop {
-      ...ShopFragment
+      ...Shop
     }
   }
   shopDomainUpdate(input: $shopDomainInput) @skip(if: $isCloudInstance) {
     errors {
-      ...ShopErrorFragment
+      ...ShopError
     }
     shop {
       domain {
@@ -27874,18 +28156,18 @@ export const ShopSettingsUpdateDocument = gql`
   }
   shopAddressUpdate(input: $addressInput) {
     errors {
-      ...ShopErrorFragment
+      ...ShopError
     }
     shop {
       companyAddress {
-        ...AddressFragment
+        ...Address
       }
     }
   }
 }
-    ${ShopErrorFragmentFragmentDoc}
-${ShopFragmentFragmentDoc}
-${AddressFragmentFragmentDoc}`;
+    ${ShopErrorFragmentDoc}
+${ShopFragmentDoc}
+${AddressFragmentDoc}`;
 export type ShopSettingsUpdateMutationFn = Apollo.MutationFunction<ShopSettingsUpdateMutation, ShopSettingsUpdateMutationVariables>;
 
 /**
@@ -27918,10 +28200,10 @@ export type ShopSettingsUpdateMutationOptions = Apollo.BaseMutationOptions<ShopS
 export const SiteSettingsDocument = gql`
     query SiteSettings {
   shop {
-    ...ShopFragment
+    ...Shop
   }
 }
-    ${ShopFragmentFragmentDoc}`;
+    ${ShopFragmentDoc}`;
 
 /**
  * __useSiteSettingsQuery__
@@ -27953,15 +28235,15 @@ export const StaffMemberAddDocument = gql`
     mutation StaffMemberAdd($input: StaffCreateInput!) {
   staffCreate(input: $input) {
     errors {
-      ...StaffErrorFragment
+      ...StaffError
     }
     user {
-      ...StaffMemberDetailsFragment
+      ...StaffMemberDetails
     }
   }
 }
-    ${StaffErrorFragmentFragmentDoc}
-${StaffMemberDetailsFragmentFragmentDoc}`;
+    ${StaffErrorFragmentDoc}
+${StaffMemberDetailsFragmentDoc}`;
 export type StaffMemberAddMutationFn = Apollo.MutationFunction<StaffMemberAddMutation, StaffMemberAddMutationVariables>;
 
 /**
@@ -27992,15 +28274,15 @@ export const StaffMemberUpdateDocument = gql`
     mutation StaffMemberUpdate($id: ID!, $input: StaffUpdateInput!) {
   staffUpdate(id: $id, input: $input) {
     errors {
-      ...StaffErrorFragment
+      ...StaffError
     }
     user {
-      ...StaffMemberDetailsFragment
+      ...StaffMemberDetails
     }
   }
 }
-    ${StaffErrorFragmentFragmentDoc}
-${StaffMemberDetailsFragmentFragmentDoc}`;
+    ${StaffErrorFragmentDoc}
+${StaffMemberDetailsFragmentDoc}`;
 export type StaffMemberUpdateMutationFn = Apollo.MutationFunction<StaffMemberUpdateMutation, StaffMemberUpdateMutationVariables>;
 
 /**
@@ -28032,11 +28314,11 @@ export const StaffMemberDeleteDocument = gql`
     mutation StaffMemberDelete($id: ID!) {
   staffDelete(id: $id) {
     errors {
-      ...StaffErrorFragment
+      ...StaffError
     }
   }
 }
-    ${StaffErrorFragmentFragmentDoc}`;
+    ${StaffErrorFragmentDoc}`;
 export type StaffMemberDeleteMutationFn = Apollo.MutationFunction<StaffMemberDeleteMutation, StaffMemberDeleteMutationVariables>;
 
 /**
@@ -28067,7 +28349,7 @@ export const StaffAvatarUpdateDocument = gql`
     mutation StaffAvatarUpdate($image: Upload!) {
   userAvatarUpdate(image: $image) {
     errors {
-      ...AccountErrorFragment
+      ...AccountError
     }
     user {
       id
@@ -28077,7 +28359,7 @@ export const StaffAvatarUpdateDocument = gql`
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}`;
+    ${AccountErrorFragmentDoc}`;
 export type StaffAvatarUpdateMutationFn = Apollo.MutationFunction<StaffAvatarUpdateMutation, StaffAvatarUpdateMutationVariables>;
 
 /**
@@ -28108,7 +28390,7 @@ export const StaffAvatarDeleteDocument = gql`
     mutation StaffAvatarDelete {
   userAvatarDelete {
     errors {
-      ...AccountErrorFragment
+      ...AccountError
     }
     user {
       id
@@ -28118,7 +28400,7 @@ export const StaffAvatarDeleteDocument = gql`
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}`;
+    ${AccountErrorFragmentDoc}`;
 export type StaffAvatarDeleteMutationFn = Apollo.MutationFunction<StaffAvatarDeleteMutation, StaffAvatarDeleteMutationVariables>;
 
 /**
@@ -28148,11 +28430,11 @@ export const ChangeStaffPasswordDocument = gql`
     mutation ChangeStaffPassword($newPassword: String!, $oldPassword: String!) {
   passwordChange(newPassword: $newPassword, oldPassword: $oldPassword) {
     errors {
-      ...AccountErrorFragment
+      ...AccountError
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}`;
+    ${AccountErrorFragmentDoc}`;
 export type ChangeStaffPasswordMutationFn = Apollo.MutationFunction<ChangeStaffPasswordMutation, ChangeStaffPasswordMutationVariables>;
 
 /**
@@ -28193,7 +28475,7 @@ export const StaffListDocument = gql`
     edges {
       cursor
       node {
-        ...StaffMemberFragment
+        ...StaffMember
         avatar(size: 48) {
           url
         }
@@ -28207,7 +28489,7 @@ export const StaffListDocument = gql`
     }
   }
 }
-    ${StaffMemberFragmentFragmentDoc}`;
+    ${StaffMemberFragmentDoc}`;
 
 /**
  * __useStaffListQuery__
@@ -28244,10 +28526,10 @@ export type StaffListQueryResult = Apollo.QueryResult<StaffListQuery, StaffListQ
 export const StaffMemberDetailsDocument = gql`
     query StaffMemberDetails($id: ID!) {
   user(id: $id) {
-    ...StaffMemberDetailsFragment
+    ...StaffMemberDetails
   }
 }
-    ${StaffMemberDetailsFragmentFragmentDoc}`;
+    ${StaffMemberDetailsFragmentDoc}`;
 
 /**
  * __useStaffMemberDetailsQuery__
@@ -28283,12 +28565,12 @@ export const UpdateTaxSettingsDocument = gql`
       ...ShopSettingsUpdateErrorFragment
     }
     shop {
-      ...ShopTaxesFragment
+      ...ShopTaxes
     }
   }
 }
     ${ShopSettingsUpdateErrorFragmentFragmentDoc}
-${ShopTaxesFragmentFragmentDoc}`;
+${ShopTaxesFragmentDoc}`;
 export type UpdateTaxSettingsMutationFn = Apollo.MutationFunction<UpdateTaxSettingsMutation, UpdateTaxSettingsMutationVariables>;
 
 /**
@@ -28323,13 +28605,13 @@ export const FetchTaxesDocument = gql`
     }
     shop {
       countries {
-        ...CountryFragment
+        ...Country
       }
     }
   }
 }
     ${ShopFetchTaxRatesErrorFragmentFragmentDoc}
-${CountryFragmentFragmentDoc}`;
+${CountryFragmentDoc}`;
 export type FetchTaxesMutationFn = Apollo.MutationFunction<FetchTaxesMutation, FetchTaxesMutationVariables>;
 
 /**
@@ -28358,14 +28640,14 @@ export type FetchTaxesMutationOptions = Apollo.BaseMutationOptions<FetchTaxesMut
 export const CountryListDocument = gql`
     query CountryList {
   shop {
-    ...ShopTaxesFragment
+    ...ShopTaxes
     countries {
-      ...CountryWithTaxesFragment
+      ...CountryWithTaxes
     }
   }
 }
-    ${ShopTaxesFragmentFragmentDoc}
-${CountryWithTaxesFragmentFragmentDoc}`;
+    ${ShopTaxesFragmentDoc}
+${CountryWithTaxesFragmentDoc}`;
 
 /**
  * __useCountryListQuery__
@@ -28396,10 +28678,10 @@ export type CountryListQueryResult = Apollo.QueryResult<CountryListQuery, Countr
 export const TaxTypeListDocument = gql`
     query TaxTypeList {
   taxTypes {
-    ...TaxTypeFragment
+    ...TaxType
   }
 }
-    ${TaxTypeFragmentFragmentDoc}`;
+    ${TaxTypeFragmentDoc}`;
 
 /**
  * __useTaxTypeListQuery__
@@ -28646,12 +28928,12 @@ export const UpdatePageTranslationsDocument = gql`
       ...PageTranslateErrorFragment
     }
     page {
-      ...PageTranslationFragment
+      ...PageTranslation
     }
   }
 }
     ${PageTranslateErrorFragmentFragmentDoc}
-${PageTranslationFragmentFragmentDoc}`;
+${PageTranslationFragmentDoc}`;
 export type UpdatePageTranslationsMutationFn = Apollo.MutationFunction<UpdatePageTranslationsMutation, UpdatePageTranslationsMutationVariables>;
 
 /**
@@ -28931,16 +29213,16 @@ export const CategoryTranslationsDocument = gql`
   ) {
     edges {
       node {
-        ...CategoryTranslationFragment
+        ...CategoryTranslation
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${CategoryTranslationFragmentFragmentDoc}
-${PageInfoFragmentFragmentDoc}`;
+    ${CategoryTranslationFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useCategoryTranslationsQuery__
@@ -28984,16 +29266,16 @@ export const CollectionTranslationsDocument = gql`
   ) {
     edges {
       node {
-        ...CollectionTranslationFragment
+        ...CollectionTranslation
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${CollectionTranslationFragmentFragmentDoc}
-${PageInfoFragmentFragmentDoc}`;
+    ${CollectionTranslationFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useCollectionTranslationsQuery__
@@ -29037,16 +29319,16 @@ export const ProductTranslationsDocument = gql`
   ) {
     edges {
       node {
-        ...ProductTranslationFragment
+        ...ProductTranslation
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${ProductTranslationFragmentFragmentDoc}
-${PageInfoFragmentFragmentDoc}`;
+    ${ProductTranslationFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useProductTranslationsQuery__
@@ -29090,16 +29372,16 @@ export const PageTranslationsDocument = gql`
   ) {
     edges {
       node {
-        ...PageTranslationFragment
+        ...PageTranslation
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${PageTranslationFragmentFragmentDoc}
-${PageInfoFragmentFragmentDoc}`;
+    ${PageTranslationFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __usePageTranslationsQuery__
@@ -29143,16 +29425,16 @@ export const VoucherTranslationsDocument = gql`
   ) {
     edges {
       node {
-        ...VoucherTranslationFragment
+        ...VoucherTranslation
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${VoucherTranslationFragmentFragmentDoc}
-${PageInfoFragmentFragmentDoc}`;
+    ${VoucherTranslationFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useVoucherTranslationsQuery__
@@ -29196,16 +29478,16 @@ export const SaleTranslationsDocument = gql`
   ) {
     edges {
       node {
-        ...SaleTranslationFragment
+        ...SaleTranslation
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${SaleTranslationFragmentFragmentDoc}
-${PageInfoFragmentFragmentDoc}`;
+    ${SaleTranslationFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useSaleTranslationsQuery__
@@ -29249,16 +29531,16 @@ export const AttributeTranslationsDocument = gql`
   ) {
     edges {
       node {
-        ...AttributeTranslationFragment
+        ...AttributeTranslation
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${AttributeTranslationFragmentFragmentDoc}
-${PageInfoFragmentFragmentDoc}`;
+    ${AttributeTranslationFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useAttributeTranslationsQuery__
@@ -29302,16 +29584,16 @@ export const ShippingMethodTranslationsDocument = gql`
   ) {
     edges {
       node {
-        ...ShippingMethodTranslationFragment
+        ...ShippingMethodTranslation
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${ShippingMethodTranslationFragmentFragmentDoc}
-${PageInfoFragmentFragmentDoc}`;
+    ${ShippingMethodTranslationFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useShippingMethodTranslationsQuery__
@@ -29347,10 +29629,10 @@ export type ShippingMethodTranslationsQueryResult = Apollo.QueryResult<ShippingM
 export const ProductTranslationDetailsDocument = gql`
     query ProductTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
   translation(kind: PRODUCT, id: $id) {
-    ...ProductTranslationFragment
+    ...ProductTranslation
   }
 }
-    ${ProductTranslationFragmentFragmentDoc}`;
+    ${ProductTranslationFragmentDoc}`;
 
 /**
  * __useProductTranslationDetailsQuery__
@@ -29423,10 +29705,10 @@ export type ProductVariantListQueryResult = Apollo.QueryResult<ProductVariantLis
 export const ProductVariantTranslationDetailsDocument = gql`
     query ProductVariantTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
   translation(kind: VARIANT, id: $id) {
-    ...ProductVariantTranslationFragment
+    ...ProductVariantTranslation
   }
 }
-    ${ProductVariantTranslationFragmentFragmentDoc}`;
+    ${ProductVariantTranslationFragmentDoc}`;
 
 /**
  * __useProductVariantTranslationDetailsQuery__
@@ -29459,10 +29741,10 @@ export type ProductVariantTranslationDetailsQueryResult = Apollo.QueryResult<Pro
 export const CategoryTranslationDetailsDocument = gql`
     query CategoryTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
   translation(kind: CATEGORY, id: $id) {
-    ...CategoryTranslationFragment
+    ...CategoryTranslation
   }
 }
-    ${CategoryTranslationFragmentFragmentDoc}`;
+    ${CategoryTranslationFragmentDoc}`;
 
 /**
  * __useCategoryTranslationDetailsQuery__
@@ -29495,10 +29777,10 @@ export type CategoryTranslationDetailsQueryResult = Apollo.QueryResult<CategoryT
 export const CollectionTranslationDetailsDocument = gql`
     query CollectionTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
   translation(id: $id, kind: COLLECTION) {
-    ...CollectionTranslationFragment
+    ...CollectionTranslation
   }
 }
-    ${CollectionTranslationFragmentFragmentDoc}`;
+    ${CollectionTranslationFragmentDoc}`;
 
 /**
  * __useCollectionTranslationDetailsQuery__
@@ -29531,10 +29813,10 @@ export type CollectionTranslationDetailsQueryResult = Apollo.QueryResult<Collect
 export const PageTranslationDetailsDocument = gql`
     query PageTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
   translation(id: $id, kind: PAGE) {
-    ...PageTranslationFragment
+    ...PageTranslation
   }
 }
-    ${PageTranslationFragmentFragmentDoc}`;
+    ${PageTranslationFragmentDoc}`;
 
 /**
  * __usePageTranslationDetailsQuery__
@@ -29567,10 +29849,10 @@ export type PageTranslationDetailsQueryResult = Apollo.QueryResult<PageTranslati
 export const SaleTranslationDetailsDocument = gql`
     query SaleTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
   translation(kind: SALE, id: $id) {
-    ...SaleTranslationFragment
+    ...SaleTranslation
   }
 }
-    ${SaleTranslationFragmentFragmentDoc}`;
+    ${SaleTranslationFragmentDoc}`;
 
 /**
  * __useSaleTranslationDetailsQuery__
@@ -29603,10 +29885,10 @@ export type SaleTranslationDetailsQueryResult = Apollo.QueryResult<SaleTranslati
 export const VoucherTranslationDetailsDocument = gql`
     query VoucherTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
   translation(kind: VOUCHER, id: $id) {
-    ...VoucherTranslationFragment
+    ...VoucherTranslation
   }
 }
-    ${VoucherTranslationFragmentFragmentDoc}`;
+    ${VoucherTranslationFragmentDoc}`;
 
 /**
  * __useVoucherTranslationDetailsQuery__
@@ -29639,10 +29921,10 @@ export type VoucherTranslationDetailsQueryResult = Apollo.QueryResult<VoucherTra
 export const AttributeTranslationDetailsDocument = gql`
     query AttributeTranslationDetails($id: ID!, $language: LanguageCodeEnum!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   translation(kind: ATTRIBUTE, id: $id) {
-    ...AttributeTranslationDetailsFragment
+    ...AttributeTranslationDetails
   }
 }
-    ${AttributeTranslationDetailsFragmentFragmentDoc}`;
+    ${AttributeTranslationDetailsFragmentDoc}`;
 
 /**
  * __useAttributeTranslationDetailsQuery__
@@ -29679,10 +29961,10 @@ export type AttributeTranslationDetailsQueryResult = Apollo.QueryResult<Attribut
 export const ShippingMethodTranslationDetailsDocument = gql`
     query ShippingMethodTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
   translation(kind: SHIPPING_METHOD, id: $id) {
-    ...ShippingMethodTranslationFragment
+    ...ShippingMethodTranslation
   }
 }
-    ${ShippingMethodTranslationFragmentFragmentDoc}`;
+    ${ShippingMethodTranslationFragmentDoc}`;
 
 /**
  * __useShippingMethodTranslationDetailsQuery__
@@ -29712,15 +29994,125 @@ export function useShippingMethodTranslationDetailsLazyQuery(baseOptions?: Apoll
 export type ShippingMethodTranslationDetailsQueryHookResult = ReturnType<typeof useShippingMethodTranslationDetailsQuery>;
 export type ShippingMethodTranslationDetailsLazyQueryHookResult = ReturnType<typeof useShippingMethodTranslationDetailsLazyQuery>;
 export type ShippingMethodTranslationDetailsQueryResult = Apollo.QueryResult<ShippingMethodTranslationDetailsQuery, ShippingMethodTranslationDetailsQueryVariables>;
+export const UpdateMetadataDocument = gql`
+    mutation UpdateMetadata($id: ID!, $input: [MetadataInput!]!, $keysToDelete: [String!]!) {
+  updateMetadata(id: $id, input: $input) {
+    errors {
+      ...MetadataError
+    }
+    item {
+      ...Metadata
+      ... on Node {
+        id
+      }
+    }
+  }
+  deleteMetadata(id: $id, keys: $keysToDelete) {
+    errors {
+      ...MetadataError
+    }
+    item {
+      ...Metadata
+      ... on Node {
+        id
+      }
+    }
+  }
+}
+    ${MetadataErrorFragmentDoc}
+${MetadataFragmentDoc}`;
+export type UpdateMetadataMutationFn = Apollo.MutationFunction<UpdateMetadataMutation, UpdateMetadataMutationVariables>;
+
+/**
+ * __useUpdateMetadataMutation__
+ *
+ * To run a mutation, you first call `useUpdateMetadataMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateMetadataMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateMetadataMutation, { data, loading, error }] = useUpdateMetadataMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *      keysToDelete: // value for 'keysToDelete'
+ *   },
+ * });
+ */
+export function useUpdateMetadataMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateMetadataMutation, UpdateMetadataMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<UpdateMetadataMutation, UpdateMetadataMutationVariables>(UpdateMetadataDocument, options);
+      }
+export type UpdateMetadataMutationHookResult = ReturnType<typeof useUpdateMetadataMutation>;
+export type UpdateMetadataMutationResult = Apollo.MutationResult<UpdateMetadataMutation>;
+export type UpdateMetadataMutationOptions = Apollo.BaseMutationOptions<UpdateMetadataMutation, UpdateMetadataMutationVariables>;
+export const UpdatePrivateMetadataDocument = gql`
+    mutation UpdatePrivateMetadata($id: ID!, $input: [MetadataInput!]!, $keysToDelete: [String!]!) {
+  updatePrivateMetadata(id: $id, input: $input) {
+    errors {
+      ...MetadataError
+    }
+    item {
+      ...Metadata
+      ... on Node {
+        id
+      }
+    }
+  }
+  deletePrivateMetadata(id: $id, keys: $keysToDelete) {
+    errors {
+      ...MetadataError
+    }
+    item {
+      ...Metadata
+      ... on Node {
+        id
+      }
+    }
+  }
+}
+    ${MetadataErrorFragmentDoc}
+${MetadataFragmentDoc}`;
+export type UpdatePrivateMetadataMutationFn = Apollo.MutationFunction<UpdatePrivateMetadataMutation, UpdatePrivateMetadataMutationVariables>;
+
+/**
+ * __useUpdatePrivateMetadataMutation__
+ *
+ * To run a mutation, you first call `useUpdatePrivateMetadataMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePrivateMetadataMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePrivateMetadataMutation, { data, loading, error }] = useUpdatePrivateMetadataMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *      keysToDelete: // value for 'keysToDelete'
+ *   },
+ * });
+ */
+export function useUpdatePrivateMetadataMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdatePrivateMetadataMutation, UpdatePrivateMetadataMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<UpdatePrivateMetadataMutation, UpdatePrivateMetadataMutationVariables>(UpdatePrivateMetadataDocument, options);
+      }
+export type UpdatePrivateMetadataMutationHookResult = ReturnType<typeof useUpdatePrivateMetadataMutation>;
+export type UpdatePrivateMetadataMutationResult = Apollo.MutationResult<UpdatePrivateMetadataMutation>;
+export type UpdatePrivateMetadataMutationOptions = Apollo.BaseMutationOptions<UpdatePrivateMetadataMutation, UpdatePrivateMetadataMutationVariables>;
 export const WarehouseDeleteDocument = gql`
     mutation WarehouseDelete($id: ID!) {
   deleteWarehouse(id: $id) {
     errors {
-      ...WarehouseErrorFragment
+      ...WarehouseError
     }
   }
 }
-    ${WarehouseErrorFragmentFragmentDoc}`;
+    ${WarehouseErrorFragmentDoc}`;
 export type WarehouseDeleteMutationFn = Apollo.MutationFunction<WarehouseDeleteMutation, WarehouseDeleteMutationVariables>;
 
 /**
@@ -29751,15 +30143,15 @@ export const WarehouseCreateDocument = gql`
     mutation WarehouseCreate($input: WarehouseCreateInput!) {
   createWarehouse(input: $input) {
     errors {
-      ...WarehouseErrorFragment
+      ...WarehouseError
     }
     warehouse {
-      ...WarehouseDetailsFragment
+      ...WarehouseDetails
     }
   }
 }
-    ${WarehouseErrorFragmentFragmentDoc}
-${WarehouseDetailsFragmentFragmentDoc}`;
+    ${WarehouseErrorFragmentDoc}
+${WarehouseDetailsFragmentDoc}`;
 export type WarehouseCreateMutationFn = Apollo.MutationFunction<WarehouseCreateMutation, WarehouseCreateMutationVariables>;
 
 /**
@@ -29790,15 +30182,15 @@ export const WarehouseUpdateDocument = gql`
     mutation WarehouseUpdate($id: ID!, $input: WarehouseUpdateInput!) {
   updateWarehouse(id: $id, input: $input) {
     errors {
-      ...WarehouseErrorFragment
+      ...WarehouseError
     }
     warehouse {
-      ...WarehouseDetailsFragment
+      ...WarehouseDetails
     }
   }
 }
-    ${WarehouseErrorFragmentFragmentDoc}
-${WarehouseDetailsFragmentFragmentDoc}`;
+    ${WarehouseErrorFragmentDoc}
+${WarehouseDetailsFragmentDoc}`;
 export type WarehouseUpdateMutationFn = Apollo.MutationFunction<WarehouseUpdateMutation, WarehouseUpdateMutationVariables>;
 
 /**
@@ -29838,16 +30230,16 @@ export const WarehouseListDocument = gql`
   ) {
     edges {
       node {
-        ...WarehouseWithShippingFragment
+        ...WarehouseWithShipping
       }
     }
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
   }
 }
-    ${WarehouseWithShippingFragmentFragmentDoc}
-${PageInfoFragmentFragmentDoc}`;
+    ${WarehouseWithShippingFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useWarehouseListQuery__
@@ -29884,10 +30276,10 @@ export type WarehouseListQueryResult = Apollo.QueryResult<WarehouseListQuery, Wa
 export const WarehouseDetailsDocument = gql`
     query WarehouseDetails($id: ID!) {
   warehouse(id: $id) {
-    ...WarehouseDetailsFragment
+    ...WarehouseDetails
   }
 }
-    ${WarehouseDetailsFragmentFragmentDoc}`;
+    ${WarehouseDetailsFragmentDoc}`;
 
 /**
  * __useWarehouseDetailsQuery__
@@ -29920,15 +30312,15 @@ export const WebhookCreateDocument = gql`
     mutation WebhookCreate($input: WebhookCreateInput!) {
   webhookCreate(input: $input) {
     errors {
-      ...WebhookErrorFragment
+      ...WebhookError
     }
     webhook {
-      ...WebhooksDetailsFragment
+      ...WebhooksDetails
     }
   }
 }
-    ${WebhookErrorFragmentFragmentDoc}
-${WebhooksDetailsFragmentFragmentDoc}`;
+    ${WebhookErrorFragmentDoc}
+${WebhooksDetailsFragmentDoc}`;
 export type WebhookCreateMutationFn = Apollo.MutationFunction<WebhookCreateMutation, WebhookCreateMutationVariables>;
 
 /**
@@ -29959,15 +30351,15 @@ export const WebhookUpdateDocument = gql`
     mutation WebhookUpdate($id: ID!, $input: WebhookUpdateInput!) {
   webhookUpdate(id: $id, input: $input) {
     errors {
-      ...WebhookErrorFragment
+      ...WebhookError
     }
     webhook {
-      ...WebhooksDetailsFragment
+      ...WebhooksDetails
     }
   }
 }
-    ${WebhookErrorFragmentFragmentDoc}
-${WebhooksDetailsFragmentFragmentDoc}`;
+    ${WebhookErrorFragmentDoc}
+${WebhooksDetailsFragmentDoc}`;
 export type WebhookUpdateMutationFn = Apollo.MutationFunction<WebhookUpdateMutation, WebhookUpdateMutationVariables>;
 
 /**
@@ -29999,11 +30391,11 @@ export const WebhookDeleteDocument = gql`
     mutation WebhookDelete($id: ID!) {
   webhookDelete(id: $id) {
     errors {
-      ...WebhookErrorFragment
+      ...WebhookError
     }
   }
 }
-    ${WebhookErrorFragmentFragmentDoc}`;
+    ${WebhookErrorFragmentDoc}`;
 export type WebhookDeleteMutationFn = Apollo.MutationFunction<WebhookDeleteMutation, WebhookDeleteMutationVariables>;
 
 /**
@@ -30033,7 +30425,7 @@ export type WebhookDeleteMutationOptions = Apollo.BaseMutationOptions<WebhookDel
 export const WebhookDetailsDocument = gql`
     query WebhookDetails($id: ID!) {
   webhook(id: $id) {
-    ...WebhookFragment
+    ...Webhook
     syncEvents {
       eventType
     }
@@ -30044,7 +30436,7 @@ export const WebhookDetailsDocument = gql`
     targetUrl
   }
 }
-    ${WebhookFragmentFragmentDoc}`;
+    ${WebhookFragmentDoc}`;
 
 /**
  * __useWebhookDetailsQuery__

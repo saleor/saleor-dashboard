@@ -4,7 +4,7 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import {
   FulfillmentStatus,
-  OrderErrorFragmentFragment,
+  OrderErrorFragment,
   OrderRefundDataQuery
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -36,7 +36,7 @@ export interface OrderRefundPageProps {
   order: OrderRefundDataQuery["order"];
   defaultType?: OrderRefundType;
   disabled: boolean;
-  errors: OrderErrorFragmentFragment[];
+  errors: OrderErrorFragment[];
   onBack: () => void;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }

@@ -11,10 +11,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import {
-  SaleDetailsFragmentFragment,
-  VoucherDetailsFragmentFragment
-} from "@saleor/graphql";
+import { SaleDetailsFragment, VoucherDetailsFragment } from "@saleor/graphql";
 import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
@@ -26,7 +23,7 @@ import { messages } from "./messages";
 import { useStyles } from "./styles";
 
 export interface DiscountCollectionsProps extends ListProps, ListActions {
-  discount: SaleDetailsFragmentFragment | VoucherDetailsFragmentFragment;
+  discount: SaleDetailsFragment | VoucherDetailsFragment;
   onCollectionAssign: () => void;
   onCollectionUnassign: (id: string) => void;
 }

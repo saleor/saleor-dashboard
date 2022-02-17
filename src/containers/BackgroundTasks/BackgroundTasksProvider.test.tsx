@@ -1,5 +1,5 @@
 import { createMockClient } from "@apollo/client/testing";
-import { JobStatusEnum } from "@saleor/types/globalTypes";
+import { JobStatusEnum } from "@saleor/graphql";
 import { renderHook } from "@testing-library/react-hooks";
 
 import {

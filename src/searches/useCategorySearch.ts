@@ -20,7 +20,7 @@ export const searchCategories = gql`
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }

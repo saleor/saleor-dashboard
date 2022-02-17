@@ -17,8 +17,8 @@ import Savebar from "@saleor/components/Savebar";
 import SeoForm from "@saleor/components/SeoForm";
 import {
   PermissionEnum,
-  ProductChannelListingErrorFragmentFragment,
-  ProductErrorWithAttributesFragmentFragment,
+  ProductChannelListingErrorFragment,
+  ProductErrorWithAttributesFragment,
   ProductTypeQuery,
   SearchAttributeValuesQuery,
   SearchCategoriesQuery,
@@ -27,7 +27,7 @@ import {
   SearchProductsQuery,
   SearchProductTypesQuery,
   SearchWarehousesQuery,
-  TaxTypeFragmentFragment
+  TaxTypeFragment
 } from "@saleor/graphql";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
@@ -50,8 +50,8 @@ import ProductCreateForm, {
 } from "./form";
 
 interface ProductCreatePageProps {
-  errors: ProductErrorWithAttributesFragmentFragment[];
-  channelsErrors: ProductChannelListingErrorFragmentFragment[];
+  errors: ProductErrorWithAttributesFragment[];
+  channelsErrors: ProductChannelListingErrorFragment[];
   allChannelsCount: number;
   currentChannels: ChannelData[];
   collections: RelayToFlat<SearchCollectionsQuery["search"]>;
@@ -72,7 +72,7 @@ interface ProductCreatePageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   weightUnit: string;
   warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
-  taxTypes: TaxTypeFragmentFragment[];
+  taxTypes: TaxTypeFragment[];
   selectedProductType?: ProductTypeQuery["productType"];
   fetchCategories: (data: string) => void;
   fetchCollections: (data: string) => void;

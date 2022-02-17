@@ -4,9 +4,11 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
-import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
-import { AppErrorFragment } from "@saleor/fragments/types/AppErrorFragment";
-import { PermissionEnum } from "@saleor/graphql";
+import {
+  AppErrorFragment,
+  PermissionEnum,
+  PermissionFragment
+} from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -25,7 +27,7 @@ export interface CustomAppCreatePageFormData {
 export interface CustomAppCreatePageProps {
   disabled: boolean;
   errors: AppErrorFragment[];
-  permissions: ShopInfo_shop_permissions[];
+  permissions: PermissionFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onSubmit: (

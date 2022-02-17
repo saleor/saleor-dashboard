@@ -27,7 +27,7 @@ export const searchStaffMembers = gql`
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }

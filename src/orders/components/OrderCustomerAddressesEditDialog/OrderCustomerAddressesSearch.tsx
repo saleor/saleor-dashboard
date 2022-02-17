@@ -9,7 +9,7 @@ import {
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import { ConfirmButton } from "@saleor/components/ConfirmButton";
 import CustomerAddressChoiceCard from "@saleor/customers/components/CustomerAddressChoiceCard";
-import { AddressFragmentFragment, AddressTypeEnum } from "@saleor/graphql";
+import { AddressFragment, AddressTypeEnum } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
 import { buttonMessages } from "@saleor/intl";
 import {
@@ -32,13 +32,9 @@ export interface OrderCustomerAddressesSearchProps {
   openFromCustomerChange: boolean;
   transitionState: ConfirmButtonTransitionState;
   selectedCustomerAddressId: string;
-  customerAddresses: AddressFragmentFragment[];
-  onChangeCustomerShippingAddress: (
-    customerAddress: AddressFragmentFragment
-  ) => void;
-  onChangeCustomerBillingAddress: (
-    customerAddress: AddressFragmentFragment
-  ) => void;
+  customerAddresses: AddressFragment[];
+  onChangeCustomerShippingAddress: (customerAddress: AddressFragment) => void;
+  onChangeCustomerBillingAddress: (customerAddress: AddressFragment) => void;
   exitSearch();
 }
 

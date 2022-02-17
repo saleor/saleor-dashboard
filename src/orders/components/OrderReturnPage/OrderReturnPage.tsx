@@ -2,10 +2,7 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
-import {
-  OrderDetailsFragmentFragment,
-  OrderErrorFragmentFragment
-} from "@saleor/graphql";
+import { OrderDetailsFragment, OrderErrorFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { Backlink } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
@@ -35,9 +32,9 @@ const messages = defineMessages({
 });
 
 export interface OrderReturnPageProps {
-  order: OrderDetailsFragmentFragment;
+  order: OrderDetailsFragment;
   loading: boolean;
-  errors?: OrderErrorFragmentFragment[];
+  errors?: OrderErrorFragment[];
   onBack: () => void;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }

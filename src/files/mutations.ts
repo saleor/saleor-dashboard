@@ -4,10 +4,10 @@ export const fileUploadMutation = gql`
   mutation FileUpload($file: Upload!) {
     fileUpload(file: $file) {
       uploadedFile {
-        ...FileFragment
+        ...File
       }
       errors {
-        ...UploadErrorFragment
+        ...UploadError
       }
     }
   }

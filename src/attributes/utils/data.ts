@@ -3,22 +3,22 @@ import {
   AttributeInput,
   AttributeInputData
 } from "@saleor/components/Attributes";
-import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
-import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
-import { SelectedVariantAttributeFragment } from "@saleor/fragments/types/SelectedVariantAttributeFragment";
-import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
-import { VariantAttributeFragment } from "@saleor/fragments/types/VariantAttributeFragment";
 import {
   AttributeEntityTypeEnum,
+  AttributeErrorFragment,
   AttributeInputTypeEnum,
   AttributeValueDeleteMutation,
+  AttributeValueFragment,
   AttributeValueInput,
   FileUploadMutation,
   Node,
   PageSelectedAttributeFragment,
   ProductFragment,
   SearchPagesQuery,
-  SearchProductsQuery
+  SearchProductsQuery,
+  SelectedVariantAttributeFragment,
+  UploadErrorFragment,
+  VariantAttributeFragment
 } from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { RelayToFlat } from "@saleor/types";

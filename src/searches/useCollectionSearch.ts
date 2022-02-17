@@ -20,7 +20,7 @@ export const searchCollections = gql`
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }

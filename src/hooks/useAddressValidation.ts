@@ -1,7 +1,7 @@
 import { AddressTypeInput } from "@saleor/customers/types";
-import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
 import {
   AccountErrorCode,
+  AccountErrorFragment,
   AddressInput,
   AddressTypeEnum
 } from "@saleor/graphql";

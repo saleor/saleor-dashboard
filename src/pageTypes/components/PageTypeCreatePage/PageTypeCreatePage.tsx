@@ -6,7 +6,7 @@ import Hr from "@saleor/components/Hr";
 import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
-import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
+import { PageErrorFragment } from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import {
   Backlink,

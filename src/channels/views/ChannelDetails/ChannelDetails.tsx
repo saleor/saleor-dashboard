@@ -5,9 +5,9 @@ import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
-import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
 import {
   ChannelDeleteMutation,
+  ChannelErrorFragment,
   ChannelUpdateMutation,
   useChannelActivateMutation,
   useChannelDeactivateMutation,

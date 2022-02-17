@@ -16,10 +16,7 @@ import ConfirmButton from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
-import {
-  OrderErrorFragmentFragment,
-  SearchOrderVariantQuery
-} from "@saleor/graphql";
+import { OrderErrorFragment, SearchOrderVariantQuery } from "@saleor/graphql";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
@@ -97,7 +94,7 @@ export interface OrderProductAddDialogProps
   extends FetchMoreProps,
     ChannelProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  errors: OrderErrorFragmentFragment[];
+  errors: OrderErrorFragment[];
   open: boolean;
   products: RelayToFlat<SearchOrderVariantQuery["search"]>;
   onClose: () => void;

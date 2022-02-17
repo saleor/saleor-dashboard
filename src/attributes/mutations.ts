@@ -4,7 +4,7 @@ export const attributeBulkDelete = gql`
   mutation AttributeBulkDelete($ids: [ID!]!) {
     attributeBulkDelete(ids: $ids) {
       errors {
-        ...AttributeErrorFragment
+        ...AttributeError
       }
     }
   }
@@ -14,7 +14,7 @@ export const attributeDelete = gql`
   mutation AttributeDelete($id: ID!) {
     attributeDelete(id: $id) {
       errors {
-        ...AttributeErrorFragment
+        ...AttributeError
       }
     }
   }
@@ -24,10 +24,10 @@ export const attributeUpdateMutation = gql`
   mutation AttributeUpdate($id: ID!, $input: AttributeUpdateInput!) {
     attributeUpdate(id: $id, input: $input) {
       attribute {
-        ...AttributeDetailsFragment
+        ...AttributeDetails
       }
       errors {
-        ...AttributeErrorFragment
+        ...AttributeError
       }
     }
   }
@@ -50,11 +50,11 @@ export const attributeValueDelete = gql`
           last: $lastValues
           before: $beforeValues
         ) {
-          ...AttributeValueListFragment
+          ...AttributeValueList
         }
       }
       errors {
-        ...AttributeErrorFragment
+        ...AttributeError
       }
     }
   }
@@ -78,11 +78,11 @@ export const attributeValueUpdateMutation = gql`
           last: $lastValues
           before: $beforeValues
         ) {
-          ...AttributeValueListFragment
+          ...AttributeValueList
         }
       }
       errors {
-        ...AttributeErrorFragment
+        ...AttributeError
       }
     }
   }
@@ -106,11 +106,11 @@ export const attributeValueCreateMutation = gql`
           last: $lastValues
           before: $beforeValues
         ) {
-          ...AttributeValueListFragment
+          ...AttributeValueList
         }
       }
       errors {
-        ...AttributeErrorFragment
+        ...AttributeError
       }
     }
   }
@@ -123,7 +123,7 @@ export const attributeCreateMutation = gql`
         id
       }
       errors {
-        ...AttributeErrorFragment
+        ...AttributeError
       }
     }
   }
@@ -148,7 +148,7 @@ export const attributeValueReorderMutation = gql`
           before: $beforeValues
         ) {
           pageInfo {
-            ...PageInfoFragment
+            ...PageInfo
           }
           edges {
             cursor
@@ -159,7 +159,7 @@ export const attributeValueReorderMutation = gql`
         }
       }
       errors {
-        ...AttributeErrorFragment
+        ...AttributeError
       }
     }
   }

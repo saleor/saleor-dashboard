@@ -4,7 +4,7 @@ import Hr from "@saleor/components/Hr";
 import ImageUpload from "@saleor/components/ImageUpload";
 import MediaTile from "@saleor/components/MediaTile";
 import Skeleton from "@saleor/components/Skeleton";
-import { CategoryDetailsFragmentFragment } from "@saleor/graphql";
+import { CategoryDetailsFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -40,7 +40,7 @@ const useStyles = makeStyles(
 
 export interface CategoryBackgroundProps {
   data: CategoryUpdateData;
-  image: CategoryDetailsFragmentFragment["backgroundImage"];
+  image: CategoryDetailsFragment["backgroundImage"];
   onChange: (event: React.ChangeEvent<any>) => void;
   onImageDelete: () => void;
   onImageUpload: (file: File) => void;

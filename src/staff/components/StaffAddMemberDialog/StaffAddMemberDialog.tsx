@@ -9,8 +9,10 @@ import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
-import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
-import { SearchPermissionGroupsQuery } from "@saleor/graphql";
+import {
+  SearchPermissionGroupsQuery,
+  StaffErrorFragment
+} from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { commonMessages } from "@saleor/intl";

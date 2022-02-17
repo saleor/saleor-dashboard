@@ -1,8 +1,11 @@
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
-import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { AddressTypeInput } from "@saleor/customers/types";
-import { AddressFragmentFragment, Node } from "@saleor/graphql";
+import {
+  AddressFragment,
+  CountryWithCodeFragment,
+  Node
+} from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
@@ -39,7 +42,7 @@ export interface OrderCustomerAddressesEditHandlers {
     addressType: "shippingAddress" | "billingAddress"
   ) => void;
   changeCustomerAddress: (
-    customerAddress: AddressFragmentFragment,
+    customerAddress: AddressFragment,
     addressType: "customerShippingAddress" | "customerBillingAddress"
   ) => void;
   selectShippingCountry: FormChange;
@@ -56,7 +59,7 @@ interface UseOrderCustomerAddressesEditFormResult
 
 interface UseOrderCustomerAddressesEditFormOpts {
   countryChoices: SingleAutocompleteChoiceType[];
-  countries: ShopInfo_shop_countries[];
+  countries: CountryWithCodeFragment[];
   defaultShippingAddress: Node;
   defaultBillingAddress: Node;
   defaultCloneAddress: boolean;
@@ -133,7 +136,7 @@ function useOrderCustomerAddressesEditForm(
       }
     });
   const handleCustomerAddressChange = (
-    customerAddress: AddressFragmentFragment,
+    customerAddress: AddressFragment,
     addressType: "customerShippingAddress" | "customerBillingAddress"
   ) =>
     change({

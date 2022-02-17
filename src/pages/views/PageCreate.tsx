@@ -12,7 +12,9 @@ import {
 import {
   useFileUploadMutation,
   usePageCreateMutation,
-  usePageTypeQuery
+  usePageTypeQuery,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -23,10 +25,6 @@ import useProductSearch from "@saleor/searches/useProductSearch";
 import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -49,8 +47,8 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   const [selectedPageTypeId, setSelectedPageTypeId] = React.useState<string>();
 

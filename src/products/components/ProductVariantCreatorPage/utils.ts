@@ -1,7 +1,6 @@
-import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
 import {
-  AttributeValueFragmentFragment,
-  ProductVariantAttributesFragmentFragment,
+  AttributeValueFragment,
+  ProductVariantAttributesFragment,
   SearchAttributeValuesQuery
 } from "@saleor/graphql";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
@@ -11,8 +10,8 @@ import { AttributeValue, ProductVariantCreateFormData } from "./form";
 
 export function getPriceAttributeValues(
   data: ProductVariantCreateFormData,
-  attributes: ProductVariantAttributesFragmentFragment["productType"]["variantAttributes"]
-): AttributeValueFragmentFragment[] {
+  attributes: ProductVariantAttributesFragment["productType"]["variantAttributes"]
+): AttributeValueFragment[] {
   return data.price.mode === "all"
     ? null
     : data.price.attribute
@@ -31,8 +30,8 @@ export function getPriceAttributeValues(
 
 export function getStockAttributeValues(
   data: ProductVariantCreateFormData,
-  attributes: ProductVariantAttributesFragmentFragment["productType"]["variantAttributes"]
-): AttributeValueFragmentFragment[] {
+  attributes: ProductVariantAttributesFragment["productType"]["variantAttributes"]
+): AttributeValueFragment[] {
   return data.stock.mode === "all"
     ? null
     : data.stock.attribute

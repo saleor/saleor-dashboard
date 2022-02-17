@@ -1,5 +1,4 @@
-import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
-import { CountryListQuery } from "@saleor/graphql";
+import { CountryListQuery, TaxTypeFragment } from "@saleor/graphql";
 
 type CountryList = CountryListQuery["shop"]["countries"];
 

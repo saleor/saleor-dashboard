@@ -4,10 +4,10 @@ export const pageTypeUpdateMutation = gql`
   mutation PageTypeUpdate($id: ID!, $input: PageTypeUpdateInput!) {
     pageTypeUpdate(id: $id, input: $input) {
       errors {
-        ...PageErrorFragment
+        ...PageError
       }
       pageType {
-        ...PageTypeDetailsFragment
+        ...PageTypeDetails
       }
     }
   }
@@ -17,10 +17,10 @@ export const pageTypeCreateMutation = gql`
   mutation PageTypeCreate($input: PageTypeCreateInput!) {
     pageTypeCreate(input: $input) {
       errors {
-        ...PageErrorFragment
+        ...PageError
       }
       pageType {
-        ...PageTypeDetailsFragment
+        ...PageTypeDetails
       }
     }
   }
@@ -30,10 +30,10 @@ export const assignPageAttributeMutation = gql`
   mutation AssignPageAttribute($id: ID!, $ids: [ID!]!) {
     pageAttributeAssign(pageTypeId: $id, attributeIds: $ids) {
       errors {
-        ...PageErrorFragment
+        ...PageError
       }
       pageType {
-        ...PageTypeDetailsFragment
+        ...PageTypeDetails
       }
     }
   }
@@ -43,10 +43,10 @@ export const unassignPageAttributeMutation = gql`
   mutation UnassignPageAttribute($id: ID!, $ids: [ID!]!) {
     pageAttributeUnassign(pageTypeId: $id, attributeIds: $ids) {
       errors {
-        ...PageErrorFragment
+        ...PageError
       }
       pageType {
-        ...PageTypeDetailsFragment
+        ...PageTypeDetails
       }
     }
   }
@@ -79,10 +79,10 @@ export const pageTypeAttributeReorder = gql`
   mutation PageTypeAttributeReorder($move: ReorderInput!, $pageTypeId: ID!) {
     pageTypeReorderAttributes(moves: [$move], pageTypeId: $pageTypeId) {
       errors {
-        ...PageErrorFragment
+        ...PageError
       }
       pageType {
-        ...PageTypeDetailsFragment
+        ...PageTypeDetails
       }
     }
   }

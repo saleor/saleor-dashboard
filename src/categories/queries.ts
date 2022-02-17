@@ -20,11 +20,11 @@ export const rootCategories = gql`
     ) {
       edges {
         node {
-          ...CategoryFragment
+          ...Category
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }
@@ -39,20 +39,20 @@ export const categoryDetails = gql`
     $before: String
   ) {
     category(id: $id) {
-      ...CategoryDetailsFragment
+      ...CategoryDetails
       children(first: $first, after: $after, last: $last, before: $before) {
         edges {
           node {
-            ...CategoryFragment
+            ...Category
           }
         }
         pageInfo {
-          ...PageInfoFragment
+          ...PageInfo
         }
       }
       products(first: $first, after: $after, last: $last, before: $before) {
         pageInfo {
-          ...PageInfoFragment
+          ...PageInfo
         }
         edges {
           cursor

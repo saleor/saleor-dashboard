@@ -2,7 +2,7 @@ import { Card, CardContent, Typography } from "@material-ui/core";
 import AddressFormatter from "@saleor/components/AddressFormatter";
 import CardTitle from "@saleor/components/CardTitle";
 import { Hr } from "@saleor/components/Hr";
-import { CustomerDetailsFragmentFragment } from "@saleor/graphql";
+import { CustomerDetailsFragment } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -21,7 +21,7 @@ const useStyles = makeStyles(
 );
 
 export interface CustomerAddressesProps {
-  customer: CustomerDetailsFragmentFragment;
+  customer: CustomerDetailsFragment;
   disabled: boolean;
   onAddressManageClick: () => void;
 }

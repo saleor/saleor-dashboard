@@ -16,12 +16,12 @@ export const productMediaCreateMutation = gql`
       }
     ) {
       errors {
-        ...ProductErrorFragment
+        ...ProductError
       }
       product {
         id
         media {
-          ...ProductMediaFragment
+          ...ProductMedia
         }
       }
     }
@@ -32,7 +32,7 @@ export const productDeleteMutation = gql`
   mutation ProductDelete($id: ID!) {
     productDelete(id: $id) {
       errors {
-        ...ProductErrorFragment
+        ...ProductError
       }
       product {
         id
@@ -45,7 +45,7 @@ export const productMediaReorder = gql`
   mutation ProductMediaReorder($productId: ID!, $mediaIds: [ID]!) {
     productMediaReorder(productId: $productId, mediaIds: $mediaIds) {
       errors {
-        ...ProductErrorFragment
+        ...ProductError
       }
       product {
         id
@@ -64,7 +64,7 @@ export const productVariantSetDefault = gql`
   mutation ProductVariantSetDefault($productId: ID!, $variantId: ID!) {
     productVariantSetDefault(productId: $productId, variantId: $variantId) {
       errors {
-        ...ProductErrorFragment
+        ...ProductError
       }
       product {
         id
@@ -92,7 +92,7 @@ export const productUpdateMutation = gql`
   ) {
     productUpdate(id: $id, input: $input) {
       errors {
-        ...ProductErrorWithAttributesFragment
+        ...ProductErrorWithAttributes
       }
       product {
         ...Product
@@ -117,7 +117,7 @@ export const simpleProductUpdateMutation = gql`
   ) {
     productUpdate(id: $id, input: $input) {
       errors {
-        ...ProductErrorWithAttributesFragment
+        ...ProductErrorWithAttributes
       }
       product {
         ...Product
@@ -125,7 +125,7 @@ export const simpleProductUpdateMutation = gql`
     }
     productVariantUpdate(id: $productVariantId, input: $productVariantInput) {
       errors {
-        ...ProductErrorWithAttributesFragment
+        ...ProductErrorWithAttributes
       }
       productVariant {
         ...ProductVariant
@@ -136,7 +136,7 @@ export const simpleProductUpdateMutation = gql`
       variantId: $productVariantId
     ) {
       errors {
-        ...BulkStockErrorFragment
+        ...BulkStockError
       }
       productVariant {
         ...ProductVariant
@@ -147,7 +147,7 @@ export const simpleProductUpdateMutation = gql`
       variantId: $productVariantId
     ) {
       errors {
-        ...StockErrorFragment
+        ...StockError
       }
       productVariant {
         ...ProductVariant
@@ -158,7 +158,7 @@ export const simpleProductUpdateMutation = gql`
       variantId: $productVariantId
     ) {
       errors {
-        ...BulkStockErrorFragment
+        ...BulkStockError
       }
       productVariant {
         ...ProductVariant
@@ -171,7 +171,7 @@ export const productCreateMutation = gql`
   mutation ProductCreate($input: ProductCreateInput!) {
     productCreate(input: $input) {
       errors {
-        ...ProductErrorWithAttributesFragment
+        ...ProductErrorWithAttributes
       }
       product {
         id
@@ -184,7 +184,7 @@ export const variantDeleteMutation = gql`
   mutation VariantDelete($id: ID!) {
     productVariantDelete(id: $id) {
       errors {
-        ...ProductErrorFragment
+        ...ProductError
       }
       productVariant {
         id
@@ -222,7 +222,7 @@ export const variantUpdateMutation = gql`
       }
     ) {
       errors {
-        ...ProductErrorWithAttributesFragment
+        ...ProductErrorWithAttributes
       }
       productVariant {
         ...ProductVariant
@@ -230,7 +230,7 @@ export const variantUpdateMutation = gql`
     }
     productVariantStocksUpdate(stocks: $stocks, variantId: $id) {
       errors {
-        ...BulkStockErrorFragment
+        ...BulkStockError
       }
       productVariant {
         ...ProductVariant
@@ -238,23 +238,23 @@ export const variantUpdateMutation = gql`
     }
     productVariantStocksCreate(stocks: $addStocks, variantId: $id) {
       errors {
-        ...BulkStockErrorFragment
+        ...BulkStockError
       }
       productVariant {
         id
         stocks {
-          ...StockFragment
+          ...Stock
         }
       }
     }
     productVariantStocksDelete(warehouseIds: $removeStocks, variantId: $id) {
       errors {
-        ...ProductVariantStocksDeleteErrorFragment
+        ...ProductVariantStocksDeleteError
       }
       productVariant {
         id
         stocks {
-          ...StockFragment
+          ...Stock
         }
       }
     }
@@ -271,7 +271,7 @@ export const variantCreateMutation = gql`
   ) {
     productVariantCreate(input: $input) {
       errors {
-        ...ProductErrorWithAttributesFragment
+        ...ProductErrorWithAttributes
       }
       productVariant {
         ...ProductVariant
@@ -284,7 +284,7 @@ export const productMediaDeleteMutation = gql`
   mutation ProductMediaDelete($id: ID!) {
     productMediaDelete(id: $id) {
       errors {
-        ...ProductErrorFragment
+        ...ProductError
       }
       product {
         id
@@ -300,12 +300,12 @@ export const productMediaUpdateMutation = gql`
   mutation ProductMediaUpdate($id: ID!, $alt: String!) {
     productMediaUpdate(id: $id, input: { alt: $alt }) {
       errors {
-        ...ProductErrorFragment
+        ...ProductError
       }
       product {
         id
         media {
-          ...ProductMediaFragment
+          ...ProductMedia
         }
       }
     }
@@ -316,24 +316,24 @@ export const variantMediaAssignMutation = gql`
   mutation VariantMediaAssign($variantId: ID!, $mediaId: ID!) {
     variantMediaAssign(variantId: $variantId, mediaId: $mediaId) {
       errors {
-        ...ProductErrorFragment
+        ...ProductError
       }
       productVariant {
         id
         media {
-          ...ProductMediaFragment
+          ...ProductMedia
         }
         product {
           id
           media {
-            ...ProductMediaFragment
+            ...ProductMedia
           }
           variants {
             id
             name
             sku
             media {
-              ...ProductMediaFragment
+              ...ProductMedia
             }
           }
         }
@@ -346,24 +346,24 @@ export const variantMediaUnassignMutation = gql`
   mutation VariantMediaUnassign($variantId: ID!, $mediaId: ID!) {
     variantMediaUnassign(variantId: $variantId, mediaId: $mediaId) {
       errors {
-        ...ProductErrorFragment
+        ...ProductError
       }
       productVariant {
         id
         media {
-          ...ProductMediaFragment
+          ...ProductMedia
         }
         product {
           id
           media {
-            ...ProductMediaFragment
+            ...ProductMedia
           }
           variants {
             id
             name
             sku
             media {
-              ...ProductMediaFragment
+              ...ProductMedia
             }
           }
         }
@@ -376,7 +376,7 @@ export const productBulkDeleteMutation = gql`
   mutation productBulkDelete($ids: [ID!]!) {
     productBulkDelete(ids: $ids) {
       errors {
-        ...ProductErrorFragment
+        ...ProductError
       }
     }
   }
@@ -389,7 +389,7 @@ export const ProductVariantBulkCreateMutation = gql`
   ) {
     productVariantBulkCreate(product: $id, variants: $inputs) {
       errors {
-        ...BulkProductErrorFragment
+        ...BulkProductError
       }
     }
   }
@@ -399,7 +399,7 @@ export const ProductVariantBulkDeleteMutation = gql`
   mutation ProductVariantBulkDelete($ids: [ID!]!) {
     productVariantBulkDelete(ids: $ids) {
       errors {
-        ...ProductErrorFragment
+        ...ProductError
       }
     }
   }
@@ -409,10 +409,10 @@ export const productExportMutation = gql`
   mutation ProductExport($input: ExportProductsInput!) {
     exportProducts(input: $input) {
       exportFile {
-        ...ExportFileFragment
+        ...ExportFile
       }
       errors {
-        ...ExportErrorFragment
+        ...ExportError
       }
     }
   }
@@ -427,17 +427,17 @@ export const ProductChannelListingUpdateMutation = gql`
       product {
         id
         channelListings {
-          ...ChannelListingProductWithoutPricingFragment
+          ...ChannelListingProductWithoutPricing
         }
         variants {
           id
           channelListings {
-            ...ChannelListingProductVariantFragment
+            ...ChannelListingProductVariant
           }
         }
       }
       errors {
-        ...ProductChannelListingErrorFragment
+        ...ProductChannelListingError
       }
     }
   }
@@ -447,7 +447,7 @@ export const productVariantReorder = gql`
   mutation ProductVariantReorder($move: ReorderInput!, $productId: ID!) {
     productVariantReorder(moves: [$move], productId: $productId) {
       errors {
-        ...ProductErrorFragment
+        ...ProductError
       }
       product {
         id
@@ -468,17 +468,17 @@ export const ProductVariantChannelListingUpdateMutation = gql`
       variant {
         id
         channelListings {
-          ...ChannelListingProductVariantFragment
+          ...ChannelListingProductVariant
         }
         product {
           id
           channelListings {
-            ...ChannelListingProductWithoutPricingFragment
+            ...ChannelListingProductWithoutPricing
           }
         }
       }
       errors {
-        ...ProductChannelListingErrorFragment
+        ...ProductChannelListingError
       }
     }
   }
@@ -490,11 +490,11 @@ export const ProductVariantPreorderDeactivateMutation = gql`
       productVariant {
         id
         preorder {
-          ...PreorderFragment
+          ...Preorder
         }
       }
       errors {
-        ...ProductErrorFragment
+        ...ProductError
       }
     }
   }

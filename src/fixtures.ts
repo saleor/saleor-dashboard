@@ -1,8 +1,10 @@
-import { PermissionEnum } from "@saleor/graphql";
+import {
+  PermissionEnum,
+  ShopInfoQuery,
+  ShopLimitFragment,
+  UserDetailsQuery
+} from "@saleor/graphql";
 
-import { ShopInfo_shop_permissions } from "./components/Shop/types/ShopInfo";
-import { ShopLimitFragment_limits } from "./fragments/types/ShopLimitFragment";
-import { User_userPermissions } from "./fragments/types/User";
 import {
   FetchMoreProps,
   FilterPageProps,
@@ -328,7 +330,7 @@ export const sortPageProps: SortPage<string> = {
   }
 };
 
-export const permissions: ShopInfo_shop_permissions[] = [
+export const permissions: ShopInfoQuery["shop"]["permissions"] = [
   {
     code: PermissionEnum.MANAGE_DISCOUNTS,
     name: "Manage sales and vouchers."
@@ -391,7 +393,7 @@ export const date = {
   to: "2019-12-38"
 };
 
-export const adminUserPermissions: User_userPermissions[] = [
+export const adminUserPermissions: UserDetailsQuery["me"]["userPermissions"] = [
   {
     __typename: "UserPermission",
     code: PermissionEnum.MANAGE_CHECKOUTS,
@@ -509,7 +511,7 @@ export const address = {
   streetAddress2: "0238 Cremin Freeway"
 };
 
-export const limits: ShopLimitFragment_limits = {
+export const limits: ShopLimitFragment["limits"] = {
   __typename: "LimitInfo",
   allowedUsage: {
     __typename: "Limits",
@@ -528,7 +530,7 @@ export const limits: ShopLimitFragment_limits = {
     warehouses: 1
   }
 };
-export const limitsReached: ShopLimitFragment_limits = {
+export const limitsReached: ShopLimitFragment["limits"] = {
   __typename: "LimitInfo",
   allowedUsage: {
     __typename: "Limits",

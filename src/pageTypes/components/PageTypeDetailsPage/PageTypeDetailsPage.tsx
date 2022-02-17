@@ -8,10 +8,10 @@ import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
 import {
   AttributeTypeEnum,
-  PageTypeDetailsFragmentFragment
+  PageErrorFragment,
+  PageTypeDetailsFragment
 } from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import {
@@ -35,7 +35,7 @@ export interface PageTypeForm extends MetadataFormData {
 
 export interface PageTypeDetailsPageProps {
   errors: PageErrorFragment[];
-  pageType: PageTypeDetailsFragmentFragment;
+  pageType: PageTypeDetailsFragment;
   disabled: boolean;
   pageTitle: string;
   attributeList: ListActions;

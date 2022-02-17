@@ -21,7 +21,7 @@ export const collectionList = gql`
     ) {
       edges {
         node {
-          ...CollectionFragment
+          ...Collection
           products {
             totalCount
           }
@@ -46,11 +46,11 @@ export const collectionDetails = gql`
     $before: String
   ) {
     collection(id: $id) {
-      ...CollectionDetailsFragment
+      ...CollectionDetails
       products(first: $first, after: $after, before: $before, last: $last) {
         edges {
           node {
-            ...CollectionProductFragment
+            ...CollectionProduct
           }
         }
         pageInfo {

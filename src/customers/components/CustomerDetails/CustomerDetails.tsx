@@ -2,10 +2,7 @@ import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import Skeleton from "@saleor/components/Skeleton";
-import {
-  AccountErrorFragmentFragment,
-  CustomerDetailsQuery
-} from "@saleor/graphql";
+import { AccountErrorFragment, CustomerDetailsQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import { getFormErrors } from "@saleor/utils/errors";
@@ -39,7 +36,7 @@ export interface CustomerDetailsProps {
     note: string;
   };
   disabled: boolean;
-  errors: AccountErrorFragmentFragment[];
+  errors: AccountErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 

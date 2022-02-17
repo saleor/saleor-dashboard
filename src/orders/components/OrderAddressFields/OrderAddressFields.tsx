@@ -1,8 +1,8 @@
 import {
-  AddressFragmentFragment,
+  AddressFragment,
   CustomerAddressesQuery,
   OrderDetailsQuery,
-  OrderErrorFragmentFragment
+  OrderErrorFragment
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -26,9 +26,9 @@ interface OrderAddressFieldsProps {
   onClose: () => void;
   onConfirm: (data: OrderCustomerAddressesEditDialogOutput) => SubmitPromise;
   confirmButtonState: ConfirmButtonTransitionState;
-  errors: OrderErrorFragmentFragment[];
-  orderShippingAddress: AddressFragmentFragment;
-  orderBillingAddress: AddressFragmentFragment;
+  errors: OrderErrorFragment[];
+  orderShippingAddress: AddressFragment;
+  orderBillingAddress: AddressFragment;
 }
 
 const OrderAddressFields: React.FC<OrderAddressFieldsProps> = ({

@@ -20,20 +20,20 @@ import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import SeoForm from "@saleor/components/SeoForm";
-import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
-import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
-import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
-import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
-import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import {
   PermissionEnum,
+  ProductChannelListingErrorFragment,
   ProductDetailsVariantFragment,
+  ProductErrorWithAttributesFragment,
   ProductFragment,
+  RefreshLimitsQuery,
   SearchAttributeValuesQuery,
   SearchCategoriesQuery,
   SearchCollectionsQuery,
   SearchPagesQuery,
-  SearchProductsQuery
+  SearchProductsQuery,
+  TaxTypeFragment,
+  WarehouseFragment
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { FormsetData } from "@saleor/hooks/useFormset";
@@ -88,7 +88,7 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   fetchMoreCategories: FetchMoreProps;
   fetchMoreCollections: FetchMoreProps;
   isMediaUrlModalVisible?: boolean;
-  limits: RefreshLimits_shop_limits;
+  limits: RefreshLimitsQuery["shop"]["limits"];
   variants: ProductDetailsVariantFragment[];
   media: ProductFragment["media"];
   hasChannelChanged: boolean;

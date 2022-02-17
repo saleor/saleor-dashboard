@@ -3,13 +3,13 @@ import AddressFormatter from "@saleor/components/AddressFormatter";
 import CardMenu from "@saleor/components/CardMenu";
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
-import { AddressFragmentFragment, AddressTypeEnum } from "@saleor/graphql";
+import { AddressFragment, AddressTypeEnum } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 export interface CustomerAddressProps {
-  address: AddressFragmentFragment;
+  address: AddressFragment;
   disabled: boolean;
   isDefaultBillingAddress: boolean;
   isDefaultShippingAddress: boolean;

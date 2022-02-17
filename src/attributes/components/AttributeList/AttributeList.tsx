@@ -6,7 +6,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import { AttributeFragmentFragment } from "@saleor/graphql";
+import { AttributeFragment } from "@saleor/graphql";
 import { translateBoolean } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
@@ -19,7 +19,7 @@ export interface AttributeListProps
   extends ListProps,
     ListActions,
     SortPage<AttributeListUrlSortField> {
-  attributes: AttributeFragmentFragment[];
+  attributes: AttributeFragment[];
 }
 
 const useStyles = makeStyles(

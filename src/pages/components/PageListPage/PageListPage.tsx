@@ -1,6 +1,6 @@
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
-import { PageFragmentFragment } from "@saleor/graphql";
+import { PageFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Button } from "@saleor/macaw-ui";
 import { PageListUrlSortField } from "@saleor/pages/urls";
@@ -14,7 +14,7 @@ export interface PageListPageProps
   extends PageListProps,
     ListActions,
     SortPage<PageListUrlSortField> {
-  pages: PageFragmentFragment[];
+  pages: PageFragment[];
 }
 
 const PageListPage: React.FC<PageListPageProps> = ({ onAdd, ...listProps }) => {

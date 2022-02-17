@@ -11,6 +11,8 @@ import {
   useFileUploadMutation,
   useProductVariantCreateDataQuery,
   useProductVariantReorderMutation,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation,
   useVariantCreateMutation,
   useWarehouseListQuery
 } from "@saleor/graphql";
@@ -22,10 +24,6 @@ import useProductSearch from "@saleor/searches/useProductSearch";
 import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import { warehouseAddPath } from "@saleor/warehouses/urls";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -90,8 +88,8 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
     }
   });
 
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   if (product === null) {
     return <NotFoundPage onBack={() => navigate(productListUrl())} />;

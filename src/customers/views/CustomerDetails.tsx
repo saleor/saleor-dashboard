@@ -4,7 +4,9 @@ import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import {
   useRemoveCustomerMutation,
-  useUpdateCustomerMutation
+  useUpdateCustomerMutation,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -12,10 +14,6 @@ import { commonMessages } from "@saleor/intl";
 import { extractMutationErrors, getStringOrPlaceholder } from "@saleor/misc";
 import { orderListUrl, orderUrl } from "@saleor/orders/urls";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -73,8 +71,8 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
     }
   });
 
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   const handleBack = () => navigate(customerListUrl());
 

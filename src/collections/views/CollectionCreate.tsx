@@ -6,7 +6,9 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import {
   CollectionCreateInput,
   useCollectionChannelListingUpdateMutation,
-  useCreateCollectionMutation
+  useCreateCollectionMutation,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation
 } from "@saleor/graphql";
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -15,10 +17,6 @@ import { commonMessages } from "@saleor/intl";
 import { getMutationErrors } from "@saleor/misc";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -43,8 +41,8 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ChannelsAction,

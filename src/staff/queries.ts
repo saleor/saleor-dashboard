@@ -20,7 +20,7 @@ export const staffList = gql`
       edges {
         cursor
         node {
-          ...StaffMemberFragment
+          ...StaffMember
           avatar(size: 48) {
             url
           }
@@ -39,7 +39,7 @@ export const staffList = gql`
 export const staffMemberDetails = gql`
   query StaffMemberDetails($id: ID!) {
     user(id: $id) {
-      ...StaffMemberDetailsFragment
+      ...StaffMemberDetails
     }
   }
 `;

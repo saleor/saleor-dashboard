@@ -3,8 +3,10 @@ import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
 import { ListSettingsUpdate } from "@saleor/components/TablePagination";
-import { AttributeTranslationDetailsFragment } from "@saleor/fragments/types/AttributeTranslationDetailsFragment";
-import { LanguageCodeEnum } from "@saleor/graphql";
+import {
+  AttributeTranslationDetailsFragment,
+  LanguageCodeEnum
+} from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";

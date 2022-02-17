@@ -1,16 +1,16 @@
 import * as avatarImg from "@assets/images/avatars/avatar1.png";
-import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
 import {
   PermissionEnum,
-  PermissionGroupDetailsFragmentFragment,
+  PermissionGroupDetailsFragment,
   PermissionGroupErrorCode,
-  PermissionGroupFragmentFragment,
+  PermissionGroupErrorFragment,
+  PermissionGroupFragment,
   SearchStaffMembersQuery,
-  StaffMemberDetailsFragmentFragment
+  StaffMemberDetailsFragment
 } from "@saleor/graphql";
 import { RelayToFlat } from "@saleor/types";
 
-export const permissionGroups: PermissionGroupFragmentFragment[] = [
+export const permissionGroups: PermissionGroupFragment[] = [
   {
     node: {
       id: "R3JvdXA6Mg==",
@@ -90,7 +90,7 @@ export const permissionGroups: PermissionGroupFragmentFragment[] = [
   }
 ].map(edge => edge.node);
 
-export const userPermissionGroups: StaffMemberDetailsFragmentFragment["permissionGroups"] = [
+export const userPermissionGroups: StaffMemberDetailsFragment["permissionGroups"] = [
   {
     id: "R3JvdXA6MQ==",
     name: "Full Access",
@@ -105,7 +105,7 @@ export const userPermissionGroups: StaffMemberDetailsFragmentFragment["permissio
   }
 ];
 
-export const emptyPermissionGroup: PermissionGroupDetailsFragmentFragment = {
+export const emptyPermissionGroup: PermissionGroupDetailsFragment = {
   id: "R3JvdXA6Mw==",
   name: "Editors",
   userCanManage: true,
@@ -135,7 +135,7 @@ export const errorsOfPermissionGroupCreate: PermissionGroupErrorFragment[] = [
   }
 ];
 
-export const permissionGroup: PermissionGroupDetailsFragmentFragment = {
+export const permissionGroup: PermissionGroupDetailsFragment = {
   id: "R3JvdXA6Mw==",
   name: "Editors",
   userCanManage: true,

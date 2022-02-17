@@ -4,9 +4,9 @@ import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
 import SingleSelectField from "@saleor/components/SingleSelectField";
-import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import {
   AttributeEntityTypeEnum,
+  AttributeErrorFragment,
   AttributeInputTypeEnum
 } from "@saleor/graphql";
 import { UseFormResult } from "@saleor/hooks/useForm";

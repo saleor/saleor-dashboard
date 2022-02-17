@@ -1,7 +1,7 @@
 import { DialogContentText, TextField } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import FormSpacer from "@saleor/components/FormSpacer";
-import { OrderErrorFragmentFragment } from "@saleor/graphql";
+import { OrderErrorFragment } from "@saleor/graphql";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
@@ -10,7 +10,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 export interface OrderMarkAsPaidDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  errors: OrderErrorFragmentFragment[];
+  errors: OrderErrorFragment[];
   open: boolean;
   transactionReference: string;
   onClose: () => void;

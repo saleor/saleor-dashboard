@@ -10,8 +10,8 @@ import AutocompleteSelectMenu from "@saleor/components/AutocompleteSelectMenu";
 import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
-import { MenuErrorFragment } from "@saleor/fragments/types/MenuErrorFragment";
 import {
+  MenuErrorFragment,
   SearchCategoriesQuery,
   SearchCollectionsQuery,
   SearchPagesQuery

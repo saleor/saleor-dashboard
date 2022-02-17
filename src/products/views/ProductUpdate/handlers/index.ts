@@ -11,20 +11,18 @@ import {
 } from "@saleor/attributes/utils/handlers";
 import { ChannelData } from "@saleor/channels/utils";
 import { VALUES_PAGINATE_BY } from "@saleor/config";
-import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
-import { BulkStockErrorFragment } from "@saleor/fragments/types/BulkStockErrorFragment";
-import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
-import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
-import { StockErrorFragment } from "@saleor/fragments/types/StockErrorFragment";
-import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
 import {
+  AttributeErrorFragment,
   AttributeValueDeleteMutation,
   AttributeValueDeleteMutationVariables,
+  BulkStockErrorFragment,
   FileUploadMutation,
   FileUploadMutationVariables,
   Node,
+  ProductChannelListingErrorFragment,
   ProductChannelListingUpdateMutation,
   ProductChannelListingUpdateMutationVariables,
+  ProductErrorFragment,
   ProductFragment,
   ProductMediaCreateMutationVariables,
   ProductMediaReorderMutationVariables,
@@ -35,6 +33,8 @@ import {
   ProductVariantReorderMutationVariables,
   SimpleProductUpdateMutation,
   SimpleProductUpdateMutationVariables,
+  StockErrorFragment,
+  UploadErrorFragment,
   VariantCreateMutation,
   VariantCreateMutationVariables
 } from "@saleor/graphql";

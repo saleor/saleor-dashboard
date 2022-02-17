@@ -21,11 +21,11 @@ export const saleList = gql`
     ) {
       edges {
         node {
-          ...SaleFragment
+          ...Sale
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }
@@ -52,11 +52,11 @@ export const voucherList = gql`
     ) {
       edges {
         node {
-          ...VoucherFragment
+          ...Voucher
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }
@@ -71,7 +71,7 @@ export const saleDetails = gql`
     $last: Int
   ) {
     sale(id: $id) {
-      ...SaleDetailsFragment
+      ...SaleDetails
     }
   }
 `;
@@ -85,7 +85,7 @@ export const voucherDetails = gql`
     $last: Int
   ) {
     voucher(id: $id) {
-      ...VoucherDetailsFragment
+      ...VoucherDetails
     }
   }
 `;

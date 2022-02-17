@@ -1,6 +1,6 @@
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
-import { MenuFragmentFragment } from "@saleor/graphql";
+import { MenuFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, Button } from "@saleor/macaw-ui";
 import { MenuListUrlSortField } from "@saleor/navigation/urls";
@@ -14,7 +14,7 @@ export interface MenuListPageProps
   extends PageListProps,
     ListActions,
     SortPage<MenuListUrlSortField> {
-  menus: MenuFragmentFragment[];
+  menus: MenuFragment[];
   onBack: () => void;
   onDelete: (id: string) => void;
 }

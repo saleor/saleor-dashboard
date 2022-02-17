@@ -2,7 +2,7 @@ import { Card } from "@material-ui/core";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
-import { ProductTypeFragmentFragment } from "@saleor/graphql";
+import { ProductTypeFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, Button } from "@saleor/macaw-ui";
 import { ProductTypeListUrlSortField } from "@saleor/productTypes/urls";
@@ -29,7 +29,7 @@ export interface ProductTypeListPageProps
     FilterPageProps<ProductTypeFilterKeys, ProductTypeListFilterOpts>,
     SortPage<ProductTypeListUrlSortField>,
     TabPageProps {
-  productTypes: ProductTypeFragmentFragment[];
+  productTypes: ProductTypeFragment[];
   onBack: () => void;
 }
 

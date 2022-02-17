@@ -1,13 +1,13 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { usePageTypeCreateMutation } from "@saleor/graphql";
+import {
+  usePageTypeCreateMutation,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getMutationErrors } from "@saleor/misc";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -20,8 +20,8 @@ export const PageTypeCreate: React.FC = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   const [createPageType, createPageTypeOpts] = usePageTypeCreateMutation({
     onCompleted: updateData => {

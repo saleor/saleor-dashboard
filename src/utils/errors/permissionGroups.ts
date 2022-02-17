@@ -1,6 +1,6 @@
 import {
   PermissionGroupErrorCode,
-  PermissionGroupErrorFragmentFragment
+  PermissionGroupErrorFragment
 } from "@saleor/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
@@ -25,7 +25,7 @@ const messages = defineMessages({
 });
 
 function getPermissionGroupErrorMessage(
-  err: PermissionGroupErrorFragmentFragment,
+  err: PermissionGroupErrorFragment,
   intl: IntlShape
 ): string {
   if (err) {

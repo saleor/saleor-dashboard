@@ -1,7 +1,7 @@
 import {
   FulfillmentStatus,
-  OrderDetailsFragmentFragment,
-  OrderLineFragmentFragment,
+  OrderDetailsFragment,
+  OrderLineFragment,
   OrderRefundDataQuery,
   OrderStatus,
   PaymentChargeStatusEnum
@@ -21,7 +21,7 @@ import {
   OrderWithTotalAndTotalCaptured
 } from "./data";
 
-const orderBase: OrderDetailsFragmentFragment = {
+const orderBase: OrderDetailsFragment = {
   __typename: "Order",
   actions: [],
   shippingMethods: [],
@@ -517,7 +517,7 @@ describe("Get get all fulfillment lines price sum", () => {
 
 describe("Get the total value of all replaced products", () => {
   it("sums up correctly", () => {
-    const unfulfilledLines: OrderLineFragmentFragment[] = [
+    const unfulfilledLines: OrderLineFragment[] = [
       {
         id: "1",
         isShippingRequired: false,
@@ -688,7 +688,7 @@ describe("Get the total value of all replaced products", () => {
       }
     ];
 
-    const fulfilledLines: OrderDetailsFragmentFragment["fulfillments"][0]["lines"] = [
+    const fulfilledLines: OrderDetailsFragment["fulfillments"][0]["lines"] = [
       {
         id: "4",
         quantity: 1,
@@ -1130,7 +1130,7 @@ describe("Get the total value of all replaced products", () => {
 
 describe("Get the total value of all selected products", () => {
   it("sums up correctly", () => {
-    const unfulfilledLines: OrderLineFragmentFragment[] = [
+    const unfulfilledLines: OrderLineFragment[] = [
       {
         id: "1",
         isShippingRequired: false,
@@ -1301,7 +1301,7 @@ describe("Get the total value of all selected products", () => {
       }
     ];
 
-    const fulfilledLines: OrderDetailsFragmentFragment["fulfillments"][0]["lines"] = [
+    const fulfilledLines: OrderDetailsFragment["fulfillments"][0]["lines"] = [
       {
         id: "4",
         quantity: 1,
@@ -1612,7 +1612,7 @@ describe("Get the total value of all selected products", () => {
 
 describe("Merge repeated order lines of fulfillment lines", () => {
   it("is able to merge repeated order lines and sum their quantities", () => {
-    const lines: OrderDetailsFragmentFragment["fulfillments"][0]["lines"] = [
+    const lines: OrderDetailsFragment["fulfillments"][0]["lines"] = [
       {
         id: "RnVsZmlsbG1lbnRMaW5lOjMx",
         quantity: 1,

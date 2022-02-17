@@ -2,8 +2,8 @@ import Hr from "@saleor/components/Hr";
 import RadioGroupField, {
   RadioGroupFieldChoice
 } from "@saleor/components/RadioGroupField";
-import { ExportErrorFragment } from "@saleor/fragments/types/ExportErrorFragment";
 import {
+  ExportErrorFragment,
   ExportProductsInput,
   ExportScope,
   FileTypesEnum

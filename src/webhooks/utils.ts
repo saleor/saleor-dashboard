@@ -1,8 +1,8 @@
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import { WebhookFragment } from "@saleor/fragments/types/WebhookFragment";
 import {
   WebhookEventTypeAsyncEnum,
-  WebhookEventTypeSyncEnum
+  WebhookEventTypeSyncEnum,
+  WebhookFragment
 } from "@saleor/graphql";
 
 export function isUnnamed(webhook: WebhookFragment): boolean {

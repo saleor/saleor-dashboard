@@ -11,7 +11,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import { ProductTypeFragmentFragment } from "@saleor/graphql";
+import { ProductTypeFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { ProductTypeListUrlSortField } from "@saleor/productTypes/urls";
 import { getArrowDirection } from "@saleor/utils/sort";
@@ -48,7 +48,7 @@ interface ProductTypeListProps
   extends ListProps,
     ListActions,
     SortPage<ProductTypeListUrlSortField> {
-  productTypes: ProductTypeFragmentFragment[];
+  productTypes: ProductTypeFragment[];
 }
 
 const numberOfColumns = 4;

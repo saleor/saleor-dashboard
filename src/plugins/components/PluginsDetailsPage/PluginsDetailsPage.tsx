@@ -4,10 +4,11 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
-import { PluginErrorFragment } from "@saleor/fragments/types/PluginErrorFragment";
 import {
   ConfigurationItemInput,
-  PluginsDetailsFragmentFragment
+  PluginConfigurationExtendedFragment,
+  PluginErrorFragment,
+  PluginsDetailsFragment
 } from "@saleor/graphql";
 import { ChangeEvent, SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
@@ -21,7 +22,6 @@ import PluginAuthorization from "../PluginAuthorization";
 import PluginDetailsChannelsCard from "../PluginDetailsChannelsCard";
 import PluginInfo from "../PluginInfo";
 import PluginSettings from "../PluginSettings";
-import { PluginConfiguration } from "./types";
 
 export interface PluginDetailsPageFormData {
   active: boolean;
@@ -31,13 +31,13 @@ export interface PluginDetailsPageFormData {
 export interface PluginsDetailsPageProps {
   disabled: boolean;
   errors: PluginErrorFragment[];
-  plugin?: PluginsDetailsFragmentFragment;
+  plugin?: PluginsDetailsFragment;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onClear: (field: string) => void;
   onEdit: (field: string) => void;
   onSubmit: (data: PluginDetailsPageFormData) => SubmitPromise;
-  selectedConfig?: PluginConfiguration;
+  selectedConfig?: PluginConfigurationExtendedFragment;
   setSelectedChannelId: (channelId: string) => void;
 }
 

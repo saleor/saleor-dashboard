@@ -2,7 +2,7 @@ import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
-import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
+import { AccountErrorFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";

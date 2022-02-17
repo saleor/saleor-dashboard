@@ -6,7 +6,7 @@ import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import {
   OrderAction,
-  OrderDetailsFragmentFragment,
+  OrderDetailsFragment,
   OrderDiscountType,
   OrderStatus
 } from "@saleor/graphql";
@@ -47,7 +47,7 @@ const useStyles = makeStyles(
 );
 
 interface OrderPaymentProps {
-  order: OrderDetailsFragmentFragment;
+  order: OrderDetailsFragment;
   onCapture: () => void;
   onMarkAsPaid: () => void;
   onRefund: () => void;

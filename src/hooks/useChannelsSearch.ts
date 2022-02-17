@@ -1,4 +1,4 @@
-import { ChannelDetailsFragmentFragment } from "@saleor/graphql";
+import { ChannelDetailsFragment } from "@saleor/graphql";
 import { FetchMoreProps, Search, SearchProps } from "@saleor/types";
 import { filter } from "fuzzaldrin";
 import React from "react";
@@ -17,5 +17,5 @@ export interface ChannelsWithLoadMoreProps
   extends FetchMoreProps,
     Search,
     SearchProps {
-  channels: ChannelDetailsFragmentFragment[];
+  channels: ChannelDetailsFragment[];
 }

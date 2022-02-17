@@ -10,10 +10,10 @@ import Savebar from "@saleor/components/Savebar";
 import { Tab, TabContainer } from "@saleor/components/Tab";
 import { createSaleChannelsChangeHandler } from "@saleor/discounts/handlers";
 import { SALE_UPDATE_FORM_ID } from "@saleor/discounts/views/SaleDetails/types";
-import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import {
+  DiscountErrorFragment,
   PermissionEnum,
-  SaleDetailsFragmentFragment,
+  SaleDetailsFragment,
   SaleType as SaleTypeEnum
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -69,7 +69,7 @@ export interface SaleDetailsPageProps
     ChannelProps {
   activeTab: SaleDetailsPageTab;
   errors: DiscountErrorFragment[];
-  sale: SaleDetailsFragmentFragment;
+  sale: SaleDetailsFragment;
   allChannelsCount: number;
   channelListings: ChannelSaleFormData[];
   hasChannelChanged: boolean;

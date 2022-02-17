@@ -9,7 +9,7 @@ import RequirePermissions from "@saleor/components/RequirePermissions";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
 import {
-  OrderDetailsFragmentFragment,
+  OrderDetailsFragment,
   PermissionEnum,
   SearchCustomersQuery,
   WarehouseClickAndCollectOptionEnum
@@ -58,7 +58,7 @@ export interface CustomerEditData {
 }
 
 export interface OrderCustomerProps extends Partial<FetchMoreProps> {
-  order: OrderDetailsFragmentFragment;
+  order: OrderDetailsFragment;
   users?: RelayToFlat<SearchCustomersQuery["search"]>;
   loading?: boolean;
   canEditAddresses: boolean;

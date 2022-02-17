@@ -16,7 +16,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import { ChannelInput } from "@saleor/discounts/handlers";
 import { RequirementsPicker } from "@saleor/discounts/types";
-import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
+import { DiscountErrorFragment } from "@saleor/graphql";
 import { renderCollection } from "@saleor/misc";
 import { getFormErrors } from "@saleor/utils/errors";
 import getDiscountErrorMessage from "@saleor/utils/errors/discounts";

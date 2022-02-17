@@ -1,8 +1,7 @@
-import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
-import { LimitInfoFragment } from "@saleor/fragments/types/LimitInfoFragment";
+import { LimitInfoFragment, RefreshLimitsQuery } from "@saleor/graphql";
 
 export function hasLimits(
-  limits: RefreshLimits_shop_limits,
+  limits: RefreshLimitsQuery["shop"]["limits"],
   key: keyof LimitInfoFragment
 ): boolean {
   if (limits === undefined) {
@@ -13,7 +12,7 @@ export function hasLimits(
 }
 
 export function isLimitReached(
-  limits: RefreshLimits_shop_limits,
+  limits: RefreshLimitsQuery["shop"]["limits"],
   key: keyof LimitInfoFragment
 ): boolean {
   if (!hasLimits(limits, key)) {

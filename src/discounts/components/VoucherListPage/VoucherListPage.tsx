@@ -4,7 +4,7 @@ import { getByName } from "@saleor/components/Filter/utils";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
 import { VoucherListUrlSortField } from "@saleor/discounts/urls";
-import { VoucherFragmentFragment } from "@saleor/graphql";
+import { VoucherFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Button } from "@saleor/macaw-ui";
 import {
@@ -32,7 +32,7 @@ export interface VoucherListPageProps
     SortPage<VoucherListUrlSortField>,
     TabPageProps,
     ChannelProps {
-  vouchers: VoucherFragmentFragment[];
+  vouchers: VoucherFragment[];
 }
 const VoucherListPage: React.FC<VoucherListPageProps> = ({
   currentTab,

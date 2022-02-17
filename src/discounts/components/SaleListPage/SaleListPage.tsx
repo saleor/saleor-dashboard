@@ -4,7 +4,7 @@ import { getByName } from "@saleor/components/Filter/utils";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
 import { SaleListUrlSortField } from "@saleor/discounts/urls";
-import { SaleFragmentFragment } from "@saleor/graphql";
+import { SaleFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Button } from "@saleor/macaw-ui";
 import {
@@ -32,7 +32,7 @@ export interface SaleListPageProps
     SortPage<SaleListUrlSortField>,
     TabPageProps,
     ChannelProps {
-  sales: SaleFragmentFragment[];
+  sales: SaleFragment[];
 }
 
 const SaleListPage: React.FC<SaleListPageProps> = ({

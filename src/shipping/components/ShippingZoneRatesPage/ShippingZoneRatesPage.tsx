@@ -9,13 +9,13 @@ import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
-import { ShippingChannelsErrorFragment } from "@saleor/fragments/types/ShippingChannelsErrorFragment";
-import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
-import { ShippingMethodTypeFragment_postalCodeRules } from "@saleor/fragments/types/ShippingMethodTypeFragment";
 import {
   PermissionEnum,
   PostalCodeRuleInclusionTypeEnum,
+  ShippingChannelsErrorFragment,
+  ShippingErrorFragment,
   ShippingMethodTypeEnum,
+  ShippingMethodTypeFragment,
   ShippingZoneQuery
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -58,7 +58,7 @@ export interface ShippingZoneRatesPageProps
   ) => void;
   onPostalCodeAssign: () => void;
   onPostalCodeUnassign: (
-    code: ShippingMethodTypeFragment_postalCodeRules
+    code: ShippingMethodTypeFragment["postalCodeRules"][0]
   ) => void;
   onChannelsChange: (data: ChannelShippingData[]) => void;
   openChannelsModal: () => void;

@@ -8,7 +8,7 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
-import { AttributeFragmentFragment, AttributeTypeEnum } from "@saleor/graphql";
+import { AttributeFragment, AttributeTypeEnum } from "@saleor/graphql";
 import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { ListActions, ReorderAction } from "@saleor/types";
@@ -41,7 +41,7 @@ const useStyles = makeStyles(
 );
 
 interface PageTypeAttributesProps extends ListActions {
-  attributes: AttributeFragmentFragment[];
+  attributes: AttributeFragment[];
   disabled: boolean;
   type: string;
   onAttributeAssign: (type: AttributeTypeEnum) => void;

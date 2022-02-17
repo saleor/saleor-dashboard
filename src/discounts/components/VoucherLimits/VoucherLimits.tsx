@@ -2,7 +2,7 @@ import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import { Grid } from "@saleor/components/Grid";
-import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
+import { DiscountErrorFragment } from "@saleor/graphql";
 import { getFormErrors } from "@saleor/utils/errors";
 import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
 import React from "react";

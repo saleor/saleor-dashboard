@@ -10,15 +10,15 @@ import {
 } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
-import { SelectedVariantAttributeFragment } from "@saleor/fragments/types/SelectedVariantAttributeFragment";
-import { VariantAttributeFragment } from "@saleor/fragments/types/VariantAttributeFragment";
 import {
   ProductDetailsVariantFragment,
   ProductFragment,
   ProductTypeQuery,
   ProductVariantCreateDataQuery,
-  StockInput
+  ProductVariantFragment,
+  SelectedVariantAttributeFragment,
+  StockInput,
+  VariantAttributeFragment
 } from "@saleor/graphql";
 import { FormsetAtomicData } from "@saleor/hooks/useFormset";
 import { maybe } from "@saleor/misc";
@@ -122,7 +122,7 @@ export function getAttributeInputFromSelectedAttributes(
 }
 
 export function getAttributeInputFromVariant(
-  variant: ProductVariant
+  variant: ProductVariantFragment
 ): AttributeInput[] {
   const selectionAttributeInput = getAttributeInputFromSelectedAttributes(
     variant?.selectionAttributes,
@@ -157,7 +157,7 @@ export function getVariantAttributeInputFromProduct(
 }
 
 export function getStockInputFromVariant(
-  variant: ProductVariant
+  variant: ProductVariantFragment
 ): ProductStockInput[] {
   return (
     variant?.stocks.map(stock => ({
