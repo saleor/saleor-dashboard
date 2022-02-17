@@ -9,5 +9,12 @@
   "viewportHeight": 660,
   "retries": {
     "runMode": 2
+  },
+  "reporter": "mochawesome",
+  "reporterOptions": {
+    "reportDir": "cypress/results",
+    "overwrite": false,
+    "html": false,
+    "json": true
   }
 }

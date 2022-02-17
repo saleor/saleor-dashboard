@@ -3,6 +3,7 @@ import { PRODUCT_DETAILS } from "../../../../elements/catalog/products/product-d
 import { VARIANTS_SELECTORS } from "../../../../elements/catalog/products/variants-selectors";
 import { AVAILABLE_CHANNELS_FORM } from "../../../../elements/channels/available-channels-form";
 import { BUTTON_SELECTORS } from "../../../../elements/shared/button-selectors";
+import { SHARED_ELEMENTS } from "../../../../elements/shared/sharedElements";
 import { formatDate } from "../../../formatData/formatDate";
 import { selectChannelVariantInDetailsPage } from "../../channelsPage";
 import { fillUpPriceList } from "./priceListComponent";
@@ -62,9 +63,10 @@ export function createVariant({
 }) {
   cy.get(PRODUCT_DETAILS.addVariantsButton).click();
   fillUpVariantDetails({ attributeName, sku, warehouseName, quantity });
-  cy.get(BUTTON_SELECTORS.back);
   cy.get(VARIANTS_SELECTORS.saveButton)
     .click()
+    .get(VARIANTS_SELECTORS.skuInput)
+    .should("be.enabled")
     .get(BUTTON_SELECTORS.back)
     .click();
   selectChannelForVariantAndFillUpPrices({
@@ -152,6 +154,8 @@ export function selectChannelForVariantAndFillUpPrices({
     .get(VARIANTS_SELECTORS.saveButton)
     .click()
     .waitForRequestAndCheckIfNoErrors("@ProductVariantChannelListingUpdate")
+    .get(PRICE_LIST.priceInput)
+    .should("be.enabled")
     .get(BUTTON_SELECTORS.back)
     .click()
     .waitForProgressBarToNotBeVisible()
