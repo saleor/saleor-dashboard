@@ -51,11 +51,15 @@ const useStyles = makeStyles(
         },
         colTotal: {}
       },
+      pill: {
+        maxWidth: "100%",
+        ...overflowing
+      },
       colCustomer: overflowing,
       colDate: {},
-      colFulfillment: overflowing,
+      colFulfillment: {},
       colNumber: {},
-      colPayment: overflowing,
+      colPayment: {},
       colTotal: {
         textAlign: "right"
       },
@@ -227,6 +231,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
                 {maybe(() => order.paymentStatus.status) !== undefined ? (
                   order.paymentStatus.status === null ? null : (
                     <Pill
+                      className={classes.pill}
                       color={order.paymentStatus.status}
                       label={order.paymentStatus.localized}
                     />
@@ -238,6 +243,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
               <TableCell className={classes.colFulfillment}>
                 {maybe(() => order.status) ? (
                   <Pill
+                    className={classes.pill}
                     color={order.status.status}
                     label={order.status.localized}
                   />
