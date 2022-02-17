@@ -139,8 +139,8 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
         {filteredWarehouses ? (
           <RadioGroup value={selectedWarehouseId} onChange={handleChange}>
             {filteredWarehouses.map(warehouse => {
-              const unavailableLines = lines.filter(line =>
-                !isLineAvailableInWarehouse(line, warehouse)
+              const unavailableLines = lines.filter(
+                line => !isLineAvailableInWarehouse(line, warehouse)
               );
               const allLinesAvailable = unavailableLines.length === 0;
               return (
