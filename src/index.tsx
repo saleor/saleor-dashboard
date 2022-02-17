@@ -5,6 +5,7 @@ import {
   InMemoryCache
 } from "@apollo/client";
 import { BatchHttpLink } from "@apollo/client/link/batch-http";
+import { onError } from "@apollo/client/link/error";
 import DemoBanner from "@saleor/components/DemoBanner";
 import useAppState from "@saleor/hooks/useAppState";
 import { ThemeProvider } from "@saleor/macaw-ui";
@@ -71,6 +72,7 @@ import TaxesSection from "./taxes";
 import themeOverrides from "./themeOverrides";
 import TranslationsSection from "./translations";
 import { TypedTypePolicies } from "./type-policies";
+import { ServerErrorWithName } from "./types";
 import { PermissionEnum } from "./types/globalTypes";
 import WarehouseSection from "./warehouses";
 import { warehouseSection } from "./warehouses/urls";
@@ -97,7 +99,11 @@ const batchLink = new BatchHttpLink({
 
 const link = ApolloLink.split(
   operation => operation.getContext().useBatching,
-  batchLink,
+  // TO-INVESTIGATE-BATCHING
+  onError(err => {
+    (err.networkError as ServerErrorWithName).operationName =
+      err.operation.operationName;
+  }).concat(batchLink),
   uploadLink
 );
 const apolloClient = new ApolloClient({
