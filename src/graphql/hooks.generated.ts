@@ -1186,11 +1186,26 @@ export const OrderLineFragmentDoc = gql`
     fragment OrderLine on OrderLine {
   id
   isShippingRequired
+  allocations {
+    id
+    quantity
+    warehouse {
+      id
+    }
+  }
   variant {
     id
     quantityAvailable
     preorder {
       endDate
+    }
+    stocks {
+      id
+      warehouse {
+        id
+      }
+      quantity
+      quantityAllocated
     }
   }
   productName
@@ -13437,7 +13452,12 @@ export type SearchStaffMembersLazyQueryHookResult = ReturnType<typeof useSearchS
 export type SearchStaffMembersQueryResult = Apollo.QueryResult<Types.SearchStaffMembersQuery, Types.SearchStaffMembersQueryVariables>;
 export const SearchWarehousesDocument = gql`
     query SearchWarehouses($after: String, $first: Int!, $query: String!) {
-  search: warehouses(after: $after, first: $first, filter: {search: $query}) {
+  search: warehouses(
+    after: $after
+    first: $first
+    sortBy: {direction: ASC, field: NAME}
+    filter: {search: $query}
+  ) {
     edges {
       node {
         id

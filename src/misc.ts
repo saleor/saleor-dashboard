@@ -525,3 +525,6 @@ export const combinedMultiAutocompleteChoices = (
 
 export const isInDevelopment =
   !process.env.NODE_ENV || process.env.NODE_ENV === "development";
+  
+export type WithOptional<T, K extends keyof T> = Omit<T, K> &
+  Partial<Pick<T, K>>;
