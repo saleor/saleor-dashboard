@@ -65,7 +65,7 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
   }>;
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
-  selectedWarehouse: Warehouse;
+  selectedWarehouse?: Warehouse;
   onOrderLineAdd?: () => void;
   onOrderLineChange?: (
     id: string,
@@ -92,7 +92,7 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
   onInvoiceClick(invoiceId: string);
   onInvoiceGenerate();
   onInvoiceSend(invoiceId: string);
-  onWarehouseChange();
+  onWarehouseChange?();
   onSubmit(data: MetadataFormData): SubmitPromise;
 }
 
