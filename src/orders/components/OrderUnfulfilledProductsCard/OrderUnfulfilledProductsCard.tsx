@@ -37,7 +37,7 @@ const useStyles = makeStyles(
       borderRadius: "4px",
       paddingTop: theme.spacing(1),
       paddingBottom: theme.spacing(1),
-      paddingRight: theme.spacing(1),
+      paddingRight: theme.spacing(0.5),
       paddingLeft: theme.spacing(1.5),
       "&:hover": {
         backgroundColor: theme.palette.saleor.active[5],
