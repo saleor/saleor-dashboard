@@ -139,10 +139,10 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
         {filteredWarehouses ? (
           <RadioGroup value={selectedWarehouseId} onChange={handleChange}>
             {filteredWarehouses.map(warehouse => {
-              const unavailableLines = lines.filter(
+              const unavailableLines = lines?.filter(
                 line => !isLineAvailableInWarehouse(line, warehouse)
               );
-              const allLinesAvailable = unavailableLines.length === 0;
+              const someLinesUnavailable = unavailableLines?.length > 0;
               return (
                 <TableRow key={warehouse.id}>
                   <TableCell className={classes.warehouseCell}>
@@ -153,7 +153,7 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
                         label={
                           <div className={classes.radioLabelContainer}>
                             {warehouse.name}
-                            {!allLinesAvailable && (
+                            {someLinesUnavailable && (
                               <Typography className={classes.supportText}>
                                 {unavailableLines.length === 1
                                   ? intl.formatMessage(
