@@ -521,11 +521,47 @@ describe("Get the total value of all replaced products", () => {
       {
         id: "1",
         isShippingRequired: false,
+        allocations: [
+          {
+            id: "allocation_test_id",
+            warehouse: {
+              id:
+                "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+              __typename: "Warehouse"
+            },
+            quantity: 1,
+            __typename: "Allocation"
+          }
+        ],
         variant: {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           quantityAvailable: 50,
           preorder: null,
-          __typename: "ProductVariant"
+          __typename: "ProductVariant",
+          stocks: [
+            {
+              id: "stock_test_id1",
+              warehouse: {
+                id:
+                  "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                __typename: "Warehouse"
+              },
+              quantity: 166,
+              quantityAllocated: 0,
+              __typename: "Stock"
+            },
+            {
+              id: "stock_test_id2",
+              warehouse: {
+                id:
+                  "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                __typename: "Warehouse"
+              },
+              quantity: 166,
+              quantityAllocated: 0,
+              __typename: "Stock"
+            }
+          ]
         },
         productName: "Lake Tunes",
         productSku: "lake-tunes-mp3",
@@ -577,10 +613,46 @@ describe("Get the total value of all replaced products", () => {
       {
         id: "2",
         isShippingRequired: false,
+        allocations: [
+          {
+            id: "allocation_test_id",
+            warehouse: {
+              id:
+                "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+              __typename: "Warehouse"
+            },
+            quantity: 1,
+            __typename: "Allocation"
+          }
+        ],
         variant: {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           quantityAvailable: 50,
           preorder: null,
+          stocks: [
+            {
+              id: "stock_test_id1",
+              warehouse: {
+                id:
+                  "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                __typename: "Warehouse"
+              },
+              quantity: 166,
+              quantityAllocated: 0,
+              __typename: "Stock"
+            },
+            {
+              id: "stock_test_id2",
+              warehouse: {
+                id:
+                  "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                __typename: "Warehouse"
+              },
+              quantity: 166,
+              quantityAllocated: 0,
+              __typename: "Stock"
+            }
+          ],
           __typename: "ProductVariant"
         },
         productName: "Lake Tunes",
@@ -633,10 +705,46 @@ describe("Get the total value of all replaced products", () => {
       {
         id: "3",
         isShippingRequired: true,
+        allocations: [
+          {
+            id: "allocation_test_id",
+            warehouse: {
+              id:
+                "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+              __typename: "Warehouse"
+            },
+            quantity: 1,
+            __typename: "Allocation"
+          }
+        ],
         variant: {
           id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
           quantityAvailable: 50,
           preorder: null,
+          stocks: [
+            {
+              id: "stock_test_id1",
+              warehouse: {
+                id:
+                  "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                __typename: "Warehouse"
+              },
+              quantity: 166,
+              quantityAllocated: 0,
+              __typename: "Stock"
+            },
+            {
+              id: "stock_test_id2",
+              warehouse: {
+                id:
+                  "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                __typename: "Warehouse"
+              },
+              quantity: 166,
+              quantityAllocated: 0,
+              __typename: "Stock"
+            }
+          ],
           __typename: "ProductVariant"
         },
         productName: "T-shirt",
@@ -695,10 +803,46 @@ describe("Get the total value of all replaced products", () => {
         orderLine: {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
+          allocations: [
+            {
+              id: "allocation_test_id",
+              warehouse: {
+                id:
+                  "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                __typename: "Warehouse"
+              },
+              quantity: 1,
+              __typename: "Allocation"
+            }
+          ],
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
             preorder: null,
+            stocks: [
+              {
+                id: "stock_test_id1",
+                warehouse: {
+                  id:
+                    "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  __typename: "Warehouse"
+                },
+                quantity: 166,
+                quantityAllocated: 0,
+                __typename: "Stock"
+              },
+              {
+                id: "stock_test_id2",
+                warehouse: {
+                  id:
+                    "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                  __typename: "Warehouse"
+                },
+                quantity: 166,
+                quantityAllocated: 0,
+                __typename: "Stock"
+              }
+            ],
             __typename: "ProductVariant"
           },
           productName: "Lake Tunes",
@@ -756,10 +900,46 @@ describe("Get the total value of all replaced products", () => {
         orderLine: {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
+          allocations: [
+            {
+              id: "allocation_test_id",
+              warehouse: {
+                id:
+                  "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                __typename: "Warehouse"
+              },
+              quantity: 1,
+              __typename: "Allocation"
+            }
+          ],
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
             preorder: null,
+            stocks: [
+              {
+                id: "stock_test_id1",
+                warehouse: {
+                  id:
+                    "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  __typename: "Warehouse"
+                },
+                quantity: 166,
+                quantityAllocated: 0,
+                __typename: "Stock"
+              },
+              {
+                id: "stock_test_id2",
+                warehouse: {
+                  id:
+                    "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                  __typename: "Warehouse"
+                },
+                quantity: 166,
+                quantityAllocated: 0,
+                __typename: "Stock"
+              }
+            ],
             __typename: "ProductVariant"
           },
           productName: "Lake Tunes",
@@ -817,10 +997,46 @@ describe("Get the total value of all replaced products", () => {
         orderLine: {
           id: "T3JkZXJMaW5lOjQ3",
           isShippingRequired: true,
+          allocations: [
+            {
+              id: "allocation_test_id",
+              warehouse: {
+                id:
+                  "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                __typename: "Warehouse"
+              },
+              quantity: 1,
+              __typename: "Allocation"
+            }
+          ],
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
             quantityAvailable: 50,
             preorder: null,
+            stocks: [
+              {
+                id: "stock_test_id1",
+                warehouse: {
+                  id:
+                    "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  __typename: "Warehouse"
+                },
+                quantity: 166,
+                quantityAllocated: 0,
+                __typename: "Stock"
+              },
+              {
+                id: "stock_test_id2",
+                warehouse: {
+                  id:
+                    "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                  __typename: "Warehouse"
+                },
+                quantity: 166,
+                quantityAllocated: 0,
+                __typename: "Stock"
+              }
+            ],
             __typename: "ProductVariant"
           },
           productName: "T-shirt",
@@ -878,10 +1094,46 @@ describe("Get the total value of all replaced products", () => {
         orderLine: {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
+          allocations: [
+            {
+              id: "allocation_test_id",
+              warehouse: {
+                id:
+                  "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                __typename: "Warehouse"
+              },
+              quantity: 1,
+              __typename: "Allocation"
+            }
+          ],
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
             preorder: null,
+            stocks: [
+              {
+                id: "stock_test_id1",
+                warehouse: {
+                  id:
+                    "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  __typename: "Warehouse"
+                },
+                quantity: 166,
+                quantityAllocated: 0,
+                __typename: "Stock"
+              },
+              {
+                id: "stock_test_id2",
+                warehouse: {
+                  id:
+                    "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                  __typename: "Warehouse"
+                },
+                quantity: 166,
+                quantityAllocated: 0,
+                __typename: "Stock"
+              }
+            ],
             __typename: "ProductVariant"
           },
           productName: "Lake Tunes",
@@ -939,10 +1191,46 @@ describe("Get the total value of all replaced products", () => {
         orderLine: {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
+          allocations: [
+            {
+              id: "allocation_test_id",
+              warehouse: {
+                id:
+                  "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                __typename: "Warehouse"
+              },
+              quantity: 1,
+              __typename: "Allocation"
+            }
+          ],
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
             preorder: null,
+            stocks: [
+              {
+                id: "stock_test_id1",
+                warehouse: {
+                  id:
+                    "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  __typename: "Warehouse"
+                },
+                quantity: 166,
+                quantityAllocated: 0,
+                __typename: "Stock"
+              },
+              {
+                id: "stock_test_id2",
+                warehouse: {
+                  id:
+                    "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                  __typename: "Warehouse"
+                },
+                quantity: 166,
+                quantityAllocated: 0,
+                __typename: "Stock"
+              }
+            ],
             __typename: "ProductVariant"
           },
           productName: "Lake Tunes",
@@ -1134,10 +1422,46 @@ describe("Get the total value of all selected products", () => {
       {
         id: "1",
         isShippingRequired: false,
+        allocations: [
+          {
+            id: "allocation_test_id",
+            warehouse: {
+              id:
+                "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+              __typename: "Warehouse"
+            },
+            quantity: 1,
+            __typename: "Allocation"
+          }
+        ],
         variant: {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           quantityAvailable: 50,
           preorder: null,
+          stocks: [
+            {
+              id: "stock_test_id1",
+              warehouse: {
+                id:
+                  "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                __typename: "Warehouse"
+              },
+              quantity: 166,
+              quantityAllocated: 0,
+              __typename: "Stock"
+            },
+            {
+              id: "stock_test_id2",
+              warehouse: {
+                id:
+                  "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                __typename: "Warehouse"
+              },
+              quantity: 166,
+              quantityAllocated: 0,
+              __typename: "Stock"
+            }
+          ],
           __typename: "ProductVariant"
         },
         productName: "Lake Tunes",
@@ -1190,10 +1514,46 @@ describe("Get the total value of all selected products", () => {
       {
         id: "2",
         isShippingRequired: false,
+        allocations: [
+          {
+            id: "allocation_test_id",
+            warehouse: {
+              id:
+                "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+              __typename: "Warehouse"
+            },
+            quantity: 1,
+            __typename: "Allocation"
+          }
+        ],
         variant: {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           quantityAvailable: 50,
           preorder: null,
+          stocks: [
+            {
+              id: "stock_test_id1",
+              warehouse: {
+                id:
+                  "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                __typename: "Warehouse"
+              },
+              quantity: 166,
+              quantityAllocated: 0,
+              __typename: "Stock"
+            },
+            {
+              id: "stock_test_id2",
+              warehouse: {
+                id:
+                  "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                __typename: "Warehouse"
+              },
+              quantity: 166,
+              quantityAllocated: 0,
+              __typename: "Stock"
+            }
+          ],
           __typename: "ProductVariant"
         },
         productName: "Lake Tunes",
@@ -1246,10 +1606,46 @@ describe("Get the total value of all selected products", () => {
       {
         id: "3",
         isShippingRequired: true,
+        allocations: [
+          {
+            id: "allocation_test_id",
+            warehouse: {
+              id:
+                "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+              __typename: "Warehouse"
+            },
+            quantity: 1,
+            __typename: "Allocation"
+          }
+        ],
         variant: {
           id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
           quantityAvailable: 50,
           preorder: null,
+          stocks: [
+            {
+              id: "stock_test_id1",
+              warehouse: {
+                id:
+                  "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                __typename: "Warehouse"
+              },
+              quantity: 166,
+              quantityAllocated: 0,
+              __typename: "Stock"
+            },
+            {
+              id: "stock_test_id2",
+              warehouse: {
+                id:
+                  "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                __typename: "Warehouse"
+              },
+              quantity: 166,
+              quantityAllocated: 0,
+              __typename: "Stock"
+            }
+          ],
           __typename: "ProductVariant"
         },
         productName: "T-shirt",
@@ -1308,10 +1704,46 @@ describe("Get the total value of all selected products", () => {
         orderLine: {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
+          allocations: [
+            {
+              id: "allocation_test_id",
+              warehouse: {
+                id:
+                  "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                __typename: "Warehouse"
+              },
+              quantity: 1,
+              __typename: "Allocation"
+            }
+          ],
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
             preorder: null,
+            stocks: [
+              {
+                id: "stock_test_id1",
+                warehouse: {
+                  id:
+                    "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  __typename: "Warehouse"
+                },
+                quantity: 166,
+                quantityAllocated: 0,
+                __typename: "Stock"
+              },
+              {
+                id: "stock_test_id2",
+                warehouse: {
+                  id:
+                    "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                  __typename: "Warehouse"
+                },
+                quantity: 166,
+                quantityAllocated: 0,
+                __typename: "Stock"
+              }
+            ],
             __typename: "ProductVariant"
           },
           productName: "Lake Tunes",
@@ -1369,10 +1801,46 @@ describe("Get the total value of all selected products", () => {
         orderLine: {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
+          allocations: [
+            {
+              id: "allocation_test_id",
+              warehouse: {
+                id:
+                  "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                __typename: "Warehouse"
+              },
+              quantity: 1,
+              __typename: "Allocation"
+            }
+          ],
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
             preorder: null,
+            stocks: [
+              {
+                id: "stock_test_id1",
+                warehouse: {
+                  id:
+                    "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  __typename: "Warehouse"
+                },
+                quantity: 166,
+                quantityAllocated: 0,
+                __typename: "Stock"
+              },
+              {
+                id: "stock_test_id2",
+                warehouse: {
+                  id:
+                    "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                  __typename: "Warehouse"
+                },
+                quantity: 166,
+                quantityAllocated: 0,
+                __typename: "Stock"
+              }
+            ],
             __typename: "ProductVariant"
           },
           productName: "Lake Tunes",
@@ -1430,10 +1898,46 @@ describe("Get the total value of all selected products", () => {
         orderLine: {
           id: "T3JkZXJMaW5lOjQ3",
           isShippingRequired: true,
+          allocations: [
+            {
+              id: "allocation_test_id",
+              warehouse: {
+                id:
+                  "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                __typename: "Warehouse"
+              },
+              quantity: 1,
+              __typename: "Allocation"
+            }
+          ],
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
             quantityAvailable: 50,
             preorder: null,
+            stocks: [
+              {
+                id: "stock_test_id1",
+                warehouse: {
+                  id:
+                    "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  __typename: "Warehouse"
+                },
+                quantity: 166,
+                quantityAllocated: 0,
+                __typename: "Stock"
+              },
+              {
+                id: "stock_test_id2",
+                warehouse: {
+                  id:
+                    "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                  __typename: "Warehouse"
+                },
+                quantity: 166,
+                quantityAllocated: 0,
+                __typename: "Stock"
+              }
+            ],
             __typename: "ProductVariant"
           },
           productName: "T-shirt",
@@ -1619,10 +2123,46 @@ describe("Merge repeated order lines of fulfillment lines", () => {
         orderLine: {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
+          allocations: [
+            {
+              id: "allocation_test_id",
+              warehouse: {
+                id:
+                  "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                __typename: "Warehouse"
+              },
+              quantity: 1,
+              __typename: "Allocation"
+            }
+          ],
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
             preorder: null,
+            stocks: [
+              {
+                id: "stock_test_id1",
+                warehouse: {
+                  id:
+                    "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  __typename: "Warehouse"
+                },
+                quantity: 166,
+                quantityAllocated: 0,
+                __typename: "Stock"
+              },
+              {
+                id: "stock_test_id2",
+                warehouse: {
+                  id:
+                    "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                  __typename: "Warehouse"
+                },
+                quantity: 166,
+                quantityAllocated: 0,
+                __typename: "Stock"
+              }
+            ],
             __typename: "ProductVariant"
           },
           productName: "Lake Tunes",
@@ -1680,10 +2220,46 @@ describe("Merge repeated order lines of fulfillment lines", () => {
         orderLine: {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
+          allocations: [
+            {
+              id: "allocation_test_id",
+              warehouse: {
+                id:
+                  "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                __typename: "Warehouse"
+              },
+              quantity: 1,
+              __typename: "Allocation"
+            }
+          ],
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
             preorder: null,
+            stocks: [
+              {
+                id: "stock_test_id1",
+                warehouse: {
+                  id:
+                    "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  __typename: "Warehouse"
+                },
+                quantity: 166,
+                quantityAllocated: 0,
+                __typename: "Stock"
+              },
+              {
+                id: "stock_test_id2",
+                warehouse: {
+                  id:
+                    "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                  __typename: "Warehouse"
+                },
+                quantity: 166,
+                quantityAllocated: 0,
+                __typename: "Stock"
+              }
+            ],
             __typename: "ProductVariant"
           },
           productName: "Lake Tunes",
@@ -1741,10 +2317,46 @@ describe("Merge repeated order lines of fulfillment lines", () => {
         orderLine: {
           id: "T3JkZXJMaW5lOjQ3",
           isShippingRequired: true,
+          allocations: [
+            {
+              id: "allocation_test_id",
+              warehouse: {
+                id:
+                  "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                __typename: "Warehouse"
+              },
+              quantity: 1,
+              __typename: "Allocation"
+            }
+          ],
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
             quantityAvailable: 50,
             preorder: null,
+            stocks: [
+              {
+                id: "stock_test_id1",
+                warehouse: {
+                  id:
+                    "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  __typename: "Warehouse"
+                },
+                quantity: 166,
+                quantityAllocated: 0,
+                __typename: "Stock"
+              },
+              {
+                id: "stock_test_id2",
+                warehouse: {
+                  id:
+                    "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                  __typename: "Warehouse"
+                },
+                quantity: 166,
+                quantityAllocated: 0,
+                __typename: "Stock"
+              }
+            ],
             __typename: "ProductVariant"
           },
           productName: "T-shirt",
