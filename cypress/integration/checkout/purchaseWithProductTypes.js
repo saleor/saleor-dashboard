@@ -1,5 +1,5 @@
-// / <reference types="cypress"/>
-// / <reference types="../../support"/>
+/// <reference types="cypress"/>
+/// <reference types="../../support"/>
 
 import faker from "faker";
 
@@ -274,12 +274,13 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
           ).to.not.be.ok;
           checkoutShippingAddressUpdate(checkout.id, address);
         })
-        .then(() => {
+        .then(({ checkout: checkoutResp }) => {
+          checkout = checkoutResp;
           addPayment(checkout.id);
         })
-        .then(({ paymentErrors }) => {
+        .then(({ errors }) => {
           expect(
-            paymentErrors,
+            errors,
             "Should be not possible to add payment without shipping"
           ).to.have.lengthOf(1);
           updateShippingInCheckout(checkout.token, shippingMethod.name);

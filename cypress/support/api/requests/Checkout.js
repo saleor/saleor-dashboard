@@ -125,7 +125,7 @@ export function addPayment({ checkoutId, gateway, token, amount }) {
       ${amountLine}
       returnUrl: "https://qa.storefront.staging.saleor.cloud/checkout/payment-confirm"
     }){
-      paymentErrors{
+      errors{
         field
         message
       }
@@ -188,13 +188,20 @@ export function checkoutVariantsUpdate(checkoutId, variantsList) {
   const mutation = `mutation{
     checkoutLinesUpdate(checkoutId:"${checkoutId}", 
     lines: [${lines.join()}]){
+      checkout{
+        id
+        shippingMethods{
+          id
+          name
+        }
+      }
       errors{
         field
         message
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy.sendRequestWithQuery(mutation).its("body.data.checkoutLinesUpdate");
 }
 
 export function checkoutShippingMethodUpdate(checkoutId, shippingMethodId) {
@@ -217,13 +224,23 @@ export function checkoutShippingAddressUpdate(checkoutId, address) {
     checkoutShippingAddressUpdate(checkoutId:"${checkoutId}", 
     ${shippingAddress}
     ){
+      checkout{
+        id
+        token
+        shippingMethods{
+          id
+          name
+        }
+      }
       errors{
         field
         message
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.checkoutShippingAddressUpdate");
 }
 
 export function addProductsToCheckout(

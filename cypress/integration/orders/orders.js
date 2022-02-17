@@ -131,7 +131,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("should not be possible to change channel in orderSALEOR_2105", () => {
+    xit("should not be possible to change channel in order. TC: SALEOR_2105", () => {
       createOrder({
         customerId: customer.id,
         channelId: defaultChannel.id,
@@ -147,7 +147,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("should cancel fulfillmentSALEOR_2106", () => {
+    it("should cancel fulfillment. TC: SALEOR_2106", () => {
       let order;
       createFulfilledOrder({
         customerId: customer.id,
@@ -183,7 +183,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should make a refundSALEOR_2107", () => {
+    it("should make a refund. TC: SALEOR_2107", () => {
       let order;
       createReadyToFulfillOrder({
         customerId: customer.id,
