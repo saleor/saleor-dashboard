@@ -50,6 +50,12 @@
       "PageCreated",
       "PageUpdated",
       "PageDeleted",
+      "ShippingPriceCreated",
+      "ShippingPriceUpdated",
+      "ShippingPriceDeleted",
+      "ShippingZoneCreated",
+      "ShippingZoneUpdated",
+      "ShippingZoneDeleted",
       "TranslationCreated",
       "TranslationUpdated"
     ],

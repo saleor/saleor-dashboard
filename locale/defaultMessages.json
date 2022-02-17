@@ -4301,6 +4301,34 @@
   "src_dot_orders_dot_components_dot_OrderCannotCancelOrderDialog_dot_775268031": {
     "string": "There are still fulfillments created for this order. Cancel the fulfillments first before you cancel the order."
   },
+  "src_dot_orders_dot_components_dot_OrderChangeWarehouseDialog_dot_currentSelection": {
+    "context": "label for currently selected warehouse",
+    "string": "currently selected"
+  },
+  "src_dot_orders_dot_components_dot_OrderChangeWarehouseDialog_dot_dialogDescription": {
+    "context": "change warehouse dialog description",
+    "string": "Choose warehouse you want to fulfill this order from"
+  },
+  "src_dot_orders_dot_components_dot_OrderChangeWarehouseDialog_dot_dialogTitle": {
+    "context": "change warehouse dialog title",
+    "string": "Change warehouse"
+  },
+  "src_dot_orders_dot_components_dot_OrderChangeWarehouseDialog_dot_multipleProductsUnavailable": {
+    "context": "warehouse label when multiple products are unavailable",
+    "string": "{productCount} products are unavailable at this location"
+  },
+  "src_dot_orders_dot_components_dot_OrderChangeWarehouseDialog_dot_productUnavailable": {
+    "context": "warehouse label when one product is unavailable",
+    "string": "{productName} is unavailable at this location"
+  },
+  "src_dot_orders_dot_components_dot_OrderChangeWarehouseDialog_dot_searchFieldPlaceholder": {
+    "context": "change warehouse dialog search placeholder",
+    "string": "Search warehouses"
+  },
+  "src_dot_orders_dot_components_dot_OrderChangeWarehouseDialog_dot_warehouseListLabel": {
+    "context": "change warehouse dialog warehouse list label",
+    "string": "Warehouses A to Z"
+  },
   "src_dot_orders_dot_components_dot_OrderChannelSectionCard_dot_1243773440": {
     "context": "section header",
     "string": "Sales channel"

@@ -3633,12 +3633,22 @@ export type ShippingPriceCreateFieldPolicy = {
 	shippingErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type ShippingPriceCreatedKeySpecifier = ('shippingMethod' | 'shippingZone' | ShippingPriceCreatedKeySpecifier)[];
+export type ShippingPriceCreatedFieldPolicy = {
+	shippingMethod?: FieldPolicy<any> | FieldReadFunction<any>,
+	shippingZone?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type ShippingPriceDeleteKeySpecifier = ('shippingMethod' | 'shippingZone' | 'shippingErrors' | 'errors' | ShippingPriceDeleteKeySpecifier)[];
 export type ShippingPriceDeleteFieldPolicy = {
 	shippingMethod?: FieldPolicy<any> | FieldReadFunction<any>,
 	shippingZone?: FieldPolicy<any> | FieldReadFunction<any>,
 	shippingErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type ShippingPriceDeletedKeySpecifier = ('shippingMethod' | 'shippingZone' | ShippingPriceDeletedKeySpecifier)[];
+export type ShippingPriceDeletedFieldPolicy = {
+	shippingMethod?: FieldPolicy<any> | FieldReadFunction<any>,
+	shippingZone?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type ShippingPriceExcludeProductsKeySpecifier = ('shippingMethod' | 'shippingErrors' | 'errors' | ShippingPriceExcludeProductsKeySpecifier)[];
 export type ShippingPriceExcludeProductsFieldPolicy = {
@@ -3664,6 +3674,11 @@ export type ShippingPriceUpdateFieldPolicy = {
 	shippingMethod?: FieldPolicy<any> | FieldReadFunction<any>,
 	shippingErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type ShippingPriceUpdatedKeySpecifier = ('shippingMethod' | 'shippingZone' | ShippingPriceUpdatedKeySpecifier)[];
+export type ShippingPriceUpdatedFieldPolicy = {
+	shippingMethod?: FieldPolicy<any> | FieldReadFunction<any>,
+	shippingZone?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type ShippingZoneKeySpecifier = ('id' | 'privateMetadata' | 'metadata' | 'name' | 'default' | 'priceRange' | 'countries' | 'shippingMethods' | 'warehouses' | 'channels' | 'description' | ShippingZoneKeySpecifier)[];
 export type ShippingZoneFieldPolicy = {
@@ -3702,16 +3717,28 @@ export type ShippingZoneCreateFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	shippingZone?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type ShippingZoneCreatedKeySpecifier = ('shippingZone' | ShippingZoneCreatedKeySpecifier)[];
+export type ShippingZoneCreatedFieldPolicy = {
+	shippingZone?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type ShippingZoneDeleteKeySpecifier = ('shippingErrors' | 'errors' | 'shippingZone' | ShippingZoneDeleteKeySpecifier)[];
 export type ShippingZoneDeleteFieldPolicy = {
 	shippingErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	shippingZone?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type ShippingZoneDeletedKeySpecifier = ('shippingZone' | ShippingZoneDeletedKeySpecifier)[];
+export type ShippingZoneDeletedFieldPolicy = {
+	shippingZone?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type ShippingZoneUpdateKeySpecifier = ('shippingErrors' | 'errors' | 'shippingZone' | ShippingZoneUpdateKeySpecifier)[];
 export type ShippingZoneUpdateFieldPolicy = {
 	shippingErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
+	shippingZone?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type ShippingZoneUpdatedKeySpecifier = ('shippingZone' | ShippingZoneUpdatedKeySpecifier)[];
+export type ShippingZoneUpdatedFieldPolicy = {
 	shippingZone?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type ShopKeySpecifier = ('availablePaymentGateways' | 'availableExternalAuthentications' | 'availableShippingMethods' | 'channelCurrencies' | 'countries' | 'defaultCountry' | 'defaultMailSenderName' | 'defaultMailSenderAddress' | 'description' | 'domain' | 'languages' | 'name' | 'permissions' | 'phonePrefixes' | 'headerText' | 'includeTaxesInPrices' | 'fulfillmentAutoApprove' | 'fulfillmentAllowUnpaid' | 'displayGrossPrices' | 'chargeTaxesOnShipping' | 'trackInventoryByDefault' | 'defaultWeightUnit' | 'translation' | 'automaticFulfillmentDigitalProducts' | 'reserveStockDurationAnonymousUser' | 'reserveStockDurationAuthenticatedUser' | 'limitQuantityPerCheckout' | 'defaultDigitalMaxDownloads' | 'defaultDigitalUrlValidDays' | 'companyAddress' | 'customerSetPasswordUrl' | 'staffNotificationRecipients' | 'limits' | 'version' | ShopKeySpecifier)[];
@@ -6133,9 +6160,17 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | ShippingPriceCreateKeySpecifier | (() => undefined | ShippingPriceCreateKeySpecifier),
 		fields?: ShippingPriceCreateFieldPolicy,
 	},
+	ShippingPriceCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | ShippingPriceCreatedKeySpecifier | (() => undefined | ShippingPriceCreatedKeySpecifier),
+		fields?: ShippingPriceCreatedFieldPolicy,
+	},
 	ShippingPriceDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ShippingPriceDeleteKeySpecifier | (() => undefined | ShippingPriceDeleteKeySpecifier),
 		fields?: ShippingPriceDeleteFieldPolicy,
+	},
+	ShippingPriceDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | ShippingPriceDeletedKeySpecifier | (() => undefined | ShippingPriceDeletedKeySpecifier),
+		fields?: ShippingPriceDeletedFieldPolicy,
 	},
 	ShippingPriceExcludeProducts?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ShippingPriceExcludeProductsKeySpecifier | (() => undefined | ShippingPriceExcludeProductsKeySpecifier),
@@ -6152,6 +6187,10 @@ export type StrictTypedTypePolicies = {
 	ShippingPriceUpdate?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ShippingPriceUpdateKeySpecifier | (() => undefined | ShippingPriceUpdateKeySpecifier),
 		fields?: ShippingPriceUpdateFieldPolicy,
+	},
+	ShippingPriceUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | ShippingPriceUpdatedKeySpecifier | (() => undefined | ShippingPriceUpdatedKeySpecifier),
+		fields?: ShippingPriceUpdatedFieldPolicy,
 	},
 	ShippingZone?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ShippingZoneKeySpecifier | (() => undefined | ShippingZoneKeySpecifier),
@@ -6173,13 +6212,25 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | ShippingZoneCreateKeySpecifier | (() => undefined | ShippingZoneCreateKeySpecifier),
 		fields?: ShippingZoneCreateFieldPolicy,
 	},
+	ShippingZoneCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | ShippingZoneCreatedKeySpecifier | (() => undefined | ShippingZoneCreatedKeySpecifier),
+		fields?: ShippingZoneCreatedFieldPolicy,
+	},
 	ShippingZoneDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ShippingZoneDeleteKeySpecifier | (() => undefined | ShippingZoneDeleteKeySpecifier),
 		fields?: ShippingZoneDeleteFieldPolicy,
 	},
+	ShippingZoneDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | ShippingZoneDeletedKeySpecifier | (() => undefined | ShippingZoneDeletedKeySpecifier),
+		fields?: ShippingZoneDeletedFieldPolicy,
+	},
 	ShippingZoneUpdate?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ShippingZoneUpdateKeySpecifier | (() => undefined | ShippingZoneUpdateKeySpecifier),
 		fields?: ShippingZoneUpdateFieldPolicy,
+	},
+	ShippingZoneUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | ShippingZoneUpdatedKeySpecifier | (() => undefined | ShippingZoneUpdatedKeySpecifier),
+		fields?: ShippingZoneUpdatedFieldPolicy,
 	},
 	Shop?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ShopKeySpecifier | (() => undefined | ShopKeySpecifier),

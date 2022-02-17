@@ -21293,6 +21293,36 @@
           },
           {
             "kind": "OBJECT",
+            "name": "ShippingPriceCreated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "ShippingPriceUpdated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "ShippingPriceDeleted",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "ShippingZoneCreated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "ShippingZoneUpdated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "ShippingZoneDeleted",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
             "name": "TranslationCreated",
             "ofType": null
           },
@@ -77464,6 +77494,67 @@
       },
       {
         "kind": "OBJECT",
+        "name": "ShippingPriceCreated",
+        "description": null,
+        "fields": [
+          {
+            "name": "shippingMethod",
+            "description": "New in Saleor 3.2. Look up a shipping method. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShippingMethodType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "shippingZone",
+            "description": "New in Saleor 3.2. Look up a shipping zone. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShippingZone",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "ShippingPriceDelete",
         "description": "Deletes a shipping price. Requires one of the following permissions: MANAGE_SHIPPING.",
         "fields": [
@@ -77535,6 +77626,67 @@
                   }
                 }
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ShippingPriceDeleted",
+        "description": null,
+        "fields": [
+          {
+            "name": "shippingMethod",
+            "description": "New in Saleor 3.2. Look up a shipping method. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShippingMethodType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "shippingZone",
+            "description": "New in Saleor 3.2. Look up a shipping zone. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShippingZone",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -78060,6 +78212,67 @@
                   }
                 }
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ShippingPriceUpdated",
+        "description": null,
+        "fields": [
+          {
+            "name": "shippingMethod",
+            "description": "New in Saleor 3.2. Look up a shipping method. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShippingMethodType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "shippingZone",
+            "description": "New in Saleor 3.2. Look up a shipping zone. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShippingZone",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -78661,6 +78874,42 @@
       },
       {
         "kind": "OBJECT",
+        "name": "ShippingZoneCreated",
+        "description": null,
+        "fields": [
+          {
+            "name": "shippingZone",
+            "description": "New in Saleor 3.2. Look up a shipping zone. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShippingZone",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "ShippingZoneDelete",
         "description": "Deletes a shipping zone. Requires one of the following permissions: MANAGE_SHIPPING.",
         "fields": [
@@ -78716,6 +78965,42 @@
             "name": "shippingZone",
             "description": null,
             "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShippingZone",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ShippingZoneDeleted",
+        "description": null,
+        "fields": [
+          {
+            "name": "shippingZone",
+            "description": "New in Saleor 3.2. Look up a shipping zone. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
             "type": {
               "kind": "OBJECT",
               "name": "ShippingZone",
@@ -78988,6 +79273,42 @@
           }
         ],
         "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ShippingZoneUpdated",
+        "description": null,
+        "fields": [
+          {
+            "name": "shippingZone",
+            "description": "New in Saleor 3.2. Look up a shipping zone. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShippingZone",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -89310,6 +89631,42 @@
             "deprecationReason": null
           },
           {
+            "name": "SHIPPING_PRICE_CREATED",
+            "description": "A new shipping price is created.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_PRICE_UPDATED",
+            "description": "A shipping price is updated.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_PRICE_DELETED",
+            "description": "A shipping price is deleted.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_ZONE_CREATED",
+            "description": "A new shipping zone is created.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_ZONE_UPDATED",
+            "description": "A shipping zone is updated.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_ZONE_DELETED",
+            "description": "A shipping zone is deleted.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "TRANSLATION_CREATED",
             "description": null,
             "isDeprecated": false,
@@ -89569,6 +89926,42 @@
           {
             "name": "PAGE_DELETED",
             "description": "A page is deleted.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_PRICE_CREATED",
+            "description": "A new shipping price is created.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_PRICE_UPDATED",
+            "description": "A shipping price is updated.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_PRICE_DELETED",
+            "description": "A shipping price is deleted.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_ZONE_CREATED",
+            "description": "A new shipping zone is created.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_ZONE_UPDATED",
+            "description": "A shipping zone is updated.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_ZONE_DELETED",
+            "description": "A shipping zone is deleted.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -89956,6 +90349,42 @@
           },
           {
             "name": "PAGE_DELETED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_PRICE_CREATED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_PRICE_UPDATED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_PRICE_DELETED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_ZONE_CREATED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_ZONE_UPDATED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_ZONE_DELETED",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
