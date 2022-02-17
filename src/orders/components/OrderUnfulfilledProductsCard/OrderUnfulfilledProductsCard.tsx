@@ -1,14 +1,16 @@
 import { Card, CardActions, TableBody, Typography } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
+import Skeleton from "@saleor/components/Skeleton";
 import { commonMessages } from "@saleor/intl";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import { Button, ChevronIcon, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { OrderDetails_order_lines } from "../../types/OrderDetails";
 import OrderCardTitle from "../OrderCardTitle";
+import { Warehouse } from "../OrderChangeWarehouseDialog/types";
 import TableHeader from "../OrderProductsCardElements/OrderProductsCardHeader";
 import TableLine from "../OrderProductsCardElements/OrderProductsTableRow";
 
@@ -26,6 +28,21 @@ const useStyles = makeStyles(
         }
       },
       tableLayout: "fixed"
+    },
+    toolbar: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      cursor: "pointer",
+      borderRadius: "4px",
+      paddingTop: theme.spacing(1),
+      paddingBottom: theme.spacing(1),
+      paddingRight: theme.spacing(1),
+      paddingLeft: theme.spacing(1.5),
+      "&:hover": {
+        backgroundColor: theme.palette.saleor.active[5],
+        color: theme.palette.saleor.active[1]
+      }
     }
   }),
   { name: "OrderUnfulfilledItems" }
@@ -36,6 +53,8 @@ interface OrderUnfulfilledProductsCardProps {
   notAllowedToFulfillUnpaid: boolean;
   lines: OrderDetails_order_lines[];
   onFulfill: () => void;
+  selectedWarehouse: Warehouse;
+  onWarehouseChange: () => null;
 }
 
 const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> = props => {
@@ -43,7 +62,9 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
     showFulfillmentAction,
     notAllowedToFulfillUnpaid,
     lines,
-    onFulfill
+    onFulfill,
+    selectedWarehouse,
+    onWarehouseChange
   } = props;
   const classes = useStyles({});
 
@@ -54,7 +75,17 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
   return (
     <>
       <Card>
-        <OrderCardTitle lines={lines} withStatus status="unfulfilled" />
+        <OrderCardTitle
+          lines={lines}
+          withStatus
+          status="unfulfilled"
+          toolbar={
+            <div className={classes.toolbar} onClick={onWarehouseChange}>
+              {selectedWarehouse?.name ?? <Skeleton />}
+              <ChevronIcon />
+            </div>
+          }
+        />
         <ResponsiveTable className={classes.table}>
           <TableHeader />
           <TableBody>

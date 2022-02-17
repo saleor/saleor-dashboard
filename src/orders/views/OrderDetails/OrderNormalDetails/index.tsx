@@ -186,6 +186,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         )}
         shippingMethods={data?.order?.shippingMethods || []}
         userPermissions={user?.userPermissions || []}
+        selectedWarehouse={fulfillmentWarehouse}
         onOrderCancel={() => openModal("cancel")}
         onOrderFulfill={() => navigate(orderFulfillUrl(id))}
         onFulfillmentApprove={fulfillmentId =>
@@ -232,6 +233,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
           })
         }
         onInvoiceSend={id => openModal("invoice-send", { id })}
+        onWarehouseChange={() => openModal("change-warehouse")}
         onSubmit={handleSubmit}
       />
       <OrderCannotCancelOrderDialog
