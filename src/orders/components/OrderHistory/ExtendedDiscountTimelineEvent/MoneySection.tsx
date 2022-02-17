@@ -1,6 +1,6 @@
 import { Typography } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
-import { DiscountValueTypeEnum, Money } from "@saleor/graphql";
+import { DiscountValueTypeEnum, MoneyFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -60,7 +60,7 @@ export enum MoneySectionType {
 interface MoneySectionProps {
   value?: number;
   calculationMode?: DiscountValueTypeEnum;
-  moneyData?: Money;
+  moneyData?: MoneyFragment;
   sectionType?: MoneySectionType;
 }
 

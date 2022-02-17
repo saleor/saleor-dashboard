@@ -31,6 +31,7 @@ generates:
         defaultValue: false
       namingConvention:
         enumValues: change-case-all#upperCase
+      onlyOperationTypes: true
     plugins:
       - add:
           content: /* eslint-disable */

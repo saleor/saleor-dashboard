@@ -1,5 +1,15 @@
 import { gql } from "@apollo/client";
 
+export const taxedMoneyFragment = gql`
+  fragment TaxedMoney on TaxedMoney {
+    net {
+      ...Money
+    }
+    gross {
+      ...Money
+    }
+  }
+`;
 export const countryFragment = gql`
   fragment Country on CountryDisplay {
     country

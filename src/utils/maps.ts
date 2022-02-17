@@ -6,7 +6,7 @@ import {
 import {
   CountryWithCodeFragment,
   MetadataInput,
-  MetadataItem,
+  MetadataItemFragment,
   SearchPagesQuery
 } from "@saleor/graphql";
 import { getFullName } from "@saleor/misc";
@@ -83,7 +83,9 @@ export function mapTagNodeToChoice(
   return mapNodeToChoice(nodes, node => node.tag);
 }
 
-export function mapMetadataItemToInput(item: MetadataItem): MetadataInput {
+export function mapMetadataItemToInput(
+  item: MetadataItemFragment
+): MetadataInput {
   return {
     key: item.key,
     value: item.value
