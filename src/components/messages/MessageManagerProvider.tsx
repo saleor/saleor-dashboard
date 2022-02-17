@@ -12,6 +12,7 @@ import { useStyles } from "./styles";
 import Transition from "./Transition";
 
 const MessageManagerProvider = ({ children }) => {
+  const timer = useRef(0);
   const classes = useStyles();
   const timersArr = useRef<ITimer[]>([]);
   const [notifications, setNotifications] = useState<INotification[]>([]);
@@ -40,7 +41,8 @@ const MessageManagerProvider = ({ children }) => {
 
   const show = useCallback(
     (message = {}, timeout = DEFAULT_NOTIFICATION_SHOW_TIME) => {
-      const id = Date.now();
+      const id = timer.current;
+      timer.current += 1;
       const notification = {
         close: () => remove(id),
         id,
@@ -124,7 +126,16 @@ const MessageManagerProvider = ({ children }) => {
                 content={notification.message.text}
                 apiMessage={
                   notification.message.apiMessage && {
-                    apiMessageContent: notification.message.apiMessage,
+                    apiMessageContent: (
+                      <pre
+                        style={{
+                          wordWrap: "break-word",
+                          whiteSpace: "pre-wrap"
+                        }}
+                      >
+                        {notification.message.apiMessage}
+                      </pre>
+                    ),
                     hideApiLabel: intl.formatMessage(
                       notificationMessages.hideError
                     ),
