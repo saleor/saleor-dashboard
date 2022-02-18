@@ -177,10 +177,7 @@ const CustomerList: React.FC<CustomerListProps> = props => {
                   requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
                 >
                   <TableCell className={classes.colOrders}>
-                    {maybe<React.ReactNode>(
-                      () => customer.orders.totalCount,
-                      <Skeleton />
-                    )}
+                    {customer?.orders?.totalCount ?? <Skeleton />}
                   </TableCell>
                 </RequirePermissions>
               </TableRow>
