@@ -1,8 +1,10 @@
-import { Pill, Tooltip } from "@saleor/macaw-ui";
+import { Grow, Paper, Popper, Typography } from "@material-ui/core";
+import { Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import messages from "./messages";
+import useStyles from "./styles";
 
 export interface PreviewPillProps {
   className?: string;
@@ -10,20 +12,36 @@ export interface PreviewPillProps {
 
 export const PreviewPill: React.FC<PreviewPillProps> = ({ className }) => {
   const intl = useIntl();
+  const [active, setActive] = React.useState(false);
+  const anchor = React.useRef<HTMLDivElement>(null);
+  const classes = useStyles();
 
   return (
-    <Tooltip
-      title={intl.formatMessage(messages.tooltip)}
-      variant="warning"
-      placement="bottom-start"
-    >
+    <>
       <Pill
         className={className}
         color="warning"
         size="small"
         label={intl.formatMessage(messages.label)}
+        ref={anchor}
+        onMouseEnter={() => setActive(true)}
+        onMouseLeave={() => setActive(false)}
       />
-    </Tooltip>
+      <Popper
+        open={active}
+        anchorEl={anchor.current}
+        transition
+        placement="bottom-start"
+      >
+        {({ TransitionProps }) => (
+          <Grow {...TransitionProps}>
+            <Paper elevation={16} className={classes.tooltip}>
+              <Typography>{intl.formatMessage(messages.tooltip)}</Typography>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
+    </>
   );
 };
 
