@@ -54,13 +54,11 @@ const useStyles = makeStyles(
 
 export interface CollectionProductsProps extends PageListProps, ListActions {
   collection: CollectionDetails_collection;
-  channelsCount: number;
   onProductUnassign: (id: string, event: React.MouseEvent<any>) => void;
 }
 
 const CollectionProducts: React.FC<CollectionProductsProps> = props => {
   const {
-    channelsCount,
     collection,
     disabled,
     onAdd,
@@ -195,7 +193,6 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
                       "-"
                     ) : product?.channelListings !== undefined ? (
                       <ChannelsAvailabilityDropdown
-                        allChannelsCount={channelsCount}
                         channels={product?.channelListings}
                       />
                     ) : (

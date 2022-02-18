@@ -8,9 +8,7 @@ import ChannelsAvailabilityDropdown, {
 } from "./ChannelsAvailabilityDropdown";
 
 const props: ChannelsAvailabilityDropdownProps = {
-  allChannelsCount: 6,
-  channels: productChannels,
-  showStatus: true
+  channels: productChannels
 };
 
 storiesOf("Generics / ChannelsAvailabilityDropdown", module)

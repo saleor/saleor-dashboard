@@ -27,7 +27,6 @@ export interface SaleProductsProps extends ListProps, ListActions {
   products:
     | SaleDetails_sale_products_edges_node[]
     | VoucherDetails_voucher_products_edges_node[];
-  channelsCount: number;
   onProductAssign: () => void;
   onProductUnassign: (id: string) => void;
 }
@@ -36,7 +35,6 @@ const numberOfColumns = 5;
 
 const DiscountProducts: React.FC<SaleProductsProps> = props => {
   const {
-    channelsCount,
     products,
     disabled,
     pageInfo,
@@ -150,7 +148,6 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
                       "-"
                     ) : product?.channelListings !== undefined ? (
                       <ChannelsAvailabilityDropdown
-                        allChannelsCount={channelsCount}
                         channels={product?.channelListings}
                       />
                     ) : (

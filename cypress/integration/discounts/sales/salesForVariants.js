@@ -3,18 +3,18 @@
 
 import faker from "faker";
 
-import * as channelsUtils from "../../support/api/utils/channelsUtils";
-import { deleteSalesStartsWith } from "../../support/api/utils/discounts/salesUtils";
-import * as productsUtils from "../../support/api/utils/products/productsUtils";
+import * as channelsUtils from "../../../support/api/utils/channelsUtils";
+import { deleteSalesStartsWith } from "../../../support/api/utils/discounts/salesUtils";
+import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith
-} from "../../support/api/utils/shippingUtils";
-import filterTests from "../../support/filterTests";
+} from "../../../support/api/utils/shippingUtils";
+import filterTests from "../../../support/filterTests";
 import {
   createSaleWithNewVariant,
   discountOptions
-} from "../../support/pages/discounts/salesPage";
+} from "../../../support/pages/discounts/salesPage";
 
 filterTests({ definedTags: ["all"] }, () => {
   describe("Sales discounts for variant", () => {

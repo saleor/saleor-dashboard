@@ -335,7 +335,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                                   }
                                 })
                               }
-                              data-test="billingSameAsShipping"
+                              data-test-id="billing-same-as-shipping"
                             />
                           }
                           label={intl.formatMessage(
@@ -388,7 +388,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                                       }
                                     })
                                   }
-                                  data-test="billingSameAsShipping"
+                                  data-test-id="billing-same-as-shipping"
                                 />
                               }
                               label={intl.formatMessage(
@@ -423,7 +423,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                                       }
                                     })
                                   }
-                                  data-test="billingSameAsShipping"
+                                  data-test-id="billing-same-as-shipping"
                                 />
                               }
                               label={intl.formatMessage(
@@ -440,7 +440,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                       transitionState={confirmButtonState}
                       variant="primary"
                       type="submit"
-                      data-test="submit"
+                      data-test-id="submit"
                     >
                       <FormattedMessage
                         {...(continueToSearchAddressesState(data)

@@ -49,7 +49,7 @@ export function createCheckout({
         token
         id
         token
-        availableShippingMethods{
+        shippingMethods{
           name
           id
         }
@@ -125,7 +125,7 @@ export function addPayment({ checkoutId, gateway, token, amount }) {
       ${amountLine}
       returnUrl: "https://qa.storefront.staging.saleor.cloud/checkout/payment-confirm"
     }){
-      paymentErrors{
+      errors{
         field
         message
       }
@@ -151,7 +151,7 @@ export function completeCheckout(checkoutId, paymentData) {
       }
       confirmationNeeded
       confirmationData
-      checkoutErrors{
+      errors{
         field
         message
       }
@@ -165,7 +165,7 @@ export function addVoucher(checkoutId, voucherCode) {
     checkoutAddPromoCode(checkoutId:"${checkoutId}",
       promoCode:"${voucherCode}"
     ){
-      checkoutErrors{
+      errors{
         field
         message
       }
@@ -187,19 +187,26 @@ export function checkoutVariantsUpdate(checkoutId, variantsList) {
   const mutation = `mutation{
     checkoutLinesUpdate(checkoutId:"${checkoutId}", 
     lines: [${lines.join()}]){
-      checkoutErrors{
+      checkout{
+        id
+        shippingMethods{
+          id
+          name
+        }
+      }
+      errors{
         field
         message
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy.sendRequestWithQuery(mutation).its("body.data.checkoutLinesUpdate");
 }
 
 export function checkoutShippingMethodUpdate(checkoutId, shippingMethodId) {
   const mutation = `mutation{
     checkoutShippingMethodUpdate(checkoutId:"${checkoutId}" shippingMethodId:"${shippingMethodId}"){
-      checkoutErrors{
+      errors{
         field
         message
       }
@@ -216,13 +223,22 @@ export function checkoutShippingAddressUpdate(checkoutId, address) {
     checkoutShippingAddressUpdate(checkoutId:"${checkoutId}", 
     ${shippingAddress}
     ){
-      checkoutErrors{
+      checkout{
+        id
+        shippingMethods{
+          id
+          name
+        }
+      }
+      errors{
         field
         message
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.checkoutShippingAddressUpdate");
 }
 
 export function addProductsToCheckout(
@@ -235,7 +251,7 @@ export function addProductsToCheckout(
     checkoutLinesUpdate(checkoutId:"${checkoutId}" lines:[${lines.join()}]){
       checkout{
         id
-        availableShippingMethods{
+        shippingMethods{
           name
         }
       }

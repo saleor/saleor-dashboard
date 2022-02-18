@@ -2,6 +2,7 @@ import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import NotFoundPage from "@saleor/components/NotFoundPage";
+import { useShopCountries } from "@saleor/components/Shop/query";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { PAGINATE_BY } from "@saleor/config";
 import { useLocalPaginationState } from "@saleor/hooks/useLocalPaginator";
@@ -22,7 +23,10 @@ import {
 import { arrayDiff } from "@saleor/utils/arrays";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+import {
+  mapCountriesToCountriesCodes,
+  mapEdgesToItems
+} from "@saleor/utils/maps";
 import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
@@ -60,6 +64,17 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
   const notify = useNotifier();
   const intl = useIntl();
   const shop = useShop();
+
+  const {
+    data: restWorldCountries,
+    refetch: refetchRestWorldCountries
+  } = useShopCountries({
+    variables: {
+      filter: {
+        attachedToShippingZones: false
+      }
+    }
+  });
 
   const [paginationState] = useLocalPaginationState(PAGINATE_BY);
 
@@ -113,6 +128,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
           text: intl.formatMessage(commonMessages.savedChanges)
         });
         closeModal();
+        refetchRestWorldCountries();
       }
     }
   });
@@ -257,18 +273,20 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
       <ShippingZoneCountriesAssignDialog
         confirmButtonState={updateShippingZoneOpts.status}
         countries={shop?.countries || []}
-        initial={
-          data?.shippingZone?.countries.map(country => country.code) || []
+        restWorldCountries={
+          mapCountriesToCountriesCodes(restWorldCountries?.shop?.countries) ||
+          []
         }
-        isDefault={data?.shippingZone?.default}
+        initial={
+          mapCountriesToCountriesCodes(data?.shippingZone?.countries) || []
+        }
         onClose={closeModal}
         onConfirm={formData =>
           updateShippingZone({
             variables: {
               id,
               input: {
-                countries: formData.countries,
-                default: formData.restOfTheWorld
+                countries: formData.countries
               }
             }
           })
