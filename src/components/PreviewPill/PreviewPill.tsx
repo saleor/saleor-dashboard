@@ -4,7 +4,11 @@ import { useIntl } from "react-intl";
 
 import messages from "./messages";
 
-export const PreviewPill: React.FC<{}> = () => {
+export interface PreviewPillProps {
+  className?: string;
+}
+
+export const PreviewPill: React.FC<PreviewPillProps> = ({ className }) => {
   const intl = useIntl();
 
   return (
@@ -14,6 +18,7 @@ export const PreviewPill: React.FC<{}> = () => {
       placement="bottom-start"
     >
       <Pill
+        className={className}
         color="warning"
         size="small"
         label={intl.formatMessage(messages.label)}
