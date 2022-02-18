@@ -1,3 +1,4 @@
+import { useUserPermissions } from "@saleor/auth/hooks/useUserPermissions";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -5,6 +6,7 @@ import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
+import RequirePermissions from "@saleor/components/RequirePermissions";
 import Savebar from "@saleor/components/Savebar";
 import { UpdateCustomer_customerUpdate_errors } from "@saleor/customers/types/UpdateCustomer";
 import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
@@ -13,6 +15,7 @@ import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
+import { PermissionEnum } from "@saleor/types/globalTypes";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
@@ -62,6 +65,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
   onDelete
 }: CustomerDetailsPageProps) => {
   const intl = useIntl();
+  const userPermissions = useUserPermissions();
 
   const initialForm: CustomerDetailsPageFormData = {
     email: customer?.email || "",
@@ -105,12 +109,17 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
                   onChange={change}
                 />
                 <CardSpacer />
-                <CustomerOrders
-                  orders={mapEdgesToItems(customer?.orders)}
-                  onViewAllOrdersClick={onViewAllOrdersClick}
-                  onRowClick={onRowClick}
-                />
-                <CardSpacer />
+                <RequirePermissions
+                  userPermissions={userPermissions}
+                  requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
+                >
+                  <CustomerOrders
+                    orders={mapEdgesToItems(customer?.orders)}
+                    onViewAllOrdersClick={onViewAllOrdersClick}
+                    onRowClick={onRowClick}
+                  />
+                  <CardSpacer />
+                </RequirePermissions>
                 <Metadata data={data} onChange={changeMetadata} />
               </div>
               <div>
@@ -122,7 +131,12 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
                 <CardSpacer />
                 <CustomerStats customer={customer} />
                 <CardSpacer />
-                <CustomerGiftCardsCard />
+                <RequirePermissions
+                  userPermissions={userPermissions}
+                  requiredPermissions={[PermissionEnum.MANAGE_GIFT_CARD]}
+                >
+                  <CustomerGiftCardsCard />
+                </RequirePermissions>
               </div>
             </Grid>
             <Savebar

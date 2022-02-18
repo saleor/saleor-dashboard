@@ -1,13 +1,15 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
+import { useUserPermissions } from "@saleor/auth/hooks/useUserPermissions";
 import CardTitle from "@saleor/components/CardTitle";
 import { DateTime } from "@saleor/components/Date";
 import { Hr } from "@saleor/components/Hr";
+import RequirePermissions from "@saleor/components/RequirePermissions";
 import Skeleton from "@saleor/components/Skeleton";
 import { makeStyles } from "@saleor/macaw-ui";
+import { PermissionEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe } from "../../../misc";
 import { CustomerDetails_user } from "../../types/CustomerDetails";
 
 const useStyles = makeStyles(
@@ -29,6 +31,7 @@ export interface CustomerStatsProps {
 const CustomerStats: React.FC<CustomerStatsProps> = props => {
   const { customer } = props;
   const classes = useStyles(props);
+  const userPermissions = useUserPermissions();
 
   const intl = useIntl();
 
@@ -44,26 +47,28 @@ const CustomerStats: React.FC<CustomerStatsProps> = props => {
         <Typography className={classes.label} variant="caption">
           <FormattedMessage defaultMessage="Last login" />
         </Typography>
-        {maybe(
-          () => (
-            <Typography variant="h6" className={classes.value}>
-              {customer.lastLogin === null ? (
-                "-"
-              ) : (
-                <DateTime date={customer.lastLogin} />
-              )}
-            </Typography>
-          ),
+        {customer ? (
+          <Typography variant="h6" className={classes.value}>
+            {customer.lastLogin === null ? (
+              "-"
+            ) : (
+              <DateTime date={customer.lastLogin} />
+            )}
+          </Typography>
+        ) : (
           <Skeleton />
         )}
       </CardContent>
-      <Hr />
-      <CardContent>
-        <Typography className={classes.label} variant="caption">
-          <FormattedMessage defaultMessage="Last order" />
-        </Typography>
-        {maybe(
-          () => (
+      <RequirePermissions
+        userPermissions={userPermissions}
+        requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
+      >
+        <Hr />
+        <CardContent>
+          <Typography className={classes.label} variant="caption">
+            <FormattedMessage defaultMessage="Last order" />
+          </Typography>
+          {customer && customer.lastPlacedOrder ? (
             <Typography variant="h6" className={classes.value}>
               {customer.lastPlacedOrder.edges.length === 0 ? (
                 "-"
@@ -73,10 +78,11 @@ const CustomerStats: React.FC<CustomerStatsProps> = props => {
                 />
               )}
             </Typography>
-          ),
-          <Skeleton />
-        )}
-      </CardContent>
+          ) : (
+            <Skeleton />
+          )}
+        </CardContent>
+      </RequirePermissions>
     </Card>
   );
 };
