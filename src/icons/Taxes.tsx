@@ -1,4 +1,4 @@
-import { createSvgIcon } from "@material-ui/core/utils";
+import { createSvgIcon, SvgIconProps } from "@material-ui/core";
 import React from "react";
 
 const Taxes = createSvgIcon(
@@ -10,8 +10,7 @@ const Taxes = createSvgIcon(
   />,
   "Taxes"
 );
-Taxes.defaultProps = {
-  viewBox: "0 0 32 32"
-};
 
-export default Taxes;
+export default (props: SvgIconProps) => (
+  <Taxes {...props} viewBox="0 0 32 32" />
+);
