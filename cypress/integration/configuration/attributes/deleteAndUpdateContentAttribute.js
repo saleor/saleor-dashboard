@@ -14,7 +14,7 @@ import filterTests from "../../../support/filterTests";
 import { fillUpAttributeNameAndCode } from "../../../support/pages/attributesPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Delete and update content attribute", () => {
+  describe("As an admin I want to delete and update content attribute", () => {
     const startsWith = "AttrContDel";
     let attribute;
 
@@ -33,7 +33,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("should delete attribute", () => {
+    it("should be able delete content attribute. TC:SALEOR_0529", () => {
       cy.visit(attributeDetailsUrl(attribute.id))
         .get(BUTTON_SELECTORS.deleteButton)
         .click()
@@ -44,7 +44,7 @@ filterTests({ definedTags: ["all"] }, () => {
       getAttribute(attribute.id).should("be.null");
     });
 
-    it("should update attribute", () => {
+    it("should be able update content attribute. TC:SALEOR_0530", () => {
       const attributeUpdatedName = `${startsWith}${faker.datatype.number()}`;
 
       cy.visit(attributeDetailsUrl(attribute.id));
