@@ -1,4 +1,5 @@
 import { FetchMoreProps, SearchPageProps } from "@saleor/types";
+import { PermissionEnum } from "@saleor/types/globalTypes";
 import { MessageDescriptor } from "react-intl";
 
 import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
@@ -34,6 +35,7 @@ export interface IFilterElement<T extends string = string>
   multipleFields?: IFilterElement[];
   id?: string;
   dependencies?: string[];
+  permissions?: PermissionEnum[];
 }
 
 export interface FilterBaseFieldProps<T extends string = string> {
