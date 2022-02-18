@@ -46,6 +46,9 @@ const useStyles = makeStyles(
         marginTop: theme.spacing(2)
       },
 
+      quantityField: {
+        minWidth: "80px"
+      },
       quantityInnerInput: {
         ...inputPadding
       },
@@ -205,7 +208,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                   <TableCell align="right">
                     {isReturnable && (
                       <TextField
-                        style={{ minWidth: "80px" }}
+                        className={classes.quantityField}
                         type="number"
                         inputProps={{
                           className: classes.quantityInnerInput,
