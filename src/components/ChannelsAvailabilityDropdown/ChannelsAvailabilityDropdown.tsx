@@ -48,7 +48,7 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
             channelCount: channels.length
           })}
           color={dropdownColor}
-          onClick={() => null} // required for dashed border
+          outlined
         />
       </div>
       <Popper anchorEl={anchor.current} open={isPopupOpen} placement={"left"}>
