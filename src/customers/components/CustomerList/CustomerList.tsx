@@ -1,5 +1,4 @@
 import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
-import { useUser } from "@saleor/auth";
 import { useUserPermissions } from "@saleor/auth/hooks/useUserPermissions";
 import Checkbox from "@saleor/components/Checkbox";
 import RequirePermissions, {
@@ -73,7 +72,6 @@ const CustomerList: React.FC<CustomerListProps> = props => {
   } = props;
 
   const userPermissions = useUserPermissions();
-
   const classes = useStyles(props);
 
   return (
