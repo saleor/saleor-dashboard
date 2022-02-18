@@ -14,6 +14,9 @@ import "./customCommands/sharedElementsOperations/deleteElement";
 import "cypress-mailhog";
 import "cypress-file-upload";
 
+import { commandTimings } from "cypress-timings";
+commandTimings();
+
 import { urlList } from "../fixtures/urlList";
 
 Cypress.Commands.add("clearSessionData", () => {
