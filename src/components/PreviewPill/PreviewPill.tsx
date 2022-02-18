@@ -20,6 +20,7 @@ export const PreviewPill: React.FC<PreviewPillProps> = ({ className }) => {
     <>
       <Pill
         className={className}
+        active={active}
         color="warning"
         size="small"
         label={intl.formatMessage(messages.label)}

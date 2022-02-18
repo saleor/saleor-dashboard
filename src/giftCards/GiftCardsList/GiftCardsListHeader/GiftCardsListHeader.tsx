@@ -1,7 +1,6 @@
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import CardMenu, { CardMenuItem } from "@saleor/components/CardMenu";
 import PageHeader from "@saleor/components/PageHeader";
-import PreviewPill from "@saleor/components/PreviewPill/PreviewPill";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import { Button } from "@saleor/macaw-ui";
@@ -12,10 +11,8 @@ import { giftCardSettingsUrl } from "../../urls";
 import { giftCardsListHeaderMenuItemsMessages as messages } from "../messages";
 import useGiftCardListDialogs from "../providers/GiftCardListDialogsProvider/hooks/useGiftCardListDialogs";
 import GiftCardsListHeaderAlert from "./GiftCardsListHeaderAlert";
-import useStyles from "./styles";
 
 const GiftCardsListHeader: React.FC = () => {
-  const classes = useStyles();
   const intl = useIntl();
   const navigate = useNavigator();
 
@@ -47,8 +44,8 @@ const GiftCardsListHeader: React.FC = () => {
 
   return (
     <>
-      <PreviewPill className={classes.preview} />
       <PageHeader
+        preview
         title={intl.formatMessage(sectionNames.giftCards)}
         cardMenu={<CardMenu menuItems={menuItems} data-test-id="menu" />}
       >
