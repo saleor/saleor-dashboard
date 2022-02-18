@@ -24,6 +24,7 @@ import { DateTimeTimezoneField } from "@saleor/components/DateTimeTimezoneField"
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import Link from "@saleor/components/Link";
+import PreviewPill from "@saleor/components/PreviewPill";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { FormChange, FormErrors } from "@saleor/hooks/useForm";
@@ -172,6 +173,9 @@ const useStyles = makeStyles(
     },
     preorderLimitInfo: {
       marginTop: theme.spacing(3)
+    },
+    preview: {
+      marginLeft: theme.spacing(1)
     }
   }),
   {
@@ -247,10 +251,13 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
           }
           disabled={disabled}
           label={
-            <FormattedMessage
-              defaultMessage="Variant currently in preorder"
-              description="product inventory, checkbox"
-            />
+            <>
+              <FormattedMessage
+                defaultMessage="Variant currently in preorder"
+                description="product inventory, checkbox"
+              />
+              <PreviewPill className={classes.preview} />
+            </>
           }
         />
 

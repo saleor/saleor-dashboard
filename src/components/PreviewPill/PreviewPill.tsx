@@ -29,6 +29,7 @@ export const PreviewPill: React.FC<PreviewPillProps> = ({ className }) => {
         onMouseLeave={() => setActive(false)}
       />
       <Popper
+        className={classes.popper}
         open={active}
         anchorEl={anchor.current}
         transition

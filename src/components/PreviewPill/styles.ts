@@ -3,6 +3,9 @@ import { triangle } from "@saleor/styles/mixins";
 
 const useStyles = makeStyles(
   theme => ({
+    popper: {
+      zIndex: 11
+    },
     tooltip: {
       "&:before": {
         ...triangle(theme.palette.saleor.warning.mid, 8),

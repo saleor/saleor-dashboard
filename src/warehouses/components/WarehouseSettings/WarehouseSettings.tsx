@@ -3,6 +3,7 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import Link from "@saleor/components/Link";
+import PreviewPill from "@saleor/components/PreviewPill";
 import { RadioGroupField } from "@saleor/components/RadioGroupField";
 import Skeleton from "@saleor/components/Skeleton";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -30,6 +31,9 @@ const useStyles = makeStyles(
       "&:not(:last-of-type)": {
         marginBottom: theme.spacing()
       }
+    },
+    preview: {
+      marginLeft: theme.spacing(1)
     }
   }),
   {
@@ -181,6 +185,7 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
       <CardContent>
         <Typography color="textSecondary" variant="h6">
           <FormattedMessage {...messages.warehouseSettingsPickupTitle} />
+          <PreviewPill className={classes.preview} />
         </Typography>
         <CardSpacer />
         <RadioGroupField
