@@ -12,7 +12,6 @@ import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { categoryDetailsUrl, urlList } from "../../fixtures/urlList";
 import { getCategory } from "../../support/api/requests/Category";
-import { createCategory as createCategoryRequest } from "../../support/api/requests/Category";
 import { deleteCategoriesStartsWith } from "../../support/api/utils/catalog/categoryUtils";
 import * as channelsUtils from "../../support/api/utils/channelsUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
