@@ -3523,9 +3523,6 @@
     "context": "Manage and Update your warehouse information",
     "string": "Exchange Rates"
   },
-  "src_dot_extensions": {
-    "string": "Extensions"
-  },
   "src_dot_firstName": {
     "string": "First Name"
   },
