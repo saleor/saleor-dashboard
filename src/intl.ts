@@ -243,6 +243,10 @@ export const sectionNames = defineMessages({
     defaultMessage: "Apps",
     description: "apps section name"
   },
+  appExtensions: {
+    defaultMessage: "Apps",
+    description: "app extensions subsection"
+  },
   attributes: {
     defaultMessage: "Attributes",
     description: "attributes section name"

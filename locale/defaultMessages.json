@@ -507,6 +507,10 @@
     "context": "button",
     "string": "Accept"
   },
+  "src_dot_appExtensions": {
+    "context": "app extensions subsection",
+    "string": "Apps"
+  },
   "src_dot_approve": {
     "context": "button",
     "string": "Approve"

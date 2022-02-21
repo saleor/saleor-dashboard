@@ -56,7 +56,7 @@ function useMenuStructure(
   const appExtensionsHeaderItem = {
     id: "extensions",
     ariaLabel: "apps",
-    label: intl.formatMessage(sectionNames.apps)
+    label: intl.formatMessage(sectionNames.appExtensions)
   };
 
   const menuItems: FilterableMenuItem[] = [
