@@ -41,7 +41,7 @@ const TranslationFieldsShort: React.FC<TranslationFieldsShortProps> = ({
               defaultMessage: "Translation"
             })}
             name="translation"
-            data-test-id="translation"
+            data-test-id="translation-field"
             value={data.translation || ""}
             onChange={change}
           />
