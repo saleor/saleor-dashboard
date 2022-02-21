@@ -1,6 +1,9 @@
 import { defineMessages, IntlShape } from "react-intl";
 
 export const commonMessages = defineMessages({
+  apps: {
+    defaultMessage: "Apps"
+  },
   availability: {
     defaultMessage: "Availability"
   },
@@ -48,9 +51,6 @@ export const commonMessages = defineMessages({
   },
   error: {
     defaultMessage: "Error"
-  },
-  extensions: {
-    defaultMessage: "Extensions"
   },
   firstName: {
     defaultMessage: "First Name"

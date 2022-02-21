@@ -45,7 +45,7 @@ export const mapToExtensionsItems = (
 ) => {
   const items: FilterableMenuItem[] = extensions.map(
     ({ label, id, app, url, permissions, open }) => ({
-      ariaLabel: id,
+      ariaLabel: `app-${label}`,
       id: `extension-${id}`,
       label,
       url: getDashboardUrFromAppCompleteUrl(url, app.appUrl, app.id),
