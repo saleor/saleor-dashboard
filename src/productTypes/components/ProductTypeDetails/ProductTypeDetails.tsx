@@ -6,6 +6,7 @@ import {
   Typography
 } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
+import PreviewPill from "@saleor/components/PreviewPill";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -25,6 +26,9 @@ const useStyles = makeStyles(
     option: {
       marginTop: theme.spacing(-0.25),
       marginBottom: theme.spacing()
+    },
+    preview: {
+      marginLeft: theme.spacing(1)
     }
   }),
   { name: "ProductTypeDetails" }
@@ -41,23 +45,23 @@ interface ProductTypeDetailsProps {
   onKindChange: (event: React.ChangeEvent<any>) => void;
 }
 
+const kindOptions = [
+  {
+    title: messages.optionNormalTitle,
+    type: ProductTypeKindEnum.NORMAL
+  },
+  {
+    title: messages.optionGiftCardTitle,
+    subtitle: messages.optionGiftCardDescription,
+    type: ProductTypeKindEnum.GIFT_CARD
+  }
+];
+
 const ProductTypeDetails: React.FC<ProductTypeDetailsProps> = props => {
   const { data, disabled, errors, onChange, onKindChange } = props;
   const classes = useStyles(props);
 
   const intl = useIntl();
-
-  const kindOptions = [
-    {
-      title: messages.optionNormalTitle,
-      type: ProductTypeKindEnum.NORMAL
-    },
-    {
-      title: messages.optionGiftCardTitle,
-      subtitle: messages.optionGiftCardDescription,
-      type: ProductTypeKindEnum.GIFT_CARD
-    }
-  ];
 
   return (
     <Card className={classes.root}>
@@ -88,6 +92,9 @@ const ProductTypeDetails: React.FC<ProductTypeDetailsProps> = props => {
               >
                 <Typography variant="body1">
                   <FormattedMessage {...option.title} />
+                  {option.type === ProductTypeKindEnum.GIFT_CARD && (
+                    <PreviewPill className={classes.preview} />
+                  )}
                 </Typography>
                 {option.subtitle && (
                   <Typography color="textSecondary" variant="caption">

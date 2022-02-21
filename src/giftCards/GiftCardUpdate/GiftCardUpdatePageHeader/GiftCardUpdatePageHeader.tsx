@@ -1,9 +1,9 @@
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import PageHeader from "@saleor/components/PageHeader";
-import PageTitleWithStatusChip from "@saleor/components/PageTitleWithStatusChip";
 import GiftCardStatusChip from "@saleor/giftCards/components/GiftCardStatusChip/GiftCardStatusChip";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, Button } from "@saleor/macaw-ui";
+import { getStringOrPlaceholder } from "@saleor/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -12,8 +12,10 @@ import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGi
 import useGiftCardUpdateDialogs from "../providers/GiftCardUpdateDialogsProvider/hooks/useGiftCardUpdateDialogs";
 import GiftCardEnableDisableSection from "./GiftCardEnableDisableSection";
 import { giftCardUpdatePageHeaderMessages as messages } from "./messages";
+import useStyles from "./styles";
 
 const GiftCardUpdatePageHeader: React.FC = () => {
+  const classes = useStyles();
   const intl = useIntl();
   const { giftCard } = useGiftCardDetails();
   const { navigateBack } = useGiftCardUpdateDialogs();
@@ -21,7 +23,7 @@ const GiftCardUpdatePageHeader: React.FC = () => {
   const { openResendCodeDialog } = useGiftCardUpdateDialogs();
 
   if (!giftCard) {
-    return null;
+    return <PageHeader preview title={getStringOrPlaceholder(undefined)} />;
   }
 
   const { last4CodeChars, isExpired } = giftCard;
@@ -36,11 +38,14 @@ const GiftCardUpdatePageHeader: React.FC = () => {
         {intl.formatMessage(sectionNames.giftCards)}
       </Backlink>
       <PageHeader
+        preview
         inline
         title={
-          <PageTitleWithStatusChip title={title}>
+          <div className={classes.title}>
+            {title}
+            <HorizontalSpacer spacing={2} />
             <GiftCardStatusChip giftCard={giftCard} />
-          </PageTitleWithStatusChip>
+          </div>
         }
       >
         <GiftCardEnableDisableSection />

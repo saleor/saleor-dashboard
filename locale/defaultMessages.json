@@ -2411,6 +2411,14 @@
     "context": "button",
     "string": "Go back to dashboard"
   },
+  "src_dot_components_dot_PreviewPill_dot_label": {
+    "context": "indicator that feature is in preview mode",
+    "string": "Preview"
+  },
+  "src_dot_components_dot_PreviewPill_dot_tooltip": {
+    "context": "tooltip",
+    "string": "This feature is in a preview state and can be subject to changes at later point"
+  },
   "src_dot_components_dot_PriceField_dot_4072537038": {
     "string": "Price cannot be lower than 0"
   },
