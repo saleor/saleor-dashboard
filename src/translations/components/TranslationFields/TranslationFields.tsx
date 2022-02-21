@@ -57,7 +57,7 @@ const useStyles = makeStyles(
     },
     content: {
       "& a": {
-        color: theme.palette.secondary.light
+        color: theme.palette.textHighlighted.active
       },
       "& blockquote": {
         borderLeft: `2px solid ${theme.palette.divider}`,
