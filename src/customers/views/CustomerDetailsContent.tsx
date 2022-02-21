@@ -1,3 +1,4 @@
+import { MutationFunction, MutationResult } from "@apollo/client";
 import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
@@ -11,7 +12,6 @@ import {
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
 import React, { useContext } from "react";
-import { MutationFunction, MutationResult } from "react-apollo";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { orderListUrl, orderUrl } from "../../orders/urls";

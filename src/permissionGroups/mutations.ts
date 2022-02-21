@@ -1,7 +1,7 @@
+import { gql } from "@apollo/client";
 import { permissionGroupErrorFragment } from "@saleor/fragments/errors";
 import { permissionGroupDetailsFragment } from "@saleor/fragments/permissionGroups";
 import makeMutation from "@saleor/hooks/makeMutation";
-import gql from "graphql-tag";
 
 import {
   PermissionGroupCreate,

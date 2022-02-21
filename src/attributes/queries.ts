@@ -1,3 +1,4 @@
+import { gql } from "@apollo/client";
 import {
   attributeDetailsFragment,
   attributeFragment,
@@ -5,7 +6,6 @@ import {
 } from "@saleor/fragments/attributes";
 import { pageInfoFragment } from "@saleor/fragments/pageInfo";
 import makeQuery from "@saleor/hooks/makeQuery";
-import gql from "graphql-tag";
 
 import {
   AttributeDetails,

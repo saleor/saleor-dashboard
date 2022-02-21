@@ -1,5 +1,5 @@
+import { gql } from "@apollo/client";
 import makeMutation from "@saleor/hooks/makeMutation";
-import gql from "graphql-tag";
 
 import {
   GiftCardCreate,

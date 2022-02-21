@@ -1,7 +1,12 @@
-import { ApolloError, MutationUpdaterFn } from "apollo-client";
+import {
+  ApolloError,
+  MutationFunction,
+  MutationResult,
+  MutationUpdaterFn
+} from "@apollo/client";
+import { Mutation } from "@apollo/client/react/components";
 import { DocumentNode } from "graphql";
 import React from "react";
-import { Mutation, MutationFunction, MutationResult } from "react-apollo";
 import { useIntl } from "react-intl";
 
 import { useUser } from "./auth";

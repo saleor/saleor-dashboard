@@ -1,7 +1,7 @@
+import { gql } from "@apollo/client";
 import { uploadErrorFragment } from "@saleor/fragments/errors";
 import { fileFragment } from "@saleor/fragments/file";
 import makeMutation from "@saleor/hooks/makeMutation";
-import gql from "graphql-tag";
 
 import { FileUpload, FileUploadVariables } from "./types/FileUpload";
 

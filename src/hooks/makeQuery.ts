@@ -1,14 +1,15 @@
-import { handleQueryAuthError } from "@saleor/auth";
-import { useUser } from "@saleor/auth";
-import { RequireAtLeastOne } from "@saleor/misc";
 import {
   ApolloError,
   ApolloQueryResult,
+  QueryResult,
+  useQuery as useBaseQuery,
   WatchQueryFetchPolicy
-} from "apollo-client";
+} from "@apollo/client";
+import { handleQueryAuthError } from "@saleor/auth";
+import { useUser } from "@saleor/auth";
+import { RequireAtLeastOne } from "@saleor/misc";
 import { DocumentNode } from "graphql";
 import { useEffect } from "react";
-import { QueryResult, useQuery as useBaseQuery } from "react-apollo";
 import { useIntl } from "react-intl";
 
 import { User_userPermissions } from "../fragments/types/User";

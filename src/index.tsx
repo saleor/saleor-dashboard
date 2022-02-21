@@ -1,15 +1,16 @@
+import {
+  ApolloClient,
+  ApolloLink,
+  ApolloProvider,
+  InMemoryCache
+} from "@apollo/client";
+import { BatchHttpLink } from "@apollo/client/link/batch-http";
 import DemoBanner from "@saleor/components/DemoBanner";
 import useAppState from "@saleor/hooks/useAppState";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import { createFetch, createSaleorClient, SaleorProvider } from "@saleor/sdk";
-import { defaultDataIdFromObject, InMemoryCache } from "apollo-cache-inmemory";
-import { IntrospectionFragmentMatcher } from "apollo-cache-inmemory";
-import { ApolloClient } from "apollo-client";
-import { ApolloLink } from "apollo-link";
-import { BatchHttpLink } from "apollo-link-batch-http";
 import { createUploadLink } from "apollo-upload-client";
 import React from "react";
-import { ApolloProvider } from "react-apollo";
 import { render } from "react-dom";
 import ErrorBoundary from "react-error-boundary";
 import TagManager from "react-gtm-module";
@@ -69,6 +70,7 @@ import StaffSection from "./staff";
 import TaxesSection from "./taxes";
 import themeOverrides from "./themeOverrides";
 import TranslationsSection from "./translations";
+import { TypedTypePolicies } from "./type-policies";
 import { PermissionEnum } from "./types/globalTypes";
 import WarehouseSection from "./warehouses";
 import { warehouseSection } from "./warehouses/urls";
@@ -98,22 +100,26 @@ const link = ApolloLink.split(
   batchLink,
   uploadLink
 );
-
-const fragmentMatcher = new IntrospectionFragmentMatcher({
-  introspectionQueryResultData
-});
-
 const apolloClient = new ApolloClient({
   cache: new InMemoryCache({
-    fragmentMatcher,
-    dataIdFromObject: (obj: any) => {
-      // We need to set manually shop's ID, since it is singleton and
-      // API does not return its ID
-      if (obj.__typename === "Shop") {
-        return "shop";
+    possibleTypes: introspectionQueryResultData.possibleTypes,
+    typePolicies: {
+      CountryDisplay: {
+        keyFields: ["code"]
+      },
+      Money: {
+        merge: false
+      },
+      TaxedMoney: {
+        merge: false
+      },
+      Weight: {
+        merge: false
+      },
+      Shop: {
+        keyFields: []
       }
-      return defaultDataIdFromObject(obj);
-    }
+    } as TypedTypePolicies
   }),
   link
 });

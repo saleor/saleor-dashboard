@@ -1,5 +1,5 @@
+import { gql } from "@apollo/client";
 import { pageTranslationFragment } from "@saleor/fragments/translations";
-import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
 import {

@@ -1,7 +1,7 @@
+import { gql } from "@apollo/client";
 import { fragmentAddress } from "@saleor/fragments/address";
 import { shopErrorFragment } from "@saleor/fragments/errors";
 import { shopFragment } from "@saleor/fragments/shop";
-import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
 import {

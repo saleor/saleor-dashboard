@@ -1,3 +1,4 @@
+import { ApolloError } from "@apollo/client";
 import { ExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
 import { getExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
 import { giftCardListUrl } from "@saleor/giftCards/urls";
@@ -19,7 +20,6 @@ import { ListViews, SortPage } from "@saleor/types";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
-import { ApolloError } from "apollo-client";
 import React, { createContext } from "react";
 
 import { getFilterVariables } from "../../GiftCardListSearchAndFilters/filters";

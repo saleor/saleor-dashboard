@@ -1,6 +1,6 @@
+import { gql } from "@apollo/client";
 import { giftCardErrorFragment } from "@saleor/fragments/errors";
 import makeMutation from "@saleor/hooks/makeMutation";
-import gql from "graphql-tag";
 
 import {
   BulkDeleteGiftCard,

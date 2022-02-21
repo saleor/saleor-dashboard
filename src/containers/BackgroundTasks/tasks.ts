@@ -1,7 +1,7 @@
+import { ApolloQueryResult } from "@apollo/client";
 import { IMessageContext } from "@saleor/components/messages";
 import { commonMessages } from "@saleor/intl";
 import { JobStatusEnum } from "@saleor/types/globalTypes";
-import { ApolloQueryResult } from "apollo-client";
 import { IntlShape } from "react-intl";
 
 import messages from "./messages";

@@ -1,10 +1,10 @@
+import { gql } from "@apollo/client";
 import { pageInfoFragment } from "@saleor/fragments/pageInfo";
 import {
   permissionGroupDetailsFragment,
   permissionGroupFragment
 } from "@saleor/fragments/permissionGroups";
 import makeQuery from "@saleor/hooks/makeQuery";
-import gql from "graphql-tag";
 
 import {
   PermissionGroupDetails,
