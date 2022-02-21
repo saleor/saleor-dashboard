@@ -36,7 +36,8 @@ const CustomerGiftCardsCard: React.FC = () => {
       filter: {
         usedBy: [id]
       }
-    }
+    },
+    skip: !id
   });
 
   const closeCreateDialog = () => setOpenCreateDialog(false);
