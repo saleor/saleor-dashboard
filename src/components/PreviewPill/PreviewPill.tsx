@@ -38,7 +38,9 @@ export const PreviewPill: React.FC<PreviewPillProps> = ({ className }) => {
         {({ TransitionProps }) => (
           <Grow {...TransitionProps}>
             <Paper elevation={16} className={classes.tooltip}>
-              <Typography>{intl.formatMessage(messages.tooltip)}</Typography>
+              <Typography className={classes.tooltipText}>
+                {intl.formatMessage(messages.tooltip)}
+              </Typography>
             </Paper>
           </Grow>
         )}

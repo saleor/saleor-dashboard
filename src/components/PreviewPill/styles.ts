@@ -20,6 +20,9 @@ const useStyles = makeStyles(
       padding: theme.spacing(2.5),
       maxWidth: 400,
       position: "relative"
+    },
+    tooltipText: {
+      color: theme.palette.common.black
     }
   }),
   { name: "PreviewPill" }
