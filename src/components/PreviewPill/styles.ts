@@ -1,5 +1,4 @@
 import { makeStyles } from "@saleor/macaw-ui";
-import { triangle } from "@saleor/styles/mixins";
 
 const useStyles = makeStyles(
   theme => ({
@@ -7,13 +6,15 @@ const useStyles = makeStyles(
       zIndex: 11
     },
     tooltip: {
-      "&:before": {
-        ...triangle(theme.palette.saleor.warning.mid, 8),
-        content: "''",
-        position: "absolute",
-        left: 17,
-        top: -8
-      },
+      // TO-FIX
+      // Triangle's position is hard coded
+      // "&:before": {
+      //   ...triangle(theme.palette.saleor.warning.mid, 8),
+      //   content: "''",
+      //   position: "absolute",
+      //   left: 17,
+      //   top: -8
+      // },
       background: theme.palette.saleor.warning.mid,
       borderRadius: 8,
       marginTop: theme.spacing(1.5),

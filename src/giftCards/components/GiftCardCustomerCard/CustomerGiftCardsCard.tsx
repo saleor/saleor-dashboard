@@ -3,6 +3,7 @@ import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
 import Link from "@saleor/components/Link";
+import PreviewPill from "@saleor/components/PreviewPill";
 import Skeleton from "@saleor/components/Skeleton";
 import { useCustomerDetails } from "@saleor/customers/hooks/useCustomerDetails";
 import GiftCardCreateDialogContent from "@saleor/giftCards/GiftCardCreateDialog/GiftCardCreateDialogContent";
@@ -62,17 +63,20 @@ const CustomerGiftCardsCard: React.FC = () => {
         <CardTitle
           title={intl.formatMessage(messages.customerGiftCardsCardTitle)}
           toolbar={
-            !!giftCards?.length && (
-              <Button
-                variant="tertiary"
-                href={viewAllGiftCardsUrl}
-                component={Link}
-              >
-                <FormattedMessage
-                  {...messages.customerGiftCardsViewAllButton}
-                />
-              </Button>
-            )
+            <>
+              {!!giftCards?.length && (
+                <Button
+                  variant="tertiary"
+                  href={viewAllGiftCardsUrl}
+                  component={Link}
+                >
+                  <FormattedMessage
+                    {...messages.customerGiftCardsViewAllButton}
+                  />
+                </Button>
+              )}
+              <PreviewPill className={classes.previewPill} />
+            </>
           }
         >
           <FormattedMessage
