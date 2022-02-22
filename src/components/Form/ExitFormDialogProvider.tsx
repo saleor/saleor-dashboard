@@ -4,6 +4,7 @@ import { useHistory } from "react-router";
 import useRouter from "use-react-router";
 
 import ExitFormDialog from "./ExitFormDialog";
+import useBeforeUnload from "./useBeforeUnload";
 
 export interface ExitFormDialogData {
   setIsDirty: (id: symbol, isDirty: boolean) => void;
@@ -259,6 +260,15 @@ const ExitFormDialogProvider = ({ children }) => {
     providerData,
     showDialog
   } = useExitFormDialogProvider();
+
+  useBeforeUnload(e => {
+    // If form is dirty and user does a refresh,
+    // the browser will ask about unsaved changes
+    if (shouldBlockNav()) {
+      e.preventDefault();
+      e.returnValue = "";
+    }
+  });
 
   return (
     <ExitFormDialogContext.Provider value={providerData}>
