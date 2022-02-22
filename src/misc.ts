@@ -1,16 +1,10 @@
+import { FetchResult, MutationFunction, MutationResult } from "@apollo/client";
 import { ConfirmButtonTransitionState, ThemeType } from "@saleor/macaw-ui";
 import uniqBy from "lodash/uniqBy";
 import moment from "moment-timezone";
-import {
-  MutationFetchResult,
-  MutationFunction,
-  MutationResult
-} from "react-apollo";
 import { IntlShape } from "react-intl";
 
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
-import { StatusType } from "./components/StatusChip/types";
-import { StatusLabelProps } from "./components/StatusLabel";
 import { AddressType, AddressTypeInput } from "./customers/types";
 import {
   commonStatusMessages,
@@ -21,6 +15,7 @@ import { OrderDetails_order_shippingAddress } from "./orders/types/OrderDetails"
 import {
   MutationResultAdditionalProps,
   PartialMutationProviderOutput,
+  StatusType,
   UserError
 } from "./types";
 import {
@@ -81,7 +76,7 @@ export const removeDoubleSlashes = (url: string) =>
 export const transformPaymentStatus = (
   status: string,
   intl: IntlShape
-): { localized: string; status: StatusLabelProps["status"] } => {
+): { localized: string; status: StatusType } => {
   switch (status) {
     case PaymentChargeStatusEnum.PARTIALLY_CHARGED:
       return {
@@ -96,17 +91,17 @@ export const transformPaymentStatus = (
     case PaymentChargeStatusEnum.PARTIALLY_REFUNDED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.partiallyRefunded),
-        status: StatusType.ERROR
+        status: StatusType.INFO
       };
     case PaymentChargeStatusEnum.FULLY_REFUNDED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.refunded),
-        status: StatusType.SUCCESS
+        status: StatusType.INFO
       };
     case PaymentChargeStatusEnum.PENDING:
       return {
         localized: intl.formatMessage(paymentStatusMessages.pending),
-        status: StatusType.NEUTRAL
+        status: StatusType.WARNING
       };
     case PaymentChargeStatusEnum.REFUSED:
       return {
@@ -143,7 +138,7 @@ export const transformOrderStatus = (
     case OrderStatus.PARTIALLY_FULFILLED:
       return {
         localized: intl.formatMessage(orderStatusMessages.partiallyFulfilled),
-        status: StatusType.NEUTRAL
+        status: StatusType.WARNING
       };
     case OrderStatus.UNFULFILLED:
       return {
@@ -158,22 +153,22 @@ export const transformOrderStatus = (
     case OrderStatus.DRAFT:
       return {
         localized: intl.formatMessage(orderStatusMessages.draft),
-        status: StatusType.ERROR
+        status: StatusType.INFO
       };
     case OrderStatus.UNCONFIRMED:
       return {
         localized: intl.formatMessage(orderStatusMessages.unconfirmed),
-        status: StatusType.NEUTRAL
+        status: StatusType.INFO
       };
     case OrderStatus.PARTIALLY_RETURNED:
       return {
         localized: intl.formatMessage(orderStatusMessages.partiallyReturned),
-        status: StatusType.NEUTRAL
+        status: StatusType.INFO
       };
     case OrderStatus.RETURNED:
       return {
         localized: intl.formatMessage(orderStatusMessages.returned),
-        status: StatusType.NEUTRAL
+        status: StatusType.INFO
       };
   }
   return {
@@ -249,7 +244,7 @@ type InferPromiseResult<T> = T extends Promise<infer V> ? V : never;
 
 export const extractMutationErrors = async <
   TData extends InferPromiseResult<TPromise>,
-  TPromise extends Promise<MutationFetchResult<TData>>,
+  TPromise extends Promise<FetchResult<TData>>,
   TErrors extends ReturnType<typeof getMutationErrors>
 >(
   submitPromise: TPromise
@@ -262,7 +257,7 @@ export const extractMutationErrors = async <
 };
 
 export const getMutationErrors = <
-  T extends MutationFetchResult<any>,
+  T extends FetchResult<any>,
   TData extends T["data"],
   TErrors extends TData[keyof TData]["errors"]
 >(

@@ -1,140 +1,63 @@
-import { Menu, MenuItem, Typography } from "@material-ui/core";
-import { CollectionList_collections_edges_node_channelListings } from "@saleor/collections/types/CollectionList";
-import Hr from "@saleor/components/Hr";
-import StatusLabel from "@saleor/components/StatusLabel";
-import useDateLocalize from "@saleor/hooks/useDateLocalize";
+import { Card, Popper } from "@material-ui/core";
+import { Pill } from "@saleor/macaw-ui";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
-import { useStyles } from "./styles";
-
-type Channels = Pick<
-  CollectionList_collections_edges_node_channelListings,
-  "isPublished" | "publicationDate" | "channel"
->;
+import ChannelsAvailabilityMenuContent from "../ChannelsAvailabilityMenuContent";
+import { messages } from "./messages";
+import {
+  CollectionChannels,
+  getDropdownColor,
+  mapChannelsToPills
+} from "./utils";
 
 export interface ChannelsAvailabilityDropdownProps {
-  allChannelsCount: number;
-  channels: Channels[];
-  showStatus?: boolean;
+  channels: CollectionChannels[] | null;
 }
 
-const isActive = (channelData: Channels) => channelData?.isPublished;
-
 export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdownProps> = ({
-  allChannelsCount,
-  channels,
-  showStatus = false
+  channels
 }) => {
   const intl = useIntl();
-  const classes = useStyles({});
-  const localizeDate = useDateLocalize();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [isPopupOpen, setPopupOpen] = React.useState(false);
+  const anchor = React.useRef<HTMLDivElement>(null);
 
-  const handleClick = event => setAnchorEl(event.currentTarget);
-  const handleClose = () => setAnchorEl(null);
-  const activeInAllChannels = React.useMemo(
-    () => showStatus && channels.every(isActive),
-    [channels, showStatus]
-  );
+  const dropdownColor = React.useMemo(() => getDropdownColor(channels), [
+    channels
+  ]);
+
+  if (!channels?.length) {
+    return (
+      <Pill label={intl.formatMessage(messages.noChannels)} color="error" />
+    );
+  }
 
   return (
-    <div onClick={e => e.stopPropagation()}>
-      <div
-        aria-controls="availability-menu"
-        aria-haspopup="true"
-        role="button"
-        onClick={handleClick}
-      >
-        <StatusLabel
-          label={intl.formatMessage(
-            {
-              defaultMessage: "{count}/{allCount} channels",
-              description: "product status title"
-            },
-            {
-              allCount: allChannelsCount,
-              count: channels.length
-            }
-          )}
-          status={
-            showStatus ? (activeInAllChannels ? "success" : "error") : undefined
-          }
+    <div
+      onClick={e => {
+        e.preventDefault();
+        e.stopPropagation();
+      }}
+      ref={anchor}
+      onMouseOver={() => setPopupOpen(true)}
+      onMouseLeave={() => setPopupOpen(false)}
+    >
+      <div aria-controls="availability-menu" aria-haspopup="true" role="button">
+        <Pill
+          label={intl.formatMessage(messages.dropdownLabel, {
+            channelCount: channels.length
+          })}
+          color={dropdownColor}
+          outlined
         />
       </div>
-      <Menu
-        id="availability-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        elevation={8}
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-        getContentAnchorEl={null}
-        anchorOrigin={{
-          horizontal: "center",
-          vertical: "bottom"
-        }}
-        transformOrigin={{
-          horizontal: "center",
-          vertical: "top"
-        }}
-      >
-        <Typography className={classes.title}>
-          <FormattedMessage
-            defaultMessage="Available in {count} out of {allCount, plural, one {# channel} other {# channels}}"
-            description="product status"
-            values={{
-              allCount: allChannelsCount,
-              count: channels.length
-            }}
+      <Popper anchorEl={anchor.current} open={isPopupOpen} placement={"left"}>
+        <Card elevation={8}>
+          <ChannelsAvailabilityMenuContent
+            pills={mapChannelsToPills(channels)}
           />
-        </Typography>
-        <Hr className={classes.hr} />
-        {channels.map(channelData => {
-          const notPublishedText = intl.formatMessage(
-            {
-              defaultMessage: "Will become available on {date}",
-              description: "product channel publication date"
-            },
-            {
-              date: localizeDate(channelData.publicationDate, "L")
-            }
-          );
-
-          const publishedText = intl.formatMessage(
-            {
-              defaultMessage: "published since {date}",
-              description: "product channel  publication date"
-            },
-            {
-              date: localizeDate(channelData.publicationDate, "L")
-            }
-          );
-
-          return (
-            <MenuItem key={channelData.channel.id} className={classes.menuItem}>
-              <StatusLabel
-                label={channelData.channel.name}
-                status={isActive(channelData) ? "success" : "error"}
-              />
-              <div>
-                <Typography variant="caption" className={classes.caption}>
-                  {channelData.isPublished && channelData.publicationDate
-                    ? publishedText
-                    : channelData.publicationDate && !channelData.isPublished
-                    ? notPublishedText
-                    : channelData.isPublished
-                    ? ""
-                    : intl.formatMessage({
-                        defaultMessage: "hidden",
-                        description: "product channel publication status"
-                      })}
-                </Typography>
-              </div>
-            </MenuItem>
-          );
-        })}
-      </Menu>
+        </Card>
+      </Popper>
     </div>
   );
 };

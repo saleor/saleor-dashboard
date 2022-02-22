@@ -53,9 +53,10 @@ function useMenuStructure(
     navigate(menuItem.url, { resetScroll: true });
   };
 
-  const extenstionHeaderItem = {
+  const appExtensionsHeaderItem = {
     id: "extensions",
-    label: intl.formatMessage(commonMessages.extensions)
+    ariaLabel: "apps",
+    label: intl.formatMessage(sectionNames.appExtensions)
   };
 
   const menuItems: FilterableMenuItem[] = [
@@ -99,7 +100,7 @@ function useMenuStructure(
         },
         ...mapToExtensionsItems(
           extensions.NAVIGATION_CATALOG,
-          extenstionHeaderItem
+          appExtensionsHeaderItem
         )
       ],
       iconSrc: catalogIcon,
@@ -124,12 +125,12 @@ function useMenuStructure(
           ariaLabel: "order drafts",
           label: intl.formatMessage(commonMessages.drafts),
           permissions: [PermissionEnum.MANAGE_ORDERS],
-          id: "order drafts",
+          id: "order-drafts",
           url: orderDraftListUrl()
         },
         ...mapToExtensionsItems(
           extensions.NAVIGATION_ORDERS,
-          extenstionHeaderItem
+          appExtensionsHeaderItem
         )
       ],
       iconSrc: ordersIcon,
@@ -149,7 +150,7 @@ function useMenuStructure(
         },
         ...mapToExtensionsItems(
           extensions.NAVIGATION_CUSTOMERS,
-          extenstionHeaderItem
+          appExtensionsHeaderItem
         )
       ],
       iconSrc: customerIcon,
@@ -176,7 +177,7 @@ function useMenuStructure(
         },
         ...mapToExtensionsItems(
           extensions.NAVIGATION_DISCOUNTS,
-          extenstionHeaderItem
+          appExtensionsHeaderItem
         )
       ],
       iconSrc: discountsIcon,
@@ -196,7 +197,7 @@ function useMenuStructure(
         },
         ...mapToExtensionsItems(
           extensions.NAVIGATION_PAGES,
-          extenstionHeaderItem
+          appExtensionsHeaderItem
         )
       ],
       iconSrc: pagesIcon,
@@ -225,7 +226,7 @@ function useMenuStructure(
         },
         ...mapToExtensionsItems(
           extensions.NAVIGATION_TRANSLATIONS,
-          extenstionHeaderItem
+          appExtensionsHeaderItem
         )
       ],
       iconSrc: translationIcon,

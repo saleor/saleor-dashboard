@@ -79,7 +79,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
       createAttribute({ name })
         .then(attributeResp => {
           attribute = attributeResp;
-          createCategory(name);
+          createCategory({ name });
         })
         .then(categoryResp => {
           category = categoryResp;
@@ -98,7 +98,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
       };
     });
 
-    xit("should purchase digital product", () => {
+    it("should purchase digital product", () => {
       const digitalName = `${startsWith}${faker.datatype.number()}`;
       let variants;
 
@@ -141,7 +141,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         });
     });
 
-    xit("should purchase physical product", () => {
+    it("should purchase physical product", () => {
       const physicalName = `${startsWith}${faker.datatype.number()}`;
       createTypeProduct({
         name: physicalName,

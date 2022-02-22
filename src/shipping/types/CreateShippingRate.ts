@@ -129,7 +129,6 @@ export interface CreateShippingRate_shippingPriceCreate_shippingZone {
   countries: (CreateShippingRate_shippingPriceCreate_shippingZone_countries | null)[] | null;
   name: string;
   description: string | null;
-  default: boolean;
   shippingMethods: (CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods | null)[] | null;
   warehouses: CreateShippingRate_shippingPriceCreate_shippingZone_warehouses[];
 }

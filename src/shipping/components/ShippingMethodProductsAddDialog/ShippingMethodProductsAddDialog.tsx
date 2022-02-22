@@ -1,3 +1,4 @@
+import { FetchResult } from "@apollo/client";
 import {
   CircularProgress,
   Dialog,
@@ -23,7 +24,6 @@ import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchP
 import { ShippingPriceExcludeProduct } from "@saleor/shipping/types/ShippingPriceExcludeProduct";
 import { FetchMoreProps } from "@saleor/types";
 import React from "react";
-import { MutationFetchResult } from "react-apollo";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -71,7 +71,7 @@ export interface ShippingMethodProductsAddDialogProps extends FetchMoreProps {
   onFetch: (query: string) => void;
   onSubmit: (
     ids: string[]
-  ) => Promise<MutationFetchResult<ShippingPriceExcludeProduct>>;
+  ) => Promise<FetchResult<ShippingPriceExcludeProduct>>;
 }
 
 const handleProductAssign = (

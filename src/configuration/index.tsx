@@ -53,7 +53,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           ],
           title: intl.formatMessage(sectionNames.attributes),
           url: attributeListUrl(),
-          testId: "configurationMenuAttributes"
+          testId: "configuration-menu-attributes"
         },
         {
           description: intl.formatMessage({
@@ -64,7 +64,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           permissions: [PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES],
           title: intl.formatMessage(sectionNames.productTypes),
           url: productTypeListUrl(),
-          testId: "configurationMenuProductTypes"
+          testId: "configuration-menu-product-types"
         }
       ]
     },
@@ -82,7 +82,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           permissions: [PermissionEnum.MANAGE_SETTINGS],
           title: intl.formatMessage(sectionNames.taxes),
           url: taxSection,
-          testId: "configurationMenuTaxes"
+          testId: "configuration-menu-taxes"
         }
       ]
     },
@@ -100,7 +100,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           permissions: [PermissionEnum.MANAGE_STAFF],
           title: intl.formatMessage(sectionNames.staff),
           url: staffListUrl(),
-          testId: "configurationMenuStaff"
+          testId: "configuration-menu-staff"
         },
         {
           description: intl.formatMessage({
@@ -112,7 +112,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           permissions: [PermissionEnum.MANAGE_STAFF],
           title: intl.formatMessage(sectionNames.permissionGroups),
           url: permissionGroupListUrl(),
-          testId: "configurationMenuPermissionGroups"
+          testId: "configuration-menu-permission-groups"
         }
       ]
     },
@@ -141,7 +141,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
           title: intl.formatMessage(sectionNames.warehouses),
           url: warehouseSection,
-          testId: "configurationMenuWarehouses"
+          testId: "configuration-menu-warehouses"
         }
       ]
     },
@@ -159,7 +159,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           permissions: [PermissionEnum.MANAGE_CHANNELS],
           title: intl.formatMessage(sectionNames.channels),
           url: channelsListUrl(),
-          testId: "configurationMenuChannels"
+          testId: "configuration-menu-channels"
         }
       ]
     },
@@ -180,7 +180,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           ],
           title: intl.formatMessage(sectionNames.pageTypes),
           url: pageTypeListUrl(),
-          testId: "configurationMenuPageTypes"
+          testId: "configuration-menu-page-types"
         }
       ]
     },
@@ -198,7 +198,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           permissions: [PermissionEnum.MANAGE_MENUS],
           title: intl.formatMessage(sectionNames.navigation),
           url: menuListUrl(),
-          testId: "configurationMenuNavigation"
+          testId: "configuration-menu-navigation"
         },
         {
           description: intl.formatMessage({
@@ -209,7 +209,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           permissions: [PermissionEnum.MANAGE_SETTINGS],
           title: intl.formatMessage(sectionNames.siteSettings),
           url: siteSettingsUrl(),
-          testId: "configurationMenuSiteSettings"
+          testId: "configuration-menu-site-settings"
         },
         {
           description: intl.formatMessage({
@@ -226,7 +226,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           permissions: [PermissionEnum.MANAGE_PLUGINS],
           title: intl.formatMessage(sectionNames.plugins),
           url: pluginListUrl(),
-          testId: "configurationPluginsPages"
+          testId: "configuration-plugins-pages"
         }
       ]
     }

@@ -20,6 +20,28 @@ export function updateShopWeightUnit(weightUnit) {
     .its("body.data.shopSettingsUpdate");
 }
 
+export function updateStockReservation({
+  authenticatedUserStock = 0,
+  anonymousUserStock = 0
+}) {
+  const mutation = `mutation{
+    shopSettingsUpdate(input:{
+      reserveStockDurationAnonymousUser: ${anonymousUserStock},
+		  reserveStockDurationAuthenticatedUser: ${authenticatedUserStock}
+    }){
+      errors{
+        field
+        message
+      }
+      shop{
+        reserveStockDurationAnonymousUser,
+		  reserveStockDurationAuthenticatedUser
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation).its("body.data.shopSettingsUpdate");
+}
+
 export function updateShopAddress(address) {
   const input = getDefaultAddress(address, "input");
   const mutation = `mutation{

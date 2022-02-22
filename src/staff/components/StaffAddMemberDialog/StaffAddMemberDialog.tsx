@@ -136,7 +136,7 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
             <DialogActions>
               <BackButton onClick={onClose} />
               <ConfirmButton
-                data-test="submit"
+                data-test-id="submit"
                 disabled={!hasChanged}
                 type="submit"
                 transitionState={confirmButtonState}

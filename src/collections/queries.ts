@@ -1,10 +1,10 @@
+import { gql } from "@apollo/client";
 import {
   collectionDetailsFragment,
   collectionFragment,
   collectionProductFragment
 } from "@saleor/fragments/collections";
 import makeQuery from "@saleor/hooks/makeQuery";
-import gql from "graphql-tag";
 
 import { TypedQuery } from "../queries";
 import {

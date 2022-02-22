@@ -1,4 +1,5 @@
 import { ShippingErrorCode } from "@saleor/types/globalTypes";
+import { mapCountriesToCountriesCodes } from "@saleor/utils/maps";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -7,34 +8,37 @@ import ShippingZoneCreatePage, {
 } from "../../../shipping/components/ShippingZoneCreatePage";
 import Decorator from "../../Decorator";
 
+const countries = [
+  {
+    __typename: "CountryDisplay" as "CountryDisplay",
+    code: "DE",
+    country: "Germany"
+  },
+  {
+    __typename: "CountryDisplay" as "CountryDisplay",
+    code: "GB",
+    country: "Great Britain"
+  },
+  {
+    __typename: "CountryDisplay" as "CountryDisplay",
+    code: "PL",
+    country: "Poland"
+  },
+  {
+    __typename: "CountryDisplay" as "CountryDisplay",
+    code: "CZ",
+    country: "Czech Republic"
+  },
+  {
+    __typename: "CountryDisplay" as "CountryDisplay",
+    code: "FR",
+    country: "France"
+  }
+];
+
 const props: ShippingZoneCreatePageProps = {
-  countries: [
-    {
-      __typename: "CountryDisplay",
-      code: "DE",
-      country: "Germany"
-    },
-    {
-      __typename: "CountryDisplay",
-      code: "GB",
-      country: "Great Britain"
-    },
-    {
-      __typename: "CountryDisplay",
-      code: "PL",
-      country: "Poland"
-    },
-    {
-      __typename: "CountryDisplay",
-      code: "CZ",
-      country: "Czech Republic"
-    },
-    {
-      __typename: "CountryDisplay",
-      code: "FR",
-      country: "France"
-    }
-  ],
+  countries,
+  restWorldCountries: mapCountriesToCountriesCodes(countries),
   disabled: false,
   errors: [],
   onBack: () => undefined,

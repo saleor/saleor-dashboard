@@ -21,7 +21,7 @@ const NODE_MARGIN = 40;
 export interface MenuItemsProps {
   canUndo: boolean;
   items: MenuDetails_menu_items[];
-  onChange: (operation: TreeOperation) => void;
+  onChange: (operations: TreeOperation[]) => void;
   onItemAdd: () => void;
   onItemClick: (id: string, type: MenuItemType) => void;
   onItemEdit: (id: string) => void;
@@ -181,10 +181,12 @@ const Node: React.FC<NodeRendererProps> = props => {
           className={classes.deleteButton}
           variant="secondary"
           onClick={() =>
-            node.onChange({
-              id: node.id as any,
-              type: "remove"
-            })
+            node.onChange([
+              {
+                id: node.id,
+                type: "remove"
+              }
+            ])
           }
         >
           <DeleteIcon />
@@ -245,6 +247,7 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
                 marginLeft: NODE_MARGIN * (path.length - 1)
               }
             })}
+            maxDepth={5}
             isVirtualized={false}
             rowHeight={NODE_HEIGHT}
             treeData={items.map(item =>
@@ -268,7 +271,7 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
         )}
       </div>
       <CardActions className={classes.actions}>
-        <Button onClick={onItemAdd} data-test-id="createNewMenuItem">
+        <Button onClick={onItemAdd} data-test-id="create-new-menu-item">
           <FormattedMessage
             defaultMessage="Create new item"
             description="add new menu item"

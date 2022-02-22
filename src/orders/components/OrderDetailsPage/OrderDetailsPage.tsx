@@ -7,7 +7,6 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
-import PageTitleWithStatusChip from "@saleor/components/PageTitleWithStatusChip";
 import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -36,8 +35,8 @@ import OrderFulfilledProductsCard from "../OrderFulfilledProductsCard";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
 import OrderPayment from "../OrderPayment/OrderPayment";
-import OrderStatusChip from "../OrderStatusChip/OrderStatusChip";
 import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard";
+import Title from "./Title";
 import { filteredConditionalItems, hasAnyItemsReplaceable } from "./utils";
 
 const useStyles = makeStyles(
@@ -224,14 +223,9 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
             <PageHeader
               className={classes.header}
               inline
-              title={
-                <PageTitleWithStatusChip title={order?.number}>
-                  <OrderStatusChip order={order} />
-                </PageTitleWithStatusChip>
-              }
-            >
-              <CardMenu outlined menuItems={selectCardMenuItems} />
-            </PageHeader>
+              title={<Title order={order} />}
+              cardMenu={<CardMenu outlined menuItems={selectCardMenuItems} />}
+            />
             <div className={classes.date}>
               {order && order.created ? (
                 <Typography variant="body2">
@@ -242,7 +236,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               )}
             </div>
             <Grid>
-              <div data-test-id="orderFulfillment">
+              <div data-test-id="order-fulfillment">
                 {!isOrderUnconfirmed ? (
                   <OrderUnfulfilledProductsCard
                     showFulfillmentAction={canFulfill}

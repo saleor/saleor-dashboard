@@ -93,7 +93,7 @@ export function createTypeAttributeAndCategoryForProduct({
           attributeId: attribute.id
         });
       }
-      categoryRequest.createCategory(name);
+      categoryRequest.createCategory({ name });
     })
     .then(categoryResp => {
       category = categoryResp;

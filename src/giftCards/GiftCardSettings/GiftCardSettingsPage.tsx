@@ -68,7 +68,11 @@ const GiftCardSettingsPage: React.FC = () => {
       <Backlink onClick={navigateBack}>
         {intl.formatMessage(sectionNames.giftCards)}
       </Backlink>
-      <PageHeader title={intl.formatMessage(messages.title)} underline={true} />
+      <PageHeader
+        preview
+        title={intl.formatMessage(messages.title)}
+        underline={true}
+      />
       <Form initial={initialData} onSubmit={handleSubmit}>
         {({ data: formData, submit, hasChanged, change }) => (
           <Grid variant="inverted">

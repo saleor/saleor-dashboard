@@ -1,6 +1,6 @@
+import { createMockClient } from "@apollo/client/testing";
 import { JobStatusEnum } from "@saleor/types/globalTypes";
 import { renderHook } from "@testing-library/react-hooks";
-import { createMockClient, RequestHandlerResponse } from "mock-apollo-client";
 
 import {
   backgroundTasksRefreshTime,
@@ -8,23 +8,30 @@ import {
 } from "./BackgroundTasksProvider";
 import { checkExportFileStatus } from "./queries";
 import { Task, TaskData, TaskStatus } from "./types";
-import { CheckExportFileStatus } from "./types/CheckExportFileStatus";
 
 jest.useFakeTimers();
 
 function renderBackgroundTasks() {
-  const mockClient = createMockClient();
-  mockClient.setRequestHandler(checkExportFileStatus, () =>
-    Promise.resolve<RequestHandlerResponse<CheckExportFileStatus>>({
-      data: {
-        exportFile: {
-          __typename: "ExportFile",
-          id: "123",
-          status: JobStatusEnum.SUCCESS
+  const mockClient = createMockClient(
+    [
+      {
+        request: {
+          query: checkExportFileStatus
+        },
+        result: {
+          data: {
+            exportFile: {
+              __typename: "ExportFile",
+              id: "123",
+              status: JobStatusEnum.SUCCESS
+            }
+          }
         }
       }
-    })
+    ],
+    checkExportFileStatus
   );
+
   const intl = {
     formatMessage: ({ defaultMessage }) => defaultMessage
   };

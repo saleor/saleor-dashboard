@@ -1,10 +1,10 @@
+import { gql } from "@apollo/client";
 import { pageInfoFragment } from "@saleor/fragments/pageInfo";
 import {
   shippingMethodWithExcludedProductsFragment,
   shippingZoneFragment
 } from "@saleor/fragments/shipping";
 import makeQuery from "@saleor/hooks/makeQuery";
-import gql from "graphql-tag";
 
 import {
   ChannelShippingZones,
@@ -55,7 +55,6 @@ const shippingZone = gql`
   ) {
     shippingZone(id: $id) {
       ...ShippingZoneFragment
-      default
       shippingMethods {
         ...ShippingMethodWithExcludedProductsFragment
       }

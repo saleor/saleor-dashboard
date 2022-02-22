@@ -31,6 +31,13 @@ const manyChoices = [
   { label: "Petrol", value: "16" }
 ];
 
+const disabledChoices = [
+  { label: "Apparel", value: "1" },
+  { label: "Groceries", value: "2", disabled: true },
+  { label: "Books", value: "3", disabled: true },
+  { label: "Accessories", value: "4" }
+];
+
 storiesOf("Generics / SingleSelectField", module)
   .addDecorator(CardDecorator)
   .addDecorator(Decorator)
@@ -89,4 +96,7 @@ storiesOf("Generics / SingleSelectField", module)
       hint="Lorem error"
       error={true}
     />
+  ))
+  .add("with disabled options", () => (
+    <SingleSelectField choices={disabledChoices} onChange={undefined} />
   ));

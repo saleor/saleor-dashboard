@@ -1,3 +1,4 @@
+import { gql } from "@apollo/client";
 import {
   saleDetailsFragment,
   saleFragment,
@@ -6,7 +7,6 @@ import {
 } from "@saleor/fragments/discounts";
 import { pageInfoFragment } from "@saleor/fragments/pageInfo";
 import makeQuery from "@saleor/hooks/makeQuery";
-import gql from "graphql-tag";
 
 import { SaleDetails, SaleDetailsVariables } from "./types/SaleDetails";
 import { SaleList, SaleListVariables } from "./types/SaleList";

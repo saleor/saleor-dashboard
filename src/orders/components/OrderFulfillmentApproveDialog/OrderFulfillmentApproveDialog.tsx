@@ -48,7 +48,7 @@ const OrderFulfillmentAcceptDialog: React.FC<OrderFulfillmentAcceptDialogProps> 
                 <FormattedMessage {...messages.description} />
               </DialogContentText>
               <ControlledCheckbox
-                data-test="notify-customer"
+                data-test-id="notify-customer"
                 name={
                   "notifyCustomer" as keyof OrderFulfillmentAcceptDialogFormData
                 }

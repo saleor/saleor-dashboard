@@ -1,3 +1,4 @@
+import { MutationFunction } from "@apollo/client";
 import { categoryAddUrl } from "@saleor/categories/urls";
 import { collectionAddUrl } from "@saleor/collections/urls";
 import { customerAddUrl } from "@saleor/customers/urls";
@@ -7,7 +8,6 @@ import { OrderDraftCreate } from "@saleor/orders/types/OrderDraftCreate";
 import { permissionGroupAddUrl } from "@saleor/permissionGroups/urls";
 import { productAddUrl } from "@saleor/products/urls";
 import { score } from "fuzzaldrin";
-import { MutationFunction } from "react-apollo";
 import { IntlShape } from "react-intl";
 
 import { QuickSearchActionInput, QuickSearchMode } from "../../types";

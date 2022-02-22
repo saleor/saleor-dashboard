@@ -1,7 +1,7 @@
+import { gql } from "@apollo/client";
 import { pageErrorFragment } from "@saleor/fragments/errors";
 import { pageTypeDetailsFragment } from "@saleor/fragments/pageTypes";
 import makeMutation from "@saleor/hooks/makeMutation";
-import gql from "graphql-tag";
 
 import {
   AssignPageAttribute,

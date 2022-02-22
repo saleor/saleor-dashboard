@@ -1,3 +1,4 @@
+import { FetchResult } from "@apollo/client";
 import { FormData } from "@saleor/discounts/components/SaleCreatePage";
 import { getSaleChannelsVariables } from "@saleor/discounts/handlers";
 import {
@@ -15,7 +16,6 @@ import {
 } from "@saleor/misc";
 import { decimal } from "@saleor/misc";
 import { DiscountValueTypeEnum, SaleType } from "@saleor/types/globalTypes";
-import { MutationFetchResult } from "react-apollo";
 
 function discountValueTypeEnum(type: SaleType): DiscountValueTypeEnum {
   return type.toString() === DiscountValueTypeEnum.FIXED
@@ -26,10 +26,10 @@ function discountValueTypeEnum(type: SaleType): DiscountValueTypeEnum {
 export function createHandler(
   createSale: (
     variables: SaleCreateVariables
-  ) => Promise<MutationFetchResult<SaleCreate>>,
+  ) => Promise<FetchResult<SaleCreate>>,
   updateChannels: (options: {
     variables: SaleChannelListingUpdateVariables;
-  }) => Promise<MutationFetchResult<SaleChannelListingUpdate>>
+  }) => Promise<FetchResult<SaleChannelListingUpdate>>
 ) {
   return async (formData: FormData) => {
     const response = await createSale({

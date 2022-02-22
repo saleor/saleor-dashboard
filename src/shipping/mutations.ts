@@ -1,3 +1,4 @@
+import { gql } from "@apollo/client";
 import {
   shippingChannelsErrorFragment,
   shippingErrorFragment
@@ -8,7 +9,6 @@ import {
 } from "@saleor/fragments/shipping";
 import { countryFragment } from "@saleor/fragments/taxes";
 import makeMutation from "@saleor/hooks/makeMutation";
-import gql from "graphql-tag";
 
 import {
   BulkDeleteShippingRate,
@@ -119,7 +119,6 @@ const createShippingZone = gql`
         countries {
           ...CountryFragment
         }
-        default
         id
         name
       }
@@ -143,7 +142,6 @@ const updateShippingZone = gql`
         countries {
           ...CountryFragment
         }
-        default
         id
         name
       }

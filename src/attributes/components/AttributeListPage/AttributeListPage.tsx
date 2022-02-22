@@ -61,7 +61,7 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
         <Button
           onClick={onAdd}
           variant="primary"
-          data-test-id="createAttributeButton"
+          data-test-id="create-attribute-button"
         >
           <FormattedMessage
             defaultMessage="Create attribute"

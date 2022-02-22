@@ -1,7 +1,7 @@
+import { gql } from "@apollo/client";
 import { collectionFragment } from "@saleor/fragments/collections";
 import makeQuery, { UseQueryResult } from "@saleor/hooks/makeQuery";
 import useDebounce from "@saleor/hooks/useDebounce";
-import gql from "graphql-tag";
 import { useState } from "react";
 
 import { SearchCatalog, SearchCatalogVariables } from "./types/SearchCatalog";

@@ -1,5 +1,5 @@
+import { MutationFunction } from "@apollo/client";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
-import { MutationFunction } from "react-apollo";
 
 import {
   UpdateMetadata,

@@ -53,12 +53,12 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
             onChange={handleChange}
             value={data.email}
             inputProps={{
-              "data-test": "email"
+              "data-test-id": "email"
             }}
           />
           <FormSpacer />
           <Button
-            data-test="submit"
+            data-test-id="submit"
             className={classes.submit}
             disabled={disabled}
             variant="primary"

@@ -105,8 +105,11 @@ export function getProductType(productTypeId) {
       productAttributes{
         name
       }
-      variantAttributes{
-        name
+      assignedVariantAttributes{
+        attribute{
+          name
+        }
+        variantSelection
       }
     }
   }`;
@@ -143,5 +146,24 @@ export function setProductTypeAsDigital(productTypeId, isDigital = true) {
      } 
     }
    }`;
+  return cy.sendRequestWithQuery(mutation);
+}
+
+export function assignAttribute(
+  productTypeId,
+  attributeId,
+  attributeType = "VARIANT"
+) {
+  const mutation = `mutation{
+    productAttributeAssign(productTypeId:"${productTypeId}", operations:{
+      id:"${attributeId}"
+      type: ${attributeType}
+    }){
+      errors{
+        field
+        message
+      }
+    }
+  }`;
   return cy.sendRequestWithQuery(mutation);
 }

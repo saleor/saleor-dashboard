@@ -49,9 +49,6 @@ export const commonMessages = defineMessages({
   error: {
     defaultMessage: "Error"
   },
-  extensions: {
-    defaultMessage: "Extensions"
-  },
   firstName: {
     defaultMessage: "First Name"
   },
@@ -245,6 +242,10 @@ export const sectionNames = defineMessages({
   apps: {
     defaultMessage: "Apps",
     description: "apps section name"
+  },
+  appExtensions: {
+    defaultMessage: "Apps",
+    description: "app extensions subsection"
   },
   attributes: {
     defaultMessage: "Attributes",

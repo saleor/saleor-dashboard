@@ -1,6 +1,6 @@
+import { gql } from "@apollo/client";
 import { metadataErrorFragment } from "@saleor/fragments/errors";
 import makeMutation from "@saleor/hooks/makeMutation";
-import gql from "graphql-tag";
 
 import { metadataFragment } from "../../fragments/metadata";
 import {
@@ -23,12 +23,6 @@ const updateMetadata = gql`
     updateMetadata(id: $id, input: $input) {
       errors {
         ...MetadataErrorFragment
-      }
-      item {
-        ...MetadataFragment
-        ... on Node {
-          id
-        }
       }
     }
     deleteMetadata(id: $id, keys: $keysToDelete) {
@@ -60,12 +54,6 @@ const updatePrivateMetadata = gql`
     updatePrivateMetadata(id: $id, input: $input) {
       errors {
         ...MetadataErrorFragment
-      }
-      item {
-        ...MetadataFragment
-        ... on Node {
-          id
-        }
       }
     }
     deletePrivateMetadata(id: $id, keys: $keysToDelete) {

@@ -105,8 +105,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
 
   return (
     <FormControl
-      data-test="richTextEditor"
-      data-test-id={name}
+      data-test-id={"rich-text-editor-" + name}
       disabled={disabled}
       error={error}
       fullWidth

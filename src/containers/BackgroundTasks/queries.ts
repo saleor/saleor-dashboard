@@ -1,5 +1,5 @@
+import { gql } from "@apollo/client";
 import { invoiceFragment } from "@saleor/fragments/orders";
-import gql from "graphql-tag";
 
 export const checkExportFileStatus = gql`
   query CheckExportFileStatus($id: ID!) {

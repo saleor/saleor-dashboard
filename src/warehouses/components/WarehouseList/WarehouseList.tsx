@@ -84,7 +84,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
   const classes = useStyles(props);
 
   return (
-    <ResponsiveTable data-test="warehouseList">
+    <ResponsiveTable data-test-id="warehouse-list">
       <TableHead>
         <TableRow>
           <TableCellHeader
@@ -131,13 +131,15 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
               hover={!!warehouse}
               onClick={warehouse ? onRowClick(warehouse.id) : undefined}
               key={warehouse ? warehouse.id : "skeleton"}
-              data-test="warehouseEntry"
-              data-testid={warehouse?.name.toLowerCase().replace(" ", "")}
+              data-test-id={
+                "warehouse-entry-" +
+                warehouse?.name.toLowerCase().replace(" ", "")
+              }
             >
-              <TableCell className={classes.colName} data-test="name">
+              <TableCell className={classes.colName} data-test-id="name">
                 {maybe<React.ReactNode>(() => warehouse.name, <Skeleton />)}
               </TableCell>
-              <TableCell className={classes.colZones} data-test="zones">
+              <TableCell className={classes.colZones} data-test-id="zones">
                 {warehouse?.shippingZones === undefined ? (
                   <Skeleton />
                 ) : (
@@ -151,7 +153,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
                   <IconButton
                     variant="secondary"
                     color="primary"
-                    data-test="editButton"
+                    data-test-id="edit-button"
                   >
                     <EditIcon />
                   </IconButton>
@@ -167,7 +169,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
             </TableRow>
           ),
           () => (
-            <TableRow data-test="emptyListMessage">
+            <TableRow data-test-id="empty-list-message">
               <TableCell colSpan={numberOfColumns}>
                 <FormattedMessage defaultMessage="No warehouses found" />
               </TableCell>

@@ -3,6 +3,7 @@
 
 import { PRODUCT_DETAILS } from "../../elements/catalog/products/product-details";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
+import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { productDetailsUrl, variantDetailsUrl } from "../../fixtures/urlList";
 import {
   activatePreorderOnVariant,
@@ -71,7 +72,11 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
       saveVariant()
         .then(({ response }) => {
           variant = response.body.data.productVariantCreate.productVariant;
-          cy.get(BUTTON_SELECTORS.back).click();
+          cy.get(SHARED_ELEMENTS.progressBar)
+            .should("be.visible")
+            .waitForProgressBarToNotBeVisible()
+            .get(BUTTON_SELECTORS.back)
+            .click();
           selectChannelForVariantAndFillUpPrices({
             channelName: defaultChannel.name,
             attributeName: attributeValues[1],
