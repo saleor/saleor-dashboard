@@ -6,7 +6,7 @@ export const VARIANTS_SELECTORS = {
   skuInput: "[ name='sku']",
   attributeSelector: "[data-test='attribute-value']",
   attributeOption:
-    "[data-test-type='option'], [data-test='multiautocomplete-select-option']",
+    "[data-test-type='option'], [data-test-id='multi-autocomplete-select-option']",
   addWarehouseButton: "[data-test-id='add-warehouse']",
   warehouseOption: "[role='menuitem']",
   saveButton: "[data-test='button-bar-confirm']",
