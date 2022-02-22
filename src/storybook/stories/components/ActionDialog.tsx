@@ -1,8 +1,15 @@
-import ActionDialog from "@saleor/components/ActionDialog";
+import ActionDialogComponent from "@saleor/components/ActionDialog";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import Decorator from "../../Decorator";
+import { ComponentWithMockContext } from "../customers/ComponentWithMockContext";
+
+const ActionDialog = props => (
+  <ComponentWithMockContext>
+    <ActionDialogComponent {...props} />
+  </ComponentWithMockContext>
+);
 
 storiesOf("Generics / ActionDialog", module)
   .addDecorator(Decorator)

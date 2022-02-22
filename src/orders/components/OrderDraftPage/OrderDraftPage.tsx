@@ -14,7 +14,7 @@ import { Backlink } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
 import DraftOrderChannelSectionCard from "@saleor/orders/components/DraftOrderChannelSectionCard";
 import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
-import { FetchMoreProps, UserPermissionProps } from "@saleor/types";
+import { FetchMoreProps } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -37,9 +37,7 @@ const useStyles = makeStyles(
   { name: "OrderDraftPage" }
 );
 
-export interface OrderDraftPageProps
-  extends FetchMoreProps,
-    UserPermissionProps {
+export interface OrderDraftPageProps extends FetchMoreProps {
   disabled: boolean;
   order: OrderDetails_order;
   users: SearchCustomers_search_edges_node[];
@@ -85,8 +83,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
     onProfileView,
     order,
     users,
-    usersLoading,
-    userPermissions
+    usersLoading
   } = props;
   const classes = useStyles(props);
 
@@ -147,7 +144,6 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
             loading={usersLoading}
             order={order}
             users={users}
-            userPermissions={userPermissions}
             onBillingAddressEdit={onBillingAddressEdit}
             onCustomerEdit={onCustomerEdit}
             onFetchMore={onFetchMore}

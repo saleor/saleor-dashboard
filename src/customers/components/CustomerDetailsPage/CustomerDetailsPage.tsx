@@ -1,4 +1,3 @@
-import { useUserPermissions } from "@saleor/auth/hooks/useUserPermissions";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -65,7 +64,6 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
   onDelete
 }: CustomerDetailsPageProps) => {
   const intl = useIntl();
-  const userPermissions = useUserPermissions();
 
   const initialForm: CustomerDetailsPageFormData = {
     email: customer?.email || "",
@@ -110,7 +108,6 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
                 />
                 <CardSpacer />
                 <RequirePermissions
-                  userPermissions={userPermissions}
                   requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
                 >
                   <CustomerOrders
@@ -132,7 +129,6 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
                 <CustomerStats customer={customer} />
                 <CardSpacer />
                 <RequirePermissions
-                  userPermissions={userPermissions}
                   requiredPermissions={[PermissionEnum.MANAGE_GIFT_CARD]}
                 >
                   <CustomerGiftCardsCard />

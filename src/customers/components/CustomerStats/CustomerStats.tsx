@@ -1,5 +1,4 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
-import { useUserPermissions } from "@saleor/auth/hooks/useUserPermissions";
 import CardTitle from "@saleor/components/CardTitle";
 import { DateTime } from "@saleor/components/Date";
 import { Hr } from "@saleor/components/Hr";
@@ -31,7 +30,6 @@ export interface CustomerStatsProps {
 const CustomerStats: React.FC<CustomerStatsProps> = props => {
   const { customer } = props;
   const classes = useStyles(props);
-  const userPermissions = useUserPermissions();
 
   const intl = useIntl();
 
@@ -59,10 +57,7 @@ const CustomerStats: React.FC<CustomerStatsProps> = props => {
           <Skeleton />
         )}
       </CardContent>
-      <RequirePermissions
-        userPermissions={userPermissions}
-        requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
-      >
+      <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
         <Hr />
         <CardContent>
           <Typography className={classes.label} variant="caption">

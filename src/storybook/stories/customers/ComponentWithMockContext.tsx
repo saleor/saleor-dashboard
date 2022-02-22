@@ -1,8 +1,11 @@
 import { UserContext } from "@saleor/auth";
 import { adminUserPermissions } from "@saleor/fixtures";
+import { User_userPermissions } from "@saleor/fragments/types/User";
 import * as React from "react";
 
-export const ComponentWithMockContext: React.FC = ({ children }) => (
+export const ComponentWithMockContext: React.FC<{
+  customPermissions?: User_userPermissions[];
+}> = ({ customPermissions, children }) => (
   <UserContext.Provider
     value={{
       login: undefined,
@@ -17,7 +20,7 @@ export const ComponentWithMockContext: React.FC = ({ children }) => (
         firstName: "user",
         lastName: "user",
         isStaff: true,
-        userPermissions: adminUserPermissions,
+        userPermissions: customPermissions ?? adminUserPermissions,
         avatar: null,
         __typename: "User"
       }

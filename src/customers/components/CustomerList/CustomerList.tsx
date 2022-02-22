@@ -11,7 +11,7 @@ import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { CustomerListUrlSortField } from "@saleor/customers/urls";
 import { makeStyles } from "@saleor/macaw-ui";
-import { getUserName, maybe, renderCollection } from "@saleor/misc";
+import { getUserName, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps, SortPage } from "@saleor/types";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import { getArrowDirection } from "@saleor/utils/sort";
@@ -72,6 +72,7 @@ const CustomerList: React.FC<CustomerListProps> = props => {
   } = props;
 
   const userPermissions = useUserPermissions();
+
   const classes = useStyles(props);
 
   return (
@@ -112,7 +113,6 @@ const CustomerList: React.FC<CustomerListProps> = props => {
           <FormattedMessage defaultMessage="Customer Email" />
         </TableCellHeader>
         <RequirePermissions
-          userPermissions={userPermissions}
           requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
         >
           <TableCellHeader
@@ -170,10 +170,9 @@ const CustomerList: React.FC<CustomerListProps> = props => {
                   {getUserName(customer)}
                 </TableCell>
                 <TableCell className={classes.colEmail}>
-                  {maybe<React.ReactNode>(() => customer.email, <Skeleton />)}
+                  {customer?.email ?? <Skeleton />}
                 </TableCell>
                 <RequirePermissions
-                  userPermissions={userPermissions}
                   requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
                 >
                   <TableCell className={classes.colOrders}>

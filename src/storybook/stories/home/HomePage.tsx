@@ -5,9 +5,12 @@ import { mapEdgesToItems } from "@saleor/utils/maps";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import HomePage, { HomePageProps } from "../../../home/components/HomePage";
+import HomePageComponent, {
+  HomePageProps
+} from "../../../home/components/HomePage";
 import { shop as shopFixture } from "../../../home/fixtures";
 import Decorator from "../../Decorator";
+import { ComponentWithMockContext } from "../customers/ComponentWithMockContext";
 
 const shop = shopFixture(placeholderImage);
 
@@ -25,8 +28,17 @@ const homePageProps: Omit<HomePageProps, "classes"> = {
   productsOutOfStock: shop.productsOutOfStock.totalCount,
   sales: shop.salesToday.gross,
   topProducts: mapEdgesToItems(shop.productTopToday),
-  userName: "admin@example.com",
-  userPermissions: adminUserPermissions
+  userName: "admin@example.com"
+};
+
+const HomePage = props => {
+  const customPermissions = props?.customPermissions;
+
+  return (
+    <ComponentWithMockContext customPermissions={customPermissions}>
+      <HomePageComponent {...props} />
+    </ComponentWithMockContext>
+  );
 };
 
 storiesOf("Views / HomePage", module)
@@ -49,12 +61,12 @@ storiesOf("Views / HomePage", module)
     <HomePage {...homePageProps} topProducts={[]} activities={[]} />
   ))
   .add("no permissions", () => (
-    <HomePage {...homePageProps} userPermissions={[]} />
+    <HomePage {...homePageProps} customPermissions={[]} />
   ))
   .add("product permissions", () => (
     <HomePage
       {...homePageProps}
-      userPermissions={adminUserPermissions.filter(
+      customPermissions={adminUserPermissions.filter(
         perm => perm.code === PermissionEnum.MANAGE_PRODUCTS
       )}
     />
@@ -62,7 +74,7 @@ storiesOf("Views / HomePage", module)
   .add("order permissions", () => (
     <HomePage
       {...homePageProps}
-      userPermissions={adminUserPermissions.filter(
+      customPermissions={adminUserPermissions.filter(
         perm => perm.code === PermissionEnum.MANAGE_ORDERS
       )}
     />
