@@ -41,8 +41,8 @@ const ExitFormDialog: React.FC<ExitFormDialogProps> = ({
   const intl = useIntl();
 
   return (
-    <Dialog className={classes.container} open={isOpen}>
-      <CardTitle title={intl.formatMessage(messages.title)} onClose={onClose} />
+    <Dialog className={classes.container} open={isOpen} onClose={onClose}>
+      <CardTitle title={intl.formatMessage(messages.title)} />
       <DialogContent>
         <FormattedMessage {...messages.description} />
         <CardSpacer />
