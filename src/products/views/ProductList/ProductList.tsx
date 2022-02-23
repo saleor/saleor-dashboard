@@ -289,7 +289,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     : null;
   const filter = getFilterVariables(params, !!selectedChannel);
   const sort = getSortQueryVariables(params, !!selectedChannel);
-  const queryVariables = React.useMemo<ProductListVariables>(
+  const queryVariables = React.useMemo<
+    Omit<ProductListVariables, "hasChannel">
+  >(
     () => ({
       ...paginationState,
       filter,
@@ -298,10 +300,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber]
   );
-  // TODO: When channel is undefined we should skip detailed pricing listings
   const { data, loading, refetch } = useProductListQuery({
     displayLoader: true,
-    variables: queryVariables
+    variables: { ...queryVariables, hasChannel: !!selectedChannel }
   });
 
   function filterColumnIds(columns: ProductListColumns[]) {

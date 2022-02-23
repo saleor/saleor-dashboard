@@ -77,15 +77,9 @@ export const channelListingProductWithoutPricingFragment = gql`
   }
 `;
 export const channelListingProductFragment = gql`
-  ${priceRangeFragment}
   ${channelListingProductWithoutPricingFragment}
   fragment ChannelListingProductFragment on ProductChannelListing {
     ...ChannelListingProductWithoutPricingFragment
-    pricing {
-      priceRange {
-        ...PriceRangeFragment
-      }
-    }
   }
 `;
 
@@ -112,6 +106,7 @@ export const channelListingProductVariantFragment = gql`
 
 export const productFragment = gql`
   ${channelListingProductFragment}
+  ${priceRangeFragment}
   fragment ProductFragment on Product {
     id
     name
@@ -125,12 +120,16 @@ export const productFragment = gql`
     }
     channelListings {
       ...ChannelListingProductFragment
+      pricing @include(if: $hasChannel) {
+        priceRange {
+          ...PriceRangeFragment
+        }
+      }
     }
   }
 `;
 
 export const productVariantAttributesFragment = gql`
-  ${priceRangeFragment}
   ${attributeValueFragment}
   ${attributeValueListFragment}
   fragment ProductVariantAttributesFragment on Product {
@@ -180,11 +179,6 @@ export const productVariantAttributesFragment = gql`
         id
         name
         currencyCode
-      }
-      pricing {
-        priceRange {
-          ...PriceRangeFragment
-        }
       }
     }
   }
@@ -303,7 +297,6 @@ export const fragmentVariant = gql`
   ${fragmentPreorder}
   ${fragmentProductMedia}
   ${selectedVariantAttributeFragment}
-  ${priceRangeFragment}
   ${fragmentProductMedia}
   ${stockFragment}
   ${weightFragment}
@@ -346,11 +339,6 @@ export const fragmentVariant = gql`
           id
           name
           currencyCode
-        }
-        pricing {
-          priceRange {
-            ...PriceRangeFragment
-          }
         }
       }
       variants {

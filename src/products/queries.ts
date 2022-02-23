@@ -145,6 +145,7 @@ const productListQuery = gql`
     $filter: ProductFilterInput
     $channel: String
     $sort: ProductOrder
+    $hasChannel: Boolean!
   ) {
     products(
       before: $before
