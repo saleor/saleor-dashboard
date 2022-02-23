@@ -4,7 +4,23 @@ All notable, unreleased changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-- Add embed plugin into editor-js - #3354 by @mociepka
+## 3.1
+### PREVIEW FEATURES
+- Gift cards - #1366, #1632 by @Cloud11PL and @bmigirl
+- Preorders - #1426 by @JanChodorowski
+- Add stock reservation settings - #1459 by @orzechdev
+- Extending Dashboard with Apps - #1292 by @jwm0
+- Optional SKU - #1440 by @orzechdev
+
+### CHANGES
+- Exit form dialog - #1816 by @bmigirl
+- Variant selection attributes - #1463 by @golota60
+- Click & Collect - #1292 by @kuchichan
+- Add swatch attributes - #1301 by @piotrgrundas
+- Limit quantity per checkout - #1536 by @kuchichan
+
+## 3.0
+
 - Add Order Confirmation settings - #840 by @orzechdev and @mmarkusik
 - Add Page Types - #807 by @orzechdev
 - Add shipping methods to translation section - #864 by @marekchoinski
@@ -39,10 +55,6 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add shipping method description - #1058 by @jwm0
 - Fix voucher and sales sorting errors - #1063 by @orzechdev
 - Fix custom currency formatting - #1067 by @orzechdev
-- Fixes - #1077 by @piotrgrundas:
-  - rich text field updates,
-  - multiselect empty chip upon creation of a product/variant,
-  - useFormset.setItemValue wrong updates,
 - Drop deprecated fields - #1071 by @jwm0
 - Add service worker - #1073 by @dominik-zeglen
 - Choosing user shipping and billing addresses for draft order - #1082 by @orzechdev
@@ -64,6 +76,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix missing call for update metadata mutation - #1207 by @orzechdev
 - Disable next step when no value selected in variant selector - #1218 by @orzechdev
 - Add boolean attributes - #1157 by @piotrgrundas
+- Add embed plugin into editor-js - #1114 by @mociepka
 - Add date & date time attributes - #1180 by @piotrgrundas
 - Fix order links on home page - #1219 by @jwm0
 - Fix incorrectly handled image upload errors - #1223 by @kamilpastuszka
@@ -72,17 +85,16 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix list pagination crash on search - #1230 by @orzechdev
 - Fix positive float number input validation - #1233 by @orzechdev
 - Use MacawUI - #1229 by @dominik-zeglen
-- Add Metadata for Sale & Voucher - #7653 by @piotrgrundas
+- Add Metadata for Sale & Voucher - #1245 by @piotrgrundas
 - Add variant create options dialog - #1238 by @orzechdev
-- Fix for errors on changing channel availability - #1264 by @krzysztofwolski
-- Fixed navigation menu items reordering issue - #1239 by @kamilpastuszka
 - Fixed issue with modals containing invalid, redundant scrolls #1240 by @kamilpastuszka
 - Add text attribute for product and page translations - #1276 by @kamilpastuszka
-- Add swatch attributes - #1301 by @piotrgrundas
-- Add app dashboard extensions - #1292 by @jwm0
-- Introduce fulfillment creation - #1241 by @orzechdev
-- Introduce Click&Collect feature - #1268 by @kuchichan
-- Add Demo Banner - #1331 by @kamilpastuszka
+- Improve auth flow, support token refreshing/expired tokens - #1593 by @orzechdev
+- Blue theme redesign - #1623 by @dominik-zeglen
+- Display error if no invoicing plugin is active - #1701 by @dominik-zeglen
+- Update rest of the world checkbox on shipping zone details - #1673 by @orzechdev
+- Sales per variant - #1578 by @Bonifacy1
+
 
 # 2.11.1
 
