@@ -2231,11 +2231,11 @@
   },
   "src_dot_components_dot_Form_dot_cancelButton": {
     "context": "ExitFormPrompt cancel button",
-    "string": "leave without saving"
+    "string": "Leave without saving"
   },
   "src_dot_components_dot_Form_dot_confirmButton": {
     "context": "ExitFormPrompt confirm button",
-    "string": "save & continue"
+    "string": "Save & continue"
   },
   "src_dot_components_dot_Form_dot_description": {
     "context": "ExitFormPrompt description",

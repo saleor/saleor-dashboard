@@ -11,11 +11,11 @@ export const exitFormPromptMessages = defineMessages({
     description: "ExitFormPrompt description"
   },
   cancelButton: {
-    defaultMessage: "leave without saving",
+    defaultMessage: "Leave without saving",
     description: "ExitFormPrompt cancel button"
   },
   confirmButton: {
-    defaultMessage: "save & continue",
+    defaultMessage: "Save & continue",
     description: "ExitFormPrompt confirm button"
   }
 });
