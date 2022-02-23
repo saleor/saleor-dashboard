@@ -150,43 +150,9 @@ export interface CreateMultipleVariantsData_product_channelListings_channel {
   currencyCode: string;
 }
 
-export interface CreateMultipleVariantsData_product_channelListings_pricing_priceRange_start_net {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface CreateMultipleVariantsData_product_channelListings_pricing_priceRange_start {
-  __typename: "TaxedMoney";
-  net: CreateMultipleVariantsData_product_channelListings_pricing_priceRange_start_net;
-}
-
-export interface CreateMultipleVariantsData_product_channelListings_pricing_priceRange_stop_net {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface CreateMultipleVariantsData_product_channelListings_pricing_priceRange_stop {
-  __typename: "TaxedMoney";
-  net: CreateMultipleVariantsData_product_channelListings_pricing_priceRange_stop_net;
-}
-
-export interface CreateMultipleVariantsData_product_channelListings_pricing_priceRange {
-  __typename: "TaxedMoneyRange";
-  start: CreateMultipleVariantsData_product_channelListings_pricing_priceRange_start | null;
-  stop: CreateMultipleVariantsData_product_channelListings_pricing_priceRange_stop | null;
-}
-
-export interface CreateMultipleVariantsData_product_channelListings_pricing {
-  __typename: "ProductPricingInfo";
-  priceRange: CreateMultipleVariantsData_product_channelListings_pricing_priceRange | null;
-}
-
 export interface CreateMultipleVariantsData_product_channelListings {
   __typename: "ProductChannelListing";
   channel: CreateMultipleVariantsData_product_channelListings_channel;
-  pricing: CreateMultipleVariantsData_product_channelListings_pricing | null;
 }
 
 export interface CreateMultipleVariantsData_product {

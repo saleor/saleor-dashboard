@@ -146,4 +146,5 @@ export interface ProductListVariables {
   filter?: ProductFilterInput | null;
   channel?: string | null;
   sort?: ProductOrder | null;
+  hasChannel: boolean;
 }

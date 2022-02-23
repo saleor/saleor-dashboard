@@ -219,45 +219,11 @@ export interface VariantCreate_productVariantCreate_productVariant_product_chann
   currencyCode: string;
 }
 
-export interface VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing_priceRange_start_net {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing_priceRange_start {
-  __typename: "TaxedMoney";
-  net: VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing_priceRange_start_net;
-}
-
-export interface VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing_priceRange_stop_net {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing_priceRange_stop {
-  __typename: "TaxedMoney";
-  net: VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing_priceRange_stop_net;
-}
-
-export interface VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing_priceRange {
-  __typename: "TaxedMoneyRange";
-  start: VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing_priceRange_start | null;
-  stop: VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing_priceRange_stop | null;
-}
-
-export interface VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing {
-  __typename: "ProductPricingInfo";
-  priceRange: VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing_priceRange | null;
-}
-
 export interface VariantCreate_productVariantCreate_productVariant_product_channelListings {
   __typename: "ProductChannelListing";
   publicationDate: any | null;
   isPublished: boolean;
   channel: VariantCreate_productVariantCreate_productVariant_product_channelListings_channel;
-  pricing: VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing | null;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_product_variants_media {
