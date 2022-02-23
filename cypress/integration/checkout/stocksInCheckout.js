@@ -7,6 +7,7 @@ import {
   addProductsToCheckout,
   createCheckout
 } from "../../support/api/requests/Checkout";
+import { updateOrdersSettings } from "../../support/api/requests/Order";
 import { getVariants } from "../../support/api/requests/Product";
 import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import { createOrderWithNewProduct } from "../../support/api/utils/ordersUtils";
@@ -38,6 +39,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
       deleteProductsStartsWith(startsWith);
       deleteShippingStartsWith(startsWith);
+
       cy.fixture("addresses")
         .then(addresses => {
           address = addresses.usAddress;

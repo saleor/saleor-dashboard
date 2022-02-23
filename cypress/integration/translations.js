@@ -1,5 +1,5 @@
-// / <reference types="cypress"/>
-// / <reference types="../../support"/>
+/// <reference types="cypress"/>
+/// <reference types="../support"/>
 
 import faker from "faker";
 
@@ -14,7 +14,7 @@ import { updateTranslationToCategory } from "../support/pages/translationsPage";
 
 filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
   describe("As an admin I want to manage translations", () => {
-    const startsWith = "Translations";
+    const startsWith = "TestTranslations";
     const randomNumber = faker.datatype.number();
 
     let category;

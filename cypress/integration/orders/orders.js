@@ -33,7 +33,7 @@ import { selectChannelInPicker } from "../../support/pages/channelsPage";
 import { finalizeDraftOrder } from "../../support/pages/draftOrderPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Orders", () => {
+  describe("As an admin I want to manage orders", () => {
     const startsWith = "CyOrders-";
     const randomName = startsWith + faker.datatype.number();
 
@@ -115,7 +115,7 @@ filterTests({ definedTags: ["all"] }, () => {
       );
     });
 
-    it("should create order with selected channel", () => {
+    it("should create order with selected channel. TC: SALEOR_2104", () => {
       // Remove login as admin after fixing SALEOR-3154
       cy.clearSessionData().loginUserViaRequest();
       cy.visit(urlList.orders)
@@ -131,8 +131,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    // This test will pass after fixing SALEOR-3154
-    it("should not be possible to change channel in order", () => {
+    xit("should not be possible to change channel in order. TC: SALEOR_2105", () => {
       createOrder({
         customerId: customer.id,
         channelId: defaultChannel.id,
@@ -148,7 +147,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("should cancel fulfillment", () => {
+    it("should cancel fulfillment. TC: SALEOR_2106", () => {
       let order;
       createFulfilledOrder({
         customerId: customer.id,
@@ -184,7 +183,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should make a refund", () => {
+    it("should make a refund. TC: SALEOR_2107", () => {
       let order;
       createReadyToFulfillOrder({
         customerId: customer.id,

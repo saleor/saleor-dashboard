@@ -1,5 +1,5 @@
-// / <reference types="cypress"/>
-// / <reference types="../../support"/>
+/// <reference types="cypress"/>
+/// <reference types="../../support"/>
 
 import faker from "faker";
 
@@ -12,7 +12,10 @@ import {
   completeCheckout,
   createCheckout
 } from "../../support/api/requests/Checkout";
-import { getOrder } from "../../support/api/requests/Order";
+import {
+  getOrder,
+  updateOrdersSettings
+} from "../../support/api/requests/Order";
 import {
   createDigitalContent,
   createTypeProduct
@@ -21,7 +24,8 @@ import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import {
   addPayment,
   createAndCompleteCheckoutWithoutShipping,
-  createWaitingForCaptureOrder
+  createWaitingForCaptureOrder,
+  getShippingMethodIdFromCheckout
 } from "../../support/api/utils/ordersUtils";
 import {
   addDigitalContentAndUpdateProductType,
@@ -54,6 +58,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
       deleteProductsStartsWith(startsWith);
       deleteShippingStartsWith(startsWith);
+      updateOrdersSettings();
       getDefaultChannel().then(channelResp => (defaultChannel = channelResp));
       cy.fixture("addresses")
         .then(addresses => {
@@ -219,25 +224,27 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         .then(({ variantsList }) => {
           checkoutVariantsUpdate(checkout.id, variantsList);
         })
-        .then(() => {
-          checkoutShippingMethodUpdate(checkout.id, shippingMethod.id);
-        })
-        .then(({ checkoutErrors }) => {
+        .then(({ checkout }) => {
           expect(
-            checkoutErrors,
+            checkout.shippingMethods,
             "Should be not possible to add shipping method without shipping address"
-          ).to.have.lengthOf(1);
+          ).to.be.empty;
           checkoutShippingAddressUpdate(checkout.id, address);
         })
-        .then(() => {
+        .then(({ checkout: checkoutResp }) => {
+          checkout = checkoutResp;
           addPayment(checkout.id);
         })
-        .then(({ paymentErrors }) => {
+        .then(({ errors }) => {
           expect(
-            paymentErrors,
+            errors,
             "Should be not possible to add payment without shipping"
           ).to.have.lengthOf(1);
-          checkoutShippingMethodUpdate(checkout.id, shippingMethod.id);
+          const shippingMethodId = getShippingMethodIdFromCheckout(
+            checkout,
+            shippingMethod.name
+          );
+          checkoutShippingMethodUpdate(checkout.id, shippingMethodId);
         })
         .then(() => {
           addPayment(checkout.id);

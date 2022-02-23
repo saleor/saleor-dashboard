@@ -23,7 +23,7 @@ import {
 } from "../../../support/pages/shippingMethodPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Postal codes in shipping", () => {
+  describe("As a user I want to create shipping method with postal codes", () => {
     const startsWith = "CyShippingMethods-";
     const name = `${startsWith}${faker.datatype.number()}`;
 
@@ -89,7 +89,7 @@ filterTests({ definedTags: ["all"] }, () => {
         .visit(shippingZoneDetailsUrl(shippingZone.id));
     });
 
-    it("Create shipping method with included postal codes", () => {
+    it("should be able to create shipping method with included postal codes. TC: SALEOR_0801", () => {
       const rateName = `${startsWith}${faker.datatype.number()}`;
 
       createRateWithPostalCode({
@@ -107,7 +107,7 @@ filterTests({ definedTags: ["all"] }, () => {
       );
     });
 
-    it("Create shipping method with excluded postal codes", () => {
+    it("should be able to create shipping method with excluded postal codes. TC: SALEOR_0802", () => {
       const rateName = `${startsWith}${faker.datatype.number()}`;
 
       createRateWithPostalCode({

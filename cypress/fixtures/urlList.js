@@ -14,6 +14,7 @@ export const urlList = {
   newPassword: "new-password/",
   navigation: "navigation/",
   orders: "orders/",
+  ordersSettings: "orders/settings",
   pages: "pages/",
   pageTypes: "page-types/",
   permissionsGroups: "permission-groups/",

@@ -39,7 +39,7 @@ export function createWaitingForCaptureOrder({
 }
 
 export function getShippingMethodIdFromCheckout(checkout, shippingMethodName) {
-  return checkout.availableShippingMethods.find(
+  return checkout.shippingMethods.find(
     element => element.name === shippingMethodName
   ).id;
 }
@@ -48,6 +48,7 @@ export function createCheckoutWithVoucher({
   channelSlug,
   email = "email@example.com",
   variantsList,
+  productQuantity = 1,
   address,
   shippingMethodName,
   voucherCode,
@@ -57,6 +58,7 @@ export function createCheckoutWithVoucher({
   return checkoutRequest
     .createCheckout({
       channelSlug,
+      productQuantity,
       email,
       variantsList,
       address,

@@ -1,5 +1,4 @@
 import { IFilter, IFilterElement } from "@saleor/components/Filter";
-import { statusLabelMessages } from "@saleor/components/StatusLabel/messages";
 import { sectionNames } from "@saleor/intl";
 import { AutocompleteFilterOpts, FilterOpts } from "@saleor/types";
 import { PluginConfigurationType } from "@saleor/types/globalTypes";
@@ -10,7 +9,10 @@ import {
 } from "@saleor/utils/filters/fields";
 import { defineMessages, IntlShape } from "react-intl";
 
-import { pluginChannelConfigurationCellMessages } from "../PluginsList/messages";
+import {
+  pluginChannelConfigurationCellMessages,
+  pluginStatusMessages
+} from "../PluginsList/messages";
 
 export enum PluginFilterKeys {
   active = "active",
@@ -58,8 +60,8 @@ export function createFilterStructure(
             intl.formatMessage(messages.channelStatusSectionSubtitle),
             opts.isActive.value,
             {
-              negative: intl.formatMessage(statusLabelMessages.inactive),
-              positive: intl.formatMessage(statusLabelMessages.active)
+              negative: intl.formatMessage(pluginStatusMessages.deactivated),
+              positive: intl.formatMessage(pluginStatusMessages.active)
             }
           )
         },
