@@ -35,13 +35,13 @@ function useHandleFormSubmit<TData, TErrors>({
 
     const errors = await result;
 
+    setIsSubmitting(false);
+
     if (errors?.length === 0) {
       setChanged(false);
 
       return [];
     }
-
-    setIsSubmitting(false);
 
     return errors;
   }
