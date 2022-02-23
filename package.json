@@ -242,7 +242,7 @@
   "scripts": {
     "build-storybook": "build-storybook -c src/storybook/ -o build/storybook",
     "generate-fragment-types": "graphql-codegen",
-    "build-types": "npx apollo codegen:generate --target=typescript types --globalTypesFile=src/types/globalTypes.ts && npm run generate-fragment-types",
+    "build-types": "npx apollo client:codegen --target=typescript types --globalTypesFile=src/types/globalTypes.ts && npm run generate-fragment-types",
     "build": "npm run generate-fragment-types && webpack -p",
     "check-strict-null-errors": "tsc --noEmit --strictNullChecks | node scripts/count-strict-null-check-errors.js",
     "check-types": "tsc --noEmit",
