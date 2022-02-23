@@ -76,12 +76,6 @@ export const channelListingProductWithoutPricingFragment = gql`
     }
   }
 `;
-export const channelListingProductFragment = gql`
-  ${channelListingProductWithoutPricingFragment}
-  fragment ChannelListingProductFragment on ProductChannelListing {
-    ...ChannelListingProductWithoutPricingFragment
-  }
-`;
 
 export const channelListingProductVariantFragment = gql`
   ${fragmentMoney}
@@ -105,7 +99,7 @@ export const channelListingProductVariantFragment = gql`
 `;
 
 export const productFragment = gql`
-  ${channelListingProductFragment}
+  ${channelListingProductWithoutPricingFragment}
   ${priceRangeFragment}
   fragment ProductFragment on Product {
     id
@@ -119,7 +113,7 @@ export const productFragment = gql`
       hasVariants
     }
     channelListings {
-      ...ChannelListingProductFragment
+      ...ChannelListingProductWithoutPricingFragment
       pricing @include(if: $hasChannel) {
         priceRange {
           ...PriceRangeFragment
@@ -192,7 +186,7 @@ export const productFragmentDetails = gql`
   ${weightFragment}
   ${metadataFragment}
   ${taxTypeFragment}
-  ${channelListingProductFragment}
+  ${channelListingProductWithoutPricingFragment}
   ${channelListingProductVariantFragment}
   fragment Product on Product {
     ...ProductVariantAttributesFragment
@@ -216,7 +210,7 @@ export const productFragmentDetails = gql`
     }
     chargeTaxes
     channelListings {
-      ...ChannelListingProductFragment
+      ...ChannelListingProductWithoutPricingFragment
     }
     media {
       ...ProductMediaFragment
