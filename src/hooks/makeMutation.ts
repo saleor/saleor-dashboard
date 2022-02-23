@@ -4,7 +4,7 @@ import {
   MutationResult,
   useMutation as useBaseMutation
 } from "@apollo/client";
-import { useUser } from "@saleor/auth";
+import { showAllErrors, useUser } from "@saleor/auth";
 import { isJwtError } from "@saleor/auth/errors";
 import { commonMessages } from "@saleor/intl";
 import { getMutationStatus } from "@saleor/misc";
@@ -47,25 +47,30 @@ function makeMutation<TData, TVariables>(
       onCompleted,
       refetchQueries,
       onError: (err: ApolloError) => {
-        if (hasError(err, GqlErrors.ReadOnlyException)) {
-          notify({
-            status: "error",
-            text: intl.formatMessage(commonMessages.readOnly)
-          });
-        } else if (err.graphQLErrors.some(isJwtError)) {
-          user.logout();
-          notify({
-            status: "error",
-            text: intl.formatMessage(commonMessages.sessionExpired)
-          });
-        } else if (!hasError(err, GqlErrors.LimitReachedException)) {
-          err.graphQLErrors.map(graphQLError => {
+        if (err.graphQLErrors) {
+          if (hasError(err, GqlErrors.ReadOnlyException)) {
             notify({
               status: "error",
-              apiMessage: graphQLError.message
+              text: intl.formatMessage(commonMessages.readOnly)
             });
-          });
+          } else if (err.graphQLErrors.some(isJwtError)) {
+            user.logout();
+            notify({
+              status: "error",
+              text: intl.formatMessage(commonMessages.sessionExpired)
+            });
+          } else if (!hasError(err, GqlErrors.LimitReachedException)) {
+            err.graphQLErrors.map(graphQLError => {
+              notify({
+                status: "error",
+                apiMessage: graphQLError.message
+              });
+            });
+          }
+        } else {
+          showAllErrors({ notify, error: err });
         }
+
         if (onError) {
           onError(err);
         }
