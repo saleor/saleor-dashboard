@@ -1,4 +1,5 @@
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import { isInDevelopment } from "@saleor/misc";
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router";
 import useRouter from "use-react-router";
@@ -264,7 +265,7 @@ const ExitFormDialogProvider = ({ children }) => {
   useBeforeUnload(e => {
     // If form is dirty and user does a refresh,
     // the browser will ask about unsaved changes
-    if (shouldBlockNav()) {
+    if (shouldBlockNav() && !isInDevelopment) {
       e.preventDefault();
       e.returnValue = "";
     }
