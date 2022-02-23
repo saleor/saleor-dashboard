@@ -3128,28 +3128,6 @@ export const variant = (placeholderImage: string): ProductVariant => ({
           currencyCode: "USD",
           id: "test1",
           name: "Test channel"
-        },
-        pricing: {
-          __typename: "ProductPricingInfo",
-          priceRange: {
-            __typename: "TaxedMoneyRange",
-            start: {
-              __typename: "TaxedMoney",
-              net: {
-                __typename: "Money",
-                amount: 1.2,
-                currency: "USD"
-              }
-            },
-            stop: {
-              __typename: "TaxedMoney",
-              net: {
-                __typename: "Money",
-                amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
         }
       },
       {
@@ -3161,28 +3139,6 @@ export const variant = (placeholderImage: string): ProductVariant => ({
           currencyCode: "USD",
           id: "test2",
           name: "Test channel other"
-        },
-        pricing: {
-          __typename: "ProductPricingInfo",
-          priceRange: {
-            __typename: "TaxedMoneyRange",
-            start: {
-              __typename: "TaxedMoney",
-              net: {
-                __typename: "Money",
-                amount: 1.2,
-                currency: "USD"
-              }
-            },
-            stop: {
-              __typename: "TaxedMoney",
-              net: {
-                __typename: "Money",
-                amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
         }
       }
     ],
