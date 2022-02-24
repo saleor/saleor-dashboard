@@ -290,7 +290,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const filter = getFilterVariables(params, !!selectedChannel);
   const sort = getSortQueryVariables(params, !!selectedChannel);
   const queryVariables = React.useMemo<
-    Omit<ProductListVariables, "hasChannel">
+    Omit<ProductListVariables, "hasChannel" | "hasSelectedAttributes">
   >(
     () => ({
       ...paginationState,
@@ -300,21 +300,28 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber]
   );
-  const { data, loading, refetch } = useProductListQuery({
-    displayLoader: true,
-    variables: { ...queryVariables, hasChannel: !!selectedChannel }
-  });
 
   function filterColumnIds(columns: ProductListColumns[]) {
     return columns
       .filter(isAttributeColumnValue)
       .map(getAttributeIdFromColumnValue);
   }
+  const filteredColumnIds = filterColumnIds(settings.columns);
+
+  const { data, loading, refetch } = useProductListQuery({
+    displayLoader: true,
+    variables: {
+      ...queryVariables,
+      hasChannel: !!selectedChannel,
+      hasSelectedAttributes: !!filteredColumnIds.length
+    }
+  });
+
   const availableInGridAttributes = useAvailableInGridAttributesQuery({
     variables: { first: 24 }
   });
   const gridAttributes = useGridAttributesQuery({
-    variables: { ids: filterColumnIds(settings.columns) }
+    variables: { ids: filteredColumnIds }
   });
 
   const [
