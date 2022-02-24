@@ -14,7 +14,6 @@ export const attributeValueFragment = gql`
       ...FileFragment
     }
     reference
-    richText
     boolean
     date
     dateTime
@@ -62,6 +61,7 @@ export const attributeValueListFragment = gql`
       cursor
       node {
         ...AttributeValueFragment
+        richText
       }
     }
   }

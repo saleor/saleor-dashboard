@@ -148,6 +148,7 @@ export const productVariantAttributesFragment = gql`
       }
       values {
         ...AttributeValueFragment
+        richText
       }
     }
     productType {
@@ -283,6 +284,7 @@ export const selectedVariantAttributeFragment = gql`
     }
     values {
       ...AttributeValueFragment
+      richText
     }
   }
 `;

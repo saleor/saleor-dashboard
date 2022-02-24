@@ -39,6 +39,7 @@ export const pageAttributesFragment = gql`
       }
       values {
         ...AttributeValueFragment
+        richText
       }
     }
     pageType {

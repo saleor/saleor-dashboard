@@ -30,11 +30,11 @@ export interface ProductType_productType_productAttributes_choices_edges_node {
   slug: string | null;
   file: ProductType_productType_productAttributes_choices_edges_node_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
   value: string | null;
+  richText: any | null;
 }
 
 export interface ProductType_productType_productAttributes_choices_edges {

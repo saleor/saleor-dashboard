@@ -23,6 +23,7 @@ export const searchAttributeValues = gql`
         edges {
           node {
             ...AttributeValueFragment
+            richText
           }
         }
         pageInfo {

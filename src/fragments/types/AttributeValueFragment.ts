@@ -20,7 +20,6 @@ export interface AttributeValueFragment {
   slug: string | null;
   file: AttributeValueFragment_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;

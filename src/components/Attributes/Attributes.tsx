@@ -21,14 +21,18 @@ import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 import AttributeRow from "./AttributeRow";
 import { AttributeRowHandlers, VariantAttributeScope } from "./types";
 
+interface AttributeValueFragmentWithRichText extends AttributeValueFragment {
+  richText: any | null;
+}
+
 export interface AttributeInputData {
   inputType: AttributeInputTypeEnum;
   entityType?: AttributeEntityTypeEnum;
   unit?: MeasurementUnitsEnum | null;
   variantAttributeScope?: VariantAttributeScope;
   isRequired: boolean;
-  values: AttributeValueFragment[];
-  selectedValues?: AttributeValueFragment[];
+  values: AttributeValueFragmentWithRichText[];
+  selectedValues?: AttributeValueFragmentWithRichText[];
   references?: AttributeReference[];
 }
 export type AttributeInput = FormsetAtomicData<AttributeInputData, string[]>;
