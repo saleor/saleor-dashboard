@@ -96,7 +96,7 @@ const useStyles = makeStyles(
       height: "auto",
       whiteSpace: "normal",
       '&[aria-selected="true"]': {
-        backgroundColor: `${theme.palette.background.default} !important`
+        backgroundColor: theme.palette.background.default
       }
     },
     progress: {},
