@@ -7,7 +7,7 @@ import CustomerDetailsPageComponent, {
 } from "../../../customers/components/CustomerDetailsPage";
 import { customer } from "../../../customers/fixtures";
 import Decorator from "../../Decorator";
-import { ComponentWithMockContext } from "./ComponentWithMockContext";
+import { MockedUserProvider } from "./MockedUserProvider";
 
 const props: Omit<CustomerDetailsPageProps, "classes"> = {
   customer,
@@ -30,9 +30,9 @@ interface CustomerDetailsPageErrors {
 }
 
 const CustomerDetailsPage = props => (
-  <ComponentWithMockContext>
+  <MockedUserProvider>
     <CustomerDetailsPageComponent {...props} />
-  </ComponentWithMockContext>
+  </MockedUserProvider>
 );
 
 storiesOf("Views / Customers / Customer details", module)

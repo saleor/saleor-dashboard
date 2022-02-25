@@ -3,7 +3,7 @@ import { adminUserPermissions } from "@saleor/fixtures";
 import { User_userPermissions } from "@saleor/fragments/types/User";
 import * as React from "react";
 
-export const ComponentWithMockContext: React.FC<{
+export const MockedUserProvider: React.FC<{
   customPermissions?: User_userPermissions[];
 }> = ({ customPermissions, children }) => (
   <UserContext.Provider

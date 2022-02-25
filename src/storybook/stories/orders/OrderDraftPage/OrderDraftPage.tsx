@@ -8,7 +8,7 @@ import OrderDraftPageComponent, {
 } from "../../../../orders/components/OrderDraftPage";
 import { clients, draftOrder } from "../../../../orders/fixtures";
 import Decorator from "../../../Decorator";
-import { ComponentWithMockContext } from "../../customers/ComponentWithMockContext";
+import { MockedUserProvider } from "../../customers/MockedUserProvider";
 import { getDiscountsProvidersWrapper } from "./utils";
 
 const order = draftOrder(placeholderImage);
@@ -42,9 +42,9 @@ const OrderDraftPage = props => {
   const customPermissions = props?.customPermissions;
 
   return (
-    <ComponentWithMockContext customPermissions={customPermissions}>
+    <MockedUserProvider customPermissions={customPermissions}>
       <OrderDraftPageComponent {...props} />
-    </ComponentWithMockContext>
+    </MockedUserProvider>
   );
 };
 

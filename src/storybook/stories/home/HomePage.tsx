@@ -10,7 +10,7 @@ import HomePageComponent, {
 } from "../../../home/components/HomePage";
 import { shop as shopFixture } from "../../../home/fixtures";
 import Decorator from "../../Decorator";
-import { ComponentWithMockContext } from "../customers/ComponentWithMockContext";
+import { MockedUserProvider } from "../customers/MockedUserProvider";
 
 const shop = shopFixture(placeholderImage);
 
@@ -35,9 +35,9 @@ const HomePage = props => {
   const customPermissions = props?.customPermissions;
 
   return (
-    <ComponentWithMockContext customPermissions={customPermissions}>
+    <MockedUserProvider customPermissions={customPermissions}>
       <HomePageComponent {...props} />
-    </ComponentWithMockContext>
+    </MockedUserProvider>
   );
 };
 

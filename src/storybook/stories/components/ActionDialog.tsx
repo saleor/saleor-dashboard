@@ -3,12 +3,12 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import Decorator from "../../Decorator";
-import { ComponentWithMockContext } from "../customers/ComponentWithMockContext";
+import { MockedUserProvider } from "../customers/MockedUserProvider";
 
 const ActionDialog = props => (
-  <ComponentWithMockContext>
+  <MockedUserProvider>
     <ActionDialogComponent {...props} />
-  </ComponentWithMockContext>
+  </MockedUserProvider>
 );
 
 storiesOf("Generics / ActionDialog", module)

@@ -15,7 +15,7 @@ import {
   tabPageProps
 } from "../../../fixtures";
 import Decorator from "../../Decorator";
-import { ComponentWithMockContext } from "./ComponentWithMockContext";
+import { MockedUserProvider } from "./MockedUserProvider";
 
 const props: CustomerListPageProps = {
   ...filterPageProps,
@@ -48,9 +48,9 @@ const props: CustomerListPageProps = {
 };
 
 const CustomerListPage = props => (
-  <ComponentWithMockContext>
+  <MockedUserProvider>
     <CustomerListPageComponent {...props} />
-  </ComponentWithMockContext>
+  </MockedUserProvider>
 );
 
 storiesOf("Views / Customers / Customer list", module)

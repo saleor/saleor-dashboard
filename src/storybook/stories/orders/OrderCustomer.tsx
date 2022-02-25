@@ -6,7 +6,7 @@ import OrderCustomerComponent, {
 } from "../../../orders/components/OrderCustomer";
 import { clients, order as orderFixture } from "../../../orders/fixtures";
 import Decorator from "../../Decorator";
-import { ComponentWithMockContext } from "../customers/ComponentWithMockContext";
+import { MockedUserProvider } from "../customers/MockedUserProvider";
 
 const order = orderFixture("");
 
@@ -26,9 +26,9 @@ const OrderCustomer = props => {
   const customPermissions = props?.customPermissions;
 
   return (
-    <ComponentWithMockContext customPermissions={customPermissions}>
+    <MockedUserProvider customPermissions={customPermissions}>
       <OrderCustomerComponent {...props} />
-    </ComponentWithMockContext>
+    </MockedUserProvider>
   );
 };
 
