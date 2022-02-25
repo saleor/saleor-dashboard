@@ -29,7 +29,8 @@ import { ShippingZoneRateUpdateFormData } from "@saleor/shipping/components/Ship
 import UnassignDialog from "@saleor/shipping/components/UnassignDialog";
 import {
   getShippingMethodChannelVariables,
-  getUpdateShippingPriceRateVariables
+  getUpdateShippingPriceRateVariables,
+  getUpdateShippingWeightRateVariables
 } from "@saleor/shipping/handlers";
 import {
   useShippingMethodChannelListingUpdate,
@@ -40,7 +41,7 @@ import {
 } from "@saleor/shipping/mutations";
 import { useShippingZone } from "@saleor/shipping/queries";
 import {
-  shippingPriceRatesEditUrl,
+  shippingRateEditUrl,
   ShippingRateUrlDialog,
   ShippingRateUrlQueryParams,
   shippingZoneUrl
@@ -66,15 +67,15 @@ import {
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { PRICE_RATES_UPDATE_FORM_ID } from "./consts";
+const FORM_ID = Symbol();
 
-export interface PriceRatesUpdateProps {
+export interface RateUpdateProps {
   id: string;
   rateId: string;
   params: ShippingRateUrlQueryParams;
 }
 
-export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
+export const RateUpdate: React.FC<RateUpdateProps> = ({
   id,
   rateId,
   params
@@ -106,7 +107,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
   const [openModal, closeModal] = createDialogActionHandlers<
     ShippingRateUrlDialog,
     ShippingRateUrlQueryParams
-  >(navigate, params => shippingPriceRatesEditUrl(id, rateId, params), params);
+  >(navigate, params => shippingRateEditUrl(id, rateId, params), params);
 
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     []
@@ -164,7 +165,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     shippingChannels,
     params?.action,
     { closeModal, openModal },
-    { formId: PRICE_RATES_UPDATE_FORM_ID }
+    { formId: FORM_ID }
   );
 
   const [updateShippingRate, updateShippingRateOpts] = useShippingRateUpdate(
@@ -221,8 +222,12 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
   const updateData = async (
     formData: ShippingZoneRateUpdateFormData
   ): Promise<unknown[]> => {
+    const getUpdateVariables =
+      rate!.type === ShippingMethodTypeEnum.PRICE
+        ? getUpdateShippingPriceRateVariables
+        : getUpdateShippingWeightRateVariables;
     const response = await updateShippingRate({
-      variables: getUpdateShippingPriceRateVariables(
+      variables: getUpdateVariables(
         formData,
         id,
         rateId,
@@ -362,7 +367,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
         onSubmit={handleProductAssign}
       />
       <ShippingZoneRatesPage
-        formId={PRICE_RATES_UPDATE_FORM_ID}
+        formId={FORM_ID}
         allChannelsCount={allChannels?.length}
         shippingChannels={currentChannels}
         disabled={
@@ -388,7 +393,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
         onChannelsChange={setCurrentChannels}
         onProductUnassign={handleProductUnassign}
         onProductAssign={() => openModal("assign-product")}
-        variant={ShippingMethodTypeEnum.PRICE}
+        variant={rate?.type}
         isChecked={isSelected}
         selected={listElements.length}
         toggle={toggle}
@@ -419,4 +424,4 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
   );
 };
 
-export default PriceRatesUpdate;
+export default RateUpdate;
