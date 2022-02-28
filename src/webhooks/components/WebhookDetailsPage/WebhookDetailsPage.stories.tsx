@@ -33,7 +33,8 @@ storiesOf("Views / Apps / Webhooks / Webhook details", module)
       errors={["name", "targetUrl", "secretKey", null].map(field => ({
         __typename: "WebhookError",
         code: WebhookErrorCode.INVALID,
-        field
+        field,
+        message: "Webhook invalid"
       }))}
     />
   ));

@@ -51,7 +51,8 @@ storiesOf("Navigation / Menu item", module)
       errors={[null, null, "name", "category"].map(field => ({
         __typename: "MenuError",
         code: MenuErrorCode.INVALID,
-        field
+        field,
+        message: "Invalid field"
       }))}
     />
   ));

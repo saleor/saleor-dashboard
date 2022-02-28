@@ -57,7 +57,8 @@ storiesOf("Views / Shipping / Create shipping zone", module)
         __typename: "ShippingError",
         channels: [],
         code: ShippingErrorCode.INVALID,
-        field
+        field,
+        message: "Name field invalid"
       }))}
     />
   ));

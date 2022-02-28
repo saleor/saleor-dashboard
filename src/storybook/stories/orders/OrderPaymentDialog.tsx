@@ -27,13 +27,15 @@ storiesOf("Orders / OrderPaymentDialog", module)
           __typename: "OrderError",
           code: OrderErrorCode.CAPTURE_INACTIVE_PAYMENT,
           field: null,
-          addressType: null
+          addressType: null,
+          message: "Capture inactive payment"
         },
         {
           __typename: "OrderError",
           code: OrderErrorCode.INVALID,
           field: "payment",
-          addressType: null
+          addressType: null,
+          message: "Payment field invalid"
         }
       ]}
     />

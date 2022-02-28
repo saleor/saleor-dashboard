@@ -57,7 +57,8 @@ storiesOf("Views / Attributes / Attribute details", module)
       errors={["name", "slug", "storefrontSearchPosition"].map(field => ({
         __typename: "AttributeError",
         code: AttributeErrorCode.INVALID,
-        field
+        field,
+        message: "Attribute code invalid"
       }))}
     >
       {() => null}

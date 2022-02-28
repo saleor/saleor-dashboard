@@ -36,7 +36,8 @@ storiesOf("Orders / OrderCancelDialog", module)
           __typename: "OrderError",
           code: OrderErrorCode.CANNOT_CANCEL_ORDER,
           field: null,
-          addressType: null
+          addressType: null,
+          message: "Cannot cancel order"
         }
       ]}
     />

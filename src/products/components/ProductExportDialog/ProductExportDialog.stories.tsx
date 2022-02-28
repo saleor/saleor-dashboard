@@ -51,7 +51,8 @@ storiesOf("Views / Products / Export / Export settings", module)
       >).map(field => ({
         __typename: "ExportError",
         code: ExportErrorCode.INVALID,
-        field
+        field,
+        message: "Export invalid"
       }))}
     />
   ));

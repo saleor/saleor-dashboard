@@ -115,7 +115,8 @@ storiesOf("Views / Products / Create product", module)
             ? [productTypeSearch.productAttributes[0].id]
             : null,
         code: ProductErrorCode.INVALID,
-        field
+        field,
+        message: "Attributes invalid"
       }))}
       header="Add product"
       collections={product.collections}

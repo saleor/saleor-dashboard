@@ -10,13 +10,15 @@ import React from "react";
 const permissionsError: PermissionGroupErrorFragment = {
   __typename: "PermissionGroupError",
   code: PermissionGroupErrorCode.OUT_OF_SCOPE_PERMISSION,
-  field: null
+  field: null,
+  message: "Permission out of scope"
 };
 
 const requiredError: PermissionGroupErrorFragment = {
   __typename: "PermissionGroupError",
   code: PermissionGroupErrorCode.REQUIRED,
-  field: null
+  field: null,
+  message: "Permission required"
 };
 
 const props: PermissionDeleteDialogProps = {

@@ -192,7 +192,8 @@ storiesOf("Views / Products / Product edit", module)
               ? [product.attributes[0].attribute.id]
               : null,
           code: ProductErrorCode.INVALID,
-          field
+          field,
+          message: "Attributes invalid"
         })
       )}
     />

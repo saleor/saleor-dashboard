@@ -28,7 +28,8 @@ storiesOf("Attributes / Attribute value edit", module)
         {
           __typename: "AttributeError",
           code: AttributeErrorCode.INVALID,
-          field: "name"
+          field: "name",
+          message: "Attribue code invalid"
         }
       ]}
     />

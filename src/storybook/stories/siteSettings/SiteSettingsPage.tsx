@@ -36,7 +36,8 @@ storiesOf("Views / Site settings / Page", module)
       ].map(field => ({
         __typename: "ShopError",
         code: ShopErrorCode.INVALID,
-        field
+        field,
+        message: "Shop form invalid"
       }))}
     />
   ));

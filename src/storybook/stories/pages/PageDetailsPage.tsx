@@ -49,7 +49,8 @@ storiesOf("Views / Pages / Page details", module)
         __typename: "PageError",
         attributes: [],
         code: PageErrorCode.INVALID,
-        field
+        field,
+        message: "Page field error"
       }))}
     />
   ));
