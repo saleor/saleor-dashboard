@@ -18,11 +18,14 @@ function useHandleFormSubmit<TData, TErrors>({
   const { setIsSubmitting } = useExitFormDialog({
     formId
   });
-  const { clearErrorNotifications } = useContext(MessageContext);
+  const messageContext = useContext(MessageContext);
 
   async function handleFormSubmit(data: TData): Promise<TErrors[]> {
     setIsSubmitting(true);
-    clearErrorNotifications();
+
+    if (messageContext?.clearErrorNotifications) {
+      messageContext.clearErrorNotifications();
+    }
 
     const result = onSubmit(data);
 
