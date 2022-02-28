@@ -14,6 +14,7 @@ export interface FulfillOrder_orderFulfill_errors {
   code: OrderErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
   warehouse: string | null;
   orderLines: string[] | null;
 }

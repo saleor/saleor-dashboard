@@ -13,6 +13,7 @@ export interface PageTypeAttributeReorder_pageTypeReorderAttributes_errors {
   __typename: "PageError";
   code: PageErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface PageTypeAttributeReorder_pageTypeReorderAttributes_pageType_metadata {

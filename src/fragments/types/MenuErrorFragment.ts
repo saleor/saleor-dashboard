@@ -13,4 +13,5 @@ export interface MenuErrorFragment {
   __typename: "MenuError";
   code: MenuErrorCode;
   field: string | null;
+  message: string | null;
 }

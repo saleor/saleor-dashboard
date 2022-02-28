@@ -14,6 +14,7 @@ export interface SaleCataloguesAdd_saleCataloguesAdd_errors {
   code: DiscountErrorCode;
   field: string | null;
   channels: string[] | null;
+  message: string | null;
 }
 
 export interface SaleCataloguesAdd_saleCataloguesAdd_sale_metadata {

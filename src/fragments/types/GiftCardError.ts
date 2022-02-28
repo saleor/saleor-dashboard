@@ -13,4 +13,5 @@ export interface GiftCardError {
   __typename: "GiftCardError";
   code: GiftCardErrorCode;
   field: string | null;
+  message: string | null;
 }

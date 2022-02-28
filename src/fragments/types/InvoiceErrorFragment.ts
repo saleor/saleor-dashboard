@@ -13,4 +13,5 @@ export interface InvoiceErrorFragment {
   __typename: "InvoiceError";
   code: InvoiceErrorCode;
   field: string | null;
+  message: string | null;
 }

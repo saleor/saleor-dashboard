@@ -57,6 +57,7 @@ export interface UnassignCollectionProduct_collectionRemoveProducts_errors {
   __typename: "CollectionError";
   code: CollectionErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface UnassignCollectionProduct_collectionRemoveProducts {

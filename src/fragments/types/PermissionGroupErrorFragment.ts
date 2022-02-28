@@ -13,4 +13,5 @@ export interface PermissionGroupErrorFragment {
   __typename: "PermissionGroupError";
   code: PermissionGroupErrorCode;
   field: string | null;
+  message: string | null;
 }

@@ -13,6 +13,7 @@ export interface BulkDeleteGiftCard_giftCardBulkDelete_errors {
   __typename: "GiftCardError";
   code: GiftCardErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface BulkDeleteGiftCard_giftCardBulkDelete {

@@ -13,6 +13,7 @@ export interface InvoiceRequest_invoiceRequest_errors {
   __typename: "InvoiceError";
   code: InvoiceErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface InvoiceRequest_invoiceRequest_invoice {

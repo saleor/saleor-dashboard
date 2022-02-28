@@ -13,6 +13,7 @@ export interface CategoryBulkDelete_categoryBulkDelete_errors {
   __typename: "ProductError";
   code: ProductErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface CategoryBulkDelete_categoryBulkDelete {

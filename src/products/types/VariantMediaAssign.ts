@@ -13,6 +13,7 @@ export interface VariantMediaAssign_variantMediaAssign_errors {
   __typename: "ProductError";
   code: ProductErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface VariantMediaAssign_variantMediaAssign_productVariant_media {

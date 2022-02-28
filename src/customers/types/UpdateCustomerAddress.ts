@@ -14,6 +14,7 @@ export interface UpdateCustomerAddress_addressUpdate_errors {
   code: AccountErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }
 
 export interface UpdateCustomerAddress_addressUpdate_address_country {

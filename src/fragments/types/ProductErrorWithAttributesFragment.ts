@@ -13,5 +13,6 @@ export interface ProductErrorWithAttributesFragment {
   __typename: "ProductError";
   code: ProductErrorCode;
   field: string | null;
+  message: string | null;
   attributes: string[] | null;
 }

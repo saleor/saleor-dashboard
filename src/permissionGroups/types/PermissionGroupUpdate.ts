@@ -13,6 +13,7 @@ export interface PermissionGroupUpdate_permissionGroupUpdate_errors {
   __typename: "PermissionGroupError";
   code: PermissionGroupErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface PermissionGroupUpdate_permissionGroupUpdate_group_users_avatar {

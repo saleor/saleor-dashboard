@@ -14,4 +14,5 @@ export interface BulkStockErrorFragment {
   code: ProductErrorCode;
   field: string | null;
   index: number | null;
+  message: string | null;
 }

@@ -14,4 +14,5 @@ export interface OrderErrorFragment {
   code: OrderErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }

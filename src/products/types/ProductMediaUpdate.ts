@@ -13,6 +13,7 @@ export interface ProductMediaUpdate_productMediaUpdate_errors {
   __typename: "ProductError";
   code: ProductErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface ProductMediaUpdate_productMediaUpdate_product_media {

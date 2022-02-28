@@ -14,6 +14,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_errors {
   code: OrderErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }
 
 export interface OrderMarkAsPaid_orderMarkAsPaid_order_metadata {

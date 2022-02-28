@@ -13,6 +13,7 @@ export interface MenuUpdate_menuUpdate_errors {
   __typename: "MenuError";
   code: MenuErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface MenuUpdate_menuUpdate {
@@ -24,6 +25,7 @@ export interface MenuUpdate_menuItemMove_errors {
   __typename: "MenuError";
   code: MenuErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface MenuUpdate_menuItemMove {
@@ -35,6 +37,7 @@ export interface MenuUpdate_menuItemBulkDelete_errors {
   __typename: "MenuError";
   code: MenuErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface MenuUpdate_menuItemBulkDelete {

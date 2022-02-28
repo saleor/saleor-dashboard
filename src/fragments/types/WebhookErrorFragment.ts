@@ -13,4 +13,5 @@ export interface WebhookErrorFragment {
   __typename: "WebhookError";
   code: WebhookErrorCode;
   field: string | null;
+  message: string | null;
 }

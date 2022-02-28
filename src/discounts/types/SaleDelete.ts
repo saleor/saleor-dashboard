@@ -14,6 +14,7 @@ export interface SaleDelete_saleDelete_errors {
   code: DiscountErrorCode;
   field: string | null;
   channels: string[] | null;
+  message: string | null;
 }
 
 export interface SaleDelete_saleDelete {

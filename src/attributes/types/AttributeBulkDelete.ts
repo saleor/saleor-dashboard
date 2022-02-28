@@ -13,6 +13,7 @@ export interface AttributeBulkDelete_attributeBulkDelete_errors {
   __typename: "AttributeError";
   code: AttributeErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface AttributeBulkDelete_attributeBulkDelete {

@@ -13,6 +13,7 @@ export interface WarehouseDelete_deleteWarehouse_errors {
   __typename: "WarehouseError";
   code: WarehouseErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface WarehouseDelete_deleteWarehouse {

@@ -1769,6 +1769,13 @@ export enum TimePeriodTypeEnum {
   YEAR = "YEAR",
 }
 
+export enum TranslationErrorCode {
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+}
+
 export enum UploadErrorCode {
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
 }

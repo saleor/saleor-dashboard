@@ -14,6 +14,7 @@ export interface StaffAvatarUpdate_userAvatarUpdate_errors {
   code: AccountErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }
 
 export interface StaffAvatarUpdate_userAvatarUpdate_user_avatar {

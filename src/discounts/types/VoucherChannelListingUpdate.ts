@@ -14,6 +14,7 @@ export interface VoucherChannelListingUpdate_voucherChannelListingUpdate_errors 
   code: DiscountErrorCode;
   field: string | null;
   channels: string[] | null;
+  message: string | null;
 }
 
 export interface VoucherChannelListingUpdate_voucherChannelListingUpdate_voucher_metadata {

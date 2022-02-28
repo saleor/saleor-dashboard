@@ -75,6 +75,7 @@ export interface CollectionAssignProduct_collectionAddProducts_errors {
   __typename: "CollectionError";
   code: CollectionErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface CollectionAssignProduct_collectionAddProducts {

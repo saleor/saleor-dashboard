@@ -13,4 +13,5 @@ export interface StaffErrorFragment {
   __typename: "StaffError";
   code: AccountErrorCode;
   field: string | null;
+  message: string | null;
 }

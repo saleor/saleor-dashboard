@@ -13,6 +13,7 @@ export interface DeleteShippingRate_shippingPriceDelete_errors {
   __typename: "ShippingError";
   code: ShippingErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface DeleteShippingRate_shippingPriceDelete_shippingZone_metadata {

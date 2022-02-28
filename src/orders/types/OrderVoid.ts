@@ -14,6 +14,7 @@ export interface OrderVoid_orderVoid_errors {
   code: OrderErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }
 
 export interface OrderVoid_orderVoid_order_metadata {

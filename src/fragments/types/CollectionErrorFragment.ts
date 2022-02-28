@@ -13,4 +13,5 @@ export interface CollectionErrorFragment {
   __typename: "CollectionError";
   code: CollectionErrorCode;
   field: string | null;
+  message: string | null;
 }

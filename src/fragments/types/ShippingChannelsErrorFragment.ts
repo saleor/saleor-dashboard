@@ -14,4 +14,5 @@ export interface ShippingChannelsErrorFragment {
   code: ShippingErrorCode;
   field: string | null;
   channels: string[] | null;
+  message: string | null;
 }

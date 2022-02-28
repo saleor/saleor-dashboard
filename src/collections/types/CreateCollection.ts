@@ -58,6 +58,7 @@ export interface CreateCollection_collectionCreate_errors {
   __typename: "CollectionError";
   code: CollectionErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface CreateCollection_collectionCreate {

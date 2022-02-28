@@ -14,6 +14,7 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_errors {
   code: OrderErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }
 
 export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_metadata {

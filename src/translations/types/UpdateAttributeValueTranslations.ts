@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AttributeValueTranslationInput, LanguageCodeEnum } from "./../../types/globalTypes";
+import { AttributeValueTranslationInput, LanguageCodeEnum, TranslationErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: UpdateAttributeValueTranslations
@@ -11,6 +11,7 @@ import { AttributeValueTranslationInput, LanguageCodeEnum } from "./../../types/
 
 export interface UpdateAttributeValueTranslations_attributeValueTranslate_errors {
   __typename: "TranslationError";
+  code: TranslationErrorCode;
   field: string | null;
   message: string | null;
 }

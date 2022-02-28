@@ -15,6 +15,7 @@ export interface ProductVariantBulkCreate_productVariantBulkCreate_errors {
   code: ProductErrorCode;
   index: number | null;
   channels: string[] | null;
+  message: string | null;
 }
 
 export interface ProductVariantBulkCreate_productVariantBulkCreate {

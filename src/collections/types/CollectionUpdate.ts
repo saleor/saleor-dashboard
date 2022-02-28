@@ -58,6 +58,7 @@ export interface CollectionUpdate_collectionUpdate_errors {
   __typename: "CollectionError";
   code: CollectionErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface CollectionUpdate_collectionUpdate {

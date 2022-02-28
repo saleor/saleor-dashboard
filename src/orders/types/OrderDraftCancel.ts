@@ -14,6 +14,7 @@ export interface OrderDraftCancel_draftOrderDelete_errors {
   code: OrderErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }
 
 export interface OrderDraftCancel_draftOrderDelete_order_metadata {

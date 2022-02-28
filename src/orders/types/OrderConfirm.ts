@@ -14,6 +14,7 @@ export interface OrderConfirm_orderConfirm_errors {
   code: OrderErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }
 
 export interface OrderConfirm_orderConfirm_order_metadata {

@@ -13,6 +13,7 @@ export interface PluginUpdate_pluginUpdate_errors {
   __typename: "PluginError";
   code: PluginErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface PluginUpdate_pluginUpdate_plugin_globalConfiguration_channel {

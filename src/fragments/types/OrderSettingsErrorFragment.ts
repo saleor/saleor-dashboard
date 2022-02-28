@@ -13,4 +13,5 @@ export interface OrderSettingsErrorFragment {
   __typename: "OrderSettingsError";
   code: OrderSettingsErrorCode;
   field: string | null;
+  message: string | null;
 }

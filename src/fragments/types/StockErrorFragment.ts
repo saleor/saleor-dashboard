@@ -13,4 +13,5 @@ export interface StockErrorFragment {
   __typename: "StockError";
   code: StockErrorCode;
   field: string | null;
+  message: string | null;
 }

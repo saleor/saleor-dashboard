@@ -13,6 +13,7 @@ export interface MenuItemUpdate_menuItemUpdate_errors {
   __typename: "MenuError";
   code: MenuErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface MenuItemUpdate_menuItemUpdate_menuItem_category {

@@ -13,6 +13,7 @@ export interface StaffMemberUpdate_staffUpdate_errors {
   __typename: "StaffError";
   code: AccountErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface StaffMemberUpdate_staffUpdate_user_permissionGroups {

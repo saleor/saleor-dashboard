@@ -13,6 +13,7 @@ export interface PageTypeUpdate_pageTypeUpdate_errors {
   __typename: "PageError";
   code: PageErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface PageTypeUpdate_pageTypeUpdate_pageType_metadata {

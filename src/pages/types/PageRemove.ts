@@ -13,6 +13,7 @@ export interface PageRemove_pageDelete_errors {
   __typename: "PageError";
   code: PageErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface PageRemove_pageDelete {

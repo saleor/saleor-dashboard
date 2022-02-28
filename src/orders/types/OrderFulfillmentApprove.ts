@@ -14,6 +14,7 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_errors {
   code: OrderErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }
 
 export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_metadata {

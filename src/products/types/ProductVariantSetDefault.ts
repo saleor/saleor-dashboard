@@ -13,6 +13,7 @@ export interface ProductVariantSetDefault_productVariantSetDefault_errors {
   __typename: "ProductError";
   code: ProductErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface ProductVariantSetDefault_productVariantSetDefault_product_defaultVariant {

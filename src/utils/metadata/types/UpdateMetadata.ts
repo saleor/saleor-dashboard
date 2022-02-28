@@ -13,6 +13,7 @@ export interface UpdateMetadata_updateMetadata_errors {
   __typename: "MetadataError";
   code: MetadataErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface UpdateMetadata_updateMetadata {
@@ -24,6 +25,7 @@ export interface UpdateMetadata_deleteMetadata_errors {
   __typename: "MetadataError";
   code: MetadataErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface UpdateMetadata_deleteMetadata_item_metadata {

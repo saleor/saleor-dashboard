@@ -14,6 +14,7 @@ export interface OrderDraftFinalize_draftOrderComplete_errors {
   code: OrderErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }
 
 export interface OrderDraftFinalize_draftOrderComplete_order_metadata {

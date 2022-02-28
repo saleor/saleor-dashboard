@@ -14,6 +14,7 @@ export interface OrderCapture_orderCapture_errors {
   code: OrderErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }
 
 export interface OrderCapture_orderCapture_order_metadata {

@@ -14,6 +14,7 @@ export interface StaffAvatarDelete_userAvatarDelete_errors {
   code: AccountErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }
 
 export interface StaffAvatarDelete_userAvatarDelete_user_avatar {

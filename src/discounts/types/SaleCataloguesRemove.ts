@@ -14,6 +14,7 @@ export interface SaleCataloguesRemove_saleCataloguesRemove_errors {
   code: DiscountErrorCode;
   field: string | null;
   channels: string[] | null;
+  message: string | null;
 }
 
 export interface SaleCataloguesRemove_saleCataloguesRemove_sale_metadata {
