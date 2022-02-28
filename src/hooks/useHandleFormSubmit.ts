@@ -1,6 +1,8 @@
 import { FormId } from "@saleor/components/Form/ExitFormDialogProvider";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
+import { MessageContext } from "@saleor/components/messages";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import { useContext } from "react";
 
 interface UseHandleFormSubmitProps<TData, TErrors> {
   formId?: FormId;
@@ -16,9 +18,11 @@ function useHandleFormSubmit<TData, TErrors>({
   const { setIsSubmitting } = useExitFormDialog({
     formId
   });
+  const { clearErrorNotifications } = useContext(MessageContext);
 
   async function handleFormSubmit(data: TData): Promise<TErrors[]> {
     setIsSubmitting(true);
+    clearErrorNotifications();
 
     const result = onSubmit(data);
 

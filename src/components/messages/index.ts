@@ -39,6 +39,7 @@ export const types = {
 export interface INotificationContext {
   show: (message: IMessage, timeout?: number | null) => void;
   remove: (notification: INotification) => void;
+  clearErrorNotifications: () => void;
 }
 
 export type IMessageContext = (message: IMessage) => void;

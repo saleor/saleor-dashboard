@@ -39,6 +39,14 @@ const MessageManagerProvider = ({ children }) => {
     );
   }, []);
 
+  const clearErrorNotifications = useCallback(() => {
+    setNotifications(notifications =>
+      notifications.filter(
+        notification => notification.message.status !== "error"
+      )
+    );
+  }, []);
+
   const show = useCallback(
     (message = {}, timeout = DEFAULT_NOTIFICATION_SHOW_TIME) => {
       const id = timer.current;
@@ -98,7 +106,9 @@ const MessageManagerProvider = ({ children }) => {
 
   return (
     <>
-      <MessageContext.Provider value={{ remove, show }}>
+      <MessageContext.Provider
+        value={{ remove, show, clearErrorNotifications }}
+      >
         {children}
       </MessageContext.Provider>
       <TransitionGroup
