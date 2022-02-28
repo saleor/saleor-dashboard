@@ -44,7 +44,6 @@ export const giftCardTimelineNoteAdd = gql`
     giftCardAddNote(id: $id, input: $input) {
       errors {
         ...GiftCardError
-        message
       }
       giftCard {
         ...GiftCardData

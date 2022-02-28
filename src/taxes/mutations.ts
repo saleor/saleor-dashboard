@@ -1,4 +1,8 @@
 import { gql } from "@apollo/client";
+import {
+  shopFetchTaxRatesErrorFragment,
+  shopSettingsUpdateErrorFragment
+} from "@saleor/fragments/errors";
 import { countryFragment, shopTaxesFragment } from "@saleor/fragments/taxes";
 import makeMutation from "@saleor/hooks/makeMutation";
 
@@ -10,12 +14,12 @@ import {
 } from "./types/UpdateTaxSettings";
 
 const updateTaxSettings = gql`
+  ${shopSettingsUpdateErrorFragment}
   ${shopTaxesFragment}
   mutation UpdateTaxSettings($input: ShopSettingsInput!) {
     shopSettingsUpdate(input: $input) {
       errors {
-        field
-        message
+        ...ShopSettingsUpdateErrorFragment
       }
       shop {
         ...ShopTaxesFragment
@@ -31,11 +35,11 @@ export const useTaxSettingsUpdateMutation = makeMutation<
 
 const fetchTaxes = gql`
   ${countryFragment}
+  ${shopFetchTaxRatesErrorFragment}
   mutation FetchTaxes {
     shopFetchTaxRates {
       errors {
-        field
-        message
+        ...ShopFetchTaxRatesErrorFragment
       }
       shop {
         countries {

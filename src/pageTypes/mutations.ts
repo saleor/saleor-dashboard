@@ -1,5 +1,9 @@
 import { gql } from "@apollo/client";
-import { pageErrorFragment } from "@saleor/fragments/errors";
+import {
+  pageErrorFragment,
+  pageTypeBulkDeleteErrorFragment,
+  pageTypeDeleteErrorFragment
+} from "@saleor/fragments/errors";
 import { pageTypeDetailsFragment } from "@saleor/fragments/pageTypes";
 import makeMutation from "@saleor/hooks/makeMutation";
 
@@ -109,11 +113,11 @@ export const useUnassignPageAttributeMutation = makeMutation<
 >(unassignPageAttributeMutation);
 
 export const pageTypeDeleteMutation = gql`
+  ${pageTypeDeleteErrorFragment}
   mutation PageTypeDelete($id: ID!) {
     pageTypeDelete(id: $id) {
       errors {
-        field
-        message
+        ...PageTypeDeleteErrorFragment
       }
       pageType {
         id
@@ -127,11 +131,11 @@ export const usePageTypeDeleteMutation = makeMutation<
 >(pageTypeDeleteMutation);
 
 export const pageTypeBulkDeleteMutation = gql`
+  ${pageTypeBulkDeleteErrorFragment}
   mutation PageTypeBulkDelete($ids: [ID!]!) {
     pageTypeBulkDelete(ids: $ids) {
       errors {
-        field
-        message
+        ...PageTypeDeleteErrorFragment
       }
     }
   }
