@@ -1297,6 +1297,9 @@
     "context": "button",
     "string": "Back"
   },
+  "src_dot_baseCodeErrorMessage": {
+    "string": "Error code {errorCode} {fieldError}"
+  },
   "src_dot_cancel": {
     "context": "button",
     "string": "Cancel"
@@ -1643,6 +1646,9 @@
   "src_dot_clear": {
     "context": "button",
     "string": "Clear"
+  },
+  "src_dot_codeErrorFieldMessage": {
+    "string": "on field {fieldName}"
   },
   "src_dot_collections": {
     "context": "collections section name",
