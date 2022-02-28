@@ -1,7 +1,8 @@
 import { gql } from "@apollo/client";
 import {
   shippingChannelsErrorFragment,
-  shippingErrorFragment
+  shippingErrorFragment,
+  shopSettingsUpdateErrorFragment
 } from "@saleor/fragments/errors";
 import {
   shippingMethodTypeFragment,
@@ -90,11 +91,11 @@ export const useShippingZoneBulkDelete = makeMutation<
 >(bulkDeleteShippingZone);
 
 const updateDefaultWeightUnit = gql`
+  ${shopSettingsUpdateErrorFragment}
   mutation UpdateDefaultWeightUnit($unit: WeightUnitsEnum) {
     shopSettingsUpdate(input: { defaultWeightUnit: $unit }) {
       errors {
-        field
-        message
+        ...ShopSettingsUpdateErrorFragment
       }
       shop {
         defaultWeightUnit

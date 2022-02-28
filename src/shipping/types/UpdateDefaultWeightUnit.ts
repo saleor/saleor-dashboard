@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { WeightUnitsEnum } from "./../../types/globalTypes";
+import { WeightUnitsEnum, ShopErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: UpdateDefaultWeightUnit
@@ -11,6 +11,7 @@ import { WeightUnitsEnum } from "./../../types/globalTypes";
 
 export interface UpdateDefaultWeightUnit_shopSettingsUpdate_errors {
   __typename: "ShopError";
+  code: ShopErrorCode;
   field: string | null;
   message: string | null;
 }
