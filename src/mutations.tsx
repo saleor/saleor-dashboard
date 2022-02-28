@@ -9,7 +9,7 @@ import { DocumentNode } from "graphql";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { showAllErrors, useUser } from "./auth";
+import { handleNestedMutationErrors, showAllErrors, useUser } from "./auth";
 import { isJwtError } from "./auth/errors";
 import useNotifier from "./hooks/useNotifier";
 import { commonMessages } from "./intl";
@@ -41,7 +41,15 @@ export function TypedMutation<TData, TVariables>(
     return (
       <Mutation
         mutation={mutation}
-        onCompleted={onCompleted}
+        onCompleted={data => {
+          handleNestedMutationErrors({
+            data,
+            intl,
+            notify
+          });
+
+          onCompleted(data);
+        }}
         errorPolicy="all"
         onError={(err: ApolloError) => {
           if (hasError(err, GqlErrors.ReadOnlyException)) {

@@ -4,7 +4,11 @@ import {
   MutationResult,
   useMutation as useBaseMutation
 } from "@apollo/client";
-import { showAllErrors, useUser } from "@saleor/auth";
+import {
+  handleNestedMutationErrors,
+  showAllErrors,
+  useUser
+} from "@saleor/auth";
 import { isJwtError } from "@saleor/auth/errors";
 import { commonMessages } from "@saleor/intl";
 import { getMutationStatus } from "@saleor/misc";
@@ -44,7 +48,15 @@ function makeMutation<TData, TVariables>(
     const user = useUser();
 
     const [mutateFn, result] = useBaseMutation(mutation, {
-      onCompleted,
+      onCompleted: data => {
+        handleNestedMutationErrors({
+          data,
+          intl,
+          notify
+        });
+
+        onCompleted(data);
+      },
       refetchQueries,
       onError: (err: ApolloError) => {
         if (err.graphQLErrors) {

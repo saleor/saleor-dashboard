@@ -8,6 +8,7 @@ import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelec
 import { AddressType, AddressTypeInput } from "./customers/types";
 import {
   commonStatusMessages,
+  errorMessages,
   orderStatusMessages,
   paymentStatusMessages
 } from "./intl";
@@ -289,6 +290,24 @@ export function getMutationProviderData<TData, TVariables>(
     opts
   };
 }
+
+export const parseLogMessage = ({
+  intl,
+  code,
+  field
+}: {
+  intl: IntlShape;
+  code: string;
+  field?: string;
+}) =>
+  intl.formatMessage(errorMessages.baseCodeErrorMessage, {
+    errorCode: code,
+    fieldError:
+      field &&
+      intl.formatMessage(errorMessages.codeErrorFieldMessage, {
+        fieldName: field
+      })
+  });
 
 interface User {
   email: string;

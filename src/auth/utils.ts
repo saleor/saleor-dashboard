@@ -1,7 +1,8 @@
 import { ApolloError } from "@apollo/client/core";
-import { IMessageContext } from "@saleor/components/messages";
+import { IMessage, IMessageContext } from "@saleor/components/messages";
 import { UseNotifierResult } from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import { getMutationErrors, parseLogMessage } from "@saleor/misc";
 import { ServerErrorWithName } from "@saleor/types";
 import { IntlShape } from "react-intl";
 
@@ -59,6 +60,32 @@ export const showAllErrors = ({
       apiMessage: message
     });
   });
+};
+
+export const handleNestedMutationErrors = ({
+  data,
+  intl,
+  notify
+}: {
+  data: any;
+  intl: IntlShape;
+  notify: (message: IMessage) => void;
+}) => {
+  const mutationErrors = getMutationErrors({ data });
+
+  if (mutationErrors.length > 0) {
+    mutationErrors.forEach(error => {
+      notify({
+        status: "error",
+        text: error.message,
+        apiMessage: parseLogMessage({
+          intl,
+          code: error.code,
+          field: error.field
+        })
+      });
+    });
+  }
 };
 
 export async function handleQueryAuthError(
