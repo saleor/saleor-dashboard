@@ -114,11 +114,34 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   const [fulfillmentWarehouse, setFulfillmentWarehouse] = React.useState<
     Warehouse
   >(null);
+
   React.useEffect(() => {
-    // @TODO this is wip
-    // exact logic for determining default
-    // warehouse will be added in future PR
-    setFulfillmentWarehouse(warehouses?.[0]);
+    const warehousesAvailability = warehouses?.map(warehouse => {
+      let linesAvailable = 0;
+
+      if (!order?.lines) {
+        return undefined;
+      }
+      order.lines.forEach(line => {
+        if (
+          line?.variant?.stocks?.find(
+            stock => stock.warehouse.id === warehouse.id
+          )
+        ) {
+          linesAvailable += 1;
+        }
+      });
+
+      return {
+        warehouse,
+        linesAvailable
+      };
+    });
+
+    const defaultWarehouse = warehousesAvailability?.reduce((prev, curr) =>
+      curr.linesAvailable > prev.linesAvailable ? curr : prev
+    ).warehouse;
+    setFulfillmentWarehouse(defaultWarehouse);
   }, [warehousesData, warehousesLoading]);
 
   const {
