@@ -7,7 +7,6 @@ import { createAttribute } from "../../support/api/requests/Attribute";
 import { createCategory } from "../../support/api/requests/Category";
 import {
   checkoutShippingAddressUpdate,
-  checkoutShippingMethodUpdate,
   checkoutVariantsUpdate,
   completeCheckout,
   createCheckout
@@ -25,7 +24,8 @@ import {
   addPayment,
   createAndCompleteCheckoutWithoutShipping,
   createWaitingForCaptureOrder,
-  getShippingMethodIdFromCheckout
+  getShippingMethodIdFromCheckout,
+  updateShippingInCheckout
 } from "../../support/api/utils/ordersUtils";
 import {
   addDigitalContentAndUpdateProductType,
@@ -39,7 +39,7 @@ import {
 import filterTests from "../../support/filterTests";
 
 filterTests({ definedTags: ["all", "critical"] }, () => {
-  describe("Purchase products with all products types", () => {
+  describe("As a customer I want to order physical and digital products", () => {
     const startsWith = `CyPurchaseByType`;
     const name = `${startsWith}${faker.datatype.number()}`;
     const email = `${startsWith}@example.com`;
@@ -101,7 +101,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
       };
     });
 
-    it("should purchase digital product", () => {
+    it("should purchase digital product. TC: SALEOR_0402", () => {
       const digitalName = `${startsWith}${faker.datatype.number()}`;
       let variants;
 
@@ -144,7 +144,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         });
     });
 
-    it("should purchase physical product", () => {
+    it("should purchase physical product. TC: SALEOR_0403", () => {
       const physicalName = `${startsWith}${faker.datatype.number()}`;
       createTypeProduct({
         name: physicalName,
@@ -177,7 +177,46 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         });
     });
 
-    it("should purchase multiple products with all product types", () => {
+    it("should purchase physical product as a logged in customer. TC: SALEOR_0409", () => {
+      const physicalName = `${startsWith}${faker.datatype.number()}`;
+      let variantsList;
+
+      createTypeProduct({
+        name: physicalName,
+        attributeId: attribute.id,
+        shippable: true
+      })
+        .then(productType => {
+          createProductData.name = physicalName;
+          createProductData.productTypeId = productType.id;
+          createProductInChannel(createProductData);
+        })
+        .then(({ variantsList: variantsListResp }) => {
+          variantsList = variantsListResp;
+          cy.loginInShop();
+        })
+        .then(() => {
+          createWaitingForCaptureOrder({
+            channelSlug: defaultChannel.slug,
+            email,
+            variantsList,
+            shippingMethodName: shippingMethod.name,
+            address
+          });
+        })
+        .then(({ order }) => {
+          getOrder(order.id);
+        })
+        .then(order => {
+          softExpect(
+            order.isShippingRequired,
+            "Check if is shipping required in order"
+          ).to.eq(true);
+          expect(order.status, testsMessage).to.be.eq("UNFULFILLED");
+        });
+    });
+
+    it("should purchase multiple products with all product types. TC: SALEOR_0404", () => {
       const physicalName = `${startsWith}${faker.datatype.number()}`;
       const digitalName = `${startsWith}${faker.datatype.number()}`;
       let digitalProductVariantsList;
@@ -224,11 +263,15 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         .then(({ variantsList }) => {
           checkoutVariantsUpdate(checkout.id, variantsList);
         })
-        .then(({ checkout }) => {
+        .then(() => {
+          const shippingMethodId = getShippingMethodIdFromCheckout(
+            checkout,
+            shippingMethod.name
+          );
           expect(
-            checkout.shippingMethods,
+            shippingMethodId,
             "Should be not possible to add shipping method without shipping address"
-          ).to.be.empty;
+          ).to.not.be.ok;
           checkoutShippingAddressUpdate(checkout.id, address);
         })
         .then(({ checkout: checkoutResp }) => {
@@ -240,11 +283,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
             errors,
             "Should be not possible to add payment without shipping"
           ).to.have.lengthOf(1);
-          const shippingMethodId = getShippingMethodIdFromCheckout(
-            checkout,
-            shippingMethod.name
-          );
-          checkoutShippingMethodUpdate(checkout.id, shippingMethodId);
+          updateShippingInCheckout(checkout.token, shippingMethod.name);
         })
         .then(() => {
           addPayment(checkout.id);

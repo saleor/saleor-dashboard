@@ -23,7 +23,7 @@ import {
 import filterTests from "../../support/filterTests";
 
 filterTests({ definedTags: ["all", "critical"] }, () => {
-  describe("Products stocks in checkout", () => {
+  describe("As an admin I want to have correct products stocks after checkout", () => {
     const startsWith = "CyStocksCheckout-";
     const name = `${startsWith}${faker.datatype.number()}`;
 
@@ -75,7 +75,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
           }
         );
     });
-    it("should create checkout with last product in stock", () => {
+    it("should create checkout with last product in stock. TC: SALEOR_0419", () => {
       const productName = `${startsWith}${faker.datatype.number()}`;
 
       createOrderWithNewProduct({
@@ -89,10 +89,13 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         address
       }).then(({ order }) => {
         expect(order, "order should be created").to.be.ok;
+        expect(order.status, "order is created with correct status").to.eq(
+          "UNFULFILLED"
+        );
       });
     });
 
-    it("should not be possible to add product with quantity greater than stock", () => {
+    it("should not be possible to add product with quantity greater than stock. TC: SALEOR_0405", () => {
       const productName = `${startsWith}${faker.datatype.number()}`;
       let variants;
 
@@ -127,7 +130,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         });
     });
 
-    it("should buy product with no quantity if tracking is not set", () => {
+    it("should buy product with no quantity if tracking is not set. TC: SALEOR_0406", () => {
       const productName = `${startsWith}${faker.datatype.number()}`;
 
       createOrderWithNewProduct({
@@ -143,10 +146,13 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         address
       }).then(({ order }) => {
         expect(order, "order should be created").to.be.ok;
+        expect(order.status, "order is created with correct status").to.eq(
+          "UNFULFILLED"
+        );
       });
     });
 
-    it("should change product stock after purchase", () => {
+    it("should change product stock after purchase. TC: SALEOR_0407", () => {
       const productName = `${startsWith}${faker.datatype.number()}`;
 
       createOrderWithNewProduct({
