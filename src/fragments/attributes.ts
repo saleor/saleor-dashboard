@@ -21,6 +21,14 @@ export const attributeValueFragment = gql`
   }
 `;
 
+export const attributeValueDetailsFragment = gql`
+  ${attributeValueFragment}
+  fragment AttributeValueDetailsFragment on AttributeValue {
+    ...AttributeValueFragment
+    richText
+  }
+`;
+
 export const attributeFragment = gql`
   fragment AttributeFragment on Attribute {
     id
