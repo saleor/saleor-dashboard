@@ -1,5 +1,9 @@
 import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
+import { useUserPermissions } from "@saleor/auth/hooks/useUserPermissions";
 import Checkbox from "@saleor/components/Checkbox";
+import RequirePermissions, {
+  hasPermissions
+} from "@saleor/components/RequirePermissions";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
@@ -7,8 +11,9 @@ import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { CustomerListUrlSortField } from "@saleor/customers/urls";
 import { makeStyles } from "@saleor/macaw-ui";
-import { getUserName, maybe, renderCollection } from "@saleor/misc";
+import { getUserName, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps, SortPage } from "@saleor/types";
+import { PermissionEnum } from "@saleor/types/globalTypes";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -45,7 +50,7 @@ export interface CustomerListProps
   customers: ListCustomers_customers_edges_node[];
 }
 
-const numberOfColumns = 4;
+const numberOfColumns = 3;
 
 const CustomerList: React.FC<CustomerListProps> = props => {
   const {
@@ -66,12 +71,18 @@ const CustomerList: React.FC<CustomerListProps> = props => {
     isChecked
   } = props;
 
+  const userPermissions = useUserPermissions();
+
   const classes = useStyles(props);
 
   return (
     <ResponsiveTable>
       <TableHead
-        colSpan={numberOfColumns}
+        colSpan={
+          hasPermissions(userPermissions, [PermissionEnum.MANAGE_ORDERS])
+            ? numberOfColumns
+            : numberOfColumns - 1
+        }
         selected={selected}
         disabled={disabled}
         items={customers}
@@ -101,18 +112,22 @@ const CustomerList: React.FC<CustomerListProps> = props => {
         >
           <FormattedMessage defaultMessage="Customer Email" />
         </TableCellHeader>
-        <TableCellHeader
-          direction={
-            sort.sort === CustomerListUrlSortField.orders
-              ? getArrowDirection(sort.asc)
-              : undefined
-          }
-          textAlign="center"
-          onClick={() => onSort(CustomerListUrlSortField.orders)}
-          className={classes.colOrders}
+        <RequirePermissions
+          requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
         >
-          <FormattedMessage defaultMessage="No. of Orders" />
-        </TableCellHeader>
+          <TableCellHeader
+            direction={
+              sort.sort === CustomerListUrlSortField.orders
+                ? getArrowDirection(sort.asc)
+                : undefined
+            }
+            textAlign="center"
+            onClick={() => onSort(CustomerListUrlSortField.orders)}
+            className={classes.colOrders}
+          >
+            <FormattedMessage defaultMessage="No. of Orders" />
+          </TableCellHeader>
+        </RequirePermissions>
       </TableHead>
       <TableFooter>
         <TableRow>
@@ -155,14 +170,15 @@ const CustomerList: React.FC<CustomerListProps> = props => {
                   {getUserName(customer)}
                 </TableCell>
                 <TableCell className={classes.colEmail}>
-                  {maybe<React.ReactNode>(() => customer.email, <Skeleton />)}
+                  {customer?.email ?? <Skeleton />}
                 </TableCell>
-                <TableCell className={classes.colOrders}>
-                  {maybe<React.ReactNode>(
-                    () => customer.orders.totalCount,
-                    <Skeleton />
-                  )}
-                </TableCell>
+                <RequirePermissions
+                  requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
+                >
+                  <TableCell className={classes.colOrders}>
+                    {customer?.orders?.totalCount ?? <Skeleton />}
+                  </TableCell>
+                </RequirePermissions>
               </TableRow>
             );
           },

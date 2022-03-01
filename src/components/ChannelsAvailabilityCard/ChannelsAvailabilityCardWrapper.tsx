@@ -1,5 +1,4 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
-import { useUser } from "@saleor/auth";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
 import RequirePermissions from "@saleor/components/RequirePermissions";
@@ -28,7 +27,6 @@ export const ChannelsAvailabilityWrapper: React.FC<ChannelsAvailabilityWrapperPr
   } = props;
   const intl = useIntl();
   const classes = useStyles({});
-  const { user } = useUser();
   const channelsAvailabilityText = intl.formatMessage(
     {
       defaultMessage:
@@ -51,10 +49,7 @@ export const ChannelsAvailabilityWrapper: React.FC<ChannelsAvailabilityWrapperPr
             description: "section header"
           })}
           toolbar={
-            <RequirePermissions
-              userPermissions={user?.userPermissions || []}
-              requiredPermissions={managePermissions}
-            >
+            <RequirePermissions requiredPermissions={managePermissions}>
               <Button
                 onClick={openModal}
                 data-test-id="channels-availability-manage-button"
