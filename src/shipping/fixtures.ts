@@ -1304,6 +1304,7 @@ export const shippingZones: ShippingZoneFragment[] = [
 
 export const shippingZone: ShippingZoneQuery["shippingZone"] = {
   __typename: "ShippingZone",
+  default: true,
   channels: [
     { __typename: "Channel", id: "channel1", name: "GBP", currencyCode: "GBP" },
 

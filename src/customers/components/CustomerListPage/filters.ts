@@ -1,8 +1,7 @@
 import { IFilter } from "@saleor/components/Filter";
 import { hasPermissions } from "@saleor/components/RequirePermissions";
-import { User_userPermissions } from "@saleor/fragments/types/User";
+import { PermissionEnum, UserFragment } from "@saleor/graphql";
 import { FilterOpts, MinMax } from "@saleor/types";
-import { PermissionEnum } from "@saleor/types/globalTypes";
 import {
   createDateField,
   createNumberField
@@ -32,7 +31,7 @@ const messages = defineMessages({
 export function createFilterStructure(
   intl: IntlShape,
   opts: CustomerListFilterOpts,
-  userPermissions: User_userPermissions[]
+  userPermissions: UserFragment["userPermissions"]
 ): IFilter<CustomerFilterKeys> {
   return [
     {

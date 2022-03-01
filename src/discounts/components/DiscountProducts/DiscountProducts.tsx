@@ -27,7 +27,6 @@ export interface SaleProductsProps extends ListProps, ListActions {
   products:
     | RelayToFlat<SaleDetailsFragment["products"]>
     | RelayToFlat<VoucherDetailsFragment["products"]>;
-  channelsCount: number;
   onProductAssign: () => void;
   onProductUnassign: (id: string) => void;
 }

@@ -1,7 +1,7 @@
 import { createFilterStructure } from "@saleor/customers/components/CustomerListPage";
 import { CustomerListUrlFilters } from "@saleor/customers/urls";
 import { date } from "@saleor/fixtures";
-import { PermissionEnum } from "@saleor/types/globalTypes";
+import { PermissionEnum } from "@saleor/graphql";
 import { getFilterQueryParams } from "@saleor/utils/filters";
 import { stringifyQs } from "@saleor/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";

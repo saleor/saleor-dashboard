@@ -1,10 +1,10 @@
-import { MenuDetailsFragment } from "@saleor/graphql";
+import { MenuDetailsFragment, MenuDetailsQuery } from "@saleor/graphql";
 
 import { menu } from "../../fixtures";
 import { TreeOperation } from "../MenuItems";
 import { computeRelativeTree } from "./tree";
 
-const relativeOutput: MenuDetails_menu_items[][] = [
+const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
   // no moves
   [
     {

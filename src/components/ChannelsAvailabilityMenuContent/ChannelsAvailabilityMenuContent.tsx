@@ -1,11 +1,10 @@
 import { Typography } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
-import { CollectionList_collections_edges_node_channelListings_channel } from "@saleor/collections/types/CollectionList";
+import { CollectionFragment } from "@saleor/graphql";
 import { Pill, PillColor } from "@saleor/macaw-ui";
 import ScrollableContent from "@saleor/plugins/components/PluginsList/PluginAvailabilityStatusPopup/ScrollableContent";
 import React from "react";
-import { MessageDescriptor } from "react-intl";
-import { useIntl } from "react-intl";
+import { MessageDescriptor, useIntl } from "react-intl";
 
 import { messages } from "../ChannelsAvailabilityDropdown/messages";
 import { useStyles } from "./styles";
@@ -14,7 +13,7 @@ export interface ChannelsAvailabilityMenuContentProps {
   pills: Pill[];
 }
 export interface Pill {
-  channel: CollectionList_collections_edges_node_channelListings_channel;
+  channel: CollectionFragment["channelListings"][0]["channel"];
   color: PillColor;
   label: MessageDescriptor;
 }

@@ -1,11 +1,11 @@
+import { OrderDetailsFragment } from "@saleor/graphql";
 import { makeStyles, Pill } from "@saleor/macaw-ui";
 import { transformOrderStatus } from "@saleor/misc";
-import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
 import React from "react";
 import { useIntl } from "react-intl";
 
 export interface TitleProps {
-  order?: OrderDetails_order;
+  order?: OrderDetailsFragment;
 }
 
 const useStyles = makeStyles(
