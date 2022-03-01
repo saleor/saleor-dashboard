@@ -13,7 +13,7 @@ import {
   TabActionDialog
 } from "../types";
 
-const productTypeSection = "@saleor/graphql";
+const productTypeSection = "/product-types/";
 
 export const productTypeListPath = productTypeSection;
 export enum ProductTypeListUrlFiltersEnum {
