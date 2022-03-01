@@ -5,7 +5,6 @@ import Money from "@saleor/components/Money";
 import RequirePermissions from "@saleor/components/RequirePermissions";
 import Skeleton from "@saleor/components/Skeleton";
 import { makeStyles } from "@saleor/macaw-ui";
-import { UserPermissionProps } from "@saleor/types";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import React from "react";
 
@@ -44,7 +43,7 @@ const useStyles = makeStyles(
   { name: "HomePage" }
 );
 
-export interface HomePageProps extends UserPermissionProps {
+export interface HomePageProps {
   activities: Home_activities_edges_node[];
   orders: number | null;
   ordersToCapture: number | null;
@@ -76,7 +75,6 @@ const HomePage: React.FC<HomePageProps> = props => {
     ordersToCapture = 0,
     ordersToFulfill = 0,
     productsOutOfStock = 0,
-    userPermissions = [],
     noChannel
   } = props;
 
@@ -89,7 +87,6 @@ const HomePage: React.FC<HomePageProps> = props => {
       <Grid>
         <div>
           <RequirePermissions
-            userPermissions={userPermissions}
             requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
           >
             <div className={classes.cardContainer}>
@@ -141,13 +138,11 @@ const HomePage: React.FC<HomePageProps> = props => {
             ordersToCapture={ordersToCapture}
             ordersToFulfill={ordersToFulfill}
             productsOutOfStock={productsOutOfStock}
-            userPermissions={userPermissions}
             noChannel={noChannel}
           />
           <CardSpacer />
           {topProducts && (
             <RequirePermissions
-              userPermissions={userPermissions}
               requiredPermissions={[
                 PermissionEnum.MANAGE_ORDERS,
                 PermissionEnum.MANAGE_PRODUCTS
@@ -165,7 +160,6 @@ const HomePage: React.FC<HomePageProps> = props => {
         {activities && (
           <div>
             <RequirePermissions
-              userPermissions={userPermissions}
               requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
             >
               <HomeActivityCard

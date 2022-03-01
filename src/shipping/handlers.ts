@@ -23,7 +23,7 @@ import {
   useShippingRateCreate,
   useShippingRateDelete
 } from "./mutations";
-import { shippingPriceRatesEditUrl, shippingWeightRatesEditUrl } from "./urls";
+import { shippingRateEditUrl } from "./urls";
 
 export const createChannelsChangeHandler = (
   selectedChannels: ChannelShippingData[],
@@ -222,10 +222,6 @@ export function useShippingRateCreator(
     type === ShippingMethodTypeEnum.PRICE
       ? getCreateShippingPriceRateVariables
       : getCreateShippingWeightRateVariables;
-  const getUrl =
-    type === ShippingMethodTypeEnum.PRICE
-      ? shippingPriceRatesEditUrl
-      : shippingWeightRatesEditUrl;
 
   const createShippingRate = async (data: ShippingZoneRateCommonFormData) => {
     const response = await createBaseShippingRate({
@@ -268,7 +264,7 @@ export function useShippingRateCreator(
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
-      navigate(getUrl(shippingZoneId, rateId));
+      navigate(shippingRateEditUrl(shippingZoneId, rateId));
       return [];
     }
   };

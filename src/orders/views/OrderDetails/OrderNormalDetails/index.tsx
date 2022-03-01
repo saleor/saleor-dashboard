@@ -1,4 +1,3 @@
-import { useUser } from "@saleor/auth";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { useCustomerAddressesQuery } from "@saleor/customers/queries";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -95,7 +94,6 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   const order = data?.order;
   const shop = data?.shop;
   const navigate = useNavigator();
-  const { user } = useUser();
 
   const warehouses = useWarehouseList({
     displayLoader: true,
@@ -168,7 +166,6 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
           ]
         )}
         shippingMethods={data?.order?.shippingMethods || []}
-        userPermissions={user?.userPermissions || []}
         onOrderCancel={() => openModal("cancel")}
         onOrderFulfill={() => navigate(orderFulfillUrl(id))}
         onFulfillmentApprove={fulfillmentId =>

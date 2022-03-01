@@ -12,7 +12,7 @@ import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
-import { FetchMoreProps, UserPermissionProps } from "@saleor/types";
+import { FetchMoreProps } from "@saleor/types";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import React from "react";
@@ -55,9 +55,7 @@ export interface CustomerEditData {
   prevUserEmail?: string;
 }
 
-export interface OrderCustomerProps
-  extends Partial<FetchMoreProps>,
-    UserPermissionProps {
+export interface OrderCustomerProps extends Partial<FetchMoreProps> {
   order: OrderDetails_order;
   users?: SearchCustomers_search_edges_node[];
   loading?: boolean;
@@ -79,7 +77,6 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
     loading,
     order,
     users,
-    userPermissions,
     onCustomerEdit,
     onBillingAddressEdit,
     onFetchMore: onFetchMoreUsers,
@@ -131,7 +128,6 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
         toolbar={
           !!canEditCustomer && (
             <RequirePermissions
-              userPermissions={userPermissions}
               requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
             >
               <Button
@@ -209,7 +205,6 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
               {user.email}
             </Typography>
             <RequirePermissions
-              userPermissions={userPermissions}
               requiredPermissions={[PermissionEnum.MANAGE_USERS]}
             >
               <div>

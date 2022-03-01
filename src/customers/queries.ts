@@ -27,6 +27,7 @@ const customerList = gql`
     $last: Int
     $filter: CustomerFilterInput
     $sort: UserSortingInput
+    $PERMISSION_MANAGE_ORDERS: Boolean!
   ) {
     customers(
       after: $after
@@ -39,7 +40,7 @@ const customerList = gql`
       edges {
         node {
           ...CustomerFragment
-          orders {
+          orders @include(if: $PERMISSION_MANAGE_ORDERS) {
             totalCount
           }
         }
@@ -60,10 +61,10 @@ export const useCustomerListQuery = makeQuery<
 
 const customerDetails = gql`
   ${customerDetailsFragment}
-  query CustomerDetails($id: ID!) {
+  query CustomerDetails($id: ID!, $PERMISSION_MANAGE_ORDERS: Boolean!) {
     user(id: $id) {
       ...CustomerDetailsFragment
-      orders(last: 5) {
+      orders(last: 5) @include(if: $PERMISSION_MANAGE_ORDERS) {
         edges {
           node {
             id
@@ -79,7 +80,7 @@ const customerDetails = gql`
           }
         }
       }
-      lastPlacedOrder: orders(last: 1) {
+      lastPlacedOrder: orders(last: 1) @include(if: $PERMISSION_MANAGE_ORDERS) {
         edges {
           node {
             id

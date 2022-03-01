@@ -1,4 +1,3 @@
-import { useUser } from "@saleor/auth";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useCustomerAddressesQuery } from "@saleor/customers/queries";
@@ -84,7 +83,6 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
 }) => {
   const order = data.order;
   const navigate = useNavigator();
-  const { user } = useUser();
 
   const {
     loadMore,
@@ -214,7 +212,6 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
             }
             saveButtonBarState="default"
             onProfileView={() => navigate(customerUrl(order.user.id))}
-            userPermissions={user?.userPermissions || []}
           />
         </OrderLineDiscountProvider>
       </OrderDiscountProvider>

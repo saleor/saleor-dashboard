@@ -135,4 +135,5 @@ export interface CustomerDetails {
 
 export interface CustomerDetailsVariables {
   id: string;
+  PERMISSION_MANAGE_ORDERS: boolean;
 }

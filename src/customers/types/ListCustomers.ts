@@ -53,4 +53,5 @@ export interface ListCustomersVariables {
   last?: number | null;
   filter?: CustomerFilterInput | null;
   sort?: UserSortingInput | null;
+  PERMISSION_MANAGE_ORDERS: boolean;
 }
