@@ -59,7 +59,7 @@ export const attributeDetailsFragment = gql`
 `;
 
 export const attributeValueListFragment = gql`
-  ${attributeValueFragment}
+  ${attributeValueDetailsFragment}
   ${pageInfoFragment}
   fragment AttributeValueListFragment on AttributeValueCountableConnection {
     pageInfo {
@@ -68,8 +68,7 @@ export const attributeValueListFragment = gql`
     edges {
       cursor
       node {
-        ...AttributeValueFragment
-        richText
+        ...AttributeValueDetailsFragment
       }
     }
   }

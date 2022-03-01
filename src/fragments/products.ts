@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client";
 
 import {
+  attributeValueDetailsFragment,
   attributeValueFragment,
   attributeValueListFragment
 } from "./attributes";
@@ -276,15 +277,14 @@ export const variantAttributeFragment = gql`
 `;
 
 export const selectedVariantAttributeFragment = gql`
-  ${attributeValueFragment}
+  ${attributeValueDetailsFragment}
   ${variantAttributeFragment}
   fragment SelectedVariantAttributeFragment on SelectedAttribute {
     attribute {
       ...VariantAttributeFragment
     }
     values {
-      ...AttributeValueFragment
-      richText
+      ...AttributeValueDetailsFragment
     }
   }
 `;
