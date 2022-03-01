@@ -2,7 +2,6 @@ import { gql } from "@apollo/client";
 
 import {
   attributeValueDetailsFragment,
-  attributeValueFragment,
   attributeValueListFragment
 } from "./attributes";
 import { metadataFragment } from "./metadata";
@@ -125,7 +124,7 @@ export const productFragment = gql`
 `;
 
 export const productVariantAttributesFragment = gql`
-  ${attributeValueFragment}
+  ${attributeValueDetailsFragment}
   ${attributeValueListFragment}
   fragment ProductVariantAttributesFragment on Product {
     id
@@ -148,8 +147,7 @@ export const productVariantAttributesFragment = gql`
         }
       }
       values {
-        ...AttributeValueFragment
-        richText
+        ...AttributeValueDetailsFragment
       }
     }
     productType {
