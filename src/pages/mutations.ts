@@ -1,10 +1,10 @@
+import { gql } from "@apollo/client";
 import {
   pageErrorFragment,
   pageErrorWithAttributesFragment
 } from "@saleor/fragments/errors";
 import { pageDetailsFragment } from "@saleor/fragments/pages";
 import makeMutation from "@saleor/hooks/makeMutation";
-import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
 import {

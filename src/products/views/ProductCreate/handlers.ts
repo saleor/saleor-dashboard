@@ -1,3 +1,4 @@
+import { FetchResult } from "@apollo/client";
 import {
   getAttributesAfterFileAttributesUpdate,
   mergeFileUploadErrors
@@ -38,7 +39,6 @@ import {
 } from "@saleor/products/types/VariantCreate";
 import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
-import { MutationFetchResult } from "react-apollo";
 
 const getChannelsVariables = (productId: string, channels: ChannelData[]) => ({
   variables: {
@@ -77,22 +77,22 @@ export function createHandler(
   productType: ProductType_productType,
   uploadFile: (
     variables: FileUploadVariables
-  ) => Promise<MutationFetchResult<FileUpload>>,
+  ) => Promise<FetchResult<FileUpload>>,
   productCreate: (
     variables: ProductCreateVariables
-  ) => Promise<MutationFetchResult<ProductCreate>>,
+  ) => Promise<FetchResult<ProductCreate>>,
   productVariantCreate: (
     variables: VariantCreateVariables
-  ) => Promise<MutationFetchResult<VariantCreate>>,
+  ) => Promise<FetchResult<VariantCreate>>,
   updateChannels: (options: {
     variables: ProductChannelListingUpdateVariables;
-  }) => Promise<MutationFetchResult<ProductChannelListingUpdate>>,
+  }) => Promise<FetchResult<ProductChannelListingUpdate>>,
   updateVariantChannels: (options: {
     variables: ProductVariantChannelListingUpdateVariables;
-  }) => Promise<MutationFetchResult<ProductVariantChannelListingUpdate>>,
+  }) => Promise<FetchResult<ProductVariantChannelListingUpdate>>,
   productDelete: (options: {
     variables: ProductDeleteVariables;
-  }) => Promise<MutationFetchResult<ProductDelete>>
+  }) => Promise<FetchResult<ProductDelete>>
 ) {
   return async (formData: ProductCreateData) => {
     let errors: Array<AttributeErrorFragment | UploadErrorFragment> = [];

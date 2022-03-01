@@ -1,6 +1,6 @@
+import { gql } from "@apollo/client";
 import makeQuery, { UseQueryResult } from "@saleor/hooks/makeQuery";
 import useDebounce from "@saleor/hooks/useDebounce";
-import gql from "graphql-tag";
 import { useState } from "react";
 
 import {

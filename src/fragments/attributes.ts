@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import { gql } from "@apollo/client";
 
 import { fileFragment } from "./file";
 import { metadataFragment } from "./metadata";

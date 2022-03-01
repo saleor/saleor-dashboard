@@ -45,6 +45,7 @@ const GiftCardsListHeader: React.FC = () => {
   return (
     <>
       <PageHeader
+        preview
         title={intl.formatMessage(sectionNames.giftCards)}
         cardMenu={<CardMenu menuItems={menuItems} data-test-id="menu" />}
       >

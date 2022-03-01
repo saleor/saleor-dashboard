@@ -1,7 +1,7 @@
-import { ApolloQueryResult } from "apollo-client";
+import { ApolloQueryResult, QueryResult } from "@apollo/client";
+import { Query } from "@apollo/client/react/components";
 import { DocumentNode } from "graphql";
 import React from "react";
-import { Query, QueryResult } from "react-apollo";
 import { useIntl } from "react-intl";
 
 import { handleQueryAuthError, useUser } from "./auth";

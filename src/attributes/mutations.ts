@@ -1,3 +1,4 @@
+import { gql } from "@apollo/client";
 import {
   attributeDetailsFragment,
   attributeValueListFragment
@@ -5,7 +6,6 @@ import {
 import { attributeErrorFragment } from "@saleor/fragments/errors";
 import { pageInfoFragment } from "@saleor/fragments/pageInfo";
 import makeMutation from "@saleor/hooks/makeMutation";
-import gql from "graphql-tag";
 
 import {
   AttributeBulkDelete,

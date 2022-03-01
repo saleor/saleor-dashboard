@@ -73,7 +73,7 @@ const useStyles = makeStyles(
         gridTemplateAreas: `"headerToolbar" 
         "headerAnchor"`
       },
-      marginBottom: theme.spacing(3)
+      marginBottom: theme.spacing(6)
     },
     headerAnchor: {
       gridArea: "headerAnchor"

@@ -1,10 +1,10 @@
+import { MutationFunction } from "@apollo/client";
 import {
   ProductTypeDetailsFragment,
   ProductTypeDetailsFragment_productAttributes
 } from "@saleor/fragments/types/ProductTypeDetailsFragment";
 import { ProductAttributeType, ReorderInput } from "@saleor/types/globalTypes";
 import React from "react";
-import { MutationFunction } from "react-apollo";
 
 import { getMutationProviderData } from "../../misc";
 import { PartialMutationProviderOutput } from "../../types";

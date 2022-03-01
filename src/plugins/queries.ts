@@ -1,9 +1,9 @@
+import { gql } from "@apollo/client";
 import {
   pluginBaseFragment,
   pluginsDetailsFragment
 } from "@saleor/fragments/plugins";
 import makeQuery from "@saleor/hooks/makeQuery";
-import gql from "graphql-tag";
 
 import { Plugin, PluginVariables } from "./types/Plugin";
 import { Plugins, PluginsVariables } from "./types/Plugins";

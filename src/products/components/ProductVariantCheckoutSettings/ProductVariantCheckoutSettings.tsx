@@ -1,5 +1,6 @@
 import { Card, CardContent, TextField } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
+import PreviewPill from "@saleor/components/PreviewPill";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { FormChange } from "@saleor/hooks/useForm";
 import { getFormErrors } from "@saleor/utils/errors";
@@ -7,6 +8,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
+import useStyles from "./styles";
 
 interface ProductVariantCheckoutSettingsProps {
   data: {
@@ -21,12 +23,20 @@ const ProductVariantCheckoutSettings: React.FC<ProductVariantCheckoutSettingsPro
   const { data, disabled, errors, onChange } = props;
 
   const intl = useIntl();
+  const classes = useStyles();
 
   const formErrors = getFormErrors(["quantityLimitPerCustomer"], errors);
 
   return (
     <Card>
-      <CardTitle title={intl.formatMessage(messages.checkoutLimits)} />
+      <CardTitle
+        title={
+          <>
+            {intl.formatMessage(messages.checkoutLimits)}
+            <PreviewPill className={classes.preview} />
+          </>
+        }
+      />
       <CardContent>
         <TextField
           disabled={disabled}

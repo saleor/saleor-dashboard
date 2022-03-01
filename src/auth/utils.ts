@@ -1,7 +1,7 @@
+import { ApolloError } from "@apollo/client";
 import { IMessageContext } from "@saleor/components/messages";
 import { UseNotifierResult } from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import { ApolloError } from "apollo-client";
 import { IntlShape } from "react-intl";
 
 import { isJwtError, isTokenExpired } from "./errors";

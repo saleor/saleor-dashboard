@@ -3,12 +3,17 @@ import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
 import ExtendedPageHeader from "../ExtendedPageHeader";
+import PreviewPill from "../PreviewPill";
 import Skeleton from "../Skeleton";
 
 const useStyles = makeStyles(
   theme => ({
     limit: {
       marginRight: theme.spacing(4)
+    },
+    preview: {
+      position: "absolute",
+      top: theme.spacing(-4)
     },
     root: {
       alignItems: "center",
@@ -47,6 +52,7 @@ interface PageHeaderProps {
   limitText?: string;
   title?: React.ReactNode;
   cardMenu?: React.ReactNode;
+  preview?: boolean;
 }
 
 const PageHeader: React.FC<PageHeaderProps> = props => {
@@ -57,39 +63,43 @@ const PageHeader: React.FC<PageHeaderProps> = props => {
     underline,
     limitText,
     title,
-    cardMenu
+    cardMenu,
+    preview
   } = props;
 
   const classes = useStyles(props);
 
   return (
-    <ExtendedPageHeader
-      testId="page-header"
-      className={className}
-      inline={inline}
-      underline={underline}
-      title={
-        <>
-          <Typography className={classes.title} variant="h1">
-            {title !== undefined ? (
-              title
-            ) : (
-              <Skeleton style={{ width: "10em" }} />
-            )}
-          </Typography>
-          {cardMenu}
-        </>
-      }
-    >
-      <div className={classes.root}>
-        {limitText && (
-          <Typography className={classes.limit} color="textSecondary">
-            {limitText}
-          </Typography>
-        )}
-        {children}
-      </div>
-    </ExtendedPageHeader>
+    <>
+      {preview && <PreviewPill className={classes.preview} />}
+      <ExtendedPageHeader
+        testId="page-header"
+        className={className}
+        inline={inline}
+        underline={underline}
+        title={
+          <>
+            <Typography className={classes.title} variant="h1">
+              {title !== undefined ? (
+                title
+              ) : (
+                <Skeleton style={{ width: "10em" }} />
+              )}
+            </Typography>
+            {cardMenu}
+          </>
+        }
+      >
+        <div className={classes.root}>
+          {limitText && (
+            <Typography className={classes.limit} color="textSecondary">
+              {limitText}
+            </Typography>
+          )}
+          {children}
+        </div>
+      </ExtendedPageHeader>
+    </>
   );
 };
 

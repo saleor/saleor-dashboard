@@ -1,3 +1,4 @@
+import { FetchResult } from "@apollo/client";
 import { ChannelVoucherData } from "@saleor/channels/utils";
 import { VoucherDetailsPageFormData } from "@saleor/discounts/components/VoucherDetailsPage";
 import { getChannelsVariables } from "@saleor/discounts/handlers";
@@ -16,17 +17,16 @@ import {
   DiscountValueTypeEnum,
   VoucherTypeEnum
 } from "@saleor/types/globalTypes";
-import { MutationFetchResult } from "react-apollo";
 
 export function createUpdateHandler(
   voucher: VoucherDetails_voucher,
   voucherChannelsChoices: ChannelVoucherData[],
   updateVoucher: (
     variables: VoucherUpdateVariables
-  ) => Promise<MutationFetchResult<VoucherUpdate>>,
+  ) => Promise<FetchResult<VoucherUpdate>>,
   updateChannels: (options: {
     variables: VoucherChannelListingUpdateVariables;
-  }) => Promise<MutationFetchResult<VoucherChannelListingUpdate>>
+  }) => Promise<FetchResult<VoucherChannelListingUpdate>>
 ) {
   return async (formData: VoucherDetailsPageFormData) => {
     const { id } = voucher;

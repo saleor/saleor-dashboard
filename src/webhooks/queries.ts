@@ -1,6 +1,6 @@
+import { gql } from "@apollo/client";
 import { webhooksFragment } from "@saleor/fragments/webhooks";
 import makeQuery from "@saleor/hooks/makeQuery";
-import gql from "graphql-tag";
 
 import {
   WebhookDetails,

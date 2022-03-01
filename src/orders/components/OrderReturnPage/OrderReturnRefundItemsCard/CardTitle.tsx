@@ -1,8 +1,7 @@
 import { Typography } from "@material-ui/core";
 import DefaultCardTitle from "@saleor/components/CardTitle";
-import { StatusType } from "@saleor/components/StatusChip/types";
-import StatusLabel from "@saleor/components/StatusLabel";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles, Pill } from "@saleor/macaw-ui";
+import { StatusType } from "@saleor/types";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import camelCase from "lodash/camelCase";
 import React from "react";
@@ -14,7 +13,8 @@ const useStyles = makeStyles(
   theme => ({
     title: {
       width: "100%",
-      display: "flex"
+      display: "flex",
+      justifyContent: "space-between"
     },
     orderNumber: {
       display: "inline",
@@ -22,6 +22,7 @@ const useStyles = makeStyles(
     },
     warehouseName: {
       float: "right",
+      alignSelf: "center",
       color: theme.palette.text.secondary,
       margin: `auto ${theme.spacing(1)} auto auto`
     }
@@ -89,19 +90,19 @@ const selectStatus = (status: CardTitleStatus) => {
     case FulfillmentStatus.FULFILLED:
       return StatusType.SUCCESS;
     case FulfillmentStatus.REFUNDED:
-      return StatusType.NEUTRAL;
+      return StatusType.INFO;
     case FulfillmentStatus.RETURNED:
-      return StatusType.NEUTRAL;
+      return StatusType.INFO;
     case FulfillmentStatus.REPLACED:
-      return StatusType.NEUTRAL;
+      return StatusType.INFO;
     case FulfillmentStatus.REFUNDED_AND_RETURNED:
-      return StatusType.NEUTRAL;
+      return StatusType.INFO;
     case FulfillmentStatus.WAITING_FOR_APPROVAL:
-      return StatusType.ALERT;
+      return StatusType.WARNING;
     case FulfillmentStatus.CANCELED:
       return StatusType.ERROR;
     default:
-      return StatusType.ALERT;
+      return StatusType.WARNING;
   }
 };
 
@@ -130,36 +131,40 @@ const CardTitle: React.FC<CardTitleProps> = ({
   );
 
   const title = (
-    <div className={classes.title}>
+    <>
       {intl.formatMessage(messageForStatus, {
         fulfillmentName,
         quantity: totalQuantity
       })}
-      <Typography className={classes.orderNumber} variant="body1">
-        {fulfillmentName}
-      </Typography>
-      {!!warehouseName && (
-        <Typography className={classes.warehouseName} variant="caption">
-          <FormattedMessage
-            {...messages.fulfilledFrom}
-            values={{
-              warehouseName
-            }}
-          />
+      {fulfillmentName && (
+        <Typography className={classes.orderNumber} variant="body1">
+          {fulfillmentName}
         </Typography>
       )}
-    </div>
+    </>
   );
 
   return (
     <DefaultCardTitle
       toolbar={toolbar}
       title={
-        withStatus ? (
-          <StatusLabel label={title} status={selectStatus(status)} />
-        ) : (
-          title
-        )
+        <div className={classes.title}>
+          {withStatus ? (
+            <Pill label={title} color={selectStatus(status)} />
+          ) : (
+            title
+          )}
+          {!!warehouseName && (
+            <Typography className={classes.warehouseName} variant="caption">
+              <FormattedMessage
+                {...messages.fulfilledFrom}
+                values={{
+                  warehouseName
+                }}
+              />
+            </Typography>
+          )}
+        </div>
       }
     />
   );

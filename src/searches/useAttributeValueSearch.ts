@@ -1,7 +1,7 @@
+import { gql } from "@apollo/client";
 import { attributeValueFragment } from "@saleor/fragments/attributes";
 import { pageInfoFragment } from "@saleor/fragments/pageInfo";
 import makeSearch from "@saleor/hooks/makeSearch";
-import gql from "graphql-tag";
 
 import {
   SearchAttributeValues,

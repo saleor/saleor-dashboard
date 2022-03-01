@@ -147,7 +147,7 @@ filterTests({ definedTags: ["all"] }, () => {
     it("should be able to delete category. TC: SALEOR_0206", () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
 
-      createCategoryRequest({ name: categoryName }).then(categoryResp => {
+      createCategory({ name: categoryName }).then(categoryResp => {
         cy.visit(categoryDetailsUrl(categoryResp.id))
           .get(BUTTON_SELECTORS.deleteButton)
           .click()
@@ -163,7 +163,7 @@ filterTests({ definedTags: ["all"] }, () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
       const updatedName = `${startsWith}updatedCategory`;
 
-      createCategoryRequest({ name: categoryName })
+      createCategory({ name: categoryName })
         .then(categoryResp => {
           cy.visitAndWaitForProgressBarToDisappear(
             categoryDetailsUrl(categoryResp.id)
@@ -185,10 +185,10 @@ filterTests({ definedTags: ["all"] }, () => {
       let firstCategory;
       let secondCategory;
 
-      createCategoryRequest({ name: firstCategoryName }).then(categoryResp => {
+      createCategory({ name: firstCategoryName }).then(categoryResp => {
         firstCategory = categoryResp;
       });
-      createCategoryRequest({ name: secondCategoryName }).then(categoryResp => {
+      createCategory({ name: secondCategoryName }).then(categoryResp => {
         secondCategory = categoryResp;
         cy.visit(urlList.categories)
           .searchInTable(startsWith)
@@ -215,7 +215,7 @@ filterTests({ definedTags: ["all"] }, () => {
       let subCategory;
       let mainCategory;
 
-      createCategoryRequest({ name: mainCategoryName })
+      createCategory({ name: mainCategoryName })
         .then(categoryResp => {
           mainCategory = categoryResp;
           createCategoryRequest({

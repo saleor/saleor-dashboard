@@ -13,6 +13,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import { InvoiceFragment } from "@saleor/fragments/types/InvoiceFragment";
 import { buttonMessages } from "@saleor/intl";
 import { Button, makeStyles } from "@saleor/macaw-ui";
+import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -86,7 +87,9 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
         }
       />
       <CardContent
-        className={!!generatedInvoices?.length && classes.cardContentTable}
+        className={classNames({
+          [classes.cardContentTable]: generatedInvoices?.length
+        })}
       >
         {!generatedInvoices ? (
           <Skeleton />

@@ -177,5 +177,5 @@
       }
     ]
   },
-  "ignorePatterns": ["node_modules/", "**/types/**/*"]
+  "ignorePatterns": ["node_modules/", "**/types/**/*", "type-policies.ts"]
 }

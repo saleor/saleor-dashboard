@@ -1,5 +1,5 @@
+import { gql } from "@apollo/client";
 import { accountErrorFragment } from "@saleor/fragments/errors";
-import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
 import {
