@@ -117,11 +117,12 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
 
   React.useEffect(() => {
     const warehousesAvailability = warehouses?.map(warehouse => {
-      let linesAvailable = 0;
-
       if (!order?.lines) {
         return undefined;
       }
+
+      let linesAvailable = 0;
+
       order.lines.forEach(line => {
         if (
           line?.variant?.stocks?.find(
