@@ -138,9 +138,11 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
       };
     });
 
-    const defaultWarehouse = warehousesAvailability?.reduce((prev, curr) =>
-      curr.linesAvailable > prev.linesAvailable ? curr : prev
-    ).warehouse;
+    const defaultWarehouse = order?.lines
+      ? warehousesAvailability?.reduce((prev, curr) =>
+          curr.linesAvailable > prev.linesAvailable ? curr : prev
+        ).warehouse
+      : undefined;
     setFulfillmentWarehouse(defaultWarehouse);
   }, [warehousesData, warehousesLoading]);
 
