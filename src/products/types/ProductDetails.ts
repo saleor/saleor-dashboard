@@ -30,11 +30,11 @@ export interface ProductDetails_product_attributes_attribute_choices_edges_node 
   slug: string | null;
   file: ProductDetails_product_attributes_attribute_choices_edges_node_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
   value: string | null;
+  richText: any | null;
 }
 
 export interface ProductDetails_product_attributes_attribute_choices_edges {
@@ -74,11 +74,11 @@ export interface ProductDetails_product_attributes_values {
   slug: string | null;
   file: ProductDetails_product_attributes_values_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
   value: string | null;
+  richText: any | null;
 }
 
 export interface ProductDetails_product_attributes {
@@ -108,11 +108,11 @@ export interface ProductDetails_product_productType_variantAttributes_choices_ed
   slug: string | null;
   file: ProductDetails_product_productType_variantAttributes_choices_edges_node_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
   value: string | null;
+  richText: any | null;
 }
 
 export interface ProductDetails_product_productType_variantAttributes_choices_edges {

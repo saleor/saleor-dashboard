@@ -146,6 +146,7 @@ const productListQuery = gql`
     $channel: String
     $sort: ProductOrder
     $hasChannel: Boolean!
+    $hasSelectedAttributes: Boolean!
   ) {
     products(
       before: $before
@@ -160,7 +161,7 @@ const productListQuery = gql`
         node {
           ...ProductFragment
           updatedAt
-          attributes {
+          attributes @include(if: $hasSelectedAttributes) {
             attribute {
               id
             }

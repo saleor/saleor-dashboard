@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 import {
-  attributeValueFragment,
+  attributeValueDetailsFragment,
   attributeValueListFragment
 } from "./attributes";
 import { metadataFragment } from "./metadata";
@@ -124,7 +124,7 @@ export const productFragment = gql`
 `;
 
 export const productVariantAttributesFragment = gql`
-  ${attributeValueFragment}
+  ${attributeValueDetailsFragment}
   ${attributeValueListFragment}
   fragment ProductVariantAttributesFragment on Product {
     id
@@ -147,7 +147,7 @@ export const productVariantAttributesFragment = gql`
         }
       }
       values {
-        ...AttributeValueFragment
+        ...AttributeValueDetailsFragment
       }
     }
     productType {
@@ -275,14 +275,14 @@ export const variantAttributeFragment = gql`
 `;
 
 export const selectedVariantAttributeFragment = gql`
-  ${attributeValueFragment}
+  ${attributeValueDetailsFragment}
   ${variantAttributeFragment}
   fragment SelectedVariantAttributeFragment on SelectedAttribute {
     attribute {
       ...VariantAttributeFragment
     }
     values {
-      ...AttributeValueFragment
+      ...AttributeValueDetailsFragment
     }
   }
 `;

@@ -90,7 +90,6 @@ export interface ProductList_products_edges_node_attributes_values {
   slug: string | null;
   file: ProductList_products_edges_node_attributes_values_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
@@ -147,4 +146,5 @@ export interface ProductListVariables {
   channel?: string | null;
   sort?: ProductOrder | null;
   hasChannel: boolean;
+  hasSelectedAttributes: boolean;
 }

@@ -42,11 +42,11 @@ export interface ProductVariant_selectionAttributes_attribute_choices_edges_node
   slug: string | null;
   file: ProductVariant_selectionAttributes_attribute_choices_edges_node_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
   value: string | null;
+  richText: any | null;
 }
 
 export interface ProductVariant_selectionAttributes_attribute_choices_edges {
@@ -86,11 +86,11 @@ export interface ProductVariant_selectionAttributes_values {
   slug: string | null;
   file: ProductVariant_selectionAttributes_values_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
   value: string | null;
+  richText: any | null;
 }
 
 export interface ProductVariant_selectionAttributes {
@@ -120,11 +120,11 @@ export interface ProductVariant_nonSelectionAttributes_attribute_choices_edges_n
   slug: string | null;
   file: ProductVariant_nonSelectionAttributes_attribute_choices_edges_node_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
   value: string | null;
+  richText: any | null;
 }
 
 export interface ProductVariant_nonSelectionAttributes_attribute_choices_edges {
@@ -164,11 +164,11 @@ export interface ProductVariant_nonSelectionAttributes_values {
   slug: string | null;
   file: ProductVariant_nonSelectionAttributes_values_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
   value: string | null;
+  richText: any | null;
 }
 
 export interface ProductVariant_nonSelectionAttributes {
