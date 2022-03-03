@@ -28,6 +28,7 @@ import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { getMutationErrors, maybe } from "../../../misc";
+import { Warehouse } from "../OrderChangeWarehouseDialog/types";
 import OrderCustomer from "../OrderCustomer";
 import OrderCustomerNote from "../OrderCustomerNote";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
@@ -65,6 +66,7 @@ export interface OrderDetailsPageProps {
   }>;
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
+  selectedWarehouse?: Warehouse;
   onOrderLineAdd?: () => void;
   onOrderLineChange?: (
     id: string,
@@ -91,6 +93,7 @@ export interface OrderDetailsPageProps {
   onInvoiceClick(invoiceId: string);
   onInvoiceGenerate();
   onInvoiceSend(invoiceId: string);
+  onWarehouseChange?();
   onSubmit(data: MetadataFormData): SubmitPromise;
 }
 
@@ -115,6 +118,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     order,
     shop,
     saveButtonBarState,
+    selectedWarehouse,
     onBack,
     onBillingAddressEdit,
     onFulfillmentApprove,
@@ -137,6 +141,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onOrderLineChange,
     onOrderLineRemove,
     onShippingMethodEdit,
+    onWarehouseChange,
     onSubmit
   } = props;
   const classes = useStyles(props);
@@ -243,6 +248,8 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                     notAllowedToFulfillUnpaid={notAllowedToFulfillUnpaid}
                     lines={unfulfilled}
                     onFulfill={onOrderFulfill}
+                    onWarehouseChange={onWarehouseChange}
+                    selectedWarehouse={selectedWarehouse}
                   />
                 ) : (
                   <>

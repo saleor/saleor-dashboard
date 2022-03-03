@@ -112,11 +112,30 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   const [fulfillmentWarehouse, setFulfillmentWarehouse] = React.useState<
     Warehouse
   >(null);
+
   React.useEffect(() => {
-    // @TODO this is wip
-    // exact logic for determining default
-    // warehouse will be added in future PR
-    setFulfillmentWarehouse(warehouses?.[0]);
+    const warehousesAvailability = warehouses?.map(warehouse => {
+      if (!order?.lines) {
+        return undefined;
+      }
+
+      const linesAvailable = order.lines.filter(line =>
+        line?.variant?.stocks?.find(
+          stock => stock.warehouse.id === warehouse.id
+        )
+      ).length;
+
+      return {
+        warehouse,
+        linesAvailable
+      };
+    });
+    const defaultWarehouse = order?.lines
+      ? warehousesAvailability?.reduce((prev, curr) =>
+          curr.linesAvailable > prev.linesAvailable ? curr : prev
+        ).warehouse
+      : undefined;
+    setFulfillmentWarehouse(defaultWarehouse);
   }, [warehousesData, warehousesLoading]);
 
   const {
@@ -183,6 +202,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
           ]
         )}
         shippingMethods={data?.order?.shippingMethods || []}
+        selectedWarehouse={fulfillmentWarehouse}
         onOrderCancel={() => openModal("cancel")}
         onOrderFulfill={() => navigate(orderFulfillUrl(id))}
         onFulfillmentApprove={fulfillmentId =>
@@ -229,6 +249,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
           })
         }
         onInvoiceSend={id => openModal("invoice-send", { id })}
+        onWarehouseChange={() => openModal("change-warehouse")}
         onSubmit={handleSubmit}
       />
       <OrderCannotCancelOrderDialog
