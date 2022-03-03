@@ -1,6 +1,5 @@
 import {
   Card,
-  CardActions,
   TableBody,
   TableCell,
   TableHead,
@@ -13,6 +12,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Form from "@saleor/components/Form";
+import { Grid } from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Savebar from "@saleor/components/Savebar";
@@ -105,6 +105,21 @@ const useStyles = makeStyles(
         "&&": {
           tableLayout: "fixed"
         }
+      },
+      shipmentInformationCard: {
+        padding: theme.spacing(3),
+        alignSelf: "start",
+        display: "grid",
+        gridRowGap: theme.spacing(1)
+      },
+      supportHeader: {
+        textTransform: "uppercase",
+        color: theme.palette.saleor.main[3],
+        fontWeight: 500,
+        letterSpacing: "0.1em",
+        fontSize: "12px",
+        lineHeight: "160%",
+        marginBottom: theme.spacing(2)
       }
     };
   },
@@ -227,244 +242,257 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
       <Form confirmLeave initial={initialFormData} onSubmit={handleSubmit}>
         {({ change, data, submit }) => (
           <>
-            <Card>
-              <CardTitle
-                title={intl.formatMessage(messages.itemsReadyToShip)}
-              />
-              <ResponsiveTable className={classes.table}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell className={classes.colName}>
-                      <FormattedMessage {...messages.productName} />
-                    </TableCell>
-                    <TableCell className={classes.colSku}>
-                      <FormattedMessage {...messages.sku} />
-                    </TableCell>
-                    {warehouses?.map(warehouse => (
-                      <TableCell
-                        key={warehouse.id}
-                        className={classNames(
-                          classes.colQuantity,
-                          classes.colQuantityHeader
-                        )}
-                      >
-                        {warehouse.name}
+            <Grid>
+              <Card>
+                <CardTitle
+                  title={intl.formatMessage(messages.itemsReadyToShip)}
+                />
+                <ResponsiveTable className={classes.table}>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell className={classes.colName}>
+                        <FormattedMessage {...messages.productName} />
                       </TableCell>
-                    ))}
-                    <TableCell className={classes.colQuantityTotal}>
-                      <FormattedMessage {...messages.quantityToFulfill} />
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {renderCollection(
-                    getToFulfillOrderLines(order?.lines),
-                    (
-                      line: OrderFulfillDataQuery["order"]["lines"][0],
-                      lineIndex
-                    ) => {
-                      if (!line) {
-                        return (
-                          <TableRow key={lineIndex}>
-                            <TableCellAvatar className={classes.colName}>
-                              <Skeleton />
-                            </TableCellAvatar>
-                            <TableCell className={classes.colSku}>
-                              <Skeleton />
-                            </TableCell>
-                            {warehouses?.map(warehouse => (
-                              <TableCell
-                                className={classes.colQuantity}
-                                key={warehouse.id}
-                              >
+                      <TableCell className={classes.colSku}>
+                        <FormattedMessage {...messages.sku} />
+                      </TableCell>
+                      {warehouses?.map(warehouse => (
+                        <TableCell
+                          key={warehouse.id}
+                          className={classNames(
+                            classes.colQuantity,
+                            classes.colQuantityHeader
+                          )}
+                        >
+                          {warehouse.name}
+                        </TableCell>
+                      ))}
+                      <TableCell className={classes.colQuantityTotal}>
+                        <FormattedMessage {...messages.quantityToFulfill} />
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {renderCollection(
+                      getToFulfillOrderLines(order?.lines),
+                      (line: OrderFulfillDataQuery["order"]["lines"][0], lineIndex) => {
+                        if (!line) {
+                          return (
+                            <TableRow key={lineIndex}>
+                              <TableCellAvatar className={classes.colName}>
+                                <Skeleton />
+                              </TableCellAvatar>
+                              <TableCell className={classes.colSku}>
                                 <Skeleton />
                               </TableCell>
-                            ))}
-                            <TableCell className={classes.colQuantityTotal}>
-                              {" "}
-                              <Skeleton />
+                              {warehouses?.map(warehouse => (
+                                <TableCell
+                                  className={classes.colQuantity}
+                                  key={warehouse.id}
+                                >
+                                  <Skeleton />
+                                </TableCell>
+                              ))}
+                              <TableCell className={classes.colQuantityTotal}>
+                                {" "}
+                                <Skeleton />
+                              </TableCell>
+                            </TableRow>
+                          );
+                        }
+
+                        const remainingQuantity = line.quantityToFulfill;
+                        const quantityToFulfill = formsetData[
+                          lineIndex
+                        ].value?.reduce(
+                          (quantityToFulfill, lineInput) =>
+                            quantityToFulfill + (lineInput.quantity || 0),
+                          0
+                        );
+                        const overfulfill =
+                          remainingQuantity < quantityToFulfill;
+                        const isPreorder = !!line.variant?.preorder;
+
+                        return (
+                          <TableRow key={line.id}>
+                            <TableCellAvatar
+                              className={classes.colName}
+                              thumbnail={line?.thumbnail?.url}
+                            >
+                              {line.productName}
+                              <Typography
+                                color="textSecondary"
+                                variant="caption"
+                              >
+                                {line.variant?.attributes
+                                  ?.map(attribute =>
+                                    attribute.values
+                                      .map(
+                                        attributeValue => attributeValue.name
+                                      )
+                                      .join(", ")
+                                  )
+                                  ?.join(" / ")}
+                              </Typography>
+                            </TableCellAvatar>
+                            <TableCell className={classes.colSku}>
+                              {line.variant?.sku}
+                            </TableCell>
+                            {warehouses?.map(warehouse => {
+                              if (isPreorder) {
+                                return (
+                                  <TableCell
+                                    key="skeleton"
+                                    className={classNames(
+                                      classes.colQuantity,
+                                      classes.error
+                                    )}
+                                  />
+                                );
+                              }
+
+                              const warehouseStock = line.variant?.stocks?.find(
+                                stock => stock.warehouse.id === warehouse.id
+                              );
+                              const formsetStock = formsetData[
+                                lineIndex
+                              ].value.find(
+                                line => line.warehouse === warehouse.id
+                              );
+
+                              if (!warehouseStock) {
+                                return (
+                                  <TableCell
+                                    key="skeleton"
+                                    className={classNames(
+                                      classes.colQuantity,
+                                      classes.error
+                                    )}
+                                  >
+                                    <FormattedMessage {...messages.noStock} />
+                                  </TableCell>
+                                );
+                              }
+
+                              const warehouseAllocation = line.allocations.find(
+                                allocation =>
+                                  allocation.warehouse.id === warehouse.id
+                              );
+                              const allocatedQuantityForLine =
+                                warehouseAllocation?.quantity || 0;
+                              const availableQuantity =
+                                warehouseStock.quantity -
+                                warehouseStock.quantityAllocated +
+                                allocatedQuantityForLine;
+
+                              return (
+                                <TableCell
+                                  className={classes.colQuantity}
+                                  key={warehouseStock.id}
+                                >
+                                  <TextField
+                                    type="number"
+                                    inputProps={{
+                                      className: classNames(
+                                        classes.quantityInnerInput,
+                                        {
+                                          [classes.quantityInnerInputNoRemaining]: !line
+                                            .variant.trackInventory
+                                        }
+                                      ),
+                                      max: (
+                                        line.variant.trackInventory &&
+                                        availableQuantity
+                                      ).toString(),
+                                      min: 0,
+                                      style: { textAlign: "right" }
+                                    }}
+                                    fullWidth
+                                    value={formsetStock.quantity}
+                                    onChange={event =>
+                                      formsetChange(
+                                        line.id,
+                                        update(
+                                          {
+                                            quantity: parseInt(
+                                              event.target.value,
+                                              10
+                                            ),
+                                            warehouse: warehouse.id
+                                          },
+                                          formsetData[lineIndex].value,
+                                          (a, b) => a.warehouse === b.warehouse
+                                        )
+                                      )
+                                    }
+                                    error={isStockError(
+                                      overfulfill,
+                                      formsetStock,
+                                      availableQuantity,
+                                      warehouse,
+                                      line,
+                                      errors
+                                    )}
+                                    InputProps={{
+                                      endAdornment: line.variant
+                                        .trackInventory && (
+                                        <div
+                                          className={classes.remainingQuantity}
+                                        >
+                                          / {availableQuantity}
+                                        </div>
+                                      )
+                                    }}
+                                  />
+                                </TableCell>
+                              );
+                            })}
+
+                            <TableCell
+                              className={classes.colQuantityTotal}
+                              key="total"
+                            >
+                              {!isPreorder && (
+                                <>
+                                  <span
+                                    className={classNames({
+                                      [classes.error]: overfulfill,
+                                      [classes.full]:
+                                        remainingQuantity <= quantityToFulfill
+                                    })}
+                                  >
+                                    {quantityToFulfill}
+                                  </span>{" "}
+                                  / {remainingQuantity}
+                                </>
+                              )}
                             </TableCell>
                           </TableRow>
                         );
                       }
-
-                      const remainingQuantity = line.quantityToFulfill;
-                      const quantityToFulfill = formsetData[
-                        lineIndex
-                      ].value?.reduce(
-                        (quantityToFulfill, lineInput) =>
-                          quantityToFulfill + (lineInput.quantity || 0),
-                        0
-                      );
-                      const overfulfill = remainingQuantity < quantityToFulfill;
-                      const isPreorder = !!line.variant?.preorder;
-
-                      return (
-                        <TableRow key={line.id}>
-                          <TableCellAvatar
-                            className={classes.colName}
-                            thumbnail={line?.thumbnail?.url}
-                          >
-                            {line.productName}
-                            <Typography color="textSecondary" variant="caption">
-                              {line.variant?.attributes
-                                ?.map(attribute =>
-                                  attribute.values
-                                    .map(attributeValue => attributeValue.name)
-                                    .join(", ")
-                                )
-                                ?.join(" / ")}
-                            </Typography>
-                          </TableCellAvatar>
-                          <TableCell className={classes.colSku}>
-                            {line.variant?.sku}
-                          </TableCell>
-                          {warehouses?.map(warehouse => {
-                            if (isPreorder) {
-                              return (
-                                <TableCell
-                                  key="skeleton"
-                                  className={classNames(
-                                    classes.colQuantity,
-                                    classes.error
-                                  )}
-                                />
-                              );
-                            }
-
-                            const warehouseStock = line.variant?.stocks?.find(
-                              stock => stock.warehouse.id === warehouse.id
-                            );
-                            const formsetStock = formsetData[
-                              lineIndex
-                            ].value.find(
-                              line => line.warehouse === warehouse.id
-                            );
-
-                            if (!warehouseStock) {
-                              return (
-                                <TableCell
-                                  key="skeleton"
-                                  className={classNames(
-                                    classes.colQuantity,
-                                    classes.error
-                                  )}
-                                >
-                                  <FormattedMessage {...messages.noStock} />
-                                </TableCell>
-                              );
-                            }
-
-                            const warehouseAllocation = line.allocations.find(
-                              allocation =>
-                                allocation.warehouse.id === warehouse.id
-                            );
-                            const allocatedQuantityForLine =
-                              warehouseAllocation?.quantity || 0;
-                            const availableQuantity =
-                              warehouseStock.quantity -
-                              warehouseStock.quantityAllocated +
-                              allocatedQuantityForLine;
-
-                            return (
-                              <TableCell
-                                className={classes.colQuantity}
-                                key={warehouseStock.id}
-                              >
-                                <TextField
-                                  type="number"
-                                  inputProps={{
-                                    className: classNames(
-                                      classes.quantityInnerInput,
-                                      {
-                                        [classes.quantityInnerInputNoRemaining]: !line
-                                          .variant.trackInventory
-                                      }
-                                    ),
-                                    max: (
-                                      line.variant.trackInventory &&
-                                      availableQuantity
-                                    ).toString(),
-                                    min: 0,
-                                    style: { textAlign: "right" }
-                                  }}
-                                  fullWidth
-                                  value={formsetStock.quantity}
-                                  onChange={event =>
-                                    formsetChange(
-                                      line.id,
-                                      update(
-                                        {
-                                          quantity: parseInt(
-                                            event.target.value,
-                                            10
-                                          ),
-                                          warehouse: warehouse.id
-                                        },
-                                        formsetData[lineIndex].value,
-                                        (a, b) => a.warehouse === b.warehouse
-                                      )
-                                    )
-                                  }
-                                  error={isStockError(
-                                    overfulfill,
-                                    formsetStock,
-                                    availableQuantity,
-                                    warehouse,
-                                    line,
-                                    errors
-                                  )}
-                                  InputProps={{
-                                    endAdornment: line.variant
-                                      .trackInventory && (
-                                      <div
-                                        className={classes.remainingQuantity}
-                                      >
-                                        / {availableQuantity}
-                                      </div>
-                                    )
-                                  }}
-                                />
-                              </TableCell>
-                            );
-                          })}
-
-                          <TableCell
-                            className={classes.colQuantityTotal}
-                            key="total"
-                          >
-                            {!isPreorder && (
-                              <>
-                                <span
-                                  className={classNames({
-                                    [classes.error]: overfulfill,
-                                    [classes.full]:
-                                      remainingQuantity <= quantityToFulfill
-                                  })}
-                                >
-                                  {quantityToFulfill}
-                                </span>{" "}
-                                / {remainingQuantity}
-                              </>
-                            )}
-                          </TableCell>
-                        </TableRow>
-                      );
-                    }
-                  )}
-                </TableBody>
-              </ResponsiveTable>
-              {shopSettings?.fulfillmentAutoApprove && (
-                <CardActions className={classes.actionBar}>
+                    )}
+                  </TableBody>
+                </ResponsiveTable>
+              </Card>
+              <Card className={classes.shipmentInformationCard}>
+                <Typography className={classes.supportHeader}>
+                  <FormattedMessage {...messages.shipmentInformation} />
+                </Typography>
+                <TextField
+                  label={intl.formatMessage(messages.trackingNumber)}
+                  fullWidth
+                />
+                {shopSettings?.fulfillmentAutoApprove && (
                   <ControlledCheckbox
                     checked={data.sendInfo}
                     label={intl.formatMessage(messages.sentShipmentDetails)}
                     name="sendInfo"
                     onChange={change}
                   />
-                </CardActions>
-              )}
-            </Card>
+                )}
+              </Card>
+            </Grid>
+
             <Savebar
               disabled={!shouldEnableSave()}
               labels={{

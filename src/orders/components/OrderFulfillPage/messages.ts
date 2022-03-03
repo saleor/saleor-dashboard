@@ -44,5 +44,13 @@ export const messages = defineMessages({
   sentShipmentDetails: {
     defaultMessage: "Send shipment details to customer",
     description: "checkbox label"
+  },
+  shipmentInformation: {
+    defaultMessage: "Shipment information",
+    description: "Shipment information card header"
+  },
+  trackingNumber: {
+    defaultMessage: "Tracking number",
+    description: "Tracking number input label"
   }
 });
