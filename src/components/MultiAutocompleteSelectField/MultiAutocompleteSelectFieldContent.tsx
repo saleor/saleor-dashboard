@@ -39,7 +39,7 @@ export interface MultiAutocompleteSelectFieldContentProps
   choices: MultiAutocompleteChoiceType[];
   displayCustomValue: boolean;
   displayValues: MultiAutocompleteChoiceType[];
-  getItemProps: (options: GetItemPropsOptions) => void;
+  getItemProps: (options: GetItemPropsOptions<string>) => any;
   highlightedIndex: number;
   inputValue: string;
 }

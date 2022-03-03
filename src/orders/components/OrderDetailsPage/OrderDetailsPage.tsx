@@ -15,7 +15,6 @@ import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
 import OrderChannelSectionCard from "@saleor/orders/components/OrderChannelSectionCard";
-import { UserPermissionProps } from "@saleor/types";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
@@ -55,7 +54,7 @@ const useStyles = makeStyles(
   }
 );
 
-export interface OrderDetailsPageProps extends UserPermissionProps {
+export interface OrderDetailsPageProps {
   order: OrderDetails_order;
   shop: OrderDetails_shop;
   shippingMethods?: Array<{
@@ -114,7 +113,6 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     order,
     shop,
     saveButtonBarState,
-    userPermissions,
     onBack,
     onBillingAddressEdit,
     onFulfillmentApprove,
@@ -299,7 +297,6 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   canEditAddresses={canEditAddresses}
                   canEditCustomer={false}
                   order={order}
-                  userPermissions={userPermissions}
                   onBillingAddressEdit={onBillingAddressEdit}
                   onShippingAddressEdit={onShippingAddressEdit}
                   onProfileView={onProfileView}

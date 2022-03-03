@@ -2,7 +2,6 @@ import {
   Card,
   CardContent,
   Checkbox,
-  Table,
   TableBody,
   TableCell,
   TableHead,
@@ -14,7 +13,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { FormsetChange } from "@saleor/hooks/useFormset";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import {
   OrderDetails_order,
@@ -47,6 +46,9 @@ const useStyles = makeStyles(
         marginTop: theme.spacing(2)
       },
 
+      quantityField: {
+        minWidth: "80px"
+      },
       quantityInnerInput: {
         ...inputPadding
       },
@@ -127,7 +129,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
       <CardContent className={classes.cartContent}>
         <MaximalButton onClick={onSetMaxQuantity} />
       </CardContent>
-      <Table>
+      <ResponsiveTable>
         <TableHead>
           <TableRow>
             <TableCell>
@@ -206,6 +208,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                   <TableCell align="right">
                     {isReturnable && (
                       <TextField
+                        className={classes.quantityField}
                         type="number"
                         inputProps={{
                           className: classes.quantityInnerInput,
@@ -253,7 +256,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
             )
           )}
         </TableBody>
-      </Table>
+      </ResponsiveTable>
     </Card>
   );
 };

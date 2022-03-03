@@ -10,6 +10,9 @@ export const useCardActionsStyles = makeStyles(
       padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
       flexDirection: ({ buttonPosition }: CustomerGiftCardsCardActionsProps) =>
         buttonPosition === "left" ? "row" : "row-reverse"
+    },
+    previewPill: {
+      marginLeft: theme.spacing(1)
     }
   }),
   { name: "CustomerGiftCardsCard" }

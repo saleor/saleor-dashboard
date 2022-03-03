@@ -1,3 +1,4 @@
+import { useUserPermissions } from "@saleor/auth/hooks/useUserPermissions";
 import { User_userPermissions } from "@saleor/fragments/types/User";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import React from "react";
@@ -16,17 +17,19 @@ export function hasPermissions(
 export interface RequirePermissionsProps {
   children: React.ReactNode | React.ReactNodeArray;
   requiredPermissions: PermissionEnum[];
-  userPermissions: User_userPermissions[];
 }
 
 const RequirePermissions: React.FC<RequirePermissionsProps> = ({
   children,
-  requiredPermissions,
-  userPermissions
-}) =>
-  userPermissions && hasPermissions(userPermissions, requiredPermissions) ? (
+  requiredPermissions
+}) => {
+  const userPermissions = useUserPermissions();
+
+  return userPermissions &&
+    hasPermissions(userPermissions, requiredPermissions) ? (
     <>{children}</>
   ) : null;
+};
 
 RequirePermissions.displayName = "RequirePermissions";
 export default RequirePermissions;

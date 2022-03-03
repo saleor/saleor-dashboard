@@ -1,6 +1,7 @@
 import { createFilterStructure } from "@saleor/customers/components/CustomerListPage";
 import { CustomerListUrlFilters } from "@saleor/customers/urls";
 import { date } from "@saleor/fixtures";
+import { PermissionEnum } from "@saleor/types/globalTypes";
 import { getFilterQueryParams } from "@saleor/utils/filters";
 import { stringifyQs } from "@saleor/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
@@ -31,22 +32,37 @@ describe("Filtering query params", () => {
 describe("Filtering URL params", () => {
   const intl = createIntl(config);
 
-  const filters = createFilterStructure(intl, {
-    joined: {
-      active: false,
-      value: {
-        max: date.to,
-        min: date.from
+  const filters = createFilterStructure(
+    intl,
+    {
+      joined: {
+        active: false,
+        value: {
+          max: date.to,
+          min: date.from
+        }
+      },
+      numberOfOrders: {
+        active: false,
+        value: {
+          max: "5",
+          min: "1"
+        }
       }
     },
-    numberOfOrders: {
-      active: false,
-      value: {
-        max: "5",
-        min: "1"
+    [
+      {
+        code: PermissionEnum.MANAGE_USERS,
+        name: "Manage customers.",
+        __typename: "UserPermission"
+      },
+      {
+        code: PermissionEnum.MANAGE_ORDERS,
+        name: "Manage orders..",
+        __typename: "UserPermission"
       }
-    }
-  });
+    ]
+  );
 
   it("should be empty if no active filters", () => {
     const filterQueryParams = getFilterQueryParams(

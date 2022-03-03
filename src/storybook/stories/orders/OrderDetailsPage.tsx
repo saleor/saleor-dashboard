@@ -1,5 +1,4 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
-import { adminUserPermissions } from "@saleor/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -43,8 +42,7 @@ const props: Omit<OrderDetailsPageProps, "classes"> = {
   onSubmit: () => undefined,
   order,
   shop: shopFixture,
-  saveButtonBarState: "default",
-  userPermissions: adminUserPermissions
+  saveButtonBarState: "default"
 };
 
 storiesOf("Views / Orders / Order details", module)

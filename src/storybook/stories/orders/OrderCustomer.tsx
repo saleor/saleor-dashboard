@@ -1,12 +1,12 @@
-import { adminUserPermissions } from "@saleor/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import OrderCustomer, {
+import OrderCustomerComponent, {
   OrderCustomerProps
 } from "../../../orders/components/OrderCustomer";
 import { clients, order as orderFixture } from "../../../orders/fixtures";
 import Decorator from "../../Decorator";
+import { MockedUserProvider } from "../customers/MockedUserProvider";
 
 const order = orderFixture("");
 
@@ -19,8 +19,17 @@ const props: Omit<OrderCustomerProps, "classes"> = {
   onProfileView: () => undefined,
   onShippingAddressEdit: undefined,
   order,
-  userPermissions: adminUserPermissions,
   users: clients
+};
+
+const OrderCustomer = props => {
+  const customPermissions = props?.customPermissions;
+
+  return (
+    <MockedUserProvider customPermissions={customPermissions}>
+      <OrderCustomerComponent {...props} />
+    </MockedUserProvider>
+  );
 };
 
 storiesOf("Orders / OrderCustomer", module)
@@ -40,5 +49,5 @@ storiesOf("Orders / OrderCustomer", module)
     <OrderCustomer {...props} canEditAddresses={true} canEditCustomer={true} />
   ))
   .add("no user permissions", () => (
-    <OrderCustomer {...props} userPermissions={[]} />
+    <OrderCustomer {...props} customPermissions={[]} />
   ));
