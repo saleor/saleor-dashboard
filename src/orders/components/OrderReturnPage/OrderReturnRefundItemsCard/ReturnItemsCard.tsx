@@ -22,9 +22,9 @@ import { renderCollection } from "@saleor/misc";
 import React, { CSSProperties } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
+import OrderCardTitle from "../../OrderCardTitle";
 import { FormsetQuantityData, FormsetReplacementData } from "../form";
 import { getById } from "../utils";
-import CardTitle from "./CardTitle";
 import MaximalButton from "./MaximalButton";
 import ProductErrorCell from "./ProductErrorCell";
 
@@ -120,7 +120,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
 
   return (
     <Card>
-      <CardTitle
+      <OrderCardTitle
         orderNumber={order?.number}
         lines={lines}
         fulfillmentOrder={fulfillment?.fulfillmentOrder}

@@ -20,6 +20,7 @@ const order = orderFixture(placeholderImage);
 
 const props: Omit<OrderDetailsPageProps, "classes"> = {
   disabled: false,
+  selectedWarehouse: undefined,
   onBack: () => undefined,
   onBillingAddressEdit: undefined,
   onFulfillmentApprove: () => undefined,
@@ -39,6 +40,7 @@ const props: Omit<OrderDetailsPageProps, "classes"> = {
   onProductClick: undefined,
   onProfileView: () => undefined,
   onShippingAddressEdit: undefined,
+  onWarehouseChange: undefined,
   onSubmit: () => undefined,
   order,
   shop: shopFixture,
