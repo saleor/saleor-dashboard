@@ -41,7 +41,7 @@ export interface SingleAutocompleteSelectFieldContentProps
   choices: Array<SingleAutocompleteChoiceType<string, string | JSX.Element>>;
   displayCustomValue: boolean;
   emptyOption: boolean;
-  getItemProps: (options: GetItemPropsOptions) => any;
+  getItemProps: (options: GetItemPropsOptions<string>) => any;
   highlightedIndex: number;
   inputValue: string;
   isCustomValueSelected: boolean;
@@ -94,7 +94,10 @@ const useStyles = makeStyles(
     },
     menuItem: {
       height: "auto",
-      whiteSpace: "normal"
+      whiteSpace: "normal",
+      '&[aria-selected="true"]': {
+        backgroundColor: theme.palette.background.default
+      }
     },
     progress: {},
     progressContainer: {

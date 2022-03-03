@@ -105,7 +105,6 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
     <DebounceAutocomplete debounceFn={fetchChoices}>
       {debounceFn => (
         <Downshift
-          defaultInputValue={displayValue}
           itemToString={() => displayValue || ""}
           onInputValueChange={value => debounceFn(value)}
           onSelect={handleChange}
@@ -177,9 +176,6 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
 
             const commonInputProps = {
               ...InputProps,
-              ...getInputProps({
-                placeholder
-              }),
               endAdornment: (
                 <div className={classes.adornment}>
                   <ArrowDropdownIcon />
@@ -188,7 +184,6 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
               error,
               id: undefined,
               onBlur: handleBlur,
-              onClick: !disabled && toggleMenu,
               onFocus: () => {
                 if (fetchOnFocus) {
                   fetchChoices(inputValue);
@@ -213,6 +208,14 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                 <TextFieldComponent
                   {...nakedInputProps}
                   InputProps={commonInputProps}
+                  // Downshift doesn't seem to be fully compatible with MUI
+                  // https://github.com/downshift-js/downshift/issues/718
+                  inputProps={{
+                    ...getInputProps({
+                      placeholder,
+                      onClick: !disabled && toggleMenu
+                    })
+                  }}
                   error={error}
                   disabled={disabled}
                   helperText={helperText}
