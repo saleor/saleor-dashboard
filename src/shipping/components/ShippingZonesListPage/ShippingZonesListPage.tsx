@@ -28,7 +28,6 @@ export interface ShippingZonesListPageProps
 const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
   defaultWeightUnit,
   disabled,
-  userPermissions,
   onBack,
   onSubmit,
   ...listProps
@@ -52,7 +51,6 @@ const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
         </div>
         <div>
           <RequirePermissions
-            userPermissions={userPermissions}
             requiredPermissions={[PermissionEnum.MANAGE_SETTINGS]}
           >
             <ShippingWeightUnitForm

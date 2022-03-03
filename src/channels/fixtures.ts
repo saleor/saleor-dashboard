@@ -1,5 +1,6 @@
 import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
 import { ProductDetails_product_channelListings } from "@saleor/products/types/ProductDetails";
+import { Money } from "@saleor/sdk/dist/apollo/types";
 import { ChannelErrorCode } from "@saleor/types/globalTypes";
 
 import { Channel_channel } from "./types/Channel";
@@ -130,7 +131,21 @@ export const channel: Channel_channel = {
   }
 };
 
-export const productChannels: ProductDetails_product_channelListings[] = [
+interface ProductDetails_product_channelListingsWithPricing
+  extends ProductDetails_product_channelListings {
+  pricing: {
+    priceRange: {
+      start: {
+        net: Money;
+      };
+      stop: {
+        net: Money;
+      };
+    };
+  };
+}
+
+export const productChannels: ProductDetails_product_channelListingsWithPricing[] = [
   {
     __typename: "ProductChannelListing",
     availableForPurchase: null,
@@ -143,21 +158,15 @@ export const productChannels: ProductDetails_product_channelListings[] = [
     isAvailableForPurchase: false,
     isPublished: true,
     pricing: {
-      __typename: "ProductPricingInfo",
       priceRange: {
-        __typename: "TaxedMoneyRange",
         start: {
-          __typename: "TaxedMoney",
           net: {
-            __typename: "Money",
             amount: 1.2,
             currency: "USD"
           }
         },
         stop: {
-          __typename: "TaxedMoney",
           net: {
-            __typename: "Money",
             amount: 3.5,
             currency: "USD"
           }
@@ -179,21 +188,15 @@ export const productChannels: ProductDetails_product_channelListings[] = [
     isAvailableForPurchase: false,
     isPublished: false,
     pricing: {
-      __typename: "ProductPricingInfo",
       priceRange: {
-        __typename: "TaxedMoneyRange",
         start: {
-          __typename: "TaxedMoney",
           net: {
-            __typename: "Money",
             amount: 2.2,
             currency: "USD"
           }
         },
         stop: {
-          __typename: "TaxedMoney",
           net: {
-            __typename: "Money",
             amount: 7.1,
             currency: "USD"
           }
@@ -215,21 +218,15 @@ export const productChannels: ProductDetails_product_channelListings[] = [
     isAvailableForPurchase: false,
     isPublished: false,
     pricing: {
-      __typename: "ProductPricingInfo",
       priceRange: {
-        __typename: "TaxedMoneyRange",
         start: {
-          __typename: "TaxedMoney",
           net: {
-            __typename: "Money",
             amount: 30.1,
             currency: "USD"
           }
         },
         stop: {
-          __typename: "TaxedMoney",
           net: {
-            __typename: "Money",
             amount: 44.9,
             currency: "USD"
           }

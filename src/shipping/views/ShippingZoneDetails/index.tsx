@@ -43,16 +43,15 @@ import {
 } from "../../../misc";
 import {
   CountryCode,
+  ShippingMethodTypeEnum,
   ShippingZoneUpdateInput
 } from "../../../types/globalTypes";
 import ShippingZoneDetailsPage from "../../components/ShippingZoneDetailsPage";
 import { ShippingZoneUpdateFormData } from "../../components/ShippingZoneDetailsPage/types";
 import { useShippingZone } from "../../queries";
 import {
-  shippingPriceRatesEditUrl,
-  shippingPriceRatesUrl,
-  shippingWeightRatesEditUrl,
-  shippingWeightRatesUrl,
+  shippingRateCreateUrl,
+  shippingRateEditUrl,
   shippingZonesListUrl,
   shippingZoneUrl,
   ShippingZoneUrlDialog,
@@ -213,10 +212,12 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
           })
         }
         onDelete={() => openModal("remove")}
-        onPriceRateAdd={() => navigate(shippingPriceRatesUrl(id))}
-        onPriceRateEdit={rateId =>
-          navigate(shippingPriceRatesEditUrl(id, rateId))
+        onPriceRateAdd={() =>
+          navigate(
+            shippingRateCreateUrl(id, { type: ShippingMethodTypeEnum.PRICE })
+          )
         }
+        onPriceRateEdit={rateId => navigate(shippingRateEditUrl(id, rateId))}
         onRateRemove={rateId =>
           openModal("remove-rate", {
             id: rateId
@@ -225,10 +226,12 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
         onSubmit={handleSubmit}
         allChannels={availableChannels}
         onWarehouseAdd={() => openModal("add-warehouse")}
-        onWeightRateAdd={() => navigate(shippingWeightRatesUrl(id))}
-        onWeightRateEdit={rateId =>
-          navigate(shippingWeightRatesEditUrl(id, rateId))
+        onWeightRateAdd={() =>
+          navigate(
+            shippingRateCreateUrl(id, { type: ShippingMethodTypeEnum.WEIGHT })
+          )
         }
+        onWeightRateEdit={rateId => navigate(shippingRateEditUrl(id, rateId))}
         saveButtonBarState={updateShippingZoneOpts.status}
         shippingZone={data?.shippingZone}
         warehouses={mapEdgesToItems(searchWarehousesOpts?.data?.search) || []}

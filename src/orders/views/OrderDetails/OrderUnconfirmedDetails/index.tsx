@@ -1,4 +1,3 @@
-import { useUser } from "@saleor/auth";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useCustomerAddressesQuery } from "@saleor/customers/queries";
@@ -109,7 +108,6 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
   const order = data.order;
   const shop = data.shop;
   const navigate = useNavigator();
-  const { user } = useUser();
 
   const {
     loadMore,
@@ -201,7 +199,6 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
               ]
             )}
             shippingMethods={data?.order?.shippingMethods || []}
-            userPermissions={user?.userPermissions || []}
             onOrderCancel={() => openModal("cancel")}
             onOrderFulfill={() => navigate(orderFulfillUrl(id))}
             onFulfillmentApprove={fulfillmentId =>

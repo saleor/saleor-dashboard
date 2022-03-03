@@ -3,6 +3,7 @@ import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { AttributeReference } from "@saleor/attributes/utils/data";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
+import { AttributeValueDetailsFragment } from "@saleor/fragments/types/AttributeValueDetailsFragment";
 import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
 import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
@@ -27,8 +28,8 @@ export interface AttributeInputData {
   unit?: MeasurementUnitsEnum | null;
   variantAttributeScope?: VariantAttributeScope;
   isRequired: boolean;
-  values: AttributeValueFragment[];
-  selectedValues?: AttributeValueFragment[];
+  values: AttributeValueDetailsFragment[];
+  selectedValues?: AttributeValueDetailsFragment[];
   references?: AttributeReference[];
 }
 export type AttributeInput = FormsetAtomicData<AttributeInputData, string[]>;

@@ -2,11 +2,12 @@ import { AccountErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import CustomerDetailsPage, {
+import CustomerDetailsPageComponent, {
   CustomerDetailsPageProps
 } from "../../../customers/components/CustomerDetailsPage";
 import { customer } from "../../../customers/fixtures";
 import Decorator from "../../Decorator";
+import { MockedUserProvider } from "./MockedUserProvider";
 
 const props: Omit<CustomerDetailsPageProps, "classes"> = {
   customer,
@@ -27,6 +28,12 @@ interface CustomerDetailsPageErrors {
   lastName: string;
   note: string;
 }
+
+const CustomerDetailsPage = props => (
+  <MockedUserProvider>
+    <CustomerDetailsPageComponent {...props} />
+  </MockedUserProvider>
+);
 
 storiesOf("Views / Customers / Customer details", module)
   .addDecorator(Decorator)

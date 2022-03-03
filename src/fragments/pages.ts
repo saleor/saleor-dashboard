@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 import {
-  attributeValueFragment,
+  attributeValueDetailsFragment,
   attributeValueListFragment
 } from "./attributes";
 import { metadataFragment } from "./metadata";
@@ -16,7 +16,7 @@ export const pageFragment = gql`
 `;
 
 export const pageAttributesFragment = gql`
-  ${attributeValueFragment}
+  ${attributeValueDetailsFragment}
   ${attributeValueListFragment}
   fragment PageAttributesFragment on Page {
     attributes {
@@ -38,7 +38,7 @@ export const pageAttributesFragment = gql`
         }
       }
       values {
-        ...AttributeValueFragment
+        ...AttributeValueDetailsFragment
       }
     }
     pageType {

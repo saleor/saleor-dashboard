@@ -6,7 +6,7 @@ import React from "react";
 import { QuickSearchAction } from "./types";
 
 interface NavigatorSectionProps {
-  getItemProps: (options: GetItemPropsOptions) => any;
+  getItemProps: (options: GetItemPropsOptions<QuickSearchAction>) => any;
   highlightedIndex: number;
   label: string;
   items: QuickSearchAction[];

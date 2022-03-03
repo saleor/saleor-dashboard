@@ -7433,17 +7433,14 @@
     "context": "dialog header",
     "string": "Delete Shipping Zones"
   },
+  "src_dot_shipping_dot_views_dot_3823295269": {
+    "string": "Manage Channel Availability"
+  },
   "src_dot_shipping_dot_views_dot_725201918": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this shipping zone?} other{Are you sure you want to delete {displayQuantity} shipping zones?}}"
   },
-  "src_dot_shipping_dot_views_dot_PriceRatesCreate_dot_3823295269": {
-    "string": "Manage Channel Availability"
-  },
-  "src_dot_shipping_dot_views_dot_PriceRatesUpdate_dot_3823295269": {
-    "string": "Manage Channel Availability"
-  },
-  "src_dot_shipping_dot_views_dot_PriceRatesUpdate_dot_870815507": {
+  "src_dot_shipping_dot_views_dot_870815507": {
     "context": "unassign products from shipping method, button",
     "string": "Unassign"
   },
@@ -7458,16 +7455,6 @@
   "src_dot_shipping_dot_views_dot_ShippingZoneDetails_dot_3133838427": {
     "context": "unassign country, dialog header",
     "string": "Delete from Shipping Zone"
-  },
-  "src_dot_shipping_dot_views_dot_WeightRatesCreate_dot_3014453080": {
-    "string": "Manage Channels Availability"
-  },
-  "src_dot_shipping_dot_views_dot_WeightRatesUpdate_dot_3014453080": {
-    "string": "Manage Channels Availability"
-  },
-  "src_dot_shipping_dot_views_dot_WeightRatesUpdate_dot_870815507": {
-    "context": "unassign products from shipping method, button",
-    "string": "Unassign"
   },
   "src_dot_shipping_dot_weight": {
     "context": "error message",
