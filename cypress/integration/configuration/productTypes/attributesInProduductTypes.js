@@ -18,7 +18,7 @@ import { deleteProductsStartsWith } from "../../../support/api/utils/products/pr
 import filterTests from "../../../support/filterTests";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("As an admin I want to manage product types", () => {
+  describe("As an admin I want to manage attributes in product types", () => {
     const startsWith = "productType";
     let category;
     let channel;
@@ -28,7 +28,7 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
       deleteProductsStartsWith(startsWith);
       createAttribute({ name: startsWith }).then(resp => (attribute = resp));
-      createCategory(startsWith).then(resp => (category = resp));
+      createCategory({ name: startsWith }).then(resp => (category = resp));
       getDefaultChannel().then(resp => (channel = resp));
     });
 

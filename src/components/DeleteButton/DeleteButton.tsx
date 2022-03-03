@@ -20,11 +20,13 @@ interface DeleteButtonProps {
   onClick: () => void;
   label?: string | React.ReactNode;
   disabled?: boolean;
+  testId?: string;
 }
 
 const DeleteButton: React.FC<DeleteButtonProps> = ({
   onClick,
   label,
+  testId,
   disabled = false
 }) => {
   const classes = useStyles({});
@@ -35,7 +37,7 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({
       variant="primary"
       onClick={onClick}
       className={classes.button}
-      data-test-id="button-bar-delete"
+      data-test-id={testId ? "confirm-delete" : "button-bar-delete"}
       disabled={disabled}
     >
       {label || intl.formatMessage(buttonMessages.delete)}

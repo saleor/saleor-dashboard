@@ -13,6 +13,10 @@ import "./customCommands/sharedElementsOperations/tables";
 import "./customCommands/sharedElementsOperations/deleteElement";
 import "cypress-mailhog";
 import "cypress-file-upload";
+import "cypress-mochawesome-reporter/register";
+
+import { commandTimings } from "cypress-timings";
+commandTimings();
 
 import { urlList } from "../fixtures/urlList";
 

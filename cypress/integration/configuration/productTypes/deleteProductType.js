@@ -31,7 +31,7 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
       deleteProductsStartsWith(startsWith);
       createAttribute({ name: startsWith }).then(resp => (attribute = resp));
-      createCategory(startsWith).then(resp => (category = resp));
+      createCategory({ name: startsWith }).then(resp => (category = resp));
       getDefaultChannel().then(resp => (channel = resp));
     });
 
@@ -49,8 +49,7 @@ filterTests({ definedTags: ["all"] }, () => {
           .get(BUTTON_SELECTORS.deleteButton)
           .click()
           .addAliasToGraphRequest("ProductTypeDelete")
-          .get(SHARED_ELEMENTS.warningDialog)
-          .find(BUTTON_SELECTORS.deleteButton)
+          .get(BUTTON_SELECTORS.confirmDeleteButton)
           .click()
           .waitForRequestAndCheckIfNoErrors("@ProductTypeDelete");
         getProductType(productType.id).should("be.null");
@@ -78,13 +77,11 @@ filterTests({ definedTags: ["all"] }, () => {
             .get(BUTTON_SELECTORS.deleteButton)
             .click()
             .addAliasToGraphRequest("ProductTypeDelete")
-            .get(SHARED_ELEMENTS.warningDialog)
-            .find(BUTTON_SELECTORS.deleteButton)
+            .get(BUTTON_SELECTORS.confirmDeleteButton)
             .should("not.be.enabled")
             .get(BUTTON_SELECTORS.deleteAssignedItemsConsentCheckbox)
             .click()
-            .get(SHARED_ELEMENTS.warningDialog)
-            .find(BUTTON_SELECTORS.deleteButton)
+            .get(BUTTON_SELECTORS.confirmDeleteButton)
             .click()
             .waitForRequestAndCheckIfNoErrors("@ProductTypeDelete");
           getProductType(productType.id).should("be.null");
