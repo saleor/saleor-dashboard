@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { attributeValueFragment } from "@saleor/fragments/attributes";
+import { attributeValueDetailsFragment } from "@saleor/fragments/attributes";
 import { pageInfoFragment } from "@saleor/fragments/pageInfo";
 import makeSearch from "@saleor/hooks/makeSearch";
 
@@ -10,7 +10,7 @@ import {
 
 export const searchAttributeValues = gql`
   ${pageInfoFragment}
-  ${attributeValueFragment}
+  ${attributeValueDetailsFragment}
   query SearchAttributeValues(
     $id: ID
     $after: String
@@ -22,7 +22,7 @@ export const searchAttributeValues = gql`
       choices(after: $after, first: $first, filter: { search: $query }) {
         edges {
           node {
-            ...AttributeValueFragment
+            ...AttributeValueDetailsFragment
           }
         }
         pageInfo {

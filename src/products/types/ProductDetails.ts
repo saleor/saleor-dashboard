@@ -30,11 +30,11 @@ export interface ProductDetails_product_attributes_attribute_choices_edges_node 
   slug: string | null;
   file: ProductDetails_product_attributes_attribute_choices_edges_node_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
   value: string | null;
+  richText: any | null;
 }
 
 export interface ProductDetails_product_attributes_attribute_choices_edges {
@@ -74,11 +74,11 @@ export interface ProductDetails_product_attributes_values {
   slug: string | null;
   file: ProductDetails_product_attributes_values_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
   value: string | null;
+  richText: any | null;
 }
 
 export interface ProductDetails_product_attributes {
@@ -108,11 +108,11 @@ export interface ProductDetails_product_productType_variantAttributes_choices_ed
   slug: string | null;
   file: ProductDetails_product_productType_variantAttributes_choices_edges_node_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
   value: string | null;
+  richText: any | null;
 }
 
 export interface ProductDetails_product_productType_variantAttributes_choices_edges {
@@ -159,43 +159,9 @@ export interface ProductDetails_product_channelListings_channel {
   currencyCode: string;
 }
 
-export interface ProductDetails_product_channelListings_pricing_priceRange_start_net {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductDetails_product_channelListings_pricing_priceRange_start {
-  __typename: "TaxedMoney";
-  net: ProductDetails_product_channelListings_pricing_priceRange_start_net;
-}
-
-export interface ProductDetails_product_channelListings_pricing_priceRange_stop_net {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductDetails_product_channelListings_pricing_priceRange_stop {
-  __typename: "TaxedMoney";
-  net: ProductDetails_product_channelListings_pricing_priceRange_stop_net;
-}
-
-export interface ProductDetails_product_channelListings_pricing_priceRange {
-  __typename: "TaxedMoneyRange";
-  start: ProductDetails_product_channelListings_pricing_priceRange_start | null;
-  stop: ProductDetails_product_channelListings_pricing_priceRange_stop | null;
-}
-
-export interface ProductDetails_product_channelListings_pricing {
-  __typename: "ProductPricingInfo";
-  priceRange: ProductDetails_product_channelListings_pricing_priceRange | null;
-}
-
 export interface ProductDetails_product_channelListings {
   __typename: "ProductChannelListing";
   channel: ProductDetails_product_channelListings_channel;
-  pricing: ProductDetails_product_channelListings_pricing | null;
   isPublished: boolean;
   publicationDate: any | null;
   isAvailableForPurchase: boolean | null;

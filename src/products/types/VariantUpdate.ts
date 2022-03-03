@@ -49,11 +49,11 @@ export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttr
   slug: string | null;
   file: VariantUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute_choices_edges_node_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
   value: string | null;
+  richText: any | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute_choices_edges {
@@ -93,11 +93,11 @@ export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttr
   slug: string | null;
   file: VariantUpdate_productVariantUpdate_productVariant_selectionAttributes_values_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
   value: string | null;
+  richText: any | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttributes {
@@ -127,11 +127,11 @@ export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionA
   slug: string | null;
   file: VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute_choices_edges_node_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
   value: string | null;
+  richText: any | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute_choices_edges {
@@ -171,11 +171,11 @@ export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionA
   slug: string | null;
   file: VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_values_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
   value: string | null;
+  richText: any | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes {
@@ -219,45 +219,11 @@ export interface VariantUpdate_productVariantUpdate_productVariant_product_chann
   currencyCode: string;
 }
 
-export interface VariantUpdate_productVariantUpdate_productVariant_product_channelListings_pricing_priceRange_start_net {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface VariantUpdate_productVariantUpdate_productVariant_product_channelListings_pricing_priceRange_start {
-  __typename: "TaxedMoney";
-  net: VariantUpdate_productVariantUpdate_productVariant_product_channelListings_pricing_priceRange_start_net;
-}
-
-export interface VariantUpdate_productVariantUpdate_productVariant_product_channelListings_pricing_priceRange_stop_net {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface VariantUpdate_productVariantUpdate_productVariant_product_channelListings_pricing_priceRange_stop {
-  __typename: "TaxedMoney";
-  net: VariantUpdate_productVariantUpdate_productVariant_product_channelListings_pricing_priceRange_stop_net;
-}
-
-export interface VariantUpdate_productVariantUpdate_productVariant_product_channelListings_pricing_priceRange {
-  __typename: "TaxedMoneyRange";
-  start: VariantUpdate_productVariantUpdate_productVariant_product_channelListings_pricing_priceRange_start | null;
-  stop: VariantUpdate_productVariantUpdate_productVariant_product_channelListings_pricing_priceRange_stop | null;
-}
-
-export interface VariantUpdate_productVariantUpdate_productVariant_product_channelListings_pricing {
-  __typename: "ProductPricingInfo";
-  priceRange: VariantUpdate_productVariantUpdate_productVariant_product_channelListings_pricing_priceRange | null;
-}
-
 export interface VariantUpdate_productVariantUpdate_productVariant_product_channelListings {
   __typename: "ProductChannelListing";
   publicationDate: any | null;
   isPublished: boolean;
   channel: VariantUpdate_productVariantUpdate_productVariant_product_channelListings_channel;
-  pricing: VariantUpdate_productVariantUpdate_productVariant_product_channelListings_pricing | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_product_variants_media {
@@ -412,11 +378,11 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_selecti
   slug: string | null;
   file: VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute_choices_edges_node_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
   value: string | null;
+  richText: any | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute_choices_edges {
@@ -456,11 +422,11 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_selecti
   slug: string | null;
   file: VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_values_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
   value: string | null;
+  richText: any | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes {
@@ -490,11 +456,11 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSele
   slug: string | null;
   file: VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute_choices_edges_node_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
   value: string | null;
+  richText: any | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute_choices_edges {
@@ -534,11 +500,11 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSele
   slug: string | null;
   file: VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_values_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
   value: string | null;
+  richText: any | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes {
@@ -582,45 +548,11 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_product
   currencyCode: string;
 }
 
-export interface VariantUpdate_productVariantStocksUpdate_productVariant_product_channelListings_pricing_priceRange_start_net {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface VariantUpdate_productVariantStocksUpdate_productVariant_product_channelListings_pricing_priceRange_start {
-  __typename: "TaxedMoney";
-  net: VariantUpdate_productVariantStocksUpdate_productVariant_product_channelListings_pricing_priceRange_start_net;
-}
-
-export interface VariantUpdate_productVariantStocksUpdate_productVariant_product_channelListings_pricing_priceRange_stop_net {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface VariantUpdate_productVariantStocksUpdate_productVariant_product_channelListings_pricing_priceRange_stop {
-  __typename: "TaxedMoney";
-  net: VariantUpdate_productVariantStocksUpdate_productVariant_product_channelListings_pricing_priceRange_stop_net;
-}
-
-export interface VariantUpdate_productVariantStocksUpdate_productVariant_product_channelListings_pricing_priceRange {
-  __typename: "TaxedMoneyRange";
-  start: VariantUpdate_productVariantStocksUpdate_productVariant_product_channelListings_pricing_priceRange_start | null;
-  stop: VariantUpdate_productVariantStocksUpdate_productVariant_product_channelListings_pricing_priceRange_stop | null;
-}
-
-export interface VariantUpdate_productVariantStocksUpdate_productVariant_product_channelListings_pricing {
-  __typename: "ProductPricingInfo";
-  priceRange: VariantUpdate_productVariantStocksUpdate_productVariant_product_channelListings_pricing_priceRange | null;
-}
-
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_product_channelListings {
   __typename: "ProductChannelListing";
   publicationDate: any | null;
   isPublished: boolean;
   channel: VariantUpdate_productVariantStocksUpdate_productVariant_product_channelListings_channel;
-  pricing: VariantUpdate_productVariantStocksUpdate_productVariant_product_channelListings_pricing | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_product_variants_media {

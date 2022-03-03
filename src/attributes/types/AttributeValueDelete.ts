@@ -30,11 +30,11 @@ export interface AttributeValueDelete_attributeValueDelete_attribute_choices_edg
   slug: string | null;
   file: AttributeValueDelete_attributeValueDelete_attribute_choices_edges_node_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
   value: string | null;
+  richText: any | null;
 }
 
 export interface AttributeValueDelete_attributeValueDelete_attribute_choices_edges {
