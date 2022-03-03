@@ -4301,6 +4301,42 @@
   "src_dot_orders_dot_components_dot_OrderCannotCancelOrderDialog_dot_775268031": {
     "string": "There are still fulfillments created for this order. Cancel the fulfillments first before you cancel the order."
   },
+  "src_dot_orders_dot_components_dot_OrderCardTitle_dot_cancelled": {
+    "context": "cancelled fulfillment, section header",
+    "string": "Cancelled ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderCardTitle_dot_fulfilled": {
+    "context": "section header",
+    "string": "Fulfilled ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderCardTitle_dot_fulfilledFrom": {
+    "context": "fulfilled fulfillment, section header",
+    "string": "Fulfilled from {warehouseName}"
+  },
+  "src_dot_orders_dot_components_dot_OrderCardTitle_dot_refunded": {
+    "context": "refunded fulfillment, section header",
+    "string": "Refunded ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderCardTitle_dot_refundedAndReturned": {
+    "context": "cancelled fulfillment, section header",
+    "string": "Refunded and Returned ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderCardTitle_dot_replaced": {
+    "context": "refunded fulfillment, section header",
+    "string": "Replaced ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderCardTitle_dot_returned": {
+    "context": "refunded fulfillment, section header",
+    "string": "Returned ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderCardTitle_dot_unfulfilled": {
+    "context": "section header",
+    "string": "Unfulfilled ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderCardTitle_dot_waitingForApproval": {
+    "context": "unapproved fulfillment, section header",
+    "string": "Waiting for approval ({quantity})"
+  },
   "src_dot_orders_dot_components_dot_OrderChangeWarehouseDialog_dot_currentSelection": {
     "context": "label for currently selected warehouse",
     "string": "currently selected"
@@ -5358,41 +5394,13 @@
     "context": "button",
     "string": "Set maximal quantities"
   },
-  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_cancelled": {
-    "context": "cancelled fulfillment, section header",
-    "string": "Cancelled ({quantity})"
-  },
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_description": {
     "context": "product no longer exists error description",
     "string": "This product is no longer in database so it can’t be replaced, nor returned"
   },
-  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_fulfilled": {
-    "context": "section header",
-    "string": "Fulfilled ({quantity})"
-  },
-  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_fulfilledFrom": {
-    "context": "fulfilled fulfillment, section header",
-    "string": "Fulfilled from {warehouseName}"
-  },
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_improperValue": {
     "context": "error message",
     "string": "Improper value"
-  },
-  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_refunded": {
-    "context": "refunded fulfillment, section header",
-    "string": "Refunded ({quantity})"
-  },
-  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_refundedAndReturned": {
-    "context": "cancelled fulfillment, section header",
-    "string": "Refunded and Returned ({quantity})"
-  },
-  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_replaced": {
-    "context": "refunded fulfillment, section header",
-    "string": "Replaced ({quantity})"
-  },
-  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_returned": {
-    "context": "refunded fulfillment, section header",
-    "string": "Returned ({quantity})"
   },
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_title": {
     "context": "product no longer exists error title",
@@ -5405,14 +5413,6 @@
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_titleUnfulfilled": {
     "context": "section header",
     "string": "Unfulfilled Items"
-  },
-  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_unfulfilled": {
-    "context": "section header",
-    "string": "Unfulfilled"
-  },
-  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_waitingForApproval": {
-    "context": "unapproved fulfillment, section header",
-    "string": "Waiting for approval ({quantity})"
   },
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_appTitle": {
     "context": "page header with order number",
