@@ -121,24 +121,17 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         return undefined;
       }
 
-      let linesAvailable = 0;
-
-      order.lines.forEach(line => {
-        if (
-          line?.variant?.stocks?.find(
-            stock => stock.warehouse.id === warehouse.id
-          )
-        ) {
-          linesAvailable += 1;
-        }
-      });
+      const linesAvailable = order.lines.filter(line =>
+        line?.variant?.stocks?.find(
+          stock => stock.warehouse.id === warehouse.id
+        )
+      ).length;
 
       return {
         warehouse,
         linesAvailable
       };
     });
-
     const defaultWarehouse = order?.lines
       ? warehousesAvailability?.reduce((prev, curr) =>
           curr.linesAvailable > prev.linesAvailable ? curr : prev
