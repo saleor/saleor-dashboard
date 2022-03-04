@@ -18,6 +18,7 @@ export interface AttributeCreate_attributeCreate_errors {
   __typename: "AttributeError";
   code: AttributeErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface AttributeCreate_attributeCreate {

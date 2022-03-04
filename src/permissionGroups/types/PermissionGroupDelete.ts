@@ -13,6 +13,7 @@ export interface PermissionGroupDelete_permissionGroupDelete_errors {
   __typename: "PermissionGroupError";
   code: PermissionGroupErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface PermissionGroupDelete_permissionGroupDelete {

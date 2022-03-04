@@ -14,4 +14,5 @@ export interface AccountErrorFragment {
   code: AccountErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }

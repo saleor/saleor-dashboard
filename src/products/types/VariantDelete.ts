@@ -13,6 +13,7 @@ export interface VariantDelete_productVariantDelete_errors {
   __typename: "ProductError";
   code: ProductErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface VariantDelete_productVariantDelete_productVariant {

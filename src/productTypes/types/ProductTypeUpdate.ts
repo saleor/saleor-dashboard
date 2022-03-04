@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ProductTypeInput, ProductTypeKindEnum, AttributeTypeEnum, MeasurementUnitsEnum, AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
+import { ProductTypeInput, ProductErrorCode, ProductTypeKindEnum, AttributeTypeEnum, MeasurementUnitsEnum, AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductTypeUpdate
@@ -11,6 +11,7 @@ import { ProductTypeInput, ProductTypeKindEnum, AttributeTypeEnum, MeasurementUn
 
 export interface ProductTypeUpdate_productTypeUpdate_errors {
   __typename: "ProductError";
+  code: ProductErrorCode;
   field: string | null;
   message: string | null;
 }

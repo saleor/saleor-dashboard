@@ -13,6 +13,7 @@ export interface DeleteShippingZone_shippingZoneDelete_errors {
   __typename: "ShippingError";
   code: ShippingErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface DeleteShippingZone_shippingZoneDelete {

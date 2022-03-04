@@ -50,6 +50,7 @@ export interface CategoryUpdate_categoryUpdate_errors {
   __typename: "ProductError";
   code: ProductErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface CategoryUpdate_categoryUpdate {

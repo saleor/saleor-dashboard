@@ -48,7 +48,8 @@ storiesOf("Views / Warehouses / Warehouse details", module)
       ] as Array<keyof WarehouseDetailsPageFormData>).map(field => ({
         __typename: "WarehouseError",
         code: WarehouseErrorCode.INVALID,
-        field
+        field,
+        message: "Warehouse invalid"
       }))}
     />
   ));

@@ -13,6 +13,7 @@ export interface WarehouseUpdate_updateWarehouse_errors {
   __typename: "WarehouseError";
   code: WarehouseErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface WarehouseUpdate_updateWarehouse_warehouse_shippingZones_edges_node {

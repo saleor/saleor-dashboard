@@ -50,6 +50,7 @@ export interface CategoryCreate_categoryCreate_errors {
   __typename: "ProductError";
   code: ProductErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface CategoryCreate_categoryCreate {

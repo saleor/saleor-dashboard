@@ -23,7 +23,8 @@ storiesOf("Views / Page types / Create page type", module)
       errors={[
         {
           code: PageErrorCode.REQUIRED,
-          field: "name"
+          field: "name",
+          message: "Field is required"
         }
       ].map(err => ({
         __typename: "PageError",

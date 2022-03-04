@@ -13,6 +13,7 @@ export interface CreateShippingZone_shippingZoneCreate_errors {
   __typename: "ShippingError";
   code: ShippingErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface CreateShippingZone_shippingZoneCreate_shippingZone_countries {

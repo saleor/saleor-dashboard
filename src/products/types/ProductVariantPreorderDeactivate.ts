@@ -26,6 +26,7 @@ export interface ProductVariantPreorderDeactivate_productVariantPreorderDeactiva
   __typename: "ProductError";
   code: ProductErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface ProductVariantPreorderDeactivate_productVariantPreorderDeactivate {

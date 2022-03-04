@@ -13,6 +13,7 @@ export interface GiftCardSettingsUpdate_giftCardSettingsUpdate_errors {
   __typename: "GiftCardSettingsError";
   code: GiftCardSettingsErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface GiftCardSettingsUpdate_giftCardSettingsUpdate_giftCardSettings_expiryPeriod {

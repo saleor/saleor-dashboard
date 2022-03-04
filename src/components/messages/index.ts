@@ -9,9 +9,10 @@ export interface IMessage {
   autohide?: number;
   expandText?: string;
   title?: string;
-  text: React.ReactNode;
+  text?: React.ReactNode;
   onUndo?: () => void;
   status?: Status;
+  apiMessage?: string;
 }
 
 export interface INotification {
@@ -38,6 +39,7 @@ export const types = {
 export interface INotificationContext {
   show: (message: IMessage, timeout?: number | null) => void;
   remove: (notification: INotification) => void;
+  clearErrorNotifications: () => void;
 }
 
 export type IMessageContext = (message: IMessage) => void;

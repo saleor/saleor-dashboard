@@ -13,6 +13,7 @@ export interface ShippingPriceExcludeProduct_shippingPriceExcludeProducts_errors
   __typename: "ShippingError";
   code: ShippingErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface ShippingPriceExcludeProduct_shippingPriceExcludeProducts {

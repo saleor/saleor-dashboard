@@ -14,6 +14,7 @@ export interface SetCustomerDefaultAddress_addressSetDefault_errors {
   code: AccountErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }
 
 export interface SetCustomerDefaultAddress_addressSetDefault_user_addresses_country {

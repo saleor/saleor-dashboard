@@ -1,4 +1,16 @@
 import { gql } from "@apollo/client";
+import {
+  attributeTranslateErrorFragment,
+  attributeValueTranslateErrorFragment,
+  categoryTranslateErrorFragment,
+  collectionTranslateErrorFragment,
+  pageTranslateErrorFragment,
+  productTranslateErrorFragment,
+  productVariantTranslateErrorFragment,
+  saleTranslateErrorFragment,
+  shippingPriceTranslateErrorFragment,
+  voucherTranslateErrorFragment
+} from "@saleor/fragments/errors";
 import { pageTranslationFragment } from "@saleor/fragments/translations";
 
 import { TypedMutation } from "../mutations";
@@ -44,6 +56,7 @@ import {
 } from "./types/UpdateVoucherTranslations";
 
 const updateProductTranslations = gql`
+  ${productTranslateErrorFragment}
   mutation UpdateProductTranslations(
     $id: ID!
     $input: TranslationInput!
@@ -51,8 +64,7 @@ const updateProductTranslations = gql`
   ) {
     productTranslate(id: $id, input: $input, languageCode: $language) {
       errors {
-        field
-        message
+        ...ProductTranslateErrorFragment
       }
       product {
         id
@@ -81,6 +93,7 @@ export const TypedUpdateProductTranslations = TypedMutation<
 >(updateProductTranslations);
 
 const updateProductVariantTranslations = gql`
+  ${productVariantTranslateErrorFragment}
   mutation UpdateProductVariantTranslations(
     $id: ID!
     $input: NameTranslationInput!
@@ -88,8 +101,7 @@ const updateProductVariantTranslations = gql`
   ) {
     productVariantTranslate(id: $id, input: $input, languageCode: $language) {
       errors {
-        field
-        message
+        ...ProductVariantTranslateErrorFragment
       }
       productVariant {
         id
@@ -112,6 +124,7 @@ export const TypedUpdateProductVariantTranslations = TypedMutation<
 >(updateProductVariantTranslations);
 
 const updateCategoryTranslations = gql`
+  ${categoryTranslateErrorFragment}
   mutation UpdateCategoryTranslations(
     $id: ID!
     $input: TranslationInput!
@@ -119,8 +132,7 @@ const updateCategoryTranslations = gql`
   ) {
     categoryTranslate(id: $id, input: $input, languageCode: $language) {
       errors {
-        field
-        message
+        ...CategoryTranslateErrorFragment
       }
       category {
         id
@@ -149,6 +161,7 @@ export const TypedUpdateCategoryTranslations = TypedMutation<
 >(updateCategoryTranslations);
 
 const updateCollectionTranslations = gql`
+  ${collectionTranslateErrorFragment}
   mutation UpdateCollectionTranslations(
     $id: ID!
     $input: TranslationInput!
@@ -156,8 +169,7 @@ const updateCollectionTranslations = gql`
   ) {
     collectionTranslate(id: $id, input: $input, languageCode: $language) {
       errors {
-        field
-        message
+        ...CollectionTranslateErrorFragment
       }
       collection {
         id
@@ -186,6 +198,7 @@ export const TypedUpdateCollectionTranslations = TypedMutation<
 >(updateCollectionTranslations);
 
 const updatePageTranslations = gql`
+  ${pageTranslateErrorFragment}
   ${pageTranslationFragment}
   mutation UpdatePageTranslations(
     $id: ID!
@@ -194,8 +207,7 @@ const updatePageTranslations = gql`
   ) {
     pageTranslate(id: $id, input: $input, languageCode: $language) {
       errors {
-        field
-        message
+        ...PageTranslateErrorFragment
       }
       page {
         ...PageTranslationFragment
@@ -209,6 +221,7 @@ export const TypedUpdatePageTranslations = TypedMutation<
 >(updatePageTranslations);
 
 const updateVoucherTranslations = gql`
+  ${voucherTranslateErrorFragment}
   mutation UpdateVoucherTranslations(
     $id: ID!
     $input: NameTranslationInput!
@@ -216,8 +229,7 @@ const updateVoucherTranslations = gql`
   ) {
     voucherTranslate(id: $id, input: $input, languageCode: $language) {
       errors {
-        field
-        message
+        ...VoucherTranslateErrorFragment
       }
       voucher {
         id
@@ -240,6 +252,7 @@ export const TypedUpdateVoucherTranslations = TypedMutation<
 >(updateVoucherTranslations);
 
 const updateSaleTranslations = gql`
+  ${saleTranslateErrorFragment}
   mutation UpdateSaleTranslations(
     $id: ID!
     $input: NameTranslationInput!
@@ -247,8 +260,7 @@ const updateSaleTranslations = gql`
   ) {
     saleTranslate(id: $id, input: $input, languageCode: $language) {
       errors {
-        field
-        message
+        ...SaleTranslateErrorFragment
       }
       sale {
         id
@@ -271,6 +283,7 @@ export const TypedUpdateSaleTranslations = TypedMutation<
 >(updateSaleTranslations);
 
 const updateAttributeTranslations = gql`
+  ${attributeTranslateErrorFragment}
   mutation UpdateAttributeTranslations(
     $id: ID!
     $input: NameTranslationInput!
@@ -278,8 +291,7 @@ const updateAttributeTranslations = gql`
   ) {
     attributeTranslate(id: $id, input: $input, languageCode: $language) {
       errors {
-        field
-        message
+        ...AttributeTranslateErrorFragment
       }
       attribute {
         id
@@ -298,6 +310,7 @@ export const TypedUpdateAttributeTranslations = TypedMutation<
 >(updateAttributeTranslations);
 
 const updateAttributeValueTranslations = gql`
+  ${attributeValueTranslateErrorFragment}
   mutation UpdateAttributeValueTranslations(
     $id: ID!
     $input: AttributeValueTranslationInput!
@@ -305,8 +318,7 @@ const updateAttributeValueTranslations = gql`
   ) {
     attributeValueTranslate(id: $id, input: $input, languageCode: $language) {
       errors {
-        field
-        message
+        ...AttributeValueTranslateErrorFragment
       }
       attributeValue {
         id
@@ -327,6 +339,7 @@ export const TypedUpdateAttributeValueTranslations = TypedMutation<
 >(updateAttributeValueTranslations);
 
 const updateShippingMethodTranslations = gql`
+  ${shippingPriceTranslateErrorFragment}
   mutation UpdateShippingMethodTranslations(
     $id: ID!
     $input: ShippingPriceTranslationInput!
@@ -334,8 +347,7 @@ const updateShippingMethodTranslations = gql`
   ) {
     shippingPriceTranslate(id: $id, input: $input, languageCode: $language) {
       errors {
-        field
-        message
+        ...ShippingPriceTranslateErrorFragment
       }
       shippingMethod {
         id

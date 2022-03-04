@@ -48,7 +48,8 @@ const errors: StaffErrorFragment[] = [
   {
     __typename: "StaffError",
     code: AccountErrorCode.OUT_OF_SCOPE_GROUP,
-    field: "addGroups"
+    field: "addGroups",
+    message: "Group out of scope"
   }
 ];
 

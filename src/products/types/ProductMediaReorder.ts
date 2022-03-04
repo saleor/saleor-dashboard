@@ -13,6 +13,7 @@ export interface ProductMediaReorder_productMediaReorder_errors {
   __typename: "ProductError";
   code: ProductErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface ProductMediaReorder_productMediaReorder_product_media {

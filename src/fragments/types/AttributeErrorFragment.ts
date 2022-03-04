@@ -13,4 +13,5 @@ export interface AttributeErrorFragment {
   __typename: "AttributeError";
   code: AttributeErrorCode;
   field: string | null;
+  message: string | null;
 }

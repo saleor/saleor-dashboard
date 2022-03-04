@@ -13,6 +13,7 @@ export interface AttributeDelete_attributeDelete_errors {
   __typename: "AttributeError";
   code: AttributeErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface AttributeDelete_attributeDelete {

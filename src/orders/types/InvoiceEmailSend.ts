@@ -13,6 +13,7 @@ export interface InvoiceEmailSend_invoiceSendNotification_errors {
   __typename: "InvoiceError";
   code: InvoiceErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface InvoiceEmailSend_invoiceSendNotification_invoice {

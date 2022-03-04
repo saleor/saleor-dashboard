@@ -14,6 +14,7 @@ export interface RequestPasswordReset_requestPasswordReset_errors {
   code: AccountErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }
 
 export interface RequestPasswordReset_requestPasswordReset {

@@ -50,7 +50,8 @@ storiesOf("Views / Customers / Customer details", module)
         __typename: "AccountError",
         code: AccountErrorCode.INVALID,
         field,
-        addressType: null
+        addressType: null,
+        message: "Account invalid"
       }))}
     />
   ))

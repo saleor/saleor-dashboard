@@ -19,6 +19,7 @@ export interface FileUpload_fileUpload_errors {
   __typename: "UploadError";
   code: UploadErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface FileUpload_fileUpload {

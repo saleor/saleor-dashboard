@@ -14,6 +14,7 @@ export interface BulkRemoveCustomers_customerBulkDelete_errors {
   code: AccountErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }
 
 export interface BulkRemoveCustomers_customerBulkDelete {

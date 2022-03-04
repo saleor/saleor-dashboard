@@ -14,6 +14,7 @@ export interface ChangeStaffPassword_passwordChange_errors {
   code: AccountErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }
 
 export interface ChangeStaffPassword_passwordChange {

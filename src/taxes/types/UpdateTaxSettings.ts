@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ShopSettingsInput } from "./../../types/globalTypes";
+import { ShopSettingsInput, ShopErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: UpdateTaxSettings
@@ -11,6 +11,7 @@ import { ShopSettingsInput } from "./../../types/globalTypes";
 
 export interface UpdateTaxSettings_shopSettingsUpdate_errors {
   __typename: "ShopError";
+  code: ShopErrorCode;
   field: string | null;
   message: string | null;
 }

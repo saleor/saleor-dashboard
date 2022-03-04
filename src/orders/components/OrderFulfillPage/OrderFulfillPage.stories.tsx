@@ -38,7 +38,8 @@ storiesOf("Views / Orders / Fulfill order", module)
           field: null,
           orderLines: [orderToFulfill.lines[0].id],
           warehouse: warehouseList[0].id,
-          addressType: null
+          addressType: null,
+          message: "Insufficient stock"
         }
       ]}
     />

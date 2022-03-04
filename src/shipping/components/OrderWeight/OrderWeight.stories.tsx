@@ -25,7 +25,8 @@ storiesOf("Shipping / Order weight rates", module)
       errors={["minimumOrderWeight", "maximumOrderWeight"].map(field => ({
         __typename: "ShippingError",
         code: ShippingErrorCode.INVALID,
-        field
+        field,
+        message: "Shipping code invalid"
       }))}
     />
   ));

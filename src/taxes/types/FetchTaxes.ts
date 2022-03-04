@@ -3,12 +3,15 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { ShopErrorCode } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL mutation operation: FetchTaxes
 // ====================================================
 
 export interface FetchTaxes_shopFetchTaxRates_errors {
   __typename: "ShopError";
+  code: ShopErrorCode;
   field: string | null;
   message: string | null;
 }

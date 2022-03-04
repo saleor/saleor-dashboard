@@ -14,6 +14,7 @@ export interface OrderDraftCreate_draftOrderCreate_errors {
   code: OrderErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }
 
 export interface OrderDraftCreate_draftOrderCreate_order {

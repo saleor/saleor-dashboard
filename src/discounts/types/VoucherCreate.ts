@@ -14,6 +14,7 @@ export interface VoucherCreate_voucherCreate_errors {
   code: DiscountErrorCode;
   field: string | null;
   channels: string[] | null;
+  message: string | null;
 }
 
 export interface VoucherCreate_voucherCreate_voucher_metadata {

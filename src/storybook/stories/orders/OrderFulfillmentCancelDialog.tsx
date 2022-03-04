@@ -28,7 +28,8 @@ storiesOf("Orders / OrderFulfillmentCancelDialog", module)
           __typename: "OrderError",
           code: OrderErrorCode.GRAPHQL_ERROR,
           field: null,
-          addressType: null
+          addressType: null,
+          message: "Graphql Error"
         }
       ]}
     />

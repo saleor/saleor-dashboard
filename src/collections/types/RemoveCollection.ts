@@ -13,6 +13,7 @@ export interface RemoveCollection_collectionDelete_errors {
   __typename: "CollectionError";
   code: CollectionErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface RemoveCollection_collectionDelete {

@@ -13,6 +13,7 @@ export interface ExportGiftCards_exportGiftCards_errors {
   __typename: "ExportError";
   code: ExportErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface ExportGiftCards_exportGiftCards_exportFile {

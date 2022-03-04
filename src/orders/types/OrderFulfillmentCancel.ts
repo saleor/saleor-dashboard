@@ -14,6 +14,7 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_errors {
   code: OrderErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }
 
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_metadata {

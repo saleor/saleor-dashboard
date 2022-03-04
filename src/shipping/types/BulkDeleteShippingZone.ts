@@ -13,6 +13,7 @@ export interface BulkDeleteShippingZone_shippingZoneBulkDelete_errors {
   __typename: "ShippingError";
   code: ShippingErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface BulkDeleteShippingZone_shippingZoneBulkDelete {

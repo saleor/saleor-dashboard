@@ -14,6 +14,7 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_e
   code: OrderErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }
 
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_metadata {

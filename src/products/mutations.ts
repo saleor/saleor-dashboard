@@ -6,6 +6,7 @@ import {
   productChannelListingErrorFragment,
   productErrorFragment,
   productErrorWithAttributesFragment,
+  productVariantStocksDeleteErrorFragment,
   stockErrorFragment
 } from "@saleor/fragments/errors";
 import {
@@ -331,6 +332,7 @@ export const variantUpdateMutation = gql`
   ${bulkStockErrorFragment}
   ${fragmentVariant}
   ${productErrorWithAttributesFragment}
+  ${productVariantStocksDeleteErrorFragment}
   mutation VariantUpdate(
     $addStocks: [StockInput!]!
     $removeStocks: [ID!]!
@@ -386,8 +388,7 @@ export const variantUpdateMutation = gql`
     }
     productVariantStocksDelete(warehouseIds: $removeStocks, variantId: $id) {
       errors {
-        code
-        field
+        ...ProductVariantStocksDeleteErrorFragment
       }
       productVariant {
         id

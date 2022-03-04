@@ -13,6 +13,7 @@ export interface VariantUpdate_productVariantUpdate_errors {
   __typename: "ProductError";
   code: ProductErrorCode;
   field: string | null;
+  message: string | null;
   attributes: string[] | null;
 }
 
@@ -343,6 +344,7 @@ export interface VariantUpdate_productVariantStocksUpdate_errors {
   code: ProductErrorCode;
   field: string | null;
   index: number | null;
+  message: string | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_metadata {
@@ -672,6 +674,7 @@ export interface VariantUpdate_productVariantStocksCreate_errors {
   code: ProductErrorCode;
   field: string | null;
   index: number | null;
+  message: string | null;
 }
 
 export interface VariantUpdate_productVariantStocksCreate_productVariant_stocks_warehouse {
@@ -704,6 +707,7 @@ export interface VariantUpdate_productVariantStocksDelete_errors {
   __typename: "StockError";
   code: StockErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface VariantUpdate_productVariantStocksDelete_productVariant_stocks_warehouse {

@@ -14,6 +14,7 @@ export interface FulfillmentReturnProducts_orderFulfillmentReturnProducts_errors
   code: OrderErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }
 
 export interface FulfillmentReturnProducts_orderFulfillmentReturnProducts_order {

@@ -13,4 +13,5 @@ export interface PluginErrorFragment {
   __typename: "PluginError";
   code: PluginErrorCode;
   field: string | null;
+  message: string | null;
 }

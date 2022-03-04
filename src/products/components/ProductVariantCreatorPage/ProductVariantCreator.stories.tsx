@@ -74,7 +74,8 @@ const errors: ProductVariantBulkCreate_productVariantBulkCreate_errors[] = [
     channels: [channels[0].channelId],
     code: ProductErrorCode.UNIQUE,
     field: "sku",
-    index: 3
+    index: 3,
+    message: "Uniwue bulk product error"
   }
 ];
 

@@ -44,6 +44,7 @@ export interface AttributeValueReorder_attributeReorderValues_errors {
   __typename: "AttributeError";
   code: AttributeErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface AttributeValueReorder_attributeReorderValues {

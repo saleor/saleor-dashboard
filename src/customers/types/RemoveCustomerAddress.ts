@@ -14,6 +14,7 @@ export interface RemoveCustomerAddress_addressDelete_errors {
   code: AccountErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }
 
 export interface RemoveCustomerAddress_addressDelete_user_addresses_country {

@@ -14,6 +14,7 @@ export interface SaleCreate_saleCreate_errors {
   code: DiscountErrorCode;
   field: string | null;
   channels: string[] | null;
+  message: string | null;
 }
 
 export interface SaleCreate_saleCreate_sale_metadata {

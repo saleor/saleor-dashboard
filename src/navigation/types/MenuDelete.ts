@@ -13,6 +13,7 @@ export interface MenuDelete_menuDelete_errors {
   __typename: "MenuError";
   code: MenuErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface MenuDelete_menuDelete {

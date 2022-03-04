@@ -43,17 +43,20 @@ storiesOf("Views / Products / Create product variant", module)
         {
           attributes: [product.productType.variantAttributes[0].id],
           code: ProductErrorCode.REQUIRED,
-          field: "attributes"
+          field: "attributes",
+          message: "Attributes required"
         },
         {
           attributes: null,
           code: ProductErrorCode.UNIQUE,
-          field: "attributes"
+          field: "attributes",
+          message: "Attributes has unique"
         },
         {
           attributes: null,
           code: ProductErrorCode.ALREADY_EXISTS,
-          field: "sku"
+          field: "sku",
+          message: "Sku already exists"
         }
       ].map(error => ({
         __typename: "ProductError",

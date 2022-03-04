@@ -14,6 +14,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_errors {
   code: OrderErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }
 
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMethods_price {

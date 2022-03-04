@@ -14,6 +14,7 @@ export interface OrderRefund_orderRefund_errors {
   code: OrderErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }
 
 export interface OrderRefund_orderRefund_order_metadata {

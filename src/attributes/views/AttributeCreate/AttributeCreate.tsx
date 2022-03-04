@@ -48,7 +48,8 @@ interface AttributeDetailsProps {
 const attributeValueAlreadyExistsError: AttributeErrorFragment = {
   __typename: "AttributeError",
   code: AttributeErrorCode.ALREADY_EXISTS,
-  field: "name"
+  field: "name",
+  message: ""
 };
 
 function areValuesEqual(

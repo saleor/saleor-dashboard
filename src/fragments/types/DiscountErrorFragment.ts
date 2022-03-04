@@ -14,4 +14,5 @@ export interface DiscountErrorFragment {
   code: DiscountErrorCode;
   field: string | null;
   channels: string[] | null;
+  message: string | null;
 }

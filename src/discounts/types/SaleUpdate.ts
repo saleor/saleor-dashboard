@@ -14,6 +14,7 @@ export interface SaleUpdate_saleUpdate_errors {
   code: DiscountErrorCode;
   field: string | null;
   channels: string[] | null;
+  message: string | null;
 }
 
 export interface SaleUpdate_saleUpdate {
@@ -26,6 +27,7 @@ export interface SaleUpdate_saleChannelListingUpdate_errors {
   code: DiscountErrorCode;
   field: string | null;
   channels: string[] | null;
+  message: string | null;
 }
 
 export interface SaleUpdate_saleChannelListingUpdate_sale_metadata {

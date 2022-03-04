@@ -36,12 +36,14 @@ storiesOf("Views / Plugins / Plugin details", module)
         >).map(field => ({
           __typename: "PluginError" as "PluginError",
           code: PluginErrorCode.INVALID,
-          field
+          field,
+          message: "Plugin invalid"
         })),
         {
           __typename: "PluginError" as "PluginError",
           code: PluginErrorCode.PLUGIN_MISCONFIGURED,
-          field: null
+          field: null,
+          message: "Plugin missconfigured"
         }
       ]}
     />

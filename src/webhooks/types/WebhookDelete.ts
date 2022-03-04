@@ -13,6 +13,7 @@ export interface WebhookDelete_webhookDelete_errors {
   __typename: "WebhookError";
   code: WebhookErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface WebhookDelete_webhookDelete {

@@ -28,7 +28,8 @@ function useAddressValidation<TInput, TOutput>(
     __typename: "AccountError",
     code: AccountErrorCode.REQUIRED,
     field: "country",
-    addressType
+    addressType,
+    message: "Country required"
   };
 
   return {

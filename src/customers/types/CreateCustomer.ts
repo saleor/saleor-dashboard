@@ -14,6 +14,7 @@ export interface CreateCustomer_customerCreate_errors {
   code: AccountErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }
 
 export interface CreateCustomer_customerCreate_user {

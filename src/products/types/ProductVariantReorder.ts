@@ -13,6 +13,7 @@ export interface ProductVariantReorder_productVariantReorder_errors {
   __typename: "ProductError";
   code: ProductErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface ProductVariantReorder_productVariantReorder_product_variants {

@@ -14,6 +14,7 @@ export interface CreateCustomerAddress_addressCreate_errors {
   code: AccountErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }
 
 export interface CreateCustomerAddress_addressCreate_address_country {

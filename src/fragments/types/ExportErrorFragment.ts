@@ -13,4 +13,5 @@ export interface ExportErrorFragment {
   __typename: "ExportError";
   code: ExportErrorCode;
   field: string | null;
+  message: string | null;
 }

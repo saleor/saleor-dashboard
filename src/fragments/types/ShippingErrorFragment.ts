@@ -13,4 +13,5 @@ export interface ShippingErrorFragment {
   __typename: "ShippingError";
   code: ShippingErrorCode;
   field: string | null;
+  message: string | null;
 }

@@ -13,6 +13,7 @@ export interface OrderSettingsUpdate_orderSettingsUpdate_errors {
   __typename: "OrderSettingsError";
   code: OrderSettingsErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface OrderSettingsUpdate_orderSettingsUpdate_orderSettings {
@@ -31,6 +32,7 @@ export interface OrderSettingsUpdate_shopSettingsUpdate_errors {
   __typename: "ShopError";
   code: ShopErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface OrderSettingsUpdate_shopSettingsUpdate_shop {

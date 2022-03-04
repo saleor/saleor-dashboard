@@ -52,11 +52,13 @@ storiesOf("Views / Collections / Collection detailsCollection details", module)
       errors={[
         {
           code: CollectionErrorCode.REQUIRED,
-          field: "name"
+          field: "name",
+          message: "Collection field name required"
         },
         {
           code: CollectionErrorCode.REQUIRED,
-          field: "description"
+          field: "description",
+          message: "Collection field description required"
         }
       ].map(err => ({
         __typename: "CollectionError",

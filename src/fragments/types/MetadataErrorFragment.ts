@@ -13,4 +13,5 @@ export interface MetadataErrorFragment {
   __typename: "MetadataError";
   code: MetadataErrorCode;
   field: string | null;
+  message: string | null;
 }

@@ -3,12 +3,15 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { PageErrorCode } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL mutation operation: PageBulkPublish
 // ====================================================
 
 export interface PageBulkPublish_pageBulkPublish_errors {
   __typename: "PageError";
+  code: PageErrorCode;
   field: string | null;
   message: string | null;
 }

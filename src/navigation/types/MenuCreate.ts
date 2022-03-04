@@ -13,6 +13,7 @@ export interface MenuCreate_menuCreate_errors {
   __typename: "MenuError";
   code: MenuErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface MenuCreate_menuCreate_menu {

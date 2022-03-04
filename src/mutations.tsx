@@ -9,7 +9,7 @@ import { DocumentNode } from "graphql";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { useUser } from "./auth";
+import { handleNestedMutationErrors, showAllErrors, useUser } from "./auth";
 import { isJwtError } from "./auth/errors";
 import useNotifier from "./hooks/useNotifier";
 import { commonMessages } from "./intl";
@@ -41,14 +41,17 @@ export function TypedMutation<TData, TVariables>(
     return (
       <Mutation
         mutation={mutation}
-        onCompleted={onCompleted}
+        onCompleted={data => {
+          handleNestedMutationErrors({
+            data,
+            intl,
+            notify
+          });
+
+          onCompleted(data);
+        }}
+        errorPolicy="all"
         onError={(err: ApolloError) => {
-          if (err.networkError) {
-            notify({
-              status: "error",
-              text: intl.formatMessage(commonMessages.somethingWentWrong)
-            });
-          }
           if (hasError(err, GqlErrors.ReadOnlyException)) {
             notify({
               status: "error",
@@ -60,12 +63,10 @@ export function TypedMutation<TData, TVariables>(
               status: "error",
               text: intl.formatMessage(commonMessages.sessionExpired)
             });
-          } else if (!hasError(err, GqlErrors.LimitReachedException)) {
-            notify({
-              status: "error",
-              text: intl.formatMessage(commonMessages.somethingWentWrong)
-            });
+          } else {
+            showAllErrors({ notify, error: err });
           }
+
           if (onError) {
             onError(err);
           }

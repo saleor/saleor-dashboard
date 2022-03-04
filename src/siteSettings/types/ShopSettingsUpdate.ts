@@ -13,6 +13,7 @@ export interface ShopSettingsUpdate_shopSettingsUpdate_errors {
   __typename: "ShopError";
   code: ShopErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface ShopSettingsUpdate_shopSettingsUpdate_shop_companyAddress_country {
@@ -73,6 +74,7 @@ export interface ShopSettingsUpdate_shopDomainUpdate_errors {
   __typename: "ShopError";
   code: ShopErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface ShopSettingsUpdate_shopDomainUpdate_shop_domain {
@@ -96,6 +98,7 @@ export interface ShopSettingsUpdate_shopAddressUpdate_errors {
   __typename: "ShopError";
   code: ShopErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface ShopSettingsUpdate_shopAddressUpdate_shop_companyAddress_country {

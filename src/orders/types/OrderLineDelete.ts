@@ -14,6 +14,7 @@ export interface OrderLineDelete_orderLineDelete_errors {
   code: OrderErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }
 
 export interface OrderLineDelete_orderLineDelete_order_metadata {

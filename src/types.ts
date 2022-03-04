@@ -1,4 +1,4 @@
-import { FetchResult, MutationResult } from "@apollo/client";
+import { FetchResult, MutationResult, ServerError } from "@apollo/client";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 
 import { IFilter, IFilterElement } from "./components/Filter";
@@ -224,3 +224,5 @@ export enum StatusType {
   WARNING = "warning",
   SUCCESS = "success"
 }
+
+export type ServerErrorWithName = ServerError & { operationName: string };

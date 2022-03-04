@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
 import {
+  pageBulkRemoveErrorFragment,
   pageErrorFragment,
   pageErrorWithAttributesFragment
 } from "@saleor/fragments/errors";
@@ -25,7 +26,6 @@ const pageCreate = gql`
     pageCreate(input: $input) {
       errors {
         ...PageErrorWithAttributesFragment
-        message
       }
       page {
         id
@@ -82,8 +82,7 @@ const pageBulkPublish = gql`
   mutation PageBulkPublish($ids: [ID]!, $isPublished: Boolean!) {
     pageBulkPublish(ids: $ids, isPublished: $isPublished) {
       errors {
-        field
-        message
+        ...PageBulkPublishErrorFragment
       }
     }
   }
@@ -94,11 +93,11 @@ export const TypedPageBulkPublish = TypedMutation<
 >(pageBulkPublish);
 
 const pageBulkRemove = gql`
+  ${pageBulkRemoveErrorFragment}
   mutation PageBulkRemove($ids: [ID]!) {
     pageBulkDelete(ids: $ids) {
       errors {
-        field
-        message
+        ...PageBulkRemoveErrorFragment
       }
     }
   }

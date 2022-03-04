@@ -46,7 +46,8 @@ storiesOf("Views / Discounts / Voucher create", module)
         __typename: "DiscountError",
         channels: [],
         code: DiscountErrorCode.INVALID,
-        field
+        field,
+        message: "Discount invalid"
       }))}
     />
   ));

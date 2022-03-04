@@ -13,6 +13,7 @@ export interface GiftCardResend_giftCardResend_errors {
   __typename: "GiftCardError";
   code: GiftCardErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface GiftCardResend_giftCardResend_giftCard_metadata {

@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { NameTranslationInput, LanguageCodeEnum } from "./../../types/globalTypes";
+import { NameTranslationInput, LanguageCodeEnum, TranslationErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: UpdateProductVariantTranslations
@@ -11,6 +11,7 @@ import { NameTranslationInput, LanguageCodeEnum } from "./../../types/globalType
 
 export interface UpdateProductVariantTranslations_productVariantTranslate_errors {
   __typename: "TranslationError";
+  code: TranslationErrorCode;
   field: string | null;
   message: string | null;
 }

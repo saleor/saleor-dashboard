@@ -13,6 +13,7 @@ export interface WebhookUpdate_webhookUpdate_errors {
   __typename: "WebhookError";
   code: WebhookErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface WebhookUpdate_webhookUpdate_webhook_app {

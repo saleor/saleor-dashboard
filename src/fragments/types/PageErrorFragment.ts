@@ -13,4 +13,5 @@ export interface PageErrorFragment {
   __typename: "PageError";
   code: PageErrorCode;
   field: string | null;
+  message: string | null;
 }

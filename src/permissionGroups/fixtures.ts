@@ -125,11 +125,13 @@ export const errorsOfPermissionGroupCreate: PermissionGroupErrorFragment[] = [
   {
     field: "name",
     code: PermissionGroupErrorCode.UNIQUE,
+    message: "Group name has to be uniqe",
     __typename: "PermissionGroupError"
   },
   {
     field: "permissions",
     code: PermissionGroupErrorCode.OUT_OF_SCOPE_PERMISSION,
+    message: "Permissions out of scope",
     __typename: "PermissionGroupError"
   }
 ];

@@ -13,6 +13,7 @@ export interface GiftCardBulkActivate_giftCardBulkActivate_errors {
   __typename: "GiftCardError";
   code: GiftCardErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface GiftCardBulkActivate_giftCardBulkActivate {

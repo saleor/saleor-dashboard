@@ -5,7 +5,11 @@ import {
   voucherDetailsFragment,
   voucherFragment
 } from "@saleor/fragments/discounts";
-import { discountErrorFragment } from "@saleor/fragments/errors";
+import {
+  discountErrorFragment,
+  saleBulkDeleteError,
+  voucherBulkDeleteError
+} from "@saleor/fragments/errors";
 import makeMutation from "@saleor/hooks/makeMutation";
 
 import { TypedMutation } from "../mutations";
@@ -160,11 +164,11 @@ export const TypedSaleDelete = TypedMutation<SaleDelete, SaleDeleteVariables>(
 );
 
 const saleBulkDelete = gql`
+  ${saleBulkDeleteError}
   mutation SaleBulkDelete($ids: [ID]!) {
     saleBulkDelete(ids: $ids) {
       errors {
-        field
-        message
+        ...SaleBulkDeleteError
       }
     }
   }
@@ -324,11 +328,11 @@ export const TypedVoucherDelete = TypedMutation<
 >(voucherDelete);
 
 const voucherBulkDelete = gql`
+  ${voucherBulkDeleteError}
   mutation VoucherBulkDelete($ids: [ID]!) {
     voucherBulkDelete(ids: $ids) {
       errors {
-        field
-        message
+        ...VoucherBulkDeleteError
       }
     }
   }

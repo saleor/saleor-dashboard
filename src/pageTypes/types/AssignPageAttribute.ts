@@ -13,6 +13,7 @@ export interface AssignPageAttribute_pageAttributeAssign_errors {
   __typename: "PageError";
   code: PageErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface AssignPageAttribute_pageAttributeAssign_pageType_metadata {

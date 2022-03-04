@@ -8,7 +8,9 @@ import {
 import { handleQueryAuthError } from "@saleor/auth";
 import { useUser } from "@saleor/auth";
 import { RequireAtLeastOne } from "@saleor/misc";
+import { ServerErrorWithName } from "@saleor/types";
 import { DocumentNode } from "graphql";
+import { getOperationAST } from "graphql";
 import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
@@ -66,7 +68,8 @@ function makeQuery<TData, TVariables>(
     skip,
     variables,
     fetchPolicy,
-    handleError
+    handleError,
+    ...rest
   }: UseQueryOpts<TVariables> = {}): UseQueryResult<TData, TVariables> {
     const notify = useNotifier();
     const intl = useIntl();
@@ -87,16 +90,23 @@ function makeQuery<TData, TVariables>(
         useBatching: true
       },
       errorPolicy: "all",
-      fetchPolicy: fetchPolicy || "cache-and-network",
+      fetchPolicy: fetchPolicy ?? "cache-and-network",
       onError: error => {
-        if (!!handleError) {
-          handleError(error);
-        } else {
-          handleQueryAuthError(error, notify, user.logout, intl);
+        // TO-INVESTIGATE-BATCHING
+        if (
+          (error.networkError as ServerErrorWithName).operationName ===
+          getOperationAST(query).name.value
+        ) {
+          if (!!handleError) {
+            handleError(error);
+          } else {
+            handleQueryAuthError(error, notify, user.logout, intl);
+          }
         }
       },
       skip,
-      variables: variablesWithPermissions
+      variables: variablesWithPermissions,
+      ...rest
     });
 
     useEffect(() => {

@@ -14,6 +14,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_e
   code: OrderErrorCode;
   field: string | null;
   addressType: AddressTypeEnum | null;
+  message: string | null;
 }
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_variant_preorder {

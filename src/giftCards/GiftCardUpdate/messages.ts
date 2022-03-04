@@ -20,7 +20,7 @@ const giftCardErrorMessages = defineMessages({
 });
 
 export function getGiftCardErrorMessage(
-  error: Omit<GiftCardError, "__typename"> | undefined,
+  error: Omit<GiftCardError, "__typename" | "message"> | undefined,
   intl: IntlShape
 ): string {
   if (error) {

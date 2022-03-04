@@ -59,6 +59,7 @@ export interface AttributeValueUpdate_attributeValueUpdate_errors {
   __typename: "AttributeError";
   code: AttributeErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface AttributeValueUpdate_attributeValueUpdate {

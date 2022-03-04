@@ -13,6 +13,7 @@ export interface CreateShippingRate_shippingPriceCreate_errors {
   __typename: "ShippingError";
   code: ShippingErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface CreateShippingRate_shippingPriceCreate_shippingZone_metadata {

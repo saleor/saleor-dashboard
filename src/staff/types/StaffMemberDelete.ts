@@ -13,6 +13,7 @@ export interface StaffMemberDelete_staffDelete_errors {
   __typename: "StaffError";
   code: AccountErrorCode;
   field: string | null;
+  message: string | null;
 }
 
 export interface StaffMemberDelete_staffDelete {
