@@ -2231,19 +2231,15 @@
   },
   "src_dot_components_dot_Form_dot_cancelButton": {
     "context": "ExitFormPrompt cancel button",
-    "string": "Leave without saving"
+    "string": "Discard changes"
   },
   "src_dot_components_dot_Form_dot_confirmButton": {
     "context": "ExitFormPrompt confirm button",
-    "string": "Save & continue"
-  },
-  "src_dot_components_dot_Form_dot_description": {
-    "context": "ExitFormPrompt description",
-    "string": "You have unsaved changes on this view. What would you like to do with them?"
+    "string": "Save changes"
   },
   "src_dot_components_dot_Form_dot_title": {
     "context": "ExitFormPrompt title",
-    "string": "Are you sure you want to leave?"
+    "string": "Would you like to save changes?"
   },
   "src_dot_components_dot_ImageUpload_dot_1731007575": {
     "context": "image upload",

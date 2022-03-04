@@ -1,9 +1,8 @@
 import { Button, Dialog, DialogContent, makeStyles } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
-import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { exitFormPromptMessages as messages } from "./messages";
 
@@ -19,6 +18,12 @@ const useStyles = makeStyles(
     buttonsContainer: {
       display: "flex",
       justifyContent: "flex-end"
+    },
+    dialogContent: {
+      "@media (min-width: 800px)": {
+        minWidth: 500
+      },
+      paddingTop: 0
     }
   }),
   { name: "ExitFormPrompt" }
@@ -43,10 +48,7 @@ const ExitFormDialog: React.FC<ExitFormDialogProps> = ({
   return (
     <Dialog className={classes.container} open={isOpen} onClose={onClose}>
       <CardTitle title={intl.formatMessage(messages.title)} />
-      <DialogContent>
-        <FormattedMessage {...messages.description} />
-        <CardSpacer />
-        <CardSpacer />
+      <DialogContent className={classes.dialogContent}>
         <div className={classes.buttonsContainer}>
           <Button onClick={onLeave}>
             {intl.formatMessage(messages.cancelButton)}
