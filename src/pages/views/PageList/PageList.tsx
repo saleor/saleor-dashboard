@@ -31,7 +31,7 @@ import {
   PageListUrlQueryParams,
   pageUrl
 } from "../../urls";
-import { getSortQueryVariables } from "./sort";
+import { getFilterVariables, getSortQueryVariables } from "./sort";
 
 interface PageListProps {
   params: PageListUrlQueryParams;
@@ -56,6 +56,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
+      filter: getFilterVariables(params),
       sort: getSortQueryVariables(params)
     }),
     [params, settings.rowNumber]
