@@ -5649,6 +5649,14 @@
     "context": "button",
     "string": "Create page"
   },
+  "src_dot_pages_dot_components_dot_PageListPage_dot_pageType": {
+    "context": "Types",
+    "string": "Page Types"
+  },
+  "src_dot_pages_dot_components_dot_PageListPage_dot_searchPlaceholder": {
+    "context": "search pages placeholder",
+    "string": "Search Pages"
+  },
   "src_dot_pages_dot_components_dot_PageList_dot_1124600214": {
     "context": "dialog header",
     "string": "Title"
