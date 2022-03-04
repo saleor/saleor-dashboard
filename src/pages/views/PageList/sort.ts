@@ -1,5 +1,5 @@
-import { PageSortField } from "@saleor/graphql";
-import { PageListUrlSortField } from "@saleor/pages/urls";
+import { PageSortField, PageFilterInput } from "@saleor/graphql";
+import { PageListUrlFilters, PageListUrlSortField } from "@saleor/pages/urls";
 import { createGetSortQueryVariables } from "@saleor/utils/sort";
 
 export function getSortQueryField(sort: PageListUrlSortField): PageSortField {
@@ -13,6 +13,15 @@ export function getSortQueryField(sort: PageListUrlSortField): PageSortField {
     default:
       return undefined;
   }
+}
+
+export function getFilterVariables(
+  params: PageListUrlFilters
+): PageFilterInput {
+  return {
+    search: params.query,
+    pageTypes: params.pageType
+  };
 }
 
 export const getSortQueryVariables = createGetSortQueryVariables(
