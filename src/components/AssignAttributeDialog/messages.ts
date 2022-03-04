@@ -18,7 +18,7 @@ export const messages = defineMessages({
     description: "description"
   },
   assignButton: {
-    defaultMessage: "Assign attributes",
+    defaultMessage: "Assign and save",
     description: "button"
   }
 });
