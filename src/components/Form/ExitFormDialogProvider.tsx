@@ -211,9 +211,10 @@ export function useExitFormDialogProvider() {
     const errors = await Promise.all(
       getDirtyFormsSubmitFn().map(submitFn => submitFn())
     );
-    const isError = errors.flat().some(errors => errors);
 
     setIsSubmitting(false);
+
+    const isError = errors.flat().some(errors => errors);
 
     if (!isError) {
       continueNavigation();
