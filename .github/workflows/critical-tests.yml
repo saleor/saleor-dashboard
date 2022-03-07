@@ -20,9 +20,9 @@ jobs:
       - name: Save build folder
         uses: actions/upload-artifact@v2
         with:
-          name: build
+          name: cypressBuild
           if-no-files-found: error
-          path: build
+          path: cypressBuild
 
       - name: Cypress install
         uses: cypress-io/github-action@v2
@@ -46,8 +46,8 @@ jobs:
       - name: Download the build folders
         uses: actions/download-artifact@v2
         with:
-          name: build
-          path: build
+          name: cypressBuild
+          path: cypressBuild
       - name: Get API_URI
         id: api_uri
         # Search for CYPRESS_API_URI in PR description and use default if not defined
