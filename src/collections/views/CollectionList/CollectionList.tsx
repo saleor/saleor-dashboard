@@ -194,6 +194,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
           <IconButton
             variant="secondary"
             color="primary"
+            data-test-id="delete-icon"
             onClick={() =>
               openModal("remove", {
                 ids: listElements
