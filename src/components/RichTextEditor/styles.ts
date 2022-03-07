@@ -108,6 +108,9 @@ const useStyles = makeStyles(
       },
       rootError: {
         borderColor: theme.palette.error.main
+      },
+      rootStatic: {
+        fontSize: theme.typography.body1.fontSize
       }
     };
   },

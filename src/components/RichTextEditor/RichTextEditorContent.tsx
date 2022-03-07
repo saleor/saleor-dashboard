@@ -97,7 +97,7 @@ const RichTextEditorContent: React.FC<RichTextEditorContentProps> = ({
 
   return (
     <div
-      className={classNames(classes.editor, className)}
+      className={classNames(classes.editor, classes.rootStatic, className)}
       ref={editorContainer}
     />
   );
