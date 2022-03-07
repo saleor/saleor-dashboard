@@ -10,12 +10,44 @@ on:
     branches: ["*"]
   
 jobs:
-  cypress-run-critical:
+  cypress-install:
     runs-on: ubuntu-latest
+    container: cypress/browsers:node12.18.3-chrome87-ff82
     steps:
       - name: Checkout
         uses: actions/checkout@v1
 
+      - name: Save build folder
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          if-no-files-found: error
+          path: build
+
+      - name: Cypress install
+        uses: cypress-io/github-action@v2
+        with:
+          # Disable running of tests within install job
+          runTests: false
+          build: yarn build
+
+  cypress-run-critical:
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node12.18.3-chrome87-ff82
+    needs: cypress-install
+    strategy:
+      fail-fast: false
+      matrix:
+        # run copies of the current job in parallel
+        containers: [1, 2, 3, 4, 5]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Download the build folders
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: build
       - name: Get API_URI
         id: api_uri
         # Search for CYPRESS_API_URI in PR description and use default if not defined
@@ -35,22 +67,6 @@ jobs:
         with:
           node-version: 14
 
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-qa-${{ env.cache-name }}-
-            ${{ runner.os }}-qa-
-            ${{ runner.os }}-
-
-      - name: Install Dependencies
-        if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: npm install
-
       - name: Cypress run critical
         uses: cypress-io/github-action@v2
         env:
@@ -62,10 +78,13 @@ jobs:
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
         with:
+          install: false
+          parallel: true
+          group: 'UI - Chrome'
           command: npm run cy:run:critical
           wait-on: ${{ steps.base_URL.outputs.base_URL }}
       - uses: actions/upload-artifact@v1
         if: ${{ failure() }}
         with:
-          name: cypress-report
+          name: cypress-reports
           path: cypress/reports
