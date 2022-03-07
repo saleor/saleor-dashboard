@@ -7,7 +7,8 @@ import * as permissionsSteps from "../support/pages/permissionsPage";
 
 describe("Navigation for users with different permissions", () => {
   Object.keys(PERMISSIONS_OPTIONS).forEach(key => {
-    const tags = key === "all" ? ["critical", "all"] : ["all"];
+    const tags =
+      key === "all" ? ["critical", "all", "refactored"] : ["all", "refactored"];
     filterTests({ definedTags: tags }, () => {
       it(`should navigate as an user with ${key} permission`, () => {
         const permissionOption = PERMISSIONS_OPTIONS[key];

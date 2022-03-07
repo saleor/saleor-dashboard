@@ -30,11 +30,11 @@ Cypress.Commands.add("clearSessionData", () => {
 
   cy.clearCookies();
   cy.clearLocalStorage();
-  cy.visit(urlList.homePage, {
-    onBeforeLoad: win => {
-      win.sessionStorage.clear();
-    }
-  });
+  // cy.visit(urlList.homePage, {
+  //   onBeforeLoad: win => {
+  //     win.sessionStorage.clear();
+  //   }
+  // });
 });
 
 Cypress.Commands.add("addAliasToGraphRequest", operationName => {

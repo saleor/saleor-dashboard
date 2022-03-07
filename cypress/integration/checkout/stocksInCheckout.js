@@ -12,16 +12,12 @@ import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import { createOrderWithNewProduct } from "../../support/api/utils/ordersUtils";
 import {
   createProductInChannel,
-  createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith
+  createTypeAttributeAndCategoryForProduct
 } from "../../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith
-} from "../../support/api/utils/shippingUtils";
+import { createShipping } from "../../support/api/utils/shippingUtils";
 import filterTests from "../../support/filterTests";
 
-filterTests({ definedTags: ["all", "critical"] }, () => {
+filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
   describe("Products stocks in checkout", () => {
     const startsWith = "CyStocksCheckout-";
     const name = `${startsWith}${faker.datatype.number()}`;
@@ -36,8 +32,6 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
 
     before(() => {
       cy.clearSessionData().loginUserViaRequest();
-      deleteProductsStartsWith(startsWith);
-      deleteShippingStartsWith(startsWith);
       cy.fixture("addresses")
         .then(addresses => {
           address = addresses.usAddress;
@@ -72,22 +66,6 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
             productType = productTypeResp;
           }
         );
-    });
-    it("should create checkout with last product in stock", () => {
-      const productName = `${startsWith}${faker.datatype.number()}`;
-
-      createOrderWithNewProduct({
-        attributeId: attribute.id,
-        categoryId: category.id,
-        productTypeId: productType.id,
-        channel: defaultChannel,
-        name: productName,
-        warehouseId: warehouse.id,
-        shippingMethod,
-        address
-      }).then(({ order }) => {
-        expect(order, "order should be created").to.be.ok;
-      });
     });
 
     it("should not be possible to add product with quantity greater than stock", () => {
@@ -144,7 +122,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
       });
     });
 
-    it("should change product stock after purchase", () => {
+    it("should create checkout with last product in stock", () => {
       const productName = `${startsWith}${faker.datatype.number()}`;
 
       createOrderWithNewProduct({
@@ -154,17 +132,17 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         channel: defaultChannel,
         name: productName,
         warehouseId: warehouse.id,
-        quantityInWarehouse: 10,
-        trackInventory: true,
         shippingMethod,
         address
       })
-        .then(({ variantsList }) => {
+        .then(({ order, variantsList }) => {
+          expect(order, "order should be created").to.be.ok;
           getVariants(variantsList);
         })
         .then(variantsList => {
           const variant = variantsList.edges[0];
           expect(variant.node.stocks[0].quantityAllocated).to.eq(1);
+          expect(variant.node.stocks[0].quantity).to.eq(1);
         });
     });
   });
