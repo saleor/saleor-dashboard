@@ -2,7 +2,9 @@ name: RUN_CRITICAL_TESTS
 
 # Only trigger, when the build workflow succeeded
 on:
-  deployment
+  workflow_run:
+    workflows: [TEST-ENV-DEPLOYMENT, test-env-deploy]
+    types: [completed]
   
 jobs:
   cypress-run-critical:
