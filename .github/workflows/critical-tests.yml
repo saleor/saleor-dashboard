@@ -2,18 +2,14 @@ name: RUN_CRITICAL_TESTS
 
 # Only trigger, when the build workflow succeeded
 on:
-  workflow_run:
-    workflows: ["TEST-ENV-DEPLOYMENT"]
-    types: [requested]
-    branches: ["*"]
+  deployment
+  
 jobs:
   cypress-run-critical:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-        with:
-          ref: ${{ github.event.workflow_run.head_branch }}
 
       - name: Get API_URI
         id: api_uri
