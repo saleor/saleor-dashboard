@@ -70,7 +70,7 @@ jobs:
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
         with:
           command: npm run cy:run:critical
-          wait-on: ${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks
+          wait-on: '${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks'
       - uses: actions/upload-artifact@v1
         if: ${{ failure() }}
         with:
