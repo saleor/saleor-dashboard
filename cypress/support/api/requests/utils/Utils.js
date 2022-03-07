@@ -61,13 +61,16 @@ export const getValuesInArray = array =>
 
 export function getDataForDescriptionInVariables(descriptionJson) {
   return {
-    variables: getValueWithDefault(description, {
-      description: descriptionJson
+    variables: getValueWithDefault(descriptionJson, {
+      description: `{\"blocks\":[{\"type\":\"paragraph\",\"data\":{\"text\":\"${descriptionJson}\"}}]}`
     }),
     mutationVariables: getValueWithDefault(
-      variables,
+      descriptionJson,
       `($description: JSONString!)`
     ),
-    descriptionLine: getValueWithDefault(variables, `description: $description`)
+    descriptionLine: getValueWithDefault(
+      descriptionJson,
+      `description: $description`
+    )
   };
 }
