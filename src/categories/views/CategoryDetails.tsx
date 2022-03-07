@@ -122,6 +122,11 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
           text: intl.formatMessage(errorMessages.imageUploadErrorText)
         });
       }
+    } else {
+      notify({
+        status: "success",
+        text: intl.formatMessage(commonMessages.savedChanges)
+      });
     }
   };
 
