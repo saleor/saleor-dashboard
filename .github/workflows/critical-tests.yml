@@ -67,5 +67,5 @@ jobs:
       - uses: actions/upload-artifact@v1
         if: ${{ failure() }}
         with:
-          name: cypress-videos
-          path: cypress/videos
+          name: cypress-report
+          path: cypress/reports
