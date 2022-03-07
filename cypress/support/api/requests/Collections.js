@@ -52,3 +52,17 @@ export function deleteCollection(collectionId) {
   }`;
   return cy.sendRequestWithQuery(mutation);
 }
+
+export function addProductToCollecton({ collectionId, productId }) {
+  const mutation = `mutation addProduct {
+    collectionAddProducts(
+      collectionId: "${collectionId}"
+      products: ["${productId}"]
+    ) {
+      errors {
+        message
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation);
+}
