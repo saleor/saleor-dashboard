@@ -4,8 +4,8 @@ name: E2E
 on:
   workflow_run:
     workflows: ["TEST-ENV-DEPLOYMENT"]
-    types:
-      - completed
+    types: [completed]
+    branches: ["*"]
 jobs:
   cypress-run-critical:
     if: ((github.event.label.name != 'run e2e') || !(contains(github.event.pull_request.labels.*.name, 'run e2e'))
