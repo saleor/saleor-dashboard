@@ -29,7 +29,7 @@ jobs:
       - name: Get base_URL
         id: base_URL
         run: |
-          echo "::set-output name=base_URL::${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks"
+          echo "::set-output name=base_URL::$(echo ${GITHUB_HEAD_REF}).dashboard.saleor.rocks"
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
@@ -70,7 +70,7 @@ jobs:
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
         with:
           command: npm run cy:run:critical
-          wait-on: '${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks'
+          wait-on: ${{ steps.api_uri.outputs.base_URL }}
       - uses: actions/upload-artifact@v1
         if: ${{ failure() }}
         with:
