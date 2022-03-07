@@ -22,13 +22,14 @@ const AssignCategoryDialog: React.FC<AssignCategoryDialogProps> = ({
   return (
     <AssignContainerDialog
       containers={categories}
-      search={{
+      labels={{
+        title: intl.formatMessage(messages.assignCategoryDialogHeader),
         label: intl.formatMessage(messages.assignCategoryDialogLabel),
         placeholder: intl.formatMessage(
           messages.assignCategoryDialogPlaceholder
-        )
+        ),
+        confirmBtn: intl.formatMessage(messages.confirmButton)
       }}
-      title={intl.formatMessage(messages.assignCategoryDialogHeader)}
       {...rest}
     />
   );

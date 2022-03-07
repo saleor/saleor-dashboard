@@ -12,5 +12,9 @@ export const messages = defineMessages({
   assignCategoryDialogHeader: {
     defaultMessage: "Assign Category",
     description: "dialog header"
+  },
+  confirmButton: {
+    defaultMessage: "Assign and save",
+    description: "assign categories to sale and save"
   }
 });

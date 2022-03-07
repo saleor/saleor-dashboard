@@ -29,6 +29,7 @@ export interface AssignContainerDialogFormData {
   query: string;
 }
 
+type Labels = Record<"confirmBtn" | "title" | "label" | "placeholder", string>;
 interface Container extends Node {
   name: string;
 }
@@ -38,8 +39,7 @@ export interface AssignContainerDialogProps
   confirmButtonState: ConfirmButtonTransitionState;
   containers: Container[];
   loading: boolean;
-  search: Record<"label" | "placeholder", string>;
-  title: string;
+  labels: Labels;
   onFetch: (value: string) => void;
   onSubmit: (data: string[]) => void;
 }
@@ -70,8 +70,7 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
     hasMore,
     loading,
     open,
-    search,
-    title,
+    labels,
     onClose,
     onFetch,
     onFetchMore,
@@ -95,14 +94,14 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
       fullWidth
       maxWidth="sm"
     >
-      <DialogTitle>{title}</DialogTitle>
+      <DialogTitle>{labels.title}</DialogTitle>
       <DialogContent className={scrollableDialogClasses.topArea}>
         <TextField
           name="query"
           value={query}
           onChange={onQueryChange}
-          label={search.label}
-          placeholder={search.placeholder}
+          label={labels.label}
+          placeholder={labels.placeholder}
           fullWidth
           InputProps={{
             autoComplete: "off",
@@ -168,7 +167,7 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
           type="submit"
           onClick={handleSubmit}
         >
-          <FormattedMessage {...messages.assignContainerDialogButton} />
+          {labels.confirmBtn}
         </ConfirmButton>
       </DialogActions>
     </Dialog>
