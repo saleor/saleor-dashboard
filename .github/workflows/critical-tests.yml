@@ -3,8 +3,11 @@ name: RUN_CRITICAL_TESTS
 # Only trigger, when the build workflow succeeded
 on:
   workflow_run:
-    workflows: [TEST-ENV-DEPLOYMENT, test-env-deploy]
+    workflows: [TEST-ENV-DEPLOYMENT]
     types: [completed]
+  pull_request:
+    types: [reopened, synchronize, labeled, opened]
+    branches: ["*"]
   
 jobs:
   cypress-run-critical:
@@ -67,6 +70,7 @@ jobs:
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
         with:
           command: npm run cy:run:critical
+          wait-on: ${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks
       - uses: actions/upload-artifact@v1
         if: ${{ failure() }}
         with:
