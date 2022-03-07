@@ -6,6 +6,7 @@ import React from "react";
 
 import { RichTextEditorContentProps, tools } from "./RichTextEditorContent";
 import useStyles from "./styles";
+import { clean } from "./utils";
 
 export type RichTextEditorChange = (data: OutputData) => void;
 export interface RichTextEditorProps extends RichTextEditorContentProps {
@@ -59,9 +60,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
       }
 
       return () => {
-        if (editor.current) {
-          editor.current.destroy();
-        }
+        clean(editor.current);
         editor.current = null;
       };
     },
