@@ -13,8 +13,7 @@ import {
 } from "@saleor/graphql/types.generated";
 import { RequireAtLeastOne } from "@saleor/misc";
 import { ServerErrorWithName } from "@saleor/types";
-import { DocumentNode } from "graphql";
-import { getOperationAST } from "graphql";
+import { DocumentNode, getOperationAST } from "graphql";
 import { useEffect } from "react";
 import { useIntl } from "react-intl";
 

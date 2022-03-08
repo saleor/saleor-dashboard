@@ -6,6 +6,7 @@ import Hr from "@saleor/components/Hr";
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
+  AttributeValueDetailsFragment,
   AttributeValueFragment,
   MeasurementUnitsEnum,
   PageErrorWithAttributesFragment,
