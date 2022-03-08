@@ -170,7 +170,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should create swatch attribute with imagev. TC:SALEOR_0532", () => {
+    it("should create swatch attribute with image. TC:SALEOR_0532", () => {
       const attributeType = "SWATCH";
       const attributeName = `${startsWith}${faker.datatype.number()}`;
       const swatchImage = "images/saleorDemoProductSneakers.png";
