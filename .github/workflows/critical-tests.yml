@@ -21,14 +21,14 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           runTests: false
-      - name: Build site 🏗
-        run: npm run docs:build
 
       - name: Save built folders 🆙
         uses: actions/upload-artifact@v2
         with:
-          name: built
+          name: install-and-build
           path: |
+            ~/.cache/Cypress
+            node_modules
             docs
             public
 
@@ -47,7 +47,7 @@ jobs:
       - name: Download built folders ⏬
         uses: actions/download-artifact@v2
         with:
-          name: built
+          name: install-and-build
       - name: Get API_URI
         id: api_uri
         # Search for CYPRESS_API_URI in PR description and use default if not defined
