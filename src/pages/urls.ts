@@ -32,7 +32,7 @@ export enum PageListUrlFiltersEnum {
 }
 
 export enum PageListUrlFiltersWithMultipleValues {
-  pageType = "pageType"
+  pageTypes = "pageTypes"
 }
 
 export type PageListUrlFilters = Filters<PageListUrlFiltersEnum> &

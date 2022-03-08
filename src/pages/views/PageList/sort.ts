@@ -20,7 +20,7 @@ export function getFilterVariables(
 ): PageFilterInput {
   return {
     search: params.query,
-    pageTypes: params.pageType
+    pageTypes: params.pageTypes
   };
 }
 

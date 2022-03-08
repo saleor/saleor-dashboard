@@ -26,7 +26,7 @@ import {
 import { defineMessages, IntlShape } from "react-intl";
 
 export enum PageListFilterKeys {
-  pageType = "pageType"
+  pageTypes = "pageTypes"
 }
 
 export const PAGES_FILTERS_KEY = "pagesFilters";
@@ -54,8 +54,8 @@ export const getFilterOpts = ({
   pageTypesProps
 }: PageListFilterOptsProps): PageListFilterOpts => ({
   pageType: {
-    active: !!params?.pageType,
-    value: params?.pageType,
+    active: !!params?.pageTypes,
+    value: params?.pageTypes,
     choices: mapNodeToChoice(pageTypes),
     displayValues: mapSingleValueNodeToChoice(pageTypes),
     initialSearch: "",
@@ -73,7 +73,7 @@ export function createFilterStructure(
   return [
     {
       ...createAutocompleteField(
-        PageListFilterKeys.pageType,
+        PageListFilterKeys.pageTypes,
         intl.formatMessage(messages.pageType),
         opts.pageType.value,
         opts.pageType.displayValues,
@@ -97,10 +97,10 @@ export function getFilterQueryParam(
 ): PageListUrlFilters {
   const { name } = filter;
 
-  const { pageType } = PageListFilterKeys;
+  const { pageTypes } = PageListFilterKeys;
 
   switch (name) {
-    case pageType:
+    case pageTypes:
       return getMultipleValueQueryParam(filter, name);
   }
 }
