@@ -1,4 +1,4 @@
-name: RUN_CRITICAL_TESTS
+name: RUN_CRITICAL_TESTS-PARALLEL
 
 # Only trigger, when the build workflow succeeded
 on:
@@ -12,13 +12,19 @@ on:
 jobs:
   cypress-run-critical:
     runs-on: ubuntu-latest
+    container: cypress/browsers:node14.16.0-chrome89-ff86
+    strategy:
+      fail-fast: false
+      matrix:
+        # run copies of the current job in parallel
+        containers: [1, 2]
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-
+      
       - name: Get API_URI
         id: api_uri
-        # Search for API_URI in PR description and use default if not defined
+        # Search for CYPRESS_API_URI in PR description and use default if not defined
         env:
           pull_request_body: ${{ github.event.pull_request.body }}
           prefix: API_URI=
@@ -30,26 +36,11 @@ jobs:
         id: base_URL
         run: |
           echo "::set-output name=base_URL::https://$(echo ${GITHUB_HEAD_REF}).dashboard.saleor.rocks"
+
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
           node-version: 14
-
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-qa-${{ env.cache-name }}-
-            ${{ runner.os }}-qa-
-            ${{ runner.os }}-
-
-      - name: Install Dependencies
-        if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: npm install
 
       - name: Cypress run critical
         uses: cypress-io/github-action@v2
@@ -62,9 +53,12 @@ jobs:
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
         with:
+          parallel: true
+          group: 'UI - Chrome'
           command: npm run cy:run:critical
           wait-on: ${{ steps.base_URL.outputs.base_URL }}
       - uses: actions/upload-artifact@v1
+        if: ${{ failure() }}
         with:
-          name: cypress-reports
+          name: cypress-reports-${{ matrix.containers }}    
           path: cypress/reports

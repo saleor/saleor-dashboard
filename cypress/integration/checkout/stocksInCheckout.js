@@ -7,9 +7,13 @@ import {
   addProductsToCheckout,
   createCheckout
 } from "../../support/api/requests/Checkout";
-import { getVariants } from "../../support/api/requests/Product";
+import { createVariant, getVariants } from "../../support/api/requests/Product";
 import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
-import { createOrderWithNewProduct } from "../../support/api/utils/ordersUtils";
+import {
+  createOrder,
+  createOrderWithNewProduct,
+  createWaitingForCaptureOrder
+} from "../../support/api/utils/ordersUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct
@@ -21,6 +25,7 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
   describe("Products stocks in checkout", () => {
     const startsWith = "CyStocksCheckout-";
     const name = `${startsWith}${faker.datatype.number()}`;
+    const productName = `${startsWith}${faker.datatype.number()}`;
 
     let defaultChannel;
     let address;
@@ -29,6 +34,10 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
     let category;
     let productType;
     let shippingMethod;
+    let product;
+    let variantsWithLowStock;
+    let variantsWithoutTrackInventory;
+    let lastVariantInStock;
 
     before(() => {
       cy.clearSessionData().loginUserViaRequest();
@@ -52,7 +61,10 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
           }) => {
             warehouse = warehouseResp;
             shippingMethod = shippingMethodResp;
-            createTypeAttributeAndCategoryForProduct({ name });
+            createTypeAttributeAndCategoryForProduct({
+              name,
+              attributeValues: ["value", "value1", "value2"]
+            });
           }
         )
         .then(
@@ -64,34 +76,66 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
             attribute = attributeResp;
             category = categoryResp;
             productType = productTypeResp;
+            createProductInChannel({
+              attributeId: attribute.id,
+              categoryId: category.id,
+              productTypeId: productType.id,
+              channelId: defaultChannel.id,
+              name: productName,
+              warehouseId: warehouse.id,
+              quantityInWarehouse: 1
+            });
           }
-        );
+        )
+        .then(({ variantsList, product: productResp }) => {
+          variantsWithLowStock = variantsList;
+          product = productResp;
+          createVariant({
+            productId: product.id,
+            attributeId: attribute.id,
+            channelId: defaultChannel.id,
+            attributeName: "value2",
+            trackInventory: false
+          });
+        })
+        .then(variantsList => {
+          variantsWithoutTrackInventory = variantsList;
+          createVariant({
+            productId: product.id,
+            attributeId: attribute.id,
+            channelId: defaultChannel.id,
+            attributeName: "value3"
+          });
+        })
+        .then(variantsList => {
+          lastVariantInStock = variantsList;
+        });
     });
 
     it("should not be possible to add product with quantity greater than stock", () => {
-      const productName = `${startsWith}${faker.datatype.number()}`;
-      let variants;
+      // const productName = `${startsWith}${faker.datatype.number()}`;
+      // let variants;
 
-      createProductInChannel({
-        attributeId: attribute.id,
-        categoryId: category.id,
-        productTypeId: productType.id,
-        channelId: defaultChannel.id,
-        name: productName,
-        warehouseId: warehouse.id,
-        quantityInWarehouse: 1
+      // createProductInChannel({
+      //   attributeId: attribute.id,
+      //   categoryId: category.id,
+      //   productTypeId: productType.id,
+      //   channelId: defaultChannel.id,
+      //   name: productName,
+      //   warehouseId: warehouse.id,
+      //   quantityInWarehouse: 1
+      // })
+      // .then(({ variantsList }) => {
+      //   variants = variantsList;
+      createCheckout({
+        channelSlug: defaultChannel.slug,
+        address,
+        billingAddress: address,
+        email: "email@example.com",
+        variantsList: variantsWithLowStock,
+        auth: "token"
       })
-        .then(({ variantsList }) => {
-          variants = variantsList;
-          createCheckout({
-            channelSlug: defaultChannel.slug,
-            address,
-            billingAddress: address,
-            email: "email@example.com",
-            variantsList,
-            auth: "token"
-          });
-        })
+        // })
         .then(({ checkout: checkout }) => {
           addProductsToCheckout(checkout.id, variants, 2);
         })
@@ -104,36 +148,50 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
     });
 
     it("should buy product with no quantity if tracking is not set", () => {
-      const productName = `${startsWith}${faker.datatype.number()}`;
+      // const productName = `${startsWith}${faker.datatype.number()}`;
 
-      createOrderWithNewProduct({
-        attributeId: attribute.id,
-        categoryId: category.id,
-        productTypeId: productType.id,
-        channel: defaultChannel,
-        name: productName,
-        warehouseId: warehouse.id,
-        quantityInWarehouse: 0,
-        trackInventory: false,
-        shippingMethod,
-        address
+      // createOrderWithNewProduct({
+      //   attributeId: attribute.id,
+      //   categoryId: category.id,
+      //   productTypeId: productType.id,
+      //   channel: defaultChannel,
+      //   name: productName,
+      //   warehouseId: warehouse.id,
+      //   quantityInWarehouse: 0,
+      //   trackInventory: false,
+      //   shippingMethod,
+      //   address
+      // })
+      createWaitingForCaptureOrder({
+        address,
+        channelSlug: defaultChannel.slug,
+        email: "example@example.com",
+        shippingMethodName: shippingMethod.name,
+        variantsList: variantsWithoutTrackInventory
       }).then(({ order }) => {
         expect(order, "order should be created").to.be.ok;
       });
     });
 
     it("should create checkout with last product in stock", () => {
-      const productName = `${startsWith}${faker.datatype.number()}`;
+      // const productName = `${startsWith}${faker.datatype.number()}`;
 
-      createOrderWithNewProduct({
-        attributeId: attribute.id,
-        categoryId: category.id,
-        productTypeId: productType.id,
-        channel: defaultChannel,
-        name: productName,
-        warehouseId: warehouse.id,
-        shippingMethod,
-        address
+      // createOrderWithNewProduct({
+      //   attributeId: attribute.id,
+      //   categoryId: category.id,
+      //   productTypeId: productType.id,
+      //   channel: defaultChannel,
+      //   name: productName,
+      //   warehouseId: warehouse.id,
+      //   shippingMethod,
+      //   address
+      // })
+      createWaitingForCaptureOrder({
+        address,
+        channelSlug: defaultChannel.slug,
+        email: "example@example.com",
+        shippingMethodName: shippingMethod.name,
+        variantsList: lastVariantInStock
       })
         .then(({ order, variantsList }) => {
           expect(order, "order should be created").to.be.ok;
