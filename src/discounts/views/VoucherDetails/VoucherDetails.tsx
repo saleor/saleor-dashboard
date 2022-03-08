@@ -372,7 +372,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
           >
             <FormattedMessage
               defaultMessage="Unassign"
-              description="unassign category from voucher, button"
+              description="button"
               id="voucherDetailsUnassignCategory"
             />
           </Button>
@@ -387,7 +387,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
           >
             <FormattedMessage
               defaultMessage="Unassign"
-              description="unassign collection from voucher, button"
+              description="button"
               id="voucherDetailsUnassignCollection"
             />
           </Button>
@@ -402,7 +402,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
           >
             <FormattedMessage
               defaultMessage="Unassign"
-              description="unassign product from voucher, button"
+              description="button"
               id="voucherDetailsUnassignProduct"
             />
           </Button>
@@ -512,7 +512,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         onConfirm={() => handleCategoriesUnassign(params.ids)}
         confirmButtonLabel={intl.formatMessage({
           defaultMessage: "Unassign and save",
-          description: "unassign categories from voucher and save, button"
+          description: "button"
         })}
       >
         {canOpenBulkActionDialog && (
@@ -541,7 +541,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         onConfirm={() => handleCollectionsUnassign(params.ids)}
         confirmButtonLabel={intl.formatMessage({
           defaultMessage: "Unassign and save",
-          description: "unassign collections from voucher and save, button"
+          description: "button"
         })}
       >
         {canOpenBulkActionDialog && (
@@ -568,7 +568,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         onConfirm={() => handleProductsUnassign(params.ids)}
         confirmButtonLabel={intl.formatMessage({
           defaultMessage: "Unassign and save",
-          description: "unassign products from voucher and save, button"
+          description: "button"
         })}
       >
         {canOpenBulkActionDialog && (
