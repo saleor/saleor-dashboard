@@ -17,14 +17,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: Cypress install
-        uses: actions/cache@v2
+      - name: Install 📦
+        uses: cypress-io/github-action@v2
         with:
+          runTests: false
+      - name: Build site 🏗
+        run: npm run docs:build
+
+      - name: Save built folders 🆙
+        uses: actions/upload-artifact@v2
+        with:
+          name: built
           path: |
-            ~/.cache/Cypress
-            node_modules
-          key: my-cache-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-      - run: npm i cypress
+            docs
+            public
 
   cypress-run-critical:
     runs-on: ubuntu-latest
@@ -38,6 +44,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
+      - name: Download built folders ⏬
+        uses: actions/download-artifact@v2
+        with:
+          name: built
       - name: Get API_URI
         id: api_uri
         # Search for CYPRESS_API_URI in PR description and use default if not defined
