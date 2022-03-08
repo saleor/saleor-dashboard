@@ -58,6 +58,7 @@ jobs:
           command: npm run cy:run:critical
           wait-on: ${{ steps.base_URL.outputs.base_URL }}
       - uses: actions/upload-artifact@v1
+        if: ${{ failure() }}
         with:
-          name: cypress-reports-${{ matrix.containers }}
+          name: cypress-reports-${{ matrix.containers }}    
           path: cypress/reports
