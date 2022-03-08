@@ -42,6 +42,7 @@ export interface UseFormResult<TData>
   errors: FormErrors<TData>;
   setError: (name: keyof TData, error: string | React.ReactNode) => void;
   clearErrors: (name?: keyof TData | Array<keyof TData>) => void;
+  setIsSubmitDisabled: (value: boolean) => void;
 }
 
 export interface CommonUseFormResult<TData> {
@@ -49,6 +50,7 @@ export interface CommonUseFormResult<TData> {
   change: FormChange;
   hasChanged: boolean;
   submit: (dataOrEvent?: any) => SubmitPromise<any[]>;
+  setIsSubmitDisabled?: (value: boolean) => void;
 }
 
 export interface CommonUseFormResultWithHandlers<TData, THandlers>
@@ -98,6 +100,7 @@ function useForm<T extends FormData, TErrors>(
     setIsDirty: setIsFormDirtyInExitDialog,
     setExitDialogSubmitRef,
     setEnableExitDialog,
+    setIsSubmitDisabled,
     formId
   } = useExitFormDialog({ formId: propsFormId });
 
@@ -216,7 +219,8 @@ function useForm<T extends FormData, TErrors>(
     toggleValue,
     handleChange,
     triggerChange: handleSetChanged,
-    setChanged: handleSetChanged
+    setChanged: handleSetChanged,
+    setIsSubmitDisabled
   };
 }
 

@@ -8,7 +8,13 @@ import {
 } from "./ExitFormDialogProvider";
 
 export interface UseExitFormDialogResult
-  extends Omit<ExitFormDialogData, "setIsDirty" | "setExitDialogSubmitRef">,
+  extends Pick<
+      ExitFormDialogData,
+      | "setEnableExitDialog"
+      | "shouldBlockNavigation"
+      | "setIsSubmitting"
+      | "setIsSubmitDisabled"
+    >,
     WithFormId {
   setIsDirty: (isDirty: boolean) => void;
   setExitDialogSubmitRef: (submitFn: SubmitFn) => void;

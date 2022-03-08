@@ -14,6 +14,7 @@ export interface ExitFormDialogData {
   shouldBlockNavigation: () => boolean;
   setIsSubmitting: (value: boolean) => void;
   submit: () => SubmitPromise;
+  setIsSubmitDisabled: (value: boolean) => void;
 }
 
 export type SubmitFn = (dataOrEvent?: any) => SubmitPromise<any[]>;
@@ -39,7 +40,8 @@ export const ExitFormDialogContext = React.createContext<ExitFormDialogData>({
   setExitDialogSubmitRef: () => undefined,
   shouldBlockNavigation: () => false,
   setIsSubmitting: () => undefined,
-  submit: () => Promise.resolve([])
+  submit: () => Promise.resolve([]),
+  setIsSubmitDisabled: () => undefined
 });
 
 const defaultValues = {
@@ -58,6 +60,11 @@ export function useExitFormDialogProvider() {
   const { history: routerHistory } = useRouter();
 
   const [showDialog, setShowDialog] = useState(defaultValues.showDialog);
+  const isSubmitDisabled = useRef<boolean>(false);
+
+  const setIsSubmitDisabled = (status: boolean) => {
+    isSubmitDisabled.current = status;
+  };
 
   const isSubmitting = useRef(defaultValues.isSubmitting);
   const formsData = useRef<FormsData>({});
@@ -242,7 +249,8 @@ export function useExitFormDialogProvider() {
     setEnableExitDialog,
     setExitDialogSubmitRef: setSubmitRef,
     setIsSubmitting,
-    submit: handleSubmit
+    submit: handleSubmit,
+    setIsSubmitDisabled
   };
 
   return {
@@ -266,7 +274,7 @@ const ExitFormDialogProvider = ({ children }) => {
   useBeforeUnload(e => {
     // If form is dirty and user does a refresh,
     // the browser will ask about unsaved changes
-    if (shouldBlockNav() && !isInDevelopment) {
+    if (shouldBlockNavigation() && !isInDevelopment) {
       e.preventDefault();
       e.returnValue = "";
     }
@@ -279,6 +287,7 @@ const ExitFormDialogProvider = ({ children }) => {
         onSubmit={handleSubmit}
         onLeave={handleLeave}
         onClose={handleClose}
+        isSubmitDisabled={isSubmitDisabled.current}
       />
       {children}
     </ExitFormDialogContext.Provider>
