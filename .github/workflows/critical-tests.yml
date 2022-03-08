@@ -18,11 +18,13 @@ jobs:
         uses: actions/checkout@v1
 
       - name: Cypress install
-        uses: cypress-io/github-action@v2
+        uses: actions/cache@v2
         with:
-          # Disable running of tests within install job
-          runTests: false
-          build: yarn build
+          path: |
+            ~/.cache/Cypress
+            node_modules
+          key: my-cache-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - run: npm i cypress
 
   cypress-run-critical:
     runs-on: ubuntu-latest
