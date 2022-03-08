@@ -22,7 +22,7 @@ import {
 import filterTests from "../../support/filterTests";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Products without shipment option", () => {
+  describe("As a customer I want to try order product without shipping", () => {
     const startsWith = "WithoutShipmentCheckout-";
     const name = `${startsWith}${faker.datatype.number()}`;
     const nameProdWithoutShipping = `${startsWith}${faker.datatype.number()}`;
@@ -95,7 +95,7 @@ filterTests({ definedTags: ["all"] }, () => {
         );
     });
 
-    it("should be not possible to buy product without shipping option", () => {
+    it("should be not possible to buy product without shipping option. TC: SALEOR_0401", () => {
       createCheckout({
         channelSlug: channel.slug,
         email: "example@example.com",

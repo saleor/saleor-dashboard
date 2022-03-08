@@ -142,6 +142,7 @@ export function completeCheckout(checkoutId, paymentData) {
     checkoutComplete(checkoutId:"${checkoutId}" ${paymentDataLine}){
       order{
         id
+        status
         paymentStatus
         total{
           gross{
@@ -225,6 +226,7 @@ export function checkoutShippingAddressUpdate(checkoutId, address) {
     ){
       checkout{
         id
+        token
         shippingMethods{
           id
           name
@@ -253,6 +255,7 @@ export function addProductsToCheckout(
         id
         shippingMethods{
           name
+          id
         }
       }
       errors{
@@ -264,6 +267,30 @@ export function addProductsToCheckout(
   return cy.sendRequestWithQuery(mutation).its("body.data.checkoutLinesUpdate");
 }
 
-export function getCheckout(checkoutId) {
-  const mutation = ``;
+export function getCheckout(token) {
+  const query = `query{
+    checkout(token:"${token}"){
+      token
+      id
+      token
+      shippingMethods{
+        name
+        id
+      }
+      lines{
+        variant{
+          id
+          pricing{
+            onSale
+            price{
+              gross{
+                amount
+              }
+            }
+          }
+        }
+      } 
+    }
+  }`;
+  return cy.sendRequestWithQuery(query).its("body.data.checkout");
 }
