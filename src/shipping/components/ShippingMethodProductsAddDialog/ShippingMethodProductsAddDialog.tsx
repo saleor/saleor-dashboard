@@ -21,7 +21,6 @@ import {
   ShippingPriceExcludeProductMutation
 } from "@saleor/graphql";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
-import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { FetchMoreProps, RelayToFlat } from "@saleor/types";

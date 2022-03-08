@@ -7,6 +7,10 @@ import AssignContainerDialog, {
 } from "../AssignContainerDialog";
 
 const messages = defineMessages({
+  confirmBtn: {
+    defaultMessage: "Assign",
+    description: "assign reference to product, button"
+  },
   header: {
     defaultMessage: "Assign Attribute Value",
     description: "dialog header"
@@ -24,7 +28,7 @@ const messages = defineMessages({
 interface AssignAttributeValueDialogProps
   extends Omit<
     AssignContainerDialogProps,
-    "containers" | "title" | "search" | "confirmButtonState"
+    "containers" | "title" | "search" | "confirmButtonState" | "labels"
   > {
   attributeValues: AttributeReference[];
 }
@@ -41,11 +45,12 @@ const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({
         id: value.value,
         name: value.label
       }))}
-      search={{
+      labels={{
+        confirmBtn: intl.formatMessage(messages.confirmBtn),
         label: intl.formatMessage(messages.searchLabel),
-        placeholder: intl.formatMessage(messages.searchPlaceholder)
+        placeholder: intl.formatMessage(messages.searchPlaceholder),
+        title: intl.formatMessage(messages.header)
       }}
-      title={intl.formatMessage(messages.header)}
       confirmButtonState="default"
       {...rest}
     />

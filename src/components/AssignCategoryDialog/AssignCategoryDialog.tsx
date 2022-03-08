@@ -9,7 +9,7 @@ import AssignContainerDialog, {
 import { messages } from "./messages";
 
 interface AssignCategoryDialogProps
-  extends Omit<AssignContainerDialogProps, "containers" | "title" | "search"> {
+  extends Omit<AssignContainerDialogProps, "containers" | "labels"> {
   categories: RelayToFlat<SearchCategoriesQuery["search"]>;
 }
 
