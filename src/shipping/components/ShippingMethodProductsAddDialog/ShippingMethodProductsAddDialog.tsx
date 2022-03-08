@@ -234,7 +234,10 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
           disabled={loading || !selectedProducts?.length}
           onClick={handleSubmit}
         >
-          <FormattedMessage {...buttonMessages.confirm} />
+          <FormattedMessage
+            defaultMessage="Assign and save"
+            description="assign products to shipping rate and save, button"
+          />
         </ConfirmButton>
       </DialogActions>
     </Dialog>
