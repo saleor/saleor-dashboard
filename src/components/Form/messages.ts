@@ -5,6 +5,10 @@ export const exitFormPromptMessages = defineMessages({
     defaultMessage: "Would you like to save changes?",
     description: "ExitFormPrompt title"
   },
+  unableToSaveTitle: {
+    defaultMessage: "You have unsaved changes",
+    description: "ExitFormPrompt title"
+  },
   cancelButton: {
     defaultMessage: "Discard changes",
     description: "ExitFormPrompt cancel button"
@@ -12,5 +16,9 @@ export const exitFormPromptMessages = defineMessages({
   confirmButton: {
     defaultMessage: "Save changes",
     description: "ExitFormPrompt confirm button"
+  },
+  continueEditingButton: {
+    defaultMessage: "Continue editing",
+    description: "ExitFormPrompt continue editing button"
   }
 });

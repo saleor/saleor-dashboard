@@ -34,20 +34,26 @@ interface ExitFormDialogProps {
   onClose: () => void;
   onLeave: () => void;
   isOpen: boolean;
+  isSubmitDisabled: boolean;
 }
 
 const ExitFormDialog: React.FC<ExitFormDialogProps> = ({
   onSubmit,
   onLeave,
   onClose,
-  isOpen
+  isOpen,
+  isSubmitDisabled
 }) => {
   const classes = useStyles();
   const intl = useIntl();
 
   return (
     <Dialog className={classes.container} open={isOpen} onClose={onClose}>
-      <CardTitle title={intl.formatMessage(messages.title)} />
+      <CardTitle
+        title={intl.formatMessage(
+          isSubmitDisabled ? messages.unableToSaveTitle : messages.title
+        )}
+      />
       <DialogContent className={classes.dialogContent}>
         <div className={classes.buttonsContainer}>
           <Button onClick={onLeave}>
@@ -57,10 +63,14 @@ const ExitFormDialog: React.FC<ExitFormDialogProps> = ({
           <Button
             variant="contained"
             color="primary"
-            onClick={onSubmit}
+            onClick={isSubmitDisabled ? onClose : onSubmit}
             data-test-id="save-and-continue"
           >
-            {intl.formatMessage(messages.confirmButton)}
+            {intl.formatMessage(
+              isSubmitDisabled
+                ? messages.continueEditingButton
+                : messages.confirmButton
+            )}
           </Button>
         </div>
       </DialogContent>
