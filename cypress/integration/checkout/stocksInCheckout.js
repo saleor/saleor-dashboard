@@ -9,11 +9,7 @@ import {
 } from "../../support/api/requests/Checkout";
 import { createVariant, getVariants } from "../../support/api/requests/Product";
 import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
-import {
-  createOrder,
-  createOrderWithNewProduct,
-  createWaitingForCaptureOrder
-} from "../../support/api/utils/ordersUtils";
+import { createWaitingForCaptureOrder } from "../../support/api/utils/ordersUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct
@@ -63,7 +59,7 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
             shippingMethod = shippingMethodResp;
             createTypeAttributeAndCategoryForProduct({
               name,
-              attributeValues: ["value", "value1", "value2"]
+              attributeValues: ["value", "value3", "value2"]
             });
           }
         )
@@ -95,7 +91,9 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
             attributeId: attribute.id,
             channelId: defaultChannel.id,
             attributeName: "value2",
-            trackInventory: false
+            trackInventory: false,
+            warehouseId: warehouse.id,
+            quantityInWarehouse: 0
           });
         })
         .then(variantsList => {
@@ -104,7 +102,8 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
             productId: product.id,
             attributeId: attribute.id,
             channelId: defaultChannel.id,
-            attributeName: "value3"
+            attributeName: "value3",
+            warehouseId: warehouse.id
           });
         })
         .then(variantsList => {
@@ -113,20 +112,6 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
     });
 
     it("should not be possible to add product with quantity greater than stock", () => {
-      // const productName = `${startsWith}${faker.datatype.number()}`;
-      // let variants;
-
-      // createProductInChannel({
-      //   attributeId: attribute.id,
-      //   categoryId: category.id,
-      //   productTypeId: productType.id,
-      //   channelId: defaultChannel.id,
-      //   name: productName,
-      //   warehouseId: warehouse.id,
-      //   quantityInWarehouse: 1
-      // })
-      // .then(({ variantsList }) => {
-      //   variants = variantsList;
       createCheckout({
         channelSlug: defaultChannel.slug,
         address,
@@ -135,9 +120,8 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
         variantsList: variantsWithLowStock,
         auth: "token"
       })
-        // })
         .then(({ checkout: checkout }) => {
-          addProductsToCheckout(checkout.id, variants, 2);
+          addProductsToCheckout(checkout.id, variantsWithLowStock, 2);
         })
         .then(({ errors }) => {
           expect(
@@ -148,20 +132,6 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
     });
 
     it("should buy product with no quantity if tracking is not set", () => {
-      // const productName = `${startsWith}${faker.datatype.number()}`;
-
-      // createOrderWithNewProduct({
-      //   attributeId: attribute.id,
-      //   categoryId: category.id,
-      //   productTypeId: productType.id,
-      //   channel: defaultChannel,
-      //   name: productName,
-      //   warehouseId: warehouse.id,
-      //   quantityInWarehouse: 0,
-      //   trackInventory: false,
-      //   shippingMethod,
-      //   address
-      // })
       createWaitingForCaptureOrder({
         address,
         channelSlug: defaultChannel.slug,
@@ -174,18 +144,6 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
     });
 
     it("should create checkout with last product in stock", () => {
-      // const productName = `${startsWith}${faker.datatype.number()}`;
-
-      // createOrderWithNewProduct({
-      //   attributeId: attribute.id,
-      //   categoryId: category.id,
-      //   productTypeId: productType.id,
-      //   channel: defaultChannel,
-      //   name: productName,
-      //   warehouseId: warehouse.id,
-      //   shippingMethod,
-      //   address
-      // })
       createWaitingForCaptureOrder({
         address,
         channelSlug: defaultChannel.slug,
@@ -193,9 +151,9 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
         shippingMethodName: shippingMethod.name,
         variantsList: lastVariantInStock
       })
-        .then(({ order, variantsList }) => {
+        .then(({ order }) => {
           expect(order, "order should be created").to.be.ok;
-          getVariants(variantsList);
+          getVariants(lastVariantInStock);
         })
         .then(variantsList => {
           const variant = variantsList.edges[0];
