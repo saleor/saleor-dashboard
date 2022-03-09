@@ -1,29 +1,15 @@
 /// <reference types="cypress"/>
 /// <reference types="../../../support"/>
 
-import {
-  createCustomer,
-  deleteCustomersStartsWith
-} from "../../../support/api/requests/Customer";
+import { createCustomer } from "../../../support/api/requests/Customer";
 import { createReadyToFulfillOrder } from "../../../support/api/utils/ordersUtils";
-import {
-  createProductWithShipping,
-  deleteProductsStartsWith
-} from "../../../support/api/utils/products/productsUtils";
-import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
+import { createProductWithShipping } from "../../../support/api/utils/products/productsUtils";
 import filterTests from "../../../support/filterTests";
 
-filterTests({ definedTags: ["all", "critical"] }, () => {
+filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
   const name = "ProductsWithoutSkuInOrder";
 
   describe("Add productWithout SKU to order", () => {
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteProductsStartsWith(name);
-      deleteShippingStartsWith(name);
-      deleteCustomersStartsWith(name);
-    });
-
     it("should create order with variant product without sku", () => {
       let variants;
       let channel;
