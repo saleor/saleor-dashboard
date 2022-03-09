@@ -1,10 +1,7 @@
 import { IFilter } from "@saleor/components/Filter";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
+import { DiscountStatusEnum, VoucherDiscountType } from "@saleor/graphql";
 import { FilterOpts, MinMax } from "@saleor/types";
-import {
-  DiscountStatusEnum,
-  VoucherDiscountType
-} from "@saleor/types/globalTypes";
 import {
   createDateField,
   createNumberField,

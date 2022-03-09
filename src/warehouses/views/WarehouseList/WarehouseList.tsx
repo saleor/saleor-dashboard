@@ -2,9 +2,13 @@ import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
-import { useShopLimitsQuery } from "@saleor/components/Shop/query";
+import { useShopLimitsQuery } from "@saleor/components/Shop/queries";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { configurationMenuUrl } from "@saleor/configuration";
+import {
+  useWarehouseDeleteMutation,
+  useWarehouseListQuery
+} from "@saleor/graphql";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -23,8 +27,6 @@ import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
 import WarehouseDeleteDialog from "@saleor/warehouses/components/WarehouseDeleteDialog";
 import WarehouseListPage from "@saleor/warehouses/components/WarehouseListPage";
-import { useWarehouseDelete } from "@saleor/warehouses/mutations";
-import { useWarehouseList } from "@saleor/warehouses/queries";
 import {
   warehouseAddUrl,
   warehouseListUrl,
@@ -69,7 +71,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber]
   );
-  const { data, loading, refetch } = useWarehouseList({
+  const { data, loading, refetch } = useWarehouseListQuery({
     displayLoader: true,
     variables: queryVariables
   });
@@ -78,7 +80,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
       warehouses: true
     }
   });
-  const [deleteWarehouse, deleteWarehouseOpts] = useWarehouseDelete({
+  const [deleteWarehouse, deleteWarehouseOpts] = useWarehouseDeleteMutation({
     onCompleted: data => {
       if (data.deleteWarehouse.errors.length === 0) {
         notify({

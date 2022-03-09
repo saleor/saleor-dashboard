@@ -1,12 +1,13 @@
 import {
   MenuItemCreateInput,
+  MenuItemFragment,
   MenuItemInput,
   MenuItemMoveInput
-} from "../../../types/globalTypes";
+} from "@saleor/graphql";
+
 import { MenuDetailsSubmitData } from "../../components/MenuDetailsPage";
 import { MenuItemDialogFormData } from "../../components/MenuItemDialog";
 import { unknownTypeError } from "../../components/MenuItems";
-import { MenuDetails_menu_items } from "../../types/MenuDetails";
 
 export function getMenuItemInputData(
   data: MenuItemDialogFormData
@@ -70,7 +71,7 @@ export function getMenuItemCreateInputData(
   return variables;
 }
 
-export function getInitialDisplayValue(item: MenuDetails_menu_items): string {
+export function getInitialDisplayValue(item: MenuItemFragment): string {
   if (!item) {
     return "...";
   }

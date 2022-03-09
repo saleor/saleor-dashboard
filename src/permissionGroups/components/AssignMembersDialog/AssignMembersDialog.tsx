@@ -16,6 +16,7 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import { SearchStaffMembersQuery } from "@saleor/graphql";
 import useElementScroll, {
   isScrolledToBottom
 } from "@saleor/hooks/useElementScroll";
@@ -23,8 +24,12 @@ import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import { getUserInitials, getUserName, renderCollection } from "@saleor/misc";
-import { SearchStaffMembers_search_edges_node } from "@saleor/searches/types/SearchStaffMembers";
-import { DialogProps, FetchMoreProps, SearchPageProps } from "@saleor/types";
+import {
+  DialogProps,
+  FetchMoreProps,
+  RelayToFlat,
+  SearchPageProps
+} from "@saleor/types";
 import classNames from "classnames";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -120,17 +125,19 @@ export interface AssignMembersDialogProps
     SearchPageProps {
   confirmButtonState: ConfirmButtonTransitionState;
   disabled: boolean;
-  staffMembers: SearchStaffMembers_search_edges_node[];
+  staffMembers: RelayToFlat<SearchStaffMembersQuery["search"]>;
   hasMore: boolean;
   onFetchMore: () => void;
-  onSubmit: (data: SearchStaffMembers_search_edges_node[]) => void;
+  onSubmit: (data: RelayToFlat<SearchStaffMembersQuery["search"]>) => void;
 }
 
 function handleStaffMemberAssign(
-  member: SearchStaffMembers_search_edges_node,
+  member: RelayToFlat<SearchStaffMembersQuery["search"]>[0],
   isSelected: boolean,
-  selectedMembers: SearchStaffMembers_search_edges_node[],
-  setSelectedMembers: (data: SearchStaffMembers_search_edges_node[]) => void
+  selectedMembers: RelayToFlat<SearchStaffMembersQuery["search"]>,
+  setSelectedMembers: (
+    data: RelayToFlat<SearchStaffMembersQuery["search"]>
+  ) => void
 ) {
   if (isSelected) {
     setSelectedMembers(
@@ -160,7 +167,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
   const [query, onQueryChange] = useSearchQuery(onSearchChange);
 
   const [selectedMembers, setSelectedMembers] = React.useState<
-    SearchStaffMembers_search_edges_node[]
+    RelayToFlat<SearchStaffMembersQuery["search"]>
   >([]);
 
   const anchor = React.useRef<HTMLDivElement>();

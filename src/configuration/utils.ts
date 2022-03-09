@@ -1,4 +1,4 @@
-import { PermissionEnum } from "@saleor/types/globalTypes";
+import { PermissionEnum } from "@saleor/graphql";
 import { IntlShape } from "react-intl";
 
 import { createConfigurationMenu } from ".";

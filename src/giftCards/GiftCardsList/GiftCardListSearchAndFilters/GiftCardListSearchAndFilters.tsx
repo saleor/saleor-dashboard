@@ -4,12 +4,13 @@ import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
-import useGiftCardTagsSearch from "@saleor/giftCards/components/GiftCardTagInput/useGiftCardTagsSearch";
 import { giftCardListUrl } from "@saleor/giftCards/urls";
+import { useGiftCardCurrenciesQuery } from "@saleor/graphql";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { maybe } from "@saleor/misc";
 import useCustomerSearch from "@saleor/searches/useCustomerSearch";
+import useGiftCardTagsSearch from "@saleor/searches/useGiftCardTagsSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -17,9 +18,8 @@ import compact from "lodash/compact";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import useGiftCardListDialogs from "../providers/GiftCardListDialogsProvider/hooks/useGiftCardListDialogs";
-import useGiftCardList from "../providers/GiftCardListProvider/hooks/useGiftCardList";
-import useGiftCardListBulkActions from "../providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
+import { useGiftCardListDialogs } from "../providers/GiftCardListDialogsProvider";
+import { useGiftCardList } from "../providers/GiftCardListProvider";
 import { GiftCardListActionParamsEnum } from "../types";
 import {
   createFilterStructure,
@@ -31,16 +31,16 @@ import {
   getFilterTabs,
   saveFilterTab
 } from "./filters";
-import { giftCardListFilterErrorMessages as errorMessages } from "./messages";
-import { giftCardListSearchAndFiltersMessages as messages } from "./messages";
-import { useGiftCardCurrenciesQuery } from "./queries";
+import {
+  giftCardListFilterErrorMessages as errorMessages,
+  giftCardListSearchAndFiltersMessages as messages
+} from "./messages";
 
 const GiftCardListSearchAndFilters: React.FC = () => {
   const navigate = useNavigator();
   const intl = useIntl();
 
-  const { params } = useGiftCardList();
-  const { reset } = useGiftCardListBulkActions();
+  const { reset, params } = useGiftCardList();
 
   const {
     onClose,

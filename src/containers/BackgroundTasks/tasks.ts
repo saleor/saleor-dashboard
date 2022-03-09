@@ -1,7 +1,11 @@
 import { ApolloQueryResult } from "@apollo/client";
 import { IMessageContext } from "@saleor/components/messages";
+import {
+  CheckExportFileStatusQuery,
+  CheckOrderInvoicesStatusQuery,
+  JobStatusEnum
+} from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
-import { JobStatusEnum } from "@saleor/types/globalTypes";
 import { IntlShape } from "react-intl";
 
 import messages from "./messages";
@@ -11,8 +15,6 @@ import {
   TaskData,
   TaskStatus
 } from "./types";
-import { CheckExportFileStatus } from "./types/CheckExportFileStatus";
-import { CheckOrderInvoicesStatus } from "./types/CheckOrderInvoicesStatus";
 
 function getTaskStatus(jobStatus: JobStatusEnum): TaskStatus {
   switch (jobStatus) {
@@ -71,7 +73,7 @@ export function queueInvoiceGenerate(
   id: number,
   generateInvoice: InvoiceGenerateParams,
   tasks: React.MutableRefObject<QueuedTask[]>,
-  fetch: () => Promise<ApolloQueryResult<CheckOrderInvoicesStatus>>,
+  fetch: () => Promise<ApolloQueryResult<CheckOrderInvoicesStatusQuery>>,
   notify: IMessageContext,
   intl: IntlShape
 ) {
@@ -111,7 +113,7 @@ export function queueInvoiceGenerate(
 export function queueExport(
   id: number,
   tasks: React.MutableRefObject<QueuedTask[]>,
-  fetch: () => Promise<ApolloQueryResult<CheckExportFileStatus>>,
+  fetch: () => Promise<ApolloQueryResult<CheckExportFileStatusQuery>>,
   notify: IMessageContext,
   intl: IntlShape
 ) {

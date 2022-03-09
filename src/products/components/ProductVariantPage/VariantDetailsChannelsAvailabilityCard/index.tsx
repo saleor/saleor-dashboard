@@ -6,7 +6,7 @@ import {
   Typography
 } from "@material-ui/core";
 import Skeleton from "@saleor/components/Skeleton";
-import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
+import { ProductVariantFragment } from "@saleor/graphql";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import IconChevronDown from "@saleor/icons/ChevronDown";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -67,7 +67,7 @@ const useSummaryStyles = makeStyles(
 );
 
 interface VariantDetailsChannelsAvailabilityCardProps {
-  variant: ProductVariant;
+  variant: ProductVariantFragment;
 }
 
 const VariantDetailsChannelsAvailabilityCard: React.FC<VariantDetailsChannelsAvailabilityCardProps> = ({

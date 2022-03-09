@@ -84,6 +84,7 @@
     "eqeqeq": ["error", "smart"],
     "guard-for-in": "error",
     "id-blacklist": "off",
+    "import/no-duplicates": "error",
     "import/no-extraneous-dependencies": "off", // imports are handled by simple-import-sort/sort
     "import/no-internal-modules": "off", // imports are handled by simple-import-sort/sort
     "import/order": "off", // imports are handled by simple-import-sort/sort

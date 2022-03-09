@@ -1,9 +1,11 @@
 import {
+  ProductCountQueryVariables,
+  useProductCountQuery
+} from "@saleor/graphql";
+import {
   UseTypeDeleteData,
   UseTypeDeleteProps
 } from "@saleor/pageTypes/hooks/usePageTypeDelete/types";
-import { useProductCountQuery } from "@saleor/products/queries";
-import { ProductCountVariables } from "@saleor/products/types/ProductCount";
 import { productListUrl } from "@saleor/products/urls";
 import {
   ProductTypeListUrlQueryParams,
@@ -27,7 +29,7 @@ function useProductTypeDelete({
   const isDeleteDialogOpen = params.action === "remove";
 
   const productsAssignedToSelectedTypesQueryVars = React.useMemo<
-    ProductCountVariables
+    ProductCountQueryVariables
   >(
     () => ({
       filter: {

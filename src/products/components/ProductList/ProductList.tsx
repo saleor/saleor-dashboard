@@ -23,17 +23,22 @@ import TablePagination from "@saleor/components/TablePagination";
 import TooltipTableCellHeader from "@saleor/components/TooltipTableCellHeader";
 import { commonTooltipMessages } from "@saleor/components/TooltipTableCellHeader/messages";
 import { ProductListColumns } from "@saleor/config";
+import { GridAttributesQuery, ProductListQuery } from "@saleor/graphql";
 import { makeStyles, Pill } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
 import {
   getAttributeIdFromColumnValue,
   isAttributeColumnValue
 } from "@saleor/products/components/ProductListPage/utils";
-import { GridAttributes_grid_edges_node } from "@saleor/products/types/GridAttributes";
-import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
 import { ProductListUrlSortField } from "@saleor/products/urls";
 import { canBeSorted } from "@saleor/products/views/ProductList/sort";
-import { ChannelProps, ListActions, ListProps, SortPage } from "@saleor/types";
+import {
+  ChannelProps,
+  ListActions,
+  ListProps,
+  RelayToFlat,
+  SortPage
+} from "@saleor/types";
 import TDisplayColumn, {
   DisplayColumnProps
 } from "@saleor/utils/columns/DisplayColumn";
@@ -116,8 +121,8 @@ interface ProductListProps
     SortPage<ProductListUrlSortField>,
     ChannelProps {
   activeAttributeSortId: string;
-  gridAttributes: GridAttributes_grid_edges_node[];
-  products: ProductList_products_edges_node[];
+  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
+  products: RelayToFlat<ProductListQuery["products"]>;
   loading: boolean;
 }
 

@@ -1,5 +1,4 @@
-import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
-import { GiftCardErrorCode } from "@saleor/types/globalTypes";
+import { GiftCardErrorCode, GiftCardErrorFragment } from "@saleor/graphql";
 import reduce from "lodash/reduce";
 
 import {
@@ -17,7 +16,7 @@ export const validateField = (
   }: GiftCardBulkCreateFormData,
   value,
   key: keyof GiftCardBulkCreateFormData
-): Pick<GiftCardError, "field" | "code"> | null => {
+): Pick<GiftCardErrorFragment, "field" | "code"> | null => {
   const error = { code: GiftCardErrorCode.INVALID, field: key };
   const expiryDateSelected = expirySelected && expiryType === "EXPIRY_DATE";
   const expiryPeriodSelected = expirySelected && expiryType === "EXPIRY_PERIOD";

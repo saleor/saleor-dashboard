@@ -4,7 +4,11 @@ import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
-import { useShopLimitsQuery } from "@saleor/components/Shop/query";
+import { useShopLimitsQuery } from "@saleor/components/Shop/queries";
+import {
+  useOrderDraftCreateMutation,
+  useOrderListQuery
+} from "@saleor/graphql";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -23,9 +27,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import OrderListPage from "../../components/OrderListPage/OrderListPage";
-import { useOrderDraftCreateMutation } from "../../mutations";
-import { useOrderListQuery } from "../../queries";
-import { OrderDraftCreate } from "../../types/OrderDraftCreate";
 import {
   orderListUrl,
   OrderListUrlDialog,
@@ -61,18 +62,16 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
 
   const intl = useIntl();
 
-  const handleCreateOrderCreateSuccess = (data: OrderDraftCreate) => {
-    notify({
-      status: "success",
-      text: intl.formatMessage({
-        defaultMessage: "Order draft successfully created"
-      })
-    });
-    navigate(orderUrl(data.draftOrderCreate.order.id));
-  };
-
   const [createOrder] = useOrderDraftCreateMutation({
-    onCompleted: handleCreateOrderCreateSuccess
+    onCompleted: data => {
+      notify({
+        status: "success",
+        text: intl.formatMessage({
+          defaultMessage: "Order draft successfully created"
+        })
+      });
+      navigate(orderUrl(data.draftOrderCreate.order.id));
+    }
   });
 
   const { channel, availableChannels } = useAppChannel(false);

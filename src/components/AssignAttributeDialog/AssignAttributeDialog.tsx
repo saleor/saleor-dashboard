@@ -14,7 +14,7 @@ import {
 import Checkbox from "@saleor/components/Checkbox";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import { AvailableAttributeFragment } from "@saleor/fragments/types/AvailableAttributeFragment";
+import { AvailableAttributeFragment } from "@saleor/graphql";
 import useElementScroll, {
   isScrolledToBottom
 } from "@saleor/hooks/useElementScroll";

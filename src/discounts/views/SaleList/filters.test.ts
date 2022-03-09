@@ -1,10 +1,7 @@
 import { createFilterStructure } from "@saleor/discounts/components/SaleListPage";
 import { SaleListUrlFilters } from "@saleor/discounts/urls";
 import { date } from "@saleor/fixtures";
-import {
-  DiscountStatusEnum,
-  DiscountValueTypeEnum
-} from "@saleor/types/globalTypes";
+import { DiscountStatusEnum, DiscountValueTypeEnum } from "@saleor/graphql";
 import { getFilterQueryParams } from "@saleor/utils/filters";
 import { stringifyQs } from "@saleor/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";

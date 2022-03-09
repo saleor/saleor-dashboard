@@ -6,21 +6,24 @@ import {
   Typography
 } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
+import { AppsListQuery } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
-import { DeleteIcon, ResponsiveTable } from "@saleor/macaw-ui";
-import { Button, IconButton } from "@saleor/macaw-ui";
+import {
+  Button,
+  DeleteIcon,
+  IconButton,
+  ResponsiveTable
+} from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import React from "react";
-import { useIntl } from "react-intl";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "../../styles";
-import { AppsList_apps_edges } from "../../types/AppsList";
 import AppsSkeleton from "../AppsSkeleton";
 import DeactivatedText from "../DeactivatedText";
 
 export interface CustomAppsProps {
-  appsList: AppsList_apps_edges[];
+  appsList: AppsListQuery["apps"]["edges"];
   navigateToCustomApp: (id: string) => () => void;
   navigateToCustomAppCreate?: () => void;
   onRemove: (id: string) => void;

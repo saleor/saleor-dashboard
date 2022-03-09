@@ -1,6 +1,5 @@
+import { VoucherTypeEnum } from "@saleor/graphql";
 import { defineMessages, IntlShape } from "react-intl";
-
-import { VoucherTypeEnum } from "../types/globalTypes";
 
 const messages = defineMessages({
   order: {

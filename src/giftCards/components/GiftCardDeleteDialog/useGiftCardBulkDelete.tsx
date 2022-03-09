@@ -1,6 +1,8 @@
-import { useGiftCardBulkDeleteMutation } from "@saleor/giftCards/GiftCardsList/mutations";
-import useGiftCardListBulkActions from "@saleor/giftCards/GiftCardsList/providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
-import { BulkDeleteGiftCard } from "@saleor/giftCards/GiftCardsList/types/BulkDeleteGiftCard";
+import { useGiftCardList } from "@saleor/giftCards/GiftCardsList/providers/GiftCardListProvider";
+import {
+  BulkDeleteGiftCardMutation,
+  useBulkDeleteGiftCardMutation
+} from "@saleor/graphql";
 import { MutationResultWithOpts } from "@saleor/hooks/makeMutation";
 import useNotifier from "@saleor/hooks/useNotifier";
 import commonErrorMessages from "@saleor/utils/errors/common";
@@ -10,7 +12,7 @@ import { giftCardDeleteDialogMessages as messages } from "./messages";
 
 interface UseGiftCardBulkDeleteProps {
   onBulkDeleteGiftCards: () => void;
-  bulkDeleteGiftCardOpts: MutationResultWithOpts<BulkDeleteGiftCard>;
+  bulkDeleteGiftCardOpts: MutationResultWithOpts<BulkDeleteGiftCardMutation>;
 }
 
 const useGiftCardBulkDelete = ({
@@ -27,35 +29,33 @@ const useGiftCardBulkDelete = ({
     listElements,
     selectedItemsCount,
     reset: resetSelectedItems
-  } = useGiftCardListBulkActions();
-
-  const onCompleted = (data: BulkDeleteGiftCard) => {
-    const errors = data?.giftCardBulkDelete?.errors;
-
-    if (!errors.length) {
-      notify({
-        status: "success",
-        text: intl.formatMessage(messages.deleteSuccessAlertText, {
-          selectedItemsCount
-        })
-      });
-
-      onClose();
-      resetSelectedItems();
-      return;
-    }
-
-    notify({
-      status: "error",
-      text: intl.formatMessage(commonErrorMessages.unknownError)
-    });
-  };
+  } = useGiftCardList();
 
   const [
     bulkDeleteGiftCard,
     bulkDeleteGiftCardOpts
-  ] = useGiftCardBulkDeleteMutation({
-    onCompleted,
+  ] = useBulkDeleteGiftCardMutation({
+    onCompleted: data => {
+      const errors = data?.giftCardBulkDelete?.errors;
+
+      if (!errors.length) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(messages.deleteSuccessAlertText, {
+            selectedItemsCount
+          })
+        });
+
+        onClose();
+        resetSelectedItems();
+        return;
+      }
+
+      notify({
+        status: "error",
+        text: intl.formatMessage(commonErrorMessages.unknownError)
+      });
+    },
     refetchQueries
   });
 

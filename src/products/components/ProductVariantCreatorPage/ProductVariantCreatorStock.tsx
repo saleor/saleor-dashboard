@@ -13,9 +13,11 @@ import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import SingleSelectField from "@saleor/components/SingleSelectField";
-import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
+import {
+  ProductVariantAttributesFragment,
+  WarehouseFragment
+} from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import { isSelected } from "@saleor/utils/lists";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -82,7 +84,7 @@ const useStyles = makeStyles(
 );
 
 export interface ProductVariantCreatorStockProps {
-  attributes: ProductDetails_product_productType_variantAttributes[];
+  attributes: ProductVariantAttributesFragment["productType"]["variantAttributes"];
   data: ProductVariantCreateFormData;
   warehouses: WarehouseFragment[];
   onApplyToAllChange: (mode: VariantCreatorPricesAndSkuMode) => void;

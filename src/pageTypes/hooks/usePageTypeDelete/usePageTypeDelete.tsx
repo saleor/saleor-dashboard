@@ -1,5 +1,4 @@
-import { usePageCountQuery } from "@saleor/pages/queries";
-import { PageCountVariables } from "@saleor/pages/types/PageCount";
+import { PageCountQueryVariables, usePageCountQuery } from "@saleor/graphql";
 import { pageListUrl } from "@saleor/pages/urls";
 import {
   PageTypeListUrlQueryParams,
@@ -24,7 +23,7 @@ function usePageTypeDelete({
   const isDeleteDialogOpen = params.action === "remove";
 
   const pagesAssignedToSelectedTypesQueryVars = React.useMemo<
-    PageCountVariables
+    PageCountQueryVariables
   >(
     () => ({
       filter: {

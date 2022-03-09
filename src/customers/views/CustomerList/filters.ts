@@ -3,8 +3,8 @@ import {
   CustomerFilterKeys,
   CustomerListFilterOpts
 } from "@saleor/customers/components/CustomerListPage";
+import { CustomerFilterInput } from "@saleor/graphql";
 import { maybe } from "@saleor/misc";
-import { CustomerFilterInput } from "@saleor/types/globalTypes";
 
 import {
   createFilterTabUtils,

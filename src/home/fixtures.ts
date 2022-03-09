@@ -1,9 +1,9 @@
-import { OrderEventsEnum } from "../types/globalTypes";
-import { Home } from "./types/Home";
+import { HomeQuery, OrderEventsEnum } from "@saleor/graphql";
 
-export const shop: (placeholderImage: string) => Home = (
+export const shop: (placeholderImage: string) => HomeQuery = (
   placeholderImage: string
 ) => ({
+  __typename: "Query",
   activities: {
     __typename: "OrderEventCountableConnection",
     edges: [

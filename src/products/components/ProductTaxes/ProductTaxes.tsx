@@ -3,7 +3,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
-import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
+import { TaxTypeFragment } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";

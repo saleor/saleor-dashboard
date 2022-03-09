@@ -1,18 +1,16 @@
 import { FetchResult } from "@apollo/client";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
-import { MetadataErrorFragment } from "@saleor/fragments/types/MetadataErrorFragment";
+import {
+  MetadataErrorFragment,
+  MetadataInput,
+  UpdateMetadataMutation,
+  UpdateMetadataMutationVariables,
+  UpdatePrivateMetadataMutation,
+  UpdatePrivateMetadataMutationVariables
+} from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
-import { MetadataInput } from "@saleor/types/globalTypes";
 import { arrayDiff } from "@saleor/utils/arrays";
 
-import {
-  UpdateMetadata,
-  UpdateMetadataVariables
-} from "../metadata/types/UpdateMetadata";
-import {
-  UpdatePrivateMetadata,
-  UpdatePrivateMetadataVariables
-} from "../metadata/types/UpdatePrivateMetadata";
 import { filterMetadataArray } from "./filterMetadataArray";
 import { areMetadataArraysEqual } from "./metadataUpdateHelpers";
 
@@ -26,11 +24,11 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
   initial: ObjectWithMetadata,
   update: (data: TData) => SubmitPromise<TError[]>,
   updateMetadata: (
-    variables: UpdateMetadataVariables
-  ) => Promise<FetchResult<UpdateMetadata>>,
+    variables: UpdateMetadataMutationVariables
+  ) => Promise<FetchResult<UpdateMetadataMutation>>,
   updatePrivateMetadata: (
-    variables: UpdatePrivateMetadataVariables
-  ) => Promise<FetchResult<UpdatePrivateMetadata>>
+    variables: UpdatePrivateMetadataMutationVariables
+  ) => Promise<FetchResult<UpdatePrivateMetadataMutation>>
 ) {
   return async (
     data: TData

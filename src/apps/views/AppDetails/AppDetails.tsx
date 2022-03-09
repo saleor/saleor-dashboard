@@ -1,5 +1,10 @@
 import { appMessages } from "@saleor/apps/messages";
 import NotFoundPage from "@saleor/components/NotFoundPage";
+import {
+  useAppActivateMutation,
+  useAppDeactivateMutation,
+  useAppQuery
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import getAppErrorMessage from "@saleor/utils/errors/app";
@@ -10,11 +15,6 @@ import { useIntl } from "react-intl";
 import AppActivateDialog from "../../components/AppActivateDialog";
 import AppDeactivateDialog from "../../components/AppDeactivateDialog";
 import AppDetailsPage from "../../components/AppDetailsPage";
-import {
-  useAppActivateMutation,
-  useAppDeactivateMutation
-} from "../../mutations";
-import { useAppDetails } from "../../queries";
 import {
   AppDetailsUrlDialog,
   AppDetailsUrlQueryParams,
@@ -29,7 +29,7 @@ interface AppDetailsProps {
 }
 
 export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
-  const { data, loading, refetch } = useAppDetails({
+  const { data, loading, refetch } = useAppQuery({
     displayLoader: true,
     variables: { id }
   });

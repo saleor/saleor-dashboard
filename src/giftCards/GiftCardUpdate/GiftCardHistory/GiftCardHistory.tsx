@@ -6,14 +6,15 @@ import Timeline, {
   TimelineAddNote,
   TimelineNote
 } from "@saleor/components/Timeline";
+import {
+  GiftCardEventsEnum,
+  useGiftCardAddNoteMutation
+} from "@saleor/graphql";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { GiftCardEventsEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { useGiftCardTimelineNoteAddMutation } from "../mutations";
 import { GIFT_CARD_DETAILS_QUERY } from "../queries";
-import { GiftCardAddNote } from "../types/GiftCardAddNote";
 import GiftCardTimelineEvent from "./GiftCardTimelineEvent";
 import useGiftCardHistoryEvents from "./hooks/useGiftCardHistoryEvents";
 import { giftCardHistoryMessages as messages } from "./messages";
@@ -29,25 +30,23 @@ const GiftCardHistory: React.FC = () => {
   const { id, events } = useGiftCardHistoryEvents();
   const classes = useStyles();
 
-  const onTimelineNoteAddCompleted = ({ giftCardAddNote }: GiftCardAddNote) => {
-    const { errors } = giftCardAddNote;
-
-    if (errors.length > 0) {
-      notify({
-        status: "error",
-        text: intl.formatMessage(messages.noteAddError)
-      });
-    } else {
-      notify({
-        status: "success",
-        text: intl.formatMessage(messages.noteAddedSuccessfully)
-      });
-    }
-  };
-
-  const [addTimelineNote, { loading }] = useGiftCardTimelineNoteAddMutation({
+  const [addTimelineNote, { loading }] = useGiftCardAddNoteMutation({
     refetchQueries: [GIFT_CARD_DETAILS_QUERY],
-    onCompleted: onTimelineNoteAddCompleted
+    onCompleted: ({ giftCardAddNote }) => {
+      const { errors } = giftCardAddNote;
+
+      if (errors.length > 0) {
+        notify({
+          status: "error",
+          text: intl.formatMessage(messages.noteAddError)
+        });
+      } else {
+        notify({
+          status: "success",
+          text: intl.formatMessage(messages.noteAddedSuccessfully)
+        });
+      }
+    }
   });
 
   const onNoteAdd = (data: FormData) => {

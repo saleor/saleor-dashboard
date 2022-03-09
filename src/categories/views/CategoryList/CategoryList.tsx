@@ -4,6 +4,11 @@ import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
+import {
+  CategoryBulkDeleteMutation,
+  useCategoryBulkDeleteMutation,
+  useRootCategoriesQuery
+} from "@saleor/graphql";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -22,9 +27,6 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { CategoryListPage } from "../../components/CategoryListPage/CategoryListPage";
-import { useCategoryBulkDeleteMutation } from "../../mutations";
-import { useRootCategoriesQuery } from "../../queries";
-import { CategoryBulkDelete } from "../../types/CategoryBulkDelete";
 import {
   categoryAddUrl,
   categoryListUrl,
@@ -123,7 +125,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     params
   );
 
-  const handleCategoryBulkDelete = (data: CategoryBulkDelete) => {
+  const handleCategoryBulkDelete = (data: CategoryBulkDeleteMutation) => {
     if (data.categoryBulkDelete.errors.length === 0) {
       navigate(categoryListUrl(), { replace: true });
       refetch();

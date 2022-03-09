@@ -1,7 +1,7 @@
 import { ChannelData } from "@saleor/channels/utils";
 import ActionDialog from "@saleor/components/ActionDialog";
+import { ProductDetailsVariantFragment } from "@saleor/graphql";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
-import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
 import { ChannelVariantListing } from "@saleor/products/views/ProductUpdate/types";
 import useChannelsWithProductVariants from "@saleor/products/views/ProductUpdate/useChannelsWithProductVariants";
 import {
@@ -11,8 +11,7 @@ import {
 } from "@saleor/products/views/ProductUpdate/utils";
 import { DialogProps } from "@saleor/types";
 import React from "react";
-import { useIntl } from "react-intl";
-import { defineMessages } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 import { useChannelsSearch } from "../../../components/ChannelsAvailabilityDialog/utils";
 import ChannelsAvailabilityContentWrapper from "../../../components/ChannelsAvailabilityDialogWrapper/ChannelsAvailabilityDialogWrapper";
@@ -28,7 +27,7 @@ const messages = defineMessages({
 export interface ChannelsAvailabilityDialogProps extends DialogProps {
   channels: ChannelData[];
   contentType?: string;
-  variants: ProductDetails_product_variants[];
+  variants: ProductDetailsVariantFragment[];
   onConfirm: (listings: ChannelVariantListing) => void;
 }
 

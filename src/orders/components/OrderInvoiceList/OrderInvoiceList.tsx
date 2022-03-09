@@ -10,7 +10,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import Date from "@saleor/components/Date";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
-import { InvoiceFragment } from "@saleor/fragments/types/InvoiceFragment";
+import { InvoiceFragment } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";

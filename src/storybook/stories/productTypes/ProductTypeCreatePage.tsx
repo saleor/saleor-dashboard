@@ -1,3 +1,4 @@
+import { ProductTypeKindEnum, WeightUnitsEnum } from "@saleor/graphql";
 import { formError } from "@saleor/storybook/misc";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -6,10 +7,6 @@ import ProductTypeCreatePage, {
   ProductTypeCreatePageProps,
   ProductTypeForm
 } from "../../../productTypes/components/ProductTypeCreatePage";
-import {
-  ProductTypeKindEnum,
-  WeightUnitsEnum
-} from "../../../types/globalTypes";
 import Decorator from "../../Decorator";
 
 const props: Omit<ProductTypeCreatePageProps, "classes"> = {

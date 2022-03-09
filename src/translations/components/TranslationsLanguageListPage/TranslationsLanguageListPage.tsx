@@ -1,14 +1,14 @@
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 // tslint:disable no-submodule-imports
-import { ShopInfo_shop_languages } from "@saleor/components/Shop/types/ShopInfo";
+import { LanguageFragment } from "@saleor/graphql";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import TranslationsLanguageList from "../TranslationsLanguageList";
 
 export interface TranslationsLanguageListPageProps {
-  languages: ShopInfo_shop_languages[];
+  languages: LanguageFragment[];
   //   onAdd: () => void;
   onRowClick: (code: string) => void;
 }

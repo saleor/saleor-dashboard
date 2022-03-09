@@ -1,18 +1,6 @@
 import { gql } from "@apollo/client";
-import { giftCardErrorFragment } from "@saleor/fragments/errors";
-import makeMutation from "@saleor/hooks/makeMutation";
 
-import {
-  GiftCardBulkActivate,
-  GiftCardBulkActivateVariables
-} from "./types/GiftCardBulkActivate";
-import {
-  GiftCardBulkDeactivate,
-  GiftCardBulkDeactivateVariables
-} from "./types/GiftCardBulkDeactivate";
-
-const giftCardBulkActivate = gql`
-  ${giftCardErrorFragment}
+export const giftCardBulkActivate = gql`
   mutation GiftCardBulkActivate($ids: [ID]!) {
     giftCardBulkActivate(ids: $ids) {
       errors {
@@ -23,13 +11,7 @@ const giftCardBulkActivate = gql`
   }
 `;
 
-export const useGiftCardBulkActivateMutation = makeMutation<
-  GiftCardBulkActivate,
-  GiftCardBulkActivateVariables
->(giftCardBulkActivate);
-
-const giftCardBulkDeactivate = gql`
-  ${giftCardErrorFragment}
+export const giftCardBulkDeactivate = gql`
   mutation GiftCardBulkDeactivate($ids: [ID]!) {
     giftCardBulkDeactivate(ids: $ids) {
       errors {
@@ -39,8 +21,3 @@ const giftCardBulkDeactivate = gql`
     }
   }
 `;
-
-export const useGiftCardBulkDeactivateMutation = makeMutation<
-  GiftCardBulkDeactivate,
-  GiftCardBulkDeactivateVariables
->(giftCardBulkDeactivate);

@@ -1,4 +1,9 @@
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
+import {
+  OrderFilterInput,
+  OrderStatusFilter,
+  PaymentChargeStatusEnum
+} from "@saleor/graphql";
 import { findInEnum, findValueInEnum, parseBoolean } from "@saleor/misc";
 import {
   OrderFilterGiftCard,
@@ -7,11 +12,6 @@ import {
 } from "@saleor/orders/components/OrderListPage/filters";
 
 import { IFilterElement } from "../../../components/Filter";
-import {
-  OrderFilterInput,
-  OrderStatusFilter,
-  PaymentChargeStatusEnum
-} from "../../../types/globalTypes";
 import {
   createFilterTabUtils,
   createFilterUtils,

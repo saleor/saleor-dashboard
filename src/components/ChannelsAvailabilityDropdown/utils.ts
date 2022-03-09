@@ -1,4 +1,4 @@
-import { CollectionList_collections_edges_node_channelListings } from "@saleor/collections/types/CollectionList";
+import { CollectionFragment } from "@saleor/graphql";
 import { PillColor } from "@saleor/macaw-ui";
 import { MessageDescriptor } from "react-intl";
 
@@ -6,11 +6,11 @@ import { Pill } from "../ChannelsAvailabilityMenuContent";
 import { channelStatusMessages } from "./messages";
 
 export type CollectionChannels = Pick<
-  CollectionList_collections_edges_node_channelListings,
+  CollectionFragment["channelListings"][0],
   "isPublished" | "publicationDate" | "channel"
 >;
 export type Channels = Pick<
-  CollectionList_collections_edges_node_channelListings,
+  CollectionFragment["channelListings"][0],
   "channel"
 >;
 

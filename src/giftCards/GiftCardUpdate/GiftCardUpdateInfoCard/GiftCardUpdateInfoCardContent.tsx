@@ -3,6 +3,7 @@ import { appUrl } from "@saleor/apps/urls";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Link from "@saleor/components/Link";
 import { customerUrl } from "@saleor/customers/urls";
+import { GiftCardEventsEnum } from "@saleor/graphql";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { getFullName, getStringOrPlaceholder } from "@saleor/misc";
 import Label from "@saleor/orders/components/OrderHistory/Label";
@@ -10,7 +11,6 @@ import { getOrderNumberLinkObject } from "@saleor/orders/components/OrderHistory
 import { getByType } from "@saleor/orders/components/OrderReturnPage/utils";
 import { productUrl } from "@saleor/products/urls";
 import { staffMemberDetailsUrl } from "@saleor/staff/urls";
-import { GiftCardEventsEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 

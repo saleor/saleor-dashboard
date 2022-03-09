@@ -1,62 +1,6 @@
 import { gql } from "@apollo/client";
-import {
-  attributeTranslateErrorFragment,
-  attributeValueTranslateErrorFragment,
-  categoryTranslateErrorFragment,
-  collectionTranslateErrorFragment,
-  pageTranslateErrorFragment,
-  productTranslateErrorFragment,
-  productVariantTranslateErrorFragment,
-  saleTranslateErrorFragment,
-  shippingPriceTranslateErrorFragment,
-  voucherTranslateErrorFragment
-} from "@saleor/fragments/errors";
-import { pageTranslationFragment } from "@saleor/fragments/translations";
 
-import { TypedMutation } from "../mutations";
-import {
-  UpdateAttributeTranslations,
-  UpdateAttributeTranslationsVariables
-} from "./types/UpdateAttributeTranslations";
-import {
-  UpdateAttributeValueTranslations,
-  UpdateAttributeValueTranslationsVariables
-} from "./types/UpdateAttributeValueTranslations";
-import {
-  UpdateCategoryTranslations,
-  UpdateCategoryTranslationsVariables
-} from "./types/UpdateCategoryTranslations";
-import {
-  UpdateCollectionTranslations,
-  UpdateCollectionTranslationsVariables
-} from "./types/UpdateCollectionTranslations";
-import {
-  UpdatePageTranslations,
-  UpdatePageTranslationsVariables
-} from "./types/UpdatePageTranslations";
-import {
-  UpdateProductTranslations,
-  UpdateProductTranslationsVariables
-} from "./types/UpdateProductTranslations";
-import {
-  UpdateProductVariantTranslations,
-  UpdateProductVariantTranslationsVariables
-} from "./types/UpdateProductVariantTranslations";
-import {
-  UpdateSaleTranslations,
-  UpdateSaleTranslationsVariables
-} from "./types/UpdateSaleTranslations";
-import {
-  UpdateShippingMethodTranslations,
-  UpdateShippingMethodTranslationsVariables
-} from "./types/UpdateShippingMethodTranslations";
-import {
-  UpdateVoucherTranslations,
-  UpdateVoucherTranslationsVariables
-} from "./types/UpdateVoucherTranslations";
-
-const updateProductTranslations = gql`
-  ${productTranslateErrorFragment}
+export const updateProductTranslations = gql`
   mutation UpdateProductTranslations(
     $id: ID!
     $input: TranslationInput!
@@ -87,13 +31,8 @@ const updateProductTranslations = gql`
     }
   }
 `;
-export const TypedUpdateProductTranslations = TypedMutation<
-  UpdateProductTranslations,
-  UpdateProductTranslationsVariables
->(updateProductTranslations);
 
-const updateProductVariantTranslations = gql`
-  ${productVariantTranslateErrorFragment}
+export const updateProductVariantTranslations = gql`
   mutation UpdateProductVariantTranslations(
     $id: ID!
     $input: NameTranslationInput!
@@ -118,13 +57,8 @@ const updateProductVariantTranslations = gql`
     }
   }
 `;
-export const TypedUpdateProductVariantTranslations = TypedMutation<
-  UpdateProductVariantTranslations,
-  UpdateProductVariantTranslationsVariables
->(updateProductVariantTranslations);
 
-const updateCategoryTranslations = gql`
-  ${categoryTranslateErrorFragment}
+export const updateCategoryTranslations = gql`
   mutation UpdateCategoryTranslations(
     $id: ID!
     $input: TranslationInput!
@@ -155,13 +89,7 @@ const updateCategoryTranslations = gql`
   }
 `;
 
-export const TypedUpdateCategoryTranslations = TypedMutation<
-  UpdateCategoryTranslations,
-  UpdateCategoryTranslationsVariables
->(updateCategoryTranslations);
-
-const updateCollectionTranslations = gql`
-  ${collectionTranslateErrorFragment}
+export const updateCollectionTranslations = gql`
   mutation UpdateCollectionTranslations(
     $id: ID!
     $input: TranslationInput!
@@ -192,14 +120,7 @@ const updateCollectionTranslations = gql`
   }
 `;
 
-export const TypedUpdateCollectionTranslations = TypedMutation<
-  UpdateCollectionTranslations,
-  UpdateCollectionTranslationsVariables
->(updateCollectionTranslations);
-
-const updatePageTranslations = gql`
-  ${pageTranslateErrorFragment}
-  ${pageTranslationFragment}
+export const updatePageTranslations = gql`
   mutation UpdatePageTranslations(
     $id: ID!
     $input: PageTranslationInput!
@@ -210,18 +131,13 @@ const updatePageTranslations = gql`
         ...PageTranslateErrorFragment
       }
       page {
-        ...PageTranslationFragment
+        ...PageTranslation
       }
     }
   }
 `;
-export const TypedUpdatePageTranslations = TypedMutation<
-  UpdatePageTranslations,
-  UpdatePageTranslationsVariables
->(updatePageTranslations);
 
-const updateVoucherTranslations = gql`
-  ${voucherTranslateErrorFragment}
+export const updateVoucherTranslations = gql`
   mutation UpdateVoucherTranslations(
     $id: ID!
     $input: NameTranslationInput!
@@ -246,13 +162,8 @@ const updateVoucherTranslations = gql`
     }
   }
 `;
-export const TypedUpdateVoucherTranslations = TypedMutation<
-  UpdateVoucherTranslations,
-  UpdateVoucherTranslationsVariables
->(updateVoucherTranslations);
 
-const updateSaleTranslations = gql`
-  ${saleTranslateErrorFragment}
+export const updateSaleTranslations = gql`
   mutation UpdateSaleTranslations(
     $id: ID!
     $input: NameTranslationInput!
@@ -277,13 +188,8 @@ const updateSaleTranslations = gql`
     }
   }
 `;
-export const TypedUpdateSaleTranslations = TypedMutation<
-  UpdateSaleTranslations,
-  UpdateSaleTranslationsVariables
->(updateSaleTranslations);
 
-const updateAttributeTranslations = gql`
-  ${attributeTranslateErrorFragment}
+export const updateAttributeTranslations = gql`
   mutation UpdateAttributeTranslations(
     $id: ID!
     $input: NameTranslationInput!
@@ -304,13 +210,8 @@ const updateAttributeTranslations = gql`
     }
   }
 `;
-export const TypedUpdateAttributeTranslations = TypedMutation<
-  UpdateAttributeTranslations,
-  UpdateAttributeTranslationsVariables
->(updateAttributeTranslations);
 
-const updateAttributeValueTranslations = gql`
-  ${attributeValueTranslateErrorFragment}
+export const updateAttributeValueTranslations = gql`
   mutation UpdateAttributeValueTranslations(
     $id: ID!
     $input: AttributeValueTranslationInput!
@@ -333,13 +234,8 @@ const updateAttributeValueTranslations = gql`
     }
   }
 `;
-export const TypedUpdateAttributeValueTranslations = TypedMutation<
-  UpdateAttributeValueTranslations,
-  UpdateAttributeValueTranslationsVariables
->(updateAttributeValueTranslations);
 
-const updateShippingMethodTranslations = gql`
-  ${shippingPriceTranslateErrorFragment}
+export const updateShippingMethodTranslations = gql`
   mutation UpdateShippingMethodTranslations(
     $id: ID!
     $input: ShippingPriceTranslationInput!
@@ -365,8 +261,3 @@ const updateShippingMethodTranslations = gql`
     }
   }
 `;
-
-export const TypedUpdateShippingMethodTranslations = TypedMutation<
-  UpdateShippingMethodTranslations,
-  UpdateShippingMethodTranslationsVariables
->(updateShippingMethodTranslations);

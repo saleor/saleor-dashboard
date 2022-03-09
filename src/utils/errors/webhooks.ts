@@ -1,4 +1,4 @@
-import { WebhookErrorFragment } from "@saleor/fragments/types/WebhookErrorFragment";
+import { WebhookErrorFragment } from "@saleor/graphql";
 import { IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";

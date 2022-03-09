@@ -4,23 +4,24 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
-import { PluginErrorFragment } from "@saleor/fragments/types/PluginErrorFragment";
+import {
+  ConfigurationItemInput,
+  PluginConfigurationExtendedFragment,
+  PluginErrorFragment,
+  PluginsDetailsFragment
+} from "@saleor/graphql";
 import { ChangeEvent, SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { isSecretField } from "@saleor/plugins/utils";
-import { ConfigurationItemInput } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { Plugin_plugin } from "../../types/Plugin";
 import PluginAuthorization from "../PluginAuthorization";
 import PluginDetailsChannelsCard from "../PluginDetailsChannelsCard";
 import PluginInfo from "../PluginInfo";
 import PluginSettings from "../PluginSettings";
-import { PluginConfiguration } from "./types";
 
 export interface PluginDetailsPageFormData {
   active: boolean;
@@ -30,13 +31,13 @@ export interface PluginDetailsPageFormData {
 export interface PluginsDetailsPageProps {
   disabled: boolean;
   errors: PluginErrorFragment[];
-  plugin?: Plugin_plugin;
+  plugin?: PluginsDetailsFragment;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onClear: (field: string) => void;
   onEdit: (field: string) => void;
   onSubmit: (data: PluginDetailsPageFormData) => SubmitPromise;
-  selectedConfig?: PluginConfiguration;
+  selectedConfig?: PluginConfigurationExtendedFragment;
   setSelectedChannelId: (channelId: string) => void;
 }
 

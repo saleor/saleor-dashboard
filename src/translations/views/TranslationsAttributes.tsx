@@ -1,4 +1,10 @@
 import { OutputData } from "@editorjs/editorjs";
+import {
+  LanguageCodeEnum,
+  useAttributeTranslationDetailsQuery,
+  useUpdateAttributeTranslationsMutation,
+  useUpdateAttributeValueTranslationsMutation
+} from "@saleor/graphql";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useLocalPaginator, {
   useLocalPaginationState
@@ -13,18 +19,10 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, getMutationState, maybe } from "../../misc";
-import { LanguageCodeEnum } from "../../types/globalTypes";
 import TranslationsAttributesPage, {
   fieldNames
 } from "../components/TranslationsAttributesPage";
-import {
-  TypedUpdateAttributeTranslations,
-  TypedUpdateAttributeValueTranslations
-} from "../mutations";
-import { useAttributeTranslationDetails } from "../queries";
 import { TranslationField } from "../types";
-import { UpdateAttributeTranslations } from "../types/UpdateAttributeTranslations";
-import { UpdateAttributeValueTranslations } from "../types/UpdateAttributeValueTranslations";
 import {
   languageEntitiesUrl,
   languageEntityUrl,
@@ -58,7 +56,7 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
     setValuesPaginationState
   ] = useLocalPaginationState(settings?.rowNumber);
 
-  const attributeTranslations = useAttributeTranslationDetails({
+  const attributeTranslations = useAttributeTranslationDetailsQuery({
     variables: {
       id,
       language: languageCode,
@@ -80,6 +78,38 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
     valuesPaginationState
   );
 
+  const [
+    updateAttributeTranslations,
+    updateAttributeTranslationsOpts
+  ] = useUpdateAttributeTranslationsMutation({
+    onCompleted: data => {
+      if (data.attributeTranslate.errors.length === 0) {
+        attributeTranslations.refetch();
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
+        navigate("?", { replace: true });
+      }
+    }
+  });
+
+  const [
+    updateAttributeValueTranslations,
+    updateAttributeValueTranslationsOpts
+  ] = useUpdateAttributeValueTranslationsMutation({
+    onCompleted: data => {
+      if (data.attributeValueTranslate.errors.length === 0) {
+        attributeTranslations.refetch();
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
+        navigate("?", { replace: true });
+      }
+    }
+  });
+
   const onEdit = (field: string) =>
     navigate(
       "?" +
@@ -88,130 +118,92 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
         }),
       { replace: true }
     );
-  const onAttributeUpdate = (data: UpdateAttributeTranslations) => {
-    if (data.attributeTranslate.errors.length === 0) {
-      attributeTranslations.refetch();
-      notify({
-        status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges)
-      });
-      navigate("?", { replace: true });
-    }
-  };
-  const onAttributeValueUpdate = (data: UpdateAttributeValueTranslations) => {
-    if (data.attributeValueTranslate.errors.length === 0) {
-      attributeTranslations.refetch();
-      notify({
-        status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges)
-      });
-      navigate("?", { replace: true });
-    }
-  };
+
   const onDiscard = () => {
     navigate("?", { replace: true });
   };
 
+  const handleSubmit = (
+    { name }: TranslationField,
+    data: string | OutputData
+  ) => {
+    const [fieldName, fieldId] = name.split(":");
+
+    if (fieldName === fieldNames.attribute) {
+      updateAttributeTranslations({
+        variables: {
+          id: fieldId,
+          input: { name: data as string },
+          language: languageCode
+        }
+      });
+    } else if (
+      [fieldNames.value, fieldNames.richTextValue].includes(fieldName)
+    ) {
+      const isRichText = fieldName === fieldNames.richTextValue;
+
+      return extractMutationErrors(
+        updateAttributeValueTranslations({
+          variables: {
+            id: fieldId,
+            input: isRichText
+              ? { richText: JSON.stringify(data) }
+              : { name: data as string },
+            language: languageCode
+          }
+        })
+      );
+    }
+  };
+
+  const saveButtonState = getMutationState(
+    updateAttributeTranslationsOpts.called ||
+      updateAttributeValueTranslationsOpts.called,
+    updateAttributeTranslationsOpts.loading ||
+      updateAttributeValueTranslationsOpts.loading,
+    maybe(
+      () => updateAttributeTranslationsOpts.data.attributeTranslate.errors,
+      []
+    ),
+    maybe(
+      () =>
+        updateAttributeValueTranslationsOpts.data.attributeValueTranslate
+          .errors,
+      []
+    )
+  );
+
   return (
-    <TypedUpdateAttributeTranslations onCompleted={onAttributeUpdate}>
-      {(updateAttributeTranslations, updateAttributeTranslationsOpts) => (
-        <TypedUpdateAttributeValueTranslations
-          onCompleted={onAttributeValueUpdate}
-        >
-          {(
-            updateAttributeValueTranslations,
-            updateAttributeValueTranslationsOpts
-          ) => {
-            const handleSubmit = (
-              { name }: TranslationField,
-              data: string | OutputData
-            ) => {
-              const [fieldName, fieldId] = name.split(":");
-
-              if (fieldName === fieldNames.attribute) {
-                updateAttributeTranslations({
-                  variables: {
-                    id: fieldId,
-                    input: { name: data as string },
-                    language: languageCode
-                  }
-                });
-              } else if (
-                [fieldNames.value, fieldNames.richTextValue].includes(fieldName)
-              ) {
-                const isRichText = fieldName === fieldNames.richTextValue;
-
-                return extractMutationErrors(
-                  updateAttributeValueTranslations({
-                    variables: {
-                      id: fieldId,
-                      input: isRichText
-                        ? { richText: JSON.stringify(data) }
-                        : { name: data as string },
-                      language: languageCode
-                    }
-                  })
-                );
-              }
-            };
-
-            const saveButtonState = getMutationState(
-              updateAttributeTranslationsOpts.called ||
-                updateAttributeValueTranslationsOpts.called,
-              updateAttributeTranslationsOpts.loading ||
-                updateAttributeValueTranslationsOpts.loading,
-              maybe(
-                () =>
-                  updateAttributeTranslationsOpts.data.attributeTranslate
-                    .errors,
-                []
-              ),
-              maybe(
-                () =>
-                  updateAttributeValueTranslationsOpts.data
-                    .attributeValueTranslate.errors,
-                []
-              )
-            );
-
-            return (
-              <TranslationsAttributesPage
-                activeField={params.activeField}
-                disabled={
-                  attributeTranslations.loading ||
-                  updateAttributeTranslationsOpts.loading ||
-                  updateAttributeValueTranslationsOpts.loading
-                }
-                languageCode={languageCode}
-                languages={maybe(() => shop.languages, [])}
-                saveButtonState={saveButtonState}
-                onBack={() =>
-                  navigate(
-                    languageEntitiesUrl(languageCode, {
-                      tab: TranslatableEntities.attributes
-                    })
-                  )
-                }
-                onEdit={onEdit}
-                onDiscard={onDiscard}
-                onLanguageChange={lang =>
-                  navigate(
-                    languageEntityUrl(lang, TranslatableEntities.attributes, id)
-                  )
-                }
-                onSubmit={handleSubmit}
-                data={translation}
-                settings={settings}
-                onUpdateListSettings={updateListSettings}
-                pageInfo={pageInfo}
-                onNextPage={loadNextPage}
-                onPreviousPage={loadPreviousPage}
-              />
-            );
-          }}
-        </TypedUpdateAttributeValueTranslations>
-      )}
-    </TypedUpdateAttributeTranslations>
+    <TranslationsAttributesPage
+      activeField={params.activeField}
+      disabled={
+        attributeTranslations.loading ||
+        updateAttributeTranslationsOpts.loading ||
+        updateAttributeValueTranslationsOpts.loading
+      }
+      languageCode={languageCode}
+      languages={maybe(() => shop.languages, [])}
+      saveButtonState={saveButtonState}
+      onBack={() =>
+        navigate(
+          languageEntitiesUrl(languageCode, {
+            tab: TranslatableEntities.attributes
+          })
+        )
+      }
+      onEdit={onEdit}
+      onDiscard={onDiscard}
+      onLanguageChange={lang =>
+        navigate(languageEntityUrl(lang, TranslatableEntities.attributes, id))
+      }
+      onSubmit={handleSubmit}
+      data={translation}
+      settings={settings}
+      onUpdateListSettings={updateListSettings}
+      pageInfo={pageInfo}
+      onNextPage={loadNextPage}
+      onPreviousPage={loadPreviousPage}
+    />
   );
 };
 TranslationsAttributes.displayName = "TranslationsAttributes";

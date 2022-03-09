@@ -1,54 +1,62 @@
 import messages from "@saleor/containers/BackgroundTasks/messages";
+import {
+  InvoiceEmailSendMutation,
+  InvoiceRequestMutation,
+  OrderAddNoteMutation,
+  OrderCancelMutation,
+  OrderCaptureMutation,
+  OrderDraftCancelMutation,
+  OrderDraftFinalizeMutation,
+  OrderDraftUpdateMutation,
+  OrderFulfillmentApproveMutation,
+  OrderFulfillmentCancelMutation,
+  OrderFulfillmentUpdateTrackingMutation,
+  OrderLineDeleteMutation,
+  OrderLinesAddMutation,
+  OrderLineUpdateMutation,
+  OrderMarkAsPaidMutation,
+  OrderShippingMethodUpdateMutation,
+  OrderUpdateMutation,
+  OrderVoidMutation
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { OrderFulfillmentApprove } from "@saleor/orders/types/OrderFulfillmentApprove";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { InvoiceEmailSend } from "../../types/InvoiceEmailSend";
-import { InvoiceRequest } from "../../types/InvoiceRequest";
-import { OrderAddNote } from "../../types/OrderAddNote";
-import { OrderCancel } from "../../types/OrderCancel";
-import { OrderCapture } from "../../types/OrderCapture";
-import { OrderDraftCancel } from "../../types/OrderDraftCancel";
-import { OrderDraftFinalize } from "../../types/OrderDraftFinalize";
-import { OrderDraftUpdate } from "../../types/OrderDraftUpdate";
-import { OrderFulfillmentCancel } from "../../types/OrderFulfillmentCancel";
-import { OrderFulfillmentUpdateTracking } from "../../types/OrderFulfillmentUpdateTracking";
-import { OrderLineDelete } from "../../types/OrderLineDelete";
-import { OrderLinesAdd } from "../../types/OrderLinesAdd";
-import { OrderLineUpdate } from "../../types/OrderLineUpdate";
-import { OrderMarkAsPaid } from "../../types/OrderMarkAsPaid";
-import { OrderShippingMethodUpdate } from "../../types/OrderShippingMethodUpdate";
-import { OrderUpdate } from "../../types/OrderUpdate";
-import { OrderVoid } from "../../types/OrderVoid";
 import { orderUrl, OrderUrlQueryParams } from "../../urls";
 
 interface OrderDetailsMessages {
   children: (props: {
-    handleDraftCancel: (data: OrderDraftCancel) => void;
-    handleDraftFinalize: (data: OrderDraftFinalize) => void;
-    handleDraftUpdate: (data: OrderDraftUpdate) => void;
-    handleNoteAdd: (data: OrderAddNote) => void;
-    handleOrderCancel: (data: OrderCancel) => void;
-    handleOrderFulfillmentApprove: (data: OrderFulfillmentApprove) => void;
-    handleOrderFulfillmentCancel: (data: OrderFulfillmentCancel) => void;
-    handleOrderFulfillmentUpdate: (
-      data: OrderFulfillmentUpdateTracking
+    handleDraftCancel: (data: OrderDraftCancelMutation) => void;
+    handleDraftFinalize: (data: OrderDraftFinalizeMutation) => void;
+    handleDraftUpdate: (data: OrderDraftUpdateMutation) => void;
+    handleNoteAdd: (data: OrderAddNoteMutation) => void;
+    handleOrderCancel: (data: OrderCancelMutation) => void;
+    handleOrderFulfillmentApprove: (
+      data: OrderFulfillmentApproveMutation
     ) => void;
-    handleOrderLinesAdd: (data: OrderLinesAdd) => void;
-    handleOrderLineDelete: (data: OrderLineDelete) => void;
-    handleOrderLineUpdate: (data: OrderLineUpdate) => void;
-    handleOrderMarkAsPaid: (data: OrderMarkAsPaid) => void;
-    handleOrderVoid: (data: OrderVoid) => void;
-    handlePaymentCapture: (data: OrderCapture) => void;
-    handleShippingMethodUpdate: (data: OrderShippingMethodUpdate) => void;
-    handleUpdate: (data: OrderUpdate) => void;
-    handleInvoiceGeneratePending: (data: InvoiceRequest) => void;
-    handleInvoiceGenerateFinished: (data: InvoiceRequest) => void;
-    handleInvoiceSend: (data: InvoiceEmailSend) => void;
+    handleOrderFulfillmentCancel: (
+      data: OrderFulfillmentCancelMutation
+    ) => void;
+    handleOrderFulfillmentUpdate: (
+      data: OrderFulfillmentUpdateTrackingMutation
+    ) => void;
+    handleOrderLinesAdd: (data: OrderLinesAddMutation) => void;
+    handleOrderLineDelete: (data: OrderLineDeleteMutation) => void;
+    handleOrderLineUpdate: (data: OrderLineUpdateMutation) => void;
+    handleOrderMarkAsPaid: (data: OrderMarkAsPaidMutation) => void;
+    handleOrderVoid: (data: OrderVoidMutation) => void;
+    handlePaymentCapture: (data: OrderCaptureMutation) => void;
+    handleShippingMethodUpdate: (
+      data: OrderShippingMethodUpdateMutation
+    ) => void;
+    handleUpdate: (data: OrderUpdateMutation) => void;
+    handleInvoiceGeneratePending: (data: InvoiceRequestMutation) => void;
+    handleInvoiceGenerateFinished: (data: InvoiceRequestMutation) => void;
+    handleInvoiceSend: (data: InvoiceEmailSendMutation) => void;
   }) => React.ReactElement;
   id: string;
   params: OrderUrlQueryParams;
@@ -69,7 +77,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     params
   );
 
-  const handlePaymentCapture = (data: OrderCapture) => {
+  const handlePaymentCapture = (data: OrderCaptureMutation) => {
     const errs = data.orderCapture?.errors;
     if (errs.length === 0) {
       pushMessage({
@@ -81,7 +89,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       closeModal();
     }
   };
-  const handleOrderMarkAsPaid = (data: OrderMarkAsPaid) => {
+  const handleOrderMarkAsPaid = (data: OrderMarkAsPaidMutation) => {
     const errs = data.orderMarkAsPaid?.errors;
     if (errs.length === 0) {
       pushMessage({
@@ -93,7 +101,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       closeModal();
     }
   };
-  const handleOrderCancel = (data: OrderCancel) => {
+  const handleOrderCancel = (data: OrderCancelMutation) => {
     const errs = data.orderCancel?.errors;
     if (errs.length === 0) {
       pushMessage({
@@ -105,7 +113,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       closeModal();
     }
   };
-  const handleDraftCancel = (data: OrderDraftCancel) => {
+  const handleDraftCancel = (data: OrderDraftCancelMutation) => {
     const errs = data.draftOrderDelete?.errors;
     if (errs.length === 0) {
       pushMessage({
@@ -117,7 +125,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       closeModal();
     }
   };
-  const handleOrderVoid = (data: OrderVoid) => {
+  const handleOrderVoid = (data: OrderVoidMutation) => {
     const errs = data.orderVoid?.errors;
     if (errs.length === 0) {
       pushMessage({
@@ -129,7 +137,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       closeModal();
     }
   };
-  const handleNoteAdd = (data: OrderAddNote) => {
+  const handleNoteAdd = (data: OrderAddNoteMutation) => {
     const errs = data.orderAddNote?.errors;
     if (errs.length === 0) {
       pushMessage({
@@ -140,7 +148,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       });
     }
   };
-  const handleUpdate = (data: OrderUpdate) => {
+  const handleUpdate = (data: OrderUpdateMutation) => {
     const errs = data.orderUpdate?.errors;
     if (errs.length === 0) {
       pushMessage({
@@ -152,7 +160,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       closeModal();
     }
   };
-  const handleDraftUpdate = (data: OrderDraftUpdate) => {
+  const handleDraftUpdate = (data: OrderDraftUpdateMutation) => {
     const errs = data.draftOrderUpdate?.errors;
     if (errs.length === 0) {
       pushMessage({
@@ -164,7 +172,9 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       closeModal();
     }
   };
-  const handleShippingMethodUpdate = (data: OrderShippingMethodUpdate) => {
+  const handleShippingMethodUpdate = (
+    data: OrderShippingMethodUpdateMutation
+  ) => {
     const errs = data.orderUpdateShipping?.errors;
     if (errs.length === 0) {
       pushMessage({
@@ -176,7 +186,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       closeModal();
     }
   };
-  const handleOrderLineDelete = (data: OrderLineDelete) => {
+  const handleOrderLineDelete = (data: OrderLineDeleteMutation) => {
     const errs = data.orderLineDelete?.errors;
     if (errs.length === 0) {
       pushMessage({
@@ -187,7 +197,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       });
     }
   };
-  const handleOrderLinesAdd = (data: OrderLinesAdd) => {
+  const handleOrderLinesAdd = (data: OrderLinesAddMutation) => {
     const errs = data.orderLinesCreate?.errors;
     if (errs.length === 0) {
       pushMessage({
@@ -199,7 +209,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       closeModal();
     }
   };
-  const handleOrderLineUpdate = (data: OrderLineUpdate) => {
+  const handleOrderLineUpdate = (data: OrderLineUpdateMutation) => {
     const errs = data.orderLineUpdate?.errors;
     if (errs.length === 0) {
       pushMessage({
@@ -217,7 +227,9 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       );
     }
   };
-  const handleOrderFulfillmentApprove = (data: OrderFulfillmentApprove) => {
+  const handleOrderFulfillmentApprove = (
+    data: OrderFulfillmentApproveMutation
+  ) => {
     const errs = data.orderFulfillmentApprove?.errors;
     if (errs.length === 0) {
       pushMessage({
@@ -229,7 +241,9 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       closeModal();
     }
   };
-  const handleOrderFulfillmentCancel = (data: OrderFulfillmentCancel) => {
+  const handleOrderFulfillmentCancel = (
+    data: OrderFulfillmentCancelMutation
+  ) => {
     const errs = data.orderFulfillmentCancel?.errors;
     if (errs.length === 0) {
       pushMessage({
@@ -242,7 +256,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
   const handleOrderFulfillmentUpdate = (
-    data: OrderFulfillmentUpdateTracking
+    data: OrderFulfillmentUpdateTrackingMutation
   ) => {
     const errs = data.orderFulfillmentUpdateTracking?.errors;
     if (errs.length === 0) {
@@ -255,7 +269,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       closeModal();
     }
   };
-  const handleDraftFinalize = (data: OrderDraftFinalize) => {
+  const handleDraftFinalize = (data: OrderDraftFinalizeMutation) => {
     const errs = data.draftOrderComplete?.errors;
     if (errs.length === 0) {
       pushMessage({
@@ -266,7 +280,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       });
     }
   };
-  const handleInvoiceGeneratePending = (data: InvoiceRequest) => {
+  const handleInvoiceGeneratePending = (data: InvoiceRequestMutation) => {
     const errs = data.invoiceRequest?.errors;
     if (errs.length === 0) {
       pushMessage({
@@ -281,7 +295,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       closeModal();
     }
   };
-  const handleInvoiceGenerateFinished = (data: InvoiceRequest) => {
+  const handleInvoiceGenerateFinished = (data: InvoiceRequestMutation) => {
     const errs = data.invoiceRequest?.errors;
     if (errs.length === 0) {
       pushMessage({
@@ -292,7 +306,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       closeModal();
     }
   };
-  const handleInvoiceSend = (data: InvoiceEmailSend) => {
+  const handleInvoiceSend = (data: InvoiceEmailSendMutation) => {
     const errs = data.invoiceSendNotification?.errors;
     if (errs.length === 0) {
       pushMessage({

@@ -1,17 +1,9 @@
+import { Node, useProductVariantSetDefaultMutation } from "@saleor/graphql";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { useProductVariantSetDefaultMutation } from "@saleor/products/mutations";
 import { getProductErrorMessage } from "@saleor/utils/errors";
 import { useIntl } from "react-intl";
 
-import { ProductDetails_product_variants } from "../products/types/ProductDetails";
-import { VariantUpdate_productVariantUpdate_productVariant } from "../products/types/VariantUpdate";
-
-function useOnSetDefaultVariant(
-  productId: string,
-  variant:
-    | ProductDetails_product_variants
-    | VariantUpdate_productVariantUpdate_productVariant
-) {
+function useOnSetDefaultVariant(productId: string, variant: Node) {
   const notify = useNotifier();
   const intl = useIntl();
 

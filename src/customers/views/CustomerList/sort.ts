@@ -1,5 +1,5 @@
 import { CustomerListUrlSortField } from "@saleor/customers/urls";
-import { UserSortField } from "@saleor/types/globalTypes";
+import { UserSortField } from "@saleor/graphql";
 import { createGetSortQueryVariables } from "@saleor/utils/sort";
 
 export function getSortQueryField(

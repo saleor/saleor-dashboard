@@ -4,12 +4,12 @@ import {
   SaleFilterKeys,
   SaleListFilterOpts
 } from "@saleor/discounts/components/SaleListPage";
-import { findValueInEnum, joinDateTime, maybe } from "@saleor/misc";
 import {
   DiscountStatusEnum,
   DiscountValueTypeEnum,
   SaleFilterInput
-} from "@saleor/types/globalTypes";
+} from "@saleor/graphql";
+import { findValueInEnum, joinDateTime, maybe } from "@saleor/misc";
 
 import {
   createFilterTabUtils,

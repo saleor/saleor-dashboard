@@ -1,6 +1,6 @@
 import { Card, CardContent, TextField } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
-import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
+import { DiscountErrorFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { Button } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";

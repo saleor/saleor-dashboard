@@ -1,7 +1,6 @@
 import { TextField } from "@material-ui/core";
 import { AddressTypeInput } from "@saleor/customers/types";
-import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
-import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
+import { AccountErrorFragment, OrderErrorFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";

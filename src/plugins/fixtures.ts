@@ -1,9 +1,10 @@
-import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
+import {
+  ConfigurationTypeFieldEnum,
+  PluginBaseFragment,
+  PluginsDetailsFragment
+} from "@saleor/graphql";
 
-import { Plugin_plugin } from "./types/Plugin";
-import { Plugins_plugins_edges_node } from "./types/Plugins";
-
-export const pluginList: Plugins_plugins_edges_node[] = [
+export const pluginList: PluginBaseFragment[] = [
   {
     __typename: "Plugin",
     globalConfiguration: null,
@@ -45,7 +46,7 @@ export const pluginList: Plugins_plugins_edges_node[] = [
     name: "VatLayer"
   }
 ];
-export const plugin: Plugin_plugin = {
+export const plugin: PluginsDetailsFragment = {
   __typename: "Plugin",
   globalConfiguration: null,
   channelConfigurations: [

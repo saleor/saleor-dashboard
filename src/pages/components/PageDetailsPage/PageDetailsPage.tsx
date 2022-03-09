@@ -12,23 +12,23 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
-import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
+import {
+  PageDetailsFragment,
+  PageErrorWithAttributesFragment,
+  SearchAttributeValuesQuery,
+  SearchPagesQuery,
+  SearchPageTypesQuery,
+  SearchProductsQuery
+} from "@saleor/graphql";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
-import { PageType_pageType } from "@saleor/pages/types/PageType";
-import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
-import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
-import { SearchPageTypes_search_edges_node } from "@saleor/searches/types/SearchPageTypes";
-import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
-import { FetchMoreProps } from "@saleor/types";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import { mapNodeToChoice } from "@saleor/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { PageDetails_page } from "../../types/PageDetails";
 import PageInfo from "../PageInfo";
 import PageOrganizeContent from "../PageOrganizeContent";
 import PageForm, { PageData, PageUpdateHandlers } from "./form";
@@ -36,14 +36,16 @@ import PageForm, { PageData, PageUpdateHandlers } from "./form";
 export interface PageDetailsPageProps {
   loading: boolean;
   errors: PageErrorWithAttributesFragment[];
-  page: PageDetails_page;
-  pageTypes?: SearchPageTypes_search_edges_node[];
-  referencePages?: SearchPages_search_edges_node[];
-  referenceProducts?: SearchProducts_search_edges_node[];
+  page: PageDetailsFragment;
+  pageTypes?: RelayToFlat<SearchPageTypesQuery["search"]>;
+  referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
+  referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
   allowEmptySlug?: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
-  selectedPageType?: PageType_pageType;
-  attributeValues: SearchAttributeValues_attribute_choices_edges_node[];
+  selectedPageType?: PageDetailsFragment["pageType"];
+  attributeValues: RelayToFlat<
+    SearchAttributeValuesQuery["attribute"]["choices"]
+  >;
   onBack: () => void;
   onRemove: () => void;
   onSubmit: (data: PageData) => SubmitPromise;

@@ -1,5 +1,5 @@
+import { ProductTypeKindEnum } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
-import { ProductTypeKindEnum } from "@saleor/types/globalTypes";
 
 export const makeProductTypeKindChangeHandler = (
   onChange: FormChange,

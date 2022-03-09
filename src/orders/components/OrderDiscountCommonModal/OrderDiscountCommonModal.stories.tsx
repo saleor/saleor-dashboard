@@ -1,5 +1,5 @@
+import { DiscountValueTypeEnum } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
-import { DiscountValueTypeEnum } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

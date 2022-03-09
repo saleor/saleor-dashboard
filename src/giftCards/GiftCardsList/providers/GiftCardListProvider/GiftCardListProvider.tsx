@@ -2,6 +2,11 @@ import { ApolloError } from "@apollo/client";
 import { ExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
 import { getExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
 import { giftCardListUrl } from "@saleor/giftCards/urls";
+import {
+  GiftCardListQuery,
+  GiftCardListQueryVariables,
+  useGiftCardListQuery
+} from "@saleor/graphql";
 import useBulkActions, {
   UseBulkActionsProps
 } from "@saleor/hooks/useBulkActions";
@@ -20,19 +25,14 @@ import { ListViews, SortPage } from "@saleor/types";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
-import React, { createContext } from "react";
+import React, { createContext, useContext } from "react";
 
 import { getFilterVariables } from "../../GiftCardListSearchAndFilters/filters";
-import { useGiftCardListQuery } from "../../queries";
 import {
   GiftCardListColummns,
   GiftCardListUrlQueryParams,
   GiftCardUrlSortField
 } from "../../types";
-import {
-  GiftCardList_giftCards_edges_node,
-  GiftCardListVariables
-} from "../../types/GiftCardList";
 import { getSortQueryVariables } from "./sort";
 
 const numberOfColumns = 7;
@@ -42,27 +42,27 @@ interface GiftCardsListProviderProps {
   params: GiftCardListUrlQueryParams;
 }
 
-export interface GiftCardListDataProps extends SortPage<GiftCardUrlSortField> {
-  giftCards: Array<ExtendedGiftCard<GiftCardList_giftCards_edges_node>>;
+export interface GiftCardsListConsumerProps
+  extends UseBulkActionsProps,
+    UseListSettings<GiftCardListColummns>,
+    SortPage<GiftCardUrlSortField> {
+  giftCards: Array<
+    ExtendedGiftCard<GiftCardListQuery["giftCards"]["edges"][0]["node"]>
+  >;
   pageInfo: PageInfo;
   loading: boolean;
   params: GiftCardListUrlQueryParams;
   paginationState: PaginationState;
   numberOfColumns: number;
   totalCount: number;
-}
-
-export interface GiftCardsListConsumerProps
-  extends UseBulkActionsProps,
-    GiftCardListDataProps,
-    UseListSettings<GiftCardListColummns>,
-    SortPage<GiftCardUrlSortField> {
   selectedItemsCount: number;
 }
 
 export const GiftCardsListContext = createContext<GiftCardsListConsumerProps>(
   null
 );
+
+export const useGiftCardList = () => useContext(GiftCardsListContext);
 
 export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
   children,
@@ -85,7 +85,7 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
 
   const handleSort = createSortHandler(navigate, giftCardListUrl, params);
 
-  const queryVariables = React.useMemo<GiftCardListVariables>(
+  const queryVariables = React.useMemo<GiftCardListQueryVariables>(
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),

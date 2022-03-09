@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const fragmentAddress = gql`
-  fragment AddressFragment on Address {
+  fragment Address on Address {
     city
     cityArea
     companyName

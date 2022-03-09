@@ -1,16 +1,17 @@
+import {
+  OrderErrorCode,
+  useFulfillmentReturnProductsMutation,
+  useOrderDetailsQuery
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { extractMutationErrors } from "@saleor/misc";
 import OrderReturnPage from "@saleor/orders/components/OrderReturnPage";
 import { OrderReturnFormData } from "@saleor/orders/components/OrderReturnPage/form";
-import { useOrderReturnCreateMutation } from "@saleor/orders/mutations";
-import { useOrderQuery } from "@saleor/orders/queries";
 import { orderUrl } from "@saleor/orders/urls";
-import { OrderErrorCode } from "@saleor/types/globalTypes";
 import React from "react";
-import { defineMessages } from "react-intl";
-import { useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 import ReturnFormDataParser from "./utils";
 
@@ -39,46 +40,48 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
   const notify = useNotifier();
   const intl = useIntl();
 
-  const { data, loading } = useOrderQuery({
+  const { data, loading } = useOrderDetailsQuery({
     displayLoader: true,
     variables: {
       id: orderId
     }
   });
 
-  const [returnCreate, returnCreateOpts] = useOrderReturnCreateMutation({
-    onCompleted: ({
-      orderFulfillmentReturnProducts: { errors, replaceOrder }
-    }) => {
-      if (!errors.length) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(messages.successAlert)
-        });
+  const [returnCreate, returnCreateOpts] = useFulfillmentReturnProductsMutation(
+    {
+      onCompleted: ({
+        orderFulfillmentReturnProducts: { errors, replaceOrder }
+      }) => {
+        if (!errors.length) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(messages.successAlert)
+          });
 
-        navigateToOrder(replaceOrder?.id);
+          navigateToOrder(replaceOrder?.id);
 
-        return;
-      }
+          return;
+        }
 
-      if (errors.some(err => err.code === OrderErrorCode.CANNOT_REFUND)) {
+        if (errors.some(err => err.code === OrderErrorCode.CANNOT_REFUND)) {
+          notify({
+            autohide: 5000,
+            status: "error",
+            text: intl.formatMessage(messages.cannotRefundDescription),
+            title: intl.formatMessage(messages.cannotRefundTitle)
+          });
+
+          return;
+        }
+
         notify({
           autohide: 5000,
           status: "error",
-          text: intl.formatMessage(messages.cannotRefundDescription),
-          title: intl.formatMessage(messages.cannotRefundTitle)
+          text: intl.formatMessage(commonMessages.somethingWentWrong)
         });
-
-        return;
       }
-
-      notify({
-        autohide: 5000,
-        status: "error",
-        text: intl.formatMessage(commonMessages.somethingWentWrong)
-      });
     }
-  });
+  );
 
   const handleSubmit = async (formData: OrderReturnFormData) => {
     if (!data?.order) {

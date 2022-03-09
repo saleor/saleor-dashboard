@@ -9,6 +9,7 @@ import {
   Typography
 } from "@material-ui/core";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
+import { useProductVariantListQuery } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { makeStyles } from "@saleor/macaw-ui";
 import {
@@ -19,8 +20,6 @@ import {
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { useProductVariantList } from "../../queries";
 
 export interface ProductContextSwitcherProps {
   productId: string;
@@ -75,7 +74,7 @@ const ProductContextSwitcher: React.FC<ProductContextSwitcherProps> = ({
   const classes = useStyles();
   const navigate = useNavigator();
   const intl = useIntl();
-  const { data } = useProductVariantList({
+  const { data } = useProductVariantListQuery({
     variables: { id: productId }
   });
 

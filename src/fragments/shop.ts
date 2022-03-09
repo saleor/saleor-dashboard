@@ -1,9 +1,21 @@
 import { gql } from "@apollo/client";
 
-import { fragmentAddress } from "./address";
+export const countryFragment = gql`
+  fragment CountryWithCode on CountryDisplay {
+    country
+    code
+  }
+`;
+
+export const languageFragment = gql`
+  fragment Language on LanguageDisplay {
+    code
+    language
+  }
+`;
 
 export const limitFragment = gql`
-  fragment LimitInfoFragment on Limits {
+  fragment LimitInfo on Limits {
     channels @include(if: $channels)
     orders @include(if: $orders)
     productVariants @include(if: $productVariants)
@@ -11,23 +23,22 @@ export const limitFragment = gql`
     warehouses @include(if: $warehouses)
   }
 
-  fragment ShopLimitFragment on Shop {
+  fragment ShopLimit on Shop {
     limits {
       currentUsage {
-        ...LimitInfoFragment
+        ...LimitInfo
       }
       allowedUsage {
-        ...LimitInfoFragment
+        ...LimitInfo
       }
     }
   }
 `;
 
 export const shopFragment = gql`
-  ${fragmentAddress}
-  fragment ShopFragment on Shop {
+  fragment Shop on Shop {
     companyAddress {
-      ...AddressFragment
+      ...Address
     }
     countries {
       code

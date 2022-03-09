@@ -1,13 +1,13 @@
+import { StaffMemberDetailsFragment } from "@saleor/graphql";
 import difference from "lodash/difference";
 
 import { StaffDetailsFormData } from "./components/StaffDetailsPage";
-import { StaffMemberDetails_user } from "./types/StaffMemberDetails";
 
 /**
  * Return lists of groups which have to be added and removed from user.
  */
 export const groupsDiff = (
-  user: StaffMemberDetails_user,
+  user: StaffMemberDetailsFragment,
   formData: StaffDetailsFormData
 ) => {
   const newGroups = formData.permissionGroups;

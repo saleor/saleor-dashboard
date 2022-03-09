@@ -1,8 +1,10 @@
 import { TextField } from "@material-ui/core";
 import { TextFieldProps } from "@material-ui/core/TextField";
 import { getErrorMessage } from "@saleor/components/Attributes/utils";
-import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
-import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
+import {
+  PageErrorWithAttributesFragment,
+  ProductErrorWithAttributesFragment
+} from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { DateTime, joinDateTime, splitDateTime } from "@saleor/misc";
 import React, { useEffect, useState } from "react";

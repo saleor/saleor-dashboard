@@ -3,6 +3,10 @@ import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
 import TypeDeleteWarningDialog from "@saleor/components/TypeDeleteWarningDialog";
+import {
+  usePageTypeBulkDeleteMutation,
+  usePageTypeListQuery
+} from "@saleor/graphql";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -15,7 +19,6 @@ import { commonMessages } from "@saleor/intl";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import usePageTypeDelete from "@saleor/pageTypes/hooks/usePageTypeDelete";
-import { usePageTypeBulkDeleteMutation } from "@saleor/pageTypes/mutations";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
@@ -26,7 +29,6 @@ import { useIntl } from "react-intl";
 
 import { configurationMenuUrl } from "../../../configuration";
 import PageTypeListPage from "../../components/PageTypeListPage";
-import { usePageTypeListQuery } from "../../queries";
 import {
   pageTypeAddUrl,
   pageTypeListUrl,

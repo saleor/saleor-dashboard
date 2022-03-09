@@ -1,8 +1,8 @@
+import { OrderDirection } from "@saleor/graphql";
 import { findValueInEnum, parseBoolean } from "@saleor/misc";
 
 import { TableCellHeaderArrowDirection } from "../components/TableCellHeader";
 import { Sort } from "../types";
-import { OrderDirection } from "../types/globalTypes";
 
 export function getSortUrlVariables<TSortKey extends string>(
   field: TSortKey,

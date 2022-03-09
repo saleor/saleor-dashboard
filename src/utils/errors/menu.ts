@@ -1,4 +1,4 @@
-import { MenuErrorFragment } from "@saleor/fragments/types/MenuErrorFragment";
+import { MenuErrorFragment } from "@saleor/graphql";
 import { IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";

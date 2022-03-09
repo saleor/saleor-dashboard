@@ -1,4 +1,5 @@
 import TextWithSelectField from "@saleor/components/TextWithSelectField";
+import { useChannelCurrenciesQuery } from "@saleor/graphql";
 import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import { mapSingleValueNodeToChoice } from "@saleor/utils/maps";
@@ -12,7 +13,6 @@ import {
 } from "../GiftCardBulkCreateDialog/types";
 import { getGiftCardErrorMessage } from "../GiftCardUpdate/messages";
 import { giftCardCreateMessages as messages } from "./messages";
-import { useChannelCurrencies } from "./queries";
 import { useGiftCardCreateFormStyles as useStyles } from "./styles";
 
 interface GiftCardCreateMoneyInputProps {
@@ -31,7 +31,7 @@ const GiftCardCreateMoneyInput: React.FC<GiftCardCreateMoneyInputProps> = ({
   const intl = useIntl();
   const classes = useStyles({});
 
-  const { data: channelCurrenciesData } = useChannelCurrencies({});
+  const { data: channelCurrenciesData } = useChannelCurrenciesQuery({});
 
   const { channelCurrencies } = channelCurrenciesData?.shop;
 

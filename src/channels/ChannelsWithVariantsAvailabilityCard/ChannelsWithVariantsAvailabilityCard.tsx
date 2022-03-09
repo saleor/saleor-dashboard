@@ -10,15 +10,14 @@ import {
   Messages
 } from "@saleor/components/ChannelsAvailabilityCard/types";
 import { getChannelsAvailabilityMessages } from "@saleor/components/ChannelsAvailabilityCard/utils";
+import { PermissionEnum, ProductDetailsVariantFragment } from "@saleor/graphql";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
-import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
 import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
 import {
   areAnyChannelVariantsSelected,
   getTotalSelectedChannelsCount
 } from "@saleor/products/views/ProductUpdate/utils";
-import { PermissionEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -36,7 +35,7 @@ export interface ChannelsWithVariantsAvailabilityCardProps
   extends CommonChannelsAvailabilityProps {
   channelsWithVariantsData: ChannelsWithVariantsData;
   channels: ChannelData[];
-  variants: ProductDetails_product_variants[];
+  variants: ProductDetailsVariantFragment[];
   errors?: ChannelsAvailabilityError[];
   messages: Messages;
   onChange: (id: string, data: ChannelOpts) => void;

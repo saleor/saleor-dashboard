@@ -1,0 +1,5 @@
+schema: ${API_URI}
+generates:
+  ./introspection.json:
+    plugins:
+      - introspection

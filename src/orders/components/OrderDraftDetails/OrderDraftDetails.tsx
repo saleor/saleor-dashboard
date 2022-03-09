@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
+import { OrderDetailsFragment } from "@saleor/graphql";
 import { Button } from "@saleor/macaw-ui";
 import {
   OrderDiscountContext,
@@ -9,14 +10,13 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
-import { OrderDetails_order } from "../../types/OrderDetails";
 import OrderDraftDetailsProducts, {
   FormData as OrderDraftDetailsProductsFormData
 } from "../OrderDraftDetailsProducts";
 import OrderDraftDetailsSummary from "../OrderDraftDetailsSummary";
 
 interface OrderDraftDetailsProps {
-  order: OrderDetails_order;
+  order: OrderDetailsFragment;
   onOrderLineAdd: () => void;
   onOrderLineChange: (
     id: string,

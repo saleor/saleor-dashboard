@@ -1,4 +1,5 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { AppCreateMutation, useAppCreateMutation } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
@@ -10,8 +11,6 @@ import { useIntl } from "react-intl";
 import CustomAppCreatePage, {
   CustomAppCreatePageFormData
 } from "../../components/CustomAppCreatePage";
-import { useAppCreateMutation } from "../../mutations";
-import { AppCreate } from "../../types/AppCreate";
 import { appsListUrl, customAppUrl } from "../../urls";
 import { messages } from "./messages";
 
@@ -26,7 +25,7 @@ export const CustomAppCreate: React.FC<CustomAppCreateProps> = ({
   const intl = useIntl();
   const shop = useShop();
 
-  const onSubmit = (data: AppCreate) => {
+  const onSubmit = (data: AppCreateMutation) => {
     if (data.appCreate.errors.length === 0) {
       notify({
         status: "success",

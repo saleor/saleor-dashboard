@@ -3,30 +3,26 @@ import { VoucherDetailsPageFormData } from "@saleor/discounts/components/Voucher
 import { getChannelsVariables } from "@saleor/discounts/handlers";
 import { DiscountTypeEnum, RequirementsPicker } from "@saleor/discounts/types";
 import {
-  VoucherChannelListingUpdate,
-  VoucherChannelListingUpdateVariables
-} from "@saleor/discounts/types/VoucherChannelListingUpdate";
-import {
-  VoucherCreate,
-  VoucherCreateVariables
-} from "@saleor/discounts/types/VoucherCreate";
+  DiscountValueTypeEnum,
+  VoucherChannelListingUpdateMutation,
+  VoucherChannelListingUpdateMutationVariables,
+  VoucherCreateMutation,
+  VoucherCreateMutationVariables,
+  VoucherTypeEnum
+} from "@saleor/graphql";
 import {
   extractMutationErrors,
   getMutationErrors,
   joinDateTime
 } from "@saleor/misc";
-import {
-  DiscountValueTypeEnum,
-  VoucherTypeEnum
-} from "@saleor/types/globalTypes";
 
 export function createHandler(
   voucherCreate: (
-    variables: VoucherCreateVariables
-  ) => Promise<FetchResult<VoucherCreate>>,
+    variables: VoucherCreateMutationVariables
+  ) => Promise<FetchResult<VoucherCreateMutation>>,
   updateChannels: (options: {
-    variables: VoucherChannelListingUpdateVariables;
-  }) => Promise<FetchResult<VoucherChannelListingUpdate>>
+    variables: VoucherChannelListingUpdateMutationVariables;
+  }) => Promise<FetchResult<VoucherChannelListingUpdateMutation>>
 ) {
   return async (formData: VoucherDetailsPageFormData) => {
     const response = await voucherCreate({

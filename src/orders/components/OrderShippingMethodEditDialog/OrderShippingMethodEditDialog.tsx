@@ -12,7 +12,7 @@ import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Money from "@saleor/components/Money";
 import { SingleSelectField } from "@saleor/components/SingleSelectField";
-import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
+import { OrderDetailsFragment, OrderErrorFragment } from "@saleor/graphql";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
@@ -20,8 +20,6 @@ import { getFormErrors } from "@saleor/utils/errors";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { OrderDetails_order_shippingMethods } from "../../types/OrderDetails";
 
 export interface FormData {
   shippingMethod: string;
@@ -63,7 +61,7 @@ export interface OrderShippingMethodEditDialogProps {
   errors: OrderErrorFragment[];
   open: boolean;
   shippingMethod: string;
-  shippingMethods?: OrderDetails_order_shippingMethods[];
+  shippingMethods?: OrderDetailsFragment["shippingMethods"];
   onClose();
   onSubmit?(data: FormData);
 }

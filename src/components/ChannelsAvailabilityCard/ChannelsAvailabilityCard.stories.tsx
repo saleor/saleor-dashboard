@@ -1,9 +1,8 @@
 import { createChannelsDataFromProduct } from "@saleor/channels/utils";
-import { User } from "@saleor/fragments/types/User";
+import { PermissionEnum, UserFragment } from "@saleor/graphql";
 import { product } from "@saleor/products/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
 import UserDecorator from "@saleor/storybook/UserDecorator";
-import { PermissionEnum } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -11,7 +10,7 @@ import ChannelsAvailabilityCard, {
   ChannelsAvailabilityCardProps
 } from "./ChannelsAvailabilityCard";
 
-const user: User = {
+const user: UserFragment = {
   __typename: "User",
   avatar: null,
   email: "email@example.com",

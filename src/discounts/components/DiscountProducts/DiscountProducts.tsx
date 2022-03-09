@@ -13,20 +13,20 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import { SaleDetailsFragment, VoucherDetailsFragment } from "@saleor/graphql";
 import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
-import { ListActions, ListProps } from "../../../types";
-import { SaleDetails_sale_products_edges_node } from "../../types/SaleDetails";
-import { VoucherDetails_voucher_products_edges_node } from "../../types/VoucherDetails";
+import { ListActions, ListProps, RelayToFlat } from "../../../types";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
+
 export interface SaleProductsProps extends ListProps, ListActions {
   products:
-    | SaleDetails_sale_products_edges_node[]
-    | VoucherDetails_voucher_products_edges_node[];
+    | RelayToFlat<SaleDetailsFragment["products"]>
+    | RelayToFlat<VoucherDetailsFragment["products"]>;
   onProductAssign: () => void;
   onProductUnassign: (id: string) => void;
 }

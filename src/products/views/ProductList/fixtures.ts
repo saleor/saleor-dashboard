@@ -2,9 +2,9 @@ import { attributes } from "@saleor/attributes/fixtures";
 import { categories } from "@saleor/categories/fixtures";
 import { collections } from "@saleor/collections/fixtures";
 import { fetchMoreProps, searchPageProps } from "@saleor/fixtures";
+import { StockAvailability } from "@saleor/graphql";
 import { ProductListFilterOpts } from "@saleor/products/components/ProductListPage";
 import { productTypes } from "@saleor/productTypes/fixtures";
-import { StockAvailability } from "@saleor/types/globalTypes";
 import { mapEdgesToItems, mapSlugNodeToChoice } from "@saleor/utils/maps";
 
 export const productListFilterOpts: ProductListFilterOpts = {

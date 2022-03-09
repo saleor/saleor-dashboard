@@ -1,8 +1,8 @@
-import Decorator from "@saleor/storybook//Decorator";
 import {
   PostalCodeRuleInclusionTypeEnum,
   ShippingMethodTypeEnum
-} from "@saleor/types/globalTypes";
+} from "@saleor/graphql";
+import Decorator from "@saleor/storybook//Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

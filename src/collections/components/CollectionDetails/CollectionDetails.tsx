@@ -5,7 +5,7 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import RichTextEditor, {
   RichTextEditorChange
 } from "@saleor/components/RichTextEditor";
-import { CollectionErrorFragment } from "@saleor/fragments/types/CollectionErrorFragment";
+import { CollectionErrorFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 import React from "react";

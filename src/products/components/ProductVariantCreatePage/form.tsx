@@ -11,6 +11,12 @@ import {
 import { AttributeInput } from "@saleor/components/Attributes";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
+import {
+  ProductVariantCreateDataQuery,
+  SearchPagesQuery,
+  SearchProductsQuery,
+  SearchWarehousesQuery
+} from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
@@ -22,13 +28,9 @@ import useFormset, {
 } from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import { errorMessages } from "@saleor/intl";
-import { ProductVariantCreateData_product } from "@saleor/products/types/ProductVariantCreateData";
 import { getVariantAttributeInputFromProduct } from "@saleor/products/utils/data";
 import { createPreorderEndDateChangeHandler } from "@saleor/products/utils/handlers";
-import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
-import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
-import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
-import { FetchMoreProps, ReorderEvent } from "@saleor/types";
+import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
@@ -53,9 +55,9 @@ export interface ProductVariantCreateData extends ProductVariantCreateFormData {
 }
 
 export interface UseProductVariantCreateFormOpts {
-  warehouses: SearchWarehouses_search_edges_node[];
-  referencePages: SearchPages_search_edges_node[];
-  referenceProducts: SearchProducts_search_edges_node[];
+  warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
+  referencePages: RelayToFlat<SearchPagesQuery["search"]>;
+  referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
   fetchReferencePages?: (data: string) => void;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchReferenceProducts?: (data: string) => void;
@@ -90,7 +92,7 @@ export interface UseProductVariantCreateFormResult
 export interface ProductVariantCreateFormProps
   extends UseProductVariantCreateFormOpts {
   children: (props: UseProductVariantCreateFormResult) => React.ReactNode;
-  product: ProductVariantCreateData_product;
+  product: ProductVariantCreateDataQuery["product"];
   onSubmit: (data: ProductVariantCreateData) => void;
 }
 
@@ -109,7 +111,7 @@ const initial: ProductVariantCreateFormData = {
 };
 
 function useProductVariantCreateForm(
-  product: ProductVariantCreateData_product,
+  product: ProductVariantCreateDataQuery["product"],
   onSubmit: (data: ProductVariantCreateData) => void,
   opts: UseProductVariantCreateFormOpts
 ): UseProductVariantCreateFormResult {

@@ -1,8 +1,8 @@
 import { OutputData } from "@editorjs/editorjs";
-import { CategoryDetails_category } from "@saleor/categories/types/CategoryDetails";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
+import { CategoryDetailsFragment } from "@saleor/graphql";
 import useForm, {
   CommonUseFormResult,
   FormChange
@@ -36,11 +36,11 @@ export interface UseCategoryUpdateFormResult
 
 export interface CategoryUpdateFormProps {
   children: (props: UseCategoryUpdateFormResult) => React.ReactNode;
-  category: CategoryDetails_category;
+  category: CategoryDetailsFragment;
   onSubmit: (data: CategoryUpdateData) => Promise<any[]>;
 }
 
-const getInitialData = (category?: CategoryDetails_category) => ({
+const getInitialData = (category?: CategoryDetailsFragment) => ({
   backgroundImageAlt: category?.backgroundImage?.alt || "",
   metadata: category?.metadata?.map(mapMetadataItemToInput),
   name: category?.name || "",
@@ -51,7 +51,7 @@ const getInitialData = (category?: CategoryDetails_category) => ({
 });
 
 function useCategoryUpdateForm(
-  category: CategoryDetails_category,
+  category: CategoryDetailsFragment,
   onSubmit: (data: CategoryUpdateData) => Promise<any[]>
 ): UseCategoryUpdateFormResult {
   const {

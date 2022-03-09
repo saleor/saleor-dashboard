@@ -7,10 +7,9 @@ import ActionDialog, {
   ActionDialogProps
 } from "@saleor/components/ActionDialog";
 import DeleteWarningDialogConsentContent from "@saleor/components/TypeDeleteWarningDialog/DeleteWarningDialogConsentContent";
-import { UseGiftCardListProps } from "@saleor/giftCards/GiftCardsList/providers/GiftCardListProvider/hooks/useGiftCardList";
-import { UseGiftCardListBulkActionsProps } from "@saleor/giftCards/GiftCardsList/providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
+import { GiftCardsListConsumerProps } from "@saleor/giftCards/GiftCardsList/providers/GiftCardListProvider";
 import { ExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
-import { GiftCardDetails_giftCard } from "@saleor/giftCards/GiftCardUpdate/types/GiftCardDetails";
+import { GiftCardDataFragment } from "@saleor/graphql";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
@@ -21,7 +20,7 @@ import { useGiftCardDeleteDialogContentStyles as useStyles } from "./styles";
 export const SINGLE = 1;
 
 type DeleteDialogContentGiftCard = Pick<
-  ExtendedGiftCard<GiftCardDetails_giftCard>,
+  ExtendedGiftCard<GiftCardDataFragment>,
   "currentBalance" | "id"
 >;
 
@@ -32,11 +31,10 @@ export interface GiftCardDeleteDialogContentProps<
       ActionDialogProps,
       "open" | "onClose" | "onConfirm" | "confirmButtonState"
     >,
-    Partial<Pick<UseGiftCardListProps, "giftCards" | "loading">>,
     Partial<
       Pick<
-        UseGiftCardListBulkActionsProps,
-        "listElements" | "selectedItemsCount"
+        GiftCardsListConsumerProps,
+        "listElements" | "selectedItemsCount" | "giftCards" | "loading"
       >
     > {
   id?: string;

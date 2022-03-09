@@ -8,10 +8,10 @@ import {
 import CardTitle from "@saleor/components/CardTitle";
 import PreviewPill from "@saleor/components/PreviewPill";
 import RadioGroupField from "@saleor/components/RadioGroupField";
+import { ProductTypeKindEnum } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import { UserError } from "@saleor/types";
-import { ProductTypeKindEnum } from "@saleor/types/globalTypes";
 import { getFieldError } from "@saleor/utils/errors";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

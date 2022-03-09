@@ -8,6 +8,10 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import {
+  ProductVariantCreateDataQuery,
+  ProductVariantDetailsQuery
+} from "@saleor/graphql";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import { ReorderAction } from "@saleor/types";
 import classNames from "classnames";
@@ -15,8 +19,6 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { renderCollection } from "../../../misc";
-import { ProductVariantCreateData_product_variants } from "../../types/ProductVariantCreateData";
-import { ProductVariantDetails_productVariant } from "../../types/ProductVariantDetails";
 
 const useStyles = makeStyles(
   theme => ({
@@ -65,8 +67,8 @@ interface ProductVariantNavigationProps {
   defaultVariantId?: string;
   fallbackThumbnail: string;
   variants:
-    | ProductVariantDetails_productVariant[]
-    | ProductVariantCreateData_product_variants[];
+    | Array<ProductVariantDetailsQuery["productVariant"]>
+    | ProductVariantCreateDataQuery["product"]["variants"];
   onAdd?: () => void;
   onRowClick: (variantId: string) => void;
   onReorder: ReorderAction;

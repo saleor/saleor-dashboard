@@ -1,5 +1,6 @@
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
+import { PageFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Button } from "@saleor/macaw-ui";
 import { PageListUrlSortField } from "@saleor/pages/urls";
@@ -7,14 +8,13 @@ import { ListActions, PageListProps, SortPage } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { PageList_pages_edges_node } from "../../types/PageList";
 import PageList from "../PageList";
 
 export interface PageListPageProps
   extends PageListProps,
     ListActions,
     SortPage<PageListUrlSortField> {
-  pages: PageList_pages_edges_node[];
+  pages: PageFragment[];
 }
 
 const PageListPage: React.FC<PageListPageProps> = ({ onAdd, ...listProps }) => {

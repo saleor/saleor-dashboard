@@ -1,9 +1,9 @@
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import { useOrderDraftCreateMutation } from "@saleor/graphql";
 import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { maybe } from "@saleor/misc";
-import { useOrderDraftCreateMutation } from "@saleor/orders/mutations";
 import { orderUrl } from "@saleor/orders/urls";
 import useCustomerSearch from "@saleor/searches/useCustomerSearch";
 import { mapEdgesToItems } from "@saleor/utils/maps";

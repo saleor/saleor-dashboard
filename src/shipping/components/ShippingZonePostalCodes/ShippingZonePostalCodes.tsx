@@ -11,11 +11,13 @@ import CardTitle from "@saleor/components/CardTitle";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
-import { ShippingMethodTypeFragment_postalCodeRules } from "@saleor/fragments/types/ShippingMethodTypeFragment";
+import {
+  PostalCodeRuleInclusionTypeEnum,
+  ShippingMethodTypeFragment
+} from "@saleor/graphql";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
 import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import { PostalCodeRuleInclusionTypeEnum } from "@saleor/types/globalTypes";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -23,12 +25,12 @@ import { FormattedMessage, useIntl } from "react-intl";
 export interface ShippingZonePostalCodesProps {
   disabled: boolean;
   initialExpanded?: boolean;
-  postalCodes: ShippingMethodTypeFragment_postalCodeRules[] | undefined;
+  postalCodes: ShippingMethodTypeFragment["postalCodeRules"] | undefined;
   onPostalCodeInclusionChange: (
     inclusion: PostalCodeRuleInclusionTypeEnum
   ) => void;
   onPostalCodeDelete: (
-    code: ShippingMethodTypeFragment_postalCodeRules
+    code: ShippingMethodTypeFragment["postalCodeRules"][0]
   ) => void;
   onPostalCodeRangeAdd: () => void;
 }
@@ -90,7 +92,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
   };
 
   const getPostalCodeRangeLabel = (
-    postalCodeRange: ShippingMethodTypeFragment_postalCodeRules
+    postalCodeRange: ShippingMethodTypeFragment["postalCodeRules"][0]
   ) => {
     if (!postalCodeRange?.start) {
       return <Skeleton />;

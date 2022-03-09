@@ -3,16 +3,20 @@ import CardMenu from "@saleor/components/CardMenu";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
-import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
+import { OrderListQuery, RefreshLimitsQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import { OrderListUrlSortField } from "@saleor/orders/urls";
-import { FilterPageProps, PageListProps, SortPage } from "@saleor/types";
+import {
+  FilterPageProps,
+  PageListProps,
+  RelayToFlat,
+  SortPage
+} from "@saleor/types";
 import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { OrderList_orders_edges_node } from "../../types/OrderList";
 import OrderLimitReached from "../OrderLimitReached";
 import OrderList from "../OrderList";
 import {
@@ -25,8 +29,8 @@ export interface OrderListPageProps
   extends PageListProps,
     FilterPageProps<OrderFilterKeys, OrderListFilterOpts>,
     SortPage<OrderListUrlSortField> {
-  limits: RefreshLimits_shop_limits;
-  orders: OrderList_orders_edges_node[];
+  limits: RefreshLimitsQuery["shop"]["limits"];
+  orders: RelayToFlat<OrderListQuery["orders"]>;
   onSettingsOpen: () => void;
 }
 

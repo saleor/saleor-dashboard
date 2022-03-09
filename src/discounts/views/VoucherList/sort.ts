@@ -1,5 +1,5 @@
 import { VoucherListUrlSortField } from "@saleor/discounts/urls";
-import { VoucherSortField } from "@saleor/types/globalTypes";
+import { VoucherSortField } from "@saleor/graphql";
 import { createGetSortQueryVariables } from "@saleor/utils/sort";
 
 export const DEFAULT_SORT_KEY = VoucherListUrlSortField.code;

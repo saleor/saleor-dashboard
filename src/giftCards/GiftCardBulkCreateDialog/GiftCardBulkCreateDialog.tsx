@@ -1,30 +1,31 @@
 import { Dialog, DialogTitle } from "@material-ui/core";
 import { IMessage } from "@saleor/components/messages";
+import {
+  GiftCardBulkCreateInput,
+  useChannelCurrenciesQuery,
+  useGiftCardBulkCreateMutation
+} from "@saleor/graphql";
 import useCurrentDate from "@saleor/hooks/useCurrentDate";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { DialogProps } from "@saleor/types";
-import { GiftCardBulkCreateInput } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import ContentWithProgress from "../GiftCardCreateDialog/ContentWithProgress";
 import GiftCardBulkCreateSuccessDialog from "../GiftCardCreateDialog/GiftCardBulkCreateSuccessDialog";
-import { useChannelCurrencies } from "../GiftCardCreateDialog/queries";
 import {
   getGiftCardCreateOnCompletedMessage,
   getGiftCardExpiryInputData
 } from "../GiftCardCreateDialog/utils";
-import { GIFT_CARD_LIST_QUERY } from "../GiftCardsList/types";
+import { GIFT_CARD_LIST_QUERY } from "../GiftCardsList/queries";
 import GiftCardBulkCreateDialogForm from "./GiftCardBulkCreateDialogForm";
 import { giftCardBulkCreateDialogMessages as messages } from "./messages";
-import { useGiftCardBulkCreateMutation } from "./mutations";
 import {
   giftCardBulkCreateErrorKeys,
   GiftCardBulkCreateFormData,
   GiftCardBulkCreateFormErrors
 } from "./types";
-import { GiftCardBulkCreate } from "./types/GiftCardBulkCreate";
 import { validateForm } from "./utils";
 
 const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
@@ -40,38 +41,7 @@ const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
 
   const onIssueSuccessDialogClose = () => setOpenIssueSuccessDialog(false);
 
-  const { loading: loadingChannelCurrencies } = useChannelCurrencies({});
-
-  const onCompleted = (data: GiftCardBulkCreate) => {
-    const errors = data?.giftCardBulkCreate?.errors;
-    const cardsAmount = data?.giftCardBulkCreate?.giftCards?.length || 0;
-
-    const giftCardsBulkIssueSuccessMessage: IMessage = {
-      status: "success",
-      title: intl.formatMessage(messages.createdSuccessAlertTitle),
-      text: intl.formatMessage(messages.createdSuccessAlertDescription, {
-        cardsAmount
-      })
-    };
-
-    notify(
-      getGiftCardCreateOnCompletedMessage(
-        errors,
-        intl,
-        giftCardsBulkIssueSuccessMessage
-      )
-    );
-
-    setFormErrors(getFormErrors(giftCardBulkCreateErrorKeys, errors));
-
-    if (!errors.length) {
-      setIssuedIds(
-        data?.giftCardBulkCreate?.giftCards?.map(giftCard => giftCard.id)
-      );
-      setOpenIssueSuccessDialog(true);
-      onClose();
-    }
-  };
+  const { loading: loadingChannelCurrencies } = useChannelCurrenciesQuery({});
 
   const currentDate = useCurrentDate();
 
@@ -102,7 +72,36 @@ const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
     bulkCreateGiftCard,
     bulkCreateGiftCardOpts
   ] = useGiftCardBulkCreateMutation({
-    onCompleted,
+    onCompleted: data => {
+      const errors = data?.giftCardBulkCreate?.errors;
+      const cardsAmount = data?.giftCardBulkCreate?.giftCards?.length || 0;
+
+      const giftCardsBulkIssueSuccessMessage: IMessage = {
+        status: "success",
+        title: intl.formatMessage(messages.createdSuccessAlertTitle),
+        text: intl.formatMessage(messages.createdSuccessAlertDescription, {
+          cardsAmount
+        })
+      };
+
+      notify(
+        getGiftCardCreateOnCompletedMessage(
+          errors,
+          intl,
+          giftCardsBulkIssueSuccessMessage
+        )
+      );
+
+      setFormErrors(getFormErrors(giftCardBulkCreateErrorKeys, errors));
+
+      if (!errors.length) {
+        setIssuedIds(
+          data?.giftCardBulkCreate?.giftCards?.map(giftCard => giftCard.id)
+        );
+        setOpenIssueSuccessDialog(true);
+        onClose();
+      }
+    },
     refetchQueries: [GIFT_CARD_LIST_QUERY]
   });
 

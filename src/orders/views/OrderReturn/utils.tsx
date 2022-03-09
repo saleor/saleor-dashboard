@@ -1,22 +1,21 @@
-/* eslint-disable @typescript-eslint/member-ordering */
+import {
+  OrderDetailsFragment,
+  OrderReturnFulfillmentLineInput,
+  OrderReturnLineInput,
+  OrderReturnProductsInput
+} from "@saleor/graphql";
 import { OrderRefundAmountCalculationMode } from "@saleor/orders/components/OrderRefundPage/form";
 import {
   FormsetQuantityData,
   OrderReturnFormData
 } from "@saleor/orders/components/OrderReturnPage/form";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
-import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
-import {
-  OrderReturnFulfillmentLineInput,
-  OrderReturnLineInput,
-  OrderReturnProductsInput
-} from "@saleor/types/globalTypes";
 
 class ReturnFormDataParser {
-  private order: OrderDetails_order;
+  private order: OrderDetailsFragment;
   private formData: OrderReturnFormData;
 
-  constructor(order: OrderDetails_order, formData: OrderReturnFormData) {
+  constructor(order: OrderDetailsFragment, formData: OrderReturnFormData) {
     this.order = order;
     this.formData = formData;
   }
@@ -101,6 +100,7 @@ class ReturnFormDataParser {
     );
   };
 
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   private static isLineRefundable = function<
     T extends OrderReturnLineInput | OrderReturnFulfillmentLineInput
   >({ replace }: T) {

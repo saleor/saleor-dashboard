@@ -1,5 +1,8 @@
-import { ChannelShippingZones_shippingZones_edges_node } from "@saleor/shipping/types/ChannelShippingZones";
+import { ChannelShippingZonesQuery } from "@saleor/graphql";
+import { RelayToFlat } from "@saleor/types";
 
-export type ChannelShippingZone = ChannelShippingZones_shippingZones_edges_node;
+export type ChannelShippingZones = RelayToFlat<
+  ChannelShippingZonesQuery["shippingZones"]
+>;
 
-export type ChannelShippingZones = ChannelShippingZone[];
+export type ChannelShippingZone = ChannelShippingZones[0];

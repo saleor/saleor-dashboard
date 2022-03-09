@@ -7,18 +7,17 @@ import Hr from "@saleor/components/Hr";
 import Money from "@saleor/components/Money";
 import Percent from "@saleor/components/Percent";
 import Skeleton from "@saleor/components/Skeleton";
+import { SaleDetailsFragment, SaleType } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { ChannelProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
-import { SaleType } from "../../../types/globalTypes";
-import { SaleDetails_sale } from "../../types/SaleDetails";
 import useStyles from "./styles";
 
 export interface SaleSummaryProps extends ChannelProps {
-  sale: SaleDetails_sale;
+  sale: SaleDetailsFragment;
 }
 
 const SaleSummary: React.FC<SaleSummaryProps> = ({

@@ -7,13 +7,13 @@ import {
 } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import { CountryListQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
-import { CountryList_shop_countries } from "../../types/CountryList";
 
 const useStyles = makeStyles(
   {
@@ -28,7 +28,7 @@ const useStyles = makeStyles(
 );
 
 interface CountryListProps {
-  countries: CountryList_shop_countries[];
+  countries: CountryListQuery["shop"]["countries"];
   onRowClick: (code: string) => void;
 }
 

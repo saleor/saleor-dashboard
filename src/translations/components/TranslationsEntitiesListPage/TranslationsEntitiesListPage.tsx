@@ -1,8 +1,8 @@
 import { Card } from "@material-ui/core";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
-import { ShopInfo_shop_languages } from "@saleor/components/Shop/types/ShopInfo";
 import FilterTabs, { FilterTab } from "@saleor/components/TableFilter";
+import { LanguageFragment } from "@saleor/graphql";
 import { Backlink } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import React from "react";
@@ -13,7 +13,7 @@ import { TranslatableEntities } from "../../urls";
 export interface TranslationsEntitiesListPageProps {
   children: React.ReactNode;
   filters: TranslationsEntitiesFilters;
-  language: ShopInfo_shop_languages;
+  language: LanguageFragment;
   onBack: () => void;
 }
 

@@ -1,21 +1,18 @@
-import { PluginConfigurationFragment_configuration } from "@saleor/fragments/types/PluginConfigurationFragment";
-
 import {
+  ConfigurationItemFragment,
   ConfigurationItemInput,
   ConfigurationTypeFieldEnum
-} from "../../types/globalTypes";
+} from "@saleor/graphql";
+
 import { getConfigurationInput } from "./PluginsDetails";
 
-const baseConfig: Omit<
-  PluginConfigurationFragment_configuration,
-  "name" | "type" | "value"
-> = {
+const baseConfig: Omit<ConfigurationItemFragment, "name" | "type" | "value"> = {
   __typename: "ConfigurationItem",
   helpText: "",
   label: ""
 };
 
-const config: PluginConfigurationFragment_configuration[] = [
+const config: ConfigurationItemFragment[] = [
   {
     ...baseConfig,
     name: "field-1",

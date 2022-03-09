@@ -1,9 +1,9 @@
+import { PermissionEnum } from "@saleor/graphql";
 import React from "react";
 import { Route, RouteProps } from "react-router-dom";
 
 import { useUser } from "..";
 import NotFound from "../../NotFound";
-import { PermissionEnum } from "../../types/globalTypes";
 import { hasAllPermissions, hasAnyPermissions } from "../misc";
 
 type MatchPermissionType = "all" | "any";

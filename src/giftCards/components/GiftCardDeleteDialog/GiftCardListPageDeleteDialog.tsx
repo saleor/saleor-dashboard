@@ -1,8 +1,7 @@
 import { ActionDialogProps } from "@saleor/components/ActionDialog";
-import useGiftCardListDialogs from "@saleor/giftCards/GiftCardsList/providers/GiftCardListDialogsProvider/hooks/useGiftCardListDialogs";
-import useGiftCardList from "@saleor/giftCards/GiftCardsList/providers/GiftCardListProvider/hooks/useGiftCardList";
-import useGiftCardListBulkActions from "@saleor/giftCards/GiftCardsList/providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
-import { GIFT_CARD_LIST_QUERY } from "@saleor/giftCards/GiftCardsList/types";
+import { useGiftCardListDialogs } from "@saleor/giftCards/GiftCardsList/providers/GiftCardListDialogsProvider";
+import { useGiftCardList } from "@saleor/giftCards/GiftCardsList/providers/GiftCardListProvider";
+import { GIFT_CARD_LIST_QUERY } from "@saleor/giftCards/GiftCardsList/queries";
 import { DialogProps } from "@saleor/types";
 import React from "react";
 
@@ -21,10 +20,8 @@ const GiftCardDeleteDialog: React.FC<GiftCardDeleteDialogProps> = ({
   onClose,
   refetchQueries = []
 }) => {
-  const giftCardBulkActionsProps = useGiftCardListBulkActions();
-  const { selectedItemsCount } = giftCardBulkActionsProps;
-
-  const { giftCards, loading } = useGiftCardList();
+  const listProps = useGiftCardList();
+  const { giftCards, loading, selectedItemsCount } = listProps;
 
   const { id } = useGiftCardListDialogs();
 
@@ -59,14 +56,14 @@ const GiftCardDeleteDialog: React.FC<GiftCardDeleteDialogProps> = ({
 
   return (
     <GiftCardDeleteDialogContent
+      {...listProps}
+      {...dialogProps}
       id={id}
       open={open}
       onClose={onClose}
       singleDeletion={singleDeletion}
       giftCards={giftCards}
       loading={loading}
-      {...giftCardBulkActionsProps}
-      {...dialogProps}
     />
   );
 };

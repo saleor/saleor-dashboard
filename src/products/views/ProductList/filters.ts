@@ -1,30 +1,27 @@
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
+import {
+  InitialProductFilterAttributesQuery,
+  InitialProductFilterCategoriesQuery,
+  InitialProductFilterCollectionsQuery,
+  InitialProductFilterProductTypesQuery,
+  ProductFilterInput,
+  SearchAttributeValuesQuery,
+  SearchAttributeValuesQueryVariables,
+  SearchCategoriesQuery,
+  SearchCategoriesQueryVariables,
+  SearchCollectionsQuery,
+  SearchCollectionsQueryVariables,
+  SearchProductTypesQuery,
+  SearchProductTypesQueryVariables,
+  StockAvailability
+} from "@saleor/graphql";
 import { UseSearchResult } from "@saleor/hooks/makeSearch";
 import { findValueInEnum, maybe } from "@saleor/misc";
 import {
   ProductFilterKeys,
   ProductListFilterOpts
 } from "@saleor/products/components/ProductListPage";
-import { InitialProductFilterAttributes_attributes_edges_node } from "@saleor/products/types/InitialProductFilterAttributes";
-import { InitialProductFilterCategories_categories_edges_node } from "@saleor/products/types/InitialProductFilterCategories";
-import { InitialProductFilterCollections_collections_edges_node } from "@saleor/products/types/InitialProductFilterCollections";
-import { InitialProductFilterProductTypes_productTypes_edges_node } from "@saleor/products/types/InitialProductFilterProductTypes";
-import {
-  SearchAttributeValues,
-  SearchAttributeValuesVariables
-} from "@saleor/searches/types/SearchAttributeValues";
-import {
-  SearchCategories,
-  SearchCategoriesVariables
-} from "@saleor/searches/types/SearchCategories";
-import {
-  SearchCollections,
-  SearchCollectionsVariables
-} from "@saleor/searches/types/SearchCollections";
-import {
-  SearchProductTypes,
-  SearchProductTypesVariables
-} from "@saleor/searches/types/SearchProductTypes";
+import { RelayToFlat } from "@saleor/types";
 import {
   mapEdgesToItems,
   mapNodeToChoice,
@@ -34,10 +31,6 @@ import isArray from "lodash/isArray";
 import moment from "moment-timezone";
 
 import { IFilterElement } from "../../../components/Filter";
-import {
-  ProductFilterInput,
-  StockAvailability
-} from "../../../types/globalTypes";
 import {
   createFilterTabUtils,
   createFilterUtils,
@@ -61,22 +54,31 @@ export const PRODUCT_FILTERS_KEY = "productFilters";
 
 export function getFilterOpts(
   params: ProductListUrlFilters,
-  attributes: InitialProductFilterAttributes_attributes_edges_node[],
+  attributes: RelayToFlat<InitialProductFilterAttributesQuery["attributes"]>,
   focusedAttributeChoices: UseSearchResult<
-    SearchAttributeValues,
-    SearchAttributeValuesVariables
+    SearchAttributeValuesQuery,
+    SearchAttributeValuesQueryVariables
   >,
   categories: {
-    initial: InitialProductFilterCategories_categories_edges_node[];
-    search: UseSearchResult<SearchCategories, SearchCategoriesVariables>;
+    initial: RelayToFlat<InitialProductFilterCategoriesQuery["categories"]>;
+    search: UseSearchResult<
+      SearchCategoriesQuery,
+      SearchCategoriesQueryVariables
+    >;
   },
   collections: {
-    initial: InitialProductFilterCollections_collections_edges_node[];
-    search: UseSearchResult<SearchCollections, SearchCollectionsVariables>;
+    initial: RelayToFlat<InitialProductFilterCollectionsQuery["collections"]>;
+    search: UseSearchResult<
+      SearchCollectionsQuery,
+      SearchCollectionsQueryVariables
+    >;
   },
   productTypes: {
-    initial: InitialProductFilterProductTypes_productTypes_edges_node[];
-    search: UseSearchResult<SearchProductTypes, SearchProductTypesVariables>;
+    initial: RelayToFlat<InitialProductFilterProductTypesQuery["productTypes"]>;
+    search: UseSearchResult<
+      SearchProductTypesQuery,
+      SearchProductTypesQueryVariables
+    >;
   },
   productKind: SingleAutocompleteChoiceType[],
   channels: SingleAutocompleteChoiceType[]

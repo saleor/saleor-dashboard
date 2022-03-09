@@ -1,10 +1,8 @@
-/* eslint-disable sort-keys */
-
 import * as placeholderImage from "@assets/images/sample-product.jpg";
-import { OrderFulfillData_order } from "@saleor/orders/types/OrderFulfillData";
+import { OrderFulfillDataQuery } from "@saleor/graphql";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 
-export const orderToFulfill: OrderFulfillData_order = {
+export const orderToFulfill: OrderFulfillDataQuery["order"] = {
   __typename: "Order",
   id: "T3JkZXI6Mg==",
   isPaid: true,

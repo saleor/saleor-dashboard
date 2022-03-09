@@ -1,6 +1,12 @@
 import { MetadataFormData } from "@saleor/components/Metadata";
-import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
 import { giftCardUpdateFormMessages } from "@saleor/giftCards/GiftCardsList/messages";
+import {
+  GiftCardErrorFragment,
+  GiftCardUpdateMutation,
+  useGiftCardUpdateMutation,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation
+} from "@saleor/graphql";
 import { MutationResultWithOpts } from "@saleor/hooks/makeMutation";
 import useForm, { FormChange, UseFormResult } from "@saleor/hooks/useForm";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
@@ -10,10 +16,6 @@ import { getFormErrors } from "@saleor/utils/errors";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import difference from "lodash/difference";
 import React, { createContext } from "react";
@@ -23,8 +25,6 @@ import {
   GiftCardCreateFormData,
   initialData as emptyFormData
 } from "../../../GiftCardCreateDialog/GiftCardCreateDialogForm";
-import { useGiftCardUpdateMutation } from "../../mutations";
-import { GiftCardUpdate } from "../../types/GiftCardUpdate";
 import useGiftCardDetails from "../GiftCardDetailsProvider/hooks/useGiftCardDetails";
 
 interface GiftCardUpdateFormProviderProps {
@@ -36,11 +36,11 @@ export type GiftCardUpdateFormData = MetadataFormData &
 
 export interface GiftCardUpdateFormConsumerData
   extends GiftCardUpdateFormErrors {
-  opts: MutationResultWithOpts<GiftCardUpdate>;
+  opts: MutationResultWithOpts<GiftCardUpdateMutation>;
 }
 
 export interface GiftCardUpdateFormErrors {
-  formErrors: Record<"tags" | "expiryDate", GiftCardError>;
+  formErrors: Record<"tags" | "expiryDate", GiftCardErrorFragment>;
   handlers: { changeMetadata: FormChange };
 }
 
@@ -71,8 +71,8 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
 }) => {
   const notify = useNotifier();
   const intl = useIntl();
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   const { loading: loadingGiftCard, giftCard } = useGiftCardDetails();
 
@@ -91,27 +91,25 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
     };
   };
 
-  const onSubmit = (data: GiftCardUpdate) => {
-    const errors = data.giftCardUpdate.errors;
-    const hasExpiryError = errors.some(error => error.field === "expiryDate");
-
-    notify(
-      hasExpiryError
-        ? {
-            title: intl.formatMessage(
-              giftCardUpdateFormMessages.giftCardInvalidExpiryDateHeader
-            ),
-            text: intl.formatMessage(
-              giftCardUpdateFormMessages.giftCardInvalidExpiryDateContent
-            ),
-            status: "error"
-          }
-        : getDefaultNotifierSuccessErrorData(errors, intl)
-    );
-  };
-
   const [updateGiftCard, updateGiftCardOpts] = useGiftCardUpdateMutation({
-    onCompleted: onSubmit
+    onCompleted: data => {
+      const errors = data.giftCardUpdate.errors;
+      const hasExpiryError = errors.some(error => error.field === "expiryDate");
+
+      notify(
+        hasExpiryError
+          ? {
+              title: intl.formatMessage(
+                giftCardUpdateFormMessages.giftCardInvalidExpiryDateHeader
+              ),
+              text: intl.formatMessage(
+                giftCardUpdateFormMessages.giftCardInvalidExpiryDateContent
+              ),
+              status: "error"
+            }
+          : getDefaultNotifierSuccessErrorData(errors, intl)
+      );
+    }
   });
 
   const submit = async ({ tags, expiryDate }: GiftCardUpdateFormData) => {

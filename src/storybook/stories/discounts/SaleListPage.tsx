@@ -1,8 +1,5 @@
 import { SaleListUrlSortField } from "@saleor/discounts/urls";
-import {
-  DiscountStatusEnum,
-  DiscountValueTypeEnum
-} from "@saleor/types/globalTypes";
+import { DiscountStatusEnum, DiscountValueTypeEnum } from "@saleor/graphql";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

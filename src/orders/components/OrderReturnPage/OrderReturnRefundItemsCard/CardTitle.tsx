@@ -1,13 +1,11 @@
 import { Typography } from "@material-ui/core";
 import DefaultCardTitle from "@saleor/components/CardTitle";
+import { FulfillmentStatus } from "@saleor/graphql";
 import { makeStyles, Pill } from "@saleor/macaw-ui";
 import { StatusType } from "@saleor/types";
-import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import camelCase from "lodash/camelCase";
 import React from "react";
-import { FormattedMessage } from "react-intl";
-import { defineMessages } from "react-intl";
-import { useIntl } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
