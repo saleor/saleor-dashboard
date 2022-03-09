@@ -1,14 +1,13 @@
-import { BaseChannels_channels } from "@saleor/channels/types/BaseChannels";
 import CardSpacer from "@saleor/components/CardSpacer";
 import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType
 } from "@saleor/components/MultiAutocompleteSelectField";
+import { ChannelFragment } from "@saleor/graphql";
 import { useChannelsSearch } from "@saleor/hooks/useChannelsSearch";
 import { FormChange } from "@saleor/hooks/useForm";
 import { mapNodeToChoice } from "@saleor/utils/maps";
 import React from "react";
-import { useIntl } from "react-intl";
-import { defineMessages, FormattedMessage } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 const messages = defineMessages({
   subtitle: {
@@ -30,7 +29,7 @@ const messages = defineMessages({
 interface ChannelsSectionProps {
   onChange: FormChange;
   selectedChannels: string[];
-  allChannels?: BaseChannels_channels[];
+  allChannels?: ChannelFragment[];
   channelsDisplayValues: MultiAutocompleteChoiceType[];
 }
 

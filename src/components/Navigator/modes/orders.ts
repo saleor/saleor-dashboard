@@ -1,9 +1,9 @@
+import { CheckIfOrderExistsQuery } from "@saleor/graphql";
 import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
 import { maybe, transformOrderStatus } from "@saleor/misc";
 import { orderUrl } from "@saleor/orders/urls";
 import { IntlShape } from "react-intl";
 
-import { CheckIfOrderExists_order } from "../queries/types/CheckIfOrderExists";
 import { QuickSearchAction } from "../types";
 import messages from "./messages";
 
@@ -19,7 +19,7 @@ function getOrdersModeActions(
   query: string,
   intl: IntlShape,
   navigate: UseNavigatorResult,
-  order: CheckIfOrderExists_order
+  order: CheckIfOrderExistsQuery["order"]
 ): QuickSearchAction[] {
   const gqlId = getGqlOrderId(query);
 

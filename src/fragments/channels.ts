@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const channelErrorFragment = gql`
-  fragment ChannelErrorFragment on ChannelError {
+  fragment ChannelError on ChannelError {
     code
     field
     message
@@ -9,7 +9,7 @@ export const channelErrorFragment = gql`
 `;
 
 export const channelFragment = gql`
-  fragment ChannelFragment on Channel {
+  fragment Channel on Channel {
     id
     isActive
     name
@@ -23,9 +23,8 @@ export const channelFragment = gql`
 `;
 
 export const channelDetailsFragment = gql`
-  ${channelFragment}
-  fragment ChannelDetailsFragment on Channel {
-    ...ChannelFragment
+  fragment ChannelDetails on Channel {
+    ...Channel
     hasOrders
   }
 `;

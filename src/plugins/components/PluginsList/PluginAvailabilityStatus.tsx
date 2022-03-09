@@ -1,15 +1,17 @@
+import { PluginBaseFragment } from "@saleor/graphql";
 import { Pill } from "@saleor/macaw-ui";
-import { Plugins_plugins_edges_node } from "@saleor/plugins/types/Plugins";
 import { isPluginGlobal } from "@saleor/plugins/views/utils";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { pluginStatusMessages } from "./messages";
-import { pluginAvailabilityStatusMessages as messages } from "./messages";
+import {
+  pluginAvailabilityStatusMessages as messages,
+  pluginStatusMessages
+} from "./messages";
 import { getActiveChannelConfigsCount } from "./utils";
 
 interface PluginAvailabilityStatusProps {
-  plugin: Plugins_plugins_edges_node;
+  plugin: PluginBaseFragment;
 }
 
 const PluginAvailabilityStatus: React.FC<PluginAvailabilityStatusProps> = ({

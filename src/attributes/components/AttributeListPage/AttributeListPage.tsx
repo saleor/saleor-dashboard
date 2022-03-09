@@ -1,6 +1,7 @@
 import { Card } from "@material-ui/core";
 import { AttributeListUrlSortField } from "@saleor/attributes/urls";
 import FilterBar from "@saleor/components/FilterBar";
+import { AttributeFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, Button } from "@saleor/macaw-ui";
 import React from "react";
@@ -15,7 +16,6 @@ import {
   SortPage,
   TabPageProps
 } from "../../../types";
-import { AttributeList_attributes_edges_node } from "../../types/AttributeList";
 import AttributeList from "../AttributeList/AttributeList";
 import {
   AttributeFilterKeys,
@@ -29,7 +29,7 @@ export interface AttributeListPageProps
     FilterPageProps<AttributeFilterKeys, AttributeListFilterOpts>,
     SortPage<AttributeListUrlSortField>,
     TabPageProps {
-  attributes: AttributeList_attributes_edges_node[];
+  attributes: AttributeFragment[];
   onBack: () => void;
 }
 

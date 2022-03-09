@@ -1,6 +1,5 @@
-import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
+import { GiftCardErrorFragment, TimePeriodTypeEnum } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
-import { TimePeriodTypeEnum } from "@saleor/types/globalTypes";
 
 import { GiftCardExpiryType } from "../GiftCardCreateDialog/types";
 
@@ -27,7 +26,10 @@ export interface GiftCardBulkCreateFormData
   cardsAmount: number;
 }
 
-export type GiftCardBulkCreateFormError = Pick<GiftCardError, "code" | "field">;
+export type GiftCardBulkCreateFormError = Pick<
+  GiftCardErrorFragment,
+  "code" | "field"
+>;
 
 export type GiftCardBulkCreateFormErrors = Partial<
   Record<GiftCardErrorKey, GiftCardBulkCreateFormError>

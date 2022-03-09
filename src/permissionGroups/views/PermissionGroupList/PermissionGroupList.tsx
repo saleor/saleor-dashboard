@@ -1,5 +1,9 @@
 import { configurationMenuUrl } from "@saleor/configuration";
-import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
+import {
+  PermissionGroupErrorFragment,
+  usePermissionGroupDeleteMutation,
+  usePermissionGroupListQuery
+} from "@saleor/graphql";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -9,9 +13,6 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import PermissionGroupDeleteDialog from "@saleor/permissionGroups/components/PermissionGroupDeleteDialog";
-import { usePermissionGroupDelete } from "@saleor/permissionGroups/mutations";
-import { usePermissionGroupListQuery } from "@saleor/permissionGroups/queries";
-import { PermissionGroupDelete } from "@saleor/permissionGroups/types/PermissionGroupDelete";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
@@ -82,24 +83,22 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
     PermissionGroupErrorFragment
   >();
 
-  const handleDeleteSuccess = (data: PermissionGroupDelete) => {
-    if (data.permissionGroupDelete.errors.length === 0) {
-      notify({
-        status: "success",
-        text: intl.formatMessage({
-          defaultMessage: "Permission Group Deleted"
-        })
-      });
-      refetch();
-      setDeleteError(undefined);
-      closeModal();
-    } else {
-      setDeleteError(data.permissionGroupDelete.errors[0]);
+  const [permissionGroupDelete] = usePermissionGroupDeleteMutation({
+    onCompleted: data => {
+      if (data.permissionGroupDelete.errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage({
+            defaultMessage: "Permission Group Deleted"
+          })
+        });
+        refetch();
+        setDeleteError(undefined);
+        closeModal();
+      } else {
+        setDeleteError(data.permissionGroupDelete.errors[0]);
+      }
     }
-  };
-
-  const [permissionGroupDelete] = usePermissionGroupDelete({
-    onCompleted: handleDeleteSuccess
   });
 
   return (

@@ -3,13 +3,14 @@ import { Container } from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
-import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
+import { RefreshLimitsQuery, StaffListQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, Button } from "@saleor/macaw-ui";
 import { StaffListUrlSortField } from "@saleor/staff/urls";
 import {
   FilterPageProps,
   ListProps,
+  RelayToFlat,
   SortPage,
   TabPageProps
 } from "@saleor/types";
@@ -17,7 +18,6 @@ import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { StaffList_staffUsers_edges_node } from "../../types/StaffList";
 import StaffList from "../StaffList/StaffList";
 import {
   createFilterStructure,
@@ -30,8 +30,8 @@ export interface StaffListPageProps
     FilterPageProps<StaffFilterKeys, StaffListFilterOpts>,
     SortPage<StaffListUrlSortField>,
     TabPageProps {
-  limits: RefreshLimits_shop_limits;
-  staffMembers: StaffList_staffUsers_edges_node[];
+  limits: RefreshLimitsQuery["shop"]["limits"];
+  staffMembers: RelayToFlat<StaffListQuery["staffUsers"]>;
   onAdd: () => void;
   onBack: () => void;
 }

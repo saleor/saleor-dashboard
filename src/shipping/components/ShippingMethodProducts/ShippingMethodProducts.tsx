@@ -13,10 +13,10 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import { ShippingZoneQuery } from "@saleor/graphql";
 import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import { ShippingZone_shippingZone_shippingMethods_excludedProducts_edges_node } from "@saleor/shipping/types/ShippingZone";
-import { ListActions, ListProps } from "@saleor/types";
+import { ListActions, ListProps, RelayToFlat } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -45,7 +45,9 @@ const useStyles = makeStyles(
 export interface ShippingMethodProductsProps
   extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">>,
     ListActions {
-  products: ShippingZone_shippingZone_shippingMethods_excludedProducts_edges_node[];
+  products: RelayToFlat<
+    ShippingZoneQuery["shippingZone"]["shippingMethods"][0]["excludedProducts"]
+  >;
   onProductAssign: () => void;
   onProductUnassign: (ids: string[]) => void;
 }

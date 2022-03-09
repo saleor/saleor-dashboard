@@ -1,11 +1,11 @@
+import { StaffMemberFragment } from "@saleor/graphql";
 import { getUserName } from "@saleor/misc";
 
-import { PermissionGroupDetails_permissionGroup_users } from "./types/PermissionGroupDetails";
 import { MembersListUrlSortField } from "./urls";
 
 export const sortMembers = (sort: string, asc: boolean) => (
-  a: PermissionGroupDetails_permissionGroup_users,
-  b: PermissionGroupDetails_permissionGroup_users
+  a: StaffMemberFragment,
+  b: StaffMemberFragment
 ) => {
   let valueA;
   let valueB;

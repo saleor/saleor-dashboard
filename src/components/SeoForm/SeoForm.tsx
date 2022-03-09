@@ -1,7 +1,9 @@
 import { Card, CardContent, TextField, Typography } from "@material-ui/core";
-import { CollectionErrorFragment } from "@saleor/fragments/types/CollectionErrorFragment";
-import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
-import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
+import {
+  CollectionErrorFragment,
+  PageErrorFragment,
+  ProductErrorFragment
+} from "@saleor/graphql";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import { getFieldError, getProductErrorMessage } from "@saleor/utils/errors";
 import getPageErrorMessage from "@saleor/utils/errors/page";

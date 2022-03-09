@@ -10,6 +10,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
+import { StaffListQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import {
   getUserInitials,
@@ -18,13 +19,11 @@ import {
   renderCollection
 } from "@saleor/misc";
 import { StaffListUrlSortField } from "@saleor/staff/urls";
-import { ListProps, SortPage } from "@saleor/types";
+import { ListProps, RelayToFlat, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { StaffList_staffUsers_edges_node } from "../../types/StaffList";
 
 const useStyles = makeStyles(
   theme => ({
@@ -70,7 +69,7 @@ const useStyles = makeStyles(
 );
 
 interface StaffListProps extends ListProps, SortPage<StaffListUrlSortField> {
-  staffMembers: StaffList_staffUsers_edges_node[];
+  staffMembers: RelayToFlat<StaffListQuery["staffUsers"]>;
 }
 
 const numberOfColumns = 2;

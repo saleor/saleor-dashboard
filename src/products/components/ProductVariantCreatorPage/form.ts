@@ -1,9 +1,10 @@
 import { ChannelPriceData } from "@saleor/channels/utils";
-import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
-import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
-import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
-
-import { ProductVariantBulkCreateInput } from "../../../types/globalTypes";
+import {
+  AttributeValueFragment,
+  ProductVariantAttributesFragment,
+  ProductVariantBulkCreateInput,
+  WarehouseFragment
+} from "@saleor/graphql";
 
 export interface ChannelPrice {
   channelId: string;
@@ -41,7 +42,7 @@ export interface ProductVariantCreateFormData {
 }
 
 export const createInitialForm = (
-  attributes: ProductDetails_product_productType_variantAttributes[],
+  attributes: ProductVariantAttributesFragment["productType"]["variantAttributes"],
   channels: ChannelPriceData[],
   warehouses: WarehouseFragment[]
 ): ProductVariantCreateFormData => {

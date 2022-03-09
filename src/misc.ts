@@ -1,4 +1,11 @@
 import { FetchResult, MutationFunction, MutationResult } from "@apollo/client";
+import {
+  AddressInput,
+  CountryCode,
+  DateRangeInput,
+  OrderStatus,
+  PaymentChargeStatusEnum
+} from "@saleor/graphql";
 import { ConfirmButtonTransitionState, ThemeType } from "@saleor/macaw-ui";
 import uniqBy from "lodash/uniqBy";
 import moment from "moment-timezone";
@@ -6,26 +13,19 @@ import { IntlShape } from "react-intl";
 
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
 import { AddressType, AddressTypeInput } from "./customers/types";
+import { AddressFragment } from "./graphql";
 import {
   commonStatusMessages,
   errorMessages,
   orderStatusMessages,
   paymentStatusMessages
 } from "./intl";
-import { OrderDetails_order_shippingAddress } from "./orders/types/OrderDetails";
 import {
   MutationResultAdditionalProps,
   PartialMutationProviderOutput,
   StatusType,
   UserError
 } from "./types";
-import {
-  AddressInput,
-  CountryCode,
-  DateRangeInput,
-  OrderStatus,
-  PaymentChargeStatusEnum
-} from "./types/globalTypes";
 
 export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<
   T,
@@ -398,7 +398,7 @@ export function findInEnum<TEnum extends {}>(needle: string, haystack: TEnum) {
 }
 
 export function addressToAddressInput<T>(
-  address: T & OrderDetails_order_shippingAddress
+  address: T & AddressFragment
 ): AddressInput {
   const { id, __typename, ...rest } = address;
   return {

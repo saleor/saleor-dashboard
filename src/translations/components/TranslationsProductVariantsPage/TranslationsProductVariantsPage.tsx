@@ -2,7 +2,10 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
-import { ProductVariantTranslationFragment } from "@saleor/fragments/types/ProductVariantTranslationFragment";
+import {
+  LanguageCodeEnum,
+  ProductVariantTranslationFragment
+} from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
@@ -13,7 +16,6 @@ import {
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { LanguageCodeEnum } from "../../../types/globalTypes";
 import ProductContextSwitcher from "../ProductContextSwitcher";
 import TranslationFields from "../TranslationFields";
 

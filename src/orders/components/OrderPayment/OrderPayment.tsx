@@ -4,17 +4,17 @@ import CardTitle from "@saleor/components/CardTitle";
 import { Hr } from "@saleor/components/Hr";
 import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
+import {
+  OrderAction,
+  OrderDetailsFragment,
+  OrderDiscountType,
+  OrderStatus
+} from "@saleor/graphql";
 import { Button, makeStyles, Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, transformPaymentStatus } from "../../../misc";
-import {
-  OrderAction,
-  OrderDiscountType,
-  OrderStatus
-} from "../../../types/globalTypes";
-import { OrderDetails_order } from "../../types/OrderDetails";
 import { orderPaymentMessages, paymentButtonMessages } from "./messages";
 import {
   extractOrderGiftCardUsedAmount,
@@ -47,7 +47,7 @@ const useStyles = makeStyles(
 );
 
 interface OrderPaymentProps {
-  order: OrderDetails_order;
+  order: OrderDetailsFragment;
   onCapture: () => void;
   onMarkAsPaid: () => void;
   onRefund: () => void;

@@ -1,5 +1,5 @@
+import { ShippingErrorCode } from "@saleor/graphql";
 import Decorator from "@saleor/storybook//Decorator";
-import { ShippingErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

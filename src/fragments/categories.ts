@@ -1,9 +1,7 @@
 import { gql } from "@apollo/client";
 
-import { metadataFragment } from "./metadata";
-
 export const categoryFragment = gql`
-  fragment CategoryFragment on Category {
+  fragment Category on Category {
     id
     name
     children {
@@ -15,10 +13,9 @@ export const categoryFragment = gql`
   }
 `;
 export const categoryDetailsFragment = gql`
-  ${metadataFragment}
-  fragment CategoryDetailsFragment on Category {
+  fragment CategoryDetails on Category {
     id
-    ...MetadataFragment
+    ...Metadata
     backgroundImage {
       alt
       url

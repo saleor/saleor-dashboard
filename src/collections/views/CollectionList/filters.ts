@@ -4,11 +4,8 @@ import {
 } from "@saleor/collections/components/CollectionListPage";
 import { IFilterElement } from "@saleor/components/Filter";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
+import { CollectionFilterInput, CollectionPublished } from "@saleor/graphql";
 import { findValueInEnum, maybe } from "@saleor/misc";
-import {
-  CollectionFilterInput,
-  CollectionPublished
-} from "@saleor/types/globalTypes";
 
 import {
   createFilterTabUtils,

@@ -8,24 +8,26 @@ import { ChannelPriceData } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
 import PriceField from "@saleor/components/PriceField";
-import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
+import {
+  BulkProductErrorFragment,
+  ProductFragment,
+  ProductVariantBulkCreateInput,
+  WarehouseFragment
+} from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
-import { ProductVariantBulkCreateInput } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import { getBulkProductErrorMessage } from "@saleor/utils/errors/product";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ProductDetails_product_productType_variantAttributes } from "../../types/ProductDetails";
 import { Attribute, ChannelPrice, ProductVariantCreateFormData } from "./form";
 
 export interface ProductVariantCreatorSummaryProps {
-  attributes: ProductDetails_product_productType_variantAttributes[];
+  attributes: ProductFragment["productType"]["variantAttributes"];
   channelListings: ChannelPriceData[];
   data: ProductVariantCreateFormData;
-  errors: ProductVariantBulkCreate_productVariantBulkCreate_errors[];
+  errors: BulkProductErrorFragment[];
   warehouses: WarehouseFragment[];
   onVariantSkuChange: (variantIndex: number, value: string) => void;
   onVariantStockDataChange: (

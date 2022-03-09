@@ -5,6 +5,7 @@ import { GiftCardBulkCreateFormError } from "@saleor/giftCards/GiftCardBulkCreat
 import { getGiftCardErrorMessage } from "@saleor/giftCards/GiftCardUpdate/messages";
 import { FormChange } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
+import useGiftCardTagsSearch from "@saleor/searches/useGiftCardTagsSearch";
 import { mapEdgesToItems, mapMultiValueNodeToChoice } from "@saleor/utils/maps";
 import compact from "lodash/compact";
 import uniq from "lodash/uniq";
@@ -12,7 +13,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { giftCardTagInputMessages as messages } from "./messages";
-import useGiftCardTagsSearch from "./useGiftCardTagsSearch";
 import { getMultiChoices } from "./utils";
 
 interface GiftCardTagInputProps

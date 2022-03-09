@@ -1,7 +1,10 @@
 import photoIcon from "@assets/images/photo-icon.svg";
 import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
-import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
+import {
+  StaffErrorFragment,
+  StaffMemberDetailsFragment
+} from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
@@ -11,7 +14,6 @@ import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getUserInitials } from "../../../misc";
-import { StaffMemberDetails_user } from "../../types/StaffMemberDetails";
 
 const useStyles = makeStyles(
   theme => ({
@@ -103,7 +105,7 @@ interface StaffPropertiesProps {
   };
   errors: StaffErrorFragment[];
   disabled: boolean;
-  staffMember: StaffMemberDetails_user;
+  staffMember: StaffMemberDetailsFragment;
   onChange: (event: React.ChangeEvent<any>) => void;
   onImageDelete: () => void;
   onImageUpload: (file: File) => void;

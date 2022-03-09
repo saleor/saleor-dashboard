@@ -1,10 +1,10 @@
 import { IFilterElement } from "@saleor/components/Filter";
+import { StaffMemberStatus, StaffUserInput } from "@saleor/graphql";
 import { findValueInEnum, maybe } from "@saleor/misc";
 import {
   StaffFilterKeys,
   StaffListFilterOpts
 } from "@saleor/staff/components/StaffListPage";
-import { StaffMemberStatus, StaffUserInput } from "@saleor/types/globalTypes";
 
 import {
   createFilterTabUtils,

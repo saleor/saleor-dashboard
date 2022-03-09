@@ -2,7 +2,7 @@ import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
   MeasurementUnitsEnum
-} from "@saleor/types/globalTypes";
+} from "@saleor/graphql";
 
 import { AttributeInput } from "./Attributes";
 

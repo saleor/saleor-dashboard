@@ -5,9 +5,9 @@ import {
 } from "@saleor/discounts/components/SaleDetailsPage";
 import { VoucherDetailsPageFormData } from "@saleor/discounts/components/VoucherDetailsPage";
 import { DiscountTypeEnum, RequirementsPicker } from "@saleor/discounts/types";
+import { SaleType, VoucherTypeEnum } from "@saleor/graphql";
 import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import { RequireOnlyOne } from "@saleor/misc";
-import { SaleType, VoucherTypeEnum } from "@saleor/types/globalTypes";
 import { arrayDiff } from "@saleor/utils/arrays";
 
 export interface ChannelArgs {

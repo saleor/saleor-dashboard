@@ -11,6 +11,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import { PageFragment } from "@saleor/graphql";
 import { makeStyles, Pill } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
 import { PageListUrlSortField } from "@saleor/pages/urls";
@@ -19,13 +20,11 @@ import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { PageList_pages_edges_node } from "../../types/PageList";
-
 export interface PageListProps
   extends ListProps,
     ListActions,
     SortPage<PageListUrlSortField> {
-  pages: PageList_pages_edges_node[];
+  pages: PageFragment[];
 }
 
 const useStyles = makeStyles(

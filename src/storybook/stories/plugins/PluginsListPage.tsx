@@ -1,5 +1,5 @@
+import { PluginConfigurationType } from "@saleor/graphql";
 import { PluginListUrlSortField } from "@saleor/plugins/urls";
-import { PluginConfigurationType } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

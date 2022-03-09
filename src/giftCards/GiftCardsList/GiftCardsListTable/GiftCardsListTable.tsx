@@ -20,16 +20,14 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import { PillLink } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { productUrl } from "@saleor/products/urls";
-import React from "react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link as RouterLink } from "react-router-dom";
 
 import GiftCardListSearchAndFilters from "../GiftCardListSearchAndFilters";
 import { giftCardsListTableMessages as messages } from "../messages";
-import useGiftCardListDialogs from "../providers/GiftCardListDialogsProvider/hooks/useGiftCardListDialogs";
-import useGiftCardList from "../providers/GiftCardListProvider/hooks/useGiftCardList";
-import useGiftCardListBulkActions from "../providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
+import { useGiftCardListDialogs } from "../providers/GiftCardListDialogsProvider";
+import { useGiftCardList } from "../providers/GiftCardListProvider";
 import { canBeSorted } from "../sort";
 import { useTableStyles as useStyles } from "../styles";
 import { GiftCardUrlSortField } from "../types";
@@ -42,8 +40,13 @@ const GiftCardsListTable: React.FC = () => {
   const classes = useStyles({});
   const navigate = useNavigator();
 
-  const { giftCards, numberOfColumns, params } = useGiftCardList();
-  const { toggle, isSelected } = useGiftCardListBulkActions();
+  const {
+    toggle,
+    isSelected,
+    giftCards,
+    numberOfColumns,
+    params
+  } = useGiftCardList();
   const { openDeleteDialog } = useGiftCardListDialogs();
 
   const isCurrencySelected = !!params.currency;

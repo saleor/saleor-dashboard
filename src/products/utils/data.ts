@@ -10,23 +10,22 @@ import {
 } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
-import { SelectedVariantAttributeFragment } from "@saleor/fragments/types/SelectedVariantAttributeFragment";
-import { VariantAttributeFragment } from "@saleor/fragments/types/VariantAttributeFragment";
+import {
+  ProductDetailsVariantFragment,
+  ProductFragment,
+  ProductTypeQuery,
+  ProductVariantCreateDataQuery,
+  ProductVariantFragment,
+  SelectedVariantAttributeFragment,
+  StockInput,
+  VariantAttributeFragment
+} from "@saleor/graphql";
 import { FormsetAtomicData } from "@saleor/hooks/useFormset";
 import { maybe } from "@saleor/misc";
-import {
-  ProductDetails_product,
-  ProductDetails_product_collections,
-  ProductDetails_product_variants
-} from "@saleor/products/types/ProductDetails";
-import { StockInput } from "@saleor/types/globalTypes";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import moment from "moment";
 
 import { ProductStockInput } from "../components/ProductStocks";
-import { ProductType_productType_productAttributes } from "../types/ProductType";
-import { ProductVariantCreateData_product } from "../types/ProductVariantCreateData";
 import { ChannelsWithVariantsData } from "../views/ProductUpdate/types";
 
 export interface Collection {
@@ -43,11 +42,11 @@ export interface ProductType {
   hasVariants: boolean;
   id: string;
   name: string;
-  productAttributes: ProductType_productType_productAttributes[];
+  productAttributes: ProductTypeQuery["productType"]["productAttributes"];
 }
 
 export function getAttributeInputFromProduct(
-  product: ProductDetails_product
+  product: ProductFragment
 ): AttributeInput[] {
   return (
     product?.attributes?.map(attribute => ({
@@ -123,7 +122,7 @@ export function getAttributeInputFromSelectedAttributes(
 }
 
 export function getAttributeInputFromVariant(
-  variant: ProductVariant
+  variant: ProductVariantFragment
 ): AttributeInput[] {
   const selectionAttributeInput = getAttributeInputFromSelectedAttributes(
     variant?.selectionAttributes,
@@ -140,7 +139,7 @@ export function getAttributeInputFromVariant(
 }
 
 export function getVariantAttributeInputFromProduct(
-  product: ProductVariantCreateData_product
+  product: ProductVariantCreateDataQuery["product"]
 ): AttributeInput[] {
   const selectionAttributeInput = getAttributeInputFromAttributes(
     product?.productType?.selectionVariantAttributes,
@@ -158,7 +157,7 @@ export function getVariantAttributeInputFromProduct(
 }
 
 export function getStockInputFromVariant(
-  variant: ProductVariant
+  variant: ProductVariantFragment
 ): ProductStockInput[] {
   return (
     variant?.stocks.map(stock => ({
@@ -173,7 +172,7 @@ export function getStockInputFromVariant(
 }
 
 export function getStockInputFromProduct(
-  product: ProductDetails_product
+  product: ProductFragment
 ): ProductStockInput[] {
   return product?.variants[0]?.stocks.map(stock => ({
     data: {
@@ -186,7 +185,7 @@ export function getStockInputFromProduct(
 }
 
 export function getCollectionInput(
-  productCollections: ProductDetails_product_collections[]
+  productCollections: ProductFragment["collections"]
 ): Collection[] {
   return maybe(
     () =>
@@ -235,8 +234,8 @@ export interface ProductUpdatePageFormData extends MetadataFormData {
 }
 
 export function getProductUpdatePageFormData(
-  product: ProductDetails_product,
-  variants: ProductDetails_product_variants[],
+  product: ProductFragment,
+  variants: ProductDetailsVariantFragment[],
   currentChannels: ChannelData[],
   channelsData: ChannelData[],
   channelsWithVariants: ChannelsWithVariantsData

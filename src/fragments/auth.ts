@@ -1,5 +1,12 @@
 import { gql } from "@apollo/client";
 
+export const userUserPermissionFragment = gql`
+  fragment UserPermission on UserPermission {
+    code
+    name
+  }
+`;
+
 export const fragmentUser = gql`
   fragment User on User {
     id
@@ -8,8 +15,7 @@ export const fragmentUser = gql`
     lastName
     isStaff
     userPermissions {
-      code
-      name
+      ...UserPermission
     }
     avatar {
       url

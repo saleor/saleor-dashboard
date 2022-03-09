@@ -1,19 +1,20 @@
 import { customAppUrl } from "@saleor/apps/urls";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import {
+  useWebhookDetailsQuery,
+  useWebhookUpdateMutation,
+  WebhookEventTypeAsyncEnum
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import { WebhookEventTypeAsyncEnum } from "@saleor/types/globalTypes";
-import { WebhookUpdate } from "@saleor/webhooks/types/WebhookUpdate";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, getStringOrPlaceholder } from "../../misc";
 import WebhookDetailsPage from "../components/WebhookDetailsPage";
 import { WebhookFormData } from "../components/WebhooksDetailsPage/WebhooksDetailsPage";
-import { useWebhookUpdateMutation } from "../mutations";
-import { useWebhooksDetailsQuery } from "../queries";
 
 export interface WebhooksDetailsProps {
   id: string;
@@ -24,23 +25,21 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
   const notify = useNotifier();
   const intl = useIntl();
 
-  const onWebhookUpdate = (data: WebhookUpdate) => {
-    const errors = data.webhookUpdate?.errors;
-    const webhook = data.webhookUpdate?.webhook;
-
-    if (errors.length === 0 && webhook) {
-      notify({
-        status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges)
-      });
-    }
-  };
-
-  const [webhookUpdate, webhookUpdateOpts] = useWebhookUpdateMutation({
-    onCompleted: onWebhookUpdate
-  });
-  const { data: webhookDetails, loading } = useWebhooksDetailsQuery({
+  const { data: webhookDetails, loading } = useWebhookDetailsQuery({
     variables: { id }
+  });
+  const [webhookUpdate, webhookUpdateOpts] = useWebhookUpdateMutation({
+    onCompleted: data => {
+      const errors = data.webhookUpdate?.errors;
+      const webhook = data.webhookUpdate?.webhook;
+
+      if (errors.length === 0 && webhook) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
+      }
+    }
   });
 
   const handleOnBack = () =>

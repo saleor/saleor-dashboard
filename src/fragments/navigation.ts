@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const menuFragment = gql`
-  fragment MenuFragment on Menu {
+  fragment Menu on Menu {
     id
     name
     items {
@@ -11,7 +11,7 @@ export const menuFragment = gql`
 `;
 
 export const menuItemFragment = gql`
-  fragment MenuItemFragment on MenuItem {
+  fragment MenuItem on MenuItem {
     category {
       id
       name
@@ -33,21 +33,20 @@ export const menuItemFragment = gql`
 
 // GraphQL does not support recurive fragments
 export const menuItemNestedFragment = gql`
-  ${menuItemFragment}
-  fragment MenuItemNestedFragment on MenuItem {
-    ...MenuItemFragment
+  fragment MenuItemNested on MenuItem {
+    ...MenuItem
     children {
-      ...MenuItemFragment
+      ...MenuItem
       children {
-        ...MenuItemFragment
+        ...MenuItem
         children {
-          ...MenuItemFragment
+          ...MenuItem
           children {
-            ...MenuItemFragment
+            ...MenuItem
             children {
-              ...MenuItemFragment
+              ...MenuItem
               children {
-                ...MenuItemFragment
+                ...MenuItem
               }
             }
           }
@@ -58,11 +57,10 @@ export const menuItemNestedFragment = gql`
 `;
 
 export const menuDetailsFragment = gql`
-  ${menuItemNestedFragment}
-  fragment MenuDetailsFragment on Menu {
+  fragment MenuDetails on Menu {
     id
     items {
-      ...MenuItemNestedFragment
+      ...MenuItemNested
     }
     name
   }

@@ -13,8 +13,8 @@ import {
 } from "@saleor/apps/useExtensions";
 import { configurationMenuUrl } from "@saleor/configuration";
 import { getConfigMenuItemsPermissions } from "@saleor/configuration/utils";
-import { User } from "@saleor/fragments/types/User";
 import { giftCardListUrl } from "@saleor/giftCards/urls";
+import { PermissionEnum, UserFragment } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { SidebarMenuItem } from "@saleor/macaw-ui";
@@ -29,7 +29,6 @@ import { saleListUrl, voucherListUrl } from "../../discounts/urls";
 import { orderDraftListUrl, orderListUrl } from "../../orders/urls";
 import { productListUrl } from "../../products/urls";
 import { languageListUrl } from "../../translations/urls";
-import { PermissionEnum } from "../../types/globalTypes";
 import { getMenuItemExtension, mapToExtensionsItems } from "./utils";
 
 export interface FilterableMenuItem extends Omit<SidebarMenuItem, "children"> {
@@ -39,7 +38,7 @@ export interface FilterableMenuItem extends Omit<SidebarMenuItem, "children"> {
 
 function useMenuStructure(
   intl: IntlShape,
-  user: User
+  user: UserFragment
 ): [SidebarMenuItem[], (menuItem: SidebarMenuItem) => void] {
   const navigate = useNavigator();
   const extensions = useExtensions(extensionMountPoints.NAVIGATION_SIDEBAR);

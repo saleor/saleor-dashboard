@@ -1,14 +1,12 @@
 import { gql } from "@apollo/client";
-import { pageInfoFragment } from "@saleor/fragments/pageInfo";
+import {
+  SearchAttributesDocument,
+  SearchAttributesQuery,
+  SearchAttributesQueryVariables
+} from "@saleor/graphql";
 import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
 
-import {
-  SearchAttributes,
-  SearchAttributesVariables
-} from "./types/SearchAttributes";
-
 export const searchAttributes = gql`
-  ${pageInfoFragment}
   query SearchAttributes($after: String, $first: Int!, $query: String!) {
     search: attributes(
       after: $after
@@ -22,12 +20,13 @@ export const searchAttributes = gql`
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }
 `;
 
-export default makeTopLevelSearch<SearchAttributes, SearchAttributesVariables>(
-  searchAttributes
-);
+export default makeTopLevelSearch<
+  SearchAttributesQuery,
+  SearchAttributesQueryVariables
+>(SearchAttributesDocument);

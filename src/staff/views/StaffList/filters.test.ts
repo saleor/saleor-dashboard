@@ -1,6 +1,6 @@
+import { StaffMemberStatus } from "@saleor/graphql";
 import { createFilterStructure } from "@saleor/staff/components/StaffListPage";
 import { StaffListUrlFilters } from "@saleor/staff/urls";
-import { StaffMemberStatus } from "@saleor/types/globalTypes";
 import { getFilterQueryParams } from "@saleor/utils/filters";
 import { stringifyQs } from "@saleor/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";

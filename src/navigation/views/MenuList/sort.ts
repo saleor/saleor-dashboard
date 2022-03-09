@@ -1,5 +1,5 @@
+import { MenuSortField } from "@saleor/graphql";
 import { MenuListUrlSortField } from "@saleor/navigation/urls";
-import { MenuSortField } from "@saleor/types/globalTypes";
 import { createGetSortQueryVariables } from "@saleor/utils/sort";
 
 export function getSortQueryField(sort: MenuListUrlSortField): MenuSortField {

@@ -4,13 +4,15 @@ import Form from "@saleor/components/Form";
 import { Grid } from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
+import {
+  GiftCardSettingsExpiryTypeEnum,
+  TimePeriodTypeEnum,
+  useGiftCardSettingsQuery,
+  useGiftCardSettingsUpdateMutation
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
-import {
-  GiftCardSettingsExpiryTypeEnum,
-  TimePeriodTypeEnum
-} from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -19,8 +21,6 @@ import { giftCardsListPath } from "../urls";
 import GiftCardExpirySettingsCard from "./GiftCardExpirySettingsCard";
 import { giftCardExpirySettingsCard as expirySettingsMessages } from "./GiftCardExpirySettingsCard/messages";
 import { giftCardSettingsPageMessages as messages } from "./messages";
-import { useGiftCardSettingsUpdateMutation } from "./mutations";
-import { useGiftCardSettingsQuery } from "./queries";
 import { GiftCardSettingsFormData } from "./types";
 import { getGiftCardSettingsInputData } from "./utils";
 

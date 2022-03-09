@@ -1,10 +1,9 @@
 import { useUserPermissions } from "@saleor/auth/hooks/useUserPermissions";
-import { User_userPermissions } from "@saleor/fragments/types/User";
-import { PermissionEnum } from "@saleor/types/globalTypes";
+import { PermissionEnum, UserPermissionFragment } from "@saleor/graphql";
 import React from "react";
 
 export function hasPermissions(
-  userPermissions: User_userPermissions[],
+  userPermissions: UserPermissionFragment[],
   requiredPermissions: PermissionEnum[]
 ): boolean {
   return requiredPermissions.reduce(

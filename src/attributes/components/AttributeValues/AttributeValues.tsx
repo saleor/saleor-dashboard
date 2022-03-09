@@ -13,18 +13,20 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import TablePagination from "@saleor/components/TablePagination";
-import { AttributeValueListFragment_edges_node } from "@saleor/fragments/types/AttributeValueListFragment";
+import {
+  AttributeInputTypeEnum,
+  AttributeValueListFragment
+} from "@saleor/graphql";
 import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
-import { ListProps, ReorderAction } from "@saleor/types";
-import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
+import { ListProps, RelayToFlat, ReorderAction } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface AttributeValuesProps
   extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">> {
   disabled: boolean;
-  values: AttributeValueListFragment_edges_node[];
+  values: RelayToFlat<AttributeValueListFragment>;
   onValueAdd: () => void;
   onValueDelete: (id: string) => void;
   onValueReorder: ReorderAction;

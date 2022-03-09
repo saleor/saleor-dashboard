@@ -9,11 +9,13 @@ import { getAttributeValueErrorMessage } from "@saleor/attributes/errors";
 import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
-import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
+import {
+  AttributeErrorFragment,
+  AttributeInputTypeEnum
+} from "@saleor/graphql";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

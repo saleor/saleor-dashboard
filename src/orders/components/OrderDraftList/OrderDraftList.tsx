@@ -7,6 +7,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import { OrderDraftListQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import {
   maybe,
@@ -15,12 +16,10 @@ import {
   transformPaymentStatus
 } from "@saleor/misc";
 import { OrderDraftListUrlSortField } from "@saleor/orders/urls";
-import { ListActions, ListProps, SortPage } from "@saleor/types";
+import { ListActions, ListProps, RelayToFlat, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { OrderDraftList_draftOrders_edges_node } from "../../types/OrderDraftList";
 
 const useStyles = makeStyles(
   theme => ({
@@ -55,7 +54,7 @@ interface OrderDraftListProps
   extends ListProps,
     ListActions,
     SortPage<OrderDraftListUrlSortField> {
-  orders: OrderDraftList_draftOrders_edges_node[];
+  orders: RelayToFlat<OrderDraftListQuery["draftOrders"]>;
 }
 
 export const OrderDraftList: React.FC<OrderDraftListProps> = props => {

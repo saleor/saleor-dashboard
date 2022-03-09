@@ -1,8 +1,8 @@
 import { IFilter } from "@saleor/components/Filter";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
+import { CollectionPublished } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { FilterOpts } from "@saleor/types";
-import { CollectionPublished } from "@saleor/types/globalTypes";
 import { createOptionsField } from "@saleor/utils/filters/fields";
 import { defineMessages, IntlShape } from "react-intl";
 

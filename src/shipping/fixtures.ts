@@ -1,12 +1,12 @@
-import { ShippingZoneFragment } from "@saleor/fragments/types/ShippingZoneFragment";
-import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
-import { ShippingZone_shippingZone } from "@saleor/shipping/types/ShippingZone";
-
 import {
   PostalCodeRuleInclusionTypeEnum,
+  SearchProductsQuery,
   ShippingMethodTypeEnum,
+  ShippingZoneFragment,
+  ShippingZoneQuery,
   WeightUnitsEnum
-} from "../types/globalTypes";
+} from "@saleor/graphql";
+import { RelayToFlat } from "@saleor/types";
 
 export const shippingZones: ShippingZoneFragment[] = [
   {
@@ -1302,8 +1302,9 @@ export const shippingZones: ShippingZoneFragment[] = [
   }
 ];
 
-export const shippingZone: ShippingZone_shippingZone = {
+export const shippingZone: ShippingZoneQuery["shippingZone"] = {
   __typename: "ShippingZone",
+  default: true,
   channels: [
     { __typename: "Channel", id: "channel1", name: "GBP", currencyCode: "GBP" },
 
@@ -1864,7 +1865,7 @@ export const shippingZone: ShippingZone_shippingZone = {
   ]
 };
 
-export const products: SearchProducts_search_edges_node[] = [
+export const products: RelayToFlat<SearchProductsQuery["search"]> = [
   {
     __typename: "Product",
     id: "1",

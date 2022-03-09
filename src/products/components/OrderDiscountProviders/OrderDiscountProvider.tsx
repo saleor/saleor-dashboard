@@ -1,23 +1,22 @@
-/* eslint-disable sort-keys */
+import {
+  OrderDetailsFragment,
+  useOrderDiscountAddMutation,
+  useOrderDiscountDeleteMutation,
+  useOrderDiscountUpdateMutation
+} from "@saleor/graphql";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { OrderDiscountCommonInput } from "@saleor/orders/components/OrderDiscountCommonModal/types";
-import {
-  useOrderDiscountAddMutation,
-  useOrderDiscountDeleteMutation,
-  useOrderDiscountUpdateMutation
-} from "@saleor/orders/mutations";
-import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
-import { OrderDiscountAdd } from "@saleor/orders/types/OrderDiscountAdd";
-import { OrderDiscountDelete } from "@saleor/orders/types/OrderDiscountDelete";
-import { OrderDiscountUpdate } from "@saleor/orders/types/OrderDiscountUpdate";
 import React, { createContext } from "react";
 import { useIntl } from "react-intl";
 
 import { OrderDiscountConsumerCommonProps, OrderDiscountData } from "./types";
-import { useDiscountDialog } from "./utils";
-import { getManualOrderDiscount, getParsedDiscountData } from "./utils";
+import {
+  getManualOrderDiscount,
+  getParsedDiscountData,
+  useDiscountDialog
+} from "./utils";
 
 export interface OrderDiscountContextConsumerProps
   extends OrderDiscountConsumerCommonProps {
@@ -30,7 +29,7 @@ export interface OrderDiscountContextConsumerProps
 
 interface OrderDiscountProviderProps {
   children: React.ReactNode;
-  order?: OrderDetails_order;
+  order?: OrderDetailsFragment;
 }
 
 export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
@@ -47,7 +46,7 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
   const orderDiscount = getManualOrderDiscount(order);
 
   const [orderDiscountAdd, orderDiscountAddOpts] = useOrderDiscountAddMutation({
-    onCompleted: ({ orderDiscountAdd: { errors } }: OrderDiscountAdd) =>
+    onCompleted: ({ orderDiscountAdd: { errors } }) =>
       handleDiscountDataSubmission(errors)
   });
 
@@ -55,7 +54,7 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
     orderDiscountUpdate,
     orderDiscountUpdateOpts
   ] = useOrderDiscountUpdateMutation({
-    onCompleted: ({ orderDiscountUpdate: { errors } }: OrderDiscountUpdate) =>
+    onCompleted: ({ orderDiscountUpdate: { errors } }) =>
       handleDiscountDataSubmission(errors)
   });
 
@@ -63,7 +62,7 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
     orderDiscountRemove,
     orderDiscountRemoveOpts
   ] = useOrderDiscountDeleteMutation({
-    onCompleted: ({ orderDiscountDelete: { errors } }: OrderDiscountDelete) =>
+    onCompleted: ({ orderDiscountDelete: { errors } }) =>
       handleDiscountDataSubmission(errors)
   });
 

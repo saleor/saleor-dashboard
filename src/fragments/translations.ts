@@ -1,9 +1,7 @@
 import { gql } from "@apollo/client";
 
-import { pageInfoFragment } from "./pageInfo";
-
 export const categoryTranslationFragment = gql`
-  fragment CategoryTranslationFragment on CategoryTranslatableContent {
+  fragment CategoryTranslation on CategoryTranslatableContent {
     translation(languageCode: $language) {
       id
       description
@@ -24,7 +22,7 @@ export const categoryTranslationFragment = gql`
   }
 `;
 export const collectionTranslationFragment = gql`
-  fragment CollectionTranslationFragment on CollectionTranslatableContent {
+  fragment CollectionTranslation on CollectionTranslatableContent {
     collection {
       id
       name
@@ -46,7 +44,7 @@ export const collectionTranslationFragment = gql`
 `;
 
 export const productTranslationFragment = gql`
-  fragment ProductTranslationFragment on ProductTranslatableContent {
+  fragment ProductTranslation on ProductTranslatableContent {
     product {
       id
       name
@@ -86,7 +84,7 @@ export const productTranslationFragment = gql`
 `;
 
 export const productVariantTranslationFragment = gql`
-  fragment ProductVariantTranslationFragment on ProductVariantTranslatableContent {
+  fragment ProductVariantTranslation on ProductVariantTranslatableContent {
     productVariant {
       id
     }
@@ -120,7 +118,7 @@ export const productVariantTranslationFragment = gql`
 `;
 
 export const saleTranslationFragment = gql`
-  fragment SaleTranslationFragment on SaleTranslatableContent {
+  fragment SaleTranslation on SaleTranslatableContent {
     sale {
       id
       name
@@ -136,7 +134,7 @@ export const saleTranslationFragment = gql`
   }
 `;
 export const voucherTranslationFragment = gql`
-  fragment VoucherTranslationFragment on VoucherTranslatableContent {
+  fragment VoucherTranslation on VoucherTranslatableContent {
     name
     voucher {
       id
@@ -153,7 +151,7 @@ export const voucherTranslationFragment = gql`
   }
 `;
 export const shippingMethodTranslationFragment = gql`
-  fragment ShippingMethodTranslationFragment on ShippingMethodTranslatableContent {
+  fragment ShippingMethodTranslation on ShippingMethodTranslatableContent {
     id
     name
     description
@@ -173,7 +171,7 @@ export const shippingMethodTranslationFragment = gql`
 `;
 
 export const pageTranslationFragment = gql`
-  fragment PageTranslationFragment on PageTranslatableContent {
+  fragment PageTranslation on PageTranslatableContent {
     page {
       id
       content
@@ -212,7 +210,7 @@ export const pageTranslationFragment = gql`
   }
 `;
 export const pageTranslatableFragment = gql`
-  fragment PageTranslatableFragment on PageTranslatableContent {
+  fragment PageTranslatable on PageTranslatableContent {
     id
     content
     seoDescription
@@ -233,10 +231,9 @@ export const pageTranslatableFragment = gql`
 `;
 
 export const attributeChoicesTranslationFragment = gql`
-  ${pageInfoFragment}
-  fragment AttributeChoicesTranslationFragment on AttributeValueCountableConnection {
+  fragment AttributeChoicesTranslation on AttributeValueCountableConnection {
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
     edges {
       cursor
@@ -256,7 +253,7 @@ export const attributeChoicesTranslationFragment = gql`
 `;
 
 export const attributeTranslationFragment = gql`
-  fragment AttributeTranslationFragment on AttributeTranslatableContent {
+  fragment AttributeTranslation on AttributeTranslatableContent {
     id
     name
     translation(languageCode: $language) {
@@ -272,8 +269,7 @@ export const attributeTranslationFragment = gql`
 `;
 
 export const attributeTranslationDetailsFragment = gql`
-  ${attributeChoicesTranslationFragment}
-  fragment AttributeTranslationDetailsFragment on AttributeTranslatableContent {
+  fragment AttributeTranslationDetails on AttributeTranslatableContent {
     translation(languageCode: $language) {
       id
       name
@@ -289,15 +285,14 @@ export const attributeTranslationDetailsFragment = gql`
         last: $lastValues
         before: $beforeValues
       ) {
-        ...AttributeChoicesTranslationFragment
+        ...AttributeChoicesTranslation
       }
     }
   }
 `;
 
 export const attributeValueTranslatableContentFragment = gql`
-  ${attributeChoicesTranslationFragment}
-  fragment AttributeValueTranslatableContentFragment on AttributeTranslatableContent {
+  fragment AttributeValueTranslatableContent on AttributeTranslatableContent {
     translation(languageCode: $language) {
       id
       name
@@ -312,7 +307,7 @@ export const attributeValueTranslatableContentFragment = gql`
         last: $lastValues
         before: $beforeValues
       ) {
-        ...AttributeChoicesTranslationFragment
+        ...AttributeChoicesTranslation
       }
     }
   }

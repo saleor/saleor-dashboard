@@ -1,10 +1,7 @@
 import { PLACEHOLDER } from "@saleor/giftCards/GiftCardUpdate/types";
+import { GiftCardDataFragment } from "@saleor/graphql";
 
-import { GiftCardList_giftCards_edges_node_tags } from "../types/GiftCardList";
-
-export const getTagCellText = (
-  tags: GiftCardList_giftCards_edges_node_tags[]
-) => {
+export const getTagCellText = (tags: GiftCardDataFragment["tags"]) => {
   if (!!tags.length) {
     return tags.map(({ name }) => name).join(", ");
   }

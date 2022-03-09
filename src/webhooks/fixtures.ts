@@ -1,6 +1,6 @@
-import { WebhookDetails_webhook } from "./types/WebhookDetails";
+import { WebhookDetailsQuery } from "@saleor/graphql";
 
-export const webhook: WebhookDetails_webhook = {
+export const webhook: WebhookDetailsQuery["webhook"] = {
   __typename: "Webhook",
   app: {
     __typename: "App",

@@ -1,6 +1,6 @@
 import { channelsList } from "@saleor/channels/fixtures";
 import { createCollectionChannels } from "@saleor/channels/utils";
-import { CollectionErrorCode } from "@saleor/types/globalTypes";
+import { CollectionErrorCode } from "@saleor/graphql";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

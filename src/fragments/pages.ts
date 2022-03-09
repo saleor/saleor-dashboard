@@ -1,13 +1,7 @@
 import { gql } from "@apollo/client";
 
-import {
-  attributeValueDetailsFragment,
-  attributeValueListFragment
-} from "./attributes";
-import { metadataFragment } from "./metadata";
-
 export const pageFragment = gql`
-  fragment PageFragment on Page {
+  fragment Page on Page {
     id
     title
     slug
@@ -15,31 +9,35 @@ export const pageFragment = gql`
   }
 `;
 
+export const pageSelectedAttribute = gql`
+  fragment PageSelectedAttribute on SelectedAttribute {
+    attribute {
+      id
+      slug
+      name
+      inputType
+      entityType
+      valueRequired
+      unit
+      choices(
+        first: $firstValues
+        after: $afterValues
+        last: $lastValues
+        before: $beforeValues
+      ) {
+        ...AttributeValueList
+      }
+    }
+    values {
+      ...AttributeValueDetails
+    }
+  }
+`;
+
 export const pageAttributesFragment = gql`
-  ${attributeValueDetailsFragment}
-  ${attributeValueListFragment}
-  fragment PageAttributesFragment on Page {
+  fragment PageAttributes on Page {
     attributes {
-      attribute {
-        id
-        slug
-        name
-        inputType
-        entityType
-        valueRequired
-        unit
-        choices(
-          first: $firstValues
-          after: $afterValues
-          last: $lastValues
-          before: $beforeValues
-        ) {
-          ...AttributeValueListFragment
-        }
-      }
-      values {
-        ...AttributeValueDetailsFragment
-      }
+      ...PageSelectedAttribute
     }
     pageType {
       id
@@ -56,7 +54,7 @@ export const pageAttributesFragment = gql`
           last: $lastValues
           before: $beforeValues
         ) {
-          ...AttributeValueListFragment
+          ...AttributeValueList
         }
       }
     }
@@ -64,13 +62,10 @@ export const pageAttributesFragment = gql`
 `;
 
 export const pageDetailsFragment = gql`
-  ${pageFragment}
-  ${pageAttributesFragment}
-  ${metadataFragment}
-  fragment PageDetailsFragment on Page {
-    ...PageFragment
-    ...PageAttributesFragment
-    ...MetadataFragment
+  fragment PageDetails on Page {
+    ...Page
+    ...PageAttributes
+    ...Metadata
     content
     seoTitle
     seoDescription

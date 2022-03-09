@@ -8,17 +8,12 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
+import { AttributeFragment, ProductAttributeType } from "@saleor/graphql";
 import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { ListActions, ReorderAction } from "@saleor/types";
-import { ProductAttributeType } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import {
-  ProductTypeDetails_productType_productAttributes,
-  ProductTypeDetails_productType_variantAttributes
-} from "../../types/ProductTypeDetails";
 
 const useStyles = makeStyles(
   {
@@ -46,9 +41,7 @@ const useStyles = makeStyles(
 );
 
 interface ProductTypeAttributesProps extends ListActions {
-  attributes:
-    | ProductTypeDetails_productType_productAttributes[]
-    | ProductTypeDetails_productType_variantAttributes[];
+  attributes: AttributeFragment[];
   disabled: boolean;
   type: string;
   testId?: string;

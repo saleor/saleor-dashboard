@@ -4,17 +4,13 @@ import Grid from "@saleor/components/Grid";
 import Money from "@saleor/components/Money";
 import RequirePermissions from "@saleor/components/RequirePermissions";
 import Skeleton from "@saleor/components/Skeleton";
+import { HomeQuery, PermissionEnum } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { PermissionEnum } from "@saleor/types/globalTypes";
+import { RelayToFlat } from "@saleor/types";
 import React from "react";
 
 import Orders from "../../../icons/Orders";
 import Sales from "../../../icons/Sales";
-import {
-  Home_activities_edges_node,
-  Home_productTopToday_edges_node,
-  Home_salesToday_gross
-} from "../../types/Home";
 import HomeActivityCard from "../HomeActivityCard";
 import HomeAnalyticsCard from "../HomeAnalyticsCard";
 import HomeHeader from "../HomeHeader";
@@ -44,13 +40,13 @@ const useStyles = makeStyles(
 );
 
 export interface HomePageProps {
-  activities: Home_activities_edges_node[];
+  activities: RelayToFlat<HomeQuery["activities"]>;
   orders: number | null;
   ordersToCapture: number | null;
   ordersToFulfill: number | null;
   productsOutOfStock: number;
-  sales: Home_salesToday_gross;
-  topProducts: Home_productTopToday_edges_node[] | null;
+  sales: HomeQuery["salesToday"]["gross"];
+  topProducts: RelayToFlat<HomeQuery["productTopToday"]> | null;
   userName: string;
   onCreateNewChannelClick: () => void;
   onOrdersToCaptureClick: () => void;

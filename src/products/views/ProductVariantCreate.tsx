@@ -7,7 +7,15 @@ import { AttributeInput } from "@saleor/components/Attributes";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
-import { useFileUploadMutation } from "@saleor/files/mutations";
+import {
+  useFileUploadMutation,
+  useProductVariantCreateDataQuery,
+  useProductVariantReorderMutation,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation,
+  useVariantCreateMutation,
+  useWarehouseListQuery
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
@@ -16,11 +24,6 @@ import useProductSearch from "@saleor/searches/useProductSearch";
 import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
-import { useWarehouseList } from "@saleor/warehouses/queries";
 import { warehouseAddPath } from "@saleor/warehouses/urls";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -28,12 +31,6 @@ import { useIntl } from "react-intl";
 import { getMutationErrors, weight } from "../../misc";
 import ProductVariantCreatePage from "../components/ProductVariantCreatePage";
 import { ProductVariantCreateData } from "../components/ProductVariantCreatePage/form";
-import {
-  useProductVariantReorderMutation,
-  useVariantCreateMutation
-} from "../mutations";
-import { useProductVariantCreateQuery } from "../queries";
-import { VariantCreate } from "../types/VariantCreate";
 import {
   productListUrl,
   productUrl,
@@ -58,14 +55,14 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
 
   const shop = useShop();
   const intl = useIntl();
-  const warehouses = useWarehouseList({
+  const warehouses = useWarehouseListQuery({
     displayLoader: true,
     variables: {
       first: 50
     }
   });
 
-  const { data, loading: productLoading } = useProductVariantCreateQuery({
+  const { data, loading: productLoading } = useProductVariantCreateDataQuery({
     displayLoader: true,
     variables: {
       id: productId,
@@ -77,24 +74,22 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
 
   const product = data?.product;
 
-  const handleVariantCreationSuccess = (data: VariantCreate) => {
-    const variantId = data.productVariantCreate.productVariant.id;
-
-    notify({
-      status: "success",
-      text: intl.formatMessage(messages.variantCreatedSuccess)
-    });
-    navigate(productVariantEditUrl(productId, variantId), {
-      resetScroll: true
-    });
-  };
-
   const [variantCreate, variantCreateResult] = useVariantCreateMutation({
-    onCompleted: handleVariantCreationSuccess
+    onCompleted: data => {
+      const variantId = data.productVariantCreate.productVariant.id;
+
+      notify({
+        status: "success",
+        text: intl.formatMessage(messages.variantCreatedSuccess)
+      });
+      navigate(productVariantEditUrl(productId, variantId), {
+        resetScroll: true
+      });
+    }
   });
 
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   if (product === null) {
     return <NotFoundPage onBack={() => navigate(productListUrl())} />;

@@ -1,4 +1,4 @@
-import { ChannelFragment } from "@saleor/fragments/types/ChannelFragment";
+import { ChannelFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { ChannelProps } from "@saleor/types";
 import { mapNodeToChoice } from "@saleor/utils/maps";

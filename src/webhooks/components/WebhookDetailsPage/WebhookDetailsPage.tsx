@@ -4,12 +4,13 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
-import { WebhookErrorFragment } from "@saleor/fragments/types/WebhookErrorFragment";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import {
+  WebhookDetailsQuery,
+  WebhookErrorFragment,
   WebhookEventTypeAsyncEnum,
   WebhookEventTypeSyncEnum
-} from "@saleor/types/globalTypes";
+} from "@saleor/graphql";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import WebhookEvents from "@saleor/webhooks/components/WebhookEvents";
 import WebhookInfo from "@saleor/webhooks/components/WebhookInfo";
 import WebhookStatus from "@saleor/webhooks/components/WebhookStatus";
@@ -17,7 +18,6 @@ import {
   createAsyncEventsSelectHandler,
   createSyncEventsSelectHandler
 } from "@saleor/webhooks/handlers";
-import { WebhookDetails_webhook } from "@saleor/webhooks/types/WebhookDetails";
 import {
   mapAsyncEventsToChoices,
   mapSyncEventsToChoices
@@ -40,7 +40,7 @@ export interface WebhookDetailsPageProps {
   appName: string;
   disabled: boolean;
   errors: WebhookErrorFragment[];
-  webhook?: WebhookDetails_webhook;
+  webhook?: WebhookDetailsQuery["webhook"];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onSubmit: (data: FormData) => void;

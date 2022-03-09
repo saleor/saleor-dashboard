@@ -1,13 +1,12 @@
 import { Typography } from "@material-ui/core";
 import Money from "@saleor/components/Money";
 import { TimelineEvent } from "@saleor/components/Timeline";
+import { OrderEventFragment, OrderEventsEnum } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { OrderEventsEnum } from "@saleor/types/globalTypes";
 import camelCase from "lodash/camelCase";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import { OrderDetails_order_events } from "../../types/OrderDetails";
 import ExtendedDiscountTimelineEvent from "./ExtendedDiscountTimelineEvent";
 import Label from "./Label";
 import {
@@ -141,7 +140,7 @@ export const messages = defineMessages({
 });
 
 interface ExtendedTimelineEventProps {
-  event: OrderDetails_order_events;
+  event: OrderEventFragment;
   orderCurrency: string;
 }
 

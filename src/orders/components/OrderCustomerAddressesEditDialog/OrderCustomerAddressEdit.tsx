@@ -6,9 +6,11 @@ import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompl
 import Skeleton from "@saleor/components/Skeleton";
 import CustomerAddressChoiceCard from "@saleor/customers/components/CustomerAddressChoiceCard";
 import { AddressTypeInput } from "@saleor/customers/types";
-import { CustomerAddresses_user_addresses } from "@saleor/customers/types/CustomerAddresses";
-import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
-import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
+import {
+  AccountErrorFragment,
+  AddressFragment,
+  OrderErrorFragment
+} from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -20,7 +22,7 @@ import { useStyles } from "./styles";
 
 export interface OrderCustomerAddressEditProps {
   loading: boolean;
-  customerAddresses: CustomerAddresses_user_addresses[];
+  customerAddresses: AddressFragment[];
   countryChoices: SingleAutocompleteChoiceType[];
   addressInputOption: AddressInputOptionEnum;
   addressInputName: string;

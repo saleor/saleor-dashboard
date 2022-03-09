@@ -1,5 +1,5 @@
 import { OutputData } from "@editorjs/editorjs";
-import { AttributeTranslationDetailsFragment_attribute_choices } from "@saleor/fragments/types/AttributeTranslationDetailsFragment";
+import { AttributeTranslationDetailsFragment } from "@saleor/graphql";
 import { TranslationField } from "@saleor/translations/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
@@ -34,7 +34,7 @@ export const getParsedTranslationInputData = ({
 };
 
 export const getTranslationFields = (
-  fields: AttributeTranslationDetailsFragment_attribute_choices,
+  fields: AttributeTranslationDetailsFragment["attribute"]["choices"],
   intl: IntlShape
 ) =>
   mapEdgesToItems(fields).map(

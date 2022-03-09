@@ -10,15 +10,13 @@ import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { CustomerListUrlSortField } from "@saleor/customers/urls";
+import { ListCustomersQuery, PermissionEnum } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { getUserName, renderCollection } from "@saleor/misc";
-import { ListActions, ListProps, SortPage } from "@saleor/types";
-import { PermissionEnum } from "@saleor/types/globalTypes";
+import { ListActions, ListProps, RelayToFlat, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage } from "react-intl";
-
-import { ListCustomers_customers_edges_node } from "../../types/ListCustomers";
 
 const useStyles = makeStyles(
   theme => ({
@@ -47,7 +45,7 @@ export interface CustomerListProps
   extends ListProps,
     ListActions,
     SortPage<CustomerListUrlSortField> {
-  customers: ListCustomers_customers_edges_node[];
+  customers: RelayToFlat<ListCustomersQuery["customers"]>;
 }
 
 const numberOfColumns = 3;

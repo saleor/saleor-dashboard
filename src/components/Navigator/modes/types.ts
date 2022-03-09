@@ -1,10 +1,12 @@
-import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
-
-import { CheckIfOrderExists_order } from "../queries/types/CheckIfOrderExists";
-import { SearchCatalog } from "../queries/types/SearchCatalog";
+import {
+  CheckIfOrderExistsQuery,
+  SearchCatalogQuery,
+  SearchCustomersQuery
+} from "@saleor/graphql";
+import { RelayToFlat } from "@saleor/types";
 
 export interface ActionQueries {
-  catalog: SearchCatalog;
-  customers: SearchCustomers_search_edges_node[];
-  order: CheckIfOrderExists_order;
+  catalog: SearchCatalogQuery;
+  customers: RelayToFlat<SearchCustomersQuery["search"]>;
+  order: CheckIfOrderExistsQuery["order"];
 }

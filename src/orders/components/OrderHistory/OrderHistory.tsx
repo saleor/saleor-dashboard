@@ -9,13 +9,13 @@ import {
   TimelineEventProps,
   TimelineNote
 } from "@saleor/components/Timeline";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import { makeStyles } from "@saleor/macaw-ui";
-import { OrderDetails_order_events } from "@saleor/orders/types/OrderDetails";
 import {
+  OrderEventFragment,
   OrderEventsEmailsEnum,
   OrderEventsEnum
-} from "@saleor/types/globalTypes";
+} from "@saleor/graphql";
+import { SubmitPromise } from "@saleor/hooks/useForm";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
@@ -23,10 +23,7 @@ import ExtendedTimelineEvent from "./ExtendedTimelineEvent";
 import LinkedTimelineEvent from "./LinkedTimelineEvent";
 import { getEventSecondaryTitle, isTimelineEventOfType } from "./utils";
 
-export const getEventMessage = (
-  event: OrderDetails_order_events,
-  intl: IntlShape
-) => {
+export const getEventMessage = (event: OrderEventFragment, intl: IntlShape) => {
   const getUserOrApp = () => {
     if (event.user) {
       return event.user.email;
@@ -294,7 +291,7 @@ const useStyles = makeStyles(
 );
 
 interface OrderHistoryProps {
-  history: OrderDetails_order_events[];
+  history: OrderEventFragment[];
   orderCurrency: string;
   onNoteAdd: (data: FormData) => SubmitPromise;
 }
@@ -306,7 +303,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
   const intl = useIntl();
 
   const getTimelineEventTitleProps = (
-    event: OrderDetails_order_events
+    event: OrderEventFragment
   ): Partial<TimelineEventProps> => {
     const { type, message } = event;
 

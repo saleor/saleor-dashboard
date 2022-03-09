@@ -11,6 +11,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import { ProductTypeFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { ProductTypeListUrlSortField } from "@saleor/productTypes/urls";
 import { getArrowDirection } from "@saleor/utils/sort";
@@ -19,7 +20,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
 import { ListActions, ListProps, SortPage } from "../../../types";
-import { ProductTypeList_productTypes_edges_node } from "../../types/ProductTypeList";
 
 const useStyles = makeStyles(
   theme => ({
@@ -48,7 +48,7 @@ interface ProductTypeListProps
   extends ListProps,
     ListActions,
     SortPage<ProductTypeListUrlSortField> {
-  productTypes: ProductTypeList_productTypes_edges_node[];
+  productTypes: ProductTypeFragment[];
 }
 
 const numberOfColumns = 4;

@@ -1,4 +1,5 @@
 import { listActionsProps } from "@saleor/fixtures";
+import { WeightUnitsEnum } from "@saleor/graphql";
 import { formError } from "@saleor/storybook/misc";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -8,7 +9,6 @@ import ProductTypeDetailsPage, {
   ProductTypeForm
 } from "../../../productTypes/components/ProductTypeDetailsPage";
 import { productType } from "../../../productTypes/fixtures";
-import { WeightUnitsEnum } from "../../../types/globalTypes";
 import Decorator from "../../Decorator";
 
 const props: Omit<ProductTypeDetailsPageProps, "classes"> = {

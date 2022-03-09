@@ -21,8 +21,8 @@ import MultiAutocompleteSelectField from "@saleor/components/MultiAutocompleteSe
 import RichTextEditor from "@saleor/components/RichTextEditor";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
 import SortableChipsField from "@saleor/components/SortableChipsField";
+import { AttributeInputTypeEnum } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
-import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 

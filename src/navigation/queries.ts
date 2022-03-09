@@ -1,18 +1,6 @@
 import { gql } from "@apollo/client";
-import {
-  menuDetailsFragment,
-  menuFragment
-} from "@saleor/fragments/navigation";
-import { pageInfoFragment } from "@saleor/fragments/pageInfo";
-import makeQuery from "@saleor/hooks/makeQuery";
 
-import { TypedQuery } from "../queries";
-import { MenuDetails, MenuDetailsVariables } from "./types/MenuDetails";
-import { MenuList, MenuListVariables } from "./types/MenuList";
-
-const menuList = gql`
-  ${menuFragment}
-  ${pageInfoFragment}
+export const menuList = gql`
   query MenuList(
     $first: Int
     $after: String
@@ -29,27 +17,20 @@ const menuList = gql`
     ) {
       edges {
         node {
-          ...MenuFragment
+          ...Menu
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }
 `;
-export const useMenuListQuery = makeQuery<MenuList, MenuListVariables>(
-  menuList
-);
 
-const menuDetails = gql`
-  ${menuDetailsFragment}
+export const menuDetails = gql`
   query MenuDetails($id: ID!) {
     menu(id: $id) {
-      ...MenuDetailsFragment
+      ...MenuDetails
     }
   }
 `;
-export const MenuDetailsQuery = TypedQuery<MenuDetails, MenuDetailsVariables>(
-  menuDetails
-);

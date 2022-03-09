@@ -1,4 +1,4 @@
-import { WarehouseSortField } from "@saleor/types/globalTypes";
+import { WarehouseSortField } from "@saleor/graphql";
 import { createGetSortQueryVariables } from "@saleor/utils/sort";
 import { WarehouseListUrlSortField } from "@saleor/warehouses/urls";
 

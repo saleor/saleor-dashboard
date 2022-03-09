@@ -1,15 +1,6 @@
 import { gql } from "@apollo/client";
-import { attributeValueListFragment } from "@saleor/fragments/attributes";
-import { pageDetailsFragment, pageFragment } from "@saleor/fragments/pages";
-import makeQuery from "@saleor/hooks/makeQuery";
 
-import { PageCount, PageCountVariables } from "./types/PageCount";
-import { PageDetails, PageDetailsVariables } from "./types/PageDetails";
-import { PageList, PageListVariables } from "./types/PageList";
-import { PageType, PageTypeVariables } from "./types/PageType";
-
-const pageList = gql`
-  ${pageFragment}
+export const pageList = gql`
   query PageList(
     $first: Int
     $after: String
@@ -26,7 +17,7 @@ const pageList = gql`
     ) {
       edges {
         node {
-          ...PageFragment
+          ...Page
         }
       }
       pageInfo {
@@ -38,12 +29,8 @@ const pageList = gql`
     }
   }
 `;
-export const usePageListQuery = makeQuery<PageList, PageListVariables>(
-  pageList
-);
 
-const pageDetails = gql`
-  ${pageDetailsFragment}
+export const pageDetails = gql`
   query PageDetails(
     $id: ID!
     $firstValues: Int
@@ -52,16 +39,12 @@ const pageDetails = gql`
     $beforeValues: String
   ) {
     page(id: $id) {
-      ...PageDetailsFragment
+      ...PageDetails
     }
   }
 `;
-export const usePageDetailsQuery = makeQuery<PageDetails, PageDetailsVariables>(
-  pageDetails
-);
 
-const pageTypeQuery = gql`
-  ${attributeValueListFragment}
+export const pageTypeQuery = gql`
   query PageType(
     $id: ID!
     $firstValues: Int
@@ -85,24 +68,17 @@ const pageTypeQuery = gql`
           last: $lastValues
           before: $beforeValues
         ) {
-          ...AttributeValueListFragment
+          ...AttributeValueList
         }
       }
     }
   }
 `;
-export const usePageTypeQuery = makeQuery<PageType, PageTypeVariables>(
-  pageTypeQuery
-);
 
-const pageCountQuery = gql`
+export const pageCountQuery = gql`
   query PageCount($filter: PageFilterInput) {
     pages(filter: $filter) {
       totalCount
     }
   }
 `;
-
-export const usePageCountQuery = makeQuery<PageCount, PageCountVariables>(
-  pageCountQuery
-);

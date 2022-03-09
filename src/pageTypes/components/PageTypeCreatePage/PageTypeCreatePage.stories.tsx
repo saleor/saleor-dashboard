@@ -1,4 +1,4 @@
-import { PageErrorCode } from "@saleor/types/globalTypes";
+import { PageErrorCode } from "@saleor/graphql";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

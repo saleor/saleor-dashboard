@@ -12,6 +12,10 @@ import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
 import { configurationMenuUrl } from "@saleor/configuration";
+import {
+  useAttributeBulkDeleteMutation,
+  useAttributeListQuery
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
@@ -31,8 +35,6 @@ import useBulkActions from "../../../hooks/useBulkActions";
 import { maybe } from "../../../misc";
 import AttributeBulkDeleteDialog from "../../components/AttributeBulkDeleteDialog";
 import AttributeListPage from "../../components/AttributeListPage";
-import { useAttributeBulkDeleteMutation } from "../../mutations";
-import { useAttributeListQuery } from "../../queries";
 import {
   attributeAddUrl,
   attributeListUrl,

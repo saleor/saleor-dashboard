@@ -1,17 +1,12 @@
 import { gql } from "@apollo/client";
 
-import { fileFragment } from "./file";
-import { metadataFragment } from "./metadata";
-import { pageInfoFragment } from "./pageInfo";
-
 export const attributeValueFragment = gql`
-  ${fileFragment}
-  fragment AttributeValueFragment on AttributeValue {
+  fragment AttributeValue on AttributeValue {
     id
     name
     slug
     file {
-      ...FileFragment
+      ...File
     }
     reference
     boolean
@@ -23,14 +18,14 @@ export const attributeValueFragment = gql`
 
 export const attributeValueDetailsFragment = gql`
   ${attributeValueFragment}
-  fragment AttributeValueDetailsFragment on AttributeValue {
-    ...AttributeValueFragment
+  fragment AttributeValueDetails on AttributeValue {
+    ...AttributeValue
     richText
   }
 `;
 
 export const attributeFragment = gql`
-  fragment AttributeFragment on Attribute {
+  fragment Attribute on Attribute {
     id
     name
     slug
@@ -44,11 +39,9 @@ export const attributeFragment = gql`
 `;
 
 export const attributeDetailsFragment = gql`
-  ${attributeFragment}
-  ${metadataFragment}
-  fragment AttributeDetailsFragment on Attribute {
-    ...AttributeFragment
-    ...MetadataFragment
+  fragment AttributeDetails on Attribute {
+    ...Attribute
+    ...Metadata
     availableInGrid
     inputType
     entityType
@@ -59,23 +52,21 @@ export const attributeDetailsFragment = gql`
 `;
 
 export const attributeValueListFragment = gql`
-  ${attributeValueDetailsFragment}
-  ${pageInfoFragment}
-  fragment AttributeValueListFragment on AttributeValueCountableConnection {
+  fragment AttributeValueList on AttributeValueCountableConnection {
     pageInfo {
-      ...PageInfoFragment
+      ...PageInfo
     }
     edges {
       cursor
       node {
-        ...AttributeValueDetailsFragment
+        ...AttributeValueDetails
       }
     }
   }
 `;
 
 export const availableAttributeFragment = gql`
-  fragment AvailableAttributeFragment on Attribute {
+  fragment AvailableAttribute on Attribute {
     id
     name
     slug

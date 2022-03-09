@@ -1,8 +1,12 @@
 import { DialogTitle } from "@material-ui/core";
+import {
+  GiftCardCreateInput,
+  useChannelCurrenciesQuery,
+  useGiftCardCreateMutation
+} from "@saleor/graphql";
 import useCurrentDate from "@saleor/hooks/useCurrentDate";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { DialogProps } from "@saleor/types";
-import { GiftCardCreateInput } from "@saleor/types/globalTypes";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -12,10 +16,7 @@ import GiftCardCreateDialogForm, {
   GiftCardCreateFormData
 } from "./GiftCardCreateDialogForm";
 import { giftCardCreateMessages as messages } from "./messages";
-import { useGiftCardCreateMutation } from "./mutations";
-import { useChannelCurrencies } from "./queries";
 import { GiftCardCreateFormCustomer } from "./types";
-import { GiftCardCreate } from "./types/GiftCardCreate";
 import {
   getGiftCardCreateOnCompletedMessage,
   getGiftCardExpiryInputData
@@ -35,19 +36,9 @@ const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = 
   const intl = useIntl();
   const notify = useNotifier();
 
-  const { loading: loadingChannelCurrencies } = useChannelCurrencies({});
+  const { loading: loadingChannelCurrencies } = useChannelCurrenciesQuery({});
 
   const [cardCode, setCardCode] = useState(null);
-
-  const onCompleted = (data: GiftCardCreate) => {
-    const errors = data?.giftCardCreate?.errors;
-
-    notify(getGiftCardCreateOnCompletedMessage(errors, intl));
-
-    if (!errors?.length) {
-      setCardCode(data?.giftCardCreate?.giftCard?.code);
-    }
-  };
 
   const currentDate = useCurrentDate();
 
@@ -80,7 +71,15 @@ const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = 
   };
 
   const [createGiftCard, createGiftCardOpts] = useGiftCardCreateMutation({
-    onCompleted,
+    onCompleted: data => {
+      const errors = data?.giftCardCreate?.errors;
+
+      notify(getGiftCardCreateOnCompletedMessage(errors, intl));
+
+      if (!errors?.length) {
+        setCardCode(data?.giftCardCreate?.giftCard?.code);
+      }
+    },
     refetchQueries
   });
 

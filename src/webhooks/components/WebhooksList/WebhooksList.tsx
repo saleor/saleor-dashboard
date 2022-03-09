@@ -5,11 +5,11 @@ import {
   TableHead,
   TableRow
 } from "@material-ui/core";
-import { App_app_webhooks } from "@saleor/apps/types/App";
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
+import { AppQuery } from "@saleor/graphql";
 import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { isUnnamed } from "@saleor/webhooks/utils";
@@ -20,7 +20,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useStyles } from "./styles";
 
 export interface WebhooksListProps {
-  webhooks: App_app_webhooks[];
+  webhooks: AppQuery["app"]["webhooks"];
   onRemove: (id: string) => void;
   onRowClick: (id: string) => () => void;
   onCreate?: () => void;

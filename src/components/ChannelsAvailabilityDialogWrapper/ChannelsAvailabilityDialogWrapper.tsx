@@ -4,8 +4,7 @@ import Hr from "@saleor/components/Hr";
 import { makeStyles } from "@saleor/macaw-ui";
 import Label from "@saleor/orders/components/OrderHistory/Label";
 import React from "react";
-import { useIntl } from "react-intl";
-import { defineMessages, FormattedMessage } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 export const useStyles = makeStyles(
   theme => ({

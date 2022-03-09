@@ -1,14 +1,12 @@
 import { gql } from "@apollo/client";
-import { pageInfoFragment } from "@saleor/fragments/pageInfo";
+import {
+  SearchWarehousesDocument,
+  SearchWarehousesQuery,
+  SearchWarehousesQueryVariables
+} from "@saleor/graphql";
 import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
 
-import {
-  SearchWarehouses,
-  SearchWarehousesVariables
-} from "./types/SearchWarehouses";
-
 export const searchWarehouses = gql`
-  ${pageInfoFragment}
   query SearchWarehouses($after: String, $first: Int!, $query: String!) {
     search: warehouses(
       after: $after
@@ -22,12 +20,13 @@ export const searchWarehouses = gql`
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }
 `;
 
-export default makeTopLevelSearch<SearchWarehouses, SearchWarehousesVariables>(
-  searchWarehouses
-);
+export default makeTopLevelSearch<
+  SearchWarehousesQuery,
+  SearchWarehousesQueryVariables
+>(SearchWarehousesDocument);

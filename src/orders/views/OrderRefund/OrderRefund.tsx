@@ -1,3 +1,8 @@
+import {
+  useOrderFulfillmentRefundProductsMutation,
+  useOrderRefundDataQuery,
+  useOrderRefundMutation
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { extractMutationErrors } from "@saleor/misc";
@@ -7,11 +12,6 @@ import {
   OrderRefundSubmitData,
   OrderRefundType
 } from "@saleor/orders/components/OrderRefundPage/form";
-import {
-  useOrderFulfillmentRefundProductsMutation,
-  useOrderRefundMutation
-} from "@saleor/orders/mutations";
-import { useOrderRefundData } from "@saleor/orders/queries";
 import { orderUrl } from "@saleor/orders/urls";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -61,7 +61,7 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
   const notify = useNotifier();
   const intl = useIntl();
 
-  const { data, loading } = useOrderRefundData({
+  const { data, loading } = useOrderRefundDataQuery({
     displayLoader: true,
     variables: {
       orderId

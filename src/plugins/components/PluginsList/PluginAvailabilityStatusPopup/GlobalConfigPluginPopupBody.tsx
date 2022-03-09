@@ -1,12 +1,14 @@
 import { CardContent, Typography } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
-import { PluginBaseFragment } from "@saleor/fragments/types/PluginBaseFragment";
+import { PluginBaseFragment } from "@saleor/graphql";
 import { Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { globalConfigPluginMessages as messages } from "../messages";
-import { pluginStatusMessages } from "../messages";
+import {
+  globalConfigPluginMessages as messages,
+  pluginStatusMessages
+} from "../messages";
 
 interface GlobalConfigPluginPopupBodyProps {
   plugin: PluginBaseFragment;

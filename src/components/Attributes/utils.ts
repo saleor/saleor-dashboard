@@ -4,9 +4,11 @@ import { FileChoiceType } from "@saleor/components/FileUploadField";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { SortableChipsFieldValueType } from "@saleor/components/SortableChipsField";
-import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
-import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
-import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
+import {
+  AttributeValueFragment,
+  PageErrorWithAttributesFragment,
+  ProductErrorWithAttributesFragment
+} from "@saleor/graphql";
 import { getProductErrorMessage } from "@saleor/utils/errors";
 import getPageErrorMessage from "@saleor/utils/errors/page";
 import { IntlShape } from "react-intl";

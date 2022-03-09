@@ -1,4 +1,4 @@
-import { MenuErrorCode } from "@saleor/types/globalTypes";
+import { MenuErrorCode } from "@saleor/graphql";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

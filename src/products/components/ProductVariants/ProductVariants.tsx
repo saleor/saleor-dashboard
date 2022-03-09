@@ -12,7 +12,6 @@ import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import LinkChoice from "@saleor/components/LinkChoice";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
 import {
@@ -20,6 +19,11 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
+import {
+  ProductDetailsVariantFragment,
+  ProductFragment,
+  RefreshLimitsQuery
+} from "@saleor/graphql";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import { isLimitReached } from "@saleor/utils/limits";
 import React from "react";
@@ -27,15 +31,12 @@ import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
 import { ChannelProps, ListActions, ReorderAction } from "../../../types";
-import {
-  ProductDetails_product,
-  ProductDetails_product_variants,
-  ProductDetails_product_variants_stocks_warehouse
-} from "../../types/ProductDetails";
 import ProductVariantSetDefault from "../ProductVariantSetDefault";
 
+type Warehouse = ProductDetailsVariantFragment[][0]["stocks"][0]["warehouse"];
+
 function getWarehouseChoices(
-  variants: ProductDetails_product_variants[],
+  variants: ProductDetailsVariantFragment[],
   intl: IntlShape
 ): SingleAutocompleteChoiceType[] {
   return [
@@ -47,12 +48,10 @@ function getWarehouseChoices(
       value: null
     },
     ...variants
-      .reduce<ProductDetails_product_variants_stocks_warehouse[]>(
+      .reduce<Warehouse[]>(
         (warehouses, variant) => [
           ...warehouses,
-          ...variant.stocks.reduce<
-            ProductDetails_product_variants_stocks_warehouse[]
-          >((variantStocks, stock) => {
+          ...variant.stocks.reduce<Warehouse[]>((variantStocks, stock) => {
             if (!!warehouses.find(w => w.id === stock.warehouse.id)) {
               return variantStocks;
             }
@@ -133,7 +132,7 @@ const useStyles = makeStyles(
 function getAvailabilityLabel(
   intl: IntlShape,
   warehouse: string,
-  variant: ProductDetails_product_variants,
+  variant: ProductDetailsVariantFragment[][0],
   numAvailable: number
 ): string {
   if (variant.preorder) {
@@ -206,12 +205,12 @@ function getAvailabilityLabel(
 
 interface ProductVariantsProps extends ListActions, ChannelProps {
   disabled: boolean;
-  limits: RefreshLimits_shop_limits;
-  product: ProductDetails_product;
-  variants: ProductDetails_product_variants[];
+  limits: RefreshLimitsQuery["shop"]["limits"];
+  product: ProductFragment;
+  variants: ProductDetailsVariantFragment[];
   onVariantReorder: ReorderAction;
   onRowClick: (id: string) => () => void;
-  onSetDefaultVariant(variant: ProductDetails_product_variants);
+  onSetDefaultVariant(variant: ProductDetailsVariantFragment[][0]);
   onVariantAdd?();
   onVariantsAdd?();
 }

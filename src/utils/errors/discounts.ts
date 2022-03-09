@@ -1,5 +1,4 @@
-import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
-import { DiscountErrorCode } from "@saleor/types/globalTypes";
+import { DiscountErrorCode, DiscountErrorFragment } from "@saleor/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";
