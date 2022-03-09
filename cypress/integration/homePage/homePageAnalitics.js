@@ -18,9 +18,16 @@ import {
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
 import * as shippingUtils from "../../support/api/utils/shippingUtils";
 import filterTests from "../../support/filterTests";
-import { changeChannel } from "../../support/pages/homePage";
+import {
+  changeChannel,
+  getOrdersReadyForCaptureRegex,
+  getOrdersReadyToFulfillRegex,
+  getProductsOutOfStockRegex,
+  getSalesAmountRegex,
+  getTodaysOrdersRegex
+} from "../../support/pages/homePage";
 
-filterTests({ definedTags: ["all", "critical"] }, () => {
+filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
   describe("Homepage analytics", () => {
     const startsWith = "CyHomeAnalytics";
     const productPrice = 22;
@@ -41,6 +48,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
     let ordersReadyForCaptureRegexp;
     let productsOutOfStockRegexp;
     let salesAmountRegexp;
+    let ordersRegexp;
 
     before(() => {
       cy.clearSessionData().loginUserViaRequest();
@@ -101,282 +109,99 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         )
         .then(({ variantsList: variantsResp }) => {
           createdVariants = variantsResp;
+
+          homePageUtils
+            .getOrdersReadyToFulfill(defaultChannel.slug)
+            .then(ordersReadyToFulfillBefore => {
+              ordersReadyToFulfillRegexp = getOrdersReadyToFulfillRegex(
+                ordersReadyToFulfillBefore,
+                1
+              );
+            });
+          homePageUtils
+            .getOrdersReadyForCapture(defaultChannel.slug)
+            .then(ordersReadyForCaptureBefore => {
+              ordersReadyForCaptureRegexp = getOrdersReadyForCaptureRegex(
+                ordersReadyForCaptureBefore,
+                1
+              );
+            });
+          homePageUtils
+            .getProductsOutOfStock(defaultChannel.slug)
+            .then(productsOutOfStockBefore => {
+              productsOutOfStockRegexp = getProductsOutOfStockRegex(
+                productsOutOfStockBefore,
+                1
+              );
+            });
+          homePageUtils
+            .getSalesAmount(defaultChannel.slug)
+            .then(salesAmount => {
+              salesAmountRegexp = getSalesAmountRegex(
+                salesAmount,
+                productPrice * 2 + shippingPrice
+              );
+            });
+          homePageUtils
+            .getTodaysOrders(defaultChannel.slug)
+            .then(ordersBefore => {
+              ordersRegexp = getTodaysOrdersRegex(ordersBefore, 2);
+            });
+        })
+        .then(() => {
+          createReadyToFulfillOrder({
+            customerId,
+            shippingMethodId: shippingMethod.id,
+            channelId: defaultChannel.id,
+            variantsList: createdVariants,
+            address: addresses.plAddress
+          });
+          createWaitingForCaptureOrder({
+            channelSlug: defaultChannel.slug,
+            email: randomEmail,
+            variantsList: createdVariants,
+            shippingMethodName: shippingMethod.name,
+            address: addresses.plAddress
+          });
+          const productOutOfStockRandomName =
+            startsWith + faker.datatype.number();
+
+          productsUtils.createProductInChannel({
+            name: productOutOfStockRandomName,
+            channelId: defaultChannel.id,
+            warehouseId: warehouse.id,
+            quantityInWarehouse: 0,
+            productTypeId: productType.id,
+            attributeId: attribute.id,
+            categoryId: category.id,
+            price: productPrice
+          });
         });
-      homePageUtils
-        .getOrdersReadyToFulfill(defaultChannel.slug)
-        .as("ordersReadyToFulfill");
-      createReadyToFulfillOrder({
-        customerId,
-        shippingMethodId: shippingMethod.id,
-        channelId: defaultChannel.id,
-        variantsList: createdVariants,
-        address: addresses.plAddress
-      });
-      cy.get("@ordersReadyToFulfill").then(ordersReadyToFulfillBefore => {
-        const allOrdersReadyToFulfill = ordersReadyToFulfillBefore + 1;
-        const notANumberRegex = "\\D*";
-        ordersReadyToFulfillRegexp = new RegExp(
-          `${notANumberRegex}${allOrdersReadyToFulfill}${notANumberRegex}`
-        );
-      });
-      homePageUtils
-        .getOrdersReadyForCapture(defaultChannel.slug)
-        .as("ordersReadyForCapture");
-
-      createWaitingForCaptureOrder({
-        channelSlug: defaultChannel.slug,
-        email: randomEmail,
-        variantsList: createdVariants,
-        shippingMethodName: shippingMethod.name,
-        address: addresses.plAddress
-      });
-
-      cy.get("@ordersReadyForCapture").then(ordersReadyForCaptureBefore => {
-        const allOrdersReadyForCapture = ordersReadyForCaptureBefore + 1;
-        const notANumberRegex = "\\D*";
-        ordersReadyForCaptureRegexp = new RegExp(
-          `${notANumberRegex}${allOrdersReadyForCapture}${notANumberRegex}`
-        );
-      });
-      homePageUtils
-        .getProductsOutOfStock(defaultChannel.slug)
-        .as("productsOutOfStock");
-      const productOutOfStockRandomName = startsWith + faker.datatype.number();
-
-      productsUtils.createProductInChannel({
-        name: productOutOfStockRandomName,
-        channelId: defaultChannel.id,
-        warehouseId: warehouse.id,
-        quantityInWarehouse: 0,
-        productTypeId: productType.id,
-        attributeId: attribute.id,
-        categoryId: category.id,
-        price: productPrice
-      });
-
-      cy.get("@productsOutOfStock").then(productsOutOfStockBefore => {
-        const allProductsOutOfStock = productsOutOfStockBefore + 1;
-        const notANumberRegex = "\\D*";
-        productsOutOfStockRegexp = new RegExp(
-          `${notANumberRegex}${allProductsOutOfStock}${notANumberRegex}`
-        );
-      });
-      homePageUtils.getSalesAmount(defaultChannel.slug).as("salesAmount");
-
-      createReadyToFulfillOrder({
-        customerId,
-        shippingMethodId: shippingMethod.id,
-        channelId: defaultChannel.id,
-        variantsList: createdVariants,
-        address: addresses.plAddress
-      });
-
-      cy.get("@salesAmount").then(salesAmount => {
-        const totalAmount = salesAmount + productPrice;
-        const totalAmountString = totalAmount.toFixed(2);
-        const totalAmountIntegerValue = totalAmountString.split(".")[0];
-        const totalAmountDecimalValue = totalAmountString.split(".")[1];
-        const decimalSeparator = "[,.]";
-        const totalAmountIntegerWithThousandsSeparator = new Intl.NumberFormat(
-          "en"
-        )
-          .format(totalAmountIntegerValue)
-          .replaceAll(",", "[,.]*");
-        const totalAmountWithSeparators = `${totalAmountIntegerWithThousandsSeparator}${decimalSeparator}${totalAmountDecimalValue}`;
-        const notANumberRegex = "\\D*";
-        salesAmountRegexp = new RegExp(
-          `${notANumberRegex}${totalAmountWithSeparators}${notANumberRegex}`
-        );
-      });
-      homePageUtils.getTodaysOrders(defaultChannel.slug).as("todaysOrders");
-
-      createReadyToFulfillOrder({
-        customerId,
-        shippingMethodId: shippingMethod.id,
-        channelId: defaultChannel.id,
-        variantsList: createdVariants,
-        address: addresses.plAddress
-      });
-
-      cy.get("@todaysOrders").then(ordersBefore => {
-        const allOrders = ordersBefore + 1;
-        const notANumberRegex = "\\D*";
-        const ordersRegexp = new RegExp(
-          `${notANumberRegex}${allOrders}${notANumberRegex}`
-        );
-      });
-
-      beforeEach(() => {
-        cy.clearSessionData().loginUserViaRequest();
-      });
-
-      xit("should all elements be visible on the dashboard", () => {
-        cy.visit(urlList.homePage)
-          .softAssertVisibility(HOMEPAGE_SELECTORS.sales)
-          .softAssertVisibility(HOMEPAGE_SELECTORS.orders)
-          .softAssertVisibility(HOMEPAGE_SELECTORS.activity)
-          .softAssertVisibility(HOMEPAGE_SELECTORS.topProducts)
-          .softAssertVisibility(HOMEPAGE_SELECTORS.ordersReadyToFulfill)
-          .softAssertVisibility(HOMEPAGE_SELECTORS.paymentsWaitingForCapture)
-          .softAssertVisibility(HOMEPAGE_SELECTORS.productsOutOfStock);
-      });
-
-      it("should correct amount of ready to fullfil orders be displayed", () => {
-        // homePageUtils
-        //   .getOrdersReadyToFulfill(defaultChannel.slug)
-        //   .as("ordersReadyToFulfill");
-        // createReadyToFulfillOrder({
-        //   customerId,
-        //   shippingMethodId: shippingMethod.id,
-        //   channelId: defaultChannel.id,
-        //   variantsList: createdVariants,
-        //   address: addresses.plAddress
-        // });
-        // cy.get("@ordersReadyToFulfill").then(ordersReadyToFulfillBefore => {
-        //   const allOrdersReadyToFulfill = ordersReadyToFulfillBefore + 1;
-        //   const notANumberRegex = "\\D*";
-        //   const ordersReadyToFulfillRegexp = new RegExp(
-        //     `${notANumberRegex}${allOrdersReadyToFulfill}${notANumberRegex}`
-        //   );
-        cy.visit(urlList.homePage);
-        changeChannel(defaultChannel.name);
-        cy.contains(
-          HOMEPAGE_SELECTORS.ordersReadyToFulfill,
-          ordersReadyToFulfillRegexp
-        ).should("be.visible");
-        cy.contains(
-          HOMEPAGE_SELECTORS.ordersReadyForCapture,
-          ordersReadyForCaptureRegexp
-        ).should("be.visible");
-        cy.contains(
-          HOMEPAGE_SELECTORS.productsOutOfStock,
-          productsOutOfStockRegexp
-        ).should("be.visible");
-        cy.contains(HOMEPAGE_SELECTORS.sales, salesAmountRegexp).should(
-          "be.visible"
-        );
-        cy.contains(HOMEPAGE_SELECTORS.orders, ordersRegexp).should(
-          "be.visible"
-        );
-        // });
-      });
-
-      xit("should correct amount of payments waiting for capture be displayed", () => {
-        // homePageUtils
-        //   .getOrdersReadyForCapture(defaultChannel.slug)
-        //   .as("ordersReadyForCapture");
-
-        // createWaitingForCaptureOrder({
-        //   channelSlug: defaultChannel.slug,
-        //   email: randomEmail,
-        //   variantsList: createdVariants,
-        //   shippingMethodName: shippingMethod.name,
-        //   address: addresses.plAddress
-        // });
-
-        // cy.get("@ordersReadyForCapture").then(ordersReadyForCaptureBefore => {
-        //   const allOrdersReadyForCapture = ordersReadyForCaptureBefore + 1;
-        //   const notANumberRegex = "\\D*";
-        //   const ordersReadyForCaptureRegexp = new RegExp(
-        //     `${notANumberRegex}${allOrdersReadyForCapture}${notANumberRegex}`
-        //   );
-        cy.visit(urlList.homePage);
-        changeChannel(defaultChannel.name);
-        cy.contains(
-          HOMEPAGE_SELECTORS.ordersReadyForCapture,
-          ordersReadyForCaptureRegexp
-        ).should("be.visible");
-        // });
-      });
-
-      xit("should correct amount of products out of stock be displayed", () => {
-        // homePageUtils
-        //   .getProductsOutOfStock(defaultChannel.slug)
-        //   .as("productsOutOfStock");
-        // const productOutOfStockRandomName = startsWith + faker.datatype.number();
-
-        // productsUtils.createProductInChannel({
-        //   name: productOutOfStockRandomName,
-        //   channelId: defaultChannel.id,
-        //   warehouseId: warehouse.id,
-        //   quantityInWarehouse: 0,
-        //   productTypeId: productType.id,
-        //   attributeId: attribute.id,
-        //   categoryId: category.id,
-        //   price: productPrice
-        // });
-
-        // cy.get("@productsOutOfStock").then(productsOutOfStockBefore => {
-        //   const allProductsOutOfStock = productsOutOfStockBefore + 1;
-        //   const notANumberRegex = "\\D*";
-        //   const productsOutOfStockRegexp = new RegExp(
-        //     `${notANumberRegex}${allProductsOutOfStock}${notANumberRegex}`
-        //   );
-        cy.visit(urlList.homePage);
-        changeChannel(defaultChannel.name);
-        cy.contains(
-          HOMEPAGE_SELECTORS.productsOutOfStock,
-          productsOutOfStockRegexp
-        ).should("be.visible");
-      });
     });
 
-    xit("should correct amount of sales be displayed", () => {
-      // homePageUtils.getSalesAmount(defaultChannel.slug).as("salesAmount");
-
-      // createReadyToFulfillOrder({
-      //   customerId,
-      //   shippingMethodId: shippingMethod.id,
-      //   channelId: defaultChannel.id,
-      //   variantsList: createdVariants,
-      //   address: addresses.plAddress
-      // });
-
-      // cy.get("@salesAmount").then(salesAmount => {
-      //   const totalAmount = salesAmount + productPrice;
-      //   const totalAmountString = totalAmount.toFixed(2);
-      //   const totalAmountIntegerValue = totalAmountString.split(".")[0];
-      //   const totalAmountDecimalValue = totalAmountString.split(".")[1];
-      //   const decimalSeparator = "[,.]";
-      //   const totalAmountIntegerWithThousandsSeparator = new Intl.NumberFormat(
-      //     "en"
-      //   )
-      //     .format(totalAmountIntegerValue)
-      //     .replaceAll(",", "[,.]*");
-      //   const totalAmountWithSeparators = `${totalAmountIntegerWithThousandsSeparator}${decimalSeparator}${totalAmountDecimalValue}`;
-      //   const notANumberRegex = "\\D*";
-      //   const salesAmountRegexp = new RegExp(
-      //     `${notANumberRegex}${totalAmountWithSeparators}${notANumberRegex}`
-      //   );
-      cy.visit(urlList.homePage);
-      changeChannel(defaultChannel.name);
-      cy.contains(HOMEPAGE_SELECTORS.sales, salesAmountRegexp).should(
-        "be.visible"
-      );
-      // });
+    beforeEach(() => {
+      cy.clearSessionData().loginUserViaRequest();
     });
 
-    xit("should correct amount of orders be displayed", () => {
-      // homePageUtils.getTodaysOrders(defaultChannel.slug).as("todaysOrders");
-
-      // createReadyToFulfillOrder({
-      //   customerId,
-      //   shippingMethodId: shippingMethod.id,
-      //   channelId: defaultChannel.id,
-      //   variantsList: createdVariants,
-      //   address: addresses.plAddress
-      // });
-
-      // cy.get("@todaysOrders").then(ordersBefore => {
-      //   const allOrders = ordersBefore + 1;
-      //   const notANumberRegex = "\\D*";
-      //   const ordersRegexp = new RegExp(
-      //     `${notANumberRegex}${allOrders}${notANumberRegex}`
-      //   );
+    it("should correct amount of ready to fullfil orders be displayed", () => {
       cy.visit(urlList.homePage);
       changeChannel(defaultChannel.name);
       cy.contains(HOMEPAGE_SELECTORS.orders, ordersRegexp).should("be.visible");
-      // });
+      cy.contains(
+        HOMEPAGE_SELECTORS.ordersReadyToFulfill,
+        ordersReadyToFulfillRegexp
+      ).should("be.visible");
+      cy.contains(
+        HOMEPAGE_SELECTORS.ordersReadyForCapture,
+        ordersReadyForCaptureRegexp
+      ).should("be.visible");
+      cy.contains(HOMEPAGE_SELECTORS.sales, salesAmountRegexp).should(
+        "be.visible"
+      );
+      cy.contains(
+        HOMEPAGE_SELECTORS.productsOutOfStock,
+        productsOutOfStockRegexp
+      ).should("be.visible");
     });
   });
 });
