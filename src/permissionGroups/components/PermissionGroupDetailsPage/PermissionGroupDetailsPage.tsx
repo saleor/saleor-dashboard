@@ -5,28 +5,26 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
-import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
-import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
+import {
+  PermissionEnum,
+  PermissionGroupDetailsFragment,
+  PermissionGroupErrorFragment,
+  UserPermissionFragment
+} from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { MembersListUrlSortField } from "@saleor/permissionGroups/urls";
 import {
   extractPermissionCodes,
   isGroupFullAccess
 } from "@saleor/permissionGroups/utils";
 import { ListActions, SortPage } from "@saleor/types";
-import { PermissionEnum } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import getPermissionGroupErrorMessage from "@saleor/utils/errors/permissionGroups";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import {
-  PermissionGroupDetails_permissionGroup,
-  PermissionGroupDetails_permissionGroup_users
-} from "../../types/PermissionGroupDetails";
 import PermissionGroupInfo from "../PermissionGroupInfo";
 import PermissionGroupMemberList from "../PermissionGroupMemberList";
 
@@ -35,10 +33,11 @@ export interface PermissionGroupDetailsPageFormData {
   hasFullAccess: boolean;
   isActive: boolean;
   permissions: PermissionEnum[];
-  users: PermissionGroupDetails_permissionGroup_users[];
+  users: PermissionGroupDetailsFragment["users"];
 }
 
-export interface PermissionData extends ShopInfo_shop_permissions {
+export interface PermissionData
+  extends Omit<UserPermissionFragment, "__typename"> {
   lastSource?: boolean;
   disabled?: boolean;
 }
@@ -48,9 +47,9 @@ export interface PermissionGroupDetailsPageProps
     SortPage<MembersListUrlSortField> {
   disabled: boolean;
   errors: PermissionGroupErrorFragment[];
-  members: PermissionGroupDetails_permissionGroup_users[];
+  members: PermissionGroupDetailsFragment["users"];
   membersModified: boolean;
-  permissionGroup: PermissionGroupDetails_permissionGroup;
+  permissionGroup: PermissionGroupDetailsFragment;
   permissions: PermissionData[];
   permissionsExceeded: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;

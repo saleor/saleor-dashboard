@@ -5,13 +5,19 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
-import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
-import { AppErrorFragment } from "@saleor/fragments/types/AppErrorFragment";
+import {
+  AppErrorFragment,
+  AppUpdateMutation,
+  PermissionEnum,
+  ShopInfoQuery
+} from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink, Button } from "@saleor/macaw-ui";
-import { PermissionEnum } from "@saleor/types/globalTypes";
+import {
+  Backlink,
+  Button,
+  ConfirmButtonTransitionState
+} from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAppErrorMessage from "@saleor/utils/errors/app";
 import WebhooksList from "@saleor/webhooks/components/WebhooksList";
@@ -20,7 +26,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import activateIcon from "../../../../assets/images/activate-icon.svg";
 import { useStyles } from "../../styles";
-import { AppUpdate_appUpdate_app } from "../../types/AppUpdate";
 import CustomAppDefaultToken from "../CustomAppDefaultToken";
 import CustomAppInformation from "../CustomAppInformation";
 import CustomAppTokens from "../CustomAppTokens";
@@ -35,9 +40,9 @@ export interface CustomAppDetailsPageProps {
   apiUri: string;
   disabled: boolean;
   errors: AppErrorFragment[];
-  permissions: ShopInfo_shop_permissions[];
+  permissions: ShopInfoQuery["shop"]["permissions"];
   saveButtonBarState: ConfirmButtonTransitionState;
-  app: AppUpdate_appUpdate_app;
+  app: AppUpdateMutation["appUpdate"]["app"];
   token: string;
   onApiUriClick: () => void;
   onBack: () => void;

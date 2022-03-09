@@ -1,5 +1,5 @@
 import { countries } from "@saleor/fixtures";
-import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
+import { ChannelErrorFragment } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";

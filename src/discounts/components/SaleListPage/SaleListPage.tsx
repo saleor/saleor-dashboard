@@ -4,6 +4,7 @@ import { getByName } from "@saleor/components/Filter/utils";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
 import { SaleListUrlSortField } from "@saleor/discounts/urls";
+import { SaleFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Button } from "@saleor/macaw-ui";
 import {
@@ -17,7 +18,6 @@ import {
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { SaleList_sales_edges_node } from "../../types/SaleList";
 import SaleList from "../SaleList";
 import {
   createFilterStructure,
@@ -32,7 +32,7 @@ export interface SaleListPageProps
     SortPage<SaleListUrlSortField>,
     TabPageProps,
     ChannelProps {
-  sales: SaleList_sales_edges_node[];
+  sales: SaleFragment[];
 }
 
 const SaleListPage: React.FC<SaleListPageProps> = ({

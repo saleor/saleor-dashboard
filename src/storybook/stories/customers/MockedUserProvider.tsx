@@ -1,10 +1,10 @@
 import { UserContext } from "@saleor/auth";
 import { adminUserPermissions } from "@saleor/fixtures";
-import { User_userPermissions } from "@saleor/fragments/types/User";
+import { UserFragment } from "@saleor/graphql";
 import * as React from "react";
 
 export const MockedUserProvider: React.FC<{
-  customPermissions?: User_userPermissions[];
+  customPermissions?: UserFragment["userPermissions"];
 }> = ({ customPermissions, children }) => (
   <UserContext.Provider
     value={{

@@ -5,18 +5,17 @@ import Hr from "@saleor/components/Hr";
 import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType
 } from "@saleor/components/MultiAutocompleteSelectField";
-import { ChangeEvent } from "@saleor/hooks/useForm";
 import {
   WebhookEventTypeAsyncEnum,
   WebhookEventTypeSyncEnum
-} from "@saleor/types/globalTypes";
+} from "@saleor/graphql";
+import { ChangeEvent } from "@saleor/hooks/useForm";
 import {
   mapAsyncEventsToChoices,
   mapSyncEventsToChoices
 } from "@saleor/webhooks/utils";
 import React from "react";
-import { FormattedMessage } from "react-intl";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
 

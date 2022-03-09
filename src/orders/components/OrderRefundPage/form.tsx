@@ -1,4 +1,5 @@
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
+import { OrderRefundDataQuery } from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   SubmitPromise
@@ -8,7 +9,6 @@ import useFormset, {
   FormsetData
 } from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
-import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
 import React, { useEffect } from "react";
 
 import { refundFulfilledStatuses } from "./OrderRefundPage";
@@ -54,7 +54,7 @@ export interface UseOrderRefundFormResult
 
 interface OrderRefundFormProps {
   children: (props: UseOrderRefundFormResult) => React.ReactNode;
-  order: OrderRefundData_order;
+  order: OrderRefundDataQuery["order"];
   defaultType: OrderRefundType;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }
@@ -71,7 +71,7 @@ function getOrderRefundPageFormData(
 }
 
 function useOrderRefundForm(
-  order: OrderRefundData_order,
+  order: OrderRefundDataQuery["order"],
   defaultType: OrderRefundType,
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise
 ): UseOrderRefundFormResult {

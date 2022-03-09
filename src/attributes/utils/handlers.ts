@@ -4,29 +4,25 @@ import {
   AttributeInputData
 } from "@saleor/components/Attributes";
 import {
-  FileUpload,
-  FileUploadVariables
-} from "@saleor/files/types/FileUpload";
+  AttributeEntityTypeEnum,
+  AttributeInputTypeEnum,
+  AttributeValueDeleteMutation,
+  AttributeValueDeleteMutationVariables,
+  AttributeValueInput,
+  FileUploadMutation,
+  FileUploadMutationVariables,
+  PageSelectedAttributeFragment,
+  ProductFragment,
+  ProductVariantDetailsQuery
+} from "@saleor/graphql";
 import {
   FormsetAtomicData,
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
-import { PageDetails_page_attributes } from "@saleor/pages/types/PageDetails";
-import { ProductDetails_product_attributes } from "@saleor/products/types/ProductDetails";
-import { ProductVariantDetails_productVariant_nonSelectionAttributes } from "@saleor/products/types/ProductVariantDetails";
 import { FetchMoreProps, ReorderEvent } from "@saleor/types";
-import {
-  AttributeEntityTypeEnum,
-  AttributeInputTypeEnum,
-  AttributeValueInput
-} from "@saleor/types/globalTypes";
 import { move, toggle } from "@saleor/utils/lists";
 
-import {
-  AttributeValueDelete,
-  AttributeValueDeleteVariables
-} from "../types/AttributeValueDelete";
 import { getFileValuesToUploadFromAttributes, isFileValueUnused } from "./data";
 
 export function createAttributeChangeHandler(
@@ -275,8 +271,8 @@ export const prepareAttributesInput = ({
 export const handleUploadMultipleFiles = async (
   attributesWithNewFileValue: FormsetData<null, File>,
   uploadFile: (
-    variables: FileUploadVariables
-  ) => Promise<FetchResult<FileUpload>>
+    variables: FileUploadMutationVariables
+  ) => Promise<FetchResult<FileUploadMutation>>
 ) =>
   Promise.all(
     getFileValuesToUploadFromAttributes(attributesWithNewFileValue).map(
@@ -290,13 +286,13 @@ export const handleUploadMultipleFiles = async (
 export const handleDeleteMultipleAttributeValues = async (
   attributesWithNewFileValue: FormsetData<null, File>,
   attributes: Array<
-    | PageDetails_page_attributes
-    | ProductDetails_product_attributes
-    | ProductVariantDetails_productVariant_nonSelectionAttributes
+    | PageSelectedAttributeFragment
+    | ProductFragment["attributes"][0]
+    | ProductVariantDetailsQuery["productVariant"]["nonSelectionAttributes"][0]
   >,
   deleteAttributeValue: (
-    variables: AttributeValueDeleteVariables
-  ) => Promise<FetchResult<AttributeValueDelete>>
+    variables: AttributeValueDeleteMutationVariables
+  ) => Promise<FetchResult<AttributeValueDeleteMutation>>
 ) =>
   Promise.all(
     attributes.map(existingAttribute => {

@@ -1,10 +1,10 @@
 import { IFilterElement } from "@saleor/components/Filter";
+import { OrderDraftFilterInput } from "@saleor/graphql";
 import { maybe } from "@saleor/misc";
 import {
   OrderDraftFilterKeys,
   OrderDraftListFilterOpts
 } from "@saleor/orders/components/OrderDraftListPage";
-import { OrderDraftFilterInput } from "@saleor/types/globalTypes";
 
 import {
   createFilterTabUtils,

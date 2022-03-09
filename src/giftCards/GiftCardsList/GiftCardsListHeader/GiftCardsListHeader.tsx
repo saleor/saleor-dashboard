@@ -9,7 +9,7 @@ import { useIntl } from "react-intl";
 
 import { giftCardSettingsUrl } from "../../urls";
 import { giftCardsListHeaderMenuItemsMessages as messages } from "../messages";
-import useGiftCardListDialogs from "../providers/GiftCardListDialogsProvider/hooks/useGiftCardListDialogs";
+import { useGiftCardListDialogs } from "../providers/GiftCardListDialogsProvider";
 import GiftCardsListHeaderAlert from "./GiftCardsListHeaderAlert";
 
 const GiftCardsListHeader: React.FC = () => {

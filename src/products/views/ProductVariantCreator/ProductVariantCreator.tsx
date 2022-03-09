@@ -1,10 +1,12 @@
-import { useShopLimitsQuery } from "@saleor/components/Shop/query";
+import { useShopLimitsQuery } from "@saleor/components/Shop/queries";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import {
+  useCreateMultipleVariantsDataQuery,
+  useProductVariantBulkCreateMutation
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { useProductVariantBulkCreateMutation } from "@saleor/products/mutations";
-import { useCreateMultipleVariantsData } from "@saleor/products/queries";
 import { productUrl } from "@saleor/products/urls";
 import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -23,7 +25,7 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const { data } = useCreateMultipleVariantsData({
+  const { data } = useCreateMultipleVariantsDataQuery({
     displayLoader: true,
     variables: {
       id,

@@ -1,47 +1,36 @@
 import useNavigator from "@saleor/hooks/useNavigator";
-import usePaginator, {
-  createPaginationState
-} from "@saleor/hooks/usePaginator";
+import { createPaginationState } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
-import { mapEdgesToItems } from "@saleor/utils/maps";
 import { stringifyQs } from "@saleor/utils/urls";
 import React from "react";
 
 import { PAGINATE_BY } from "../../config";
 import { maybe } from "../../misc";
-import TranslationsEntitiesList from "../components/TranslationsEntitiesList";
 import TranslationsEntitiesListPage from "../components/TranslationsEntitiesListPage";
 import {
-  TypedAttributeTranslations,
-  TypedCategoryTranslations,
-  TypedCollectionTranslations,
-  TypedPageTranslations,
-  TypedProductTranslations,
-  TypedSaleTranslations,
-  TypedShippingMethodTranslations,
-  TypedVoucherTranslations
-} from "../queries";
-import {
   LanguageEntitiesUrlQueryParams,
-  languageEntityUrl,
   languageListUrl,
   TranslatableEntities
 } from "../urls";
+import TranslationsAttributeList from "./EntityLists/TranslationsAttributeList";
+import TranslationsCategoryList from "./EntityLists/TranslationsCategoryList";
+import TranslationsCollectionList from "./EntityLists/TranslationsCollectionList";
+import TranslationsPageList from "./EntityLists/TranslationsPageList";
+import TranslationsProductList from "./EntityLists/TranslationsProductList";
+import TranslationsSaleList from "./EntityLists/TranslationsSaleList";
+import TranslationsShippingMethodList from "./EntityLists/TranslationsShippingMethodList";
+import TranslationsVoucherList from "./EntityLists/TranslationsVoucherList";
 
 interface TranslationsEntitiesProps {
   language: string;
   params: LanguageEntitiesUrlQueryParams;
 }
 
-const sumCompleted = (list: any[]) =>
-  list.reduce((acc, field) => acc + (field ? 1 : 0), 0);
-
 const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
   language,
   params
 }) => {
   const navigate = useNavigator();
-  const paginate = usePaginator();
   const shop = useShop();
 
   if (Object.keys(TranslatableEntities).indexOf(params.tab) === -1) {
@@ -133,332 +122,27 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
       onBack={() => navigate(languageListUrl)}
     >
       {params.tab === "categories" ? (
-        <TypedCategoryTranslations variables={queryVariables}>
-          {({ data, loading }) => {
-            const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-              data?.translations?.pageInfo,
-              paginationState,
-              params
-            );
-            return (
-              <TranslationsEntitiesList
-                disabled={loading}
-                entities={mapEdgesToItems(data?.translations)?.map(
-                  node =>
-                    node.__typename === "CategoryTranslatableContent" && {
-                      completion: {
-                        current: sumCompleted([
-                          node.translation?.description,
-                          node.translation?.name,
-                          node.translation?.seoDescription,
-                          node.translation?.seoTitle
-                        ]),
-                        max: 4
-                      },
-                      id: node?.category?.id,
-                      name: node?.category?.name
-                    }
-                )}
-                onRowClick={id =>
-                  navigate(
-                    languageEntityUrl(
-                      language,
-                      TranslatableEntities.categories,
-                      id
-                    )
-                  )
-                }
-                onNextPage={loadNextPage}
-                onPreviousPage={loadPreviousPage}
-                pageInfo={pageInfo}
-              />
-            );
-          }}
-        </TypedCategoryTranslations>
+        <TranslationsCategoryList params={params} variables={queryVariables} />
       ) : params.tab === "products" ? (
-        <TypedProductTranslations variables={queryVariables}>
-          {({ data, loading }) => {
-            const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-              data?.translations?.pageInfo,
-              paginationState,
-              params
-            );
-            return (
-              <TranslationsEntitiesList
-                disabled={loading}
-                entities={mapEdgesToItems(data?.translations)?.map(
-                  node =>
-                    node.__typename === "ProductTranslatableContent" && {
-                      completion: {
-                        current: sumCompleted([
-                          node.translation?.description,
-                          node.translation?.name,
-                          node.translation?.seoDescription,
-                          node.translation?.seoTitle,
-                          ...(node.attributeValues?.map(
-                            ({ translation }) => translation?.richText
-                          ) || [])
-                        ]),
-                        max: 4 + (node.attributeValues?.length || 0)
-                      },
-                      id: node?.product?.id,
-                      name: node?.product?.name
-                    }
-                )}
-                onRowClick={id =>
-                  navigate(
-                    languageEntityUrl(
-                      language,
-                      TranslatableEntities.products,
-                      id
-                    )
-                  )
-                }
-                onNextPage={loadNextPage}
-                onPreviousPage={loadPreviousPage}
-                pageInfo={pageInfo}
-              />
-            );
-          }}
-        </TypedProductTranslations>
+        <TranslationsProductList params={params} variables={queryVariables} />
       ) : params.tab === "collections" ? (
-        <TypedCollectionTranslations variables={queryVariables}>
-          {({ data, loading }) => {
-            const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-              data?.translations?.pageInfo,
-              paginationState,
-              params
-            );
-
-            return (
-              <TranslationsEntitiesList
-                disabled={loading}
-                entities={mapEdgesToItems(data?.translations)?.map(
-                  node =>
-                    node.__typename === "CollectionTranslatableContent" && {
-                      completion: {
-                        current: sumCompleted([
-                          node.translation?.description,
-                          node.translation?.name,
-                          node.translation?.seoDescription,
-                          node.translation?.seoTitle
-                        ]),
-                        max: 4
-                      },
-                      id: node.collection.id,
-                      name: node.collection.name
-                    }
-                )}
-                onRowClick={id =>
-                  navigate(
-                    languageEntityUrl(
-                      language,
-                      TranslatableEntities.collections,
-                      id
-                    )
-                  )
-                }
-                onNextPage={loadNextPage}
-                onPreviousPage={loadPreviousPage}
-                pageInfo={pageInfo}
-              />
-            );
-          }}
-        </TypedCollectionTranslations>
+        <TranslationsCollectionList
+          params={params}
+          variables={queryVariables}
+        />
       ) : params.tab === "sales" ? (
-        <TypedSaleTranslations variables={queryVariables}>
-          {({ data, loading }) => {
-            const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-              data?.translations?.pageInfo,
-              paginationState,
-              params
-            );
-
-            return (
-              <TranslationsEntitiesList
-                disabled={loading}
-                entities={mapEdgesToItems(data?.translations)?.map(
-                  node =>
-                    node.__typename === "SaleTranslatableContent" && {
-                      completion: {
-                        current: sumCompleted([node.translation?.name]),
-                        max: 1
-                      },
-                      id: node.sale?.id,
-                      name: node.sale?.name
-                    }
-                )}
-                onRowClick={id =>
-                  navigate(
-                    languageEntityUrl(language, TranslatableEntities.sales, id)
-                  )
-                }
-                onNextPage={loadNextPage}
-                onPreviousPage={loadPreviousPage}
-                pageInfo={pageInfo}
-              />
-            );
-          }}
-        </TypedSaleTranslations>
+        <TranslationsSaleList params={params} variables={queryVariables} />
       ) : params.tab === "vouchers" ? (
-        <TypedVoucherTranslations
-          variables={{
-            ...paginationState,
-            language: language as any
-          }}
-        >
-          {({ data, loading }) => {
-            const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-              data?.translations?.pageInfo,
-              paginationState,
-              params
-            );
-            return (
-              <TranslationsEntitiesList
-                disabled={loading}
-                entities={mapEdgesToItems(data?.translations)?.map(
-                  node =>
-                    node.__typename === "VoucherTranslatableContent" && {
-                      completion: {
-                        current: sumCompleted([node.translation?.name]),
-                        max: 1
-                      },
-                      id: node.voucher?.id,
-                      name: node.voucher?.name || "-"
-                    }
-                )}
-                onRowClick={id =>
-                  navigate(
-                    languageEntityUrl(
-                      language,
-                      TranslatableEntities.vouchers,
-                      id
-                    )
-                  )
-                }
-                onNextPage={loadNextPage}
-                onPreviousPage={loadPreviousPage}
-                pageInfo={pageInfo}
-              />
-            );
-          }}
-        </TypedVoucherTranslations>
+        <TranslationsVoucherList params={params} variables={queryVariables} />
       ) : params.tab === "pages" ? (
-        <TypedPageTranslations variables={queryVariables}>
-          {({ data, loading }) => {
-            const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-              data?.translations?.pageInfo,
-              paginationState,
-              params
-            );
-
-            return (
-              <TranslationsEntitiesList
-                disabled={loading}
-                entities={mapEdgesToItems(data?.translations)?.map(
-                  node =>
-                    node.__typename === "PageTranslatableContent" && {
-                      completion: {
-                        current: sumCompleted([
-                          node.translation?.content,
-                          node.translation?.seoDescription,
-                          node.translation?.seoTitle,
-                          node.translation?.title
-                        ]),
-                        max: 4
-                      },
-                      id: node?.page.id,
-                      name: node?.page.title
-                    }
-                )}
-                onRowClick={id =>
-                  navigate(
-                    languageEntityUrl(language, TranslatableEntities.pages, id)
-                  )
-                }
-                onNextPage={loadNextPage}
-                onPreviousPage={loadPreviousPage}
-                pageInfo={pageInfo}
-              />
-            );
-          }}
-        </TypedPageTranslations>
+        <TranslationsPageList params={params} variables={queryVariables} />
       ) : params.tab === "attributes" ? (
-        <TypedAttributeTranslations variables={queryVariables}>
-          {({ data, loading }) => {
-            const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-              data?.translations?.pageInfo,
-              paginationState,
-              params
-            );
-            return (
-              <TranslationsEntitiesList
-                disabled={loading}
-                entities={mapEdgesToItems(data?.translations)?.map(
-                  node =>
-                    node.__typename === "AttributeTranslatableContent" && {
-                      completion: null,
-                      id: node?.attribute.id,
-                      name: node?.attribute.name
-                    }
-                )}
-                onRowClick={id =>
-                  navigate(
-                    languageEntityUrl(
-                      language,
-                      TranslatableEntities.attributes,
-                      id
-                    )
-                  )
-                }
-                onNextPage={loadNextPage}
-                onPreviousPage={loadPreviousPage}
-                pageInfo={pageInfo}
-              />
-            );
-          }}
-        </TypedAttributeTranslations>
+        <TranslationsAttributeList params={params} variables={queryVariables} />
       ) : params.tab === "shippingMethods" ? (
-        <TypedShippingMethodTranslations variables={queryVariables}>
-          {({ data, loading }) => {
-            const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-              data?.translations?.pageInfo,
-              paginationState,
-              params
-            );
-            return (
-              <TranslationsEntitiesList
-                disabled={loading}
-                entities={mapEdgesToItems(data?.translations)?.map(
-                  node =>
-                    node.__typename === "ShippingMethodTranslatableContent" && {
-                      completion: {
-                        current: sumCompleted([
-                          node.translation?.name,
-                          node.translation?.description
-                        ]),
-                        max: 2
-                      },
-                      id: node?.shippingMethod.id,
-                      name: node?.name
-                    }
-                )}
-                onRowClick={id =>
-                  navigate(
-                    languageEntityUrl(
-                      language,
-                      TranslatableEntities.shippingMethods,
-                      id
-                    )
-                  )
-                }
-                onNextPage={loadNextPage}
-                onPreviousPage={loadPreviousPage}
-                pageInfo={pageInfo}
-              />
-            );
-          }}
-        </TypedShippingMethodTranslations>
+        <TranslationsShippingMethodList
+          params={params}
+          variables={queryVariables}
+        />
       ) : null}
     </TranslationsEntitiesListPage>
   );

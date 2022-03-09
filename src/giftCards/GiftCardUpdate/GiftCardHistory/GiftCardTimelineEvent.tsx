@@ -2,19 +2,15 @@ import { appPath } from "@saleor/apps/urls";
 import Link from "@saleor/components/Link";
 import { TimelineEvent } from "@saleor/components/Timeline";
 import { customerPath } from "@saleor/customers/urls";
+import { GiftCardEventFragment, GiftCardEventsEnum } from "@saleor/graphql";
 import { orderUrl } from "@saleor/orders/urls";
 import { staffMemberDetailsUrl } from "@saleor/staff/urls";
-import { GiftCardEventsEnum } from "@saleor/types/globalTypes";
 import React from "react";
-import { useIntl } from "react-intl";
-import { IntlShape } from "react-intl";
+import { IntlShape, useIntl } from "react-intl";
 
-import { GiftCardDetails_giftCard_events } from "../types/GiftCardDetails";
 import { giftCardHistoryTimelineMessages as timelineMessages } from "./messages";
 
-const getUserOrApp = (
-  event: GiftCardDetails_giftCard_events
-): string | null => {
+const getUserOrApp = (event: GiftCardEventFragment): string | null => {
   if (event.user) {
     const { firstName, lastName, email } = event.user;
 
@@ -32,10 +28,7 @@ const getUserOrApp = (
   return null;
 };
 
-const getEventMessage = (
-  event: GiftCardDetails_giftCard_events,
-  intl: IntlShape
-) => {
+const getEventMessage = (event: GiftCardEventFragment, intl: IntlShape) => {
   const user = getUserOrApp(event);
 
   switch (event.type) {
@@ -120,7 +113,7 @@ const getEventMessage = (
 
 export interface GiftCardTimelineEventProps {
   date: string;
-  event: GiftCardDetails_giftCard_events;
+  event: GiftCardEventFragment;
 }
 
 const GiftCardTimelineEvent: React.FC<GiftCardTimelineEventProps> = ({

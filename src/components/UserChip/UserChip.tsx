@@ -1,5 +1,5 @@
 import { FormControlLabel, Switch } from "@material-ui/core";
-import { User } from "@saleor/fragments/types/User";
+import { UserFragment } from "@saleor/graphql";
 import { makeStyles, UserChipMenu, UserChipMenuItem } from "@saleor/macaw-ui";
 import { getUserInitials, getUserName } from "@saleor/misc";
 import React from "react";
@@ -20,7 +20,7 @@ const useStyles = makeStyles(
 
 export interface UserChipProps {
   isDarkThemeEnabled: boolean;
-  user: User;
+  user: UserFragment;
   onLogout: () => void;
   onProfileClick: () => void;
   onThemeToggle: () => void;

@@ -2,7 +2,7 @@ import { Card, CardContent, TextField } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { IS_CLOUD_INSTANCE } from "@saleor/config";
-import { ShopErrorFragment } from "@saleor/fragments/types/ShopErrorFragment";
+import { ShopErrorFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { getFormErrors } from "@saleor/utils/errors";
 import getShopErrorMessage from "@saleor/utils/errors/shop";

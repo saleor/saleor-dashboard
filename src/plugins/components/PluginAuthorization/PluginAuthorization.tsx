@@ -1,16 +1,18 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
-import { PluginConfigurationFragment_configuration } from "@saleor/fragments/types/PluginConfigurationFragment";
+import {
+  ConfigurationItemFragment,
+  ConfigurationTypeFieldEnum
+} from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import { isSecretField } from "@saleor/plugins/utils";
-import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface PluginAuthorizationProps {
-  fields: PluginConfigurationFragment_configuration[];
+  fields: ConfigurationItemFragment[];
   onClear: (field: string) => void;
   onEdit: (field: string) => void;
 }

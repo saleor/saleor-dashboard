@@ -7,10 +7,10 @@ import {
   sortPageProps,
   tabPageProps
 } from "@saleor/fixtures";
+import { StaffMemberStatus } from "@saleor/graphql";
 import { staffMembers } from "@saleor/staff/fixtures";
 import { StaffListUrlSortField } from "@saleor/staff/urls";
 import Decorator from "@saleor/storybook/Decorator";
-import { StaffMemberStatus } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

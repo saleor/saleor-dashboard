@@ -5,6 +5,7 @@ import Container from "@saleor/components/Container";
 import ExternalLink from "@saleor/components/ExternalLink";
 import PageHeader from "@saleor/components/PageHeader";
 import Skeleton from "@saleor/components/Skeleton";
+import { AppQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, Button } from "@saleor/macaw-ui";
 import React from "react";
@@ -16,12 +17,11 @@ import activateIcon from "../../../../assets/images/activate-icon.svg";
 import settingsIcon from "../../../../assets/images/settings-icon.svg";
 import supportIcon from "../../../../assets/images/support-icon.svg";
 import { useStyles } from "../../styles";
-import { App_app } from "../../types/App";
 import DeactivatedText from "../DeactivatedText";
 
 export interface AppDetailsPageProps {
   loading: boolean;
-  data: App_app;
+  data: AppQuery["app"];
   navigateToApp: () => void;
   navigateToAppSettings: () => void;
   onAppActivateOpen: () => void;

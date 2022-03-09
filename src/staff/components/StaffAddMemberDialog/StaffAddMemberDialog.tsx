@@ -9,13 +9,15 @@ import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
-import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
+import {
+  SearchPermissionGroupsQuery,
+  StaffErrorFragment
+} from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { commonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
-import { SearchPermissionGroups_search_edges_node } from "@saleor/searches/types/SearchPermissionGroups";
-import { FetchMoreProps, SearchPageProps } from "@saleor/types";
+import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@saleor/types";
 import { getFormErrors } from "@saleor/utils/errors";
 import getStaffErrorMessage from "@saleor/utils/errors/staff";
 import React from "react";
@@ -58,7 +60,7 @@ const useStyles = makeStyles(
 );
 
 interface StaffAddMemberDialogProps extends SearchPageProps {
-  availablePermissionGroups: SearchPermissionGroups_search_edges_node[];
+  availablePermissionGroups: RelayToFlat<SearchPermissionGroupsQuery["search"]>;
   confirmButtonState: ConfirmButtonTransitionState;
   disabled: boolean;
   errors: StaffErrorFragment[];

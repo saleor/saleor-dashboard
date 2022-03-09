@@ -2,18 +2,18 @@ import { Card } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import { InternalLink } from "@saleor/components/InternalLink";
+import { CategoryDetailsQuery } from "@saleor/graphql";
 import { Button } from "@saleor/macaw-ui";
 import { productListUrl } from "@saleor/products/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ListActions, PageListProps } from "../../../types";
-import { CategoryDetails_category_products_edges_node } from "../../types/CategoryDetails";
+import { ListActions, PageListProps, RelayToFlat } from "../../../types";
 import CategoryProductList from "../CategoryProductList";
 import { useStyles } from "./styles";
 
 interface CategoryProductsProps extends PageListProps, ListActions {
-  products: CategoryDetails_category_products_edges_node[];
+  products: RelayToFlat<CategoryDetailsQuery["category"]["products"]>;
   categoryName: string;
   categoryId: string;
 }

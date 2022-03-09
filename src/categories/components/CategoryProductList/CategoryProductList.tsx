@@ -6,13 +6,12 @@ import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import { CategoryDetailsQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
-import { ListActions, ListProps } from "@saleor/types";
+import { ListActions, ListProps, RelayToFlat } from "@saleor/types";
 import React from "react";
 import { FormattedMessage } from "react-intl";
-
-import { CategoryDetails_category_products_edges_node } from "../../types/CategoryDetails";
 
 const useStyles = makeStyles(
   theme => ({
@@ -51,7 +50,7 @@ const useStyles = makeStyles(
 );
 
 interface CategoryProductListProps extends ListProps, ListActions {
-  products: CategoryDetails_category_products_edges_node[];
+  products: RelayToFlat<CategoryDetailsQuery["category"]["products"]>;
 }
 
 export const CategoryProductList: React.FC<CategoryProductListProps> = props => {

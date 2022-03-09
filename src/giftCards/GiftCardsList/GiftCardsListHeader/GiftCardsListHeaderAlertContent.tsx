@@ -1,7 +1,7 @@
 import Link from "@saleor/components/Link";
+import { ProductTypeKindEnum } from "@saleor/graphql";
 import { productAddUrl } from "@saleor/products/urls";
 import { productTypeAddUrl } from "@saleor/productTypes/urls";
-import { ProductTypeKindEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

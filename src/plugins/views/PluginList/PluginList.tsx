@@ -3,6 +3,7 @@ import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
 import { configurationMenuUrl } from "@saleor/configuration";
+import { usePluginsQuery } from "@saleor/graphql";
 import { useChannelsSearchWithLoadMore } from "@saleor/hooks/useChannelsSearchWithLoadMore";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -20,7 +21,6 @@ import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
 
 import PluginsListPage from "../../components/PluginsListPage/PluginsListPage";
-import { usePluginsListQuery } from "../../queries";
 import {
   pluginListUrl,
   PluginListUrlDialog,
@@ -61,7 +61,7 @@ export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber]
   );
-  const { data, loading } = usePluginsListQuery({
+  const { data, loading } = usePluginsQuery({
     displayLoader: true,
     variables: queryVariables
   });

@@ -1,6 +1,6 @@
 import { fetchMoreProps } from "@saleor/fixtures";
+import { PageErrorCode } from "@saleor/graphql";
 import { PageData } from "@saleor/pages/components/PageDetailsPage/form";
-import { PageErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

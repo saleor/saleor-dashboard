@@ -3,9 +3,8 @@ import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { TimelineEvent } from "@saleor/components/Timeline";
 import { TitleElement } from "@saleor/components/Timeline/TimelineEventHeader";
+import { OrderEventFragment, OrderEventsEnum } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { OrderDetails_order_events } from "@saleor/orders/types/OrderDetails";
-import { OrderEventsEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -33,7 +32,7 @@ export const messages = defineMessages({
 });
 
 interface ExtendedTimelineEventProps {
-  event: OrderDetails_order_events;
+  event: OrderEventFragment;
   titleElements: TitleElement[];
 }
 

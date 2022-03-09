@@ -8,7 +8,7 @@ import {
 import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
-import { MenuErrorFragment } from "@saleor/fragments/types/MenuErrorFragment";
+import { MenuErrorFragment } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";

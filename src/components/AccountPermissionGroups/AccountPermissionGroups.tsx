@@ -1,8 +1,10 @@
 import { Typography } from "@material-ui/core";
-import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
+import {
+  SearchPermissionGroupsQuery,
+  StaffErrorFragment
+} from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
-import { SearchPermissionGroups_search_edges_node } from "@saleor/searches/types/SearchPermissionGroups";
-import { FetchMoreProps, SearchPageProps } from "@saleor/types";
+import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@saleor/types";
 import { getFormErrors } from "@saleor/utils/errors";
 import getStaffErrorMessage from "@saleor/utils/errors/staff";
 import React from "react";
@@ -20,7 +22,7 @@ export interface AccountPermissionGroupsProps
   };
   disabled: boolean;
   errors: StaffErrorFragment[];
-  availablePermissionGroups: SearchPermissionGroups_search_edges_node[];
+  availablePermissionGroups: RelayToFlat<SearchPermissionGroupsQuery["search"]>;
   onChange: FormChange;
   displayValues: MultiAutocompleteChoiceType[];
 }

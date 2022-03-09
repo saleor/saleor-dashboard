@@ -1,5 +1,5 @@
 import { Typography } from "@material-ui/core";
-import { FileFragment } from "@saleor/fragments/types/FileFragment";
+import { FileFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import React from "react";

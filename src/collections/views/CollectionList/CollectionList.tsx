@@ -5,6 +5,10 @@ import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
+import {
+  useCollectionBulkDeleteMutation,
+  useCollectionListQuery
+} from "@saleor/graphql";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -22,13 +26,10 @@ import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
-import React from "react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CollectionListPage from "../../components/CollectionListPage/CollectionListPage";
-import { useCollectionBulkDelete } from "../../mutations";
-import { useCollectionListQuery } from "../../queries";
 import {
   collectionAddUrl,
   collectionListUrl,
@@ -104,7 +105,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const [
     collectionBulkDelete,
     collectionBulkDeleteOpts
-  ] = useCollectionBulkDelete({
+  ] = useCollectionBulkDeleteMutation({
     onCompleted: data => {
       if (data.collectionBulkDelete.errors.length === 0) {
         notify({

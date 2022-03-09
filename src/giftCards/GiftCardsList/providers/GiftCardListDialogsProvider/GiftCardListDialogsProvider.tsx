@@ -6,10 +6,10 @@ import GiftCardExportDialogContent from "@saleor/giftCards/GiftCardExportDialogC
 import { giftCardListUrl } from "@saleor/giftCards/urls";
 import useNavigator from "@saleor/hooks/useNavigator";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import React, { createContext } from "react";
+import React, { createContext, useContext } from "react";
 
+import { GIFT_CARD_LIST_QUERY } from "../../queries";
 import {
-  GIFT_CARD_LIST_QUERY,
   GiftCardListActionParamsEnum,
   GiftCardListUrlQueryParams
 } from "../../types";
@@ -33,6 +33,9 @@ export interface GiftCardListDialogsConsumerProps {
 export const GiftCardListDialogsContext = createContext<
   GiftCardListDialogsConsumerProps
 >(null);
+
+export const useGiftCardListDialogs = () =>
+  useContext(GiftCardListDialogsContext);
 
 const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = ({
   children,

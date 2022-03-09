@@ -1,19 +1,17 @@
 import {
   AppExtensionMountEnum,
-  PermissionEnum
-} from "@saleor/types/globalTypes";
+  ExtensionListQuery,
+  PermissionEnum,
+  useExtensionListQuery
+} from "@saleor/graphql";
+import { RelayToFlat } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 
 import { AppData, useExternalApp } from "./components/ExternalAppContext";
-import { useExtensionList } from "./queries";
-import {
-  ExtensionList_appExtensions_edges_node,
-  ExtensionList_appExtensions_edges_node_app
-} from "./types/ExtensionList";
 
 export interface Extension {
   id: string;
-  app: ExtensionList_appExtensions_edges_node_app;
+  app: RelayToFlat<ExtensionListQuery["appExtensions"]>[0]["app"];
   accessToken: string;
   permissions: PermissionEnum[];
   label: string;
@@ -38,7 +36,7 @@ export const extensionMountPoints = {
 };
 
 const filterAndMapToTarget = (
-  extensions: ExtensionList_appExtensions_edges_node[],
+  extensions: RelayToFlat<ExtensionListQuery["appExtensions"]>,
   openApp: (appData: AppData) => void
 ): Extension[] =>
   extensions.map(
@@ -67,7 +65,7 @@ export const useExtensions = <T extends AppExtensionMountEnum>(
 ): Record<T, Extension[]> => {
   const { openApp } = useExternalApp();
 
-  const { data } = useExtensionList({
+  const { data } = useExtensionListQuery({
     fetchPolicy: "cache-first",
     variables: {
       filter: {

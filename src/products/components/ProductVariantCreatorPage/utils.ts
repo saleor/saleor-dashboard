@@ -1,17 +1,17 @@
-import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
-import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import {
-  ProductDetails_product_productType_variantAttributes,
-  ProductDetails_product_productType_variantAttributes_choices_edges_node
-} from "@saleor/products/types/ProductDetails";
-import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
+  AttributeValueFragment,
+  ProductVariantAttributesFragment,
+  SearchAttributeValuesQuery
+} from "@saleor/graphql";
+import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
+import { RelayToFlat } from "@saleor/types";
 
 import { AttributeValue, ProductVariantCreateFormData } from "./form";
 
 export function getPriceAttributeValues(
   data: ProductVariantCreateFormData,
-  attributes: ProductDetails_product_productType_variantAttributes[]
-): ProductDetails_product_productType_variantAttributes_choices_edges_node[] {
+  attributes: ProductVariantAttributesFragment["productType"]["variantAttributes"]
+): AttributeValueFragment[] {
   return data.price.mode === "all"
     ? null
     : data.price.attribute
@@ -30,8 +30,8 @@ export function getPriceAttributeValues(
 
 export function getStockAttributeValues(
   data: ProductVariantCreateFormData,
-  attributes: ProductDetails_product_productType_variantAttributes[]
-): ProductDetails_product_productType_variantAttributes_choices_edges_node[] {
+  attributes: ProductVariantAttributesFragment["productType"]["variantAttributes"]
+): AttributeValueFragment[] {
   return data.stock.mode === "all"
     ? null
     : data.stock.attribute
@@ -65,7 +65,9 @@ export const getBooleanAttributeValue = (
 export const getBasicAttributeValue = (
   attributeId: string,
   attributeValue: string,
-  attributeValues: SearchAttributeValues_attribute_choices_edges_node[],
+  attributeValues: RelayToFlat<
+    SearchAttributeValuesQuery["attribute"]["choices"]
+  >,
   data: ProductVariantCreateFormData
 ): AttributeValue<Partial<AttributeValueFragment>> => {
   const dataAttribute = data.attributes.find(getById(attributeId));

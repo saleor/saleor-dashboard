@@ -1,4 +1,10 @@
 import { OutputData } from "@editorjs/editorjs";
+import {
+  LanguageCodeEnum,
+  usePageTranslationDetailsQuery,
+  useUpdateAttributeValueTranslationsMutation,
+  useUpdatePageTranslationsMutation
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
@@ -8,13 +14,7 @@ import { stringifyQs } from "@saleor/utils/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { LanguageCodeEnum } from "../../types/globalTypes";
 import TranslationsPagesPage from "../components/TranslationsPagesPage";
-import {
-  TypedUpdateAttributeValueTranslations,
-  TypedUpdatePageTranslations
-} from "../mutations";
-import { usePageTranslationDetails } from "../queries";
 import { PageTranslationInputFieldName, TranslationField } from "../types";
 import {
   languageEntitiesUrl,
@@ -42,18 +42,9 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
   const shop = useShop();
   const intl = useIntl();
 
-  const pageTranslations = usePageTranslationDetails({
+  const pageTranslations = usePageTranslationDetailsQuery({
     variables: { id, language: languageCode }
   });
-
-  const onEdit = (field: string) =>
-    navigate(
-      "?" +
-        stringifyQs({
-          activeField: field
-        }),
-      { replace: true }
-    );
 
   const onUpdate = (errors: unknown[]) => {
     if (errors.length === 0) {
@@ -66,90 +57,92 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
     }
   };
 
+  const [
+    updateTranslations,
+    updateTranslationsOpts
+  ] = useUpdatePageTranslationsMutation({
+    onCompleted: data => onUpdate(data.pageTranslate.errors)
+  });
+
+  const [
+    updateAttributeValueTranslations
+  ] = useUpdateAttributeValueTranslationsMutation({
+    onCompleted: data => onUpdate(data.attributeValueTranslate.errors)
+  });
+
+  const onEdit = (field: string) =>
+    navigate(
+      "?" +
+        stringifyQs({
+          activeField: field
+        }),
+      { replace: true }
+    );
+
   const onDiscard = () => {
     navigate("?", { replace: true });
   };
 
+  const handleSubmit = (
+    { name: fieldName }: TranslationField<PageTranslationInputFieldName>,
+    data: string | any
+  ) =>
+    extractMutationErrors(
+      updateTranslations({
+        variables: {
+          id,
+          input: getParsedTranslationInputData({
+            data,
+            fieldName
+          }),
+          language: languageCode
+        }
+      })
+    );
+
+  const handleAttributeValueSubmit = (
+    { id }: TranslationField<PageTranslationInputFieldName>,
+    data: OutputData
+  ) =>
+    extractMutationErrors(
+      updateAttributeValueTranslations({
+        variables: {
+          id,
+          input: { richText: JSON.stringify(data) },
+          language: languageCode
+        }
+      })
+    );
+
+  const translation = pageTranslations?.data?.translation;
+
   return (
-    <TypedUpdatePageTranslations
-      onCompleted={data => onUpdate(data.pageTranslate.errors)}
-    >
-      {(updateTranslations, updateTranslationsOpts) => (
-        <TypedUpdateAttributeValueTranslations
-          onCompleted={data => onUpdate(data.attributeValueTranslate.errors)}
-        >
-          {updateAttributeValueTranslations => {
-            const handleSubmit = (
-              {
-                name: fieldName
-              }: TranslationField<PageTranslationInputFieldName>,
-              data: string | any
-            ) =>
-              extractMutationErrors(
-                updateTranslations({
-                  variables: {
-                    id,
-                    input: getParsedTranslationInputData({
-                      data,
-                      fieldName
-                    }),
-                    language: languageCode
-                  }
-                })
-              );
-
-            const handleAttributeValueSubmit = (
-              { id }: TranslationField<PageTranslationInputFieldName>,
-              data: OutputData
-            ) =>
-              extractMutationErrors(
-                updateAttributeValueTranslations({
-                  variables: {
-                    id,
-                    input: { richText: JSON.stringify(data) },
-                    language: languageCode
-                  }
-                })
-              );
-
-            const translation = pageTranslations?.data?.translation;
-
-            return (
-              <TranslationsPagesPage
-                activeField={params.activeField}
-                disabled={
-                  pageTranslations.loading || updateTranslationsOpts.loading
-                }
-                languageCode={languageCode}
-                languages={shop?.languages || []}
-                saveButtonState={updateTranslationsOpts.status}
-                onBack={() =>
-                  navigate(
-                    languageEntitiesUrl(languageCode, {
-                      tab: TranslatableEntities.pages
-                    })
-                  )
-                }
-                onEdit={onEdit}
-                onDiscard={onDiscard}
-                onLanguageChange={lang =>
-                  navigate(
-                    languageEntityUrl(lang, TranslatableEntities.pages, id)
-                  )
-                }
-                onSubmit={handleSubmit}
-                onAttributeValueSubmit={handleAttributeValueSubmit}
-                data={
-                  translation?.__typename === "PageTranslatableContent"
-                    ? translation
-                    : null
-                }
-              />
-            );
-          }}
-        </TypedUpdateAttributeValueTranslations>
-      )}
-    </TypedUpdatePageTranslations>
+    <TranslationsPagesPage
+      activeField={params.activeField}
+      disabled={pageTranslations.loading || updateTranslationsOpts.loading}
+      languageCode={languageCode}
+      languages={shop?.languages || []}
+      saveButtonState={updateTranslationsOpts.status}
+      onBack={() =>
+        navigate(
+          languageEntitiesUrl(languageCode, {
+            tab: TranslatableEntities.pages
+          })
+        )
+      }
+      onEdit={onEdit}
+      onDiscard={onDiscard}
+      onLanguageChange={lang =>
+        navigate(languageEntityUrl(lang, TranslatableEntities.pages, id))
+      }
+      onSubmit={handleSubmit}
+      onAttributeValueSubmit={handleAttributeValueSubmit}
+      data={
+        translation?.__typename === "PageTranslatableContent"
+          ? translation
+          : null
+      }
+    />
   );
 };
 TranslationsPages.displayName = "TranslationsPages";

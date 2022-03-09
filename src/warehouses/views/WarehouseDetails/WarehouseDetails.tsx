@@ -1,5 +1,11 @@
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import {
+  CountryCode,
+  useWarehouseDeleteMutation,
+  useWarehouseDetailsQuery,
+  useWarehouseUpdateMutation
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
@@ -11,17 +17,11 @@ import {
   getStringOrPlaceholder
 } from "@saleor/misc";
 import { shippingZoneUrl } from "@saleor/shipping/urls";
-import { CountryCode } from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import WarehouseDeleteDialog from "@saleor/warehouses/components/WarehouseDeleteDialog";
 import WarehouseDetailsPage, {
   WarehouseDetailsPageFormData
 } from "@saleor/warehouses/components/WarehouseDetailsPage";
-import {
-  useWarehouseDelete,
-  useWarehouseUpdate
-} from "@saleor/warehouses/mutations";
-import { useWarehouseDetails } from "@saleor/warehouses/queries";
 import {
   warehouseListUrl,
   warehouseUrl,
@@ -40,11 +40,11 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
-  const { data, loading } = useWarehouseDetails({
+  const { data, loading } = useWarehouseDetailsQuery({
     displayLoader: true,
     variables: { id }
   });
-  const [updateWarehouse, updateWarehouseOpts] = useWarehouseUpdate({
+  const [updateWarehouse, updateWarehouseOpts] = useWarehouseUpdateMutation({
     onCompleted: data => {
       if (data.updateWarehouse.errors.length === 0) {
         notify({
@@ -56,7 +56,7 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
   });
   const updateWarehouseTransitionState = getMutationStatus(updateWarehouseOpts);
 
-  const [deleteWarehouse, deleteWarehouseOpts] = useWarehouseDelete({
+  const [deleteWarehouse, deleteWarehouseOpts] = useWarehouseDeleteMutation({
     onCompleted: data => {
       if (data.deleteWarehouse.errors.length === 0) {
         notify({

@@ -1,4 +1,4 @@
-import { MetadataInput } from "@saleor/types/globalTypes";
+import { MetadataInput } from "@saleor/graphql";
 
 export enum EventDataAction {
   add = "add",

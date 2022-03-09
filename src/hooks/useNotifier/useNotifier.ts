@@ -1,5 +1,8 @@
-import { IMessage } from "@saleor/components/messages";
-import { IMessageContext, MessageContext } from "@saleor/components/messages";
+import {
+  IMessage,
+  IMessageContext,
+  MessageContext
+} from "@saleor/components/messages";
 import { useContext } from "react";
 
 export type UseNotifierResult = IMessageContext;

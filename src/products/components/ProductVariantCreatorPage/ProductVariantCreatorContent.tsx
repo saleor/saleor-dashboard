@@ -1,9 +1,11 @@
 import { ChannelPriceData } from "@saleor/channels/utils";
-import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
-import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
-import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
-import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
-import { FetchMoreProps } from "@saleor/types";
+import {
+  BulkProductErrorFragment,
+  ProductVariantAttributesFragment,
+  SearchAttributeValuesQuery,
+  WarehouseFragment
+} from "@saleor/graphql";
+import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import { isSelected } from "@saleor/utils/lists";
 import React from "react";
 
@@ -18,12 +20,14 @@ import {
 import { ProductVariantCreatorStep } from "./types";
 
 export interface ProductVariantCreatorContentProps {
-  attributes: ProductDetails_product_productType_variantAttributes[];
-  attributeValues: SearchAttributeValues_attribute_choices_edges_node[];
+  attributes: ProductVariantAttributesFragment["productType"]["variantAttributes"];
+  attributeValues: RelayToFlat<
+    SearchAttributeValuesQuery["attribute"]["choices"]
+  >;
   channelListings: ChannelPriceData[];
   data: ProductVariantCreateFormData;
   dispatchFormDataAction: React.Dispatch<ProductVariantCreateReducerAction>;
-  errors: ProductVariantBulkCreate_productVariantBulkCreate_errors[];
+  errors: BulkProductErrorFragment[];
   step: ProductVariantCreatorStep;
   variantsLeft: number | null;
   warehouses: WarehouseFragment[];

@@ -1,6 +1,6 @@
+import { StockAvailability } from "@saleor/graphql";
 import { createFilterStructure } from "@saleor/products/components/ProductListPage";
 import { ProductListUrlFilters } from "@saleor/products/urls";
-import { StockAvailability } from "@saleor/types/globalTypes";
 import { getFilterQueryParams } from "@saleor/utils/filters";
 import { stringifyQs } from "@saleor/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";

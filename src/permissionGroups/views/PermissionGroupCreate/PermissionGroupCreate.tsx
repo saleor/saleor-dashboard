@@ -1,5 +1,6 @@
 import { useUser } from "@saleor/auth";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { usePermissionGroupCreateMutation } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
@@ -11,8 +12,6 @@ import { useIntl } from "react-intl";
 import PermissionGroupCreatePage, {
   PermissionGroupCreateFormData
 } from "../../components/PermissionGroupCreatePage";
-import { usePermissionGroupCreate } from "../../mutations";
-import { PermissionGroupCreate } from "../../types/PermissionGroupCreate";
 import { permissionGroupDetailsUrl, permissionGroupListUrl } from "../../urls";
 
 const PermissionGroupCreateView: React.FC = () => {
@@ -22,23 +21,23 @@ const PermissionGroupCreateView: React.FC = () => {
   const shop = useShop();
   const user = useUser();
 
-  const handleSuccess = (data: PermissionGroupCreate) => {
-    if (data?.permissionGroupCreate?.errors.length === 0) {
-      notify({
-        status: "success",
-        text: intl.formatMessage({
-          defaultMessage: "Permission group created"
-        })
-      });
-      navigate(permissionGroupDetailsUrl(data.permissionGroupCreate.group.id));
-    }
-  };
-
   const [
     createPermissionGroup,
     createPermissionGroupResult
-  ] = usePermissionGroupCreate({
-    onCompleted: handleSuccess
+  ] = usePermissionGroupCreateMutation({
+    onCompleted: data => {
+      if (data?.permissionGroupCreate?.errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage({
+            defaultMessage: "Permission group created"
+          })
+        });
+        navigate(
+          permissionGroupDetailsUrl(data.permissionGroupCreate.group.id)
+        );
+      }
+    }
   });
 
   const errors =

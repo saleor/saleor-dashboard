@@ -1,7 +1,9 @@
-import { BulkProductErrorFragment } from "@saleor/fragments/types/BulkProductErrorFragment";
-import { CollectionErrorFragment } from "@saleor/fragments/types/CollectionErrorFragment";
-import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
-import { ProductErrorCode } from "@saleor/types/globalTypes";
+import {
+  BulkProductErrorFragment,
+  CollectionErrorFragment,
+  ProductErrorCode,
+  ProductErrorFragment
+} from "@saleor/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 import commonErrorMessages, { getCommonFormFieldErrorMessage } from "./common";

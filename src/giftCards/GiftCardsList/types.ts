@@ -40,5 +40,3 @@ export type GiftCardListUrlQueryParams = Pagination &
   GiftCardUrlSort &
   ActiveTab &
   Search;
-
-export const GIFT_CARD_LIST_QUERY = "GiftCardList";

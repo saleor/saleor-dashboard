@@ -1,4 +1,4 @@
-import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
+import { GiftCardErrorFragment } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
 
 import { GiftCardCreateFormData } from "./GiftCardCreateDialogForm";
@@ -12,11 +12,11 @@ export interface GiftCardCreateFormCustomer {
 
 export type GiftCardCreateCommonFormErrors = Record<
   "tags" | "expiryDate" | "currency" | "amount" | "balance",
-  GiftCardError
+  GiftCardErrorFragment
 >;
 
 export type GiftCardCreateFormErrors = GiftCardCreateCommonFormErrors &
-  Record<"customer", GiftCardError>;
+  Record<"customer", GiftCardErrorFragment>;
 
 export interface GiftCardCreateFormCommonProps {
   change: FormChange;

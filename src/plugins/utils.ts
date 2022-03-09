@@ -1,8 +1,10 @@
-import { PluginConfigurationFragment_configuration } from "@saleor/fragments/types/PluginConfigurationFragment";
-import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
+import {
+  ConfigurationItemFragment,
+  ConfigurationTypeFieldEnum
+} from "@saleor/graphql";
 
 export function isSecretField(
-  config: PluginConfigurationFragment_configuration[],
+  config: ConfigurationItemFragment[],
   field: string
 ) {
   return [

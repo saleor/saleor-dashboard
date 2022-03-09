@@ -13,8 +13,7 @@ import { getGiftCardErrorMessage } from "@saleor/giftCards/GiftCardUpdate/messag
 import useCurrentDate from "@saleor/hooks/useCurrentDate";
 import { FormChange } from "@saleor/hooks/useForm";
 import React from "react";
-import { FormattedMessage } from "react-intl";
-import { MessageDescriptor, useIntl } from "react-intl";
+import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 
 import { giftCardCreateExpirySelectMessages as messages } from "./messages";
 import { useGiftCardCreateExpirySelectStyles as useStyles } from "./styles";

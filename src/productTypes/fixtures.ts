@@ -1,19 +1,16 @@
 import {
-  ProductType_productType,
-  ProductType_productType_productAttributes
-} from "@saleor/products/types/ProductType";
-import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
-
-import {
   AttributeInputTypeEnum,
   AttributeTypeEnum,
+  ProductTypeDetailsQuery,
   ProductTypeKindEnum,
+  ProductTypeListQuery,
+  ProductTypeQuery,
+  SearchProductTypesQuery,
   WeightUnitsEnum
-} from "../types/globalTypes";
-import { ProductTypeDetails_productType } from "./types/ProductTypeDetails";
-import { ProductTypeList_productTypes_edges_node } from "./types/ProductTypeList";
+} from "@saleor/graphql";
+import { RelayToFlat } from "@saleor/types";
 
-export const attributes: ProductType_productType_productAttributes[] = [
+export const attributes: ProductTypeQuery["productType"]["productAttributes"] = [
   {
     node: {
       __typename: "Attribute" as "Attribute",
@@ -969,7 +966,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
   }
 ].map(edge => edge.node);
 
-export const productTypeSearch: ProductType_productType = {
+export const productTypeSearch: ProductTypeQuery["productType"] = {
   __typename: "ProductType" as "ProductType",
   hasVariants: true,
   id: "UHJvZHVjdFR5cGU6NA==",
@@ -982,8 +979,10 @@ export const productTypeSearch: ProductType_productType = {
   }
 };
 
-export const productTypes: Array<SearchProductTypes_search_edges_node &
-  ProductTypeList_productTypes_edges_node> = [
+export const productTypes: Array<RelayToFlat<
+  SearchProductTypesQuery["search"]
+>[0] &
+  ProductTypeListQuery["productTypes"]["edges"][0]["node"]> = [
   {
     __typename: "ProductType" as "ProductType",
     hasVariants: true,
@@ -1064,7 +1063,7 @@ export const productTypes: Array<SearchProductTypes_search_edges_node &
   ...productType
 }));
 
-export const productType: ProductTypeDetails_productType = {
+export const productType: ProductTypeDetailsQuery["productType"] = {
   __typename: "ProductType" as "ProductType",
   hasVariants: false,
   id: "UHJvZHVjdFR5cGU6NQ==",

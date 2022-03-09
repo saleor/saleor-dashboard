@@ -1,18 +1,10 @@
 import { gql } from "@apollo/client";
-import { exportErrorFragment } from "@saleor/fragments/errors";
-import makeMutation from "@saleor/hooks/makeMutation";
 
-import {
-  ExportGiftCards,
-  ExportGiftCardsVariables
-} from "./types/ExportGiftCards";
-
-const exportGiftCards = gql`
-  ${exportErrorFragment}
+export const exportGiftCards = gql`
   mutation ExportGiftCards($input: ExportGiftCardsInput!) {
     exportGiftCards(input: $input) {
       errors {
-        ...ExportErrorFragment
+        ...ExportError
       }
       exportFile {
         id
@@ -20,8 +12,3 @@ const exportGiftCards = gql`
     }
   }
 `;
-
-export const useGiftCardExportMutation = makeMutation<
-  ExportGiftCards,
-  ExportGiftCardsVariables
->(exportGiftCards);

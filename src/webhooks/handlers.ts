@@ -1,8 +1,8 @@
-import { ChangeEvent } from "@saleor/hooks/useForm";
 import {
   WebhookEventTypeAsyncEnum,
   WebhookEventTypeSyncEnum
-} from "@saleor/types/globalTypes";
+} from "@saleor/graphql";
+import { ChangeEvent } from "@saleor/hooks/useForm";
 import { toggle } from "@saleor/utils/lists";
 
 import { filterSelectedAsyncEvents } from "./utils";

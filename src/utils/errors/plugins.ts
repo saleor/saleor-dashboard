@@ -1,5 +1,4 @@
-import { PluginErrorFragment } from "@saleor/fragments/types/PluginErrorFragment";
-import { PluginErrorCode } from "@saleor/types/globalTypes";
+import { PluginErrorCode, PluginErrorFragment } from "@saleor/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";

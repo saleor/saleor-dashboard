@@ -1,16 +1,13 @@
 import { IFilter } from "@saleor/components/Filter";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import { commonMessages } from "@saleor/intl";
+import { OrderStatusFilter, PaymentChargeStatusEnum } from "@saleor/graphql";
 import {
+  commonMessages,
   commonStatusMessages,
   orderStatusMessages,
   paymentStatusMessages
 } from "@saleor/intl";
 import { FilterOpts, MinMax } from "@saleor/types";
-import {
-  OrderStatusFilter,
-  PaymentChargeStatusEnum
-} from "@saleor/types/globalTypes";
 import {
   createBooleanField,
   createDateField,

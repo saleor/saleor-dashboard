@@ -1,15 +1,7 @@
 import { gql } from "@apollo/client";
-import { fragmentUserBase } from "@saleor/fragments/auth";
-import { fragmentMoney } from "@saleor/fragments/products";
-import makeQuery from "@saleor/hooks/makeQuery";
-
-import { GiftCardList, GiftCardListVariables } from "./types/GiftCardList";
-import { GiftCardProductsCount } from "./types/GiftCardProductsCount";
-import { GiftCardTotalCount } from "./types/GiftCardTotalCount";
+import { getOperationAST } from "graphql";
 
 export const giftCardList = gql`
-  ${fragmentUserBase}
-  ${fragmentMoney}
   query GiftCardList(
     $first: Int
     $after: String
@@ -59,6 +51,8 @@ export const giftCardList = gql`
   }
 `;
 
+export const GIFT_CARD_LIST_QUERY = getOperationAST(giftCardList).name.value;
+
 export const giftCardTotalCount = gql`
   query GiftCardTotalCount {
     giftCards {
@@ -66,15 +60,6 @@ export const giftCardTotalCount = gql`
     }
   }
 `;
-
-export const useGiftCardTotalCountQuery = makeQuery<GiftCardTotalCount, {}>(
-  giftCardTotalCount
-);
-
-export const useGiftCardListQuery = makeQuery<
-  GiftCardList,
-  GiftCardListVariables
->(giftCardList);
 
 export const giftCardProductsCount = gql`
   query GiftCardProductsCount {
@@ -86,8 +71,3 @@ export const giftCardProductsCount = gql`
     }
   }
 `;
-
-export const useGiftCardProductsCountQuery = makeQuery<
-  GiftCardProductsCount,
-  never
->(giftCardProductsCount);

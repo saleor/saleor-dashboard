@@ -2,7 +2,7 @@ import { Card } from "@material-ui/core";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
-import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
+import { OrderDraftListQuery, RefreshLimitsQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Button } from "@saleor/macaw-ui";
 import { OrderDraftListUrlSortField } from "@saleor/orders/urls";
@@ -10,6 +10,7 @@ import {
   FilterPageProps,
   ListActions,
   PageListProps,
+  RelayToFlat,
   SortPage,
   TabPageProps
 } from "@saleor/types";
@@ -17,7 +18,6 @@ import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { OrderDraftList_draftOrders_edges_node } from "../../types/OrderDraftList";
 import OrderDraftList from "../OrderDraftList";
 import OrderLimitReached from "../OrderLimitReached";
 import {
@@ -32,8 +32,8 @@ export interface OrderDraftListPageProps
     FilterPageProps<OrderDraftFilterKeys, OrderDraftListFilterOpts>,
     SortPage<OrderDraftListUrlSortField>,
     TabPageProps {
-  limits: RefreshLimits_shop_limits;
-  orders: OrderDraftList_draftOrders_edges_node[];
+  limits: RefreshLimitsQuery["shop"]["limits"];
+  orders: RelayToFlat<OrderDraftListQuery["draftOrders"]>;
 }
 
 const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({

@@ -1,93 +1,46 @@
 import { gql } from "@apollo/client";
-import {
-  accountErrorFragment,
-  staffErrorFragment
-} from "@saleor/fragments/errors";
-import { staffMemberDetailsFragment } from "@saleor/fragments/staff";
-import makeMutation from "@saleor/hooks/makeMutation";
 
-import { TypedMutation } from "../mutations";
-import {
-  ChangeStaffPassword,
-  ChangeStaffPasswordVariables
-} from "./types/ChangeStaffPassword";
-import { StaffAvatarDelete } from "./types/StaffAvatarDelete";
-import {
-  StaffAvatarUpdate,
-  StaffAvatarUpdateVariables
-} from "./types/StaffAvatarUpdate";
-import {
-  StaffMemberAdd,
-  StaffMemberAddVariables
-} from "./types/StaffMemberAdd";
-import {
-  StaffMemberDelete,
-  StaffMemberDeleteVariables
-} from "./types/StaffMemberDelete";
-import {
-  StaffMemberUpdate,
-  StaffMemberUpdateVariables
-} from "./types/StaffMemberUpdate";
-
-const staffMemberAddMutation = gql`
-  ${staffErrorFragment}
-  ${staffMemberDetailsFragment}
+export const staffMemberAddMutation = gql`
   mutation StaffMemberAdd($input: StaffCreateInput!) {
     staffCreate(input: $input) {
       errors {
-        ...StaffErrorFragment
+        ...StaffError
       }
       user {
-        ...StaffMemberDetailsFragment
+        ...StaffMemberDetails
       }
     }
   }
 `;
-export const useStaffMemberAddMutation = makeMutation<
-  StaffMemberAdd,
-  StaffMemberAddVariables
->(staffMemberAddMutation);
 
-const staffMemberUpdateMutation = gql`
-  ${staffErrorFragment}
-  ${staffMemberDetailsFragment}
+export const staffMemberUpdateMutation = gql`
   mutation StaffMemberUpdate($id: ID!, $input: StaffUpdateInput!) {
     staffUpdate(id: $id, input: $input) {
       errors {
-        ...StaffErrorFragment
+        ...StaffError
       }
       user {
-        ...StaffMemberDetailsFragment
+        ...StaffMemberDetails
       }
     }
   }
 `;
-export const useStaffMemberUpdateMutation = makeMutation<
-  StaffMemberUpdate,
-  StaffMemberUpdateVariables
->(staffMemberUpdateMutation);
 
-const staffMemberDeleteMutation = gql`
-  ${staffErrorFragment}
+export const staffMemberDeleteMutation = gql`
   mutation StaffMemberDelete($id: ID!) {
     staffDelete(id: $id) {
       errors {
-        ...StaffErrorFragment
+        ...StaffError
       }
     }
   }
 `;
-export const TypedStaffMemberDeleteMutation = TypedMutation<
-  StaffMemberDelete,
-  StaffMemberDeleteVariables
->(staffMemberDeleteMutation);
 
-const staffAvatarUpdateMutation = gql`
-  ${accountErrorFragment}
+export const staffAvatarUpdateMutation = gql`
   mutation StaffAvatarUpdate($image: Upload!) {
     userAvatarUpdate(image: $image) {
       errors {
-        ...AccountErrorFragment
+        ...AccountError
       }
       user {
         id
@@ -98,17 +51,12 @@ const staffAvatarUpdateMutation = gql`
     }
   }
 `;
-export const TypedStaffAvatarUpdateMutation = TypedMutation<
-  StaffAvatarUpdate,
-  StaffAvatarUpdateVariables
->(staffAvatarUpdateMutation);
 
-const staffAvatarDeleteMutation = gql`
-  ${accountErrorFragment}
+export const staffAvatarDeleteMutation = gql`
   mutation StaffAvatarDelete {
     userAvatarDelete {
       errors {
-        ...AccountErrorFragment
+        ...AccountError
       }
       user {
         id
@@ -119,22 +67,13 @@ const staffAvatarDeleteMutation = gql`
     }
   }
 `;
-export const TypedStaffAvatarDeleteMutation = TypedMutation<
-  StaffAvatarDelete,
-  StaffMemberDeleteVariables
->(staffAvatarDeleteMutation);
 
-const changeStaffPassword = gql`
-  ${accountErrorFragment}
+export const changeStaffPassword = gql`
   mutation ChangeStaffPassword($newPassword: String!, $oldPassword: String!) {
     passwordChange(newPassword: $newPassword, oldPassword: $oldPassword) {
       errors {
-        ...AccountErrorFragment
+        ...AccountError
       }
     }
   }
 `;
-export const useChangeStaffPassword = makeMutation<
-  ChangeStaffPassword,
-  ChangeStaffPasswordVariables
->(changeStaffPassword);

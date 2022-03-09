@@ -1,8 +1,8 @@
 import { TextField } from "@material-ui/core";
 import DebounceForm from "@saleor/components/DebounceForm";
 import Form from "@saleor/components/Form";
+import { OrderLineFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { OrderDetails_order_lines } from "@saleor/orders/types/OrderDetails";
 import createNonNegativeValueChangeHandler from "@saleor/utils/handlers/nonNegativeValueChangeHandler";
 import React from "react";
 
@@ -24,7 +24,7 @@ export interface FormData {
 }
 
 interface TableLineFormProps {
-  line: OrderDetails_order_lines;
+  line: OrderLineFragment;
   onOrderLineChange: (id: string, data: FormData) => void;
 }
 

@@ -1,20 +1,20 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import {
+  CategoryCreateMutation,
+  useCategoryCreateMutation,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getMutationErrors } from "@saleor/misc";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import CategoryCreatePage from "../components/CategoryCreatePage";
 import { CategoryCreateData } from "../components/CategoryCreatePage/form";
-import { useCategoryCreateMutation } from "../mutations";
-import { CategoryCreate } from "../types/CategoryCreate";
 import { categoryListUrl, categoryUrl } from "../urls";
 
 interface CategoryCreateViewProps {
@@ -27,10 +27,10 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
-  const handleSuccess = (data: CategoryCreate) => {
+  const handleSuccess = (data: CategoryCreateMutation) => {
     if (data.categoryCreate.errors.length === 0) {
       notify({
         status: "success",

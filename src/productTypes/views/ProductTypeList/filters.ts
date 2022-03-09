@@ -1,14 +1,14 @@
 import { IFilterElement } from "@saleor/components/Filter";
+import {
+  ProductTypeConfigurable,
+  ProductTypeEnum,
+  ProductTypeFilterInput
+} from "@saleor/graphql";
 import { findValueInEnum, maybe } from "@saleor/misc";
 import {
   ProductTypeFilterKeys,
   ProductTypeListFilterOpts
 } from "@saleor/productTypes/components/ProductTypeListPage";
-import {
-  ProductTypeConfigurable,
-  ProductTypeEnum,
-  ProductTypeFilterInput
-} from "@saleor/types/globalTypes";
 
 import {
   createFilterTabUtils,

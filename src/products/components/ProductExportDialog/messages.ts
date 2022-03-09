@@ -1,4 +1,4 @@
-import { ProductFieldEnum } from "@saleor/types/globalTypes";
+import { ProductFieldEnum } from "@saleor/graphql";
 import { defineMessages, useIntl } from "react-intl";
 
 export const productExportDialogMessages = defineMessages({

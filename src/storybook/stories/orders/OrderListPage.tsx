@@ -1,12 +1,9 @@
+import { OrderStatusFilter, PaymentChargeStatusEnum } from "@saleor/graphql";
 import OrderListPage, {
   OrderFilterGiftCard,
   OrderListPageProps
 } from "@saleor/orders/components/OrderListPage";
 import { OrderListUrlSortField } from "@saleor/orders/urls";
-import {
-  OrderStatusFilter,
-  PaymentChargeStatusEnum
-} from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

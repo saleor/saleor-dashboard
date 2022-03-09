@@ -8,20 +8,22 @@ import Link from "@saleor/components/Link";
 import RequirePermissions from "@saleor/components/RequirePermissions";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
+import {
+  OrderDetailsFragment,
+  PermissionEnum,
+  SearchCustomersQuery,
+  WarehouseClickAndCollectOptionEnum
+} from "@saleor/graphql";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
 import { Button, makeStyles } from "@saleor/macaw-ui";
-import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
-import { FetchMoreProps } from "@saleor/types";
-import { PermissionEnum } from "@saleor/types/globalTypes";
+import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { customerUrl } from "../../../customers/urls";
 import { maybe } from "../../../misc";
-import { OrderDetails_order } from "../../types/OrderDetails";
-import { WarehouseClickAndCollectOptionEnum } from "./../../../types/globalTypes";
 import messages from "./messages";
 
 const useStyles = makeStyles(
@@ -56,8 +58,8 @@ export interface CustomerEditData {
 }
 
 export interface OrderCustomerProps extends Partial<FetchMoreProps> {
-  order: OrderDetails_order;
-  users?: SearchCustomers_search_edges_node[];
+  order: OrderDetailsFragment;
+  users?: RelayToFlat<SearchCustomersQuery["search"]>;
   loading?: boolean;
   canEditAddresses: boolean;
   canEditCustomer: boolean;

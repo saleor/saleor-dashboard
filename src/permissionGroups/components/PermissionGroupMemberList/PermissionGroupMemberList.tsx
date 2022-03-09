@@ -12,6 +12,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
+import { PermissionGroupMemberFragment } from "@saleor/graphql";
 import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import {
   getUserInitials,
@@ -20,7 +21,6 @@ import {
   stopPropagation
 } from "@saleor/misc";
 import { sortMembers } from "@saleor/permissionGroups/sort";
-import { PermissionGroupDetails_permissionGroup_users } from "@saleor/permissionGroups/types/PermissionGroupDetails";
 import { MembersListUrlSortField } from "@saleor/permissionGroups/urls";
 import { ListActions, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
@@ -85,7 +85,7 @@ const numberOfColumns = 4;
 interface PermissionGroupProps
   extends ListActions,
     SortPage<MembersListUrlSortField> {
-  users: PermissionGroupDetails_permissionGroup_users[];
+  users: PermissionGroupMemberFragment[];
   disabled: boolean;
   onUnassign: (ida: string[]) => void;
   onAssign: () => void;

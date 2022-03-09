@@ -6,17 +6,19 @@ import CardTitle from "@saleor/components/CardTitle";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import MultiAutocompleteSelectField from "@saleor/components/MultiAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
-import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
+import {
+  AttributeInputTypeEnum,
+  AttributeValueFragment,
+  ProductVariantAttributesFragment,
+  SearchAttributeValuesQuery
+} from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import {
   getBasicAttributeValue,
   getBooleanAttributeValue
 } from "@saleor/products/components/ProductVariantCreatorPage/utils";
-import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
-import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
-import { FetchMoreProps } from "@saleor/types";
-import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
+import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import React from "react";
 import {
   defineMessages,
@@ -47,7 +49,7 @@ export function getVariantsNumber(data: ProductVariantCreateFormData): number {
 
 export function getMultiValues(
   attributes: Attribute[],
-  attribute: ProductDetails_product_productType_variantAttributes
+  attribute: ProductVariantAttributesFragment["productType"]["variantAttributes"][0]
 ) {
   return attributes
     .find(getById(attribute.id))
@@ -56,7 +58,7 @@ export function getMultiValues(
 
 export function getMultiDisplayValues(
   attributes: Attribute[],
-  attribute: ProductDetails_product_productType_variantAttributes
+  attribute: ProductVariantAttributesFragment["productType"]["variantAttributes"][0]
 ) {
   return attributes.find(getById(attribute.id))?.values.map(value => ({
     label: value.value?.name,
@@ -92,8 +94,10 @@ const getBooleanChoices = (
 };
 
 export interface ProductVariantCreatorValuesProps {
-  attributes: ProductDetails_product_productType_variantAttributes[];
-  attributeValues: SearchAttributeValues_attribute_choices_edges_node[];
+  attributes: ProductVariantAttributesFragment["productType"]["variantAttributes"];
+  attributeValues: RelayToFlat<
+    SearchAttributeValuesQuery["attribute"]["choices"]
+  >;
   fetchAttributeValues: (query: string, attributeId: string) => void;
   fetchMoreAttributeValues?: FetchMoreProps;
   data: ProductVariantCreateFormData;

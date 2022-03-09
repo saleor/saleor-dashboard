@@ -1,10 +1,13 @@
+import { CardContent, Typography } from "@material-ui/core";
 import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
 import Skeleton from "@saleor/components/Skeleton";
+import { PluginsDetailsFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Plugin_plugin } from "@saleor/plugins/types/Plugin";
 import { isPluginGlobal } from "@saleor/plugins/views/utils";
 import React from "react";
 import { FormattedMessage } from "react-intl";
+
+import { pluginDetailsChannelsCardMessages as messages } from "./messages";
 
 const useStyles = makeStyles(
   theme => ({
@@ -26,12 +29,8 @@ const useStyles = makeStyles(
 export interface PluginDetailsChannelsCardProps {
   setSelectedChannelId: (channelId: string) => void;
   selectedChannelId: string;
-  plugin: Plugin_plugin;
+  plugin: PluginsDetailsFragment;
 }
-
-import { CardContent, Typography } from "@material-ui/core";
-
-import { pluginDetailsChannelsCardMessages as messages } from "./messages";
 
 const PluginDetailsChannelsCardContent: React.FC<PluginDetailsChannelsCardProps> = ({
   plugin,

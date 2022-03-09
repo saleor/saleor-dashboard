@@ -1,25 +1,6 @@
 import { gql } from "@apollo/client";
-import { pageInfoFragment } from "@saleor/fragments/pageInfo";
-import {
-  productTypeDetailsFragment,
-  productTypeFragment
-} from "@saleor/fragments/productTypes";
-import makeQuery from "@saleor/hooks/makeQuery";
-
-import { TypedQuery } from "../queries";
-import { ProductTypeCreateData } from "./types/ProductTypeCreateData";
-import {
-  ProductTypeDetails,
-  ProductTypeDetailsVariables
-} from "./types/ProductTypeDetails";
-import {
-  ProductTypeList,
-  ProductTypeListVariables
-} from "./types/ProductTypeList";
 
 export const productTypeListQuery = gql`
-  ${pageInfoFragment}
-  ${productTypeFragment}
   query ProductTypeList(
     $after: String
     $before: String
@@ -38,25 +19,20 @@ export const productTypeListQuery = gql`
     ) {
       edges {
         node {
-          ...ProductTypeFragment
+          ...ProductType
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }
 `;
-export const useProductTypeListQuery = makeQuery<
-  ProductTypeList,
-  ProductTypeListVariables
->(productTypeListQuery);
 
 export const productTypeDetailsQuery = gql`
-  ${productTypeDetailsFragment}
   query ProductTypeDetails($id: ID!) {
     productType(id: $id) {
-      ...ProductTypeDetailsFragment
+      ...ProductTypeDetails
     }
     shop {
       defaultWeightUnit
@@ -67,10 +43,6 @@ export const productTypeDetailsQuery = gql`
     }
   }
 `;
-export const TypedProductTypeDetailsQuery = TypedQuery<
-  ProductTypeDetails,
-  ProductTypeDetailsVariables
->(productTypeDetailsQuery);
 
 export const productTypeCreateDataQuery = gql`
   query ProductTypeCreateData {
@@ -83,7 +55,3 @@ export const productTypeCreateDataQuery = gql`
     }
   }
 `;
-export const TypedProductTypeCreateDataQuery = TypedQuery<
-  ProductTypeCreateData,
-  {}
->(productTypeCreateDataQuery);

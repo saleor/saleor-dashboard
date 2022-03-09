@@ -1,70 +1,37 @@
 import { gql } from "@apollo/client";
-import { warehouseErrorFragment } from "@saleor/fragments/errors";
-import { warehouseDetailsFragment } from "@saleor/fragments/warehouses";
-import makeMutation from "@saleor/hooks/makeMutation";
 
-import {
-  WarehouseCreate,
-  WarehouseCreateVariables
-} from "./types/WarehouseCreate";
-import {
-  WarehouseDelete,
-  WarehouseDeleteVariables
-} from "./types/WarehouseDelete";
-import {
-  WarehouseUpdate,
-  WarehouseUpdateVariables
-} from "./types/WarehouseUpdate";
-
-const deleteWarehouse = gql`
-  ${warehouseErrorFragment}
+export const deleteWarehouse = gql`
   mutation WarehouseDelete($id: ID!) {
     deleteWarehouse(id: $id) {
       errors {
-        ...WarehouseErrorFragment
+        ...WarehouseError
       }
     }
   }
 `;
-export const useWarehouseDelete = makeMutation<
-  WarehouseDelete,
-  WarehouseDeleteVariables
->(deleteWarehouse);
 
-const createWarehouse = gql`
-  ${warehouseDetailsFragment}
-  ${warehouseErrorFragment}
+export const createWarehouse = gql`
   mutation WarehouseCreate($input: WarehouseCreateInput!) {
     createWarehouse(input: $input) {
       errors {
-        ...WarehouseErrorFragment
+        ...WarehouseError
       }
       warehouse {
-        ...WarehouseDetailsFragment
+        ...WarehouseDetails
       }
     }
   }
 `;
-export const useWarehouseCreate = makeMutation<
-  WarehouseCreate,
-  WarehouseCreateVariables
->(createWarehouse);
 
-const updateWarehouse = gql`
-  ${warehouseDetailsFragment}
-  ${warehouseErrorFragment}
+export const updateWarehouse = gql`
   mutation WarehouseUpdate($id: ID!, $input: WarehouseUpdateInput!) {
     updateWarehouse(id: $id, input: $input) {
       errors {
-        ...WarehouseErrorFragment
+        ...WarehouseError
       }
       warehouse {
-        ...WarehouseDetailsFragment
+        ...WarehouseDetails
       }
     }
   }
 `;
-export const useWarehouseUpdate = makeMutation<
-  WarehouseUpdate,
-  WarehouseUpdateVariables
->(updateWarehouse);

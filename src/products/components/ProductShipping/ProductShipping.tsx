@@ -6,7 +6,7 @@ import {
 } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import Grid from "@saleor/components/Grid";
-import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
+import { ProductErrorFragment } from "@saleor/graphql";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 import createNonNegativeValueChangeHandler from "@saleor/utils/handlers/nonNegativeValueChangeHandler";
 import React from "react";

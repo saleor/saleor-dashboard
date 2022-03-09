@@ -1,5 +1,7 @@
-import { CollectionChannelListingErrorFragment } from "@saleor/fragments/types/CollectionChannelListingErrorFragment";
-import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
+import {
+  CollectionChannelListingErrorFragment,
+  ProductChannelListingErrorFragment
+} from "@saleor/graphql";
 
 export interface ChannelOpts {
   availableForPurchase?: string;

@@ -1,9 +1,5 @@
 import { FetchResult } from "@apollo/client";
 import {
-  AttributeValueDelete,
-  AttributeValueDeleteVariables
-} from "@saleor/attributes/types/AttributeValueDelete";
-import {
   getAttributesAfterFileAttributesUpdate,
   mergeAttributeValueDeleteErrors,
   mergeFileUploadErrors
@@ -16,45 +12,33 @@ import {
 import { ChannelData } from "@saleor/channels/utils";
 import { VALUES_PAGINATE_BY } from "@saleor/config";
 import {
-  FileUpload,
-  FileUploadVariables
-} from "@saleor/files/types/FileUpload";
-import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
-import { BulkStockErrorFragment } from "@saleor/fragments/types/BulkStockErrorFragment";
-import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
-import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
-import { StockErrorFragment } from "@saleor/fragments/types/StockErrorFragment";
-import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
+  AttributeErrorFragment,
+  AttributeValueDeleteMutation,
+  AttributeValueDeleteMutationVariables,
+  BulkStockErrorFragment,
+  FileUploadMutation,
+  FileUploadMutationVariables,
+  Node,
+  ProductChannelListingErrorFragment,
+  ProductChannelListingUpdateMutation,
+  ProductChannelListingUpdateMutationVariables,
+  ProductErrorFragment,
+  ProductFragment,
+  ProductMediaCreateMutationVariables,
+  ProductMediaReorderMutationVariables,
+  ProductUpdateMutation,
+  ProductUpdateMutationVariables,
+  ProductVariantChannelListingUpdateMutation,
+  ProductVariantChannelListingUpdateMutationVariables,
+  ProductVariantReorderMutationVariables,
+  SimpleProductUpdateMutation,
+  SimpleProductUpdateMutationVariables,
+  StockErrorFragment,
+  UploadErrorFragment,
+  VariantCreateMutation,
+  VariantCreateMutationVariables
+} from "@saleor/graphql";
 import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
-import {
-  ProductChannelListingUpdate,
-  ProductChannelListingUpdateVariables
-} from "@saleor/products/types/ProductChannelListingUpdate";
-import {
-  ProductDetails_product,
-  ProductDetails_product_variants
-} from "@saleor/products/types/ProductDetails";
-import { ProductMediaCreateVariables } from "@saleor/products/types/ProductMediaCreate";
-import { ProductMediaReorderVariables } from "@saleor/products/types/ProductMediaReorder";
-import {
-  ProductUpdate,
-  ProductUpdateVariables
-} from "@saleor/products/types/ProductUpdate";
-import {
-  ProductVariantChannelListingUpdate,
-  ProductVariantChannelListingUpdateVariables
-} from "@saleor/products/types/ProductVariantChannelListingUpdate";
-import { ProductVariantCreateData_product } from "@saleor/products/types/ProductVariantCreateData";
-import { ProductVariantDetails_productVariant_product } from "@saleor/products/types/ProductVariantDetails";
-import { ProductVariantReorderVariables } from "@saleor/products/types/ProductVariantReorder";
-import {
-  SimpleProductUpdate,
-  SimpleProductUpdateVariables
-} from "@saleor/products/types/SimpleProductUpdate";
-import {
-  VariantCreate,
-  VariantCreateVariables
-} from "@saleor/products/types/VariantCreate";
 import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
 import { ReorderEvent } from "@saleor/types";
 import { move } from "@saleor/utils/lists";
@@ -79,29 +63,29 @@ type SubmitErrors = Array<
 >;
 
 export function createUpdateHandler(
-  product: ProductDetails_product,
+  product: ProductFragment,
   allChannels: ChannelData[],
   uploadFile: (
-    variables: FileUploadVariables
-  ) => Promise<FetchResult<FileUpload>>,
+    variables: FileUploadMutationVariables
+  ) => Promise<FetchResult<FileUploadMutation>>,
   updateProduct: (
-    variables: ProductUpdateVariables
-  ) => Promise<FetchResult<ProductUpdate>>,
+    variables: ProductUpdateMutationVariables
+  ) => Promise<FetchResult<ProductUpdateMutation>>,
   updateSimpleProduct: (
-    variables: SimpleProductUpdateVariables
-  ) => Promise<FetchResult<SimpleProductUpdate>>,
+    variables: SimpleProductUpdateMutationVariables
+  ) => Promise<FetchResult<SimpleProductUpdateMutation>>,
   updateChannels: (options: {
-    variables: ProductChannelListingUpdateVariables;
-  }) => Promise<FetchResult<ProductChannelListingUpdate>>,
+    variables: ProductChannelListingUpdateMutationVariables;
+  }) => Promise<FetchResult<ProductChannelListingUpdateMutation>>,
   updateVariantChannels: (options: {
-    variables: ProductVariantChannelListingUpdateVariables;
-  }) => Promise<FetchResult<ProductVariantChannelListingUpdate>>,
+    variables: ProductVariantChannelListingUpdateMutationVariables;
+  }) => Promise<FetchResult<ProductVariantChannelListingUpdateMutation>>,
   productVariantCreate: (options: {
-    variables: VariantCreateVariables;
-  }) => Promise<FetchResult<VariantCreate>>,
+    variables: VariantCreateMutationVariables;
+  }) => Promise<FetchResult<VariantCreateMutation>>,
   deleteAttributeValue: (
-    variables: AttributeValueDeleteVariables
-  ) => Promise<FetchResult<AttributeValueDelete>>
+    variables: AttributeValueDeleteMutationVariables
+  ) => Promise<FetchResult<AttributeValueDeleteMutation>>
 ) {
   return async (data: ProductUpdatePageSubmitData) => {
     let errors: SubmitErrors = [];
@@ -127,7 +111,7 @@ export function createUpdateHandler(
       uploadFilesResult
     );
 
-    const productVariables: ProductUpdateVariables = {
+    const productVariables: ProductUpdateMutationVariables = {
       id: product.id,
       input: {
         attributes: prepareAttributesInput({
@@ -223,7 +207,7 @@ export function createUpdateHandler(
 
 export function createImageUploadHandler(
   id: string,
-  createProductImage: (variables: ProductMediaCreateVariables) => void
+  createProductImage: (variables: ProductMediaCreateMutationVariables) => void
 ) {
   return (file: File) =>
     createProductImage({
@@ -234,8 +218,10 @@ export function createImageUploadHandler(
 }
 
 export function createImageReorderHandler(
-  product: ProductDetails_product,
-  reorderProductImages: (variables: ProductMediaReorderVariables) => void
+  product: ProductFragment,
+  reorderProductImages: (
+    variables: ProductMediaReorderMutationVariables
+  ) => void
 ) {
   return ({ newIndex, oldIndex }: ReorderEvent) => {
     let ids = product.media.map(image => image.id);
@@ -247,30 +233,28 @@ export function createImageReorderHandler(
   };
 }
 
-function areVariantsEqual(
-  a: ProductDetails_product_variants,
-  b: ProductDetails_product_variants
-) {
+function areVariantsEqual(a: Node, b: Node) {
   return a.id === b.id;
 }
 
-export function createVariantReorderHandler(
-  product:
-    | ProductDetails_product
-    | ProductVariantDetails_productVariant_product
-    | ProductVariantCreateData_product,
-  reorderProductVariants: (variables: ProductVariantReorderVariables) => void
+export function createVariantReorderHandler<
+  T extends { id: string; variants: any[] }
+>(
+  product: T,
+  reorderProductVariants: (
+    variables: ProductVariantReorderMutationVariables
+  ) => void
 ) {
   return ({ newIndex, oldIndex }: ReorderEvent) => {
     const oldVariantOrder = [...product.variants];
 
     product.variants = [
-      ...(move(
+      ...move<T["variants"][0]>(
         product.variants[oldIndex],
         product!.variants,
         areVariantsEqual,
         newIndex
-      ) as ProductDetails_product_variants[])
+      )
     ];
 
     reorderProductVariants({

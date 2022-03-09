@@ -7,10 +7,8 @@ import {
 } from "@material-ui/core";
 import { Button } from "@saleor/macaw-ui";
 import { DialogProps } from "@saleor/types";
-import React from "react";
-import { useState } from "react";
-import { FormattedMessage } from "react-intl";
-import { useIntl } from "react-intl";
+import React, { useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import GiftCardExportDialogContent from "../GiftCardExportDialogContent";
 import { giftCardCreateMessages as messages } from "./messages";

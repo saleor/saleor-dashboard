@@ -11,7 +11,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import PriceField from "@saleor/components/PriceField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableHead from "@saleor/components/TableHead";
-import { ShippingChannelsErrorFragment } from "@saleor/fragments/types/ShippingChannelsErrorFragment";
+import { ShippingChannelsErrorFragment } from "@saleor/graphql";
 import {
   getFormChannelError,
   getFormChannelErrors

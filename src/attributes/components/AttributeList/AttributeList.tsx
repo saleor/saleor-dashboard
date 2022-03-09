@@ -6,6 +6,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import { AttributeFragment } from "@saleor/graphql";
 import { translateBoolean } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
@@ -14,13 +15,11 @@ import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { AttributeList_attributes_edges_node } from "../../types/AttributeList";
-
 export interface AttributeListProps
   extends ListProps,
     ListActions,
     SortPage<AttributeListUrlSortField> {
-  attributes: AttributeList_attributes_edges_node[];
+  attributes: AttributeFragment[];
 }
 
 const useStyles = makeStyles(

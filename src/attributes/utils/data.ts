@@ -3,22 +3,25 @@ import {
   AttributeInput,
   AttributeInputData
 } from "@saleor/components/Attributes";
-import { FileUpload } from "@saleor/files/types/FileUpload";
-import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
-import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
-import { SelectedVariantAttributeFragment } from "@saleor/fragments/types/SelectedVariantAttributeFragment";
-import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
-import { VariantAttributeFragment } from "@saleor/fragments/types/VariantAttributeFragment";
-import { FormsetData } from "@saleor/hooks/useFormset";
-import { PageDetails_page_attributes } from "@saleor/pages/types/PageDetails";
-import { ProductDetails_product_attributes } from "@saleor/products/types/ProductDetails";
-import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
-import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import {
   AttributeEntityTypeEnum,
+  AttributeErrorFragment,
   AttributeInputTypeEnum,
-  AttributeValueInput
-} from "@saleor/types/globalTypes";
+  AttributeValueDeleteMutation,
+  AttributeValueFragment,
+  AttributeValueInput,
+  FileUploadMutation,
+  Node,
+  PageSelectedAttributeFragment,
+  ProductFragment,
+  SearchPagesQuery,
+  SearchProductsQuery,
+  SelectedVariantAttributeFragment,
+  UploadErrorFragment,
+  VariantAttributeFragment
+} from "@saleor/graphql";
+import { FormsetData } from "@saleor/hooks/useFormset";
+import { RelayToFlat } from "@saleor/types";
 import {
   mapEdgesToItems,
   mapNodeToChoice,
@@ -26,8 +29,11 @@ import {
 } from "@saleor/utils/maps";
 
 import { AttributePageFormData } from "../components/AttributePage";
-import { AtributesOfFiles } from "../types/AttributeOfUploadedFile";
-import { AttributeValueDelete } from "../types/AttributeValueDelete";
+
+type AtributesOfFiles = Pick<
+  AttributeValueInput,
+  "file" | "id" | "values" | "contentType"
+>;
 
 export const ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES = [
   AttributeInputTypeEnum.DROPDOWN,
@@ -145,8 +151,8 @@ export function getDefaultAttributeValues(attribute: VariantAttributeFragment) {
 
 export function getSelectedAttributeValues(
   attribute:
-    | PageDetails_page_attributes
-    | ProductDetails_product_attributes
+    | PageSelectedAttributeFragment
+    | ProductFragment["attributes"][0]
     | SelectedVariantAttributeFragment
 ) {
   switch (attribute.attribute.inputType) {
@@ -176,8 +182,8 @@ export function getSelectedAttributeValues(
 export const isFileValueUnused = (
   attributesWithNewFileValue: FormsetData<null, File>,
   existingAttribute:
-    | PageDetails_page_attributes
-    | ProductDetails_product_attributes
+    | PageSelectedAttributeFragment
+    | ProductFragment["attributes"][0]
     | SelectedVariantAttributeFragment
 ) => {
   if (existingAttribute.attribute.inputType !== AttributeInputTypeEnum.FILE) {
@@ -195,7 +201,7 @@ export const isFileValueUnused = (
 };
 
 export const mergeFileUploadErrors = (
-  uploadFilesResult: Array<FetchResult<FileUpload>>
+  uploadFilesResult: Array<FetchResult<FileUploadMutation>>
 ): UploadErrorFragment[] =>
   uploadFilesResult.reduce((errors, uploadFileResult) => {
     const uploadErrors = uploadFileResult?.data?.fileUpload?.errors;
@@ -206,7 +212,7 @@ export const mergeFileUploadErrors = (
   }, []);
 
 export const mergeAttributeValueDeleteErrors = (
-  deleteAttributeValuesResult: Array<FetchResult<AttributeValueDelete>>
+  deleteAttributeValuesResult: Array<FetchResult<AttributeValueDeleteMutation>>
 ): AttributeErrorFragment[] =>
   deleteAttributeValuesResult.reduce((errors, deleteValueResult) => {
     const deleteErrors = deleteValueResult?.data?.attributeValueDelete?.errors;
@@ -218,8 +224,8 @@ export const mergeAttributeValueDeleteErrors = (
 
 export const mergeChoicesWithValues = (
   attribute:
-    | ProductDetails_product_attributes
-    | PageDetails_page_attributes
+    | ProductFragment["attributes"][0]
+    | PageSelectedAttributeFragment
     | SelectedVariantAttributeFragment
 ) => {
   const choices = mapEdgesToItems(attribute.attribute.choices) || [];
@@ -262,7 +268,7 @@ export const getAttributesOfRemovedFiles = (
 
 export const getAttributesOfUploadedFiles = (
   fileValuesToUpload: FormsetData<null, File>,
-  uploadFilesResult: Array<FetchResult<FileUpload>>
+  uploadFilesResult: Array<FetchResult<FileUploadMutation>>
 ): AtributesOfFiles[] =>
   uploadFilesResult.map((uploadFileResult, index) => {
     const attribute = fileValuesToUpload[index];
@@ -277,7 +283,7 @@ export const getAttributesOfUploadedFiles = (
 
 export const getAttributesAfterFileAttributesUpdate = (
   attributesWithNewFileValue: FormsetData<null, File>,
-  uploadFilesResult: Array<FetchResult<FileUpload>>
+  uploadFilesResult: Array<FetchResult<FileUploadMutation>>
 ): AttributeValueInput[] => {
   const removedFileValues = getFileValuesRemovedFromAttributes(
     attributesWithNewFileValue
@@ -316,7 +322,7 @@ export const getFileAttributeDisplayData = (
 
 export const getPageReferenceAttributeDisplayData = (
   attribute: AttributeInput,
-  referencePages: SearchPages_search_edges_node[]
+  referencePages: RelayToFlat<SearchPagesQuery["search"]>
 ) => ({
   ...attribute,
   data: {
@@ -337,7 +343,7 @@ export const getPageReferenceAttributeDisplayData = (
 
 export const getProductReferenceAttributeDisplayData = (
   attribute: AttributeInput,
-  referenceProducts: SearchProducts_search_edges_node[]
+  referenceProducts: RelayToFlat<SearchProductsQuery["search"]>
 ) => ({
   ...attribute,
   data: {
@@ -358,8 +364,8 @@ export const getProductReferenceAttributeDisplayData = (
 
 export const getReferenceAttributeDisplayData = (
   attribute: AttributeInput,
-  referencePages: SearchPages_search_edges_node[],
-  referenceProducts: SearchProducts_search_edges_node[]
+  referencePages: RelayToFlat<SearchPagesQuery["search"]>,
+  referenceProducts: RelayToFlat<SearchProductsQuery["search"]>
 ) => {
   if (attribute.data.entityType === AttributeEntityTypeEnum.PAGE) {
     return getPageReferenceAttributeDisplayData(attribute, referencePages);
@@ -374,8 +380,8 @@ export const getReferenceAttributeDisplayData = (
 export const getAttributesDisplayData = (
   attributes: AttributeInput[],
   attributesWithNewFileValue: FormsetData<null, File>,
-  referencePages: SearchPages_search_edges_node[],
-  referenceProducts: SearchProducts_search_edges_node[]
+  referencePages: RelayToFlat<SearchPagesQuery["search"]>,
+  referenceProducts: RelayToFlat<SearchProductsQuery["search"]>
 ) =>
   attributes.map(attribute => {
     if (attribute.data.inputType === AttributeInputTypeEnum.REFERENCE) {
@@ -391,11 +397,9 @@ export const getAttributesDisplayData = (
     return attribute;
   });
 
-export const getSelectedReferencesFromAttribute = <
-  Node extends SearchPages_search_edges_node | SearchProducts_search_edges_node
->(
+export const getSelectedReferencesFromAttribute = <T extends Node>(
   attribute?: AttributeInput,
-  references?: Node[]
+  references?: T[]
 ) =>
   references?.filter(
     value =>
@@ -405,8 +409,8 @@ export const getSelectedReferencesFromAttribute = <
 export const getAttributeValuesFromReferences = (
   attributeId: string,
   attributes?: AttributeInput[],
-  referencePages?: SearchPages_search_edges_node[],
-  referenceProducts?: SearchProducts_search_edges_node[]
+  referencePages?: RelayToFlat<SearchPagesQuery["search"]>,
+  referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>
 ) => {
   const attribute = attributes?.find(attribute => attribute.id === attributeId);
 

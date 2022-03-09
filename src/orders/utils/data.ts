@@ -1,13 +1,18 @@
 import { IMoney, subtractMoney } from "@saleor/components/Money";
-import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
-import { FormsetData } from "@saleor/hooks/useFormset";
-import { addressToAddressInput } from "@saleor/misc";
 import {
   AddressInput,
   CountryCode,
   FulfillmentStatus,
-  OrderErrorCode
-} from "@saleor/types/globalTypes";
+  FulfillOrderMutation,
+  OrderDetailsFragment,
+  OrderErrorCode,
+  OrderFulfillDataQuery,
+  OrderLineFragment,
+  OrderRefundDataQuery,
+  WarehouseFragment
+} from "@saleor/graphql";
+import { FormsetData } from "@saleor/hooks/useFormset";
+import { addressToAddressInput } from "@saleor/misc";
 
 import {
   LineItemData,
@@ -18,21 +23,9 @@ import {
   getAllOrderWaitingLines,
   getById
 } from "../components/OrderReturnPage/utils";
-import { FulfillOrder_orderFulfill_errors } from "../types/FulfillOrder";
-import {
-  OrderDetails_order,
-  OrderDetails_order_fulfillments_lines,
-  OrderDetails_order_lines
-} from "../types/OrderDetails";
-import { OrderFulfillData_order_lines } from "../types/OrderFulfillData";
-import {
-  OrderRefundData_order,
-  OrderRefundData_order_fulfillments,
-  OrderRefundData_order_lines
-} from "../types/OrderRefundData";
 
 export type OrderWithTotalAndTotalCaptured = Pick<
-  OrderRefundData_order,
+  OrderRefundDataQuery["order"],
   "total" | "totalCaptured"
 >;
 
@@ -42,7 +35,9 @@ export interface OrderLineWithStockWarehouses {
   };
 }
 
-export function getToFulfillOrderLines(lines?: OrderFulfillData_order_lines[]) {
+export function getToFulfillOrderLines(
+  lines?: OrderFulfillDataQuery["order"]["lines"]
+) {
   return lines?.filter(line => line.quantityToFulfill > 0) || [];
 }
 
@@ -77,7 +72,7 @@ const getItemPriceAndQuantity = ({
   itemsQuantities,
   id
 }: {
-  orderLines: OrderDetails_order_lines[];
+  orderLines: OrderLineFragment[];
   itemsQuantities: FormsetData<LineItemData, number>;
   id: string;
 }) => {
@@ -96,7 +91,7 @@ const getFulfillmentByFulfillmentLineId = (order, fulfillmentLineId) => {
 };
 
 const selectItemPriceAndQuantity = (
-  order: OrderDetails_order,
+  order: OrderDetailsFragment,
   {
     fulfilledItemsQuantities,
     waitingItemsQuantities,
@@ -127,7 +122,7 @@ const selectItemPriceAndQuantity = (
 };
 
 export const getReplacedProductsAmount = (
-  order: OrderDetails_order,
+  order: OrderDetailsFragment,
   {
     itemsToBeReplaced,
     unfulfilledItemsQuantities,
@@ -166,7 +161,7 @@ export const getReplacedProductsAmount = (
 };
 
 export const getReturnSelectedProductsAmount = (
-  order: OrderDetails_order,
+  order: OrderDetailsFragment,
   {
     itemsToBeReplaced,
     waitingItemsQuantities,
@@ -206,7 +201,7 @@ const getPartialProductsValue = ({
 }: {
   itemsToBeReplaced: FormsetData<LineItemData, boolean>;
   itemsQuantities: FormsetData<LineItemData, number>;
-  orderLines: OrderDetails_order_lines[];
+  orderLines: OrderLineFragment[];
 }) =>
   itemsQuantities.reduce(
     (resultAmount, { id, value: quantity, data: { isRefunded } }) => {
@@ -228,7 +223,7 @@ const getPartialProductsValue = ({
   );
 
 export function getRefundedLinesPriceSum(
-  lines: OrderRefundData_order_lines[],
+  lines: OrderRefundDataQuery["order"]["lines"],
   refundedProductQuantities: FormsetData<null, string | number>
 ): number {
   return lines?.reduce((sum, line) => {
@@ -240,7 +235,7 @@ export function getRefundedLinesPriceSum(
 }
 
 export function getAllFulfillmentLinesPriceSum(
-  fulfillments: OrderRefundData_order_fulfillments[],
+  fulfillments: OrderRefundDataQuery["order"]["fulfillments"],
   refundedFulfilledProductQuantities: FormsetData<null, string | number>
 ): number {
   return fulfillments?.reduce((sum, fulfillment) => {
@@ -258,7 +253,7 @@ export function getAllFulfillmentLinesPriceSum(
 }
 
 export function mergeRepeatedOrderLines(
-  fulfillmentLines: OrderDetails_order_fulfillments_lines[]
+  fulfillmentLines: OrderDetailsFragment["fulfillments"][0]["lines"]
 ) {
   return fulfillmentLines.reduce((prev, curr) => {
     const existingOrderLineIndex = prev.findIndex(
@@ -277,7 +272,7 @@ export function mergeRepeatedOrderLines(
     }
 
     return prev;
-  }, Array<OrderDetails_order_fulfillments_lines>());
+  }, Array<OrderDetailsFragment["fulfillments"][0]["lines"][0]>());
 }
 
 export const isStockError = (
@@ -285,8 +280,8 @@ export const isStockError = (
   formsetStock: { quantity: number },
   availableQuantity: number,
   warehouse: WarehouseFragment,
-  line: OrderFulfillData_order_lines,
-  errors: FulfillOrder_orderFulfill_errors[]
+  line: OrderFulfillDataQuery["order"]["lines"][0],
+  errors: FulfillOrderMutation["orderFulfill"]["errors"]
 ) => {
   if (overfulfill) {
     return true;
@@ -306,7 +301,7 @@ export const isStockError = (
 };
 
 export const getVariantSearchAddress = (
-  order: OrderDetails_order
+  order: OrderDetailsFragment
 ): AddressInput => {
   if (order.shippingAddress) {
     return addressToAddressInput(order.shippingAddress);

@@ -10,14 +10,13 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import { CountryListQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Backlink } from "@saleor/macaw-ui";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Backlink, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
-import { CountryList_shop_countries_vat_reducedRates } from "../../types/CountryList";
 
 const useStyles = makeStyles(
   {
@@ -30,7 +29,7 @@ const useStyles = makeStyles(
 
 export interface CountryTaxesPageProps {
   countryName: string;
-  taxCategories: CountryList_shop_countries_vat_reducedRates[];
+  taxCategories: CountryListQuery["shop"]["countries"][0]["vat"]["reducedRates"];
   onBack: () => void;
 }
 

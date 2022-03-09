@@ -1,7 +1,7 @@
 import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import { FormSpacer } from "@saleor/components/FormSpacer";
-import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
+import { AccountErrorFragment } from "@saleor/graphql";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAccountErrorMessage from "@saleor/utils/errors/account";
 import React from "react";

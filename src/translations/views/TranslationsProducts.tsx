@@ -1,4 +1,10 @@
 import { OutputData } from "@editorjs/editorjs";
+import {
+  LanguageCodeEnum,
+  useProductTranslationDetailsQuery,
+  useUpdateAttributeValueTranslationsMutation,
+  useUpdateProductTranslationsMutation
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
@@ -8,13 +14,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, maybe } from "../../misc";
-import { LanguageCodeEnum } from "../../types/globalTypes";
 import TranslationsProductsPage from "../components/TranslationsProductsPage";
-import {
-  TypedUpdateAttributeValueTranslations,
-  TypedUpdateProductTranslations
-} from "../mutations";
-import { useProductTranslationDetails } from "../queries";
 import { TranslationField, TranslationInputFieldName } from "../types";
 import {
   languageEntitiesUrl,
@@ -42,18 +42,9 @@ const TranslationsProducts: React.FC<TranslationsProductsProps> = ({
   const shop = useShop();
   const intl = useIntl();
 
-  const productTranslations = useProductTranslationDetails({
+  const productTranslations = useProductTranslationDetailsQuery({
     variables: { id, language: languageCode }
   });
-
-  const onEdit = (field: string) =>
-    navigate(
-      "?" +
-        stringifyQs({
-          activeField: field
-        }),
-      { replace: true }
-    );
 
   const onUpdate = (errors: unknown[]) => {
     if (errors.length === 0) {
@@ -66,89 +57,93 @@ const TranslationsProducts: React.FC<TranslationsProductsProps> = ({
     }
   };
 
+  const [
+    updateTranslations,
+    updateTranslationsOpts
+  ] = useUpdateProductTranslationsMutation({
+    onCompleted: data => onUpdate(data.productTranslate.errors)
+  });
+
+  const [
+    updateAttributeValueTranslations
+  ] = useUpdateAttributeValueTranslationsMutation({
+    onCompleted: data => onUpdate(data.attributeValueTranslate.errors)
+  });
+
+  const onEdit = (field: string) =>
+    navigate(
+      "?" +
+        stringifyQs({
+          activeField: field
+        }),
+      { replace: true }
+    );
+
   const onDiscard = () => {
     navigate("?", { replace: true });
   };
 
+  const handleSubmit = (
+    { name: fieldName }: TranslationField<TranslationInputFieldName>,
+    data: string
+  ) =>
+    extractMutationErrors(
+      updateTranslations({
+        variables: {
+          id,
+          input: getParsedTranslationInputData({
+            data,
+            fieldName
+          }),
+          language: languageCode
+        }
+      })
+    );
+
+  const handleAttributeValueSubmit = (
+    { id }: TranslationField<TranslationInputFieldName>,
+    data: OutputData
+  ) =>
+    extractMutationErrors(
+      updateAttributeValueTranslations({
+        variables: {
+          id,
+          input: { richText: JSON.stringify(data) },
+          language: languageCode
+        }
+      })
+    );
+
+  const translation = productTranslations?.data?.translation;
+
   return (
-    <TypedUpdateProductTranslations
-      onCompleted={data => onUpdate(data.productTranslate.errors)}
-    >
-      {(updateTranslations, updateTranslationsOpts) => (
-        <TypedUpdateAttributeValueTranslations
-          onCompleted={data => onUpdate(data.attributeValueTranslate.errors)}
-        >
-          {updateAttributeValueTranslations => {
-            const handleSubmit = (
-              { name: fieldName }: TranslationField<TranslationInputFieldName>,
-              data: string
-            ) =>
-              extractMutationErrors(
-                updateTranslations({
-                  variables: {
-                    id,
-                    input: getParsedTranslationInputData({
-                      data,
-                      fieldName
-                    }),
-                    language: languageCode
-                  }
-                })
-              );
-
-            const handleAttributeValueSubmit = (
-              { id }: TranslationField<TranslationInputFieldName>,
-              data: OutputData
-            ) =>
-              extractMutationErrors(
-                updateAttributeValueTranslations({
-                  variables: {
-                    id,
-                    input: { richText: JSON.stringify(data) },
-                    language: languageCode
-                  }
-                })
-              );
-
-            const translation = productTranslations?.data?.translation;
-
-            return (
-              <TranslationsProductsPage
-                productId={id}
-                activeField={params.activeField}
-                disabled={
-                  productTranslations.loading || updateTranslationsOpts.loading
-                }
-                languageCode={languageCode}
-                languages={maybe(() => shop.languages, [])}
-                saveButtonState={updateTranslationsOpts.status}
-                onBack={() =>
-                  navigate(
-                    languageEntitiesUrl(languageCode, {
-                      tab: TranslatableEntities.products
-                    })
-                  )
-                }
-                onEdit={onEdit}
-                onDiscard={onDiscard}
-                onLanguageChange={lang =>
-                  navigate(
-                    languageEntityUrl(lang, TranslatableEntities.products, id)
-                  )
-                }
-                onSubmit={handleSubmit}
-                onAttributeValueSubmit={handleAttributeValueSubmit}
-                data={
-                  translation?.__typename === "ProductTranslatableContent"
-                    ? translation
-                    : null
-                }
-              />
-            );
-          }}
-        </TypedUpdateAttributeValueTranslations>
-      )}
-    </TypedUpdateProductTranslations>
+    <TranslationsProductsPage
+      productId={id}
+      activeField={params.activeField}
+      disabled={productTranslations.loading || updateTranslationsOpts.loading}
+      languageCode={languageCode}
+      languages={maybe(() => shop.languages, [])}
+      saveButtonState={updateTranslationsOpts.status}
+      onBack={() =>
+        navigate(
+          languageEntitiesUrl(languageCode, {
+            tab: TranslatableEntities.products
+          })
+        )
+      }
+      onEdit={onEdit}
+      onDiscard={onDiscard}
+      onLanguageChange={lang =>
+        navigate(languageEntityUrl(lang, TranslatableEntities.products, id))
+      }
+      onSubmit={handleSubmit}
+      onAttributeValueSubmit={handleAttributeValueSubmit}
+      data={
+        translation?.__typename === "ProductTranslatableContent"
+          ? translation
+          : null
+      }
+    />
   );
 };
 TranslationsProducts.displayName = "TranslationsProducts";

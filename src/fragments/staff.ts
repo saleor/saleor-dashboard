@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const staffMemberFragment = gql`
-  fragment StaffMemberFragment on User {
+  fragment StaffMember on User {
     id
     email
     firstName
@@ -10,9 +10,8 @@ export const staffMemberFragment = gql`
   }
 `;
 export const staffMemberDetailsFragment = gql`
-  ${staffMemberFragment}
-  fragment StaffMemberDetailsFragment on User {
-    ...StaffMemberFragment
+  fragment StaffMemberDetails on User {
+    ...StaffMember
     permissionGroups {
       id
       name

@@ -1,6 +1,6 @@
+import { AccountErrorCode } from "@saleor/graphql";
 import CardDecorator from "@saleor/storybook//CardDecorator";
 import Decorator from "@saleor/storybook//Decorator";
-import { AccountErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

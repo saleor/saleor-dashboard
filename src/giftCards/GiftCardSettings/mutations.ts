@@ -1,29 +1,14 @@
 import { gql } from "@apollo/client";
-import { giftCardSettingsErrorFragment } from "@saleor/fragments/errors";
-import { fragmentGiftCardsSettings } from "@saleor/fragments/giftCards";
-import makeMutation from "@saleor/hooks/makeMutation";
 
-import {
-  GiftCardSettingsUpdate,
-  GiftCardSettingsUpdateVariables
-} from "./types/GiftCardSettingsUpdate";
-
-const giftCardSettingsUpdate = gql`
-  ${giftCardSettingsErrorFragment}
-  ${fragmentGiftCardsSettings}
+export const giftCardSettingsUpdate = gql`
   mutation GiftCardSettingsUpdate($input: GiftCardSettingsUpdateInput!) {
     giftCardSettingsUpdate(input: $input) {
       errors {
-        ...GiftCardSettingsErrorFragment
+        ...GiftCardSettingsError
       }
       giftCardSettings {
-        ...GiftCardsSettingsFragment
+        ...GiftCardsSettings
       }
     }
   }
 `;
-
-export const useGiftCardSettingsUpdateMutation = makeMutation<
-  GiftCardSettingsUpdate,
-  GiftCardSettingsUpdateVariables
->(giftCardSettingsUpdate);

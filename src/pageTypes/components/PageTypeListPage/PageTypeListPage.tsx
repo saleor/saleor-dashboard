@@ -2,9 +2,9 @@ import { Card } from "@material-ui/core";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
+import { PageTypeFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, Button } from "@saleor/macaw-ui";
-import { PageTypeList_pageTypes_edges_node } from "@saleor/pageTypes/types/PageTypeList";
 import { PageTypeListUrlSortField } from "@saleor/pageTypes/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -24,7 +24,7 @@ export interface PageTypeListPageProps
     SearchPageProps,
     SortPage<PageTypeListUrlSortField>,
     TabPageProps {
-  pageTypes: PageTypeList_pageTypes_edges_node[];
+  pageTypes: PageTypeFragment[];
   onBack: () => void;
 }
 

@@ -6,11 +6,11 @@ import {
   Typography
 } from "@material-ui/core";
 import { ChannelData } from "@saleor/channels/utils";
+import { ProductDetailsVariantFragment } from "@saleor/graphql";
 import IconChevronDown from "@saleor/icons/ChevronDown";
 import { makeStyles } from "@saleor/macaw-ui";
 import Label from "@saleor/orders/components/OrderHistory/Label";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
-import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
 import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
 import {
   areAllChannelVariantsSelected,
@@ -100,7 +100,7 @@ interface ChannelsWithVariantsAvailabilityDialogContentProps {
   toggleAllChannelVariants: (channelId: string) => void;
   isChannelSelected: (channelId: string) => boolean;
   channels: ChannelData[];
-  allVariants: ProductDetails_product_variants[];
+  allVariants: ProductDetailsVariantFragment[];
 }
 
 const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVariantsAvailabilityDialogContentProps> = ({

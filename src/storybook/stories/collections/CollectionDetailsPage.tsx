@@ -1,7 +1,7 @@
 import placeholderCollectionImage from "@assets/images/block1.jpg";
 import placeholderProductImage from "@assets/images/placeholder60x60.png";
 import { createCollectionChannelsData } from "@saleor/channels/utils";
-import { CollectionErrorCode } from "@saleor/types/globalTypes";
+import { CollectionErrorCode } from "@saleor/graphql";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

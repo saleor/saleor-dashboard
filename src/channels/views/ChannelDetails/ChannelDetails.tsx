@@ -1,12 +1,22 @@
 import ChannelDeleteDialog from "@saleor/channels/components/ChannelDeleteDialog";
 import { FormData } from "@saleor/channels/components/ChannelForm/ChannelForm";
-import { ChannelDelete } from "@saleor/channels/types/ChannelDelete";
 import { getChannelsCurrencyChoices } from "@saleor/channels/utils";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
-import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
+import {
+  ChannelDeleteMutation,
+  ChannelErrorFragment,
+  ChannelUpdateMutation,
+  useChannelActivateMutation,
+  useChannelDeactivateMutation,
+  useChannelDeleteMutation,
+  useChannelQuery,
+  useChannelShippingZonesQuery,
+  useChannelsQuery,
+  useChannelUpdateMutation
+} from "@saleor/graphql";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -16,21 +26,12 @@ import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import { extractMutationErrors } from "@saleor/misc";
 import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
-import { useChannelShippingZones } from "@saleor/shipping/queries";
 import getChannelsErrorMessage from "@saleor/utils/errors/channels";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import {
-  useChannelActivateMutation,
-  useChannelDeactivateMutation,
-  useChannelDeleteMutation,
-  useChannelUpdateMutation
-} from "../../mutations";
 import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
-import { useChannelDetails, useChannelsList } from "../../queries";
-import { ChannelUpdate } from "../../types/ChannelUpdate";
 import {
   channelsListUrl,
   channelUrl,
@@ -54,7 +55,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
 
   const handleBack = () => navigate(channelsListUrl());
 
-  const channelsListData = useChannelsList({ displayLoader: true });
+  const channelsListData = useChannelsQuery({ displayLoader: true });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ChannelUrlDialog,
@@ -62,11 +63,11 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
   >(navigate, params => channelUrl(id, params), params);
 
   const [updateChannel, updateChannelOpts] = useChannelUpdateMutation({
-    onCompleted: ({ channelUpdate: { errors } }: ChannelUpdate) =>
+    onCompleted: ({ channelUpdate: { errors } }: ChannelUpdateMutation) =>
       notify(getDefaultNotifierSuccessErrorData(errors, intl))
   });
 
-  const { data, loading } = useChannelDetails({
+  const { data, loading } = useChannelQuery({
     displayLoader: true,
     variables: { id }
   });
@@ -121,7 +122,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
       })
     );
 
-  const onDeleteCompleted = (data: ChannelDelete) => {
+  const onDeleteCompleted = (data: ChannelDeleteMutation) => {
     const errors = data.channelDelete.errors;
     if (errors.length === 0) {
       notify({
@@ -160,7 +161,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
   const {
     data: channelShippingZonesData,
     loading: channelsShippingZonesLoading
-  } = useChannelShippingZones({
+  } = useChannelShippingZonesQuery({
     variables: {
       filter: {
         channels: [id]

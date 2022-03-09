@@ -1,10 +1,10 @@
 import { AttributePageFormData } from "@saleor/attributes/components/AttributePage";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import SingleSelectField from "@saleor/components/SingleSelectField";
+import { MeasurementUnitsEnum } from "@saleor/graphql";
 import { UseFormResult } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import { MeasurementUnitsEnum } from "@saleor/types/globalTypes";
 import React, { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 

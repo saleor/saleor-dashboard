@@ -1,4 +1,4 @@
-import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
+import { ProductDetailsVariantFragment } from "@saleor/graphql";
 import CentralPlacementDecorator from "@saleor/storybook/CentralPlacementDecorator";
 import CommonDecorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
@@ -76,7 +76,7 @@ const props: ChannelsWithVariantsAvailabilityCardProps = {
       name: "Variant C",
       media: []
     }
-  ] as ProductDetails_product_variants[],
+  ] as ProductDetailsVariantFragment[],
   channelsWithVariantsData: {
     ["1"]: {
       selectedVariantsIds: ["variantA", "variantB"],

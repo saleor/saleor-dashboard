@@ -10,25 +10,24 @@ import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import Checkbox from "@saleor/components/Checkbox";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
-import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { AddressTypeInput } from "@saleor/customers/types";
 import {
-  CustomerAddresses_user_addresses,
-  CustomerAddresses_user_defaultBillingAddress,
-  CustomerAddresses_user_defaultShippingAddress
-} from "@saleor/customers/types/CustomerAddresses";
-import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
+  AddressFragment,
+  AddressInput,
+  AddressTypeEnum,
+  CountryWithCodeFragment,
+  Node,
+  OrderErrorFragment
+} from "@saleor/graphql";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState, DialogHeader } from "@saleor/macaw-ui";
 import { transformAddressToAddressInput } from "@saleor/misc";
-import { AddressInput, AddressTypeEnum } from "@saleor/types/globalTypes";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React from "react";
-import { MessageDescriptor } from "react-intl";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 
 import { getById } from "../OrderReturnPage/utils";
 import OrderCustomerAddressesEditForm, {
@@ -54,10 +53,10 @@ export interface OrderCustomerAddressesEditDialogProps {
   errors: OrderErrorFragment[];
   orderShippingAddress?: AddressTypeInput;
   orderBillingAddress?: AddressTypeInput;
-  countries?: ShopInfo_shop_countries[];
-  customerAddresses?: CustomerAddresses_user_addresses[];
-  defaultShippingAddress?: CustomerAddresses_user_defaultShippingAddress;
-  defaultBillingAddress?: CustomerAddresses_user_defaultBillingAddress;
+  countries?: CountryWithCodeFragment[];
+  customerAddresses?: AddressFragment[];
+  defaultShippingAddress?: Node;
+  defaultBillingAddress?: Node;
   onClose();
   onConfirm(
     data: Partial<OrderCustomerAddressesEditDialogOutput>

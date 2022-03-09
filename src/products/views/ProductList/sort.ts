@@ -1,8 +1,8 @@
+import { ProductOrder, ProductOrderField } from "@saleor/graphql";
 import {
   ProductListUrlQueryParams,
   ProductListUrlSortField
 } from "@saleor/products/urls";
-import { ProductOrder, ProductOrderField } from "@saleor/types/globalTypes";
 import { getOrderDirection } from "@saleor/utils/sort";
 
 export const DEFAULT_SORT_KEY = ProductListUrlSortField.name;

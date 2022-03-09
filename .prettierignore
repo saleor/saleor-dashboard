@@ -1,3 +1,4 @@
 types/
 schema.graphql
-src/type-policies.ts
+*.generated.*
+src/graphql/extendedTypes.ts

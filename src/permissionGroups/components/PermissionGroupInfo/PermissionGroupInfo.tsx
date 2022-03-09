@@ -1,6 +1,6 @@
 import { Card, CardContent, TextField } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
-import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
+import { PermissionGroupErrorFragment } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
 import { getFieldError, getFormErrors } from "@saleor/utils/errors";
