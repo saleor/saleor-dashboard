@@ -55,19 +55,20 @@ Cypress.Commands.add("addAliasToGraphRequest", operationName => {
   });
 });
 
-Cypress.Commands.add("sendRequestWithQuery", (query, authorization = "auth") =>
-  cy.request({
-    body: {
+Cypress.Commands.add(
+  "sendRequestWithQuery",
+  (query, authorization = "auth", variables = "") =>
+    cy.request({
+      body: {
+        variables,
+        query
+      },
+      headers: {
+        Authorization: `JWT ${window.sessionStorage.getItem(authorization)}`
+      },
       method: "POST",
-      query,
       url: urlList.apiUri
-    },
-    headers: {
-      Authorization: `JWT ${window.sessionStorage.getItem(authorization)}`
-    },
-    method: "POST",
-    url: urlList.apiUri
-  })
+    })
 );
 Cypress.on(
   "uncaught:exception",
