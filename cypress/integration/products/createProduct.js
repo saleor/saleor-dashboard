@@ -14,7 +14,6 @@ import {
   expectCorrectProductInformation,
   expectCorrectProductVariantInformation
 } from "../../support/api/utils/products/checkProductInfo";
-import * as productUtils from "../../support/api/utils/products/productsUtils";
 import filterTests from "../../support/filterTests";
 import { metadataForms } from "../../support/pages/catalog/metadataComponent";
 import {
@@ -53,7 +52,6 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
 
     before(() => {
       cy.clearSessionData().loginUserViaRequest();
-      productUtils.deleteProductsStartsWith(startsWith);
       createAttribute({ name }).then(attributeResp => {
         attribute = attributeResp;
       });

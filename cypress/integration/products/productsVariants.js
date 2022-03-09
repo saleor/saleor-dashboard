@@ -10,10 +10,7 @@ import {
   createProduct,
   updateChannelInProduct
 } from "../../support/api/requests/Product";
-import {
-  deleteChannelsStartsWith,
-  getDefaultChannel
-} from "../../support/api/utils/channelsUtils";
+import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import * as productUtils from "../../support/api/utils/products/productsUtils";
 import * as shippingUtils from "../../support/api/utils/shippingUtils";
 import { getProductVariants } from "../../support/api/utils/storeFront/storeFrontProductUtils";
@@ -23,9 +20,12 @@ import {
   createVariant,
   variantsShouldBeVisible
 } from "../../support/pages/catalog/products/VariantsPage";
-import { enterHomePageChangeChannelAndReturn } from "../../support/pages/channelsPage";
+import {
+  enterHomePageChangeChannelAndReturn,
+  selectChannelInHeader
+} from "../../support/pages/channelsPage";
 
-filterTests({ definedTags: ["all", "critical"] }, () => {
+filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
   describe("Creating variants", () => {
     const startsWith = "CyCreateVariants-";
     const attributeValues = ["value1", "value2"];
@@ -39,9 +39,6 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
 
     before(() => {
       cy.clearSessionData().loginUserViaRequest();
-      shippingUtils.deleteShippingStartsWith(startsWith);
-      productUtils.deleteProductsStartsWith(startsWith);
-      deleteChannelsStartsWith(startsWith);
 
       const name = `${startsWith}${faker.datatype.number()}`;
       getDefaultChannel()
@@ -84,7 +81,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
       );
     });
 
-    it("should create variant visible on frontend", () => {
+    it("should create variant visible on frontend in all channels", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const price = 10;
       let createdProduct;
@@ -101,6 +98,10 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
             productId: createdProduct.id,
             channelId: defaultChannel.id
           });
+          updateChannelInProduct({
+            productId: createdProduct.id,
+            channelId: newChannel.id
+          });
           cy.visit(`${urlList.products}${createdProduct.id}`);
           createFirstVariant({
             sku: name,
@@ -110,6 +111,18 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
           enterHomePageChangeChannelAndReturn(defaultChannel.name);
           variantsShouldBeVisible({ name, price });
           getProductVariants(createdProduct.id, defaultChannel.slug);
+        })
+        .then(([variant]) => {
+          expect(variant).to.have.property("name", attributeValues[0]);
+          expect(variant).to.have.property("price", price);
+          selectChannelInHeader(newChannel.name);
+          variantsShouldBeVisible({ name, price });
+          getProductVariants(createdProduct.id, defaultChannel.slug);
+        })
+        .then(([variant]) => {
+          expect(variant).to.have.property("name", attributeValues[0]);
+          expect(variant).to.have.property("price", price);
+          getProductVariants(createdProduct.id, newChannel.slug);
         })
         .then(([variant]) => {
           expect(variant).to.have.property("name", attributeValues[0]);
@@ -155,53 +168,6 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
           expect(firstVariant).to.have.property("price", variants[0].price);
           expect(secondVariant).to.have.property("name", variants[1].name);
           expect(secondVariant).to.have.property("price", variants[1].price);
-        });
-    });
-
-    it("should create variant for many channels", () => {
-      const name = `${startsWith}${faker.datatype.number()}`;
-      const variantsPrice = 10;
-      let createdProduct;
-      createProduct({
-        attributeId: attribute.id,
-        name,
-        productTypeId: productType.id,
-        categoryId: category.id
-      })
-        .then(productResp => {
-          createdProduct = productResp;
-          updateChannelInProduct({
-            productId: createdProduct.id,
-            channelId: defaultChannel.id
-          });
-        })
-        .then(() => {
-          updateChannelInProduct({
-            productId: createdProduct.id,
-            channelId: newChannel.id
-          });
-        })
-        .then(() => {
-          cy.visit(`${urlList.products}${createdProduct.id}`);
-          createFirstVariant({
-            sku: name,
-            price: variantsPrice,
-            attribute: attributeValues[0]
-          });
-          enterHomePageChangeChannelAndReturn(defaultChannel.name);
-          variantsShouldBeVisible({ name, price: variantsPrice });
-          enterHomePageChangeChannelAndReturn(newChannel.name);
-          variantsShouldBeVisible({ name, price: variantsPrice });
-          getProductVariants(createdProduct.id, defaultChannel.slug);
-        })
-        .then(([variant]) => {
-          expect(variant).to.have.property("name", attributeValues[0]);
-          expect(variant).to.have.property("price", variantsPrice);
-          getProductVariants(createdProduct.id, newChannel.slug);
-        })
-        .then(([variant]) => {
-          expect(variant).to.have.property("name", attributeValues[0]);
-          expect(variant).to.have.property("price", variantsPrice);
         });
     });
   });
