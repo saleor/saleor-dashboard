@@ -1,4 +1,7 @@
-import { getValueWithDefault } from "./utils/Utils";
+import {
+  getDataForDescriptionInVariables,
+  getValueWithDefault
+} from "./utils/Utils";
 
 export function createCategory({ name, slug = name, parent }) {
   const parentLine = getValueWithDefault(parent, `parent:"${parent}"`);
@@ -92,12 +95,13 @@ export function updateCategoryTranslation({
   name,
   description
 }) {
-  const mutation = `mutation Update_fields{
+  const descriptionData = getDataForDescriptionInVariables(description);
+  const mutation = `mutation Update_fields${descriptionData.mutationVariables}{
     categoryTranslate (id:"${categoryTranslateId}",languageCode:${languageCode},input:{
       seoTitle:"${seoTitle}",
       seoDescription:"${seoDescription}",
       name:"${name}"
-      description: "{\\"time\\":1642670800306,\\"blocks\\":[{\\"id\\":\\"l8oQJqyxa3\\",\\"type\\":\\"paragraph\\",\\"data\\":{\\"text\\":\\"${description}\\"}}],\\"version\\":\\"2.22.2\\"}"
+      ${descriptionData.descriptionLine}
     })
     {
       errors{
@@ -107,5 +111,10 @@ export function updateCategoryTranslation({
     }
   }
   `;
-  return cy.sendRequestWithQuery(mutation);
+  return cy.sendRequestWithQuery(
+    mutation,
+    "auth",
+    descriptionData.variables,
+    true
+  );
 }
