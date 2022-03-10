@@ -7,8 +7,10 @@ import { collectionRow } from "../../elements/catalog/collection-selectors";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { collectionDetailsUrl, urlList } from "../../fixtures/urlList";
 import { createChannel } from "../../support/api/requests/Channels";
-import { createCollection as createCollectionRequest } from "../../support/api/requests/Collections";
-import { addProductToCollecton } from "../../support/api/requests/Collections";
+import {
+  addProductToCollecton,
+  createCollection as createCollectionRequest
+} from "../../support/api/requests/Collections";
 import { updateChannelInProduct } from "../../support/api/requests/Product";
 import { getCollection } from "../../support/api/requests/storeFront/Collections";
 import { getProductDetails } from "../../support/api/requests/storeFront/ProductDetails";
@@ -79,7 +81,7 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("should create hidden collection. SALEOR_0301", () => {
+    it("should create hidden collection. TC: SALEOR_0301", () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
       cy.visit(urlList.collections);
       cy.softExpectSkeletonIsVisible();
@@ -102,7 +104,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should create published collection. TC:SALEOR_0302", () => {
+    it("should create published collection. TC: SALEOR_0302", () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
       let collection;
 
@@ -124,7 +126,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("Create collection not available for channel. TC:SALEOR_0303", () => {
+    it("create collection not available for channel. TC: SALEOR_0303", () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
       let collection;
       let channel;
@@ -153,7 +155,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("Create published collection with products hidden in listings. C:SALEOR_0304", () => {
+    it("create published collection with products hidden in listings. TC: SALEOR_0304", () => {
       // Products "hidden in listings" are not displayed in Category listings or search results,
       // but are listed on Collections
       const randomName = `${startsWith}${faker.datatype.number()}`;
@@ -202,7 +204,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should delete collection. SALEOR_0305", () => {
+    it("should delete collection. TC: SALEOR_0305", () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
 
       createCollectionRequest(collectionName).then(collectionResp => {
@@ -219,7 +221,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("As an admin I should be able to delete several collections on collections list page. SALEOR_0309", () => {
+    it("delete several collections on collections list page. TC: SALEOR_0309", () => {
       const deleteSeveral = "delete-several-";
       const firstCollectionName = `${deleteSeveral}${startsWith}${faker.datatype.number()}`;
       const secondCollectionName = `${deleteSeveral}${startsWith}${faker.datatype.number()}`;
@@ -255,7 +257,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("As an admin I want to assign product to collection. SALEOR_0307", () => {
+    it("assign product to collection. TC: SALEOR_0307", () => {
       const collectionName = `Assign-${startsWith}${faker.datatype.number()}`;
       const randomName = `Product-To-Assign-${startsWith}${faker.datatype.number()}`;
 
@@ -290,7 +292,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("As an admin I want to remove product from collection. SALEOR_0308", () => {
+    it("remove product from collection. TC: SALEOR_0308", () => {
       const collectionName = `Remove-With-Asigned-Product-${startsWith}${faker.datatype.number()}`;
       const randomName = `Product-To-Assign-${startsWith}${faker.datatype.number()}`;
       let collection;
@@ -339,7 +341,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("should update collection. SALEOR_0306", () => {
+    it("should update collection. TC: SALEOR_0306", () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
       const updatedName = `${startsWith}updatedCollection`;
 
