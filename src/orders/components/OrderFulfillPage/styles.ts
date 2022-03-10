@@ -19,7 +19,7 @@ export const useStyles = makeStyles(
       colQuantityHeader: {
         textAlign: "right"
       },
-      colQuantityTotal: {
+      colStock: {
         textAlign: "right",
         width: 180
       },
