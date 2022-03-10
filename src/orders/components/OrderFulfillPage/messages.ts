@@ -60,5 +60,9 @@ export const messages = defineMessages({
   trackingNumber: {
     defaultMessage: "Tracking number",
     description: "Tracking number input label"
+  },
+  fulfillingFrom: {
+    defaultMessage: "Fulfilling from {warehouseName}",
+    description: "Support text under page header"
   }
 });

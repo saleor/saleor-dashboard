@@ -61,6 +61,9 @@ export const useStyles = makeStyles(
         fontSize: "12px",
         lineHeight: "160%",
         marginBottom: theme.spacing(2)
+      },
+      warehouseLabel: {
+        marginBottom: theme.spacing(4)
       }
     };
   },

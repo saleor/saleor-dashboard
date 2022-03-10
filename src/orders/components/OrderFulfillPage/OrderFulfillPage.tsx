@@ -156,6 +156,12 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
           orderNumber: order?.number
         })}
       />
+      <Typography className={classes.warehouseLabel}>
+        <FormattedMessage
+          {...messages.fulfillingFrom}
+          values={{ warehouseName: warehouse?.name }}
+        />
+      </Typography>
       <Form confirmLeave initial={initialFormData} onSubmit={handleSubmit}>
         {({ change, data, submit }) => (
           <>
