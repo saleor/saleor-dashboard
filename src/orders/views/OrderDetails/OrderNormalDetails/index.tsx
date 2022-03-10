@@ -204,7 +204,9 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         shippingMethods={data?.order?.shippingMethods || []}
         selectedWarehouse={fulfillmentWarehouse}
         onOrderCancel={() => openModal("cancel")}
-        onOrderFulfill={() => navigate(orderFulfillUrl(id))}
+        onOrderFulfill={() =>
+          navigate(orderFulfillUrl(id, { warehouse: fulfillmentWarehouse?.id }))
+        }
         onFulfillmentApprove={fulfillmentId =>
           navigate(
             orderUrl(id, {
