@@ -176,11 +176,6 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
           onChange={onCountryChange}
           value={data.country}
           choices={countries}
-          InputProps={{
-            inputProps: {
-              autoComplete: "none"
-            }
-          }}
         />
         <TextField
           disabled={disabled}
