@@ -26,7 +26,7 @@ import {
 } from "../../support/pages/channelsPage";
 
 filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
-  describe("Creating variants", () => {
+  describe("As an admin I should be able to create variant", () => {
     const startsWith = "CyCreateVariants-";
     const attributeValues = ["value1", "value2"];
 
@@ -81,7 +81,7 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
       );
     });
 
-    it("should create variant visible on frontend in all channels", () => {
+    it("should be able to create variant visible for the customers in all channels. TC: SALEOR_2901", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const price = 10;
       let createdProduct;
@@ -130,7 +130,7 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
         });
     });
 
-    it("should create several variants", () => {
+    it("should be able to create several variants visible for the customers. TC: SALEOR_2902", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const secondVariantSku = `${startsWith}${faker.datatype.number()}`;
       const variants = [{ price: 7 }, { name: attributeValues[1], price: 16 }];

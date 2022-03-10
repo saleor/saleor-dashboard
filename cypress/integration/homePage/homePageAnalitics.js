@@ -28,7 +28,7 @@ import {
 } from "../../support/pages/homePage";
 
 filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
-  describe("Homepage analytics", () => {
+  describe("As an admin I want to see correct information on dashboard home page", () => {
     const startsWith = "CyHomeAnalytics";
     const productPrice = 22;
     const shippingPrice = 12;
@@ -183,7 +183,7 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("should correct amount of ready to fullfil orders be displayed", () => {
+    it("should display correct information on dashboard home page. SALEOR_2004", () => {
       cy.visit(urlList.homePage);
       changeChannel(defaultChannel.name);
       cy.contains(HOMEPAGE_SELECTORS.orders, ordersRegexp).should("be.visible");

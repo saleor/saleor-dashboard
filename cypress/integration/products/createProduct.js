@@ -24,7 +24,7 @@ import { fillUpCommonFieldsForAllProductTypes } from "../../support/pages/catalo
 import { selectChannelInDetailsPages } from "../../support/pages/channelsPage";
 
 filterTests({ definedTags: ["all", "critical"] }, () => {
-  describe("Create product", () => {
+  describe("As an admin I should be able to create product", () => {
     const startsWith = "CyCreateProduct-";
     const name = `${startsWith}${faker.datatype.number()}`;
     const generalInfo = {
@@ -60,7 +60,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("should create product with variants", () => {
+    it("should be able to create product with variants as an admin. SALEOR_2701", () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
       seo.slug = randomName;
       const productData = {
@@ -87,7 +87,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         });
     });
 
-    it("should create product without variants", () => {
+    it("should be able to create product without variants as an admin. SALEOR_2702", () => {
       const prices = { sellingPrice: 6, costPrice: 3 };
       const randomName = `${startsWith}${faker.datatype.number()}`;
       seo.slug = randomName;

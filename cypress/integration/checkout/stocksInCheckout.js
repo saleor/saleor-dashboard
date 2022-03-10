@@ -18,7 +18,7 @@ import { createShipping } from "../../support/api/utils/shippingUtils";
 import filterTests from "../../support/filterTests";
 
 filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
-  describe("Products stocks in checkout", () => {
+  describe("Manage products stocks in checkout", () => {
     const startsWith = "CyStocksCheckout-";
     const name = `${startsWith}${faker.datatype.number()}`;
     const productName = `${startsWith}${faker.datatype.number()}`;
@@ -111,7 +111,7 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
         });
     });
 
-    it("should not be possible to add product with quantity greater than stock", () => {
+    it("should not be possible to add product with quantity greater than stock to checkout. TC: SALEOR_0405", () => {
       createCheckout({
         channelSlug: defaultChannel.slug,
         address,
@@ -131,7 +131,7 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
         });
     });
 
-    it("should buy product with no quantity if tracking is not set", () => {
+    it("should buy product with no quantity if tracking is not set. TC: SALEOR_0406", () => {
       createWaitingForCaptureOrder({
         address,
         channelSlug: defaultChannel.slug,
@@ -143,7 +143,7 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
       });
     });
 
-    it("should create checkout with last product in stock", () => {
+    it("should create checkout with last product in stock. TC: SALEOR_0419", () => {
       createWaitingForCaptureOrder({
         address,
         channelSlug: defaultChannel.slug,

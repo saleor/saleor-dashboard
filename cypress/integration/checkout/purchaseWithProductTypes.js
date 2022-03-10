@@ -29,7 +29,7 @@ import { createShipping } from "../../support/api/utils/shippingUtils";
 import filterTests from "../../support/filterTests";
 
 filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
-  describe("Purchase products with all products types", () => {
+  describe("As an unlogged customer I want to order physical and digital products", () => {
     const startsWith = `CyPurchaseByType`;
     const name = `${startsWith}${faker.datatype.number()}`;
     const email = `${startsWith}@example.com`;
@@ -121,7 +121,7 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
         });
     });
 
-    it("should purchase digital product", () => {
+    it("should purchase digital product as unlogged customer. TC: SALEOR_0402", () => {
       createAndCompleteCheckoutWithoutShipping({
         channelSlug: defaultChannel.slug,
         email,
@@ -141,7 +141,7 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
         });
     });
 
-    it("should purchase physical product", () => {
+    it("should purchase physical product as unlogged customer. TC: SALEOR_0403", () => {
       createWaitingForCaptureOrder({
         channelSlug: defaultChannel.slug,
         email,
@@ -161,7 +161,7 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
         });
     });
 
-    it("should purchase multiple products with all product types", () => {
+    it("should purchase multiple products with all product types as unlogged customer. TC: SALEOR_0404", () => {
       let checkout;
 
       createCheckout({
