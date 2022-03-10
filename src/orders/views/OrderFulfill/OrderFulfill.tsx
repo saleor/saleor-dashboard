@@ -1,19 +1,14 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import {
-  OrderFulfillDataQuery,
   useFulfillOrderMutation,
   useOrderFulfillDataQuery,
   useOrderFulfillSettingsQuery,
-  useWarehouseDetailsQuery,
-  WarehouseClickAndCollectOptionEnum,
-  WarehouseFragment
-} from "@saleor/graphql";
+  useWarehouseDetailsQuery} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { extractMutationErrors } from "@saleor/misc";
 import OrderFulfillPage from "@saleor/orders/components/OrderFulfillPage";
 import { OrderFulfillUrlQueryParams, orderUrl } from "@saleor/orders/urls";
-import { getWarehousesFromOrderLines } from "@saleor/orders/utils/data";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -21,23 +16,6 @@ export interface OrderFulfillProps {
   orderId: string;
   params: OrderFulfillUrlQueryParams;
 }
-
-const resolveLocalFulfillment = (
-  order: OrderFulfillDataQuery["order"],
-  orderLineWarehouses: WarehouseFragment[]
-) => {
-  const deliveryMethod = order?.deliveryMethod;
-  if (
-    deliveryMethod?.__typename === "Warehouse" &&
-    deliveryMethod?.clickAndCollectOption ===
-      WarehouseClickAndCollectOptionEnum.LOCAL
-  ) {
-    return orderLineWarehouses?.filter(
-      warehouse => warehouse?.id === deliveryMethod?.id
-    );
-  }
-  return orderLineWarehouses;
-};
 
 const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
   const navigate = useNavigator();
@@ -56,8 +34,6 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
     }
   });
 
-  const orderLinesWarehouses = getWarehousesFromOrderLines(data?.order?.lines);
-
   const [fulfillOrder, fulfillOrderOpts] = useFulfillOrderMutation({
     onCompleted: data => {
       if (data.orderFulfill.errors.length === 0) {
@@ -72,11 +48,6 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
       }
     }
   });
-
-  const resolvedOrderLinesWarehouses = resolveLocalFulfillment(
-    data?.order,
-    orderLinesWarehouses
-  );
 
   const { data: warehouseData } = useWarehouseDetailsQuery({
     variables: {
