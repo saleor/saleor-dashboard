@@ -1,6 +1,7 @@
 import { OrderErrorCode } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
 import { warehouseList } from "@saleor/warehouses/fixtures";
+import { WarehouseDetails_warehouse } from "@saleor/warehouses/types/WarehouseDetails";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -14,7 +15,7 @@ const props: OrderFulfillPageProps = {
   onSubmit: () => undefined,
   order: orderToFulfill,
   saveButtonBar: "default",
-  warehouses: warehouseList
+  warehouse: warehouseList[0] as WarehouseDetails_warehouse
 };
 
 storiesOf("Views / Orders / Fulfill order", module)
@@ -25,7 +26,7 @@ storiesOf("Views / Orders / Fulfill order", module)
       {...props}
       loading={true}
       order={undefined}
-      warehouses={undefined}
+      warehouse={undefined}
     />
   ))
   .add("error", () => (
@@ -44,6 +45,4 @@ storiesOf("Views / Orders / Fulfill order", module)
       ]}
     />
   ))
-  .add("one warehouse", () => (
-    <OrderFulfillPage {...props} warehouses={warehouseList.slice(0, 1)} />
-  ));
+  .add("one warehouse", () => <OrderFulfillPage {...props} />);
