@@ -2,6 +2,7 @@ import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompl
 import {
   AccountErrorFragment,
   AddressFragment,
+  AddressInput,
   AddressTypeEnum,
   Node,
   OrderErrorFragment
@@ -48,6 +49,21 @@ export function validateDefaultAddress<T extends AddressFragment>(
   return defaultAddress;
 }
 
+const filterAddressErrors = (
+  dialogErrors: Array<OrderErrorFragment | AccountErrorFragment>,
+  addressType: AddressTypeEnum
+) => dialogErrors.filter(error => error.addressType === addressType);
+
+interface ShippingAddresses {
+  shippingAddress: AccountErrorFragment[] | AddressInput;
+  billingAddress: AccountErrorFragment[] | AddressInput;
+}
+
+export const hasPreSubmitErrors = (input: ShippingAddresses) =>
+  Object.values(input)
+    .flat()
+    .some(el => (el as AccountErrorFragment).code);
+
 export const getAddressEditProps = (
   variant: "shipping" | "billing",
   data: OrderCustomerAddressesEditData,
@@ -63,9 +79,7 @@ export const getAddressEditProps = (
     return {
       ...addressEditCommonProps,
       addressInputName: "shippingAddressInputOption",
-      formErrors: dialogErrors.filter(
-        error => error.addressType === AddressTypeEnum.SHIPPING
-      ),
+      formErrors: filterAddressErrors(dialogErrors, AddressTypeEnum.SHIPPING),
       onEdit: () =>
         setAddressSearchState({
           open: true,
@@ -84,9 +98,7 @@ export const getAddressEditProps = (
   return {
     ...addressEditCommonProps,
     addressInputName: "billingAddressInputOption",
-    formErrors: dialogErrors.filter(
-      error => error.addressType === AddressTypeEnum.BILLING
-    ),
+    formErrors: filterAddressErrors(dialogErrors, AddressTypeEnum.BILLING),
     onEdit: () =>
       setAddressSearchState({
         open: true,
