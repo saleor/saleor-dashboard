@@ -7,7 +7,6 @@ import {
   TextField,
   Typography
 } from "@material-ui/core";
-import { CSSProperties } from "@material-ui/styles";
 import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
@@ -22,15 +21,12 @@ import {
   FulfillOrderMutation,
   OrderFulfillDataQuery,
   OrderFulfillStockInput,
-  ShopOrderSettingsFragment} from "@saleor/graphql";
+  ShopOrderSettingsFragment
+} from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
 import { commonMessages } from "@saleor/intl";
-import {
-  Backlink,
-  ConfirmButtonTransitionState,
-  makeStyles
-} from "@saleor/macaw-ui";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import {
   getToFulfillOrderLines,
@@ -43,79 +39,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { Warehouse } from "../OrderChangeWarehouseDialog/types";
 import { messages } from "./messages";
-
-const useStyles = makeStyles(
-  theme => {
-    const inputPadding: CSSProperties = {
-      paddingBottom: theme.spacing(2),
-      paddingTop: theme.spacing(2)
-    };
-
-    return {
-      actionBar: {
-        flexDirection: "row",
-        padding: theme.spacing(1, 4)
-      },
-      colName: {
-        width: 250
-      },
-      colQuantity: {
-        textAlign: "right",
-        width: 210
-      },
-      colQuantityHeader: {
-        textAlign: "right"
-      },
-      colQuantityTotal: {
-        textAlign: "right",
-        width: 180
-      },
-      colSku: {
-        textAlign: "right",
-        textOverflow: "ellipsis",
-        width: 150
-      },
-      error: {
-        color: theme.palette.error.main
-      },
-      full: {
-        fontWeight: 600
-      },
-      quantityInnerInput: {
-        ...inputPadding
-      },
-      quantityInnerInputNoRemaining: {
-        paddingRight: 0
-      },
-      remainingQuantity: {
-        ...inputPadding,
-        color: theme.palette.text.secondary,
-        whiteSpace: "nowrap"
-      },
-      table: {
-        "&&": {
-          tableLayout: "fixed"
-        }
-      },
-      shipmentInformationCard: {
-        padding: theme.spacing(3),
-        alignSelf: "start",
-        display: "grid",
-        gridRowGap: theme.spacing(1)
-      },
-      supportHeader: {
-        textTransform: "uppercase",
-        color: theme.palette.saleor.main[3],
-        fontWeight: 500,
-        letterSpacing: "0.1em",
-        fontSize: "12px",
-        lineHeight: "160%",
-        marginBottom: theme.spacing(2)
-      }
-    };
-  },
-  { name: "OrderFulfillPage" }
-);
+import { useStyles } from "./styles";
 
 interface OrderFulfillFormData {
   sendInfo: boolean;
@@ -176,19 +100,11 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     }))
   );
 
-  const handleSubmit = (formData: OrderFulfillFormData) => {
-    // eslint-disable-next-line no-console
-    console.log(
-      formsetData.map(line => ({
-        orderLineId: line.id,
-        stocks: line.value
-      }))
-    );
-    return onSubmit({
+  const handleSubmit = (formData: OrderFulfillFormData) =>
+    onSubmit({
       ...formData,
       items: formsetData
     });
-  };
 
   const notAllowedToFulfillUnpaid =
     shopSettings?.fulfillmentAutoApprove &&
@@ -274,7 +190,10 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                     <TableBody>
                       {renderCollection(
                         getToFulfillOrderLines(order?.lines),
-                        (line: OrderFulfillDataQuery["order"]["lines"][0], lineIndex) => {
+                        (
+                          line: OrderFulfillDataQuery["order"]["lines"][0],
+                          lineIndex
+                        ) => {
                           if (!line) {
                             return (
                               <TableRow key={lineIndex}>
