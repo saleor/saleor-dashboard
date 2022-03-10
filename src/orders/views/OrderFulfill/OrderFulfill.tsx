@@ -84,10 +84,12 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
             fulfillOrder({
               variables: {
                 input: {
-                  lines: formData.items.map(line => ({
-                    orderLineId: line.id,
-                    stocks: line.value
-                  })),
+                  lines: formData.items
+                    .filter(line => !!line?.value)
+                    .map(line => ({
+                      orderLineId: line.id,
+                      stocks: line.value
+                    })),
                   notifyCustomer:
                     settings?.shop?.fulfillmentAutoApprove && formData.sendInfo
                 },

@@ -91,12 +91,14 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
             .join(" , ")
         )
         .join(" / "),
-      value: line.variant?.stocks
-        ?.filter(stock => stock.warehouse.id === warehouse?.id)
-        .map(stock => ({
-          quantity: 0,
-          warehouse: stock.warehouse.id
-        }))
+      value:
+        !line.variant.preorder &&
+        line.variant?.stocks
+          ?.filter(stock => stock.warehouse.id === warehouse?.id)
+          .map(stock => ({
+            quantity: 0,
+            warehouse: stock.warehouse.id
+          }))
     }))
   );
 
@@ -124,20 +126,22 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     //   value?.some(({ quantity }) => quantity > 0)
     // );
 
-    const areProperlyFulfilled = formsetData?.every(({ id, value }) => {
-      const { lines } = order;
+    const areProperlyFulfilled = formsetData
+      .filter(item => !!item?.value)
+      .every(({ id, value }) => {
+        const { lines } = order;
 
-      const { quantityToFulfill } = lines.find(
-        ({ id: lineId }) => lineId === id
-      );
+        const { quantityToFulfill } = lines.find(
+          ({ id: lineId }) => lineId === id
+        );
 
-      const formQuantityFulfilled = value?.reduce(
-        (result, { quantity }) => result + quantity,
-        0
-      );
+        const formQuantityFulfilled = value?.reduce(
+          (result, { quantity }) => result + quantity,
+          0
+        );
 
-      return formQuantityFulfilled <= quantityToFulfill;
-    });
+        return formQuantityFulfilled <= quantityToFulfill;
+      });
 
     return areProperlyFulfilled;
   };
@@ -220,24 +224,23 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                             );
                           }
 
+                          const isPreorder = !!line.variant?.preorder;
                           const remainingQuantity = line.quantityToFulfill;
-                          const quantityToFulfill = formsetData[
-                            lineIndex
-                          ].value?.reduce(
-                            (quantityToFulfill, lineInput) =>
-                              quantityToFulfill + (lineInput.quantity || 0),
-                            0
-                          );
+                          const quantityToFulfill = isPreorder
+                            ? 0
+                            : formsetData[lineIndex].value?.reduce(
+                                (quantityToFulfill, lineInput) =>
+                                  quantityToFulfill + (lineInput.quantity || 0),
+                                0
+                              );
                           const overfulfill =
                             remainingQuantity < quantityToFulfill;
-                          const isPreorder = !!line.variant?.preorder;
 
                           const warehouseStock = line.variant?.stocks?.find(
                             stock => stock.warehouse.id === warehouse.id
                           );
-                          const formsetStock = formsetData[
-                            lineIndex
-                          ].value.find(line => line.warehouse === warehouse.id);
+                          const formsetStock =
+                            formsetData[lineIndex]?.value?.[0];
 
                           const warehouseAllocation = line.allocations.find(
                             allocation =>
