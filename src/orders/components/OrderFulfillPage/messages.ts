@@ -37,6 +37,14 @@ export const messages = defineMessages({
     defaultMessage: "Quantity to fulfill",
     description: "quantity of fulfilled products"
   },
+  quantity: {
+    defaultMessage: "Quantity",
+    description: "Header row quantity label"
+  },
+  stock: {
+    defaultMessage: "Stock",
+    description: "Header row stock label"
+  },
   noStock: {
     defaultMessage: "No Stock",
     description: "no variant stock in warehouse"

@@ -4,6 +4,7 @@ import {
   useFulfillOrderMutation,
   useOrderFulfillDataQuery,
   useOrderFulfillSettingsQuery,
+  useWarehouseDetailsQuery,
   WarehouseClickAndCollectOptionEnum,
   WarehouseFragment
 } from "@saleor/graphql";
@@ -11,13 +12,14 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { extractMutationErrors } from "@saleor/misc";
 import OrderFulfillPage from "@saleor/orders/components/OrderFulfillPage";
-import { orderUrl } from "@saleor/orders/urls";
+import { OrderFulfillUrlQueryParams, orderUrl } from "@saleor/orders/urls";
 import { getWarehousesFromOrderLines } from "@saleor/orders/utils/data";
 import React from "react";
 import { useIntl } from "react-intl";
 
 export interface OrderFulfillProps {
   orderId: string;
+  params: OrderFulfillUrlQueryParams;
 }
 
 const resolveLocalFulfillment = (
@@ -37,7 +39,7 @@ const resolveLocalFulfillment = (
   return orderLineWarehouses;
 };
 
-const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
+const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -75,6 +77,12 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
     data?.order,
     orderLinesWarehouses
   );
+
+  const { data: warehouseData } = useWarehouseDetailsQuery({
+    variables: {
+      id: params?.warehouse
+    }
+  });
 
   return (
     <>
@@ -119,7 +127,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
         }
         order={data?.order}
         saveButtonBar="default"
-        warehouses={resolvedOrderLinesWarehouses}
+        warehouse={warehouseData?.warehouse}
         shopSettings={settings?.shop}
       />
     </>
