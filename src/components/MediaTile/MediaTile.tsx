@@ -1,6 +1,5 @@
 import { CircularProgress } from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
-import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { DeleteIcon, EditIcon, makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 
@@ -28,7 +27,8 @@ const useStyles = makeStyles(
       width: 148
     },
     mediaOverlay: {
-      background: "rgba(0, 0, 0, 0.6)",
+      background: theme.palette.background.default,
+      opacity: 0.8,
       cursor: "move",
       display: "none",
       height: 148,
@@ -47,6 +47,18 @@ const useStyles = makeStyles(
     mediaOverlayToolbar: {
       display: "flex",
       justifyContent: "flex-end"
+    },
+    controlButton: {
+      color: theme.palette.saleor.main[1],
+      cursor: "pointer",
+      margin: theme.spacing(2),
+
+      "&:hover": {
+        color: theme.palette.saleor.active[1]
+      },
+      "&:first-child": {
+        marginRight: 0
+      }
     }
   }),
   { name: "MediaTile" }
@@ -84,14 +96,14 @@ const MediaTile: React.FC<MediaTileProps> = props => {
         ) : (
           <div className={classes.mediaOverlayToolbar}>
             {onEdit && (
-              <IconButton variant="secondary" color="primary" onClick={onEdit}>
+              <div className={classes.controlButton} onClick={onEdit}>
                 <EditIcon />
-              </IconButton>
+              </div>
             )}
             {onDelete && (
-              <IconButton color="primary" onClick={onDelete}>
+              <div className={classes.controlButton} onClick={onDelete}>
                 <DeleteIcon />
-              </IconButton>
+              </div>
             )}
           </div>
         )}
