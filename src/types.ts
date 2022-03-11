@@ -1,4 +1,4 @@
-import { FetchResult, MutationResult, ServerError } from "@apollo/client";
+import { FetchResult, MutationResult } from "@apollo/client";
 import { UserPermissionFragment } from "@saleor/graphql";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 
