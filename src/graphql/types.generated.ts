@@ -6868,6 +6868,8 @@ export type SearchOrderVariantQueryVariables = Exact<{
   query: Scalars['String'];
   after?: InputMaybe<Scalars['String']>;
   address?: InputMaybe<AddressInput>;
+  isPublished?: InputMaybe<Scalars['Boolean']>;
+  stockAvailability?: InputMaybe<StockAvailability>;
 }>;
 
 
