@@ -149,7 +149,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
               </TableCell>
               <TableCell className={classes.colType}>
                 <FormattedMessage
-                  defaultMessage="Cost"
+                  defaultMessage="Cost price"
                   description="tabel column header"
                 />
               </TableCell>
