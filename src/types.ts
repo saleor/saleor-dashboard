@@ -225,8 +225,6 @@ export enum StatusType {
   SUCCESS = "success"
 }
 
-export type ServerErrorWithName = ServerError & { operationName: string };
-
 export type RelayToFlat<T extends { edges: Array<{ node: any }> }> = Array<
   T["edges"][0]["node"]
 >;
