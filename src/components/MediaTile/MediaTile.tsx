@@ -50,8 +50,11 @@ const useStyles = makeStyles(
     },
     controlButton: {
       color: theme.palette.saleor.main[1],
+      backgroundColor: "transparent",
+      border: "none",
       cursor: "pointer",
       margin: theme.spacing(2),
+      padding: 0,
 
       "&:hover": {
         color: theme.palette.saleor.active[1]
@@ -96,14 +99,14 @@ const MediaTile: React.FC<MediaTileProps> = props => {
         ) : (
           <div className={classes.mediaOverlayToolbar}>
             {onEdit && (
-              <div className={classes.controlButton} onClick={onEdit}>
+              <button className={classes.controlButton} onClick={onEdit}>
                 <EditIcon />
-              </div>
+              </button>
             )}
             {onDelete && (
-              <div className={classes.controlButton} onClick={onDelete}>
+              <button className={classes.controlButton} onClick={onDelete}>
                 <DeleteIcon />
-              </div>
+              </button>
             )}
           </div>
         )}
