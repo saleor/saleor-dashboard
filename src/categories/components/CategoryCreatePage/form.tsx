@@ -47,7 +47,7 @@ const initialData: CategoryCreateFormData = {
 
 function useCategoryCreateForm(
   onSubmit: (data: CategoryCreateData) => Promise<any[]>,
-  disabled?: boolean
+  disabled: boolean
 ): UseCategoryCreateFormResult {
   const {
     handleChange,
