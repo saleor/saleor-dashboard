@@ -150,4 +150,27 @@ describe("useExitFormDialog", () => {
     expect(result.current.exit.shouldBlockNavigation()).toBe(true);
     expect(result.current.history.location.pathname).toBe(initialPath);
   });
+
+  it("navigates to full url with querystring", async () => {
+    // Given
+    const submitFn = jest.fn(() => Promise.resolve([]));
+    const { result } = setup(submitFn);
+    const qs = "?param=value";
+    const targetPathWithQs = targetPath + qs;
+
+    // When
+    act(() => {
+      result.current.form.change({
+        target: { name: "field", value: "something" }
+      });
+    });
+    act(() => {
+      result.current.history.push(targetPathWithQs);
+      result.current.exit.leave();
+    });
+
+    // Then
+    expect(result.current.history.location.pathname).toBe(targetPath);
+    expect(result.current.history.location.search).toBe(qs);
+  });
 });
