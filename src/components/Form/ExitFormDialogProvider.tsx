@@ -60,7 +60,7 @@ export function useExitFormDialogProvider() {
   const { history: routerHistory } = useRouter();
 
   const [showDialog, setShowDialog] = useState(defaultValues.showDialog);
-  const isSubmitDisabled = useRef<boolean>(false);
+  const isSubmitDisabled = useRef(false);
 
   const setIsSubmitDisabled = (status: boolean) => {
     isSubmitDisabled.current = status;
