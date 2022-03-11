@@ -124,12 +124,6 @@ export function createHandler(
 
     const result = await productCreate(productVariables);
 
-    // When 400 is thrown Apollo for some reason adds ApolloError in result.errors
-    // This code is required to prevent navigation in exit form
-    if (result.errors && (result.errors as any)?.networkError) {
-      errors = [...errors, ...getAllErrorMessages(result.errors as any)];
-    }
-
     let hasErrors = errors.length > 0;
 
     const hasVariants = productType?.hasVariants;
