@@ -130,12 +130,14 @@ export interface ProductVariantUpdateFormProps
   extends UseProductVariantUpdateFormOpts {
   children: (props: UseProductVariantUpdateFormResult) => React.ReactNode;
   variant: ProductVariantFragment;
+  loading: boolean;
   onSubmit: (data: ProductVariantUpdateSubmitData) => SubmitPromise;
 }
 
 function useProductVariantUpdateForm(
   variant: ProductVariantFragment,
   onSubmit: (data: ProductVariantUpdateSubmitData) => SubmitPromise,
+  loading: boolean,
   opts: UseProductVariantUpdateFormOpts
 ): UseProductVariantUpdateFormResult {
   const intl = useIntl();
@@ -180,7 +182,8 @@ function useProductVariantUpdateForm(
     data: formData,
     setChanged,
     hasChanged,
-    formId
+    formId,
+    setIsSubmitDisabled
   } = form;
 
   const { setExitDialogSubmitRef } = useExitFormDialog({
@@ -332,6 +335,9 @@ function useProductVariantUpdateForm(
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
+  const saveDisabled = loading || disabled || !hasChanged;
+  setIsSubmitDisabled(saveDisabled);
+
   return {
     change: handleChange,
     data,
@@ -353,7 +359,8 @@ function useProductVariantUpdateForm(
       selectAttributeReference: handleAttributeReferenceChange
     },
     hasChanged,
-    submit
+    submit,
+    saveDisabled
   };
 }
 
@@ -361,9 +368,10 @@ const ProductVariantUpdateForm: React.FC<ProductVariantUpdateFormProps> = ({
   children,
   variant,
   onSubmit,
+  loading,
   ...rest
 }) => {
-  const props = useProductVariantUpdateForm(variant, onSubmit, rest);
+  const props = useProductVariantUpdateForm(variant, onSubmit, loading, rest);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };

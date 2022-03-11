@@ -57,6 +57,7 @@ interface OrderRefundFormProps {
   order: OrderRefundDataQuery["order"];
   defaultType: OrderRefundType;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
+  disabled: boolean;
 }
 
 function getOrderRefundPageFormData(
@@ -73,7 +74,8 @@ function getOrderRefundPageFormData(
 function useOrderRefundForm(
   order: OrderRefundDataQuery["order"],
   defaultType: OrderRefundType,
-  onSubmit: (data: OrderRefundSubmitData) => SubmitPromise
+  onSubmit: (data: OrderRefundSubmitData) => SubmitPromise,
+  disabled: boolean
 ): UseOrderRefundFormResult {
   const {
     handleChange,
@@ -81,12 +83,15 @@ function useOrderRefundForm(
     hasChanged,
     triggerChange,
     data: formData,
-    formId
+    formId,
+    setIsSubmitDisabled
   } = useForm(getOrderRefundPageFormData(defaultType), undefined, {
     confirmLeave: true
   });
 
-  const { setExitDialogSubmitRef } = useExitFormDialog();
+  const { setExitDialogSubmitRef } = useExitFormDialog({
+    formId
+  });
 
   const refundedProductQuantities = useFormset<null, string>(
     order?.lines
@@ -188,7 +193,8 @@ function useOrderRefundForm(
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
-  const disabled = !order;
+  const saveDisabled = disabled || !order;
+  setIsSubmitDisabled(saveDisabled);
 
   return {
     change: handleChange,
@@ -201,7 +207,8 @@ function useOrderRefundForm(
       setMaximalRefundedProductQuantities: handleMaximalRefundedProductQuantitiesSet
     },
     hasChanged,
-    submit
+    submit,
+    saveDisabled
   };
 }
 
@@ -209,9 +216,10 @@ const OrderRefundForm: React.FC<OrderRefundFormProps> = ({
   children,
   order,
   defaultType,
-  onSubmit
+  onSubmit,
+  disabled
 }) => {
-  const props = useOrderRefundForm(order, defaultType, onSubmit);
+  const props = useOrderRefundForm(order, defaultType, onSubmit, disabled);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };

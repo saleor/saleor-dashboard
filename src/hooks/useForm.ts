@@ -50,7 +50,7 @@ export interface CommonUseFormResult<TData> {
   change: FormChange;
   hasChanged: boolean;
   submit: (dataOrEvent?: any) => SubmitPromise<any[]>;
-  setIsSubmitDisabled?: (value: boolean) => void;
+  saveDisabled?: boolean;
 }
 
 export interface CommonUseFormResultWithHandlers<TData, THandlers>

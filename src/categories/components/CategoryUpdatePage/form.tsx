@@ -38,6 +38,7 @@ export interface CategoryUpdateFormProps {
   children: (props: UseCategoryUpdateFormResult) => React.ReactNode;
   category: CategoryDetailsFragment;
   onSubmit: (data: CategoryUpdateData) => Promise<any[]>;
+  disabled: boolean;
 }
 
 const getInitialData = (category?: CategoryDetailsFragment) => ({
@@ -52,7 +53,8 @@ const getInitialData = (category?: CategoryDetailsFragment) => ({
 
 function useCategoryUpdateForm(
   category: CategoryDetailsFragment,
-  onSubmit: (data: CategoryUpdateData) => Promise<any[]>
+  onSubmit: (data: CategoryUpdateData) => Promise<any[]>,
+  disabled: boolean
 ): UseCategoryUpdateFormResult {
   const {
     handleChange,
@@ -60,7 +62,8 @@ function useCategoryUpdateForm(
     triggerChange,
     hasChanged,
     setChanged,
-    formId
+    formId,
+    setIsSubmitDisabled
   } = useForm(getInitialData(category), undefined, { confirmLeave: true });
 
   const handleFormSubmit = useHandleFormSubmit({
@@ -101,6 +104,9 @@ function useCategoryUpdateForm(
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
+  const saveDisabled = disabled || !hasChanged;
+  setIsSubmitDisabled(saveDisabled);
+
   return {
     change: handleChange,
     data: getData(),
@@ -109,16 +115,18 @@ function useCategoryUpdateForm(
       changeMetadata
     },
     hasChanged,
-    submit
+    submit,
+    saveDisabled
   };
 }
 
 const CategoryUpdateForm: React.FC<CategoryUpdateFormProps> = ({
   children,
   category,
-  onSubmit
+  onSubmit,
+  disabled
 }) => {
-  const props = useCategoryUpdateForm(category, onSubmit);
+  const props = useCategoryUpdateForm(category, onSubmit, disabled);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };

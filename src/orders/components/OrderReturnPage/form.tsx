@@ -85,12 +85,15 @@ function useOrderReturnForm(
     hasChanged,
     data: formData,
     triggerChange,
-    formId
+    formId,
+    setIsSubmitDisabled
   } = useForm(getOrderRefundPageFormData(), undefined, {
     confirmLeave: true
   });
 
-  const { setExitDialogSubmitRef } = useExitFormDialog();
+  const { setExitDialogSubmitRef } = useExitFormDialog({
+    formId
+  });
 
   const unfulfiledItemsQuantites = useFormset<LineItemData, number>(
     getOrderUnfulfilledLines(order).map(getParsedLineData({ initialValue: 0 }))
@@ -241,6 +244,14 @@ function useOrderReturnForm(
     };
   }
 
+  const hasAnyItemsSelected =
+    fulfiledItemsQuatities.data.some(({ value }) => !!value) ||
+    waitingItemsQuantities.data.some(({ value }) => !!value) ||
+    unfulfiledItemsQuantites.data.some(({ value }) => !!value);
+
+  const saveDisabled = !hasAnyItemsSelected;
+  setIsSubmitDisabled(saveDisabled);
+
   return {
     change: handleChange,
     data,
@@ -259,7 +270,8 @@ function useOrderReturnForm(
       handleSetMaximalUnfulfiledItemsQuantities
     },
     hasChanged,
-    submit
+    submit,
+    saveDisabled
   };
 }
 

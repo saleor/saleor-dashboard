@@ -157,7 +157,6 @@ export interface UseProductUpdateFormResult
     ProductUpdateData,
     ProductUpdateHandlers
   > {
-  disabled: boolean;
   formErrors: FormErrors<ProductUpdateSubmitData>;
 }
 
@@ -193,6 +192,8 @@ export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
   children: (props: UseProductUpdateFormResult) => React.ReactNode;
   product: ProductFragment;
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise;
+  disabled: boolean;
+  hasChannelChanged: boolean;
 }
 
 const getStocksData = (
@@ -222,6 +223,8 @@ const getStocksData = (
 function useProductUpdateForm(
   product: ProductFragment,
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise,
+  disabled: boolean,
+  hasChannelChanged: boolean,
   opts: UseProductUpdateFormOpts
 ): UseProductUpdateFormResult {
   const intl = useIntl();
@@ -244,7 +247,8 @@ function useProductUpdateForm(
     toggleValue,
     data: formData,
     setChanged,
-    hasChanged
+    hasChanged,
+    setIsSubmitDisabled
   } = form;
 
   const attributes = useFormset(getAttributeInputFromProduct(product));
@@ -435,12 +439,15 @@ function useProductUpdateForm(
     return true;
   };
 
-  const disabled = !shouldEnableSave();
+  const isSaveEnabled = !shouldEnableSave();
+
+  const saveDisabled =
+    disabled || isSaveEnabled || (!hasChanged && !hasChannelChanged);
+  setIsSubmitDisabled(saveDisabled);
 
   return {
     change: handleChange,
     data,
-    disabled,
     formErrors: form.errors,
     handlers: {
       addStock: handleStockAdd,
@@ -464,7 +471,8 @@ function useProductUpdateForm(
       selectTaxRate: handleTaxTypeSelect
     },
     hasChanged,
-    submit
+    submit,
+    saveDisabled
   };
 }
 
@@ -472,9 +480,17 @@ const ProductUpdateForm: React.FC<ProductUpdateFormProps> = ({
   children,
   product,
   onSubmit,
+  disabled,
+  hasChannelChanged,
   ...rest
 }) => {
-  const props = useProductUpdateForm(product, onSubmit, rest);
+  const props = useProductUpdateForm(
+    product,
+    onSubmit,
+    disabled,
+    hasChannelChanged,
+    rest
+  );
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };
