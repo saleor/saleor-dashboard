@@ -7,7 +7,6 @@ import {
   handleUploadMultipleFiles,
   prepareAttributesInput
 } from "@saleor/attributes/utils/handlers";
-import { getAllErrorMessages } from "@saleor/auth";
 import { ChannelData } from "@saleor/channels/utils";
 import {
   AttributeErrorFragment,
