@@ -64,6 +64,10 @@ export const useStyles = makeStyles(
       },
       warehouseLabel: {
         marginBottom: theme.spacing(4)
+      },
+      warningIcon: {
+        color: theme.palette.saleor.warning.mid,
+        marginRight: theme.spacing(2)
       }
     };
   },

@@ -26,11 +26,15 @@ import {
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
 import { commonMessages } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState, WarningIcon } from "@saleor/macaw-ui";
+import {
+  Backlink,
+  ConfirmButtonTransitionState,
+  Tooltip,
+  WarningIcon
+} from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import {
   getToFulfillOrderLines,
-  isStockError
 } from "@saleor/orders/utils/data";
 import { update } from "@saleor/utils/lists";
 import classNames from "classnames";
@@ -253,6 +257,24 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                               <TableCellAvatar
                                 className={classes.colName}
                                 thumbnail={line?.thumbnail?.url}
+                                badge={
+                                  isPreorder || !line?.variant ? (
+                                    <Tooltip
+                                      variant="warning"
+                                      title={intl.formatMessage(
+                                        isPreorder
+                                          ? messages.preorderWarning
+                                          : messages.deletedVariantWarning
+                                      )}
+                                    >
+                                      <div className={classes.warningIcon}>
+                                        <WarningIcon />
+                                      </div>
+                                    </Tooltip>
+                                  ) : (
+                                    undefined
+                                  )
+                                }
                               >
                                 {line.productName}
                                 <Typography
