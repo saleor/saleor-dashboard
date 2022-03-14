@@ -430,7 +430,7 @@
     "string": "Taxes"
   },
   "productTypeTaxesInputLabel": {
-    "string": "Taxes"
+    "string": "Tax group"
   },
   "productVariantCreatePricesSetPricePlaceholder": {
     "context": "input label",
@@ -6502,10 +6502,6 @@
     "context": "modal button upload",
     "string": "Upload"
   },
-  "src_dot_products_dot_components_dot_ProductOrganization_dot_150865454": {
-    "context": "product is not configurable",
-    "string": "Simple"
-  },
   "src_dot_products_dot_components_dot_ProductOrganization_dot_1755013298": {
     "string": "Category"
   },
@@ -6517,7 +6513,6 @@
     "string": "Organize Product"
   },
   "src_dot_products_dot_components_dot_ProductOrganization_dot_2754779425": {
-    "context": "product is configurable",
     "string": "Configurable"
   },
   "src_dot_products_dot_components_dot_ProductOrganization_dot_2805838453": {
