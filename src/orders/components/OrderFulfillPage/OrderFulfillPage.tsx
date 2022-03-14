@@ -96,7 +96,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
         line.variant?.stocks
           ?.filter(stock => stock.warehouse.id === warehouse?.id)
           .map(stock => ({
-            quantity: 0,
+            quantity: line.quantityToFulfill,
             warehouse: stock.warehouse.id
           }))
     }))
