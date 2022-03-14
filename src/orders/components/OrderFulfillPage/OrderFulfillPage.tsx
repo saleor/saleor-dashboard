@@ -26,7 +26,7 @@ import {
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
 import { commonMessages } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { Backlink, ConfirmButtonTransitionState, WarningIcon } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import {
   getToFulfillOrderLines,
@@ -225,22 +225,16 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                           }
 
                           const isPreorder = !!line.variant?.preorder;
-                          const remainingQuantity = line.quantityToFulfill;
-                          const quantityToFulfill = isPreorder
+                          const lineFormQuantity = isPreorder
                             ? 0
-                            : formsetData[lineIndex].value?.reduce(
-                                (quantityToFulfill, lineInput) =>
-                                  quantityToFulfill + (lineInput.quantity || 0),
-                                0
-                              );
+                            : formsetData[lineIndex].value[0].quantity;
+
                           const overfulfill =
-                            remainingQuantity < quantityToFulfill;
+                            lineFormQuantity > line.quantityToFulfill;
 
                           const warehouseStock = line.variant?.stocks?.find(
                             stock => stock.warehouse.id === warehouse.id
                           );
-                          const formsetStock =
-                            formsetData[lineIndex]?.value?.[0];
 
                           const warehouseAllocation = line.allocations.find(
                             allocation =>
@@ -248,6 +242,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                           );
                           const allocatedQuantityForLine =
                             warehouseAllocation?.quantity || 0;
+
                           const availableQuantity =
                             warehouseStock.quantity -
                             warehouseStock.quantityAllocated +
@@ -327,7 +322,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                         style: { textAlign: "right" }
                                       }}
                                       fullWidth
-                                      value={formsetStock.quantity}
+                                      value={lineFormQuantity}
                                       onChange={event =>
                                         formsetChange(
                                           line.id,
@@ -345,14 +340,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                           )
                                         )
                                       }
-                                      error={isStockError(
-                                        overfulfill,
-                                        formsetStock,
-                                        availableQuantity,
-                                        warehouse,
-                                        line,
-                                        errors
-                                      )}
+                                      error={overfulfill}
                                       InputProps={{
                                         endAdornment: line.variant
                                           .trackInventory && (
@@ -361,7 +349,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                               classes.remainingQuantity
                                             }
                                           >
-                                            / {remainingQuantity}
+                                            / {line.quantityToFulfill}
                                           </div>
                                         )
                                       }}
