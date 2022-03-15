@@ -249,8 +249,6 @@ filterTests({ definedTags: ["all"] }, () => {
           .get(BUTTON_SELECTORS.submit)
           .click()
           .waitForRequestAndCheckIfNoErrors("@CollectionBulkDelete");
-        // .wait(4000);CollectionBulkDelete
-
         getCollection({ collectionId: firstCollection.id, auth: "auth" })
           .its("collection")
           .should("be.null");
