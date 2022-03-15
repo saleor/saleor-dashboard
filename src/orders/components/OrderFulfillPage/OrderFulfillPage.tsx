@@ -69,7 +69,6 @@ const initialFormData: OrderFulfillFormData = {
 const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
   const {
     loading,
-    errors,
     order,
     saveButtonBar,
     warehouse,
