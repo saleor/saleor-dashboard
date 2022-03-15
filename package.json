@@ -272,7 +272,7 @@
     "cy:run:dashboard": "cypress run --record --key 1fe833f5-fca4-4454-ac55-943815b91c6c",
     "cy:run:record": "npm run cy:run -- --record",
     "cy:open": "cypress open",
-    "cy:run:critical": "cypress run --env tags=critical --spec 'cypress/integration/navigation.js','cypress/integration/products/*.js','cypress/integration/checkout/*.js' --record --key 1fe833f5-fca4-4454-ac55-943815b91c6c --reporter cypress-mochawesome-reporter --reporter-options reportDir='cypress/reports',overwrite=true,charts=true  --parallel",
+    "cy:run:critical": "cypress run --env tags=critical --spec 'cypress/integration/navigation.js','cypress/integration/products/*.js','cypress/integration/checkout/*.js' --record --key 1fe833f5-fca4-4454-ac55-943815b91c6c --parallel",
     "cy:run:allEnv": "cypress run --env tags=all --record --key 1fe833f5-fca4-4454-ac55-943815b91c6c",
     "test:e2e:run": "start-server-and-test start http://localhost:9000 cy:run",
     "test:e2e:run:record": "start-server-and-test start http://localhost:9000 cy:run:record",
