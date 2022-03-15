@@ -1,16 +1,17 @@
 /// <reference types="cypress"/>
 /// <reference types="../../../support"/>
 
+import faker from "faker";
+
 import { createCustomer } from "../../../support/api/requests/Customer";
 import { createReadyToFulfillOrder } from "../../../support/api/utils/ordersUtils";
 import { createProductWithShipping } from "../../../support/api/utils/products/productsUtils";
 import filterTests from "../../../support/filterTests";
 
 filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
-  const name =
-    "As an admin I should be able to create order with variant without SKU";
+  const name = `ProductsWithoutSkuInOrder${faker.datatype.number()}`;
 
-  describe("Add productWithout SKU to order", () => {
+  describe("As an admin I should be able to create order with variant without SKU", () => {
     it("should create order with variant product without sku. SALEOR_2801", () => {
       let variants;
       let channel;
