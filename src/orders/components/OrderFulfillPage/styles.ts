@@ -68,6 +68,10 @@ export const useStyles = makeStyles(
       warningIcon: {
         color: theme.palette.saleor.warning.mid,
         marginRight: theme.spacing(2)
+      },
+      warning: {
+        color: theme.palette.warning.main,
+        borderColor: theme.palette.warning.main + " !important"
       }
     };
   },

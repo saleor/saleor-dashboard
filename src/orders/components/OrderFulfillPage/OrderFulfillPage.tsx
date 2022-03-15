@@ -251,6 +251,9 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                             warehouseStock.quantityAllocated +
                             allocatedQuantityForLine;
 
+                          const isStockExceeded =
+                            lineFormQuantity > availableQuantity;
+
                           return (
                             <TableRow key={line.id}>
                               <TableCellAvatar
@@ -335,10 +338,6 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                               .variant.trackInventory
                                           }
                                         ),
-                                        max: (
-                                          line.variant.trackInventory &&
-                                          availableQuantity
-                                        ).toString(),
                                         min: 0,
                                         style: { textAlign: "right" }
                                       }}
@@ -362,7 +361,14 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                         )
                                       }
                                       error={overfulfill}
+                                      variant="outlined"
                                       InputProps={{
+                                        classes: {
+                                          ...(isStockExceeded &&
+                                            !overfulfill && {
+                                              notchedOutline: classes.warning
+                                            })
+                                        },
                                         endAdornment: line.variant
                                           .trackInventory && (
                                           <div
