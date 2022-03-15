@@ -1,16 +1,17 @@
 import { Card, Popper } from "@material-ui/core";
+import ChannelsAvailabilityMenuContent from "@saleor/components/ChannelsAvailabilityMenuContent";
 import { PluginBaseFragment } from "@saleor/fragments/types/PluginBaseFragment";
 import { makeStyles } from "@saleor/macaw-ui";
 import { isPluginGlobal } from "@saleor/plugins/views/utils";
 import React from "react";
 
-import ChannelConfigPluginPopupBody from "./ChannelConfigPluginPopupBody";
+import { mapPluginsToPills } from "../utils";
 import GlobalConfigPluginPopupBody from "./GlobalConfigPluginPopupBody";
 
 const useStyles = makeStyles(
   () => ({
     container: {
-      maxWidth: 300,
+      maxWidth: 500,
       zIndex: 1000
     }
   }),
@@ -43,7 +44,9 @@ const PluginAvailabilityStatusPopup: React.FC<PluginAvailabilityStatusPopupProps
         {isGlobalPlugin ? (
           <GlobalConfigPluginPopupBody plugin={plugin} />
         ) : (
-          <ChannelConfigPluginPopupBody plugin={plugin} />
+          <ChannelsAvailabilityMenuContent
+            pills={mapPluginsToPills(plugin.channelConfigurations)}
+          />
         )}
       </Card>
     </Popper>

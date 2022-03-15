@@ -289,7 +289,7 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
               variant="secondary"
               color="text"
               onClick={onClose}
-              data-test="cancel"
+              data-test-id="cancel"
             >
               <FormattedMessage {...buttonMessages.cancel} />
             </Button>
@@ -299,13 +299,13 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
               variant="secondary"
               color="text"
               onClick={prev}
-              data-test="back"
+              data-test-id="back"
             >
               <FormattedMessage {...buttonMessages.back} />
             </Button>
           )}
           {step === ProductExportStep.INFO && (
-            <Button variant="primary" onClick={next} data-test="next">
+            <Button variant="primary" onClick={next} data-test-id="next">
               <FormattedMessage {...buttonMessages.nextStep} />
             </Button>
           )}
@@ -313,7 +313,7 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
             <ConfirmButton
               transitionState={confirmButtonState}
               type="submit"
-              data-test="submit"
+              data-test-id="submit"
               onClick={submit}
             >
               <FormattedMessage {...messages.confirmButtonLabel} />

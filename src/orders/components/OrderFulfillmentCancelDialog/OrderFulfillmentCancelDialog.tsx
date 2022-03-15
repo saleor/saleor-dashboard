@@ -97,7 +97,7 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
                 </DialogContentText>
                 <div
                   className={classes.selectCcontainer}
-                  data-test-id="cancelFulfillmentSelectField"
+                  data-test-id="cancel-fulfillment-select-field"
                 >
                   <SingleAutocompleteSelectField
                     choices={choices}
@@ -125,7 +125,7 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
               <DialogActions>
                 <BackButton onClick={onClose} />
                 <ConfirmButton
-                  data-test="submit"
+                  data-test-id="submit"
                   disabled={formData.warehouseId === null}
                   transitionState={confirmButtonState}
                   onClick={submit}

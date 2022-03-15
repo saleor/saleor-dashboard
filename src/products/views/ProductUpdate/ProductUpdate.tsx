@@ -677,7 +677,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           option === "multiple" ? handleVariantsAdd() : handleVariantAdd()
         }
       />
-      {isSimpleProduct && !!product?.variants?.[0].preorder && (
+      {isSimpleProduct && !!product?.variants?.[0]?.preorder && (
         <ProductVariantEndPreorderDialog
           confirmButtonState={deactivatePreoderOpts.status}
           onClose={() => setIsEndPreorderModalOpened(false)}

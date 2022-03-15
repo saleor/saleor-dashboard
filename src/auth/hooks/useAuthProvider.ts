@@ -1,3 +1,4 @@
+import { ApolloClient, useQuery } from "@apollo/client";
 import { IMessageContext } from "@saleor/components/messages";
 import { APP_DEFAULT_URI, APP_MOUNT_URI, DEMO_MODE } from "@saleor/config";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
@@ -14,9 +15,7 @@ import {
   login as loginWithCredentialsManagementAPI,
   saveCredentials
 } from "@saleor/utils/credentialsManagement";
-import ApolloClient from "apollo-client";
 import { useEffect, useRef, useState } from "react";
-import { useQuery } from "react-apollo";
 import { IntlShape } from "react-intl";
 import urlJoin from "url-join";
 

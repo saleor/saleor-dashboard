@@ -10,7 +10,6 @@ import RequirePermissions from "@saleor/components/RequirePermissions";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { makeStyles } from "@saleor/macaw-ui";
-import { UserPermissionProps } from "@saleor/types";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -33,7 +32,7 @@ const useStyles = makeStyles(
   { name: "HomeNotificationTable" }
 );
 
-interface HomeNotificationTableProps extends UserPermissionProps {
+interface HomeNotificationTableProps {
   ordersToCapture: number;
   ordersToFulfill: number;
   productsOutOfStock: number;
@@ -53,7 +52,6 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
     ordersToCapture,
     ordersToFulfill,
     productsOutOfStock,
-    userPermissions,
     noChannel
   } = props;
 
@@ -67,7 +65,6 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
         <TableBody className={classes.tableRow}>
           {noChannel && (
             <RequirePermissions
-              userPermissions={userPermissions}
               requiredPermissions={[PermissionEnum.MANAGE_CHANNELS]}
             >
               <TableRow hover={true} onClick={onCreateNewChannelClick}>
@@ -83,7 +80,6 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
             </RequirePermissions>
           )}
           <RequirePermissions
-            userPermissions={userPermissions}
             requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
           >
             <TableRow hover={true} onClick={onOrdersToFulfillClick}>
@@ -128,7 +124,6 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
             </TableRow>
           </RequirePermissions>
           <RequirePermissions
-            userPermissions={userPermissions}
             requiredPermissions={[PermissionEnum.MANAGE_PRODUCTS]}
           >
             <TableRow hover={true} onClick={onProductsOutOfStockClick}>

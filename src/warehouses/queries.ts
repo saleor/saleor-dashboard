@@ -1,10 +1,10 @@
+import { gql } from "@apollo/client";
 import { pageInfoFragment } from "@saleor/fragments/pageInfo";
 import {
   warehouseDetailsFragment,
   warehouseWithShippingFragment
 } from "@saleor/fragments/warehouses";
 import makeQuery from "@saleor/hooks/makeQuery";
-import gql from "graphql-tag";
 
 import {
   WarehouseDetails,

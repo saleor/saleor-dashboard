@@ -10,6 +10,7 @@ import {
 import { SelectProps } from "@material-ui/core/Select";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -31,6 +32,9 @@ const useStyles = makeStyles(
     },
     paper: {
       maxHeight: `calc(${singleSelectFieldItemHeight}px * 10 + ${singleSelectFieldItemHeight}px * 0.5)`
+    },
+    disabledMenuItem: {
+      pointerEvents: "none"
     }
   }),
   { name: "SingleSelectField" }
@@ -127,8 +131,8 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
           choices.map(choice => (
             <MenuItem
               disabled={choice.disabled}
-              data-test="selectFieldOption"
-              data-test-id={choice.value}
+              className={clsx(choice.disabled && classes.disabledMenuItem)}
+              data-test-id={"select-field-option-" + choice.value}
               value={choice.value}
               key={choice.value}
             >
@@ -137,7 +141,7 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
           ))
         ) : (
           <MenuItem
-            data-test="selectFieldOption"
+            data-test-id="select-field-option"
             data-test-disabled
             disabled={true}
           >

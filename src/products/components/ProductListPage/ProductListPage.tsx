@@ -71,7 +71,9 @@ const useStyles = makeStyles(
       }
     },
     settings: {
-      marginRight: theme.spacing(2)
+      [theme.breakpoints.up("sm")]: {
+        marginRight: theme.spacing(2)
+      }
     }
   }),
   { name: "ProductListPage" }
@@ -148,6 +150,23 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   return (
     <Container>
       <PageHeader
+        cardMenu={
+          <CardMenu
+            className={classes.settings}
+            menuItems={[
+              {
+                label: intl.formatMessage({
+                  defaultMessage: "Export Products",
+                  description: "export products to csv file, button"
+                }),
+                onSelect: onExport,
+                testId: "export"
+              },
+              ...extensionMenuItems
+            ]}
+            data-test-id="menu"
+          />
+        }
         title={intl.formatMessage(sectionNames.products)}
         limitText={
           hasLimits(limits, "productVariants") &&
@@ -163,21 +182,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           )
         }
       >
-        <CardMenu
-          className={classes.settings}
-          menuItems={[
-            {
-              label: intl.formatMessage({
-                defaultMessage: "Export Products",
-                description: "export products to csv file, button"
-              }),
-              onSelect: onExport,
-              testId: "export"
-            },
-            ...extensionMenuItems
-          ]}
-          data-test="menu"
-        />
         <ColumnPicker
           className={classes.columnPicker}
           columns={columns}
@@ -194,7 +198,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
         />
         <ButtonWithSelect
           options={extensionCreateButtonItems}
-          data-test="add-product"
+          data-test-id="add-product"
           disabled={limitReached}
           onClick={onAdd}
         >
@@ -241,7 +245,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           loading={loading}
           gridAttributes={gridAttributes}
           settings={settings}
-          channelsCount={channelsCount}
           selectedChannelId={selectedChannelId}
           onUpdateListSettings={onUpdateListSettings}
           filterDependency={filterDependency}

@@ -43,7 +43,7 @@ const CustomApps: React.FC<CustomAppsProps> = ({
             <Button
               variant="secondary"
               onClick={navigateToCustomAppCreate}
-              data-test-id="createApp"
+              data-test-id="create-app"
             >
               <FormattedMessage
                 defaultMessage="Create App"

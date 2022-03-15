@@ -1,7 +1,7 @@
+import { gql } from "@apollo/client";
 import { warehouseErrorFragment } from "@saleor/fragments/errors";
 import { warehouseDetailsFragment } from "@saleor/fragments/warehouses";
 import makeMutation from "@saleor/hooks/makeMutation";
-import gql from "graphql-tag";
 
 import {
   WarehouseCreate,

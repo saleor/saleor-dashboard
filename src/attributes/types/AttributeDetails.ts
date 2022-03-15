@@ -42,11 +42,11 @@ export interface AttributeDetails_attribute_choices_edges_node {
   slug: string | null;
   file: AttributeDetails_attribute_choices_edges_node_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
   value: string | null;
+  richText: any | null;
 }
 
 export interface AttributeDetails_attribute_choices_edges {

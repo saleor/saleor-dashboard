@@ -507,6 +507,10 @@
     "context": "button",
     "string": "Accept"
   },
+  "src_dot_appExtensions": {
+    "context": "app extensions subsection",
+    "string": "Apps"
+  },
   "src_dot_approve": {
     "context": "button",
     "string": "Approve"
@@ -2040,25 +2044,33 @@
     "context": "select title",
     "string": "Select channels you want for {contentType} to be available on"
   },
-  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1043589445": {
-    "context": "product channel publication status",
-    "string": "hidden"
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_channel": {
+    "context": "Channel label",
+    "string": "Channel"
   },
-  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1702481199": {
-    "context": "product channel  publication date",
-    "string": "published since {date}"
-  },
-  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1944644572": {
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_dropdownLabel": {
     "context": "product status title",
-    "string": "{count}/{allCount} channels"
+    "string": "{channelCount} {channelCount,plural, =1 {Channel} other {Channels}}"
   },
-  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_3285520461": {
-    "context": "product channel publication date",
-    "string": "Will become available on {date}"
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_noChannels": {
+    "context": "dropdown label when there are no channels assigned",
+    "string": "No channels"
   },
-  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_802058289": {
-    "context": "product status",
-    "string": "Available in {count} out of {allCount, plural, one {# channel} other {# channels}}"
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_published": {
+    "context": "Status label when object is published in a channel",
+    "string": "Published"
+  },
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_scheduled": {
+    "context": "Status label when object is scheduled to publish in a channel",
+    "string": "Scheduled to publish"
+  },
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_status": {
+    "context": "Status label",
+    "string": "Status"
+  },
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_unpublished": {
+    "context": "Status label when object is unpublished in a channel",
+    "string": "Unpublished"
   },
   "src_dot_components_dot_ColumnPicker_dot_1483881697": {
     "context": "button",
@@ -2403,6 +2415,14 @@
     "context": "button",
     "string": "Go back to dashboard"
   },
+  "src_dot_components_dot_PreviewPill_dot_label": {
+    "context": "indicator that feature is in preview mode",
+    "string": "Preview"
+  },
+  "src_dot_components_dot_PreviewPill_dot_tooltip": {
+    "context": "tooltip",
+    "string": "This feature is in a preview state and can be subject to changes at later point"
+  },
   "src_dot_components_dot_PriceField_dot_4072537038": {
     "string": "Price cannot be lower than 0"
   },
@@ -2466,18 +2486,6 @@
   },
   "src_dot_components_dot_SingleSelectField_dot_4205644805": {
     "string": "No results found"
-  },
-  "src_dot_components_dot_StatusLabel_dot_active": {
-    "context": "status label active",
-    "string": "Active"
-  },
-  "src_dot_components_dot_StatusLabel_dot_deactivated": {
-    "context": "status label deactivated",
-    "string": "Deactivated"
-  },
-  "src_dot_components_dot_StatusLabel_dot_inactive": {
-    "context": "status label inactive",
-    "string": "Inactive"
   },
   "src_dot_components_dot_TableHead_dot_868570480": {
     "string": "Selected {number} items"
@@ -3519,9 +3527,6 @@
     "context": "Manage and Update your warehouse information",
     "string": "Exchange Rates"
   },
-  "src_dot_extensions": {
-    "string": "Extensions"
-  },
   "src_dot_firstName": {
     "string": "First Name"
   },
@@ -4377,6 +4382,9 @@
     "context": "OrderCustomer Fulfillment from Local Warehouse",
     "string": "Fulfill from Local Stock"
   },
+  "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_580490159": {
+    "string": "Order #{orderNumber}"
+  },
   "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_cancelOrder": {
     "context": "cancel button",
     "string": "Cancel order"
@@ -4950,84 +4958,92 @@
     "context": "dialog header",
     "string": "Void Payment"
   },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_1322321687": {
-    "context": "order payment",
-    "string": "Refunded amount"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_1325966144": {
-    "context": "order shipping method name",
-    "string": "Shipping"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_1817306106": {
-    "context": "vat included in order price",
-    "string": "VAT included"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_1934027242": {
-    "context": "voucher type order discount",
-    "string": "Voucher"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_2183023165": {
-    "context": "ordered products",
-    "string": "{quantity} items"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_2320183694": {
-    "context": "order payment",
-    "string": "Captured amount"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_2392156856": {
-    "context": "staff added type order discount",
-    "string": "Staff added"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_2444197639": {
-    "context": "void payment, button",
-    "string": "Void"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_2845258362": {
-    "context": "button",
-    "string": "Refund"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_3500506678": {
-    "context": "order, button",
-    "string": "Mark as paid"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_353147224": {
-    "context": "order payment",
-    "string": "Outstanding Balance"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_3720114122": {
-    "context": "order discount",
-    "string": "Discount"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_372187363": {
-    "context": "order payment",
-    "string": "Paid with Gift Card"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_3768782744": {
-    "context": "order payment",
-    "string": "Preauthorized amount"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_3955023266": {
-    "string": "Taxes"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_4211710217": {
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_capture": {
     "context": "capture payment, button",
     "string": "Capture"
   },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_781550514": {
-    "context": "order subtotal price",
-    "string": "Subtotal"
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_captured": {
+    "context": "order payment",
+    "string": "Captured amount"
   },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_878013594": {
-    "context": "order total price",
-    "string": "Total"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_orderPaymentClickAndCollectShippingMethod": {
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_clickAndCollectShippingMethod": {
     "context": "OrderPayment click&collect shipping method",
     "string": "click&collect"
   },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_orderPaymentShippingDoesNotApply": {
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_discount": {
+    "context": "order discount",
+    "string": "Discount"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_itemCount": {
+    "context": "ordered products",
+    "string": "{quantity} items"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_markAsPaid": {
+    "context": "order, button",
+    "string": "Mark as paid"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_outstanding": {
+    "context": "order payment",
+    "string": "Outstanding Balance"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_paidWithGiftCard": {
+    "context": "order payment",
+    "string": "Paid with Gift Card"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_paymentTitle": {
+    "context": "Payment card title",
+    "string": "Payment status"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_preauthorized": {
+    "context": "order payment",
+    "string": "Preauthorized amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_refund": {
+    "context": "button",
+    "string": "Refund"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_refunded": {
+    "context": "order payment",
+    "string": "Refunded amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_shipping": {
+    "context": "order shipping method name",
+    "string": "Shipping"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_shippingDoesNotApply": {
     "context": "OrderPayment does not require shipping",
     "string": "does not apply"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_shippingNotApplicable": {
+    "context": "order does not require shipping",
+    "string": "does not apply"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_staffAdded": {
+    "context": "staff added type order discount",
+    "string": "Staff added"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_subtotal": {
+    "context": "order subtotal price",
+    "string": "Subtotal"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_taxes": {
+    "string": "Taxes"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_total": {
+    "context": "order total price",
+    "string": "Total"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_vatIncluded": {
+    "context": "vat included in order price",
+    "string": "VAT included"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_void": {
+    "context": "button",
+    "string": "Refund"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_voucher": {
+    "context": "voucher type order discount",
+    "string": "Voucher"
   },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2272209368": {
     "context": "variant sku",
@@ -5945,17 +5961,25 @@
   "src_dot_plugins_dot_components_dot_PluginsList_dot_666641390": {
     "string": "No plugins found"
   },
+  "src_dot_plugins_dot_components_dot_PluginsList_dot_active": {
+    "context": "status label active",
+    "string": "Active"
+  },
   "src_dot_plugins_dot_components_dot_PluginsList_dot_channelLabel": {
     "context": "table header channel col label",
     "string": "Channel"
   },
   "src_dot_plugins_dot_components_dot_PluginsList_dot_channelTitle": {
     "context": "plugin channel availability status title",
-    "string": "Active in {activeChannelsCount}"
+    "string": "{activeChannelsCount,plural, =0 {Deactivated} other {Active in {activeChannelsCount}}}"
   },
   "src_dot_plugins_dot_components_dot_PluginsList_dot_confLabel": {
     "context": "table header configuration col label",
     "string": "Configuration"
+  },
+  "src_dot_plugins_dot_components_dot_PluginsList_dot_deactivated": {
+    "context": "status label deactivated",
+    "string": "Deactivated"
   },
   "src_dot_plugins_dot_components_dot_PluginsList_dot_description": {
     "context": "global config plugin status popup description",
@@ -7181,35 +7205,41 @@
     "context": "header, dialog",
     "string": "Create New Warehouse"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_1003092716": {
-    "string": "Rest of the World"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_1440682557": {
-    "string": "Quick Pick"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_1585396479": {
-    "context": "dialog header",
-    "string": "Assign Countries"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_1818089229": {
-    "string": "If selected, this will add all of the countries not selected to other shipping zones"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_2110418881": {
-    "string": "Search by country name"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_2404264158": {
-    "string": "Choose countries you want to add to shipping zone from list below"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_2747492886": {
+  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_assignCountriesButton": {
     "context": "button",
     "string": "Assign countries"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_2777439857": {
+  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_assignCountriesDescription": {
+    "context": "dialog description",
+    "string": "Choose countries you want to add to shipping zone from list below"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_assignCountriesTitle": {
+    "context": "dialog header",
+    "string": "Assign Countries"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_countriesSubtitle": {
     "context": "country selection",
     "string": "Countries A to Z"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_3510295703": {
+  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_quickPickSubtitle": {
+    "context": "section title",
+    "string": "Quick Pick"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_restOfTheWorldCheckbox": {
+    "context": "checkbox label",
+    "string": "Rest of the World"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_restOfTheWorldCheckboxDescription": {
+    "context": "checkbox description",
+    "string": "If selected, this will add all of the countries not selected to other shipping zones"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_searchCountriesLabel": {
+    "context": "search label",
     "string": "Search Countries"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_searchCountriesPlaceholder": {
+    "context": "search placeholder",
+    "string": "Search by country name"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneCreatePage_dot_countries": {
     "context": "country list header",
@@ -7219,18 +7249,12 @@
     "context": "section header",
     "string": "Create New Shipping Zone"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneCreatePage_dot_defaultZone": {
-    "string": "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
-  },
   "src_dot_shipping_dot_components_dot_ShippingZoneCreatePage_dot_noCountriesAssigned": {
     "string": "Currently, there are no countries assigned to this shipping zone"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneDetailsPage_dot_countries": {
     "context": "country list header",
     "string": "Countries"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneDetailsPage_dot_defaultZone": {
-    "string": "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneDetailsPage_dot_noCountriesAssigned": {
     "string": "Currently, there are no countries assigned to this shipping zone"
@@ -7409,17 +7433,14 @@
     "context": "dialog header",
     "string": "Delete Shipping Zones"
   },
+  "src_dot_shipping_dot_views_dot_3823295269": {
+    "string": "Manage Channel Availability"
+  },
   "src_dot_shipping_dot_views_dot_725201918": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this shipping zone?} other{Are you sure you want to delete {displayQuantity} shipping zones?}}"
   },
-  "src_dot_shipping_dot_views_dot_PriceRatesCreate_dot_3823295269": {
-    "string": "Manage Channel Availability"
-  },
-  "src_dot_shipping_dot_views_dot_PriceRatesUpdate_dot_3823295269": {
-    "string": "Manage Channel Availability"
-  },
-  "src_dot_shipping_dot_views_dot_PriceRatesUpdate_dot_870815507": {
+  "src_dot_shipping_dot_views_dot_870815507": {
     "context": "unassign products from shipping method, button",
     "string": "Unassign"
   },
@@ -7434,16 +7455,6 @@
   "src_dot_shipping_dot_views_dot_ShippingZoneDetails_dot_3133838427": {
     "context": "unassign country, dialog header",
     "string": "Delete from Shipping Zone"
-  },
-  "src_dot_shipping_dot_views_dot_WeightRatesCreate_dot_3014453080": {
-    "string": "Manage Channels Availability"
-  },
-  "src_dot_shipping_dot_views_dot_WeightRatesUpdate_dot_3014453080": {
-    "string": "Manage Channels Availability"
-  },
-  "src_dot_shipping_dot_views_dot_WeightRatesUpdate_dot_870815507": {
-    "context": "unassign products from shipping method, button",
-    "string": "Unassign"
   },
   "src_dot_shipping_dot_weight": {
     "context": "error message",

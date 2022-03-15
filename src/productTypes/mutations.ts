@@ -1,6 +1,6 @@
+import { gql } from "@apollo/client";
 import { productTypeDetailsFragment } from "@saleor/fragments/productTypes";
 import makeMutation from "@saleor/hooks/makeMutation";
-import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
 import {

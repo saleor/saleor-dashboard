@@ -280,7 +280,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
       <DialogActions>
         <BackButton onClick={onClose} />
         <ConfirmButton
-          data-test="submit"
+          data-test-id="submit"
           transitionState={confirmButtonState}
           type="submit"
           onClick={handleSubmit}

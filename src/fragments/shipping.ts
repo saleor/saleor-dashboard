@@ -1,5 +1,5 @@
+import { gql } from "@apollo/client";
 import { fragmentMoney } from "@saleor/fragments/products";
-import gql from "graphql-tag";
 
 import { metadataFragment } from "./metadata";
 
@@ -102,7 +102,6 @@ export const shippingZoneDetailsFragment = gql`
   ${shippingMethodTypeFragment}
   fragment ShippingZoneDetailsFragment on ShippingZone {
     ...ShippingZoneFragment
-    default
     shippingMethods {
       ...ShippingMethodTypeFragment
     }

@@ -77,21 +77,23 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
             }
           )
         }
+        cardMenu={
+          !!onSettingsOpen && (
+            <CardMenu
+              className={classes.settings}
+              menuItems={[
+                {
+                  label: intl.formatMessage({
+                    defaultMessage: "Order Settings",
+                    description: "button"
+                  }),
+                  onSelect: onSettingsOpen
+                }
+              ]}
+            />
+          )
+        }
       >
-        {!!onSettingsOpen && (
-          <CardMenu
-            className={classes.settings}
-            menuItems={[
-              {
-                label: intl.formatMessage({
-                  defaultMessage: "Order Settings",
-                  description: "button"
-                }),
-                onSelect: onSettingsOpen
-              }
-            ]}
-          />
-        )}
         <Button
           disabled={limitsReached}
           variant="primary"

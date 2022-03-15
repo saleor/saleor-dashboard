@@ -42,11 +42,11 @@ export interface ProductVariantDetails_productVariant_selectionAttributes_attrib
   slug: string | null;
   file: ProductVariantDetails_productVariant_selectionAttributes_attribute_choices_edges_node_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
   value: string | null;
+  richText: any | null;
 }
 
 export interface ProductVariantDetails_productVariant_selectionAttributes_attribute_choices_edges {
@@ -86,11 +86,11 @@ export interface ProductVariantDetails_productVariant_selectionAttributes_values
   slug: string | null;
   file: ProductVariantDetails_productVariant_selectionAttributes_values_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
   value: string | null;
+  richText: any | null;
 }
 
 export interface ProductVariantDetails_productVariant_selectionAttributes {
@@ -120,11 +120,11 @@ export interface ProductVariantDetails_productVariant_nonSelectionAttributes_att
   slug: string | null;
   file: ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_choices_edges_node_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
   value: string | null;
+  richText: any | null;
 }
 
 export interface ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_choices_edges {
@@ -164,11 +164,11 @@ export interface ProductVariantDetails_productVariant_nonSelectionAttributes_val
   slug: string | null;
   file: ProductVariantDetails_productVariant_nonSelectionAttributes_values_file | null;
   reference: string | null;
-  richText: any | null;
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
   value: string | null;
+  richText: any | null;
 }
 
 export interface ProductVariantDetails_productVariant_nonSelectionAttributes {
@@ -212,45 +212,11 @@ export interface ProductVariantDetails_productVariant_product_channelListings_ch
   currencyCode: string;
 }
 
-export interface ProductVariantDetails_productVariant_product_channelListings_pricing_priceRange_start_net {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductVariantDetails_productVariant_product_channelListings_pricing_priceRange_start {
-  __typename: "TaxedMoney";
-  net: ProductVariantDetails_productVariant_product_channelListings_pricing_priceRange_start_net;
-}
-
-export interface ProductVariantDetails_productVariant_product_channelListings_pricing_priceRange_stop_net {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductVariantDetails_productVariant_product_channelListings_pricing_priceRange_stop {
-  __typename: "TaxedMoney";
-  net: ProductVariantDetails_productVariant_product_channelListings_pricing_priceRange_stop_net;
-}
-
-export interface ProductVariantDetails_productVariant_product_channelListings_pricing_priceRange {
-  __typename: "TaxedMoneyRange";
-  start: ProductVariantDetails_productVariant_product_channelListings_pricing_priceRange_start | null;
-  stop: ProductVariantDetails_productVariant_product_channelListings_pricing_priceRange_stop | null;
-}
-
-export interface ProductVariantDetails_productVariant_product_channelListings_pricing {
-  __typename: "ProductPricingInfo";
-  priceRange: ProductVariantDetails_productVariant_product_channelListings_pricing_priceRange | null;
-}
-
 export interface ProductVariantDetails_productVariant_product_channelListings {
   __typename: "ProductChannelListing";
   publicationDate: any | null;
   isPublished: boolean;
   channel: ProductVariantDetails_productVariant_product_channelListings_channel;
-  pricing: ProductVariantDetails_productVariant_product_channelListings_pricing | null;
 }
 
 export interface ProductVariantDetails_productVariant_product_variants_media {

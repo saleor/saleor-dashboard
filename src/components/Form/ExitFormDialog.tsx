@@ -52,7 +52,12 @@ const ExitFormDialog: React.FC<ExitFormDialogProps> = ({
             {intl.formatMessage(messages.cancelButton)}
           </Button>
           <HorizontalSpacer />
-          <Button variant="contained" color="primary" onClick={onSubmit}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={onSubmit}
+            data-test-id="save-and-continue"
+          >
             {intl.formatMessage(messages.confirmButton)}
           </Button>
         </div>

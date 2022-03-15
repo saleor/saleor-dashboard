@@ -2,7 +2,7 @@ import { CustomerListUrlSortField } from "@saleor/customers/urls";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import CustomerListPage, {
+import CustomerListPageComponent, {
   CustomerListPageProps
 } from "../../../customers/components/CustomerListPage";
 import { customerList } from "../../../customers/fixtures";
@@ -15,6 +15,7 @@ import {
   tabPageProps
 } from "../../../fixtures";
 import Decorator from "../../Decorator";
+import { MockedUserProvider } from "./MockedUserProvider";
 
 const props: CustomerListPageProps = {
   ...filterPageProps,
@@ -45,6 +46,12 @@ const props: CustomerListPageProps = {
     sort: CustomerListUrlSortField.name
   }
 };
+
+const CustomerListPage = props => (
+  <MockedUserProvider>
+    <CustomerListPageComponent {...props} />
+  </MockedUserProvider>
+);
 
 storiesOf("Views / Customers / Customer list", module)
   .addDecorator(Decorator)

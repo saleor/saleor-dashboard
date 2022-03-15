@@ -68,7 +68,9 @@ export const ButtonWithSelect: React.FC<ButtonWithSelectProps> = ({
         aria-label="button with select"
         {...props}
       >
-        <Button onClick={onClick}>{children}</Button>
+        <Button onClick={onClick} style={{ width: "100%" }}>
+          {children}
+        </Button>
         {options.length > 0 && (
           <Button
             color="primary"

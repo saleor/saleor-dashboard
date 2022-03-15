@@ -1,9 +1,9 @@
+import { gql } from "@apollo/client";
 import { menuErrorFragment } from "@saleor/fragments/errors";
 import {
   menuItemFragment,
   menuItemNestedFragment
 } from "@saleor/fragments/navigation";
-import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
 import {

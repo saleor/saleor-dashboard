@@ -19,7 +19,7 @@ import {
 } from "../../../support/pages/shippingMethodPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Edit shipping method", () => {
+  describe("As a user I should be able to update and delete shipping method", () => {
     const startsWith = "EditShipping-";
     const name = `${startsWith}${faker.datatype.number()}`;
     const price = 10;
@@ -55,7 +55,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("Update shipping rate", () => {
+    it("should be able to update shipping rate. TC: SALEOR_0806", () => {
       const updatedRateName = `${startsWith}Updated`;
       const deliveryTime = { min: 1, max: 7 };
 
@@ -80,7 +80,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("Delete shipping rate", () => {
+    it("should be able to delete shipping rate. TC: SALEOR_0807", () => {
       cy.visit(
         priceRateUrl(shippingZone.id, shippingMethod.id)
       ).deleteElementWithReqAlias("DeleteShippingRate");

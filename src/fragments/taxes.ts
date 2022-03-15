@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import { gql } from "@apollo/client";
 
 export const countryFragment = gql`
   fragment CountryFragment on CountryDisplay {

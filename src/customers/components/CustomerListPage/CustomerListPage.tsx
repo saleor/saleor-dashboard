@@ -1,4 +1,5 @@
 import { Card } from "@material-ui/core";
+import { useUserPermissions } from "@saleor/auth/hooks/useUserPermissions";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
@@ -48,12 +49,17 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
 }) => {
   const intl = useIntl();
 
-  const structure = createFilterStructure(intl, filterOpts);
+  const userPermissions = useUserPermissions();
+  const structure = createFilterStructure(intl, filterOpts, userPermissions);
 
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.customers)}>
-        <Button variant="primary" onClick={onAdd} data-test-id="createCustomer">
+        <Button
+          variant="primary"
+          onClick={onAdd}
+          data-test-id="create-customer"
+        >
           <FormattedMessage
             defaultMessage="Create customer"
             description="button"

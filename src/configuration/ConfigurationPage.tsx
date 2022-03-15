@@ -137,9 +137,11 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
                       icon={item.icon}
                       title={item.title}
                       description={item.description}
-                      data-test="settingsSubsection"
-                      data-testid={item.title.toLowerCase()}
-                      data-test-id={item.testId}
+                      data-test-id={
+                        item.testId +
+                        "-settings-subsection-" +
+                        item.title.toLowerCase()
+                      }
                     />
                   </Link>
                 ))}

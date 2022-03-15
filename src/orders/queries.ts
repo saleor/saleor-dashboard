@@ -1,3 +1,4 @@
+import { gql } from "@apollo/client";
 import { fragmentAddress } from "@saleor/fragments/address";
 import {
   fragmentOrderDetails,
@@ -9,7 +10,6 @@ import { fragmentMoney } from "@saleor/fragments/products";
 import { warehouseFragment } from "@saleor/fragments/warehouses";
 import makeQuery from "@saleor/hooks/makeQuery";
 import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
-import gql from "graphql-tag";
 
 import { TypedQuery } from "../queries";
 import { OrderDetails, OrderDetailsVariables } from "./types/OrderDetails";

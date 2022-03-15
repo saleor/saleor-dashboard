@@ -23,8 +23,7 @@ const FilterRangeField: React.FC<FilterRangeFieldProps> = ({
   return (
     <>
       <TextField
-        data-test={filterTestingContext}
-        data-test-id={filter.name}
+        data-test-id={filterTestingContext + filter.name}
         data-test-range-type="min"
         fullWidth
         name={filter.name + "_min"}
@@ -55,8 +54,7 @@ const FilterRangeField: React.FC<FilterRangeFieldProps> = ({
         />
       </span>
       <TextField
-        data-test={filterTestingContext}
-        data-test-id={filter.name}
+        data-test-id={filterTestingContext + filter.name}
         data-test-range-type="max"
         fullWidth
         name={filter.name + "_max"}

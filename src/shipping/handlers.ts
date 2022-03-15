@@ -1,4 +1,5 @@
 import { ChannelShippingData } from "@saleor/channels/utils";
+import { CountryFragment } from "@saleor/fragments/types/CountryFragment";
 import { ShippingMethodTypeFragment_postalCodeRules } from "@saleor/fragments/types/ShippingMethodTypeFragment";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -22,7 +23,7 @@ import {
   useShippingRateCreate,
   useShippingRateDelete
 } from "./mutations";
-import { shippingPriceRatesEditUrl, shippingWeightRatesEditUrl } from "./urls";
+import { shippingRateEditUrl } from "./urls";
 
 export const createChannelsChangeHandler = (
   selectedChannels: ChannelShippingData[],
@@ -221,10 +222,6 @@ export function useShippingRateCreator(
     type === ShippingMethodTypeEnum.PRICE
       ? getCreateShippingPriceRateVariables
       : getCreateShippingWeightRateVariables;
-  const getUrl =
-    type === ShippingMethodTypeEnum.PRICE
-      ? shippingPriceRatesEditUrl
-      : shippingWeightRatesEditUrl;
 
   const createShippingRate = async (data: ShippingZoneRateCommonFormData) => {
     const response = await createBaseShippingRate({
@@ -267,7 +264,7 @@ export function useShippingRateCreator(
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
-      navigate(getUrl(shippingZoneId, rateId));
+      navigate(shippingRateEditUrl(shippingZoneId, rateId));
       return [];
     }
   };
@@ -291,4 +288,29 @@ export function useShippingRateCreator(
     errors,
     status: getMutationState(called, loading, [...errors, ...channelErrors])
   };
+}
+
+export function getCountrySelectionMap(
+  countries?: CountryFragment[],
+  countriesSelected?: string[]
+) {
+  return (
+    countriesSelected &&
+    countries?.reduce((acc, country) => {
+      acc[country.code] = !!countriesSelected.find(
+        selectedCountries => selectedCountries === country.code
+      );
+      return acc;
+    }, {} as Map<string, boolean>)
+  );
+}
+
+export function isRestWorldCountriesSelected(
+  restWorldCountries?: string[],
+  countrySelectionMap?: Map<string, boolean>
+) {
+  return (
+    countrySelectionMap &&
+    restWorldCountries?.every(countryCode => countrySelectionMap[countryCode])
+  );
 }

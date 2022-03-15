@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import { gql } from "@apollo/client";
 
 import { fileFragment } from "./file";
 import { metadataFragment } from "./metadata";
@@ -14,11 +14,18 @@ export const attributeValueFragment = gql`
       ...FileFragment
     }
     reference
-    richText
     boolean
     date
     dateTime
     value
+  }
+`;
+
+export const attributeValueDetailsFragment = gql`
+  ${attributeValueFragment}
+  fragment AttributeValueDetailsFragment on AttributeValue {
+    ...AttributeValueFragment
+    richText
   }
 `;
 
@@ -52,7 +59,7 @@ export const attributeDetailsFragment = gql`
 `;
 
 export const attributeValueListFragment = gql`
-  ${attributeValueFragment}
+  ${attributeValueDetailsFragment}
   ${pageInfoFragment}
   fragment AttributeValueListFragment on AttributeValueCountableConnection {
     pageInfo {
@@ -61,7 +68,7 @@ export const attributeValueListFragment = gql`
     edges {
       cursor
       node {
-        ...AttributeValueFragment
+        ...AttributeValueDetailsFragment
       }
     }
   }

@@ -1,3 +1,4 @@
+import { gql } from "@apollo/client";
 import { pageInfoFragment } from "@saleor/fragments/pageInfo";
 import {
   attributeTranslationDetailsFragment,
@@ -12,7 +13,6 @@ import {
   voucherTranslationFragment
 } from "@saleor/fragments/translations";
 import makeQuery from "@saleor/hooks/makeQuery";
-import gql from "graphql-tag";
 
 import { TypedQuery } from "../queries";
 import {

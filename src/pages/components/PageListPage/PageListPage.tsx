@@ -23,7 +23,7 @@ const PageListPage: React.FC<PageListPageProps> = ({ onAdd, ...listProps }) => {
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.pages)}>
-        <Button onClick={onAdd} variant="primary" data-test-id="createPage">
+        <Button onClick={onAdd} variant="primary" data-test-id="create-page">
           <FormattedMessage defaultMessage="Create page" description="button" />
         </Button>
       </PageHeader>

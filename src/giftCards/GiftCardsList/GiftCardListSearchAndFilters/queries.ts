@@ -1,5 +1,5 @@
+import { gql } from "@apollo/client";
 import makeQuery from "@saleor/hooks/makeQuery";
-import gql from "graphql-tag";
 
 import { GiftCardCurrencies } from "./types/GiftCardCurrencies";
 

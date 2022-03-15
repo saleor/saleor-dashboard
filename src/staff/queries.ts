@@ -1,9 +1,9 @@
+import { gql } from "@apollo/client";
 import {
   staffMemberDetailsFragment,
   staffMemberFragment
 } from "@saleor/fragments/staff";
 import makeQuery from "@saleor/hooks/makeQuery";
-import gql from "graphql-tag";
 
 import { TypedQuery } from "../queries";
 import { StaffList, StaffListVariables } from "./types/StaffList";

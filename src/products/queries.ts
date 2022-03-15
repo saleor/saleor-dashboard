@@ -1,3 +1,4 @@
+import { gql } from "@apollo/client";
 import {
   attributeValueFragment,
   attributeValueListFragment
@@ -17,7 +18,6 @@ import {
   ProductMediaById,
   ProductMediaByIdVariables
 } from "@saleor/products/types/ProductMediaById";
-import gql from "graphql-tag";
 
 import {
   AvailableInGridAttributes,
@@ -145,6 +145,8 @@ const productListQuery = gql`
     $filter: ProductFilterInput
     $channel: String
     $sort: ProductOrder
+    $hasChannel: Boolean!
+    $hasSelectedAttributes: Boolean!
   ) {
     products(
       before: $before
@@ -159,7 +161,7 @@ const productListQuery = gql`
         node {
           ...ProductFragment
           updatedAt
-          attributes {
+          attributes @include(if: $hasSelectedAttributes) {
             attribute {
               id
             }

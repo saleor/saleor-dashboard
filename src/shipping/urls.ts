@@ -54,48 +54,26 @@ export type ShippingRateCreateUrlDialog = ZipCodeRangeActions | ChannelsAction;
 export type ShippingRateCreateUrlQueryParams = Dialog<
   ShippingRateCreateUrlDialog
 > &
-  SingleAction;
+  SingleAction &
+  Partial<{
+    type: ShippingMethodTypeEnum;
+  }>;
 
-export const shippingPriceRatesPath = (id: string) =>
-  urlJoin(shippingZonePath(id), "price", "add");
-export const shippingPriceRatesUrl = (
+export const shippingRateCreatePath = (id: string) =>
+  urlJoin(shippingZonePath(id), "add");
+export const shippingRateCreateUrl = (
   id: string,
   params?: ShippingRateCreateUrlQueryParams
-) => shippingPriceRatesPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+) => shippingRateCreatePath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
-export const shippingWeightRatesPath = (id: string) =>
-  urlJoin(shippingZonePath(id), "weight", "add");
-export const shippingWeightRatesUrl = (
-  id: string,
-  params?: ShippingRateCreateUrlQueryParams
-) =>
-  shippingWeightRatesPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
-
-export const shippingPriceRatesEditPath = (id: string, rateId: string) =>
-  urlJoin(shippingZonePath(id), "price", rateId);
-export const shippingPriceRatesEditUrl = (
+export const shippingRateEditPath = (id: string, rateId: string) =>
+  urlJoin(shippingZonePath(id), rateId);
+export const shippingRateEditUrl = (
   id: string,
   rateId: string,
   params?: ShippingRateUrlQueryParams
 ) =>
-  shippingPriceRatesEditPath(
-    encodeURIComponent(id),
-    encodeURIComponent(rateId)
-  ) +
-  "?" +
-  stringifyQs(params);
-
-export const shippingWeightRatesEditPath = (id: string, rateId: string) =>
-  urlJoin(shippingZonePath(id), "weight", rateId);
-export const shippingWeightRatesEditUrl = (
-  id: string,
-  rateId: string,
-  params?: ShippingRateUrlQueryParams
-) =>
-  shippingWeightRatesEditPath(
-    encodeURIComponent(id),
-    encodeURIComponent(rateId)
-  ) +
+  shippingRateEditPath(encodeURIComponent(id), encodeURIComponent(rateId)) +
   "?" +
   stringifyQs(params);
 

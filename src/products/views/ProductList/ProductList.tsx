@@ -289,7 +289,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     : null;
   const filter = getFilterVariables(params, !!selectedChannel);
   const sort = getSortQueryVariables(params, !!selectedChannel);
-  const queryVariables = React.useMemo<ProductListVariables>(
+  const queryVariables = React.useMemo<
+    Omit<ProductListVariables, "hasChannel" | "hasSelectedAttributes">
+  >(
     () => ({
       ...paginationState,
       filter,
@@ -298,22 +300,28 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber]
   );
-  // TODO: When channel is undefined we should skip detailed pricing listings
-  const { data, loading, refetch } = useProductListQuery({
-    displayLoader: true,
-    variables: queryVariables
-  });
 
   function filterColumnIds(columns: ProductListColumns[]) {
     return columns
       .filter(isAttributeColumnValue)
       .map(getAttributeIdFromColumnValue);
   }
+  const filteredColumnIds = filterColumnIds(settings.columns);
+
+  const { data, loading, refetch } = useProductListQuery({
+    displayLoader: true,
+    variables: {
+      ...queryVariables,
+      hasChannel: !!selectedChannel,
+      hasSelectedAttributes: filteredColumnIds.length > 0
+    }
+  });
+
   const availableInGridAttributes = useAvailableInGridAttributesQuery({
     variables: { first: 24 }
   });
   const gridAttributes = useGridAttributesQuery({
-    variables: { ids: filterColumnIds(settings.columns) }
+    variables: { ids: filteredColumnIds }
   });
 
   const [

@@ -1,4 +1,4 @@
-import { MockedProvider, MockedResponse } from "@apollo/react-testing";
+import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 // mocks
 import { mocks as appMocks } from "@saleor/apps/apolloMocks";
 import React from "react";

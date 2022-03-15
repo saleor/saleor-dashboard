@@ -44,12 +44,12 @@ function useOrderSettingsForm(
   shop: ShopOrderSettingsFragment,
   onSubmit: (data: OrderSettingsFormData) => SubmitPromise
 ): UseOrderSettingsFormResult {
-  const [changed, setChanged] = React.useState(false);
-
-  const { data, handleChange, formId } = useForm(
+  const { data, handleChange, formId, hasChanged, setChanged } = useForm(
     getOrderSeettingsFormData(orderSettings, shop),
     undefined,
-    { confirmLeave: true }
+    {
+      confirmLeave: true
+    }
   );
 
   const handleFormSubmit = useHandleFormSubmit({
@@ -63,7 +63,7 @@ function useOrderSettingsForm(
   return {
     change: handleChange,
     data,
-    hasChanged: changed,
+    hasChanged,
     submit
   };
 }

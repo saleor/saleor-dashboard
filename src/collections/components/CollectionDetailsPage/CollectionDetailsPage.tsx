@@ -101,7 +101,6 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
               <CardSpacer />
               <CollectionProducts
                 disabled={disabled}
-                channelsCount={channelsCount}
                 collection={collection}
                 {...collectionProductsProps}
               />

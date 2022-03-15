@@ -7,7 +7,6 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
-import PageTitleWithStatusChip from "@saleor/components/PageTitleWithStatusChip";
 import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -16,7 +15,6 @@ import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
 import OrderChannelSectionCard from "@saleor/orders/components/OrderChannelSectionCard";
-import { UserPermissionProps } from "@saleor/types";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
@@ -36,8 +34,8 @@ import OrderFulfilledProductsCard from "../OrderFulfilledProductsCard";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
 import OrderPayment from "../OrderPayment/OrderPayment";
-import OrderStatusChip from "../OrderStatusChip/OrderStatusChip";
 import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard";
+import Title from "./Title";
 import { filteredConditionalItems, hasAnyItemsReplaceable } from "./utils";
 
 const useStyles = makeStyles(
@@ -56,7 +54,7 @@ const useStyles = makeStyles(
   }
 );
 
-export interface OrderDetailsPageProps extends UserPermissionProps {
+export interface OrderDetailsPageProps {
   order: OrderDetails_order;
   shop: OrderDetails_shop;
   shippingMethods?: Array<{
@@ -115,7 +113,6 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     order,
     shop,
     saveButtonBarState,
-    userPermissions,
     onBack,
     onBillingAddressEdit,
     onFulfillmentApprove,
@@ -224,14 +221,9 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
             <PageHeader
               className={classes.header}
               inline
-              title={
-                <PageTitleWithStatusChip title={order?.number}>
-                  <OrderStatusChip order={order} />
-                </PageTitleWithStatusChip>
-              }
-            >
-              <CardMenu outlined menuItems={selectCardMenuItems} />
-            </PageHeader>
+              title={<Title order={order} />}
+              cardMenu={<CardMenu outlined menuItems={selectCardMenuItems} />}
+            />
             <div className={classes.date}>
               {order && order.created ? (
                 <Typography variant="body2">
@@ -242,7 +234,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               )}
             </div>
             <Grid>
-              <div data-test-id="orderFulfillment">
+              <div data-test-id="order-fulfillment">
                 {!isOrderUnconfirmed ? (
                   <OrderUnfulfilledProductsCard
                     showFulfillmentAction={canFulfill}
@@ -305,7 +297,6 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   canEditAddresses={canEditAddresses}
                   canEditCustomer={false}
                   order={order}
-                  userPermissions={userPermissions}
                   onBillingAddressEdit={onBillingAddressEdit}
                   onShippingAddressEdit={onShippingAddressEdit}
                   onProfileView={onProfileView}

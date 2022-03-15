@@ -1,3 +1,4 @@
+import { FetchResult } from "@apollo/client";
 import {
   AttributeInput,
   AttributeInputData
@@ -23,7 +24,6 @@ import {
   mapNodeToChoice,
   mapPagesToChoices
 } from "@saleor/utils/maps";
-import { MutationFetchResult } from "react-apollo";
 
 import { AttributePageFormData } from "../components/AttributePage";
 import { AtributesOfFiles } from "../types/AttributeOfUploadedFile";
@@ -195,7 +195,7 @@ export const isFileValueUnused = (
 };
 
 export const mergeFileUploadErrors = (
-  uploadFilesResult: Array<MutationFetchResult<FileUpload>>
+  uploadFilesResult: Array<FetchResult<FileUpload>>
 ): UploadErrorFragment[] =>
   uploadFilesResult.reduce((errors, uploadFileResult) => {
     const uploadErrors = uploadFileResult?.data?.fileUpload?.errors;
@@ -206,7 +206,7 @@ export const mergeFileUploadErrors = (
   }, []);
 
 export const mergeAttributeValueDeleteErrors = (
-  deleteAttributeValuesResult: Array<MutationFetchResult<AttributeValueDelete>>
+  deleteAttributeValuesResult: Array<FetchResult<AttributeValueDelete>>
 ): AttributeErrorFragment[] =>
   deleteAttributeValuesResult.reduce((errors, deleteValueResult) => {
     const deleteErrors = deleteValueResult?.data?.attributeValueDelete?.errors;
@@ -262,7 +262,7 @@ export const getAttributesOfRemovedFiles = (
 
 export const getAttributesOfUploadedFiles = (
   fileValuesToUpload: FormsetData<null, File>,
-  uploadFilesResult: Array<MutationFetchResult<FileUpload>>
+  uploadFilesResult: Array<FetchResult<FileUpload>>
 ): AtributesOfFiles[] =>
   uploadFilesResult.map((uploadFileResult, index) => {
     const attribute = fileValuesToUpload[index];
@@ -277,7 +277,7 @@ export const getAttributesOfUploadedFiles = (
 
 export const getAttributesAfterFileAttributesUpdate = (
   attributesWithNewFileValue: FormsetData<null, File>,
-  uploadFilesResult: Array<MutationFetchResult<FileUpload>>
+  uploadFilesResult: Array<FetchResult<FileUpload>>
 ): AttributeValueInput[] => {
   const removedFileValues = getFileValuesRemovedFromAttributes(
     attributesWithNewFileValue

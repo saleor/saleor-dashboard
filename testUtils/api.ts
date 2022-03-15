@@ -1,10 +1,9 @@
+import { ApolloClient, InMemoryCache } from "@apollo/client";
+import { BatchHttpLink } from "@apollo/client/link/batch-http";
 import NodeHttpAdapter from "@pollyjs/adapter-node-http";
 import { Polly } from "@pollyjs/core";
 import FSPersister from "@pollyjs/persister-fs";
 import { createFetch } from "@saleor/sdk";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import ApolloClient from "apollo-client";
-import { BatchHttpLink } from "apollo-link-batch-http";
 import path from "path";
 import { setupPolly } from "setup-polly-jest";
 
