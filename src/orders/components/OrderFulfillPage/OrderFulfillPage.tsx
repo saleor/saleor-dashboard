@@ -230,7 +230,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                           const isPreorder = !!line.variant?.preorder;
                           const lineFormQuantity = isPreorder
                             ? 0
-                            : formsetData[lineIndex].value[0].quantity;
+                            : formsetData[lineIndex].value[0]?.quantity;
 
                           const overfulfill =
                             lineFormQuantity > line.quantityToFulfill;
@@ -247,9 +247,9 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                             warehouseAllocation?.quantity || 0;
 
                           const availableQuantity =
-                            warehouseStock.quantity -
-                            warehouseStock.quantityAllocated +
-                            allocatedQuantityForLine;
+                            warehouseStock?.quantity ??
+                            0 - warehouseStock?.quantityAllocated ??
+                            0 + allocatedQuantityForLine;
 
                           const isStockExceeded =
                             lineFormQuantity > availableQuantity;
