@@ -29,7 +29,6 @@ import { FetchMoreProps, RelayToFlat, ReorderAction } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import { maybe } from "../../../misc";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
 import ProductVariantCheckoutSettings from "../ProductVariantCheckoutSettings/ProductVariantCheckoutSettings";
@@ -240,12 +239,10 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                 <Grid variant="inverted">
                   <div>
                     <ProductVariantNavigation
-                      current={variant ? variant.id : undefined}
+                      current={variant?.id}
                       defaultVariantId={defaultVariantId}
-                      fallbackThumbnail={maybe(
-                        () => variant.product.thumbnail.url
-                      )}
-                      variants={maybe(() => variant.product.variants)}
+                      fallbackThumbnail={variant?.product.thumbnail.url}
+                      variants={variant?.product.variants}
                       onAdd={onAdd}
                       onRowClick={(variantId: string) => {
                         if (variant) {
@@ -415,7 +412,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           onMediaSelect={onMediaSelect}
           open={isModalOpened}
           media={productMedia}
-          selectedMedia={maybe(() => variant.media.map(image => image.id))}
+          selectedMedia={variant?.media.map(image => image.id)}
         />
       )}
       {!!variant?.preorder && (
