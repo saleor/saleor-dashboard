@@ -201,6 +201,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
                   </TableCell>
                   <TableCell className={classes.colActions}>
                     <IconButton
+                      data-test-id="delete-icon"
                       variant="secondary"
                       disabled={!product}
                       onClick={event => onProductUnassign(product.id, event)}

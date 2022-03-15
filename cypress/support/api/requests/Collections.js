@@ -55,7 +55,7 @@ export function deleteCollection(collectionId) {
   return cy.sendRequestWithQuery(mutation);
 }
 
-export function addProductToCollecton({ collectionId, productId }) {
+export function addProductToCollection({ collectionId, productId }) {
   const mutation = `mutation addProduct {
     collectionAddProducts(
       collectionId: "${collectionId}"
