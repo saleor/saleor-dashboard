@@ -16,35 +16,22 @@ import filterTests from "../../../support/filterTests";
 import { createAttributeWithInputType } from "../../../support/pages/attributesPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("As an admin I want to create content attribute", () => {
+  describe("Create content attribute", () => {
     const startsWith = "AttrCont";
     const attributesTypes = [
-      { type: "DROPDOWN", testCase: "SALEOR_0512" },
-      { type: "MULTISELECT", testCase: "SALEOR_0513" },
-      { type: "FILE", testCase: "SALEOR_0514" },
-      { type: "RICH_TEXT", testCase: "SALEOR_0515" },
-      { type: "BOOLEAN", testCase: "SALEOR_0516" },
-      { type: "DATE", testCase: "SALEOR_0527" },
-      { type: "DATE_TIME", testCase: "SALEOR_0528" }
+      "DROPDOWN",
+      "MULTISELECT",
+      "FILE",
+      "RICH_TEXT",
+      "BOOLEAN",
+      "DATE",
+      "DATE_TIME"
     ];
-    const attributeReferenceType = [
-      { type: "PRODUCT", testCase: "SALEOR_0517" },
-      { type: "PAGE", testCase: "SALEOR_0518" }
-    ];
+    const attributeReferenceType = ["PRODUCT", "PAGE"];
     const attributeNumericType = [
-      {
-        unitSystem: "IMPERIAL",
-        unitsOf: "DISTANCE",
-        unit: "FT",
-        testCase: "SALEOR_0519"
-      },
-      {
-        unitSystem: "METRIC",
-        unitsOf: "VOLUME",
-        unit: "CUBIC_CENTIMETER",
-        testCase: "SALEOR_0520"
-      },
-      { unitSystem: "without selecting unit", testCase: "SALEOR_0521" }
+      { unitSystem: "IMPERIAL", unitsOf: "DISTANCE", unit: "FT" },
+      { unitSystem: "METRIC", unitsOf: "VOLUME", unit: "CUBIC_CENTIMETER" },
+      { unitSystem: "without selecting unit" }
     ];
 
     before(() => {
@@ -63,32 +50,29 @@ filterTests({ definedTags: ["all"] }, () => {
     });
 
     attributesTypes.forEach(attributeType => {
-      it(`should be able to create ${attributeType.type} attribute. TC:${attributeType.testCase}`, () => {
+      it(`should create ${attributeType} attribute`, () => {
         const attributeName = `${startsWith}${faker.datatype.number()}`;
-        createAttributeWithInputType({
-          name: attributeName,
-          attributeType: attributeType.type
-        })
+        createAttributeWithInputType({ name: attributeName, attributeType })
           .then(({ attribute }) => {
             getAttribute(attribute.id);
           })
           .then(attribute => {
             expectCorrectDataInAttribute(attribute, {
               attributeName,
-              attributeType: attributeType.type
+              attributeType
             });
           });
       });
     });
 
     attributeReferenceType.forEach(entityType => {
-      it(`should be able to create reference to ${entityType.type} attribute. TC:${entityType.testCase}`, () => {
+      it(`should create reference ${entityType} attribute`, () => {
         const attributeType = "REFERENCE";
         const attributeName = `${startsWith}${faker.datatype.number()}`;
         createAttributeWithInputType({
           name: attributeName,
           attributeType,
-          entityType: entityType.type
+          entityType
         })
           .then(({ attribute }) => {
             getAttribute(attribute.id);
@@ -97,14 +81,14 @@ filterTests({ definedTags: ["all"] }, () => {
             expectCorrectDataInAttribute(attribute, {
               attributeName,
               attributeType,
-              entityType: entityType.type
+              entityType
             });
           });
       });
     });
 
     attributeNumericType.forEach(numericSystemType => {
-      it(`should be able to create numeric ${numericSystemType.unitSystem} attribute. TC: ${numericSystemType.testCase}`, () => {
+      it(`should create numeric attribute - ${numericSystemType.unitSystem}`, () => {
         const attributeType = "NUMERIC";
         const attributeName = `${startsWith}${faker.datatype.number()}`;
         createAttributeWithInputType({
@@ -125,7 +109,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("should be able to create attribute without require value TC:SALEOR_0522", () => {
+    it("should create attribute without required value", () => {
       const attributeType = "BOOLEAN";
       const attributeName = `${startsWith}${faker.datatype.number()}`;
       createAttributeWithInputType({
