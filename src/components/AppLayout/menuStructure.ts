@@ -244,11 +244,14 @@ function useMenuStructure(
     }
   ];
 
-  const isMenuItemPermitted = (menuItem: FilterableMenuItem) =>
-    !menuItem.permissions ||
-    (user?.userPermissions || []).some(permission =>
-      menuItem.permissions.includes(permission.code)
+  const isMenuItemPermitted = (menuItem: FilterableMenuItem) => {
+    const userPermissions = (user?.userPermissions || []).map(
+      permission => permission.code
     );
+    return (menuItem.permissions || []).every(permission =>
+      userPermissions.includes(permission)
+    );
+  };
 
   const getFilteredMenuItems = (menuItems: FilterableMenuItem[]) =>
     menuItems.filter(isMenuItemPermitted);
