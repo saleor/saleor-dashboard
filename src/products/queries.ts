@@ -2,10 +2,7 @@ import { gql } from "@apollo/client";
 
 export const initialProductFilterAttributesQuery = gql`
   query InitialProductFilterAttributes {
-    attributes(
-      first: 100
-      filter: { filterableInDashboard: true, type: PRODUCT_TYPE }
-    ) {
+    attributes(first: 100, filter: { type: PRODUCT_TYPE }) {
       edges {
         node {
           id
@@ -258,11 +255,7 @@ export const availableInGridAttributes = gql`
     availableInGrid: attributes(
       first: $first
       after: $after
-      filter: {
-        availableInGrid: true
-        isVariantOnly: false
-        type: PRODUCT_TYPE
-      }
+      filter: { isVariantOnly: false, type: PRODUCT_TYPE }
     ) {
       edges {
         node {

@@ -11931,10 +11931,7 @@ export type ProductVariantPreorderDeactivateMutationResult = Apollo.MutationResu
 export type ProductVariantPreorderDeactivateMutationOptions = Apollo.BaseMutationOptions<Types.ProductVariantPreorderDeactivateMutation, Types.ProductVariantPreorderDeactivateMutationVariables>;
 export const InitialProductFilterAttributesDocument = gql`
     query InitialProductFilterAttributes {
-  attributes(
-    first: 100
-    filter: {filterableInDashboard: true, type: PRODUCT_TYPE}
-  ) {
+  attributes(first: 100, filter: {type: PRODUCT_TYPE}) {
     edges {
       node {
         id
@@ -12480,7 +12477,7 @@ export const AvailableInGridAttributesDocument = gql`
   availableInGrid: attributes(
     first: $first
     after: $after
-    filter: {availableInGrid: true, isVariantOnly: false, type: PRODUCT_TYPE}
+    filter: {isVariantOnly: false, type: PRODUCT_TYPE}
   ) {
     edges {
       node {
