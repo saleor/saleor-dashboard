@@ -1,4 +1,4 @@
-import { MockedProvider, MockedResponse } from "@apollo/react-testing";
+import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { allPermissions } from "@saleor/hooks/makeQuery";
 import { order, warehouseSearch } from "@saleor/orders/fixtures";
 import { searchWarehouses } from "@saleor/searches/useWarehouseSearch";
