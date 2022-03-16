@@ -3484,9 +3484,6 @@
   "src_dot_discounts_dot_views_dot_VoucherCreate_dot_655651329": {
     "string": "Successfully created voucher"
   },
-  "src_dot_discounts_dot_views_dot_VoucherDetails_dot_1162257691": {
-    "string": "Deleted voucher"
-  },
   "src_dot_discounts_dot_views_dot_VoucherDetails_dot_1402402714": {
     "context": "dialog header",
     "string": "Unassign Collections From Voucher"
@@ -8525,15 +8522,15 @@
     "string": "Unlimited"
   },
   "voucherDetailsUnassignCategory": {
-    "context": "unassign category from voucher, button",
+    "context": "button",
     "string": "Unassign"
   },
   "voucherDetailsUnassignCollection": {
-    "context": "unassign collection from voucher, button",
+    "context": "button",
     "string": "Unassign"
   },
   "voucherDetailsUnassignProduct": {
-    "context": "unassign product from voucher, button",
+    "context": "button",
     "string": "Unassign"
   },
   "will become available on": {
