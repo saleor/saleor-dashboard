@@ -3,6 +3,10 @@ import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import isEqual from "lodash/isEqual";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
 
+const emptyContent: OutputData = {
+  blocks: []
+};
+
 function useRichText(opts: {
   initial: string | null;
   triggerChange: () => void;
@@ -12,7 +16,7 @@ function useRichText(opts: {
 
   useEffect(() => {
     if (opts.initial === null) {
-      data.current = { blocks: [] };
+      data.current = emptyContent;
       setLoaded(true);
       return;
     }

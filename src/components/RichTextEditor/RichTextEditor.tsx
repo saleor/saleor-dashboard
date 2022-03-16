@@ -6,6 +6,7 @@ import React from "react";
 
 import { RichTextEditorContentProps, tools } from "./RichTextEditorContent";
 import useStyles from "./styles";
+import { clean } from "./utils";
 
 export type RichTextEditorChange = (data: OutputData) => void;
 export interface RichTextEditorProps extends RichTextEditorContentProps {
@@ -33,12 +34,11 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   const editor = React.useRef<EditorJS>();
   const editorContainer = React.useRef<HTMLDivElement>();
   const togglePromiseQueue = React.useRef(PromiseQueue()); // used to await subsequent toggle invocations
-  const initialMount = React.useRef(true);
 
   React.useEffect(
     () => {
       if (data !== undefined && !editor.current) {
-        const editorjs = new EditorJS({
+        editor.current = new EditorJS({
           data,
           holder: editorContainer.current,
           logLevel: "ERROR" as LogLevels,
@@ -51,21 +51,16 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             // const undo = new Undo({ editor });
             // undo.initialize(data);
 
-            editor.current = editorjs;
-
             if (onReady) {
               onReady();
             }
           },
-          readOnly: disabled,
           tools
         });
       }
 
       return () => {
-        if (editor.current) {
-          editor.current.destroy();
-        }
+        clean(editor.current);
         editor.current = null;
       };
     },
@@ -96,11 +91,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
       }
     };
 
-    if (!initialMount.current) {
-      toggle();
-    } else {
-      initialMount.current = false;
-    }
+    toggle();
   }, [disabled]);
 
   return (

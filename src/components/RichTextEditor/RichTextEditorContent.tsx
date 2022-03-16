@@ -15,6 +15,7 @@ import createGenericInlineTool from "editorjs-inline-tool";
 import React from "react";
 
 import useStyles from "./styles";
+import { clean } from "./utils";
 
 export interface RichTextEditorContentProps {
   className?: string;
@@ -85,9 +86,7 @@ const RichTextEditorContent: React.FC<RichTextEditorContentProps> = ({
       }
 
       return () => {
-        if (editor.current) {
-          editor.current.destroy();
-        }
+        clean(editor.current);
         editor.current = null;
       };
     },
@@ -97,7 +96,7 @@ const RichTextEditorContent: React.FC<RichTextEditorContentProps> = ({
 
   return (
     <div
-      className={classNames(classes.editor, className)}
+      className={classNames(classes.editor, classes.rootStatic, className)}
       ref={editorContainer}
     />
   );
