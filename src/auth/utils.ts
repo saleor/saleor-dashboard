@@ -17,34 +17,28 @@ export const displayDemoMessage = (
   });
 };
 
-const getAllErrorMessages = (error: ApolloError) => {
-  const errorMessages = [];
-
-  if (error.graphQLErrors.length) {
-    error.graphQLErrors.forEach(err => {
-      errorMessages.push(err.message);
-    });
-  }
-
+const getNetworkErrors = (error: ApolloError): string[] => {
   const networkErrors = error.networkError as ServerErrorWithName;
 
-  if (error.networkError) {
+  if (networkErrors) {
     // Apparently network errors can be an object or an array
     if (Array.isArray(networkErrors.result)) {
       networkErrors.result.forEach(result => {
         if (result.errors) {
-          result.errors.forEach(({ message }) => {
-            errorMessages.push(message);
-          });
+          return result.errors.map(({ message }) => message);
         }
       });
-    } else {
-      errorMessages.push(networkErrors.result.errors.message);
     }
+    return networkErrors.result.errors.message;
   }
 
-  return errorMessages;
+  return [];
 };
+
+const getAllErrorMessages = (error: ApolloError) => [
+  ...(error.graphQLErrors?.map(err => err.message) || []),
+  ...getNetworkErrors(error)
+];
 
 export const showAllErrors = ({
   notify,
