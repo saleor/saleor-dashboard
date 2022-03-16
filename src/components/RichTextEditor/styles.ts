@@ -102,10 +102,15 @@ const useStyles = makeStyles(
         boxShadow: `inset 0px 0px 0 2px ${theme.palette.primary.main}`
       },
       rootDisabled: {
-        ...theme.overrides.MuiOutlinedInput.root["&$disabled"]["& fieldset"]
+        ...theme.overrides.MuiOutlinedInput.root["&$disabled"]["& fieldset"],
+        background: theme.palette.background.default,
+        color: theme.palette.saleor.main[4]
       },
       rootError: {
         borderColor: theme.palette.error.main
+      },
+      rootStatic: {
+        fontSize: theme.typography.body1.fontSize
       }
     };
   },

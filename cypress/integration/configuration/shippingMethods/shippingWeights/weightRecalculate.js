@@ -5,7 +5,7 @@ import faker from "faker";
 
 import { SHARED_ELEMENTS } from "../../../../elements/shared/sharedElements";
 import { SHIPPING_RATE_DETAILS } from "../../../../elements/shipping/shipping-rate-details";
-import { urlList, weightRateUrl } from "../../../../fixtures/urlList";
+import { shippingRateUrl, urlList } from "../../../../fixtures/urlList";
 import {
   createShippingRate as createShippingRateViaApi,
   createShippingZone
@@ -73,7 +73,7 @@ filterTests({ definedTags: ["all"] }, () => {
           changeWeightUnit("G");
 
           cy.addAliasToGraphRequest("ShippingZone");
-          cy.visit(weightRateUrl(shippingZone.id, shippingMethod.id))
+          cy.visit(shippingRateUrl(shippingZone.id, shippingMethod.id))
             .wait("@ShippingZone")
             .its("response.body");
         })

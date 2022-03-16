@@ -236,11 +236,6 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             onChange={onCountryChange}
             value={data.country}
             choices={countries}
-            InputProps={{
-              inputProps: {
-                autoComplete: "none"
-              }
-            }}
           />
         </div>
         <div>

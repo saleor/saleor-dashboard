@@ -53,7 +53,9 @@ export function useMutation<TData, TVariables>(
         notify
       });
 
-      onCompleted(data);
+      if (onCompleted) {
+        onCompleted(data);
+      }
     },
     onError: (err: ApolloError) => {
       if (err.graphQLErrors) {

@@ -7,6 +7,7 @@ import React from "react";
 
 import * as fixtures from "./fixtures.json";
 import { RichTextEditorProps } from "./RichTextEditor";
+import RichTextEditorContent from "./RichTextEditorContent";
 
 export const data: OutputData = fixtures.richTextEditor;
 
@@ -25,4 +26,5 @@ storiesOf("Generics / Rich text editor", module)
   .addDecorator(Decorator)
   .add("default", () => <RichTextEditor {...props} />)
   .add("disabled", () => <RichTextEditor {...props} disabled={true} />)
-  .add("error", () => <RichTextEditor {...props} error={true} />);
+  .add("error", () => <RichTextEditor {...props} error={true} />)
+  .add("static", () => <RichTextEditorContent {...props} />);

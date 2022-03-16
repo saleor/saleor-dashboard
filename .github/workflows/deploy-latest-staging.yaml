@@ -50,6 +50,21 @@ jobs:
           aws s3 cp build/dashboard/index.html s3://${{ secrets.AWS_STAGING_DEPLOYMENT_BUCKET }}/${ENVIRONMENT}/
           aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_STAGING_CF_DIST_ID }} --paths "/dashboard*"
 
+      - name: Prepare Sandbox release pull request
+        run: |
+          export GITHUB_TOKEN=$( \
+            curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
+          )
+          gh api /repos/saleor/saleor-cloud-deployments/dispatches \
+            --input - <<< '{
+              "event_type": "open-release-pull-request",
+              "client_payload": {
+                "project": "DASHBOARD",
+                "environment": "SANDBOX",
+                "version": "${{ github.event.inputs.git_ref }}"
+              }
+            }'
+
       - name: Notify Slack
         if: ${{ always() }}
         env:

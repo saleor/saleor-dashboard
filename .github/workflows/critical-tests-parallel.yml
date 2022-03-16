@@ -2,9 +2,9 @@ name: RUN_CRITICAL_TESTS-PARALLEL
 
 # Only trigger, when the build workflow succeeded
 on:
-  workflow_run:
-    workflows: [TEST-ENV-DEPLOYMENT]
-    types: [completed]
+  # workflow_run:
+  #   workflows: [TEST-ENV-DEPLOYMENT]
+  #   types: [completed]
   pull_request:
     types: [reopened, synchronize, labeled, opened]
     branches: ["*"]
@@ -52,10 +52,11 @@ jobs:
           CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           parallel: true
           group: 'UI - Chrome'
-          command: npm run cy:run:critical
+          command: npm run cy:run:critical:parallel
           wait-on: ${{ steps.base_URL.outputs.base_URL }}
       - uses: actions/upload-artifact@v1
         if: ${{ failure() }}
