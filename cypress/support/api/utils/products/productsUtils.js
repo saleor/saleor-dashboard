@@ -12,9 +12,11 @@ import {
   setProductTypeAsDigital
 } from "../../requests/ProductType";
 import { deleteAttributesStartsWith } from "../attributes/attributeUtils";
-import { deleteCollectionsStartsWith } from "../catalog/collectionsUtils";
 import { getDefaultChannel } from "../channelsUtils";
-import { createShipping, deleteShippingStartsWith } from "../shippingUtils";
+import {
+  createShipping,
+  createShippingWithDefaultChannelAndAddress
+} from "../shippingUtils";
 
 export function createProductInChannel({
   name,
@@ -116,7 +118,7 @@ export function deleteProductsStartsWith(startsWith) {
   );
 }
 
-export function deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
+export function createNewProductWithNewDataAndDefaultChannel({
   name,
   description = name,
   warehouseId,
@@ -128,9 +130,9 @@ export function deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
   let defaultChannel;
   let collection;
   let attribute;
+  let category;
+  let productType;
 
-  deleteProductsStartsWith(name);
-  deleteCollectionsStartsWith(name);
   return getDefaultChannel()
     .then(channel => {
       defaultChannel = channel;
@@ -140,23 +142,37 @@ export function deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
       collection = collectionResp;
       createTypeAttributeAndCategoryForProduct({ name, attributeValues });
     })
-    .then(({ attribute: attributeResp, category, productType }) => {
-      attribute = attributeResp;
-      createProductInChannel({
-        attributeId: attribute.id,
-        categoryId: category.id,
-        productTypeId: productType.id,
-        channelId: defaultChannel.id,
-        name,
-        collectionId: collection.id,
-        description,
-        warehouseId,
-        price: productPrice,
-        preorder,
-        sku
-      });
-    })
-    .then(({ product, variantsList }) => ({ product, variantsList }));
+    .then(
+      ({
+        attribute: attributeResp,
+        category: categoryResp,
+        productType: productTypeResp
+      }) => {
+        attribute = attributeResp;
+        category = categoryResp;
+        productType = productTypeResp;
+        createProductInChannel({
+          attributeId: attribute.id,
+          categoryId: category.id,
+          productTypeId: productType.id,
+          channelId: defaultChannel.id,
+          name,
+          collectionId: collection.id,
+          description,
+          warehouseId,
+          price: productPrice,
+          preorder,
+          sku
+        });
+      }
+    )
+    .then(({ product, variantsList }) => ({
+      product,
+      variantsList,
+      attribute,
+      category,
+      productType
+    }));
 }
 
 export function createProductWithShipping({
@@ -173,7 +189,6 @@ export function createProductWithShipping({
   let defaultChannel;
   let shippingZone;
 
-  deleteShippingStartsWith(name);
   return cy
     .fixture("addresses")
     .then(addresses => {
@@ -198,7 +213,7 @@ export function createProductWithShipping({
         warehouse = warehouseResp;
         shippingMethod = shippingMethodResp;
         shippingZone = shippingZoneResp;
-        deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
+        createNewProductWithNewDataAndDefaultChannel({
           name,
           warehouseId: warehouse.id,
           productPrice,
@@ -208,14 +223,17 @@ export function createProductWithShipping({
         });
       }
     )
-    .then(({ variantsList, product }) => ({
+    .then(({ variantsList, product, attribute, category, productType }) => ({
       variantsList,
       product,
       warehouse,
       shippingZone,
       defaultChannel,
       shippingMethod,
-      address
+      address,
+      attribute,
+      category,
+      productType
     }));
 }
 
@@ -263,4 +281,167 @@ export function addDigitalContentAndUpdateProductType(
   createDigitalContent(variantId);
   setProductTypeAsDigital(productTypeId);
   productRequest.updateVariantPrice({ variantId, channelId, price });
+}
+
+export function createDigitalAndPhysicalProductWithNewDataAndDefaultChannel({
+  physicalProductName,
+  digitalProductName
+}) {
+  let physicalVariants;
+  let digitalVariants;
+  let warehouse;
+  let attribute;
+  let shippingMethod;
+  let defaultChannel;
+  let address;
+  let category;
+  let digitalProductType;
+
+  return createProductWithShipping({
+    name: physicalProductName,
+    attributeValues: ["physical"]
+  })
+    .then(resp => {
+      physicalVariants = resp.variantsList;
+      warehouse = resp.warehouse;
+      shippingMethod = resp.shippingMethod;
+      attribute = resp.attribute;
+      defaultChannel = resp.defaultChannel;
+      address = resp.address;
+      category = resp.category;
+
+      createTypeProduct({
+        name: digitalProductName,
+        shippable: false,
+        attributeId: attribute.id
+      });
+    })
+    .then(productType => {
+      digitalProductType = productType;
+      createProductInChannel({
+        attributeId: attribute.id,
+        productTypeId: productType.id,
+        categoryId: category.id,
+        channelId: defaultChannel.id,
+        name: digitalProductName,
+        warehouseId: warehouse.id
+      });
+    })
+    .then(({ variantsList }) => {
+      digitalVariants = variantsList;
+      addDigitalContentAndUpdateProductType(
+        digitalVariants[0].id,
+        digitalProductType.id,
+        defaultChannel.id
+      );
+    })
+    .then(() => ({
+      digitalVariants,
+      physicalVariants,
+      shippingMethod,
+      defaultChannel,
+      address
+    }));
+}
+
+export function createNewProductWithSeveralVariants(name, variantsData) {
+  let address;
+  let defaultChannel;
+  let warehouse;
+  let shippingMethod;
+  const createdVariants = [];
+  let attribute;
+  let productType;
+  let category;
+
+  return cy
+    .fixture("addresses")
+    .then(addresses => {
+      address = addresses.usAddress;
+      getDefaultChannel();
+    })
+    .then(channel => {
+      defaultChannel = channel;
+      createShipping({
+        channelId: defaultChannel.id,
+        name,
+        address
+      });
+    })
+    .then(
+      ({ warehouse: warehouseResp, shippingMethod: shippingMethodResp }) => {
+        warehouse = warehouseResp;
+        shippingMethod = shippingMethodResp;
+
+        const attributeValues = [];
+        variantsData.forEach(variant => {
+          attributeValues.push(variant.name);
+        });
+
+        createTypeAttributeAndCategoryForProduct({
+          name,
+          attributeValues
+        });
+      }
+    )
+    .then(
+      ({
+        attribute: attributeResp,
+        category: categoryResp,
+        productType: productTypeResp
+      }) => {
+        attribute = attributeResp;
+        category = categoryResp;
+        productType = productTypeResp;
+
+        createProductInChannelWithoutVariants({
+          attributeId: attribute.id,
+          categoryId: category.id,
+          productTypeId: productType.id,
+          channelId: defaultChannel.id,
+          name
+        });
+      }
+    )
+    .then(product => {
+      variantsData.forEach(variant => {
+        productRequest
+          .createVariant({
+            productId: product.id,
+            attributeId: attribute.id,
+            channelId: defaultChannel.id,
+            attributeName: variant.name,
+            trackInventory: variant.trackInventory,
+            warehouseId: warehouse.id,
+            quantityInWarehouse: variant.quantityInWarehouse
+          })
+          .then(variants => {
+            createdVariants.push(variants[0]);
+          });
+      });
+    })
+    .then(() => ({ createdVariants, address, shippingMethod, defaultChannel }));
+}
+
+export function createShippingProductTypeAttributeAndCategory(
+  name,
+  attributeValues
+) {
+  let warehouse;
+  let defaultChannel;
+
+  return createShippingWithDefaultChannelAndAddress(name)
+    .then(({ warehouse: warehouseResp, defaultChannel: channel }) => {
+      warehouse = warehouseResp;
+      defaultChannel = channel;
+
+      createTypeAttributeAndCategoryForProduct({ name, attributeValues });
+    })
+    .then(({ attribute, productType, category }) => ({
+      attribute,
+      productType,
+      category,
+      warehouse,
+      defaultChannel
+    }));
 }
