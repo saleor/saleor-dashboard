@@ -38,40 +38,22 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
     let newChannel;
 
     before(() => {
+      const name = `${startsWith}${faker.datatype.number()}`;
+
       cy.clearSessionData().loginUserViaRequest();
 
-      const name = `${startsWith}${faker.datatype.number()}`;
-      getDefaultChannel()
-        .then(channel => {
-          defaultChannel = channel;
-          cy.fixture("addresses");
-        })
-        .then(fixtureAddresses =>
-          shippingUtils.createShipping({
-            channelId: defaultChannel.id,
-            name,
-            address: fixtureAddresses.plAddress
-          })
-        )
-        .then(({ warehouse: warehouseResp }) => {
-          warehouse = warehouseResp;
+      productUtils
+        .createShippingProductTypeAttributeAndCategory(name, attributeValues)
+        .then(resp => {
+          attribute = resp.attribute;
+          productType = resp.productType;
+          category = resp.category;
+          defaultChannel = resp.defaultChannel;
+          warehouse = resp.warehouse;
+
           createChannel({ isActive: true, name, currencyCode: "USD" });
         })
         .then(resp => (newChannel = resp));
-
-      productUtils
-        .createTypeAttributeAndCategoryForProduct({ name, attributeValues })
-        .then(
-          ({
-            attribute: attributeResp,
-            productType: productTypeResp,
-            category: categoryResp
-          }) => {
-            attribute = attributeResp;
-            productType = productTypeResp;
-            category = categoryResp;
-          }
-        );
     });
 
     beforeEach(() => {

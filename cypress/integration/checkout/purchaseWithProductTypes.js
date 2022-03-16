@@ -3,8 +3,6 @@
 
 import faker from "faker";
 
-import { createAttribute } from "../../support/api/requests/Attribute";
-import { createCategory } from "../../support/api/requests/Category";
 import {
   checkoutShippingAddressUpdate,
   checkoutVariantsUpdate,
@@ -12,8 +10,6 @@ import {
   createCheckout
 } from "../../support/api/requests/Checkout";
 import { getOrder } from "../../support/api/requests/Order";
-import { createTypeProduct } from "../../support/api/requests/ProductType";
-import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import {
   addPayment,
   createAndCompleteCheckoutWithoutShipping,
@@ -21,17 +17,12 @@ import {
   getShippingMethodIdFromCheckout,
   updateShippingInCheckout
 } from "../../support/api/utils/ordersUtils";
-import {
-  addDigitalContentAndUpdateProductType,
-  createProductInChannel
-} from "../../support/api/utils/products/productsUtils";
-import { createShipping } from "../../support/api/utils/shippingUtils";
+import { createDigitalAndPhysicalProductWithNewDataAndDefaultChannel } from "../../support/api/utils/products/productsUtils";
 import filterTests from "../../support/filterTests";
 
 filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
   describe("As an unlogged customer I want to order physical and digital products", () => {
     const startsWith = `CyPurchaseByType`;
-    const name = `${startsWith}${faker.datatype.number()}`;
     const email = `${startsWith}@example.com`;
     const testsMessage = "Check order status";
     const digitalName = `${startsWith}${faker.datatype.number()}`;
@@ -40,85 +31,22 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
 
     let defaultChannel;
     let address;
-    let warehouse;
-    let attribute;
-    let category;
     let shippingMethod;
-    let createProductData;
     let digitalVariants;
     let physicalVariants;
 
     before(() => {
       cy.clearSessionData().loginUserViaRequest();
-      getDefaultChannel().then(channelResp => (defaultChannel = channelResp));
-      cy.fixture("addresses")
-        .then(addresses => {
-          address = addresses.usAddress;
-          createShipping({
-            channelId: defaultChannel.id,
-            name,
-            address,
-            price: 10
-          });
-        })
-        .then(
-          ({
-            warehouse: warehouseResp,
-            shippingMethod: shippingMethodResp
-          }) => {
-            warehouse = warehouseResp;
-            shippingMethod = shippingMethodResp;
-          }
-        );
-      createAttribute({ name })
-        .then(attributeResp => {
-          attribute = attributeResp;
-          createCategory({ name });
-        })
-        .then(categoryResp => {
-          category = categoryResp;
-          createProductData = {
-            name: digitalName,
-            channelId: defaultChannel.id,
-            warehouseId: warehouse.id,
-            quantityInWarehouse: 10,
-            attributeId: attribute.id,
-            categoryId: category.id,
-            price: 10
-          };
-          createTypeProduct({
-            name: digitalName,
-            attributeId: attribute.id,
-            shippable: false
-          });
-        })
-        .then(productType => {
-          createProductData.productTypeId = productType.id;
-          createProductInChannel(createProductData);
-        })
-        .then(({ variantsList }) => {
-          digitalVariants = variantsList;
-          addDigitalContentAndUpdateProductType(
-            digitalVariants[0].id,
-            createProductData.productTypeId,
-            defaultChannel.id
-          );
-        })
-        .then(() => {
-          createTypeProduct({
-            name: physicalName,
-            attributeId: attribute.id,
-            shippable: true
-          });
-        })
-        .then(productType => {
-          createProductData.name = physicalName;
-          createProductData.productTypeId = productType.id;
-          createProductInChannel(createProductData);
-        })
-        .then(({ variantsList }) => {
-          physicalVariants = variantsList;
-        });
+      createDigitalAndPhysicalProductWithNewDataAndDefaultChannel({
+        physicalProductName: physicalName,
+        digitalProductName: digitalName
+      }).then(resp => {
+        defaultChannel = resp.defaultChannel;
+        address = resp.address;
+        shippingMethod = resp.shippingMethod;
+        digitalVariants = resp.digitalVariants;
+        physicalVariants = resp.physicalVariants;
+      });
     });
 
     it("should purchase digital product as unlogged customer. TC: SALEOR_0402", () => {

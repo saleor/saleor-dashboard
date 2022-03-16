@@ -5,18 +5,13 @@ import faker from "faker";
 
 import { HOMEPAGE_SELECTORS } from "../../elements/homePage/homePage-selectors";
 import { urlList } from "../../fixtures/urlList";
-import {
-  createCustomer,
-  deleteCustomersStartsWith
-} from "../../support/api/requests/Customer";
-import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
+import { createCustomer } from "../../support/api/requests/Customer";
 import * as homePageUtils from "../../support/api/utils/homePageUtils";
 import {
   createReadyToFulfillOrder,
   createWaitingForCaptureOrder
 } from "../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
-import * as shippingUtils from "../../support/api/utils/shippingUtils";
 import filterTests from "../../support/filterTests";
 import {
   changeChannel,
@@ -35,7 +30,7 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
     const randomName = startsWith + faker.datatype.number();
     const randomEmail = `${startsWith}${randomName}@example.com`;
 
-    let customerId;
+    let customer;
     let defaultChannel;
     let createdVariants;
     let productType;
@@ -43,7 +38,7 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
     let category;
     let warehouse;
     let shippingMethod;
-    let addresses;
+    let address;
     let ordersReadyToFulfillRegexp;
     let ordersReadyForCaptureRegexp;
     let productsOutOfStockRegexp;
@@ -52,63 +47,26 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
 
     before(() => {
       cy.clearSessionData().loginUserViaRequest();
-      productsUtils.deleteProductsStartsWith(startsWith);
-      deleteCustomersStartsWith(startsWith);
-      shippingUtils.deleteShippingStartsWith(startsWith);
 
-      getDefaultChannel()
-        .then(channel => {
-          defaultChannel = channel;
-          cy.fixture("addresses");
+      productsUtils
+        .createProductWithShipping({
+          name: randomName,
+          productPrice,
+          shippingPrice
         })
-        .then(addressesFixture => (addresses = addressesFixture))
-        .then(() =>
-          createCustomer(randomEmail, randomName, addresses.plAddress)
-        )
         .then(resp => {
-          customerId = resp.user.id;
-          shippingUtils.createShipping({
-            channelId: defaultChannel.id,
-            name: randomName,
-            address: addresses.plAddress,
-            price: shippingPrice
-          });
-        })
-        .then(
-          ({
-            warehouse: warehouseResp,
-            shippingMethod: shippingMethodResp
-          }) => {
-            warehouse = warehouseResp;
-            shippingMethod = shippingMethodResp;
-            productsUtils.createTypeAttributeAndCategoryForProduct({
-              name: randomName
-            });
-          }
-        )
-        .then(
-          ({
-            productType: productTypeResp,
-            attribute: attributeResp,
-            category: categoryResp
-          }) => {
-            productType = productTypeResp;
-            attribute = attributeResp;
-            category = categoryResp;
-            productsUtils.createProductInChannel({
-              name: randomName,
-              channelId: defaultChannel.id,
-              warehouseId: warehouse.id,
-              quantityInWarehouse: 20,
-              productTypeId: productType.id,
-              attributeId: attribute.id,
-              categoryId: category.id,
-              price: productPrice
-            });
-          }
-        )
-        .then(({ variantsList: variantsResp }) => {
-          createdVariants = variantsResp;
+          createdVariants = resp.variantsList;
+          address = resp.address;
+          warehouse = resp.warehouse;
+          defaultChannel = resp.defaultChannel;
+          shippingMethod = resp.shippingMethod;
+          attribute = resp.attribute;
+          category = resp.category;
+          productType = resp.productType;
+
+          createCustomer(randomEmail, randomName, address).then(
+            customerResp => (customer = customerResp)
+          );
 
           homePageUtils
             .getOrdersReadyToFulfill(defaultChannel.slug)
@@ -118,6 +76,7 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
                 1
               );
             });
+
           homePageUtils
             .getOrdersReadyForCapture(defaultChannel.slug)
             .then(ordersReadyForCaptureBefore => {
@@ -126,6 +85,7 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
                 1
               );
             });
+
           homePageUtils
             .getProductsOutOfStock(defaultChannel.slug)
             .then(productsOutOfStockBefore => {
@@ -134,6 +94,7 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
                 1
               );
             });
+
           homePageUtils
             .getSalesAmount(defaultChannel.slug)
             .then(salesAmount => {
@@ -142,6 +103,7 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
                 productPrice * 2 + shippingPrice
               );
             });
+
           homePageUtils
             .getTodaysOrders(defaultChannel.slug)
             .then(ordersBefore => {
@@ -150,19 +112,21 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
         })
         .then(() => {
           createReadyToFulfillOrder({
-            customerId,
+            customerId: customer.id,
             shippingMethodId: shippingMethod.id,
             channelId: defaultChannel.id,
             variantsList: createdVariants,
-            address: addresses.plAddress
+            address
           });
+
           createWaitingForCaptureOrder({
             channelSlug: defaultChannel.slug,
             email: randomEmail,
             variantsList: createdVariants,
             shippingMethodName: shippingMethod.name,
-            address: addresses.plAddress
+            address
           });
+
           const productOutOfStockRandomName =
             startsWith + faker.datatype.number();
 
