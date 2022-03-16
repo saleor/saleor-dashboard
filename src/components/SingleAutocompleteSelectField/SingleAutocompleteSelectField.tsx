@@ -90,7 +90,8 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
     ...rest
   } = props;
   const classes = useStyles(props);
-  const anchor = React.useRef<HTMLInputElement | null>(null);
+  const anchor = React.useRef<HTMLDivElement | null>(null);
+  const input = React.useRef<HTMLInputElement | null>(null);
 
   const handleChange = (item: string) => {
     onChange({
@@ -188,6 +189,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                 if (fetchOnFocus) {
                   fetchChoices(inputValue);
                 }
+                input.current.select();
               }
             };
 
@@ -224,6 +226,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                   fullWidth={true}
                   onBlur={onBlur}
                   ref={anchor}
+                  inputRef={input}
                 />
                 {isOpen && (!!inputValue || !!choices.length) && (
                   <Popper
