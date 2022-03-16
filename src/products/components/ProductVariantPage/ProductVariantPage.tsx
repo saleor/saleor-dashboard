@@ -72,6 +72,11 @@ export interface ProductVariantPageSubmitData
   removeStocks: string[];
 }
 
+function byAttributeScope(scope: VariantAttributeScope) {
+  return (attribute: AttributeInput) =>
+    attribute.data.variantAttributeScope === scope;
+}
+
 interface ProductVariantPageProps {
   assignReferencesAttributeId?: string;
   defaultVariantId?: string;
@@ -224,14 +229,10 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
             submit
           }) => {
             const nonSelectionAttributes = data.attributes.filter(
-              attribute =>
-                attribute.data.variantAttributeScope ===
-                VariantAttributeScope.NOT_VARIANT_SELECTION
+              byAttributeScope(VariantAttributeScope.NOT_VARIANT_SELECTION)
             );
             const selectionAttributes = data.attributes.filter(
-              attribute =>
-                attribute.data.variantAttributeScope ===
-                VariantAttributeScope.VARIANT_SELECTION
+              byAttributeScope(VariantAttributeScope.VARIANT_SELECTION)
             );
 
             return (
