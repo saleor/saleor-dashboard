@@ -85,10 +85,6 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
     <Card>
       <CardTitle title={intl.formatMessage(commonMessages.properties)} />
       <CardContent>
-        <Typography variant="subtitle1">
-          <FormattedMessage {...messages.storefrontPropertiesTitle} />
-        </Typography>
-        <Hr />
         {storefrontFacetedNavigationProperties && (
           <>
             <ControlledCheckbox
@@ -118,9 +114,9 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
                 />
               </>
             )}
+            <FormSpacer />
           </>
         )}
-        <FormSpacer />
         <ControlledSwitch
           name={"visibleInStorefront" as keyof FormData}
           label={
