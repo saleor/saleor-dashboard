@@ -2,8 +2,7 @@ import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
-import { useIntl } from "react-intl";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import messages from "./messages";
 
