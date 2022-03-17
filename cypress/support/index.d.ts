@@ -34,6 +34,7 @@ declare namespace Cypress {
     fillUpAddressForm(address: {}): Chainable<any>;
     fillUpBasicAddress(address: {}): Chainable<any>;
     confirmationMessageShouldDisappear(): Chainable<any>;
+    confirmationMessageShouldAppear(): Chainable<any>;
     waitForProgressBarToNotExist(): Chainable<any>;
     waitForProgressBarToNotBeVisible(): Chainable<any>;
     visitAndWaitForProgressBarToDisappear(url: string): Chainable<any>;

@@ -28,8 +28,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
       "MULTISELECT",
       "BOOLEAN",
       "NUMERIC",
-      "SWATCH",
-      "DATE"
+      "SWATCH"
     ];
     let channel;
     let category;
@@ -108,6 +107,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
           })
           .then(({ attributes }) => {
             expect(attributes[0].attribute.inputType).to.eq(inputType);
+            cy.confirmationMessageShouldAppear();
           });
       });
     });
