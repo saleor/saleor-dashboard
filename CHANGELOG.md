@@ -18,6 +18,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Click & Collect - #1292 by @kuchichan
 - Add swatch attributes - #1301 by @piotrgrundas
 - Limit quantity per checkout - #1536 by @kuchichan
+- Disable query batching - #1922 by @dominik-zeglen
 
 ## 3.0
 
