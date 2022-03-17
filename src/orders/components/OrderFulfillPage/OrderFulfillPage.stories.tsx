@@ -1,10 +1,10 @@
 import { OrderErrorCode } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
 import { warehouseList } from "@saleor/warehouses/fixtures";
-import { WarehouseDetails_warehouse } from "@saleor/warehouses/types/WarehouseDetails";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { Warehouse } from "../OrderChangeWarehouseDialog/types";
 import { orderToFulfill } from "./fixtures";
 import OrderFulfillPage, { OrderFulfillPageProps } from "./OrderFulfillPage";
 
@@ -15,7 +15,7 @@ const props: OrderFulfillPageProps = {
   onSubmit: () => undefined,
   order: orderToFulfill,
   saveButtonBar: "default",
-  warehouse: warehouseList[0] as WarehouseDetails_warehouse
+  warehouse: warehouseList[0] as Warehouse
 };
 
 storiesOf("Views / Orders / Fulfill order", module)
