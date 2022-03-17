@@ -80,12 +80,7 @@ export const productListQuery = gql`
           ...ProductWithChannelListings
           updatedAt
           attributes @include(if: $hasSelectedAttributes) {
-            attribute {
-              id
-            }
-            values {
-              ...AttributeValue
-            }
+            ...ProductListAttribute
           }
         }
       }

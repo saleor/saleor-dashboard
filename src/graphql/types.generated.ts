@@ -520,7 +520,11 @@ export type CatalogueInput = {
   categories?: InputMaybe<Array<Scalars['ID']>>;
   /** Collections related to the discount. */
   collections?: InputMaybe<Array<Scalars['ID']>>;
-  /** Added in Saleor 3.1. Product variant related to the discount. */
+  /**
+   * Product variant related to the discount.
+   *
+   * Added in Saleor 3.1.
+   */
   variants?: InputMaybe<Array<Scalars['ID']>>;
 };
 
@@ -576,7 +580,11 @@ export type ChannelCreateInput = {
   slug: Scalars['String'];
   /** Currency of the channel. */
   currencyCode: Scalars['String'];
-  /** Added in Saleor 3.1. Default country for the channel. Default country can be used in checkout to determine the stock quantities or calculate taxes when the country was not explicitly provided. */
+  /**
+   * Default country for the channel. Default country can be used in checkout to determine the stock quantities or calculate taxes when the country was not explicitly provided.
+   *
+   * Added in Saleor 3.1.
+   */
   defaultCountry: CountryCode;
   /** List of shipping zones to assign to the channel. */
   addShippingZones?: InputMaybe<Array<Scalars['ID']>>;
@@ -607,7 +615,11 @@ export type ChannelUpdateInput = {
   name?: InputMaybe<Scalars['String']>;
   /** Slug of the channel. */
   slug?: InputMaybe<Scalars['String']>;
-  /** Added in Saleor 3.1. Default country for the channel. Default country can be used in checkout to determine the stock quantities or calculate taxes when the country was not explicitly provided. */
+  /**
+   * Default country for the channel. Default country can be used in checkout to determine the stock quantities or calculate taxes when the country was not explicitly provided.
+   *
+   * Added in Saleor 3.1.
+   */
   defaultCountry?: InputMaybe<CountryCode>;
   /** List of shipping zones to assign to the channel. */
   addShippingZones?: InputMaybe<Array<Scalars['ID']>>;
@@ -674,7 +686,13 @@ export type CheckoutLineInput = {
   quantity: Scalars['Int'];
   /** ID of the product variant. */
   variantId: Scalars['ID'];
-  /** Added in Saleor 3.1. Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used. Note: this feature is in a preview state and can be subject to changes at later point. */
+  /**
+   * Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used.
+   *
+   * Added in Saleor 3.1.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
   price?: InputMaybe<Scalars['PositiveDecimal']>;
 };
 
@@ -683,7 +701,13 @@ export type CheckoutLineUpdateInput = {
   quantity?: InputMaybe<Scalars['Int']>;
   /** ID of the product variant. */
   variantId: Scalars['ID'];
-  /** Added in Saleor 3.1. Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used. Note: this feature is in a preview state and can be subject to changes at later point. */
+  /**
+   * Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used.
+   *
+   * Added in Saleor 3.1.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
   price?: InputMaybe<Scalars['PositiveDecimal']>;
 };
 
@@ -1451,9 +1475,21 @@ export type GiftCardBulkCreateInput = {
 };
 
 export type GiftCardCreateInput = {
-  /** Added in Saleor 3.1. The gift card tags to add. Note: this feature is in a preview state and can be subject to changes at later point. */
+  /**
+   * The gift card tags to add.
+   *
+   * Added in Saleor 3.1.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
   addTags?: InputMaybe<Array<Scalars['String']>>;
-  /** Added in Saleor 3.1. The gift card expiry date. Note: this feature is in a preview state and can be subject to changes at later point. */
+  /**
+   * The gift card expiry date.
+   *
+   * Added in Saleor 3.1.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
   expiryDate?: InputMaybe<Scalars['Date']>;
   /**
    * Start date of the gift card in ISO 8601 format.
@@ -1471,9 +1507,21 @@ export type GiftCardCreateInput = {
   balance: PriceInput;
   /** Email of the customer to whom gift card will be sent. */
   userEmail?: InputMaybe<Scalars['String']>;
-  /** Added in Saleor 3.1. Slug of a channel from which the email should be sent. Note: this feature is in a preview state and can be subject to changes at later point. */
+  /**
+   * Slug of a channel from which the email should be sent.
+   *
+   * Added in Saleor 3.1.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
   channel?: InputMaybe<Scalars['String']>;
-  /** Added in Saleor 3.1. Determine if gift card is active. Note: this feature is in a preview state and can be subject to changes at later point. */
+  /**
+   * Determine if gift card is active.
+   *
+   * Added in Saleor 3.1.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
   isActive: Scalars['Boolean'];
   /**
    * Code to use the gift card.
@@ -1481,7 +1529,13 @@ export type GiftCardCreateInput = {
    * DEPRECATED: this field will be removed in Saleor 4.0. The code is now auto generated.
    */
   code?: InputMaybe<Scalars['String']>;
-  /** Added in Saleor 3.1. The gift card note from the staff member. Note: this feature is in a preview state and can be subject to changes at later point. */
+  /**
+   * The gift card note from the staff member.
+   *
+   * Added in Saleor 3.1.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
   note?: InputMaybe<Scalars['String']>;
 };
 
@@ -1581,9 +1635,21 @@ export type GiftCardTagFilterInput = {
 };
 
 export type GiftCardUpdateInput = {
-  /** Added in Saleor 3.1. The gift card tags to add. Note: this feature is in a preview state and can be subject to changes at later point. */
+  /**
+   * The gift card tags to add.
+   *
+   * Added in Saleor 3.1.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
   addTags?: InputMaybe<Array<Scalars['String']>>;
-  /** Added in Saleor 3.1. The gift card expiry date. Note: this feature is in a preview state and can be subject to changes at later point. */
+  /**
+   * The gift card expiry date.
+   *
+   * Added in Saleor 3.1.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
   expiryDate?: InputMaybe<Scalars['Date']>;
   /**
    * Start date of the gift card in ISO 8601 format.
@@ -1597,9 +1663,21 @@ export type GiftCardUpdateInput = {
    * DEPRECATED: this field will be removed in Saleor 4.0. Use `expiryDate` from `expirySettings` instead.
    */
   endDate?: InputMaybe<Scalars['Date']>;
-  /** Added in Saleor 3.1. The gift card tags to remove. Note: this feature is in a preview state and can be subject to changes at later point. */
+  /**
+   * The gift card tags to remove.
+   *
+   * Added in Saleor 3.1.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
   removeTags?: InputMaybe<Array<Scalars['String']>>;
-  /** Added in Saleor 3.1. The gift card balance amount. Note: this feature is in a preview state and can be subject to changes at later point. */
+  /**
+   * The gift card balance amount.
+   *
+   * Added in Saleor 3.1.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
   balanceAmount?: InputMaybe<Scalars['PositiveDecimal']>;
 };
 
@@ -2976,7 +3054,11 @@ export type PageCreateInput = {
    * DEPRECATED: this field will be removed in Saleor 4.0. Use `publishedAt` field instead.
    */
   publicationDate?: InputMaybe<Scalars['String']>;
-  /** Added in Saleor 3.3. Publication date time. ISO 8601 standard. */
+  /**
+   * Publication date time. ISO 8601 standard.
+   *
+   * Added in Saleor 3.3.
+   */
   publishedAt?: InputMaybe<Scalars['DateTime']>;
   /** Search engine optimization fields. */
   seo?: InputMaybe<SeoInput>;
@@ -3019,7 +3101,11 @@ export type PageInput = {
    * DEPRECATED: this field will be removed in Saleor 4.0. Use `publishedAt` field instead.
    */
   publicationDate?: InputMaybe<Scalars['String']>;
-  /** Added in Saleor 3.3. Publication date time. ISO 8601 standard. */
+  /**
+   * Publication date time. ISO 8601 standard.
+   *
+   * Added in Saleor 3.3.
+   */
   publishedAt?: InputMaybe<Scalars['DateTime']>;
   /** Search engine optimization fields. */
   seo?: InputMaybe<SeoInput>;
@@ -3157,9 +3243,17 @@ export type PaymentInput = {
   amount?: InputMaybe<Scalars['PositiveDecimal']>;
   /** URL of a storefront view where user should be redirected after requiring additional actions. Payment with additional actions will not be finished if this field is not provided. */
   returnUrl?: InputMaybe<Scalars['String']>;
-  /** Added in Saleor 3.1. Payment store type. */
+  /**
+   * Payment store type.
+   *
+   * Added in Saleor 3.1.
+   */
   storePaymentMethod?: InputMaybe<StorePaymentMethodEnum>;
-  /** Added in Saleor 3.1. User public metadata. */
+  /**
+   * User public metadata.
+   *
+   * Added in Saleor 3.1.
+   */
   metadata?: InputMaybe<Array<MetadataInput>>;
 };
 
@@ -3315,14 +3409,22 @@ export type ProductAttributeAssignInput = {
   id: Scalars['ID'];
   /** The attribute type to be assigned as. */
   type: ProductAttributeType;
-  /** Added in Saleor 3.1. Whether attribute is allowed in variant selection. Allowed types are: ['dropdown', 'boolean', 'swatch', 'numeric']. */
+  /**
+   * Whether attribute is allowed in variant selection. Allowed types are: ['dropdown', 'boolean', 'swatch', 'numeric'].
+   *
+   * Added in Saleor 3.1.
+   */
   variantSelection?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type ProductAttributeAssignmentUpdateInput = {
   /** The ID of the attribute to assign. */
   id: Scalars['ID'];
-  /** Added in Saleor 3.1. Whether attribute is allowed in variant selection. Allowed types are: ['dropdown', 'boolean', 'swatch', 'numeric']. */
+  /**
+   * Whether attribute is allowed in variant selection. Allowed types are: ['dropdown', 'boolean', 'swatch', 'numeric'].
+   *
+   * Added in Saleor 3.1.
+   */
   variantSelection: Scalars['Boolean'];
 };
 
@@ -3342,7 +3444,11 @@ export type ProductChannelListingAddInput = {
    * DEPRECATED: this field will be removed in Saleor 4.0. Use `publishedAt` field instead.
    */
   publicationDate?: InputMaybe<Scalars['Date']>;
-  /** Added in Saleor 3.3. Publication date time. ISO 8601 standard. */
+  /**
+   * Publication date time. ISO 8601 standard.
+   *
+   * Added in Saleor 3.3.
+   */
   publishedAt?: InputMaybe<Scalars['DateTime']>;
   /** Determines if product is visible in product listings (doesn't apply to product collections). */
   visibleInListings?: InputMaybe<Scalars['Boolean']>;
@@ -3354,7 +3460,11 @@ export type ProductChannelListingAddInput = {
    * DEPRECATED: this field will be removed in Saleor 4.0. Use `availableForPurchaseAt` field instead.
    */
   availableForPurchaseDate?: InputMaybe<Scalars['Date']>;
-  /** Added in Saleor 3.3. A start date time from which a product will be available for purchase. When not set and `isAvailable` is set to True, the current day is assumed. */
+  /**
+   * A start date time from which a product will be available for purchase. When not set and `isAvailable` is set to True, the current day is assumed.
+   *
+   * Added in Saleor 3.3.
+   */
   availableForPurchaseAt?: InputMaybe<Scalars['DateTime']>;
   /** List of variants to which the channel should be assigned. */
   addVariants?: InputMaybe<Array<Scalars['ID']>>;
@@ -3631,9 +3741,21 @@ export type ProductVariantBulkCreateInput = {
   trackInventory?: InputMaybe<Scalars['Boolean']>;
   /** Weight of the Product Variant. */
   weight?: InputMaybe<Scalars['WeightScalar']>;
-  /** Added in Saleor 3.1. Determines if variant is in preorder. Note: this feature is in a preview state and can be subject to changes at later point. */
+  /**
+   * Determines if variant is in preorder.
+   *
+   * Added in Saleor 3.1.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
   preorder?: InputMaybe<PreorderSettingsInput>;
-  /** Added in Saleor 3.1. Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout. Note: this feature is in a preview state and can be subject to changes at later point. */
+  /**
+   * Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout.
+   *
+   * Added in Saleor 3.1.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
   quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
   /** Stocks of a product available for sale. */
   stocks?: InputMaybe<Array<StockInput>>;
@@ -3648,7 +3770,13 @@ export type ProductVariantChannelListingAddInput = {
   price: Scalars['PositiveDecimal'];
   /** Cost price of the variant in channel. */
   costPrice?: InputMaybe<Scalars['PositiveDecimal']>;
-  /** Added in Saleor 3.1. The threshold for preorder variant in channel. Note: this feature is in a preview state and can be subject to changes at later point. */
+  /**
+   * The threshold for preorder variant in channel.
+   *
+   * Added in Saleor 3.1.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
   preorderThreshold?: InputMaybe<Scalars['Int']>;
 };
 
@@ -3661,9 +3789,21 @@ export type ProductVariantCreateInput = {
   trackInventory?: InputMaybe<Scalars['Boolean']>;
   /** Weight of the Product Variant. */
   weight?: InputMaybe<Scalars['WeightScalar']>;
-  /** Added in Saleor 3.1. Determines if variant is in preorder. Note: this feature is in a preview state and can be subject to changes at later point. */
+  /**
+   * Determines if variant is in preorder.
+   *
+   * Added in Saleor 3.1.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
   preorder?: InputMaybe<PreorderSettingsInput>;
-  /** Added in Saleor 3.1. Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout. Note: this feature is in a preview state and can be subject to changes at later point. */
+  /**
+   * Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout.
+   *
+   * Added in Saleor 3.1.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
   quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
   /** Product ID of which type is the variant. */
   product: Scalars['ID'];
@@ -3688,9 +3828,21 @@ export type ProductVariantInput = {
   trackInventory?: InputMaybe<Scalars['Boolean']>;
   /** Weight of the Product Variant. */
   weight?: InputMaybe<Scalars['WeightScalar']>;
-  /** Added in Saleor 3.1. Determines if variant is in preorder. Note: this feature is in a preview state and can be subject to changes at later point. */
+  /**
+   * Determines if variant is in preorder.
+   *
+   * Added in Saleor 3.1.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
   preorder?: InputMaybe<PreorderSettingsInput>;
-  /** Added in Saleor 3.1. Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout. Note: this feature is in a preview state and can be subject to changes at later point. */
+  /**
+   * Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout.
+   *
+   * Added in Saleor 3.1.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
   quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
 };
 
@@ -3717,7 +3869,11 @@ export type PublishableChannelListingInput = {
    * DEPRECATED: this field will be removed in Saleor 4.0. Use `publishedAt` field instead.
    */
   publicationDate?: InputMaybe<Scalars['Date']>;
-  /** Added in Saleor 3.3. Publication date time. ISO 8601 standard. */
+  /**
+   * Publication date time. ISO 8601 standard.
+   *
+   * Added in Saleor 3.3.
+   */
   publishedAt?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -3964,9 +4120,17 @@ export type ShopSettingsInput = {
   defaultWeightUnit?: InputMaybe<WeightUnitsEnum>;
   /** Enable automatic fulfillment for all digital products. */
   automaticFulfillmentDigitalProducts?: InputMaybe<Scalars['Boolean']>;
-  /** Added in Saleor 3.1. Enable automatic approval of all new fulfillments. */
+  /**
+   * Enable automatic approval of all new fulfillments.
+   *
+   * Added in Saleor 3.1.
+   */
   fulfillmentAutoApprove?: InputMaybe<Scalars['Boolean']>;
-  /** Added in Saleor 3.1. Enable ability to approve fulfillments which are unpaid. */
+  /**
+   * Enable ability to approve fulfillments which are unpaid.
+   *
+   * Added in Saleor 3.1.
+   */
   fulfillmentAllowUnpaid?: InputMaybe<Scalars['Boolean']>;
   /** Default number of max downloads per digital content URL. */
   defaultDigitalMaxDownloads?: InputMaybe<Scalars['Int']>;
@@ -3978,11 +4142,25 @@ export type ShopSettingsInput = {
   defaultMailSenderAddress?: InputMaybe<Scalars['String']>;
   /** URL of a view where customers can set their password. */
   customerSetPasswordUrl?: InputMaybe<Scalars['String']>;
-  /** Added in Saleor 3.1. Default number of minutes stock will be reserved for anonymous checkout. Enter 0 or null to disable. */
+  /**
+   * Default number of minutes stock will be reserved for anonymous checkout. Enter 0 or null to disable.
+   *
+   * Added in Saleor 3.1.
+   */
   reserveStockDurationAnonymousUser?: InputMaybe<Scalars['Int']>;
-  /** Added in Saleor 3.1. Default number of minutes stock will be reserved for authenticated checkout. Enter 0 or null to disable. */
+  /**
+   * Default number of minutes stock will be reserved for authenticated checkout. Enter 0 or null to disable.
+   *
+   * Added in Saleor 3.1.
+   */
   reserveStockDurationAuthenticatedUser?: InputMaybe<Scalars['Int']>;
-  /** Added in Saleor 3.1. Default number of maximum line quantity in single checkout. Minimum possible value is 1, default value is 50. Note: this feature is in a preview state and can be subject to changes at later point. */
+  /**
+   * Default number of maximum line quantity in single checkout. Minimum possible value is 1, default value is 50.
+   *
+   * Added in Saleor 3.1.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
   limitQuantityPerCheckout?: InputMaybe<Scalars['Int']>;
 };
 
@@ -4275,7 +4453,11 @@ export type VoucherInput = {
   discountValueType?: InputMaybe<DiscountValueTypeEnum>;
   /** Products discounted by the voucher. */
   products?: InputMaybe<Array<Scalars['ID']>>;
-  /** Added in Saleor 3.1. Variants discounted by the voucher. */
+  /**
+   * Variants discounted by the voucher.
+   *
+   * Added in Saleor 3.1.
+   */
   variants?: InputMaybe<Array<Scalars['ID']>>;
   /** Collections discounted by the voucher. */
   collections?: InputMaybe<Array<Scalars['ID']>>;
@@ -4389,9 +4571,21 @@ export type WarehouseUpdateInput = {
   name?: InputMaybe<Scalars['String']>;
   /** Address of the warehouse. */
   address?: InputMaybe<AddressInput>;
-  /** Added in Saleor 3.1. Click and collect options: local, all or disabled. Note: this feature is in a preview state and can be subject to changes at later point. */
+  /**
+   * Click and collect options: local, all or disabled.
+   *
+   * Added in Saleor 3.1.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
   clickAndCollectOption?: InputMaybe<WarehouseClickAndCollectOptionEnum>;
-  /** Added in Saleor 3.1. Visibility of warehouse stocks. Note: this feature is in a preview state and can be subject to changes at later point. */
+  /**
+   * Visibility of warehouse stocks.
+   *
+   * Added in Saleor 3.1.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
   isPrivate?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -4416,7 +4610,13 @@ export type WebhookCreateInput = {
   isActive?: InputMaybe<Scalars['Boolean']>;
   /** The secret key used to create a hash signature with each payload. */
   secretKey?: InputMaybe<Scalars['String']>;
-  /** Added in Saleor 3.2. Subscription query used to define a webhook payload. Note: this feature is in a preview state and can be subject to changes at later point. */
+  /**
+   * Subscription query used to define a webhook payload.
+   *
+   * Added in Saleor 3.2.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
   query?: InputMaybe<Scalars['String']>;
 };
 
@@ -4745,7 +4945,13 @@ export type WebhookUpdateInput = {
   isActive?: InputMaybe<Scalars['Boolean']>;
   /** Use to create a hash signature with each payload. */
   secretKey?: InputMaybe<Scalars['String']>;
-  /** Added in Saleor 3.2. Subscription query used to define a webhook payload. Note: this feature is in a preview state and can be subject to changes at later point. */
+  /**
+   * Subscription query used to define a webhook payload.
+   *
+   * Added in Saleor 3.2.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
   query?: InputMaybe<Scalars['String']>;
 };
 
@@ -5825,6 +6031,8 @@ export type SelectedVariantAttributeFragment = { __typename: 'SelectedAttribute'
 export type ProductVariantFragment = { __typename: 'ProductVariant', id: string, name: string, sku: string | null, trackInventory: boolean, quantityLimitPerCustomer: number | null, selectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, nonSelectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: any }> | null, product: { __typename: 'Product', id: string, name: string, defaultVariant: { __typename: 'ProductVariant', id: string } | null, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: any }> | null, thumbnail: { __typename: 'Image', url: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', publicationDate: any | null, isPublished: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: any }> | null }> | null }, channelListings: Array<{ __typename: 'ProductVariantChannelListing', channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null }> | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, preorder: { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null } | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
 export type ExportFileFragment = { __typename: 'ExportFile', id: string, status: JobStatusEnum, url: string | null };
+
+export type ProductListAttributeFragment = { __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string }, values: Array<{ __typename: 'AttributeValue', id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> };
 
 export type ShippingZoneFragment = { __typename: 'ShippingZone', id: string, name: string, description: string | null, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
