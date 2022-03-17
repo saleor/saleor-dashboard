@@ -1,6 +1,5 @@
 import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import { ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION } from "@saleor/attributes/utils/data";
-import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import ControlledSwitch from "@saleor/components/ControlledSwitch";
@@ -77,10 +76,6 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
 
   const formErrors = getFormErrors(["storefrontSearchPosition"], errors);
 
-  const dashboardProperties = ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION.includes(
-    data.inputType
-  );
-
   const storefrontFacetedNavigationProperties =
     ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION.includes(
       data.inputType
@@ -90,37 +85,6 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
     <Card>
       <CardTitle title={intl.formatMessage(commonMessages.properties)} />
       <CardContent>
-        {/* <Typography variant="subtitle1">
-          <FormattedMessage
-            defaultMessage="General Properties"
-            description="attribute general properties section"
-            
-          />
-        </Typography>
-        <Hr />
-        <CardSpacer />
-        <ControlledSwitch
-          name={"" as keyof AttributePageFormData}
-          checked={false}
-          disabled={disabled}
-          label={
-            <>
-              <FormattedMessage
-                defaultMessage="Variant Attribute"
-                description="attribute is variant-only"
-                
-              />
-              <Typography variant="caption">
-                <FormattedMessage
-                  defaultMessage="If enabled, you'll be able to use this attribute to create product variants"
-                  
-                />
-              </Typography>
-            </>
-          }
-          onChange={onChange}
-        /> */}
-
         <Typography variant="subtitle1">
           <FormattedMessage {...messages.storefrontPropertiesTitle} />
         </Typography>
@@ -171,47 +135,6 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
           onChange={onChange}
           disabled={disabled}
         />
-        {dashboardProperties && (
-          <>
-            <CardSpacer />
-            <Typography variant="subtitle1">
-              <FormattedMessage {...messages.dashboardPropertiesTitle} />
-            </Typography>
-            <Hr />
-            <CardSpacer />
-            <ControlledCheckbox
-              name={"filterableInDashboard" as keyof FormData}
-              label={
-                <>
-                  <FormattedMessage {...messages.filterableInDashboard} />
-                  <Typography variant="caption">
-                    <FormattedMessage
-                      {...messages.filterableInDashboardCaption}
-                    />
-                  </Typography>
-                </>
-              }
-              checked={data.filterableInDashboard}
-              onChange={onChange}
-              disabled={disabled}
-            />
-            <FormSpacer />
-            <ControlledCheckbox
-              name={"availableInGrid" as keyof FormData}
-              label={
-                <>
-                  <FormattedMessage {...messages.availableInGrid} />
-                  <Typography variant="caption">
-                    <FormattedMessage {...messages.availableInGridCaption} />
-                  </Typography>
-                </>
-              }
-              checked={data.availableInGrid}
-              onChange={onChange}
-              disabled={disabled}
-            />
-          </>
-        )}
       </CardContent>
     </Card>
   );

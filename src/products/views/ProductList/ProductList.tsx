@@ -1,4 +1,5 @@
 import { DialogContentText } from "@material-ui/core";
+import { filterable } from "@saleor/attributes/utils/data";
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
@@ -319,7 +320,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const filterOpts = getFilterOpts(
     params,
-    mapEdgesToItems(initialFilterAttributes?.attributes) || [],
+    (mapEdgesToItems(initialFilterAttributes?.attributes) || []).filter(
+      filterable
+    ),
     searchAttributeValues,
     {
       initial: mapEdgesToItems(initialFilterCategories?.categories) || [],
