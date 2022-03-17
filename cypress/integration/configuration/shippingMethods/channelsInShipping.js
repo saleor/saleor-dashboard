@@ -14,9 +14,7 @@ import {
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
 import filterTests from "../../../support/filterTests";
-import { getCurrencyAndAmountInString } from "../../../support/formatData/formatCurrencyAmount";
-import { getFormattedCurrencyAmount } from "../../../support/formatData/formatCurrencyAmount";
-import { enterHomePageChangeChannelAndReturn } from "../../../support/pages/channelsPage";
+import { selectChannelInHeader } from "../../../support/pages/channelsPage";
 import {
   enterAndSelectShippings,
   enterShippingZone
@@ -26,22 +24,11 @@ filterTests({ definedTags: ["all"] }, () => {
   describe("As a staff user I want have different shipping method prices for each channel", () => {
     const startsWith = "ChannelShippingMethod";
     let defaultChannel;
-    let plAddress;
 
     before(() => {
       cy.clearSessionData().loginUserViaRequest();
       shippingUtils.deleteShippingStartsWith(startsWith);
       channelsUtils.deleteChannelsStartsWith(startsWith);
-
-      channelsUtils
-        .getDefaultChannel()
-        .then(channel => {
-          defaultChannel = channel;
-          cy.fixture("addresses");
-        })
-        .then(addresses => {
-          plAddress = addresses.plAddress;
-        });
     });
 
     it("should be able to display different price for each channel. TC: SALEOR_0805", () => {
@@ -55,26 +42,26 @@ filterTests({ definedTags: ["all"] }, () => {
       let createdChannel;
 
       cy.clearSessionData().loginUserViaRequest();
+
       createChannel({
         name: shippingName,
         currencyCode: createdChannelCurrency
-      })
-        .then(channel => {
-          createdChannel = channel;
-          shippingUtils.createShipping({
-            channelId: defaultChannel.id,
-            name: shippingName,
-            address: plAddress,
-            price: defaultChannelPrice
-          });
-        })
+      }).then(channel => {
+        createdChannel = channel;
+      });
+
+      shippingUtils
+        .createShippingWithDefaultChannel(shippingName, defaultChannelPrice)
         .then(
           ({
             shippingMethod: shippingMethodResp,
-            shippingZone: shippingZoneResp
+            shippingZone: shippingZoneResp,
+            defaultChannel: defaultChannelResp
           }) => {
             shippingZone = shippingZoneResp;
             shippingMethod = shippingMethodResp;
+            defaultChannel = defaultChannelResp;
+
             addChannelToShippingZone(shippingZone.id, createdChannel.id).then(
               () => {
                 addChannelToShippingMethod(
@@ -92,7 +79,7 @@ filterTests({ definedTags: ["all"] }, () => {
             ONE_PERMISSION_USERS.shipping
           );
           enterAndSelectShippings(shippingZone.id, enterShippingZone);
-          enterHomePageChangeChannelAndReturn(defaultChannel.name);
+          selectChannelInHeader(defaultChannel.name);
           cy.waitForProgressBarToNotBeVisible()
             .get(SHARED_ELEMENTS.skeleton)
             .should("not.exist")
@@ -100,13 +87,14 @@ filterTests({ definedTags: ["all"] }, () => {
               SHIPPING_ZONE_DETAILS.shippingRatePriceTableCell
             )
             .then(text => {
-              const expectedValue = getCurrencyAndAmountInString(
-                defaultChannelPrice,
-                defaultChannel.currencyCode
-              );
-              expect(text).to.eq(expectedValue);
-
-              enterHomePageChangeChannelAndReturn(createdChannel.name);
+              const value = defaultChannelPrice
+                .toFixed(2)
+                .toString()
+                .split(".");
+              const valueRegex = new RegExp(value.join("(.|,)"));
+              expect(text).to.match(valueRegex);
+              expect(text).to.includes(defaultChannel.currencyCode);
+              selectChannelInHeader(createdChannel.name);
               cy.waitForProgressBarToNotBeVisible()
                 .get(SHARED_ELEMENTS.skeleton)
                 .should("not.exist");
@@ -117,11 +105,13 @@ filterTests({ definedTags: ["all"] }, () => {
               );
             })
             .then(text => {
-              const expectedValue = getCurrencyAndAmountInString(
-                createdChannelPrice,
-                createdChannelCurrency
-              );
-              expect(text).to.be.eq(expectedValue);
+              const value = createdChannelPrice
+                .toFixed(2)
+                .toString()
+                .split(".");
+              const valueRegex = new RegExp(value.join("(.|,)"));
+              expect(text).to.match(valueRegex);
+              expect(text).to.includes(createdChannelCurrency);
             });
         });
     });
