@@ -11,7 +11,6 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import PriceField from "@saleor/components/PriceField";
 import RadioGroupField from "@saleor/components/RadioGroupField";
-import { Money } from "@saleor/fragments/types/Money";
 import { DiscountValueTypeEnum, MoneyFragment } from "@saleor/graphql";
 import { usePrevious } from "@saleor/hooks/usePrevious";
 import { useUpdateEffect } from "@saleor/hooks/useUpdateEffect";
@@ -165,7 +164,9 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
   const [calculationMode, setCalculationMode] = useState<DiscountValueTypeEnum>(
     initialData.calculationMode
   );
-  const previousCalculationMode = usePrevious(calculationMode);
+  const [previousCalculationMode, setPreviousCalculationMode] = usePrevious(
+    calculationMode
+  );
 
   const classes = useStyles({});
   const intl = useIntl();
@@ -269,6 +270,13 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
   const isSubmitDisabled =
     !getParsedDiscountValue() || isValueError || isAmountTooLarge();
 
+  const handleSetCalculationMode = (
+    newCalculationMode: DiscountValueTypeEnum
+  ) => {
+    setPreviousCalculationMode(calculationMode);
+    setCalculationMode(newCalculationMode);
+  };
+
   return (
     <Popper
       open={isOpen}
@@ -285,7 +293,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
             name="discountType"
             variant="inlineJustify"
             value={calculationMode}
-            onChange={event => setCalculationMode(event.target.value)}
+            onChange={event => handleSetCalculationMode(event.target.value)}
           />
           <CardSpacer />
           <PriceField
