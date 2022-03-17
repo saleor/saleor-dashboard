@@ -4,7 +4,6 @@ import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import ControlledSwitch from "@saleor/components/ControlledSwitch";
 import FormSpacer from "@saleor/components/FormSpacer";
-import Hr from "@saleor/components/Hr";
 import { AttributeErrorFragment, AttributeTypeEnum } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { getFormErrors } from "@saleor/utils/errors";
