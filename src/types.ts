@@ -1,4 +1,4 @@
-import { FetchResult, MutationResult, ServerError } from "@apollo/client";
+import { FetchResult, MutationResult } from "@apollo/client";
 import { UserPermissionFragment } from "@saleor/graphql";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 
@@ -224,8 +224,6 @@ export enum StatusType {
   WARNING = "warning",
   SUCCESS = "success"
 }
-
-export type ServerErrorWithName = ServerError & { operationName: string };
 
 export type RelayToFlat<T extends { edges: Array<{ node: any }> }> = Array<
   T["edges"][0]["node"]
