@@ -15,8 +15,6 @@ import {
 export const attributeSection = "/attributes/";
 
 export enum AttributeListUrlFiltersEnum {
-  availableInGrid = "availableInGrid",
-  filterableInDashboard = "filterableInDashboard",
   filterableInStorefront = "filterableInStorefront",
   isVariantOnly = "isVariantOnly",
   valueRequired = "valueRequired",

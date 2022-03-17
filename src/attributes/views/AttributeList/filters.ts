@@ -23,14 +23,6 @@ export function getFilterOpts(
   params: AttributeListUrlFilters
 ): AttributeListFilterOpts {
   return {
-    availableInGrid: {
-      active: params.availableInGrid !== undefined,
-      value: maybe(() => parseBoolean(params.availableInGrid, true))
-    },
-    filterableInDashboard: {
-      active: params.filterableInDashboard !== undefined,
-      value: maybe(() => parseBoolean(params.filterableInDashboard, true))
-    },
     filterableInStorefront: {
       active: params.filterableInStorefront !== undefined,
       value: maybe(() => parseBoolean(params.filterableInStorefront, true))
@@ -54,14 +46,6 @@ export function getFilterVariables(
   params: AttributeListUrlFilters
 ): AttributeFilterInput {
   return {
-    availableInGrid:
-      params.availableInGrid !== undefined
-        ? parseBoolean(params.availableInGrid, false)
-        : undefined,
-    filterableInDashboard:
-      params.filterableInDashboard !== undefined
-        ? parseBoolean(params.filterableInDashboard, false)
-        : undefined,
     filterableInStorefront:
       params.filterableInStorefront !== undefined
         ? parseBoolean(params.filterableInStorefront, false)
@@ -88,18 +72,6 @@ export function getFilterQueryParam(
   const { name } = filter;
 
   switch (name) {
-    case AttributeFilterKeys.availableInGrid:
-      return getSingleValueQueryParam(
-        filter,
-        AttributeListUrlFiltersEnum.availableInGrid
-      );
-
-    case AttributeFilterKeys.filterableInDashboard:
-      return getSingleValueQueryParam(
-        filter,
-        AttributeListUrlFiltersEnum.filterableInDashboard
-      );
-
     case AttributeFilterKeys.filterableInStorefront:
       return getSingleValueQueryParam(
         filter,
