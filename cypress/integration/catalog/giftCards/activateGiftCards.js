@@ -27,6 +27,7 @@ import {
 import filterTests from "../../../support/filterTests";
 import {
   changeGiftCardActiveStatus,
+  enterAndSelectGiftCards,
   selectGiftCard
 } from "../../../support/pages/catalog/giftCardPage";
 
@@ -119,7 +120,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("should be able to enable gift card and use it in checkout. TC: SALEOR_1006", () => {
+    xit("should be able to enable gift card and use it in checkout. TC: SALEOR_1006", () => {
       const expectedGiftCardBalance =
         giftCardData.amount - productPrice - shippingPrice;
       giftCardData.tag = `${startsWith}${faker.datatype.number()}`;
@@ -150,7 +151,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         });
     });
 
-    it("should not be able to disable gift card and use it in checkout. TC: SALEOR_1007", () => {
+    xit("should not be able to disable gift card and use it in checkout. TC: SALEOR_1007", () => {
       giftCardData.tag = `${startsWith}${faker.datatype.number()}`;
       let giftCard;
 
@@ -198,10 +199,11 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         })
         .then(giftCard => {
           secondGiftCard = giftCard;
-          cy.visit(urlList.giftCards).waitForProgressBarToNotExist();
-          selectGiftCard(firstGiftCard.id);
-          selectGiftCard(secondGiftCard.id)
-            .addAliasToGraphRequest("GiftCardBulkDeactivate")
+          // cy.visit(urlList.giftCards).waitForProgressBarToNotExist();
+          // selectGiftCard(firstGiftCard.id);
+          // selectGiftCard(secondGiftCard.id)
+          enterAndSelectGiftCards([firstGiftCard.id, secondGiftCard.id]);
+          cy.addAliasToGraphRequest("GiftCardBulkDeactivate")
             .get(GIFT_CARD_LIST.deactivateGiftCardButton)
             .click()
             .waitForRequestAndCheckIfNoErrors("@GiftCardBulkDeactivate")
