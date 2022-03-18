@@ -1,14 +1,14 @@
 import ColumnPicker, {
   ColumnPickerProps
 } from "@saleor/components/ColumnPicker";
-import { ColumnPickerChoice } from "@saleor/components/ColumnPicker/ColumnPickerContent";
+import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import CardDecorator from "@saleor/storybook/CardDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import Decorator from "../../Decorator";
 
-const availableColumns: ColumnPickerChoice[] = [
+const availableColumns: MultiAutocompleteChoiceType[] = [
   { label: "Name", value: "name" },
   { label: "Value", value: "value" },
   { label: "Type", value: "type" },
