@@ -26,10 +26,10 @@ import {
   updateShippingInCheckout
 } from "../../support/api/utils/ordersUtils";
 import {
-  addDigitalContentAndUpdateProductType,
   createProductInChannel,
   deleteProductsStartsWith
 } from "../../support/api/utils/products/productsUtils";
+import { addDigitalContentAndUpdateProductType } from "../../support/api/utils/productTypeUtils";
 import {
   createShipping,
   deleteShippingStartsWith

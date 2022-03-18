@@ -253,14 +253,3 @@ export function createProductInChannelWithoutVariants({
     })
     .then(() => product);
 }
-
-export function addDigitalContentAndUpdateProductType(
-  variantId,
-  productTypeId,
-  channelId,
-  price = 1
-) {
-  createDigitalContent(variantId);
-  setProductTypeAsDigital(productTypeId);
-  productRequest.updateVariantPrice({ variantId, channelId, price });
-}
