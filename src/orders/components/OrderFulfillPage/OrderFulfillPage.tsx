@@ -125,9 +125,9 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
       return false;
     }
 
-    // const isAtLeastOneFulfilled = formsetData?.some(({ value }) =>
-    //   value?.some(({ quantity }) => quantity > 0)
-    // );
+    const isAtLeastOneFulfilled = formsetData?.some(
+      el => el.value[0]?.quantity > 0
+    );
 
     const areProperlyFulfilled = formsetData
       .filter(item => !!item?.value)
@@ -146,7 +146,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
         return formQuantityFulfilled <= quantityToFulfill;
       });
 
-    return areProperlyFulfilled;
+    return areProperlyFulfilled && isAtLeastOneFulfilled;
   };
 
   return (
