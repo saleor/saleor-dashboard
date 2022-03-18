@@ -1,5 +1,3 @@
-import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
-import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import {
   SHIPPING_ZONE_CHECKBOX,
   SHIPPING_ZONE_NAME
