@@ -245,27 +245,6 @@ export const productMediaQuery = gql`
   }
 `;
 
-export const availableInGridAttributes = gql`
-  query AvailableInGridAttributes($first: Int!, $after: String) {
-    availableInGrid: attributes(
-      first: $first
-      after: $after
-      filter: { isVariantOnly: false, type: PRODUCT_TYPE }
-    ) {
-      edges {
-        node {
-          id
-          name
-        }
-      }
-      pageInfo {
-        ...PageInfo
-      }
-      totalCount
-    }
-  }
-`;
-
 export const gridAttributes = gql`
   query GridAttributes($ids: [ID!]!) {
     grid: attributes(first: 25, filter: { ids: $ids }) {

@@ -8,7 +8,7 @@ import React from "react";
 
 import Decorator from "../../Decorator";
 
-const columns: ColumnPickerChoice[] = [
+const availableColumns: ColumnPickerChoice[] = [
   { label: "Name", value: "name" },
   { label: "Value", value: "value" },
   { label: "Type", value: "type" },
@@ -25,11 +25,13 @@ const columns: ColumnPickerChoice[] = [
 ];
 
 const props: ColumnPickerProps = {
-  columns,
-  defaultColumns: [1, 3].map(index => columns[index].value),
-  initialColumns: [1, 3, 4, 6].map(index => columns[index].value),
+  availableColumns,
+  defaultColumns: [1, 3].map(index => availableColumns[index].value),
+  initialColumns: [1, 3, 4, 6].map(index => availableColumns[index].value),
   initialOpen: true,
-  onSave: () => undefined
+  onSave: () => undefined,
+  query: "",
+  onQueryChange: () => undefined
 };
 
 storiesOf("Generics / Column picker", module)

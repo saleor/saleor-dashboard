@@ -6,20 +6,19 @@ import {
 } from "@saleor/apps/useExtensions";
 import { ButtonWithSelect } from "@saleor/components/ButtonWithSelect";
 import CardMenu from "@saleor/components/CardMenu";
-import ColumnPicker, {
-  ColumnPickerChoice
-} from "@saleor/components/ColumnPicker";
+import ColumnPicker from "@saleor/components/ColumnPicker";
 import Container from "@saleor/components/Container";
 import { getByName } from "@saleor/components/Filter/utils";
 import FilterBar from "@saleor/components/FilterBar";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
+import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import PageHeader from "@saleor/components/PageHeader";
 import { ProductListColumns } from "@saleor/config";
 import {
-  AvailableInGridAttributesQuery,
   GridAttributesQuery,
   ProductListQuery,
-  RefreshLimitsQuery
+  RefreshLimitsQuery,
+  SearchAvailableInGridAttributesQuery
 } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -33,6 +32,7 @@ import {
   SortPage
 } from "@saleor/types";
 import { hasLimits, isLimitReached } from "@saleor/utils/limits";
+import uniqBy from "lodash/uniqBy";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -44,6 +44,7 @@ import {
   ProductFilterKeys,
   ProductListFilterOpts
 } from "./filters";
+import { getAttributeColumnValue } from "./utils";
 
 export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
@@ -54,15 +55,17 @@ export interface ProductListPageProps
     ChannelProps {
   activeAttributeSortId: string;
   availableInGridAttributes: RelayToFlat<
-    AvailableInGridAttributesQuery["availableInGrid"]
+    SearchAvailableInGridAttributesQuery["availableInGrid"]
   >;
   channelsCount: number;
+  columnQuery: string;
   currencySymbol: string;
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   limits: RefreshLimitsQuery["shop"]["limits"];
   totalGridAttributes: number;
   products: RelayToFlat<ProductListQuery["products"]>;
   onExport: () => void;
+  onColumnQueryChange: (query: string) => void;
 }
 
 const useStyles = makeStyles(
@@ -87,6 +90,7 @@ const useStyles = makeStyles(
 export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const {
     channelsCount,
+    columnQuery,
     currencySymbol,
     currentTab,
     defaultSettings,
@@ -102,6 +106,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     totalGridAttributes,
     onAdd,
     onAll,
+    onColumnQueryChange,
     onExport,
     onFetchMore,
     onFilterChange,
@@ -124,7 +129,11 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
 
   const filterDependency = filterStructure.find(getByName("channel"));
 
-  const columns: ColumnPickerChoice[] = [
+  const availableColumns: MultiAutocompleteChoiceType[] = [
+    {
+      label: intl.formatMessage(columnsMessages.availability),
+      value: "availability" as ProductListColumns
+    },
     {
       label: intl.formatMessage(columnsMessages.price),
       value: "price" as ProductListColumns
@@ -137,10 +146,16 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
       label: intl.formatMessage(columnsMessages.updatedAt),
       value: "date" as ProductListColumns
     },
-    ...availableInGridAttributes.map(attribute => ({
-      label: attribute.name,
-      value: `attribute:${attribute.id}`
-    }))
+    ...uniqBy(
+      [...availableInGridAttributes, ...gridAttributes].map(
+        attribute =>
+          ({
+            label: attribute.name,
+            value: getAttributeColumnValue(attribute.id)
+          } as MultiAutocompleteChoiceType)
+      ),
+      "value"
+    )
   ];
 
   const limitReached = isLimitReached(limits, "productVariants");
@@ -189,15 +204,12 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
       >
         <ColumnPicker
           className={classes.columnPicker}
-          columns={columns}
+          availableColumns={availableColumns}
           defaultColumns={defaultSettings.columns}
           hasMore={hasMore}
           initialColumns={settings.columns}
-          total={
-            columns.length -
-            availableInGridAttributes.length +
-            totalGridAttributes
-          }
+          query={columnQuery}
+          onQueryChange={onColumnQueryChange}
           onFetchMore={onFetchMore}
           onSave={handleSave}
         />
