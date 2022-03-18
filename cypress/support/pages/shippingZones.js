@@ -10,47 +10,13 @@ export function enterAndSelectShippings(
   shippingIds,
   actionFunction = selectShippingZone
 ) {
-  cy.addAliasToGraphRequest("ShippingZones").visit(urlList.shippingMethods);
-  selectShippingsOnTable(shippingIds, actionFunction);
-}
-
-export function selectShippingsOnTable(
-  shippingIds,
-  actionFunction = selectShippingZone,
-  counter = 0
-) {
-  cy.get(SHARED_ELEMENTS.skeleton)
-    .should("not.exist")
-    .wait("@ShippingZones")
-    .its("response.body")
-    .then(body => {
-      const shippingResults = body.find(element => {
-        if (element.data.shippingZones) {
-          return element;
-        }
-      });
-      const shippingList = shippingResults.data.shippingZones.edges;
-      const notSelectedShippings = [];
-      shippingIds = Array.isArray(shippingIds) ? shippingIds : [shippingIds];
-      shippingIds.forEach(id => {
-        const isShippingOnList = shippingList.find(
-          element => element.node.id === id
-        );
-        if (isShippingOnList) {
-          actionFunction(id);
-          counter += 1;
-        } else {
-          notSelectedShippings.push(id);
-        }
-        if (counter === shippingIds.length) {
-          return;
-        }
-      });
-      if (counter === shippingIds.length) {
-        return;
-      }
-      cy.get(BUTTON_SELECTORS.nextPaginationButton).click();
-      selectShippingsOnTable(notSelectedShippings, actionFunction, counter);
+  cy.addAliasToGraphRequest("ShippingZones")
+    .visit(urlList.shippingMethods)
+    .findElementsAndMakeActionOnTable({
+      elementsGraphqlAlias: "ShippingZones",
+      elementsName: "shippingZones",
+      elementsIds: shippingIds,
+      actionFunction
     });
 }
 

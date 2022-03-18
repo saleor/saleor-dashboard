@@ -68,7 +68,7 @@ export function changeGiftCardActiveStatus(giftCardId) {
   cy.visit(giftCardDetailsUrl(giftCardId))
     .get(GIFT_CARD_UPDATE.changeActiveStatusButton)
     .click()
-    .confirmationMessageShouldDisappear();
+    .confirmationMessageShouldAppear();
 }
 
 export function selectGiftCard(giftCardId) {
