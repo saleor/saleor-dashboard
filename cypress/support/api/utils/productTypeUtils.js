@@ -43,7 +43,8 @@ export function createProductTypeWithNewVariantSelectionAttribute({
       productType = productTypeResp;
       productAttributeAssignmentUpdate({
         productTypeId: productType.id,
-        attributeId: attribute.id
+        attributeId: attribute.id,
+        variantSelection: true
       });
     })
     .then(() => ({ attribute, productType }));
