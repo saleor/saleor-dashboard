@@ -2,11 +2,13 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import {
   useFulfillOrderMutation,
   useOrderFulfillDataQuery,
+  useOrderFulfillmentUpdateTrackingMutation,
   useOrderFulfillSettingsQuery,
-  useWarehouseDetailsQuery} from "@saleor/graphql";
+  useWarehouseDetailsQuery
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { extractMutationErrors } from "@saleor/misc";
+import { extractMutationErrors, getMutationErrors } from "@saleor/misc";
 import OrderFulfillPage from "@saleor/orders/components/OrderFulfillPage";
 import { OrderFulfillUrlQueryParams, orderUrl } from "@saleor/orders/urls";
 import React from "react";
@@ -33,6 +35,11 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
       orderId
     }
   });
+
+  const [
+    updateTracking,
+    updateTrackingOpts
+  ] = useOrderFulfillmentUpdateTrackingMutation();
 
   const [fulfillOrder, fulfillOrderOpts] = useFulfillOrderMutation({
     onCompleted: data => {
@@ -79,25 +86,41 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
         loading={loading || settingsLoading || fulfillOrderOpts.loading}
         errors={fulfillOrderOpts.data?.orderFulfill.errors}
         onBack={() => navigate(orderUrl(orderId))}
-        onSubmit={formData =>
-          extractMutationErrors(
-            fulfillOrder({
+        onSubmit={async formData => {
+          const res = await fulfillOrder({
+            variables: {
+              input: {
+                lines: formData.items
+                  .filter(line => !!line?.value)
+                  .map(line => ({
+                    orderLineId: line.id,
+                    stocks: line.value
+                  })),
+                notifyCustomer:
+                  settings?.shop?.fulfillmentAutoApprove && formData.sendInfo
+              },
+              orderId
+            }
+          });
+
+          const fulfillments = res?.data?.orderFulfill?.order?.fulfillments;
+          if (fulfillments) {
+            updateTracking({
               variables: {
+                id: fulfillments[fulfillments.length - 1].id,
                 input: {
-                  lines: formData.items
-                    .filter(line => !!line?.value)
-                    .map(line => ({
-                      orderLineId: line.id,
-                      stocks: line.value
-                    })),
+                  ...(formData?.trackingNumber && {
+                    trackingNumber: formData.trackingNumber
+                  }),
                   notifyCustomer:
                     settings?.shop?.fulfillmentAutoApprove && formData.sendInfo
-                },
-                orderId
+                }
               }
-            })
-          )
-        }
+            });
+          }
+
+          return getMutationErrors(res);
+        }}
         order={data?.order}
         saveButtonBar="default"
         warehouse={warehouseData?.warehouse}

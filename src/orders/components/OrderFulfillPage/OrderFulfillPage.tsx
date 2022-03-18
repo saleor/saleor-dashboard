@@ -33,9 +33,7 @@ import {
   WarningIcon
 } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import {
-  getToFulfillOrderLines,
-} from "@saleor/orders/utils/data";
+import { getToFulfillOrderLines } from "@saleor/orders/utils/data";
 import { update } from "@saleor/utils/lists";
 import classNames from "classnames";
 import React from "react";
@@ -47,6 +45,7 @@ import { useStyles } from "./styles";
 
 interface OrderFulfillFormData {
   sendInfo: boolean;
+  trackingNumber: string;
 }
 export interface OrderFulfillSubmitData extends OrderFulfillFormData {
   items: FormsetData<null, OrderFulfillStockInput[]>;
@@ -63,7 +62,8 @@ export interface OrderFulfillPageProps {
 }
 
 const initialFormData: OrderFulfillFormData = {
-  sendInfo: true
+  sendInfo: true,
+  trackingNumber: ""
 };
 
 const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
@@ -406,8 +406,11 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                   <FormattedMessage {...messages.shipmentInformation} />
                 </Typography>
                 <TextField
+                  value={data.trackingNumber}
+                  name="trackingNumber"
                   label={intl.formatMessage(messages.trackingNumber)}
                   fullWidth
+                  onChange={change}
                 />
                 {shopSettings?.fulfillmentAutoApprove && (
                   <ControlledCheckbox
