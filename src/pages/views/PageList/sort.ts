@@ -1,4 +1,4 @@
-import { PageSortField, PageFilterInput } from "@saleor/graphql";
+import { PageFilterInput, PageSortField } from "@saleor/graphql";
 import { PageListUrlFilters, PageListUrlSortField } from "@saleor/pages/urls";
 import { createGetSortQueryVariables } from "@saleor/utils/sort";
 
