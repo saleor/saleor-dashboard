@@ -26,10 +26,11 @@ export type FormErrors<T> = {
   [field in keyof T]?: string | React.ReactNode;
 };
 
-export interface UseFormOpts {
+export interface UseFormOpts<T> {
   confirmLeave: boolean;
   formId?: FormId;
-  isDisabled?: IsDisabledFnType;
+  isDisabled?: IsDisabledFnType<T>;
+  disabled?: boolean;
 }
 
 export interface UseFormResult<TData>
@@ -88,9 +89,9 @@ function handleRefresh<T extends FormData>(
 function useForm<T extends FormData, TErrors>(
   initialData: T,
   onSubmit?: (data: T) => SubmitPromise<TErrors[]> | void,
-  opts: UseFormOpts = { confirmLeave: false, formId: undefined }
+  opts: UseFormOpts<T> = { confirmLeave: false, formId: undefined }
 ): UseFormResult<T> {
-  const { confirmLeave, formId: propsFormId, isDisabled } = opts;
+  const { confirmLeave, formId: propsFormId, isDisabled, disabled } = opts;
   const [hasChanged, setChanged] = useState(false);
   const [errors, setErrors] = useState<FormErrors<T>>({});
   const [data, setData] = useStateFromProps(initialData, {
@@ -98,12 +99,22 @@ function useForm<T extends FormData, TErrors>(
     onRefresh: newData => handleRefresh(data, newData, handleSetChanged)
   });
 
-  const saveDisabled =
-    isDisabled &&
-    isDisabled({
-      ...data,
-      hasChanged
-    });
+  const basicFormDisableConditions = () => !hasChanged || disabled;
+
+  const saveDisabled = () => {
+    if (isDisabled) {
+      return isDisabled({
+        ...data,
+        hasChanged
+      });
+    }
+
+    if (disabled !== undefined) {
+      return basicFormDisableConditions();
+    }
+
+    return false;
+  };
 
   const {
     setIsDirty: setIsFormDirtyInExitDialog,
@@ -111,7 +122,7 @@ function useForm<T extends FormData, TErrors>(
     setEnableExitDialog,
     setIsSubmitDisabled,
     formId
-  } = useExitFormDialog({ formId: propsFormId, isDisabled: saveDisabled });
+  } = useExitFormDialog({ formId: propsFormId, isDisabled: saveDisabled() });
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
@@ -230,7 +241,7 @@ function useForm<T extends FormData, TErrors>(
     triggerChange: handleSetChanged,
     setChanged: handleSetChanged,
     setIsSubmitDisabled,
-    saveDisabled
+    saveDisabled: saveDisabled()
   };
 }
 
