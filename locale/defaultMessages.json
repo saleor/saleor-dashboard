@@ -1856,7 +1856,7 @@
   },
   "src_dot_components_dot_AssignAttributeDialog_dot_assignButton": {
     "context": "button",
-    "string": "Assign attributes"
+    "string": "Assign and save"
   },
   "src_dot_components_dot_AssignAttributeDialog_dot_noMembersFound": {
     "context": "description",
@@ -1873,6 +1873,10 @@
   "src_dot_components_dot_AssignAttributeDialog_dot_title": {
     "context": "dialog header",
     "string": "Assign Attribute"
+  },
+  "src_dot_components_dot_AssignAttributeValueDialog_dot_confirmBtn": {
+    "context": "assign reference to product, button",
+    "string": "Assign"
   },
   "src_dot_components_dot_AssignAttributeValueDialog_dot_header": {
     "context": "dialog header",
@@ -1898,6 +1902,10 @@
     "context": "dialog search placeholder",
     "string": "Search by category name, etc..."
   },
+  "src_dot_components_dot_AssignCategoryDialog_dot_confirmButton": {
+    "context": "assign categories to sale and save",
+    "string": "Assign and save"
+  },
   "src_dot_components_dot_AssignCollectionDialog_dot_assignCollectionDialogHeader": {
     "context": "dialog header",
     "string": "Assign Collection"
@@ -1910,13 +1918,17 @@
     "context": "dialog search placeholder",
     "string": "Search by collection name, etc..."
   },
+  "src_dot_components_dot_AssignCollectionDialog_dot_confirmBtn": {
+    "context": "assign collections to sale and save",
+    "string": "Assign and save"
+  },
   "src_dot_components_dot_AssignContainerDialog_dot_assignContainerDialogButton": {
     "context": "button",
     "string": "Assign"
   },
   "src_dot_components_dot_AssignProductDialog_dot_assignProductDialogButton": {
     "context": "button",
-    "string": "Assign"
+    "string": "Assign and save"
   },
   "src_dot_components_dot_AssignProductDialog_dot_assignProductDialogContent": {
     "string": "Search Products"
@@ -1932,8 +1944,8 @@
     "string": "No products available in order channel matching given query"
   },
   "src_dot_components_dot_AssignVariantDialog_dot_assignVariantDialogButton": {
-    "context": "button",
-    "string": "Assign"
+    "context": "button, assign variants to sale and save",
+    "string": "Assign and save"
   },
   "src_dot_components_dot_AssignVariantDialog_dot_assignVariantDialogContent": {
     "string": "Search Variants"
@@ -1949,7 +1961,12 @@
   "src_dot_components_dot_AssignVariantDialog_dot_assignVariantDialogSearch": {
     "string": "Search by product name, attribute, product type etc..."
   },
-  "src_dot_components_dot_AttributeUnassignDialog_dot_2037985699": {
+  "src_dot_components_dot_AttributeUnassignDialog_dot_confirmBtn": {
+    "context": "button, unassign attribute from object",
+    "string": "Unassign and save"
+  },
+  "src_dot_components_dot_AttributeUnassignDialog_dot_content": {
+    "context": "unassign attribute from object",
     "string": "Are you sure you want to unassign {attributeName} from {itemTypeName}?"
   },
   "src_dot_components_dot_Attributes_dot_attributesNumber": {
@@ -1975,7 +1992,11 @@
   "src_dot_components_dot_AutocompleteSelectMenu_dot_2332404293": {
     "string": "No results"
   },
-  "src_dot_components_dot_BulkAttributeUnassignDialog_dot_3177750460": {
+  "src_dot_components_dot_BulkAttributeUnassignDialog_dot_confirmBtn": {
+    "context": "button, unassign attribute from object",
+    "string": "Unassign and save"
+  },
+  "src_dot_components_dot_BulkAttributeUnassignDialog_dot_content": {
     "context": "unassign multiple attributes from item",
     "string": "{counter,plural,one{Are you sure you want to unassign this attribute from {itemTypeName}?} other{Are you sure you want to unassign {attributeQuantity} attributes from {itemTypeName}?}}"
   },
@@ -3398,8 +3419,8 @@
     "string": "Delete Sale"
   },
   "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignCategory": {
-    "context": "unassign category from sale, button",
-    "string": "Unassign"
+    "context": "unassign category from sale and save, button",
+    "string": "Unassign and save"
   },
   "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignCategoryDialog": {
     "context": "dialog content",
@@ -3410,8 +3431,8 @@
     "string": "Unassign Categories From Sale"
   },
   "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignCollection": {
-    "context": "unassign collection from sale, button",
-    "string": "Unassign"
+    "context": "unassign collection from sale and save, button",
+    "string": "Unassign and save"
   },
   "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignCollectionDialog": {
     "context": "dialog content",
@@ -3426,8 +3447,8 @@
     "string": "Are you sure you want to delete {saleName}?"
   },
   "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignProduct": {
-    "context": "unassign product from sale, button",
-    "string": "Unassign"
+    "context": "unassign product from sale and save, button",
+    "string": "Unassign and save"
   },
   "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignProductDialog": {
     "context": "dialog content",
@@ -3438,8 +3459,8 @@
     "string": "Unassign Product From Sale"
   },
   "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignVariant": {
-    "context": "unassign variant from sale, button",
-    "string": "Unassign"
+    "context": "unassign variant from sale and save, button",
+    "string": "Unassign and save"
   },
   "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignVariantDialog": {
     "context": "dialog content",
@@ -3463,12 +3484,13 @@
   "src_dot_discounts_dot_views_dot_VoucherCreate_dot_655651329": {
     "string": "Successfully created voucher"
   },
-  "src_dot_discounts_dot_views_dot_VoucherDetails_dot_1162257691": {
-    "string": "Deleted voucher"
-  },
   "src_dot_discounts_dot_views_dot_VoucherDetails_dot_1402402714": {
     "context": "dialog header",
     "string": "Unassign Collections From Voucher"
+  },
+  "src_dot_discounts_dot_views_dot_VoucherDetails_dot_1569805915": {
+    "context": "button",
+    "string": "Unassign and save"
   },
   "src_dot_discounts_dot_views_dot_VoucherDetails_dot_2072403265": {
     "context": "dialog header",
@@ -7172,6 +7194,10 @@
   "src_dot_shipping_dot_components_dot_ShippingMethodProductsAddDialog_dot_353369701": {
     "string": "No products matching given query"
   },
+  "src_dot_shipping_dot_components_dot_ShippingMethodProductsAddDialog_dot_3657244300": {
+    "context": "assign products to shipping rate and save, button",
+    "string": "Assign and save"
+  },
   "src_dot_shipping_dot_components_dot_ShippingMethodProductsAddDialog_dot_3756118423": {
     "context": "dialog header",
     "string": "Assign Products"
@@ -7223,8 +7249,8 @@
     "string": "Create New Warehouse"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_assignCountriesButton": {
-    "context": "button",
-    "string": "Assign countries"
+    "context": "assign countries to shipping zone and save, button",
+    "string": "Assign and save"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_assignCountriesDescription": {
     "context": "dialog description",
@@ -7427,6 +7453,10 @@
     "context": "dialog header",
     "string": "Unassign Products From Shipping"
   },
+  "src_dot_shipping_dot_components_dot_UnassignDialog_dot_1569805915": {
+    "context": "unassign products from shipping rate and save, button",
+    "string": "Unassign and save"
+  },
   "src_dot_shipping_dot_components_dot_UnassignDialog_dot_3215481647": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
@@ -7465,13 +7495,17 @@
     "context": "dialog header",
     "string": "Delete Shipping Zone"
   },
-  "src_dot_shipping_dot_views_dot_ShippingZoneDetails_dot_131963671": {
+  "src_dot_shipping_dot_views_dot_ShippingZoneDetails_dot_1790261672": {
     "context": "unassign country",
-    "string": "Are you sure you want to delete {countryName} from this shipping zone?"
+    "string": "Are you sure you want to remove {countryName} from this shipping zone?"
   },
-  "src_dot_shipping_dot_views_dot_ShippingZoneDetails_dot_3133838427": {
+  "src_dot_shipping_dot_views_dot_ShippingZoneDetails_dot_4243932177": {
     "context": "unassign country, dialog header",
-    "string": "Delete from Shipping Zone"
+    "string": "Remove from Shipping Zone"
+  },
+  "src_dot_shipping_dot_views_dot_ShippingZoneDetails_dot_4279089621": {
+    "context": "remove country from shipping zone and save, button",
+    "string": "Remove and save"
   },
   "src_dot_shipping_dot_weight": {
     "context": "error message",
@@ -8488,15 +8522,15 @@
     "string": "Unlimited"
   },
   "voucherDetailsUnassignCategory": {
-    "context": "unassign category from voucher, button",
+    "context": "button",
     "string": "Unassign"
   },
   "voucherDetailsUnassignCollection": {
-    "context": "unassign collection from voucher, button",
+    "context": "button",
     "string": "Unassign"
   },
   "voucherDetailsUnassignProduct": {
-    "context": "unassign product from voucher, button",
+    "context": "button",
     "string": "Unassign"
   },
   "will become available on": {

@@ -162,14 +162,17 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     updateChannelsOpts
   ] = useVoucherChannelListingUpdateMutation({});
 
+  const notifySaved = () =>
+    notify({
+      status: "success",
+      text: intl.formatMessage(commonMessages.savedChanges)
+    });
+
   const [voucherUpdate, voucherUpdateOpts] = useVoucherUpdateMutation({
     onCompleted: data => {
       if (data.voucherUpdate.errors.length === 0) {
         closeModal();
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
-        });
+        notifySaved();
       }
     }
   });
@@ -177,12 +180,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
   const [voucherDelete, voucherDeleteOpts] = useVoucherDeleteMutation({
     onCompleted: data => {
       if (data.voucherDelete.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            defaultMessage: "Deleted voucher"
-          })
-        });
+        notifySaved();
         navigate(voucherListUrl(), { replace: true });
       }
     }
@@ -194,6 +192,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
   ] = useVoucherCataloguesRemoveMutation({
     onCompleted: data => {
       if (data.voucherCataloguesRemove.errors.length === 0) {
+        notifySaved();
         closeModal();
         reset();
       }
@@ -206,6 +205,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
   ] = useVoucherCataloguesAddMutation({
     onCompleted: data => {
       if (data.voucherCataloguesAdd.errors.length === 0) {
+        notifySaved();
         closeModal();
       }
     }
@@ -323,14 +323,8 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         onCategoryClick={id => () => navigate(categoryUrl(id))}
         onCollectionAssign={() => openModal("assign-collection")}
         onCollectionUnassign={collectionId =>
-          voucherCataloguesRemove({
-            variables: {
-              ...paginationState,
-              id,
-              input: {
-                collections: [collectionId]
-              }
-            }
+          openModal("unassign-collection", {
+            ids: [collectionId]
           })
         }
         onCountryAssign={() => openModal("assign-country")}
@@ -348,27 +342,15 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
           })
         }
         onCategoryUnassign={categoryId =>
-          voucherCataloguesRemove({
-            variables: {
-              ...paginationState,
-              id,
-              input: {
-                categories: [categoryId]
-              }
-            }
+          openModal("unassign-category", {
+            ids: [categoryId]
           })
         }
         onCollectionClick={id => () => navigate(collectionUrl(id))}
         onProductAssign={() => openModal("assign-product")}
         onProductUnassign={productId =>
-          voucherCataloguesRemove({
-            variables: {
-              ...paginationState,
-              id,
-              input: {
-                products: [productId]
-              }
-            }
+          openModal("unassign-product", {
+            ids: [productId]
           })
         }
         onProductClick={id => () => navigate(productUrl(id))}
@@ -390,7 +372,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
           >
             <FormattedMessage
               defaultMessage="Unassign"
-              description="unassign category from voucher, button"
+              description="button"
               id="voucherDetailsUnassignCategory"
             />
           </Button>
@@ -405,7 +387,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
           >
             <FormattedMessage
               defaultMessage="Unassign"
-              description="unassign collection from voucher, button"
+              description="button"
               id="voucherDetailsUnassignCollection"
             />
           </Button>
@@ -420,7 +402,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
           >
             <FormattedMessage
               defaultMessage="Unassign"
-              description="unassign product from voucher, button"
+              description="button"
               id="voucherDetailsUnassignProduct"
             />
           </Button>
@@ -528,6 +510,10 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         confirmButtonState={voucherCataloguesRemoveOpts.status}
         onClose={closeModal}
         onConfirm={() => handleCategoriesUnassign(params.ids)}
+        confirmButtonLabel={intl.formatMessage({
+          defaultMessage: "Unassign and save",
+          description: "button"
+        })}
       >
         {canOpenBulkActionDialog && (
           <DialogContentText>
@@ -553,6 +539,10 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         confirmButtonState={voucherCataloguesRemoveOpts.status}
         onClose={closeModal}
         onConfirm={() => handleCollectionsUnassign(params.ids)}
+        confirmButtonLabel={intl.formatMessage({
+          defaultMessage: "Unassign and save",
+          description: "button"
+        })}
       >
         {canOpenBulkActionDialog && (
           <DialogContentText>
@@ -576,6 +566,10 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         confirmButtonState={voucherCataloguesRemoveOpts.status}
         onClose={closeModal}
         onConfirm={() => handleProductsUnassign(params.ids)}
+        confirmButtonLabel={intl.formatMessage({
+          defaultMessage: "Unassign and save",
+          description: "button"
+        })}
       >
         {canOpenBulkActionDialog && (
           <DialogContentText>

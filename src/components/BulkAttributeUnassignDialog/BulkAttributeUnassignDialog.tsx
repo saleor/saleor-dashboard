@@ -2,7 +2,9 @@ import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
+
+import messages from "./messages";
 
 export interface BulkAttributeUnassignDialogProps {
   title: string;
@@ -22,26 +24,30 @@ const BulkAttributeUnassignDialog: React.FC<BulkAttributeUnassignDialogProps> = 
   itemTypeName,
   onClose,
   onConfirm
-}) => (
-  <ActionDialog
-    confirmButtonState={confirmButtonState}
-    open={open}
-    onClose={onClose}
-    onConfirm={onConfirm}
-    title={title}
-  >
-    <DialogContentText>
-      <FormattedMessage
-        defaultMessage="{counter,plural,one{Are you sure you want to unassign this attribute from {itemTypeName}?} other{Are you sure you want to unassign {attributeQuantity} attributes from {itemTypeName}?}}"
-        description="unassign multiple attributes from item"
-        values={{
-          attributeQuantity: <strong>{attributeQuantity}</strong>,
-          counter: attributeQuantity,
-          itemTypeName: <strong>{itemTypeName}</strong>
-        }}
-      />
-    </DialogContentText>
-  </ActionDialog>
-);
+}) => {
+  const intl = useIntl();
+
+  return (
+    <ActionDialog
+      confirmButtonState={confirmButtonState}
+      open={open}
+      onClose={onClose}
+      onConfirm={onConfirm}
+      title={title}
+      confirmButtonLabel={intl.formatMessage(messages.confirmBtn)}
+    >
+      <DialogContentText>
+        <FormattedMessage
+          {...messages.content}
+          values={{
+            attributeQuantity: <strong>{attributeQuantity}</strong>,
+            counter: attributeQuantity,
+            itemTypeName: <strong>{itemTypeName}</strong>
+          }}
+        />
+      </DialogContentText>
+    </ActionDialog>
+  );
+};
 BulkAttributeUnassignDialog.displayName = "BulkAttributeUnassignDialog";
 export default BulkAttributeUnassignDialog;
