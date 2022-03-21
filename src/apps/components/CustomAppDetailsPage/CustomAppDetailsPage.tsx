@@ -108,7 +108,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
       onSubmit={onSubmit}
       isDisabled={opts => basicFormDisableConditions(opts, disabled)}
     >
-      {({ data, change, hasChanged, submit, saveDisabled }) => (
+      {({ data, change, submit, saveDisabled }) => (
         <Container>
           <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.apps)}
