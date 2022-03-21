@@ -8,7 +8,7 @@ import {
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { extractMutationErrors, getMutationErrors } from "@saleor/misc";
+import { getMutationErrors } from "@saleor/misc";
 import OrderFulfillPage from "@saleor/orders/components/OrderFulfillPage";
 import { OrderFulfillUrlQueryParams, orderUrl } from "@saleor/orders/urls";
 import React from "react";
@@ -36,10 +36,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
     }
   });
 
-  const [
-    updateTracking,
-    updateTrackingOpts
-  ] = useOrderFulfillmentUpdateTrackingMutation();
+  const [updateTracking] = useOrderFulfillmentUpdateTrackingMutation();
 
   const [fulfillOrder, fulfillOrderOpts] = useFulfillOrderMutation({
     onCompleted: data => {
