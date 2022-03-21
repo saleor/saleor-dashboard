@@ -6,6 +6,9 @@ export const isLineAvailableInWarehouse = (
   line: OrderLineFragment,
   warehouse: Warehouse
 ) => {
+  if (!line?.variant?.stocks) {
+    return false;
+  }
   if (line.variant.stocks.find(stock => stock.warehouse.id === warehouse.id)) {
     return line.quantityToFulfill <= getAvailableQuantity(line, warehouse);
   }
