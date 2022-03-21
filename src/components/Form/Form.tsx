@@ -3,6 +3,12 @@ import React from "react";
 
 import { FormId } from "./ExitFormDialogProvider";
 
+export interface FormDataWithOpts extends FormData {
+  hasChanged: boolean;
+}
+
+export type IsDisabledFnType = (data: FormDataWithOpts) => boolean;
+
 export interface FormProps<TData, TErrors>
   extends Omit<React.HTMLProps<HTMLFormElement>, "onSubmit"> {
   children: (props: UseFormResult<TData>) => React.ReactNode;
@@ -11,6 +17,7 @@ export interface FormProps<TData, TErrors>
   resetOnSubmit?: boolean;
   onSubmit?: (data: TData) => SubmitPromise<TErrors[]> | void;
   formId?: FormId;
+  isDisabled?: IsDisabledFnType;
 }
 
 function Form<TData, Terrors>({
@@ -20,9 +27,14 @@ function Form<TData, Terrors>({
   onSubmit,
   confirmLeave = false,
   formId,
+  isDisabled,
   ...rest
 }: FormProps<TData, Terrors>) {
-  const renderProps = useForm(initial, onSubmit, { confirmLeave, formId });
+  const renderProps = useForm(initial, onSubmit, {
+    confirmLeave,
+    formId,
+    isDisabled
+  });
 
   function handleSubmit(event?: React.FormEvent<any>, cb?: () => void) {
     const { reset, submit } = renderProps;

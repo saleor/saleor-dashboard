@@ -11,6 +11,7 @@ import uniqBy from "lodash/uniqBy";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
 
+import { FormDataWithOpts } from "./components/Form";
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
 import { AddressType, AddressTypeInput } from "./customers/types";
 import { AddressFragment } from "./graphql";
@@ -525,3 +526,8 @@ export const combinedMultiAutocompleteChoices = (
 
 export const isInDevelopment =
   !process.env.NODE_ENV || process.env.NODE_ENV === "development";
+
+export const basicFormDisableConditions = (
+  opts: FormDataWithOpts,
+  disabled: boolean
+) => !opts.hasChanged || disabled;
