@@ -29,12 +29,6 @@ export type Scalars = {
    * String, Boolean, Int, Float, List or Object.
    */
   GenericScalar: any;
-  /**
-   * Allows use of a JSON String for input / output from the GraphQL schema.
-   *
-   * Use of this type is *not recommended* as you lose the benefits of having a defined, static
-   * schema (one of the key benefits of GraphQL).
-   */
   JSONString: any;
   /**
    * Positive Decimal scalar implementation.
@@ -46,7 +40,7 @@ export type Scalars = {
   /** Variables of this type must be set to null in mutations. They will be replaced with a filename from a following multipart part containing a binary file. See: https://github.com/jaydenseric/graphql-multipart-request-spec. */
   Upload: any;
   WeightScalar: any;
-  /** Anything */
+  /** _Any value scalar as defined by Federation spec. */
   _Any: any;
 };
 
@@ -1085,6 +1079,7 @@ export type CustomerFilterInput = {
   placedOrders?: InputMaybe<DateRangeInput>;
   search?: InputMaybe<Scalars['String']>;
   metadata?: InputMaybe<Array<InputMaybe<MetadataFilter>>>;
+  updatedAt?: InputMaybe<DateTimeRangeInput>;
 };
 
 export type CustomerInput = {
@@ -1292,12 +1287,10 @@ export type ExportFileFilterInput = {
 };
 
 export enum ExportFileSortField {
-  /** Sort export file by status. */
   STATUS = 'STATUS',
-  /** Sort export file by created at. */
   CREATED_AT = 'CREATED_AT',
-  /** Sort export file by updated at. */
-  UPDATED_AT = 'UPDATED_AT'
+  UPDATED_AT = 'UPDATED_AT',
+  LAST_MODIFIED_AT = 'LAST_MODIFIED_AT'
 }
 
 export type ExportFileSortingInput = {
@@ -1416,9 +1409,9 @@ export type GiftCardBulkCreateInput = {
 };
 
 export type GiftCardCreateInput = {
-  /** New in Saleor 3.1. The gift card tags to add. */
+  /** New in Saleor 3.1. The gift card tags to add. Note: this feature is in a preview state and can be subject to changes at later point. */
   addTags?: InputMaybe<Array<Scalars['String']>>;
-  /** New in Saleor 3.1. The gift card expiry date. */
+  /** New in Saleor 3.1. The gift card expiry date. Note: this feature is in a preview state and can be subject to changes at later point. */
   expiryDate?: InputMaybe<Scalars['Date']>;
   /**
    * Start date of the gift card in ISO 8601 format.
@@ -1436,9 +1429,9 @@ export type GiftCardCreateInput = {
   balance: PriceInput;
   /** Email of the customer to whom gift card will be sent. */
   userEmail?: InputMaybe<Scalars['String']>;
-  /** New in Saleor 3.1. Slug of a channel from which the email should be sent. */
+  /** New in Saleor 3.1. Slug of a channel from which the email should be sent. Note: this feature is in a preview state and can be subject to changes at later point. */
   channel?: InputMaybe<Scalars['String']>;
-  /** New in Saleor 3.1. Determine if gift card is active. */
+  /** New in Saleor 3.1. Determine if gift card is active. Note: this feature is in a preview state and can be subject to changes at later point. */
   isActive: Scalars['Boolean'];
   /**
    * Code to use the gift card.
@@ -1446,7 +1439,7 @@ export type GiftCardCreateInput = {
    * DEPRECATED: this field will be removed in Saleor 4.0. The code is now auto generated.
    */
   code?: InputMaybe<Scalars['String']>;
-  /** New in Saleor 3.1. The gift card note from the staff member. */
+  /** New in Saleor 3.1. The gift card note from the staff member. Note: this feature is in a preview state and can be subject to changes at later point. */
   note?: InputMaybe<Scalars['String']>;
 };
 
@@ -1546,9 +1539,9 @@ export type GiftCardTagFilterInput = {
 };
 
 export type GiftCardUpdateInput = {
-  /** New in Saleor 3.1. The gift card tags to add. */
+  /** New in Saleor 3.1. The gift card tags to add. Note: this feature is in a preview state and can be subject to changes at later point. */
   addTags?: InputMaybe<Array<Scalars['String']>>;
-  /** New in Saleor 3.1. The gift card expiry date. */
+  /** New in Saleor 3.1. The gift card expiry date. Note: this feature is in a preview state and can be subject to changes at later point. */
   expiryDate?: InputMaybe<Scalars['Date']>;
   /**
    * Start date of the gift card in ISO 8601 format.
@@ -1562,9 +1555,9 @@ export type GiftCardUpdateInput = {
    * DEPRECATED: this field will be removed in Saleor 4.0. Use `expiryDate` from `expirySettings` instead.
    */
   endDate?: InputMaybe<Scalars['Date']>;
-  /** New in Saleor 3.1. The gift card tags to remove. */
+  /** New in Saleor 3.1. The gift card tags to remove. Note: this feature is in a preview state and can be subject to changes at later point. */
   removeTags?: InputMaybe<Array<Scalars['String']>>;
-  /** New in Saleor 3.1. The gift card balance amount. */
+  /** New in Saleor 3.1. The gift card balance amount. Note: this feature is in a preview state and can be subject to changes at later point. */
   balanceAmount?: InputMaybe<Scalars['PositiveDecimal']>;
 };
 
@@ -2529,7 +2522,8 @@ export enum MetadataErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   NOT_FOUND = 'NOT_FOUND',
-  REQUIRED = 'REQUIRED'
+  REQUIRED = 'REQUIRED',
+  NOT_UPDATED = 'NOT_UPDATED'
 }
 
 export type MetadataFilter = {
@@ -2719,6 +2713,7 @@ export type OrderFilterInput = {
   search?: InputMaybe<Scalars['String']>;
   metadata?: InputMaybe<Array<InputMaybe<MetadataFilter>>>;
   channels?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  updatedAt?: InputMaybe<DateTimeRangeInput>;
   isClickAndCollect?: InputMaybe<Scalars['Boolean']>;
   isPreorder?: InputMaybe<Scalars['Boolean']>;
   ids?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
@@ -2839,8 +2834,20 @@ export type OrderSettingsUpdateInput = {
 export enum OrderSortField {
   /** Sort orders by number. */
   NUMBER = 'NUMBER',
-  /** Sort orders by creation date. */
+  /**
+   * Sort orders by creation date.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0.
+   */
   CREATION_DATE = 'CREATION_DATE',
+  /**
+   * Sort orders by creation date.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0.
+   */
+  CREATED_AT = 'CREATED_AT',
+  /** Sort orders by last modified at. */
+  LAST_MODIFIED_AT = 'LAST_MODIFIED_AT',
   /** Sort orders by customer. */
   CUSTOMER = 'CUSTOMER',
   /** Sort orders by payment. */
@@ -3343,6 +3350,7 @@ export type ProductFilterInput = {
   metadata?: InputMaybe<Array<InputMaybe<MetadataFilter>>>;
   price?: InputMaybe<PriceRangeInput>;
   minimalPrice?: InputMaybe<PriceRangeInput>;
+  updatedAt?: InputMaybe<DateTimeRangeInput>;
   productTypes?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   giftCard?: InputMaybe<Scalars['Boolean']>;
   ids?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
@@ -3430,6 +3438,8 @@ export enum ProductOrderField {
   /** Sort products by a minimal price of a product's variant. */
   MINIMAL_PRICE = 'MINIMAL_PRICE',
   /** Sort products by update date. */
+  LAST_MODIFIED = 'LAST_MODIFIED',
+  /** Sort products by update date. */
   DATE = 'DATE',
   /** Sort products by type. */
   TYPE = 'TYPE',
@@ -3437,6 +3447,10 @@ export enum ProductOrderField {
   PUBLISHED = 'PUBLISHED',
   /** Sort products by publication date. */
   PUBLICATION_DATE = 'PUBLICATION_DATE',
+  /** Sort products by publication date. */
+  PUBLISHED_AT = 'PUBLISHED_AT',
+  /** Sort products by update date. */
+  LAST_MODIFIED_AT = 'LAST_MODIFIED_AT',
   /** Sort products by collection. Note: This option is available only for the `Collection.products` query. */
   COLLECTION = 'COLLECTION',
   /** Sort products by rating. */
@@ -3521,9 +3535,9 @@ export type ProductVariantBulkCreateInput = {
   trackInventory?: InputMaybe<Scalars['Boolean']>;
   /** Weight of the Product Variant. */
   weight?: InputMaybe<Scalars['WeightScalar']>;
-  /** New in Saleor 3.1. Determines if variant is in preorder. */
+  /** New in Saleor 3.1. Determines if variant is in preorder. Note: this feature is in a preview state and can be subject to changes at later point. */
   preorder?: InputMaybe<PreorderSettingsInput>;
-  /** New in Saleor 3.1. Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout. */
+  /** New in Saleor 3.1. Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout. Note: this feature is in a preview state and can be subject to changes at later point. */
   quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
   /** Stocks of a product available for sale. */
   stocks?: InputMaybe<Array<StockInput>>;
@@ -3538,7 +3552,7 @@ export type ProductVariantChannelListingAddInput = {
   price: Scalars['PositiveDecimal'];
   /** Cost price of the variant in channel. */
   costPrice?: InputMaybe<Scalars['PositiveDecimal']>;
-  /** New in Saleor 3.1. The threshold for preorder variant in channel. */
+  /** New in Saleor 3.1. The threshold for preorder variant in channel. Note: this feature is in a preview state and can be subject to changes at later point. */
   preorderThreshold?: InputMaybe<Scalars['Int']>;
 };
 
@@ -3551,9 +3565,9 @@ export type ProductVariantCreateInput = {
   trackInventory?: InputMaybe<Scalars['Boolean']>;
   /** Weight of the Product Variant. */
   weight?: InputMaybe<Scalars['WeightScalar']>;
-  /** New in Saleor 3.1. Determines if variant is in preorder. */
+  /** New in Saleor 3.1. Determines if variant is in preorder. Note: this feature is in a preview state and can be subject to changes at later point. */
   preorder?: InputMaybe<PreorderSettingsInput>;
-  /** New in Saleor 3.1. Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout. */
+  /** New in Saleor 3.1. Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout. Note: this feature is in a preview state and can be subject to changes at later point. */
   quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
   /** Product ID of which type is the variant. */
   product: Scalars['ID'];
@@ -3566,6 +3580,7 @@ export type ProductVariantFilterInput = {
   sku?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   metadata?: InputMaybe<Array<InputMaybe<MetadataFilter>>>;
   isPreorder?: InputMaybe<Scalars['Boolean']>;
+  updatedAt?: InputMaybe<DateTimeRangeInput>;
 };
 
 export type ProductVariantInput = {
@@ -3577,10 +3592,22 @@ export type ProductVariantInput = {
   trackInventory?: InputMaybe<Scalars['Boolean']>;
   /** Weight of the Product Variant. */
   weight?: InputMaybe<Scalars['WeightScalar']>;
-  /** New in Saleor 3.1. Determines if variant is in preorder. */
+  /** New in Saleor 3.1. Determines if variant is in preorder. Note: this feature is in a preview state and can be subject to changes at later point. */
   preorder?: InputMaybe<PreorderSettingsInput>;
-  /** New in Saleor 3.1. Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout. */
+  /** New in Saleor 3.1. Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout. Note: this feature is in a preview state and can be subject to changes at later point. */
   quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
+};
+
+export enum ProductVariantSortField {
+  /** Sort products variants by last modified at. */
+  LAST_MODIFIED_AT = 'LAST_MODIFIED_AT'
+}
+
+export type ProductVariantSortingInput = {
+  /** Specifies the direction in which to sort products. */
+  direction: OrderDirection;
+  /** Sort productVariants by the selected field. */
+  field: ProductVariantSortField;
 };
 
 export type PublishableChannelListingInput = {
@@ -3624,6 +3651,7 @@ export type SaleFilterInput = {
   started?: InputMaybe<DateTimeRangeInput>;
   search?: InputMaybe<Scalars['String']>;
   metadata?: InputMaybe<Array<InputMaybe<MetadataFilter>>>;
+  updatedAt?: InputMaybe<DateTimeRangeInput>;
 };
 
 export type SaleInput = {
@@ -3656,7 +3684,11 @@ export enum SaleSortField {
   /** Sort sales by value. */
   VALUE = 'VALUE',
   /** Sort sales by type. */
-  TYPE = 'TYPE'
+  TYPE = 'TYPE',
+  /** Sort sales by created at. */
+  CREATED_AT = 'CREATED_AT',
+  /** Sort sales by last modified at. */
+  LAST_MODIFIED_AT = 'LAST_MODIFIED_AT'
 }
 
 export type SaleSortingInput = {
@@ -3848,7 +3880,7 @@ export type ShopSettingsInput = {
   reserveStockDurationAnonymousUser?: InputMaybe<Scalars['Int']>;
   /** New in Saleor 3.1. Default number of minutes stock will be reserved for authenticated checkout. Enter 0 or null to disable. */
   reserveStockDurationAuthenticatedUser?: InputMaybe<Scalars['Int']>;
-  /** New in Saleor 3.1. Default number of maximum line quantity in single checkout. Minimum possible value is 1, default value is 50. */
+  /** New in Saleor 3.1. Default number of maximum line quantity in single checkout. Minimum possible value is 1, default value is 50. Note: this feature is in a preview state and can be subject to changes at later point. */
   limitQuantityPerCheckout?: InputMaybe<Scalars['Int']>;
 };
 
@@ -4058,7 +4090,11 @@ export enum UserSortField {
   /** Sort users by email. */
   EMAIL = 'EMAIL',
   /** Sort users by order count. */
-  ORDER_COUNT = 'ORDER_COUNT'
+  ORDER_COUNT = 'ORDER_COUNT',
+  /** Sort users by created at. */
+  CREATED_AT = 'CREATED_AT',
+  /** Sort users by last modified at. */
+  LAST_MODIFIED_AT = 'LAST_MODIFIED_AT'
 }
 
 export type UserSortingInput = {
@@ -4251,9 +4287,9 @@ export type WarehouseUpdateInput = {
   name?: InputMaybe<Scalars['String']>;
   /** Address of the warehouse. */
   address?: InputMaybe<AddressInput>;
-  /** New in Saleor 3.1. Click and collect options: local, all or disabled */
+  /** New in Saleor 3.1. Click and collect options: local, all or disabled. Note: this feature is in a preview state and can be subject to changes at later point. */
   clickAndCollectOption?: InputMaybe<WarehouseClickAndCollectOptionEnum>;
-  /** New in Saleor 3.1. Visibility of warehouse stocks */
+  /** New in Saleor 3.1. Visibility of warehouse stocks. Note: this feature is in a preview state and can be subject to changes at later point. */
   isPrivate?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -4409,7 +4445,9 @@ export enum WebhookEventTypeEnum {
   PAYMENT_PROCESS = 'PAYMENT_PROCESS',
   PAYMENT_REFUND = 'PAYMENT_REFUND',
   PAYMENT_VOID = 'PAYMENT_VOID',
-  SHIPPING_LIST_METHODS_FOR_CHECKOUT = 'SHIPPING_LIST_METHODS_FOR_CHECKOUT'
+  SHIPPING_LIST_METHODS_FOR_CHECKOUT = 'SHIPPING_LIST_METHODS_FOR_CHECKOUT',
+  ORDER_FILTER_SHIPPING_METHODS = 'ORDER_FILTER_SHIPPING_METHODS',
+  CHECKOUT_FILTER_SHIPPING_METHODS = 'CHECKOUT_FILTER_SHIPPING_METHODS'
 }
 
 /** Enum determining type of webhook. */
@@ -4421,7 +4459,9 @@ export enum WebhookEventTypeSyncEnum {
   PAYMENT_PROCESS = 'PAYMENT_PROCESS',
   PAYMENT_REFUND = 'PAYMENT_REFUND',
   PAYMENT_VOID = 'PAYMENT_VOID',
-  SHIPPING_LIST_METHODS_FOR_CHECKOUT = 'SHIPPING_LIST_METHODS_FOR_CHECKOUT'
+  SHIPPING_LIST_METHODS_FOR_CHECKOUT = 'SHIPPING_LIST_METHODS_FOR_CHECKOUT',
+  ORDER_FILTER_SHIPPING_METHODS = 'ORDER_FILTER_SHIPPING_METHODS',
+  CHECKOUT_FILTER_SHIPPING_METHODS = 'CHECKOUT_FILTER_SHIPPING_METHODS'
 }
 
 /** An enumeration. */
@@ -6696,7 +6736,7 @@ export type ProductListQueryVariables = Exact<{
 }>;
 
 
-export type ProductListQuery = { __typename: 'Query', products: { __typename: 'ProductCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', updatedAt: any | null, id: string, name: string, attributes?: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string }, values: Array<{ __typename: 'AttributeValue', id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } | null> }>, thumbnail: { __typename: 'Image', url: string } | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean }, channelListings: Array<{ __typename: 'ProductChannelListing', isPublished: boolean, publicationDate: any | null, isAvailableForPurchase: boolean | null, availableForPurchase: any | null, visibleInListings: boolean, pricing?: { __typename: 'ProductPricingInfo', priceRange: { __typename: 'TaxedMoneyRange', start: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string } } | null, stop: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string } } | null } | null } | null, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null } }>, pageInfo: { __typename: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string | null, endCursor: string | null } } | null };
+export type ProductListQuery = { __typename: 'Query', products: { __typename: 'ProductCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', updatedAt: any, id: string, name: string, attributes?: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string }, values: Array<{ __typename: 'AttributeValue', id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } | null> }>, thumbnail: { __typename: 'Image', url: string } | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean }, channelListings: Array<{ __typename: 'ProductChannelListing', isPublished: boolean, publicationDate: any | null, isAvailableForPurchase: boolean | null, availableForPurchase: any | null, visibleInListings: boolean, pricing?: { __typename: 'ProductPricingInfo', priceRange: { __typename: 'TaxedMoneyRange', start: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string } } | null, stop: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string } } | null } | null } | null, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null } }>, pageInfo: { __typename: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string | null, endCursor: string | null } } | null };
 
 export type ProductCountQueryVariables = Exact<{
   filter?: InputMaybe<ProductFilterInput>;
