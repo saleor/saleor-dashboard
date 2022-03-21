@@ -13,10 +13,7 @@ import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import {
-  basicFormDisableConditions,
-  extractMutationErrors
-} from "@saleor/misc";
+import { extractMutationErrors } from "@saleor/misc";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React from "react";
@@ -142,7 +139,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
       confirmLeave
       initial={initialForm}
       onSubmit={handleSubmit}
-      isDisabled={opts => basicFormDisableConditions(opts, disabled)}
+      disabled={disabled}
     >
       {({ change, data, saveDisabled, submit }) => {
         const handleCountrySelect = createSingleAutocompleteSelectHandler(

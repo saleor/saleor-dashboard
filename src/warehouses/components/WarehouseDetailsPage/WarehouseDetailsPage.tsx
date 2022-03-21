@@ -18,11 +18,7 @@ import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import {
-  basicFormDisableConditions,
-  findValueInEnum,
-  maybe
-} from "@saleor/misc";
+import { findValueInEnum, maybe } from "@saleor/misc";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices, mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
@@ -92,7 +88,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
       confirmLeave
       initial={initialForm}
       onSubmit={handleSubmit}
-      isDisabled={opts => basicFormDisableConditions(opts, disabled)}
+      disabled={disabled}
     >
       {({ change, data, saveDisabled, submit, set }) => {
         const countryChoices = mapCountriesToChoices(countries);

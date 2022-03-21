@@ -17,7 +17,7 @@ import { ChangeEvent, FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { basicFormDisableConditions, maybe } from "@saleor/misc";
+import { maybe } from "@saleor/misc";
 import { ListActions, ReorderEvent, UserError } from "@saleor/types";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -160,7 +160,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
       initial={formInitialData}
       onSubmit={handleSubmit}
       confirmLeave
-      isDisabled={opts => basicFormDisableConditions(opts, disabled)}
+      disabled={disabled}
     >
       {({ change, data, saveDisabled, submit, setChanged }) => {
         const changeMetadata = makeMetadataChangeHandler(change);

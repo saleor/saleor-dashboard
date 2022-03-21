@@ -21,7 +21,7 @@ import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTr
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { basicFormDisableConditions, getUserName } from "../../../misc";
+import { getUserName } from "../../../misc";
 import CustomerAddresses from "../CustomerAddresses";
 import CustomerDetails from "../CustomerDetails";
 import CustomerInfo from "../CustomerInfo";
@@ -84,7 +84,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
       confirmLeave
       initial={initialForm}
       onSubmit={onSubmit}
-      isDisabled={opts => basicFormDisableConditions(opts, disabled)}
+      disabled={disabled}
     >
       {({ change, data, saveDisabled, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);

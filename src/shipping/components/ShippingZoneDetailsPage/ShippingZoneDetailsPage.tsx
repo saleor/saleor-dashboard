@@ -24,10 +24,7 @@ import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTr
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import {
-  basicFormDisableConditions,
-  getStringOrPlaceholder
-} from "../../../misc";
+import { getStringOrPlaceholder } from "../../../misc";
 import { ChannelProps, FetchMoreProps, SearchProps } from "../../../types";
 import { ShippingZoneUpdateFormData } from "../../components/ShippingZoneDetailsPage/types";
 import ShippingZoneInfo from "../ShippingZoneInfo";
@@ -131,7 +128,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
       initial={initialForm}
       onSubmit={onSubmit}
       confirmLeave
-      isDisabled={opts => basicFormDisableConditions(opts, disabled)}
+      disabled={disabled}
     >
       {({ change, data, saveDisabled, submit, toggleValue }) => {
         const handleWarehouseChange = createMultiAutocompleteSelectHandler(

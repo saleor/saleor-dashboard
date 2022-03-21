@@ -10,7 +10,7 @@ import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { basicFormDisableConditions, maybe } from "../../../misc";
+import { maybe } from "../../../misc";
 import CountryList from "../CountryList";
 import TaxConfiguration from "../TaxConfiguration";
 
@@ -50,7 +50,7 @@ const CountryListPage: React.FC<CountryListPageProps> = ({
       confirmLeave
       initial={initialForm}
       onSubmit={onSubmit}
-      isDisabled={opts => basicFormDisableConditions(opts, disabled)}
+      disabled={disabled}
     >
       {({ change, data, saveDisabled, submit }) => (
         <>

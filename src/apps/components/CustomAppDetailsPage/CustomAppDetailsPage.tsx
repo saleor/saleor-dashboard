@@ -18,7 +18,6 @@ import {
   Button,
   ConfirmButtonTransitionState
 } from "@saleor/macaw-ui";
-import { basicFormDisableConditions } from "@saleor/misc";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAppErrorMessage from "@saleor/utils/errors/app";
 import WebhooksList from "@saleor/webhooks/components/WebhooksList";
@@ -106,7 +105,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
       confirmLeave
       initial={initialForm}
       onSubmit={onSubmit}
-      isDisabled={opts => basicFormDisableConditions(opts, disabled)}
+      disabled={disabled}
     >
       {({ data, change, submit, saveDisabled }) => (
         <Container>

@@ -20,7 +20,7 @@ import {
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { basicFormDisableConditions, maybe } from "@saleor/misc";
+import { maybe } from "@saleor/misc";
 import { ListSettings, ReorderAction } from "@saleor/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -160,7 +160,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
       confirmLeave
       initial={initialForm}
       onSubmit={handleSubmit}
-      isDisabled={opts => basicFormDisableConditions(opts, disabled)}
+      disabled={disabled}
     >
       {({
         change,

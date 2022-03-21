@@ -18,7 +18,7 @@ import useLocale from "@saleor/hooks/useLocale";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { basicFormDisableConditions, getUserName } from "@saleor/misc";
+import { getUserName } from "@saleor/misc";
 import UserStatus from "@saleor/staff/components/UserStatus";
 import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
@@ -105,7 +105,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
       confirmLeave
       initial={initialForm}
       onSubmit={onSubmit}
-      isDisabled={opts => basicFormDisableConditions(opts, disabled)}
+      disabled={disabled}
     >
       {({ data: formData, change, saveDisabled, submit, toggleValue }) => {
         const permissionGroupsChange = createMultiAutocompleteSelectHandler(
