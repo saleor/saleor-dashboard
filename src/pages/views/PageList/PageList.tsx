@@ -126,6 +126,11 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
         onUpdateListSettings={updateListSettings}
         onRowClick={id => () => navigate(pageUrl(id))}
         onSort={handleSort}
+        actionDialogOpts={{
+          open: openModal,
+          close: closeModal
+        }}
+        params={params}
         toolbar={
           <>
             <Button

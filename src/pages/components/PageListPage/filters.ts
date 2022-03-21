@@ -1,11 +1,11 @@
 import { IFilter, IFilterElement } from "@saleor/components/Filter";
 import { SearchWithFetchMoreProps } from "@saleor/giftCards/GiftCardsList/GiftCardListSearchAndFilters/types";
+import { SearchPageTypesQuery } from "@saleor/graphql";
 import {
   PageListUrlFilters,
   PageListUrlFiltersWithMultipleValues,
   PageListUrlSort
 } from "@saleor/pages/urls";
-import { SearchPageTypes_search_edges_node } from "@saleor/searches/types/SearchPageTypes";
 import {
   ActiveTab,
   AutocompleteFilterOpts,
@@ -44,7 +44,7 @@ const messages = defineMessages({
 
 interface PageListFilterOptsProps {
   params: PageListUrlFilters;
-  pageTypes: SearchPageTypes_search_edges_node[];
+  pageTypes: Array<SearchPageTypesQuery["search"]["edges"][0]["node"]>;
   pageTypesProps: SearchWithFetchMoreProps;
 }
 
