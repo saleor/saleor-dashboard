@@ -2,7 +2,7 @@ import { ChannelSaleData, validateSalePrice } from "@saleor/channels/utils";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import Container from "@saleor/components/Container";
-import Form from "@saleor/components/Form";
+import Form, { FormDataWithOpts } from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
@@ -156,22 +156,26 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
     metadata: sale?.metadata.map(mapMetadataItemToInput),
     privateMetadata: sale?.privateMetadata.map(mapMetadataItemToInput)
   };
+
+  const isFormDisabled = (data: SaleDetailsPageFormData & FormDataWithOpts) =>
+    data.channelListings?.some(channel => validateSalePrice(data, channel)) ||
+    disabled ||
+    (!data.hasChanged && !hasChannelChanged);
+
   return (
     <Form
       confirmLeave
       initial={initialForm}
       onSubmit={onSubmit}
       formId={SALE_UPDATE_FORM_ID}
+      isDisabled={isFormDisabled}
     >
-      {({ change, data, hasChanged, submit, triggerChange }) => {
+      {({ change, data, submit, triggerChange, saveDisabled }) => {
         const handleChannelChange = createSaleChannelsChangeHandler(
           data.channelListings,
           onChannelsChange,
           triggerChange,
           data.type
-        );
-        const formDisabled = data.channelListings?.some(channel =>
-          validateSalePrice(data, channel)
         );
         const changeMetadata = makeMetadataChangeHandler(change);
 
@@ -370,9 +374,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
               <Metadata data={data} onChange={changeMetadata} />
             </Grid>
             <Savebar
-              disabled={
-                disabled || formDisabled || (!hasChanged && !hasChannelChanged)
-              }
+              disabled={saveDisabled}
               onCancel={onBack}
               onDelete={onRemove}
               onSubmit={submit}
