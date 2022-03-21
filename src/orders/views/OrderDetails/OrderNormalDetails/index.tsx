@@ -309,11 +309,11 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
             ?.orderFulfillmentUpdateTracking.errors || []
         }
         open={params.action === "edit-fulfillment"}
-        trackingNumber={getStringOrPlaceholder(
+        trackingNumber={
           data?.order?.fulfillments.find(
             fulfillment => fulfillment.id === params.id
           )?.trackingNumber
-        )}
+        }
         onConfirm={variables =>
           orderFulfillmentUpdateTracking.mutate({
             id: params.id,
