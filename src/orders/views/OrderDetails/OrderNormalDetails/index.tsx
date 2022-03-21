@@ -98,14 +98,15 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   const shop = data?.shop;
   const navigate = useNavigator();
 
-  const { data: warehousesData, loading: warehousesLoading } = useWarehouseListQuery(
-    {
-      displayLoader: true,
-      variables: {
-        first: 30
-      }
+  const {
+    data: warehousesData,
+    loading: warehousesLoading
+  } = useWarehouseListQuery({
+    displayLoader: true,
+    variables: {
+      first: 30
     }
-  );
+  });
 
   const warehouses = mapEdgesToItems(warehousesData?.warehouses);
 
