@@ -15,7 +15,7 @@ function renderAuthProvider() {
   };
   const notify = jest.fn();
   const saleorClient = createSaleorClient({
-    apiUrl: process.env.API_URI || "http://localhost:8000/graphql/",
+    apiUrl: process.env.API_URI,
     channel: ""
   });
   const wrapper = ({ children }) => (
@@ -50,7 +50,7 @@ beforeEach(() => {
   sessionStorage.clear();
 });
 
-describe("User", () => {
+xdescribe("User", () => {
   it("will be logged in if has valid credentials", async done => {
     const hook = renderAuthProvider();
 
