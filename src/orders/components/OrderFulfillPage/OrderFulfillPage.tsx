@@ -42,6 +42,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { Warehouse } from "../OrderChangeWarehouseDialog/types";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
+import { getDefaultFulfillmentValue } from "./utils";
 
 interface OrderFulfillFormData {
   sendInfo: boolean;
@@ -94,21 +95,14 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
             .join(" , ")
         )
         .join(" / "),
-      value:
-        !line.variant.preorder &&
-        line.variant?.stocks
-          ?.filter(stock => stock.warehouse.id === warehouse?.id)
-          .map(stock => ({
-            quantity: line.quantityToFulfill,
-            warehouse: stock.warehouse.id
-          }))
+      value: getDefaultFulfillmentValue(line, warehouse?.id)
     }))
   );
 
   const handleSubmit = (formData: OrderFulfillFormData) =>
     onSubmit({
       ...formData,
-      items: formsetData
+      items: formsetData.filter(item => !!item.value)
     });
 
   const notAllowedToFulfillUnpaid =
@@ -126,23 +120,16 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     }
 
     const isAtLeastOneFulfilled = formsetData?.some(
-      el => el.value[0]?.quantity > 0
+      el => el.value?.[0]?.quantity > 0
     );
 
     const areProperlyFulfilled = formsetData
       .filter(item => !!item?.value)
-      .every(({ id, value }) => {
-        const { lines } = order;
-
-        const { quantityToFulfill } = lines.find(
-          ({ id: lineId }) => lineId === id
-        );
-
-        const formQuantityFulfilled = value?.reduce(
-          (result, { quantity }) => result + quantity,
-          0
-        );
-
+      .some(item => {
+        const formQuantityFulfilled = item?.value?.[0]?.quantity;
+        const quantityToFulfill = order?.lines?.find(
+          line => line.id === item.id
+        ).quantityToFulfill;
         return formQuantityFulfilled <= quantityToFulfill;
       });
 
@@ -227,10 +214,11 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                             );
                           }
 
+                          const isDeletedVariant = !line?.variant;
                           const isPreorder = !!line.variant?.preorder;
                           const lineFormQuantity = isPreorder
                             ? 0
-                            : formsetData[lineIndex].value[0]?.quantity;
+                            : formsetData[lineIndex].value?.[0]?.quantity;
 
                           const overfulfill =
                             lineFormQuantity > line.quantityToFulfill;
@@ -309,24 +297,13 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                   );
                                 }
 
-                                if (!warehouseStock) {
-                                  return (
-                                    <TableCell
-                                      key="skeleton"
-                                      className={classNames(
-                                        classes.colQuantity,
-                                        classes.error
-                                      )}
-                                    >
-                                      <FormattedMessage {...messages.noStock} />
-                                    </TableCell>
-                                  );
-                                }
-
                                 return (
                                   <TableCell
                                     className={classes.colQuantity}
-                                    key={warehouseStock.id}
+                                    key={
+                                      warehouseStock?.id ??
+                                      "deletedVariant" + lineIndex
+                                    }
                                   >
                                     <TextField
                                       type="number"
@@ -335,7 +312,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                           classes.quantityInnerInput,
                                           {
                                             [classes.quantityInnerInputNoRemaining]: !line
-                                              .variant.trackInventory
+                                              .variant?.trackInventory
                                           }
                                         ),
                                         min: 0,
@@ -370,7 +347,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                             })
                                         },
                                         endAdornment: line.variant
-                                          .trackInventory && (
+                                          ?.trackInventory && (
                                           <div
                                             className={
                                               classes.remainingQuantity
@@ -388,7 +365,9 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                 className={classes.colStock}
                                 key="total"
                               >
-                                {!isPreorder && availableQuantity}
+                                {isPreorder || isDeletedVariant
+                                  ? undefined
+                                  : availableQuantity}
                               </TableCell>
                             </TableRow>
                           );
