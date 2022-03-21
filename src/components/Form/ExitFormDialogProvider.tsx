@@ -258,7 +258,9 @@ export function useExitFormDialogProvider() {
     showDialog,
     handleSubmit,
     handleLeave,
-    handleClose
+    handleClose,
+    shouldBlockNav,
+    isSubmitDisabled
   };
 }
 
@@ -268,13 +270,15 @@ const ExitFormDialogProvider = ({ children }) => {
     handleLeave,
     handleSubmit,
     providerData,
-    showDialog
+    showDialog,
+    shouldBlockNav,
+    isSubmitDisabled
   } = useExitFormDialogProvider();
 
   useBeforeUnload(e => {
     // If form is dirty and user does a refresh,
     // the browser will ask about unsaved changes
-    if (shouldBlockNavigation() && !isInDevelopment) {
+    if (shouldBlockNav() && !isInDevelopment) {
       e.preventDefault();
       e.returnValue = "";
     }

@@ -14,6 +14,7 @@ export interface UseExitFormDialogResult
       | "shouldBlockNavigation"
       | "setIsSubmitting"
       | "setIsSubmitDisabled"
+      | "submit"
     >,
     WithFormId {
   setIsDirty: (isDirty: boolean) => void;
