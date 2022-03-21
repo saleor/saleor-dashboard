@@ -18,6 +18,7 @@ import {
   Button,
   ConfirmButtonTransitionState
 } from "@saleor/macaw-ui";
+import { basicFormDisableConditions } from "@saleor/misc";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAppErrorMessage from "@saleor/utils/errors/app";
 import WebhooksList from "@saleor/webhooks/components/WebhooksList";
@@ -101,8 +102,13 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
   };
 
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-      {({ data, change, hasChanged, submit }) => (
+    <Form
+      confirmLeave
+      initial={initialForm}
+      onSubmit={onSubmit}
+      isDisabled={opts => basicFormDisableConditions(opts, disabled)}
+    >
+      {({ data, change, hasChanged, submit, saveDisabled }) => (
         <Container>
           <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.apps)}
@@ -182,7 +188,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
             </div>
           </Grid>
           <Savebar
-            disabled={disabled || !hasChanged}
+            disabled={saveDisabled}
             state={saveButtonBarState}
             onCancel={onBack}
             onSubmit={submit}

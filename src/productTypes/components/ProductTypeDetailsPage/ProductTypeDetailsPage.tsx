@@ -17,7 +17,7 @@ import { ChangeEvent, FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { maybe } from "@saleor/misc";
+import { basicFormDisableConditions, maybe } from "@saleor/misc";
 import { ListActions, ReorderEvent, UserError } from "@saleor/types";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -156,8 +156,13 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
   };
 
   return (
-    <Form initial={formInitialData} onSubmit={handleSubmit} confirmLeave>
-      {({ change, data, hasChanged, submit, setChanged }) => {
+    <Form
+      initial={formInitialData}
+      onSubmit={handleSubmit}
+      confirmLeave
+      isDisabled={opts => basicFormDisableConditions(opts, disabled)}
+    >
+      {({ change, data, saveDisabled, submit, setChanged }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
@@ -256,7 +261,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
               onCancel={onBack}
               onDelete={onDelete}
               onSubmit={submit}
-              disabled={disabled || !hasChanged}
+              disabled={saveDisabled}
               state={saveButtonBarState}
             />
           </Container>

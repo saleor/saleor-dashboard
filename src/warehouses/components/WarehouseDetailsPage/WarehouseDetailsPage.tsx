@@ -18,7 +18,11 @@ import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { findValueInEnum, maybe } from "@saleor/misc";
+import {
+  basicFormDisableConditions,
+  findValueInEnum,
+  maybe
+} from "@saleor/misc";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices, mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
@@ -84,8 +88,13 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
   };
 
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
-      {({ change, data, hasChanged, submit, set }) => {
+    <Form
+      confirmLeave
+      initial={initialForm}
+      onSubmit={handleSubmit}
+      isDisabled={opts => basicFormDisableConditions(opts, disabled)}
+    >
+      {({ change, data, saveDisabled, submit, set }) => {
         const countryChoices = mapCountriesToChoices(countries);
         const handleCountryChange = createSingleAutocompleteSelectHandler(
           change,
@@ -134,7 +143,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
               </div>
             </Grid>
             <Savebar
-              disabled={disabled || !hasChanged}
+              disabled={saveDisabled}
               onCancel={onBack}
               onDelete={onDelete}
               onSubmit={submit}

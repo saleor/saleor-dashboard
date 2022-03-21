@@ -16,6 +16,7 @@ import {
   ConfirmButtonTransitionState,
   makeStyles
 } from "@saleor/macaw-ui";
+import { basicFormDisableConditions } from "@saleor/misc";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React from "react";
@@ -134,8 +135,9 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
         return submitFunc(data);
       }}
       confirmLeave
+      isDisabled={opts => basicFormDisableConditions(opts, disabled)}
     >
-      {({ change, data, hasChanged, submit }) => {
+      {({ change, data, saveDisabled, submit }) => {
         const countryChoices = mapCountriesToChoices(shop?.countries || []);
         const handleCountryChange = createSingleAutocompleteSelectHandler(
           change,
@@ -201,7 +203,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
             </Grid>
             <Savebar
               state={saveButtonBarState}
-              disabled={disabled || !hasChanged}
+              disabled={saveDisabled}
               onCancel={onBack}
               onSubmit={submit}
             />

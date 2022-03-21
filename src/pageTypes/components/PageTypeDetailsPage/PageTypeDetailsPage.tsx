@@ -19,6 +19,7 @@ import {
   ConfirmButtonTransitionState,
   makeStyles
 } from "@saleor/macaw-ui";
+import { basicFormDisableConditions } from "@saleor/misc";
 import { ListActions, ReorderEvent } from "@saleor/types";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -110,8 +111,13 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
   };
 
   return (
-    <Form confirmLeave initial={formInitialData} onSubmit={handleSubmit}>
-      {({ change, data, hasChanged, submit }) => {
+    <Form
+      confirmLeave
+      initial={formInitialData}
+      onSubmit={handleSubmit}
+      isDisabled={opts => basicFormDisableConditions(opts, disabled)}
+    >
+      {({ change, data, saveDisabled, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
@@ -174,7 +180,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
               onCancel={onBack}
               onDelete={onDelete}
               onSubmit={submit}
-              disabled={disabled || !hasChanged}
+              disabled={saveDisabled}
               state={saveButtonBarState}
             />
           </Container>

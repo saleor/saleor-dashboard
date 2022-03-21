@@ -12,6 +12,7 @@ import {
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { basicFormDisableConditions } from "@saleor/misc";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAppErrorMessage from "@saleor/utils/errors/app";
 import React from "react";
@@ -56,8 +57,13 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
   const permissionsError = getAppErrorMessage(formErrors.permissions, intl);
 
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-      {({ data, change, hasChanged, submit }) => (
+    <Form
+      confirmLeave
+      initial={initialForm}
+      onSubmit={onSubmit}
+      isDisabled={opts => basicFormDisableConditions(opts, disabled)}
+    >
+      {({ data, change, hasChanged, submit, saveDisabled }) => (
         <Container>
           <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.apps)}
@@ -96,7 +102,7 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
             />
           </Grid>
           <Savebar
-            disabled={disabled || !hasChanged}
+            disabled={saveDisabled}
             state={saveButtonBarState}
             onCancel={onBack}
             onSubmit={submit}

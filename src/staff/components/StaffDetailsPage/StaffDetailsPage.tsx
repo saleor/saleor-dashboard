@@ -18,7 +18,7 @@ import useLocale from "@saleor/hooks/useLocale";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { getUserName } from "@saleor/misc";
+import { basicFormDisableConditions, getUserName } from "@saleor/misc";
 import UserStatus from "@saleor/staff/components/UserStatus";
 import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
@@ -101,8 +101,13 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
   };
 
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-      {({ data: formData, change, hasChanged, submit, toggleValue }) => {
+    <Form
+      confirmLeave
+      initial={initialForm}
+      onSubmit={onSubmit}
+      isDisabled={opts => basicFormDisableConditions(opts, disabled)}
+    >
+      {({ data: formData, change, saveDisabled, submit, toggleValue }) => {
         const permissionGroupsChange = createMultiAutocompleteSelectHandler(
           toggleValue,
           setPermissionGroupsDisplayValues,
@@ -187,7 +192,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
               </div>
             </Grid>
             <Savebar
-              disabled={disabled || !hasChanged}
+              disabled={saveDisabled}
               state={saveButtonBarState}
               onCancel={onBack}
               onSubmit={submit}

@@ -7,6 +7,7 @@ import { PermissionEnum, PermissionGroupErrorFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { basicFormDisableConditions } from "@saleor/misc";
 import { getFormErrors } from "@saleor/utils/errors";
 import getPermissionGroupErrorMessage from "@saleor/utils/errors/permissionGroups";
 import React from "react";
@@ -55,8 +56,13 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
   );
 
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-      {({ data, change, submit, hasChanged }) => (
+    <Form
+      confirmLeave
+      initial={initialForm}
+      onSubmit={onSubmit}
+      isDisabled={opts => basicFormDisableConditions(opts, disabled)}
+    >
+      {({ data, change, submit, saveDisabled }) => (
         <Container>
           <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.permissionGroups)}
@@ -95,7 +101,7 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
               onCancel={onBack}
               onSubmit={submit}
               state={saveButtonBarState}
-              disabled={disabled || !hasChanged}
+              disabled={saveDisabled}
             />
           </div>
         </Container>

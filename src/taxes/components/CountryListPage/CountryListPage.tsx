@@ -10,7 +10,7 @@ import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { maybe } from "../../../misc";
+import { basicFormDisableConditions, maybe } from "../../../misc";
 import CountryList from "../CountryList";
 import TaxConfiguration from "../TaxConfiguration";
 
@@ -46,8 +46,13 @@ const CountryListPage: React.FC<CountryListPageProps> = ({
     showGross: maybe(() => shop.displayGrossPrices, false)
   };
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, hasChanged, submit }) => (
+    <Form
+      confirmLeave
+      initial={initialForm}
+      onSubmit={onSubmit}
+      isDisabled={opts => basicFormDisableConditions(opts, disabled)}
+    >
+      {({ change, data, saveDisabled, submit }) => (
         <>
           <Container>
             <Backlink onClick={onBack}>
@@ -77,7 +82,7 @@ const CountryListPage: React.FC<CountryListPageProps> = ({
             </Grid>
           </Container>
           <Savebar
-            disabled={disabled || !hasChanged}
+            disabled={saveDisabled}
             state={saveButtonBarState}
             onCancel={onBack}
             onSubmit={submit}

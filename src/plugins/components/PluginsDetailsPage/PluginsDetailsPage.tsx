@@ -13,7 +13,10 @@ import {
 import { ChangeEvent, SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { getStringOrPlaceholder } from "@saleor/misc";
+import {
+  basicFormDisableConditions,
+  getStringOrPlaceholder
+} from "@saleor/misc";
 import { isSecretField } from "@saleor/plugins/utils";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -75,8 +78,9 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
       initial={initialFormData()}
       onSubmit={onSubmit}
       key={selectedChannelId}
+      isDisabled={opts => basicFormDisableConditions(opts, disabled)}
     >
-      {({ data, hasChanged, submit, set }) => {
+      {({ data, submit, set, saveDisabled }) => {
         const onChange = (event: ChangeEvent) => {
           const { name, value } = event.target;
           const newData = {
@@ -159,7 +163,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
               </div>
             </Grid>
             <Savebar
-              disabled={disabled || !hasChanged}
+              disabled={saveDisabled}
               state={saveButtonBarState}
               onCancel={onBack}
               onSubmit={submit}

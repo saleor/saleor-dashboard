@@ -9,6 +9,7 @@ import { CountryFragment, ShippingErrorFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { basicFormDisableConditions } from "@saleor/misc";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -66,8 +67,13 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
   };
 
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, hasChanged, submit }) => (
+    <Form
+      confirmLeave
+      initial={initialForm}
+      onSubmit={onSubmit}
+      isDisabled={opts => basicFormDisableConditions(opts, disabled)}
+    >
+      {({ change, data, saveDisabled, submit }) => (
         <>
           <Container>
             <Backlink onClick={onBack}>
@@ -105,7 +111,7 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
               </div>
             </Grid>
             <Savebar
-              disabled={disabled || !hasChanged}
+              disabled={saveDisabled}
               onCancel={onBack}
               onSubmit={submit}
               state={saveButtonBarState}
