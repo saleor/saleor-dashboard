@@ -149,7 +149,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
               </TableCell>
               <TableCell className={classes.colType}>
                 <FormattedMessage
-                  defaultMessage="Cost Price"
+                  defaultMessage="Cost price"
                   description="tabel column header"
                 />
               </TableCell>
@@ -206,7 +206,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                           className={classes.input}
                           error={!!costPriceError}
                           label={intl.formatMessage({
-                            defaultMessage: "Cost Price",
+                            defaultMessage: "Cost",
                             description: "tabel column header"
                           })}
                           name={`${listing.id}-channel-costPrice`}

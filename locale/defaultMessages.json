@@ -6869,9 +6869,9 @@
     "context": "tabel column header",
     "string": "Selling Price"
   },
-  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_2051669917": {
+  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_2644882304": {
     "context": "tabel column header",
-    "string": "Cost Price"
+    "string": "Cost"
   },
   "src_dot_products_dot_components_dot_ProductVariantPrice_dot_3211447524": {
     "context": "info text",
@@ -6883,6 +6883,10 @@
   },
   "src_dot_products_dot_components_dot_ProductVariantPrice_dot_4097816011": {
     "string": "No channels found"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_819659341": {
+    "context": "tabel column header",
+    "string": "Cost price"
   },
   "src_dot_products_dot_components_dot_ProductVariantSetDefault_dot_3683859003": {
     "context": "set variant as default, button",
