@@ -157,7 +157,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
     privateMetadata: sale?.privateMetadata.map(mapMetadataItemToInput)
   };
 
-  const isFormDisabled = (data: SaleDetailsPageFormData & FormDataWithOpts) =>
+  const isFormDisabled = (data: FormDataWithOpts<SaleDetailsPageFormData>) =>
     data.channelListings?.some(channel => validateSalePrice(data, channel)) ||
     disabled ||
     (!data.hasChanged && !hasChannelChanged);
@@ -170,7 +170,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
       formId={SALE_UPDATE_FORM_ID}
       isDisabled={isFormDisabled}
     >
-      {({ change, data, submit, triggerChange, saveDisabled }) => {
+      {({ change, data, submit, triggerChange, isSaveDisabled }) => {
         const handleChannelChange = createSaleChannelsChangeHandler(
           data.channelListings,
           onChannelsChange,
@@ -374,7 +374,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
               <Metadata data={data} onChange={changeMetadata} />
             </Grid>
             <Savebar
-              disabled={saveDisabled}
+              disabled={isSaveDisabled}
               onCancel={onBack}
               onDelete={onRemove}
               onSubmit={submit}

@@ -90,8 +90,8 @@ function useCategoryCreateForm(
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
-  const saveDisabled = disabled || !hasChanged;
-  setIsSubmitDisabled(saveDisabled);
+  const isSaveDisabled = disabled || !hasChanged;
+  setIsSubmitDisabled(isSaveDisabled);
 
   return {
     change: handleChange,
@@ -102,7 +102,7 @@ function useCategoryCreateForm(
     },
     hasChanged,
     submit,
-    saveDisabled
+    isSaveDisabled
   };
 }
 

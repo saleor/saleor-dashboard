@@ -441,9 +441,9 @@ function useProductUpdateForm(
 
   const isSaveEnabled = !shouldEnableSave();
 
-  const saveDisabled =
+  const isSaveDisabled =
     disabled || isSaveEnabled || (!hasChanged && !hasChannelChanged);
-  setIsSubmitDisabled(saveDisabled);
+  setIsSubmitDisabled(isSaveDisabled);
 
   return {
     change: handleChange,
@@ -472,7 +472,7 @@ function useProductUpdateForm(
     },
     hasChanged,
     submit,
-    saveDisabled
+    isSaveDisabled
   };
 }
 

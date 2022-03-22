@@ -65,15 +65,15 @@ function useOrderSettingsForm(
   });
 
   const submit = () => handleFormSubmit(data);
-  const saveDisabled = disabled || !hasChanged;
-  setIsSubmitDisabled(saveDisabled);
+  const isSaveDisabled = disabled || !hasChanged;
+  setIsSubmitDisabled(isSaveDisabled);
 
   return {
     change: handleChange,
     data,
     hasChanged,
     submit,
-    saveDisabled
+    isSaveDisabled
   };
 }
 

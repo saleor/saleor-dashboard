@@ -72,7 +72,7 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
       onSubmit={onSubmit}
       disabled={disabled}
     >
-      {({ change, data, saveDisabled, submit }) => (
+      {({ change, data, isSaveDisabled, submit }) => (
         <>
           <Container>
             <Backlink onClick={onBack}>
@@ -110,7 +110,7 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
               </div>
             </Grid>
             <Savebar
-              disabled={saveDisabled}
+              disabled={isSaveDisabled}
               onCancel={onBack}
               onSubmit={submit}
               state={saveButtonBarState}

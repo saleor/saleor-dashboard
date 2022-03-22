@@ -249,8 +249,8 @@ function useOrderReturnForm(
     waitingItemsQuantities.data.some(({ value }) => !!value) ||
     unfulfiledItemsQuantites.data.some(({ value }) => !!value);
 
-  const saveDisabled = !hasAnyItemsSelected;
-  setIsSubmitDisabled(saveDisabled);
+  const isSaveDisabled = !hasAnyItemsSelected;
+  setIsSubmitDisabled(isSaveDisabled);
 
   return {
     change: handleChange,
@@ -271,7 +271,7 @@ function useOrderReturnForm(
     },
     hasChanged,
     submit,
-    saveDisabled
+    isSaveDisabled
   };
 }
 

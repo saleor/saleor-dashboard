@@ -97,7 +97,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
       onSubmit={onSubmit}
       disabled={disabled}
     >
-      {({ data, change, handlers, submit, saveDisabled }) => (
+      {({ data, change, handlers, submit, isSaveDisabled }) => (
         <Container>
           <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.categories)}
@@ -221,7 +221,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
             onDelete={onDelete}
             onSubmit={submit}
             state={saveButtonBarState}
-            disabled={saveDisabled}
+            disabled={isSaveDisabled}
           />
         </Container>
       )}

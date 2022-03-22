@@ -97,7 +97,7 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
       onSubmit={onSubmit}
       disabled={disabled}
     >
-      {({ change, data, saveDisabled, submit }) => {
+      {({ change, data, isSaveDisabled, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         const changeKind = makeProductTypeKindChangeHandler(
@@ -150,7 +150,7 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
             <Savebar
               onCancel={onBack}
               onSubmit={submit}
-              disabled={saveDisabled}
+              disabled={isSaveDisabled}
               state={saveButtonBarState}
             />
           </Container>

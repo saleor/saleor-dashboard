@@ -53,7 +53,7 @@ export interface CommonUseFormResult<TData> {
   change: FormChange;
   hasChanged: boolean;
   submit: (dataOrEvent?: any) => SubmitPromise<any[]>;
-  saveDisabled?: boolean;
+  isSaveDisabled?: boolean;
 }
 
 export interface CommonUseFormResultWithHandlers<TData, THandlers>
@@ -101,7 +101,7 @@ function useForm<T extends FormData, TErrors>(
 
   const basicFormDisableConditions = () => !hasChanged || disabled;
 
-  const saveDisabled = () => {
+  const isSaveDisabled = () => {
     if (isDisabled) {
       return isDisabled({
         ...data,
@@ -122,7 +122,10 @@ function useForm<T extends FormData, TErrors>(
     setEnableExitDialog,
     setIsSubmitDisabled,
     formId
-  } = useExitFormDialog({ formId: propsFormId, isDisabled: saveDisabled() });
+  } = useExitFormDialog({
+    formId: propsFormId,
+    isDisabled: isSaveDisabled()
+  });
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
@@ -241,7 +244,7 @@ function useForm<T extends FormData, TErrors>(
     triggerChange: handleSetChanged,
     setChanged: handleSetChanged,
     setIsSubmitDisabled,
-    saveDisabled: saveDisabled()
+    isSaveDisabled: isSaveDisabled()
   };
 }
 

@@ -90,7 +90,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
       onSubmit={handleSubmit}
       disabled={disabled}
     >
-      {({ change, data, saveDisabled, submit, set }) => {
+      {({ change, data, isSaveDisabled, submit, set }) => {
         const countryChoices = mapCountriesToChoices(countries);
         const handleCountryChange = createSingleAutocompleteSelectHandler(
           change,
@@ -139,7 +139,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
               </div>
             </Grid>
             <Savebar
-              disabled={saveDisabled}
+              disabled={isSaveDisabled}
               onCancel={onBack}
               onDelete={onDelete}
               onSubmit={submit}

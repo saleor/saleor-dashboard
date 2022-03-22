@@ -235,8 +235,8 @@ function useProductVariantCreateForm(
     data.hasPreorderEndDate &&
     !!form.errors.preorderEndDateTime;
 
-  const saveDisabled = disabled || formDisabled || !onSubmit;
-  setIsSubmitDisabled(saveDisabled);
+  const isSaveDisabled = disabled || formDisabled || !onSubmit;
+  setIsSubmitDisabled(isSaveDisabled);
 
   return {
     change: handleChange,
@@ -259,7 +259,7 @@ function useProductVariantCreateForm(
     },
     hasChanged,
     submit,
-    saveDisabled
+    isSaveDisabled
   };
 }
 

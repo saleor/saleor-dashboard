@@ -137,7 +137,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
       onSubmit={onSubmit}
       disabled={loading}
     >
-      {({ change, data, handlers, submit, saveDisabled }) => (
+      {({ change, data, handlers, submit, isSaveDisabled }) => (
         <Container>
           <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.pages)}
@@ -243,7 +243,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
             </div>
           </Grid>
           <Savebar
-            disabled={saveDisabled}
+            disabled={isSaveDisabled}
             state={saveButtonBarState}
             onCancel={onBack}
             onDelete={page === null ? undefined : onRemove}

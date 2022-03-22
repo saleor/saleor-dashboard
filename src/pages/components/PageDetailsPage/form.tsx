@@ -240,8 +240,8 @@ function usePageForm(
 
   const valid = pageExists || !!opts.selectedPageType;
 
-  const saveDisabled = disabled || !hasChanged || !valid;
-  setIsSubmitDisabled(saveDisabled);
+  const isSaveDisabled = disabled || !hasChanged || !valid;
+  setIsSubmitDisabled(isSaveDisabled);
 
   return {
     change: handleChange,
@@ -261,7 +261,7 @@ function usePageForm(
     },
     hasChanged,
     submit,
-    saveDisabled
+    isSaveDisabled
   };
 }
 

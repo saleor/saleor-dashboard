@@ -62,7 +62,7 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
       onSubmit={onSubmit}
       disabled={disabled}
     >
-      {({ data, change, submit, saveDisabled }) => (
+      {({ data, change, submit, isSaveDisabled }) => (
         <Container>
           <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.apps)}
@@ -101,7 +101,7 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
             />
           </Grid>
           <Savebar
-            disabled={saveDisabled}
+            disabled={isSaveDisabled}
             state={saveButtonBarState}
             onCancel={onBack}
             onSubmit={submit}

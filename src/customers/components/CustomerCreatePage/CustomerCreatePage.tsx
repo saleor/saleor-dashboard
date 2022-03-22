@@ -141,7 +141,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
       onSubmit={handleSubmit}
       disabled={disabled}
     >
-      {({ change, data, saveDisabled, submit }) => {
+      {({ change, data, isSaveDisabled, submit }) => {
         const handleCountrySelect = createSingleAutocompleteSelectHandler(
           change,
           setCountryDisplayName,
@@ -187,7 +187,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
               </div>
             </Grid>
             <Savebar
-              disabled={saveDisabled}
+              disabled={isSaveDisabled}
               state={saveButtonBar}
               onSubmit={submit}
               onCancel={onBack}

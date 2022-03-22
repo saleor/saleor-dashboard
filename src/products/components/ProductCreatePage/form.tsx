@@ -391,8 +391,8 @@ function useProductCreateForm(
 
   const isSaveEnabled = !shouldEnableSave();
 
-  const saveDisabled = loading || !onSubmit || isSaveEnabled || !hasChanged;
-  setIsSubmitDisabled(saveDisabled);
+  const isSaveDisabled = loading || !onSubmit || isSaveEnabled || !hasChanged;
+  setIsSubmitDisabled(isSaveDisabled);
 
   return {
     change: handleChange,
@@ -422,7 +422,7 @@ function useProductCreateForm(
     },
     hasChanged,
     submit,
-    saveDisabled
+    isSaveDisabled
   };
 }
 

@@ -287,7 +287,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       disabled={disabled}
       hasChannelChanged={hasChannelChanged}
     >
-      {({ change, data, formErrors, handlers, submit, saveDisabled }) => (
+      {({ change, data, formErrors, handlers, submit, isSaveDisabled }) => (
         <>
           <Container>
             <Backlink onClick={onBack}>
@@ -502,7 +502,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
               onDelete={onDelete}
               onSubmit={submit}
               state={saveButtonBarState}
-              disabled={saveDisabled}
+              disabled={isSaveDisabled}
             />
             {canOpenAssignReferencesAttributeDialog && (
               <AssignAttributeValueDialog

@@ -77,7 +77,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
       key={selectedChannelId}
       disabled={disabled}
     >
-      {({ data, submit, set, saveDisabled }) => {
+      {({ data, submit, set, isSaveDisabled }) => {
         const onChange = (event: ChangeEvent) => {
           const { name, value } = event.target;
           const newData = {
@@ -160,7 +160,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
               </div>
             </Grid>
             <Savebar
-              disabled={saveDisabled}
+              disabled={isSaveDisabled}
               state={saveButtonBarState}
               onCancel={onBack}
               onSubmit={submit}

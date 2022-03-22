@@ -335,8 +335,8 @@ function useProductVariantUpdateForm(
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
-  const saveDisabled = loading || disabled || !hasChanged;
-  setIsSubmitDisabled(saveDisabled);
+  const isSaveDisabled = loading || disabled || !hasChanged;
+  setIsSubmitDisabled(isSaveDisabled);
 
   return {
     change: handleChange,
@@ -360,7 +360,7 @@ function useProductVariantUpdateForm(
     },
     hasChanged,
     submit,
-    saveDisabled
+    isSaveDisabled
   };
 }
 

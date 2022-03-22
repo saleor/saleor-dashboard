@@ -86,7 +86,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
       onSubmit={onSubmit}
       disabled={disabled}
     >
-      {({ change, data, saveDisabled, submit }) => {
+      {({ change, data, isSaveDisabled, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
@@ -141,7 +141,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
               </div>
             </Grid>
             <Savebar
-              disabled={saveDisabled}
+              disabled={isSaveDisabled}
               state={saveButtonBar}
               onSubmit={submit}
               onCancel={onBack}

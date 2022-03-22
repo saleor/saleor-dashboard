@@ -45,7 +45,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
   const intl = useIntl();
   return (
     <OrderRefundForm order={order} onSubmit={onSubmit}>
-      {({ data, handlers, change, submit, saveDisabled }) => (
+      {({ data, handlers, change, submit, isSaveDisabled }) => (
         <Container>
           <Backlink onClick={onBack}>
             {intl.formatMessage(messages.appTitle, {
@@ -126,7 +126,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                 amountData={getReturnProductsAmountValues(order, data)}
                 data={data}
                 order={order}
-                disableSubmitButton={saveDisabled}
+                disableSubmitButton={isSaveDisabled}
                 disabled={loading}
                 errors={errors}
                 onChange={change}

@@ -76,7 +76,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
       disabled={disabled}
       hasChannelChanged={hasChannelChanged}
     >
-      {({ change, data, handlers, submit, saveDisabled }) => (
+      {({ change, data, handlers, submit, isSaveDisabled }) => (
         <Container>
           <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.collections)}
@@ -152,7 +152,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
           </Grid>
           <Savebar
             state={saveButtonBarState}
-            disabled={saveDisabled}
+            disabled={isSaveDisabled}
             onCancel={onBack}
             onDelete={onCollectionRemove}
             onSubmit={submit}

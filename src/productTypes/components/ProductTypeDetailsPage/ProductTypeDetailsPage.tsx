@@ -162,7 +162,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
       confirmLeave
       disabled={disabled}
     >
-      {({ change, data, saveDisabled, submit, setChanged }) => {
+      {({ change, data, isSaveDisabled, submit, setChanged }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
@@ -261,7 +261,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
               onCancel={onBack}
               onDelete={onDelete}
               onSubmit={submit}
-              disabled={saveDisabled}
+              disabled={isSaveDisabled}
               state={saveButtonBarState}
             />
           </Container>

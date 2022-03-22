@@ -61,7 +61,7 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
       onSubmit={onSubmit}
       disabled={disabled}
     >
-      {({ data, change, submit, saveDisabled }) => (
+      {({ data, change, submit, isSaveDisabled }) => (
         <Container>
           <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.permissionGroups)}
@@ -100,7 +100,7 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
               onCancel={onBack}
               onSubmit={submit}
               state={saveButtonBarState}
-              disabled={saveDisabled}
+              disabled={isSaveDisabled}
             />
           </div>
         </Container>

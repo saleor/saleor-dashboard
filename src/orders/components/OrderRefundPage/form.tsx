@@ -193,8 +193,8 @@ function useOrderRefundForm(
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
-  const saveDisabled = disabled || !order;
-  setIsSubmitDisabled(saveDisabled);
+  const isSaveDisabled = disabled || !order;
+  setIsSubmitDisabled(isSaveDisabled);
 
   return {
     change: handleChange,
@@ -208,7 +208,7 @@ function useOrderRefundForm(
     },
     hasChanged,
     submit,
-    saveDisabled
+    isSaveDisabled
   };
 }
 

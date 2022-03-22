@@ -11,7 +11,6 @@ import uniqBy from "lodash/uniqBy";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
 
-import { FormDataWithOpts } from "./components/Form";
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
 import { AddressType, AddressTypeInput } from "./customers/types";
 import { AddressFragment } from "./graphql";

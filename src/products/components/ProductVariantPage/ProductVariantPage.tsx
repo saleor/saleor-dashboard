@@ -220,7 +220,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           assignReferencesAttributeId={assignReferencesAttributeId}
           loading={loading}
         >
-          {({ change, data, formErrors, saveDisabled, handlers, submit }) => {
+          {({ change, data, formErrors, isSaveDisabled, handlers, submit }) => {
             const nonSelectionAttributes = data.attributes.filter(
               byAttributeScope(VariantAttributeScope.NOT_VARIANT_SELECTION)
             );
@@ -366,7 +366,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                   </div>
                 </Grid>
                 <Savebar
-                  disabled={saveDisabled}
+                  disabled={isSaveDisabled}
                   state={saveButtonBarState}
                   onCancel={onBack}
                   onDelete={onDelete}

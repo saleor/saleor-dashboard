@@ -107,7 +107,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
       onSubmit={onSubmit}
       disabled={disabled}
     >
-      {({ data: formData, change, saveDisabled, submit, toggleValue }) => {
+      {({ data: formData, change, isSaveDisabled, submit, toggleValue }) => {
         const permissionGroupsChange = createMultiAutocompleteSelectHandler(
           toggleValue,
           setPermissionGroupsDisplayValues,
@@ -192,7 +192,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
               </div>
             </Grid>
             <Savebar
-              disabled={saveDisabled}
+              disabled={isSaveDisabled}
               state={saveButtonBarState}
               onCancel={onBack}
               onSubmit={submit}

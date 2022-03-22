@@ -52,7 +52,7 @@ const CountryListPage: React.FC<CountryListPageProps> = ({
       onSubmit={onSubmit}
       disabled={disabled}
     >
-      {({ change, data, saveDisabled, submit }) => (
+      {({ change, data, isSaveDisabled, submit }) => (
         <>
           <Container>
             <Backlink onClick={onBack}>
@@ -82,7 +82,7 @@ const CountryListPage: React.FC<CountryListPageProps> = ({
             </Grid>
           </Container>
           <Savebar
-            disabled={saveDisabled}
+            disabled={isSaveDisabled}
             state={saveButtonBarState}
             onCancel={onBack}
             onSubmit={submit}

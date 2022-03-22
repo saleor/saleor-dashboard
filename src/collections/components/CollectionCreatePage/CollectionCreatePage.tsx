@@ -56,7 +56,7 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
       setChannels={onChannelsChange}
       disabled={disabled}
     >
-      {({ change, data, handlers, submit, saveDisabled }) => (
+      {({ change, data, handlers, submit, isSaveDisabled }) => (
         <Container>
           <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.collections)}
@@ -157,7 +157,7 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
           </Grid>
           <Savebar
             state={saveButtonBarState}
-            disabled={saveDisabled}
+            disabled={isSaveDisabled}
             onCancel={onBack}
             onSubmit={submit}
           />

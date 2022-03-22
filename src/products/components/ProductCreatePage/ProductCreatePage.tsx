@@ -204,7 +204,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       assignReferencesAttributeId={assignReferencesAttributeId}
       loading={loading}
     >
-      {({ change, data, formErrors, handlers, submit, saveDisabled }) => {
+      {({ change, data, formErrors, handlers, submit, isSaveDisabled }) => {
         // Comparing explicitly to false because `hasVariants` can be undefined
         const isSimpleProduct = data.productType?.hasVariants === false;
 
@@ -360,7 +360,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
               onCancel={onBack}
               onSubmit={submit}
               state={saveButtonBarState}
-              disabled={saveDisabled}
+              disabled={isSaveDisabled}
             />
             {canOpenAssignReferencesAttributeDialog && (
               <AssignAttributeValueDialog

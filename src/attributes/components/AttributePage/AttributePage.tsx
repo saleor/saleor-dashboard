@@ -166,7 +166,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
         change,
         set,
         data,
-        saveDisabled,
+        isSaveDisabled,
         submit,
         errors,
         setError,
@@ -244,7 +244,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
                 </div>
               </Grid>
               <Savebar
-                disabled={saveDisabled}
+                disabled={isSaveDisabled}
                 state={saveButtonBarState}
                 onCancel={onBack}
                 onSubmit={submit}

@@ -131,8 +131,8 @@ function useCollectionUpdateForm(
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
-  const saveDisabled = disabled || (!hasChanged && !hasChannelChanged);
-  setIsSubmitDisabled(saveDisabled);
+  const isSaveDisabled = disabled || (!hasChanged && !hasChannelChanged);
+  setIsSubmitDisabled(isSaveDisabled);
 
   return {
     change: handleChange,
@@ -144,7 +144,7 @@ function useCollectionUpdateForm(
     },
     hasChanged,
     submit,
-    saveDisabled
+    isSaveDisabled
   };
 }
 

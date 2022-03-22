@@ -136,7 +136,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
       confirmLeave
       disabled={disabled}
     >
-      {({ change, data, saveDisabled, submit }) => {
+      {({ change, data, isSaveDisabled, submit }) => {
         const countryChoices = mapCountriesToChoices(shop?.countries || []);
         const handleCountryChange = createSingleAutocompleteSelectHandler(
           change,
@@ -202,7 +202,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
             </Grid>
             <Savebar
               state={saveButtonBarState}
-              disabled={saveDisabled}
+              disabled={isSaveDisabled}
               onCancel={onBack}
               onSubmit={submit}
             />

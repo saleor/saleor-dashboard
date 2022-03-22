@@ -130,7 +130,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
       confirmLeave
       disabled={disabled}
     >
-      {({ change, data, saveDisabled, submit, toggleValue }) => {
+      {({ change, data, isSaveDisabled, submit, toggleValue }) => {
         const handleWarehouseChange = createMultiAutocompleteSelectHandler(
           toggleValue,
           setWarehouseDisplayValues,
@@ -220,7 +220,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
               </div>
             </Grid>
             <Savebar
-              disabled={saveDisabled}
+              disabled={isSaveDisabled}
               onCancel={onBack}
               onDelete={onDelete}
               onSubmit={submit}
