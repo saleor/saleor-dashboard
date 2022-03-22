@@ -81,7 +81,7 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
     privateMetadata: []
   };
 
-  const isFormDisabled = (data: FormDataWithOpts<FormData>) =>
+  const checkIfSaveIsDisabled = (data: FormDataWithOpts<FormData>) =>
     data.channelListings?.some(channel => validateSalePrice(data, channel)) ||
     disabled ||
     !data.hasChanged;
@@ -92,7 +92,7 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
       initial={initialForm}
       onSubmit={onSubmit}
       formId={SALE_CREATE_FORM_ID}
-      isDisabled={isFormDisabled}
+      checkIfSaveIsDisabled={checkIfSaveIsDisabled}
     >
       {({ change, data, submit, triggerChange, isSaveDisabled }) => {
         const handleChannelChange = createSaleChannelsChangeHandler(

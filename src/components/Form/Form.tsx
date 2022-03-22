@@ -6,7 +6,9 @@ import { FormId } from "./ExitFormDialogProvider";
 export type FormDataWithOpts<TData> = TData &
   Pick<UseFormResult<TData>, "hasChanged">;
 
-export type IsDisabledFnType<T> = (data: FormDataWithOpts<T>) => boolean;
+export type CheckIfSaveIsDisabledFnType<T> = (
+  data: FormDataWithOpts<T>
+) => boolean;
 
 export interface FormProps<TData, TErrors>
   extends Omit<React.HTMLProps<HTMLFormElement>, "onSubmit"> {
@@ -16,7 +18,7 @@ export interface FormProps<TData, TErrors>
   resetOnSubmit?: boolean;
   onSubmit?: (data: TData) => SubmitPromise<TErrors[]> | void;
   formId?: FormId;
-  isDisabled?: IsDisabledFnType<TData>;
+  checkIfSaveIsDisabled?: CheckIfSaveIsDisabledFnType<TData>;
 }
 
 function Form<TData, Terrors>({
@@ -26,14 +28,14 @@ function Form<TData, Terrors>({
   onSubmit,
   confirmLeave = false,
   formId,
-  isDisabled,
+  checkIfSaveIsDisabled,
   disabled,
   ...rest
 }: FormProps<TData, Terrors>) {
   const renderProps = useForm(initial, onSubmit, {
     confirmLeave,
     formId,
-    isDisabled,
+    checkIfSaveIsDisabled,
     disabled
   });
 

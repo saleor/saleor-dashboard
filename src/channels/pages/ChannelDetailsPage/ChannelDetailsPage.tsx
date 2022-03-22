@@ -94,7 +94,7 @@ const ChannelDetailsPage = function<TErrors>({
         !shippingZonesToDisplay.some(({ id }) => id === searchedZoneId)
     );
 
-  const isDisabled = (data: FormDataWithOpts<FormData>) => {
+  const checkIfSaveIsDisabled = (data: FormDataWithOpts<FormData>) => {
     const formDisabled =
       !data.name ||
       !data.slug ||
@@ -110,7 +110,7 @@ const ChannelDetailsPage = function<TErrors>({
       confirmLeave
       onSubmit={onSubmit}
       initial={initialData}
-      isDisabled={isDisabled}
+      checkIfSaveIsDisabled={checkIfSaveIsDisabled}
     >
       {({ change, data, submit, set, isSaveDisabled }) => {
         const handleCurrencyCodeSelect = createSingleAutocompleteSelectHandler(

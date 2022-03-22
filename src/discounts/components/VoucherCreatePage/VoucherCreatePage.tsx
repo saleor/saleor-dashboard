@@ -91,7 +91,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     privateMetadata: []
   };
 
-  const isFormDisabled = (data: FormDataWithOpts<FormData>) =>
+  const checkIfSaveIsDisabled = (data: FormDataWithOpts<FormData>) =>
     (data.discountType.toString() !== "SHIPPING" &&
       data.channelListings?.some(
         channel =>
@@ -108,7 +108,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
       initial={initialForm}
       onSubmit={onSubmit}
       formId={VOUCHER_CREATE_FORM_ID}
-      isDisabled={isFormDisabled}
+      checkIfSaveIsDisabled={checkIfSaveIsDisabled}
     >
       {({ change, data, submit, triggerChange, set, isSaveDisabled }) => {
         const handleDiscountTypeChange = createDiscountTypeChangeHandler(

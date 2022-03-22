@@ -1,4 +1,4 @@
-import { IsDisabledFnType } from "@saleor/components/Form";
+import { CheckIfSaveIsDisabledFnType } from "@saleor/components/Form";
 import { FormId } from "@saleor/components/Form/ExitFormDialogProvider";
 import {
   useExitFormDialog,
@@ -29,7 +29,7 @@ export type FormErrors<T> = {
 export interface UseFormOpts<T> {
   confirmLeave: boolean;
   formId?: FormId;
-  isDisabled?: IsDisabledFnType<T>;
+  checkIfSaveIsDisabled?: CheckIfSaveIsDisabledFnType<T>;
   disabled?: boolean;
 }
 
@@ -91,7 +91,12 @@ function useForm<T extends FormData, TErrors>(
   onSubmit?: (data: T) => SubmitPromise<TErrors[]> | void,
   opts: UseFormOpts<T> = { confirmLeave: false, formId: undefined }
 ): UseFormResult<T> {
-  const { confirmLeave, formId: propsFormId, isDisabled, disabled } = opts;
+  const {
+    confirmLeave,
+    formId: propsFormId,
+    checkIfSaveIsDisabled,
+    disabled
+  } = opts;
   const [hasChanged, setChanged] = useState(false);
   const [errors, setErrors] = useState<FormErrors<T>>({});
   const [data, setData] = useStateFromProps(initialData, {
@@ -102,8 +107,8 @@ function useForm<T extends FormData, TErrors>(
   const basicFormDisableConditions = () => !hasChanged || disabled;
 
   const isSaveDisabled = () => {
-    if (isDisabled) {
-      return isDisabled({
+    if (checkIfSaveIsDisabled) {
+      return checkIfSaveIsDisabled({
         ...data,
         hasChanged
       });
