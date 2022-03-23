@@ -9,10 +9,7 @@ import {
 import useNavigator from "@saleor/hooks/useNavigator";
 import { CustomerEditData } from "@saleor/orders/components/OrderCustomer";
 import { OrderCustomerAddressesEditDialogOutput } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/types";
-import {
-  CustomerChangeActionEnum,
-  OrderCustomerChangeData
-} from "@saleor/orders/components/OrderCustomerChangeDialog/form";
+import { CustomerChangeActionEnum } from "@saleor/orders/components/OrderCustomerChangeDialog/form";
 import OrderCustomerChangeDialog from "@saleor/orders/components/OrderCustomerChangeDialog/OrderCustomerChangeDialog";
 import { getVariantSearchAddress } from "@saleor/orders/utils/data";
 import { OrderDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
@@ -62,11 +59,7 @@ interface OrderDraftDetailsProps {
 }
 
 export const isAnyAddressEditModalOpen = (uri: string | undefined): boolean =>
-  [
-    "edit-customer-addresses",
-    "edit-shipping-address",
-    "edit-billing-address"
-  ].includes(uri);
+  ["edit-shipping-address", "edit-billing-address"].includes(uri);
 
 export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   id,
@@ -114,7 +107,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     variables: {
       id: order?.user?.id
     },
-    skip: !order?.user?.id || !isAnyAddressEditModalOpen(params.action)
+    skip: !order?.user?.id
   });
 
   const intl = useIntl();
@@ -143,13 +136,13 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
       return;
     }
 
-    const modalUri = prevUser ? "customer-change" : "edit-customer-addresses";
+    const modalUri = prevUser ? "customer-change" : "edit-customer-address";
     openModal(modalUri);
   };
 
-  const handleCustomerChangeAction = (data: OrderCustomerChangeData) => {
-    if (data.changeActionOption === CustomerChangeActionEnum.CHANGE_ADDRESS) {
-      openModal("edit-customer-addresses");
+  const handleCustomerChangeAction = (choice: CustomerChangeActionEnum) => {
+    if (choice === CustomerChangeActionEnum.CHANGE_ADDRESS) {
+      openModal("edit-customer-address");
     } else {
       closeModal();
     }
@@ -270,14 +263,11 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
       <OrderCustomerChangeDialog
         open={params.action === "customer-change"}
         onClose={closeModal}
-        onConfirm={handleCustomerChangeAction}
+        onChoiceClick={handleCustomerChangeAction}
       />
       <OrderAddressFields
         action={params?.action}
-        orderShippingAddress={order?.shippingAddress}
-        orderBillingAddress={order?.billingAddress}
-        customerAddressesLoading={customerAddressesLoading}
-        isDraft
+        customerAddressesLoading={customerAddressesLoading || loading}
         countries={data?.shop?.countries}
         customer={customerAddresses?.user}
         onClose={closeModal}

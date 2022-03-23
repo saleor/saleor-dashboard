@@ -412,9 +412,6 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
       <OrderAddressFields
         action={params?.action}
         customerAddressesLoading={customerAddressesLoading}
-        orderShippingAddress={order?.shippingAddress}
-        orderBillingAddress={order?.billingAddress}
-        isDraft={false}
         countries={data?.shop?.countries}
         customer={customerAddresses?.user}
         onClose={closeModal}

@@ -9,8 +9,7 @@ export const useStyles = makeStyles(
       borderWidth: "2px"
     },
     cardSelected: {
-      borderColor: theme.palette.primary.main,
-      cursor: "pointer"
+      borderColor: theme.palette.primary.main
     },
     cardContent: {
       display: "flex",

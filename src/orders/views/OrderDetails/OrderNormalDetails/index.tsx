@@ -335,10 +335,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
       />
       <OrderAddressFields
         action={params?.action}
-        orderShippingAddress={order?.shippingAddress}
-        orderBillingAddress={order?.billingAddress}
         customerAddressesLoading={customerAddressesLoading}
-        isDraft={false}
         countries={data?.shop?.countries}
         customer={customerAddresses?.user}
         onClose={closeModal}

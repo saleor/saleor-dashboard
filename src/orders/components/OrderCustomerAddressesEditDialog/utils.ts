@@ -15,7 +15,6 @@ import {
   OrderCustomerAddressesEditHandlers
 } from "./form";
 import { OrderCustomerAddressEditProps } from "./OrderCustomerAddressEdit";
-import { OrderCustomerSearchAddressState } from "./types";
 
 interface AddressEditCommonProps {
   showCard: boolean;
@@ -54,11 +53,8 @@ export const getAddressEditProps = (
   handlers: OrderCustomerAddressesEditHandlers,
   change: FormChange,
   dialogErrors: Array<OrderErrorFragment | AccountErrorFragment>,
-  setAddressSearchState: React.Dispatch<
-    React.SetStateAction<OrderCustomerSearchAddressState>
-  >,
   addressEditCommonProps: AddressEditCommonProps
-): OrderCustomerAddressEditProps => {
+): Omit<OrderCustomerAddressEditProps, "onChangeCustomerAddress"> => {
   if (variant === "shipping") {
     return {
       ...addressEditCommonProps,
@@ -66,11 +62,6 @@ export const getAddressEditProps = (
       formErrors: dialogErrors.filter(
         error => error.addressType === AddressTypeEnum.SHIPPING
       ),
-      onEdit: () =>
-        setAddressSearchState({
-          open: true,
-          type: AddressTypeEnum.SHIPPING
-        }),
       onChangeAddressInputOption: change,
       addressInputOption: data.shippingAddressInputOption,
       selectedCustomerAddressId: data.customerShippingAddress?.id,
@@ -87,11 +78,6 @@ export const getAddressEditProps = (
     formErrors: dialogErrors.filter(
       error => error.addressType === AddressTypeEnum.BILLING
     ),
-    onEdit: () =>
-      setAddressSearchState({
-        open: true,
-        type: AddressTypeEnum.BILLING
-      }),
     onChangeAddressInputOption: change,
     addressInputOption: data.billingAddressInputOption,
     selectedCustomerAddressId: data.customerBillingAddress?.id,

@@ -1,12 +1,10 @@
 import {
-  AddressFragment,
   CustomerAddressesQuery,
   OrderDetailsQuery,
   OrderErrorFragment
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { transformAddressToForm } from "@saleor/misc";
 import React from "react";
 
 import OrderCustomerAddressesEditDialog, {
@@ -19,7 +17,6 @@ import {
 
 interface OrderAddressFieldsProps {
   action: string;
-  isDraft: boolean;
   customerAddressesLoading: boolean;
   customer: CustomerAddressesQuery["user"];
   countries: OrderDetailsQuery["shop"]["countries"];
@@ -27,22 +24,30 @@ interface OrderAddressFieldsProps {
   onConfirm: (data: OrderCustomerAddressesEditDialogOutput) => SubmitPromise;
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
-  orderShippingAddress: AddressFragment;
-  orderBillingAddress: AddressFragment;
 }
+
+const getVariant = (action: string) => {
+  switch (action) {
+    case "edit-customer-address":
+      return AddressEditDialogVariant.CHANGE_CUSTOMER_ADDRESS;
+    case "edit-shipping-address":
+      return AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS;
+    case "edit-billing-address":
+      return AddressEditDialogVariant.CHANGE_BILLING_ADDRESS;
+    default:
+      return undefined;
+  }
+};
 
 const OrderAddressFields: React.FC<OrderAddressFieldsProps> = ({
   action,
-  isDraft,
   customerAddressesLoading,
   customer,
   countries,
   onClose,
   onConfirm,
   confirmButtonState,
-  errors,
-  orderShippingAddress,
-  orderBillingAddress
+  errors
 }) => {
   const addressFieldCommonProps: Omit<
     OrderCustomerAddressesEditDialogProps,
@@ -52,8 +57,6 @@ const OrderAddressFields: React.FC<OrderAddressFieldsProps> = ({
     confirmButtonState,
     countries,
     errors,
-    orderShippingAddress: transformAddressToForm(orderShippingAddress),
-    orderBillingAddress: transformAddressToForm(orderBillingAddress),
     customerAddresses: customer?.addresses,
     defaultShippingAddress: customer?.defaultShippingAddress,
     defaultBillingAddress: customer?.defaultBillingAddress,
@@ -62,26 +65,11 @@ const OrderAddressFields: React.FC<OrderAddressFieldsProps> = ({
   };
 
   return (
-    <>
-      {isDraft && (
-        <OrderCustomerAddressesEditDialog
-          open={action === "edit-customer-addresses"}
-          variant={AddressEditDialogVariant.CHANGE_CUSTOMER}
-          {...addressFieldCommonProps}
-        />
-      )}
-
-      <OrderCustomerAddressesEditDialog
-        open={action === "edit-shipping-address"}
-        variant={AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS}
-        {...addressFieldCommonProps}
-      />
-      <OrderCustomerAddressesEditDialog
-        open={action === "edit-billing-address"}
-        variant={AddressEditDialogVariant.CHANGE_BILLING_ADDRESS}
-        {...addressFieldCommonProps}
-      />
-    </>
+    <OrderCustomerAddressesEditDialog
+      open={!!getVariant(action)}
+      variant={getVariant(action)}
+      {...addressFieldCommonProps}
+    />
   );
 };
 

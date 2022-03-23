@@ -5,7 +5,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { customer } from "../../../customers/fixtures";
-import { transformAddressToForm } from "../../../misc";
+import { getAddressFormData } from "../../../misc";
 import { countries } from "../../../orders/fixtures";
 import Decorator from "../../Decorator";
 
@@ -21,7 +21,7 @@ storiesOf("Generics / AddressEdit", module)
       <CardContent>
         <AddressEdit
           errors={[]}
-          data={transformAddressToForm(customer.defaultBillingAddress)}
+          data={getAddressFormData(customer.defaultBillingAddress)}
           countries={mapCountriesToChoices(countries)}
           countryDisplayValue={customer.defaultBillingAddress.country.country}
           onChange={undefined}

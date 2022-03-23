@@ -10,6 +10,10 @@ export const useStyles = makeStyles(
     },
     overflow: {
       overflowY: "visible"
+    },
+    buttonsContainer: {
+      display: "flex",
+      justifyContent: "flex-end"
     }
   },
   { name: "OrderCustomerChangeDialog" }

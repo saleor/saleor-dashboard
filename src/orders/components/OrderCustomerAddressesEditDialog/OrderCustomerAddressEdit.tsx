@@ -1,10 +1,7 @@
-import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
+import { Divider } from "@material-ui/core";
 import AddressEdit from "@saleor/components/AddressEdit";
-import CardSpacer from "@saleor/components/CardSpacer";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import Skeleton from "@saleor/components/Skeleton";
-import CustomerAddressChoiceCard from "@saleor/customers/components/CustomerAddressChoiceCard";
 import { AddressTypeInput } from "@saleor/customers/types";
 import {
   AccountErrorFragment,
@@ -12,13 +9,12 @@ import {
   OrderErrorFragment
 } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
-import React from "react";
-import { useIntl } from "react-intl";
+import { SwitchSelector } from "@saleor/macaw-ui";
+import React, { useEffect } from "react";
 
 import { getById } from "../OrderReturnPage/utils";
 import { AddressInputOptionEnum } from "./form";
-import { addressEditMessages } from "./messages";
-import { useStyles } from "./styles";
+import OrderCustomerAddressesSearch from "./OrderCustomerAddressesSearch";
 
 export interface OrderCustomerAddressEditProps {
   loading: boolean;
@@ -27,14 +23,14 @@ export interface OrderCustomerAddressEditProps {
   addressInputOption: AddressInputOptionEnum;
   addressInputName: string;
   onChangeAddressInputOption: FormChange;
+  initialCustomerAddress?: AddressFragment;
   selectedCustomerAddressId: string;
   formAddress: AddressTypeInput;
   formAddressCountryDisplayName: string;
   formErrors: Array<AccountErrorFragment | OrderErrorFragment>;
   onChangeFormAddress: (event: React.ChangeEvent<any>) => void;
   onChangeFormAddressCountry: (event: React.ChangeEvent<any>) => void;
-  onEdit?: () => void;
-  showCard?: boolean;
+  onChangeCustomerAddress: (customerAddress: AddressFragment) => void;
 }
 
 const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props => {
@@ -51,77 +47,63 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
     formErrors,
     onChangeFormAddress,
     onChangeFormAddressCountry,
-    onEdit,
-    showCard = true
+    onChangeCustomerAddress
   } = props;
 
-  const classes = useStyles(props);
-  const intl = useIntl();
+  const switchOptions = [
+    {
+      value: "customerAddress",
+      label: "Select address"
+    },
+    {
+      value: "newAddress",
+      label: "New address"
+    }
+  ];
 
-  if (loading) {
-    return <Skeleton />;
-  }
+  const initialAddress = customerAddresses.find(
+    getById(selectedCustomerAddressId)
+  );
 
-  if (!customerAddresses.length) {
-    return (
-      <AddressEdit
-        countries={countryChoices}
-        countryDisplayValue={formAddressCountryDisplayName}
-        data={formAddress}
-        errors={formErrors}
-        onChange={onChangeFormAddress}
-        onCountryChange={onChangeFormAddressCountry}
-      />
-    );
-  }
+  const [
+    temporarySelectedAddress,
+    setTemporarySelectedAddress
+  ] = React.useState(initialAddress);
+
+  useEffect(() => {
+    if (temporarySelectedAddress) {
+      onChangeCustomerAddress(temporarySelectedAddress);
+    }
+  }, [temporarySelectedAddress]);
 
   return (
-    <RadioGroup
-      className={classes.container}
-      value={addressInputOption}
-      name={addressInputName}
-      onChange={event => onChangeAddressInputOption(event)}
-    >
-      <FormControlLabel
-        value={AddressInputOptionEnum.CUSTOMER_ADDRESS}
-        control={
-          <Radio
-            color="primary"
-            data-test-id={
-              addressInputOption + AddressInputOptionEnum.CUSTOMER_ADDRESS
-            }
-          />
+    <>
+      <SwitchSelector
+        options={switchOptions}
+        activeTab={addressInputOption}
+        setActiveTab={value =>
+          onChangeAddressInputOption({
+            target: { name: addressInputName, value }
+          })
         }
-        label={intl.formatMessage(addressEditMessages.customerAddress)}
-        className={classes.optionLabel}
       />
-      {addressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS &&
-        showCard && (
-          <>
-            <CardSpacer />
-            <CustomerAddressChoiceCard
-              address={customerAddresses.find(
-                getById(selectedCustomerAddressId)
-              )}
-              editable
-              onEditClick={onEdit}
-            />
-            <FormSpacer />
-          </>
-        )}
-      <FormControlLabel
-        value={AddressInputOptionEnum.NEW_ADDRESS}
-        control={
-          <Radio
-            color="primary"
-            data-test-id={
-              addressInputOption + AddressInputOptionEnum.NEW_ADDRESS
-            }
+      <FormSpacer />
+      <Divider />
+      <FormSpacer />
+
+      {addressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS && (
+        <>
+          <OrderCustomerAddressesSearch
+            customerAddresses={customerAddresses}
+            selectedCustomerAddressId={selectedCustomerAddressId}
+            loading={loading}
+            temporarilySelectedAddress={temporarySelectedAddress}
+            setTemporaryAddress={setTemporarySelectedAddress}
           />
-        }
-        label={intl.formatMessage(addressEditMessages.newAddress)}
-        className={classes.optionLabel}
-      />
+          <FormSpacer />
+        </>
+      )}
+
       {addressInputOption === AddressInputOptionEnum.NEW_ADDRESS && (
         <AddressEdit
           countries={countryChoices}
@@ -132,7 +114,7 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
           onCountryChange={onChangeFormAddressCountry}
         />
       )}
-    </RadioGroup>
+    </>
   );
 };
 

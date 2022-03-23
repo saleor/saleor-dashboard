@@ -58,16 +58,9 @@ export const dialogMessages = defineMessages({
   noResultsFound: {
     defaultMessage: "No results found",
     description: "info when addresses search is unsuccessful"
-  }
-});
-
-export const addressEditMessages = defineMessages({
-  customerAddress: {
-    defaultMessage: "Use one of customer addresses",
-    description: "address type"
   },
-  newAddress: {
-    defaultMessage: "Add new address",
-    description: "address type"
+  customerHasNoAddresses: {
+    defaultMessage: "Customer has no saved addresses",
+    description: "info when customer doesn't have any addresses"
   }
 });

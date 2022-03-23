@@ -178,7 +178,7 @@ export const transformOrderStatus = (
   };
 };
 
-export const transformAddressToForm = (data?: AddressType) => ({
+export const getAddressFormData = (data?: AddressType) => ({
   city: data?.city || "",
   cityArea: data?.cityArea || "",
   companyName: data?.companyName || "",

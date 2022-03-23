@@ -8,7 +8,7 @@ import OrderCustomerChangeDialog, {
 
 const props: OrderCustomerChangeDialogProps = {
   onClose: () => undefined,
-  onConfirm: () => undefined,
+  onChoiceClick: () => undefined,
   open: true
 };
 
@@ -18,7 +18,7 @@ storiesOf("Orders / OrderCustomerChangeDialog", module)
     <OrderCustomerChangeDialog
       {...props}
       onClose={() => undefined}
-      onConfirm={() => undefined}
+      onChoiceClick={() => undefined}
       open={true}
     />
   ));

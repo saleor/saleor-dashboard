@@ -63,6 +63,7 @@ interface UseOrderCustomerAddressesEditFormOpts {
   defaultShippingAddress: Node;
   defaultBillingAddress: Node;
   defaultCloneAddress: boolean;
+  hasAddresses: boolean;
 }
 
 export interface OrderCustomerAddressesEditFormProps
@@ -86,8 +87,12 @@ function useOrderCustomerAddressesEditForm(
   };
   const defaultInitialFormData: OrderCustomerAddressesEditFormData = {
     cloneAddress: opts.defaultCloneAddress,
-    shippingAddressInputOption: AddressInputOptionEnum.CUSTOMER_ADDRESS,
-    billingAddressInputOption: AddressInputOptionEnum.CUSTOMER_ADDRESS,
+    shippingAddressInputOption: opts.hasAddresses
+      ? AddressInputOptionEnum.CUSTOMER_ADDRESS
+      : AddressInputOptionEnum.NEW_ADDRESS,
+    billingAddressInputOption: opts.hasAddresses
+      ? AddressInputOptionEnum.CUSTOMER_ADDRESS
+      : AddressInputOptionEnum.NEW_ADDRESS,
     customerShippingAddress: opts.defaultShippingAddress,
     customerBillingAddress: opts.defaultBillingAddress,
     shippingAddress: emptyAddress,
@@ -138,13 +143,15 @@ function useOrderCustomerAddressesEditForm(
   const handleCustomerAddressChange = (
     customerAddress: AddressFragment,
     addressType: "customerShippingAddress" | "customerBillingAddress"
-  ) =>
+  ) => {
     change({
       target: {
         name: addressType,
         value: customerAddress
       }
     });
+  };
+
   const handleShippingCountrySelect = createSingleAutocompleteSelectHandler(
     event =>
       change({
