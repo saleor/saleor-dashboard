@@ -111,7 +111,6 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
     change,
     data: formData,
     hasChanged,
-    submit,
     setChanged,
     setIsSubmitDisabled,
     triggerChange
@@ -132,14 +131,18 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
 
-  const handleSubmit: FormEventHandler = event => {
-    event.preventDefault();
+  // Prevents closing ref in submit functions
+  const getData = () => ({
+    ...formData,
+    description: description.current
+  });
+  const data = getData();
 
-    handleFormSubmit({
-      ...data,
-      description: description.current
-    });
+  const handleFormElementSubmit: FormEventHandler = event => {
+    event.preventDefault();
+    handleFormSubmit(getData());
   };
+  const handleSubmit = () => handleFormSubmit(getData());
 
   const handleChannelsChange = createChannelsChangeHandler(
     shippingChannels,
@@ -157,13 +160,8 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   const isSaveDisabled = disabled || formDisabled || formIsUnchanged;
   setIsSubmitDisabled(isSaveDisabled);
 
-  const data = {
-    ...formData,
-    description: description.current
-  };
-
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleFormElementSubmit}>
       <Container>
         <Backlink onClick={onBack}>
           <FormattedMessage defaultMessage="Shipping" />
@@ -241,7 +239,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
           disabled={isSaveDisabled}
           onCancel={onBack}
           onDelete={onDelete}
-          onSubmit={submit}
+          onSubmit={handleSubmit}
           state={saveButtonBarState}
         />
       </Container>
