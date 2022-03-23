@@ -4321,10 +4321,6 @@
     "context": "search modal billing title",
     "string": "Billing address"
   },
-  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_customerAddress": {
-    "context": "address type",
-    "string": "Use one of customer addresses"
-  },
   "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_customerChangeBillingDescription": {
     "context": "dialog content",
     "string": "Select one of customer addresses or add a new address:"
@@ -4337,9 +4333,9 @@
     "context": "dialog header",
     "string": "Change address for order"
   },
-  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_newAddress": {
-    "context": "address type",
-    "string": "Add new address"
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_customerHasNoAddresses": {
+    "context": "info when customer doesn't have any addresses",
+    "string": "Customer has no saved addresses"
   },
   "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_noAddressBillingDescription": {
     "context": "dialog content",
