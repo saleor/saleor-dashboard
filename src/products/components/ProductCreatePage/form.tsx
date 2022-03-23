@@ -163,11 +163,13 @@ export interface ProductCreateFormProps extends UseProductCreateFormOpts {
   children: (props: UseProductCreateFormResult) => React.ReactNode;
   initial?: Partial<ProductCreateFormData>;
   onSubmit: (data: ProductCreateData) => SubmitPromise;
+  loading: boolean;
 }
 
 function useProductCreateForm(
   initial: Partial<ProductCreateFormData>,
   onSubmit: (data: ProductCreateData) => SubmitPromise,
+  loading: boolean,
   opts: UseProductCreateFormOpts
 ): UseProductCreateFormResult {
   const intl = useIntl();
@@ -229,10 +231,6 @@ function useProductCreateForm(
   const [description, changeDescription] = useRichText({
     initial: null,
     triggerChange
-  });
-
-  const { setExitDialogSubmitRef } = useExitFormDialog({
-    formId: PRODUCT_CREATE_FORM_ID
   });
 
   const {
@@ -357,6 +355,10 @@ function useProductCreateForm(
 
   const submit = () => handleFormSubmit(data);
 
+  const { setExitDialogSubmitRef, setIsSubmitDisabled } = useExitFormDialog({
+    formId: PRODUCT_CREATE_FORM_ID
+  });
+
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   const shouldEnableSave = () => {
@@ -387,12 +389,15 @@ function useProductCreateForm(
     return true;
   };
 
-  const disabled = !shouldEnableSave();
+  const isSaveEnabled = !shouldEnableSave();
+
+  const isSaveDisabled = loading || !onSubmit || isSaveEnabled || !hasChanged;
+  setIsSubmitDisabled(isSaveDisabled);
 
   return {
     change: handleChange,
     data,
-    disabled,
+    disabled: isSaveEnabled,
     formErrors: form.errors,
     handlers: {
       addStock: handleStockAdd,
@@ -416,7 +421,8 @@ function useProductCreateForm(
       selectTaxRate: handleTaxTypeSelect
     },
     hasChanged,
-    submit
+    submit,
+    isSaveDisabled
   };
 }
 
@@ -424,9 +430,10 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({
   children,
   initial,
   onSubmit,
+  loading,
   ...rest
 }) => {
-  const props = useProductCreateForm(initial || {}, onSubmit, rest);
+  const props = useProductCreateForm(initial || {}, onSubmit, loading, rest);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };

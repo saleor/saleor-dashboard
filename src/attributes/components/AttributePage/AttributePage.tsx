@@ -156,12 +156,17 @@ const AttributePage: React.FC<AttributePageProps> = ({
   };
 
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
+    <Form
+      confirmLeave
+      initial={initialForm}
+      onSubmit={handleSubmit}
+      disabled={disabled}
+    >
       {({
         change,
         set,
         data,
-        hasChanged,
+        isSaveDisabled,
         submit,
         errors,
         setError,
@@ -239,7 +244,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
                 </div>
               </Grid>
               <Savebar
-                disabled={disabled || !hasChanged}
+                disabled={isSaveDisabled}
                 state={saveButtonBarState}
                 onCancel={onBack}
                 onSubmit={submit}

@@ -46,8 +46,13 @@ const CountryListPage: React.FC<CountryListPageProps> = ({
     showGross: maybe(() => shop.displayGrossPrices, false)
   };
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, hasChanged, submit }) => (
+    <Form
+      confirmLeave
+      initial={initialForm}
+      onSubmit={onSubmit}
+      disabled={disabled}
+    >
+      {({ change, data, isSaveDisabled, submit }) => (
         <>
           <Container>
             <Backlink onClick={onBack}>
@@ -77,7 +82,7 @@ const CountryListPage: React.FC<CountryListPageProps> = ({
             </Grid>
           </Container>
           <Savebar
-            disabled={disabled || !hasChanged}
+            disabled={isSaveDisabled}
             state={saveButtonBarState}
             onCancel={onBack}
             onSubmit={submit}

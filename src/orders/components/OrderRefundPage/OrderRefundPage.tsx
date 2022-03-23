@@ -67,8 +67,9 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
       order={order}
       defaultType={defaultType}
       onSubmit={onSubmit}
+      disabled={disabled}
     >
-      {({ data, handlers, change, submit }) => {
+      {({ data, handlers, change, submit, isSaveDisabled }) => {
         const isProductRefund = data.type === OrderRefundType.PRODUCTS;
 
         return (
@@ -156,7 +157,7 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
                   }
                   data={data}
                   order={order}
-                  disabled={disabled}
+                  disabled={isSaveDisabled}
                   errors={errors}
                   onChange={change}
                   onRefund={submit}

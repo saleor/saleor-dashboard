@@ -124,8 +124,13 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   } = useMetadataChangeTrigger();
 
   return (
-    <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
-      {({ change, data, hasChanged, submit, toggleValue }) => {
+    <Form
+      initial={initialForm}
+      onSubmit={onSubmit}
+      confirmLeave
+      disabled={disabled}
+    >
+      {({ change, data, isSaveDisabled, submit, toggleValue }) => {
         const handleWarehouseChange = createMultiAutocompleteSelectHandler(
           toggleValue,
           setWarehouseDisplayValues,
@@ -215,7 +220,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
               </div>
             </Grid>
             <Savebar
-              disabled={disabled || !hasChanged}
+              disabled={isSaveDisabled}
               onCancel={onBack}
               onDelete={onDelete}
               onSubmit={submit}

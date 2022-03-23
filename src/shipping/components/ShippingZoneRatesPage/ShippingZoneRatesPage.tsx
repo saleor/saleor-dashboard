@@ -3,7 +3,7 @@ import { ChannelShippingData } from "@saleor/channels/utils";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import Container from "@saleor/components/Container";
-import Form from "@saleor/components/Form";
+import Form, { FormDataWithOpts } from "@saleor/components/Form";
 import { WithFormId } from "@saleor/components/Form/ExitFormDialogProvider";
 import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata/Metadata";
@@ -112,21 +112,31 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
 
+  const checkIfSaveIsDisabled = (
+    data: FormDataWithOpts<ShippingZoneRateUpdateFormData>
+  ) => {
+    const formDisabled = data.channelListings?.some(channel =>
+      validatePrice(channel.price)
+    );
+    const formIsUnchanged =
+      !data.hasChanged && !hasChannelChanged && !havePostalCodesChanged;
+
+    return disabled || formDisabled || formIsUnchanged;
+  };
+
   return (
     <Form
       confirmLeave
       initial={initialForm}
       onSubmit={onSubmit}
       formId={formId}
+      checkIfSaveIsDisabled={checkIfSaveIsDisabled}
     >
-      {({ change, data, hasChanged, submit, set, triggerChange }) => {
+      {({ change, data, isSaveDisabled, submit, set, triggerChange }) => {
         const handleChannelsChange = createChannelsChangeHandler(
           shippingChannels,
           onChannelsChange,
           triggerChange
-        );
-        const formDisabled = data.channelListings?.some(channel =>
-          validatePrice(channel.price)
         );
         const onDescriptionChange = (description: OutputData) => {
           set({ description });
@@ -134,8 +144,6 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
         };
 
         const changeMetadata = makeMetadataChangeHandler(change);
-        const formIsUnchanged =
-          !hasChanged && !hasChannelChanged && !havePostalCodesChanged;
 
         return (
           <Container>
@@ -212,7 +220,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
               </div>
             </Grid>
             <Savebar
-              disabled={disabled || formDisabled || formIsUnchanged}
+              disabled={isSaveDisabled}
               onCancel={onBack}
               onDelete={onDelete}
               onSubmit={submit}
