@@ -81,8 +81,13 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         .get("@ProductDetails")
         .its("response.body")
         .then(resp => {
-          const productResp = resp.find(element => element.data.product).data
-            .product;
+          let productResp;
+          if (Array.isArray(resp)) {
+            productResp = resp.find(element => element.data.product).data
+              .product;
+          } else {
+            productResp = resp.data.product;
+          }
           expectCorrectProductInformation(productResp, productData);
         });
     });
@@ -114,8 +119,13 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         .get("@ProductDetails")
         .its("response.body")
         .then(resp => {
-          const productResp = resp.find(element => element.data.product).data
-            .product;
+          let productResp;
+          if (Array.isArray(resp)) {
+            productResp = resp.find(element => element.data.product).data
+              .product;
+          } else {
+            productResp = resp.data.product;
+          }
           expectCorrectProductInformation(productResp, productData);
           expectCorrectProductVariantInformation(
             productResp.variants,
