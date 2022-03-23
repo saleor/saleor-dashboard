@@ -55,7 +55,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
 }) => {
   const intl = useIntl();
 
-  const initialFormData = (): PluginDetailsPageFormData => ({
+  const initialFormData: PluginDetailsPageFormData = {
     active: selectedConfig?.active,
     configuration: selectedConfig?.configuration
       ?.filter(
@@ -65,14 +65,14 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
         ...field,
         value: field.value || ""
       }))
-  });
+  };
 
   const selectedChannelId = selectedConfig?.channel?.id;
 
   return (
     <Form
       confirmLeave
-      initial={initialFormData()}
+      initial={initialFormData}
       onSubmit={onSubmit}
       key={selectedChannelId}
       disabled={disabled}
@@ -82,22 +82,15 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
           const { name, value } = event.target;
           const newData = {
             active: name === "active" ? value : data.active,
-            configuration: data.configuration
+            configuration: data.configuration.map(configItem =>
+              configItem.name === name
+                ? {
+                    ...configItem,
+                    value
+                  }
+                : configItem
+            )
           };
-
-          if (newData.configuration) {
-            newData.configuration.map(item => {
-              if (item.name === name) {
-                item.value = value;
-              }
-            });
-
-            selectedConfig.configuration.map(item => {
-              if (item.name === name) {
-                item.value = value;
-              }
-            });
-          }
 
           set(newData);
         };
@@ -149,7 +142,8 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                       <>
                         <CardSpacer />
                         <PluginAuthorization
-                          fields={selectedConfig?.configuration}
+                          data={data.configuration}
+                          fields={selectedConfig.configuration}
                           onClear={onClear}
                           onEdit={onEdit}
                         />

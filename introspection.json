@@ -2412,7 +2412,7 @@
           },
           {
             "name": "extensions",
-            "description": "New in Saleor 3.1. App's dashboard extensions.",
+            "description": "New in Saleor 3.1. App's dashboard extensions. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -11014,7 +11014,7 @@
           },
           {
             "name": "availableCollectionPoints",
-            "description": "New in Saleor 3.1. Collection points that can be used for this order.",
+            "description": "New in Saleor 3.1. Collection points that can be used for this order. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -11174,7 +11174,7 @@
           },
           {
             "name": "deliveryMethod",
-            "description": "New in Saleor 3.1. The delivery method selected for this checkout.",
+            "description": "New in Saleor 3.1. The delivery method selected for this checkout. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "UNION",
@@ -11619,7 +11619,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "This field will be removed in Saleor 4.0. Always returns `True`."
+            "deprecationReason": "This field will be removed in Saleor 4.0. Always returns `true`."
           },
           {
             "name": "checkoutErrors",
@@ -11923,7 +11923,7 @@
       {
         "kind": "OBJECT",
         "name": "CheckoutDeliveryMethodUpdate",
-        "description": "New in Saleor 3.1. Updates the delivery method (shipping method or pick up point) of the checkout.",
+        "description": "New in Saleor 3.1. Updates the delivery method (shipping method or pick up point) of the checkout. Note: this feature is in a preview state and can be subject to changes at later point.",
         "fields": [
           {
             "name": "checkout",
@@ -18063,6 +18063,18 @@
             "defaultValue": null,
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "updatedAt",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "DateTimeRangeInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "interfaces": null,
@@ -18541,7 +18553,7 @@
       {
         "kind": "UNION",
         "name": "DeliveryMethod",
-        "description": "Represents a delivery method chosen for the checkout. `Warehouse` type is used when checkout is marked as \"click and collect\" and `ShippingMethod` otherwise.",
+        "description": "New in Saleor 3.1. Represents a delivery method chosen for the checkout. `Warehouse` type is used when checkout is marked as \"click and collect\" and `ShippingMethod` otherwise. Note: this feature is in a preview state and can be subject to changes at later point.",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -21776,19 +21788,25 @@
         "enumValues": [
           {
             "name": "STATUS",
-            "description": "Sort export file by status.",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "CREATED_AT",
-            "description": "Sort export file by created at.",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "UPDATED_AT",
-            "description": "Sort export file by updated at.",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "LAST_MODIFIED_AT",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -21841,7 +21859,7 @@
       {
         "kind": "OBJECT",
         "name": "ExportGiftCards",
-        "description": "New in Saleor 3.1. Export gift cards to csv file.",
+        "description": "New in Saleor 3.1. Export gift cards to csv file. Note: this feature is in a preview state and can be subject to changes at later point.",
         "fields": [
           {
             "name": "exportFile",
@@ -24014,7 +24032,7 @@
           },
           {
             "name": "createdBy",
-            "description": "New in Saleor 3.1. The user who bought or issued a gift card.",
+            "description": "New in Saleor 3.1. The user who bought or issued a gift card. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -24026,7 +24044,7 @@
           },
           {
             "name": "usedBy",
-            "description": "New in Saleor 3.1. The customer who used a gift card.",
+            "description": "New in Saleor 3.1. The customer who used a gift card. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -24038,7 +24056,7 @@
           },
           {
             "name": "createdByEmail",
-            "description": "New in Saleor 3.1. Email address of the user who bought or issued gift card.",
+            "description": "New in Saleor 3.1. Email address of the user who bought or issued gift card. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -24050,7 +24068,7 @@
           },
           {
             "name": "usedByEmail",
-            "description": "New in Saleor 3.1. Email address of the customer who used a gift card.",
+            "description": "New in Saleor 3.1. Email address of the customer who used a gift card. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -24086,7 +24104,7 @@
           },
           {
             "name": "app",
-            "description": "New in Saleor 3.1. App which created the gift card.",
+            "description": "New in Saleor 3.1. App which created the gift card. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -24098,7 +24116,7 @@
           },
           {
             "name": "product",
-            "description": "New in Saleor 3.1. Related gift card product.",
+            "description": "New in Saleor 3.1. Related gift card product. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -24110,7 +24128,7 @@
           },
           {
             "name": "events",
-            "description": "New in Saleor 3.1. List of events associated with the gift card.",
+            "description": "New in Saleor 3.1. List of events associated with the gift card. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [
               {
                 "name": "filter",
@@ -24147,7 +24165,7 @@
           },
           {
             "name": "tags",
-            "description": "New in Saleor 3.1. The gift card tag.",
+            "description": "New in Saleor 3.1. The gift card tag. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -24171,7 +24189,7 @@
           },
           {
             "name": "boughtInChannel",
-            "description": "{ADDED_IN_31} Slug of the channel where the gift card was bought.",
+            "description": "New in Saleor 3.1. Slug of the channel where the gift card was bought. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -24348,7 +24366,7 @@
       {
         "kind": "OBJECT",
         "name": "GiftCardAddNote",
-        "description": "New in Saleor 3.1. Adds note to the gift card.",
+        "description": "New in Saleor 3.1. Adds note to the gift card. Note: this feature is in a preview state and can be subject to changes at later point.",
         "fields": [
           {
             "name": "giftCard",
@@ -24434,7 +24452,7 @@
       {
         "kind": "OBJECT",
         "name": "GiftCardBulkActivate",
-        "description": "New in Saleor 3.1. Activate gift cards.",
+        "description": "New in Saleor 3.1. Activate gift cards. Note: this feature is in a preview state and can be subject to changes at later point.",
         "fields": [
           {
             "name": "count",
@@ -24485,7 +24503,7 @@
       {
         "kind": "OBJECT",
         "name": "GiftCardBulkCreate",
-        "description": "New in Saleor 3.1. Create gift cards.",
+        "description": "New in Saleor 3.1. Create gift cards. Note: this feature is in a preview state and can be subject to changes at later point.",
         "fields": [
           {
             "name": "count",
@@ -24651,7 +24669,7 @@
       {
         "kind": "OBJECT",
         "name": "GiftCardBulkDeactivate",
-        "description": "New in Saleor 3.1. Deactivate gift cards.",
+        "description": "New in Saleor 3.1. Deactivate gift cards. Note: this feature is in a preview state and can be subject to changes at later point.",
         "fields": [
           {
             "name": "count",
@@ -24702,7 +24720,7 @@
       {
         "kind": "OBJECT",
         "name": "GiftCardBulkDelete",
-        "description": "New in Saleor 3.1. Delete gift cards.",
+        "description": "New in Saleor 3.1. Delete gift cards. Note: this feature is in a preview state and can be subject to changes at later point.",
         "fields": [
           {
             "name": "count",
@@ -24935,7 +24953,7 @@
         "inputFields": [
           {
             "name": "addTags",
-            "description": "New in Saleor 3.1. The gift card tags to add.",
+            "description": "New in Saleor 3.1. The gift card tags to add. Note: this feature is in a preview state and can be subject to changes at later point.",
             "type": {
               "kind": "LIST",
               "name": null,
@@ -24955,7 +24973,7 @@
           },
           {
             "name": "expiryDate",
-            "description": "New in Saleor 3.1. The gift card expiry date.",
+            "description": "New in Saleor 3.1. The gift card expiry date. Note: this feature is in a preview state and can be subject to changes at later point.",
             "type": {
               "kind": "SCALAR",
               "name": "Date",
@@ -25019,7 +25037,7 @@
           },
           {
             "name": "channel",
-            "description": "New in Saleor 3.1. Slug of a channel from which the email should be sent.",
+            "description": "New in Saleor 3.1. Slug of a channel from which the email should be sent. Note: this feature is in a preview state and can be subject to changes at later point.",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -25031,7 +25049,7 @@
           },
           {
             "name": "isActive",
-            "description": "New in Saleor 3.1. Determine if gift card is active.",
+            "description": "New in Saleor 3.1. Determine if gift card is active. Note: this feature is in a preview state and can be subject to changes at later point.",
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -25059,7 +25077,7 @@
           },
           {
             "name": "note",
-            "description": "New in Saleor 3.1. The gift card note from the staff member.",
+            "description": "New in Saleor 3.1. The gift card note from the staff member. Note: this feature is in a preview state and can be subject to changes at later point.",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -25148,7 +25166,7 @@
       {
         "kind": "OBJECT",
         "name": "GiftCardDelete",
-        "description": "New in Saleor 3.1. Delete gift card.",
+        "description": "New in Saleor 3.1. Delete gift card. Note: this feature is in a preview state and can be subject to changes at later point.",
         "fields": [
           {
             "name": "giftCardErrors",
@@ -25349,7 +25367,7 @@
       {
         "kind": "OBJECT",
         "name": "GiftCardEvent",
-        "description": "New in Saleor 3.1. History log of the gift card.",
+        "description": "New in Saleor 3.1. History log of the gift card. Note: this feature is in a preview state and can be subject to changes at later point.",
         "fields": [
           {
             "name": "id",
@@ -25890,7 +25908,7 @@
       {
         "kind": "OBJECT",
         "name": "GiftCardResend",
-        "description": "New in Saleor 3.1. Resend a gift card.",
+        "description": "New in Saleor 3.1. Resend a gift card. Note: this feature is in a preview state and can be subject to changes at later point.",
         "fields": [
           {
             "name": "giftCard",
@@ -26288,7 +26306,7 @@
       {
         "kind": "OBJECT",
         "name": "GiftCardTag",
-        "description": "New in Saleor 3.1. The gift card tag.",
+        "description": "New in Saleor 3.1. The gift card tag. Note: this feature is in a preview state and can be subject to changes at later point.",
         "fields": [
           {
             "name": "id",
@@ -26542,7 +26560,7 @@
         "inputFields": [
           {
             "name": "addTags",
-            "description": "New in Saleor 3.1. The gift card tags to add.",
+            "description": "New in Saleor 3.1. The gift card tags to add. Note: this feature is in a preview state and can be subject to changes at later point.",
             "type": {
               "kind": "LIST",
               "name": null,
@@ -26562,7 +26580,7 @@
           },
           {
             "name": "expiryDate",
-            "description": "New in Saleor 3.1. The gift card expiry date.",
+            "description": "New in Saleor 3.1. The gift card expiry date. Note: this feature is in a preview state and can be subject to changes at later point.",
             "type": {
               "kind": "SCALAR",
               "name": "Date",
@@ -26598,7 +26616,7 @@
           },
           {
             "name": "removeTags",
-            "description": "New in Saleor 3.1. The gift card tags to remove.",
+            "description": "New in Saleor 3.1. The gift card tags to remove. Note: this feature is in a preview state and can be subject to changes at later point.",
             "type": {
               "kind": "LIST",
               "name": null,
@@ -26618,7 +26636,7 @@
           },
           {
             "name": "balanceAmount",
-            "description": "New in Saleor 3.1. The gift card balance amount.",
+            "description": "New in Saleor 3.1. The gift card balance amount. Note: this feature is in a preview state and can be subject to changes at later point.",
             "type": {
               "kind": "SCALAR",
               "name": "PositiveDecimal",
@@ -27683,7 +27701,7 @@
       {
         "kind": "SCALAR",
         "name": "JSONString",
-        "description": "Allows use of a JSON String for input / output from the GraphQL schema.\n\nUse of this type is *not recommended* as you lose the benefits of having a defined, static\nschema (one of the key benefits of GraphQL).",
+        "description": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -35250,6 +35268,12 @@
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "NOT_UPDATED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "possibleTypes": null
@@ -38855,7 +38879,7 @@
           },
           {
             "name": "productVariantPreorderDeactivate",
-            "description": "New in Saleor 3.1. Deactivates product variant preorder.It changes all preorder allocation into regular allocation.",
+            "description": "New in Saleor 3.1. Deactivates product variant preorder. It changes all preorder allocation into regular allocation. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [
               {
                 "name": "id",
@@ -41858,7 +41882,7 @@
           },
           {
             "name": "giftCardDelete",
-            "description": "New in Saleor 3.1. Delete gift card.",
+            "description": "New in Saleor 3.1. Delete gift card. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [
               {
                 "name": "id",
@@ -41961,7 +41985,7 @@
           },
           {
             "name": "giftCardResend",
-            "description": "New in Saleor 3.1. Resend a gift card.",
+            "description": "New in Saleor 3.1. Resend a gift card. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [
               {
                 "name": "input",
@@ -41990,7 +42014,7 @@
           },
           {
             "name": "giftCardAddNote",
-            "description": "New in Saleor 3.1. Adds note to the gift card.",
+            "description": "New in Saleor 3.1. Adds note to the gift card. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [
               {
                 "name": "id",
@@ -42035,7 +42059,7 @@
           },
           {
             "name": "giftCardBulkCreate",
-            "description": "New in Saleor 3.1. Create gift cards.",
+            "description": "New in Saleor 3.1. Create gift cards. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [
               {
                 "name": "input",
@@ -42064,7 +42088,7 @@
           },
           {
             "name": "giftCardBulkDelete",
-            "description": "New in Saleor 3.1. Delete gift cards.",
+            "description": "New in Saleor 3.1. Delete gift cards. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [
               {
                 "name": "ids",
@@ -42097,7 +42121,7 @@
           },
           {
             "name": "giftCardBulkActivate",
-            "description": "New in Saleor 3.1. Activate gift cards.",
+            "description": "New in Saleor 3.1. Activate gift cards. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [
               {
                 "name": "ids",
@@ -42130,7 +42154,7 @@
           },
           {
             "name": "giftCardBulkDeactivate",
-            "description": "New in Saleor 3.1. Deactivate gift cards.",
+            "description": "New in Saleor 3.1. Deactivate gift cards. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [
               {
                 "name": "ids",
@@ -42970,7 +42994,7 @@
           },
           {
             "name": "exportGiftCards",
-            "description": "New in Saleor 3.1. Export gift cards to csv file.",
+            "description": "New in Saleor 3.1. Export gift cards to csv file. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [
               {
                 "name": "input",
@@ -43807,7 +43831,7 @@
           },
           {
             "name": "checkoutDeliveryMethodUpdate",
-            "description": "New in Saleor 3.1. Updates the delivery method (shipping method or pick up point) of the checkout.",
+            "description": "New in Saleor 3.1. Updates the delivery method (shipping method or pick up point) of the checkout. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [
               {
                 "name": "deliveryMethodId",
@@ -47246,6 +47270,22 @@
             "deprecationReason": null
           },
           {
+            "name": "updatedAt",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "status",
             "description": null,
             "args": [],
@@ -47447,7 +47487,7 @@
           },
           {
             "name": "availableCollectionPoints",
-            "description": "New in Saleor 3.1. Collection points that can be used for this order.",
+            "description": "New in Saleor 3.1. Collection points that can be used for this order. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -47903,7 +47943,7 @@
           },
           {
             "name": "deliveryMethod",
-            "description": "New in Saleor 3.1. The delivery method selected for this checkout.",
+            "description": "New in Saleor 3.1. The delivery method selected for this checkout. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "UNION",
@@ -47955,7 +47995,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "This field will be removed in Saleor 4.0. Use discounts field."
+            "deprecationReason": "This field will be removed in Saleor 4.0. Use the `discounts` field instead."
           },
           {
             "name": "discountName",
@@ -47967,7 +48007,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "This field will be removed in Saleor 4.0. Use discounts field."
+            "deprecationReason": "This field will be removed in Saleor 4.0. Use the `discounts` field instead."
           },
           {
             "name": "translatedDiscountName",
@@ -47979,7 +48019,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "This field will be removed in Saleor 4.0. Use discounts field. "
+            "deprecationReason": "This field will be removed in Saleor 4.0. Use the `discounts` field instead. "
           },
           {
             "name": "discounts",
@@ -50431,6 +50471,18 @@
             "deprecationReason": null
           },
           {
+            "name": "updatedAt",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "DateTimeRangeInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "isClickAndCollect",
             "description": null,
             "type": {
@@ -52364,7 +52416,19 @@
           },
           {
             "name": "CREATION_DATE",
-            "description": "Sort orders by creation date.",
+            "description": "Sort orders by creation date. \n\nDEPRECATED: this field will be removed in Saleor 4.0.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CREATED_AT",
+            "description": "Sort orders by creation date. \n\nDEPRECATED: this field will be removed in Saleor 4.0.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "LAST_MODIFIED_AT",
+            "description": "Sort orders by last modified at.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -59020,13 +59084,33 @@
             "deprecationReason": null
           },
           {
+            "name": "created",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "updatedAt",
             "description": null,
             "args": [],
             "type": {
-              "kind": "SCALAR",
-              "name": "DateTime",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -61264,6 +61348,18 @@
             "deprecationReason": null
           },
           {
+            "name": "updatedAt",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "DateTimeRangeInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "productTypes",
             "description": null,
             "type": {
@@ -62317,6 +62413,12 @@
             "deprecationReason": null
           },
           {
+            "name": "LAST_MODIFIED",
+            "description": "Sort products by update date.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "DATE",
             "description": "Sort products by update date.",
             "isDeprecated": false,
@@ -62337,6 +62439,18 @@
           {
             "name": "PUBLICATION_DATE",
             "description": "Sort products by publication date.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "PUBLISHED_AT",
+            "description": "Sort products by publication date.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "LAST_MODIFIED_AT",
+            "description": "Sort products by update date.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -64664,12 +64778,44 @@
           },
           {
             "name": "preorder",
-            "description": "New in Saleor 3.1. Preorder data for product variant.",
+            "description": "New in Saleor 3.1. Preorder data for product variant. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "OBJECT",
               "name": "PreorderData",
               "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "created",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updatedAt",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -64858,7 +65004,7 @@
           },
           {
             "name": "preorder",
-            "description": "New in Saleor 3.1. Determines if variant is in preorder.",
+            "description": "New in Saleor 3.1. Determines if variant is in preorder. Note: this feature is in a preview state and can be subject to changes at later point.",
             "type": {
               "kind": "INPUT_OBJECT",
               "name": "PreorderSettingsInput",
@@ -64870,7 +65016,7 @@
           },
           {
             "name": "quantityLimitPerCustomer",
-            "description": "New in Saleor 3.1. Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout.",
+            "description": "New in Saleor 3.1. Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout. Note: this feature is in a preview state and can be subject to changes at later point.",
             "type": {
               "kind": "SCALAR",
               "name": "Int",
@@ -65075,7 +65221,7 @@
           },
           {
             "name": "preorderThreshold",
-            "description": "New in Saleor 3.1. Preorder variant data.",
+            "description": "New in Saleor 3.1. Preorder variant data. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -65149,7 +65295,7 @@
           },
           {
             "name": "preorderThreshold",
-            "description": "New in Saleor 3.1. The threshold for preorder variant in channel.",
+            "description": "New in Saleor 3.1. The threshold for preorder variant in channel. Note: this feature is in a preview state and can be subject to changes at later point.",
             "type": {
               "kind": "SCALAR",
               "name": "Int",
@@ -65480,7 +65626,7 @@
           },
           {
             "name": "preorder",
-            "description": "New in Saleor 3.1. Determines if variant is in preorder.",
+            "description": "New in Saleor 3.1. Determines if variant is in preorder. Note: this feature is in a preview state and can be subject to changes at later point.",
             "type": {
               "kind": "INPUT_OBJECT",
               "name": "PreorderSettingsInput",
@@ -65492,7 +65638,7 @@
           },
           {
             "name": "quantityLimitPerCustomer",
-            "description": "New in Saleor 3.1. Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout.",
+            "description": "New in Saleor 3.1. Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout. Note: this feature is in a preview state and can be subject to changes at later point.",
             "type": {
               "kind": "SCALAR",
               "name": "Int",
@@ -65675,6 +65821,18 @@
             "defaultValue": null,
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "updatedAt",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "DateTimeRangeInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "interfaces": null,
@@ -65745,7 +65903,7 @@
           },
           {
             "name": "preorder",
-            "description": "New in Saleor 3.1. Determines if variant is in preorder.",
+            "description": "New in Saleor 3.1. Determines if variant is in preorder. Note: this feature is in a preview state and can be subject to changes at later point.",
             "type": {
               "kind": "INPUT_OBJECT",
               "name": "PreorderSettingsInput",
@@ -65757,7 +65915,7 @@
           },
           {
             "name": "quantityLimitPerCustomer",
-            "description": "New in Saleor 3.1. Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout.",
+            "description": "New in Saleor 3.1. Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout. Note: this feature is in a preview state and can be subject to changes at later point.",
             "type": {
               "kind": "SCALAR",
               "name": "Int",
@@ -65775,7 +65933,7 @@
       {
         "kind": "OBJECT",
         "name": "ProductVariantPreorderDeactivate",
-        "description": "New in Saleor 3.1. Deactivates product variant preorder.It changes all preorder allocation into regular allocation.",
+        "description": "New in Saleor 3.1. Deactivates product variant preorder. It changes all preorder allocation into regular allocation. Note: this feature is in a preview state and can be subject to changes at later point.",
         "fields": [
           {
             "name": "productVariant",
@@ -66029,6 +66187,66 @@
         ],
         "inputFields": null,
         "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "ProductVariantSortField",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "LAST_MODIFIED_AT",
+            "description": "Sort products variants by last modified at.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "ProductVariantSortingInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "direction",
+            "description": "Specifies the direction in which to sort products.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "OrderDirection",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "field",
+            "description": "Sort productVariants by the selected field.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "ProductVariantSortField",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -67928,6 +68146,18 @@
                 "deprecationReason": null
               },
               {
+                "name": "sortBy",
+                "description": "Sort products variants.",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ProductVariantSortingInput",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
                 "name": "before",
                 "description": "Return the elements in the list that come before the specified cursor.",
                 "type": {
@@ -69084,7 +69314,7 @@
             "args": [
               {
                 "name": "sortBy",
-                "description": "New in Saleor 3.1. Sort gift cards.",
+                "description": "New in Saleor 3.1. Sort gift cards. Note: this feature is in a preview state and can be subject to changes at later point.",
                 "type": {
                   "kind": "INPUT_OBJECT",
                   "name": "GiftCardSortingInput",
@@ -69096,7 +69326,7 @@
               },
               {
                 "name": "filter",
-                "description": "New in Saleor 3.1. Filtering options for gift cards.",
+                "description": "New in Saleor 3.1. Filtering options for gift cards. Note: this feature is in a preview state and can be subject to changes at later point.",
                 "type": {
                   "kind": "INPUT_OBJECT",
                   "name": "GiftCardFilterInput",
@@ -69165,7 +69395,7 @@
           },
           {
             "name": "giftCardCurrencies",
-            "description": "New in Saleor 3.1. List of gift card currencies.",
+            "description": "New in Saleor 3.1. List of gift card currencies. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -69189,7 +69419,7 @@
           },
           {
             "name": "giftCardTags",
-            "description": "{ADDED_IN_31} List of gift card tags.",
+            "description": "New in Saleor 3.1. List of gift card tags. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [
               {
                 "name": "filter",
@@ -70302,7 +70532,7 @@
           },
           {
             "name": "appExtensions",
-            "description": "New in Saleor 3.1. List of all extensions",
+            "description": "New in Saleor 3.1. List of all extensions. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [
               {
                 "name": "filter",
@@ -70375,7 +70605,7 @@
           },
           {
             "name": "appExtension",
-            "description": "New in Saleor 3.1. Look up an app extension by ID.",
+            "description": "New in Saleor 3.1. Look up an app extension by ID. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [
               {
                 "name": "id",
@@ -71315,6 +71545,38 @@
               "kind": "SCALAR",
               "name": "DateTime",
               "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "created",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updatedAt",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -72366,6 +72628,18 @@
             "defaultValue": null,
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "updatedAt",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "DateTimeRangeInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "interfaces": null,
@@ -72613,6 +72887,18 @@
           {
             "name": "TYPE",
             "description": "Sort sales by type.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CREATED_AT",
+            "description": "Sort sales by created at.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "LAST_MODIFIED_AT",
+            "description": "Sort sales by last modified at.",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -73332,7 +73618,7 @@
       {
         "kind": "OBJECT",
         "name": "ShippingMethod",
-        "description": "('Shipping methods that can be used as means of shippingfor orders and checkouts.',)",
+        "description": "Shipping methods that can be used as means of shipping for orders and checkouts.",
         "fields": [
           {
             "name": "id",
@@ -76646,7 +76932,7 @@
           },
           {
             "name": "limitQuantityPerCheckout",
-            "description": "New in Saleor 3.1. Default number of maximum line quantity in single checkout (per single checkout line).",
+            "description": "New in Saleor 3.1. Default number of maximum line quantity in single checkout (per single checkout line). Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -77287,7 +77573,7 @@
           },
           {
             "name": "limitQuantityPerCheckout",
-            "description": "New in Saleor 3.1. Default number of maximum line quantity in single checkout. Minimum possible value is 1, default value is 50.",
+            "description": "New in Saleor 3.1. Default number of maximum line quantity in single checkout. Minimum possible value is 1, default value is 50. Note: this feature is in a preview state and can be subject to changes at later point.",
             "type": {
               "kind": "SCALAR",
               "name": "Int",
@@ -80386,7 +80672,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "This field will be removed in Saleor 4.0. Use the `checkout_tokens` field to fetch the user checkouts."
+            "deprecationReason": "This field will be removed in Saleor 4.0. Use the `checkoutTokens` field to fetch the user checkouts."
           },
           {
             "name": "checkoutTokens",
@@ -80727,6 +81013,22 @@
           },
           {
             "name": "dateJoined",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updatedAt",
             "description": null,
             "args": [],
             "type": {
@@ -81321,6 +81623,18 @@
           {
             "name": "ORDER_COUNT",
             "description": "Sort users by order count.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CREATED_AT",
+            "description": "Sort users by created at.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "LAST_MODIFIED_AT",
+            "description": "Sort users by last modified at.",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -84157,7 +84471,7 @@
           },
           {
             "name": "clickAndCollectOption",
-            "description": "New in Saleor 3.1. Click and collect options: local, all or disabled",
+            "description": "New in Saleor 3.1. Click and collect options: local, all or disabled. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -85103,7 +85417,7 @@
           },
           {
             "name": "clickAndCollectOption",
-            "description": "New in Saleor 3.1. Click and collect options: local, all or disabled",
+            "description": "New in Saleor 3.1. Click and collect options: local, all or disabled. Note: this feature is in a preview state and can be subject to changes at later point.",
             "type": {
               "kind": "ENUM",
               "name": "WarehouseClickAndCollectOptionEnum",
@@ -85115,7 +85429,7 @@
           },
           {
             "name": "isPrivate",
-            "description": "New in Saleor 3.1. Visibility of warehouse stocks",
+            "description": "New in Saleor 3.1. Visibility of warehouse stocks. Note: this feature is in a preview state and can be subject to changes at later point.",
             "type": {
               "kind": "SCALAR",
               "name": "Boolean",
@@ -86420,6 +86734,18 @@
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "ORDER_FILTER_SHIPPING_METHODS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CHECKOUT_FILTER_SHIPPING_METHODS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "possibleTypes": null
@@ -86476,6 +86802,18 @@
           },
           {
             "name": "SHIPPING_LIST_METHODS_FOR_CHECKOUT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ORDER_FILTER_SHIPPING_METHODS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CHECKOUT_FILTER_SHIPPING_METHODS",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -87017,7 +87355,7 @@
       {
         "kind": "SCALAR",
         "name": "_Any",
-        "description": "Anything",
+        "description": "_Any value scalar as defined by Federation spec.",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -87027,7 +87365,7 @@
       {
         "kind": "UNION",
         "name": "_Entity",
-        "description": null,
+        "description": "_Entity union as defined by Federation spec.",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -87093,7 +87431,7 @@
       {
         "kind": "OBJECT",
         "name": "_Service",
-        "description": null,
+        "description": "_Service manifest as defined by Federation spec.",
         "fields": [
           {
             "name": "sdl",

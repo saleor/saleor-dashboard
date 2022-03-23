@@ -224,7 +224,11 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         confirmButtonState={deleteResult.status}
         variant="delete"
         onClose={closeModal}
-        onConfirm={deleteStaffMember}
+        onConfirm={() =>
+          deleteStaffMember({
+            variables: { id }
+          })
+        }
       >
         <DialogContentText>
           <FormattedMessage
