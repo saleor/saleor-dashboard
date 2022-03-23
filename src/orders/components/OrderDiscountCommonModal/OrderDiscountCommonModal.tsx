@@ -20,6 +20,7 @@ import React, {
   ChangeEvent,
   MutableRefObject,
   useEffect,
+  useRef,
   useState
 } from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -164,9 +165,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
   const [calculationMode, setCalculationMode] = useState<DiscountValueTypeEnum>(
     initialData.calculationMode
   );
-  const [previousCalculationMode, setPreviousCalculationMode] = usePrevious(
-    calculationMode
-  );
+  const previousCalculationMode = useRef<DiscountValueTypeEnum>();
 
   const classes = useStyles({});
   const intl = useIntl();
@@ -236,7 +235,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
     }
 
     const changedFromPercentageToFixed =
-      previousCalculationMode === DiscountValueTypeEnum.PERCENTAGE &&
+      previousCalculationMode.current === DiscountValueTypeEnum.PERCENTAGE &&
       calculationMode === DiscountValueTypeEnum.FIXED;
 
     const recalculatedValueFromPercentageToFixed = (
@@ -273,7 +272,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
   const handleSetCalculationMode = (
     newCalculationMode: DiscountValueTypeEnum
   ) => {
-    setPreviousCalculationMode(calculationMode);
+    previousCalculationMode.current = calculationMode;
     setCalculationMode(newCalculationMode);
   };
 
