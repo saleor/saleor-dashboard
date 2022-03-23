@@ -62,7 +62,7 @@ interface ShippingAddresses {
 export const hasPreSubmitErrors = (input: ShippingAddresses) =>
   Object.values(input)
     .flat()
-    .some(el => (el as AccountErrorFragment).code);
+    .some(el => "code" in el);
 
 export const getAddressEditProps = (
   variant: "shipping" | "billing",
