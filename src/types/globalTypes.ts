@@ -1501,9 +1501,11 @@ export enum OrderSettingsErrorCode {
 }
 
 export enum OrderSortField {
+  CREATED_AT = "CREATED_AT",
   CREATION_DATE = "CREATION_DATE",
   CUSTOMER = "CUSTOMER",
   FULFILLMENT_STATUS = "FULFILLMENT_STATUS",
+  LAST_MODIFIED_AT = "LAST_MODIFIED_AT",
   NUMBER = "NUMBER",
   PAYMENT = "PAYMENT",
 }
@@ -1673,11 +1675,14 @@ export enum ProductMediaType {
 export enum ProductOrderField {
   COLLECTION = "COLLECTION",
   DATE = "DATE",
+  LAST_MODIFIED = "LAST_MODIFIED",
+  LAST_MODIFIED_AT = "LAST_MODIFIED_AT",
   MINIMAL_PRICE = "MINIMAL_PRICE",
   NAME = "NAME",
   PRICE = "PRICE",
   PUBLICATION_DATE = "PUBLICATION_DATE",
   PUBLISHED = "PUBLISHED",
+  PUBLISHED_AT = "PUBLISHED_AT",
   RANK = "RANK",
   RATING = "RATING",
   TYPE = "TYPE",
@@ -1705,7 +1710,9 @@ export enum ProductTypeSortField {
 }
 
 export enum SaleSortField {
+  CREATED_AT = "CREATED_AT",
   END_DATE = "END_DATE",
+  LAST_MODIFIED_AT = "LAST_MODIFIED_AT",
   NAME = "NAME",
   START_DATE = "START_DATE",
   TYPE = "TYPE",
@@ -1774,8 +1781,10 @@ export enum UploadErrorCode {
 }
 
 export enum UserSortField {
+  CREATED_AT = "CREATED_AT",
   EMAIL = "EMAIL",
   FIRST_NAME = "FIRST_NAME",
+  LAST_MODIFIED_AT = "LAST_MODIFIED_AT",
   LAST_NAME = "LAST_NAME",
   ORDER_COUNT = "ORDER_COUNT",
 }
@@ -1874,6 +1883,7 @@ export enum WebhookEventTypeAsyncEnum {
 export enum WebhookEventTypeEnum {
   ANY_EVENTS = "ANY_EVENTS",
   CHECKOUT_CREATED = "CHECKOUT_CREATED",
+  CHECKOUT_FILTER_SHIPPING_METHODS = "CHECKOUT_FILTER_SHIPPING_METHODS",
   CHECKOUT_UPDATED = "CHECKOUT_UPDATED",
   COLLECTION_CREATED = "COLLECTION_CREATED",
   COLLECTION_DELETED = "COLLECTION_DELETED",
@@ -1892,6 +1902,7 @@ export enum WebhookEventTypeEnum {
   ORDER_CANCELLED = "ORDER_CANCELLED",
   ORDER_CONFIRMED = "ORDER_CONFIRMED",
   ORDER_CREATED = "ORDER_CREATED",
+  ORDER_FILTER_SHIPPING_METHODS = "ORDER_FILTER_SHIPPING_METHODS",
   ORDER_FULFILLED = "ORDER_FULFILLED",
   ORDER_FULLY_PAID = "ORDER_FULLY_PAID",
   ORDER_UPDATED = "ORDER_UPDATED",
@@ -1922,6 +1933,8 @@ export enum WebhookEventTypeEnum {
 }
 
 export enum WebhookEventTypeSyncEnum {
+  CHECKOUT_FILTER_SHIPPING_METHODS = "CHECKOUT_FILTER_SHIPPING_METHODS",
+  ORDER_FILTER_SHIPPING_METHODS = "ORDER_FILTER_SHIPPING_METHODS",
   PAYMENT_AUTHORIZE = "PAYMENT_AUTHORIZE",
   PAYMENT_CAPTURE = "PAYMENT_CAPTURE",
   PAYMENT_CONFIRM = "PAYMENT_CONFIRM",
@@ -2195,6 +2208,7 @@ export interface CustomerFilterInput {
   placedOrders?: DateRangeInput | null;
   search?: string | null;
   metadata?: (MetadataFilter | null)[] | null;
+  updatedAt?: DateTimeRangeInput | null;
 }
 
 export interface CustomerInput {
@@ -2419,6 +2433,7 @@ export interface OrderFilterInput {
   search?: string | null;
   metadata?: (MetadataFilter | null)[] | null;
   channels?: (string | null)[] | null;
+  updatedAt?: DateTimeRangeInput | null;
   isClickAndCollect?: boolean | null;
   isPreorder?: boolean | null;
   ids?: (string | null)[] | null;
@@ -2578,6 +2593,7 @@ export interface PermissionGroupCreateInput {
 
 export interface PermissionGroupFilterInput {
   search?: string | null;
+  ids?: (string | null)[] | null;
 }
 
 export interface PermissionGroupSortingInput {
@@ -2683,6 +2699,7 @@ export interface ProductFilterInput {
   metadata?: (MetadataFilter | null)[] | null;
   price?: PriceRangeInput | null;
   minimalPrice?: PriceRangeInput | null;
+  updatedAt?: DateTimeRangeInput | null;
   productTypes?: (string | null)[] | null;
   giftCard?: boolean | null;
   ids?: (string | null)[] | null;
@@ -2808,6 +2825,7 @@ export interface SaleFilterInput {
   started?: DateTimeRangeInput | null;
   search?: string | null;
   metadata?: (MetadataFilter | null)[] | null;
+  updatedAt?: DateTimeRangeInput | null;
 }
 
 export interface SaleInput {
@@ -2947,6 +2965,7 @@ export interface StaffUpdateInput {
 export interface StaffUserInput {
   status?: StaffMemberStatus | null;
   search?: string | null;
+  ids?: (string | null)[] | null;
 }
 
 export interface StockInput {
