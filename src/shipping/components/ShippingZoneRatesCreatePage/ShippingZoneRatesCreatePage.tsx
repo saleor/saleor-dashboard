@@ -3,7 +3,7 @@ import { ChannelShippingData } from "@saleor/channels/utils";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import Container from "@saleor/components/Container";
-import Form from "@saleor/components/Form";
+import Form, { FormDataWithOpts } from "@saleor/components/Form";
 import { WithFormId } from "@saleor/components/Form/ExitFormDialogProvider";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
@@ -86,21 +86,29 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
     type: null
   };
 
+  const checkIfSaveIsDisabled = (
+    data: FormDataWithOpts<ShippingZoneRateCommonFormData>
+  ) => {
+    const formDisabled = data.channelListings?.some(channel =>
+      validatePrice(channel.price)
+    );
+
+    return disabled || formDisabled || (!data.hasChanged && !hasChannelChanged);
+  };
+
   return (
     <Form
       confirmLeave
       initial={initialForm}
       onSubmit={onSubmit}
       formId={formId}
+      checkIfSaveIsDisabled={checkIfSaveIsDisabled}
     >
-      {({ change, data, hasChanged, submit, triggerChange, set }) => {
+      {({ change, data, isSaveDisabled, submit, triggerChange, set }) => {
         const handleChannelsChange = createChannelsChangeHandler(
           shippingChannels,
           onChannelsChange,
           triggerChange
-        );
-        const formDisabled = data.channelListings?.some(channel =>
-          validatePrice(channel.price)
         );
         const onDescriptionChange = (description: OutputData) => {
           set({ description });
@@ -181,9 +189,7 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
               </div>
             </Grid>
             <Savebar
-              disabled={
-                disabled || formDisabled || (!hasChanged && !hasChannelChanged)
-              }
+              disabled={isSaveDisabled}
               onCancel={onBack}
               onDelete={onDelete}
               onSubmit={submit}
