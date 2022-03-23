@@ -1,3 +1,4 @@
+import { useApolloClient } from "@apollo/client";
 import {
   AppDeleteFailedInstallationMutation,
   AppDeleteMutation,
@@ -29,6 +30,7 @@ import { useIntl } from "react-intl";
 import AppDeleteDialog from "../../components/AppDeleteDialog";
 import AppInProgressDeleteDialog from "../../components/AppInProgressDeleteDialog";
 import AppsListPage from "../../components/AppsListPage";
+import { EXTENSION_LIST_QUERY } from "../../queries";
 import {
   appDetailsUrl,
   AppListUrlDialog,
@@ -55,6 +57,7 @@ interface AppsListProps {
 
 export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const { action } = params;
+  const client = useApolloClient();
   const [activeInstallations, setActiveInstallations] = useLocalStorage<
     Array<Record<"id" | "name", string>>
   >("activeInstallations", []);
@@ -116,6 +119,12 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     }
   });
 
+  const refetchExtensionList = () => {
+    client.refetchQueries({
+      include: [EXTENSION_LIST_QUERY]
+    });
+  };
+
   const installedAppNotify = (name: string) => {
     notify({
       status: "success",
@@ -153,6 +162,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
         refetch();
       }
       closeModal();
+      refetchExtensionList();
       removeAppNotify();
     } else {
       errors.forEach(error =>
@@ -187,16 +197,19 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
           2000
         );
       }
+      let newAppInstalled = false;
       activeInstallations.forEach(installation => {
         const item = appsInProgress?.find(app => app.id === installation.id);
         if (!item) {
           removeInstallation(installation.id);
           installedAppNotify(installation.name);
           appsInProgressRefetch();
+          newAppInstalled = true;
         } else if (item.status === JobStatusEnum.SUCCESS) {
           removeInstallation(installation.id);
           installedAppNotify(item.appName);
           refetch();
+          newAppInstalled = true;
         } else if (item.status === JobStatusEnum.FAILED) {
           removeInstallation(installation.id);
           notify({
@@ -208,6 +221,9 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
           });
         }
       });
+      if (newAppInstalled) {
+        refetchExtensionList();
+      }
     }
     if (!activeInstallations.length && intervalId.current) {
       clearInterval(intervalId.current);

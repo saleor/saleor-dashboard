@@ -11,6 +11,7 @@ export interface ExitFormDialogData {
   setEnableExitDialog: (value: boolean) => void;
   shouldBlockNavigation: () => boolean;
   setIsSubmitting: (value: boolean) => void;
+  submit: () => SubmitPromise;
 }
 
 export type SubmitFn = (dataOrEvent?: any) => SubmitPromise<any[]>;
@@ -35,7 +36,8 @@ export const ExitFormDialogContext = React.createContext<ExitFormDialogData>({
   setEnableExitDialog: () => undefined,
   setExitDialogSubmitRef: () => undefined,
   shouldBlockNavigation: () => false,
-  setIsSubmitting: () => undefined
+  setIsSubmitting: () => undefined,
+  submit: () => Promise.resolve([])
 });
 
 const defaultValues = {
@@ -49,7 +51,7 @@ const defaultValues = {
   formsData: {}
 };
 
-const ExitFormDialogProvider = ({ children }) => {
+export function useExitFormDialogProvider() {
   const history = useHistory();
   const { history: routerHistory } = useRouter();
 
@@ -207,7 +209,6 @@ const ExitFormDialogProvider = ({ children }) => {
     const errors = await Promise.all(
       getDirtyFormsSubmitFn().map(submitFn => submitFn())
     );
-
     const isError = errors.flat().some(errors => errors);
 
     setIsSubmitting(false);
@@ -237,8 +238,27 @@ const ExitFormDialogProvider = ({ children }) => {
     shouldBlockNavigation,
     setEnableExitDialog,
     setExitDialogSubmitRef: setSubmitRef,
-    setIsSubmitting
+    setIsSubmitting,
+    submit: handleSubmit
   };
+
+  return {
+    providerData,
+    showDialog,
+    handleSubmit,
+    handleLeave,
+    handleClose
+  };
+}
+
+const ExitFormDialogProvider = ({ children }) => {
+  const {
+    handleClose,
+    handleLeave,
+    handleSubmit,
+    providerData,
+    showDialog
+  } = useExitFormDialogProvider();
 
   return (
     <ExitFormDialogContext.Provider value={providerData}>

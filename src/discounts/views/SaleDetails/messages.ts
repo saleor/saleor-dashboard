@@ -2,20 +2,20 @@ import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
   saleDetailsUnassignCategory: {
-    defaultMessage: "Unassign",
-    description: "unassign category from sale, button"
+    defaultMessage: "Unassign and save",
+    description: "unassign category from sale and save, button"
   },
   saleDetailsUnassignCollection: {
-    defaultMessage: "Unassign",
-    description: "unassign collection from sale, button"
+    defaultMessage: "Unassign and save",
+    description: "unassign collection from sale and save, button"
   },
   saleDetailsUnassignProduct: {
-    defaultMessage: "Unassign",
-    description: "unassign product from sale, button"
+    defaultMessage: "Unassign and save",
+    description: "unassign product from sale and save, button"
   },
   saleDetailsUnassignVariant: {
-    defaultMessage: "Unassign",
-    description: "unassign variant from sale, button"
+    defaultMessage: "Unassign and save",
+    description: "unassign variant from sale and save, button"
   },
   saleDetailsUnassignCategoryDialog: {
     defaultMessage:

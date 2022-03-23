@@ -12,8 +12,7 @@ import {
   UserPermissionFragment
 } from "@saleor/graphql/types.generated";
 import { RequireAtLeastOne } from "@saleor/misc";
-import { ServerErrorWithName } from "@saleor/types";
-import { DocumentNode, getOperationAST } from "graphql";
+import { DocumentNode } from "graphql";
 import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
@@ -96,16 +95,10 @@ export function useQuery<TData, TVariables>(
     errorPolicy: "all",
     fetchPolicy: fetchPolicy ?? "cache-and-network",
     onError: error => {
-      // TO-INVESTIGATE-BATCHING
-      if (
-        (error.networkError as ServerErrorWithName).operationName ===
-        getOperationAST(query).name.value
-      ) {
-        if (!!handleError) {
-          handleError(error);
-        } else {
-          handleQueryAuthError(error, notify, user.logout, intl);
-        }
+      if (!!handleError) {
+        handleError(error);
+      } else {
+        handleQueryAuthError(error, notify, user.logout, intl);
       }
     },
     skip,

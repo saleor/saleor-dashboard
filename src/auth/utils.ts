@@ -1,9 +1,8 @@
-import { ApolloError } from "@apollo/client/core";
+import { ApolloError, ServerError } from "@apollo/client/core";
 import { IMessage, IMessageContext } from "@saleor/components/messages";
 import { UseNotifierResult } from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { getMutationErrors, parseLogMessage } from "@saleor/misc";
-import { ServerErrorWithName } from "@saleor/types";
 import { IntlShape } from "react-intl";
 
 import { isJwtError, isTokenExpired } from "./errors";
@@ -18,7 +17,7 @@ export const displayDemoMessage = (
 };
 
 const getNetworkErrors = (error: ApolloError): string[] => {
-  const networkErrors = error.networkError as ServerErrorWithName;
+  const networkErrors = error.networkError as ServerError;
 
   if (networkErrors) {
     // Apparently network errors can be an object or an array
@@ -29,7 +28,8 @@ const getNetworkErrors = (error: ApolloError): string[] => {
         }
       });
     }
-    return networkErrors.result.errors.message;
+
+    return [networkErrors.message];
   }
 
   return [];

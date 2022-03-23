@@ -12,5 +12,9 @@ export const messages = defineMessages({
   assignCollectionDialogHeader: {
     defaultMessage: "Assign Collection",
     description: "dialog header"
+  },
+  confirmBtn: {
+    defaultMessage: "Assign and save",
+    description: "assign collections to sale and save"
   }
 });

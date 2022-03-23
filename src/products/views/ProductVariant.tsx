@@ -190,6 +190,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         })
       );
     }
+
+    return [];
   };
 
   const variant = data?.productVariant;
@@ -385,6 +387,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         onSubmit={async data => {
           const errors = await handleSubmit(data);
           const channelErrors = await handleSubmitChannels(data, variant);
+
           return [...errors, ...channelErrors];
         }}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
