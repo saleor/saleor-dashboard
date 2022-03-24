@@ -77,7 +77,6 @@ const ProductVariantCreateDialog: React.FC<ProductVariantCreateDialogProps> = pr
               </Typography>
               <FormSpacer />
               <RadioGroupField
-                alignTop
                 choices={options.map(option => ({
                   label: (
                     <div
