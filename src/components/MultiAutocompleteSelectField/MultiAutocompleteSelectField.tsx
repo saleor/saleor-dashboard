@@ -241,7 +241,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                             }
                           }
                         }
-                        choices={choices.filter(
+                        choices={choices?.filter(
                           choice => !value.includes(choice.value)
                         )}
                         displayCustomValue={displayCustomValue}
