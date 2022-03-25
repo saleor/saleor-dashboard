@@ -8,7 +8,7 @@ import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { collectionDetailsUrl, urlList } from "../../fixtures/urlList";
 import { createChannel } from "../../support/api/requests/Channels";
 import {
-  addProductToCollecton,
+  addProductToCollection,
   createCollection as createCollectionRequest
 } from "../../support/api/requests/Collections";
 import { updateChannelInProduct } from "../../support/api/requests/Product";
@@ -28,6 +28,7 @@ import filterTests from "../../support/filterTests";
 import {
   assignProductsToCollection,
   createCollection,
+  removeProductsFromCollection,
   updateCollection
 } from "../../support/pages/catalog/collectionsPage";
 
@@ -226,32 +227,34 @@ filterTests({ definedTags: ["all"] }, () => {
       const firstCollectionName = `${deleteSeveral}${startsWith}${faker.datatype.number()}`;
       const secondCollectionName = `${deleteSeveral}${startsWith}${faker.datatype.number()}`;
       let firstCollection;
-      let secondColelction;
+      let secondCollection;
 
       createCollectionRequest(firstCollectionName).then(collectionResp => {
         firstCollection = collectionResp;
       });
 
       createCollectionRequest(secondCollectionName).then(collectionResp => {
-        secondColelction = collectionResp;
+        secondCollection = collectionResp;
         cy.visit(urlList.collections)
           .searchInTable(deleteSeveral)
           .get(collectionRow(firstCollection.id))
           .find(BUTTON_SELECTORS.checkbox)
           .click()
-          .get(collectionRow(secondColelction.id))
+          .get(collectionRow(secondCollection.id))
           .find(BUTTON_SELECTORS.checkbox)
           .click()
           .get(BUTTON_SELECTORS.deleteIcon)
           .click()
+          .addAliasToGraphRequest("CollectionBulkDelete")
           .get(BUTTON_SELECTORS.submit)
           .click()
-          .wait(4000);
+          .waitForRequestAndCheckIfNoErrors("@CollectionBulkDelete");
+        // .wait(4000);CollectionBulkDelete
 
         getCollection({ collectionId: firstCollection.id, auth: "auth" })
           .its("collection")
           .should("be.null");
-        getCollection({ collectionId: secondColelction.id, auth: "auth" })
+        getCollection({ collectionId: secondCollection.id, auth: "auth" })
           .its("collection")
           .should("be.null");
       });
@@ -285,15 +288,15 @@ filterTests({ definedTags: ["all"] }, () => {
             getCollection({ collectionId: collection.id, auth: "auth" })
               .its("collection.products.edges")
               .should("have.length", 1)
-              .then(producArray => {
-                expect(producArray[0].node.id).to.equal(productToAssign.id);
+              .then(productArray => {
+                expect(productArray[0].node.id).to.equal(productToAssign.id);
               });
           });
       });
     });
 
     it("remove product from collection. TC: SALEOR_0308", () => {
-      const collectionName = `Remove-With-Asigned-Product-${startsWith}${faker.datatype.number()}`;
+      const collectionName = `Remove-With-Assigned-Product-${startsWith}${faker.datatype.number()}`;
       const randomName = `Product-To-Assign-${startsWith}${faker.datatype.number()}`;
       let collection;
       let productToAssign;
@@ -315,7 +318,7 @@ filterTests({ definedTags: ["all"] }, () => {
 
             cy.visit(collectionDetailsUrl(collection.id));
 
-            addProductToCollecton({
+            addProductToCollection({
               collectionId: collection.id,
               productId: productToAssign.id
             });
@@ -324,18 +327,14 @@ filterTests({ definedTags: ["all"] }, () => {
               .its("body.data.product.collections")
               .should("have.length", 1);
 
-            getCollection({ collectionId: collection.id, auth: "auth" }).log(
-              collection.product
-            );
-            cy.get(BUTTON_SELECTORS.deleteButton)
-              .click()
-              .addAliasToGraphRequest("RemoveCollection")
-              .get(BUTTON_SELECTORS.submit)
-              .click()
-              .waitForRequestAndCheckIfNoErrors("@RemoveCollection");
+            getCollection({ collectionId: collection.id, auth: "auth" })
+              .its("collection.products.edges")
+              .should("have.length", 1);
 
-            getProductDetails(productToAssign.id, defaultChannel.slug, "auth")
-              .its("body.data.product.collections")
+            removeProductsFromCollection(productToAssign.name);
+
+            getCollection({ collectionId: collection.id, auth: "auth" })
+              .its("collection.products.edges")
               .should("be.empty");
           });
       });

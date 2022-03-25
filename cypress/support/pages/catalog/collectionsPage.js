@@ -67,3 +67,13 @@ export function assignProductsToCollection(productName) {
   cy.get(ASSIGN_ELEMENTS_SELECTORS.submitButton).click();
   cy.waitForRequestAndCheckIfNoErrors("@CollectionAssignProduct");
 }
+
+export function removeProductsFromCollection(productName) {
+  cy.contains(ASSIGN_ELEMENTS_SELECTORS.tableRow, productName)
+    .find(ASSIGN_ELEMENTS_SELECTORS.checkbox)
+    .click()
+    .addAliasToGraphRequest("UnassignCollectionProduct")
+    .get(BUTTON_SELECTORS.deleteIcon)
+    .click()
+    .waitForRequestAndCheckIfNoErrors("@UnassignCollectionProduct");
+}
