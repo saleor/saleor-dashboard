@@ -3,7 +3,6 @@ import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
 import {
   ConfigurationItemFragment,
-  ConfigurationItemInput,
   ConfigurationTypeFieldEnum
 } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
@@ -13,7 +12,6 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface PluginAuthorizationProps {
-  data: ConfigurationItemInput[];
   fields: ConfigurationItemFragment[];
   onClear: (field: string) => void;
   onEdit: (field: string) => void;
@@ -39,7 +37,7 @@ const useStyles = makeStyles(
 );
 
 const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
-  const { data, fields, onClear, onEdit } = props;
+  const { fields, onClear, onEdit } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
@@ -58,7 +56,7 @@ const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
       />
       <CardContent>
         {secretFields.map((field, fieldIndex) => {
-          const inputData = data.find(
+          const inputData = fields.find(
             dataField => dataField.name === field.name
           );
 
