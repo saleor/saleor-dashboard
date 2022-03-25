@@ -151,6 +151,49 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
+    it("should create swatch attribute. TC:SALEOR_0531", () => {
+      const attributeType = "SWATCH";
+      const attributeName = `${startsWith}${faker.datatype.number()}`;
+      createAttributeWithInputType({
+        name: attributeName,
+        attributeType
+      })
+        .then(({ attribute }) => {
+          getAttribute(attribute.id);
+        })
+        .then(attribute => {
+          expectCorrectDataInAttribute(attribute, {
+            attributeName,
+            attributeType,
+            valueRequired: true
+          });
+        });
+    });
+
+    it("should create swatch attribute with imagev. TC:SALEOR_0532", () => {
+      const attributeType = "SWATCH";
+      const attributeName = `${startsWith}${faker.datatype.number()}`;
+      const swatchImage = "images/saleorDemoProductSneakers.png";
+      createAttributeWithInputType({
+        name: attributeName,
+        attributeType,
+        swatchImage
+      })
+        .then(({ attribute }) => {
+          getAttribute(attribute.id);
+        })
+        .then(attribute => {
+          expectCorrectDataInAttribute(attribute, {
+            attributeName,
+            attributeType,
+            valueRequired: true
+          });
+          cy.get(ATTRIBUTES_DETAILS.swatchValueImage)
+            .invoke("attr", "style")
+            .should("include", "saleorDemoProductSneakers");
+        });
+    });
+
     it("should be able delete product attribute. TC:SALEOR_0525", () => {
       const attributeName = `${startsWith}${faker.datatype.number()}`;
 
