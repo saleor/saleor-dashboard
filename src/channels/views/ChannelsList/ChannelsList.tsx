@@ -1,6 +1,11 @@
 import { getChannelsCurrencyChoices } from "@saleor/channels/utils";
-import { useShopLimitsQuery } from "@saleor/components/Shop/query";
+import { useShopLimitsQuery } from "@saleor/components/Shop/queries";
 import { configurationMenuUrl } from "@saleor/configuration";
+import {
+  ChannelDeleteMutation,
+  useChannelDeleteMutation,
+  useChannelsQuery
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import getChannelsErrorMessage from "@saleor/utils/errors/channels";
@@ -9,10 +14,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import ChannelDeleteDialog from "../../components/ChannelDeleteDialog";
-import { useChannelDeleteMutation } from "../../mutations";
 import ChannelsListPage from "../../pages/ChannelsListPage";
-import { useChannelsList } from "../../queries";
-import { ChannelDelete } from "../../types/ChannelDelete";
 import {
   channelAddUrl,
   channelsListUrl,
@@ -30,7 +32,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
   const notify = useNotifier();
   const intl = useIntl();
 
-  const { data, refetch } = useChannelsList({ displayLoader: true });
+  const { data, refetch } = useChannelsQuery({ displayLoader: true });
   const limitOpts = useShopLimitsQuery({
     variables: {
       channels: true
@@ -46,7 +48,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
     ChannelsListUrlQueryParams
   >(navigate, channelsListUrl, params);
 
-  const onCompleted = (data: ChannelDelete) => {
+  const onCompleted = (data: ChannelDeleteMutation) => {
     const errors = data.channelDelete.errors;
     if (errors.length === 0) {
       notify({

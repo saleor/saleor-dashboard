@@ -1,9 +1,9 @@
+import { useGiftCardProductsCountQuery } from "@saleor/graphql";
 import { Alert } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { giftCardsListHeaderMenuItemsMessages as messages } from "../messages";
-import { useGiftCardProductsCountQuery } from "../queries";
 import GiftCardsListHeaderAlertContent from "./GiftCardsListHeaderAlertContent";
 
 const GiftCardsListHeaderAlert: React.FC = () => {

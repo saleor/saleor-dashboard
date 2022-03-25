@@ -131,6 +131,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
         ref={anchorRef}
         onClick={handleToggle}
         variant={outlined ? "primary" : "secondary"}
+        state={open ? "active" : "default"}
       >
         <MoreIcon />
       </IconButton>
@@ -163,6 +164,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
                       disabled={menuItem.loading || menuItem.disabled}
                       onClick={() => handleMenuClick(menuItemIndex)}
                       key={menuItem.label}
+                      button
                     >
                       <div
                         className={classNames(className, {

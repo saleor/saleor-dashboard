@@ -1,4 +1,4 @@
-import { ShopErrorCode } from "@saleor/types/globalTypes";
+import { ShopErrorCode } from "@saleor/graphql";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -36,7 +36,8 @@ storiesOf("Views / Site settings / Page", module)
       ].map(field => ({
         __typename: "ShopError",
         code: ShopErrorCode.INVALID,
-        field
+        field,
+        message: "Shop form invalid"
       }))}
     />
   ));

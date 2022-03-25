@@ -1,15 +1,9 @@
-import {
-  ApolloClient,
-  ApolloLink,
-  ApolloProvider,
-  InMemoryCache
-} from "@apollo/client";
-import { BatchHttpLink } from "@apollo/client/link/batch-http";
+import { ApolloProvider } from "@apollo/client";
 import DemoBanner from "@saleor/components/DemoBanner";
+import { PermissionEnum } from "@saleor/graphql";
 import useAppState from "@saleor/hooks/useAppState";
 import { ThemeProvider } from "@saleor/macaw-ui";
-import { createFetch, createSaleorClient, SaleorProvider } from "@saleor/sdk";
-import { createUploadLink } from "apollo-upload-client";
+import { SaleorProvider } from "@saleor/sdk";
 import React from "react";
 import { render } from "react-dom";
 import ErrorBoundary from "react-error-boundary";
@@ -17,7 +11,6 @@ import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import introspectionQueryResultData from "../fragmentTypes.json";
 import AppsSection from "./apps";
 import { ExternalAppProvider } from "./apps/components/ExternalAppContext";
 import { appsSection } from "./apps/urls";
@@ -41,7 +34,7 @@ import { LocaleProvider } from "./components/Locale";
 import MessageManagerProvider from "./components/messages";
 import { ShopProvider } from "./components/Shop";
 import { WindowTitle } from "./components/WindowTitle";
-import { API_URI, APP_MOUNT_URI, DEMO_MODE, GTM_ID } from "./config";
+import { APP_MOUNT_URI, DEMO_MODE, GTM_ID } from "./config";
 import ConfigurationSection from "./configuration";
 import { getConfigMenuItemsPermissions } from "./configuration/utils";
 import AppStateProvider from "./containers/AppState";
@@ -51,6 +44,7 @@ import { CustomerSection } from "./customers";
 import DiscountSection from "./discounts";
 import GiftCardSection from "./giftCards";
 import { giftCardsSectionUrlName } from "./giftCards/urls";
+import { apolloClient, saleorClient } from "./graphql/client";
 import HomePage from "./home";
 import { commonMessages } from "./intl";
 import NavigationSection from "./navigation";
@@ -70,8 +64,6 @@ import StaffSection from "./staff";
 import TaxesSection from "./taxes";
 import themeOverrides from "./themeOverrides";
 import TranslationsSection from "./translations";
-import { TypedTypePolicies } from "./type-policies";
-import { PermissionEnum } from "./types/globalTypes";
 import WarehouseSection from "./warehouses";
 import { warehouseSection } from "./warehouses/urls";
 
@@ -80,54 +72,6 @@ if (process.env.GTM_ID) {
 }
 
 errorTracker.init();
-
-// DON'T TOUCH THIS
-// These are separate clients and do not share configs between themselves
-// so we need to explicitly set them
-const linkOptions = {
-  credentials: "include",
-  uri: API_URI,
-  fetch: createFetch()
-};
-const uploadLink = createUploadLink(linkOptions);
-const batchLink = new BatchHttpLink({
-  batchInterval: 100,
-  ...linkOptions
-});
-
-const link = ApolloLink.split(
-  operation => operation.getContext().useBatching,
-  batchLink,
-  uploadLink
-);
-const apolloClient = new ApolloClient({
-  cache: new InMemoryCache({
-    possibleTypes: introspectionQueryResultData.possibleTypes,
-    typePolicies: {
-      CountryDisplay: {
-        keyFields: ["code"]
-      },
-      Money: {
-        merge: false
-      },
-      TaxedMoney: {
-        merge: false
-      },
-      Weight: {
-        merge: false
-      },
-      Shop: {
-        keyFields: []
-      }
-    } as TypedTypePolicies
-  }),
-  link
-});
-
-const saleorClient = createSaleorClient({
-  apiUrl: API_URI,
-  channel: ""
-});
 
 const App: React.FC = () => (
   <SaleorProvider client={saleorClient}>

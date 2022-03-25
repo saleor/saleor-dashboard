@@ -1,6 +1,6 @@
 import { fetchMoreProps } from "@saleor/fixtures";
+import { PageErrorCode } from "@saleor/graphql";
 import { PageData } from "@saleor/pages/components/PageDetailsPage/form";
-import { PageErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -49,7 +49,8 @@ storiesOf("Views / Pages / Page details", module)
         __typename: "PageError",
         attributes: [],
         code: PageErrorCode.INVALID,
-        field
+        field,
+        message: "Page field error"
       }))}
     />
   ));

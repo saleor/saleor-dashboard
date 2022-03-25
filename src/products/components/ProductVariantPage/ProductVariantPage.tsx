@@ -15,21 +15,20 @@ import { MetadataFormData } from "@saleor/components/Metadata";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
-import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
-import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
-import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
-import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
-import { VariantUpdate_productVariantUpdate_errors } from "@saleor/products/types/VariantUpdate";
-import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
-import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
-import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
-import { FetchMoreProps, ReorderAction } from "@saleor/types";
+import {
+  ProductChannelListingErrorFragment,
+  ProductErrorWithAttributesFragment,
+  ProductVariantFragment,
+  SearchAttributeValuesQuery,
+  SearchPagesQuery,
+  SearchProductsQuery,
+  WarehouseFragment
+} from "@saleor/graphql";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { FetchMoreProps, RelayToFlat, ReorderAction } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import { maybe } from "../../../misc";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
 import ProductVariantCheckoutSettings from "../ProductVariantCheckoutSettings/ProductVariantCheckoutSettings";
@@ -73,24 +72,29 @@ export interface ProductVariantPageSubmitData
   removeStocks: string[];
 }
 
+function byAttributeScope(scope: VariantAttributeScope) {
+  return (attribute: AttributeInput) =>
+    attribute.data.variantAttributeScope === scope;
+}
+
 interface ProductVariantPageProps {
   assignReferencesAttributeId?: string;
   defaultVariantId?: string;
   defaultWeightUnit: string;
-  errors:
-    | ProductErrorWithAttributesFragment[]
-    | VariantUpdate_productVariantUpdate_errors[];
+  errors: ProductErrorWithAttributesFragment[];
   header: string;
   channels: ChannelPriceData[];
   channelErrors: ProductChannelListingErrorFragment[];
   loading?: boolean;
   placeholderImage?: string;
   saveButtonBarState: ConfirmButtonTransitionState;
-  variant?: ProductVariant;
+  variant?: ProductVariantFragment;
   warehouses: WarehouseFragment[];
-  referencePages?: SearchPages_search_edges_node[];
-  referenceProducts?: SearchProducts_search_edges_node[];
-  attributeValues: SearchAttributeValues_attribute_choices_edges_node[];
+  referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
+  referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
+  attributeValues: RelayToFlat<
+    SearchAttributeValuesQuery["attribute"]["choices"]
+  >;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchMoreReferenceProducts?: FetchMoreProps;
   fetchMoreAttributeValues?: FetchMoreProps;
@@ -214,184 +218,186 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           fetchReferenceProducts={fetchReferenceProducts}
           fetchMoreReferenceProducts={fetchMoreReferenceProducts}
           assignReferencesAttributeId={assignReferencesAttributeId}
+          loading={loading}
         >
-          {({
-            change,
-            data,
-            formErrors,
-            disabled: formDisabled,
-            handlers,
-            hasChanged,
-            submit
-          }) => (
-            <>
-              <Grid variant="inverted">
-                <div>
-                  <ProductVariantNavigation
-                    current={variant ? variant.id : undefined}
-                    defaultVariantId={defaultVariantId}
-                    fallbackThumbnail={maybe(
-                      () => variant.product.thumbnail.url
-                    )}
-                    variants={maybe(() => variant.product.variants)}
-                    onAdd={onAdd}
-                    onRowClick={(variantId: string) => {
-                      if (variant) {
-                        return onVariantClick(variantId);
-                      }
-                    }}
-                    onReorder={onVariantReorder}
-                  />
-                </div>
-                <div>
-                  <VariantDetailsChannelsAvailabilityCard variant={variant} />
-                  <Attributes
-                    entityId={variant?.id}
-                    title={intl.formatMessage(messages.nonSelectionAttributes)}
-                    attributes={data.attributes.filter(
-                      attribute =>
-                        attribute.data.variantAttributeScope ===
-                        VariantAttributeScope.NOT_VARIANT_SELECTION
-                    )}
-                    attributeValues={attributeValues}
-                    loading={loading}
-                    disabled={loading}
-                    errors={errors}
-                    onChange={handlers.selectAttribute}
-                    onMultiChange={handlers.selectAttributeMultiple}
-                    onFileChange={handlers.selectAttributeFile}
-                    onReferencesRemove={handlers.selectAttributeReference}
-                    onReferencesAddClick={onAssignReferencesClick}
-                    onReferencesReorder={handlers.reorderAttributeValue}
-                    fetchAttributeValues={fetchAttributeValues}
-                    fetchMoreAttributeValues={fetchMoreAttributeValues}
-                    onAttributeSelectBlur={onAttributeSelectBlur}
-                  />
-                  <CardSpacer />
-                  <Attributes
-                    entityId={variant?.id}
-                    title={intl.formatMessage(
-                      messages.selectionAttributesHeader
-                    )}
-                    attributes={data.attributes.filter(
-                      attribute =>
-                        attribute.data.variantAttributeScope ===
-                        VariantAttributeScope.VARIANT_SELECTION
-                    )}
-                    attributeValues={attributeValues}
-                    loading={loading}
-                    disabled={loading}
-                    errors={errors}
-                    onChange={handlers.selectAttribute}
-                    onMultiChange={handlers.selectAttributeMultiple}
-                    onFileChange={handlers.selectAttributeFile}
-                    onReferencesRemove={handlers.selectAttributeReference}
-                    onReferencesAddClick={onAssignReferencesClick}
-                    onReferencesReorder={handlers.reorderAttributeValue}
-                    fetchAttributeValues={fetchAttributeValues}
-                    fetchMoreAttributeValues={fetchMoreAttributeValues}
-                    onAttributeSelectBlur={onAttributeSelectBlur}
-                  />
-                  <CardSpacer />
-                  <ProductVariantMedia
-                    disabled={loading}
-                    media={media}
-                    placeholderImage={placeholderImage}
-                    onImageAdd={toggleModal}
-                  />
-                  <CardSpacer />
-                  <ProductVariantPrice
-                    disabled={!variant}
-                    ProductVariantChannelListings={data.channelListings.map(
-                      channel => ({
-                        ...channel.data,
-                        ...channel.value
-                      })
-                    )}
-                    errors={channelErrors}
-                    loading={loading}
-                    onChange={handlers.changeChannels}
-                  />
-                  <CardSpacer />
-                  <ProductVariantCheckoutSettings
-                    data={data}
-                    disabled={loading}
-                    errors={errors}
-                    onChange={change}
-                  />
-                  <CardSpacer />
+          {({ change, data, formErrors, isSaveDisabled, handlers, submit }) => {
+            const nonSelectionAttributes = data.attributes.filter(
+              byAttributeScope(VariantAttributeScope.NOT_VARIANT_SELECTION)
+            );
+            const selectionAttributes = data.attributes.filter(
+              byAttributeScope(VariantAttributeScope.VARIANT_SELECTION)
+            );
 
-                  <ProductShipping
-                    data={data}
-                    disabled={loading}
-                    errors={errors}
-                    weightUnit={variant?.weight?.unit || defaultWeightUnit}
-                    onChange={change}
-                  />
-                  <CardSpacer />
-                  <ProductStocks
-                    productVariantChannelListings={data.channelListings.map(
-                      channel => ({
-                        ...channel.data,
-                        ...channel.value
-                      })
+            return (
+              <>
+                <Grid variant="inverted">
+                  <div>
+                    <ProductVariantNavigation
+                      current={variant?.id}
+                      defaultVariantId={defaultVariantId}
+                      fallbackThumbnail={variant?.product?.thumbnail.url}
+                      variants={variant?.product.variants}
+                      onAdd={onAdd}
+                      onRowClick={(variantId: string) => {
+                        if (variant) {
+                          return onVariantClick(variantId);
+                        }
+                      }}
+                      onReorder={onVariantReorder}
+                    />
+                  </div>
+                  <div>
+                    <VariantDetailsChannelsAvailabilityCard variant={variant} />
+                    {nonSelectionAttributes.length > 0 && (
+                      <>
+                        <Attributes
+                          entityId={variant?.id}
+                          title={intl.formatMessage(
+                            messages.nonSelectionAttributes
+                          )}
+                          attributes={nonSelectionAttributes}
+                          attributeValues={attributeValues}
+                          loading={loading}
+                          disabled={loading}
+                          errors={errors}
+                          onChange={handlers.selectAttribute}
+                          onMultiChange={handlers.selectAttributeMultiple}
+                          onFileChange={handlers.selectAttributeFile}
+                          onReferencesRemove={handlers.selectAttributeReference}
+                          onReferencesAddClick={onAssignReferencesClick}
+                          onReferencesReorder={handlers.reorderAttributeValue}
+                          fetchAttributeValues={fetchAttributeValues}
+                          fetchMoreAttributeValues={fetchMoreAttributeValues}
+                          onAttributeSelectBlur={onAttributeSelectBlur}
+                        />
+                        <CardSpacer />
+                      </>
                     )}
-                    onVariantChannelListingChange={handlers.changeChannels}
-                    data={data}
-                    disabled={loading}
-                    hasVariants={true}
-                    errors={errors}
-                    formErrors={formErrors}
-                    stocks={data.stocks}
-                    warehouses={warehouses}
-                    onChange={handlers.changeStock}
-                    onFormDataChange={change}
-                    onChangePreorderEndDate={handlers.changePreorderEndDate}
-                    onEndPreorderTrigger={
-                      !!variant?.preorder
-                        ? () => setIsEndPreorderModalOpened(true)
-                        : null
-                    }
-                    onWarehouseStockAdd={handlers.addStock}
-                    onWarehouseStockDelete={handlers.deleteStock}
-                    onWarehouseConfigure={onWarehouseConfigure}
-                  />
-                  <CardSpacer />
-                  <Metadata data={data} onChange={handlers.changeMetadata} />
-                </div>
-              </Grid>
-              <Savebar
-                disabled={loading || formDisabled || !hasChanged}
-                state={saveButtonBarState}
-                onCancel={onBack}
-                onDelete={onDelete}
-                onSubmit={submit}
-              />
-              {canOpenAssignReferencesAttributeDialog && (
-                <AssignAttributeValueDialog
-                  attributeValues={getAttributeValuesFromReferences(
-                    assignReferencesAttributeId,
-                    data.attributes,
-                    referencePages,
-                    referenceProducts
-                  )}
-                  hasMore={handlers.fetchMoreReferences?.hasMore}
-                  open={canOpenAssignReferencesAttributeDialog}
-                  onFetch={handlers.fetchReferences}
-                  onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
-                  loading={handlers.fetchMoreReferences?.loading}
-                  onClose={onCloseDialog}
-                  onSubmit={attributeValues =>
-                    handleAssignReferenceAttribute(
-                      attributeValues,
-                      data,
-                      handlers
-                    )
-                  }
+                    {selectionAttributes.length > 0 && (
+                      <>
+                        <Attributes
+                          entityId={variant?.id}
+                          title={intl.formatMessage(
+                            messages.selectionAttributesHeader
+                          )}
+                          attributes={selectionAttributes}
+                          attributeValues={attributeValues}
+                          loading={loading}
+                          disabled={loading}
+                          errors={errors}
+                          onChange={handlers.selectAttribute}
+                          onMultiChange={handlers.selectAttributeMultiple}
+                          onFileChange={handlers.selectAttributeFile}
+                          onReferencesRemove={handlers.selectAttributeReference}
+                          onReferencesAddClick={onAssignReferencesClick}
+                          onReferencesReorder={handlers.reorderAttributeValue}
+                          fetchAttributeValues={fetchAttributeValues}
+                          fetchMoreAttributeValues={fetchMoreAttributeValues}
+                          onAttributeSelectBlur={onAttributeSelectBlur}
+                        />
+                        <CardSpacer />
+                      </>
+                    )}
+                    <ProductVariantMedia
+                      disabled={loading}
+                      media={media}
+                      placeholderImage={placeholderImage}
+                      onImageAdd={toggleModal}
+                    />
+                    <CardSpacer />
+                    <ProductVariantPrice
+                      disabled={!variant}
+                      ProductVariantChannelListings={data.channelListings.map(
+                        channel => ({
+                          ...channel.data,
+                          ...channel.value
+                        })
+                      )}
+                      errors={channelErrors}
+                      loading={loading}
+                      onChange={handlers.changeChannels}
+                    />
+                    <CardSpacer />
+                    <ProductVariantCheckoutSettings
+                      data={data}
+                      disabled={loading}
+                      errors={errors}
+                      onChange={change}
+                    />
+                    <CardSpacer />
+
+                    <ProductShipping
+                      data={data}
+                      disabled={loading}
+                      errors={errors}
+                      weightUnit={variant?.weight?.unit || defaultWeightUnit}
+                      onChange={change}
+                    />
+                    <CardSpacer />
+                    <ProductStocks
+                      productVariantChannelListings={data.channelListings.map(
+                        channel => ({
+                          ...channel.data,
+                          ...channel.value
+                        })
+                      )}
+                      onVariantChannelListingChange={handlers.changeChannels}
+                      data={data}
+                      disabled={loading}
+                      hasVariants={true}
+                      errors={errors}
+                      formErrors={formErrors}
+                      stocks={data.stocks}
+                      warehouses={warehouses}
+                      onChange={handlers.changeStock}
+                      onFormDataChange={change}
+                      onChangePreorderEndDate={handlers.changePreorderEndDate}
+                      onEndPreorderTrigger={
+                        !!variant?.preorder
+                          ? () => setIsEndPreorderModalOpened(true)
+                          : null
+                      }
+                      onWarehouseStockAdd={handlers.addStock}
+                      onWarehouseStockDelete={handlers.deleteStock}
+                      onWarehouseConfigure={onWarehouseConfigure}
+                    />
+                    <CardSpacer />
+                    <Metadata data={data} onChange={handlers.changeMetadata} />
+                  </div>
+                </Grid>
+                <Savebar
+                  disabled={isSaveDisabled}
+                  state={saveButtonBarState}
+                  onCancel={onBack}
+                  onDelete={onDelete}
+                  onSubmit={submit}
                 />
-              )}
-            </>
-          )}
+                {canOpenAssignReferencesAttributeDialog && (
+                  <AssignAttributeValueDialog
+                    attributeValues={getAttributeValuesFromReferences(
+                      assignReferencesAttributeId,
+                      data.attributes,
+                      referencePages,
+                      referenceProducts
+                    )}
+                    hasMore={handlers.fetchMoreReferences?.hasMore}
+                    open={canOpenAssignReferencesAttributeDialog}
+                    onFetch={handlers.fetchReferences}
+                    onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
+                    loading={handlers.fetchMoreReferences?.loading}
+                    onClose={onCloseDialog}
+                    onSubmit={attributeValues =>
+                      handleAssignReferenceAttribute(
+                        attributeValues,
+                        data,
+                        handlers
+                      )
+                    }
+                  />
+                )}
+              </>
+            );
+          }}
         </ProductVariantUpdateForm>
       </Container>
       {variant && (
@@ -400,7 +406,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           onMediaSelect={onMediaSelect}
           open={isModalOpened}
           media={productMedia}
-          selectedMedia={maybe(() => variant.media.map(image => image.id))}
+          selectedMedia={variant?.media.map(image => image.id)}
         />
       )}
       {!!variant?.preorder && (

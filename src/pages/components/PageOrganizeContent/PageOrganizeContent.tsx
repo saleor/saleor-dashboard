@@ -3,8 +3,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType
 } from "@saleor/components/SingleAutocompleteSelectField";
-import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
-import { PageTypeFragment } from "@saleor/fragments/types/PageTypeFragment";
+import { PageDetailsFragment, PageErrorFragment } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
@@ -18,7 +17,7 @@ import { PageFormData } from "../PageDetailsPage/form";
 export interface PageOrganizeContentProps {
   canChangeType: boolean;
   data: PageFormData;
-  pageType?: PageTypeFragment;
+  pageType?: PageDetailsFragment["pageType"];
   pageTypeInputDisplayValue?: string;
   errors: PageErrorFragment[];
   disabled: boolean;

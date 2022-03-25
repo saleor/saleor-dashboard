@@ -1,7 +1,7 @@
 import { channelsList } from "@saleor/channels/fixtures";
 import { createChannelsData } from "@saleor/channels/utils";
 import { fetchMoreProps } from "@saleor/fixtures";
-import { ProductErrorCode } from "@saleor/types/globalTypes";
+import { ProductErrorCode } from "@saleor/graphql";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -115,7 +115,8 @@ storiesOf("Views / Products / Create product", module)
             ? [productTypeSearch.productAttributes[0].id]
             : null,
         code: ProductErrorCode.INVALID,
-        field
+        field,
+        message: "Attributes invalid"
       }))}
       header="Add product"
       collections={product.collections}

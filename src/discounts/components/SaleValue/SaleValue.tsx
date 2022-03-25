@@ -10,7 +10,7 @@ import {
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
-import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
+import { DiscountErrorFragment } from "@saleor/graphql";
 import { renderCollection } from "@saleor/misc";
 import { getFormErrors } from "@saleor/utils/errors";
 import getDiscountErrorMessage from "@saleor/utils/errors/discounts";

@@ -3,9 +3,10 @@ import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
-import { useShopLimitsQuery } from "@saleor/components/Shop/query";
+import { useShopLimitsQuery } from "@saleor/components/Shop/queries";
 import { APP_MOUNT_URI, DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { configurationMenuUrl } from "@saleor/configuration";
+import { useStaffListQuery, useStaffMemberAddMutation } from "@saleor/graphql";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -30,8 +31,6 @@ import StaffAddMemberDialog, {
   AddMemberFormData
 } from "../../components/StaffAddMemberDialog";
 import StaffListPage from "../../components/StaffListPage";
-import { useStaffMemberAddMutation } from "../../mutations";
-import { useStaffListQuery } from "../../queries";
 import {
   staffListUrl,
   StaffListUrlDialog,

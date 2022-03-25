@@ -1,14 +1,12 @@
+import { CustomerDetailsQuery, useCustomerDetailsQuery } from "@saleor/graphql";
 import React, { createContext } from "react";
-
-import { useCustomerDetails } from "../queries";
-import { CustomerDetails } from "../types/CustomerDetails";
 
 export interface CustomerDetailsProviderProps {
   id: string;
 }
 
 interface CustomerDetailsConsumerProps {
-  customer: CustomerDetails | null;
+  customer: CustomerDetailsQuery | null;
   loading: boolean | null;
 }
 
@@ -20,7 +18,7 @@ export const CustomerDetailsProvider: React.FC<CustomerDetailsProviderProps> = (
   children,
   id
 }) => {
-  const { data, loading } = useCustomerDetails({
+  const { data, loading } = useCustomerDetailsQuery({
     displayLoader: true,
     variables: {
       id

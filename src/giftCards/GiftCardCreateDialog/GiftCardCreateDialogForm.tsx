@@ -2,23 +2,23 @@ import { DialogContent, Divider, TextField } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import DialogButtons from "@saleor/components/ActionDialog/DialogButtons";
 import CardSpacer from "@saleor/components/CardSpacer";
-import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
 import GiftCardTagInput from "@saleor/giftCards/components/GiftCardTagInput";
+import {
+  GiftCardErrorFragment,
+  GiftCardSettingsExpiryTypeEnum,
+  TimePeriodTypeEnum,
+  useGiftCardSettingsQuery
+} from "@saleor/graphql";
 import useForm from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import Label from "@saleor/orders/components/OrderHistory/Label";
-import {
-  GiftCardSettingsExpiryTypeEnum,
-  TimePeriodTypeEnum
-} from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import GiftCardSendToCustomer from "../components/GiftCardSendToCustomer/GiftCardSendToCustomer";
 import { GiftCardCreateCommonFormData } from "../GiftCardBulkCreateDialog/types";
-import { useGiftCardSettingsQuery } from "../GiftCardSettings/queries";
 import GiftCardCreateExpirySelect from "./GiftCardCreateExpirySelect";
 import GiftCardCreateMoneyInput from "./GiftCardCreateMoneyInput";
 import GiftCardCreateRequiresActivationSection from "./GiftCardCreateRequiresActivationSection";
@@ -51,7 +51,7 @@ export const initialData: GiftCardCreateFormData = {
 };
 interface GiftCardCreateDialogFormProps {
   opts: { status: ConfirmButtonTransitionState };
-  apiErrors: GiftCardError[];
+  apiErrors: GiftCardErrorFragment[];
   onSubmit: (data: GiftCardCreateFormData) => void;
   onClose: () => void;
   initialCustomer?: GiftCardCreateFormCustomer | null;

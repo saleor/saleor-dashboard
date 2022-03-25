@@ -2,6 +2,7 @@ import { Card } from "@material-ui/core";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
+import { PluginBaseFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import { PluginListUrlSortField } from "@saleor/plugins/urls";
@@ -14,7 +15,6 @@ import {
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { Plugins_plugins_edges_node } from "../../types/Plugins";
 import PluginsList from "../PluginsList/PluginsList";
 import {
   createFilterStructure,
@@ -28,7 +28,7 @@ export interface PluginsListPageProps
     FilterPageProps<PluginFilterKeys, PluginListFilterOpts>,
     SortPage<PluginListUrlSortField>,
     TabPageProps {
-  plugins: Plugins_plugins_edges_node[];
+  plugins: PluginBaseFragment[];
   onBack: () => void;
 }
 

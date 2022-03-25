@@ -2,20 +2,19 @@ import { FetchResult } from "@apollo/client";
 import { FormData } from "@saleor/discounts/components/SaleCreatePage";
 import { getSaleChannelsVariables } from "@saleor/discounts/handlers";
 import {
-  SaleChannelListingUpdate,
-  SaleChannelListingUpdateVariables
-} from "@saleor/discounts/types/SaleChannelListingUpdate";
+  DiscountValueTypeEnum,
+  SaleChannelListingUpdateMutation,
+  SaleChannelListingUpdateMutationVariables,
+  SaleCreateMutation,
+  SaleCreateMutationVariables,
+  SaleType
+} from "@saleor/graphql";
 import {
-  SaleCreate,
-  SaleCreateVariables
-} from "@saleor/discounts/types/SaleCreate";
-import {
+  decimal,
   extractMutationErrors,
   getMutationErrors,
   joinDateTime
 } from "@saleor/misc";
-import { decimal } from "@saleor/misc";
-import { DiscountValueTypeEnum, SaleType } from "@saleor/types/globalTypes";
 
 function discountValueTypeEnum(type: SaleType): DiscountValueTypeEnum {
   return type.toString() === DiscountValueTypeEnum.FIXED
@@ -25,11 +24,11 @@ function discountValueTypeEnum(type: SaleType): DiscountValueTypeEnum {
 
 export function createHandler(
   createSale: (
-    variables: SaleCreateVariables
-  ) => Promise<FetchResult<SaleCreate>>,
+    variables: SaleCreateMutationVariables
+  ) => Promise<FetchResult<SaleCreateMutation>>,
   updateChannels: (options: {
-    variables: SaleChannelListingUpdateVariables;
-  }) => Promise<FetchResult<SaleChannelListingUpdate>>
+    variables: SaleChannelListingUpdateMutationVariables;
+  }) => Promise<FetchResult<SaleChannelListingUpdateMutation>>
 ) {
   return async (formData: FormData) => {
     const response = await createSale({

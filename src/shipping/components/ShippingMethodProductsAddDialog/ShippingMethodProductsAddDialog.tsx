@@ -16,13 +16,14 @@ import ConfirmButton from "@saleor/components/ConfirmButton";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import {
+  SearchProductsQuery,
+  ShippingPriceExcludeProductMutation
+} from "@saleor/graphql";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
-import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
-import { ShippingPriceExcludeProduct } from "@saleor/shipping/types/ShippingPriceExcludeProduct";
-import { FetchMoreProps } from "@saleor/types";
+import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -66,19 +67,21 @@ const useStyles = makeStyles(
 export interface ShippingMethodProductsAddDialogProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
-  products: SearchProducts_search_edges_node[];
+  products: RelayToFlat<SearchProductsQuery["search"]>;
   onClose: () => void;
   onFetch: (query: string) => void;
   onSubmit: (
     ids: string[]
-  ) => Promise<FetchResult<ShippingPriceExcludeProduct>>;
+  ) => Promise<FetchResult<ShippingPriceExcludeProductMutation>>;
 }
 
 const handleProductAssign = (
-  product: SearchProducts_search_edges_node,
+  product: RelayToFlat<SearchProductsQuery["search"]>[0],
   isSelected: boolean,
-  selectedProducts: SearchProducts_search_edges_node[],
-  setSelectedProducts: (data: SearchProducts_search_edges_node[]) => void
+  selectedProducts: RelayToFlat<SearchProductsQuery["search"]>,
+  setSelectedProducts: (
+    data: RelayToFlat<SearchProductsQuery["search"]>
+  ) => void
 ) => {
   if (isSelected) {
     setSelectedProducts(
@@ -110,7 +113,7 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
   const intl = useIntl();
   const [query, onQueryChange, resetQuery] = useSearchQuery(onFetch);
   const [selectedProducts, setSelectedProducts] = React.useState<
-    SearchProducts_search_edges_node[]
+    RelayToFlat<SearchProductsQuery["search"]>
   >([]);
 
   const handleSubmit = () => {
@@ -230,7 +233,10 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
           disabled={loading || !selectedProducts?.length}
           onClick={handleSubmit}
         >
-          <FormattedMessage {...buttonMessages.confirm} />
+          <FormattedMessage
+            defaultMessage="Assign and save"
+            description="assign products to shipping rate and save, button"
+          />
         </ConfirmButton>
       </DialogActions>
     </Dialog>

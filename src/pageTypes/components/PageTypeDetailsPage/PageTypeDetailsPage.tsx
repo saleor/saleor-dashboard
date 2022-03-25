@@ -8,14 +8,18 @@ import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
+import {
+  AttributeTypeEnum,
+  PageErrorFragment,
+  PageTypeDetailsFragment
+} from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
-import { makeStyles } from "@saleor/macaw-ui";
-import { PageTypeDetails_pageType } from "@saleor/pageTypes/types/PageTypeDetails";
+import {
+  Backlink,
+  ConfirmButtonTransitionState,
+  makeStyles
+} from "@saleor/macaw-ui";
 import { ListActions, ReorderEvent } from "@saleor/types";
-import { AttributeTypeEnum } from "@saleor/types/globalTypes";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
@@ -31,7 +35,7 @@ export interface PageTypeForm extends MetadataFormData {
 
 export interface PageTypeDetailsPageProps {
   errors: PageErrorFragment[];
-  pageType: PageTypeDetails_pageType;
+  pageType: PageTypeDetailsFragment;
   disabled: boolean;
   pageTitle: string;
   attributeList: ListActions;
@@ -106,8 +110,13 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
   };
 
   return (
-    <Form confirmLeave initial={formInitialData} onSubmit={handleSubmit}>
-      {({ change, data, hasChanged, submit }) => {
+    <Form
+      confirmLeave
+      initial={formInitialData}
+      onSubmit={handleSubmit}
+      disabled={disabled}
+    >
+      {({ change, data, isSaveDisabled, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
@@ -170,7 +179,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
               onCancel={onBack}
               onDelete={onDelete}
               onSubmit={submit}
-              disabled={disabled || !hasChanged}
+              disabled={isSaveDisabled}
               state={saveButtonBarState}
             />
           </Container>

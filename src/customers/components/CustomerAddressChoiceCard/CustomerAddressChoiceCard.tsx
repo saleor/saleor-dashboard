@@ -1,16 +1,16 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
 import AddressFormatter from "@saleor/components/AddressFormatter";
+import { AddressFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { EditIcon } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { CustomerAddresses_user_addresses } from "../../types/CustomerAddresses";
 import { useStyles } from "./styles";
 
 export interface CustomerAddressChoiceCardProps {
-  address: CustomerAddresses_user_addresses;
+  address: AddressFragment;
   selected?: boolean;
   editable?: boolean;
   onSelect?: () => void;

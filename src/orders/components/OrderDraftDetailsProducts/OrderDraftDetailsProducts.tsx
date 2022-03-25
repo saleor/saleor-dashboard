@@ -1,6 +1,7 @@
 import { TableBody, TableCell, TableHead, TableRow } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
+import { OrderLineFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import {
   OrderLineDiscountConsumer,
@@ -10,7 +11,6 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
-import { OrderDetails_order_lines } from "../../types/OrderDetails";
 import TableLine from "./TableLine";
 
 export interface FormData {
@@ -58,7 +58,7 @@ const useStyles = makeStyles(
 );
 
 interface OrderDraftDetailsProductsProps {
-  lines: OrderDetails_order_lines[];
+  lines: OrderLineFragment[];
   onOrderLineChange: (id: string, data: FormData) => void;
   onOrderLineRemove: (id: string) => void;
 }

@@ -1,7 +1,5 @@
+import { HomeQuery, OrderEventsEnum } from "@saleor/graphql";
 import { defineMessages, IntlShape } from "react-intl";
-
-import { OrderEventsEnum } from "../../../types/globalTypes";
-import { Home_activities_edges_node } from "../../types/Home";
 
 const messages = defineMessages({
   draft: {
@@ -19,7 +17,7 @@ const messages = defineMessages({
 });
 
 export const getActivityMessage = (
-  activity: Home_activities_edges_node,
+  activity: HomeQuery["activities"]["edges"][0]["node"],
   intl: IntlShape
 ) => {
   switch (activity.type) {

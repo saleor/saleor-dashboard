@@ -1,8 +1,7 @@
 import backgroundArt from "@assets/images/login-background.svg";
 import saleorDarkLogo from "@assets/images/logo-dark.svg";
 import saleorLightLogo from "@assets/images/logo-light.svg";
-import { useTheme } from "@saleor/macaw-ui";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles, useTheme } from "@saleor/macaw-ui";
 import React from "react";
 import SVG from "react-inlinesvg";
 

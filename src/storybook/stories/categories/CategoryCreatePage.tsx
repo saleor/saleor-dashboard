@@ -1,4 +1,4 @@
-import { ProductErrorCode } from "@saleor/types/globalTypes";
+import { ProductErrorCode } from "@saleor/graphql";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -27,11 +27,13 @@ storiesOf("Views / Categories / Create category", module)
       errors={[
         {
           code: ProductErrorCode.REQUIRED,
-          field: "name"
+          field: "name",
+          message: "Product field name required"
         },
         {
           code: ProductErrorCode.REQUIRED,
-          field: "description"
+          field: "description",
+          message: "Product field description required"
         }
       ].map(err => ({
         __typename: "ProductError",

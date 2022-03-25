@@ -1,5 +1,5 @@
 import { listActionsProps } from "@saleor/fixtures";
-import { PageErrorCode } from "@saleor/types/globalTypes";
+import { PageErrorCode } from "@saleor/graphql";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -49,7 +49,8 @@ storiesOf("Views / Page types / Page type details", module)
       errors={[
         {
           code: PageErrorCode.REQUIRED,
-          field: "name"
+          field: "name",
+          message: "Field is required"
         }
       ].map(err => ({
         __typename: "PageError",

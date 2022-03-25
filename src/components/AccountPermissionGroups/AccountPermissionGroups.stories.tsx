@@ -1,14 +1,17 @@
-import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
-import { SearchPermissionGroups_search_edges_node } from "@saleor/searches/types/SearchPermissionGroups";
+import {
+  AccountErrorCode,
+  SearchPermissionGroupsQuery,
+  StaffErrorFragment
+} from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
-import { AccountErrorCode } from "@saleor/types/globalTypes";
+import { RelayToFlat } from "@saleor/types";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
 import AccountPermissionGroups, { AccountPermissionGroupsProps } from ".";
 
-const availablePermissionGroups: SearchPermissionGroups_search_edges_node[] = [
+const availablePermissionGroups: RelayToFlat<SearchPermissionGroupsQuery["search"]> = [
   {
     __typename: "Group",
     id: "R3JvdXA6MQ==",
@@ -48,7 +51,8 @@ const errors: StaffErrorFragment[] = [
   {
     __typename: "StaffError",
     code: AccountErrorCode.OUT_OF_SCOPE_GROUP,
-    field: "addGroups"
+    field: "addGroups",
+    message: "Group out of scope"
   }
 ];
 

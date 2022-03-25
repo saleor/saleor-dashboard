@@ -1,5 +1,4 @@
-import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
-import { GiftCardErrorCode } from "@saleor/types/globalTypes";
+import { GiftCardErrorCode, GiftCardErrorFragment } from "@saleor/graphql";
 import commonErrorMessages, {
   getCommonFormFieldErrorMessage
 } from "@saleor/utils/errors/common";
@@ -20,7 +19,7 @@ const giftCardErrorMessages = defineMessages({
 });
 
 export function getGiftCardErrorMessage(
-  error: Omit<GiftCardError, "__typename"> | undefined,
+  error: Omit<GiftCardErrorFragment, "__typename" | "message"> | undefined,
   intl: IntlShape
 ): string {
   if (error) {

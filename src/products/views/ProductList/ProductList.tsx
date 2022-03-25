@@ -5,7 +5,7 @@ import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
-import { useShopLimitsQuery } from "@saleor/components/Shop/query";
+import { useShopLimitsQuery } from "@saleor/components/Shop/queries";
 import {
   DEFAULT_INITIAL_PAGINATION_DATA,
   DEFAULT_INITIAL_SEARCH_DATA,
@@ -13,6 +13,20 @@ import {
   ProductListColumns
 } from "@saleor/config";
 import { Task } from "@saleor/containers/BackgroundTasks/types";
+import {
+  ProductListQueryVariables,
+  useAvailableInGridAttributesQuery,
+  useGridAttributesQuery,
+  useInitialProductFilterAttributesQuery,
+  useInitialProductFilterCategoriesQuery,
+  useInitialProductFilterCollectionsQuery,
+  useInitialProductFilterProductTypesQuery,
+  useProductBulkDeleteMutation,
+  useProductCountQuery,
+  useProductExportMutation,
+  useProductListQuery,
+  useWarehouseListQuery
+} from "@saleor/graphql";
 import useBackgroundTask from "@saleor/hooks/useBackgroundTask";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
@@ -31,17 +45,6 @@ import {
   isAttributeColumnValue
 } from "@saleor/products/components/ProductListPage/utils";
 import {
-  useAvailableInGridAttributesQuery,
-  useGridAttributesQuery,
-  useInitialProductFilterAttributesQuery,
-  useInitialProductFilterCategoriesQuery,
-  useInitialProductFilterCollectionsQuery,
-  useInitialProductFilterProductTypesQuery,
-  useProductCountQuery,
-  useProductListQuery
-} from "@saleor/products/queries";
-import { ProductListVariables } from "@saleor/products/types/ProductList";
-import {
   productAddUrl,
   productListUrl,
   ProductListUrlDialog,
@@ -59,15 +62,10 @@ import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandl
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
 import { getSortUrlVariables } from "@saleor/utils/sort";
-import { useWarehouseList } from "@saleor/warehouses/queries";
 import React, { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductListPage from "../../components/ProductListPage";
-import {
-  useProductBulkDeleteMutation,
-  useProductExport
-} from "../../mutations";
 import {
   deleteFilterTab,
   getActiveFilters,
@@ -160,7 +158,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     },
     skip: !focusedAttribute
   });
-  const warehouses = useWarehouseList({
+  const warehouses = useWarehouseListQuery({
     variables: {
       first: 100
     },
@@ -191,7 +189,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     skip: params.action !== "export"
   });
 
-  const [exportProducts, exportProductsOpts] = useProductExport({
+  const [exportProducts, exportProductsOpts] = useProductExportMutation({
     onCompleted: data => {
       if (data.exportProducts.errors.length === 0) {
         notify({
@@ -290,7 +288,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const filter = getFilterVariables(params, !!selectedChannel);
   const sort = getSortQueryVariables(params, !!selectedChannel);
   const queryVariables = React.useMemo<
-    Omit<ProductListVariables, "hasChannel" | "hasSelectedAttributes">
+    Omit<ProductListQueryVariables, "hasChannel" | "hasSelectedAttributes">
   >(
     () => ({
       ...paginationState,

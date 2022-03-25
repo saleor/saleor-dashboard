@@ -1,24 +1,24 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
-import { useCustomerAddressesQuery } from "@saleor/customers/queries";
+import {
+  FulfillmentStatus,
+  OrderFulfillmentApproveMutation,
+  OrderFulfillmentApproveMutationVariables,
+  OrderUpdateMutation,
+  OrderUpdateMutationVariables,
+  useCustomerAddressesQuery,
+  useWarehouseListQuery
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
 import { OrderCustomerAddressesEditDialogOutput } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/types";
 import OrderFulfillmentApproveDialog from "@saleor/orders/components/OrderFulfillmentApproveDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
-import {
-  OrderFulfillmentApprove,
-  OrderFulfillmentApproveVariables
-} from "@saleor/orders/types/OrderFulfillmentApprove";
-import {
-  OrderUpdate,
-  OrderUpdateVariables
-} from "@saleor/orders/types/OrderUpdate";
 import { OrderDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
+import { useOrderVariantSearch } from "@saleor/searches/useOrderVariantSearch";
 import { PartialMutationProviderOutput } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
-import { useWarehouseList } from "@saleor/warehouses/queries";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -29,7 +29,6 @@ import {
   getStringOrPlaceholder
 } from "../../../../misc";
 import { productUrl } from "../../../../products/urls";
-import { FulfillmentStatus } from "../../../../types/globalTypes";
 import OrderAddressFields from "../../../components/OrderAddressFields/OrderAddressFields";
 import OrderCancelDialog from "../../../components/OrderCancelDialog";
 import OrderDetailsPage from "../../../components/OrderDetailsPage";
@@ -40,12 +39,11 @@ import OrderPaymentDialog from "../../../components/OrderPaymentDialog";
 import OrderPaymentVoidDialog from "../../../components/OrderPaymentVoidDialog";
 import OrderProductAddDialog from "../../../components/OrderProductAddDialog";
 import OrderShippingMethodEditDialog from "../../../components/OrderShippingMethodEditDialog";
-import { useOrderVariantSearch } from "../../../queries";
 import {
   orderFulfillUrl,
   orderListUrl,
   orderRefundUrl,
-  orderReturnPath,
+  orderReturnUrl,
   orderUrl,
   OrderUrlQueryParams
 } from "../../../urls";
@@ -60,7 +58,10 @@ interface OrderUnconfirmedDetailsProps {
   orderLineDelete: any;
   orderInvoiceRequest: any;
   handleSubmit: any;
-  orderUpdate: PartialMutationProviderOutput<OrderUpdate, OrderUpdateVariables>;
+  orderUpdate: PartialMutationProviderOutput<
+    OrderUpdateMutation,
+    OrderUpdateMutationVariables
+  >;
   orderCancel: any;
   orderShippingMethodUpdate: any;
   orderLinesAdd: any;
@@ -68,8 +69,8 @@ interface OrderUnconfirmedDetailsProps {
   orderVoid: any;
   orderPaymentCapture: any;
   orderFulfillmentApprove: PartialMutationProviderOutput<
-    OrderFulfillmentApprove,
-    OrderFulfillmentApproveVariables
+    OrderFulfillmentApproveMutation,
+    OrderFulfillmentApproveMutationVariables
   >;
   orderFulfillmentCancel: any;
   orderFulfillmentUpdateTracking: any;
@@ -116,7 +117,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
   } = useOrderVariantSearch({
     variables: { ...DEFAULT_INITIAL_SEARCH_DATA, channel: order.channel.slug }
   });
-  const warehouses = useWarehouseList({
+  const warehouses = useWarehouseListQuery({
     displayLoader: true,
     variables: {
       first: 30
@@ -162,7 +163,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
       <OrderDiscountProvider order={order}>
         <OrderLineDiscountProvider order={order}>
           <OrderDetailsPage
-            onOrderReturn={() => navigate(orderReturnPath(id))}
+            onOrderReturn={() => navigate(orderReturnUrl(id))}
             disabled={
               updateMetadataOpts.loading || updatePrivateMetadataOpts.loading
             }
@@ -384,11 +385,11 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
             ?.orderFulfillmentUpdateTracking.errors || []
         }
         open={params.action === "edit-fulfillment"}
-        trackingNumber={getStringOrPlaceholder(
+        trackingNumber={
           data?.order?.fulfillments.find(
             fulfillment => fulfillment.id === params.id
           )?.trackingNumber
-        )}
+        }
         onConfirm={variables =>
           orderFulfillmentUpdateTracking.mutate({
             id: params.id,

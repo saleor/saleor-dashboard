@@ -2,12 +2,14 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
-import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
+import {
+  FulfillmentStatus,
+  OrderErrorFragment,
+  OrderRefundDataQuery
+} from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { Backlink } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
-import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -31,7 +33,7 @@ export const refundFulfilledStatuses = [
 ];
 
 export interface OrderRefundPageProps {
-  order: OrderRefundData_order;
+  order: OrderRefundDataQuery["order"];
   defaultType?: OrderRefundType;
   disabled: boolean;
   errors: OrderErrorFragment[];
@@ -65,8 +67,9 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
       order={order}
       defaultType={defaultType}
       onSubmit={onSubmit}
+      disabled={disabled}
     >
-      {({ data, handlers, change, submit }) => {
+      {({ data, handlers, change, submit, isSaveDisabled }) => {
         const isProductRefund = data.type === OrderRefundType.PRODUCTS;
 
         return (
@@ -154,7 +157,7 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
                   }
                   data={data}
                   order={order}
-                  disabled={disabled}
+                  disabled={isSaveDisabled}
                   errors={errors}
                   onChange={change}
                   onRefund={submit}

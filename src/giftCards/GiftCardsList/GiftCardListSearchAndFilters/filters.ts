@@ -1,7 +1,10 @@
 import { IFilter, IFilterElement } from "@saleor/components/Filter";
-import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
-import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
-import { GiftCardFilterInput } from "@saleor/types/globalTypes";
+import {
+  GiftCardFilterInput,
+  SearchCustomersQuery,
+  SearchProductsQuery
+} from "@saleor/graphql";
+import { RelayToFlat } from "@saleor/types";
 import {
   createFilterTabUtils,
   createFilterUtils,
@@ -38,9 +41,9 @@ interface GiftCardFilterOptsProps {
   params: GiftCardListUrlFilters;
   currencies: string[];
   loadingCurrencies: boolean;
-  products: SearchProducts_search_edges_node[];
+  products: RelayToFlat<SearchProductsQuery["search"]>;
   productSearchProps: SearchWithFetchMoreProps;
-  customers: SearchCustomers_search_edges_node[];
+  customers: RelayToFlat<SearchCustomersQuery["search"]>;
   customerSearchProps: SearchWithFetchMoreProps;
   tags: string[];
   tagSearchProps: SearchWithFetchMoreProps;

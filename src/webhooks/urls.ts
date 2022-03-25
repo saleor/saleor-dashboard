@@ -1,5 +1,4 @@
-import { customAppListPath } from "@saleor/apps/urls";
-import { appsSection } from "@saleor/apps/urls";
+import { appsSection, customAppListPath } from "@saleor/apps/urls";
 import { stringifyQs } from "@saleor/utils/urls";
 import urlJoin from "url-join";
 

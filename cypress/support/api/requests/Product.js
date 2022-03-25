@@ -1,6 +1,10 @@
 import { stringify } from "../.././formatData/formatJson";
 import { returnValueDependsOnShopVersion } from "../../formatData/dataDependingOnVersion";
-import { getValueWithDefault, getVariantsListIds } from "./utils/Utils";
+import {
+  getDataForDescriptionInVariables,
+  getValueWithDefault,
+  getVariantsListIds
+} from "./utils/Utils";
 
 export function getFirstProducts(first, search) {
   const filter = search
@@ -102,10 +106,7 @@ export function createProduct({
     `collections:["${collectionId}"]`
   );
   const category = getValueWithDefault(categoryId, `category:"${categoryId}"`);
-  const descriptionLine = getValueWithDefault(
-    description,
-    `description:"{\\"blocks\\":[{\\"type\\":\\"paragraph\\",\\"data\\":{\\"text\\":\\"${description}\\"}}]}"`
-  );
+  const descriptionData = getDataForDescriptionInVariables(description);
   const attributeValuesLine = getValueWithDefault(
     attributeValue,
     `values:["${attributeValue}"]`
@@ -117,7 +118,7 @@ export function createProduct({
       ${attributeValuesLine}
     }]`
   );
-  const mutation = `mutation{
+  const mutation = `mutation createProduct${descriptionData.mutationVariables}{
     productCreate(input:{
       ${attributes}
       name:"${name}"
@@ -126,7 +127,7 @@ export function createProduct({
       productType:"${productTypeId}"
       ${category}
       ${collection}
-      ${descriptionLine}
+      ${descriptionData.descriptionLine}
     }){
       product{
         id
@@ -139,7 +140,7 @@ export function createProduct({
     }
   }`;
   return cy
-    .sendRequestWithQuery(mutation)
+    .sendRequestWithQuery(mutation, "auth", descriptionData.variables, true)
     .its("body.data.productCreate.product");
 }
 
@@ -147,7 +148,7 @@ export function createVariant({
   productId,
   sku,
   warehouseId,
-  quantityInWarehouse,
+  quantityInWarehouse = 1,
   channelId,
   attributeId,
   price = 1,

@@ -20,7 +20,7 @@ import filterTests from "../../../support/filterTests";
 import { fillUpVariantDetails } from "../../../support/pages/catalog/products/VariantsPage";
 
 filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
-  describe("Create attribute with type", () => {
+  describe("Create variant with variant selection attribute", () => {
     const startsWith = "VarSel";
 
     const attributesTypes = [
@@ -39,7 +39,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
       cy.clearSessionData().loginUserViaRequest();
       deleteProductsStartsWith(startsWith);
       getDefaultChannel().then(defaultChannel => (channel = defaultChannel));
-      createCategory(startsWith).then(
+      createCategory({ name: startsWith }).then(
         categoryResp => (category = categoryResp)
       );
     });

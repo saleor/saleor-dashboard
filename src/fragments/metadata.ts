@@ -5,7 +5,7 @@ export const metadataFragment = gql`
     key
     value
   }
-  fragment MetadataFragment on ObjectWithMetadata {
+  fragment Metadata on ObjectWithMetadata {
     metadata {
       ...MetadataItem
     }

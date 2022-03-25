@@ -1,5 +1,4 @@
 import { DialogContentText } from "@material-ui/core";
-import { useAttributeValueDeleteMutation } from "@saleor/attributes/mutations";
 import {
   getAttributesAfterFileAttributesUpdate,
   mergeAttributeValueDeleteErrors,
@@ -17,10 +16,20 @@ import {
   DEFAULT_INITIAL_SEARCH_DATA,
   VALUES_PAGINATE_BY
 } from "@saleor/config";
-import { useFileUploadMutation } from "@saleor/files/mutations";
-import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
-import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
-import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
+import {
+  AttributeErrorFragment,
+  AttributeValueInput,
+  PageErrorFragment,
+  PageInput,
+  UploadErrorFragment,
+  useAttributeValueDeleteMutation,
+  useFileUploadMutation,
+  usePageDetailsQuery,
+  usePageRemoveMutation,
+  usePageUpdateMutation,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
@@ -29,21 +38,13 @@ import useProductSearch from "@saleor/searches/useProductSearch";
 import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getStringOrPlaceholder, maybe } from "../../misc";
-import { AttributeValueInput, PageInput } from "../../types/globalTypes";
 import PageDetailsPage from "../components/PageDetailsPage";
 import { PageData, PageSubmitData } from "../components/PageDetailsPage/form";
-import { usePageRemoveMutation, usePageUpdateMutation } from "../mutations";
-import { usePageDetailsQuery } from "../queries";
-import { PageRemove } from "../types/PageRemove";
 import { pageListUrl, pageUrl, PageUrlQueryParams } from "../urls";
 
 export interface PageDetailsProps {
@@ -74,8 +75,8 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   const pageDetails = usePageDetailsQuery({
     variables: {
@@ -94,7 +95,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
   ] = useAttributeValueDeleteMutation({});
 
   const [pageRemove, pageRemoveOpts] = usePageRemoveMutation({
-    onCompleted: (data: PageRemove) => {
+    onCompleted: data => {
       if (data.pageDelete.errors.length === 0) {
         notify({
           status: "success",

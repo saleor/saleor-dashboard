@@ -10,13 +10,12 @@ import {
   TextField,
   Typography
 } from "@material-ui/core";
+import { MetadataInput } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
 import { Button, DeleteIcon, ExpandIcon, IconButton } from "@saleor/macaw-ui";
-import { MetadataInput } from "@saleor/types/globalTypes";
 import classNames from "classnames";
 import React, { useEffect } from "react";
-import { useIntl } from "react-intl";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "../CardTitle";
 import Skeleton from "../Skeleton";

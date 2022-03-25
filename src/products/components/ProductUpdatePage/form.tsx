@@ -20,6 +20,12 @@ import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
+import {
+  ProductFragment,
+  SearchPagesQuery,
+  SearchProductsQuery,
+  SearchWarehousesQuery
+} from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
@@ -33,7 +39,6 @@ import useFormset, {
 } from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import { errorMessages } from "@saleor/intl";
-import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import {
   getAttributeInputFromProduct,
   getProductUpdatePageFormData,
@@ -51,10 +56,7 @@ import {
 } from "@saleor/products/utils/validation";
 import { PRODUCT_UPDATE_FORM_ID } from "@saleor/products/views/ProductUpdate/consts";
 import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
-import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
-import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
-import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
-import { FetchMoreProps, ReorderEvent } from "@saleor/types";
+import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import { arrayDiff } from "@saleor/utils/arrays";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
@@ -155,7 +157,6 @@ export interface UseProductUpdateFormResult
     ProductUpdateData,
     ProductUpdateHandlers
   > {
-  disabled: boolean;
   formErrors: FormErrors<ProductUpdateSubmitData>;
 }
 
@@ -170,14 +171,14 @@ export interface UseProductUpdateFormOpts
   >;
   setSelectedTaxType: React.Dispatch<React.SetStateAction<string>>;
   selectedCollections: MultiAutocompleteChoiceType[];
-  warehouses: SearchWarehouses_search_edges_node[];
+  warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
   channelsData: ChannelData[];
   hasVariants: boolean;
   currentChannels: ChannelData[];
   setChannels: (data: ChannelData[]) => void;
   setChannelsData: (data: ChannelData[]) => void;
-  referencePages: SearchPages_search_edges_node[];
-  referenceProducts: SearchProducts_search_edges_node[];
+  referencePages: RelayToFlat<SearchPagesQuery["search"]>;
+  referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
   fetchReferencePages?: (data: string) => void;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchReferenceProducts?: (data: string) => void;
@@ -189,12 +190,14 @@ export interface UseProductUpdateFormOpts
 
 export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
   children: (props: UseProductUpdateFormResult) => React.ReactNode;
-  product: ProductDetails_product;
+  product: ProductFragment;
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise;
+  disabled: boolean;
+  hasChannelChanged: boolean;
 }
 
 const getStocksData = (
-  product: ProductDetails_product,
+  product: ProductFragment,
   stocks: FormsetData<ProductStockFormsetData, string>
 ) => {
   if (product?.productType?.hasVariants) {
@@ -218,8 +221,10 @@ const getStocksData = (
 };
 
 function useProductUpdateForm(
-  product: ProductDetails_product,
+  product: ProductFragment,
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise,
+  disabled: boolean,
+  hasChannelChanged: boolean,
   opts: UseProductUpdateFormOpts
 ): UseProductUpdateFormResult {
   const intl = useIntl();
@@ -242,7 +247,8 @@ function useProductUpdateForm(
     toggleValue,
     data: formData,
     setChanged,
-    hasChanged
+    hasChanged,
+    setIsSubmitDisabled
   } = form;
 
   const attributes = useFormset(getAttributeInputFromProduct(product));
@@ -433,12 +439,15 @@ function useProductUpdateForm(
     return true;
   };
 
-  const disabled = !shouldEnableSave();
+  const isSaveEnabled = !shouldEnableSave();
+
+  const isSaveDisabled =
+    disabled || isSaveEnabled || (!hasChanged && !hasChannelChanged);
+  setIsSubmitDisabled(isSaveDisabled);
 
   return {
     change: handleChange,
     data,
-    disabled,
     formErrors: form.errors,
     handlers: {
       addStock: handleStockAdd,
@@ -462,7 +471,8 @@ function useProductUpdateForm(
       selectTaxRate: handleTaxTypeSelect
     },
     hasChanged,
-    submit
+    submit,
+    isSaveDisabled
   };
 }
 
@@ -470,9 +480,17 @@ const ProductUpdateForm: React.FC<ProductUpdateFormProps> = ({
   children,
   product,
   onSubmit,
+  disabled,
+  hasChannelChanged,
   ...rest
 }) => {
-  const props = useProductUpdateForm(product, onSubmit, rest);
+  const props = useProductUpdateForm(
+    product,
+    onSubmit,
+    disabled,
+    hasChannelChanged,
+    rest
+  );
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };

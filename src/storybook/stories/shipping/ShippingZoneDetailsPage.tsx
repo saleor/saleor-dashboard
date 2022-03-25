@@ -1,5 +1,5 @@
 import { fetchMoreProps, searchPageProps } from "@saleor/fixtures";
-import { ShippingErrorCode } from "@saleor/types/globalTypes";
+import { ShippingErrorCode } from "@saleor/graphql";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -49,7 +49,8 @@ storiesOf("Views / Shipping / Shipping zone details", module)
         __typename: "ShippingError",
         channels: [],
         code: ShippingErrorCode.INVALID,
-        field
+        field,
+        message: "Name field invalid"
       }))}
     />
   ));

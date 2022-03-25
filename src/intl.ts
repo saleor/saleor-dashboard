@@ -93,6 +93,9 @@ export const commonMessages = defineMessages({
   somethingWentWrong: {
     defaultMessage: "Saleor ran into an unexpected problem"
   },
+  defaultErrorTitle: {
+    defaultMessage: "Something went wrong"
+  },
   startDate: {
     defaultMessage: "Start Date"
   },
@@ -144,6 +147,12 @@ export const errorMessages = defineMessages({
   },
   preorderEndDateInFutureErrorText: {
     defaultMessage: "Preorder end time needs to be set in the future"
+  },
+  baseCodeErrorMessage: {
+    defaultMessage: "Error code {errorCode} {fieldError}"
+  },
+  codeErrorFieldMessage: {
+    defaultMessage: "on field {fieldName}"
   }
 });
 

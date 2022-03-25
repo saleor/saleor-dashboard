@@ -6,8 +6,8 @@ import {
   TableRow
 } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import { ShopInfo_shop_languages } from "@saleor/components/Shop/types/ShopInfo";
 import Skeleton from "@saleor/components/Skeleton";
+import { LanguageFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -15,7 +15,7 @@ import { FormattedMessage } from "react-intl";
 import { maybe, renderCollection } from "../../../misc";
 
 export interface TranslationsLanguageListProps {
-  languages: ShopInfo_shop_languages[];
+  languages: LanguageFragment[];
   onRowClick: (code: string) => void;
 }
 

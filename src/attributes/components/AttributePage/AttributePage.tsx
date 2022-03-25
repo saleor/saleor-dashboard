@@ -1,4 +1,3 @@
-import { AttributeDetails_attribute_choices } from "@saleor/attributes/types/AttributeDetails";
 import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@saleor/attributes/utils/data";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
@@ -9,20 +8,20 @@ import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { ListSettingsUpdate } from "@saleor/components/TablePagination";
-import { AttributeDetailsFragment } from "@saleor/fragments/types/AttributeDetailsFragment";
-import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
-import { maybe } from "@saleor/misc";
-import { ListSettings, ReorderAction } from "@saleor/types";
 import {
+  AttributeDetailsFragment,
+  AttributeDetailsQuery,
   AttributeEntityTypeEnum,
+  AttributeErrorFragment,
   AttributeInputTypeEnum,
   AttributeTypeEnum,
   MeasurementUnitsEnum
-} from "@saleor/types/globalTypes";
+} from "@saleor/graphql";
+import { SubmitPromise } from "@saleor/hooks/useForm";
+import { sectionNames } from "@saleor/intl";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { maybe } from "@saleor/misc";
+import { ListSettings, ReorderAction } from "@saleor/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
@@ -39,7 +38,7 @@ export interface AttributePageProps {
   disabled: boolean;
   errors: AttributeErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  values: AttributeDetails_attribute_choices;
+  values: AttributeDetailsQuery["attribute"]["choices"];
   onBack: () => void;
   onDelete: () => void;
   onSubmit: (data: AttributePageFormData) => SubmitPromise;
@@ -157,12 +156,17 @@ const AttributePage: React.FC<AttributePageProps> = ({
   };
 
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
+    <Form
+      confirmLeave
+      initial={initialForm}
+      onSubmit={handleSubmit}
+      disabled={disabled}
+    >
       {({
         change,
         set,
         data,
-        hasChanged,
+        isSaveDisabled,
         submit,
         errors,
         setError,
@@ -240,7 +244,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
                 </div>
               </Grid>
               <Savebar
-                disabled={disabled || !hasChanged}
+                disabled={isSaveDisabled}
                 state={saveButtonBarState}
                 onCancel={onBack}
                 onSubmit={submit}

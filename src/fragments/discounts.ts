@@ -1,13 +1,8 @@
 import { gql } from "@apollo/client";
-import { metadataFragment } from "@saleor/fragments/metadata";
-import { channelListingProductWithoutPricingFragment } from "@saleor/fragments/products";
-
-import { pageInfoFragment } from "./pageInfo";
 
 export const saleFragment = gql`
-  ${metadataFragment}
-  fragment SaleFragment on Sale {
-    ...MetadataFragment
+  fragment Sale on Sale {
+    ...Metadata
     id
     name
     type
@@ -27,11 +22,8 @@ export const saleFragment = gql`
 `;
 
 export const saleDetailsFragment = gql`
-  ${channelListingProductWithoutPricingFragment}
-  ${pageInfoFragment}
-  ${saleFragment}
-  fragment SaleDetailsFragment on Sale {
-    ...SaleFragment
+  fragment SaleDetails on Sale {
+    ...Sale
     variants(after: $after, before: $before, first: $first, last: $last) {
       edges {
         node {
@@ -48,13 +40,13 @@ export const saleDetailsFragment = gql`
               name
             }
             channelListings {
-              ...ChannelListingProductWithoutPricingFragment
+              ...ChannelListingProductWithoutPricing
             }
           }
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
       totalCount
     }
@@ -71,12 +63,12 @@ export const saleDetailsFragment = gql`
             url
           }
           channelListings {
-            ...ChannelListingProductWithoutPricingFragment
+            ...ChannelListingProductWithoutPricing
           }
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
       totalCount
     }
@@ -91,7 +83,7 @@ export const saleDetailsFragment = gql`
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
       totalCount
     }
@@ -106,7 +98,7 @@ export const saleDetailsFragment = gql`
         }
       }
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
       totalCount
     }
@@ -114,9 +106,8 @@ export const saleDetailsFragment = gql`
 `;
 
 export const voucherFragment = gql`
-  ${metadataFragment}
-  fragment VoucherFragment on Voucher {
-    ...MetadataFragment
+  fragment Voucher on Voucher {
+    ...Metadata
     id
     code
     startDate
@@ -147,11 +138,8 @@ export const voucherFragment = gql`
 `;
 
 export const voucherDetailsFragment = gql`
-  ${pageInfoFragment}
-  ${voucherFragment}
-  ${channelListingProductWithoutPricingFragment}
-  fragment VoucherDetailsFragment on Voucher {
-    ...VoucherFragment
+  fragment VoucherDetails on Voucher {
+    ...Voucher
     code
     usageLimit
     used
@@ -171,13 +159,13 @@ export const voucherDetailsFragment = gql`
             url
           }
           channelListings {
-            ...ChannelListingProductWithoutPricingFragment
+            ...ChannelListingProductWithoutPricing
           }
         }
       }
       totalCount
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
     collections(after: $after, before: $before, first: $first, last: $last) {
@@ -192,7 +180,7 @@ export const voucherDetailsFragment = gql`
       }
       totalCount
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
     categories(after: $after, before: $before, first: $first, last: $last) {
@@ -207,7 +195,7 @@ export const voucherDetailsFragment = gql`
       }
       totalCount
       pageInfo {
-        ...PageInfoFragment
+        ...PageInfo
       }
     }
   }

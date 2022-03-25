@@ -1,8 +1,8 @@
 import { OutputData } from "@editorjs/editorjs";
-import { CategoryDetails_category } from "@saleor/categories/types/CategoryDetails";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
+import { CategoryDetailsFragment } from "@saleor/graphql";
 import useForm, {
   CommonUseFormResult,
   FormChange
@@ -36,11 +36,12 @@ export interface UseCategoryUpdateFormResult
 
 export interface CategoryUpdateFormProps {
   children: (props: UseCategoryUpdateFormResult) => React.ReactNode;
-  category: CategoryDetails_category;
+  category: CategoryDetailsFragment;
   onSubmit: (data: CategoryUpdateData) => Promise<any[]>;
+  disabled: boolean;
 }
 
-const getInitialData = (category?: CategoryDetails_category) => ({
+const getInitialData = (category?: CategoryDetailsFragment) => ({
   backgroundImageAlt: category?.backgroundImage?.alt || "",
   metadata: category?.metadata?.map(mapMetadataItemToInput),
   name: category?.name || "",
@@ -51,8 +52,9 @@ const getInitialData = (category?: CategoryDetails_category) => ({
 });
 
 function useCategoryUpdateForm(
-  category: CategoryDetails_category,
-  onSubmit: (data: CategoryUpdateData) => Promise<any[]>
+  category: CategoryDetailsFragment,
+  onSubmit: (data: CategoryUpdateData) => Promise<any[]>,
+  disabled: boolean
 ): UseCategoryUpdateFormResult {
   const {
     handleChange,
@@ -60,7 +62,8 @@ function useCategoryUpdateForm(
     triggerChange,
     hasChanged,
     setChanged,
-    formId
+    formId,
+    setIsSubmitDisabled
   } = useForm(getInitialData(category), undefined, { confirmLeave: true });
 
   const handleFormSubmit = useHandleFormSubmit({
@@ -101,6 +104,9 @@ function useCategoryUpdateForm(
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
+  const isSaveDisabled = disabled || !hasChanged;
+  setIsSubmitDisabled(isSaveDisabled);
+
   return {
     change: handleChange,
     data: getData(),
@@ -109,16 +115,18 @@ function useCategoryUpdateForm(
       changeMetadata
     },
     hasChanged,
-    submit
+    submit,
+    isSaveDisabled
   };
 }
 
 const CategoryUpdateForm: React.FC<CategoryUpdateFormProps> = ({
   children,
   category,
-  onSubmit
+  onSubmit,
+  disabled
 }) => {
-  const props = useCategoryUpdateForm(category, onSubmit);
+  const props = useCategoryUpdateForm(category, onSubmit, disabled);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };

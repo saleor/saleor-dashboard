@@ -1,6 +1,6 @@
 import { Card, Popper } from "@material-ui/core";
 import ChannelsAvailabilityMenuContent from "@saleor/components/ChannelsAvailabilityMenuContent";
-import { PluginBaseFragment } from "@saleor/fragments/types/PluginBaseFragment";
+import { PluginBaseFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { isPluginGlobal } from "@saleor/plugins/views/utils";
 import React from "react";

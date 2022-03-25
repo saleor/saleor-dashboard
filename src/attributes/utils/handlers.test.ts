@@ -1,7 +1,7 @@
 import { createAttributeMultiChangeHandler } from "@saleor/attributes/utils/handlers";
 import { AttributeInputData } from "@saleor/components/Attributes";
+import { AttributeInputTypeEnum } from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
-import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 
 const attributes: FormsetData<AttributeInputData, string[]> = [
   {

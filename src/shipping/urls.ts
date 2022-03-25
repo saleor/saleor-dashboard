@@ -1,9 +1,9 @@
 import { ChannelsAction } from "@saleor/channels/urls";
+import { ShippingMethodTypeEnum } from "@saleor/graphql";
 import { stringifyQs } from "@saleor/utils/urls";
 import urlJoin from "url-join";
 
 import { BulkAction, Dialog, Pagination, SingleAction } from "../types";
-import { ShippingMethodTypeEnum } from "../types/globalTypes";
 
 export const shippingSection = "/shipping/";
 

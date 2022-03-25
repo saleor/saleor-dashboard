@@ -1,4 +1,4 @@
-import { OrderErrorCode } from "@saleor/types/globalTypes";
+import { OrderErrorCode } from "@saleor/graphql";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -36,7 +36,8 @@ storiesOf("Orders / OrderCancelDialog", module)
           __typename: "OrderError",
           code: OrderErrorCode.CANNOT_CANCEL_ORDER,
           field: null,
-          addressType: null
+          addressType: null,
+          message: "Cannot cancel order"
         }
       ]}
     />

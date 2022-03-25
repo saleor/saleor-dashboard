@@ -1,5 +1,5 @@
 import { AttributeListUrlSortField } from "@saleor/attributes/urls";
-import { AttributeSortField } from "@saleor/types/globalTypes";
+import { AttributeSortField } from "@saleor/graphql";
 import { createGetSortQueryVariables } from "@saleor/utils/sort";
 
 export function getSortQueryField(

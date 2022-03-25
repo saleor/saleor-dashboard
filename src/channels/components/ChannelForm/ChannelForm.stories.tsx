@@ -1,6 +1,6 @@
 import { countries } from "@saleor/fixtures";
+import { CountryCode } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
-import { CountryCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

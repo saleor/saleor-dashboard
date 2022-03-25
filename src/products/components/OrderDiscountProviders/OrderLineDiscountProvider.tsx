@@ -1,16 +1,13 @@
-/* eslint-disable sort-keys */
+import {
+  OrderDetailsFragment,
+  useOrderLineDiscountRemoveMutation,
+  useOrderLineDiscountUpdateMutation
+} from "@saleor/graphql";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { OrderDiscountCommonInput } from "@saleor/orders/components/OrderDiscountCommonModal/types";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
-import {
-  useOrderLineDiscountRemoveMutation,
-  useOrderLineDiscountUpdateMutation
-} from "@saleor/orders/mutations";
-import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
-import { OrderLineDiscountRemove } from "@saleor/orders/types/OrderLineDiscountRemove";
-import { OrderLineDiscountUpdate } from "@saleor/orders/types/OrderLineDiscountUpdate";
 import React, { createContext, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -20,8 +17,11 @@ import {
   OrderLineDiscountConsumerProps,
   OrderLineDiscountData
 } from "./types";
-import { useDiscountDialog } from "./utils";
-import { getOrderLineDiscount, getParsedDiscountData } from "./utils";
+import {
+  getOrderLineDiscount,
+  getParsedDiscountData,
+  useDiscountDialog
+} from "./utils";
 
 export interface OrderLineDiscountContextConsumerProps
   extends OrderDiscountConsumerCommonProps {
@@ -34,7 +34,7 @@ export interface OrderLineDiscountContextConsumerProps
 
 interface DiscountProviderProps {
   children: React.ReactNode;
-  order: OrderDetails_order;
+  order: OrderDetailsFragment;
 }
 
 export const OrderLineDiscountContext = createContext<
@@ -64,18 +64,16 @@ export const OrderLineDiscountProvider: React.FC<DiscountProviderProps> = ({
     orderLineDiscountAddOrUpdate,
     orderLineDiscountAddOrUpdateOpts
   ] = useOrderLineDiscountUpdateMutation({
-    onCompleted: ({
-      orderLineDiscountUpdate: { errors }
-    }: OrderLineDiscountUpdate) => handleDiscountDataSubmission(errors)
+    onCompleted: ({ orderLineDiscountUpdate: { errors } }) =>
+      handleDiscountDataSubmission(errors)
   });
 
   const [
     orderLineDiscountRemove,
     orderLineDiscountRemoveOpts
   ] = useOrderLineDiscountRemoveMutation({
-    onCompleted: ({
-      orderLineDiscountRemove: { errors }
-    }: OrderLineDiscountRemove) => handleDiscountDataSubmission(errors)
+    onCompleted: ({ orderLineDiscountRemove: { errors } }) =>
+      handleDiscountDataSubmission(errors)
   });
 
   const handleDiscountDataSubmission = (errors: any[]) => {

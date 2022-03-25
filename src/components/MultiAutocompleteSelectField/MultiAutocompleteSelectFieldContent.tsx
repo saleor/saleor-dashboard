@@ -164,7 +164,7 @@ function getChoiceIndex(
 const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectFieldContentProps> = props => {
   const {
     add,
-    choices,
+    choices = [],
     displayCustomValue,
     displayValues,
     getItemProps,
@@ -199,7 +199,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
   }, [loading]);
 
   const hasValuesToDisplay =
-    displayValues.length > 0 || displayCustomValue || choices.length > 0;
+    displayValues?.length > 0 || displayCustomValue || choices.length > 0;
   return (
     <Paper className={classes.root} elevation={8}>
       {hasValuesToDisplay && (
@@ -243,9 +243,9 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                 />
               </MenuItem>
             )}
-            {(choices.length > 0 || displayValues.length > 0) &&
+            {(choices.length > 0 || displayValues?.length > 0) &&
               displayCustomValue && <Hr className={classes.hr} />}
-            {displayValues.map(value => (
+            {displayValues?.map(value => (
               <MenuItem
                 className={classes.menuItem}
                 key={value.value}
@@ -266,7 +266,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                 <span className={classes.menuItemLabel}>{value.label}</span>
               </MenuItem>
             ))}
-            {displayValues.length > 0 && choices.length > 0 && (
+            {displayValues?.length > 0 && choices.length > 0 && (
               <Hr className={classes.hr} />
             )}
             {choices.map((suggestion, index) => {

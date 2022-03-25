@@ -1,11 +1,11 @@
 import { AddressTypeInput } from "@saleor/customers/types";
-import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
-import { transformFormToAddressInput } from "@saleor/misc";
 import {
   AccountErrorCode,
+  AccountErrorFragment,
   AddressInput,
   AddressTypeEnum
-} from "@saleor/types/globalTypes";
+} from "@saleor/graphql";
+import { transformFormToAddressInput } from "@saleor/misc";
 import { add, remove } from "@saleor/utils/lists";
 import { useState } from "react";
 
@@ -28,7 +28,8 @@ function useAddressValidation<TInput, TOutput>(
     __typename: "AccountError",
     code: AccountErrorCode.REQUIRED,
     field: "country",
-    addressType
+    addressType,
+    message: "Country required"
   };
 
   return {

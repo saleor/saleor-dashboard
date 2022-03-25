@@ -1,8 +1,6 @@
-import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
+import { CountryListQuery, TaxTypeFragment } from "@saleor/graphql";
 
-import { CountryList_shop_countries } from "../../../taxes/types/CountryList";
-
-type CountryList = CountryList_shop_countries[];
+type CountryList = CountryListQuery["shop"]["countries"];
 
 export const countries: CountryList = [
   {
@@ -2716,7 +2714,6 @@ export const countries: CountryList = [
   }
 ].filter(country => country.vat);
 
-/* eslint-disable sort-keys */
 export const taxTypes: TaxTypeFragment[] = [
   {
     description: "accommodation",

@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const configurationItemFragment = gql`
-  fragment ConfigurationItemFragment on ConfigurationItem {
+  fragment ConfigurationItem on ConfigurationItem {
     name
     value
     type
@@ -11,7 +11,7 @@ export const configurationItemFragment = gql`
 `;
 
 export const pluginConfigurationBaseFragment = gql`
-  fragment PluginConfigurationBaseFragment on PluginConfiguration {
+  fragment PluginConfigurationBase on PluginConfiguration {
     active
     channel {
       id
@@ -22,42 +22,38 @@ export const pluginConfigurationBaseFragment = gql`
 `;
 
 export const pluginConfigurationExtendedFragment = gql`
-  ${configurationItemFragment}
-  ${pluginConfigurationBaseFragment}
-  fragment PluginConfigurationExtendedFragment on PluginConfiguration {
-    ...PluginConfigurationBaseFragment
+  fragment PluginConfigurationExtended on PluginConfiguration {
+    ...PluginConfigurationBase
     configuration {
-      ...ConfigurationItemFragment
+      ...ConfigurationItem
     }
   }
 `;
 
 export const pluginBaseFragment = gql`
-  ${pluginConfigurationBaseFragment}
-  fragment PluginBaseFragment on Plugin {
+  fragment PluginBase on Plugin {
     id
     name
     description
     channelConfigurations {
-      ...PluginConfigurationBaseFragment
+      ...PluginConfigurationBase
     }
     globalConfiguration {
-      ...PluginConfigurationBaseFragment
+      ...PluginConfigurationBase
     }
   }
 `;
 
 export const pluginsDetailsFragment = gql`
-  ${pluginConfigurationExtendedFragment}
-  fragment PluginsDetailsFragment on Plugin {
+  fragment PluginsDetails on Plugin {
     id
     name
     description
     globalConfiguration {
-      ...PluginConfigurationExtendedFragment
+      ...PluginConfigurationExtended
     }
     channelConfigurations {
-      ...PluginConfigurationExtendedFragment
+      ...PluginConfigurationExtended
     }
   }
 `;

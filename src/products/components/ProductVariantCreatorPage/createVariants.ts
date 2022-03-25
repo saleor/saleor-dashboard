@@ -1,7 +1,7 @@
 import {
   BulkAttributeValueInput,
   ProductVariantBulkCreateInput
-} from "@saleor/types/globalTypes";
+} from "@saleor/graphql";
 
 import {
   Attribute,

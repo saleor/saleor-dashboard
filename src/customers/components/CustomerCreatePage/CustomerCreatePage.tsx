@@ -4,21 +4,22 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
-import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
+import {
+  AccountErrorFragment,
+  AddressInput,
+  CustomerCreateDataQuery
+} from "@saleor/graphql";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { extractMutationErrors } from "@saleor/misc";
-import { AddressInput } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { AddressTypeInput } from "../../types";
-import { CustomerCreateData_shop_countries } from "../../types/CustomerCreateData";
 import CustomerCreateAddress from "../CustomerCreateAddress/CustomerCreateAddress";
 import CustomerCreateDetails from "../CustomerCreateDetails";
 import CustomerCreateNote from "../CustomerCreateNote/CustomerCreateNote";
@@ -53,7 +54,7 @@ const initialForm: CustomerCreatePageFormData & AddressTypeInput = {
 };
 
 export interface CustomerCreatePageProps {
-  countries: CustomerCreateData_shop_countries[];
+  countries: CustomerCreateDataQuery["shop"]["countries"];
   disabled: boolean;
   errors: AccountErrorFragment[];
   saveButtonBar: ConfirmButtonTransitionState;
@@ -134,8 +135,13 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
   };
 
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
-      {({ change, data, hasChanged, submit }) => {
+    <Form
+      confirmLeave
+      initial={initialForm}
+      onSubmit={handleSubmit}
+      disabled={disabled}
+    >
+      {({ change, data, isSaveDisabled, submit }) => {
         const handleCountrySelect = createSingleAutocompleteSelectHandler(
           change,
           setCountryDisplayName,
@@ -181,7 +187,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
               </div>
             </Grid>
             <Savebar
-              disabled={disabled || !hasChanged}
+              disabled={isSaveDisabled}
               state={saveButtonBar}
               onSubmit={submit}
               onCancel={onBack}

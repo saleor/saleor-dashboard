@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const weightFragment = gql`
-  fragment WeightFragment on Weight {
+  fragment Weight on Weight {
     unit
     value
   }

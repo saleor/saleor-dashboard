@@ -15,28 +15,29 @@ import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocomplet
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import SeoForm from "@saleor/components/SeoForm";
-import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
-import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
-import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
+import {
+  PermissionEnum,
+  ProductChannelListingErrorFragment,
+  ProductErrorWithAttributesFragment,
+  ProductTypeQuery,
+  SearchAttributeValuesQuery,
+  SearchCategoriesQuery,
+  SearchCollectionsQuery,
+  SearchPagesQuery,
+  SearchProductsQuery,
+  SearchProductTypesQuery,
+  SearchWarehousesQuery,
+  TaxTypeFragment
+} from "@saleor/graphql";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
-import { ProductType_productType } from "@saleor/products/types/ProductType";
 import { getChoices } from "@saleor/products/utils/data";
-import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
-import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
-import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
-import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
-import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
-import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
-import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
-import { PermissionEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { FetchMoreProps } from "../../../types";
+import { FetchMoreProps, RelayToFlat } from "../../../types";
 import ProductDetailsForm from "../ProductDetailsForm";
 import ProductOrganization from "../ProductOrganization";
 import ProductShipping from "../ProductShipping/ProductShipping";
@@ -53,24 +54,26 @@ interface ProductCreatePageProps {
   channelsErrors: ProductChannelListingErrorFragment[];
   allChannelsCount: number;
   currentChannels: ChannelData[];
-  collections: SearchCollections_search_edges_node[];
-  categories: SearchCategories_search_edges_node[];
-  attributeValues: SearchAttributeValues_attribute_choices_edges_node[];
+  collections: RelayToFlat<SearchCollectionsQuery["search"]>;
+  categories: RelayToFlat<SearchCategoriesQuery["search"]>;
+  attributeValues: RelayToFlat<
+    SearchAttributeValuesQuery["attribute"]["choices"]
+  >;
   loading: boolean;
   fetchMoreCategories: FetchMoreProps;
   fetchMoreCollections: FetchMoreProps;
   fetchMoreProductTypes: FetchMoreProps;
   fetchMoreAttributeValues?: FetchMoreProps;
   initial?: Partial<ProductCreateFormData>;
-  productTypes?: SearchProductTypes_search_edges_node[];
-  referencePages?: SearchPages_search_edges_node[];
-  referenceProducts?: SearchProducts_search_edges_node[];
+  productTypes?: RelayToFlat<SearchProductTypesQuery["search"]>;
+  referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
+  referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   weightUnit: string;
-  warehouses: SearchWarehouses_search_edges_node[];
+  warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
   taxTypes: TaxTypeFragment[];
-  selectedProductType?: ProductType_productType;
+  selectedProductType?: ProductTypeQuery["productType"];
   fetchCategories: (data: string) => void;
   fetchCollections: (data: string) => void;
   fetchProductTypes: (data: string) => void;
@@ -199,16 +202,9 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       fetchReferenceProducts={fetchReferenceProducts}
       fetchMoreReferenceProducts={fetchMoreReferenceProducts}
       assignReferencesAttributeId={assignReferencesAttributeId}
+      loading={loading}
     >
-      {({
-        change,
-        data,
-        formErrors,
-        disabled: formDisabled,
-        handlers,
-        hasChanged,
-        submit
-      }) => {
+      {({ change, data, formErrors, handlers, submit, isSaveDisabled }) => {
         // Comparing explicitly to false because `hasVariants` can be undefined
         const isSimpleProduct = data.productType?.hasVariants === false;
 
@@ -364,7 +360,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
               onCancel={onBack}
               onSubmit={submit}
               state={saveButtonBarState}
-              disabled={loading || !onSubmit || formDisabled || !hasChanged}
+              disabled={isSaveDisabled}
             />
             {canOpenAssignReferencesAttributeDialog && (
               <AssignAttributeValueDialog

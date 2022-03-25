@@ -58,3 +58,19 @@ export const getPaymentDataLine = paymentData =>
 
 export const getValuesInArray = array =>
   getValueWithDefault(array.length === 1, `["${array}"]`, `${array}`);
+
+export function getDataForDescriptionInVariables(descriptionJson) {
+  return {
+    variables: getValueWithDefault(descriptionJson, {
+      description: `{\"blocks\":[{\"type\":\"paragraph\",\"data\":{\"text\":\"${descriptionJson}\"}}]}`
+    }),
+    mutationVariables: getValueWithDefault(
+      descriptionJson,
+      `($description: JSONString!)`
+    ),
+    descriptionLine: getValueWithDefault(
+      descriptionJson,
+      `description: $description`
+    )
+  };
+}

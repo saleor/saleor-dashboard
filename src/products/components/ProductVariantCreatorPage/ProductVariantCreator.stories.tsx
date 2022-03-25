@@ -2,8 +2,7 @@ import { attributes } from "@saleor/attributes/fixtures";
 import { productChannels } from "@saleor/channels/fixtures";
 import Container from "@saleor/components/Container";
 import { fetchMoreProps, limitsReached } from "@saleor/fixtures";
-import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
-import { ProductErrorCode } from "@saleor/types/globalTypes";
+import { BulkProductErrorFragment, ProductErrorCode } from "@saleor/graphql";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -68,13 +67,14 @@ const dataAttributes = selectedAttributes.map(attribute => ({
     .filter((_, valueIndex) => valueIndex % 2 !== 1)
 }));
 
-const errors: ProductVariantBulkCreate_productVariantBulkCreate_errors[] = [
+const errors: BulkProductErrorFragment[] = [
   {
     __typename: "BulkProductError",
     channels: [channels[0].channelId],
     code: ProductErrorCode.UNIQUE,
     field: "sku",
-    index: 3
+    index: 3,
+    message: "Uniwue bulk product error"
   }
 ];
 

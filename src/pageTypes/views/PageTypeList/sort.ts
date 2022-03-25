@@ -1,5 +1,5 @@
+import { PageTypeSortField } from "@saleor/graphql";
 import { PageTypeListUrlSortField } from "@saleor/pageTypes/urls";
-import { PageTypeSortField } from "@saleor/types/globalTypes";
 import { createGetSortQueryVariables } from "@saleor/utils/sort";
 
 export function getSortQueryField(

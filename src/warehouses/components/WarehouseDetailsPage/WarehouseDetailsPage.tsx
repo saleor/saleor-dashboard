@@ -5,21 +5,20 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
-import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { AddressTypeInput } from "@saleor/customers/types";
-import { WarehouseDetailsFragment } from "@saleor/fragments/types/WarehouseDetailsFragment";
-import { WarehouseErrorFragment } from "@saleor/fragments/types/WarehouseErrorFragment";
+import {
+  CountryCode,
+  CountryWithCodeFragment,
+  WarehouseClickAndCollectOptionEnum,
+  WarehouseDetailsFragment,
+  WarehouseErrorFragment
+} from "@saleor/graphql";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { findValueInEnum, maybe } from "@saleor/misc";
-import {
-  CountryCode,
-  WarehouseClickAndCollectOptionEnum
-} from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices, mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
@@ -34,7 +33,7 @@ export interface WarehouseDetailsPageFormData extends AddressTypeInput {
   clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
 }
 export interface WarehouseDetailsPageProps {
-  countries: ShopInfo_shop_countries[];
+  countries: CountryWithCodeFragment[];
   disabled: boolean;
   errors: WarehouseErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -85,8 +84,13 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
   };
 
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
-      {({ change, data, hasChanged, submit, set }) => {
+    <Form
+      confirmLeave
+      initial={initialForm}
+      onSubmit={handleSubmit}
+      disabled={disabled}
+    >
+      {({ change, data, isSaveDisabled, submit, set }) => {
         const countryChoices = mapCountriesToChoices(countries);
         const handleCountryChange = createSingleAutocompleteSelectHandler(
           change,
@@ -135,7 +139,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
               </div>
             </Grid>
             <Savebar
-              disabled={disabled || !hasChanged}
+              disabled={isSaveDisabled}
               onCancel={onBack}
               onDelete={onDelete}
               onSubmit={submit}

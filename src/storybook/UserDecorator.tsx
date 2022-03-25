@@ -1,8 +1,8 @@
 import { UserContext } from "@saleor/auth";
-import { User } from "@saleor/fragments/types/User";
+import { UserFragment } from "@saleor/graphql";
 import React from "react";
 
-export const UserDecorator = (user: User) => storyFn => (
+export const UserDecorator = (user: UserFragment) => storyFn => (
   <UserContext.Provider
     value={{
       login: undefined,

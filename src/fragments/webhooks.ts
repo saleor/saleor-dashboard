@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const webhooksFragment = gql`
-  fragment WebhookFragment on Webhook {
+  fragment Webhook on Webhook {
     id
     name
     isActive
@@ -13,8 +13,7 @@ export const webhooksFragment = gql`
 `;
 
 export const webhooksDetailsFragment = gql`
-  ${webhooksFragment}
-  fragment WebhooksDetailsFragment on Webhook {
-    ...WebhookFragment
+  fragment WebhooksDetails on Webhook {
+    ...Webhook
   }
 `;

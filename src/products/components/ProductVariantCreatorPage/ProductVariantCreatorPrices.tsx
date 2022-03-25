@@ -13,8 +13,8 @@ import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import PriceField from "@saleor/components/PriceField";
 import SingleSelectField from "@saleor/components/SingleSelectField";
+import { ProductVariantAttributesFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -58,7 +58,7 @@ const useStyles = makeStyles(
 );
 
 export interface ProductVariantCreatorPricesProps {
-  attributes: ProductDetails_product_productType_variantAttributes[];
+  attributes: ProductVariantAttributesFragment["productType"]["variantAttributes"];
   channelListings: ChannelPriceData[];
   data: ProductVariantCreateFormData;
   onApplyToAllChange: (applyToAll: VariantCreatorPricesAndSkuMode) => void;

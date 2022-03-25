@@ -1,4 +1,4 @@
-import { OrderErrorCode } from "@saleor/types/globalTypes";
+import { OrderErrorCode } from "@saleor/graphql";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -27,13 +27,15 @@ storiesOf("Orders / OrderPaymentDialog", module)
           __typename: "OrderError",
           code: OrderErrorCode.CAPTURE_INACTIVE_PAYMENT,
           field: null,
-          addressType: null
+          addressType: null,
+          message: "Capture inactive payment"
         },
         {
           __typename: "OrderError",
           code: OrderErrorCode.INVALID,
           field: "payment",
-          addressType: null
+          addressType: null,
+          message: "Payment field invalid"
         }
       ]}
     />

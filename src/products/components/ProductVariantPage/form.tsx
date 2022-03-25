@@ -15,7 +15,12 @@ import {
 import { AttributeInput } from "@saleor/components/Attributes";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
-import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
+import {
+  ProductVariantFragment,
+  SearchPagesQuery,
+  SearchProductsQuery,
+  SearchWarehousesQuery
+} from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
@@ -40,10 +45,7 @@ import {
   validateCostPrice,
   validatePrice
 } from "@saleor/products/utils/validation";
-import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
-import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
-import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
-import { FetchMoreProps, ReorderEvent } from "@saleor/types";
+import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import { arrayDiff } from "@saleor/utils/arrays";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
@@ -86,10 +88,10 @@ export interface ProductVariantUpdateSubmitData
 }
 
 export interface UseProductVariantUpdateFormOpts {
-  warehouses: SearchWarehouses_search_edges_node[];
+  warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
   currentChannels: ChannelPriceAndPreorderData[];
-  referencePages: SearchPages_search_edges_node[];
-  referenceProducts: SearchProducts_search_edges_node[];
+  referencePages: RelayToFlat<SearchPagesQuery["search"]>;
+  referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
   fetchReferencePages?: (data: string) => void;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchReferenceProducts?: (data: string) => void;
@@ -127,13 +129,15 @@ export interface UseProductVariantUpdateFormResult
 export interface ProductVariantUpdateFormProps
   extends UseProductVariantUpdateFormOpts {
   children: (props: UseProductVariantUpdateFormResult) => React.ReactNode;
-  variant: ProductVariant;
+  variant: ProductVariantFragment;
+  loading: boolean;
   onSubmit: (data: ProductVariantUpdateSubmitData) => SubmitPromise;
 }
 
 function useProductVariantUpdateForm(
-  variant: ProductVariant,
+  variant: ProductVariantFragment,
   onSubmit: (data: ProductVariantUpdateSubmitData) => SubmitPromise,
+  loading: boolean,
   opts: UseProductVariantUpdateFormOpts
 ): UseProductVariantUpdateFormResult {
   const intl = useIntl();
@@ -178,7 +182,8 @@ function useProductVariantUpdateForm(
     data: formData,
     setChanged,
     hasChanged,
-    formId
+    formId,
+    setIsSubmitDisabled
   } = form;
 
   const { setExitDialogSubmitRef } = useExitFormDialog({
@@ -330,6 +335,9 @@ function useProductVariantUpdateForm(
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
+  const isSaveDisabled = loading || disabled || !hasChanged;
+  setIsSubmitDisabled(isSaveDisabled);
+
   return {
     change: handleChange,
     data,
@@ -351,7 +359,8 @@ function useProductVariantUpdateForm(
       selectAttributeReference: handleAttributeReferenceChange
     },
     hasChanged,
-    submit
+    submit,
+    isSaveDisabled
   };
 }
 
@@ -359,9 +368,10 @@ const ProductVariantUpdateForm: React.FC<ProductVariantUpdateFormProps> = ({
   children,
   variant,
   onSubmit,
+  loading,
   ...rest
 }) => {
-  const props = useProductVariantUpdateForm(variant, onSubmit, rest);
+  const props = useProductVariantUpdateForm(variant, onSubmit, loading, rest);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };

@@ -1,5 +1,5 @@
+import { OrderErrorCode } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
-import { OrderErrorCode } from "@saleor/types/globalTypes";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -38,7 +38,8 @@ storiesOf("Views / Orders / Fulfill order", module)
           field: null,
           orderLines: [orderToFulfill.lines[0].id],
           warehouse: warehouseList[0].id,
-          addressType: null
+          addressType: null,
+          message: "Insufficient stock"
         }
       ]}
     />

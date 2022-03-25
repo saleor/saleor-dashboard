@@ -3,7 +3,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import Grid from "@saleor/components/Grid";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import { DiscountTypeEnum } from "@saleor/discounts/types";
-import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
+import { DiscountErrorFragment } from "@saleor/graphql";
 import { getFormErrors } from "@saleor/utils/errors";
 import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
 import React from "react";

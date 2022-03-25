@@ -30,6 +30,10 @@ export const UnassignDialog: React.FC<UnassignDialogProps> = ({
       confirmButtonState={confirmButtonState}
       onClose={closeModal}
       onConfirm={onConfirm}
+      confirmButtonLabel={intl.formatMessage({
+        defaultMessage: "Unassign and save",
+        description: "unassign products from shipping rate and save, button"
+      })}
     >
       <DialogContentText>
         <FormattedMessage

@@ -1,4 +1,4 @@
-import { ProductTypeKindEnum } from "@saleor/types/globalTypes";
+import { ProductTypeKindEnum } from "@saleor/graphql";
 import { stringifyQs } from "@saleor/utils/urls";
 import urlJoin from "url-join";
 

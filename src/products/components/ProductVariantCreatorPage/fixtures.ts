@@ -1,5 +1,5 @@
 import { ChannelPriceData } from "@saleor/channels/utils";
-import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
+import { WarehouseFragment } from "@saleor/graphql";
 
 import { createVariants } from "./createVariants";
 import {

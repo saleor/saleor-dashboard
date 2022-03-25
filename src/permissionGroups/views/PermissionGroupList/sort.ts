@@ -1,5 +1,5 @@
+import { PermissionGroupSortField } from "@saleor/graphql";
 import { PermissionGroupListUrlSortField } from "@saleor/permissionGroups/urls";
-import { PermissionGroupSortField } from "@saleor/types/globalTypes";
 import { createGetSortQueryVariables } from "@saleor/utils/sort";
 
 export function getSortQueryField(

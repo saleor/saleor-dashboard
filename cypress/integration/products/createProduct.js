@@ -14,7 +14,6 @@ import {
   expectCorrectProductInformation,
   expectCorrectProductVariantInformation
 } from "../../support/api/utils/products/checkProductInfo";
-import * as productUtils from "../../support/api/utils/products/productsUtils";
 import filterTests from "../../support/filterTests";
 import { metadataForms } from "../../support/pages/catalog/metadataComponent";
 import {
@@ -25,7 +24,7 @@ import { fillUpCommonFieldsForAllProductTypes } from "../../support/pages/catalo
 import { selectChannelInDetailsPages } from "../../support/pages/channelsPage";
 
 filterTests({ definedTags: ["all", "critical"] }, () => {
-  describe("Create product", () => {
+  describe("As an admin I should be able to create product", () => {
     const startsWith = "CyCreateProduct-";
     const name = `${startsWith}${faker.datatype.number()}`;
     const generalInfo = {
@@ -53,7 +52,6 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
 
     before(() => {
       cy.clearSessionData().loginUserViaRequest();
-      productUtils.deleteProductsStartsWith(startsWith);
       createAttribute({ name }).then(attributeResp => {
         attribute = attributeResp;
       });
@@ -62,7 +60,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("should create product with variants", () => {
+    it("should be able to create product with variants as an admin. SALEOR_2701", () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
       seo.slug = randomName;
       const productData = {
@@ -83,13 +81,18 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         .get("@ProductDetails")
         .its("response.body")
         .then(resp => {
-          const productResp = resp.find(element => element.data.product).data
-            .product;
+          let productResp;
+          if (Array.isArray(resp)) {
+            productResp = resp.find(element => element.data.product).data
+              .product;
+          } else {
+            productResp = resp.data.product;
+          }
           expectCorrectProductInformation(productResp, productData);
         });
     });
 
-    it("should create product without variants", () => {
+    it("should be able to create product without variants as an admin. SALEOR_2702", () => {
       const prices = { sellingPrice: 6, costPrice: 3 };
       const randomName = `${startsWith}${faker.datatype.number()}`;
       seo.slug = randomName;
@@ -116,8 +119,13 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         .get("@ProductDetails")
         .its("response.body")
         .then(resp => {
-          const productResp = resp.find(element => element.data.product).data
-            .product;
+          let productResp;
+          if (Array.isArray(resp)) {
+            productResp = resp.find(element => element.data.product).data
+              .product;
+          } else {
+            productResp = resp.data.product;
+          }
           expectCorrectProductInformation(productResp, productData);
           expectCorrectProductVariantInformation(
             productResp.variants,

@@ -3,12 +3,13 @@ import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
-import { OrderSettingsFragment } from "@saleor/fragments/types/OrderSettingsFragment";
-import { ShopOrderSettingsFragment } from "@saleor/fragments/types/ShopOrderSettingsFragment";
+import {
+  OrderSettingsFragment,
+  ShopOrderSettingsFragment
+} from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -42,8 +43,9 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
       orderSettings={orderSettings}
       shop={shop}
       onSubmit={onSubmit}
+      disabled={disabled}
     >
-      {({ data, submit, hasChanged, change }) => (
+      {({ data, submit, change, isSaveDisabled }) => (
         <Container>
           <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.orders)}
@@ -72,7 +74,7 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
           <Savebar
             onCancel={onBack}
             onSubmit={submit}
-            disabled={disabled || !hasChanged}
+            disabled={isSaveDisabled}
             state={saveButtonBarState}
           />
         </Container>

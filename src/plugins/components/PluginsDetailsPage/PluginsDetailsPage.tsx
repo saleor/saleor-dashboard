@@ -4,23 +4,24 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
-import { PluginErrorFragment } from "@saleor/fragments/types/PluginErrorFragment";
+import {
+  ConfigurationItemInput,
+  PluginConfigurationExtendedFragment,
+  PluginErrorFragment,
+  PluginsDetailsFragment
+} from "@saleor/graphql";
 import { ChangeEvent, SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { isSecretField } from "@saleor/plugins/utils";
-import { ConfigurationItemInput } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { Plugin_plugin } from "../../types/Plugin";
 import PluginAuthorization from "../PluginAuthorization";
 import PluginDetailsChannelsCard from "../PluginDetailsChannelsCard";
 import PluginInfo from "../PluginInfo";
 import PluginSettings from "../PluginSettings";
-import { PluginConfiguration } from "./types";
 
 export interface PluginDetailsPageFormData {
   active: boolean;
@@ -30,13 +31,13 @@ export interface PluginDetailsPageFormData {
 export interface PluginsDetailsPageProps {
   disabled: boolean;
   errors: PluginErrorFragment[];
-  plugin?: Plugin_plugin;
+  plugin?: PluginsDetailsFragment;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onClear: (field: string) => void;
   onEdit: (field: string) => void;
   onSubmit: (data: PluginDetailsPageFormData) => SubmitPromise;
-  selectedConfig?: PluginConfiguration;
+  selectedConfig?: PluginConfigurationExtendedFragment;
   setSelectedChannelId: (channelId: string) => void;
 }
 
@@ -54,7 +55,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
 }) => {
   const intl = useIntl();
 
-  const initialFormData = (): PluginDetailsPageFormData => ({
+  const initialFormData: PluginDetailsPageFormData = {
     active: selectedConfig?.active,
     configuration: selectedConfig?.configuration
       ?.filter(
@@ -64,38 +65,32 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
         ...field,
         value: field.value || ""
       }))
-  });
+  };
 
   const selectedChannelId = selectedConfig?.channel?.id;
 
   return (
     <Form
       confirmLeave
-      initial={initialFormData()}
+      initial={initialFormData}
       onSubmit={onSubmit}
       key={selectedChannelId}
+      disabled={disabled}
     >
-      {({ data, hasChanged, submit, set }) => {
+      {({ data, submit, set, isSaveDisabled }) => {
         const onChange = (event: ChangeEvent) => {
           const { name, value } = event.target;
           const newData = {
             active: name === "active" ? value : data.active,
-            configuration: data.configuration
+            configuration: data.configuration.map(configItem =>
+              configItem.name === name
+                ? {
+                    ...configItem,
+                    value
+                  }
+                : configItem
+            )
           };
-
-          if (newData.configuration) {
-            newData.configuration.map(item => {
-              if (item.name === name) {
-                item.value = value;
-              }
-            });
-
-            selectedConfig.configuration.map(item => {
-              if (item.name === name) {
-                item.value = value;
-              }
-            });
-          }
 
           set(newData);
         };
@@ -147,7 +142,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                       <>
                         <CardSpacer />
                         <PluginAuthorization
-                          fields={selectedConfig?.configuration}
+                          fields={selectedConfig.configuration}
                           onClear={onClear}
                           onEdit={onEdit}
                         />
@@ -158,7 +153,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
               </div>
             </Grid>
             <Savebar
-              disabled={disabled || !hasChanged}
+              disabled={isSaveDisabled}
               state={saveButtonBarState}
               onCancel={onBack}
               onSubmit={submit}

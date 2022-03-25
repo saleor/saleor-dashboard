@@ -5,9 +5,11 @@ import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType
 } from "@saleor/components/SingleAutocompleteSelectField";
 import { AddressTypeInput } from "@saleor/customers/types";
-import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
-import { ShopErrorFragment } from "@saleor/fragments/types/ShopErrorFragment";
-import { WarehouseErrorFragment } from "@saleor/fragments/types/WarehouseErrorFragment";
+import {
+  AccountErrorFragment,
+  ShopErrorFragment,
+  WarehouseErrorFragment
+} from "@saleor/graphql";
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";

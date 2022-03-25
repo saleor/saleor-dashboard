@@ -15,25 +15,23 @@ import {
   createDiscountTypeChangeHandler
 } from "@saleor/discounts/handlers";
 import { DiscountTypeEnum, RequirementsPicker } from "@saleor/discounts/types";
-import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
+import {
+  DiscountErrorFragment,
+  DiscountValueTypeEnum,
+  PermissionEnum,
+  VoucherDetailsFragment,
+  VoucherTypeEnum
+} from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
-import { mapEdgesToItems } from "@saleor/utils/maps";
-import { mapMetadataItemToInput } from "@saleor/utils/maps";
+import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, splitDateTime } from "../../../misc";
 import { ChannelProps, ListProps, TabListActions } from "../../../types";
-import {
-  DiscountValueTypeEnum,
-  PermissionEnum,
-  VoucherTypeEnum
-} from "../../../types/globalTypes";
-import { VoucherDetails_voucher } from "../../types/VoucherDetails";
 import DiscountCategories from "../DiscountCategories";
 import DiscountCollections from "../DiscountCollections";
 import DiscountDates from "../DiscountDates";
@@ -80,7 +78,7 @@ export interface VoucherDetailsPageProps
   activeTab: VoucherDetailsPageTab;
   errors: DiscountErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  voucher: VoucherDetails_voucher;
+  voucher: VoucherDetailsFragment;
   allChannelsCount: number;
   channelListings: ChannelVoucherData[];
   hasChannelChanged: boolean;
@@ -349,7 +347,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                         onProductUnassign={onProductUnassign}
                         onRowClick={onProductClick}
                         pageInfo={pageInfo}
-                        products={mapEdgesToItems(voucher.products)}
+                        products={mapEdgesToItems(voucher?.products)}
                         isChecked={isChecked}
                         selected={selected}
                         toggle={toggle}

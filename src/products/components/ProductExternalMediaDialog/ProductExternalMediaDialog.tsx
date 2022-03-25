@@ -9,14 +9,14 @@ import {
 import BackButton from "@saleor/components/BackButton";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
+import { ProductFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { Button } from "@saleor/macaw-ui";
-import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 interface ProductExternalMediaDialogProps {
-  product: ProductDetails_product;
+  product: ProductFragment;
   open: boolean;
   onClose: () => void;
   onSubmit: (mediaUrl: string) => SubmitPromise;

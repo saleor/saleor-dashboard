@@ -1,5 +1,4 @@
-import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
-import { PageErrorCode } from "@saleor/types/globalTypes";
+import { PageErrorCode, PageErrorFragment } from "@saleor/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";

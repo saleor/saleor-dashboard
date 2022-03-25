@@ -1,6 +1,6 @@
 import { countries } from "@saleor/fixtures";
+import { WarehouseErrorCode } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
-import { WarehouseErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -48,7 +48,8 @@ storiesOf("Views / Warehouses / Warehouse details", module)
       ] as Array<keyof WarehouseDetailsPageFormData>).map(field => ({
         __typename: "WarehouseError",
         code: WarehouseErrorCode.INVALID,
-        field
+        field,
+        message: "Warehouse invalid"
       }))}
     />
   ));

@@ -1,5 +1,6 @@
 import { appMessages } from "@saleor/apps/messages";
 import NotFoundPage from "@saleor/components/NotFoundPage";
+import { useAppQuery } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import React from "react";
@@ -7,7 +8,6 @@ import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
 import AppPage from "../../components/AppPage";
-import { useAppDetails } from "../../queries";
 import {
   appDetailsUrl,
   appsListPath,
@@ -20,7 +20,7 @@ interface AppProps {
 
 export const App: React.FC<AppProps> = ({ id }) => {
   const location = useLocation();
-  const { data } = useAppDetails({
+  const { data } = useAppQuery({
     displayLoader: true,
     variables: { id }
   });

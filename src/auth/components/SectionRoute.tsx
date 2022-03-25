@@ -1,9 +1,9 @@
+import { PermissionEnum } from "@saleor/graphql";
 import React from "react";
 import { Route, RouteProps } from "react-router-dom";
 
 import { useUser } from "..";
 import NotFound from "../../NotFound";
-import { PermissionEnum } from "../../types/globalTypes";
 import { hasAllPermissions, hasAnyPermissions } from "../misc";
 
 type MatchPermissionType = "all" | "any";
@@ -21,6 +21,11 @@ export const SectionRoute: React.FC<SectionRouteProps> = ({
   ...props
 }) => {
   const { user } = useUser();
+
+  // Prevents race condition
+  if (user === undefined) {
+    return null;
+  }
 
   const hasSectionPermissions = () => {
     if (!permissions) {

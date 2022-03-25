@@ -1,5 +1,5 @@
+import { WebhookErrorCode } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
-import { WebhookErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -33,7 +33,8 @@ storiesOf("Views / Apps / Webhooks / Webhook details", module)
       errors={["name", "targetUrl", "secretKey", null].map(field => ({
         __typename: "WebhookError",
         code: WebhookErrorCode.INVALID,
-        field
+        field,
+        message: "Webhook invalid"
       }))}
     />
   ));

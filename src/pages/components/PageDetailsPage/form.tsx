@@ -13,6 +13,12 @@ import { AttributeInput } from "@saleor/components/Attributes";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
+import {
+  PageDetailsFragment,
+  SearchPagesQuery,
+  SearchPageTypesQuery,
+  SearchProductsQuery
+} from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
@@ -24,19 +30,11 @@ import useFormset, {
 } from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import {
-  PageDetails_page,
-  PageDetails_page_pageType
-} from "@saleor/pages/types/PageDetails";
-import { PageType_pageType } from "@saleor/pages/types/PageType";
-import {
   getAttributeInputFromPage,
   getAttributeInputFromPageType
 } from "@saleor/pages/utils/data";
 import { createPageTypeSelectHandler } from "@saleor/pages/utils/handlers";
-import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
-import { SearchPageTypes_search_edges_node } from "@saleor/searches/types/SearchPageTypes";
-import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
-import { FetchMoreProps, ReorderEvent } from "@saleor/types";
+import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import getPublicationData from "@saleor/utils/data/getPublicationData";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
@@ -51,7 +49,7 @@ export interface PageFormData extends MetadataFormData {
   seoTitle: string;
   slug: string;
   title: string;
-  pageType: PageType_pageType | PageDetails_page_pageType;
+  pageType: PageDetailsFragment["pageType"];
 }
 export interface PageData extends PageFormData {
   attributes: AttributeInput[];
@@ -83,25 +81,26 @@ export interface UsePageUpdateFormResult
 }
 
 export interface UsePageFormOpts {
-  pageTypes?: SearchPageTypes_search_edges_node[];
-  referencePages: SearchPages_search_edges_node[];
-  referenceProducts: SearchProducts_search_edges_node[];
+  pageTypes?: RelayToFlat<SearchPageTypesQuery["search"]>;
+  referencePages: RelayToFlat<SearchPagesQuery["search"]>;
+  referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
   fetchReferencePages?: (data: string) => void;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchReferenceProducts?: (data: string) => void;
   fetchMoreReferenceProducts?: FetchMoreProps;
   assignReferencesAttributeId?: string;
-  selectedPageType?: PageType_pageType;
+  selectedPageType?: PageDetailsFragment["pageType"];
   onSelectPageType: (pageTypeId: string) => void;
 }
 
 export interface PageFormProps extends UsePageFormOpts {
   children: (props: UsePageUpdateFormResult) => React.ReactNode;
-  page: PageDetails_page;
+  page: PageDetailsFragment;
   onSubmit: (data: PageData) => SubmitPromise;
+  disabled: boolean;
 }
 
-const getInitialFormData = (page?: PageDetails_page): PageFormData => ({
+const getInitialFormData = (page?: PageDetailsFragment): PageFormData => ({
   isPublished: page?.isPublished,
   metadata: page?.metadata?.map(mapMetadataItemToInput) || [],
   pageType: null,
@@ -114,8 +113,9 @@ const getInitialFormData = (page?: PageDetails_page): PageFormData => ({
 });
 
 function usePageForm(
-  page: PageDetails_page,
+  page: PageDetailsFragment,
   onSubmit: (data: PageData) => SubmitPromise,
+  disabled: boolean,
   opts: UsePageFormOpts
 ): UsePageUpdateFormResult {
   const pageExists = page !== null;
@@ -140,7 +140,7 @@ function usePageForm(
     confirmLeave: true
   });
 
-  const { setExitDialogSubmitRef } = useExitFormDialog({
+  const { setExitDialogSubmitRef, setIsSubmitDisabled } = useExitFormDialog({
     formId
   });
 
@@ -240,6 +240,9 @@ function usePageForm(
 
   const valid = pageExists || !!opts.selectedPageType;
 
+  const isSaveDisabled = disabled || !hasChanged || !valid;
+  setIsSubmitDisabled(isSaveDisabled);
+
   return {
     change: handleChange,
     data: getData(),
@@ -257,7 +260,8 @@ function usePageForm(
       selectPageType: handlePageTypeSelect
     },
     hasChanged,
-    submit
+    submit,
+    isSaveDisabled
   };
 }
 
@@ -265,9 +269,10 @@ const PageForm: React.FC<PageFormProps> = ({
   children,
   page,
   onSubmit,
+  disabled,
   ...rest
 }) => {
-  const props = usePageForm(page, onSubmit, rest);
+  const props = usePageForm(page, onSubmit, disabled, rest);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };

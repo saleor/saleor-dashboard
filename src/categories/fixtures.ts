@@ -1,7 +1,6 @@
-import { CategoryFragment } from "@saleor/fragments/types/CategoryFragment";
+import { CategoryDetailsQuery, CategoryFragment } from "@saleor/graphql";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
-import { CategoryDetails_category } from "./types/CategoryDetails";
 
 const content = richTextEditorFixtures.richTextEditor;
 
@@ -87,7 +86,7 @@ export const categories: CategoryFragment[] = [
 ];
 export const category: (
   placeholderImage: string
-) => CategoryDetails_category = (placeholderImage: string) => ({
+) => CategoryDetailsQuery["category"] = (placeholderImage: string) => ({
   __typename: "Category",
   backgroundImage: {
     __typename: "Image",

@@ -4,6 +4,7 @@ import { getByName } from "@saleor/components/Filter/utils";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
 import { VoucherListUrlSortField } from "@saleor/discounts/urls";
+import { VoucherFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Button } from "@saleor/macaw-ui";
 import {
@@ -17,7 +18,6 @@ import {
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { VoucherList_vouchers_edges_node } from "../../types/VoucherList";
 import VoucherList from "../VoucherList";
 import {
   createFilterStructure,
@@ -32,7 +32,7 @@ export interface VoucherListPageProps
     SortPage<VoucherListUrlSortField>,
     TabPageProps,
     ChannelProps {
-  vouchers: VoucherList_vouchers_edges_node[];
+  vouchers: VoucherFragment[];
 }
 const VoucherListPage: React.FC<VoucherListPageProps> = ({
   currentTab,

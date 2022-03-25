@@ -3,7 +3,7 @@
 
 import faker from "faker";
 
-import { priceRateUrl } from "../../../fixtures/urlList";
+import { shippingRateUrl } from "../../../fixtures/urlList";
 import {
   addChannelToShippingMethod,
   createShippingRate,
@@ -59,7 +59,7 @@ filterTests({ definedTags: ["all"] }, () => {
       const updatedRateName = `${startsWith}Updated`;
       const deliveryTime = { min: 1, max: 7 };
 
-      cy.visit(priceRateUrl(shippingZone.id, shippingMethod.id));
+      cy.visit(shippingRateUrl(shippingZone.id, shippingMethod.id));
       fillUpShippingRate({
         rateName: updatedRateName,
         price,
@@ -82,7 +82,7 @@ filterTests({ definedTags: ["all"] }, () => {
 
     it("should be able to delete shipping rate. TC: SALEOR_0807", () => {
       cy.visit(
-        priceRateUrl(shippingZone.id, shippingMethod.id)
+        shippingRateUrl(shippingZone.id, shippingMethod.id)
       ).deleteElementWithReqAlias("DeleteShippingRate");
       getShippingZone(shippingZone.id).then(({ shippingMethods }) => {
         const deletedShipping = shippingMethods.find(

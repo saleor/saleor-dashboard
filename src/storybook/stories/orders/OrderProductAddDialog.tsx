@@ -1,6 +1,6 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
 import { fetchMoreProps } from "@saleor/fixtures";
-import { OrderErrorCode } from "@saleor/types/globalTypes";
+import { OrderErrorCode } from "@saleor/graphql";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -35,7 +35,8 @@ storiesOf("Orders / OrderProductAddDialog", module)
           __typename: "OrderError",
           code: OrderErrorCode.GRAPHQL_ERROR,
           field: null,
-          addressType: null
+          addressType: null,
+          message: "Graphql Error"
         }
       ]}
     />

@@ -1,10 +1,15 @@
 import {
   ApolloError,
   MutationFunction,
+  MutationHookOptions as BaseMutationHookOptions,
   MutationResult,
   useMutation as useBaseMutation
 } from "@apollo/client";
-import { useUser } from "@saleor/auth";
+import {
+  handleNestedMutationErrors,
+  showAllErrors,
+  useUser
+} from "@saleor/auth";
 import { isJwtError } from "@saleor/auth/errors";
 import { commonMessages } from "@saleor/intl";
 import { getMutationStatus } from "@saleor/misc";
@@ -22,31 +27,38 @@ export type UseMutation<TData, TVariables> = [
   MutationFunction<TData, TVariables>,
   MutationResultWithOpts<TData>
 ];
-export type UseMutationCbs<TData> = Partial<{
-  onCompleted: (data: TData) => void;
-  onError: (error: ApolloError) => void;
-  refetchQueries?: string[];
-}>;
 export type UseMutationHook<TData, TVariables> = (
-  cbs: UseMutationCbs<TData>
+  cbs: MutationHookOptions<TData, TVariables>
 ) => UseMutation<TData, TVariables>;
 
-function makeMutation<TData, TVariables>(
-  mutation: DocumentNode
-): UseMutationHook<TData, TVariables> {
-  function useMutation<TData, TVariables>({
-    onCompleted,
-    onError,
-    refetchQueries = []
-  }: UseMutationCbs<TData>): UseMutation<TData, TVariables> {
-    const notify = useNotifier();
-    const intl = useIntl();
-    const user = useUser();
+export type MutationHookOptions<TData, TVariables> = BaseMutationHookOptions<
+  TData,
+  TVariables
+>;
 
-    const [mutateFn, result] = useBaseMutation(mutation, {
-      onCompleted,
-      refetchQueries,
-      onError: (err: ApolloError) => {
+export function useMutation<TData, TVariables>(
+  mutation: DocumentNode,
+  { onCompleted, onError, ...opts }: MutationHookOptions<TData, TVariables>
+): UseMutation<TData, TVariables> {
+  const notify = useNotifier();
+  const intl = useIntl();
+  const user = useUser();
+
+  const [mutateFn, result] = useBaseMutation(mutation, {
+    ...opts,
+    onCompleted: data => {
+      handleNestedMutationErrors({
+        data,
+        intl,
+        notify
+      });
+
+      if (onCompleted) {
+        onCompleted(data);
+      }
+    },
+    onError: (err: ApolloError) => {
+      if (err.graphQLErrors) {
         if (hasError(err, GqlErrors.ReadOnlyException)) {
           notify({
             status: "error",
@@ -59,27 +71,37 @@ function makeMutation<TData, TVariables>(
             text: intl.formatMessage(commonMessages.sessionExpired)
           });
         } else if (!hasError(err, GqlErrors.LimitReachedException)) {
-          notify({
-            status: "error",
-            text: intl.formatMessage(commonMessages.somethingWentWrong)
+          err.graphQLErrors.map(graphQLError => {
+            notify({
+              status: "error",
+              apiMessage: graphQLError.message
+            });
           });
         }
-        if (onError) {
-          onError(err);
-        }
+      } else {
+        showAllErrors({ notify, error: err });
       }
-    });
 
-    return [
-      mutateFn,
-      {
-        ...result,
-        status: getMutationStatus(result)
+      if (onError) {
+        onError(err);
       }
-    ];
-  }
+    }
+  });
 
-  return useMutation;
+  return [
+    mutateFn,
+    {
+      ...result,
+      status: getMutationStatus(result)
+    }
+  ];
+}
+
+function makeMutation<TData, TVariables>(
+  mutation: DocumentNode
+): UseMutationHook<TData, TVariables> {
+  return (opts: MutationHookOptions<TData, TVariables>) =>
+    useMutation<TData, TVariables>(mutation, opts);
 }
 
 export default makeMutation;

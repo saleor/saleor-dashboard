@@ -1,5 +1,7 @@
-import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
-import { PermissionGroupErrorCode } from "@saleor/types/globalTypes";
+import {
+  PermissionGroupErrorCode,
+  PermissionGroupErrorFragment
+} from "@saleor/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";

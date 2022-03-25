@@ -2,9 +2,9 @@ import { Popper, TextField, Typography } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import CloseIcon from "@material-ui/icons/Close";
 import Debounce, { DebounceProps } from "@saleor/components/Debounce";
-import ArrowDropdownIcon from "@saleor/icons/ArrowDropdown";
-import { IconButton, makeStyles } from "@saleor/macaw-ui";
+import { ChevronIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
+import classNames from "classnames";
 import Downshift, { ControllerStateAndHelpers } from "downshift";
 import { filter } from "fuzzaldrin";
 import React from "react";
@@ -65,12 +65,18 @@ const useStyles = makeStyles(
       paddingRight: theme.spacing(1)
     },
     adornment: {
+      color: theme.palette.saleor.main[3],
+      cursor: "pointer",
+      userSelect: "none",
       display: "flex",
       alignItems: "center",
-      userSelect: "none",
-      cursor: "pointer",
-      "&:active": {
-        pointerEvents: "none"
+      "& svg": {
+        transition: theme.transitions.duration.shorter + "ms"
+      }
+    },
+    adornmentRotate: {
+      "& svg": {
+        transform: "rotate(180deg)"
       }
     }
   }),
@@ -167,7 +173,8 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
               toggleMenu,
               getMenuProps,
               highlightedIndex,
-              inputValue
+              inputValue,
+              getToggleButtonProps
             }) => {
               const displayCustomValue =
                 inputValue &&
@@ -183,13 +190,17 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                   <TextField
                     InputProps={{
                       endAdornment: (
-                        <div className={classes.adornment}>
+                        <div
+                          {...getToggleButtonProps()}
+                          className={classNames(classes.adornment, {
+                            [classes.adornmentRotate]: isOpen
+                          })}
+                        >
                           {endAdornment}
-                          <ArrowDropdownIcon />
+                          <ChevronIcon />
                         </div>
                       ),
                       ref: anchor,
-                      onBlur,
                       onFocus: () => {
                         if (fetchOnFocus) {
                           fetchChoices(inputValue);
@@ -208,6 +219,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                     label={label}
                     fullWidth={true}
                     disabled={disabled}
+                    onBlur={onBlur}
                   />
                   {isOpen && (
                     <Popper
@@ -229,7 +241,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                             }
                           }
                         }
-                        choices={choices.filter(
+                        choices={choices?.filter(
                           choice => !value.includes(choice.value)
                         )}
                         displayCustomValue={displayCustomValue}

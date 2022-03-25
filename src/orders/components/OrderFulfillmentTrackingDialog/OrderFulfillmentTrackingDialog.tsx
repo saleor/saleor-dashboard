@@ -10,7 +10,7 @@ import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
-import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
+import { OrderErrorFragment } from "@saleor/graphql";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -46,9 +46,13 @@ const OrderFulfillmentTrackingDialog: React.FC<OrderFulfillmentTrackingDialogPro
   const formFields = ["trackingNumber"];
   const formErrors = getFormErrors(formFields, errors);
 
+  const initialData: FormData = {
+    trackingNumber: trackingNumber || ""
+  };
+
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="xs">
-      <Form confirmLeave initial={{ trackingNumber }} onSubmit={onConfirm}>
+      <Form initial={initialData} onSubmit={onConfirm}>
         {({ change, data, submit }) => (
           <>
             <DialogTitle>

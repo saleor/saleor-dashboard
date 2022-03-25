@@ -1,5 +1,6 @@
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
+import { MenuFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, Button } from "@saleor/macaw-ui";
 import { MenuListUrlSortField } from "@saleor/navigation/urls";
@@ -7,14 +8,13 @@ import { ListActions, PageListProps, SortPage } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { MenuList_menus_edges_node } from "../../types/MenuList";
 import MenuList from "../MenuList";
 
 export interface MenuListPageProps
   extends PageListProps,
     ListActions,
     SortPage<MenuListUrlSortField> {
-  menus: MenuList_menus_edges_node[];
+  menus: MenuFragment[];
   onBack: () => void;
   onDelete: (id: string) => void;
 }

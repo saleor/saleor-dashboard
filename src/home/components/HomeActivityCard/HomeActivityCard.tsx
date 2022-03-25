@@ -8,12 +8,13 @@ import {
 import CardTitle from "@saleor/components/CardTitle";
 import { DateTime } from "@saleor/components/Date";
 import Skeleton from "@saleor/components/Skeleton";
+import { HomeQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
+import { RelayToFlat } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { renderCollection } from "../../../misc";
-import { Home_activities_edges_node } from "../../types/Home";
 import { getActivityMessage } from "./activityMessages";
 
 const useStyles = makeStyles(
@@ -31,7 +32,7 @@ const useStyles = makeStyles(
 );
 
 interface HomeActivityCardProps {
-  activities: Home_activities_edges_node[];
+  activities: RelayToFlat<HomeQuery["activities"]>;
   testId?: string;
 }
 

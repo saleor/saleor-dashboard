@@ -7,27 +7,23 @@ import Metadata from "@saleor/components/Metadata/Metadata";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
+import {
+  ProductAttributeType,
+  ProductTypeDetailsQuery,
+  ProductTypeKindEnum,
+  WeightUnitsEnum
+} from "@saleor/graphql";
 import { ChangeEvent, FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import { ListActions, ReorderEvent, UserError } from "@saleor/types";
-import {
-  ProductAttributeType,
-  ProductTypeKindEnum,
-  WeightUnitsEnum
-} from "@saleor/types/globalTypes";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import {
-  ProductTypeDetails_productType,
-  ProductTypeDetails_taxTypes
-} from "../../types/ProductTypeDetails";
 import ProductTypeAttributes from "../ProductTypeAttributes/ProductTypeAttributes";
 import ProductTypeDetails from "../ProductTypeDetails/ProductTypeDetails";
 import ProductTypeShipping from "../ProductTypeShipping/ProductTypeShipping";
@@ -52,13 +48,13 @@ export interface ProductTypeForm extends MetadataFormData {
 
 export interface ProductTypeDetailsPageProps {
   errors: UserError[];
-  productType: ProductTypeDetails_productType;
+  productType: ProductTypeDetailsQuery["productType"];
   defaultWeightUnit: WeightUnitsEnum;
   disabled: boolean;
   pageTitle: string;
   productAttributeList: ListActions;
   saveButtonBarState: ConfirmButtonTransitionState;
-  taxTypes: ProductTypeDetails_taxTypes[];
+  taxTypes: ProductTypeDetailsQuery["taxTypes"];
   variantAttributeList: ListActions;
   onAttributeAdd: (type: ProductAttributeType) => void;
   onAttributeClick: (id: string) => void;
@@ -74,7 +70,7 @@ export interface ProductTypeDetailsPageProps {
 
 function handleTaxTypeChange(
   event: ChangeEvent,
-  taxTypes: ProductTypeDetails_taxTypes[],
+  taxTypes: ProductTypeDetailsQuery["taxTypes"],
   formChange: FormChange,
   displayChange: (name: string) => void
 ) {
@@ -160,8 +156,13 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
   };
 
   return (
-    <Form initial={formInitialData} onSubmit={handleSubmit} confirmLeave>
-      {({ change, data, hasChanged, submit, setChanged }) => {
+    <Form
+      initial={formInitialData}
+      onSubmit={handleSubmit}
+      confirmLeave
+      disabled={disabled}
+    >
+      {({ change, data, isSaveDisabled, submit, setChanged }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
@@ -260,7 +261,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
               onCancel={onBack}
               onDelete={onDelete}
               onSubmit={submit}
-              disabled={disabled || !hasChanged}
+              disabled={isSaveDisabled}
               state={saveButtonBarState}
             />
           </Container>

@@ -17,7 +17,7 @@ import TableHead from "@saleor/components/TableHead";
 import TextFieldWithChoice from "@saleor/components/TextFieldWithChoice";
 import { ChannelInput } from "@saleor/discounts/handlers";
 import { DiscountTypeEnum } from "@saleor/discounts/types";
-import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
+import { DiscountErrorFragment } from "@saleor/graphql";
 import { renderCollection } from "@saleor/misc";
 import { getFormErrors } from "@saleor/utils/errors";
 import getDiscountErrorMessage from "@saleor/utils/errors/discounts";

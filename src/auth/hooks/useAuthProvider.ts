@@ -1,6 +1,7 @@
-import { ApolloClient, useQuery } from "@apollo/client";
+import { ApolloClient } from "@apollo/client";
 import { IMessageContext } from "@saleor/components/messages";
 import { APP_DEFAULT_URI, APP_MOUNT_URI, DEMO_MODE } from "@saleor/config";
+import { useUserDetailsQuery } from "@saleor/graphql";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { commonMessages } from "@saleor/intl";
@@ -19,7 +20,6 @@ import { useEffect, useRef, useState } from "react";
 import { IntlShape } from "react-intl";
 import urlJoin from "url-join";
 
-import { userDetailsQuery } from "../queries";
 import {
   ExternalLoginInput,
   RequestExternalLoginInput,
@@ -27,7 +27,6 @@ import {
   UserContext,
   UserContextError
 } from "../types";
-import { UserDetails } from "../types/UserDetails";
 import { displayDemoMessage } from "../utils";
 
 export interface UseAuthProviderOpts {
@@ -80,7 +79,7 @@ export function useAuthProvider({
     }
   }, [authenticated, authenticating]);
 
-  const userDetails = useQuery<UserDetails>(userDetailsQuery, {
+  const userDetails = useUserDetailsQuery({
     client: apolloClient,
     skip: !authenticated,
     // Don't change this to 'network-only' - update of intl provider's
@@ -127,7 +126,8 @@ export function useAuthProvider({
     try {
       const result = await login({
         email,
-        password
+        password,
+        includeDetails: false
       });
 
       if (result && !result.data.tokenCreate.errors.length) {

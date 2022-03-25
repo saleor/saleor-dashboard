@@ -49,6 +49,7 @@ export interface CollectionCreateFormProps {
   setChannels: (data: ChannelCollectionData[]) => void;
   children: (props: UseCollectionCreateFormResult) => React.ReactNode;
   onSubmit: (data: CollectionCreateData) => SubmitPromise;
+  disabled: boolean;
 }
 
 const getInitialData = (
@@ -71,7 +72,8 @@ const getInitialData = (
 function useCollectionCreateForm(
   currentChannels: ChannelCollectionData[],
   setChannels: (data: ChannelCollectionData[]) => void,
-  onSubmit: (data: CollectionCreateData) => SubmitPromise
+  onSubmit: (data: CollectionCreateData) => SubmitPromise,
+  disabled: boolean
 ): UseCollectionCreateFormResult {
   const {
     handleChange,
@@ -79,7 +81,8 @@ function useCollectionCreateForm(
     triggerChange,
     setChanged,
     hasChanged,
-    formId
+    formId,
+    setIsSubmitDisabled
   } = useForm(getInitialData(currentChannels), undefined, {
     confirmLeave: true,
     formId: COLLECTION_CREATE_FORM_ID
@@ -122,6 +125,9 @@ function useCollectionCreateForm(
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
+  const isSaveDisabled = disabled || !hasChanged;
+  setIsSubmitDisabled(isSaveDisabled);
+
   return {
     change: handleChange,
     data: getData(),
@@ -131,7 +137,8 @@ function useCollectionCreateForm(
       changeMetadata
     },
     hasChanged,
-    submit
+    submit,
+    isSaveDisabled
   };
 }
 
@@ -139,9 +146,15 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
   currentChannels,
   setChannels,
   children,
-  onSubmit
+  onSubmit,
+  disabled
 }) => {
-  const props = useCollectionCreateForm(currentChannels, setChannels, onSubmit);
+  const props = useCollectionCreateForm(
+    currentChannels,
+    setChannels,
+    onSubmit,
+    disabled
+  );
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };

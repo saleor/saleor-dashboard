@@ -1,5 +1,4 @@
-import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
-import { AttributeErrorCode } from "@saleor/types/globalTypes";
+import { AttributeErrorCode, AttributeErrorFragment } from "@saleor/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";

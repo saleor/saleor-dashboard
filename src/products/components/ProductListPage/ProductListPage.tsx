@@ -14,19 +14,22 @@ import { getByName } from "@saleor/components/Filter/utils";
 import FilterBar from "@saleor/components/FilterBar";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
-import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { ProductListColumns } from "@saleor/config";
+import {
+  AvailableInGridAttributesQuery,
+  GridAttributesQuery,
+  ProductListQuery,
+  RefreshLimitsQuery
+} from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import { AvailableInGridAttributes_availableInGrid_edges_node } from "@saleor/products/types/AvailableInGridAttributes";
-import { GridAttributes_grid_edges_node } from "@saleor/products/types/GridAttributes";
-import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
 import {
   ChannelProps,
   FetchMoreProps,
   FilterPageProps,
   ListActions,
   PageListProps,
+  RelayToFlat,
   SortPage
 } from "@saleor/types";
 import { hasLimits, isLimitReached } from "@saleor/utils/limits";
@@ -50,13 +53,15 @@ export interface ProductListPageProps
     SortPage<ProductListUrlSortField>,
     ChannelProps {
   activeAttributeSortId: string;
-  availableInGridAttributes: AvailableInGridAttributes_availableInGrid_edges_node[];
+  availableInGridAttributes: RelayToFlat<
+    AvailableInGridAttributesQuery["availableInGrid"]
+  >;
   channelsCount: number;
   currencySymbol: string;
-  gridAttributes: GridAttributes_grid_edges_node[];
-  limits: RefreshLimits_shop_limits;
+  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
+  limits: RefreshLimitsQuery["shop"]["limits"];
   totalGridAttributes: number;
-  products: ProductList_products_edges_node[];
+  products: RelayToFlat<ProductListQuery["products"]>;
   onExport: () => void;
 }
 

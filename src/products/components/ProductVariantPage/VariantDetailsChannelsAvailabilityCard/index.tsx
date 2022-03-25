@@ -6,7 +6,7 @@ import {
   Typography
 } from "@material-ui/core";
 import Skeleton from "@saleor/components/Skeleton";
-import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
+import { ProductVariantFragment } from "@saleor/graphql";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import IconChevronDown from "@saleor/icons/ChevronDown";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -38,7 +38,7 @@ const useExpanderStyles = makeStyles(
 );
 
 const useSummaryStyles = makeStyles(
-  theme => ({
+  () => ({
     expanded: {},
     root: {
       width: "100%",
@@ -46,10 +46,6 @@ const useSummaryStyles = makeStyles(
       margin: 0,
       padding: 0,
       minHeight: 0,
-      paddingTop: theme.spacing(2),
-      paddingLeft: theme.spacing(3),
-      paddingRight: theme.spacing(5.5),
-      paddingBottom: theme.spacing(2),
 
       "&$expanded": {
         minHeight: 0
@@ -66,13 +62,23 @@ const useSummaryStyles = makeStyles(
   { name: "VariantDetailsChannelsAvailabilityCardExpanderSummary" }
 );
 
+const useStyles = makeStyles(
+  () => ({
+    summaryContent: {
+      paddingTop: 0
+    }
+  }),
+  { name: "VariantDetailsChannelsAvailabilityCard" }
+);
+
 interface VariantDetailsChannelsAvailabilityCardProps {
-  variant: ProductVariant;
+  variant: ProductVariantFragment;
 }
 
 const VariantDetailsChannelsAvailabilityCard: React.FC<VariantDetailsChannelsAvailabilityCardProps> = ({
   variant
 }) => {
+  const classes = useStyles();
   const expanderClasses = useExpanderStyles({});
   const summaryClasses = useSummaryStyles({});
   const localizeDate = useDateLocalize();
@@ -139,18 +145,20 @@ const VariantDetailsChannelsAvailabilityCard: React.FC<VariantDetailsChannelsAva
   return (
     <CardContainer>
       <Accordion classes={expanderClasses}>
-        <AccordionSummary
-          expandIcon={<IconChevronDown />}
-          classes={summaryClasses}
-          data-test-id="channels-variant-availability-summary"
-        >
-          <Typography variant="caption">
-            {intl.formatMessage(messages.subtitle, {
-              publishedInChannelsCount: publishedInChannelsListings.length,
-              availableChannelsCount: allAvailableChannelsListings.length
-            })}
-          </Typography>
-        </AccordionSummary>
+        <CardContent className={classes.summaryContent}>
+          <AccordionSummary
+            expandIcon={<IconChevronDown />}
+            classes={summaryClasses}
+            data-test-id="channels-variant-availability-summary"
+          >
+            <Typography variant="caption">
+              {intl.formatMessage(messages.subtitle, {
+                publishedInChannelsCount: publishedInChannelsListings.length,
+                availableChannelsCount: allAvailableChannelsListings.length
+              })}
+            </Typography>
+          </AccordionSummary>
+        </CardContent>
 
         {channelListings.map(({ channel }) => (
           <React.Fragment key={channel.id}>

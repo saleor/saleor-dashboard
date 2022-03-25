@@ -13,20 +13,19 @@ import Checkbox from "@saleor/components/Checkbox";
 import Chip from "@saleor/components/Chip";
 import Hr from "@saleor/components/Hr";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import { ChannelFragment } from "@saleor/fragments/types/ChannelFragment";
+import {
+  ChannelFragment,
+  ExportProductsInput,
+  ProductFieldEnum
+} from "@saleor/graphql";
 import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { sectionNames } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
-import {
-  ExportProductsInput,
-  ProductFieldEnum
-} from "@saleor/types/globalTypes";
 import { toggle } from "@saleor/utils/lists";
 import React from "react";
-import { useIntl } from "react-intl";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import useProductExportFieldMessages from "./messages";
 

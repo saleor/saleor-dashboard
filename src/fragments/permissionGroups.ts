@@ -1,9 +1,7 @@
 import { gql } from "@apollo/client";
 
-import { staffMemberFragment } from "./staff";
-
 export const permissionGroupFragment = gql`
-  fragment PermissionGroupFragment on Group {
+  fragment PermissionGroup on Group {
     id
     name
     userCanManage
@@ -16,26 +14,29 @@ export const permissionGroupFragment = gql`
 `;
 
 export const permissionFragment = gql`
-  fragment PermissionFragment on Permission {
+  fragment Permission on Permission {
     code
     name
   }
 `;
 
+export const permissionGroupMember = gql`
+  fragment PermissionGroupMember on User {
+    ...StaffMember
+    avatar(size: 48) {
+      url
+    }
+  }
+`;
+
 export const permissionGroupDetailsFragment = gql`
-  ${permissionGroupFragment}
-  ${permissionFragment}
-  ${staffMemberFragment}
-  fragment PermissionGroupDetailsFragment on Group {
-    ...PermissionGroupFragment
+  fragment PermissionGroupDetails on Group {
+    ...PermissionGroup
     permissions {
-      ...PermissionFragment
+      ...Permission
     }
     users {
-      ...StaffMemberFragment
-      avatar(size: 48) {
-        url
-      }
+      ...PermissionGroupMember
     }
   }
 `;

@@ -13,7 +13,6 @@ import {
 } from "@saleor/macaw-ui";
 import { isDarkTheme } from "@saleor/misc";
 import { staffMemberDetailsUrl } from "@saleor/staff/urls";
-import classNames from "classnames";
 import React from "react";
 import { useIntl } from "react-intl";
 import useRouter from "use-react-router";
@@ -40,9 +39,6 @@ const useStyles = makeStyles(
       gridColumn: 2,
       position: "sticky",
       zIndex: 10
-    },
-    appActionDocked: {
-      position: "static"
     },
     appLoader: {
       height: appLoaderHeight,
@@ -123,7 +119,7 @@ interface AppLayoutProps {
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const classes = useStyles({});
   const { themeType, setTheme } = useTheme();
-  const { anchor: appActionAnchor, docked } = useActionBar();
+  const { anchor: appActionAnchor } = useActionBar();
   const appHeaderAnchor = useBacklink();
   const { logout, user } = useUser();
   const navigate = useNavigator();
@@ -234,12 +230,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                 : children}
             </main>
           </div>
-          <div
-            className={classNames(classes.appAction, {
-              [classes.appActionDocked]: docked
-            })}
-            ref={appActionAnchor}
-          />
+          <div className={classes.appAction} ref={appActionAnchor} />
         </div>
       </div>
     </>

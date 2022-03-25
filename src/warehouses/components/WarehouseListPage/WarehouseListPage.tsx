@@ -3,8 +3,10 @@ import Container from "@saleor/components/Container";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
-import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
-import { WarehouseWithShippingFragment } from "@saleor/fragments/types/WarehouseWithShippingFragment";
+import {
+  RefreshLimitsQuery,
+  WarehouseWithShippingFragment
+} from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, Button } from "@saleor/macaw-ui";
 import {
@@ -25,7 +27,7 @@ export interface WarehouseListPageProps
     SearchPageProps,
     SortPage<WarehouseListUrlSortField>,
     TabPageProps {
-  limits: RefreshLimits_shop_limits;
+  limits: RefreshLimitsQuery["shop"]["limits"];
   warehouses: WarehouseWithShippingFragment[];
   onBack: () => void;
   onRemove: (id: string) => void;

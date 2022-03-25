@@ -1,6 +1,6 @@
 import { createConfigurationMenu } from "@saleor/configuration";
 import ConfigurationPage from "@saleor/configuration/ConfigurationPage";
-import { User } from "@saleor/fragments/types/User";
+import { UserFragment } from "@saleor/graphql";
 import { staffMember } from "@saleor/staff/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
@@ -27,7 +27,7 @@ const versions = {
   coreVersion: "3.0.0-b.15"
 };
 
-const Story: React.FC<{ user: User }> = ({ user }) => {
+const Story: React.FC<{ user: UserFragment }> = ({ user }) => {
   const intl = useIntl();
 
   return (

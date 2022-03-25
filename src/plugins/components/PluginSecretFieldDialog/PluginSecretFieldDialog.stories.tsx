@@ -1,4 +1,4 @@
-import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
+import { ConfigurationTypeFieldEnum } from "@saleor/graphql";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

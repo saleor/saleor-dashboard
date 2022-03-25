@@ -1,5 +1,5 @@
 import placeholderImage from "@assets/images/placeholder255x255.png";
-import { ProductErrorCode } from "@saleor/types/globalTypes";
+import { ProductErrorCode } from "@saleor/graphql";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -86,11 +86,13 @@ storiesOf("Views / Categories / Update category", module)
       errors={[
         {
           code: ProductErrorCode.REQUIRED,
-          field: "name"
+          field: "name",
+          message: "Product field name required"
         },
         {
           code: ProductErrorCode.REQUIRED,
-          field: "description"
+          field: "description",
+          message: "Product field description required"
         }
       ].map(err => ({
         __typename: "ProductError",

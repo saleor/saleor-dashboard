@@ -1,12 +1,12 @@
 import { categoryUrl } from "@saleor/categories/urls";
 import { collectionUrl } from "@saleor/collections/urls";
+import { SearchCatalogQuery } from "@saleor/graphql";
 import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
 import { productUrl } from "@saleor/products/urls";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { score } from "fuzzaldrin";
 import { IntlShape } from "react-intl";
 
-import { SearchCatalog } from "../queries/types/SearchCatalog";
 import { QuickSearchAction, QuickSearchActionInput } from "../types";
 import messages from "./messages";
 import { sortScores } from "./utils";
@@ -17,7 +17,7 @@ export function searchInCatalog(
   search: string,
   intl: IntlShape,
   navigate: UseNavigatorResult,
-  catalog: SearchCatalog
+  catalog: SearchCatalogQuery
 ): QuickSearchAction[] {
   const categories: QuickSearchActionInput[] = (
     mapEdgesToItems(catalog?.categories) || []
@@ -86,7 +86,7 @@ function getCatalogModeActions(
   query: string,
   intl: IntlShape,
   navigate: UseNavigatorResult,
-  catalog: SearchCatalog
+  catalog: SearchCatalogQuery
 ): QuickSearchAction[] {
   return searchInCatalog(query, intl, navigate, catalog);
 }

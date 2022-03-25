@@ -2,6 +2,19 @@ import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import {
+  CategoryBulkDeleteMutation,
+  CategoryDeleteMutation,
+  CategoryInput,
+  CategoryUpdateMutation,
+  useCategoryBulkDeleteMutation,
+  useCategoryDeleteMutation,
+  useCategoryDetailsQuery,
+  useCategoryUpdateMutation,
+  useProductBulkDeleteMutation,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation
+} from "@saleor/graphql";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useLocalPaginator, {
   useSectionLocalPaginationState
@@ -13,33 +26,18 @@ import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { PAGINATE_BY } from "../../config";
 import { extractMutationErrors, maybe } from "../../misc";
-import { useProductBulkDeleteMutation } from "../../products/mutations";
 import { productAddUrl, productUrl } from "../../products/urls";
-import { CategoryInput } from "../../types/globalTypes";
 import {
   CategoryPageTab,
   CategoryUpdatePage
 } from "../components/CategoryUpdatePage/CategoryUpdatePage";
 import { CategoryUpdateData } from "../components/CategoryUpdatePage/form";
-import {
-  useCategoryBulkDeleteMutation,
-  useCategoryDeleteMutation,
-  useCategoryUpdateMutation
-} from "../mutations";
-import { useCategoryDetailsQuery } from "../queries";
-import { CategoryBulkDelete } from "../types/CategoryBulkDelete";
-import { CategoryDelete } from "../types/CategoryDelete";
-import { CategoryUpdate } from "../types/CategoryUpdate";
 import {
   categoryAddUrl,
   categoryListUrl,
@@ -69,8 +67,8 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     params.ids
   );
   const intl = useIntl();
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   const [activeTab, setActiveTab] = useState<CategoryPageTab>(
     CategoryPageTab.categories
@@ -96,7 +94,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     return <NotFoundPage onBack={() => navigate(categoryListUrl())} />;
   }
 
-  const handleCategoryDelete = (data: CategoryDelete) => {
+  const handleCategoryDelete = (data: CategoryDeleteMutation) => {
     if (data.categoryDelete.errors.length === 0) {
       notify({
         status: "success",
@@ -112,7 +110,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     onCompleted: handleCategoryDelete
   });
 
-  const handleCategoryUpdate = (data: CategoryUpdate) => {
+  const handleCategoryUpdate = (data: CategoryUpdateMutation) => {
     if (data.categoryUpdate.errors.length > 0) {
       const backgroundImageError = data.categoryUpdate.errors.find(
         error => error.field === ("backgroundImage" as keyof CategoryInput)
@@ -124,6 +122,11 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
           text: intl.formatMessage(errorMessages.imageUploadErrorText)
         });
       }
+    } else {
+      notify({
+        status: "success",
+        text: intl.formatMessage(commonMessages.savedChanges)
+      });
     }
   };
 
@@ -131,7 +134,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     onCompleted: handleCategoryUpdate
   });
 
-  const handleBulkCategoryDelete = (data: CategoryBulkDelete) => {
+  const handleBulkCategoryDelete = (data: CategoryBulkDeleteMutation) => {
     if (data.categoryBulkDelete.errors.length === 0) {
       closeModal();
       notify({

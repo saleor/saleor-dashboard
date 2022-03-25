@@ -1,23 +1,40 @@
+import { Card } from "@material-ui/core";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
+import { PageFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Button } from "@saleor/macaw-ui";
-import { PageListUrlSortField } from "@saleor/pages/urls";
+import {
+  PageListUrlDialog,
+  PageListUrlQueryParams,
+  PageListUrlSortField
+} from "@saleor/pages/urls";
 import { ListActions, PageListProps, SortPage } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { PageList_pages_edges_node } from "../../types/PageList";
 import PageList from "../PageList";
+import PageListSearchAndFilters from "./PageListSearchAndFilters";
 
+export interface PageListActionDialogOpts {
+  open: (action: PageListUrlDialog, newParams?: PageListUrlQueryParams) => void;
+  close: () => void;
+}
 export interface PageListPageProps
   extends PageListProps,
     ListActions,
     SortPage<PageListUrlSortField> {
-  pages: PageList_pages_edges_node[];
+  pages: PageFragment[];
+  params: PageListUrlQueryParams;
+  actionDialogOpts: PageListActionDialogOpts;
 }
 
-const PageListPage: React.FC<PageListPageProps> = ({ onAdd, ...listProps }) => {
+const PageListPage: React.FC<PageListPageProps> = ({
+  onAdd,
+  params,
+  actionDialogOpts,
+  ...listProps
+}) => {
   const intl = useIntl();
 
   return (
@@ -27,7 +44,13 @@ const PageListPage: React.FC<PageListPageProps> = ({ onAdd, ...listProps }) => {
           <FormattedMessage defaultMessage="Create page" description="button" />
         </Button>
       </PageHeader>
-      <PageList {...listProps} />
+      <Card>
+        <PageListSearchAndFilters
+          params={params}
+          actionDialogOpts={actionDialogOpts}
+        />
+        <PageList {...listProps} />
+      </Card>
     </Container>
   );
 };

@@ -1,4 +1,4 @@
-import { Channels_channels } from "@saleor/channels/types/Channels";
+import { ChannelDetailsFragment } from "@saleor/graphql";
 import CentralPlacementDecorator from "@saleor/storybook/CentralPlacementDecorator";
 import CommonDecorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
@@ -42,10 +42,9 @@ const props: ShippingZoneSettingsCardProps = {
   ],
   allChannels: [
     { __typename: "Channel", id: "channel1", name: "GBP" },
-
     { __typename: "Channel", id: "channel2", name: "PLN" },
     { __typename: "Channel", id: "channel3", name: "USD" }
-  ] as Channels_channels[],
+  ] as ChannelDetailsFragment[],
   channelsDisplayValues: [
     {
       value: "channel1",

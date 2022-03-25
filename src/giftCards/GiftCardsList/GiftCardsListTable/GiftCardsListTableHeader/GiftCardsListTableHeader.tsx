@@ -16,10 +16,8 @@ import { MessageDescriptor, useIntl } from "react-intl";
 
 import { messages as filterLabels } from "../../GiftCardListSearchAndFilters/filters";
 import { giftCardsListTableMessages as messages } from "../../messages";
-import useGiftCardListDialogs from "../../providers/GiftCardListDialogsProvider/hooks/useGiftCardListDialogs";
-import useGiftCardListSort from "../../providers/GiftCardListDialogsProvider/hooks/useGiftCardListSort";
-import useGiftCardList from "../../providers/GiftCardListProvider/hooks/useGiftCardList";
-import useGiftCardListBulkActions from "../../providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
+import { useGiftCardListDialogs } from "../../providers/GiftCardListDialogsProvider";
+import { useGiftCardList } from "../../providers/GiftCardListProvider";
 import { canBeSorted } from "../../sort";
 import { useTableStyles as useStyles } from "../../styles";
 import { GiftCardUrlSortField } from "../../types";
@@ -42,10 +40,15 @@ const GiftCardsListTableHeader: React.FC<GiftCardsListTableHeaderProps> = ({
   const intl = useIntl();
   const classes = useStyles({});
 
-  const { giftCards, numberOfColumns, loading } = useGiftCardList();
-  const { toggleAll, listElements } = useGiftCardListBulkActions();
+  const {
+    giftCards,
+    numberOfColumns,
+    loading,
+    toggleAll,
+    listElements
+  } = useGiftCardList();
   const { openDeleteDialog } = useGiftCardListDialogs();
-  const { onSort, sort } = useGiftCardListSort();
+  const { onSort, sort } = useGiftCardList();
 
   const getDirection = (sortField: GiftCardUrlSortField) =>
     sort.sort === sortField ? getArrowDirection(sort.asc) : undefined;

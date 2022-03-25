@@ -6,36 +6,34 @@ import NotFoundPage from "@saleor/components/NotFoundPage";
 import TypeDeleteWarningDialog from "@saleor/components/TypeDeleteWarningDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import {
+  useAssignPageAttributeMutation,
+  usePageTypeAttributeReorderMutation,
+  usePageTypeDeleteMutation,
+  usePageTypeDetailsQuery,
+  usePageTypeUpdateMutation,
+  useUnassignPageAttributeMutation,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation
+} from "@saleor/graphql";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { Button } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
-import {
-  useAssignPageAttributeMutation,
-  usePageTypeAttributeReorderMutation,
-  usePageTypeDeleteMutation,
-  usePageTypeUpdateMutation,
-  useUnassignPageAttributeMutation
-} from "@saleor/pageTypes/mutations";
 import { ReorderEvent } from "@saleor/types";
 import getPageErrorMessage from "@saleor/utils/errors/page";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import useAvailablePageAttributeSearch from "../../searches/useAvailablePageAttributesSearch";
 import PageTypeDetailsPage, {
   PageTypeForm
 } from "../components/PageTypeDetailsPage";
-import useAvailablePageAttributeSearch from "../hooks/useAvailablePageAttributeSearch";
 import usePageTypeDelete from "../hooks/usePageTypeDelete";
-import { usePageTypeDetailsQuery } from "../queries";
 import { pageTypeListUrl, pageTypeUrl, PageTypeUrlQueryParams } from "../urls";
 
 interface PageTypeDetailsProps {
@@ -52,16 +50,19 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
   const attributeListActions = useBulkActions();
   const intl = useIntl();
 
+  const notifySaved = () =>
+    notify({
+      status: "success",
+      text: intl.formatMessage(commonMessages.savedChanges)
+    });
+
   const [updatePageType, updatePageTypeOpts] = usePageTypeUpdateMutation({
     onCompleted: updateData => {
       if (
         !updateData.pageTypeUpdate.errors ||
         updateData.pageTypeUpdate.errors.length === 0
       ) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
-        });
+        notifySaved();
       }
     }
   });
@@ -82,10 +83,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
     {
       onCompleted: data => {
         if (data.pageAttributeAssign.errors.length === 0) {
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges)
-          });
+          notifySaved();
           closeModal();
         }
       }
@@ -106,10 +104,21 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
       }
     }
   });
-  const [reorderAttribute] = usePageTypeAttributeReorderMutation({});
+  const [reorderAttribute] = usePageTypeAttributeReorderMutation({
+    onCompleted: data => {
+      if (data.pageTypeReorderAttributes.errors.length === 0) {
+        notifySaved();
+      }
+    }
+  });
 
-  const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const pageTypeDeleteData = usePageTypeDelete({
+    singleId: id,
+    params
+  });
+
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   const handleBack = () => navigate(pageTypeListUrl());
 
@@ -185,11 +194,6 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
   );
 
   const loading = updatePageTypeOpts.loading || dataLoading;
-
-  const pageTypeDeleteData = usePageTypeDelete({
-    singleId: id,
-    params
-  });
 
   return (
     <>

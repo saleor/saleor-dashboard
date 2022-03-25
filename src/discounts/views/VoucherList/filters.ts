@@ -4,12 +4,12 @@ import {
   VoucherFilterKeys,
   VoucherListFilterOpts
 } from "@saleor/discounts/components/VoucherListPage";
-import { findValueInEnum, joinDateTime, maybe } from "@saleor/misc";
 import {
   DiscountStatusEnum,
   VoucherDiscountType,
   VoucherFilterInput
-} from "@saleor/types/globalTypes";
+} from "@saleor/graphql";
+import { findValueInEnum, joinDateTime, maybe } from "@saleor/misc";
 
 import {
   createFilterTabUtils,

@@ -1,9 +1,6 @@
 import { channelsList } from "@saleor/channels/fixtures";
+import { ExportErrorCode, ExportProductsInput } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
-import {
-  ExportErrorCode,
-  ExportProductsInput
-} from "@saleor/types/globalTypes";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -51,7 +48,8 @@ storiesOf("Views / Products / Export / Export settings", module)
       >).map(field => ({
         __typename: "ExportError",
         code: ExportErrorCode.INVALID,
-        field
+        field,
+        message: "Export invalid"
       }))}
     />
   ));

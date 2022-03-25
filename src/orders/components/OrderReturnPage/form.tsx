@@ -1,4 +1,5 @@
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
+import { FulfillmentStatus, OrderDetailsFragment } from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   SubmitPromise
@@ -8,8 +9,6 @@ import useFormset, {
   FormsetData
 } from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
-import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
-import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import React, { useEffect } from "react";
 
 import { OrderRefundAmountCalculationMode } from "../OrderRefundPage/form";
@@ -66,7 +65,7 @@ export type UseOrderRefundFormResult = CommonUseFormResultWithHandlers<
 
 interface OrderReturnProps {
   children: (props: UseOrderRefundFormResult) => React.ReactNode;
-  order: OrderDetails_order;
+  order: OrderDetailsFragment;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }
 
@@ -77,7 +76,7 @@ const getOrderRefundPageFormData = (): OrderReturnData => ({
 });
 
 function useOrderReturnForm(
-  order: OrderDetails_order,
+  order: OrderDetailsFragment,
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise
 ): UseOrderRefundFormResult {
   const {
@@ -86,12 +85,15 @@ function useOrderReturnForm(
     hasChanged,
     data: formData,
     triggerChange,
-    formId
+    formId,
+    setIsSubmitDisabled
   } = useForm(getOrderRefundPageFormData(), undefined, {
     confirmLeave: true
   });
 
-  const { setExitDialogSubmitRef } = useExitFormDialog();
+  const { setExitDialogSubmitRef } = useExitFormDialog({
+    formId
+  });
 
   const unfulfiledItemsQuantites = useFormset<LineItemData, number>(
     getOrderUnfulfilledLines(order).map(getParsedLineData({ initialValue: 0 }))
@@ -242,6 +244,14 @@ function useOrderReturnForm(
     };
   }
 
+  const hasAnyItemsSelected =
+    fulfiledItemsQuatities.data.some(({ value }) => !!value) ||
+    waitingItemsQuantities.data.some(({ value }) => !!value) ||
+    unfulfiledItemsQuantites.data.some(({ value }) => !!value);
+
+  const isSaveDisabled = !hasAnyItemsSelected;
+  setIsSubmitDisabled(isSaveDisabled);
+
   return {
     change: handleChange,
     data,
@@ -260,7 +270,8 @@ function useOrderReturnForm(
       handleSetMaximalUnfulfiledItemsQuantities
     },
     hasChanged,
-    submit
+    submit,
+    isSaveDisabled
   };
 }
 

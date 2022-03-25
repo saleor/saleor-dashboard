@@ -1,4 +1,4 @@
-import { GiftCardSettingsErrorFragment } from "@saleor/fragments/types/GiftCardSettingsErrorFragment";
+import { GiftCardSettingsErrorFragment } from "@saleor/graphql";
 import { getCommonFormFieldErrorMessage } from "@saleor/utils/errors/common";
 import { defineMessages, IntlShape } from "react-intl";
 

@@ -1,4 +1,4 @@
-import { MenuErrorCode } from "@saleor/types/globalTypes";
+import { MenuErrorCode } from "@saleor/graphql";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -28,7 +28,8 @@ storiesOf("Navigation / Menu create", module)
       errors={["name"].map(field => ({
         __typename: "MenuError",
         code: MenuErrorCode.INVALID,
-        field
+        field,
+        message: "Invalid field"
       }))}
     />
   ));

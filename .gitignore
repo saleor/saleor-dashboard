@@ -42,6 +42,7 @@ cypress/videos
 webpack-bundle.json
 /templates/templated_email/compiled/*
 !/templates/templated_email/compiled/.gitkeep
+cypress/reports
 
 # Exported results file
 django-queries-results.html

@@ -8,10 +8,12 @@ import {
 import InfoIcon from "@material-ui/icons/Info";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledSwitch from "@saleor/components/ControlledSwitch";
-import { PluginConfigurationFragment_configuration } from "@saleor/fragments/types/PluginConfigurationFragment";
+import {
+  ConfigurationItemFragment,
+  ConfigurationTypeFieldEnum
+} from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { UserError } from "@saleor/types";
-import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
 import { getFieldError } from "@saleor/utils/errors";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -23,7 +25,7 @@ interface PluginSettingsProps {
   errors: UserError[];
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
-  fields: PluginConfigurationFragment_configuration[];
+  fields: ConfigurationItemFragment[];
 }
 
 const useStyles = makeStyles(

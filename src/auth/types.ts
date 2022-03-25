@@ -1,4 +1,4 @@
-import { User } from "@saleor/fragments/types/User";
+import { UserFragment } from "@saleor/graphql";
 import {
   GetExternalAccessTokenData,
   GetExternalAuthUrlData,
@@ -34,7 +34,7 @@ export interface UserContext {
     pluginId: string,
     input: RequestExternalLoginInput
   ) => Promise<GetExternalAuthUrlData>;
-  user?: User;
+  user?: UserFragment;
   authenticating: boolean;
   authenticated: boolean;
   error?: UserContextError;

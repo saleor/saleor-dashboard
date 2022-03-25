@@ -1,31 +1,10 @@
 import { gql } from "@apollo/client";
-import {
-  pageErrorFragment,
-  pageErrorWithAttributesFragment
-} from "@saleor/fragments/errors";
-import { pageDetailsFragment } from "@saleor/fragments/pages";
-import makeMutation from "@saleor/hooks/makeMutation";
 
-import { TypedMutation } from "../mutations";
-import {
-  PageBulkPublish,
-  PageBulkPublishVariables
-} from "./types/PageBulkPublish";
-import {
-  PageBulkRemove,
-  PageBulkRemoveVariables
-} from "./types/PageBulkRemove";
-import { PageCreate, PageCreateVariables } from "./types/PageCreate";
-import { PageRemove, PageRemoveVariables } from "./types/PageRemove";
-import { PageUpdate, PageUpdateVariables } from "./types/PageUpdate";
-
-const pageCreate = gql`
-  ${pageErrorWithAttributesFragment}
+export const pageCreate = gql`
   mutation PageCreate($input: PageCreateInput!) {
     pageCreate(input: $input) {
       errors {
-        ...PageErrorWithAttributesFragment
-        message
+        ...PageErrorWithAttributes
       }
       page {
         id
@@ -33,13 +12,8 @@ const pageCreate = gql`
     }
   }
 `;
-export const TypedPageCreate = TypedMutation<PageCreate, PageCreateVariables>(
-  pageCreate
-);
 
-const pageUpdate = gql`
-  ${pageDetailsFragment}
-  ${pageErrorWithAttributesFragment}
+export const pageUpdate = gql`
   mutation PageUpdate(
     $id: ID!
     $input: PageInput!
@@ -50,60 +24,41 @@ const pageUpdate = gql`
   ) {
     pageUpdate(id: $id, input: $input) {
       errors {
-        ...PageErrorWithAttributesFragment
+        ...PageErrorWithAttributes
       }
       page {
-        ...PageDetailsFragment
+        ...PageDetails
       }
     }
   }
 `;
-export const usePageUpdateMutation = makeMutation<
-  PageUpdate,
-  PageUpdateVariables
->(pageUpdate);
 
-const pageRemove = gql`
-  ${pageErrorFragment}
+export const pageRemove = gql`
   mutation PageRemove($id: ID!) {
     pageDelete(id: $id) {
       errors {
-        ...PageErrorFragment
+        ...PageError
       }
     }
   }
 `;
-export const usePageRemoveMutation = makeMutation<
-  PageRemove,
-  PageRemoveVariables
->(pageRemove);
 
-const pageBulkPublish = gql`
+export const pageBulkPublish = gql`
   mutation PageBulkPublish($ids: [ID]!, $isPublished: Boolean!) {
     pageBulkPublish(ids: $ids, isPublished: $isPublished) {
       errors {
-        field
-        message
+        ...PageBulkPublishErrorFragment
       }
     }
   }
 `;
-export const TypedPageBulkPublish = TypedMutation<
-  PageBulkPublish,
-  PageBulkPublishVariables
->(pageBulkPublish);
 
-const pageBulkRemove = gql`
+export const pageBulkRemove = gql`
   mutation PageBulkRemove($ids: [ID]!) {
     pageBulkDelete(ids: $ids) {
       errors {
-        field
-        message
+        ...PageBulkRemoveErrorFragment
       }
     }
   }
 `;
-export const TypedPageBulkRemove = TypedMutation<
-  PageBulkRemove,
-  PageBulkRemoveVariables
->(pageBulkRemove);

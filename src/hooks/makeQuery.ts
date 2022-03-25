@@ -1,27 +1,31 @@
 import {
   ApolloError,
   ApolloQueryResult,
+  QueryHookOptions as BaseQueryHookOptions,
   QueryResult,
-  useQuery as useBaseQuery,
-  WatchQueryFetchPolicy
+  useQuery as useBaseQuery
 } from "@apollo/client";
-import { handleQueryAuthError } from "@saleor/auth";
-import { useUser } from "@saleor/auth";
+import { handleQueryAuthError, useUser } from "@saleor/auth";
+import { PrefixedPermissions } from "@saleor/graphql/extendedTypes";
+import {
+  PermissionEnum,
+  UserPermissionFragment
+} from "@saleor/graphql/types.generated";
 import { RequireAtLeastOne } from "@saleor/misc";
 import { DocumentNode } from "graphql";
 import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
-import { User_userPermissions } from "../fragments/types/User";
-import { PrefixedPermissions } from "../types/extendedTypes";
-import { PermissionEnum } from "../types/globalTypes";
 import useAppState from "./useAppState";
 import useNotifier from "./useNotifier";
+export { useLazyQuery, LazyQueryHookOptions } from "@apollo/client";
 
 const getPermissionKey = (permission: string) =>
   `PERMISSION_${permission}` as PrefixedPermissions;
 
-const allPermissions = Object.keys(PermissionEnum).reduce(
+const allPermissions: Record<PrefixedPermissions, boolean> = Object.keys(
+  PermissionEnum
+).reduce(
   (prev, code) => ({
     ...prev,
     [getPermissionKey(code)]: false
@@ -29,7 +33,9 @@ const allPermissions = Object.keys(PermissionEnum).reduce(
   {} as Record<PrefixedPermissions, boolean>
 );
 
-const getUserPermissions = (userPermissions: User_userPermissions[]) =>
+const getUserPermissions = (
+  userPermissions: UserPermissionFragment[]
+): Record<PrefixedPermissions, boolean> =>
   userPermissions.reduce(
     (prev, permission) => ({
       ...prev,
@@ -47,91 +53,95 @@ export interface LoadMore<TData, TVariables> {
 
 export type UseQueryResult<TData, TVariables> = QueryResult<TData, TVariables> &
   LoadMore<TData, TVariables>;
-export type UseQueryOpts<TVariables> = Partial<{
-  displayLoader: boolean;
-  skip: boolean;
-  variables: TVariables;
-  fetchPolicy: WatchQueryFetchPolicy;
-  handleError?: (error: ApolloError) => void | undefined;
-}>;
+export type QueryHookOptions<TData, TVariables> = Partial<
+  Omit<BaseQueryHookOptions<TData, TVariables>, "variables"> & {
+    displayLoader: boolean;
+    handleError?: (error: ApolloError) => void | undefined;
+    variables?: Omit<TVariables, PrefixedPermissions>;
+  }
+>;
 type UseQueryHook<TData, TVariables> = (
-  opts?: UseQueryOpts<Omit<TVariables, PrefixedPermissions>>
+  opts?: QueryHookOptions<TData, Omit<TVariables, PrefixedPermissions>>
 ) => UseQueryResult<TData, TVariables>;
 
-function makeQuery<TData, TVariables>(
-  query: DocumentNode
-): UseQueryHook<TData, TVariables> {
-  function useQuery({
+export function useQuery<TData, TVariables>(
+  query: DocumentNode,
+  {
     displayLoader,
     skip,
     variables,
     fetchPolicy,
-    handleError
-  }: UseQueryOpts<TVariables> = {}): UseQueryResult<TData, TVariables> {
-    const notify = useNotifier();
-    const intl = useIntl();
-    const [, dispatchAppState] = useAppState();
-    const user = useUser();
-    const userPermissions = getUserPermissions(
-      user.user?.userPermissions || []
-    );
+    handleError,
+    ...opts
+  }: QueryHookOptions<TData, TVariables> = {}
+): UseQueryResult<TData, TVariables> {
+  const notify = useNotifier();
+  const intl = useIntl();
+  const [, dispatchAppState] = useAppState();
+  const user = useUser();
+  const userPermissions = getUserPermissions(user.user?.userPermissions || []);
 
-    const variablesWithPermissions = {
-      ...variables,
-      ...allPermissions,
-      ...userPermissions
-    };
+  const variablesWithPermissions = {
+    ...variables,
+    ...allPermissions,
+    ...userPermissions
+  } as TVariables & Record<PrefixedPermissions, boolean>;
 
-    const queryData = useBaseQuery(query, {
-      context: {
-        useBatching: true
-      },
-      errorPolicy: "all",
-      fetchPolicy: fetchPolicy || "cache-and-network",
-      onError: error => {
-        if (!!handleError) {
-          handleError(error);
-        } else {
-          handleQueryAuthError(error, notify, user.logout, intl);
+  const queryData = useBaseQuery(query, {
+    ...opts,
+    context: {
+      useBatching: true
+    },
+    errorPolicy: "all",
+    fetchPolicy: fetchPolicy ?? "cache-and-network",
+    onError: error => {
+      if (!!handleError) {
+        handleError(error);
+      } else {
+        handleQueryAuthError(error, notify, user.logout, intl);
+      }
+    },
+    skip,
+    variables: variablesWithPermissions
+  });
+
+  useEffect(() => {
+    if (displayLoader) {
+      dispatchAppState({
+        payload: {
+          value: queryData.loading
+        },
+        type: "displayLoader"
+      });
+    }
+  }, [queryData.loading]);
+
+  const loadMore = (
+    mergeFunc: (previousResults: TData, fetchMoreResult: TData) => TData,
+    extraVariables: RequireAtLeastOne<TVariables>
+  ) =>
+    queryData.fetchMore({
+      query,
+      updateQuery: (previousResults, { fetchMoreResult }) => {
+        if (!fetchMoreResult) {
+          return previousResults;
         }
+        return mergeFunc(previousResults, fetchMoreResult);
       },
-      skip,
-      variables: variablesWithPermissions
+      variables: { ...variablesWithPermissions, ...extraVariables }
     });
 
-    useEffect(() => {
-      if (displayLoader) {
-        dispatchAppState({
-          payload: {
-            value: queryData.loading
-          },
-          type: "displayLoader"
-        });
-      }
-    }, [queryData.loading]);
+  return {
+    ...queryData,
+    loadMore
+  };
+}
 
-    const loadMore = (
-      mergeFunc: (previousResults: TData, fetchMoreResult: TData) => TData,
-      extraVariables: RequireAtLeastOne<TVariables>
-    ) =>
-      queryData.fetchMore({
-        query,
-        updateQuery: (previousResults, { fetchMoreResult }) => {
-          if (!fetchMoreResult) {
-            return previousResults;
-          }
-          return mergeFunc(previousResults, fetchMoreResult);
-        },
-        variables: { ...variablesWithPermissions, ...extraVariables }
-      });
-
-    return {
-      ...queryData,
-      loadMore
-    };
-  }
-
-  return useQuery;
+function makeQuery<TData, TVariables>(
+  query: DocumentNode
+): UseQueryHook<TData, TVariables> {
+  return (opts: QueryHookOptions<TData, TVariables>) =>
+    useQuery<TData, TVariables>(query, opts);
 }
 
 export default makeQuery;

@@ -1,6 +1,6 @@
 import { IFilter } from "@saleor/components/Filter";
+import { StaffMemberStatus } from "@saleor/graphql";
 import { FilterOpts } from "@saleor/types";
-import { StaffMemberStatus } from "@saleor/types/globalTypes";
 import { createOptionsField } from "@saleor/utils/filters/fields";
 import { defineMessages, IntlShape } from "react-intl";
 

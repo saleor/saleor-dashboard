@@ -1,5 +1,5 @@
 import { CategoryListUrlSortField } from "@saleor/categories/urls";
-import { CategorySortField } from "@saleor/types/globalTypes";
+import { CategorySortField } from "@saleor/graphql";
 import { createGetSortQueryVariables } from "@saleor/utils/sort";
 
 export function getSortQueryField(

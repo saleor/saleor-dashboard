@@ -1,5 +1,5 @@
+import { OrderSortField } from "@saleor/graphql";
 import { OrderListUrlSortField } from "@saleor/orders/urls";
-import { OrderSortField } from "@saleor/types/globalTypes";
 import { createGetSortQueryVariables } from "@saleor/utils/sort";
 
 export function getSortQueryField(sort: OrderListUrlSortField): OrderSortField {

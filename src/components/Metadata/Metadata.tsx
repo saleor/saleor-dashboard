@@ -1,5 +1,5 @@
+import { MetadataInput } from "@saleor/graphql";
 import { ChangeEvent } from "@saleor/hooks/useForm";
-import { MetadataInput } from "@saleor/types/globalTypes";
 import { removeAtIndex, updateAtIndex } from "@saleor/utils/lists";
 import React from "react";
 

@@ -1,9 +1,11 @@
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import { isInDevelopment } from "@saleor/misc";
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router";
 import useRouter from "use-react-router";
 
 import ExitFormDialog from "./ExitFormDialog";
+import useBeforeUnload from "./useBeforeUnload";
 
 export interface ExitFormDialogData {
   setIsDirty: (id: symbol, isDirty: boolean) => void;
@@ -11,6 +13,8 @@ export interface ExitFormDialogData {
   setEnableExitDialog: (value: boolean) => void;
   shouldBlockNavigation: () => boolean;
   setIsSubmitting: (value: boolean) => void;
+  submit: () => SubmitPromise;
+  setIsSubmitDisabled: (value: boolean) => void;
 }
 
 export type SubmitFn = (dataOrEvent?: any) => SubmitPromise<any[]>;
@@ -35,7 +39,9 @@ export const ExitFormDialogContext = React.createContext<ExitFormDialogData>({
   setEnableExitDialog: () => undefined,
   setExitDialogSubmitRef: () => undefined,
   shouldBlockNavigation: () => false,
-  setIsSubmitting: () => undefined
+  setIsSubmitting: () => undefined,
+  submit: () => Promise.resolve([]),
+  setIsSubmitDisabled: () => undefined
 });
 
 const defaultValues = {
@@ -49,11 +55,16 @@ const defaultValues = {
   formsData: {}
 };
 
-const ExitFormDialogProvider = ({ children }) => {
+export function useExitFormDialogProvider() {
   const history = useHistory();
   const { history: routerHistory } = useRouter();
 
   const [showDialog, setShowDialog] = useState(defaultValues.showDialog);
+  const isSubmitDisabled = useRef(false);
+
+  const setIsSubmitDisabled = (status: boolean) => {
+    isSubmitDisabled.current = status;
+  };
 
   const isSubmitting = useRef(defaultValues.isSubmitting);
   const formsData = useRef<FormsData>({});
@@ -208,9 +219,9 @@ const ExitFormDialogProvider = ({ children }) => {
       getDirtyFormsSubmitFn().map(submitFn => submitFn())
     );
 
-    const isError = errors.flat().some(errors => errors);
-
     setIsSubmitting(false);
+
+    const isError = errors.flat().some(errors => errors);
 
     if (!isError) {
       continueNavigation();
@@ -237,8 +248,41 @@ const ExitFormDialogProvider = ({ children }) => {
     shouldBlockNavigation,
     setEnableExitDialog,
     setExitDialogSubmitRef: setSubmitRef,
-    setIsSubmitting
+    setIsSubmitting,
+    submit: handleSubmit,
+    setIsSubmitDisabled
   };
+
+  return {
+    providerData,
+    showDialog,
+    handleSubmit,
+    handleLeave,
+    handleClose,
+    shouldBlockNav,
+    isSubmitDisabled
+  };
+}
+
+const ExitFormDialogProvider = ({ children }) => {
+  const {
+    handleClose,
+    handleLeave,
+    handleSubmit,
+    providerData,
+    showDialog,
+    shouldBlockNav,
+    isSubmitDisabled
+  } = useExitFormDialogProvider();
+
+  useBeforeUnload(e => {
+    // If form is dirty and user does a refresh,
+    // the browser will ask about unsaved changes
+    if (shouldBlockNav() && !isInDevelopment) {
+      e.preventDefault();
+      e.returnValue = "";
+    }
+  });
 
   return (
     <ExitFormDialogContext.Provider value={providerData}>
@@ -247,6 +291,7 @@ const ExitFormDialogProvider = ({ children }) => {
         onSubmit={handleSubmit}
         onLeave={handleLeave}
         onClose={handleClose}
+        isSubmitDisabled={isSubmitDisabled.current}
       />
       {children}
     </ExitFormDialogContext.Provider>

@@ -9,7 +9,7 @@ import ConfirmButton from "@saleor/components/ConfirmButton";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
-import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
+import { OrderErrorFragment } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
 import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import getOrderErrorMessage from "@saleor/utils/errors/order";

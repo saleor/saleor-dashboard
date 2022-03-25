@@ -1,9 +1,9 @@
 import { FetchResult, MutationResult } from "@apollo/client";
+import { UserPermissionFragment } from "@saleor/graphql";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 
 import { IFilter, IFilterElement } from "./components/Filter";
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
-import { User_userPermissions } from "./fragments/types/User";
 
 export interface UserError {
   field: string | null;
@@ -195,7 +195,7 @@ export interface FetchMoreProps {
 export type TabActionDialog = "save-search" | "delete-search";
 
 export interface UserPermissionProps {
-  userPermissions: User_userPermissions[];
+  userPermissions: UserPermissionFragment[];
 }
 
 export interface MutationResultAdditionalProps {
@@ -224,3 +224,7 @@ export enum StatusType {
   WARNING = "warning",
   SUCCESS = "success"
 }
+
+export type RelayToFlat<T extends { edges: Array<{ node: any }> }> = Array<
+  T["edges"][0]["node"]
+>;

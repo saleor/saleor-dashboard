@@ -4,13 +4,14 @@ export const useStyles = makeStyles(
   theme => ({
     container: {
       display: "grid",
-      gridTemplateRows: "repeat(auto-fill, minmax(90px, 1fr))",
       justifyContent: "end",
-      left: 0,
-      pointerEvents: "none",
+      right: 0,
+      pointerEvents: "auto",
       position: "fixed",
       top: 0,
-      width: "100%",
+      width: "auto",
+      maxHeight: "100vh",
+      overflowY: "auto",
       zIndex: 10000
     },
     notification: {

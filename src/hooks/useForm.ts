@@ -1,3 +1,4 @@
+import { CheckIfSaveIsDisabledFnType } from "@saleor/components/Form";
 import { FormId } from "@saleor/components/Form/ExitFormDialogProvider";
 import {
   useExitFormDialog,
@@ -7,8 +8,7 @@ import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import { toggle } from "@saleor/utils/lists";
 import isEqual from "lodash/isEqual";
 import omit from "lodash/omit";
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import useStateFromProps from "./useStateFromProps";
 
@@ -26,9 +26,11 @@ export type FormErrors<T> = {
   [field in keyof T]?: string | React.ReactNode;
 };
 
-export interface UseFormOpts {
+export interface UseFormOpts<T> {
   confirmLeave: boolean;
   formId?: FormId;
+  checkIfSaveIsDisabled?: CheckIfSaveIsDisabledFnType<T>;
+  disabled?: boolean;
 }
 
 export interface UseFormResult<TData>
@@ -43,6 +45,7 @@ export interface UseFormResult<TData>
   errors: FormErrors<TData>;
   setError: (name: keyof TData, error: string | React.ReactNode) => void;
   clearErrors: (name?: keyof TData | Array<keyof TData>) => void;
+  setIsSubmitDisabled: (value: boolean) => void;
 }
 
 export interface CommonUseFormResult<TData> {
@@ -50,6 +53,7 @@ export interface CommonUseFormResult<TData> {
   change: FormChange;
   hasChanged: boolean;
   submit: (dataOrEvent?: any) => SubmitPromise<any[]>;
+  isSaveDisabled?: boolean;
 }
 
 export interface CommonUseFormResultWithHandlers<TData, THandlers>
@@ -85,9 +89,14 @@ function handleRefresh<T extends FormData>(
 function useForm<T extends FormData, TErrors>(
   initialData: T,
   onSubmit?: (data: T) => SubmitPromise<TErrors[]> | void,
-  opts: UseFormOpts = { confirmLeave: false, formId: undefined }
+  opts: UseFormOpts<T> = { confirmLeave: false, formId: undefined }
 ): UseFormResult<T> {
-  const { confirmLeave, formId: propsFormId } = opts;
+  const {
+    confirmLeave,
+    formId: propsFormId,
+    checkIfSaveIsDisabled,
+    disabled
+  } = opts;
   const [hasChanged, setChanged] = useState(false);
   const [errors, setErrors] = useState<FormErrors<T>>({});
   const [data, setData] = useStateFromProps(initialData, {
@@ -95,12 +104,33 @@ function useForm<T extends FormData, TErrors>(
     onRefresh: newData => handleRefresh(data, newData, handleSetChanged)
   });
 
+  const basicFormDisableConditions = () => !hasChanged || disabled;
+
+  const isSaveDisabled = () => {
+    if (checkIfSaveIsDisabled) {
+      return checkIfSaveIsDisabled({
+        ...data,
+        hasChanged
+      });
+    }
+
+    if (disabled !== undefined) {
+      return basicFormDisableConditions();
+    }
+
+    return false;
+  };
+
   const {
     setIsDirty: setIsFormDirtyInExitDialog,
     setExitDialogSubmitRef,
     setEnableExitDialog,
+    setIsSubmitDisabled,
     formId
-  } = useExitFormDialog({ formId: propsFormId });
+  } = useExitFormDialog({
+    formId: propsFormId,
+    isDisabled: isSaveDisabled()
+  });
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
@@ -217,7 +247,9 @@ function useForm<T extends FormData, TErrors>(
     toggleValue,
     handleChange,
     triggerChange: handleSetChanged,
-    setChanged: handleSetChanged
+    setChanged: handleSetChanged,
+    setIsSubmitDisabled,
+    isSaveDisabled: isSaveDisabled()
   };
 }
 

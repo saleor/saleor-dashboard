@@ -1,6 +1,5 @@
-/* eslint-disable sort-keys */
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
+import { OrderDetailsQuery } from "@saleor/graphql";
 import {
   OrderDiscountContext,
   OrderDiscountContextConsumerProps
@@ -11,7 +10,9 @@ import {
 } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import React from "react";
 
-export const getDiscountsProvidersWrapper = (order: OrderDetails_order) => {
+export const getDiscountsProvidersWrapper = (
+  order: OrderDetailsQuery["order"]
+) => {
   const mockedCommonDiscountProviderValues = {
     openDialog: () => {},
     closeDialog: () => {},

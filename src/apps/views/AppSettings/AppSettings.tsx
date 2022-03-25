@@ -1,12 +1,12 @@
 import { appMessages } from "@saleor/apps/messages";
 import NotFoundPage from "@saleor/components/NotFoundPage";
+import { useAppQuery } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import AppPage from "../../components/AppPage";
-import { useAppDetails } from "../../queries";
 import { appDetailsUrl, appsListPath } from "../../urls";
 
 interface AppSettingsProps {
@@ -14,7 +14,7 @@ interface AppSettingsProps {
 }
 
 export const AppSettings: React.FC<AppSettingsProps> = ({ id }) => {
-  const { data } = useAppDetails({
+  const { data } = useAppQuery({
     displayLoader: true,
     variables: { id }
   });

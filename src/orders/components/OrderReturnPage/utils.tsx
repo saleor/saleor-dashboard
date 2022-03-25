@@ -1,10 +1,5 @@
-import { OrderDetailsFragment_fulfillments_lines } from "@saleor/fragments/types/OrderDetailsFragment";
-import {
-  OrderDetails_order,
-  OrderDetails_order_fulfillments
-} from "@saleor/orders/types/OrderDetails";
+import { FulfillmentStatus, OrderDetailsFragment } from "@saleor/graphql";
 import { Node } from "@saleor/types";
-import { FulfillmentStatus } from "@saleor/types/globalTypes";
 
 import { LineItemOptions } from "./form";
 
@@ -13,30 +8,30 @@ const fulfiledStatuses = [
   FulfillmentStatus.REFUNDED
 ];
 
-export const getOrderUnfulfilledLines = (order: OrderDetails_order) =>
+export const getOrderUnfulfilledLines = (order: OrderDetailsFragment) =>
   order?.lines.filter(line => line.quantityToFulfill > 0) || [];
 
 export const getFulfilledFulfillment = fulfillment =>
   fulfiledStatuses.includes(fulfillment.status);
 
-export const getFulfilledFulfillemnts = (order?: OrderDetails_order) =>
+export const getFulfilledFulfillemnts = (order?: OrderDetailsFragment) =>
   order?.fulfillments.filter(getFulfilledFulfillment) || [];
 
-export const getWaitingFulfillments = (order: OrderDetails_order) =>
+export const getWaitingFulfillments = (order: OrderDetailsFragment) =>
   order?.fulfillments.filter(
     f => f.status === FulfillmentStatus.WAITING_FOR_APPROVAL
   ) || [];
 
-export const getUnfulfilledLines = (order?: OrderDetails_order) =>
+export const getUnfulfilledLines = (order?: OrderDetailsFragment) =>
   order?.lines.filter(line => line.quantityToFulfill > 0) || [];
 
-export const getAllOrderFulfilledLines = (order?: OrderDetails_order) =>
+export const getAllOrderFulfilledLines = (order?: OrderDetailsFragment) =>
   getFulfilledFulfillemnts(order).reduce(
     (result, { lines }) => [...result, ...getParsedLines(lines)],
     []
   );
 
-export const getAllOrderWaitingLines = (order?: OrderDetails_order) =>
+export const getAllOrderWaitingLines = (order?: OrderDetailsFragment) =>
   getWaitingFulfillments(order).reduce(
     (result, { lines }) => [...result, ...getParsedLines(lines)],
     []
@@ -68,7 +63,7 @@ export function getParsedLineData<T>({
 }
 
 export function getParsedLineDataForFulfillmentStatus<T>(
-  order: OrderDetails_order,
+  order: OrderDetailsFragment,
   fulfillmentStatus: FulfillmentStatus,
   lineItemOptions: LineItemOptions<T>
 ) {
@@ -78,14 +73,14 @@ export function getParsedLineDataForFulfillmentStatus<T>(
 }
 
 export const getFulfillmentsWithStatus = (
-  order: OrderDetails_order,
+  order: OrderDetailsFragment,
   fulfillmentStatus: FulfillmentStatus
 ) =>
   order?.fulfillments.filter(({ status }) => status === fulfillmentStatus) ||
   [];
 
 export const getParsedLinesOfFulfillments = (
-  fullfillments: OrderDetails_order_fulfillments[]
+  fullfillments: OrderDetailsFragment["fulfillments"]
 ) =>
   fullfillments.reduce(
     (result, { lines }) => [...result, ...getParsedLines(lines)],
@@ -93,7 +88,7 @@ export const getParsedLinesOfFulfillments = (
   );
 
 export const getParsedLines = (
-  lines: OrderDetailsFragment_fulfillments_lines[]
+  lines: OrderDetailsFragment["fulfillments"][0]["lines"]
 ) =>
   lines.map(({ id, quantity, orderLine }) => ({
     ...orderLine,

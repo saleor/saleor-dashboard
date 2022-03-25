@@ -1,14 +1,16 @@
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import {
   ChoiceValue,
   SingleAutocompleteChoiceType
 } from "@saleor/components/SingleAutocompleteSelectField";
-import { MetadataItem } from "@saleor/fragments/types/MetadataItem";
+import {
+  CountryWithCodeFragment,
+  MetadataInput,
+  MetadataItemFragment,
+  SearchPagesQuery
+} from "@saleor/graphql";
 import { getFullName } from "@saleor/misc";
-import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
-import { Node, SlugNode, TagNode } from "@saleor/types";
-import { MetadataInput } from "@saleor/types/globalTypes";
+import { Node, RelayToFlat, SlugNode, TagNode } from "@saleor/types";
 
 interface Edge<T> {
   node: T;
@@ -24,19 +26,21 @@ export function mapEdgesToItems<T>(
 }
 
 export function mapCountriesToCountriesCodes(
-  countries?: ShopInfo_shop_countries[]
+  countries?: CountryWithCodeFragment[]
 ) {
   return countries?.map(country => country.code);
 }
 
-export function mapCountriesToChoices(countries: ShopInfo_shop_countries[]) {
+export function mapCountriesToChoices(countries: CountryWithCodeFragment[]) {
   return countries.map(country => ({
     label: country.country,
     value: country.code
   }));
 }
 
-export function mapPagesToChoices(pages: SearchPages_search_edges_node[]) {
+export function mapPagesToChoices(
+  pages: RelayToFlat<SearchPagesQuery["search"]>
+) {
   return pages.map(page => ({
     label: page.title,
     value: page.id
@@ -79,7 +83,9 @@ export function mapTagNodeToChoice(
   return mapNodeToChoice(nodes, node => node.tag);
 }
 
-export function mapMetadataItemToInput(item: MetadataItem): MetadataInput {
+export function mapMetadataItemToInput(
+  item: MetadataItemFragment
+): MetadataInput {
   return {
     key: item.key,
     value: item.value

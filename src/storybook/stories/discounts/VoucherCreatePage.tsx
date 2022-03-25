@@ -1,6 +1,6 @@
 import { channelsList } from "@saleor/channels/fixtures";
 import { createVoucherChannels } from "@saleor/channels/utils";
-import { DiscountErrorCode } from "@saleor/types/globalTypes";
+import { DiscountErrorCode } from "@saleor/graphql";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -46,7 +46,8 @@ storiesOf("Views / Discounts / Voucher create", module)
         __typename: "DiscountError",
         channels: [],
         code: DiscountErrorCode.INVALID,
-        field
+        field,
+        message: "Discount invalid"
       }))}
     />
   ));

@@ -1,4 +1,4 @@
-import { OrderErrorCode } from "@saleor/types/globalTypes";
+import { OrderErrorCode } from "@saleor/graphql";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -26,7 +26,8 @@ storiesOf("Orders / OrderPaymentVoidDialog", module)
           __typename: "OrderError",
           code: OrderErrorCode.VOID_INACTIVE_PAYMENT,
           field: null,
-          addressType: null
+          addressType: null,
+          message: "Void inactive payment Error"
         }
       ]}
     />

@@ -1,7 +1,6 @@
 import useForm from "@saleor/hooks/useForm";
 import Wrapper from "@test/wrapper";
-import { configure } from "enzyme";
-import { mount } from "enzyme";
+import { configure, mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import React from "react";
 

@@ -2,10 +2,7 @@ import AttributePage, {
   AttributePageProps
 } from "@saleor/attributes/components/AttributePage";
 import { attribute } from "@saleor/attributes/fixtures";
-import {
-  AttributeErrorCode,
-  AttributeInputTypeEnum
-} from "@saleor/types/globalTypes";
+import { AttributeErrorCode, AttributeInputTypeEnum } from "@saleor/graphql";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -57,7 +54,8 @@ storiesOf("Views / Attributes / Attribute details", module)
       errors={["name", "slug", "storefrontSearchPosition"].map(field => ({
         __typename: "AttributeError",
         code: AttributeErrorCode.INVALID,
-        field
+        field,
+        message: "Attribute code invalid"
       }))}
     >
       {() => null}

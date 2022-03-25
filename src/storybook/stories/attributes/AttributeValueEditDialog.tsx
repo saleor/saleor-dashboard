@@ -1,5 +1,5 @@
 import { attribute } from "@saleor/attributes/fixtures";
-import { AttributeErrorCode } from "@saleor/types/globalTypes";
+import { AttributeErrorCode } from "@saleor/graphql";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -28,7 +28,8 @@ storiesOf("Attributes / Attribute value edit", module)
         {
           __typename: "AttributeError",
           code: AttributeErrorCode.INVALID,
-          field: "name"
+          field: "name",
+          message: "Attribue code invalid"
         }
       ]}
     />

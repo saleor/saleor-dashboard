@@ -6,10 +6,13 @@ import Hr from "@saleor/components/Hr";
 import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
-import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
+import { PageErrorFragment } from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink, makeStyles } from "@saleor/macaw-ui";
+import {
+  Backlink,
+  ConfirmButtonTransitionState,
+  makeStyles
+} from "@saleor/macaw-ui";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -55,8 +58,13 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
   } = useMetadataChangeTrigger();
 
   return (
-    <Form confirmLeave initial={formInitialData} onSubmit={onSubmit}>
-      {({ change, data, hasChanged, submit }) => {
+    <Form
+      confirmLeave
+      initial={formInitialData}
+      onSubmit={onSubmit}
+      disabled={disabled}
+    >
+      {({ change, data, submit, isSaveDisabled }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
@@ -100,7 +108,7 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
             <Savebar
               onCancel={onBack}
               onSubmit={submit}
-              disabled={disabled || !hasChanged}
+              disabled={isSaveDisabled}
               state={saveButtonBarState}
             />
           </Container>

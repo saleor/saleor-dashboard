@@ -1,4 +1,5 @@
-import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
+import { SearchCategoriesQuery } from "@saleor/graphql";
+import { RelayToFlat } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -8,8 +9,8 @@ import AssignContainerDialog, {
 import { messages } from "./messages";
 
 interface AssignCategoryDialogProps
-  extends Omit<AssignContainerDialogProps, "containers" | "title" | "search"> {
-  categories: SearchCategories_search_edges_node[];
+  extends Omit<AssignContainerDialogProps, "containers" | "labels"> {
+  categories: RelayToFlat<SearchCategoriesQuery["search"]>;
 }
 
 const AssignCategoryDialog: React.FC<AssignCategoryDialogProps> = ({
@@ -21,13 +22,14 @@ const AssignCategoryDialog: React.FC<AssignCategoryDialogProps> = ({
   return (
     <AssignContainerDialog
       containers={categories}
-      search={{
+      labels={{
+        title: intl.formatMessage(messages.assignCategoryDialogHeader),
         label: intl.formatMessage(messages.assignCategoryDialogLabel),
         placeholder: intl.formatMessage(
           messages.assignCategoryDialogPlaceholder
-        )
+        ),
+        confirmBtn: intl.formatMessage(messages.confirmButton)
       }}
-      title={intl.formatMessage(messages.assignCategoryDialogHeader)}
       {...rest}
     />
   );

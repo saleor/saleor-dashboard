@@ -9,7 +9,7 @@ import {
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import { ConfirmButton } from "@saleor/components/ConfirmButton";
 import CustomerAddressChoiceCard from "@saleor/customers/components/CustomerAddressChoiceCard";
-import { CustomerAddresses_user_addresses } from "@saleor/customers/types/CustomerAddresses";
+import { AddressFragment, AddressTypeEnum } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
 import { buttonMessages } from "@saleor/intl";
 import {
@@ -17,7 +17,6 @@ import {
   ConfirmButtonTransitionState,
   SearchIcon
 } from "@saleor/macaw-ui";
-import { AddressTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -33,13 +32,9 @@ export interface OrderCustomerAddressesSearchProps {
   openFromCustomerChange: boolean;
   transitionState: ConfirmButtonTransitionState;
   selectedCustomerAddressId: string;
-  customerAddresses: CustomerAddresses_user_addresses[];
-  onChangeCustomerShippingAddress: (
-    customerAddress: CustomerAddresses_user_addresses
-  ) => void;
-  onChangeCustomerBillingAddress: (
-    customerAddress: CustomerAddresses_user_addresses
-  ) => void;
+  customerAddresses: AddressFragment[];
+  onChangeCustomerShippingAddress: (customerAddress: AddressFragment) => void;
+  onChangeCustomerBillingAddress: (customerAddress: AddressFragment) => void;
   exitSearch();
 }
 
@@ -93,7 +88,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
 
   return (
     <>
-      <DialogContent>
+      <DialogContent className={classes.dialogContent}>
         {intl.formatMessage(messages.searchInfo)}
         <VerticalSpacer spacing={2} />
         <TextField

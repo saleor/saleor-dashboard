@@ -1,56 +1,6 @@
 import { gql } from "@apollo/client";
-import {
-  saleDetailsFragment,
-  saleFragment,
-  voucherDetailsFragment,
-  voucherFragment
-} from "@saleor/fragments/discounts";
-import { discountErrorFragment } from "@saleor/fragments/errors";
-import makeMutation from "@saleor/hooks/makeMutation";
 
-import { TypedMutation } from "../mutations";
-import {
-  SaleBulkDelete,
-  SaleBulkDeleteVariables
-} from "./types/SaleBulkDelete";
-import {
-  SaleCataloguesAdd,
-  SaleCataloguesAddVariables
-} from "./types/SaleCataloguesAdd";
-import {
-  SaleCataloguesRemove,
-  SaleCataloguesRemoveVariables
-} from "./types/SaleCataloguesRemove";
-import {
-  SaleChannelListingUpdate,
-  SaleChannelListingUpdateVariables
-} from "./types/SaleChannelListingUpdate";
-import { SaleCreate, SaleCreateVariables } from "./types/SaleCreate";
-import { SaleDelete, SaleDeleteVariables } from "./types/SaleDelete";
-import { SaleUpdate, SaleUpdateVariables } from "./types/SaleUpdate";
-import {
-  VoucherBulkDelete,
-  VoucherBulkDeleteVariables
-} from "./types/VoucherBulkDelete";
-import {
-  VoucherCataloguesAdd,
-  VoucherCataloguesAddVariables
-} from "./types/VoucherCataloguesAdd";
-import {
-  VoucherCataloguesRemove,
-  VoucherCataloguesRemoveVariables
-} from "./types/VoucherCataloguesRemove";
-import {
-  VoucherChannelListingUpdate,
-  VoucherChannelListingUpdateVariables
-} from "./types/VoucherChannelListingUpdate";
-import { VoucherCreate, VoucherCreateVariables } from "./types/VoucherCreate";
-import { VoucherDelete, VoucherDeleteVariables } from "./types/VoucherDelete";
-import { VoucherUpdate, VoucherUpdateVariables } from "./types/VoucherUpdate";
-
-const saleUpdate = gql`
-  ${discountErrorFragment}
-  ${saleFragment}
+export const saleUpdate = gql`
   mutation SaleUpdate(
     $input: SaleInput!
     $id: ID!
@@ -58,26 +8,21 @@ const saleUpdate = gql`
   ) {
     saleUpdate(id: $id, input: $input) {
       errors {
-        ...DiscountErrorFragment
+        ...DiscountError
       }
     }
     saleChannelListingUpdate(id: $id, input: $channelInput) {
       errors {
-        ...DiscountErrorFragment
+        ...DiscountError
       }
       sale {
-        ...SaleFragment
+        ...Sale
       }
     }
   }
 `;
-export const TypedSaleUpdate = TypedMutation<SaleUpdate, SaleUpdateVariables>(
-  saleUpdate
-);
 
-const saleCataloguesAdd = gql`
-  ${discountErrorFragment}
-  ${saleDetailsFragment}
+export const saleCataloguesAdd = gql`
   mutation SaleCataloguesAdd(
     $input: CatalogueInput!
     $id: ID!
@@ -88,22 +33,16 @@ const saleCataloguesAdd = gql`
   ) {
     saleCataloguesAdd(id: $id, input: $input) {
       errors {
-        ...DiscountErrorFragment
+        ...DiscountError
       }
       sale {
-        ...SaleDetailsFragment
+        ...SaleDetails
       }
     }
   }
 `;
-export const TypedSaleCataloguesAdd = TypedMutation<
-  SaleCataloguesAdd,
-  SaleCataloguesAddVariables
->(saleCataloguesAdd);
 
-const saleCataloguesRemove = gql`
-  ${discountErrorFragment}
-  ${saleDetailsFragment}
+export const saleCataloguesRemove = gql`
   mutation SaleCataloguesRemove(
     $input: CatalogueInput!
     $id: ID!
@@ -114,132 +53,94 @@ const saleCataloguesRemove = gql`
   ) {
     saleCataloguesRemove(id: $id, input: $input) {
       errors {
-        ...DiscountErrorFragment
+        ...DiscountError
       }
       sale {
-        ...SaleDetailsFragment
+        ...SaleDetails
       }
     }
   }
 `;
-export const TypedSaleCataloguesRemove = TypedMutation<
-  SaleCataloguesRemove,
-  SaleCataloguesRemoveVariables
->(saleCataloguesRemove);
 
-const saleCreate = gql`
-  ${discountErrorFragment}
-  ${saleFragment}
+export const saleCreate = gql`
   mutation SaleCreate($input: SaleInput!) {
     saleCreate(input: $input) {
       errors {
-        ...DiscountErrorFragment
+        ...DiscountError
       }
       sale {
-        ...SaleFragment
+        ...Sale
       }
     }
   }
 `;
-export const TypedSaleCreate = TypedMutation<SaleCreate, SaleCreateVariables>(
-  saleCreate
-);
 
-const saleDelete = gql`
-  ${discountErrorFragment}
+export const saleDelete = gql`
   mutation SaleDelete($id: ID!) {
     saleDelete(id: $id) {
       errors {
-        ...DiscountErrorFragment
+        ...DiscountError
       }
     }
   }
 `;
-export const TypedSaleDelete = TypedMutation<SaleDelete, SaleDeleteVariables>(
-  saleDelete
-);
 
-const saleBulkDelete = gql`
+export const saleBulkDelete = gql`
   mutation SaleBulkDelete($ids: [ID]!) {
     saleBulkDelete(ids: $ids) {
       errors {
-        field
-        message
+        ...SaleBulkDeleteError
       }
     }
   }
 `;
-export const TypedSaleBulkDelete = TypedMutation<
-  SaleBulkDelete,
-  SaleBulkDeleteVariables
->(saleBulkDelete);
 
-const saleChannelListingUpdate = gql`
-  ${discountErrorFragment}
-  ${saleFragment}
+export const saleChannelListingUpdate = gql`
   mutation SaleChannelListingUpdate(
     $id: ID!
     $input: SaleChannelListingInput!
   ) {
     saleChannelListingUpdate(id: $id, input: $input) {
       errors {
-        ...DiscountErrorFragment
+        ...DiscountError
       }
       sale {
-        ...SaleFragment
+        ...Sale
       }
     }
   }
 `;
-export const useSaleChannelListingUpdate = makeMutation<
-  SaleChannelListingUpdate,
-  SaleChannelListingUpdateVariables
->(saleChannelListingUpdate);
 
-const voucherChannelListingUpdate = gql`
-  ${discountErrorFragment}
-  ${voucherFragment}
+export const voucherChannelListingUpdate = gql`
   mutation VoucherChannelListingUpdate(
     $id: ID!
     $input: VoucherChannelListingInput!
   ) {
     voucherChannelListingUpdate(id: $id, input: $input) {
       errors {
-        ...DiscountErrorFragment
+        ...DiscountError
       }
       voucher {
-        ...VoucherFragment
+        ...Voucher
       }
     }
   }
 `;
-export const useVoucherChannelListingUpdate = makeMutation<
-  VoucherChannelListingUpdate,
-  VoucherChannelListingUpdateVariables
->(voucherChannelListingUpdate);
 
-const voucherUpdate = gql`
-  ${discountErrorFragment}
-  ${voucherFragment}
+export const voucherUpdate = gql`
   mutation VoucherUpdate($input: VoucherInput!, $id: ID!) {
     voucherUpdate(id: $id, input: $input) {
       errors {
-        ...DiscountErrorFragment
+        ...DiscountError
       }
       voucher {
-        ...VoucherFragment
+        ...Voucher
       }
     }
   }
 `;
-export const TypedVoucherUpdate = TypedMutation<
-  VoucherUpdate,
-  VoucherUpdateVariables
->(voucherUpdate);
 
-const voucherCataloguesAdd = gql`
-  ${discountErrorFragment}
-  ${voucherDetailsFragment}
+export const voucherCataloguesAdd = gql`
   mutation VoucherCataloguesAdd(
     $input: CatalogueInput!
     $id: ID!
@@ -250,22 +151,16 @@ const voucherCataloguesAdd = gql`
   ) {
     voucherCataloguesAdd(id: $id, input: $input) {
       errors {
-        ...DiscountErrorFragment
+        ...DiscountError
       }
       voucher {
-        ...VoucherDetailsFragment
+        ...VoucherDetails
       }
     }
   }
 `;
-export const TypedVoucherCataloguesAdd = TypedMutation<
-  VoucherCataloguesAdd,
-  VoucherCataloguesAddVariables
->(voucherCataloguesAdd);
 
-const voucherCataloguesRemove = gql`
-  ${discountErrorFragment}
-  ${voucherDetailsFragment}
+export const voucherCataloguesRemove = gql`
   mutation VoucherCataloguesRemove(
     $input: CatalogueInput!
     $id: ID!
@@ -276,64 +171,44 @@ const voucherCataloguesRemove = gql`
   ) {
     voucherCataloguesRemove(id: $id, input: $input) {
       errors {
-        ...DiscountErrorFragment
+        ...DiscountError
       }
       voucher {
-        ...VoucherDetailsFragment
+        ...VoucherDetails
       }
     }
   }
 `;
-export const TypedVoucherCataloguesRemove = TypedMutation<
-  VoucherCataloguesRemove,
-  VoucherCataloguesRemoveVariables
->(voucherCataloguesRemove);
 
-const voucherCreate = gql`
-  ${discountErrorFragment}
-  ${voucherFragment}
+export const voucherCreate = gql`
   mutation VoucherCreate($input: VoucherInput!) {
     voucherCreate(input: $input) {
       errors {
-        ...DiscountErrorFragment
+        ...DiscountError
       }
       voucher {
-        ...VoucherFragment
+        ...Voucher
       }
     }
   }
 `;
-export const TypedVoucherCreate = TypedMutation<
-  VoucherCreate,
-  VoucherCreateVariables
->(voucherCreate);
 
-const voucherDelete = gql`
-  ${discountErrorFragment}
+export const voucherDelete = gql`
   mutation VoucherDelete($id: ID!) {
     voucherDelete(id: $id) {
       errors {
-        ...DiscountErrorFragment
+        ...DiscountError
       }
     }
   }
 `;
-export const TypedVoucherDelete = TypedMutation<
-  VoucherDelete,
-  VoucherDeleteVariables
->(voucherDelete);
 
-const voucherBulkDelete = gql`
+export const voucherBulkDelete = gql`
   mutation VoucherBulkDelete($ids: [ID]!) {
     voucherBulkDelete(ids: $ids) {
       errors {
-        field
-        message
+        ...VoucherBulkDeleteError
       }
     }
   }
 `;
-export const TypedVoucherBulkDelete = TypedMutation<
-  VoucherBulkDelete,
-  VoucherBulkDeleteVariables
->(voucherBulkDelete);

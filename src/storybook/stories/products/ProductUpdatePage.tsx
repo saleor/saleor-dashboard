@@ -8,12 +8,12 @@ import {
   limitsReached,
   listActionsProps
 } from "@saleor/fixtures";
+import { ProductErrorCode } from "@saleor/graphql";
 import ProductUpdatePage, {
   ProductUpdatePageProps
 } from "@saleor/products/components/ProductUpdatePage";
 import { product as productFixture } from "@saleor/products/fixtures";
 import { ProductUpdatePageFormData } from "@saleor/products/utils/data";
-import { ProductErrorCode } from "@saleor/types/globalTypes";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -192,7 +192,8 @@ storiesOf("Views / Products / Product edit", module)
               ? [product.attributes[0].attribute.id]
               : null,
           code: ProductErrorCode.INVALID,
-          field
+          field,
+          message: "Attributes invalid"
         })
       )}
     />

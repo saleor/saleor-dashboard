@@ -1,8 +1,7 @@
+import { WebhookDetailsQuery } from "@saleor/graphql";
 import { getStringOrPlaceholder } from "@saleor/misc";
-import { WebhookDetails_webhook } from "@saleor/webhooks/types/WebhookDetails";
 import { isUnnamed } from "@saleor/webhooks/utils";
-import { IntlShape } from "react-intl";
-import { defineMessages } from "react-intl";
+import { defineMessages, IntlShape } from "react-intl";
 
 export const messages = defineMessages({
   header: {
@@ -21,7 +20,7 @@ export const messages = defineMessages({
 
 export const getHeaderTitle = (
   intl: IntlShape,
-  webhook?: WebhookDetails_webhook
+  webhook?: WebhookDetailsQuery["webhook"]
 ) => {
   if (!webhook) {
     return intl.formatMessage(messages.headerCreate);

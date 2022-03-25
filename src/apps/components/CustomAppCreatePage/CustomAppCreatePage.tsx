@@ -4,13 +4,14 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
-import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
-import { AppErrorFragment } from "@saleor/fragments/types/AppErrorFragment";
+import {
+  AppErrorFragment,
+  PermissionEnum,
+  PermissionFragment
+} from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
-import { PermissionEnum } from "@saleor/types/globalTypes";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAppErrorMessage from "@saleor/utils/errors/app";
 import React from "react";
@@ -26,7 +27,7 @@ export interface CustomAppCreatePageFormData {
 export interface CustomAppCreatePageProps {
   disabled: boolean;
   errors: AppErrorFragment[];
-  permissions: ShopInfo_shop_permissions[];
+  permissions: PermissionFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onSubmit: (
@@ -55,8 +56,13 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
   const permissionsError = getAppErrorMessage(formErrors.permissions, intl);
 
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-      {({ data, change, hasChanged, submit }) => (
+    <Form
+      confirmLeave
+      initial={initialForm}
+      onSubmit={onSubmit}
+      disabled={disabled}
+    >
+      {({ data, change, submit, isSaveDisabled }) => (
         <Container>
           <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.apps)}
@@ -95,7 +101,7 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
             />
           </Grid>
           <Savebar
-            disabled={disabled || !hasChanged}
+            disabled={isSaveDisabled}
             state={saveButtonBarState}
             onCancel={onBack}
             onSubmit={submit}

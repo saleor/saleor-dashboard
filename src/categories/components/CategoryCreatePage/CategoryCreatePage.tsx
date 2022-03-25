@@ -4,10 +4,9 @@ import Metadata from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import SeoForm from "@saleor/components/SeoForm";
-import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
+import { ProductErrorFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -32,8 +31,8 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
   const intl = useIntl();
 
   return (
-    <CategoryCreateForm onSubmit={onSubmit}>
-      {({ data, change, handlers, submit, hasChanged }) => (
+    <CategoryCreateForm onSubmit={onSubmit} disabled={disabled}>
+      {({ data, change, handlers, submit, isSaveDisabled }) => (
         <Container>
           <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.categories)}
@@ -75,7 +74,7 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
               onCancel={onBack}
               onSubmit={submit}
               state={saveButtonBarState}
-              disabled={disabled || !hasChanged}
+              disabled={isSaveDisabled}
             />
           </div>
         </Container>

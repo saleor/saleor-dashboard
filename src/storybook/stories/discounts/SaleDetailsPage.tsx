@@ -1,6 +1,6 @@
 import { channelsList } from "@saleor/channels/fixtures";
 import { createSaleChannels } from "@saleor/channels/utils";
-import { DiscountErrorCode } from "@saleor/types/globalTypes";
+import { DiscountErrorCode } from "@saleor/graphql";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -68,7 +68,8 @@ storiesOf("Views / Discounts / Sale details", module)
         __typename: "DiscountError",
         channels: [],
         code: DiscountErrorCode.INVALID,
-        field
+        field,
+        message: "Discount invalid"
       }))}
     />
   ))

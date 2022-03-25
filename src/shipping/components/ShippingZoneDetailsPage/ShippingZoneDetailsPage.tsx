@@ -1,4 +1,3 @@
-import { BaseChannels_channels } from "@saleor/channels/types/BaseChannels";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import CountryList from "@saleor/components/CountryList";
@@ -9,13 +8,16 @@ import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocomplet
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
-import { ShippingZoneDetailsFragment_warehouses } from "@saleor/fragments/types/ShippingZoneDetailsFragment";
+import {
+  ChannelFragment,
+  ShippingErrorFragment,
+  ShippingMethodTypeEnum,
+  ShippingZoneDetailsFragment,
+  ShippingZoneQuery
+} from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Backlink } from "@saleor/macaw-ui";
-import { ShippingZone_shippingZone } from "@saleor/shipping/types/ShippingZone";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import { mapNodeToChoice } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -24,7 +26,6 @@ import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { getStringOrPlaceholder } from "../../../misc";
 import { ChannelProps, FetchMoreProps, SearchProps } from "../../../types";
-import { ShippingMethodTypeEnum } from "../../../types/globalTypes";
 import { ShippingZoneUpdateFormData } from "../../components/ShippingZoneDetailsPage/types";
 import ShippingZoneInfo from "../ShippingZoneInfo";
 import ShippingZoneRates from "../ShippingZoneRates";
@@ -53,8 +54,8 @@ export interface ShippingZoneDetailsPageProps
   disabled: boolean;
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  shippingZone: ShippingZone_shippingZone;
-  warehouses: ShippingZoneDetailsFragment_warehouses[];
+  shippingZone: ShippingZoneQuery["shippingZone"];
+  warehouses: ShippingZoneDetailsFragment["warehouses"];
   onBack: () => void;
   onCountryAdd: () => void;
   onCountryRemove: (code: string) => void;
@@ -66,7 +67,7 @@ export interface ShippingZoneDetailsPageProps
   onWarehouseAdd: () => void;
   onWeightRateAdd: () => void;
   onWeightRateEdit: (id: string) => void;
-  allChannels?: BaseChannels_channels[];
+  allChannels?: ChannelFragment[];
 }
 
 function warehouseToChoice(
@@ -123,8 +124,13 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   } = useMetadataChangeTrigger();
 
   return (
-    <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
-      {({ change, data, hasChanged, submit, toggleValue }) => {
+    <Form
+      initial={initialForm}
+      onSubmit={onSubmit}
+      confirmLeave
+      disabled={disabled}
+    >
+      {({ change, data, isSaveDisabled, submit, toggleValue }) => {
         const handleWarehouseChange = createMultiAutocompleteSelectHandler(
           toggleValue,
           setWarehouseDisplayValues,
@@ -214,7 +220,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
               </div>
             </Grid>
             <Savebar
-              disabled={disabled || !hasChanged}
+              disabled={isSaveDisabled}
               onCancel={onBack}
               onDelete={onDelete}
               onSubmit={submit}

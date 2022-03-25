@@ -11,12 +11,10 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType
 } from "@saleor/components/SingleAutocompleteSelectField";
-import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
+import { ChannelErrorFragment, CountryCode } from "@saleor/graphql";
 import useClipboard from "@saleor/hooks/useClipboard";
-import { ChangeEvent } from "@saleor/hooks/useForm";
-import { FormChange } from "@saleor/hooks/useForm";
+import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
-import { CountryCode } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import getChannelsErrorMessage from "@saleor/utils/errors/channels";
 import React from "react";

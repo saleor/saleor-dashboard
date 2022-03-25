@@ -1,4 +1,4 @@
-import { OrderErrorCode } from "@saleor/types/globalTypes";
+import { OrderErrorCode } from "@saleor/graphql";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -30,13 +30,15 @@ storiesOf("Orders / OrderShippingMethodEditDialog", module)
           __typename: "OrderError",
           code: OrderErrorCode.SHIPPING_METHOD_NOT_APPLICABLE,
           field: "shippingMethod",
-          addressType: null
+          addressType: null,
+          message: "Shipping method not applicable"
         },
         {
           __typename: "OrderError",
           code: OrderErrorCode.GRAPHQL_ERROR,
           field: null,
-          addressType: null
+          addressType: null,
+          message: "Graphql error"
         }
       ]}
     />

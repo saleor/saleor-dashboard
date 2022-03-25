@@ -1,11 +1,16 @@
 import ShippingZonesCard from "@saleor/channels/components/ShippingZonesCard/ShippingZonesCard";
 import CardSpacer from "@saleor/components/CardSpacer";
-import Form from "@saleor/components/Form";
+import Form, { FormDataWithOpts } from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import Savebar from "@saleor/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
-import { CountryFragment } from "@saleor/fragments/types/CountryFragment";
+import {
+  ChannelDetailsFragment,
+  ChannelErrorFragment,
+  CountryCode,
+  CountryFragment,
+  SearchShippingZonesQuery
+} from "@saleor/graphql";
 import { SearchData } from "@saleor/hooks/makeTopLevelSearch";
 import { getParsedSearchData } from "@saleor/hooks/makeTopLevelSearch/utils";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -15,21 +20,18 @@ import {
   getById,
   getByUnmatchingId
 } from "@saleor/orders/components/OrderReturnPage/utils";
-import { SearchShippingZones_search_edges_node } from "@saleor/searches/types/SearchShippingZones";
-import { FetchMoreProps } from "@saleor/types";
-import { CountryCode } from "@saleor/types/globalTypes";
+import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React, { useState } from "react";
 
 import { ChannelForm, FormData } from "../../components/ChannelForm";
 import { ChannelStatus } from "../../components/ChannelStatus/ChannelStatus";
-import { Channel_channel } from "../../types/Channel";
 import { ChannelShippingZones } from "./types";
 import { getUpdatedIdsWithNewId, getUpdatedIdsWithoutNewId } from "./utils";
 
 export interface ChannelDetailsPageProps<TErrors> {
-  channel?: Channel_channel;
+  channel?: ChannelDetailsFragment;
   currencyCodes?: SingleAutocompleteChoiceType[];
   disabled: boolean;
   disabledStatus?: boolean;
@@ -86,15 +88,31 @@ const ChannelDetailsPage = function<TErrors>({
     ...formData
   };
 
-  const getFilteredShippingZonesChoices = (): SearchShippingZones_search_edges_node[] =>
+  const getFilteredShippingZonesChoices = (): RelayToFlat<SearchShippingZonesQuery["search"]> =>
     getParsedSearchData({ data: searchShippingZonesData }).filter(
       ({ id: searchedZoneId }) =>
         !shippingZonesToDisplay.some(({ id }) => id === searchedZoneId)
     );
 
+  const checkIfSaveIsDisabled = (data: FormDataWithOpts<FormData>) => {
+    const formDisabled =
+      !data.name ||
+      !data.slug ||
+      !data.currencyCode ||
+      !data.defaultCountry ||
+      !(data.name.trim().length > 0);
+
+    return disabled || formDisabled || !data.hasChanged;
+  };
+
   return (
-    <Form confirmLeave onSubmit={onSubmit} initial={initialData}>
-      {({ change, data, hasChanged, submit, set }) => {
+    <Form
+      confirmLeave
+      onSubmit={onSubmit}
+      initial={initialData}
+      checkIfSaveIsDisabled={checkIfSaveIsDisabled}
+    >
+      {({ change, data, submit, set, isSaveDisabled }) => {
         const handleCurrencyCodeSelect = createSingleAutocompleteSelectHandler(
           change,
           setSelectedCurrencyCode,
@@ -145,13 +163,6 @@ const ChannelDetailsPage = function<TErrors>({
           );
         };
 
-        const formDisabled =
-          !data.name ||
-          !data.slug ||
-          !data.currencyCode ||
-          !data.defaultCountry ||
-          !(data.name.trim().length > 0);
-
         return (
           <>
             <Grid>
@@ -195,7 +206,7 @@ const ChannelDetailsPage = function<TErrors>({
               onSubmit={submit}
               onDelete={onDelete}
               state={saveButtonBarState}
-              disabled={disabled || formDisabled || !onSubmit || !hasChanged}
+              disabled={isSaveDisabled}
             />
           </>
         );

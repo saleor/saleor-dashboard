@@ -1,3 +1,19 @@
+import { useApolloClient } from "@apollo/client";
+import {
+  AppDeleteFailedInstallationMutation,
+  AppDeleteMutation,
+  AppsInstallationsQuery,
+  AppsListQuery,
+  AppSortField,
+  AppTypeEnum,
+  JobStatusEnum,
+  OrderDirection,
+  useAppDeleteFailedInstallationMutation,
+  useAppDeleteMutation,
+  useAppRetryInstallMutation,
+  useAppsInstallationsQuery,
+  useAppsListQuery
+} from "@saleor/graphql";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -11,25 +27,10 @@ import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandl
 import React, { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 
-import {
-  AppSortField,
-  AppTypeEnum,
-  JobStatusEnum,
-  OrderDirection
-} from "../../../types/globalTypes";
 import AppDeleteDialog from "../../components/AppDeleteDialog";
 import AppInProgressDeleteDialog from "../../components/AppInProgressDeleteDialog";
 import AppsListPage from "../../components/AppsListPage";
-import {
-  useAppDeleteFailedInstallationMutation,
-  useAppDeleteMutation,
-  useAppRetryInstallMutation
-} from "../../mutations";
-import { useAppsInProgressListQuery, useAppsListQuery } from "../../queries";
-import { AppDelete } from "../../types/AppDelete";
-import { AppDeleteFailedInstallation } from "../../types/AppDeleteFailedInstallation";
-import { AppsInstallations_appsInstallations } from "../../types/AppsInstallations";
-import { AppsList_apps_edges } from "../../types/AppsList";
+import { EXTENSION_LIST_QUERY } from "../../queries";
 import {
   appDetailsUrl,
   AppListUrlDialog,
@@ -41,12 +42,14 @@ import {
 } from "../../urls";
 import { messages } from "./messages";
 
-const getCurrentAppName = (id: string, collection?: AppsList_apps_edges[]) =>
-  collection?.find(edge => edge.node.id === id)?.node?.name;
+const getCurrentAppName = (
+  id: string,
+  collection?: AppsListQuery["apps"]["edges"]
+) => collection?.find(edge => edge.node.id === id)?.node?.name;
 
 const getAppInProgressName = (
   id: string,
-  collection?: AppsInstallations_appsInstallations[]
+  collection?: AppsInstallationsQuery["appsInstallations"]
 ) => collection?.find(app => app.id === id)?.appName;
 interface AppsListProps {
   params: AppListUrlQueryParams;
@@ -54,6 +57,7 @@ interface AppsListProps {
 
 export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const { action } = params;
+  const client = useApolloClient();
   const [activeInstallations, setActiveInstallations] = useLocalStorage<
     Array<Record<"id" | "name", string>>
   >("activeInstallations", []);
@@ -80,7 +84,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     data: appsInProgressData,
     loading: loadingAppsInProgress,
     refetch: appsInProgressRefetch
-  } = useAppsInProgressListQuery({
+  } = useAppsInstallationsQuery({
     displayLoader: false
   });
   const { data, loading, refetch } = useAppsListQuery({
@@ -115,6 +119,12 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     }
   });
 
+  const refetchExtensionList = () => {
+    client.refetchQueries({
+      include: [EXTENSION_LIST_QUERY]
+    });
+  };
+
   const installedAppNotify = (name: string) => {
     notify({
       status: "success",
@@ -143,7 +153,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     AppListUrlQueryParams
   >(navigate, appsListUrl, params);
 
-  const onAppRemove = (data: AppDelete) => {
+  const onAppRemove = (data: AppDeleteMutation) => {
     const errors = data.appDelete.errors;
     if (errors.length === 0) {
       if (data.appDelete.app.type === AppTypeEnum.LOCAL) {
@@ -152,6 +162,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
         refetch();
       }
       closeModal();
+      refetchExtensionList();
       removeAppNotify();
     } else {
       errors.forEach(error =>
@@ -186,16 +197,19 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
           2000
         );
       }
+      let newAppInstalled = false;
       activeInstallations.forEach(installation => {
         const item = appsInProgress?.find(app => app.id === installation.id);
         if (!item) {
           removeInstallation(installation.id);
           installedAppNotify(installation.name);
           appsInProgressRefetch();
+          newAppInstalled = true;
         } else if (item.status === JobStatusEnum.SUCCESS) {
           removeInstallation(installation.id);
           installedAppNotify(item.appName);
           refetch();
+          newAppInstalled = true;
         } else if (item.status === JobStatusEnum.FAILED) {
           removeInstallation(installation.id);
           notify({
@@ -207,6 +221,9 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
           });
         }
       });
+      if (newAppInstalled) {
+        refetchExtensionList();
+      }
     }
     if (!activeInstallations.length && intervalId.current) {
       clearInterval(intervalId.current);
@@ -242,7 +259,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     });
   };
 
-  const onAppInProgressRemove = (data: AppDeleteFailedInstallation) => {
+  const onAppInProgressRemove = (data: AppDeleteFailedInstallationMutation) => {
     const errors = data.appDeleteFailedInstallation.errors;
     if (errors.length === 0) {
       removeAppNotify();

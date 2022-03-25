@@ -1,17 +1,22 @@
 import { DEFAULT_NOTIFICATION_SHOW_TIME } from "@saleor/config";
+import { commonMessages } from "@saleor/intl";
 import { Notification } from "@saleor/macaw-ui";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useIntl } from "react-intl";
 import { TransitionGroup } from "react-transition-group";
 
 import { INotification, ITimer, MessageContext } from ".";
 import Container from "./Container";
+import { messages as notificationMessages } from "./messages";
 import { useStyles } from "./styles";
 import Transition from "./Transition";
 
 const MessageManagerProvider = ({ children }) => {
+  const timer = useRef(0);
   const classes = useStyles();
   const timersArr = useRef<ITimer[]>([]);
   const [notifications, setNotifications] = useState<INotification[]>([]);
+  const intl = useIntl();
 
   useEffect(() => {
     const timersArrRef = timersArr.current;
@@ -34,9 +39,18 @@ const MessageManagerProvider = ({ children }) => {
     );
   }, []);
 
+  const clearErrorNotifications = useCallback(() => {
+    setNotifications(notifications =>
+      notifications.filter(
+        notification => notification.message.status !== "error"
+      )
+    );
+  }, []);
+
   const show = useCallback(
     (message = {}, timeout = DEFAULT_NOTIFICATION_SHOW_TIME) => {
-      const id = Date.now();
+      const id = timer.current;
+      timer.current += 1;
       const notification = {
         close: () => remove(id),
         id,
@@ -92,7 +106,9 @@ const MessageManagerProvider = ({ children }) => {
 
   return (
     <>
-      <MessageContext.Provider value={{ remove, show }}>
+      <MessageContext.Provider
+        value={{ remove, show, clearErrorNotifications }}
+      >
         {children}
       </MessageContext.Provider>
       <TransitionGroup
@@ -111,9 +127,33 @@ const MessageManagerProvider = ({ children }) => {
                     }
                   : {})}
                 onClose={notification.close}
-                title={notification.message.title}
+                title={
+                  notification.message.apiMessage && !notification.message.title
+                    ? intl.formatMessage(commonMessages.defaultErrorTitle)
+                    : notification.message.title
+                }
                 type={notification.message.status || "info"}
                 content={notification.message.text}
+                apiMessage={
+                  notification.message.apiMessage && {
+                    apiMessageContent: (
+                      <pre
+                        style={{
+                          wordWrap: "break-word",
+                          whiteSpace: "pre-wrap"
+                        }}
+                      >
+                        {notification.message.apiMessage}
+                      </pre>
+                    ),
+                    hideApiLabel: intl.formatMessage(
+                      notificationMessages.hideError
+                    ),
+                    showApiLabel: intl.formatMessage(
+                      notificationMessages.seeError
+                    )
+                  }
+                }
                 {...(!!notification.message.actionBtn
                   ? {
                       action: {
