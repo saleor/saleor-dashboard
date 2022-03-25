@@ -1,4 +1,4 @@
-import { InputAdornment, TextField } from "@material-ui/core";
+import { InputAdornment, TextField, TextFieldProps } from "@material-ui/core";
 import { InputProps } from "@material-ui/core/Input";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -43,6 +43,8 @@ interface PriceFieldProps {
   onChange(event: any);
 }
 
+const MAX_DECIMAL_LENGTH = 2;
+
 export const PriceField: React.FC<PriceFieldProps> = props => {
   const {
     className,
@@ -61,6 +63,17 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
 
   const classes = useStyles(props);
   const minValue = 0;
+
+  const handleChange: TextFieldProps["onChange"] = e => {
+    const [, decimalPart] = e.target.value.split(".");
+
+    if (decimalPart?.length > MAX_DECIMAL_LENGTH) {
+      return;
+    }
+
+    onChange(e);
+  };
+
   return (
     <TextField
       className={className}
@@ -88,6 +101,7 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
         ),
         inputProps: {
           min: 0,
+          step: "0.01",
           ...InputProps?.inputProps
         },
         type: "number"
@@ -100,7 +114,7 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
       name={name}
       disabled={disabled}
       required={required}
-      onChange={onChange}
+      onChange={handleChange}
     />
   );
 };
