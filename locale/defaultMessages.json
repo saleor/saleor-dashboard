@@ -623,6 +623,9 @@
     "context": "section header",
     "string": "About this app"
   },
+  "src_dot_apps_dot_components_dot_AppFrame_dot_29277312": {
+    "string": "You are about to leave the Dashboard. Do you want to continue?"
+  },
   "src_dot_apps_dot_components_dot_AppInProgressDeleteDialog_dot_1462011531": {
     "context": "dialog header",
     "string": "Delete App"
