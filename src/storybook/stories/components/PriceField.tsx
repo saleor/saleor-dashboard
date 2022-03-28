@@ -17,7 +17,7 @@ storiesOf("Generics / Price input", module)
     <PriceField hint="Lorem ipsum" onChange={undefined} />
   ))
   .add("with currency symbol", () => (
-    <PriceField currencySymbol="$" onChange={undefined} />
+    <PriceField currencySymbol="USD" onChange={undefined} />
   ))
   .add("disabled", () => <PriceField disabled onChange={undefined} />)
   .add("with label and hint", () => (
@@ -29,7 +29,7 @@ storiesOf("Generics / Price input", module)
       label="Lorem"
       hint="Ipsum"
       onChange={undefined}
-      currencySymbol="$"
+      currencySymbol="USD"
     />
   ))
   .add("with value, label, currency symbol and error", () => (
@@ -39,6 +39,6 @@ storiesOf("Generics / Price input", module)
       hint="Ipsum"
       error={true}
       onChange={undefined}
-      currencySymbol="$"
+      currencySymbol="USD"
     />
   ));
