@@ -9,7 +9,7 @@ import {
   OrderErrorFragment
 } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
-import { SwitchSelector } from "@saleor/macaw-ui";
+import { SwitchSelector, SwitchSelectorButton } from "@saleor/macaw-ui";
 import React, { useEffect } from "react";
 
 import { getById } from "../OrderReturnPage/utils";
@@ -78,15 +78,21 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
 
   return (
     <>
-      <SwitchSelector
-        options={switchOptions}
-        activeTab={addressInputOption}
-        setActiveTab={value =>
-          onChangeAddressInputOption({
-            target: { name: addressInputName, value }
-          })
-        }
-      />
+      <SwitchSelector>
+        {switchOptions.map(({ label, value }) => (
+          <SwitchSelectorButton
+            value={value}
+            onClick={() =>
+              onChangeAddressInputOption({
+                target: { name: addressInputName, value }
+              })
+            }
+            activeTab={addressInputOption}
+          >
+            {label}
+          </SwitchSelectorButton>
+        ))}
+      </SwitchSelector>
       <FormSpacer />
       <Divider />
       <FormSpacer />
