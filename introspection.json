@@ -11619,7 +11619,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "This field will be removed in Saleor 4.0. Always returns `true`."
+            "deprecationReason": "This field will be removed in Saleor 4.0. Always returns `True`."
           },
           {
             "name": "checkoutErrors",
@@ -21788,25 +21788,19 @@
         "enumValues": [
           {
             "name": "STATUS",
-            "description": null,
+            "description": "Sort export file by status.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "CREATED_AT",
-            "description": null,
+            "description": "Sort export file by created at.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "UPDATED_AT",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "LAST_MODIFIED_AT",
-            "description": null,
+            "description": "Sort export file by updated at.",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -27701,7 +27695,7 @@
       {
         "kind": "SCALAR",
         "name": "JSONString",
-        "description": null,
+        "description": "Allows use of a JSON String for input / output from the GraphQL schema.\n\nUse of this type is *not recommended* as you lose the benefits of having a defined, static\nschema (one of the key benefits of GraphQL).",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -35265,12 +35259,6 @@
           },
           {
             "name": "REQUIRED",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "NOT_UPDATED",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -47995,7 +47983,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "This field will be removed in Saleor 4.0. Use the `discounts` field instead."
+            "deprecationReason": "This field will be removed in Saleor 4.0. Use discounts field."
           },
           {
             "name": "discountName",
@@ -48007,7 +47995,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "This field will be removed in Saleor 4.0. Use the `discounts` field instead."
+            "deprecationReason": "This field will be removed in Saleor 4.0. Use discounts field."
           },
           {
             "name": "translatedDiscountName",
@@ -48019,7 +48007,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "This field will be removed in Saleor 4.0. Use the `discounts` field instead. "
+            "deprecationReason": "This field will be removed in Saleor 4.0. Use discounts field. "
           },
           {
             "name": "discounts",
@@ -52416,19 +52404,7 @@
           },
           {
             "name": "CREATION_DATE",
-            "description": "Sort orders by creation date. \n\nDEPRECATED: this field will be removed in Saleor 4.0.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "CREATED_AT",
-            "description": "Sort orders by creation date. \n\nDEPRECATED: this field will be removed in Saleor 4.0.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "LAST_MODIFIED_AT",
-            "description": "Sort orders by last modified at.",
+            "description": "Sort orders by creation date.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -62443,18 +62419,6 @@
             "deprecationReason": null
           },
           {
-            "name": "PUBLISHED_AT",
-            "description": "Sort products by publication date.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "LAST_MODIFIED_AT",
-            "description": "Sort products by update date.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "COLLECTION",
             "description": "Sort products by collection. Note: This option is available only for the `Collection.products` query.",
             "isDeprecated": false,
@@ -66191,66 +66155,6 @@
         "possibleTypes": null
       },
       {
-        "kind": "ENUM",
-        "name": "ProductVariantSortField",
-        "description": null,
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [
-          {
-            "name": "LAST_MODIFIED_AT",
-            "description": "Sort products variants by last modified at.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "ProductVariantSortingInput",
-        "description": null,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "direction",
-            "description": "Specifies the direction in which to sort products.",
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "ENUM",
-                "name": "OrderDirection",
-                "ofType": null
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "field",
-            "description": "Sort productVariants by the selected field.",
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "ENUM",
-                "name": "ProductVariantSortField",
-                "ofType": null
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
         "kind": "OBJECT",
         "name": "ProductVariantStocksCreate",
         "description": "Creates stocks for product variant.",
@@ -68139,18 +68043,6 @@
                 "type": {
                   "kind": "INPUT_OBJECT",
                   "name": "ProductVariantFilterInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "sortBy",
-                "description": "Sort products variants.",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "ProductVariantSortingInput",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -72887,18 +72779,6 @@
           {
             "name": "TYPE",
             "description": "Sort sales by type.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "CREATED_AT",
-            "description": "Sort sales by created at.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "LAST_MODIFIED_AT",
-            "description": "Sort sales by last modified at.",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -80672,7 +80552,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "This field will be removed in Saleor 4.0. Use the `checkoutTokens` field to fetch the user checkouts."
+            "deprecationReason": "This field will be removed in Saleor 4.0. Use the `checkout_tokens` field to fetch the user checkouts."
           },
           {
             "name": "checkoutTokens",
@@ -81623,18 +81503,6 @@
           {
             "name": "ORDER_COUNT",
             "description": "Sort users by order count.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "CREATED_AT",
-            "description": "Sort users by created at.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "LAST_MODIFIED_AT",
-            "description": "Sort users by last modified at.",
             "isDeprecated": false,
             "deprecationReason": null
           }

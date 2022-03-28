@@ -29,6 +29,12 @@ export type Scalars = {
    * String, Boolean, Int, Float, List or Object.
    */
   GenericScalar: any;
+  /**
+   * Allows use of a JSON String for input / output from the GraphQL schema.
+   *
+   * Use of this type is *not recommended* as you lose the benefits of having a defined, static
+   * schema (one of the key benefits of GraphQL).
+   */
   JSONString: any;
   /**
    * Positive Decimal scalar implementation.
@@ -1287,10 +1293,12 @@ export type ExportFileFilterInput = {
 };
 
 export enum ExportFileSortField {
+  /** Sort export file by status. */
   STATUS = 'STATUS',
+  /** Sort export file by created at. */
   CREATED_AT = 'CREATED_AT',
-  UPDATED_AT = 'UPDATED_AT',
-  LAST_MODIFIED_AT = 'LAST_MODIFIED_AT'
+  /** Sort export file by updated at. */
+  UPDATED_AT = 'UPDATED_AT'
 }
 
 export type ExportFileSortingInput = {
@@ -2522,8 +2530,7 @@ export enum MetadataErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   NOT_FOUND = 'NOT_FOUND',
-  REQUIRED = 'REQUIRED',
-  NOT_UPDATED = 'NOT_UPDATED'
+  REQUIRED = 'REQUIRED'
 }
 
 export type MetadataFilter = {
@@ -2834,20 +2841,8 @@ export type OrderSettingsUpdateInput = {
 export enum OrderSortField {
   /** Sort orders by number. */
   NUMBER = 'NUMBER',
-  /**
-   * Sort orders by creation date.
-   *
-   * DEPRECATED: this field will be removed in Saleor 4.0.
-   */
+  /** Sort orders by creation date. */
   CREATION_DATE = 'CREATION_DATE',
-  /**
-   * Sort orders by creation date.
-   *
-   * DEPRECATED: this field will be removed in Saleor 4.0.
-   */
-  CREATED_AT = 'CREATED_AT',
-  /** Sort orders by last modified at. */
-  LAST_MODIFIED_AT = 'LAST_MODIFIED_AT',
   /** Sort orders by customer. */
   CUSTOMER = 'CUSTOMER',
   /** Sort orders by payment. */
@@ -3447,10 +3442,6 @@ export enum ProductOrderField {
   PUBLISHED = 'PUBLISHED',
   /** Sort products by publication date. */
   PUBLICATION_DATE = 'PUBLICATION_DATE',
-  /** Sort products by publication date. */
-  PUBLISHED_AT = 'PUBLISHED_AT',
-  /** Sort products by update date. */
-  LAST_MODIFIED_AT = 'LAST_MODIFIED_AT',
   /** Sort products by collection. Note: This option is available only for the `Collection.products` query. */
   COLLECTION = 'COLLECTION',
   /** Sort products by rating. */
@@ -3598,18 +3589,6 @@ export type ProductVariantInput = {
   quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
 };
 
-export enum ProductVariantSortField {
-  /** Sort products variants by last modified at. */
-  LAST_MODIFIED_AT = 'LAST_MODIFIED_AT'
-}
-
-export type ProductVariantSortingInput = {
-  /** Specifies the direction in which to sort products. */
-  direction: OrderDirection;
-  /** Sort productVariants by the selected field. */
-  field: ProductVariantSortField;
-};
-
 export type PublishableChannelListingInput = {
   /** ID of a channel. */
   channelId: Scalars['ID'];
@@ -3684,11 +3663,7 @@ export enum SaleSortField {
   /** Sort sales by value. */
   VALUE = 'VALUE',
   /** Sort sales by type. */
-  TYPE = 'TYPE',
-  /** Sort sales by created at. */
-  CREATED_AT = 'CREATED_AT',
-  /** Sort sales by last modified at. */
-  LAST_MODIFIED_AT = 'LAST_MODIFIED_AT'
+  TYPE = 'TYPE'
 }
 
 export type SaleSortingInput = {
@@ -4090,11 +4065,7 @@ export enum UserSortField {
   /** Sort users by email. */
   EMAIL = 'EMAIL',
   /** Sort users by order count. */
-  ORDER_COUNT = 'ORDER_COUNT',
-  /** Sort users by created at. */
-  CREATED_AT = 'CREATED_AT',
-  /** Sort users by last modified at. */
-  LAST_MODIFIED_AT = 'LAST_MODIFIED_AT'
+  ORDER_COUNT = 'ORDER_COUNT'
 }
 
 export type UserSortingInput = {
@@ -6309,6 +6280,7 @@ export type PageListQueryVariables = Exact<{
   last?: InputMaybe<Scalars['Int']>;
   before?: InputMaybe<Scalars['String']>;
   sort?: InputMaybe<PageSortingInput>;
+  filter?: InputMaybe<PageFilterInput>;
 }>;
 
 
@@ -6445,7 +6417,7 @@ export type AssignProductAttributeMutation = { __typename: 'Mutation', productAt
 
 export type UnassignProductAttributeMutationVariables = Exact<{
   id: Scalars['ID'];
-  ids: Array<InputMaybe<Scalars['ID']>> | InputMaybe<Scalars['ID']>;
+  ids: Array<Scalars['ID']> | Scalars['ID'];
 }>;
 
 

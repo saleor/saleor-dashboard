@@ -53,7 +53,7 @@ export const assignProductAttributeMutation = gql`
 `;
 
 export const unassignProductAttributeMutation = gql`
-  mutation UnassignProductAttribute($id: ID!, $ids: [ID]!) {
+  mutation UnassignProductAttribute($id: ID!, $ids: [ID!]!) {
     productAttributeUnassign(productTypeId: $id, attributeIds: $ids) {
       errors {
         ...ProductAttributeUnassignErrorFragment
