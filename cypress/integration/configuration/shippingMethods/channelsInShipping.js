@@ -15,7 +15,6 @@ import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
 import filterTests from "../../../support/filterTests";
 import { getCurrencyAndAmountInString } from "../../../support/formatData/formatCurrencyAmount";
-import { getFormattedCurrencyAmount } from "../../../support/formatData/formatCurrencyAmount";
 import { enterHomePageChangeChannelAndReturn } from "../../../support/pages/channelsPage";
 import {
   enterAndSelectShippings,
