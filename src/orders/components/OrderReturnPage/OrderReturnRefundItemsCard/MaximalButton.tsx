@@ -5,10 +5,8 @@ import { FormattedMessage } from "react-intl";
 const useStyles = makeStyles(
   theme => ({
     button: {
-      letterSpacing: 2,
       marginBottom: theme.spacing(1),
-      marginTop: theme.spacing(3),
-      padding: 0
+      marginTop: theme.spacing(3)
     }
   }),
   { name: "MaximalButton" }

@@ -92,8 +92,12 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   const intl = useIntl();
 
   return (
-    <CategoryUpdateForm category={category} onSubmit={onSubmit}>
-      {({ data, change, handlers, submit, hasChanged }) => (
+    <CategoryUpdateForm
+      category={category}
+      onSubmit={onSubmit}
+      disabled={disabled}
+    >
+      {({ data, change, handlers, submit, isSaveDisabled }) => (
         <Container>
           <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.categories)}
@@ -217,7 +221,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
             onDelete={onDelete}
             onSubmit={submit}
             state={saveButtonBarState}
-            disabled={disabled || !hasChanged}
+            disabled={isSaveDisabled}
           />
         </Container>
       )}

@@ -21,6 +21,13 @@ const props: PageListPageProps = {
   sort: {
     ...sortPageProps.sort,
     sort: PageListUrlSortField.title
+  },
+  actionDialogOpts: {
+    open: () => undefined,
+    close: () => undefined
+  },
+  params: {
+    ids: []
   }
 };
 

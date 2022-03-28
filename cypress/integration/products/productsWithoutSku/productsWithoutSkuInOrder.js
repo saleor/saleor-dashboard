@@ -1,30 +1,18 @@
 /// <reference types="cypress"/>
 /// <reference types="../../../support"/>
 
-import {
-  createCustomer,
-  deleteCustomersStartsWith
-} from "../../../support/api/requests/Customer";
+import faker from "faker";
+
+import { createCustomer } from "../../../support/api/requests/Customer";
 import { createReadyToFulfillOrder } from "../../../support/api/utils/ordersUtils";
-import {
-  createProductWithShipping,
-  deleteProductsStartsWith
-} from "../../../support/api/utils/products/productsUtils";
-import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
+import { createProductWithShipping } from "../../../support/api/utils/products/productsUtils";
 import filterTests from "../../../support/filterTests";
 
-filterTests({ definedTags: ["all", "critical"] }, () => {
-  const name = "ProductsWithoutSkuInOrder";
+filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
+  const name = `ProductsWithoutSkuInOrder${faker.datatype.number()}`;
 
-  describe("Add productWithout SKU to order", () => {
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteProductsStartsWith(name);
-      deleteShippingStartsWith(name);
-      deleteCustomersStartsWith(name);
-    });
-
-    it("should create order with variant product without sku", () => {
+  describe("As an admin I should be able to create order with variant without SKU", () => {
+    it("should create order with variant product without sku. SALEOR_2801", () => {
       let variants;
       let channel;
       let shippingMethodId;

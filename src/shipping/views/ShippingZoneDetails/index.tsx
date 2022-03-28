@@ -330,14 +330,18 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
         }
         open={params.action === "unassign-country"}
         title={intl.formatMessage({
-          defaultMessage: "Delete from Shipping Zone",
+          defaultMessage: "Remove from Shipping Zone",
           description: "unassign country, dialog header"
         })}
         variant="delete"
+        confirmButtonLabel={intl.formatMessage({
+          defaultMessage: "Remove and save",
+          description: "remove country from shipping zone and save, button"
+        })}
       >
         <DialogContentText>
           <FormattedMessage
-            defaultMessage="Are you sure you want to delete {countryName} from this shipping zone?"
+            defaultMessage="Are you sure you want to remove {countryName} from this shipping zone?"
             description="unassign country"
             values={{
               countryName: (

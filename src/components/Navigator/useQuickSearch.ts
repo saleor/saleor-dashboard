@@ -36,7 +36,8 @@ function useQuickSearch(
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       first: 5
-    }
+    },
+    skip: !query
   });
   const [{ data: catalog }, searchCatalog] = useSearchCatalog(5);
   const [createOrder] = useOrderDraftCreateMutation({

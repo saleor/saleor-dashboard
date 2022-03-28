@@ -21,7 +21,6 @@ import {
   ShippingPriceExcludeProductMutation
 } from "@saleor/graphql";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
-import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { FetchMoreProps, RelayToFlat } from "@saleor/types";
@@ -234,7 +233,10 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
           disabled={loading || !selectedProducts?.length}
           onClick={handleSubmit}
         >
-          <FormattedMessage {...buttonMessages.confirm} />
+          <FormattedMessage
+            defaultMessage="Assign and save"
+            description="assign products to shipping rate and save, button"
+          />
         </ConfirmButton>
       </DialogActions>
     </Dialog>

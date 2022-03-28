@@ -94,6 +94,7 @@ export interface ProductVariantCreateFormProps
   children: (props: UseProductVariantCreateFormResult) => React.ReactNode;
   product: ProductVariantCreateDataQuery["product"];
   onSubmit: (data: ProductVariantCreateData) => void;
+  disabled: boolean;
 }
 
 const initial: ProductVariantCreateFormData = {
@@ -113,6 +114,7 @@ const initial: ProductVariantCreateFormData = {
 function useProductVariantCreateForm(
   product: ProductVariantCreateDataQuery["product"],
   onSubmit: (data: ProductVariantCreateData) => void,
+  disabled: boolean,
   opts: UseProductVariantCreateFormOpts
 ): UseProductVariantCreateFormResult {
   const intl = useIntl();
@@ -126,7 +128,8 @@ function useProductVariantCreateForm(
     handleChange,
     hasChanged,
     data: formData,
-    formId
+    formId,
+    setIsSubmitDisabled
   } = form;
 
   const attributes = useFormset(attributeInput);
@@ -227,13 +230,18 @@ function useProductVariantCreateForm(
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
+  const formDisabled =
+    data.isPreorder &&
+    data.hasPreorderEndDate &&
+    !!form.errors.preorderEndDateTime;
+
+  const isSaveDisabled = disabled || formDisabled || !onSubmit;
+  setIsSubmitDisabled(isSaveDisabled);
+
   return {
     change: handleChange,
     data,
-    disabled:
-      data.isPreorder &&
-      data.hasPreorderEndDate &&
-      !!form.errors.preorderEndDateTime,
+    disabled,
     formErrors: form.errors,
     handlers: {
       addStock: handleStockAdd,
@@ -250,7 +258,8 @@ function useProductVariantCreateForm(
       selectAttributeReference: handleAttributeReferenceChange
     },
     hasChanged,
-    submit
+    submit,
+    isSaveDisabled
   };
 }
 
@@ -258,9 +267,10 @@ const ProductVariantCreateForm: React.FC<ProductVariantCreateFormProps> = ({
   children,
   product,
   onSubmit,
+  disabled,
   ...rest
 }) => {
-  const props = useProductVariantCreateForm(product, onSubmit, rest);
+  const props = useProductVariantCreateForm(product, onSubmit, disabled, rest);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };

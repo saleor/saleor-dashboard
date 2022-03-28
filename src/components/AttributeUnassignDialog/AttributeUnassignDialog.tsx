@@ -2,7 +2,9 @@ import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
+
+import messages from "./messages";
 
 export interface AttributeUnassignDialogProps {
   title: string;
@@ -22,24 +24,29 @@ const AttributeUnassignDialog: React.FC<AttributeUnassignDialogProps> = ({
   itemTypeName,
   onClose,
   onConfirm
-}) => (
-  <ActionDialog
-    confirmButtonState={confirmButtonState}
-    open={open}
-    onClose={onClose}
-    onConfirm={onConfirm}
-    title={title}
-  >
-    <DialogContentText>
-      <FormattedMessage
-        defaultMessage="Are you sure you want to unassign {attributeName} from {itemTypeName}?"
-        values={{
-          attributeName: <strong>{attributeName}</strong>,
-          itemTypeName: <strong>{itemTypeName}</strong>
-        }}
-      />
-    </DialogContentText>
-  </ActionDialog>
-);
+}) => {
+  const intl = useIntl();
+
+  return (
+    <ActionDialog
+      confirmButtonState={confirmButtonState}
+      open={open}
+      onClose={onClose}
+      onConfirm={onConfirm}
+      title={title}
+      confirmButtonLabel={intl.formatMessage(messages.confirmBtn)}
+    >
+      <DialogContentText>
+        <FormattedMessage
+          {...messages.content}
+          values={{
+            attributeName: <strong>{attributeName}</strong>,
+            itemTypeName: <strong>{itemTypeName}</strong>
+          }}
+        />
+      </DialogContentText>
+    </ActionDialog>
+  );
+};
 AttributeUnassignDialog.displayName = "AttributeUnassignDialog";
 export default AttributeUnassignDialog;

@@ -151,13 +151,16 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
 
   const [selectedChannel] = useLocalStorage("salesListChannel", "");
 
+  const notifySaved = () =>
+    notify({
+      status: "success",
+      text: intl.formatMessage(commonMessages.savedChanges)
+    });
+
   const [saleUpdate, saleUpdateOpts] = useSaleUpdateMutation({
     onCompleted: data => {
       if (data.saleUpdate.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
-        });
+        notifySaved();
       }
     }
   });
@@ -165,10 +168,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
   const [saleDelete, saleDeleteOpts] = useSaleDeleteMutation({
     onCompleted: data => {
       if (data.saleDelete.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(messages.saleDetailsSaleDeleteDialog)
-        });
+        notifySaved();
         navigate(saleListUrl(), { replace: true });
       }
     }
@@ -180,6 +180,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
   ] = useSaleCataloguesAddMutation({
     onCompleted: data => {
       if (data.saleCataloguesAdd.errors.length === 0) {
+        notifySaved();
         closeModal();
       }
     }
@@ -191,6 +192,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
   ] = useSaleCataloguesRemoveMutation({
     onCompleted: data => {
       if (data.saleCataloguesRemove.errors.length === 0) {
+        notifySaved();
         closeModal();
         reset();
       }
@@ -308,17 +310,29 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
         onCategoryClick={id => () => navigate(categoryUrl(id))}
         onCollectionAssign={() => openModal("assign-collection")}
         onCollectionUnassign={collectionId =>
-          handleCollectionsUnassign([collectionId])
+          openModal("unassign-collection", {
+            ids: [collectionId]
+          })
         }
         onCategoryUnassign={categoryId =>
-          handleCategoriesUnassign([categoryId])
+          openModal("unassign-category", {
+            ids: [categoryId]
+          })
         }
         onCollectionClick={id => () => navigate(collectionUrl(id))}
         onProductAssign={() => openModal("assign-product")}
-        onProductUnassign={productId => handleProductsUnassign([productId])}
+        onProductUnassign={productId =>
+          openModal("unassign-product", {
+            ids: [productId]
+          })
+        }
         onProductClick={id => () => navigate(productUrl(id))}
         onVariantAssign={() => openModal("assign-variant")}
-        onVariantUnassign={variantId => handleVariantsUnassign([variantId])}
+        onVariantUnassign={variantId =>
+          openModal("unassign-variant", {
+            ids: [variantId]
+          })
+        }
         onVariantClick={(productId, variantId) => () =>
           navigate(productVariantEditPath(productId, variantId))}
         activeTab={activeTab}
@@ -476,6 +490,9 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
         confirmButtonState={saleCataloguesRemoveOpts.status}
         onClose={closeModal}
         onConfirm={() => handleCategoriesUnassign(params.ids)}
+        confirmButtonLabel={intl.formatMessage(
+          messages.saleDetailsUnassignCategory
+        )}
       >
         {canOpenBulkActionDialog && (
           <DialogContentText>
@@ -499,6 +516,9 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
         confirmButtonState={saleCataloguesRemoveOpts.status}
         onClose={closeModal}
         onConfirm={() => handleCollectionsUnassign(params.ids)}
+        confirmButtonLabel={intl.formatMessage(
+          messages.saleDetailsUnassignCollection
+        )}
       >
         {canOpenBulkActionDialog && (
           <DialogContentText>
@@ -520,6 +540,9 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
         confirmButtonState={saleCataloguesRemoveOpts.status}
         onClose={closeModal}
         onConfirm={() => handleProductsUnassign(params.ids)}
+        confirmButtonLabel={intl.formatMessage(
+          messages.saleDetailsUnassignProduct
+        )}
       >
         {canOpenBulkActionDialog && (
           <DialogContentText>
@@ -541,6 +564,9 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
         confirmButtonState={saleCataloguesRemoveOpts.status}
         onClose={closeModal}
         onConfirm={() => handleVariantsUnassign(params.ids)}
+        confirmButtonLabel={intl.formatMessage(
+          messages.saleDetailsUnassignVariant
+        )}
       >
         {canOpenBulkActionDialog && (
           <DialogContentText>

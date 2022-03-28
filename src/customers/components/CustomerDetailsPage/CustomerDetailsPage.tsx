@@ -80,8 +80,13 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
   } = useMetadataChangeTrigger();
 
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, hasChanged, submit }) => {
+    <Form
+      confirmLeave
+      initial={initialForm}
+      onSubmit={onSubmit}
+      disabled={disabled}
+    >
+      {({ change, data, isSaveDisabled, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
@@ -136,7 +141,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
               </div>
             </Grid>
             <Savebar
-              disabled={disabled || !hasChanged}
+              disabled={isSaveDisabled}
               state={saveButtonBar}
               onSubmit={submit}
               onCancel={onBack}

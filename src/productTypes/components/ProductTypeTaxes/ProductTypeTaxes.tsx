@@ -48,7 +48,7 @@ const ProductTypeTaxes: React.FC<ProductTypeTaxesProps> = props => {
           disabled={disabled}
           displayValue={taxTypeDisplayName}
           label={intl.formatMessage({
-            defaultMessage: "Taxes",
+            defaultMessage: "Tax group",
             id: "productTypeTaxesInputLabel"
           })}
           name={"taxType" as keyof ProductTypeForm}

@@ -58,8 +58,13 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
   } = useMetadataChangeTrigger();
 
   return (
-    <Form confirmLeave initial={formInitialData} onSubmit={onSubmit}>
-      {({ change, data, hasChanged, submit }) => {
+    <Form
+      confirmLeave
+      initial={formInitialData}
+      onSubmit={onSubmit}
+      disabled={disabled}
+    >
+      {({ change, data, submit, isSaveDisabled }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
@@ -103,7 +108,7 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
             <Savebar
               onCancel={onBack}
               onSubmit={submit}
-              disabled={disabled || !hasChanged}
+              disabled={isSaveDisabled}
               state={saveButtonBarState}
             />
           </Container>

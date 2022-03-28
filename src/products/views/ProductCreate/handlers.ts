@@ -122,10 +122,11 @@ export function createHandler(
     };
 
     const result = await productCreate(productVariables);
+
     let hasErrors = errors.length > 0;
 
-    const hasVariants = productType.hasVariants;
-    const productId = result.data.productCreate.product?.id;
+    const hasVariants = productType?.hasVariants;
+    const productId = result?.data?.productCreate?.product?.id;
 
     if (!productId) {
       return { errors };

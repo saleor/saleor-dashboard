@@ -33,6 +33,7 @@ export interface UseCategoryCreateFormResult
 export interface CategoryCreateFormProps {
   children: (props: UseCategoryCreateFormResult) => React.ReactNode;
   onSubmit: (data: CategoryCreateData) => Promise<any[]>;
+  disabled: boolean;
 }
 
 const initialData: CategoryCreateFormData = {
@@ -45,7 +46,8 @@ const initialData: CategoryCreateFormData = {
 };
 
 function useCategoryCreateForm(
-  onSubmit: (data: CategoryCreateData) => Promise<any[]>
+  onSubmit: (data: CategoryCreateData) => Promise<any[]>,
+  disabled: boolean
 ): UseCategoryCreateFormResult {
   const {
     handleChange,
@@ -53,7 +55,8 @@ function useCategoryCreateForm(
     hasChanged,
     triggerChange,
     setChanged,
-    formId
+    formId,
+    setIsSubmitDisabled
   } = useForm(initialData, undefined, { confirmLeave: true });
 
   const handleFormSubmit = useHandleFormSubmit({
@@ -87,6 +90,9 @@ function useCategoryCreateForm(
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
+  const isSaveDisabled = disabled || !hasChanged;
+  setIsSubmitDisabled(isSaveDisabled);
+
   return {
     change: handleChange,
     data: getData(),
@@ -95,15 +101,17 @@ function useCategoryCreateForm(
       changeMetadata
     },
     hasChanged,
-    submit
+    submit,
+    isSaveDisabled
   };
 }
 
 const CategoryCreateForm: React.FC<CategoryCreateFormProps> = ({
   children,
-  onSubmit
+  onSubmit,
+  disabled
 }) => {
-  const props = useCategoryCreateForm(onSubmit);
+  const props = useCategoryCreateForm(onSubmit, disabled);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };
