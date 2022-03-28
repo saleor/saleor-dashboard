@@ -1,8 +1,11 @@
 import { InputAdornment, TextField, TextFieldProps } from "@material-ui/core";
 import { InputProps } from "@material-ui/core/Input";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import React, { useMemo } from "react";
 import { FormattedMessage } from "react-intl";
+
+import { SEPARATOR_CHARACTERS } from "./consts";
+import { findPriceSeparator, getCurrencyDecimalPoints } from "./utils";
 
 const useStyles = makeStyles(
   theme => ({
@@ -43,8 +46,6 @@ interface PriceFieldProps {
   onChange(event: any);
 }
 
-const MAX_DECIMAL_LENGTH = 2;
-
 export const PriceField: React.FC<PriceFieldProps> = props => {
   const {
     className,
@@ -64,14 +65,36 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
   const classes = useStyles(props);
   const minValue = 0;
 
-  const handleChange: TextFieldProps["onChange"] = e => {
-    const [, decimalPart] = e.target.value.split(".");
+  const maxDecimalLength = useMemo(
+    () => getCurrencyDecimalPoints(currencySymbol),
+    [currencySymbol]
+  );
 
-    if (decimalPart?.length > MAX_DECIMAL_LENGTH) {
-      return;
+  const handleChange: TextFieldProps["onChange"] = e => {
+    let newValue = e.target.value;
+    const splitCharacter = findPriceSeparator(newValue);
+    const [integerPart, decimalPart] = e.target.value.split(splitCharacter);
+
+    if (maxDecimalLength === 0 && decimalPart) {
+      // this shouldn't happen - decimal character should be ignored
+      newValue = integerPart;
     }
 
-    onChange(e);
+    if (decimalPart?.length > maxDecimalLength) {
+      newValue = `${integerPart}${splitCharacter}${decimalPart.slice(0, 2)}`;
+    }
+
+    onChange({ ...e, target: { ...e.target, value: newValue } });
+  };
+
+  const handleKeyPress: TextFieldProps["onKeyDown"] = e => {
+    // ignore separator input when currency doesn't support decimal values
+    if (
+      maxDecimalLength === 0 &&
+      SEPARATOR_CHARACTERS.some(separator => e.key === separator)
+    ) {
+      e.preventDefault();
+    }
   };
 
   return (
@@ -115,6 +138,7 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
       disabled={disabled}
       required={required}
       onChange={handleChange}
+      onKeyDown={handleKeyPress}
     />
   );
 };
