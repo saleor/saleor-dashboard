@@ -124,7 +124,7 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
         ),
         inputProps: {
           min: 0,
-          step: "0.01",
+          step: 1 / Math.pow(10, maxDecimalLength),
           ...InputProps?.inputProps
         },
         type: "number"

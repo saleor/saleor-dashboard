@@ -1,6 +1,6 @@
 import { SEPARATOR_CHARACTERS } from "./consts";
 
-export const getCurrencyDecimalPoints = (currency: string) => {
+export const getCurrencyDecimalPoints = (currency: string = "USD") => {
   const options = new Intl.NumberFormat("en-GB", {
     style: "currency",
     currency
