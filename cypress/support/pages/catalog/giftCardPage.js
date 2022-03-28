@@ -68,7 +68,7 @@ export function changeGiftCardActiveStatus(giftCardId) {
   cy.visit(giftCardDetailsUrl(giftCardId))
     .get(GIFT_CARD_UPDATE.changeActiveStatusButton)
     .click()
-    .confirmationMessageShouldDisappear();
+    .confirmationMessageShouldAppear();
 }
 
 export function selectGiftCard(giftCardId) {
@@ -76,4 +76,16 @@ export function selectGiftCard(giftCardId) {
     .get(giftCardRow(giftCardId))
     .find(GIFT_CARD_LIST.selectGiftCardCheckbox)
     .click();
+}
+
+export function enterAndSelectGiftCards(giftCardsIds) {
+  const alias = "GiftCardList";
+  cy.addAliasToGraphRequest(alias)
+    .visit(urlList.giftCards)
+    .findElementsAndMakeActionOnTable({
+      elementsGraphqlAlias: alias,
+      elementsName: "giftCards",
+      elementsIds: giftCardsIds,
+      actionFunction: selectGiftCard
+    });
 }
