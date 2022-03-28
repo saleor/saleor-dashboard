@@ -389,9 +389,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const handleBack = () => navigate(productListUrl());
 
-  if (product === null) {
-    return <NotFoundPage onBack={handleBack} />;
-  }
   const handleVariantAdd = () => navigate(productVariantAddUrl(id));
   const handleVariantsAdd = () => navigate(productVariantCreatorUrl(id));
 
@@ -519,6 +516,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     loading: !!searchAttributeValuesOpts.loading,
     onFetchMore: loadMoreAttributeValues
   };
+
+  if (product === null) {
+    return <NotFoundPage onBack={handleBack} />;
+  }
 
   return (
     <>

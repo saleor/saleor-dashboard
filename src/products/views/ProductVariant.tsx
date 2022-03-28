@@ -197,10 +197,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   const variant = data?.productVariant;
   const channels = createVariantChannels(variant);
 
-  if (variant === null) {
-    return <NotFoundPage onBack={handleBack} />;
-  }
-
   const [
     deactivatePreorder,
     deactivatePreoderOpts
@@ -359,6 +355,10 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
 
   const attributeValues =
     mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
+
+  if (variant === null) {
+    return <NotFoundPage onBack={handleBack} />;
+  }
 
   return (
     <>
