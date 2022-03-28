@@ -91,8 +91,13 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
   };
 
   return (
-    <Form confirmLeave initial={initialData} onSubmit={onSubmit}>
-      {({ change, data, hasChanged, submit }) => {
+    <Form
+      confirmLeave
+      initial={initialData}
+      onSubmit={onSubmit}
+      disabled={disabled}
+    >
+      {({ change, data, isSaveDisabled, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         const changeKind = makeProductTypeKindChangeHandler(
@@ -145,7 +150,7 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
             <Savebar
               onCancel={onBack}
               onSubmit={submit}
-              disabled={disabled || !hasChanged}
+              disabled={isSaveDisabled}
               state={saveButtonBarState}
             />
           </Container>

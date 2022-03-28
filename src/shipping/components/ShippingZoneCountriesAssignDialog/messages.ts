@@ -36,7 +36,7 @@ export const messages = defineMessages({
     description: "checkbox description"
   },
   assignCountriesButton: {
-    defaultMessage: "Assign countries",
-    description: "button"
+    defaultMessage: "Assign and save",
+    description: "assign countries to shipping zone and save, button"
   }
 });

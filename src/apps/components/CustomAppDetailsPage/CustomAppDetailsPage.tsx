@@ -101,8 +101,13 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
   };
 
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-      {({ data, change, hasChanged, submit }) => (
+    <Form
+      confirmLeave
+      initial={initialForm}
+      onSubmit={onSubmit}
+      disabled={disabled}
+    >
+      {({ data, change, submit, isSaveDisabled }) => (
         <Container>
           <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.apps)}
@@ -182,7 +187,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
             </div>
           </Grid>
           <Savebar
-            disabled={disabled || !hasChanged}
+            disabled={isSaveDisabled}
             state={saveButtonBarState}
             onCancel={onBack}
             onSubmit={submit}

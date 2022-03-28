@@ -54,6 +54,7 @@ export const AppFrame: React.FC<Props> = ({
       onError={onError}
       onLoad={handleLoad}
       className={classes.iframe}
+      sandbox="allow-same-origin allow-forms allow-scripts"
     />
   );
 };

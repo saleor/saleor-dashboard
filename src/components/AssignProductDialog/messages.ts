@@ -6,7 +6,7 @@ export const messages = defineMessages({
     description: "dialog header"
   },
   assignProductDialogButton: {
-    defaultMessage: "Assign",
+    defaultMessage: "Assign and save",
     description: "button"
   },
   assignProductDialogContent: {

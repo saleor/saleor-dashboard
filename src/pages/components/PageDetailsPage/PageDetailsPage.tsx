@@ -135,8 +135,9 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
       fetchMoreReferenceProducts={fetchMoreReferenceProducts}
       assignReferencesAttributeId={assignReferencesAttributeId}
       onSubmit={onSubmit}
+      disabled={loading}
     >
-      {({ change, data, valid, handlers, hasChanged, submit }) => (
+      {({ change, data, handlers, submit, isSaveDisabled }) => (
         <Container>
           <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.pages)}
@@ -242,7 +243,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
             </div>
           </Grid>
           <Savebar
-            disabled={loading || !hasChanged || !valid}
+            disabled={isSaveDisabled}
             state={saveButtonBarState}
             onCancel={onBack}
             onDelete={page === null ? undefined : onRemove}

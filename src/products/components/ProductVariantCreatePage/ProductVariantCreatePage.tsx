@@ -149,15 +149,9 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
       fetchReferenceProducts={fetchReferenceProducts}
       fetchMoreReferenceProducts={fetchMoreReferenceProducts}
       assignReferencesAttributeId={assignReferencesAttributeId}
+      disabled={disabled}
     >
-      {({
-        change,
-        data,
-        formErrors,
-        disabled: formDisabled,
-        handlers,
-        submit
-      }) => (
+      {({ change, data, formErrors, handlers, submit, isSaveDisabled }) => (
         <Container>
           <Backlink onClick={onBack}>{product?.name}</Backlink>
           <PageHeader title={header} />
@@ -258,7 +252,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
             </div>
           </Grid>
           <Savebar
-            disabled={disabled || formDisabled || !onSubmit}
+            disabled={isSaveDisabled}
             labels={{
               confirm: intl.formatMessage(messages.saveVariant),
               delete: intl.formatMessage(messages.deleteVariant)

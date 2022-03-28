@@ -28,7 +28,8 @@ const getNetworkErrors = (error: ApolloError): string[] => {
         }
       });
     }
-    return networkErrors.result.errors.message;
+
+    return [networkErrors.message];
   }
 
   return [];

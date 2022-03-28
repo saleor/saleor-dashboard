@@ -43,7 +43,7 @@ import {
   orderFulfillUrl,
   orderListUrl,
   orderRefundUrl,
-  orderReturnPath,
+  orderReturnUrl,
   orderUrl,
   OrderUrlQueryParams
 } from "../../../urls";
@@ -163,7 +163,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
       <OrderDiscountProvider order={order}>
         <OrderLineDiscountProvider order={order}>
           <OrderDetailsPage
-            onOrderReturn={() => navigate(orderReturnPath(id))}
+            onOrderReturn={() => navigate(orderReturnUrl(id))}
             disabled={
               updateMetadataOpts.loading || updatePrivateMetadataOpts.loading
             }
@@ -385,11 +385,11 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
             ?.orderFulfillmentUpdateTracking.errors || []
         }
         open={params.action === "edit-fulfillment"}
-        trackingNumber={getStringOrPlaceholder(
+        trackingNumber={
           data?.order?.fulfillments.find(
             fulfillment => fulfillment.id === params.id
           )?.trackingNumber
-        )}
+        }
         onConfirm={variables =>
           orderFulfillmentUpdateTracking.mutate({
             id: params.id,

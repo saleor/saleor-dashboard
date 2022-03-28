@@ -284,16 +284,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       fetchReferenceProducts={fetchReferenceProducts}
       fetchMoreReferenceProducts={fetchMoreReferenceProducts}
       assignReferencesAttributeId={assignReferencesAttributeId}
+      disabled={disabled}
+      hasChannelChanged={hasChannelChanged}
     >
-      {({
-        change,
-        data,
-        formErrors,
-        disabled: formDisabled,
-        handlers,
-        hasChanged,
-        submit
-      }) => (
+      {({ change, data, formErrors, handlers, submit, isSaveDisabled }) => (
         <>
           <Container>
             <Backlink onClick={onBack}>
@@ -508,9 +502,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
               onDelete={onDelete}
               onSubmit={submit}
               state={saveButtonBarState}
-              disabled={
-                disabled || formDisabled || (!hasChanged && !hasChannelChanged)
-              }
+              disabled={isSaveDisabled}
             />
             {canOpenAssignReferencesAttributeDialog && (
               <AssignAttributeValueDialog

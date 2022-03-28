@@ -31,8 +31,8 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
   const intl = useIntl();
 
   return (
-    <CategoryCreateForm onSubmit={onSubmit}>
-      {({ data, change, handlers, submit, hasChanged }) => (
+    <CategoryCreateForm onSubmit={onSubmit} disabled={disabled}>
+      {({ data, change, handlers, submit, isSaveDisabled }) => (
         <Container>
           <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.categories)}
@@ -74,7 +74,7 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
               onCancel={onBack}
               onSubmit={submit}
               state={saveButtonBarState}
-              disabled={disabled || !hasChanged}
+              disabled={isSaveDisabled}
             />
           </div>
         </Container>

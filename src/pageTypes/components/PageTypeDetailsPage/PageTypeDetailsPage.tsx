@@ -110,8 +110,13 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
   };
 
   return (
-    <Form confirmLeave initial={formInitialData} onSubmit={handleSubmit}>
-      {({ change, data, hasChanged, submit }) => {
+    <Form
+      confirmLeave
+      initial={formInitialData}
+      onSubmit={handleSubmit}
+      disabled={disabled}
+    >
+      {({ change, data, isSaveDisabled, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
@@ -174,7 +179,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
               onCancel={onBack}
               onDelete={onDelete}
               onSubmit={submit}
-              disabled={disabled || !hasChanged}
+              disabled={isSaveDisabled}
               state={saveButtonBarState}
             />
           </Container>

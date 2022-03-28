@@ -22,6 +22,11 @@ export const SectionRoute: React.FC<SectionRouteProps> = ({
 }) => {
   const { user } = useUser();
 
+  // Prevents race condition
+  if (user === undefined) {
+    return null;
+  }
+
   const hasSectionPermissions = () => {
     if (!permissions) {
       return true;
