@@ -94,6 +94,7 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
           hasMore={hasMore}
           fetchOnFocus
           onFetchMore={onFetchMore}
+          popperPlacement="top-end"
         />
       </CardContent>
       <CardActions className={classes.actions}>
