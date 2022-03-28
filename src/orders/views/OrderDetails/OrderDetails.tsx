@@ -190,6 +190,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                   updatePrivateMetadataOpts={updatePrivateMetadataOpts}
                   openModal={openModal}
                   closeModal={closeModal}
+                  loading={loading}
                 />
               )}
               {isOrderDraft && (
@@ -237,6 +238,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                   updatePrivateMetadataOpts={updatePrivateMetadataOpts}
                   openModal={openModal}
                   closeModal={closeModal}
+                  loading={loading}
                 />
               )}
             </>

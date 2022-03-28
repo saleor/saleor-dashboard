@@ -1,6 +1,5 @@
 import { InputAdornment, TextField, Typography } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
-import Skeleton from "@saleor/components/Skeleton";
 import CustomerAddressChoiceCard from "@saleor/customers/components/CustomerAddressChoiceCard";
 import { AddressFragment } from "@saleor/graphql";
 import { SearchIcon } from "@saleor/macaw-ui";
@@ -15,7 +14,6 @@ import { parseQuery, stringifyAddress } from "./utils";
 export interface OrderCustomerAddressesSearchProps {
   selectedCustomerAddressId: string;
   customerAddresses: AddressFragment[];
-  loading?: boolean;
   temporarilySelectedAddress?: AddressFragment;
   setTemporaryAddress: (address: AddressFragment) => void;
 }
@@ -23,7 +21,6 @@ export interface OrderCustomerAddressesSearchProps {
 const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> = props => {
   const {
     customerAddresses,
-    loading,
     temporarilySelectedAddress,
     setTemporaryAddress
   } = props;
@@ -66,9 +63,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
           [classes.scrollableWrapper]: filteredCustomerAddresses.length > 0
         })}
       >
-        {loading ? (
-          <Skeleton />
-        ) : filteredCustomerAddresses.length === 0 ? (
+        {filteredCustomerAddresses.length === 0 ? (
           <Typography>
             {intl.formatMessage(
               customerAddresses.length

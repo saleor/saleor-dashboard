@@ -1,4 +1,5 @@
-import { Divider } from "@material-ui/core";
+import { CircularProgress, Divider } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
 import AddressEdit from "@saleor/components/AddressEdit";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
@@ -10,7 +11,7 @@ import {
 } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
 import { SwitchSelector, SwitchSelectorButton } from "@saleor/macaw-ui";
-import React, { useEffect } from "react";
+import React from "react";
 
 import { getById } from "../OrderReturnPage/utils";
 import { AddressInputOptionEnum } from "./form";
@@ -33,7 +34,20 @@ export interface OrderCustomerAddressEditProps {
   onChangeCustomerAddress: (customerAddress: AddressFragment) => void;
 }
 
+const useStyles = makeStyles(
+  () => ({
+    loading: {
+      alignItems: "center",
+      display: "flex",
+      minHeight: 200,
+      justifyContent: "center"
+    }
+  }),
+  { name: "OrderCustomerAddressEdit" }
+);
+
 const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props => {
+  const classes = useStyles();
   const {
     loading,
     customerAddresses,
@@ -70,7 +84,7 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
     setTemporarySelectedAddress
   ] = React.useState(initialAddress);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (temporarySelectedAddress) {
       onChangeCustomerAddress(temporarySelectedAddress);
     }
@@ -93,32 +107,40 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
           </SwitchSelectorButton>
         ))}
       </SwitchSelector>
+
       <FormSpacer />
       <Divider />
       <FormSpacer />
 
-      {addressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS && (
+      {loading ? (
+        <div className={classes.loading}>
+          <CircularProgress size={128} />
+        </div>
+      ) : (
         <>
-          <OrderCustomerAddressesSearch
-            customerAddresses={customerAddresses}
-            selectedCustomerAddressId={selectedCustomerAddressId}
-            loading={loading}
-            temporarilySelectedAddress={temporarySelectedAddress}
-            setTemporaryAddress={setTemporarySelectedAddress}
-          />
-          <FormSpacer />
-        </>
-      )}
+          {addressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS && (
+            <>
+              <OrderCustomerAddressesSearch
+                customerAddresses={customerAddresses}
+                selectedCustomerAddressId={selectedCustomerAddressId}
+                temporarilySelectedAddress={temporarySelectedAddress}
+                setTemporaryAddress={setTemporarySelectedAddress}
+              />
+              <FormSpacer />
+            </>
+          )}
 
-      {addressInputOption === AddressInputOptionEnum.NEW_ADDRESS && (
-        <AddressEdit
-          countries={countryChoices}
-          countryDisplayValue={formAddressCountryDisplayName}
-          data={formAddress}
-          errors={formErrors}
-          onChange={onChangeFormAddress}
-          onCountryChange={onChangeFormAddressCountry}
-        />
+          {addressInputOption === AddressInputOptionEnum.NEW_ADDRESS && (
+            <AddressEdit
+              countries={countryChoices}
+              countryDisplayValue={formAddressCountryDisplayName}
+              data={formAddress}
+              errors={formErrors}
+              onChange={onChangeFormAddress}
+              onCountryChange={onChangeFormAddressCountry}
+            />
+          )}
+        </>
       )}
     </>
   );

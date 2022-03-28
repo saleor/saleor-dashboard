@@ -79,6 +79,7 @@ interface OrderUnconfirmedDetailsProps {
   updatePrivateMetadataOpts: any;
   openModal: any;
   closeModal: any;
+  loading?: boolean;
 }
 
 export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = ({
@@ -104,7 +105,8 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
   updateMetadataOpts,
   updatePrivateMetadataOpts,
   openModal,
-  closeModal
+  closeModal,
+  loading
 }) => {
   const order = data.order;
   const shop = data.shop;
@@ -411,7 +413,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
       />
       <OrderAddressFields
         action={params?.action}
-        customerAddressesLoading={customerAddressesLoading}
+        customerAddressesLoading={customerAddressesLoading || loading}
         countries={data?.shop?.countries}
         customer={customerAddresses?.user}
         onClose={closeModal}

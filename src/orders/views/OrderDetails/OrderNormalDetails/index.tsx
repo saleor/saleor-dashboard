@@ -69,6 +69,7 @@ interface OrderNormalDetailsProps {
   updatePrivateMetadataOpts: any;
   openModal: any;
   closeModal: any;
+  loading?: boolean;
 }
 
 export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
@@ -90,7 +91,8 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   updateMetadataOpts,
   updatePrivateMetadataOpts,
   openModal,
-  closeModal
+  closeModal,
+  loading
 }) => {
   const order = data?.order;
   const shop = data?.shop;
@@ -335,7 +337,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
       />
       <OrderAddressFields
         action={params?.action}
-        customerAddressesLoading={customerAddressesLoading}
+        customerAddressesLoading={customerAddressesLoading || loading}
         countries={data?.shop?.countries}
         customer={customerAddresses?.user}
         onClose={closeModal}
