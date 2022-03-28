@@ -127,7 +127,14 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
                     <FormSpacer />
                     <ResponsiveTable className={classes.table}>
                       <TableBody>
-                        <TableRow>
+                        <TableRow
+                          className={classes.clickableRow}
+                          onClick={() =>
+                            handleRestOfTheWorldChange(
+                              !isRestOfTheWorldSelected
+                            )
+                          }
+                        >
                           <TableCell className={classes.wideCell}>
                             <FormattedMessage
                               {...messages.restOfTheWorldCheckbox}
@@ -145,11 +152,6 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
                             <Checkbox
                               name="restOfTheWorld"
                               checked={isRestOfTheWorldSelected}
-                              onChange={() =>
-                                handleRestOfTheWorldChange(
-                                  !isRestOfTheWorldSelected
-                                )
-                              }
                             />
                           </TableCell>
                         </TableRow>
@@ -171,7 +173,13 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
                       const isChecked = countrySelectionMap[country.code];
 
                       return (
-                        <TableRow key={country.code}>
+                        <TableRow
+                          className={classes.clickableRow}
+                          onClick={() =>
+                            handleCountryChange(country.code, !isChecked)
+                          }
+                          key={country.code}
+                        >
                           <TableCell className={classes.wideCell}>
                             {country.country}
                           </TableCell>
@@ -179,12 +187,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
                             padding="checkbox"
                             className={classes.checkboxCell}
                           >
-                            <Checkbox
-                              checked={isChecked}
-                              onChange={() =>
-                                handleCountryChange(country.code, !isChecked)
-                              }
-                            />
+                            <Checkbox checked={isChecked} />
                           </TableCell>
                         </TableRow>
                       );

@@ -2,7 +2,7 @@ import { ChannelVoucherData } from "@saleor/channels/utils";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import Container from "@saleor/components/Container";
-import Form from "@saleor/components/Form";
+import Form, { FormDataWithOpts } from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
@@ -91,14 +91,26 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     privateMetadata: []
   };
 
+  const checkIfSaveIsDisabled = (data: FormDataWithOpts<FormData>) =>
+    (data.discountType.toString() !== "SHIPPING" &&
+      data.channelListings?.some(
+        channel =>
+          validatePrice(channel.discountValue) ||
+          (data.requirementsPicker === RequirementsPicker.ORDER &&
+            validatePrice(channel.minSpent))
+      )) ||
+    disabled ||
+    (!data.hasChanged && hasChannelChanged);
+
   return (
     <Form
       confirmLeave
       initial={initialForm}
       onSubmit={onSubmit}
       formId={VOUCHER_CREATE_FORM_ID}
+      checkIfSaveIsDisabled={checkIfSaveIsDisabled}
     >
-      {({ change, data, hasChanged, submit, triggerChange, set }) => {
+      {({ change, data, submit, triggerChange, set, isSaveDisabled }) => {
         const handleDiscountTypeChange = createDiscountTypeChangeHandler(
           change
         );
@@ -107,14 +119,6 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
           onChannelsChange,
           triggerChange
         );
-        const formDisabled =
-          data.discountType.toString() !== "SHIPPING" &&
-          data.channelListings?.some(
-            channel =>
-              validatePrice(channel.discountValue) ||
-              (data.requirementsPicker === RequirementsPicker.ORDER &&
-                validatePrice(channel.minSpent))
-          );
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
@@ -199,9 +203,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
               <Metadata data={data} onChange={changeMetadata} />
             </Grid>
             <Savebar
-              disabled={
-                disabled || formDisabled || (!hasChanged && !hasChannelChanged)
-              }
+              disabled={isSaveDisabled}
               onCancel={onBack}
               onSubmit={submit}
               state={saveButtonBarState}

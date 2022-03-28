@@ -9,6 +9,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import {
   AssignProductAttributeMutation,
   ProductAttributeType,
+  ProductTypeAttributeReorderMutation,
   ProductTypeDeleteMutation,
   UnassignProductAttributeMutation,
   useProductAttributeAssignmentUpdateMutation,
@@ -219,6 +220,17 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
     }
   };
 
+  const handleAttributeReorderSuccess = (
+    data: ProductTypeAttributeReorderMutation
+  ) => {
+    if (data.productTypeReorderAttributes.errors.length === 0) {
+      notify({
+        status: "success",
+        text: intl.formatMessage(commonMessages.savedChanges)
+      });
+    }
+  };
+
   const {
     assignAttribute,
     deleteProductType,
@@ -226,7 +238,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
     reorderAttribute
   } = useProductTypeOperations({
     onAssignAttribute: handleAttributeAssignSuccess,
-    onProductTypeAttributeReorder: () => undefined,
+    onProductTypeAttributeReorder: handleAttributeReorderSuccess,
     onProductTypeDelete: handleProductTypeDeleteSuccess,
     onUnassignAttribute: handleAttributeUnassignSuccess,
     productType: data?.productType

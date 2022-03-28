@@ -43,8 +43,9 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
       orderSettings={orderSettings}
       shop={shop}
       onSubmit={onSubmit}
+      disabled={disabled}
     >
-      {({ data, submit, hasChanged, change }) => (
+      {({ data, submit, change, isSaveDisabled }) => (
         <Container>
           <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.orders)}
@@ -73,7 +74,7 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
           <Savebar
             onCancel={onBack}
             onSubmit={submit}
-            disabled={disabled || !hasChanged}
+            disabled={isSaveDisabled}
             state={saveButtonBarState}
           />
         </Container>

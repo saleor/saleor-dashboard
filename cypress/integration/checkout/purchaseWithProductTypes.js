@@ -3,21 +3,13 @@
 
 import faker from "faker";
 
-import { createAttribute } from "../../support/api/requests/Attribute";
-import { createCategory } from "../../support/api/requests/Category";
 import {
   checkoutShippingAddressUpdate,
-  checkoutShippingMethodUpdate,
   checkoutVariantsUpdate,
   completeCheckout,
   createCheckout
 } from "../../support/api/requests/Checkout";
 import { getOrder } from "../../support/api/requests/Order";
-import {
-  createDigitalContent,
-  createTypeProduct
-} from "../../support/api/requests/ProductType";
-import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import {
   addPayment,
   createAndCompleteCheckoutWithoutShipping,
@@ -25,110 +17,46 @@ import {
   getShippingMethodIdFromCheckout,
   updateShippingInCheckout
 } from "../../support/api/utils/ordersUtils";
-import {
-  addDigitalContentAndUpdateProductType,
-  createProductInChannel,
-  deleteProductsStartsWith
-} from "../../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith
-} from "../../support/api/utils/shippingUtils";
+import { createDigitalAndPhysicalProductWithNewDataAndDefaultChannel } from "../../support/api/utils/products/productsUtils";
 import filterTests from "../../support/filterTests";
 
-filterTests({ definedTags: ["all", "critical"] }, () => {
-  describe("Purchase products with all products types", () => {
+filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
+  describe("As an unlogged customer I want to order physical and digital products", () => {
     const startsWith = `CyPurchaseByType`;
-    const name = `${startsWith}${faker.datatype.number()}`;
     const email = `${startsWith}@example.com`;
     const testsMessage = "Check order status";
+    const digitalName = `${startsWith}${faker.datatype.number()}`;
+    const physicalName = `${startsWith}${faker.datatype.number()}`;
     const { softExpect } = chai;
 
     let defaultChannel;
     let address;
-    let warehouse;
-    let attribute;
-    let category;
     let shippingMethod;
-    let createProductData;
+    let digitalVariants;
+    let physicalVariants;
 
     before(() => {
       cy.clearSessionData().loginUserViaRequest();
-      deleteProductsStartsWith(startsWith);
-      deleteShippingStartsWith(startsWith);
-      getDefaultChannel().then(channelResp => (defaultChannel = channelResp));
-      cy.fixture("addresses")
-        .then(addresses => {
-          address = addresses.usAddress;
-          createShipping({
-            channelId: defaultChannel.id,
-            name,
-            address,
-            price: 10
-          });
-        })
-        .then(
-          ({
-            warehouse: warehouseResp,
-            shippingMethod: shippingMethodResp
-          }) => {
-            warehouse = warehouseResp;
-            shippingMethod = shippingMethodResp;
-          }
-        );
-      createAttribute({ name })
-        .then(attributeResp => {
-          attribute = attributeResp;
-          createCategory({ name });
-        })
-        .then(categoryResp => {
-          category = categoryResp;
-        });
+      createDigitalAndPhysicalProductWithNewDataAndDefaultChannel({
+        physicalProductName: physicalName,
+        digitalProductName: digitalName
+      }).then(resp => {
+        defaultChannel = resp.defaultChannel;
+        address = resp.address;
+        shippingMethod = resp.shippingMethod;
+        digitalVariants = resp.digitalVariants;
+        physicalVariants = resp.physicalVariants;
+      });
     });
 
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      createProductData = {
-        channelId: defaultChannel.id,
-        warehouseId: warehouse.id,
-        quantityInWarehouse: 10,
-        attributeId: attribute.id,
-        categoryId: category.id,
-        price: 10
-      };
-    });
-
-    it("should purchase digital product", () => {
-      const digitalName = `${startsWith}${faker.datatype.number()}`;
-      let variants;
-
-      createTypeProduct({
-        name: digitalName,
-        attributeId: attribute.id,
-        shippable: false
+    it("should purchase digital product as unlogged customer. TC: SALEOR_0402", () => {
+      createAndCompleteCheckoutWithoutShipping({
+        channelSlug: defaultChannel.slug,
+        email,
+        billingAddress: address,
+        variantsList: digitalVariants,
+        auth: "token"
       })
-        .then(productType => {
-          createProductData.name = digitalName;
-          createProductData.productTypeId = productType.id;
-          createProductInChannel(createProductData);
-        })
-        .then(({ variantsList }) => {
-          variants = variantsList;
-          addDigitalContentAndUpdateProductType(
-            variants[0].id,
-            createProductData.productTypeId,
-            defaultChannel.id
-          );
-        })
-        .then(() => {
-          createAndCompleteCheckoutWithoutShipping({
-            channelSlug: defaultChannel.slug,
-            email,
-            billingAddress: address,
-            variantsList: variants,
-            auth: "token"
-          });
-        })
         .then(({ order }) => {
           getOrder(order.id);
         })
@@ -141,27 +69,14 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         });
     });
 
-    it("should purchase physical product", () => {
-      const physicalName = `${startsWith}${faker.datatype.number()}`;
-      createTypeProduct({
-        name: physicalName,
-        attributeId: attribute.id,
-        shippable: true
+    it("should purchase physical product as unlogged customer. TC: SALEOR_0403", () => {
+      createWaitingForCaptureOrder({
+        channelSlug: defaultChannel.slug,
+        email,
+        variantsList: physicalVariants,
+        shippingMethodName: shippingMethod.name,
+        address
       })
-        .then(productType => {
-          createProductData.name = physicalName;
-          createProductData.productTypeId = productType.id;
-          createProductInChannel(createProductData);
-        })
-        .then(({ variantsList }) => {
-          createWaitingForCaptureOrder({
-            channelSlug: defaultChannel.slug,
-            email,
-            variantsList,
-            shippingMethodName: shippingMethod.name,
-            address
-          });
-        })
         .then(({ order }) => {
           getOrder(order.id);
         })
@@ -174,52 +89,22 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         });
     });
 
-    it("should purchase multiple products with all product types", () => {
-      const physicalName = `${startsWith}${faker.datatype.number()}`;
-      const digitalName = `${startsWith}${faker.datatype.number()}`;
-      let digitalProductVariantsList;
+    it("should purchase multiple products with all product types as unlogged customer. TC: SALEOR_0404", () => {
       let checkout;
-      createTypeProduct({
-        name: digitalName,
-        attributeId: attribute.id,
-        shippable: false
+
+      createCheckout({
+        channelSlug: defaultChannel.slug,
+        email,
+        variantsList: digitalVariants,
+        billingAddress: address,
+        auth: "token"
       })
-        .then(productType => {
-          createProductData.name = digitalName;
-          createProductData.productTypeId = productType.id;
-          createProductInChannel(createProductData);
-        })
-        .then(({ variantsList }) => {
-          digitalProductVariantsList = variantsList;
-          createDigitalContent(variantsList[0].id);
-        })
-        .then(() => {
-          createCheckout({
-            channelSlug: defaultChannel.slug,
-            email,
-            variantsList: digitalProductVariantsList,
-            billingAddress: address,
-            auth: "token"
-          });
-        })
         .then(({ checkout: checkoutResp }) => {
           checkout = checkoutResp;
           addPayment(checkout.id);
         })
         .then(() => {
-          createTypeProduct({
-            name: physicalName,
-            attributeId: attribute.id,
-            shippable: true
-          });
-        })
-        .then(productType => {
-          createProductData.name = physicalName;
-          createProductData.productTypeId = productType.id;
-          createProductInChannel(createProductData);
-        })
-        .then(({ variantsList }) => {
-          checkoutVariantsUpdate(checkout.id, variantsList);
+          checkoutVariantsUpdate(checkout.id, physicalVariants);
         })
         .then(() => {
           const shippingMethodId = getShippingMethodIdFromCheckout(

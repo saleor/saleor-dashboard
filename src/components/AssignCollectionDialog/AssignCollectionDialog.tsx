@@ -9,7 +9,7 @@ import AssignContainerDialog, {
 import { messages } from "./messages";
 
 interface AssignCollectionDialogProps
-  extends Omit<AssignContainerDialogProps, "containers" | "title" | "search"> {
+  extends Omit<AssignContainerDialogProps, "containers" | "labels"> {
   collections: RelayToFlat<SearchCollectionsQuery["search"]>;
 }
 
@@ -22,13 +22,14 @@ const AssignCollectionDialog: React.FC<AssignCollectionDialogProps> = ({
   return (
     <AssignContainerDialog
       containers={collections}
-      search={{
+      labels={{
+        title: intl.formatMessage(messages.assignCollectionDialogHeader),
         label: intl.formatMessage(messages.assignCollectionDialogLabel),
         placeholder: intl.formatMessage(
           messages.assignCollectionDialogPlaceholder
-        )
+        ),
+        confirmBtn: intl.formatMessage(messages.confirmBtn)
       }}
-      title={intl.formatMessage(messages.assignCollectionDialogHeader)}
       {...rest}
     />
   );

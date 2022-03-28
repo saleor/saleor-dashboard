@@ -148,7 +148,7 @@ export function createVariant({
   productId,
   sku,
   warehouseId,
-  quantityInWarehouse,
+  quantityInWarehouse = 1,
   channelId,
   attributeId,
   price = 1,

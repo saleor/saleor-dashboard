@@ -5,11 +5,12 @@ import { PERMISSIONS_OPTIONS } from "../fixtures/permissionsUsers";
 import filterTests from "../support/filterTests";
 import * as permissionsSteps from "../support/pages/permissionsPage";
 
-describe("Navigation for users with different permissions", () => {
+describe("As a staff user I want to navigate through shop using different permissions", () => {
   Object.keys(PERMISSIONS_OPTIONS).forEach(key => {
-    const tags = key === "all" ? ["critical", "all"] : ["all"];
+    const tags =
+      key === "all" ? ["critical", "all", "refactored"] : ["all", "refactored"];
     filterTests({ definedTags: tags }, () => {
-      it(`should navigate as an user with ${key} permission`, () => {
+      it(`should be able to navigate through shop as a staff member using ${key} permission. ${PERMISSIONS_OPTIONS[key].testCase}`, () => {
         const permissionOption = PERMISSIONS_OPTIONS[key];
         const permissions = permissionOption.permissions;
         cy.clearSessionData();

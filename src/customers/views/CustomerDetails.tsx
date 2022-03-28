@@ -137,7 +137,13 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
       <ActionDialog
         confirmButtonState={removeCustomerOpts.status}
         onClose={() => navigate(customerUrl(id), { replace: true })}
-        onConfirm={() => removeCustomer()}
+        onConfirm={() =>
+          removeCustomer({
+            variables: {
+              id
+            }
+          })
+        }
         title={intl.formatMessage({
           defaultMessage: "Delete Customer",
           description: "dialog header"

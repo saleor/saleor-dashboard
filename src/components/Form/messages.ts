@@ -2,20 +2,23 @@ import { defineMessages } from "react-intl";
 
 export const exitFormPromptMessages = defineMessages({
   title: {
-    defaultMessage: "Are you sure you want to leave?",
+    defaultMessage: "Would you like to save changes?",
     description: "ExitFormPrompt title"
   },
-  description: {
-    defaultMessage:
-      "You have unsaved changes on this view. What would you like to do with them?",
-    description: "ExitFormPrompt description"
+  unableToSaveTitle: {
+    defaultMessage: "You have unsaved changes",
+    description: "ExitFormPrompt title"
   },
   cancelButton: {
-    defaultMessage: "leave without saving",
+    defaultMessage: "Discard changes",
     description: "ExitFormPrompt cancel button"
   },
   confirmButton: {
-    defaultMessage: "save & continue",
+    defaultMessage: "Save changes",
     description: "ExitFormPrompt confirm button"
+  },
+  continueEditingButton: {
+    defaultMessage: "Continue editing",
+    description: "ExitFormPrompt continue editing button"
   }
 });

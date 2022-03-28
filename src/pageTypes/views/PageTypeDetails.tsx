@@ -50,16 +50,19 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
   const attributeListActions = useBulkActions();
   const intl = useIntl();
 
+  const notifySaved = () =>
+    notify({
+      status: "success",
+      text: intl.formatMessage(commonMessages.savedChanges)
+    });
+
   const [updatePageType, updatePageTypeOpts] = usePageTypeUpdateMutation({
     onCompleted: updateData => {
       if (
         !updateData.pageTypeUpdate.errors ||
         updateData.pageTypeUpdate.errors.length === 0
       ) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
-        });
+        notifySaved();
       }
     }
   });
@@ -80,10 +83,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
     {
       onCompleted: data => {
         if (data.pageAttributeAssign.errors.length === 0) {
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges)
-          });
+          notifySaved();
           closeModal();
         }
       }
@@ -104,7 +104,13 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
       }
     }
   });
-  const [reorderAttribute] = usePageTypeAttributeReorderMutation({});
+  const [reorderAttribute] = usePageTypeAttributeReorderMutation({
+    onCompleted: data => {
+      if (data.pageTypeReorderAttributes.errors.length === 0) {
+        notifySaved();
+      }
+    }
+  });
 
   const pageTypeDeleteData = usePageTypeDelete({
     singleId: id,

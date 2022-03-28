@@ -56,8 +56,13 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
   const permissionsError = getAppErrorMessage(formErrors.permissions, intl);
 
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-      {({ data, change, hasChanged, submit }) => (
+    <Form
+      confirmLeave
+      initial={initialForm}
+      onSubmit={onSubmit}
+      disabled={disabled}
+    >
+      {({ data, change, submit, isSaveDisabled }) => (
         <Container>
           <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.apps)}
@@ -96,7 +101,7 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
             />
           </Grid>
           <Savebar
-            disabled={disabled || !hasChanged}
+            disabled={isSaveDisabled}
             state={saveButtonBarState}
             onCancel={onBack}
             onSubmit={submit}

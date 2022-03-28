@@ -1,5 +1,6 @@
 import * as shippingMethodRequest from "../requests/ShippingMethod";
 import * as warehouseRequest from "../requests/Warehouse";
+import { getDefaultChannel } from "./channelsUtils";
 
 export function createShipping({
   channelId,
@@ -40,6 +41,30 @@ export function createShipping({
     })
     .then(() => ({ shippingMethod, shippingZone, warehouse }));
 }
+
+export function createShippingWithDefaultChannelAndAddress(name) {
+  let defaultChannel;
+
+  return getDefaultChannel()
+    .then(channel => {
+      defaultChannel = channel;
+      cy.fixture("addresses");
+    })
+    .then(fixtureAddresses =>
+      createShipping({
+        channelId: defaultChannel.id,
+        name,
+        address: fixtureAddresses.plAddress
+      })
+    )
+    .then(({ shippingMethod, shippingZone, warehouse }) => ({
+      shippingMethod,
+      shippingZone,
+      warehouse,
+      defaultChannel
+    }));
+}
+
 export function createShippingRate({ name, shippingZoneId }) {
   return shippingMethodRequest
     .createShippingRate({ name, shippingZone: shippingZoneId })

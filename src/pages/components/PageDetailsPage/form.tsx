@@ -97,6 +97,7 @@ export interface PageFormProps extends UsePageFormOpts {
   children: (props: UsePageUpdateFormResult) => React.ReactNode;
   page: PageDetailsFragment;
   onSubmit: (data: PageData) => SubmitPromise;
+  disabled: boolean;
 }
 
 const getInitialFormData = (page?: PageDetailsFragment): PageFormData => ({
@@ -114,6 +115,7 @@ const getInitialFormData = (page?: PageDetailsFragment): PageFormData => ({
 function usePageForm(
   page: PageDetailsFragment,
   onSubmit: (data: PageData) => SubmitPromise,
+  disabled: boolean,
   opts: UsePageFormOpts
 ): UsePageUpdateFormResult {
   const pageExists = page !== null;
@@ -138,7 +140,7 @@ function usePageForm(
     confirmLeave: true
   });
 
-  const { setExitDialogSubmitRef } = useExitFormDialog({
+  const { setExitDialogSubmitRef, setIsSubmitDisabled } = useExitFormDialog({
     formId
   });
 
@@ -238,6 +240,9 @@ function usePageForm(
 
   const valid = pageExists || !!opts.selectedPageType;
 
+  const isSaveDisabled = disabled || !hasChanged || !valid;
+  setIsSubmitDisabled(isSaveDisabled);
+
   return {
     change: handleChange,
     data: getData(),
@@ -255,7 +260,8 @@ function usePageForm(
       selectPageType: handlePageTypeSelect
     },
     hasChanged,
-    submit
+    submit,
+    isSaveDisabled
   };
 }
 
@@ -263,9 +269,10 @@ const PageForm: React.FC<PageFormProps> = ({
   children,
   page,
   onSubmit,
+  disabled,
   ...rest
 }) => {
-  const props = usePageForm(page, onSubmit, rest);
+  const props = usePageForm(page, onSubmit, disabled, rest);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };
