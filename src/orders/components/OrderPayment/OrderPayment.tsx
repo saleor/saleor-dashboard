@@ -41,6 +41,11 @@ const useStyles = makeStyles(
     },
     titleContainer: {
       display: "flex"
+    },
+    buttonContainer: {
+      "& button:not(:first-child)": {
+        marginLeft: theme.spacing(1)
+      }
     }
   }),
   { name: "OrderPayment" }
@@ -109,7 +114,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               </div>
               {maybe(() => order.status) !== OrderStatus.CANCELED &&
                 (canCapture || canRefund || canVoid || canMarkAsPaid) && (
-                  <div>
+                  <div className={classes.buttonContainer}>
                     {canCapture && (
                       <Button variant="tertiary" onClick={onCapture}>
                         <FormattedMessage {...paymentButtonMessages.capture} />
