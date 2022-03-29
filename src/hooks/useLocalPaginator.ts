@@ -66,6 +66,10 @@ export function useSectionLocalPaginationState(
     paginateBy
   );
 
+  const fallbackPaginationState = {
+    first: paginateBy
+  };
+
   useEffect(() => {
     if (section !== paginationSection) {
       setPaginationState({});
@@ -79,7 +83,7 @@ export function useSectionLocalPaginationState(
   }, [paginationState]);
 
   return [
-    section === paginationSection ? paginationState : {},
+    section === paginationSection ? paginationState : fallbackPaginationState,
     setPaginationState
   ];
 }
