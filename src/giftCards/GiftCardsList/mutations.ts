@@ -11,7 +11,7 @@ export const deleteGiftCard = gql`
 `;
 
 export const bulkDeleteGiftCard = gql`
-  mutation BulkDeleteGiftCard($ids: [ID]!) {
+  mutation BulkDeleteGiftCard($ids: [ID!]!) {
     giftCardBulkDelete(ids: $ids) {
       errors {
         ...GiftCardError

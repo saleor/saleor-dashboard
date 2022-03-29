@@ -11,7 +11,7 @@ export const deleteShippingZone = gql`
 `;
 
 export const bulkDeleteShippingZone = gql`
-  mutation BulkDeleteShippingZone($ids: [ID]!) {
+  mutation BulkDeleteShippingZone($ids: [ID!]!) {
     shippingZoneBulkDelete(ids: $ids) {
       errors {
         ...ShippingError
@@ -110,7 +110,7 @@ export const deleteShippingRate = gql`
 `;
 
 export const bulkDeleteShippingRate = gql`
-  mutation BulkDeleteShippingRate($ids: [ID]!) {
+  mutation BulkDeleteShippingRate($ids: [ID!]!) {
     shippingPriceBulkDelete(ids: $ids) {
       errors {
         ...ShippingError
@@ -149,7 +149,7 @@ export const shippingPriceExcludeProducts = gql`
 `;
 
 export const shippingPriceRemoveProductsFromExclude = gql`
-  mutation ShippingPriceRemoveProductFromExclude($id: ID!, $products: [ID]!) {
+  mutation ShippingPriceRemoveProductFromExclude($id: ID!, $products: [ID!]!) {
     shippingPriceRemoveProductFromExclude(id: $id, products: $products) {
       errors {
         ...ShippingError

@@ -101,7 +101,7 @@ export const orderDraftCancelMutation = gql`
 `;
 
 export const orderDraftBulkCancelMutation = gql`
-  mutation OrderDraftBulkCancel($ids: [ID]!) {
+  mutation OrderDraftBulkCancel($ids: [ID!]!) {
     draftOrderBulkDelete(ids: $ids) {
       errors {
         ...OrderError
@@ -383,7 +383,7 @@ export const orderLineDeleteMutation = gql`
 `;
 
 export const orderLinesAddMutation = gql`
-  mutation OrderLinesAdd($id: ID!, $input: [OrderLineCreateInput]!) {
+  mutation OrderLinesAdd($id: ID!, $input: [OrderLineCreateInput!]!) {
     orderLinesCreate(id: $id, input: $input) {
       errors {
         ...OrderError

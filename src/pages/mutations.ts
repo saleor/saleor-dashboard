@@ -44,7 +44,7 @@ export const pageRemove = gql`
 `;
 
 export const pageBulkPublish = gql`
-  mutation PageBulkPublish($ids: [ID]!, $isPublished: Boolean!) {
+  mutation PageBulkPublish($ids: [ID!]!, $isPublished: Boolean!) {
     pageBulkPublish(ids: $ids, isPublished: $isPublished) {
       errors {
         ...PageBulkPublishErrorFragment
@@ -54,7 +54,7 @@ export const pageBulkPublish = gql`
 `;
 
 export const pageBulkRemove = gql`
-  mutation PageBulkRemove($ids: [ID]!) {
+  mutation PageBulkRemove($ids: [ID!]!) {
     pageBulkDelete(ids: $ids) {
       errors {
         ...PageBulkRemoveErrorFragment

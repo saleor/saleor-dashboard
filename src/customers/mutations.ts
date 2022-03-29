@@ -96,7 +96,7 @@ export const removeCustomerAddress = gql`
 `;
 
 export const bulkRemoveCustomers = gql`
-  mutation BulkRemoveCustomers($ids: [ID]!) {
+  mutation BulkRemoveCustomers($ids: [ID!]!) {
     customerBulkDelete(ids: $ids) {
       errors {
         ...AccountError
