@@ -32,7 +32,7 @@ const OrderCustomerChangeDialog: React.FC<OrderCustomerChangeDialogProps> = prop
         <FormattedMessage {...messages.title} />
       </DialogTitle>
       <DialogContent className={classes.overflow}>
-        <Typography>
+        <Typography variant="subtitle1">
           <FormattedMessage {...messages.description} />
         </Typography>
         <FormSpacer />

@@ -9,7 +9,8 @@ export const useStyles = makeStyles(
       display: "block"
     },
     overflow: {
-      overflowY: "visible"
+      overflowY: "visible",
+      paddingTop: 0
     },
     buttonsContainer: {
       display: "flex",

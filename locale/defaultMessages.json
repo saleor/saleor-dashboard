@@ -4367,19 +4367,19 @@
   },
   "src_dot_orders_dot_components_dot_OrderCustomerChangeDialog_dot_changeAddress": {
     "context": "option label",
-    "string": "Change address"
+    "string": "Change"
   },
   "src_dot_orders_dot_components_dot_OrderCustomerChangeDialog_dot_description": {
     "context": "dialog description",
-    "string": "You have changed customer assigned to this order. What would you like to do with the shipping address?"
+    "string": "A new customer has been assigned for this order, but the address remained of a previous customer."
   },
   "src_dot_orders_dot_components_dot_OrderCustomerChangeDialog_dot_keepAddress": {
     "context": "option label",
-    "string": "Keep address"
+    "string": "Keep"
   },
   "src_dot_orders_dot_components_dot_OrderCustomerChangeDialog_dot_title": {
     "context": "dialog header",
-    "string": "Changed Customer"
+    "string": "Would you like to change address?"
   },
   "src_dot_orders_dot_components_dot_OrderCustomerNote_dot_1505053535": {
     "string": "No notes from customer"

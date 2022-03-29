@@ -2,20 +2,20 @@ import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
   title: {
-    defaultMessage: "Changed Customer",
+    defaultMessage: "Would you like to change address?",
     description: "dialog header"
   },
   description: {
     defaultMessage:
-      "You have changed customer assigned to this order. What would you like to do with the shipping address?",
+      "A new customer has been assigned for this order, but the address remained of a previous customer.",
     description: "dialog description"
   },
   keepAddress: {
-    defaultMessage: "Keep address",
+    defaultMessage: "Keep",
     description: "option label"
   },
   changeAddress: {
-    defaultMessage: "Change address",
+    defaultMessage: "Change",
     description: "option label"
   }
 });
