@@ -12986,11 +12986,11 @@ export type SearchGiftCardTagsQueryHookResult = ReturnType<typeof useSearchGiftC
 export type SearchGiftCardTagsLazyQueryHookResult = ReturnType<typeof useSearchGiftCardTagsLazyQuery>;
 export type SearchGiftCardTagsQueryResult = Apollo.QueryResult<Types.SearchGiftCardTagsQuery, Types.SearchGiftCardTagsQueryVariables>;
 export const SearchOrderVariantDocument = gql`
-    query SearchOrderVariant($channel: String!, $first: Int!, $query: String!, $after: String, $address: AddressInput) {
+    query SearchOrderVariant($channel: String!, $first: Int!, $query: String!, $after: String, $address: AddressInput, $isPublished: Boolean, $stockAvailability: StockAvailability) {
   search: products(
     first: $first
     after: $after
-    filter: {search: $query}
+    filter: {search: $query, isPublished: $isPublished, stockAvailability: $stockAvailability}
     channel: $channel
   ) {
     edges {
@@ -13059,6 +13059,8 @@ export const SearchOrderVariantDocument = gql`
  *      query: // value for 'query'
  *      after: // value for 'after'
  *      address: // value for 'address'
+ *      isPublished: // value for 'isPublished'
+ *      stockAvailability: // value for 'stockAvailability'
  *   },
  * });
  */
