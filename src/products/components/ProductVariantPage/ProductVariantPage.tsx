@@ -235,7 +235,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     <ProductVariantNavigation
                       current={variant?.id}
                       defaultVariantId={defaultVariantId}
-                      fallbackThumbnail={variant?.product?.thumbnail.url}
+                      fallbackThumbnail={variant?.product?.thumbnail?.url}
                       variants={variant?.product.variants}
                       onAdd={onAdd}
                       onRowClick={(variantId: string) => {
