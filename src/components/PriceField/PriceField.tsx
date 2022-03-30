@@ -81,7 +81,8 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
     }
 
     if (decimalPart?.length > maxDecimalLength) {
-      newValue = `${integerPart}${splitCharacter}${decimalPart.slice(0, 2)}`;
+      const shortenedDecimalPart = decimalPart.slice(0, maxDecimalLength);
+      newValue = `${integerPart}${splitCharacter}${shortenedDecimalPart}`;
     }
 
     onChange({ ...e, target: { ...e.target, value: newValue } });
