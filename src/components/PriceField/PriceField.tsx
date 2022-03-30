@@ -88,6 +88,10 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
   };
 
   const handleKeyPress: TextFieldProps["onKeyDown"] = e => {
+    // disallow entering e (exponent)
+    if (e.key === "e" || e.key === "E") {
+      e.preventDefault();
+    }
     // ignore separator input when currency doesn't support decimal values
     if (
       maxDecimalLength === 0 &&
