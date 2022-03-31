@@ -59,7 +59,11 @@ interface OrderDraftDetailsProps {
 }
 
 export const isAnyAddressEditModalOpen = (uri: string | undefined): boolean =>
-  ["edit-shipping-address", "edit-billing-address"].includes(uri);
+  [
+    "edit-shipping-address",
+    "edit-billing-address",
+    "edit-customer-address"
+  ].includes(uri);
 
 export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   id,
@@ -107,7 +111,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     variables: {
       id: order?.user?.id
     },
-    skip: !order?.user?.id
+    skip: !order?.user?.id || !isAnyAddressEditModalOpen(params.action)
   });
 
   const intl = useIntl();

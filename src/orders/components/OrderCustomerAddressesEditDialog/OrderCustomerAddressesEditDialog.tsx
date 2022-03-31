@@ -80,8 +80,9 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
   const classes = useStyles(props);
   const intl = useIntl();
 
-  const hasCustomerChanged =
-    variant === AddressEditDialogVariant.CHANGE_CUSTOMER_ADDRESS;
+  const hasCustomerChanged = variant === "CHANGE_CUSTOMER_ADDRESS";
+  const isShippingAddressEdited =
+    variant === "CHANGE_SHIPPING_ADDRESS" || hasCustomerChanged;
 
   const {
     errors: shippingValidationErrors,
@@ -118,29 +119,24 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
         ? getCustomerAddress(data.customerBillingAddress.id)
         : handleNewBillingAddressSubmit(data.billingAddress);
 
-    if (variant === AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS) {
+    if (isShippingAddressEdited) {
       return {
         shippingAddress,
         ...(data.cloneAddress && { billingAddress: shippingAddress })
       };
     }
-    if (variant === AddressEditDialogVariant.CHANGE_BILLING_ADDRESS) {
-      return {
-        ...(data.cloneAddress && { shippingAddress: billingAddress }),
-        billingAddress
-      };
-    }
+
     return {
-      shippingAddress,
-      billingAddress: data.cloneAddress ? shippingAddress : billingAddress
+      ...(data.cloneAddress && { shippingAddress: billingAddress }),
+      billingAddress
     };
   };
 
   const getDialogTitle = (): MessageDescriptor => {
-    if (variant === AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS) {
+    if (variant === "CHANGE_SHIPPING_ADDRESS") {
       return dialogMessages.shippingChangeTitle;
     }
-    if (variant === AddressEditDialogVariant.CHANGE_BILLING_ADDRESS) {
+    if (variant === "CHANGE_BILLING_ADDRESS") {
       return dialogMessages.billingChangeTitle;
     }
     return dialogMessages.customerChangeTitle;
@@ -176,11 +172,14 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     customerAddresses
   };
 
-  const getVariant = (action: AddressEditDialogVariant) => {
+  const getVariant = (
+    action: AddressEditDialogVariant
+  ): "shipping" | "billing" => {
     switch (action) {
-      case AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS:
+      case "CHANGE_CUSTOMER_ADDRESS":
+      case "CHANGE_SHIPPING_ADDRESS":
         return "shipping";
-      case AddressEditDialogVariant.CHANGE_BILLING_ADDRESS:
+      case "CHANGE_BILLING_ADDRESS":
         return "billing";
     }
   };
@@ -188,9 +187,6 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
   const exitModal = () => {
     onClose();
   };
-
-  const isShippingEdit =
-    variant === AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS;
 
   return (
     <Dialog onClose={exitModal} open={open} fullWidth>
@@ -227,12 +223,12 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                   {...addressEditProps}
                   customerAddresses={customerAddresses}
                   selectedCustomerAddressId={
-                    isShippingEdit
+                    isShippingAddressEdited
                       ? data.customerShippingAddress?.id
                       : data.customerBillingAddress?.id
                   }
                   onChangeCustomerAddress={customerAddress =>
-                    isShippingEdit
+                    isShippingAddressEdited
                       ? handlers.changeCustomerAddress(
                           customerAddress,
                           "customerShippingAddress"
@@ -263,7 +259,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                     />
                   }
                   label={intl.formatMessage(
-                    isShippingEdit
+                    isShippingAddressEdited
                       ? dialogMessages.billingSameAsShipping
                       : dialogMessages.shippingSameAsBilling
                   )}

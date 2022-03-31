@@ -26,14 +26,14 @@ interface OrderAddressFieldsProps {
   errors: OrderErrorFragment[];
 }
 
-const getVariant = (action: string) => {
+const getVariant = (action: string): AddressEditDialogVariant => {
   switch (action) {
     case "edit-customer-address":
-      return AddressEditDialogVariant.CHANGE_CUSTOMER_ADDRESS;
+      return "CHANGE_CUSTOMER_ADDRESS";
     case "edit-shipping-address":
-      return AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS;
+      return "CHANGE_SHIPPING_ADDRESS";
     case "edit-billing-address":
-      return AddressEditDialogVariant.CHANGE_BILLING_ADDRESS;
+      return "CHANGE_BILLING_ADDRESS";
     default:
       return undefined;
   }
@@ -64,9 +64,11 @@ const OrderAddressFields: React.FC<OrderAddressFieldsProps> = ({
     onConfirm
   };
 
+  const isAddressEditDialogVariantSelected = !!getVariant(action);
+
   return (
     <OrderCustomerAddressesEditDialog
-      open={!!getVariant(action)}
+      open={isAddressEditDialogVariantSelected}
       variant={getVariant(action)}
       {...addressFieldCommonProps}
     />

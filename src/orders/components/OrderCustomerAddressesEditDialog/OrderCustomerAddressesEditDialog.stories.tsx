@@ -12,7 +12,7 @@ const order = orderFixture("");
 
 const props: OrderCustomerAddressesEditDialogProps = {
   confirmButtonState: "default",
-  variant: AddressEditDialogVariant.CHANGE_CUSTOMER,
+  variant: "CHANGE_SHIPPING_ADDRESS",
   loading: false,
   onClose: () => undefined,
   onConfirm: () => undefined,
@@ -23,19 +23,9 @@ const props: OrderCustomerAddressesEditDialogProps = {
 
 storiesOf("Orders / Changing address in order", module)
   .addDecorator(Decorator)
-  .add("address change when customer is changed", () => (
-    <OrderCustomerAddressesEditDialog
-      {...props}
-      customerAddresses={[
-        order.shippingAddress,
-        { ...order.billingAddress, id: "asdfghjfuunie" }
-      ]}
-    />
-  ))
   .add("shipping address change", () => (
     <OrderCustomerAddressesEditDialog
       {...props}
-      variant={AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS}
       customerAddresses={[
         order.shippingAddress,
         { ...order.billingAddress, id: "asdfghjfuunie" }
@@ -45,7 +35,7 @@ storiesOf("Orders / Changing address in order", module)
   .add("billing address change", () => (
     <OrderCustomerAddressesEditDialog
       {...props}
-      variant={AddressEditDialogVariant.CHANGE_BILLING_ADDRESS}
+      variant="CHANGE_BILLING_ADDRESS"
       customerAddresses={[
         order.shippingAddress,
         { ...order.billingAddress, id: "asdfghjfuunie" }
