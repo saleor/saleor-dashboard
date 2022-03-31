@@ -42,7 +42,7 @@ export const productDeleteMutation = gql`
 `;
 
 export const productMediaReorder = gql`
-  mutation ProductMediaReorder($productId: ID!, $mediaIds: [ID]!) {
+  mutation ProductMediaReorder($productId: ID!, $mediaIds: [ID!]!) {
     productMediaReorder(productId: $productId, mediaIds: $mediaIds) {
       errors {
         ...ProductError
@@ -385,7 +385,7 @@ export const productBulkDeleteMutation = gql`
 export const ProductVariantBulkCreateMutation = gql`
   mutation ProductVariantBulkCreate(
     $id: ID!
-    $inputs: [ProductVariantBulkCreateInput]!
+    $inputs: [ProductVariantBulkCreateInput!]!
   ) {
     productVariantBulkCreate(product: $id, variants: $inputs) {
       errors {

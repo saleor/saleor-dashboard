@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const giftCardBulkActivate = gql`
-  mutation GiftCardBulkActivate($ids: [ID]!) {
+  mutation GiftCardBulkActivate($ids: [ID!]!) {
     giftCardBulkActivate(ids: $ids) {
       errors {
         ...GiftCardError
@@ -12,7 +12,7 @@ export const giftCardBulkActivate = gql`
 `;
 
 export const giftCardBulkDeactivate = gql`
-  mutation GiftCardBulkDeactivate($ids: [ID]!) {
+  mutation GiftCardBulkDeactivate($ids: [ID!]!) {
     giftCardBulkDeactivate(ids: $ids) {
       errors {
         ...GiftCardError
