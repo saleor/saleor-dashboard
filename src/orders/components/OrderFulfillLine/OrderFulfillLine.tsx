@@ -2,73 +2,16 @@ import { TableCell, TableRow, TextField, Typography } from "@material-ui/core";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { OrderFulfillDataQuery, OrderFulfillStockInput } from "@saleor/graphql";
-import { FormChange } from "@saleor/hooks/useForm";
 import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
-import { makeStyles, Tooltip, WarningIcon } from "@saleor/macaw-ui";
+import { Tooltip, WarningIcon } from "@saleor/macaw-ui";
 import { update } from "@saleor/utils/lists";
 import classNames from "classnames";
 import React from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { Warehouse } from "../OrderChangeWarehouseDialog/types";
-
-const messages = defineMessages({
-  preorderWarning: {
-    defaultMessage:
-      "This product is still in preorder. You will be able to fulfill it after it reaches it’s release date",
-    description: "tooltip content when product is in preorder"
-  },
-  deletedVariantWarning: {
-    defaultMessage: "This variant no longer exists. You can still fulfill it.",
-    description: "tooltip content when line's variant has been deleted"
-  }
-});
-
-const useStyles = makeStyles(
-  theme => ({
-    colStock: {
-      textAlign: "right",
-      width: 180
-    },
-    colName: {
-      width: 250
-    },
-    colQuantity: {
-      textAlign: "right",
-      width: 210
-    },
-    colSku: {
-      textAlign: "right",
-      textOverflow: "ellipsis",
-      width: 150
-    },
-    warningIcon: {
-      color: theme.palette.saleor.warning.mid,
-      marginRight: theme.spacing(2)
-    },
-    error: {
-      color: theme.palette.error.main
-    },
-    warning: {
-      color: theme.palette.warning.main,
-      borderColor: theme.palette.warning.main + " !important"
-    },
-    quantityInnerInput: {
-      paddingBottom: theme.spacing(2),
-      paddingTop: theme.spacing(2)
-    },
-    quantityInnerInputNoRemaining: {
-      paddingRight: 0
-    },
-    remainingQuantity: {
-      paddingBottom: theme.spacing(2),
-      paddingTop: theme.spacing(2),
-      color: theme.palette.text.secondary,
-      whiteSpace: "nowrap"
-    }
-  }),
-  { name: "OrderFulfillLine" }
-);
+import { messages } from "./messages";
+import { useStyles } from "./styles";
 
 interface OrderFulfillLineProps {
   line: OrderFulfillDataQuery["order"]["lines"][0];
