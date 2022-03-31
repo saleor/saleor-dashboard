@@ -1,10 +1,10 @@
 [main]
 host = https://www.transifex.com
 
-[saleor-1.dashboard-20-json]
-file_filter = locale/<lang>.json
+[o:saleorcommerce:p:saleor-1:r:dashboard-20-json]
+file_filter  = locale/<lang>.json
+source_file  = locale/defaultMessages.json
+source_lang  = en
+type         = STRUCTURED_JSON
 minimum_perc = 1
-source_file = locale/defaultMessages.json
-source_lang = en
-type = STRUCTURED_JSON
 
