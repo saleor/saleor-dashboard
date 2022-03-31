@@ -191,7 +191,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                           <OrderFulfillLine
                             line={line}
                             lineIndex={lineIndex}
-                            warehouse={warehouse}
+                            warehouseId={warehouse?.id}
                             formsetData={formsetData}
                             formsetChange={formsetChange}
                           />

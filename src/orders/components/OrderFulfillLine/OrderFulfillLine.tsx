@@ -8,20 +8,19 @@ import classNames from "classnames";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { Warehouse } from "../OrderChangeWarehouseDialog/types";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
 interface OrderFulfillLineProps {
   line: OrderFulfillDataQuery["order"]["lines"][0];
   lineIndex: number;
-  warehouse: Warehouse;
+  warehouseId: string;
   formsetData: FormsetData<null, OrderFulfillStockInput[]>;
   formsetChange: FormsetChange<OrderFulfillStockInput[]>;
 }
 
 export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
-  const { line, lineIndex, warehouse, formsetData, formsetChange } = props;
+  const { line, lineIndex, warehouseId, formsetData, formsetChange } = props;
   const classes = useStyles();
   const intl = useIntl();
 
@@ -34,11 +33,11 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
   const overfulfill = lineFormQuantity > line.quantityToFulfill;
 
   const warehouseStock = line.variant?.stocks?.find(
-    stock => stock.warehouse.id === warehouse.id
+    stock => stock.warehouse.id === warehouseId
   );
 
   const warehouseAllocation = line.allocations.find(
-    allocation => allocation.warehouse.id === warehouse.id
+    allocation => allocation.warehouse.id === warehouseId
   );
   const allocatedQuantityForLine = warehouseAllocation?.quantity || 0;
 
@@ -127,7 +126,7 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
               formsetChange(line.id, [
                 {
                   quantity: parseInt(event.target.value, 10),
-                  warehouse: warehouse.id
+                  warehouse: warehouseId
                 }
               ])
             }
