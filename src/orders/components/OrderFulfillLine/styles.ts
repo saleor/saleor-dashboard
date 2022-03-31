@@ -26,8 +26,8 @@ export const useStyles = makeStyles(
       color: theme.palette.error.main
     },
     warning: {
-      color: theme.palette.warning.main,
-      borderColor: theme.palette.warning.main + " !important"
+      borderColor: theme.palette.saleor.warning.dark + " !important",
+      boxShadow: `0 0 0 3px ${theme.palette.saleor.warning.light}`
     },
     quantityInnerInput: {
       paddingBottom: theme.spacing(2),
