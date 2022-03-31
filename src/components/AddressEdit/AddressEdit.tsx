@@ -93,6 +93,8 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             value={data.firstName}
             fullWidth
             InputProps={{
+              // Setting 'autoComplete: "new-password"' is the only way to
+              // disable Chrome's autofill on forms as of early 2022
               autoComplete: "new-password"
             }}
           />
