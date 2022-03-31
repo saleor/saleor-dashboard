@@ -4,7 +4,6 @@ import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { OrderFulfillDataQuery, OrderFulfillStockInput } from "@saleor/graphql";
 import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
 import { Tooltip, WarningIcon } from "@saleor/macaw-ui";
-import { update } from "@saleor/utils/lists";
 import classNames from "classnames";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -133,18 +132,12 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
               fullWidth
               value={lineFormQuantity}
               onChange={event =>
-                // check it
-                formsetChange(
-                  line.id,
-                  update(
-                    {
-                      quantity: parseInt(event.target.value, 10),
-                      warehouse: warehouse.id
-                    },
-                    formsetData[lineIndex].value,
-                    (a, b) => a.warehouse === b.warehouse
-                  )
-                )
+                formsetChange(line.id, [
+                  {
+                    quantity: parseInt(event.target.value, 10),
+                    warehouse: warehouse.id
+                  }
+                ])
               }
               error={overfulfill}
               variant="outlined"
