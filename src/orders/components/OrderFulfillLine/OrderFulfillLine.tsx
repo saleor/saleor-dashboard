@@ -25,25 +25,6 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
   const classes = useStyles();
   const intl = useIntl();
 
-  if (!line) {
-    return (
-      <TableRow key={lineIndex}>
-        <TableCellAvatar className={classes.colName}>
-          <Skeleton />
-        </TableCellAvatar>
-        <TableCell className={classes.colSku}>
-          <Skeleton />
-        </TableCell>
-        <TableCell className={classes.colQuantity}>
-          <Skeleton />
-        </TableCell>
-        <TableCell className={classes.colStock}>
-          <Skeleton />
-        </TableCell>
-      </TableRow>
-    );
-  }
-
   const isDeletedVariant = !line?.variant;
   const isPreorder = !!line.variant?.preorder;
   const lineFormQuantity = isPreorder
@@ -67,6 +48,25 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
     0 + allocatedQuantityForLine;
 
   const isStockExceeded = lineFormQuantity > availableQuantity;
+
+  if (!line) {
+    return (
+      <TableRow key={lineIndex}>
+        <TableCellAvatar className={classes.colName}>
+          <Skeleton />
+        </TableCellAvatar>
+        <TableCell className={classes.colSku}>
+          <Skeleton />
+        </TableCell>
+        <TableCell className={classes.colQuantity}>
+          <Skeleton />
+        </TableCell>
+        <TableCell className={classes.colStock}>
+          <Skeleton />
+        </TableCell>
+      </TableRow>
+    );
+  }
 
   return (
     <TableRow key={line.id}>
