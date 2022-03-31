@@ -139,7 +139,7 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
                     notchedOutline: classes.warning
                   })
               },
-              endAdornment: line.variant?.trackInventory && (
+              endAdornment: (
                 <div className={classes.remainingQuantity}>
                   / {line.quantityToFulfill}
                 </div>
