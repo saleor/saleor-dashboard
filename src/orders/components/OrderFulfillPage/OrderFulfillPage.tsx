@@ -194,7 +194,6 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                             warehouse={warehouse}
                             formsetData={formsetData}
                             formsetChange={formsetChange}
-                            formChange={change}
                           />
                         )
                       )}

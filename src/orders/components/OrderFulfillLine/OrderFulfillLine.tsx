@@ -1,10 +1,16 @@
 import { TableCell, TableRow, TextField, Typography } from "@material-ui/core";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import { OrderFulfillDataQuery, OrderFulfillStockInput } from "@saleor/graphql";
+import { FormChange } from "@saleor/hooks/useForm";
+import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
 import { makeStyles, Tooltip, WarningIcon } from "@saleor/macaw-ui";
+import { update } from "@saleor/utils/lists";
 import classNames from "classnames";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
+
+import { Warehouse } from "../OrderChangeWarehouseDialog/types";
 
 const messages = defineMessages({
   preorderWarning: {
@@ -65,23 +71,15 @@ const useStyles = makeStyles(
 );
 
 interface OrderFulfillLineProps {
-  line: any;
+  line: OrderFulfillDataQuery["order"]["lines"][0];
   lineIndex: number;
-  warehouse: any;
-  formsetData: any;
-  formsetChange: any;
-  formChange: any;
+  warehouse: Warehouse;
+  formsetData: FormsetData<null, OrderFulfillStockInput[]>;
+  formsetChange: FormsetChange<OrderFulfillStockInput[]>;
 }
 
 export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
-  const {
-    line,
-    lineIndex,
-    warehouse,
-    formsetData,
-    formsetChange,
-    formChange
-  } = props;
+  const { line, lineIndex, warehouse, formsetData, formsetChange } = props;
   const classes = useStyles();
   const intl = useIntl();
 
@@ -195,7 +193,7 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
                 // check it
                 formsetChange(
                   line.id,
-                  formChange(
+                  update(
                     {
                       quantity: parseInt(event.target.value, 10),
                       warehouse: warehouse.id
