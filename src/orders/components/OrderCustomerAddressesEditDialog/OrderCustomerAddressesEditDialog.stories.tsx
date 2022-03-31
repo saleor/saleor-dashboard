@@ -6,7 +6,6 @@ import { countries, order as orderFixture } from "../../fixtures";
 import OrderCustomerAddressesEditDialog, {
   OrderCustomerAddressesEditDialogProps
 } from ".";
-import { AddressEditDialogVariant } from "./types";
 
 const order = orderFixture("");
 
@@ -23,6 +22,16 @@ const props: OrderCustomerAddressesEditDialogProps = {
 
 storiesOf("Orders / Changing address in order", module)
   .addDecorator(Decorator)
+  .add("address change when customer is changed", () => (
+    <OrderCustomerAddressesEditDialog
+      {...props}
+      variant="CHANGE_CUSTOMER_ADDRESS"
+      customerAddresses={[
+        order.shippingAddress,
+        { ...order.billingAddress, id: "asdfghjfuunie" }
+      ]}
+    />
+  ))
   .add("shipping address change", () => (
     <OrderCustomerAddressesEditDialog
       {...props}
