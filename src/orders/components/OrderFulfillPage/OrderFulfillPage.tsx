@@ -117,17 +117,17 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
       el => el.value?.[0]?.quantity > 0
     );
 
-    const areProperlyFulfilled = formsetData
-      .filter(item => !!item?.value)
+    const overfulfill = formsetData
+      .filter(item => !!item?.value) // this can be removed after preorder is dropped
       .some(item => {
         const formQuantityFulfilled = item?.value?.[0]?.quantity;
         const quantityToFulfill = order?.lines?.find(
           line => line.id === item.id
         ).quantityToFulfill;
-        return formQuantityFulfilled <= quantityToFulfill;
+        return formQuantityFulfilled > quantityToFulfill;
       });
 
-    return areProperlyFulfilled && isAtLeastOneFulfilled;
+    return !overfulfill && isAtLeastOneFulfilled;
   };
 
   return (
