@@ -93,7 +93,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             value={data.firstName}
             fullWidth
             InputProps={{
-              autoComplete: "given-name"
+              autoComplete: "new-password"
             }}
           />
         </div>
@@ -108,7 +108,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             value={data.lastName}
             fullWidth
             InputProps={{
-              autoComplete: "family-name"
+              autoComplete: "new-password"
             }}
           />
         </div>
@@ -128,7 +128,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             value={data.companyName}
             fullWidth
             InputProps={{
-              autoComplete: "organization"
+              autoComplete: "new-password"
             }}
           />
         </div>
@@ -145,7 +145,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             value={data.phone}
             onChange={onChange}
             InputProps={{
-              autoComplete: "tel"
+              autoComplete: "new-password"
             }}
           />
         </div>
@@ -163,7 +163,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
         value={data.streetAddress1}
         fullWidth
         InputProps={{
-          autoComplete: "address-line1"
+          autoComplete: "new-password"
         }}
       />
       <FormSpacer />
@@ -179,7 +179,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
         value={data.streetAddress2}
         fullWidth
         InputProps={{
-          autoComplete: "address-line2"
+          autoComplete: "new-password"
         }}
       />
       <FormSpacer />
@@ -197,7 +197,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             value={data.city}
             fullWidth
             InputProps={{
-              autoComplete: "address-level2"
+              autoComplete: "new-password"
             }}
           />
         </div>
@@ -214,7 +214,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             value={data.postalCode}
             fullWidth
             InputProps={{
-              autoComplete: "postal-code"
+              autoComplete: "new-password"
             }}
           />
         </div>
@@ -251,7 +251,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             value={data.countryArea}
             fullWidth
             InputProps={{
-              autoComplete: "address-level1"
+              autoComplete: "new-password"
             }}
           />
         </div>
