@@ -4652,9 +4652,13 @@
     "context": "button",
     "string": "Finalize"
   },
-  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_deletedVariantWarning": {
+  "src_dot_orders_dot_components_dot_OrderFulfillLine_dot_deletedVariantWarning": {
     "context": "tooltip content when line's variant has been deleted",
     "string": "This variant no longer exists. You can still fulfill it."
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillLine_dot_preorderWarning": {
+    "context": "tooltip content when product is in preorder",
+    "string": "This product is still in preorder. You will be able to fulfill it after it reaches it’s release date"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_fulfillingFrom": {
     "context": "Support text under page header",
@@ -4679,10 +4683,6 @@
   "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_noStock": {
     "context": "no variant stock in warehouse",
     "string": "No Stock"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_preorderWarning": {
-    "context": "tooltip content when product is in preorder",
-    "string": "This product is still in preorder. You will be able to fulfill it after it reaches it’s release date"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_productName": {
     "context": "name",
