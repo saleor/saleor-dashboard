@@ -1,7 +1,7 @@
-import { OrderFulfillDataQuery } from "@saleor/graphql";
+import { FulfillmentOrderLineFragment } from "@saleor/graphql";
 
 export const getDefaultFulfillmentValue = (
-  line: OrderFulfillDataQuery["order"]["lines"][0],
+  line: FulfillmentOrderLineFragment,
   warehouseId: string
 ) => {
   const isDeletedVariant = !line?.variant;

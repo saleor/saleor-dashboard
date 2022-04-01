@@ -1,7 +1,10 @@
 import { TableCell, TableRow, TextField, Typography } from "@material-ui/core";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
-import { OrderFulfillDataQuery, OrderFulfillStockInput } from "@saleor/graphql";
+import {
+  FulfillmentOrderLineFragment,
+  OrderFulfillStockInput
+} from "@saleor/graphql";
 import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
 import { Tooltip, WarningIcon } from "@saleor/macaw-ui";
 import classNames from "classnames";
@@ -12,7 +15,7 @@ import { messages } from "./messages";
 import { useStyles } from "./styles";
 
 interface OrderFulfillLineProps {
-  line: OrderFulfillDataQuery["order"]["lines"][0];
+  line: FulfillmentOrderLineFragment;
   lineIndex: number;
   warehouseId: string;
   formsetData: FormsetData<null, OrderFulfillStockInput[]>;
