@@ -63,14 +63,14 @@ jobs:
           fi
           
           gh api /repos/saleor/saleor-cloud-deployments/dispatches \
-            --input - <<< "{
-              \"event_type\": \"open-release-pull-request\",
-              \"client_payload\": {
-                \"project\": \"DASHBOARD\",
-                \"environment\": \"SANDBOX\",
-                \"version\": \"${version}\"
+            --input - <<< '{
+              "event_type": "open-release-pull-request",
+              "client_payload": {
+                "project": "DASHBOARD",
+                "environment": "SANDBOX",
+                "version": "${{ github.event.inputs.git_ref || github.ref_name }}"
               }
-            }"
+            }'
 
       - name: Notify Slack
         if: ${{ always() }}
