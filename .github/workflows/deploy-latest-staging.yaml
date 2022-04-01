@@ -55,15 +55,22 @@ jobs:
           export GITHUB_TOKEN=$( \
             curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
           )
+          
+          if [[ -n "${{ github.event.inputs.git_ref }}" ]]; then 
+            version="${{ github.event.inputs.git_ref }}"; 
+          else
+            version="$(git describe --tags)"
+          fi
+          
           gh api /repos/saleor/saleor-cloud-deployments/dispatches \
-            --input - <<< '{
-              "event_type": "open-release-pull-request",
-              "client_payload": {
-                "project": "DASHBOARD",
-                "environment": "SANDBOX",
-                "version": "${{ github.event.inputs.git_ref }}"
+            --input - <<< "{
+              \"event_type\": \"open-release-pull-request\",
+              \"client_payload\": {
+                \"project\": \"DASHBOARD\",
+                \"environment\": \"SANDBOX\",
+                \"version\": \"${version}\"
               }
-            }'
+            }"
 
       - name: Notify Slack
         if: ${{ always() }}
