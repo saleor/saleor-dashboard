@@ -20,6 +20,7 @@ import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import { TableRowLink } from "@saleor/components/TableRowLink/TableRowLink";
 import TooltipTableCellHeader from "@saleor/components/TooltipTableCellHeader";
 import { commonTooltipMessages } from "@saleor/components/TooltipTableCellHeader/messages";
 import { ProductListColumns } from "@saleor/config";
@@ -143,7 +144,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
     onNextPage,
     onPreviousPage,
     onUpdateListSettings,
-    onRowClick,
+    getRowHref,
     onSort,
     selectedChannelId,
     filterDependency
@@ -339,11 +340,11 @@ export const ProductList: React.FC<ProductListProps> = props => {
               );
 
               return (
-                <TableRow
+                <TableRowLink
                   selected={isSelected}
                   hover={!!product}
                   key={product ? product.id : "skeleton"}
-                  onClick={product && onRowClick(product.id)}
+                  href={product && getRowHref(product.id)}
                   className={classes.link}
                   data-test-id={"id-" + (product ? product?.id : "skeleton")}
                 >
@@ -472,7 +473,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                       )}
                     </TableCell>
                   </DisplayColumn>
-                </TableRow>
+                </TableRowLink>
               );
             },
             () => (

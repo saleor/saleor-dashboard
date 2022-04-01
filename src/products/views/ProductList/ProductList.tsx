@@ -408,7 +408,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
         pageInfo={pageInfo}
-        onRowClick={id => () => navigate(productUrl(id))}
+        getRowHref={id => productUrl(id)}
         onAll={resetFilters}
         toolbar={
           <IconButton
