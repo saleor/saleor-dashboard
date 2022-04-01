@@ -2,7 +2,7 @@ import { TableCell, TableRow, TextField, Typography } from "@material-ui/core";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import {
-  FulfillmentOrderLineFragment,
+  OrderFulfillLineFragment,
   OrderFulfillStockInput
 } from "@saleor/graphql";
 import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
@@ -15,7 +15,7 @@ import { messages } from "./messages";
 import { useStyles } from "./styles";
 
 interface OrderFulfillLineProps {
-  line: FulfillmentOrderLineFragment;
+  line: OrderFulfillLineFragment;
   lineIndex: number;
   warehouseId: string;
   formsetData: FormsetData<null, OrderFulfillStockInput[]>;

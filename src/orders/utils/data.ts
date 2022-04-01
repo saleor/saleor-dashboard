@@ -2,12 +2,12 @@ import { IMoney, subtractMoney } from "@saleor/components/Money";
 import {
   AddressInput,
   CountryCode,
-  FulfillmentOrderLineFragment,
   FulfillmentStatus,
   FulfillOrderMutation,
   OrderDetailsFragment,
   OrderErrorCode,
   OrderFulfillDataQuery,
+  OrderFulfillLineFragment,
   OrderLineFragment,
   OrderRefundDataQuery,
   WarehouseFragment
@@ -36,7 +36,7 @@ export interface OrderLineWithStockWarehouses {
   };
 }
 
-export function getToFulfillOrderLines(lines?: FulfillmentOrderLineFragment[]) {
+export function getToFulfillOrderLines(lines?: OrderFulfillLineFragment[]) {
   return lines?.filter(line => line.quantityToFulfill > 0) || [];
 }
 

@@ -1442,8 +1442,8 @@ export const WarehouseFragmentDoc = gql`
   name
 }
     `;
-export const FulfillmentOrderLineFragmentDoc = gql`
-    fragment FulfillmentOrderLine on OrderLine {
+export const OrderFulfillLineFragmentDoc = gql`
+    fragment OrderFulfillLine on OrderLine {
   id
   isShippingRequired
   productName
@@ -9193,12 +9193,12 @@ export const OrderFulfillDataDocument = gql`
       }
     }
     lines {
-      ...FulfillmentOrderLine
+      ...OrderFulfillLine
     }
     number
   }
 }
-    ${FulfillmentOrderLineFragmentDoc}`;
+    ${OrderFulfillLineFragmentDoc}`;
 
 /**
  * __useOrderFulfillDataQuery__

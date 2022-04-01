@@ -17,9 +17,9 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import {
-  FulfillmentOrderLineFragment,
   FulfillOrderMutation,
   OrderFulfillDataQuery,
+  OrderFulfillLineFragment,
   OrderFulfillStockInput,
   ShopOrderSettingsFragment
 } from "@saleor/graphql";
@@ -185,7 +185,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                     <TableBody>
                       {renderCollection(
                         getToFulfillOrderLines(order?.lines),
-                        (line: FulfillmentOrderLineFragment, lineIndex) => (
+                        (line: OrderFulfillLineFragment, lineIndex) => (
                           <OrderFulfillLine
                             line={line}
                             lineIndex={lineIndex}

@@ -341,7 +341,7 @@ export const fragmentShopOrderSettings = gql`
 `;
 
 export const fragmentOrderFulfillLine = gql`
-  fragment FulfillmentOrderLine on OrderLine {
+  fragment OrderFulfillLine on OrderLine {
     id
     isShippingRequired
     productName

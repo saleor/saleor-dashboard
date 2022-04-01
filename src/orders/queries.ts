@@ -130,7 +130,7 @@ export const orderFulfillData = gql`
         }
       }
       lines {
-        ...FulfillmentOrderLine
+        ...OrderFulfillLine
       }
       number
     }
