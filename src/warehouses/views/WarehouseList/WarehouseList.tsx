@@ -162,7 +162,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
         onRemove={id => openModal("delete", { id })}
         onSort={handleSort}
         onUpdateListSettings={updateListSettings}
-        onRowClick={id => () => navigate(warehouseUrl(id))}
+        getRowHref={id => warehouseUrl(id)}
         sort={getSortParams(params)}
       />
       <WarehouseDeleteDialog

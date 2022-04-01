@@ -10,6 +10,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
+import { TableRowLink } from "@saleor/components/TableRowLink/TableRowLink";
 import { WarehouseWithShippingFragment } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
@@ -77,7 +78,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
     onPreviousPage,
     onUpdateListSettings,
     onRemove,
-    onRowClick,
+    getRowHref,
     onSort
   } = props;
 
@@ -126,10 +127,10 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
         {renderCollection(
           warehouses,
           warehouse => (
-            <TableRow
+            <TableRowLink
+              href={warehouse && getRowHref(warehouse.id)}
               className={classes.tableRow}
               hover={!!warehouse}
-              onClick={warehouse ? onRowClick(warehouse.id) : undefined}
               key={warehouse ? warehouse.id : "skeleton"}
               data-test-id={
                 "warehouse-entry-" +
@@ -166,7 +167,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
                   </IconButton>
                 </div>
               </TableCell>
-            </TableRow>
+            </TableRowLink>
           ),
           () => (
             <TableRow data-test-id="empty-list-message">
