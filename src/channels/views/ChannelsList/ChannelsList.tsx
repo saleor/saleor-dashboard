@@ -100,7 +100,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
         limits={limitOpts.data?.shop.limits}
         navigateToChannelCreate={navigateToChannelCreate}
         onBack={() => navigate(configurationMenuUrl)}
-        onRowClick={id => () => navigate(channelUrl(id))}
+        getRowHref={id => channelUrl(id)}
         onRemove={id =>
           openModal("remove", {
             id

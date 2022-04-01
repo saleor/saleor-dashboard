@@ -12,7 +12,7 @@ const props: ChannelsListPageProps = {
   navigateToChannelCreate: () => undefined,
   onBack: () => undefined,
   onRemove: () => undefined,
-  onRowClick: () => undefined
+  getRowHref: () => ""
 };
 
 storiesOf("Views / Channels / Channels list", module)

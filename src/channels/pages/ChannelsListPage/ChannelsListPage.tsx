@@ -11,6 +11,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
+import { TableRowLink } from "@saleor/components/TableRowLink/TableRowLink";
 import { ChannelDetailsFragment, RefreshLimitsQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
@@ -26,7 +27,7 @@ export interface ChannelsListPageProps {
   limits: RefreshLimitsQuery["shop"]["limits"];
   navigateToChannelCreate: () => void;
   onBack: () => void;
-  onRowClick: (id: string) => () => void;
+  getRowHref: (id: string) => string;
   onRemove: (id: string) => void;
 }
 
@@ -38,7 +39,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
   navigateToChannelCreate,
   onBack,
   onRemove,
-  onRowClick
+  getRowHref
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -110,11 +111,11 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
             {renderCollection(
               channelsList,
               channel => (
-                <TableRow
+                <TableRowLink
                   hover={!!channel}
                   key={channel ? channel.id : "skeleton"}
                   className={classes.tableRow}
-                  onClick={!!channel ? onRowClick(channel.id) : undefined}
+                  href={channel && getRowHref(channel.id)}
                 >
                   <TableCell className={classes.colName}>
                     <span data-test-id="name">
@@ -136,7 +137,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
                       </IconButton>
                     )}
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               ),
               () => (
                 <TableRow>
