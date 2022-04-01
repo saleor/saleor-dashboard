@@ -54,7 +54,7 @@ export interface CustomAppDetailsPageProps {
   ) => SubmitPromise<AppErrorFragment[]>;
   onWebhookCreate: () => void;
   onWebhookRemove: (id: string) => void;
-  navigateToWebhookDetails: (id: string) => () => void;
+  getWebhookUrl: (id: string) => string;
   onAppActivateOpen: () => void;
   onAppDeactivateOpen: () => void;
 }
@@ -67,7 +67,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
     permissions,
     saveButtonBarState,
     app,
-    navigateToWebhookDetails,
+    getWebhookUrl,
     token,
     onApiUriClick,
     onBack,
@@ -162,7 +162,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
               <WebhooksList
                 webhooks={webhooks}
                 onRemove={onWebhookRemove}
-                onRowClick={navigateToWebhookDetails}
+                getRowHref={getWebhookUrl}
                 onCreate={app?.isActive && onWebhookCreate}
               />
             </div>

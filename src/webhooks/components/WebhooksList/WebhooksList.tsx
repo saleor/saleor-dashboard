@@ -9,6 +9,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
+import { TableRowLink } from "@saleor/components/TableRowLink/TableRowLink";
 import { AppQuery } from "@saleor/graphql";
 import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
@@ -22,14 +23,14 @@ import { useStyles } from "./styles";
 export interface WebhooksListProps {
   webhooks: AppQuery["app"]["webhooks"];
   onRemove: (id: string) => void;
-  onRowClick: (id: string) => () => void;
+  getRowHref: (id: string) => string;
   onCreate?: () => void;
 }
 
 const WebhooksList: React.FC<WebhooksListProps> = ({
   webhooks,
   onCreate,
-  onRowClick,
+  getRowHref,
   onRemove
 }) => {
   const intl = useIntl();
@@ -81,10 +82,10 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
           {renderCollection(
             webhooks,
             webhook => (
-              <TableRow
+              <TableRowLink
                 hover={!!webhook}
                 className={!!webhook ? classes.tableRow : undefined}
-                onClick={webhook ? onRowClick(webhook.id) : undefined}
+                href={webhook && getRowHref(webhook.id)}
                 key={webhook ? webhook.id : "skeleton"}
               >
                 <TableCell
@@ -113,7 +114,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
                     <DeleteIcon />
                   </IconButton>
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
             () => (
               <TableRow>

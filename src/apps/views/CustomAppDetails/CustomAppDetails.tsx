@@ -225,7 +225,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
         disabled={loading}
         errors={updateAppOpts.data?.appUpdate?.errors || []}
         token={token}
-        navigateToWebhookDetails={id => () => navigate(webhookPath(id))}
+        getWebhookUrl={id => webhookPath(id)}
         onApiUriClick={() => open(API_URI, "blank")}
         onBack={handleBack}
         onSubmit={handleSubmit}
