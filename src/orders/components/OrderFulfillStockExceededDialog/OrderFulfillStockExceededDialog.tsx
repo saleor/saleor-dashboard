@@ -10,10 +10,9 @@ import { CardSpacer } from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import { OrderFulfillDataQuery, OrderFulfillStockInput } from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { renderCollection } from "@saleor/misc";
-import { OrderFulfillData_order_lines } from "@saleor/orders/types/OrderFulfillData";
-import { OrderFulfillStockInput } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -22,7 +21,7 @@ import { stockExceededDialogMessages as messages } from "./messages";
 import { useStyles } from "./styles";
 
 export interface OrderFulfillStockExceededDialogProps {
-  lines: OrderFulfillData_order_lines[];
+  lines: OrderFulfillDataQuery["order"]["lines"];
   open: boolean;
   formsetData: FormsetData<null, OrderFulfillStockInput[]>;
   onSubmit();
