@@ -1436,6 +1436,54 @@ export const ShopOrderSettingsFragmentDoc = gql`
   fulfillmentAllowUnpaid
 }
     `;
+export const WarehouseFragmentDoc = gql`
+    fragment Warehouse on Warehouse {
+  id
+  name
+}
+    `;
+export const FulfillmentOrderLineFragmentDoc = gql`
+    fragment FulfillmentOrderLine on OrderLine {
+  id
+  isShippingRequired
+  productName
+  quantity
+  allocations {
+    quantity
+    warehouse {
+      id
+    }
+  }
+  quantityFulfilled
+  quantityToFulfill
+  variant {
+    id
+    name
+    sku
+    preorder {
+      endDate
+    }
+    attributes {
+      values {
+        id
+        name
+      }
+    }
+    stocks {
+      id
+      warehouse {
+        ...Warehouse
+      }
+      quantity
+      quantityAllocated
+    }
+    trackInventory
+  }
+  thumbnail(size: 64) {
+    url
+  }
+}
+    ${WarehouseFragmentDoc}`;
 export const PageTypeFragmentDoc = gql`
     fragment PageType on PageType {
   id
@@ -2571,12 +2619,6 @@ export const AttributeValueTranslatableContentFragmentDoc = gql`
   }
 }
     ${AttributeChoicesTranslationFragmentDoc}`;
-export const WarehouseFragmentDoc = gql`
-    fragment Warehouse on Warehouse {
-  id
-  name
-}
-    `;
 export const WarehouseWithShippingFragmentDoc = gql`
     fragment WarehouseWithShipping on Warehouse {
   ...Warehouse
@@ -9151,49 +9193,12 @@ export const OrderFulfillDataDocument = gql`
       }
     }
     lines {
-      id
-      isShippingRequired
-      productName
-      quantity
-      allocations {
-        quantity
-        warehouse {
-          id
-        }
-      }
-      quantityFulfilled
-      quantityToFulfill
-      variant {
-        id
-        name
-        sku
-        preorder {
-          endDate
-        }
-        attributes {
-          values {
-            id
-            name
-          }
-        }
-        stocks {
-          id
-          warehouse {
-            ...Warehouse
-          }
-          quantity
-          quantityAllocated
-        }
-        trackInventory
-      }
-      thumbnail(size: 64) {
-        url
-      }
+      ...FulfillmentOrderLine
     }
     number
   }
 }
-    ${WarehouseFragmentDoc}`;
+    ${FulfillmentOrderLineFragmentDoc}`;
 
 /**
  * __useOrderFulfillDataQuery__

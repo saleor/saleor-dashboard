@@ -339,3 +339,46 @@ export const fragmentShopOrderSettings = gql`
     fulfillmentAllowUnpaid
   }
 `;
+
+export const fragmentOrderFulfillLine = gql`
+  fragment FulfillmentOrderLine on OrderLine {
+    id
+    isShippingRequired
+    productName
+    quantity
+    allocations {
+      quantity
+      warehouse {
+        id
+      }
+    }
+    quantityFulfilled
+    quantityToFulfill
+    variant {
+      id
+      name
+      sku
+      preorder {
+        endDate
+      }
+      attributes {
+        values {
+          id
+          name
+        }
+      }
+      stocks {
+        id
+        warehouse {
+          ...Warehouse
+        }
+        quantity
+        quantityAllocated
+      }
+      trackInventory
+    }
+    thumbnail(size: 64) {
+      url
+    }
+  }
+`;
