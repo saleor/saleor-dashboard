@@ -11,6 +11,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import { TableRowLink } from "@saleor/components/TableRowLink/TableRowLink";
 import { ProductTypeFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { ProductTypeListUrlSortField } from "@saleor/productTypes/urls";
@@ -60,7 +61,7 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
     pageInfo,
     onNextPage,
     onPreviousPage,
-    onRowClick,
+    getRowHref,
     onSort,
     isChecked,
     selected,
@@ -138,11 +139,11 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
           productType => {
             const isSelected = productType ? isChecked(productType.id) : false;
             return (
-              <TableRow
+              <TableRowLink
                 className={!!productType ? classes.link : undefined}
                 hover={!!productType}
                 key={productType ? productType.id : "skeleton"}
-                onClick={productType ? onRowClick(productType.id) : undefined}
+                href={getRowHref(productType.id)}
                 selected={isSelected}
                 data-test-id={"id-" + maybe(() => productType.id)}
               >
@@ -202,7 +203,7 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
                     <Skeleton />
                   )}
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             );
           },
           () => (

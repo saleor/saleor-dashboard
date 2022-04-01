@@ -191,7 +191,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
         onBack={() => navigate(configurationMenuUrl)}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
-        onRowClick={id => () => navigate(productTypeUrl(id))}
+        getRowHref={id => productTypeUrl(id)}
         onSort={handleSort}
         isChecked={isSelected}
         selected={selectedProductTypes.length}
