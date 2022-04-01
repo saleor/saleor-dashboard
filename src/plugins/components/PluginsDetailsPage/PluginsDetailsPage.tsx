@@ -142,7 +142,6 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                       <>
                         <CardSpacer />
                         <PluginAuthorization
-                          data={data.configuration}
                           fields={selectedConfig.configuration}
                           onClear={onClear}
                           onEdit={onEdit}

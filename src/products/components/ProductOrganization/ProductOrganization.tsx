@@ -12,6 +12,7 @@ import SingleAutocompleteSelectField, {
 } from "@saleor/components/SingleAutocompleteSelectField";
 import { ProductErrorFragment } from "@saleor/graphql";
 import { ChangeEvent } from "@saleor/hooks/useForm";
+import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import { productTypeUrl } from "@saleor/productTypes/urls";
@@ -132,28 +133,24 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
             <Typography className={classes.label} variant="caption">
               <FormattedMessage defaultMessage="Product Type" />
             </Typography>
-            <Link
-              href={productTypeUrl(productType?.id) ?? ""}
-              disabled={!productType?.id}
-            >
-              {productType?.name ?? "..."}
-            </Link>
+            <Typography>
+              <Link
+                href={productTypeUrl(productType?.id) ?? ""}
+                disabled={!productType?.id}
+              >
+                {productType?.name ?? "..."}
+              </Link>
+            </Typography>
             <CardSpacer />
             <Typography className={classes.label} variant="caption">
-              <FormattedMessage defaultMessage="Product Type" />
+              <FormattedMessage defaultMessage="Configurable" />
             </Typography>
             <Typography>
               {maybe(
                 () =>
                   productType.hasVariants
-                    ? intl.formatMessage({
-                        defaultMessage: "Configurable",
-                        description: "product is configurable"
-                      })
-                    : intl.formatMessage({
-                        defaultMessage: "Simple",
-                        description: "product is not configurable"
-                      }),
+                    ? intl.formatMessage(commonMessages.yes)
+                    : intl.formatMessage(commonMessages.no),
                 "..."
               )}
             </Typography>

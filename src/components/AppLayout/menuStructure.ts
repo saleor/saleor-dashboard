@@ -248,7 +248,10 @@ function useMenuStructure(
     const userPermissions = (user?.userPermissions || []).map(
       permission => permission.code
     );
-    return (menuItem.permissions || []).every(permission =>
+    if (!menuItem?.permissions) {
+      return true;
+    }
+    return menuItem.permissions.some(permission =>
       userPermissions.includes(permission)
     );
   };
@@ -259,12 +262,10 @@ function useMenuStructure(
   return [
     menuItems.reduce(
       (resultItems: FilterableMenuItem[], menuItem: FilterableMenuItem) => {
-        const { children } = menuItem;
-
         if (!isMenuItemPermitted(menuItem)) {
           return resultItems;
         }
-
+        const { children } = menuItem;
         const filteredChildren = children
           ? getFilteredMenuItems(children)
           : undefined;

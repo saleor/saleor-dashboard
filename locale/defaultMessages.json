@@ -430,7 +430,7 @@
     "string": "Taxes"
   },
   "productTypeTaxesInputLabel": {
-    "string": "Taxes"
+    "string": "Tax group"
   },
   "productVariantCreatePricesSetPricePlaceholder": {
     "context": "input label",
@@ -622,6 +622,9 @@
   "src_dot_apps_dot_components_dot_AppDetailsPage_dot_85811128": {
     "context": "section header",
     "string": "About this app"
+  },
+  "src_dot_apps_dot_components_dot_AppFrame_dot_29277312": {
+    "string": "You are about to leave the Dashboard. Do you want to continue?"
   },
   "src_dot_apps_dot_components_dot_AppInProgressDeleteDialog_dot_1462011531": {
     "context": "dialog header",
@@ -6502,10 +6505,6 @@
     "context": "modal button upload",
     "string": "Upload"
   },
-  "src_dot_products_dot_components_dot_ProductOrganization_dot_150865454": {
-    "context": "product is not configurable",
-    "string": "Simple"
-  },
   "src_dot_products_dot_components_dot_ProductOrganization_dot_1755013298": {
     "string": "Category"
   },
@@ -6517,7 +6516,6 @@
     "string": "Organize Product"
   },
   "src_dot_products_dot_components_dot_ProductOrganization_dot_2754779425": {
-    "context": "product is configurable",
     "string": "Configurable"
   },
   "src_dot_products_dot_components_dot_ProductOrganization_dot_2805838453": {

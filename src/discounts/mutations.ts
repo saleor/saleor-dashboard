@@ -86,7 +86,7 @@ export const saleDelete = gql`
 `;
 
 export const saleBulkDelete = gql`
-  mutation SaleBulkDelete($ids: [ID]!) {
+  mutation SaleBulkDelete($ids: [ID!]!) {
     saleBulkDelete(ids: $ids) {
       errors {
         ...SaleBulkDeleteError
@@ -204,7 +204,7 @@ export const voucherDelete = gql`
 `;
 
 export const voucherBulkDelete = gql`
-  mutation VoucherBulkDelete($ids: [ID]!) {
+  mutation VoucherBulkDelete($ids: [ID!]!) {
     voucherBulkDelete(ids: $ids) {
       errors {
         ...VoucherBulkDeleteError

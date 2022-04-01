@@ -88,7 +88,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
 
   return (
     <>
-      <DialogContent>
+      <DialogContent className={classes.dialogContent}>
         {intl.formatMessage(messages.searchInfo)}
         <VerticalSpacer spacing={2} />
         <TextField

@@ -1,3 +1,4 @@
+import { useUserPermissions } from "@saleor/auth/hooks/useUserPermissions";
 import {
   AppExtensionMountEnum,
   ExtensionListQuery,
@@ -64,6 +65,10 @@ export const useExtensions = <T extends AppExtensionMountEnum>(
   mountList: T[]
 ): Record<T, Extension[]> => {
   const { openApp } = useExternalApp();
+  const permissions = useUserPermissions();
+  const extensionsPermissions = permissions?.find(
+    perm => perm.code === PermissionEnum.MANAGE_APPS
+  );
 
   const { data } = useExtensionListQuery({
     fetchPolicy: "cache-first",
@@ -71,7 +76,8 @@ export const useExtensions = <T extends AppExtensionMountEnum>(
       filter: {
         mount: mountList
       }
-    }
+    },
+    skip: !extensionsPermissions
   });
 
   const extensions = filterAndMapToTarget(

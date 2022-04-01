@@ -3,7 +3,6 @@ import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
 import {
   ConfigurationItemFragment,
-  ConfigurationItemInput,
   ConfigurationTypeFieldEnum
 } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
@@ -13,7 +12,6 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface PluginAuthorizationProps {
-  data: ConfigurationItemInput[];
   fields: ConfigurationItemFragment[];
   onClear: (field: string) => void;
   onEdit: (field: string) => void;
@@ -39,7 +37,7 @@ const useStyles = makeStyles(
 );
 
 const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
-  const { data, fields, onClear, onEdit } = props;
+  const { fields, onClear, onEdit } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
@@ -57,53 +55,47 @@ const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
         })}
       />
       <CardContent>
-        {secretFields.map((field, fieldIndex) => {
-          const inputData = data.find(
-            dataField => dataField.name === field.name
-          );
-
-          return (
-            <React.Fragment key={field.name}>
-              <div className={classes.item} key={field.name}>
-                {field.type === ConfigurationTypeFieldEnum.SECRET ||
-                field.type === ConfigurationTypeFieldEnum.SECRETMULTILINE ? (
-                  <div>
-                    <Typography variant="body1">{field.label}</Typography>
-                    {field.value !== null && (
-                      <Typography>**** {inputData.value}</Typography>
-                    )}
-                  </div>
-                ) : (
+        {secretFields.map((field, fieldIndex) => (
+          <React.Fragment key={field.name}>
+            <div className={classes.item} key={field.name}>
+              {field.type === ConfigurationTypeFieldEnum.SECRET ||
+              field.type === ConfigurationTypeFieldEnum.SECRETMULTILINE ? (
+                <div>
                   <Typography variant="body1">{field.label}</Typography>
-                )}
-                <div className={classes.spacer} />
-                {field.value === null ? (
+                  {field.value !== null && (
+                    <Typography>**** {field.value}</Typography>
+                  )}
+                </div>
+              ) : (
+                <Typography variant="body1">{field.label}</Typography>
+              )}
+              <div className={classes.spacer} />
+              {field.value === null ? (
+                <Button
+                  className={classes.button}
+                  onClick={() => onEdit(field.name)}
+                >
+                  <FormattedMessage {...buttonMessages.create} />
+                </Button>
+              ) : (
+                <>
+                  <Button onClick={() => onClear(field.name)}>
+                    <FormattedMessage {...buttonMessages.clear} />
+                  </Button>
                   <Button
                     className={classes.button}
                     onClick={() => onEdit(field.name)}
                   >
-                    <FormattedMessage {...buttonMessages.create} />
+                    <FormattedMessage {...buttonMessages.edit} />
                   </Button>
-                ) : (
-                  <>
-                    <Button onClick={() => onClear(field.name)}>
-                      <FormattedMessage {...buttonMessages.clear} />
-                    </Button>
-                    <Button
-                      className={classes.button}
-                      onClick={() => onEdit(field.name)}
-                    >
-                      <FormattedMessage {...buttonMessages.edit} />
-                    </Button>
-                  </>
-                )}
-              </div>
-              {fieldIndex !== secretFields.length - 1 && (
-                <Hr className={classes.hr} />
+                </>
               )}
-            </React.Fragment>
-          );
-        })}
+            </div>
+            {fieldIndex !== secretFields.length - 1 && (
+              <Hr className={classes.hr} />
+            )}
+          </React.Fragment>
+        ))}
       </CardContent>
     </Card>
   );

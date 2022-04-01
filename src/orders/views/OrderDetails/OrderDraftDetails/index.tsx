@@ -4,6 +4,7 @@ import {
   OrderDetailsQuery,
   OrderDraftUpdateMutation,
   OrderDraftUpdateMutationVariables,
+  StockAvailability,
   useCustomerAddressesQuery
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -95,7 +96,9 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       channel: order.channel.slug,
-      address: getVariantSearchAddress(order)
+      address: getVariantSearchAddress(order),
+      isPublished: true,
+      stockAvailability: StockAvailability.IN_STOCK
     }
   });
 
