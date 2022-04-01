@@ -42,9 +42,9 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
   const allocatedQuantityForLine = warehouseAllocation?.quantity || 0;
 
   const availableQuantity =
-    warehouseStock?.quantity ??
-    0 - warehouseStock?.quantityAllocated ??
-    0 + allocatedQuantityForLine;
+    (warehouseStock?.quantity ?? 0) -
+    (warehouseStock?.quantityAllocated ?? 0) +
+    allocatedQuantityForLine;
 
   const isStockExceeded = lineFormQuantity > availableQuantity;
 
