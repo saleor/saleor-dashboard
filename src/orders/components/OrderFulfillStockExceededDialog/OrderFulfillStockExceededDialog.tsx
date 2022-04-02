@@ -8,7 +8,10 @@ import {
 import ActionDialog from "@saleor/components/ActionDialog";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import { OrderFulfillDataQuery, OrderFulfillStockInput } from "@saleor/graphql";
+import {
+  OrderFulfillLineFragment,
+  OrderFulfillStockInput
+} from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
@@ -24,7 +27,7 @@ import {
 } from "./utils";
 
 export interface OrderFulfillStockExceededDialogProps {
-  lines: OrderFulfillDataQuery["order"]["lines"];
+  lines: OrderFulfillLineFragment[];
   open: boolean;
   formsetData: FormsetData<null, OrderFulfillStockInput[]>;
   warehouseId: string;
