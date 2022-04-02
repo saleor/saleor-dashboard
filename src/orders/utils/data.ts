@@ -16,7 +16,6 @@ import {
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { addressToAddressInput } from "@saleor/misc";
 
-import { Warehouse } from "../components/OrderChangeWarehouseDialog/types";
 import {
   LineItemData,
   OrderReturnFormData
