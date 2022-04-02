@@ -37,6 +37,14 @@ export const messages = defineMessages({
     defaultMessage: "Quantity to fulfill",
     description: "quantity of fulfilled products"
   },
+  quantity: {
+    defaultMessage: "Quantity",
+    description: "Header row quantity label"
+  },
+  stock: {
+    defaultMessage: "Stock",
+    description: "Header row stock label"
+  },
   noStock: {
     defaultMessage: "No Stock",
     description: "no variant stock in warehouse"
@@ -44,5 +52,17 @@ export const messages = defineMessages({
   sentShipmentDetails: {
     defaultMessage: "Send shipment details to customer",
     description: "checkbox label"
+  },
+  shipmentInformation: {
+    defaultMessage: "Shipment information",
+    description: "Shipment information card header"
+  },
+  trackingNumber: {
+    defaultMessage: "Tracking number",
+    description: "Tracking number input label"
+  },
+  fulfillingFrom: {
+    defaultMessage: "Fulfilling from {warehouseName}",
+    description: "Support text under page header"
   }
 });

@@ -8,6 +8,7 @@ import {
   OrderDetailsFragment,
   OrderErrorCode,
   OrderFulfillDataQuery,
+  OrderFulfillLineFragment,
   OrderLineFragment,
   OrderRefundDataQuery,
   WarehouseFragment
@@ -36,9 +37,7 @@ export interface OrderLineWithStockWarehouses {
   };
 }
 
-export function getToFulfillOrderLines(
-  lines?: OrderFulfillDataQuery["order"]["lines"]
-) {
+export function getToFulfillOrderLines(lines?: OrderFulfillLineFragment[]) {
   return lines?.filter(line => line.quantityToFulfill > 0) || [];
 }
 

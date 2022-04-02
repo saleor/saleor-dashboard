@@ -4672,6 +4672,18 @@
     "context": "button",
     "string": "Finalize"
   },
+  "src_dot_orders_dot_components_dot_OrderFulfillLine_dot_deletedVariantWarning": {
+    "context": "tooltip content when line's variant has been deleted",
+    "string": "This variant no longer exists. You can still fulfill it."
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillLine_dot_preorderWarning": {
+    "context": "tooltip content when product is in preorder",
+    "string": "This product is still in preorder. You will be able to fulfill it after it reaches it’s release date"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_fulfillingFrom": {
+    "context": "Support text under page header",
+    "string": "Fulfilling from {warehouseName}"
+  },
   "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_headerOrder": {
     "context": "page header",
     "string": "Order"
@@ -4696,6 +4708,10 @@
     "context": "name",
     "string": "Product name"
   },
+  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_quantity": {
+    "context": "Header row quantity label",
+    "string": "Quantity"
+  },
   "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_quantityToFulfill": {
     "context": "quantity of fulfilled products",
     "string": "Quantity to fulfill"
@@ -4704,9 +4720,17 @@
     "context": "checkbox label",
     "string": "Send shipment details to customer"
   },
+  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_shipmentInformation": {
+    "context": "Shipment information card header",
+    "string": "Shipment information"
+  },
   "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_sku": {
     "context": "product's sku",
     "string": "SKU"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_stock": {
+    "context": "Header row stock label",
+    "string": "Stock"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_submitFulfillment": {
     "context": "fulfill order, button",
@@ -4715,6 +4739,10 @@
   "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_submitPrepareFulfillment": {
     "context": "prepare order fulfillment, button",
     "string": "Prepare fulfillment"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_trackingNumber": {
+    "context": "Tracking number input label",
+    "string": "Tracking number"
   },
   "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_addTracking": {
     "context": "add tracking button",

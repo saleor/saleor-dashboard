@@ -4,6 +4,7 @@ import { warehouseList } from "@saleor/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { Warehouse } from "../OrderChangeWarehouseDialog/types";
 import { orderToFulfill } from "./fixtures";
 import OrderFulfillPage, { OrderFulfillPageProps } from "./OrderFulfillPage";
 
@@ -14,7 +15,7 @@ const props: OrderFulfillPageProps = {
   onSubmit: () => undefined,
   order: orderToFulfill,
   saveButtonBar: "default",
-  warehouses: warehouseList
+  warehouse: warehouseList[0] as Warehouse
 };
 
 storiesOf("Views / Orders / Fulfill order", module)
@@ -25,7 +26,7 @@ storiesOf("Views / Orders / Fulfill order", module)
       {...props}
       loading={true}
       order={undefined}
-      warehouses={undefined}
+      warehouse={undefined}
     />
   ))
   .add("error", () => (
@@ -44,6 +45,4 @@ storiesOf("Views / Orders / Fulfill order", module)
       ]}
     />
   ))
-  .add("one warehouse", () => (
-    <OrderFulfillPage {...props} warehouses={warehouseList.slice(0, 1)} />
-  ));
+  .add("one warehouse", () => <OrderFulfillPage {...props} />);
