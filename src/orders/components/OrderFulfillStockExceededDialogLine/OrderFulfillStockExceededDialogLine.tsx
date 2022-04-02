@@ -32,11 +32,11 @@ const OrderFulfillStockExceededDialogLine: React.FC<OrderFulfillStockExceededDia
     <TableRow key={line?.id}>
       <TableCellAvatar
         className={classes.colName}
-        thumbnail={line?.thumbnail.url}
+        thumbnail={line?.thumbnail?.url}
       >
         {line?.productName}
         <Typography color="textSecondary" variant="caption">
-          {line.variant.attributes
+          {line.variant?.attributes
             .map(attribute =>
               attribute.values
                 .map(attributeValue => attributeValue.name)
