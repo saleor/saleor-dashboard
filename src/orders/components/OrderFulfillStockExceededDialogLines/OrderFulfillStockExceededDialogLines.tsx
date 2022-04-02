@@ -32,11 +32,7 @@ const OrderFulfillStockExceededDialogLines: React.FC<OrderFulfillStockExceededDi
     );
     const availableQuantity =
       stock.quantity - stock.quantityAllocated + allocatedQuantityForLine;
-    const formsetQuantity = getFulfillmentFormsetQuantity(
-      formsetData,
-      line,
-      stock
-    );
+    const formsetQuantity = getFulfillmentFormsetQuantity(formsetData, line);
     return availableQuantity < formsetQuantity;
   });
 
@@ -58,7 +54,7 @@ const OrderFulfillStockExceededDialogLines: React.FC<OrderFulfillStockExceededDi
         </Typography>
       </TableCellAvatar>
       <TableCell className={classes.colQuantity}>
-        {getFulfillmentFormsetQuantity(formsetData, line, stock)}
+        {getFulfillmentFormsetQuantity(formsetData, line)}
       </TableCell>
       <TableCell className={classes.colQuantity}>
         {line.variant.stocks.reduce(

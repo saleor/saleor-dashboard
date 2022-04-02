@@ -35,9 +35,5 @@ export const getOrderLineAvailableQuantity = (
 
 export const getFulfillmentFormsetQuantity = (
   formsetData: FormsetData<null, OrderFulfillStockInput[]>,
-  line: OrderFulfillLineFragment,
-  stock: OrderFulfillLineFragment["variant"]["stocks"][0]
-) =>
-  formsetData
-    .find(getById(line.id))
-    ?.value.find(val => val.warehouse === stock.warehouse.id).quantity;
+  line: OrderFulfillLineFragment
+) => formsetData.find(getById(line.id))?.value?.[0]?.quantity;
