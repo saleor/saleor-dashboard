@@ -1,10 +1,16 @@
-import { OrderFulfillDataQuery, OrderFulfillStockInput } from "@saleor/graphql";
+import {
+  OrderFulfillDataQuery,
+  OrderFulfillLineFragment,
+  OrderFulfillStockInput
+} from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 
+import { Warehouse } from "../OrderChangeWarehouseDialog/types";
+
 export const getAllocatedQuantityForLine = (
-  line: OrderFulfillDataQuery["order"]["lines"][0],
-  warehouse: OrderFulfillDataQuery["order"]["lines"][0]["variant"]["stocks"][0]["warehouse"]
+  line: OrderFulfillLineFragment,
+  warehouse: Warehouse
 ) => {
   const warehouseAllocation = line.allocations.find(
     allocation => allocation.warehouse.id === warehouse.id
@@ -13,7 +19,7 @@ export const getAllocatedQuantityForLine = (
 };
 
 export const getOrderLineAvailableQuantity = (
-  line: OrderFulfillDataQuery["order"]["lines"][0],
+  line: OrderFulfillLineFragment,
   stock: OrderFulfillDataQuery["order"]["lines"][0]["variant"]["stocks"][0]
 ) => {
   const allocatedQuantityForLine = getAllocatedQuantityForLine(
@@ -29,8 +35,8 @@ export const getOrderLineAvailableQuantity = (
 
 export const getFulfillmentFormsetQuantity = (
   formsetData: FormsetData<null, OrderFulfillStockInput[]>,
-  line: OrderFulfillDataQuery["order"]["lines"][0],
-  stock: OrderFulfillDataQuery["order"]["lines"][0]["variant"]["stocks"][0]
+  line: OrderFulfillLineFragment,
+  stock: OrderFulfillLineFragment["variant"]["stocks"][0]
 ) =>
   formsetData
     .find(getById(line.id))
