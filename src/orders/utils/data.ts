@@ -275,31 +275,6 @@ export function mergeRepeatedOrderLines(
   }, Array<OrderDetailsFragment["fulfillments"][0]["lines"][0]>());
 }
 
-export const isStockError = (
-  overfulfill: boolean,
-  formsetStock: { quantity: number },
-  availableQuantity: number,
-  warehouse: WarehouseFragment,
-  line: OrderFulfillDataQuery["order"]["lines"][0],
-  errors: FulfillOrderMutation["orderFulfill"]["errors"]
-) => {
-  if (overfulfill) {
-    return true;
-  }
-
-  const isQuantityLargerThanAvailable =
-    line.variant.trackInventory && formsetStock.quantity > availableQuantity;
-
-  const isError = !!errors?.find(
-    err =>
-      err.warehouse === warehouse.id &&
-      err.orderLines.find((id: string) => id === line.id) &&
-      err.code === OrderErrorCode.INSUFFICIENT_STOCK
-  );
-
-  return isQuantityLargerThanAvailable || isError;
-};
-
 export const getVariantSearchAddress = (
   order: OrderDetailsFragment
 ): AddressInput => {
