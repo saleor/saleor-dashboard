@@ -46,12 +46,6 @@ interface OrderFulfillFormData {
   trackingNumber: string;
   allowStockToBeExceeded: boolean;
 }
-
-const initialFormData: OrderFulfillFormData = {
-  sendInfo: true,
-  trackingNumber: "",
-  allowStockToBeExceeded: false
-};
 export interface OrderFulfillSubmitData extends OrderFulfillFormData {
   items: FormsetData<null, OrderFulfillStockInput[]>;
 }
@@ -65,6 +59,12 @@ export interface OrderFulfillPageProps {
   onBack: () => void;
   onSubmit: (data: OrderFulfillSubmitData) => SubmitPromise;
 }
+
+const initialFormData: OrderFulfillFormData = {
+  sendInfo: true,
+  trackingNumber: "",
+  allowStockToBeExceeded: false
+};
 
 const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
   const {
