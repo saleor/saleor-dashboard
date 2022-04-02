@@ -60,8 +60,15 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
 
   const [query, setQuery] = React.useState<string>("");
   const [selectedWarehouseId, setSelectedWarehouseId] = React.useState<string>(
-    currentWarehouse?.id
+    null
   );
+
+  React.useEffect(() => {
+    if (currentWarehouse?.id) {
+      setSelectedWarehouseId(currentWarehouse?.id);
+    }
+  }, [currentWarehouse]);
+
   const { result: warehousesOpts, loadMore, search } = useWarehouseSearch({
     variables: {
       after: null,
@@ -71,13 +78,14 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
   });
   const filteredWarehouses = mapEdgesToItems(warehousesOpts?.data?.search);
 
+  const selectedWarehouse = filteredWarehouses?.find(
+    getById(selectedWarehouseId ?? "")
+  );
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedWarehouseId(e.target.value);
   };
   const handleSubmit = () => {
-    const selectedWarehouse = filteredWarehouses.find(
-      getById(selectedWarehouseId)
-    );
     onConfirm(selectedWarehouse);
     onClose();
   };
@@ -189,7 +197,12 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
       </DialogTable>
       <ScrollShadow variant="bottom" show={bottomShadow}>
         <DialogActions>
-          <Button onClick={handleSubmit} color="primary" variant="primary">
+          <Button
+            onClick={handleSubmit}
+            color="primary"
+            variant="primary"
+            disabled={!selectedWarehouse}
+          >
             {intl.formatMessage(buttonMessages.select)}
           </Button>
         </DialogActions>

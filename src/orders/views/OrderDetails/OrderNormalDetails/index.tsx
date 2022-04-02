@@ -15,6 +15,11 @@ import { Warehouse } from "@saleor/orders/components/OrderChangeWarehouseDialog/
 import { OrderCustomerAddressesEditDialogOutput } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/types";
 import OrderFulfillmentApproveDialog from "@saleor/orders/components/OrderFulfillmentApproveDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
+import {
+  getOrderLineAvailableQuantity,
+  getToFulfillOrderLines,
+  getWarehouseStock
+} from "@saleor/orders/utils/data";
 import { PartialMutationProviderOutput } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
@@ -72,6 +77,10 @@ interface OrderNormalDetailsProps {
   openModal: any;
   closeModal: any;
 }
+interface WarehousesAvailibility {
+  warehouse: Warehouse;
+  linesAvailable: number;
+}
 
 export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   id,
@@ -115,29 +124,37 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   >(null);
 
   React.useEffect(() => {
-    const warehousesAvailability = warehouses?.map(warehouse => {
-      if (!order?.lines) {
-        return undefined;
+    const warehousesAvailability: WarehousesAvailibility[] = warehouses?.map(
+      warehouse => {
+        if (!order?.lines) {
+          return undefined;
+        }
+        const linesToFulfill = getToFulfillOrderLines(order.lines);
+
+        const linesAvailable = linesToFulfill.filter(line => {
+          const stock = getWarehouseStock(line.variant?.stocks, warehouse?.id);
+          if (!stock) {
+            return false;
+          }
+
+          const availableQuantity = getOrderLineAvailableQuantity(line, stock);
+
+          return line.quantityToFulfill <= availableQuantity;
+        }).length;
+
+        return {
+          warehouse,
+          linesAvailable
+        };
       }
-
-      const linesAvailable = order.lines.filter(line =>
-        line?.variant?.stocks?.find(
-          stock => stock.warehouse.id === warehouse.id
-        )
-      ).length;
-
-      return {
-        warehouse,
-        linesAvailable
-      };
-    });
+    );
     const defaultWarehouse = order?.lines
       ? warehousesAvailability?.reduce((prev, curr) =>
           curr.linesAvailable > prev.linesAvailable ? curr : prev
         ).warehouse
       : undefined;
     setFulfillmentWarehouse(defaultWarehouse);
-  }, [warehousesData, warehousesLoading]);
+  }, [warehousesData, warehousesLoading, order]);
 
   const {
     data: customerAddresses,
