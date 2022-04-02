@@ -8,6 +8,7 @@ import {
   OrderErrorCode,
   OrderFulfillDataQuery,
   OrderFulfillLineFragment,
+  OrderFulfillStockInput,
   OrderLineFragment,
   OrderRefundDataQuery,
   WarehouseFragment
@@ -15,6 +16,7 @@ import {
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { addressToAddressInput } from "@saleor/misc";
 
+import { Warehouse } from "../components/OrderChangeWarehouseDialog/types";
 import {
   LineItemData,
   OrderReturnFormData
@@ -312,3 +314,41 @@ export const getVariantSearchAddress = (
 
   return { country: order.channel.defaultCountry.code as CountryCode };
 };
+
+export const getAllocatedQuantityForLine = (
+  line: OrderFulfillLineFragment,
+  warehouseId: string
+) => {
+  const warehouseAllocation = line.allocations.find(
+    allocation => allocation.warehouse.id === warehouseId
+  );
+  return warehouseAllocation?.quantity || 0;
+};
+
+export const getOrderLineAvailableQuantity = (
+  line: OrderFulfillLineFragment,
+  stock: OrderFulfillLineFragment["variant"]["stocks"][0]
+) => {
+  if (!stock) {
+    return 0;
+  }
+  const allocatedQuantityForLine = getAllocatedQuantityForLine(
+    line,
+    stock.warehouse.id
+  );
+
+  const availableQuantity =
+    stock.quantity - stock.quantityAllocated + allocatedQuantityForLine;
+
+  return availableQuantity;
+};
+
+export const getFulfillmentFormsetQuantity = (
+  formsetData: FormsetData<null, OrderFulfillStockInput[]>,
+  line: OrderFulfillLineFragment
+) => formsetData.find(getById(line.id))?.value?.[0]?.quantity;
+
+export const getWarehouseStock = (
+  stocks: OrderFulfillLineFragment["variant"]["stocks"],
+  warehouseId: string
+) => stocks?.find(stock => stock.warehouse.id === warehouseId);

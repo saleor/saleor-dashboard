@@ -15,16 +15,16 @@ import {
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
+import {
+  getFulfillmentFormsetQuantity,
+  getOrderLineAvailableQuantity
+} from "@saleor/orders/utils/data";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import OrderFulfillStockExceededDialogLine from "../OrderFulfillStockExceededDialogLine";
 import { stockExceededDialogMessages as messages } from "./messages";
 import { useStyles } from "./styles";
-import {
-  getFulfillmentFormsetQuantity,
-  getOrderLineAvailableQuantity
-} from "./utils";
 
 export interface OrderFulfillStockExceededDialogProps {
   lines: OrderFulfillLineFragment[];

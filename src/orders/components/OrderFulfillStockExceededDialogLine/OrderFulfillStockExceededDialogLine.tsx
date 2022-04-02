@@ -5,13 +5,13 @@ import {
   OrderFulfillStockInput
 } from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
-import React from "react";
-
-import { useStyles } from "../OrderFulfillStockExceededDialog/styles";
 import {
   getFulfillmentFormsetQuantity,
   getOrderLineAvailableQuantity
-} from "../OrderFulfillStockExceededDialog/utils";
+} from "@saleor/orders/utils/data";
+import React from "react";
+
+import { useStyles } from "../OrderFulfillStockExceededDialog/styles";
 
 export interface OrderFulfillStockExceededDialogLineProps {
   line: OrderFulfillLineFragment;
