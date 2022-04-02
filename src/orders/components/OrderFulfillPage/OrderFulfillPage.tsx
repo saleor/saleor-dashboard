@@ -281,6 +281,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
               lines={order?.lines}
               formsetData={formsetData}
               warehouseId={warehouse?.id}
+              confirmButtonState={saveButtonBar}
               onSubmit={submit}
               onClose={() => setDisplayStockExceededDialog(false)}
             />

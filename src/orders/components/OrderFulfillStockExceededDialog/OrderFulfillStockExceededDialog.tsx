@@ -10,6 +10,7 @@ import { CardSpacer } from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { OrderFulfillDataQuery, OrderFulfillStockInput } from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -27,12 +28,21 @@ export interface OrderFulfillStockExceededDialogProps {
   open: boolean;
   formsetData: FormsetData<null, OrderFulfillStockInput[]>;
   warehouseId: string;
+  confirmButtonState: ConfirmButtonTransitionState;
   onSubmit();
   onClose();
 }
 
 const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogProps> = props => {
-  const { lines, open, formsetData, warehouseId, onClose, onSubmit } = props;
+  const {
+    lines,
+    open,
+    formsetData,
+    warehouseId,
+    confirmButtonState,
+    onClose,
+    onSubmit
+  } = props;
 
   const intl = useIntl();
   const classes = useStyles(props);
@@ -55,7 +65,7 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
         title={intl.formatMessage(messages.title)}
         onConfirm={onSubmit}
         onClose={onClose}
-        confirmButtonState="default"
+        confirmButtonState={confirmButtonState}
         maxWidth="sm"
         confirmButtonLabel={intl.formatMessage(messages.fulfillButton)}
       >

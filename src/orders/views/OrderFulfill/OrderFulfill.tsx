@@ -121,7 +121,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
           return getMutationErrors(res);
         }}
         order={data?.order}
-        saveButtonBar="default"
+        saveButtonBar={fulfillOrderOpts.status}
         warehouse={warehouseData?.warehouse}
         shopSettings={settings?.shop}
       />
