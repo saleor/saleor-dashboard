@@ -18,6 +18,7 @@ import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import {
   FulfillOrderMutation,
+  OrderErrorCode,
   OrderFulfillDataQuery,
   OrderFulfillLineFragment,
   OrderFulfillStockInput,
@@ -35,6 +36,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { Warehouse } from "../OrderChangeWarehouseDialog/types";
 import OrderFulfillLine from "../OrderFulfillLine/OrderFulfillLine";
+import OrderFulfillStockExceededDialog from "../OrderFulfillStockExceededDialog";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 import { getDefaultFulfillmentValue } from "./utils";
@@ -42,7 +44,14 @@ import { getDefaultFulfillmentValue } from "./utils";
 interface OrderFulfillFormData {
   sendInfo: boolean;
   trackingNumber: string;
+  allowStockToBeExceeded: boolean;
 }
+
+const initialFormData: OrderFulfillFormData = {
+  sendInfo: true,
+  trackingNumber: "",
+  allowStockToBeExceeded: false
+};
 export interface OrderFulfillSubmitData extends OrderFulfillFormData {
   items: FormsetData<null, OrderFulfillStockInput[]>;
 }
@@ -57,14 +66,10 @@ export interface OrderFulfillPageProps {
   onSubmit: (data: OrderFulfillSubmitData) => SubmitPromise;
 }
 
-const initialFormData: OrderFulfillFormData = {
-  sendInfo: true,
-  trackingNumber: ""
-};
-
 const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
   const {
     loading,
+    errors,
     order,
     saveButtonBar,
     warehouse,
@@ -94,11 +99,33 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     }))
   );
 
-  const handleSubmit = (formData: OrderFulfillFormData) =>
-    onSubmit({
+  const [
+    displayStockExceededDialog,
+    setDisplayStockExceededDialog
+  ] = React.useState(false);
+
+  const handleSubmit = ({
+    formData,
+    allowStockToBeExceeded
+  }: {
+    formData: OrderFulfillFormData;
+    allowStockToBeExceeded: boolean;
+  }) => {
+    setDisplayStockExceededDialog(false);
+    return onSubmit({
       ...formData,
+      allowStockToBeExceeded,
       items: formsetData.filter(item => !!item.value)
     });
+  };
+  React.useEffect(() => {
+    if (
+      errors &&
+      errors.every(err => err.code === OrderErrorCode.INSUFFICIENT_STOCK)
+    ) {
+      setDisplayStockExceededDialog(true);
+    }
+  }, [errors]);
 
   const notAllowedToFulfillUnpaid =
     shopSettings?.fulfillmentAutoApprove &&
@@ -151,7 +178,16 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
           values={{ warehouseName: warehouse?.name }}
         />
       </Typography>
-      <Form confirmLeave initial={initialFormData} onSubmit={handleSubmit}>
+      <Form
+        confirmLeave
+        initial={initialFormData}
+        onSubmit={formData =>
+          handleSubmit({
+            formData,
+            allowStockToBeExceeded: displayStockExceededDialog
+          })
+        }
+      >
         {({ change, data, submit }) => (
           <>
             <Grid>
@@ -239,6 +275,14 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
               }}
               onSubmit={submit}
               onCancel={onBack}
+            />
+            <OrderFulfillStockExceededDialog
+              open={displayStockExceededDialog}
+              lines={order?.lines}
+              formsetData={formsetData}
+              warehouseId={warehouse?.id}
+              onSubmit={submit}
+              onClose={() => setDisplayStockExceededDialog(false)}
             />
           </>
         )}
