@@ -1,5 +1,4 @@
 import {
-  OrderFulfillDataQuery,
   OrderFulfillLineFragment,
   OrderFulfillStockInput
 } from "@saleor/graphql";
@@ -20,8 +19,12 @@ export const getAllocatedQuantityForLine = (
 
 export const getOrderLineAvailableQuantity = (
   line: OrderFulfillLineFragment,
-  stock: OrderFulfillDataQuery["order"]["lines"][0]["variant"]["stocks"][0]
+  stock: OrderFulfillLineFragment["variant"]["stocks"][0]
 ) => {
+  if (!stock) {
+    return 0;
+  }
+
   const allocatedQuantityForLine = getAllocatedQuantityForLine(
     line,
     stock.warehouse

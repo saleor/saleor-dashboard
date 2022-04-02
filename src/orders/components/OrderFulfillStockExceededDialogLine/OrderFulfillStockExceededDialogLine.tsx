@@ -5,39 +5,31 @@ import {
   OrderFulfillStockInput
 } from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
-import { renderCollection } from "@saleor/misc";
 import React from "react";
 
 import { useStyles } from "../OrderFulfillStockExceededDialog/styles";
 import {
-  getAllocatedQuantityForLine,
   getFulfillmentFormsetQuantity,
   getOrderLineAvailableQuantity
 } from "../OrderFulfillStockExceededDialog/utils";
 
-export interface OrderFulfillStockExceededDialogLinesProps {
+export interface OrderFulfillStockExceededDialogLineProps {
   line: OrderFulfillLineFragment;
+  warehouseId: string;
   formsetData: FormsetData<null, OrderFulfillStockInput[]>;
 }
 
-const OrderFulfillStockExceededDialogLines: React.FC<OrderFulfillStockExceededDialogLinesProps> = props => {
-  const { line, formsetData } = props;
+const OrderFulfillStockExceededDialogLine: React.FC<OrderFulfillStockExceededDialogLineProps> = props => {
+  const { line, warehouseId, formsetData } = props;
 
   const classes = useStyles(props);
 
-  const filteredStocks = line.variant.stocks.filter(stock => {
-    const allocatedQuantityForLine = getAllocatedQuantityForLine(
-      line,
-      stock.warehouse
-    );
-    const availableQuantity =
-      stock.quantity - stock.quantityAllocated + allocatedQuantityForLine;
-    const formsetQuantity = getFulfillmentFormsetQuantity(formsetData, line);
-    return availableQuantity < formsetQuantity;
-  });
+  const stock = line.variant?.stocks.find(
+    stock => stock.warehouse.id === warehouseId
+  );
 
-  return renderCollection(filteredStocks, stock => (
-    <TableRow key={line?.id + stock?.id}>
+  return (
+    <TableRow key={line?.id}>
       <TableCellAvatar
         className={classes.colName}
         thumbnail={line?.thumbnail.url}
@@ -56,20 +48,13 @@ const OrderFulfillStockExceededDialogLines: React.FC<OrderFulfillStockExceededDi
       <TableCell className={classes.colQuantity}>
         {getFulfillmentFormsetQuantity(formsetData, line)}
       </TableCell>
-      <TableCell className={classes.colQuantity}>
-        {line.variant.stocks.reduce(
-          (partialSum, currentValue) =>
-            partialSum + getOrderLineAvailableQuantity(line, currentValue),
-          0
-        )}
-      </TableCell>
       <TableCell className={classes.colWarehouseStock}>
         {getOrderLineAvailableQuantity(line, stock)}
       </TableCell>
     </TableRow>
-  ));
+  );
 };
 
-OrderFulfillStockExceededDialogLines.displayName =
-  "OrderFulfillStockExceededDialogLines";
-export default OrderFulfillStockExceededDialogLines;
+OrderFulfillStockExceededDialogLine.displayName =
+  "OrderFulfillStockExceededDialogLine";
+export default OrderFulfillStockExceededDialogLine;

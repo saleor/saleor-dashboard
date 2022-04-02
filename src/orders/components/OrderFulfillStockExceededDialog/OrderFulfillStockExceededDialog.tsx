@@ -16,7 +16,7 @@ import { renderCollection } from "@saleor/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import OrderFulfillStockExceededDialogLines from "../OrderFulfillStockExceededDialogLines";
+import OrderFulfillStockExceededDialogLine from "../OrderFulfillStockExceededDialogLine";
 import { stockExceededDialogMessages as messages } from "./messages";
 import { useStyles } from "./styles";
 
@@ -24,12 +24,13 @@ export interface OrderFulfillStockExceededDialogProps {
   lines: OrderFulfillDataQuery["order"]["lines"];
   open: boolean;
   formsetData: FormsetData<null, OrderFulfillStockInput[]>;
+  warehouseId: string;
   onSubmit();
   onClose();
 }
 
 const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogProps> = props => {
-  const { lines, open, formsetData, onClose, onSubmit } = props;
+  const { lines, open, formsetData, warehouseId, onClose, onSubmit } = props;
 
   const intl = useIntl();
   const classes = useStyles(props);
@@ -72,10 +73,11 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
               {renderCollection(
                 lines,
                 line => (
-                  <OrderFulfillStockExceededDialogLines
+                  <OrderFulfillStockExceededDialogLine
                     key={line?.id}
                     line={line}
                     formsetData={formsetData}
+                    warehouseId={warehouseId}
                   />
                 ),
                 () => (
