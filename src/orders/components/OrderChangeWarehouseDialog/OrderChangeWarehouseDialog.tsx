@@ -25,6 +25,10 @@ import {
   SearchIcon,
   useElementScroll
 } from "@saleor/macaw-ui";
+import {
+  isLineAvailableInWarehouse,
+  Warehouse
+} from "@saleor/orders/utils/data";
 import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
@@ -33,8 +37,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { getById } from "../OrderReturnPage/utils";
 import { changeWarehouseDialogMessages as messages } from "./messages";
 import { useStyles } from "./styles";
-import { Warehouse } from "./types";
-import { isLineAvailableInWarehouse } from "./utils";
 
 export interface OrderChangeWarehouseDialogProps {
   open: boolean;

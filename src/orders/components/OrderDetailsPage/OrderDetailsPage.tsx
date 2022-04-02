@@ -22,13 +22,13 @@ import {
   makeStyles
 } from "@saleor/macaw-ui";
 import OrderChannelSectionCard from "@saleor/orders/components/OrderChannelSectionCard";
+import { Warehouse } from "@saleor/orders/utils/data";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { getMutationErrors, maybe } from "../../../misc";
-import { Warehouse } from "../OrderChangeWarehouseDialog/types";
 import OrderCustomer from "../OrderCustomer";
 import OrderCustomerNote from "../OrderCustomerNote";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";

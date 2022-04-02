@@ -11,14 +11,14 @@ import {
 import useNavigator from "@saleor/hooks/useNavigator";
 import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
 import OrderChangeWarehouseDialog from "@saleor/orders/components/OrderChangeWarehouseDialog";
-import { Warehouse } from "@saleor/orders/components/OrderChangeWarehouseDialog/types";
 import { OrderCustomerAddressesEditDialogOutput } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/types";
 import OrderFulfillmentApproveDialog from "@saleor/orders/components/OrderFulfillmentApproveDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
 import {
   getOrderLineAvailableQuantity,
   getToFulfillOrderLines,
-  getWarehouseStock
+  getWarehouseStock,
+  Warehouse
 } from "@saleor/orders/utils/data";
 import { PartialMutationProviderOutput } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";

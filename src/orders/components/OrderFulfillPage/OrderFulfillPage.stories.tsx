@@ -1,10 +1,10 @@
 import { OrderErrorCode } from "@saleor/graphql";
+import { Warehouse } from "@saleor/orders/utils/data";
 import Decorator from "@saleor/storybook/Decorator";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { Warehouse } from "../OrderChangeWarehouseDialog/types";
 import { orderToFulfill } from "./fixtures";
 import OrderFulfillPage, { OrderFulfillPageProps } from "./OrderFulfillPage";
 

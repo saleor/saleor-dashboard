@@ -29,12 +29,11 @@ import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
 import { commonMessages } from "@saleor/intl";
 import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import { getToFulfillOrderLines } from "@saleor/orders/utils/data";
+import { getToFulfillOrderLines, Warehouse } from "@saleor/orders/utils/data";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { Warehouse } from "../OrderChangeWarehouseDialog/types";
 import OrderFulfillLine from "../OrderFulfillLine/OrderFulfillLine";
 import OrderFulfillStockExceededDialog from "../OrderFulfillStockExceededDialog";
 import { messages } from "./messages";

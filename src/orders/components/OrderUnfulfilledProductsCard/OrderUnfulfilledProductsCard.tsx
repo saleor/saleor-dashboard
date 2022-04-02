@@ -6,11 +6,11 @@ import { OrderLineFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { Button, ChevronIcon, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
+import { Warehouse } from "@saleor/orders/utils/data";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import OrderCardTitle from "../OrderCardTitle";
-import { Warehouse } from "../OrderChangeWarehouseDialog/types";
 import TableHeader from "../OrderProductsCardElements/OrderProductsCardHeader";
 import TableLine from "../OrderProductsCardElements/OrderProductsTableRow";
 

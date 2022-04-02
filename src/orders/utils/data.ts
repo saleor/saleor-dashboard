@@ -8,10 +8,12 @@ import {
   OrderFulfillStockInput,
   OrderLineFragment,
   OrderRefundDataQuery,
-  WarehouseFragment
+  WarehouseFragment,
+  WarehouseListQuery
 } from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
-import { addressToAddressInput } from "@saleor/misc";
+import { addressToAddressInput, WithOptional } from "@saleor/misc";
+import { RelayToFlat } from "@saleor/types";
 
 import {
   LineItemData,
@@ -286,8 +288,20 @@ export const getVariantSearchAddress = (
   return { country: order.channel.defaultCountry.code as CountryCode };
 };
 
-export const getAllocatedQuantityForLine = (
-  line: OrderFulfillLineFragment,
+export type OrderFulfillLineStockData = Pick<
+  OrderFulfillLineFragment,
+  "allocations" | "quantity" | "quantityToFulfill"
+> & { variant: Pick<OrderLineFragment["variant"], "stocks"> };
+
+export type Warehouse = WithOptional<
+  RelayToFlat<WarehouseListQuery["warehouses"]>[0],
+  "shippingZones"
+>;
+
+export const getAllocatedQuantityForLine = <
+  T extends OrderFulfillLineStockData
+>(
+  line: T,
   warehouseId: string
 ) => {
   const warehouseAllocation = line.allocations.find(
@@ -296,9 +310,11 @@ export const getAllocatedQuantityForLine = (
   return warehouseAllocation?.quantity || 0;
 };
 
-export const getOrderLineAvailableQuantity = (
-  line: OrderFulfillLineFragment,
-  stock: OrderFulfillLineFragment["variant"]["stocks"][0]
+export const getOrderLineAvailableQuantity = <
+  T extends OrderFulfillLineStockData
+>(
+  line: T,
+  stock: OrderLineFragment["variant"]["stocks"][0]
 ) => {
   if (!stock) {
     return 0;
@@ -320,6 +336,20 @@ export const getFulfillmentFormsetQuantity = (
 ) => formsetData.find(getById(line.id))?.value?.[0]?.quantity;
 
 export const getWarehouseStock = (
-  stocks: OrderFulfillLineFragment["variant"]["stocks"],
+  stocks: OrderLineFragment["variant"]["stocks"],
   warehouseId: string
 ) => stocks?.find(stock => stock.warehouse.id === warehouseId);
+
+export const isLineAvailableInWarehouse = <T extends OrderFulfillLineStockData>(
+  line: T,
+  warehouse: Warehouse
+) => {
+  if (!line?.variant?.stocks) {
+    return false;
+  }
+  const stock = getWarehouseStock(line.variant.stocks, warehouse.id);
+  if (stock) {
+    return line.quantityToFulfill <= getOrderLineAvailableQuantity(line, stock);
+  }
+  return false;
+};
