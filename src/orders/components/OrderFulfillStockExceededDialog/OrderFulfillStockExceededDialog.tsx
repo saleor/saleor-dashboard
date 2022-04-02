@@ -8,8 +8,6 @@ import {
 import ActionDialog from "@saleor/components/ActionDialog";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { OrderFulfillDataQuery, OrderFulfillStockInput } from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { renderCollection } from "@saleor/misc";
@@ -19,6 +17,10 @@ import { useIntl } from "react-intl";
 import OrderFulfillStockExceededDialogLine from "../OrderFulfillStockExceededDialogLine";
 import { stockExceededDialogMessages as messages } from "./messages";
 import { useStyles } from "./styles";
+import {
+  getFulfillmentFormsetQuantity,
+  getOrderLineAvailableQuantity
+} from "./utils";
 
 export interface OrderFulfillStockExceededDialogProps {
   lines: OrderFulfillDataQuery["order"]["lines"];
@@ -34,6 +36,17 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
 
   const intl = useIntl();
   const classes = useStyles(props);
+
+  const exceededLines = lines?.filter(line => {
+    const stock = line.variant?.stocks.find(
+      stock => stock.warehouse.id === warehouseId
+    );
+
+    return (
+      getFulfillmentFormsetQuantity(formsetData, line) >
+      getOrderLineAvailableQuantity(line, stock)
+    );
+  });
 
   return (
     <>
@@ -59,9 +72,6 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
                   <TableCell className={classes.colQuantity}>
                     {intl.formatMessage(messages.requiredStockLabel)}
                   </TableCell>
-                  <TableCell className={classes.colQuantity}>
-                    {intl.formatMessage(messages.availableStockLabel)}
-                  </TableCell>
                   <TableCell className={classes.colWarehouseStock}>
                     {intl.formatMessage(messages.warehouseStockLabel)}
                   </TableCell>
@@ -70,33 +80,14 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
             )}
 
             <TableBody>
-              {renderCollection(
-                lines,
-                line => (
-                  <OrderFulfillStockExceededDialogLine
-                    key={line?.id}
-                    line={line}
-                    formsetData={formsetData}
-                    warehouseId={warehouseId}
-                  />
-                ),
-                () => (
-                  <TableRow>
-                    <TableCellAvatar className={classes.colName}>
-                      <Skeleton />
-                    </TableCellAvatar>
-                    <TableCell className={classes.colQuantity}>
-                      <Skeleton />
-                    </TableCell>
-                    <TableCell className={classes.colQuantity}>
-                      <Skeleton />
-                    </TableCell>
-                    <TableCell className={classes.colWarehouseStock}>
-                      <Skeleton />
-                    </TableCell>
-                  </TableRow>
-                )
-              )}
+              {renderCollection(exceededLines, line => (
+                <OrderFulfillStockExceededDialogLine
+                  key={line?.id}
+                  line={line}
+                  formsetData={formsetData}
+                  warehouseId={warehouseId}
+                />
+              ))}
             </TableBody>
           </ResponsiveTable>
         </div>
