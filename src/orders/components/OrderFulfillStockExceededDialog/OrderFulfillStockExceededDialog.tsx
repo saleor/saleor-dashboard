@@ -16,7 +16,7 @@ import { renderCollection } from "@saleor/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import OrderFulfillStockExceededDialogLines from "../OrderFulfillStockExceededDialogLine";
+import OrderFulfillStockExceededDialogLines from "../OrderFulfillStockExceededDialogLines";
 import { stockExceededDialogMessages as messages } from "./messages";
 import { useStyles } from "./styles";
 
