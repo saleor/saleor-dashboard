@@ -23,7 +23,7 @@ export const useStyles = makeStyles(
       margin: theme.spacing(2)
     },
     scrollable: {
-      height: 450,
+      maxHeight: 450,
       overflow: "scroll"
     }
   }),
