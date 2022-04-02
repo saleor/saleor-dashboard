@@ -1,10 +1,11 @@
 import { TableCell, TableRow, Typography } from "@material-ui/core";
-import { ClassNameMap } from "@material-ui/styles";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import {
+  OrderFulfillLineFragment,
+  OrderFulfillStockInput
+} from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { renderCollection } from "@saleor/misc";
-import { OrderFulfillData_order_lines } from "@saleor/orders/types/OrderFulfillData";
-import { OrderFulfillStockInput } from "@saleor/types/globalTypes";
 import React from "react";
 
 import { useStyles } from "../OrderFulfillStockExceededDialog/styles";
@@ -15,9 +16,8 @@ import {
 } from "../OrderFulfillStockExceededDialog/utils";
 
 export interface OrderFulfillStockExceededDialogLinesProps {
-  line: OrderFulfillData_order_lines;
+  line: OrderFulfillLineFragment;
   formsetData: FormsetData<null, OrderFulfillStockInput[]>;
-  classes: ClassNameMap;
 }
 
 const OrderFulfillStockExceededDialogLines: React.FC<OrderFulfillStockExceededDialogLinesProps> = props => {

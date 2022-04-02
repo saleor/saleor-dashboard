@@ -76,7 +76,6 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
                     key={line?.id}
                     line={line}
                     formsetData={formsetData}
-                    classes={classes}
                   />
                 ),
                 () => (
