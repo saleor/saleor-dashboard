@@ -2306,7 +2306,7 @@ export const shopOrderSettings: ShopOrderSettingsFragment = {
   fulfillmentAllowUnpaid: true
 };
 
-export const warehouseSearch: SearchWarehousesQuery['search'] = {
+export const warehouseSearch: SearchWarehousesQuery["search"] = {
   edges: [
     {
       node: {

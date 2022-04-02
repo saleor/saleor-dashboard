@@ -120,6 +120,8 @@ export type OrderUrlDialog =
 
 export type OrderUrlQueryParams = Dialog<OrderUrlDialog> & SingleAction;
 
+export type OrderFulfillUrlQueryParams = Partial<{ warehouse: string }>;
+
 export const orderUrl = (id: string, params?: OrderUrlQueryParams) =>
   orderPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
@@ -128,8 +130,10 @@ export const orderFulfillPath = (id: string) =>
 
 export const orderReturnPath = (id: string) => urlJoin(orderPath(id), "return");
 
-export const orderFulfillUrl = (id: string) =>
-  orderFulfillPath(encodeURIComponent(id));
+export const orderFulfillUrl = (
+  id: string,
+  params?: OrderFulfillUrlQueryParams
+) => orderFulfillPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
 export const orderSettingsPath = urlJoin(orderSectionUrl, "settings");
 
