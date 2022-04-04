@@ -9,7 +9,9 @@ import {
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getMutationErrors } from "@saleor/misc";
-import OrderFulfillPage from "@saleor/orders/components/OrderFulfillPage";
+import OrderFulfillPage, {
+  OrderFulfillSubmitData
+} from "@saleor/orders/components/OrderFulfillPage";
 import { OrderFulfillUrlQueryParams, orderUrl } from "@saleor/orders/urls";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -83,7 +85,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
         loading={loading || settingsLoading || fulfillOrderOpts.loading}
         errors={fulfillOrderOpts.data?.orderFulfill.errors}
         onBack={() => navigate(orderUrl(orderId))}
-        onSubmit={async formData => {
+        onSubmit={async (formData: OrderFulfillSubmitData) => {
           const res = await fulfillOrder({
             variables: {
               input: {
@@ -94,14 +96,15 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
                     stocks: line.value
                   })),
                 notifyCustomer:
-                  settings?.shop?.fulfillmentAutoApprove && formData.sendInfo
+                  settings?.shop?.fulfillmentAutoApprove && formData.sendInfo,
+                allowStockToBeExceeded: formData.allowStockToBeExceeded
               },
               orderId
             }
           });
 
           const fulfillments = res?.data?.orderFulfill?.order?.fulfillments;
-          if (fulfillments) {
+          if (fulfillments && formData.trackingNumber) {
             updateTracking({
               variables: {
                 id: fulfillments[fulfillments.length - 1].id,
@@ -115,11 +118,10 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
               }
             });
           }
-
           return getMutationErrors(res);
         }}
         order={data?.order}
-        saveButtonBar="default"
+        saveButtonBar={fulfillOrderOpts.status}
         warehouse={warehouseData?.warehouse}
         shopSettings={settings?.shop}
       />
