@@ -76,7 +76,7 @@ export const CountryList: React.FC = () => {
         loading || fetchTaxesOpts.loading || updateTaxSettingsOpts.loading
       }
       onBack={() => navigate(configurationMenuUrl)}
-      onRowClick={code => navigate(countryTaxRatesUrl(code))}
+      getRowHref={code => countryTaxRatesUrl(code)}
       onSubmit={handleSubmit}
       onTaxFetch={fetchTaxes}
       saveButtonBarState={updateTaxSettingsOpts.status}

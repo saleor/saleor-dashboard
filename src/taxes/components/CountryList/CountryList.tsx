@@ -7,6 +7,7 @@ import {
 } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { CountryListQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
@@ -29,11 +30,11 @@ const useStyles = makeStyles(
 
 interface CountryListProps {
   countries: CountryListQuery["shop"]["countries"];
-  onRowClick: (code: string) => void;
+  getRowHref: (id: string) => string;
 }
 
 const CountryList: React.FC<CountryListProps> = props => {
-  const { onRowClick, countries } = props;
+  const { getRowHref, countries } = props;
 
   const classes = useStyles(props);
 
@@ -57,12 +58,12 @@ const CountryList: React.FC<CountryListProps> = props => {
           {renderCollection(
             countries,
             country => (
-              <TableRow
+              <TableRowLink
                 className={classNames({
                   [classes.tableRow]: !!country
                 })}
                 hover={!!country}
-                onClick={!!country ? () => onRowClick(country.code) : undefined}
+                href={country && getRowHref(country.code)}
                 key={country ? country.code : "skeleton"}
               >
                 <TableCell>
@@ -77,7 +78,7 @@ const CountryList: React.FC<CountryListProps> = props => {
                     <Skeleton />
                   )}
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
             () => (
               <TableRow>
