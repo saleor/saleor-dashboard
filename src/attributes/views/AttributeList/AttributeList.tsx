@@ -156,7 +156,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
         onFilterChange={changeFilters}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
-        onRowClick={id => () => navigate(attributeUrl(id))}
+        getRowHref={id => attributeUrl(id)}
         onSearchChange={handleSearchChange}
         onSort={handleSort}
         onTabChange={handleTabChange}
