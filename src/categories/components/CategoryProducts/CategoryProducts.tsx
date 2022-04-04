@@ -25,7 +25,7 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
   onAdd,
   onNextPage,
   onPreviousPage,
-  onRowClick,
+  getRowHref,
   categoryId,
   categoryName,
   isChecked,
@@ -81,7 +81,7 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
         pageInfo={pageInfo}
         onNextPage={onNextPage}
         onPreviousPage={onPreviousPage}
-        onRowClick={onRowClick}
+        getRowHref={getRowHref}
         selected={selected}
         isChecked={isChecked}
         toggle={toggle}

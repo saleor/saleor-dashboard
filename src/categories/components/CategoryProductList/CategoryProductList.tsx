@@ -6,6 +6,7 @@ import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { CategoryDetailsQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
@@ -65,7 +66,7 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
     toolbar,
     onNextPage,
     onPreviousPage,
-    onRowClick
+    getRowHref
   } = props;
 
   const classes = useStyles(props);
@@ -113,12 +114,12 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
               const isSelected = product ? isChecked(product.id) : false;
 
               return (
-                <TableRow
+                <TableRowLink
                   data-test-id="product-row"
                   selected={isSelected}
                   hover={!!product}
                   key={product ? product.id : "skeleton"}
-                  onClick={product && onRowClick(product.id)}
+                  href={product && getRowHref(product.id)}
                   className={classes.link}
                 >
                   <TableCell padding="checkbox">
@@ -135,7 +136,7 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
                   >
                     {product ? product.name : <Skeleton />}
                   </TableCellAvatar>
-                </TableRow>
+                </TableRowLink>
               );
             },
             () => (

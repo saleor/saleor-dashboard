@@ -157,7 +157,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         settings={settings}
         sort={getSortParams(params)}
         onAdd={() => navigate(categoryAddUrl())}
-        onRowClick={id => () => navigate(categoryUrl(id))}
+        getRowHref={id => categoryUrl(id)}
         onSort={handleSort}
         disabled={loading}
         onNextPage={loadNextPage}

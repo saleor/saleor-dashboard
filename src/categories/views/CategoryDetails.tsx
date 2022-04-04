@@ -223,7 +223,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
             maybe(() => categoryUrl(data.category.parent.id), categoryListUrl())
           )
         }
-        onCategoryClick={id => () => navigate(categoryUrl(id))}
+        getCategoryHref={id => categoryUrl(id)}
         onDelete={() => openModal("delete")}
         onImageDelete={() =>
           updateCategory({
@@ -248,7 +248,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         pageInfo={pageInfo}
-        onProductClick={id => () => navigate(productUrl(id))}
+        getProductHref={id => productUrl(id)}
         onSubmit={handleSubmit}
         products={mapEdgesToItems(data?.category?.products)}
         saveButtonBarState={updateResult.status}

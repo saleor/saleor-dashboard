@@ -9,7 +9,7 @@ import Decorator from "../../Decorator";
 
 const props: TranslationsLanguageListPageProps = {
   languages,
-  onRowClick: () => undefined
+  getRowHref: () => ""
 };
 
 storiesOf("Views / Translations / Language list", module)

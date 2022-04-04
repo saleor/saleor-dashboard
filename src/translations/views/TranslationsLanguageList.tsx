@@ -12,7 +12,7 @@ const TranslationsLanguageList: React.FC = () => {
     <TranslationsLanguageListPage
       languages={maybe(() => shop.languages)}
       //   onAdd={undefined}
-      getRowLink={code => languageEntitiesUrl(code, {})}
+      getRowHref={code => languageEntitiesUrl(code, {})}
     />
   );
 };
