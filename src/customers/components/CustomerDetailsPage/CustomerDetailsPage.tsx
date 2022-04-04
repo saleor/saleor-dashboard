@@ -46,7 +46,7 @@ export interface CustomerDetailsPageProps {
     data: CustomerDetailsPageFormData
   ) => SubmitPromise<AccountErrorFragment[]>;
   onViewAllOrdersClick: () => void;
-  onRowClick: (id: string) => void;
+  getRowHref: (id: string) => string;
   onAddressManageClick: () => void;
   onDelete: () => void;
 }
@@ -59,7 +59,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
   onBack,
   onSubmit,
   onViewAllOrdersClick,
-  onRowClick,
+  getRowHref,
   onAddressManageClick,
   onDelete
 }: CustomerDetailsPageProps) => {
@@ -118,7 +118,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
                   <CustomerOrders
                     orders={mapEdgesToItems(customer?.orders)}
                     onViewAllOrdersClick={onViewAllOrdersClick}
-                    onRowClick={onRowClick}
+                    getRowHref={getRowHref}
                   />
                   <CardSpacer />
                 </RequirePermissions>

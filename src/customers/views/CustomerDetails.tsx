@@ -117,7 +117,7 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
         saveButtonBar={updateCustomerOpts.status}
         onAddressManageClick={() => navigate(customerAddressesUrl(id))}
         onBack={handleBack}
-        onRowClick={id => navigate(orderUrl(id))}
+        getRowHref={id => orderUrl(id)}
         onSubmit={handleSubmit}
         onDelete={() =>
           navigate(

@@ -10,6 +10,7 @@ import { DateTime } from "@saleor/components/Date";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { CustomerDetailsQuery } from "@saleor/graphql";
 import { Button, makeStyles, Pill } from "@saleor/macaw-ui";
 import { RelayToFlat } from "@saleor/types";
@@ -33,11 +34,11 @@ const useStyles = makeStyles(
 export interface CustomerOrdersProps {
   orders: RelayToFlat<CustomerDetailsQuery["user"]["orders"]>;
   onViewAllOrdersClick: () => void;
-  onRowClick: (id: string) => void;
+  getRowHref: (id: string) => string;
 }
 
 const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
-  const { orders, onRowClick, onViewAllOrdersClick } = props;
+  const { orders, getRowHref, onViewAllOrdersClick } = props;
   const classes = useStyles(props);
 
   const intl = useIntl();
@@ -97,10 +98,10 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
           {renderCollection(
             orderList,
             order => (
-              <TableRow
+              <TableRowLink
                 hover={!!order}
                 className={!!order ? classes.link : undefined}
-                onClick={order ? () => onRowClick(order.id) : undefined}
+                href={order && getRowHref(order.id)}
                 key={order ? order.id : "skeleton"}
               >
                 <TableCell>
@@ -136,7 +137,7 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
                     <Skeleton />
                   )}
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
             () => (
               <TableRow>

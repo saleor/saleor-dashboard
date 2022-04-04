@@ -171,7 +171,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
-        onRowClick={id => () => navigate(customerUrl(id))}
+        getRowHref={id => customerUrl(id)}
         onSort={handleSort}
         toolbar={
           <IconButton
