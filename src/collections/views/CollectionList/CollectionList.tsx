@@ -190,7 +190,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         onUpdateListSettings={updateListSettings}
         pageInfo={pageInfo}
         sort={getSortParams(params)}
-        onRowClick={id => () => navigate(collectionUrl(id))}
+        getRowHref={id => collectionUrl(id)}
         toolbar={
           <IconButton
             variant="secondary"

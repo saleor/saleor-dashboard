@@ -20,7 +20,7 @@ import Decorator from "../../Decorator";
 
 const props: CollectionListPageProps = {
   ...listActionsProps,
-  ...pageListProps.default,
+  ...pageListProps.defaultHref,
   ...filterPageProps,
   ...sortPageProps,
   channelsCount: 2,
