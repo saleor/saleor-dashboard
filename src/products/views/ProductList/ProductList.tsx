@@ -62,7 +62,7 @@ import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandl
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
 import { getSortUrlVariables } from "@saleor/utils/sort";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductListPage from "../../components/ProductListPage";
@@ -76,7 +76,8 @@ import {
   getFilterVariables,
   saveFilterTab
 } from "./filters";
-import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
+import { getSortQueryVariables } from "./sort";
+import { useSortRedirects } from "./useSortRedirects";
 import { getAvailableProductKinds, getProductKindOpts } from "./utils";
 
 interface ProductListProps {
@@ -176,6 +177,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     channel => channel.slug === params.channel
   );
 
+  useSortRedirects(params, !!selectedChannel);
+
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductListUrlDialog,
     ProductListUrlQueryParams
@@ -222,32 +225,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     navigate,
     params
   });
-
-  useEffect(() => {
-    const sortWithQuery = ProductListUrlSortField.rank;
-    const sortWithoutQuery =
-      params.sort === ProductListUrlSortField.rank
-        ? DEFAULT_SORT_KEY
-        : params.sort;
-    navigate(
-      productListUrl({
-        ...params,
-        asc: params.query ? undefined : params.asc,
-        sort: params.query ? sortWithQuery : sortWithoutQuery
-      })
-    );
-  }, [params.query]);
-
-  useEffect(() => {
-    if (!canBeSorted(params.sort, !!selectedChannel)) {
-      navigate(
-        productListUrl({
-          ...params,
-          sort: DEFAULT_SORT_KEY
-        })
-      );
-    }
-  }, [params]);
 
   const handleTabChange = (tab: number) => {
     reset();
