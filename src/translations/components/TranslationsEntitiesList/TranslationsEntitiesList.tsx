@@ -8,6 +8,7 @@ import {
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
@@ -28,7 +29,6 @@ export interface TranslatableEntity {
 export interface TranslationsEntitiesListProps
   extends Omit<ListProps, "onRowClick"> {
   entities: TranslatableEntity[];
-  onRowClick: (code: string) => void;
 }
 
 const useStyles = makeStyles(
@@ -51,7 +51,7 @@ const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props 
     entities,
     onNextPage,
     onPreviousPage,
-    onRowClick,
+    getRowHref,
     pageInfo
   } = props;
 
@@ -92,12 +92,12 @@ const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props 
         {renderCollection(
           entities,
           entity => (
-            <TableRow
+            <TableRowLink
               className={classNames({
                 [classes.tableRow]: !!entity
               })}
               hover={!!entity}
-              onClick={entity ? () => onRowClick(entity.id) : undefined}
+              href={entity && getRowHref(entity.id)}
               key={entity ? entity.id : "skeleton"}
             >
               <TableCell>{entity?.name || <Skeleton />}</TableCell>
@@ -115,7 +115,7 @@ const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props 
                     <Skeleton />
                   )}
               </TableCell>
-            </TableRow>
+            </TableRowLink>
           ),
           () => (
             <TableRow>

@@ -10,7 +10,7 @@ import TranslationsEntitiesListPage, {
 import Decorator from "../../Decorator";
 
 const props: TranslationsEntitiesListPageProps = {
-  ...pageListProps.default,
+  ...pageListProps.defaultHref,
   ...searchPageProps,
   children: null,
   filters: {
@@ -50,7 +50,7 @@ storiesOf("Views / Translations / Entity list", module)
             name: "Brown Supreme Hoodie"
           }
         ]}
-        onRowClick={() => undefined}
+        getRowHref={() => ""}
         onNextPage={() => undefined}
         onPreviousPage={() => undefined}
         pageInfo={{
