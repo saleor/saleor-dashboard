@@ -77,16 +77,16 @@ export interface SaleDetailsPageProps
   onBack: () => void;
   onCategoryAssign: () => void;
   onCategoryUnassign: (id: string) => void;
-  onCategoryClick: (id: string) => () => void;
+  getCategoryHref: (id: string) => string;
   onCollectionAssign: () => void;
   onCollectionUnassign: (id: string) => void;
-  onCollectionClick: (id: string) => () => void;
+  getCollectionHref: (id: string) => string;
   onProductAssign: () => void;
   onProductUnassign: (id: string) => void;
-  onProductClick: (id: string) => () => void;
+  getProductHref: (id: string) => string;
   onVariantAssign: () => void;
   onVariantUnassign: (id: string) => void;
-  onVariantClick: (productId: string, variantId: string) => () => void;
+  getVariantHref: (productId: string, variantId: string) => string;
   onRemove: () => void;
   onSubmit: (data: SaleDetailsPageFormData) => SubmitPromise<any[]>;
   onTabClick: (index: SaleDetailsPageTab) => void;
@@ -116,19 +116,19 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   onBack,
   onCategoryAssign,
   onCategoryUnassign,
-  onCategoryClick,
+  getCategoryHref,
   onChannelsChange,
   onCollectionAssign,
   onCollectionUnassign,
-  onCollectionClick,
+  getCollectionHref,
   onNextPage,
   onPreviousPage,
   onProductAssign,
   onProductUnassign,
-  onProductClick,
+  getProductHref,
   onVariantAssign,
   onVariantUnassign,
-  onVariantClick,
+  getVariantHref,
   categoryListToolbar,
   collectionListToolbar,
   productListToolbar,
@@ -289,7 +289,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                     onCategoryUnassign={onCategoryUnassign}
                     onNextPage={onNextPage}
                     onPreviousPage={onPreviousPage}
-                    onRowClick={onCategoryClick}
+                    getRowHref={getCategoryHref}
                     pageInfo={pageInfo}
                     discount={sale}
                     isChecked={isChecked}
@@ -305,7 +305,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                     onCollectionUnassign={onCollectionUnassign}
                     onNextPage={onNextPage}
                     onPreviousPage={onPreviousPage}
-                    onRowClick={onCollectionClick}
+                    getRowHref={getCollectionHref}
                     pageInfo={pageInfo}
                     discount={sale}
                     isChecked={isChecked}
@@ -321,7 +321,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                     onPreviousPage={onPreviousPage}
                     onProductAssign={onProductAssign}
                     onProductUnassign={onProductUnassign}
-                    onRowClick={onProductClick}
+                    getRowHref={getProductHref}
                     pageInfo={pageInfo}
                     products={mapEdgesToItems(sale?.products)}
                     isChecked={isChecked}
@@ -337,7 +337,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                     onPreviousPage={onPreviousPage}
                     onVariantAssign={onVariantAssign}
                     onVariantUnassign={onVariantUnassign}
-                    onRowClick={onVariantClick}
+                    getRowHref={getVariantHref}
                     pageInfo={pageInfo}
                     variants={mapEdgesToItems(sale?.variants)}
                     isChecked={isChecked}

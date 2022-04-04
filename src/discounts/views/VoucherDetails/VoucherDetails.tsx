@@ -320,7 +320,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onCategoryAssign={() => openModal("assign-category")}
-        onCategoryClick={id => () => navigate(categoryUrl(id))}
+        getCategoryHref={id => categoryUrl(id)}
         onCollectionAssign={() => openModal("assign-collection")}
         onCollectionUnassign={collectionId =>
           openModal("unassign-collection", {
@@ -346,14 +346,14 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
             ids: [categoryId]
           })
         }
-        onCollectionClick={id => () => navigate(collectionUrl(id))}
+        getCollectionHref={id => collectionUrl(id)}
         onProductAssign={() => openModal("assign-product")}
         onProductUnassign={productId =>
           openModal("unassign-product", {
             ids: [productId]
           })
         }
-        onProductClick={id => () => navigate(productUrl(id))}
+        getProductHref={id => productUrl(id)}
         activeTab={activeTab}
         onBack={() => navigate(voucherListUrl())}
         onTabClick={changeTab}

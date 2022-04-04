@@ -85,15 +85,15 @@ export interface VoucherDetailsPageProps
   onBack: () => void;
   onCategoryAssign: () => void;
   onCategoryUnassign: (id: string) => void;
-  onCategoryClick: (id: string) => () => void;
+  getCategoryHref: (id: string) => string;
   onCollectionAssign: () => void;
   onCollectionUnassign: (id: string) => void;
-  onCollectionClick: (id: string) => () => void;
+  getCollectionHref: (id: string) => string;
   onCountryAssign: () => void;
   onCountryUnassign: (code: string) => void;
   onProductAssign: () => void;
   onProductUnassign: (id: string) => void;
-  onProductClick: (id: string) => () => void;
+  getProductHref: (id: string) => string;
   onRemove: () => void;
   onSubmit: (data: VoucherDetailsPageFormData) => void;
   onTabClick: (index: VoucherDetailsPageTab) => void;
@@ -116,18 +116,18 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   voucher,
   onBack,
   onCategoryAssign,
-  onCategoryClick,
+  getCategoryHref,
   onCategoryUnassign,
   onChannelsChange,
   onCountryAssign,
   onCountryUnassign,
   onCollectionAssign,
-  onCollectionClick,
+  getCollectionHref,
   onCollectionUnassign,
   onNextPage,
   onPreviousPage,
   onProductAssign,
-  onProductClick,
+  getProductHref,
   onProductUnassign,
   onTabClick,
   hasChannelChanged,
@@ -313,7 +313,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                         onCategoryUnassign={onCategoryUnassign}
                         onNextPage={onNextPage}
                         onPreviousPage={onPreviousPage}
-                        onRowClick={onCategoryClick}
+                        getRowHref={getCategoryHref}
                         pageInfo={pageInfo}
                         discount={voucher}
                         isChecked={isChecked}
@@ -329,7 +329,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                         onCollectionUnassign={onCollectionUnassign}
                         onNextPage={onNextPage}
                         onPreviousPage={onPreviousPage}
-                        onRowClick={onCollectionClick}
+                        getRowHref={getCollectionHref}
                         pageInfo={pageInfo}
                         discount={voucher}
                         isChecked={isChecked}
@@ -345,7 +345,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                         onPreviousPage={onPreviousPage}
                         onProductAssign={onProductAssign}
                         onProductUnassign={onProductUnassign}
-                        onRowClick={onProductClick}
+                        getRowHref={getProductHref}
                         pageInfo={pageInfo}
                         products={mapEdgesToItems(voucher?.products)}
                         isChecked={isChecked}

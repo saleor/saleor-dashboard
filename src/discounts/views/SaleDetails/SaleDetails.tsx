@@ -307,7 +307,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onCategoryAssign={() => openModal("assign-category")}
-        onCategoryClick={id => () => navigate(categoryUrl(id))}
+        getCategoryHref={id => categoryUrl(id)}
         onCollectionAssign={() => openModal("assign-collection")}
         onCollectionUnassign={collectionId =>
           openModal("unassign-collection", {
@@ -319,22 +319,23 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
             ids: [categoryId]
           })
         }
-        onCollectionClick={id => () => navigate(collectionUrl(id))}
+        getCollectionHref={id => collectionUrl(id)}
         onProductAssign={() => openModal("assign-product")}
         onProductUnassign={productId =>
           openModal("unassign-product", {
             ids: [productId]
           })
         }
-        onProductClick={id => () => navigate(productUrl(id))}
+        getProductHref={id => productUrl(id)}
         onVariantAssign={() => openModal("assign-variant")}
         onVariantUnassign={variantId =>
           openModal("unassign-variant", {
             ids: [variantId]
           })
         }
-        onVariantClick={(productId, variantId) => () =>
-          navigate(productVariantEditPath(productId, variantId))}
+        getVariantHref={(productId, variantId) =>
+          productVariantEditPath(productId, variantId)
+        }
         activeTab={activeTab}
         onBack={() => navigate(saleListUrl())}
         onTabClick={changeTab}

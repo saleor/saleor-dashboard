@@ -11,6 +11,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { SaleDetailsFragment, VoucherDetailsFragment } from "@saleor/graphql";
 import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -37,7 +38,7 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
     pageInfo,
     onCategoryAssign,
     onCategoryUnassign,
-    onRowClick,
+    getRowHref,
     onPreviousPage,
     onNextPage,
     toolbar,
@@ -109,10 +110,10 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
               const isSelected = category ? isChecked(category.id) : false;
 
               return (
-                <TableRow
+                <TableRowLink
                   hover={!!category}
                   key={category ? category.id : "skeleton"}
-                  onClick={category && onRowClick(category.id)}
+                  href={category && getRowHref(category.id)}
                   className={classes.tableRow}
                   selected={isSelected}
                 >
@@ -145,7 +146,7 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               );
             },
             () => (

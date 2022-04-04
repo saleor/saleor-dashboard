@@ -13,6 +13,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { SaleDetailsFragment, VoucherDetailsFragment } from "@saleor/graphql";
 import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
@@ -38,7 +39,7 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
     products,
     disabled,
     pageInfo,
-    onRowClick,
+    getRowHref,
     onPreviousPage,
     onProductAssign,
     onProductUnassign,
@@ -116,10 +117,10 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
               const isSelected = product ? isChecked(product.id) : false;
 
               return (
-                <TableRow
+                <TableRowLink
                   hover={!!product}
                   key={product ? product.id : "skeleton"}
-                  onClick={product && onRowClick(product.id)}
+                  href={product && getRowHref(product.id)}
                   className={classes.tableRow}
                   selected={isSelected}
                 >
@@ -166,7 +167,7 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               );
             },
             () => (

@@ -12,6 +12,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { SaleDetailsFragment } from "@saleor/graphql";
 import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
@@ -21,12 +22,13 @@ import { maybe, renderCollection } from "../../../misc";
 import { ListActions, ListProps, RelayToFlat } from "../../../types";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
+
 export interface SaleVariantsProps
-  extends Omit<ListProps, "onRowClick">,
+  extends Omit<ListProps, "onRowClick" | "getRowHref">,
     ListActions {
   variants: RelayToFlat<SaleDetailsFragment["variants"]> | null;
   onVariantAssign: () => void;
-  onRowClick: (productId: string, variantId: string) => () => void;
+  getRowHref: (productId: string, variantId: string) => string;
   onVariantUnassign: (id: string) => void;
 }
 
@@ -37,7 +39,7 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
     variants,
     disabled,
     pageInfo,
-    onRowClick,
+    getRowHref,
     onPreviousPage,
     onVariantAssign,
     onVariantUnassign,
@@ -117,12 +119,10 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
               const isSelected = variant ? isChecked(variant.id) : false;
 
               return (
-                <TableRow
+                <TableRowLink
                   hover={!!variant}
                   key={variant ? variant.id : "skeleton"}
-                  onClick={
-                    variant && onRowClick(variant.product.id, variant.id)
-                  }
+                  href={variant && getRowHref(variant.product.id, variant.id)}
                   className={classes.tableRow}
                   selected={isSelected}
                 >
@@ -164,7 +164,7 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
                       <DeleteIcon color="primary" />
                     </IconButton>
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               );
             },
             () => (
