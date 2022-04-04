@@ -7,6 +7,10 @@ import {
 } from "@saleor/graphql";
 import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
 import { Tooltip, WarningIcon } from "@saleor/macaw-ui";
+import {
+  getOrderLineAvailableQuantity,
+  getWarehouseStock
+} from "@saleor/orders/utils/data";
 import classNames from "classnames";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -34,20 +38,8 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
     : formsetData[lineIndex].value?.[0]?.quantity;
 
   const overfulfill = lineFormQuantity > line.quantityToFulfill;
-
-  const warehouseStock = line.variant?.stocks?.find(
-    stock => stock.warehouse.id === warehouseId
-  );
-
-  const warehouseAllocation = line.allocations.find(
-    allocation => allocation.warehouse.id === warehouseId
-  );
-  const allocatedQuantityForLine = warehouseAllocation?.quantity || 0;
-
-  const availableQuantity =
-    (warehouseStock?.quantity ?? 0) -
-    (warehouseStock?.quantityAllocated ?? 0) +
-    allocatedQuantityForLine;
+  const warehouseStock = getWarehouseStock(line?.variant?.stocks, warehouseId);
+  const availableQuantity = getOrderLineAvailableQuantity(line, warehouseStock);
 
   const isStockExceeded = lineFormQuantity > availableQuantity;
 

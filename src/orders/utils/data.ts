@@ -4,11 +4,9 @@ import {
   AddressInput,
   CountryCode,
   FulfillmentStatus,
-  FulfillOrderMutation,
   OrderDetailsFragment,
-  OrderErrorCode,
-  OrderFulfillDataQuery,
   OrderFulfillLineFragment,
+  OrderFulfillStockInput,
   OrderLineFragment,
   OrderRefundDataQuery,
   WarehouseFragment
@@ -275,31 +273,6 @@ export function mergeRepeatedOrderLines(
   }, Array<OrderDetailsFragment["fulfillments"][0]["lines"][0]>());
 }
 
-export const isStockError = (
-  overfulfill: boolean,
-  formsetStock: { quantity: number },
-  availableQuantity: number,
-  warehouse: WarehouseFragment,
-  line: OrderFulfillDataQuery["order"]["lines"][0],
-  errors: FulfillOrderMutation["orderFulfill"]["errors"]
-) => {
-  if (overfulfill) {
-    return true;
-  }
-
-  const isQuantityLargerThanAvailable =
-    line.variant.trackInventory && formsetStock.quantity > availableQuantity;
-
-  const isError = !!errors?.find(
-    err =>
-      err.warehouse === warehouse.id &&
-      err.orderLines.find((id: string) => id === line.id) &&
-      err.code === OrderErrorCode.INSUFFICIENT_STOCK
-  );
-
-  return isQuantityLargerThanAvailable || isError;
-};
-
 export function addressToAddressInput<T>(
   address: T & AddressFragment
 ): AddressInput {
@@ -323,3 +296,41 @@ export const getVariantSearchAddress = (
 
   return { country: order.channel.defaultCountry.code as CountryCode };
 };
+
+export const getAllocatedQuantityForLine = (
+  line: OrderFulfillLineFragment,
+  warehouseId: string
+) => {
+  const warehouseAllocation = line.allocations.find(
+    allocation => allocation.warehouse.id === warehouseId
+  );
+  return warehouseAllocation?.quantity || 0;
+};
+
+export const getOrderLineAvailableQuantity = (
+  line: OrderFulfillLineFragment,
+  stock: OrderFulfillLineFragment["variant"]["stocks"][0]
+) => {
+  if (!stock) {
+    return 0;
+  }
+  const allocatedQuantityForLine = getAllocatedQuantityForLine(
+    line,
+    stock.warehouse.id
+  );
+
+  const availableQuantity =
+    stock.quantity - stock.quantityAllocated + allocatedQuantityForLine;
+
+  return availableQuantity;
+};
+
+export const getFulfillmentFormsetQuantity = (
+  formsetData: FormsetData<null, OrderFulfillStockInput[]>,
+  line: OrderFulfillLineFragment
+) => formsetData.find(getById(line.id))?.value?.[0]?.quantity;
+
+export const getWarehouseStock = (
+  stocks: OrderFulfillLineFragment["variant"]["stocks"],
+  warehouseId: string
+) => stocks?.find(stock => stock.warehouse.id === warehouseId);

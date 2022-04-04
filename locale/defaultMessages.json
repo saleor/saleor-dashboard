@@ -4744,6 +4744,42 @@
     "context": "Tracking number input label",
     "string": "Tracking number"
   },
+  "src_dot_orders_dot_components_dot_OrderFulfillStockExceededDialog_dot_availableStockLabel": {
+    "context": "table header available stock label",
+    "string": "Available"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillStockExceededDialog_dot_cancelButton": {
+    "context": "cancel button label",
+    "string": "Cancel"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillStockExceededDialog_dot_fulfillButton": {
+    "context": "fulfill button label",
+    "string": "Fulfill anyway"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillStockExceededDialog_dot_infoLabel": {
+    "context": "stock exceeded dialog description",
+    "string": "Stock for items shown below are not enough to prepare fulfillment:"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillStockExceededDialog_dot_productLabel": {
+    "context": "table header product label",
+    "string": "Product"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillStockExceededDialog_dot_questionLabel": {
+    "context": "stock exceeded action question label",
+    "string": "Are you sure you want to fulfill those products anyway?"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillStockExceededDialog_dot_requiredStockLabel": {
+    "context": "table header required stock label",
+    "string": "Required"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillStockExceededDialog_dot_title": {
+    "context": "stock exceeded dialog title",
+    "string": "Not enough stock"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillStockExceededDialog_dot_warehouseStockLabel": {
+    "context": "table header warehouse stock label",
+    "string": "Warehouse stock"
+  },
   "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_addTracking": {
     "context": "add tracking button",
     "string": "Add tracking"
