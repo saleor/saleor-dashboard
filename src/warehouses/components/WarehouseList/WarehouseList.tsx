@@ -10,7 +10,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
-import { TableRowLink } from "@saleor/components/TableRowLink/TableRowLink";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { WarehouseWithShippingFragment } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";

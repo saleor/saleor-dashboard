@@ -11,7 +11,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import { TableRowLink } from "@saleor/components/TableRowLink/TableRowLink";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { ProductTypeFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { ProductTypeListUrlSortField } from "@saleor/productTypes/urls";

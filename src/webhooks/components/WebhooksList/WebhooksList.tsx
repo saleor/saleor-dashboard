@@ -9,7 +9,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
-import { TableRowLink } from "@saleor/components/TableRowLink/TableRowLink";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { AppQuery } from "@saleor/graphql";
 import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";

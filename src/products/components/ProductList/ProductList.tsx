@@ -20,7 +20,7 @@ import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import { TableRowLink } from "@saleor/components/TableRowLink/TableRowLink";
+import TableRowLink from "@saleor/components/TableRowLink";
 import TooltipTableCellHeader from "@saleor/components/TooltipTableCellHeader";
 import { commonTooltipMessages } from "@saleor/components/TooltipTableCellHeader/messages";
 import { ProductListColumns } from "@saleor/config";

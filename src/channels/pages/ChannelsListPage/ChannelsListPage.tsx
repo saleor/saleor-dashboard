@@ -11,7 +11,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
-import { TableRowLink } from "@saleor/components/TableRowLink/TableRowLink";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { ChannelDetailsFragment, RefreshLimitsQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";

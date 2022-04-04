@@ -24,7 +24,7 @@ const useStyles = makeStyles(
   { name: "TableRowLink" }
 );
 
-export const TableRowLink: React.FC<TableRowLinkProps> = ({
+const TableRowLink: React.FC<TableRowLinkProps> = ({
   href,
   children,
   linkClassName,
@@ -44,3 +44,6 @@ export const TableRowLink: React.FC<TableRowLinkProps> = ({
     </TableRow>
   );
 };
+
+TableRowLink.displayName = "TableRowLink";
+export default TableRowLink;
