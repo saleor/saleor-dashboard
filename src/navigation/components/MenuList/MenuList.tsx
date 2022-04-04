@@ -12,6 +12,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { MenuFragment } from "@saleor/graphql";
 import { DeleteIcon, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
@@ -65,7 +66,7 @@ const MenuList: React.FC<MenuListProps> = props => {
     onNextPage,
     onPreviousPage,
     onUpdateListSettings,
-    onRowClick,
+    getRowHref,
     onSort,
     pageInfo,
     selected,
@@ -143,10 +144,10 @@ const MenuList: React.FC<MenuListProps> = props => {
               const isSelected = menu ? isChecked(menu.id) : false;
 
               return (
-                <TableRow
+                <TableRowLink
                   hover={!!menu}
                   key={menu ? menu.id : "skeleton"}
-                  onClick={menu && onRowClick(menu.id)}
+                  href={menu && getRowHref(menu.id)}
                   className={classes.row}
                   selected={isSelected}
                 >
@@ -174,7 +175,7 @@ const MenuList: React.FC<MenuListProps> = props => {
                   >
                     <DeleteIcon />
                   </IconButtonTableCell>
-                </TableRow>
+                </TableRowLink>
               );
             },
             () => (

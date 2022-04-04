@@ -151,7 +151,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
-        onRowClick={id => () => navigate(menuUrl(id))}
+        getRowHref={id => menuUrl(id)}
         onSort={handleSort}
         pageInfo={pageInfo}
         isChecked={isSelected}
