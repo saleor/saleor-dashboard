@@ -37,33 +37,19 @@ const HomeSection = () => {
       onProductClick={(productId, variantId) =>
         navigate(productVariantEditUrl(productId, variantId))
       }
-      onCreateNewChannelClick={() => {
-        navigate(channelsListUrl());
-      }}
-      onOrdersToCaptureClick={() =>
-        navigate(
-          orderListUrl({
-            status: [OrderStatusFilter.READY_TO_CAPTURE],
-            channel: [channel?.id]
-          })
-        )
-      }
-      onOrdersToFulfillClick={() =>
-        navigate(
-          orderListUrl({
-            status: [OrderStatusFilter.READY_TO_FULFILL],
-            channel: [channel?.id]
-          })
-        )
-      }
-      onProductsOutOfStockClick={() =>
-        navigate(
-          productListUrl({
-            stockStatus: StockAvailability.OUT_OF_STOCK,
-            channel: channel?.slug
-          })
-        )
-      }
+      createNewChannelHref={channelsListUrl()}
+      ordersToCaptureHref={orderListUrl({
+        status: [OrderStatusFilter.READY_TO_CAPTURE],
+        channel: [channel?.id]
+      })}
+      ordersToFulfillHref={orderListUrl({
+        status: [OrderStatusFilter.READY_TO_FULFILL],
+        channel: [channel?.id]
+      })}
+      productsOutOfStockHref={productListUrl({
+        stockStatus: StockAvailability.OUT_OF_STOCK,
+        channel: channel?.slug
+      })}
       ordersToCapture={data?.ordersToCapture?.totalCount}
       ordersToFulfill={data?.ordersToFulfill?.totalCount}
       productsOutOfStock={data?.productsOutOfStock.totalCount}
