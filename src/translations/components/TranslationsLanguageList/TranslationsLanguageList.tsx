@@ -7,6 +7,7 @@ import {
 } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { LanguageFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -16,7 +17,7 @@ import { maybe, renderCollection } from "../../../misc";
 
 export interface TranslationsLanguageListProps {
   languages: LanguageFragment[];
-  onRowClick: (code: string) => void;
+  getRowLink: (code: string) => string;
 }
 
 const useStyles = makeStyles(
@@ -32,7 +33,7 @@ const useStyles = makeStyles(
 );
 
 const TranslationsLanguageList: React.FC<TranslationsLanguageListProps> = props => {
-  const { languages, onRowClick } = props;
+  const { languages, getRowLink } = props;
 
   const classes = useStyles(props);
 
@@ -50,12 +51,12 @@ const TranslationsLanguageList: React.FC<TranslationsLanguageListProps> = props 
           {renderCollection(
             languages,
             language => (
-              <TableRow
+              <TableRowLink
                 data-test-id={language ? language.code : "skeleton"}
                 className={!!language ? classes.link : undefined}
                 hover={!!language}
                 key={language ? language.code : "skeleton"}
-                onClick={() => onRowClick(language.code)}
+                href={language && getRowLink(language.code)}
               >
                 <TableCell className={classes.capitalize}>
                   {maybe<React.ReactNode>(
@@ -63,7 +64,7 @@ const TranslationsLanguageList: React.FC<TranslationsLanguageListProps> = props 
                     <Skeleton />
                   )}
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
             () => (
               <TableRow>
