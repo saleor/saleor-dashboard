@@ -157,7 +157,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
             id
           })
         }
-        onRowClick={id => () => navigate(shippingZoneUrl(id))}
+        getRowHref={id => shippingZoneUrl(id)}
         onSubmit={unit =>
           extractMutationErrors(
             updateDefaultWeightUnit({

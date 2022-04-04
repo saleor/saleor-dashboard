@@ -11,6 +11,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { ShippingZoneFragment } from "@saleor/graphql";
 import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
@@ -56,7 +57,7 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
     onPreviousPage,
     onRemove,
     onUpdateListSettings,
-    onRowClick,
+    getRowHref,
     pageInfo,
     shippingZones,
     isChecked,
@@ -136,11 +137,11 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
                 : false;
 
               return (
-                <TableRow
+                <TableRowLink
                   className={classes.row}
                   hover={!!shippingZone}
                   key={shippingZone ? shippingZone.id : "skeleton"}
-                  onClick={shippingZone && onRowClick(shippingZone.id)}
+                  href={shippingZone && getRowHref(shippingZone.id)}
                   selected={isSelected}
                 >
                   <TableCell padding="checkbox">
@@ -180,7 +181,7 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               );
             },
             () => (
