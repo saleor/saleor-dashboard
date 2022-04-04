@@ -55,13 +55,14 @@ jobs:
           export GITHUB_TOKEN=$( \
             curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
           )
+          
           gh api /repos/saleor/saleor-cloud-deployments/dispatches \
             --input - <<< '{
               "event_type": "open-release-pull-request",
               "client_payload": {
                 "project": "DASHBOARD",
                 "environment": "SANDBOX",
-                "version": "${{ github.event.inputs.git_ref }}"
+                "version": "${{ github.event.inputs.git_ref || github.ref_name }}"
               }
             }'
 
