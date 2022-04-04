@@ -207,6 +207,7 @@ filterTests({ definedTags: ["all"] }, () => {
         .its("response.body.data.categoryCreate.category")
         .then(categoryResp => {
           secondCategory = categoryResp;
+          cy.log("po utworzeniu drugiej kategorii");
           cy.visit(urlList.categories)
             .searchInTable(startsWith)
             .get(categoryRow(firstCategory.id))
