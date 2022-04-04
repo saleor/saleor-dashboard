@@ -124,7 +124,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
-        onRowClick={id => () => navigate(pageUrl(id))}
+        getRowHref={id => pageUrl(id)}
         onSort={handleSort}
         actionDialogOpts={{
           open: openModal,
