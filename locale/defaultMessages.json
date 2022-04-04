@@ -1124,7 +1124,7 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeProperties_dot_filterableInStorefront": {
     "context": "attribute is filterable in storefront",
-    "string": "Use in Faceted Navigation"
+    "string": "Use as filter"
   },
   "src_dot_attributes_dot_components_dot_AttributeProperties_dot_storefrontPropertiesTitle": {
     "context": "attribute properties regarding storefront",

@@ -37,7 +37,7 @@ const messages = defineMessages({
     description: "caption"
   },
   filterableInStorefront: {
-    defaultMessage: "Use in Faceted Navigation",
+    defaultMessage: "Use as filter",
     description: "attribute is filterable in storefront"
   },
   storefrontPropertiesTitle: {
