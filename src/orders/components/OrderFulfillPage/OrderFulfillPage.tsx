@@ -37,7 +37,6 @@ import { Warehouse } from "../OrderChangeWarehouseDialog/types";
 import OrderFulfillLine from "../OrderFulfillLine/OrderFulfillLine";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
-import { getDefaultFulfillmentValue } from "./utils";
 
 interface OrderFulfillFormData {
   sendInfo: boolean;
@@ -90,7 +89,14 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
             .join(" , ")
         )
         .join(" / "),
-      value: getDefaultFulfillmentValue(line, warehouse?.id)
+      value: line?.variant?.preorder
+        ? null
+        : [
+            {
+              quantity: line.quantityToFulfill,
+              warehouse: warehouse?.id
+            }
+          ]
     }))
   );
 

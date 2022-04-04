@@ -83,7 +83,7 @@ type CardTitleStatus = FulfillmentStatus | "unfulfilled";
 
 type CardTitleLines = Array<{
   quantity: number;
-  quantityToFulfill: number;
+  quantityToFulfill?: number;
 }>;
 
 interface OrderCardTitleProps {
@@ -139,8 +139,8 @@ const OrderCardTitle: React.FC<OrderCardTitleProps> = ({
   const totalQuantity =
     status === "unfulfilled"
       ? lines.reduce(
-          (resultQuantity, { quantityToFulfill }) =>
-            resultQuantity + quantityToFulfill,
+          (resultQuantity, line) =>
+            resultQuantity + (line.quantityToFulfill ?? line.quantity),
           0
         )
       : lines.reduce(
