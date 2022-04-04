@@ -61,12 +61,12 @@ export interface ShippingZoneDetailsPageProps
   onCountryRemove: (code: string) => void;
   onDelete: () => void;
   onPriceRateAdd: () => void;
-  onPriceRateEdit: (id: string) => void;
+  getPriceRateEditHref: (id: string) => string;
   onRateRemove: (rateId: string) => void;
   onSubmit: (data: ShippingZoneUpdateFormData) => SubmitPromise;
   onWarehouseAdd: () => void;
   onWeightRateAdd: () => void;
-  onWeightRateEdit: (id: string) => void;
+  getWeightRateEditHref: (id: string) => string;
   allChannels?: ChannelFragment[];
 }
 
@@ -90,13 +90,13 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   onDelete,
   onFetchMore,
   onPriceRateAdd,
-  onPriceRateEdit,
+  getPriceRateEditHref,
   onRateRemove,
   onSearchChange,
   onSubmit,
   onWarehouseAdd,
   onWeightRateAdd,
-  onWeightRateEdit,
+  getWeightRateEditHref,
   saveButtonBarState,
   selectedChannelId,
   shippingZone,
@@ -177,7 +177,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                 <ShippingZoneRates
                   disabled={disabled}
                   onRateAdd={onPriceRateAdd}
-                  onRateEdit={onPriceRateEdit}
+                  getRateEditHref={getPriceRateEditHref}
                   onRateRemove={onRateRemove}
                   rates={shippingZone?.shippingMethods?.filter(
                     method => method.type === ShippingMethodTypeEnum.PRICE
@@ -190,7 +190,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                 <ShippingZoneRates
                   disabled={disabled}
                   onRateAdd={onWeightRateAdd}
-                  onRateEdit={onWeightRateEdit}
+                  getRateEditHref={getWeightRateEditHref}
                   onRateRemove={onRateRemove}
                   rates={shippingZone?.shippingMethods?.filter(
                     method => method.type === ShippingMethodTypeEnum.WEIGHT

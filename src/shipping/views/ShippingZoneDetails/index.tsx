@@ -221,7 +221,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
             shippingRateCreateUrl(id, { type: ShippingMethodTypeEnum.PRICE })
           )
         }
-        onPriceRateEdit={rateId => navigate(shippingRateEditUrl(id, rateId))}
+        getPriceRateEditHref={rateId => shippingRateEditUrl(id, rateId)}
         onRateRemove={rateId =>
           openModal("remove-rate", {
             id: rateId
@@ -235,7 +235,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
             shippingRateCreateUrl(id, { type: ShippingMethodTypeEnum.WEIGHT })
           )
         }
-        onWeightRateEdit={rateId => navigate(shippingRateEditUrl(id, rateId))}
+        getWeightRateEditHref={rateId => shippingRateEditUrl(id, rateId)}
         saveButtonBarState={updateShippingZoneOpts.status}
         shippingZone={data?.shippingZone}
         warehouses={mapEdgesToItems(searchWarehousesOpts?.data?.search) || []}

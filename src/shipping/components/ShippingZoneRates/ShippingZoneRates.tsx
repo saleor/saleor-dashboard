@@ -12,8 +12,10 @@ import Money from "@saleor/components/Money";
 import MoneyRange from "@saleor/components/MoneyRange";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import TableRowLink from "@saleor/components/TableRowLink";
 import WeightRange from "@saleor/components/WeightRange";
 import { ShippingZoneDetailsFragment } from "@saleor/graphql";
+import useNavigator from "@saleor/hooks/useNavigator";
 import {
   Button,
   DeleteIcon,
@@ -32,7 +34,7 @@ export interface ShippingZoneRatesProps extends ChannelProps {
   variant: "price" | "weight";
   testId?: string;
   onRateAdd: () => void;
-  onRateEdit: (id: string) => void;
+  getRateEditHref: (id: string) => string;
   onRateRemove: (id: string) => void;
 }
 
@@ -59,7 +61,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
   const {
     disabled,
     onRateAdd,
-    onRateEdit,
+    getRateEditHref,
     onRateRemove,
     rates,
     selectedChannelId,
@@ -68,6 +70,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
   } = props;
 
   const classes = useStyles(props);
+  const navigate = useNavigator();
   const intl = useIntl();
 
   return (
@@ -132,10 +135,10 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                 listing => listing.channel.id === selectedChannelId
               );
               return (
-                <TableRow
+                <TableRowLink
                   hover={!!rate}
                   key={rate ? rate.id : "skeleton"}
-                  onClick={!!rate ? () => onRateEdit(rate.id) : undefined}
+                  href={rate && getRateEditHref(rate.id)}
                 >
                   <TableCell className={classes.nameColumn}>
                     {maybe<React.ReactNode>(() => rate.name, <Skeleton />)}
@@ -172,7 +175,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                   </TableCell>
                   <IconButtonTableCell
                     disabled={disabled}
-                    onClick={() => onRateEdit(rate.id)}
+                    onClick={() => navigate(getRateEditHref(rate.id))}
                     className={classes.buttonColumn}
                   >
                     <EditIcon />
@@ -184,7 +187,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                   >
                     <DeleteIcon />
                   </IconButtonTableCell>
-                </TableRow>
+                </TableRowLink>
               );
             },
             () => (
