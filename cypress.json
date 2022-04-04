@@ -3,7 +3,7 @@
   "projectId": "k8be36",
   "chromeWebSecurity": false,
   "videoUploadOnPasses": false,
-  "defaultCommandTimeout": 15000,
+  "defaultCommandimeout": 15000,
   "requestTimeout": 15000,
   "viewportWidth": 1400,
   "viewportHeight": 660,
