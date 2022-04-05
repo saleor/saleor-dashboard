@@ -18,6 +18,7 @@ import {
   getOrderLineAvailableQuantity,
   getToFulfillOrderLines,
   getWarehouseStock,
+  isLineAvailableInWarehouse,
   Warehouse
 } from "@saleor/orders/utils/data";
 import { PartialMutationProviderOutput } from "@saleor/types";
@@ -131,16 +132,9 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         }
         const linesToFulfill = getToFulfillOrderLines(order.lines);
 
-        const linesAvailable = linesToFulfill.filter(line => {
-          const stock = getWarehouseStock(line.variant?.stocks, warehouse?.id);
-          if (!stock) {
-            return false;
-          }
-
-          const availableQuantity = getOrderLineAvailableQuantity(line, stock);
-
-          return line.quantityToFulfill <= availableQuantity;
-        }).length;
+        const linesAvailable = linesToFulfill.filter(line =>
+          isLineAvailableInWarehouse(line, warehouse)
+        ).length;
 
         return {
           warehouse,
