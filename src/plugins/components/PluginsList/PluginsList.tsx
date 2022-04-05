@@ -2,6 +2,7 @@ import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { PluginBaseFragment } from "@saleor/graphql";
 import { EditIcon, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
@@ -39,7 +40,7 @@ const PluginList: React.FC<PluginListProps> = props => {
     onNextPage,
     pageInfo,
     sort,
-    onRowClick,
+    getRowHref,
     onSort,
     onUpdateListSettings,
     onPreviousPage
@@ -70,22 +71,20 @@ const PluginList: React.FC<PluginListProps> = props => {
           plugins,
           plugin =>
             plugin ? (
-              <TableRow
+              <TableRowLink
                 data-test-id="plugin"
                 hover={!!plugin}
                 className={!!plugin ? classes.link : undefined}
-                onClick={plugin ? onRowClick(plugin.id) : undefined}
+                href={plugin && getRowHref(plugin.id)}
                 key={plugin ? plugin.id : "skeleton"}
               >
                 <TableCell colSpan={5}>{plugin.name}</TableCell>
                 <PluginChannelConfigurationCell plugin={plugin} />
                 <PluginChannelAvailabilityCell plugin={plugin} />
                 <TableCell align="right">
-                  <div onClick={plugin ? onRowClick(plugin.id) : undefined}>
-                    <EditIcon />
-                  </div>
+                  <EditIcon />
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ) : (
               <TableRow>
                 <TableCell colSpan={totalColSpan}>

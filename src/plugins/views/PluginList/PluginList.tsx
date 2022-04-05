@@ -140,7 +140,7 @@ export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
         onTabDelete={() => openModal("delete-search")}
         onTabChange={handleTabChange}
         onUpdateListSettings={updateListSettings}
-        onRowClick={id => () => navigate(pluginUrl(id))}
+        getRowHref={id => pluginUrl(id)}
       />
       <SaveFilterTabDialog
         open={params.action === "save-search"}
