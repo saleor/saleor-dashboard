@@ -195,7 +195,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         onPreviousPage={loadPreviousPage}
         onSort={handleSort}
         onUpdateListSettings={updateListSettings}
-        onRowClick={id => () => navigate(saleUrl(id))}
+        getRowHref={id => saleUrl(id)}
         isChecked={isSelected}
         selected={listElements.length}
         sort={getSortParams(params)}
