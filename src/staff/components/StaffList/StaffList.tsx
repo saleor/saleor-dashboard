@@ -10,6 +10,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { StaffListQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import {
@@ -81,7 +82,7 @@ const StaffList: React.FC<StaffListProps> = props => {
     onNextPage,
     onPreviousPage,
     onUpdateListSettings,
-    onRowClick,
+    getRowHref,
     onSort,
     pageInfo,
     sort,
@@ -147,12 +148,12 @@ const StaffList: React.FC<StaffListProps> = props => {
         {renderCollection(
           staffMembers,
           staffMember => (
-            <TableRow
+            <TableRowLink
               className={classNames({
                 [classes.tableRow]: !!staffMember
               })}
               hover={!!staffMember}
-              onClick={!!staffMember ? onRowClick(staffMember.id) : undefined}
+              href={staffMember && getRowHref(staffMember.id)}
               key={staffMember ? staffMember.id : "skeleton"}
             >
               <TableCell>
@@ -190,7 +191,7 @@ const StaffList: React.FC<StaffListProps> = props => {
               <TableCell>
                 {maybe<React.ReactNode>(() => staffMember.email, <Skeleton />)}
               </TableCell>
-            </TableRow>
+            </TableRowLink>
           ),
           () => (
             <TableRow>
