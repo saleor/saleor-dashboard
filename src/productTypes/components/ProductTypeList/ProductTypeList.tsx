@@ -143,7 +143,7 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
                 className={!!productType ? classes.link : undefined}
                 hover={!!productType}
                 key={productType ? productType.id : "skeleton"}
-                href={getRowHref(productType.id)}
+                href={productType && getRowHref(productType.id)}
                 selected={isSelected}
                 data-test-id={"id-" + maybe(() => productType.id)}
               >

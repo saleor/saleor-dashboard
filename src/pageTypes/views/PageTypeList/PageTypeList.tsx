@@ -185,7 +185,7 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
         onBack={() => navigate(configurationMenuUrl)}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
-        onRowClick={id => () => navigate(pageTypeUrl(id))}
+        getRowHref={id => pageTypeUrl(id)}
         onSort={handleSort}
         isChecked={isSelected}
         selected={selectedPageTypes.length}
