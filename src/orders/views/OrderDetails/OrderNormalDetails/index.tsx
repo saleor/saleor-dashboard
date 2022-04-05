@@ -15,9 +15,7 @@ import { OrderCustomerAddressesEditDialogOutput } from "@saleor/orders/component
 import OrderFulfillmentApproveDialog from "@saleor/orders/components/OrderFulfillmentApproveDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
 import {
-  getOrderLineAvailableQuantity,
   getToFulfillOrderLines,
-  getWarehouseStock,
   isLineAvailableInWarehouse,
   Warehouse
 } from "@saleor/orders/utils/data";
