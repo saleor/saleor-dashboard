@@ -17,7 +17,6 @@ export interface PermissionGroupListPageProps
   permissionGroups: PermissionGroupFragment[];
   onBack: () => void;
   onDelete: (id: string) => void;
-  onRowClick: (id: string) => () => void;
 }
 
 const PermissionGroupListPage: React.FC<PermissionGroupListPageProps> = ({

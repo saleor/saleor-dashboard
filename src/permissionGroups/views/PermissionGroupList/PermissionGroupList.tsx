@@ -115,7 +115,7 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
-        onRowClick={id => () => navigate(permissionGroupDetailsUrl(id))}
+        getRowHref={id => permissionGroupDetailsUrl(id)}
         onSort={handleSort}
       />
       <PermissionGroupDeleteDialog
