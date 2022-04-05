@@ -6,7 +6,6 @@ import {
   StockAvailability,
   useHomeQuery
 } from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 
@@ -16,7 +15,6 @@ import { productListUrl, productVariantEditUrl } from "../../products/urls";
 import HomePage from "../components/HomePage";
 
 const HomeSection = () => {
-  const navigate = useNavigator();
   const { user } = useUser();
   const { channel } = useAppChannel();
 
@@ -34,8 +32,8 @@ const HomeSection = () => {
       orders={data?.ordersToday?.totalCount}
       sales={data?.salesToday?.gross}
       topProducts={mapEdgesToItems(data?.productTopToday)}
-      onProductClick={(productId, variantId) =>
-        navigate(productVariantEditUrl(productId, variantId))
+      getProductHref={(productId, variantId) =>
+        productVariantEditUrl(productId, variantId)
       }
       createNewChannelHref={channelsListUrl()}
       ordersToCaptureHref={orderListUrl({

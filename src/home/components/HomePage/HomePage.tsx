@@ -52,7 +52,7 @@ export interface HomePageProps {
   ordersToFulfillHref: string;
   ordersToCaptureHref: string;
   productsOutOfStockHref: string;
-  onProductClick: (productId: string, variantId: string) => void;
+  getProductHref: (productId: string, variantId: string) => string;
   noChannel: boolean;
 }
 
@@ -62,7 +62,7 @@ const HomePage: React.FC<HomePageProps> = props => {
     orders,
     sales,
     topProducts,
-    onProductClick,
+    getProductHref,
     activities,
     createNewChannelHref,
     ordersToFulfillHref,
@@ -146,7 +146,7 @@ const HomePage: React.FC<HomePageProps> = props => {
             >
               <HomeProductListCard
                 testId="top-products"
-                onRowClick={onProductClick}
+                getRowHref={getProductHref}
                 topProducts={topProducts}
               />
               <CardSpacer />

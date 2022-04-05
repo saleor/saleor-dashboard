@@ -10,6 +10,7 @@ import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { HomeQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { RelayToFlat } from "@saleor/types";
@@ -51,11 +52,11 @@ const useStyles = makeStyles(
 interface HomeProductListProps {
   testId?: string;
   topProducts: RelayToFlat<HomeQuery["productTopToday"]>;
-  onRowClick: (productId: string, variantId: string) => void;
+  getRowHref: (productId: string, variantId: string) => string;
 }
 
 export const HomeProductList: React.FC<HomeProductListProps> = props => {
-  const { topProducts, onRowClick, testId } = props;
+  const { topProducts, getRowHref, testId } = props;
   const classes = useStyles(props);
 
   const intl = useIntl();
@@ -79,17 +80,13 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
           {renderCollection(
             topProducts,
             variant => (
-              <TableRow
+              <TableRowLink
                 key={variant ? variant.id : "skeleton"}
                 hover={!!variant}
                 className={classNames({
                   [classes.tableRow]: !!variant
                 })}
-                onClick={
-                  !!variant
-                    ? () => onRowClick(variant.product.id, variant.id)
-                    : undefined
-                }
+                href={getRowHref(variant.product.id, variant.id)}
               >
                 <TableCellAvatar
                   className={classes.colAvatar}
@@ -136,7 +133,7 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
                     )}
                   </Typography>
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
             () => (
               <TableRow>
