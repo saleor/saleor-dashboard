@@ -61,13 +61,13 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
   const bottomShadow = isScrolledToBottom(anchor, position, 20) === false;
 
   const [query, setQuery] = React.useState<string>("");
-  const [selectedWarehouseId, setSelectedWarehouseId] = React.useState<string>(
-    null
-  );
+  const [selectedWarehouseId, setSelectedWarehouseId] = React.useState<
+    string | null
+  >(null);
 
   React.useEffect(() => {
     if (currentWarehouse?.id) {
-      setSelectedWarehouseId(currentWarehouse?.id);
+      setSelectedWarehouseId(currentWarehouse.id);
     }
   }, [currentWarehouse]);
 
