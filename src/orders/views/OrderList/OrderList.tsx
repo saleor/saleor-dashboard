@@ -162,7 +162,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
-        onRowClick={id => () => navigate(orderUrl(id))}
+        getRowHref={id => orderUrl(id)}
         onSort={handleSort}
         onSearchChange={handleSearchChange}
         onFilterChange={changeFilters}

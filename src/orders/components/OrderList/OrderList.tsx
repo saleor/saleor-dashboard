@@ -12,6 +12,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { OrderListQuery } from "@saleor/graphql";
 import { makeStyles, Pill } from "@saleor/macaw-ui";
 import {
@@ -85,7 +86,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
     onPreviousPage,
     onNextPage,
     onUpdateListSettings,
-    onRowClick,
+    getRowHref,
     onSort,
     sort
   } = props;
@@ -196,11 +197,11 @@ export const OrderList: React.FC<OrderListProps> = props => {
         {renderCollection(
           orderList,
           order => (
-            <TableRow
+            <TableRowLink
               data-test-id="order-table-row"
               hover={!!order}
               className={!!order ? classes.link : undefined}
-              onClick={order ? onRowClick(order.id) : undefined}
+              href={order && getRowHref(order.id)}
               key={order ? order.id : "skeleton"}
             >
               <TableCell className={classes.colNumber}>
@@ -257,7 +258,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
                   <Skeleton />
                 )}
               </TableCell>
-            </TableRow>
+            </TableRowLink>
           ),
           () => (
             <TableRow>
