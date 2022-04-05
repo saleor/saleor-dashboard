@@ -315,7 +315,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
             }
           });
         }}
-        onRowClick={id => () => navigate(productUrl(id))}
+        getRowHref={id => productUrl(id)}
         saveButtonBarState={formTransitionState}
         toolbar={
           <Button
