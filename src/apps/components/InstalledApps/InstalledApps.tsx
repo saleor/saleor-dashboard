@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { AppsListQuery } from "@saleor/graphql";
 import {
   Button,
@@ -39,7 +40,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
   disabled,
   onNextPage,
   onPreviousPage,
-  onRowClick,
+  getRowHref,
   onRowAboutClick,
   onUpdateListSettings,
   pageInfo,
@@ -77,10 +78,10 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
             appsList,
             (app, index) =>
               app ? (
-                <TableRow
+                <TableRowLink
                   key={app.node.id}
                   className={classes.tableRow}
-                  onClick={onRowClick(app.node.id)}
+                  href={getRowHref(app.node.id)}
                 >
                   <TableCell className={classes.colName}>
                     <span data-tc="name" className={classes.appName}>
@@ -117,7 +118,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               ) : (
                 <AppsSkeleton key={index} />
               ),

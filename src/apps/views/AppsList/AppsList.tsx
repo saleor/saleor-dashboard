@@ -314,7 +314,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
-        onRowClick={id => () => navigate(appUrl(id))}
+        getRowHref={id => appUrl(id)}
         onRowAboutClick={id => () => navigate(appDetailsUrl(id))}
         onAppInstallRetry={onAppInstallRetry}
         navigateToCustomApp={id => () => navigate(customAppUrl(id))}
