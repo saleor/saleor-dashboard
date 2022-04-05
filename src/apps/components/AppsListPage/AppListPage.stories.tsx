@@ -14,7 +14,7 @@ import AppsListPage, { AppsListPageProps } from "./AppsListPage";
 
 const props: AppsListPageProps = {
   ...listActionsProps,
-  ...pageListProps.default,
+  ...pageListProps.defaultHref,
   ...searchPageProps,
   ...sortPageProps,
   ...tabPageProps,
@@ -26,7 +26,7 @@ const props: AppsListPageProps = {
   disabled: false,
   installedAppsList: appsList,
   loadingAppsInProgress: false,
-  navigateToCustomApp: () => undefined,
+  getCustomAppHref: () => "",
   navigateToCustomAppCreate: () => undefined,
   onAppInProgressRemove: () => undefined,
   onAppInstallRetry: () => undefined,

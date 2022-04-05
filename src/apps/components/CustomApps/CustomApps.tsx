@@ -6,6 +6,7 @@ import {
   Typography
 } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { AppsListQuery } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import {
@@ -24,7 +25,7 @@ import DeactivatedText from "../DeactivatedText";
 
 export interface CustomAppsProps {
   appsList: AppsListQuery["apps"]["edges"];
-  navigateToCustomApp: (id: string) => () => void;
+  getCustomAppHref: (id: string) => string;
   navigateToCustomAppCreate?: () => void;
   onRemove: (id: string) => void;
 }
@@ -33,7 +34,7 @@ const CustomApps: React.FC<CustomAppsProps> = ({
   appsList,
   navigateToCustomAppCreate,
   onRemove,
-  navigateToCustomApp
+  getCustomAppHref
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -63,10 +64,10 @@ const CustomApps: React.FC<CustomAppsProps> = ({
             appsList,
             (app, index) =>
               app ? (
-                <TableRow
+                <TableRowLink
                   key={app.node.id}
                   className={classes.tableRow}
-                  onClick={navigateToCustomApp(app.node.id)}
+                  href={getCustomAppHref(app.node.id)}
                 >
                   <TableCell className={classes.colName}>
                     <span data-tc="name" className={classes.appName}>
@@ -87,7 +88,7 @@ const CustomApps: React.FC<CustomAppsProps> = ({
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               ) : (
                 <AppsSkeleton key={index} />
               ),

@@ -317,7 +317,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
         getRowHref={id => appUrl(id)}
         onRowAboutClick={id => () => navigate(appDetailsUrl(id))}
         onAppInstallRetry={onAppInstallRetry}
-        navigateToCustomApp={id => () => navigate(customAppUrl(id))}
+        getCustomAppHref={id => customAppUrl(id)}
         navigateToCustomAppCreate={() => navigate(customAppAddUrl)}
         onInstalledAppRemove={id =>
           openModal("remove-app", {
