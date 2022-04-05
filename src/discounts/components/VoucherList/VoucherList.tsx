@@ -8,6 +8,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import TooltipTableCellHeader from "@saleor/components/TooltipTableCellHeader";
 import { commonTooltipMessages } from "@saleor/components/TooltipTableCellHeader/messages";
 import { VoucherListUrlSortField } from "@saleor/discounts/urls";
@@ -90,7 +91,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
     onNextPage,
     onPreviousPage,
     onUpdateListSettings,
-    onRowClick,
+    getRowHref,
     onSort,
     pageInfo,
     vouchers,
@@ -240,12 +241,12 @@ const VoucherList: React.FC<VoucherListProps> = props => {
             const hasChannelsLoaded = voucher?.channelListings?.length;
 
             return (
-              <TableRow
+              <TableRowLink
                 className={!!voucher ? classes.tableRow : undefined}
                 hover={!!voucher}
                 key={voucher ? voucher.id : "skeleton"}
                 selected={isSelected}
-                onClick={voucher ? onRowClick(voucher.id) : undefined}
+                href={voucher && getRowHref(voucher.id)}
               >
                 <TableCell padding="checkbox">
                   <Checkbox
@@ -287,10 +288,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
                     <Skeleton />
                   )}
                 </TableCell>
-                <TableCell
-                  className={classes.colValue}
-                  onClick={voucher ? onRowClick(voucher.id) : undefined}
-                >
+                <TableCell className={classes.colValue}>
                   {voucher?.code ? (
                     hasChannelsLoaded ? (
                       voucher.discountValueType ===
@@ -320,7 +318,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
                     <Skeleton />
                   )}
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             );
           },
           () => (

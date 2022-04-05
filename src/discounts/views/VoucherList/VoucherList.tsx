@@ -201,7 +201,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
-        onRowClick={id => () => navigate(voucherUrl(id))}
+        getRowHref={id => voucherUrl(id)}
         onSort={handleSort}
         isChecked={isSelected}
         selected={listElements.length}
