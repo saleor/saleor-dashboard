@@ -100,7 +100,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     settings,
     tabs,
     totalGridAttributes,
-    onAdd,
+    addHref,
     onAll,
     onExport,
     onFetchMore,
@@ -205,7 +205,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           options={extensionCreateButtonItems}
           data-test-id="add-product"
           disabled={limitReached}
-          onClick={onAdd}
+          href={addHref}
         >
           <FormattedMessage
             defaultMessage="Create Product"

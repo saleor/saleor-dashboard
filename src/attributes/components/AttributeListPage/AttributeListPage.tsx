@@ -36,7 +36,7 @@ export interface AttributeListPageProps
 const AttributeListPage: React.FC<AttributeListPageProps> = ({
   filterOpts,
   initialSearch,
-  onAdd,
+  addHref,
   onBack,
   onFilterChange,
   onSearchChange,
@@ -59,7 +59,7 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
       </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.attributes)}>
         <Button
-          onClick={onAdd}
+          href={addHref}
           variant="primary"
           data-test-id="create-attribute-button"
         >

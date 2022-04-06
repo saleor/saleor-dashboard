@@ -181,7 +181,7 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
         disabled={loading}
         pageTypes={pageTypesData}
         pageInfo={pageInfo}
-        onAdd={() => navigate(pageTypeAddUrl)}
+        addHref={pageTypeAddUrl}
         onBack={() => navigate(configurationMenuUrl)}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}

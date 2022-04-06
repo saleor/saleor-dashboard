@@ -37,7 +37,7 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
   currentTab,
   filterOpts,
   initialSearch,
-  onAdd,
+  addHref,
   onAll,
   onBack,
   onFilterChange,
@@ -60,7 +60,7 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
       <PageHeader title={intl.formatMessage(sectionNames.productTypes)}>
         <Button
           variant="primary"
-          onClick={onAdd}
+          href={addHref}
           data-test-id="add-product-type"
         >
           <FormattedMessage

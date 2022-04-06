@@ -39,7 +39,7 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
   currentTab,
   filterOpts,
   initialSearch,
-  onAdd,
+  addHref,
   onAll,
   onFilterChange,
   onSearchChange,
@@ -57,7 +57,7 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.sales)}>
-        <Button onClick={onAdd} variant="primary" data-test-id="create-sale">
+        <Button href={addHref} variant="primary" data-test-id="create-sale">
           <FormattedMessage defaultMessage="Create Sale" description="button" />
         </Button>
       </PageHeader>

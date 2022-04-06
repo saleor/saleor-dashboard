@@ -22,6 +22,7 @@ export const pageListProps = {
   default: {
     disabled: false,
     onAdd: undefined,
+    addHref: "",
     onNextPage: undefined,
     onPreviousPage: undefined,
     onRowClick: () => undefined,
@@ -31,6 +32,7 @@ export const pageListProps = {
   defaultHref: {
     disabled: false,
     onAdd: undefined,
+    addHref: "",
     onNextPage: undefined,
     onPreviousPage: undefined,
     getRowHref: () => "",
@@ -40,6 +42,7 @@ export const pageListProps = {
   loading: {
     disabled: true,
     onAdd: undefined,
+    addHref: "",
     onNextPage: undefined,
     onPreviousPage: undefined,
     onRowClick: () => undefined,

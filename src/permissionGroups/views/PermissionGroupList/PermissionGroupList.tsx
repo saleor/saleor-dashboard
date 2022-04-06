@@ -109,7 +109,7 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
         pageInfo={pageInfo}
         sort={getSortParams(params)}
         permissionGroups={permissionGroups}
-        onAdd={() => navigate(permissionGroupAddUrl)}
+        addHref={permissionGroupAddUrl}
         onBack={() => navigate(configurationMenuUrl)}
         onDelete={id => openModal("remove", { id })}
         onNextPage={loadNextPage}

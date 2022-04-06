@@ -50,7 +50,6 @@ interface CategoryListProps
     SortPage<CategoryListUrlSortField> {
   categories?: CategoryFragment[];
   isRoot: boolean;
-  onAdd?();
 }
 
 const CategoryList: React.FC<CategoryListProps> = props => {

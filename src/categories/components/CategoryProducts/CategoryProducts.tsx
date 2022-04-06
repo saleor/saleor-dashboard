@@ -22,7 +22,7 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
   products,
   disabled,
   pageInfo,
-  onAdd,
+  addHref,
   onNextPage,
   onPreviousPage,
   getRowHref,
@@ -64,7 +64,7 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
             <HorizontalSpacer />
             <Button
               variant="tertiary"
-              onClick={onAdd}
+              href={addHref}
               data-test-id="add-products"
             >
               <FormattedMessage

@@ -128,7 +128,7 @@ export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
         pageInfo={pageInfo}
         sort={getSortParams(params)}
         tabs={getFilterTabs().map(tab => tab.name)}
-        onAdd={() => navigate(configurationMenuUrl)}
+        addHref={configurationMenuUrl}
         onAll={resetFilters}
         onBack={() => navigate(configurationMenuUrl)}
         onFilterChange={changeFilters}

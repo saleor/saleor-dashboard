@@ -187,7 +187,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
         disabled={loading}
         productTypes={productTypesData}
         pageInfo={pageInfo}
-        onAdd={() => navigate(productTypeAddUrl())}
+        addHref={productTypeAddUrl()}
         onBack={() => navigate(configurationMenuUrl)}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}

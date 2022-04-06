@@ -167,7 +167,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
         settings={settings}
         disabled={loading}
         pageInfo={pageInfo}
-        onAdd={() => navigate(customerAddUrl)}
+        addHref={customerAddUrl}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}

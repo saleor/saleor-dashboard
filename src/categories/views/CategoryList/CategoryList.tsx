@@ -156,7 +156,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         tabs={tabs.map(tab => tab.name)}
         settings={settings}
         sort={getSortParams(params)}
-        onAdd={() => navigate(categoryAddUrl())}
+        addHref={categoryAddUrl()}
         getRowHref={id => categoryUrl(id)}
         onSort={handleSort}
         disabled={loading}

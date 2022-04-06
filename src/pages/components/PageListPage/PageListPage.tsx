@@ -30,7 +30,7 @@ export interface PageListPageProps
 }
 
 const PageListPage: React.FC<PageListPageProps> = ({
-  onAdd,
+  addHref,
   params,
   actionDialogOpts,
   ...listProps
@@ -40,7 +40,7 @@ const PageListPage: React.FC<PageListPageProps> = ({
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.pages)}>
-        <Button onClick={onAdd} variant="primary" data-test-id="create-page">
+        <Button href={addHref} variant="primary" data-test-id="create-page">
           <FormattedMessage defaultMessage="Create page" description="button" />
         </Button>
       </PageHeader>

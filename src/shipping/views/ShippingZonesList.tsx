@@ -33,7 +33,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import ShippingZonesListPage from "../components/ShippingZonesListPage";
 import {
-  shippingZoneAddUrl,
   shippingZonesListUrl,
   ShippingZonesListUrlDialog,
   ShippingZonesListUrlQueryParams,
@@ -147,7 +146,6 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
         }
         shippingZones={mapEdgesToItems(data?.shippingZones)}
         pageInfo={pageInfo}
-        onAdd={() => navigate(shippingZoneAddUrl)}
         onBack={() => navigate(configurationMenuUrl)}
         onUpdateListSettings={updateListSettings}
         onNextPage={loadNextPage}

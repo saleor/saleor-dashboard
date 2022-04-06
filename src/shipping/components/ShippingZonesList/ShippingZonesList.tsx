@@ -15,13 +15,13 @@ import TableRowLink from "@saleor/components/TableRowLink";
 import { ShippingZoneFragment } from "@saleor/graphql";
 import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
+import { shippingZoneAddUrl } from "@saleor/shipping/urls";
 import { ListActions, ListProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface ShippingZonesListProps extends ListProps, ListActions {
   shippingZones: ShippingZoneFragment[];
-  onAdd: () => void;
   onRemove: (id: string) => void;
 }
 
@@ -52,7 +52,6 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
   const {
     disabled,
     settings,
-    onAdd,
     onNextPage,
     onPreviousPage,
     onRemove,
@@ -79,7 +78,7 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
           description: "sort shipping methods by zone, section header"
         })}
         toolbar={
-          <Button onClick={onAdd} data-test-id="add-shipping-zone">
+          <Button href={shippingZoneAddUrl} data-test-id="add-shipping-zone">
             <FormattedMessage
               defaultMessage="Create shipping zone"
               description="button"

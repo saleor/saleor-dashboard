@@ -132,13 +132,9 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         disabled={loading}
         menus={mapEdgesToItems(data?.menus)}
         settings={settings}
-        onAdd={() =>
-          navigate(
-            menuListUrl({
-              action: "add"
-            })
-          )
-        }
+        addHref={menuListUrl({
+          action: "add"
+        })}
         onBack={() => navigate(configurationMenuUrl)}
         onDelete={id =>
           navigate(

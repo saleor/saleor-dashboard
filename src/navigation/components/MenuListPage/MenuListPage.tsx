@@ -20,7 +20,7 @@ export interface MenuListPageProps
 }
 
 const MenuListPage: React.FC<MenuListPageProps> = ({
-  onAdd,
+  addHref,
   onBack,
   ...listProps
 }) => {
@@ -31,7 +31,7 @@ const MenuListPage: React.FC<MenuListPageProps> = ({
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.navigation)}>
-        <Button variant="primary" onClick={onAdd} data-test-id="add-menu">
+        <Button variant="primary" href={addHref} data-test-id="add-menu">
           <FormattedMessage
             defaultMessage="Create Menu"
             description="button"

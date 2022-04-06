@@ -61,7 +61,6 @@ interface WarehouseListProps
   extends ListProps,
     SortPage<WarehouseListUrlSortField> {
   warehouses: WarehouseWithShippingFragment[];
-  onAdd: () => void;
   onRemove: (id: string) => void;
 }
 

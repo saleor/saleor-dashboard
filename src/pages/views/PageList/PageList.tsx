@@ -120,7 +120,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
         settings={settings}
         pages={mapEdgesToItems(data?.pages)}
         pageInfo={pageInfo}
-        onAdd={() => navigate(pageCreateUrl())}
+        addHref={pageCreateUrl()}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}

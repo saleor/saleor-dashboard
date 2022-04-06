@@ -36,7 +36,7 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
   currentTab,
   disabled,
   initialSearch,
-  onAdd,
+  addHref,
   onAll,
   onSearchChange,
   onTabChange,
@@ -60,7 +60,7 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
         <Button
           disabled={disabled}
           variant="primary"
-          onClick={onAdd}
+          href={addHref}
           data-test-id="create-collection"
         >
           <FormattedMessage

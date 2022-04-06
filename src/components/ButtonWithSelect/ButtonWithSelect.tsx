@@ -23,13 +23,13 @@ interface Option {
 export interface ButtonWithSelectProps
   extends Omit<ButtonGroupProps, "onClick"> {
   options: Option[];
-  onClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void;
+  href: string;
 }
 
 export const ButtonWithSelect: React.FC<ButtonWithSelectProps> = ({
   options,
   children,
-  onClick,
+  href,
   ...props
 }) => {
   const [open, setOpen] = React.useState(false);
@@ -68,7 +68,7 @@ export const ButtonWithSelect: React.FC<ButtonWithSelectProps> = ({
         aria-label="button with select"
         {...props}
       >
-        <Button onClick={onClick} style={{ width: "100%" }}>
+        <Button href={href} style={{ width: "100%" }}>
           {children}
         </Button>
         {options.length > 0 && (

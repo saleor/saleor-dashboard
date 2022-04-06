@@ -372,7 +372,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
             availableInGridAttributes.data.availableInGrid.pageInfo.hasNextPage,
           false
         )}
-        onAdd={() => navigate(productAddUrl())}
+        addHref={productAddUrl()}
         disabled={loading}
         limits={limitOpts.data?.shop.limits}
         products={mapEdgesToItems(data?.products)}

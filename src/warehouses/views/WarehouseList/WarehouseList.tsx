@@ -156,7 +156,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
         settings={settings}
         disabled={loading}
         pageInfo={pageInfo}
-        onAdd={() => navigate(warehouseAddUrl)}
+        addHref={warehouseAddUrl}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onRemove={id => openModal("delete", { id })}

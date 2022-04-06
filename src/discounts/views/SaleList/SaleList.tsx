@@ -190,7 +190,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         settings={settings}
         disabled={loading}
         pageInfo={pageInfo}
-        onAdd={() => navigate(saleAddUrl())}
+        addHref={saleAddUrl()}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onSort={handleSort}

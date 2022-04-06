@@ -62,7 +62,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
   const {
     collection,
     disabled,
-    onAdd,
+    addHref,
     onNextPage,
     onPreviousPage,
     onProductUnassign,
@@ -104,7 +104,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
             data-test-id="add-product"
             disabled={disabled}
             variant="tertiary"
-            onClick={onAdd}
+            href={addHref}
           >
             <FormattedMessage
               defaultMessage="Assign product"

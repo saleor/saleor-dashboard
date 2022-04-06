@@ -150,7 +150,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
         filterOpts={getFilterOpts(params)}
         initialSearch={params.query || ""}
         isChecked={isSelected}
-        onAdd={() => navigate(attributeAddUrl())}
+        addHref={attributeAddUrl()}
         onAll={resetFilters}
         onBack={() => navigate(configurationMenuUrl)}
         onFilterChange={changeFilters}

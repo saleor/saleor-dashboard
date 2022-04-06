@@ -45,16 +45,16 @@ export interface CategoryUpdatePageProps
     hasPreviousPage: boolean;
   };
   saveButtonBarState: ConfirmButtonTransitionState;
+  addProductHref: string;
+  addCategoryHref: string;
   onImageDelete: () => void;
   onSubmit: (data: CategoryUpdateData) => SubmitPromise;
   onImageUpload(file: File);
   onNextPage();
   onPreviousPage();
   getProductHref(id: string): string;
-  onAddProduct();
   onBack();
   onDelete();
-  onAddCategory();
   getCategoryHref(id: string): string;
 }
 
@@ -71,8 +71,8 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   products,
   saveButtonBarState,
   subcategories,
-  onAddCategory,
-  onAddProduct,
+  addCategoryHref,
+  addProductHref,
   onBack,
   getCategoryHref,
   onDelete,
@@ -170,7 +170,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                 toolbar={
                   <Button
                     variant="tertiary"
-                    onClick={onAddCategory}
+                    href={addCategoryHref}
                     data-test-id="create-subcategory"
                   >
                     <FormattedMessage
@@ -208,7 +208,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               onNextPage={onNextPage}
               onPreviousPage={onPreviousPage}
               getRowHref={getProductHref}
-              onAdd={onAddProduct}
+              addHref={addProductHref}
               toggle={toggle}
               toggleAll={toggleAll}
               selected={selected}

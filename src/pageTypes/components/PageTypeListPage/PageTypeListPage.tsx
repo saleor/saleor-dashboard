@@ -31,7 +31,7 @@ export interface PageTypeListPageProps
 const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
   currentTab,
   initialSearch,
-  onAdd,
+  addHref,
   onAll,
   onBack,
   onSearchChange,
@@ -50,7 +50,7 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
       <PageHeader title={intl.formatMessage(sectionNames.pageTypes)}>
         <Button
           variant="primary"
-          onClick={onAdd}
+          href={addHref}
           data-test-id="create-page-type"
         >
           <FormattedMessage

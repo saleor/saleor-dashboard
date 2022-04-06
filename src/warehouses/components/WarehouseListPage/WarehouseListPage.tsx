@@ -42,7 +42,7 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
   pageInfo,
   settings,
   tabs,
-  onAdd,
+  addHref,
   onAll,
   onBack,
   onNextPage,
@@ -85,7 +85,7 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
           data-test-id="create-warehouse"
           disabled={limitReached}
           variant="primary"
-          onClick={onAdd}
+          href={addHref}
         >
           <FormattedMessage
             defaultMessage="Create Warehouse"
@@ -126,7 +126,6 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
           disabled={disabled}
           pageInfo={pageInfo}
           settings={settings}
-          onAdd={onAdd}
           onNextPage={onNextPage}
           onPreviousPage={onPreviousPage}
           onRemove={onRemove}

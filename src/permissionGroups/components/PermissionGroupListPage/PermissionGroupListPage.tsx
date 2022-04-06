@@ -20,7 +20,7 @@ export interface PermissionGroupListPageProps
 }
 
 const PermissionGroupListPage: React.FC<PermissionGroupListPageProps> = ({
-  onAdd,
+  addHref,
   onBack,
   ...listProps
 }) => {
@@ -34,7 +34,7 @@ const PermissionGroupListPage: React.FC<PermissionGroupListPageProps> = ({
       <PageHeader title={intl.formatMessage(sectionNames.permissionGroups)}>
         <Button
           variant="primary"
-          onClick={onAdd}
+          href={addHref}
           data-test-id="create-permission-group"
         >
           <FormattedMessage

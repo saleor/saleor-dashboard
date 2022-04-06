@@ -38,7 +38,7 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
   currentTab,
   filterOpts,
   initialSearch,
-  onAdd,
+  addHref,
   onAll,
   onFilterChange,
   onSearchChange,
@@ -56,7 +56,7 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.vouchers)}>
-        <Button onClick={onAdd} variant="primary" data-test-id="create-voucher">
+        <Button href={addHref} variant="primary" data-test-id="create-voucher">
           <FormattedMessage
             defaultMessage="Create voucher"
             description="button"
