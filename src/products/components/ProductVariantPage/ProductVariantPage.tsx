@@ -28,6 +28,7 @@ import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
+import clone from "lodash/clone";
 
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
@@ -165,9 +166,11 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   ] = React.useState(false);
 
   const variantMedia = variant?.media?.map(image => image.id);
-  const productMedia = variant?.product?.media?.sort((prev, next) =>
+  const unsortedProductMedia = clone(variant?.product?.media)
+  const productMedia = unsortedProductMedia?.sort((prev, next) =>
     prev.sortOrder > next.sortOrder ? 1 : -1
   );
+
   const media = productMedia
     ?.filter(image => variantMedia.indexOf(image.id) !== -1)
     .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1));
