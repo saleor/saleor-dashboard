@@ -26,6 +26,7 @@ import useAppChannel from "./AppChannelContext";
 import AppChannelSelect from "./AppChannelSelect";
 import { appLoaderHeight } from "./consts";
 import useMenuStructure from "./menuStructure";
+import { SidebarLink } from "./SidebarLink";
 import { isMenuActive } from "./utils";
 
 const useStyles = makeStyles(
@@ -171,6 +172,8 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             activeId={activeMenu}
             menuItems={menuStructure}
             onMenuItemClick={handleMenuItemClick}
+            logoHref="/"
+            linkComponent={SidebarLink}
           />
         )}
         <div className={classes.content}>
@@ -188,7 +191,9 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                     {!isMdUp && (
                       <SidebarDrawer
                         menuItems={menuStructure}
+                        logoHref="/"
                         onMenuItemClick={handleMenuItemClick}
+                        linkComponent={SidebarLink}
                       />
                     )}
                     <div className={classes.spacer} />
