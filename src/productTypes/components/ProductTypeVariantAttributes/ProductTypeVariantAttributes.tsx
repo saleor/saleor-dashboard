@@ -259,9 +259,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                         <Tooltip
                           title={
                             <FormattedMessage
-                              defaultMessage={
-                                "{inputType} attributes cannot be used as variant selection attributes."
-                              }
+                              defaultMessage="{inputType} attributes cannot be used as variant selection attributes."
                               values={{ inputType: readableAttributeInputType }}
                             />
                           }

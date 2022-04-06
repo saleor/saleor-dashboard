@@ -16,13 +16,20 @@ import SingleSelectField from "@saleor/components/SingleSelectField";
 import { ProductVariantAttributesFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import {
   ProductVariantCreateFormData,
   VariantCreatorPricesAndSkuMode
 } from "./form";
 import { getPriceAttributeValues } from "./utils";
+
+const messages = defineMessages({
+  price: {
+    defaultMessage: "Price",
+    description: "input label"
+  }
+});
 
 const useStyles = makeStyles(
   theme => ({
@@ -127,11 +134,7 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
                           channel => channel.channelId === listing.id
                         )?.price
                       }
-                      label={intl.formatMessage({
-                        defaultMessage: "Price",
-                        description: "input label",
-                        id: "productVariantCreatePricesSetPricePlaceholder"
-                      })}
+                      label={intl.formatMessage(messages.price)}
                       currencySymbol={listing.currency}
                       onChange={event =>
                         onApplyToAllPriceChange(listing.id, event.target.value)
@@ -197,12 +200,7 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
                               {listing.name}
                             </Typography>
                             <PriceField
-                              label={intl.formatMessage({
-                                defaultMessage: "Price",
-                                description: "input label",
-                                id:
-                                  "productVariantCreatePricesSetPricePlaceholder"
-                              })}
+                              label={intl.formatMessage(messages.price)}
                               currencySymbol={listing.currency}
                               value={
                                 attributesChannels.find(

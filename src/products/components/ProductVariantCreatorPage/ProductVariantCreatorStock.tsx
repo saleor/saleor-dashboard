@@ -20,13 +20,19 @@ import {
 import { makeStyles } from "@saleor/macaw-ui";
 import { isSelected } from "@saleor/utils/lists";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import {
   ProductVariantCreateFormData,
   VariantCreatorPricesAndSkuMode
 } from "./form";
 import { getStockAttributeValues } from "./utils";
+
+const messages = defineMessages({
+  stock: {
+    defaultMessage: "Stock"
+  }
+});
 
 const useStyles = makeStyles(
   theme => ({
@@ -211,10 +217,7 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
                           min: 0,
                           type: "number"
                         }}
-                        label={intl.formatMessage({
-                          defaultMessage: "Stock",
-                          id: "productVariantCreatePricesStockInputLabel"
-                        })}
+                        label={intl.formatMessage(messages.stock)}
                         value={data.stock.value[warehouseIndex]}
                         onChange={event =>
                           onApplyToAllStockChange(
@@ -280,11 +283,7 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
                                       min: 0,
                                       type: "number"
                                     }}
-                                    label={intl.formatMessage({
-                                      defaultMessage: "Stock",
-                                      id:
-                                        "productVariantCreatePricesStockInputLabel"
-                                    })}
+                                    label={intl.formatMessage(messages.stock)}
                                     value={
                                       data.stock.values.find(
                                         value =>
