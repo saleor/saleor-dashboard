@@ -43,7 +43,11 @@ import {
   OrderCustomerAddressesEditDialogOutput,
   OrderCustomerSearchAddressState
 } from "./types";
-import { getAddressEditProps, validateDefaultAddress } from "./utils";
+import {
+  getAddressEditProps,
+  hasPreSubmitErrors,
+  validateDefaultAddress
+} from "./utils";
 
 export interface OrderCustomerAddressesEditDialogProps {
   open: boolean;
@@ -131,20 +135,22 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     transformAddressToAddressInput(
       customerAddresses.find(getById(selectedCustomerAddressID))
     );
-
-  const handleAddressesSubmit = (data: OrderCustomerAddressesEditFormData) => {
+  // async because handleShippingSubmit can return a promise
+  const handleAddressesSubmit = async (
+    data: OrderCustomerAddressesEditFormData
+  ) => {
     const shippingAddress =
       customerAddresses.length > 0 &&
       data.shippingAddressInputOption ===
         AddressInputOptionEnum.CUSTOMER_ADDRESS
         ? getCustomerAddress(data.customerShippingAddress.id)
-        : handleShippingSubmit(data.shippingAddress);
+        : await handleShippingSubmit(data.shippingAddress);
 
     const billingAddress =
       customerAddresses.length > 0 &&
       data.billingAddressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS
         ? getCustomerAddress(data.customerBillingAddress.id)
-        : handleBillingSubmit(data.billingAddress);
+        : await handleBillingSubmit(data.billingAddress);
 
     if (variant === AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS) {
       return {
@@ -205,12 +211,11 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     handleSubmit(data);
   };
   const handleSubmit = async (data: OrderCustomerAddressesEditFormData) => {
-    const addressesInput = handleAddressesSubmit(data);
-    if (addressesInput) {
+    const addressesInput = await handleAddressesSubmit(data);
+    if (addressesInput && !hasPreSubmitErrors(addressesInput)) {
       await onConfirm(addressesInput as OrderCustomerAddressesEditDialogOutput);
       setAddressSearchState(defaultSearchState);
     }
-
     return Promise.resolve([
       ...shippingValidationErrors,
       ...billingValidationErrors

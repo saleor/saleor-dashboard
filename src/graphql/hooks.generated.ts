@@ -3923,7 +3923,7 @@ export type CategoryUpdateMutationHookResult = ReturnType<typeof useCategoryUpda
 export type CategoryUpdateMutationResult = Apollo.MutationResult<Types.CategoryUpdateMutation>;
 export type CategoryUpdateMutationOptions = Apollo.BaseMutationOptions<Types.CategoryUpdateMutation, Types.CategoryUpdateMutationVariables>;
 export const CategoryBulkDeleteDocument = gql`
-    mutation CategoryBulkDelete($ids: [ID]!) {
+    mutation CategoryBulkDelete($ids: [ID!]!) {
   categoryBulkDelete(ids: $ids) {
     errors {
       ...ProductError
@@ -4547,7 +4547,7 @@ export type RemoveCollectionMutationHookResult = ReturnType<typeof useRemoveColl
 export type RemoveCollectionMutationResult = Apollo.MutationResult<Types.RemoveCollectionMutation>;
 export type RemoveCollectionMutationOptions = Apollo.BaseMutationOptions<Types.RemoveCollectionMutation, Types.RemoveCollectionMutationVariables>;
 export const UnassignCollectionProductDocument = gql`
-    mutation UnassignCollectionProduct($collectionId: ID!, $productIds: [ID]!, $first: Int, $after: String, $last: Int, $before: String) {
+    mutation UnassignCollectionProduct($collectionId: ID!, $productIds: [ID!]!, $first: Int, $after: String, $last: Int, $before: String) {
   collectionRemoveProducts(collectionId: $collectionId, products: $productIds) {
     collection {
       id
@@ -4611,7 +4611,7 @@ export type UnassignCollectionProductMutationHookResult = ReturnType<typeof useU
 export type UnassignCollectionProductMutationResult = Apollo.MutationResult<Types.UnassignCollectionProductMutation>;
 export type UnassignCollectionProductMutationOptions = Apollo.BaseMutationOptions<Types.UnassignCollectionProductMutation, Types.UnassignCollectionProductMutationVariables>;
 export const CollectionBulkDeleteDocument = gql`
-    mutation CollectionBulkDelete($ids: [ID]!) {
+    mutation CollectionBulkDelete($ids: [ID!]!) {
   collectionBulkDelete(ids: $ids) {
     errors {
       ...CollectionError
@@ -5378,7 +5378,7 @@ export type RemoveCustomerAddressMutationHookResult = ReturnType<typeof useRemov
 export type RemoveCustomerAddressMutationResult = Apollo.MutationResult<Types.RemoveCustomerAddressMutation>;
 export type RemoveCustomerAddressMutationOptions = Apollo.BaseMutationOptions<Types.RemoveCustomerAddressMutation, Types.RemoveCustomerAddressMutationVariables>;
 export const BulkRemoveCustomersDocument = gql`
-    mutation BulkRemoveCustomers($ids: [ID]!) {
+    mutation BulkRemoveCustomers($ids: [ID!]!) {
   customerBulkDelete(ids: $ids) {
     errors {
       ...AccountError
@@ -5814,7 +5814,7 @@ export type SaleDeleteMutationHookResult = ReturnType<typeof useSaleDeleteMutati
 export type SaleDeleteMutationResult = Apollo.MutationResult<Types.SaleDeleteMutation>;
 export type SaleDeleteMutationOptions = Apollo.BaseMutationOptions<Types.SaleDeleteMutation, Types.SaleDeleteMutationVariables>;
 export const SaleBulkDeleteDocument = gql`
-    mutation SaleBulkDelete($ids: [ID]!) {
+    mutation SaleBulkDelete($ids: [ID!]!) {
   saleBulkDelete(ids: $ids) {
     errors {
       ...SaleBulkDeleteError
@@ -6131,7 +6131,7 @@ export type VoucherDeleteMutationHookResult = ReturnType<typeof useVoucherDelete
 export type VoucherDeleteMutationResult = Apollo.MutationResult<Types.VoucherDeleteMutation>;
 export type VoucherDeleteMutationOptions = Apollo.BaseMutationOptions<Types.VoucherDeleteMutation, Types.VoucherDeleteMutationVariables>;
 export const VoucherBulkDeleteDocument = gql`
-    mutation VoucherBulkDelete($ids: [ID]!) {
+    mutation VoucherBulkDelete($ids: [ID!]!) {
   voucherBulkDelete(ids: $ids) {
     errors {
       ...VoucherBulkDeleteError
@@ -6894,7 +6894,7 @@ export type GiftCardCurrenciesQueryHookResult = ReturnType<typeof useGiftCardCur
 export type GiftCardCurrenciesLazyQueryHookResult = ReturnType<typeof useGiftCardCurrenciesLazyQuery>;
 export type GiftCardCurrenciesQueryResult = Apollo.QueryResult<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>;
 export const GiftCardBulkActivateDocument = gql`
-    mutation GiftCardBulkActivate($ids: [ID]!) {
+    mutation GiftCardBulkActivate($ids: [ID!]!) {
   giftCardBulkActivate(ids: $ids) {
     errors {
       ...GiftCardError
@@ -6930,7 +6930,7 @@ export type GiftCardBulkActivateMutationHookResult = ReturnType<typeof useGiftCa
 export type GiftCardBulkActivateMutationResult = Apollo.MutationResult<Types.GiftCardBulkActivateMutation>;
 export type GiftCardBulkActivateMutationOptions = Apollo.BaseMutationOptions<Types.GiftCardBulkActivateMutation, Types.GiftCardBulkActivateMutationVariables>;
 export const GiftCardBulkDeactivateDocument = gql`
-    mutation GiftCardBulkDeactivate($ids: [ID]!) {
+    mutation GiftCardBulkDeactivate($ids: [ID!]!) {
   giftCardBulkDeactivate(ids: $ids) {
     errors {
       ...GiftCardError
@@ -7001,7 +7001,7 @@ export type DeleteGiftCardMutationHookResult = ReturnType<typeof useDeleteGiftCa
 export type DeleteGiftCardMutationResult = Apollo.MutationResult<Types.DeleteGiftCardMutation>;
 export type DeleteGiftCardMutationOptions = Apollo.BaseMutationOptions<Types.DeleteGiftCardMutation, Types.DeleteGiftCardMutationVariables>;
 export const BulkDeleteGiftCardDocument = gql`
-    mutation BulkDeleteGiftCard($ids: [ID]!) {
+    mutation BulkDeleteGiftCard($ids: [ID!]!) {
   giftCardBulkDelete(ids: $ids) {
     errors {
       ...GiftCardError
@@ -7365,7 +7365,7 @@ export type MenuCreateMutationHookResult = ReturnType<typeof useMenuCreateMutati
 export type MenuCreateMutationResult = Apollo.MutationResult<Types.MenuCreateMutation>;
 export type MenuCreateMutationOptions = Apollo.BaseMutationOptions<Types.MenuCreateMutation, Types.MenuCreateMutationVariables>;
 export const MenuBulkDeleteDocument = gql`
-    mutation MenuBulkDelete($ids: [ID]!) {
+    mutation MenuBulkDelete($ids: [ID!]!) {
   menuBulkDelete(ids: $ids) {
     errors {
       ...MenuError
@@ -7479,7 +7479,7 @@ export type MenuItemCreateMutationHookResult = ReturnType<typeof useMenuItemCrea
 export type MenuItemCreateMutationResult = Apollo.MutationResult<Types.MenuItemCreateMutation>;
 export type MenuItemCreateMutationOptions = Apollo.BaseMutationOptions<Types.MenuItemCreateMutation, Types.MenuItemCreateMutationVariables>;
 export const MenuUpdateDocument = gql`
-    mutation MenuUpdate($id: ID!, $name: String!, $moves: [MenuItemMoveInput]!, $removeIds: [ID]!) {
+    mutation MenuUpdate($id: ID!, $name: String!, $moves: [MenuItemMoveInput!]!, $removeIds: [ID!]!) {
   menuUpdate(id: $id, input: {name: $name}) {
     errors {
       ...MenuError
@@ -7925,7 +7925,7 @@ export type OrderDraftCancelMutationHookResult = ReturnType<typeof useOrderDraft
 export type OrderDraftCancelMutationResult = Apollo.MutationResult<Types.OrderDraftCancelMutation>;
 export type OrderDraftCancelMutationOptions = Apollo.BaseMutationOptions<Types.OrderDraftCancelMutation, Types.OrderDraftCancelMutationVariables>;
 export const OrderDraftBulkCancelDocument = gql`
-    mutation OrderDraftBulkCancel($ids: [ID]!) {
+    mutation OrderDraftBulkCancel($ids: [ID!]!) {
   draftOrderBulkDelete(ids: $ids) {
     errors {
       ...OrderError
@@ -8673,7 +8673,7 @@ export type OrderLineDeleteMutationHookResult = ReturnType<typeof useOrderLineDe
 export type OrderLineDeleteMutationResult = Apollo.MutationResult<Types.OrderLineDeleteMutation>;
 export type OrderLineDeleteMutationOptions = Apollo.BaseMutationOptions<Types.OrderLineDeleteMutation, Types.OrderLineDeleteMutationVariables>;
 export const OrderLinesAddDocument = gql`
-    mutation OrderLinesAdd($id: ID!, $input: [OrderLineCreateInput]!) {
+    mutation OrderLinesAdd($id: ID!, $input: [OrderLineCreateInput!]!) {
   orderLinesCreate(id: $id, input: $input) {
     errors {
       ...OrderError
@@ -9825,7 +9825,7 @@ export type PageRemoveMutationHookResult = ReturnType<typeof usePageRemoveMutati
 export type PageRemoveMutationResult = Apollo.MutationResult<Types.PageRemoveMutation>;
 export type PageRemoveMutationOptions = Apollo.BaseMutationOptions<Types.PageRemoveMutation, Types.PageRemoveMutationVariables>;
 export const PageBulkPublishDocument = gql`
-    mutation PageBulkPublish($ids: [ID]!, $isPublished: Boolean!) {
+    mutation PageBulkPublish($ids: [ID!]!, $isPublished: Boolean!) {
   pageBulkPublish(ids: $ids, isPublished: $isPublished) {
     errors {
       ...PageBulkPublishErrorFragment
@@ -9861,7 +9861,7 @@ export type PageBulkPublishMutationHookResult = ReturnType<typeof usePageBulkPub
 export type PageBulkPublishMutationResult = Apollo.MutationResult<Types.PageBulkPublishMutation>;
 export type PageBulkPublishMutationOptions = Apollo.BaseMutationOptions<Types.PageBulkPublishMutation, Types.PageBulkPublishMutationVariables>;
 export const PageBulkRemoveDocument = gql`
-    mutation PageBulkRemove($ids: [ID]!) {
+    mutation PageBulkRemove($ids: [ID!]!) {
   pageBulkDelete(ids: $ids) {
     errors {
       ...PageBulkRemoveErrorFragment
@@ -9896,8 +9896,15 @@ export type PageBulkRemoveMutationHookResult = ReturnType<typeof usePageBulkRemo
 export type PageBulkRemoveMutationResult = Apollo.MutationResult<Types.PageBulkRemoveMutation>;
 export type PageBulkRemoveMutationOptions = Apollo.BaseMutationOptions<Types.PageBulkRemoveMutation, Types.PageBulkRemoveMutationVariables>;
 export const PageListDocument = gql`
-    query PageList($first: Int, $after: String, $last: Int, $before: String, $sort: PageSortingInput) {
-  pages(before: $before, after: $after, first: $first, last: $last, sortBy: $sort) {
+    query PageList($first: Int, $after: String, $last: Int, $before: String, $sort: PageSortingInput, $filter: PageFilterInput) {
+  pages(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sortBy: $sort
+    filter: $filter
+  ) {
     edges {
       node {
         ...Page
@@ -9930,6 +9937,7 @@ export const PageListDocument = gql`
  *      last: // value for 'last'
  *      before: // value for 'before'
  *      sort: // value for 'sort'
+ *      filter: // value for 'filter'
  *   },
  * });
  */
@@ -10462,7 +10470,7 @@ export type ProductTypeDeleteMutationHookResult = ReturnType<typeof useProductTy
 export type ProductTypeDeleteMutationResult = Apollo.MutationResult<Types.ProductTypeDeleteMutation>;
 export type ProductTypeDeleteMutationOptions = Apollo.BaseMutationOptions<Types.ProductTypeDeleteMutation, Types.ProductTypeDeleteMutationVariables>;
 export const ProductTypeBulkDeleteDocument = gql`
-    mutation ProductTypeBulkDelete($ids: [ID]!) {
+    mutation ProductTypeBulkDelete($ids: [ID!]!) {
   productTypeBulkDelete(ids: $ids) {
     errors {
       ...ProductTypeBulkDeleteErrorFragment
@@ -10577,7 +10585,7 @@ export type AssignProductAttributeMutationHookResult = ReturnType<typeof useAssi
 export type AssignProductAttributeMutationResult = Apollo.MutationResult<Types.AssignProductAttributeMutation>;
 export type AssignProductAttributeMutationOptions = Apollo.BaseMutationOptions<Types.AssignProductAttributeMutation, Types.AssignProductAttributeMutationVariables>;
 export const UnassignProductAttributeDocument = gql`
-    mutation UnassignProductAttribute($id: ID!, $ids: [ID]!) {
+    mutation UnassignProductAttribute($id: ID!, $ids: [ID!]!) {
   productAttributeUnassign(productTypeId: $id, attributeIds: $ids) {
     errors {
       ...ProductAttributeUnassignErrorFragment
@@ -10701,7 +10709,7 @@ export type ProductTypeAttributeReorderMutationHookResult = ReturnType<typeof us
 export type ProductTypeAttributeReorderMutationResult = Apollo.MutationResult<Types.ProductTypeAttributeReorderMutation>;
 export type ProductTypeAttributeReorderMutationOptions = Apollo.BaseMutationOptions<Types.ProductTypeAttributeReorderMutation, Types.ProductTypeAttributeReorderMutationVariables>;
 export const ProductAttributeAssignmentUpdateDocument = gql`
-    mutation ProductAttributeAssignmentUpdate($operations: [ProductAttributeAssignmentUpdateInput]!, $productTypeId: ID!) {
+    mutation ProductAttributeAssignmentUpdate($operations: [ProductAttributeAssignmentUpdateInput!]!, $productTypeId: ID!) {
   productAttributeAssignmentUpdate(
     operations: $operations
     productTypeId: $productTypeId
@@ -10964,7 +10972,7 @@ export type ProductDeleteMutationHookResult = ReturnType<typeof useProductDelete
 export type ProductDeleteMutationResult = Apollo.MutationResult<Types.ProductDeleteMutation>;
 export type ProductDeleteMutationOptions = Apollo.BaseMutationOptions<Types.ProductDeleteMutation, Types.ProductDeleteMutationVariables>;
 export const ProductMediaReorderDocument = gql`
-    mutation ProductMediaReorder($productId: ID!, $mediaIds: [ID]!) {
+    mutation ProductMediaReorder($productId: ID!, $mediaIds: [ID!]!) {
   productMediaReorder(productId: $productId, mediaIds: $mediaIds) {
     errors {
       ...ProductError
@@ -11627,7 +11635,7 @@ export type ProductBulkDeleteMutationHookResult = ReturnType<typeof useProductBu
 export type ProductBulkDeleteMutationResult = Apollo.MutationResult<Types.ProductBulkDeleteMutation>;
 export type ProductBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Types.ProductBulkDeleteMutation, Types.ProductBulkDeleteMutationVariables>;
 export const ProductVariantBulkCreateDocument = gql`
-    mutation ProductVariantBulkCreate($id: ID!, $inputs: [ProductVariantBulkCreateInput]!) {
+    mutation ProductVariantBulkCreate($id: ID!, $inputs: [ProductVariantBulkCreateInput!]!) {
   productVariantBulkCreate(product: $id, variants: $inputs) {
     errors {
       ...BulkProductError
@@ -12986,11 +12994,11 @@ export type SearchGiftCardTagsQueryHookResult = ReturnType<typeof useSearchGiftC
 export type SearchGiftCardTagsLazyQueryHookResult = ReturnType<typeof useSearchGiftCardTagsLazyQuery>;
 export type SearchGiftCardTagsQueryResult = Apollo.QueryResult<Types.SearchGiftCardTagsQuery, Types.SearchGiftCardTagsQueryVariables>;
 export const SearchOrderVariantDocument = gql`
-    query SearchOrderVariant($channel: String!, $first: Int!, $query: String!, $after: String, $address: AddressInput) {
+    query SearchOrderVariant($channel: String!, $first: Int!, $query: String!, $after: String, $address: AddressInput, $isPublished: Boolean, $stockAvailability: StockAvailability) {
   search: products(
     first: $first
     after: $after
-    filter: {search: $query}
+    filter: {search: $query, isPublished: $isPublished, stockAvailability: $stockAvailability}
     channel: $channel
   ) {
     edges {
@@ -13059,6 +13067,8 @@ export const SearchOrderVariantDocument = gql`
  *      query: // value for 'query'
  *      after: // value for 'after'
  *      address: // value for 'address'
+ *      isPublished: // value for 'isPublished'
+ *      stockAvailability: // value for 'stockAvailability'
  *   },
  * });
  */
@@ -13506,7 +13516,7 @@ export type DeleteShippingZoneMutationHookResult = ReturnType<typeof useDeleteSh
 export type DeleteShippingZoneMutationResult = Apollo.MutationResult<Types.DeleteShippingZoneMutation>;
 export type DeleteShippingZoneMutationOptions = Apollo.BaseMutationOptions<Types.DeleteShippingZoneMutation, Types.DeleteShippingZoneMutationVariables>;
 export const BulkDeleteShippingZoneDocument = gql`
-    mutation BulkDeleteShippingZone($ids: [ID]!) {
+    mutation BulkDeleteShippingZone($ids: [ID!]!) {
   shippingZoneBulkDelete(ids: $ids) {
     errors {
       ...ShippingError
@@ -13788,7 +13798,7 @@ export type DeleteShippingRateMutationHookResult = ReturnType<typeof useDeleteSh
 export type DeleteShippingRateMutationResult = Apollo.MutationResult<Types.DeleteShippingRateMutation>;
 export type DeleteShippingRateMutationOptions = Apollo.BaseMutationOptions<Types.DeleteShippingRateMutation, Types.DeleteShippingRateMutationVariables>;
 export const BulkDeleteShippingRateDocument = gql`
-    mutation BulkDeleteShippingRate($ids: [ID]!) {
+    mutation BulkDeleteShippingRate($ids: [ID!]!) {
   shippingPriceBulkDelete(ids: $ids) {
     errors {
       ...ShippingError
@@ -13899,7 +13909,7 @@ export type ShippingPriceExcludeProductMutationHookResult = ReturnType<typeof us
 export type ShippingPriceExcludeProductMutationResult = Apollo.MutationResult<Types.ShippingPriceExcludeProductMutation>;
 export type ShippingPriceExcludeProductMutationOptions = Apollo.BaseMutationOptions<Types.ShippingPriceExcludeProductMutation, Types.ShippingPriceExcludeProductMutationVariables>;
 export const ShippingPriceRemoveProductFromExcludeDocument = gql`
-    mutation ShippingPriceRemoveProductFromExclude($id: ID!, $products: [ID]!) {
+    mutation ShippingPriceRemoveProductFromExclude($id: ID!, $products: [ID!]!) {
   shippingPriceRemoveProductFromExclude(id: $id, products: $products) {
     errors {
       ...ShippingError

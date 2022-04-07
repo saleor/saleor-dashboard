@@ -13,11 +13,17 @@ export const searchOrderVariant = gql`
     $query: String!
     $after: String
     $address: AddressInput
+    $isPublished: Boolean
+    $stockAvailability: StockAvailability
   ) {
     search: products(
       first: $first
       after: $after
-      filter: { search: $query }
+      filter: {
+        search: $query
+        isPublished: $isPublished
+        stockAvailability: $stockAvailability
+      }
       channel: $channel
     ) {
       edges {
