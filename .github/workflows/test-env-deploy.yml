@@ -8,7 +8,7 @@ jobs:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
     runs-on: ubuntu-latest
     outputs:
-      base_URL: ${{ steps.set-domain.outputs.base_URL }}
+      base_URL: ${{ steps.set-domain.outputs.domain }}
     steps:
       - uses: actions/checkout@v2
 
