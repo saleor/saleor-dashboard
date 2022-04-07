@@ -118,12 +118,16 @@ module.exports = speedMeasureWrapper((env, argv) => {
     module: {
       rules: [
         {
-          exclude: /node_modules/,
-          loader: "babel-loader",
-          options: {
-            configFile: resolve("./babel.config.js")
-          },
-          test: /\.(jsx?|tsx?)$/
+          test: /\.(jsx?|tsx?)$/,
+          use: [
+            {
+              loader: "esbuild-loader",
+              options: {
+                loader: "tsx",
+                target: "es2015"
+              }
+            }
+          ]
         },
         {
           include: [
