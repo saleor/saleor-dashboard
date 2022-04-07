@@ -7,6 +7,8 @@ jobs:
   deploy:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
     runs-on: ubuntu-latest
+    outputs:
+      base_URL: ${{ steps.set-domain.outputs.base_URL }}
     steps:
       - uses: actions/checkout@v2
 
@@ -129,10 +131,6 @@ jobs:
           fallback_uri: ${{ secrets.CYPRESS_API_URI }}
         run: |
           echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1 | { read custom_uri; if [ -z "$custom_uri" ]; then echo "$fallback_uri"; else echo "$custom_uri"; fi })"
-      - name: Get base_URL
-        id: base_URL
-        run: |
-          echo "::set-output name=base_URL::https://$(echo ${GITHUB_HEAD_REF}).dashboard.saleor.rocks"
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
@@ -159,14 +157,14 @@ jobs:
         env:
           API_URI: ${{ steps.api_uri.outputs.custom_api_uri }}
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
-          CYPRESS_baseUrl: ${{ steps.base_URL.outputs.base_URL }}
+          CYPRESS_baseUrl: ${{needs.deploy.outputs.base_URL}}
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
         with:
           command: npm run cy:run:critical
-          wait-on: ${{ steps.base_URL.outputs.base_URL }}
       - uses: actions/upload-artifact@v1
         with:
           name: cypress-videos
