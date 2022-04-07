@@ -13,7 +13,8 @@
     "local-rules",
     "simple-import-sort",
     "cypress",
-    "chai-friendly"
+    "chai-friendly",
+    "formatjs"
   ],
   "rules": {
     "@typescript-eslint/adjacent-overload-signatures": "error",
@@ -82,6 +83,12 @@
     "dot-notation": "error",
     "eol-last": "off",
     "eqeqeq": ["error", "smart"],
+    "formatjs/enforce-id": [
+      "error",
+      {
+        "idInterpolationPattern": "[sha512:contenthash:base64:6]"
+      }
+    ],
     "guard-for-in": "error",
     "id-blacklist": "off",
     "import/no-duplicates": "error",
