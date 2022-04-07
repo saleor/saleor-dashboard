@@ -32,7 +32,6 @@ import {
   SortPage
 } from "@saleor/types";
 import { hasLimits, isLimitReached } from "@saleor/utils/limits";
-import uniqBy from "lodash/uniqBy";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

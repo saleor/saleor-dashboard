@@ -54,9 +54,7 @@ import {
 } from "@saleor/products/urls";
 import useAttributeSearch from "@saleor/searches/useAttributeSearch";
 import useAttributeValueSearch from "@saleor/searches/useAttributeValueSearch";
-import useAvailableInGridAttributesSearch, {
-  availableInGridAttributes
-} from "@saleor/searches/useAvailableInGridAttributesSearch";
+import useAvailableInGridAttributesSearch from "@saleor/searches/useAvailableInGridAttributesSearch";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
@@ -297,8 +295,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       first: 5
     }
-    // skip: !availableInGridAttributesOpts?.result.data.availableInGrid.pageInfo
-    // .hasNextPage
   });
   const gridAttributes = useGridAttributesQuery({
     variables: { ids: filteredColumnIds },
