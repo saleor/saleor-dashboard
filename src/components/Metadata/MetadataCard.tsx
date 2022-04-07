@@ -63,10 +63,12 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
           <>
             {isPrivate
               ? intl.formatMessage({
+                  id: "ETHnjq",
                   defaultMessage: "Private Metadata",
                   description: "header"
                 })
               : intl.formatMessage({
+                  id: "VcI+Zh",
                   defaultMessage: "Metadata",
                   description: "header"
                 })}
@@ -94,6 +96,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
             {data.length > 0 && (
               <Typography color="textSecondary" variant="body2">
                 <FormattedMessage
+                  id="2+v1wX"
                   defaultMessage="{number,plural,one{{number} string} other{{number} strings}}"
                   description="number of metadata fields in model"
                   values={{
@@ -109,6 +112,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                 <CardContent className={classes.emptyContainer}>
                   <Typography variant="body2" color="textSecondary">
                     <FormattedMessage
+                      id="cY6H2C"
                       defaultMessage="No metadata created for this element. Use the button below to add new metadata field."
                       description="empty metadata text"
                     />
@@ -120,18 +124,21 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                     <TableRow>
                       <TableCell className={classes.colNameHeader}>
                         <FormattedMessage
+                          id="nudPsY"
                           defaultMessage="Field"
                           description="metadata field name, header"
                         />
                       </TableCell>
                       <TableCell className={classes.colValue}>
                         <FormattedMessage
+                          id="LkuDEb"
                           defaultMessage="Value"
                           description="metadata field value, header"
                         />
                       </TableCell>
                       <TableCell className={classes.colActionHeader}>
                         <FormattedMessage
+                          id="nEixpu"
                           defaultMessage="Actions"
                           description="table action"
                         />
@@ -203,6 +210,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                   }
                 >
                   <FormattedMessage
+                    id="GiDxS4"
                     defaultMessage="Add Field"
                     description="add metadata field,button"
                   />

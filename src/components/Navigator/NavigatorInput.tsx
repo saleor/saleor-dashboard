@@ -87,27 +87,32 @@ const NavigatorInput = React.forwardRef<HTMLInputElement, NavigatorInputProps>(
           placeholder={
             mode === "orders"
               ? intl.formatMessage({
+                  id: "8B8E+3",
                   defaultMessage: "Order Number",
                   description: "navigator placeholder"
                 })
               : mode === "commands"
               ? intl.formatMessage({
+                  id: "NqxvFh",
                   defaultMessage: "Type Command",
                   description: "navigator placeholder"
                 })
               : mode === "catalog"
               ? intl.formatMessage({
+                  id: "AOI4LW",
                   defaultMessage: "Search in Catalog",
                   description: "navigator placeholder"
                 })
               : mode === "customers"
               ? intl.formatMessage({
+                  id: "TpPx7V",
                   defaultMessage: "Search Customer",
                   description: "navigator placeholder"
                 })
               : mode === "default"
               ? intl.formatMessage(
                   {
+                    id: "BooQvo",
                     defaultMessage: "Type {key} to see available actions",
                     description: "navigator placeholder"
                   },

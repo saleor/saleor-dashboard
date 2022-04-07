@@ -26,10 +26,14 @@ const CustomAppDefaultToken: React.FC<CustomAppDefaultTokenProps> = props => {
         <div className={classes.content}>
           <div>
             <Typography>
-              <FormattedMessage defaultMessage="We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again." />
+              <FormattedMessage
+                id="ixjvkM"
+                defaultMessage="We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
+              />
             </Typography>
             <Typography>
               <FormattedMessage
+                id="DGCzal"
                 defaultMessage="This token gives you access to your shop's API, which you'll find here: {url}"
                 values={{
                   url: (
@@ -49,14 +53,19 @@ const CustomAppDefaultToken: React.FC<CustomAppDefaultTokenProps> = props => {
         </div>
         <Paper className={classes.paper} elevation={0}>
           <Typography variant="caption">
-            <FormattedMessage defaultMessage="Generated Token" />
+            <FormattedMessage id="Kxiige" defaultMessage="Generated Token" />
           </Typography>
           <Typography>{token}</Typography>
           <Button className={classes.copy} onClick={() => copy(token)}>
             {copied ? (
-              <FormattedMessage defaultMessage="Copied" description="button" />
+              <FormattedMessage
+                id="r86alc"
+                defaultMessage="Copied"
+                description="button"
+              />
             ) : (
               <FormattedMessage
+                id="HVFq//"
                 defaultMessage="Copy token"
                 description="button"
               />

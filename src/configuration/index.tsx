@@ -38,13 +38,14 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
   return [
     {
       label: intl.formatMessage({
+        id: "HP6m+q",
         defaultMessage: "Attributes and Product Types"
       }),
       menuItems: [
         {
           description: intl.formatMessage({
-            defaultMessage: "Determine attributes used to create product types",
-            id: "configurationMenuAttributes"
+            id: "19/lwV",
+            defaultMessage: "Determine attributes used to create product types"
           }),
           icon: <Attributes />,
           permissions: [
@@ -57,8 +58,8 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
         },
         {
           description: intl.formatMessage({
-            defaultMessage: "Define types of products you sell",
-            id: "configurationMenuProductTypes"
+            id: "n0RwMK",
+            defaultMessage: "Define types of products you sell"
           }),
           icon: <ProductTypes />,
           permissions: [PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES],
@@ -70,13 +71,14 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
     },
     {
       label: intl.formatMessage({
+        id: "jFrdB5",
         defaultMessage: "Product Settings"
       }),
       menuItems: [
         {
           description: intl.formatMessage({
-            defaultMessage: "Manage how your store charges tax",
-            id: "configurationMenuTaxes"
+            id: "EIULpW",
+            defaultMessage: "Manage how your store charges tax"
           }),
           icon: <Taxes />,
           permissions: [PermissionEnum.MANAGE_SETTINGS],
@@ -88,13 +90,14 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
     },
     {
       label: intl.formatMessage({
+        id: "UN+yTt",
         defaultMessage: "Staff Settings"
       }),
       menuItems: [
         {
           description: intl.formatMessage({
-            defaultMessage: "Manage your employees and their permissions",
-            id: "configurationMenuStaff"
+            id: "RQUkVW",
+            defaultMessage: "Manage your employees and their permissions"
           }),
           icon: <StaffMembers />,
           permissions: [PermissionEnum.MANAGE_STAFF],
@@ -104,9 +107,9 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
         },
         {
           description: intl.formatMessage({
+            id: "ivJ1qt",
             defaultMessage:
-              "Manage your permission groups and their permissions",
-            id: "configurationMenuPermissionGroups"
+              "Manage your permission groups and their permissions"
           }),
           icon: <PermissionGroups />,
           permissions: [PermissionEnum.MANAGE_STAFF],
@@ -118,13 +121,14 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
     },
     {
       label: intl.formatMessage({
+        id: "gTr0qE",
         defaultMessage: "Shipping Settings"
       }),
       menuItems: [
         {
           description: intl.formatMessage({
-            defaultMessage: "Manage how you ship out orders",
-            id: "configurationMenuShipping"
+            id: "zxs6G3",
+            defaultMessage: "Manage how you ship out orders"
           }),
           icon: <ShippingMethods />,
           permissions: [PermissionEnum.MANAGE_SHIPPING],
@@ -134,8 +138,8 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
         },
         {
           description: intl.formatMessage({
-            defaultMessage: "Manage and update your warehouse information",
-            id: "configurationMenuWarehouses"
+            id: "5RmuD+",
+            defaultMessage: "Manage and update your warehouse information"
           }),
           icon: <Warehouses />,
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
@@ -147,13 +151,14 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
     },
     {
       label: intl.formatMessage({
+        id: "MWSacl",
         defaultMessage: "Multichannel"
       }),
       menuItems: [
         {
           description: intl.formatMessage({
-            defaultMessage: "Define and manage your sales channels",
-            id: "configurationMenuChannels"
+            id: "8vJCJ4",
+            defaultMessage: "Define and manage your sales channels"
           }),
           icon: <Channels />,
           permissions: [PermissionEnum.MANAGE_CHANNELS],
@@ -165,13 +170,14 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
     },
     {
       label: intl.formatMessage({
+        id: "HjXnIf",
         defaultMessage: "Content Management"
       }),
       menuItems: [
         {
           description: intl.formatMessage({
-            defaultMessage: "Define types of content pages used in your store",
-            id: "configurationMenuPageTypes"
+            id: "JPH/uP",
+            defaultMessage: "Define types of content pages used in your store"
           }),
           icon: <PageTypes />,
           permissions: [
@@ -186,13 +192,14 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
     },
     {
       label: intl.formatMessage({
+        id: "YZl6cv",
         defaultMessage: "Miscellaneous"
       }),
       menuItems: [
         {
           description: intl.formatMessage({
-            defaultMessage: "Define how users can navigate through your store",
-            id: "configurationMenuNavigation"
+            id: "hpMcW8",
+            defaultMessage: "Define how users can navigate through your store"
           }),
           icon: <Navigation />,
           permissions: [PermissionEnum.MANAGE_MENUS],
@@ -202,8 +209,8 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
         },
         {
           description: intl.formatMessage({
-            defaultMessage: "View and update your site settings",
-            id: "configurationMenuSiteSettings"
+            id: "5BajZK",
+            defaultMessage: "View and update your site settings"
           }),
           icon: <SiteSettings />,
           permissions: [PermissionEnum.MANAGE_SETTINGS],
@@ -213,8 +220,8 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
         },
         {
           description: intl.formatMessage({
-            defaultMessage: "View and update your plugins and their settings.",
-            id: "configurationPluginsPages"
+            id: "m19JfL",
+            defaultMessage: "View and update your plugins and their settings."
           }),
           icon: (
             <Plugins

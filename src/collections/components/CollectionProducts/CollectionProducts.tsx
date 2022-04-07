@@ -87,6 +87,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
           !!collection ? (
             intl.formatMessage(
               {
+                id: "/dnWE8",
                 defaultMessage: "Products in {name}",
                 description: "products in collection"
               },
@@ -106,6 +107,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
             onClick={onAdd}
           >
             <FormattedMessage
+              id="scHVdW"
               defaultMessage="Assign product"
               description="button"
             />
@@ -124,6 +126,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
           <TableCell className={classes.colName}>
             <span className={classes.colNameLabel}>
               <FormattedMessage
+                id="6AMFki"
                 defaultMessage="Name"
                 description="product name"
               />
@@ -131,12 +134,14 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
           </TableCell>
           <TableCell className={classes.colType}>
             <FormattedMessage
+              id="k+HcTv"
               defaultMessage="Type"
               description="product type"
             />
           </TableCell>
           <TableCell className={classes.colPublished}>
             <FormattedMessage
+              id="Oe62bR"
               defaultMessage="Availability"
               description="product availability"
             />
@@ -214,7 +219,10 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage defaultMessage="No products found" />
+                  <FormattedMessage
+                    id="Q1Uzbb"
+                    defaultMessage="No products found"
+                  />
                 </TableCell>
               </TableRow>
             )

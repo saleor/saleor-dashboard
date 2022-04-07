@@ -74,6 +74,7 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
           className={classes.colName}
         >
           <FormattedMessage
+            id="BQ2NVl"
             defaultMessage="Content Type Name"
             description="page type name"
           />
@@ -127,7 +128,10 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
           () => (
             <TableRow>
               <TableCell colSpan={numberOfColumns}>
-                <FormattedMessage defaultMessage="No page types found" />
+                <FormattedMessage
+                  id="6fORLY"
+                  defaultMessage="No page types found"
+                />
               </TableCell>
             </TableRow>
           )

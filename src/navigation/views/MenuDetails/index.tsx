@@ -231,15 +231,15 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
         }
         variant="delete"
         title={intl.formatMessage({
+          id: "QzseV7",
           defaultMessage: "Delete Menu",
-          description: "dialog header",
-          id: "menuDetailsDeleteMenuHeader"
+          description: "dialog header"
         })}
       >
         <DialogContentText>
           <FormattedMessage
+            id="G/SYtU"
             defaultMessage="Are you sure you want to delete menu {menuName}?"
-            id="menuDetailsDeleteMenuContent"
             values={{
               menuName: <strong>{maybe(() => data.menu.name, "...")}</strong>
             }}

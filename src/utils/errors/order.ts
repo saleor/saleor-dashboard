@@ -5,55 +5,68 @@ import { getCommonFormFieldErrorMessage } from "./common";
 
 const messages = defineMessages({
   billingNotSet: {
+    id: "IFWHn0",
     defaultMessage: "Billing address is not set",
     description: "error message"
   },
   cannotCancelFulfillment: {
+    id: "ij7olm",
     defaultMessage: "This fulfillment cannot be cancelled",
     description: "error message"
   },
   cannotCancelOrder: {
+    id: "BM1JiJ",
     defaultMessage: "This order cannot be cancelled",
     description: "error message"
   },
   cannotFulfillLine: {
+    id: "nOo0oL",
     defaultMessage: "Not enough items to fulfill",
     description: "error message"
   },
   cannotRefund: {
+    id: "Xb6BJ9",
     defaultMessage: "Manual payments can not be refunded",
     description: "error message"
   },
   cannotVoid: {
+    id: "sZ27WU",
     defaultMessage: "Only pre-authorized payments can be voided",
     description: "error message"
   },
   captureInactive: {
+    id: "gKdGxP",
     defaultMessage: "Only pre-authorized payments can be captured",
     description: "error message"
   },
   insufficientStock: {
+    id: "d9UqaJ",
     defaultMessage: "Cannot change the quantity because of insufficient stock",
     description: "error message"
   },
   noShippingAddress: {
+    id: "Wlc67M",
     defaultMessage:
       "Cannot choose a shipping method for an order without the shipping address",
     description: "error message"
   },
   notEditable: {
+    id: "r+8q4B",
     defaultMessage: "Only draft orders can be edited",
     description: "error message"
   },
   paymentMissing: {
+    id: "Y1B0PN",
     defaultMessage: "There's no payment associated with the order",
     description: "error message"
   },
   shippingNotApplicable: {
+    id: "VEE4gD",
     defaultMessage: "Shipping method is not valid for chosen shipping address",
     description: "error message"
   },
   shippingRequired: {
+    id: "ychKsb",
     defaultMessage: "Shipping method is required for this order",
     description: "error message"
   }

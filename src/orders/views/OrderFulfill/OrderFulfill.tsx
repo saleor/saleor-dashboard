@@ -63,6 +63,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "CYEnGq",
             defaultMessage: "Fulfilled Items",
             description: "order fulfilled success message"
           })
@@ -83,6 +84,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
           data?.order?.number
             ? intl.formatMessage(
                 {
+                  id: "2MKBk2",
                   defaultMessage: "Fulfill Order #{orderNumber}",
                   description: "window title"
                 },
@@ -91,6 +93,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
                 }
               )
             : intl.formatMessage({
+                id: "NzifUg",
                 defaultMessage: "Fulfill Order",
                 description: "window title"
               })

@@ -63,6 +63,7 @@ export const FilterNumericField: React.FC<FilterNumericFieldProps> = ({
             <div className={classes.spacer} />
             <span className={classes.andLabel}>
               <FormattedMessage
+                id="34F7Jk"
                 defaultMessage="and"
                 description="filter range separator"
               />

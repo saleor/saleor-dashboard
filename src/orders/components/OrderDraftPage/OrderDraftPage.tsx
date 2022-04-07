@@ -104,6 +104,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
           menuItems={[
             {
               label: intl.formatMessage({
+                id: "PAqicb",
                 defaultMessage: "Cancel order",
                 description: "button"
               }),
@@ -162,6 +163,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
         onSubmit={onDraftFinalize}
         labels={{
           confirm: intl.formatMessage({
+            id: "4Z14xW",
             defaultMessage: "Finalize",
             description: "button"
           })

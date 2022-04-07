@@ -20,18 +20,22 @@ import ProductMediaNavigation from "../ProductMediaNavigation";
 
 const messages = defineMessages({
   editMedia: {
+    id: "Ihp4D3",
     defaultMessage: "Edit Media",
     description: "header"
   },
   mediaInformation: {
+    id: "9RvXNg",
     defaultMessage: "Media Information",
     description: "section header"
   },
   mediaView: {
+    id: "cW1RIo",
     defaultMessage: "Media View",
     description: "section header"
   },
   optional: {
+    id: "lzdvwp",
     defaultMessage: "Optional",
     description: "field is optional"
   }

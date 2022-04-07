@@ -99,6 +99,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
       notify({
         status: "success",
         text: intl.formatMessage({
+          id: "HvJPcU",
           defaultMessage: "Category deleted"
         })
       });
@@ -291,6 +292,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
         onConfirm={() => deleteCategory({ variables: { id } })}
         open={params.action === "delete"}
         title={intl.formatMessage({
+          id: "xo5UIb",
           defaultMessage: "Delete category",
           description: "dialog title"
         })}
@@ -298,6 +300,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
       >
         <DialogContentText>
           <FormattedMessage
+            id="xRkj2h"
             defaultMessage="Are you sure you want to delete {categoryName}?"
             values={{
               categoryName: (
@@ -307,7 +310,10 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
           />
         </DialogContentText>
         <DialogContentText>
-          <FormattedMessage defaultMessage="Remember this will also unpin all products assigned to this category, making them unavailable in storefront." />
+          <FormattedMessage
+            id="3DGvA/"
+            defaultMessage="Remember this will also unpin all products assigned to this category, making them unavailable in storefront."
+          />
         </DialogContentText>
       </ActionDialog>
       <ActionDialog
@@ -323,6 +329,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
           }).then(() => refetch())
         }
         title={intl.formatMessage({
+          id: "sG0w22",
           defaultMessage: "Delete categories",
           description: "dialog title"
         })}
@@ -330,6 +337,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
       >
         <DialogContentText>
           <FormattedMessage
+            id="Pp/7T7"
             defaultMessage="{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
             values={{
               counter: maybe(() => params.ids.length),
@@ -338,7 +346,10 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
           />
         </DialogContentText>
         <DialogContentText>
-          <FormattedMessage defaultMessage="Remember this will also delete all products assigned to this category." />
+          <FormattedMessage
+            id="e+L+q3"
+            defaultMessage="Remember this will also delete all products assigned to this category."
+          />
         </DialogContentText>
       </ActionDialog>
       <ActionDialog
@@ -351,6 +362,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
           }).then(() => refetch())
         }
         title={intl.formatMessage({
+          id: "KCjd1o",
           defaultMessage: "Delete products",
           description: "dialog title"
         })}
@@ -358,6 +370,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
       >
         <DialogContentText>
           <FormattedMessage
+            id="7l5Bh9"
             defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
             values={{
               counter: maybe(() => params.ids.length),

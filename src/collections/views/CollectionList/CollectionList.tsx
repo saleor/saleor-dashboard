@@ -226,12 +226,14 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         }
         variant="delete"
         title={intl.formatMessage({
+          id: "Ykw8k5",
           defaultMessage: "Delete collections",
           description: "dialog title"
         })}
       >
         <DialogContentText>
           <FormattedMessage
+            id="yT5zvU"
             defaultMessage="{counter,plural,one{Are you sure you want to delete this collection?} other{Are you sure you want to delete {displayQuantity} collections?}}"
             values={{
               counter: maybe(() => params.ids.length),

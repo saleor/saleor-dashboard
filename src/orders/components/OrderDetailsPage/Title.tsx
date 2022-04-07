@@ -35,7 +35,7 @@ const Title: React.FC<TitleProps> = props => {
   return (
     <div className={classes.container}>
       {intl.formatMessage(
-        { defaultMessage: "Order #{orderNumber}" },
+        { id: "AqXzM2", defaultMessage: "Order #{orderNumber}" },
         { orderNumber: order?.number }
       )}
       <div className={classes.statusContainer}>

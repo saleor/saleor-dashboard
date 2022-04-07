@@ -19,10 +19,12 @@ interface ProductMediaPopperProps {
 
 const messages = defineMessages({
   uploadImages: {
+    id: "9CEu8k",
     defaultMessage: "Upload Images",
     description: "modal button images upload"
   },
   uploadUrl: {
+    id: "Q2UXlW",
     defaultMessage: "Upload URL",
     description: "modal button url upload"
   }

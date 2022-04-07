@@ -415,6 +415,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   onClick={onSeoClick}
                   onChange={change}
                   helperText={intl.formatMessage({
+                    id: "LKoIB1",
                     defaultMessage:
                       "Add search engine title and description to make this product easier to find"
                   })}
@@ -446,11 +447,13 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     managePermissions={[PermissionEnum.MANAGE_PRODUCTS]}
                     messages={{
                       hiddenLabel: intl.formatMessage({
+                        id: "saKXY3",
                         defaultMessage: "Not published",
                         description: "product label"
                       }),
 
                       visibleLabel: intl.formatMessage({
+                        id: "qJedl0",
                         defaultMessage: "Published",
                         description: "product label"
                       })
@@ -467,15 +470,15 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   <ChannelsWithVariantsAvailabilityCard
                     messages={{
                       hiddenLabel: intl.formatMessage({
+                        id: "saKXY3",
                         defaultMessage: "Not published",
-                        description: "product label",
-                        id: "not published channel"
+                        description: "product label"
                       }),
 
                       visibleLabel: intl.formatMessage({
+                        id: "qJedl0",
                         defaultMessage: "Published",
-                        description: "product label",
-                        id: "published channel"
+                        description: "product label"
                       })
                     }}
                     errors={channelsErrors}

@@ -77,12 +77,14 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "t3aiWF",
           defaultMessage: "Excluded Products",
           description: "section header"
         })}
         toolbar={
           <Button variant="tertiary" onClick={onProductAssign}>
             <FormattedMessage
+              id="U8eeLW"
               defaultMessage="Assign products"
               description="button"
             />
@@ -101,10 +103,10 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
               toolbar={toolbar}
             >
               <TableCell className={classes.colProductName}>
-                <FormattedMessage defaultMessage="Product Name" />
+                <FormattedMessage id="ZIc5lM" defaultMessage="Product Name" />
               </TableCell>
               <TableCell className={classes.colAction}>
-                <FormattedMessage defaultMessage="Actions" />
+                <FormattedMessage id="wL7VAE" defaultMessage="Actions" />
               </TableCell>
             </TableHead>
             <TableFooter>
@@ -128,7 +130,7 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
           {products?.length === 0 ? (
             <TableRow>
               <TableCell colSpan={5}>
-                <FormattedMessage defaultMessage="No Products" />
+                <FormattedMessage id="Gg4+K7" defaultMessage="No Products" />
               </TableCell>
             </TableRow>
           ) : (

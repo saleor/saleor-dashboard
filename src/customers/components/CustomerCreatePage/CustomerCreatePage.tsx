@@ -155,6 +155,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
             </Backlink>
             <PageHeader
               title={intl.formatMessage({
+                id: "N76zUg",
                 defaultMessage: "Create Customer",
                 description: "page header"
               })}

@@ -70,6 +70,7 @@ export const CollectionImage: React.FC<CollectionImageProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "DP6b8U",
           defaultMessage: "Background Image (optional)",
           description: "section header"
         })}
@@ -112,6 +113,7 @@ export const CollectionImage: React.FC<CollectionImageProps> = props => {
               name="backgroundImageAlt"
               label={intl.formatMessage(commonMessages.description)}
               helperText={intl.formatMessage({
+                id: "0iMYc+",
                 defaultMessage: "(Optional)",
                 description: "field is optional"
               })}

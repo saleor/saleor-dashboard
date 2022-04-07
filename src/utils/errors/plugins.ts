@@ -5,9 +5,11 @@ import { getCommonFormFieldErrorMessage } from "./common";
 
 const messages = defineMessages({
   misconfigured: {
+    id: "0AQH0Q",
     defaultMessage: "Plugin is misconfigured and cannot be activated"
   },
   unique: {
+    id: "lqIzC8",
     defaultMessage: "This field needs to be unique"
   }
 });

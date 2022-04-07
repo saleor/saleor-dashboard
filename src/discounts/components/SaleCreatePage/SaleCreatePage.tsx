@@ -110,6 +110,7 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
             </Backlink>
             <PageHeader
               title={intl.formatMessage({
+                id: "2E1xZ0",
                 defaultMessage: "Create Sale",
                 description: "page header"
               })}

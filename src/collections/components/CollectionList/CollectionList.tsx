@@ -107,7 +107,7 @@ const CollectionList: React.FC<CollectionListProps> = props => {
           onClick={() => onSort(CollectionListUrlSortField.name)}
           className={classes.colName}
         >
-          <FormattedMessage defaultMessage="Collection Name" />
+          <FormattedMessage id="VZsE96" defaultMessage="Collection Name" />
         </TableCellHeader>
         <TableCellHeader
           direction={
@@ -118,7 +118,7 @@ const CollectionList: React.FC<CollectionListProps> = props => {
           onClick={() => onSort(CollectionListUrlSortField.productCount)}
           className={classes.colProducts}
         >
-          <FormattedMessage defaultMessage="No. of Products" />
+          <FormattedMessage id="mWQt3s" defaultMessage="No. of Products" />
         </TableCellHeader>
         <TooltipTableCellHeader
           direction={
@@ -139,6 +139,7 @@ const CollectionList: React.FC<CollectionListProps> = props => {
           })}
         >
           <FormattedMessage
+            id="UxdBmI"
             defaultMessage="Availability"
             description="collection availability"
           />
@@ -218,7 +219,10 @@ const CollectionList: React.FC<CollectionListProps> = props => {
           () => (
             <TableRow>
               <TableCell colSpan={numberOfColumns}>
-                <FormattedMessage defaultMessage="No collections found" />
+                <FormattedMessage
+                  id="Yw+9F7"
+                  defaultMessage="No collections found"
+                />
               </TableCell>
             </TableRow>
           )

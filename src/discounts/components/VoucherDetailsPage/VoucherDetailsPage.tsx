@@ -257,6 +257,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                       >
                         {intl.formatMessage(
                           {
+                            id: "ppLwx3",
                             defaultMessage: "Categories ({quantity})",
                             description: "number of categories"
                           },
@@ -276,6 +277,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                       >
                         {intl.formatMessage(
                           {
+                            id: "QdGzUf",
                             defaultMessage: "Collections ({quantity})",
                             description: "number of collections"
                           },
@@ -293,6 +295,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                       >
                         {intl.formatMessage(
                           {
+                            id: "bNw8PM",
                             defaultMessage: "Products ({quantity})",
                             description: "number of products"
                           },
@@ -363,16 +366,21 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                     countries={maybe(() => voucher.countries)}
                     disabled={disabled}
                     emptyText={intl.formatMessage({
+                      id: "jd/LWa",
                       defaultMessage: "Voucher applies to all countries"
                     })}
                     title={
                       <>
                         {intl.formatMessage({
+                          id: "ibnmEd",
                           defaultMessage: "Countries",
                           description: "voucher country range"
                         })}
                         <Typography variant="caption">
-                          <FormattedMessage defaultMessage="Voucher is limited to these countries" />
+                          <FormattedMessage
+                            id="glT6fm"
+                            defaultMessage="Voucher is limited to these countries"
+                          />
                         </Typography>
                       </>
                     }

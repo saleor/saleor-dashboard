@@ -48,6 +48,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
       <PageHeader
         title={intl.formatMessage(
           {
+            id: "22x9tu",
             defaultMessage:
               'Translation Product "{productName}" - {languageCode}',
             description: "header"
@@ -77,6 +78,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
         fields={[
           {
             displayName: intl.formatMessage({
+              id: "ZIc5lM",
               defaultMessage: "Product Name"
             }),
             name: TranslationInputFieldName.name,
@@ -86,6 +88,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
           },
           {
             displayName: intl.formatMessage({
+              id: "Q8Qw5B",
               defaultMessage: "Description"
             }),
             name: TranslationInputFieldName.description,
@@ -106,11 +109,13 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
         disabled={disabled}
         initialState={true}
         title={intl.formatMessage({
+          id: "TGX4T1",
           defaultMessage: "Search Engine Preview"
         })}
         fields={[
           {
             displayName: intl.formatMessage({
+              id: "HlEpii",
               defaultMessage: "Search Engine Title"
             }),
             name: TranslationInputFieldName.seoTitle,
@@ -120,6 +125,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
           },
           {
             displayName: intl.formatMessage({
+              id: "US3IPU",
               defaultMessage: "Search Engine Description"
             }),
             name: TranslationInputFieldName.seoDescription,
@@ -147,6 +153,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
                 id: attrVal.attributeValue.id,
                 displayName: intl.formatMessage(
                   {
+                    id: "PajjqE",
                     defaultMessage: "Attribute {number}",
                     description: "attribute list"
                   },

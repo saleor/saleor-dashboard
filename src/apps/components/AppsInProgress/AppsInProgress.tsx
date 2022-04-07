@@ -44,6 +44,7 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "nIrjSR",
           defaultMessage: "Ongoing Installations",
           description: "section header"
         })}
@@ -64,6 +65,7 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
                 >
                   <Typography variant="body2" className={classes.text}>
                     <FormattedMessage
+                      id="1qRwgQ"
                       defaultMessage="Installing app..."
                       description="app installation"
                     />
@@ -82,6 +84,7 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
                 >
                   <Typography variant="body2" className={classes.error}>
                     <FormattedMessage
+                      id="JufWFT"
                       defaultMessage="There was a problem during installation"
                       description="app installation error"
                     />
@@ -96,6 +99,7 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
                   </Typography>
                   <Button onClick={() => onAppInstallRetry(id)}>
                     <FormattedMessage
+                      id="+c/f61"
                       defaultMessage="Retry"
                       description="retry installation"
                     />

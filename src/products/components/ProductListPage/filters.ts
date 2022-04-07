@@ -45,37 +45,46 @@ export interface ProductListFilterOpts {
 
 const messages = defineMessages({
   available: {
+    id: "diOQm7",
     defaultMessage: "Available",
     description: "product status"
   },
   channel: {
+    id: "pbGIUg",
     defaultMessage: "Channel",
     description: "sales channel"
   },
   kind: {
+    id: "pBTTtU",
     defaultMessage: "Product Kind",
     description: "product kind"
   },
   hidden: {
+    id: "Bx367s",
     defaultMessage: "Hidden",
     description: "product is hidden"
   },
   outOfStock: {
+    id: "Sna+WK",
     defaultMessage: "Out Of Stock",
     description: "product status"
   },
   price: {
+    id: "b1zuN9",
     defaultMessage: "Price"
   },
   quantity: {
+    id: "3Z8972",
     defaultMessage: "Stock quantity",
     description: "product"
   },
   visibility: {
+    id: "g+GAf4",
     defaultMessage: "Visibility",
     description: "product visibility"
   },
   visible: {
+    id: "6Y1nQd",
     defaultMessage: "Visible",
     description: "product is visible"
   }

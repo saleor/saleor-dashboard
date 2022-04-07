@@ -30,6 +30,7 @@ const ResetPasswordView: React.FC = () => {
         ) {
           setError(
             intl.formatMessage({
+              id: "C0JLNW",
               defaultMessage:
                 "Provided email address does not exist in our database."
             })

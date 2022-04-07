@@ -39,6 +39,7 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
           </Backlink>
           <PageHeader
             title={intl.formatMessage({
+              id: "cgsY/X",
               defaultMessage: "Create New Category",
               description: "page header"
             })}
@@ -55,6 +56,7 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
             <SeoForm
               allowEmptySlug={true}
               helperText={intl.formatMessage({
+                id: "wQdR8M",
                 defaultMessage:
                   "Add search engine title and description to make this category easier to find"
               })}

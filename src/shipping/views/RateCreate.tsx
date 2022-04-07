@@ -139,6 +139,7 @@ export const RateCreate: React.FC<RateCreateProps> = ({ id, params }) => {
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
           title={intl.formatMessage({
+            id: "EM730i",
             defaultMessage: "Manage Channel Availability"
           })}
           confirmButtonState="default"

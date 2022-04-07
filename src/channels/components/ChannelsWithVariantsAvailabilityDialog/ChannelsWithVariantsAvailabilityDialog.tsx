@@ -19,6 +19,7 @@ import ChannelsWithVariantsAvailabilityDialogContent from "./ChannelsWithVariant
 
 const messages = defineMessages({
   title: {
+    id: "p/EWEZ",
     defaultMessage: "Manage Channels",
     description: "channels variants availability dialog title"
   }

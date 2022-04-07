@@ -121,6 +121,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             error={!!formErrors.companyName}
             helperText={getErrorMessage(formErrors.companyName, intl)}
             label={intl.formatMessage({
+              id: "9YazHG",
               defaultMessage: "Company"
             })}
             name="companyName"
@@ -139,6 +140,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             fullWidth
             helperText={getErrorMessage(formErrors.phone, intl)}
             label={intl.formatMessage({
+              id: "O95R3Z",
               defaultMessage: "Phone"
             })}
             name="phone"
@@ -156,6 +158,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
         error={!!formErrors.streetAddress1}
         helperText={getErrorMessage(formErrors.streetAddress1, intl)}
         label={intl.formatMessage({
+          id: "B52Em/",
           defaultMessage: "Address line 1"
         })}
         name="streetAddress1"
@@ -172,6 +175,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
         error={!!formErrors.streetAddress2}
         helperText={getErrorMessage(formErrors.streetAddress2, intl)}
         label={intl.formatMessage({
+          id: "oQY0a2",
           defaultMessage: "Address line 2"
         })}
         name="streetAddress2"
@@ -190,6 +194,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             error={!!formErrors.city}
             helperText={getErrorMessage(formErrors.city, intl)}
             label={intl.formatMessage({
+              id: "TE4fIS",
               defaultMessage: "City"
             })}
             name="city"
@@ -207,6 +212,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             error={!!formErrors.postalCode}
             helperText={getErrorMessage(formErrors.postalCode, intl)}
             label={intl.formatMessage({
+              id: "oYGfnY",
               defaultMessage: "ZIP / Postal code"
             })}
             name="postalCode"
@@ -230,6 +236,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             error={!!formErrors.country}
             helperText={getErrorMessage(formErrors.country, intl)}
             label={intl.formatMessage({
+              id: "vONi+O",
               defaultMessage: "Country"
             })}
             name="country"
@@ -244,6 +251,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             error={!!formErrors.countryArea}
             helperText={getErrorMessage(formErrors.countryArea, intl)}
             label={intl.formatMessage({
+              id: "AuwpCm",
               defaultMessage: "Country area"
             })}
             name="countryArea"

@@ -72,15 +72,18 @@ const useStyles = makeStyles(
 
 const messages = defineMessages({
   improperValue: {
+    id: "xoyCZ/",
     defaultMessage: "Improper value",
     description: "error message"
   },
 
   titleFulfilled: {
+    id: "NxRsHQ",
     defaultMessage: "Fulfillment - #{fulfilmentId}",
     description: "section header"
   },
   titleUnfulfilled: {
+    id: "BkFke9",
     defaultMessage: "Unfulfilled Items",
     description: "section header"
   }
@@ -134,6 +137,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
           <TableRow>
             <TableCell>
               <FormattedMessage
+                id="aAAxKp"
                 defaultMessage="Product"
                 description="table column header"
               />
@@ -141,18 +145,21 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
             <TableCell />
             <TableCell align="right">
               <FormattedMessage
+                id="Y299ST"
                 defaultMessage="Price"
                 description="table column header"
               />
             </TableCell>
             <TableCell align="right">
               <FormattedMessage
+                id="0qg33z"
                 defaultMessage="Return"
                 description="table column header"
               />
             </TableCell>
             <TableCell align="center">
               <FormattedMessage
+                id="ikM00B"
                 defaultMessage="Replace"
                 description="table column header"
               />

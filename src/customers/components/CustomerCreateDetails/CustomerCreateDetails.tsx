@@ -44,6 +44,7 @@ const CustomerCreateDetails: React.FC<CustomerCreateDetailsProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "fjPWOA",
           defaultMessage: "Customer Overview",
           description: "header"
         })}

@@ -171,6 +171,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
       <WindowTitle
         title={intl.formatMessage(
           {
+            id: "TLNf6K",
             defaultMessage: "Draft Order #{orderNumber}",
             description: "window title"
           },

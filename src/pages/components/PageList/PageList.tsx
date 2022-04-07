@@ -96,6 +96,7 @@ const PageList: React.FC<PageListProps> = props => {
             className={classes.colTitle}
           >
             <FormattedMessage
+              id="V2+HTM"
               defaultMessage="Title"
               description="dialog header"
             />
@@ -111,6 +112,7 @@ const PageList: React.FC<PageListProps> = props => {
             className={classes.colSlug}
           >
             <FormattedMessage
+              id="I8dAAe"
               defaultMessage="Slug"
               description="page internal name"
             />
@@ -126,6 +128,7 @@ const PageList: React.FC<PageListProps> = props => {
             className={classes.colVisibility}
           >
             <FormattedMessage
+              id="5GSYCR"
               defaultMessage="Visibility"
               description="page status"
             />
@@ -181,10 +184,12 @@ const PageList: React.FC<PageListProps> = props => {
                           label={
                             page.isPublished
                               ? intl.formatMessage({
+                                  id: "G1KzEx",
                                   defaultMessage: "Published",
                                   description: "page status"
                                 })
                               : intl.formatMessage({
+                                  id: "UN3qWD",
                                   defaultMessage: "Not Published",
                                   description: "page status"
                                 })
@@ -201,7 +206,10 @@ const PageList: React.FC<PageListProps> = props => {
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage defaultMessage="No pages found" />
+                  <FormattedMessage
+                    id="iMJka8"
+                    defaultMessage="No pages found"
+                  />
                 </TableCell>
               </TableRow>
             )

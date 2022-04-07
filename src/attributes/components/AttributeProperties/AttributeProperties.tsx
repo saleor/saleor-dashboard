@@ -17,44 +17,54 @@ import { AttributePageFormData } from "../AttributePage";
 
 const messages = defineMessages({
   availableInGrid: {
+    id: "jswILH",
     defaultMessage: "Add to Column Options",
     description: "add attribute as column in product list table"
   },
   availableInGridCaption: {
+    id: "AzMSmb",
     defaultMessage:
       "If enabled this attribute can be used as a column in product table.",
     description: "caption"
   },
   dashboardPropertiesTitle: {
+    id: "lCxfDe",
     defaultMessage: "Dashboard Properties",
     description: "attribute properties regarding dashboard"
   },
   filterableInDashboard: {
+    id: "RH+aOF",
     defaultMessage: "Use in Filtering",
     description: "use attribute in filtering"
   },
   filterableInDashboardCaption: {
+    id: "Q9wTrz",
     defaultMessage:
       "If enabled, you’ll be able to use this attribute to filter products in product list.",
     description: "caption"
   },
   filterableInStorefront: {
+    id: "rpOkiA",
     defaultMessage: "Use in Faceted Navigation",
     description: "attribute is filterable in storefront"
   },
   storefrontPropertiesTitle: {
+    id: "AgY5Mv",
     defaultMessage: "Storefront Properties",
     description: "attribute properties regarding storefront"
   },
   storefrontSearchPosition: {
+    id: "cJ5ASN",
     defaultMessage: "Position in faceted navigation",
     description: "attribute position in storefront filters"
   },
   visibleInStorefront: {
+    id: "x8V/xS",
     defaultMessage: "Public",
     description: "attribute visibility in storefront"
   },
   visibleInStorefrontCaption: {
+    id: "h2Hta6",
     defaultMessage: "If enabled, attribute will be accessible to customers.",
     description: "caption"
   }
@@ -92,6 +102,7 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
       <CardContent>
         {/* <Typography variant="subtitle1">
           <FormattedMessage
+            id="cNxis1"
             defaultMessage="General Properties"
             description="attribute general properties section"
             
@@ -106,12 +117,14 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
           label={
             <>
               <FormattedMessage
+                id="JilRiJ"
                 defaultMessage="Variant Attribute"
                 description="attribute is variant-only"
                 
               />
               <Typography variant="caption">
                 <FormattedMessage
+                  id="wXO0T5"
                   defaultMessage="If enabled, you'll be able to use this attribute to create product variants"
                   
                 />

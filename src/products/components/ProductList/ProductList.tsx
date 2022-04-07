@@ -204,7 +204,11 @@ export const ProductList: React.FC<ProductListProps> = props => {
             onClick={() => onSort(ProductListUrlSortField.name)}
           >
             <span className={classes.colNameHeader}>
-              <FormattedMessage defaultMessage="Name" description="product" />
+              <FormattedMessage
+                id="VQLIXd"
+                defaultMessage="Name"
+                description="product"
+              />
             </span>
           </TableCellHeader>
           <DisplayColumn column="productType" displayColumns={settings.columns}>
@@ -365,11 +369,13 @@ export const ProductList: React.FC<ProductListProps> = props => {
                           <Typography variant="caption">
                             {product.productType.hasVariants ? (
                               <FormattedMessage
+                                id="X90t9n"
                                 defaultMessage="Configurable"
                                 description="product type"
                               />
                             ) : (
                               <FormattedMessage
+                                id="Jz/Cb+"
                                 defaultMessage="Simple"
                                 description="product type"
                               />
@@ -478,7 +484,10 @@ export const ProductList: React.FC<ProductListProps> = props => {
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage defaultMessage="No products found" />
+                  <FormattedMessage
+                    id="Q1Uzbb"
+                    defaultMessage="No products found"
+                  />
                 </TableCell>
               </TableRow>
             )

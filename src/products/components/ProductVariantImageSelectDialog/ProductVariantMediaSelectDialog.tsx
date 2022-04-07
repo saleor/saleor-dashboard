@@ -65,6 +65,7 @@ const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogP
     <Dialog onClose={onClose} open={open}>
       <DialogTitle>
         <FormattedMessage
+          id="iPk640"
           defaultMessage="Media Selection"
           description="dialog header"
         />

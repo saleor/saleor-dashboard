@@ -51,14 +51,17 @@ interface RefundAmountInputProps {
 
 const messages = defineMessages({
   amountTooBig: {
+    id: "fbH51z",
     defaultMessage: "Amount cannot be bigger than max refund",
     description: "Amount error message"
   },
   amountTooSmall: {
+    id: "IKvOK+",
     defaultMessage: "Amount must be bigger than 0",
     description: "Amount error message"
   },
   label: {
+    id: "lrq8O6",
     defaultMessage: "Amount",
     description: "order refund amount, input label"
   }

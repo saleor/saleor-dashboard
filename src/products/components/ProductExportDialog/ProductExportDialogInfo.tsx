@@ -181,6 +181,7 @@ const FieldAccordion: React.FC<AccordionProps & {
             {selectedFields.length > maxChips && (
               <Typography className={classes.moreLabel} variant="caption">
                 <FormattedMessage
+                  id="ve/Sph"
                   defaultMessage="and {number} more"
                   description="there are more elements of list that are hidden"
                   values={{
@@ -200,6 +201,7 @@ const FieldAccordion: React.FC<AccordionProps & {
         onChange={() => onToggleAll(fields, !selectedAll)}
       >
         <FormattedMessage
+          id="lQRnYK"
           defaultMessage="Select All"
           description="selectt all options"
         />
@@ -308,6 +310,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
     <>
       <Typography className={classes.dialogLabel}>
         <FormattedMessage
+          id="Jwuu4X"
           defaultMessage="Information exported:"
           description="select product informations to be exported"
         />
@@ -330,6 +333,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
                 {selectedChannels.length > maxChips && (
                   <Typography className={classes.moreLabel} variant="caption">
                     <FormattedMessage
+                      id="ve/Sph"
                       defaultMessage="and {number} more"
                       description="there are more elements of list that are hidden"
                       values={{
@@ -362,6 +366,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
         <FieldAccordion
           className={classes.accordion}
           title={intl.formatMessage({
+            id: "64aYF0",
             defaultMessage: "Product Organization",
             description: "informations about product organization, header"
           })}
@@ -399,6 +404,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
                 {selectedAttributes.length > maxChips && (
                   <Typography className={classes.moreLabel} variant="caption">
                     <FormattedMessage
+                      id="ve/Sph"
                       defaultMessage="and {number} more"
                       description="there are more elements of list that are hidden"
                       values={{
@@ -417,9 +423,11 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
             value={query}
             onChange={onQueryChange}
             label={intl.formatMessage({
+              id: "YicEbK",
               defaultMessage: "Search Atrtibuttes"
             })}
             placeholder={intl.formatMessage({
+              id: "tIc2/h",
               defaultMessage: "Search by attribute name",
               description: "input helper text, search attributes"
             })}
@@ -445,6 +453,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
               {hasMore && !loading && (
                 <Button color="primary" onClick={onFetchMore}>
                   <FormattedMessage
+                    id="ZDJEat"
                     defaultMessage="Load More"
                     description="button"
                   />
@@ -457,6 +466,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
         <FieldAccordion
           className={classes.accordion}
           title={intl.formatMessage({
+            id: "jj3Cb8",
             defaultMessage: "Financial Information",
             description: "informations about product prices etc, header"
           })}
@@ -469,6 +479,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
         <Accordion
           className={classes.accordion}
           title={intl.formatMessage({
+            id: "xjpTLF",
             defaultMessage: "Inventory Information",
             description: "informations about product stock, header"
           })}
@@ -515,6 +526,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
                   maxChips && (
                   <Typography className={classes.moreLabel} variant="caption">
                     <FormattedMessage
+                      id="ve/Sph"
                       defaultMessage="and {number} more"
                       description="there are more elements of list that are hidden"
                       values={{
@@ -543,6 +555,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
               }
             >
               <FormattedMessage
+                id="lQRnYK"
                 defaultMessage="Select All"
                 description="selectt all options"
               />
@@ -560,7 +573,10 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
           </div>
           <Hr className={classes.hrWarehouses} />
           <Typography>
-            <FormattedMessage defaultMessage="Export Product Stock Quantity to CSV" />
+            <FormattedMessage
+              id="ZRz3hM"
+              defaultMessage="Export Product Stock Quantity to CSV"
+            />
           </Typography>
           <div>
             <Option
@@ -571,6 +587,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
               onChange={onSelectAllWarehouses}
             >
               <FormattedMessage
+                id="JGm7E5"
                 defaultMessage="Export stock for all warehouses"
                 description="option"
               />
@@ -579,6 +596,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
           <Hr className={classes.hrWarehouses} />
           <Typography className={classes.warehousesLabel} variant="subtitle1">
             <FormattedMessage
+              id="WQMTKI"
               defaultMessage="Warehouses A to Z"
               description="list of warehouses"
             />
@@ -596,6 +614,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
         </Accordion>
         <FieldAccordion
           title={intl.formatMessage({
+            id: "6xC/Ls",
             defaultMessage: "SEO Information",
             description: "informations about product seo, header"
           })}

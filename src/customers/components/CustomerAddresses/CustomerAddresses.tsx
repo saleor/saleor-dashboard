@@ -36,6 +36,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "BfJGij",
           defaultMessage: "Address Information",
           description: "header"
         })}
@@ -57,6 +58,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
             <CardContent>
               <Typography className={classes.label}>
                 <FormattedMessage
+                  id="biVFKU"
                   defaultMessage="Billing Address"
                   description="subsection header"
                 />
@@ -74,6 +76,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
             <CardContent>
               <Typography className={classes.label}>
                 <FormattedMessage
+                  id="Zd3Eew"
                   defaultMessage="Shipping Address"
                   description="subsection header"
                 />
@@ -88,13 +91,17 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
         maybe(() => customer.defaultShippingAddress) === null ? (
         <CardContent>
           <Typography>
-            <FormattedMessage defaultMessage="This customer has no addresses yet" />
+            <FormattedMessage
+              id="3d1RXL"
+              defaultMessage="This customer has no addresses yet"
+            />
           </Typography>
         </CardContent>
       ) : (
         <CardContent>
           <Typography className={classes.label}>
             <FormattedMessage
+              id="bHdFph"
               defaultMessage="Address"
               description="subsection header"
             />

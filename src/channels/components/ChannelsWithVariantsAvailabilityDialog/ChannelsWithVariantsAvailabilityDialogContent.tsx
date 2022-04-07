@@ -88,6 +88,7 @@ const useSummaryStyles = makeStyles(
 
 const messages = defineMessages({
   variantsSelectedLabel: {
+    id: "yHaQWG",
     defaultMessage: "{variantsAmount} variants selected",
     description: "variants selected label"
   }

@@ -42,7 +42,7 @@ const TranslationsLanguageList: React.FC<TranslationsLanguageListProps> = props 
         <TableHead>
           <TableRow>
             <TableCell>
-              <FormattedMessage defaultMessage="Language" />
+              <FormattedMessage id="y1Z3or" defaultMessage="Language" />
             </TableCell>
           </TableRow>
         </TableHead>
@@ -68,7 +68,10 @@ const TranslationsLanguageList: React.FC<TranslationsLanguageListProps> = props 
             () => (
               <TableRow>
                 <TableCell colSpan={1}>
-                  <FormattedMessage defaultMessage="No languages found" />
+                  <FormattedMessage
+                    id="ptPPVk"
+                    defaultMessage="No languages found"
+                  />
                 </TableCell>
               </TableRow>
             )

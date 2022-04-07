@@ -122,11 +122,13 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
               <img src={activateIcon} alt="" />
               {data?.isActive ? (
                 <FormattedMessage
+                  id="whTEcF"
                   defaultMessage="Deactivate"
                   description="link"
                 />
               ) : (
                 <FormattedMessage
+                  id="P5twxk"
                   defaultMessage="Activate"
                   description="link"
                 />
@@ -175,10 +177,12 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
                 permissionsExceeded={false}
                 onChange={change}
                 fullAccessLabel={intl.formatMessage({
+                  id: "D4nzdD",
                   defaultMessage: "Grant this app full access to the store",
                   description: "checkbox label"
                 })}
                 description={intl.formatMessage({
+                  id: "flP8Hj",
                   defaultMessage:
                     "Expand or restrict app permissions to access certain part of Saleor system.",
                   description: "card description"

@@ -29,12 +29,14 @@ const TokenDeleteDialog: React.FC<TokenDeleteDialogProps> = ({
       onConfirm={onConfirm}
       variant="delete"
       title={intl.formatMessage({
+        id: "quV5zH",
         defaultMessage: "Delete Token",
         description: "dialog title"
       })}
     >
       <DialogContentText>
         <FormattedMessage
+          id="2VSP8C"
           defaultMessage="Are you sure you want to delete token {token}?"
           description="delete token"
           values={{
