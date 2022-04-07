@@ -127,7 +127,6 @@ interface ProductListProps
   activeAttributeSortId: string;
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   products: RelayToFlat<ProductListQuery["products"]>;
-  loading: boolean;
 }
 
 export const ProductList: React.FC<ProductListProps> = props => {

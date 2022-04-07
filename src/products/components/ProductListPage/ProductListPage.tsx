@@ -221,6 +221,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           initialColumns={initialColumnsChoices}
           defaultColumns={defaultSettings.columns}
           hasMore={hasMore}
+          loading={loading}
           query={columnQuery}
           onQueryChange={onColumnQueryChange}
           onFetchMore={onFetchMore}
@@ -272,7 +273,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
         />
         <ProductList
           {...listProps}
-          loading={loading}
           gridAttributes={gridAttributes}
           settings={settings}
           selectedChannelId={selectedChannelId}

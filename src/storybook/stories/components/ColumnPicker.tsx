@@ -29,6 +29,9 @@ const props: ColumnPickerProps = {
   defaultColumns: [1, 3].map(index => availableColumns[index].value),
   initialColumns: [1, 3, 4, 6].map(index => availableColumns[index].value),
   initialOpen: true,
+  hasMore: false,
+  onFetchMore: () => undefined,
+  loading: false,
   onSave: () => undefined,
   query: "",
   onQueryChange: () => undefined
@@ -43,6 +46,4 @@ storiesOf("Generics / Column picker", module)
   .addDecorator(CardDecorator)
   .addDecorator(Decorator)
   .add("default", () => <ColumnPicker {...props} />)
-  .add("loading", () => (
-    <ColumnPicker {...props} hasMore={true} onFetchMore={() => undefined} />
-  ));
+  .add("loading", () => <ColumnPicker {...props} loading hasMore />);
