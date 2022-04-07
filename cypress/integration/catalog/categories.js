@@ -143,28 +143,30 @@ filterTests({ definedTags: ["all"] }, () => {
     //   });
     // });
 
-    // it("should be able to enter category details page. TC: SALEOR_0205", () => {
-    //   cy.visit(urlList.categories)
-    //     .get(SHARED_ELEMENTS.searchInput)
-    //     .type(category.name);
-    //   cy.contains(SHARED_ELEMENTS.tableRow, category.name).click();
-    //   cy.contains(SHARED_ELEMENTS.header, category.name).should("be.visible");
-    // });
+    it("should be able to enter category details page. TC: SALEOR_0205", () => {
+      cy.visit(urlList.categories)
+        .get(SHARED_ELEMENTS.searchInput)
+        .type(category.name);
+      cy.contains(SHARED_ELEMENTS.tableRow, category.name).click();
+      cy.contains(SHARED_ELEMENTS.header, category.name).should("be.visible");
+    });
 
-    // it("should be able to delete category. TC: SALEOR_0206", () => {
-    //   const categoryName = `${startsWith}${faker.datatype.number()}`;
+    it("should be able to delete category. TC: SALEOR_0206", () => {
+      const categoryName = `${startsWith}${faker.datatype.number()}`;
 
-    //   createCategory({ name: categoryName, description: categoryName }).then(categoryResp => {
-    //     cy.visit(categoryDetailsUrl(categoryResp.id))
-    //       .get(BUTTON_SELECTORS.deleteButton)
-    //       .click()
-    //       .addAliasToGraphRequest("CategoryDelete")
-    //       .get(BUTTON_SELECTORS.submit)
-    //       .click()
-    //       .waitForRequestAndCheckIfNoErrors("@CategoryDelete");
-    //     getCategory(categoryResp.id).should("be.null");
-    //   });
-    // });
+      createCategory({ name: categoryName, description: categoryName }).then(
+        categoryResp => {
+          cy.visit(categoryDetailsUrl(categoryResp.id))
+            .get(BUTTON_SELECTORS.deleteButton)
+            .click()
+            .addAliasToGraphRequest("CategoryDelete")
+            .get(BUTTON_SELECTORS.submit)
+            .click()
+            .waitForRequestAndCheckIfNoErrors("@CategoryDelete");
+          getCategory(categoryResp.id).should("be.null");
+        }
+      );
+    });
 
     // it("should be able to update category. TC: SALEOR_0207", () => {
     //   const categoryName = `${startsWith}${faker.datatype.number()}`;
@@ -213,6 +215,7 @@ filterTests({ definedTags: ["all"] }, () => {
           secondCategory = categoryResp;
           cy.visit(urlList.categories)
             .searchInTable(startsWith)
+            .get(categoryRow(firstCategory.id))
             .find(BUTTON_SELECTORS.checkbox)
             .click()
             .get(categoryRow(secondCategory.id))
@@ -224,7 +227,6 @@ filterTests({ definedTags: ["all"] }, () => {
             .get(BUTTON_SELECTORS.submit)
             .click()
             .waitForRequestAndCheckIfNoErrors("@CategoryBulkDelete");
-          cy.log(firstCategory.id);
           getCategory(firstCategory.id).should("be.null");
           getCategory(secondCategory.id).should("be.null");
         });
