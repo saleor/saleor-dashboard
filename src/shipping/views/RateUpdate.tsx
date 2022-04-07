@@ -2,6 +2,7 @@ import {
   createShippingChannelsFromRate,
   createSortedShippingChannels
 } from "@saleor/channels/utils";
+import Button from "@saleor/components/Button";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
@@ -25,7 +26,6 @@ import useLocalPaginator, {
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages, sectionNames } from "@saleor/intl";
-import { Button } from "@saleor/macaw-ui";
 import {
   getById,
   getByUnmatchingId

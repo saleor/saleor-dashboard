@@ -1,5 +1,6 @@
 import { Card } from "@material-ui/core";
 import { useUserPermissions } from "@saleor/auth/hooks/useUserPermissions";
+import Button from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
@@ -9,7 +10,6 @@ import {
 } from "@saleor/customers/urls";
 import { ListCustomersQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Button } from "@saleor/macaw-ui";
 import {
   FilterPageProps,
   ListActions,

@@ -5,11 +5,12 @@ import {
   TableHead,
   TableRow
 } from "@material-ui/core";
+import Button from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { AppUpdateMutation } from "@saleor/graphql";
-import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

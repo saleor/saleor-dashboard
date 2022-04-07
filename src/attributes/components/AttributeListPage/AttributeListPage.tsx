@@ -3,10 +3,11 @@ import {
   attributeAddUrl,
   AttributeListUrlSortField
 } from "@saleor/attributes/urls";
+import Button from "@saleor/components/Button";
 import FilterBar from "@saleor/components/FilterBar";
 import { AttributeFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, Button } from "@saleor/macaw-ui";
+import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

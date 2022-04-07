@@ -1,5 +1,6 @@
+import Button from "@saleor/components/Button";
 import { buttonMessages } from "@saleor/intl";
-import { Button, ButtonProps } from "@saleor/macaw-ui";
+import { ButtonProps } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

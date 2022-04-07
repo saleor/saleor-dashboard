@@ -1,4 +1,5 @@
 import { Card } from "@material-ui/core";
+import Button from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import { getByName } from "@saleor/components/Filter/utils";
 import FilterBar from "@saleor/components/FilterBar";
@@ -6,7 +7,6 @@ import PageHeader from "@saleor/components/PageHeader";
 import { saleAddUrl, SaleListUrlSortField } from "@saleor/discounts/urls";
 import { SaleFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Button } from "@saleor/macaw-ui";
 import {
   ChannelProps,
   FilterPageProps,

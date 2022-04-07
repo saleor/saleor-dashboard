@@ -1,5 +1,6 @@
 import { Card, CardActions, Dialog } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
+import Button from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
 import Link from "@saleor/components/Link";
@@ -10,7 +11,6 @@ import GiftCardCreateDialogContent from "@saleor/giftCards/GiftCardCreateDialog/
 import { getExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
 import { giftCardListUrl } from "@saleor/giftCards/urls";
 import { useCustomerGiftCardListQuery } from "@saleor/graphql";
-import { Button } from "@saleor/macaw-ui";
 import { getFullName } from "@saleor/misc";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import * as React from "react";

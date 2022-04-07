@@ -1,9 +1,10 @@
 import { Card, CardActions, CardContent } from "@material-ui/core";
+import Button from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { sectionNames } from "@saleor/intl";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

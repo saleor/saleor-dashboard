@@ -1,5 +1,6 @@
 import { Card, TableCell, TableRow, Tooltip } from "@material-ui/core";
 import HelpOutline from "@material-ui/icons/HelpOutline";
+import Button from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -10,7 +11,7 @@ import {
 } from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
 import { ProductAttributeType, ProductTypeDetailsQuery } from "@saleor/graphql";
-import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { ListActions, ReorderAction } from "@saleor/types";
 import capitalize from "lodash/capitalize";

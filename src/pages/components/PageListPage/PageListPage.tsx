@@ -1,9 +1,9 @@
 import { Card } from "@material-ui/core";
+import Button from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { PageFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Button } from "@saleor/macaw-ui";
 import {
   pageCreateUrl,
   PageListUrlDialog,

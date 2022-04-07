@@ -1,4 +1,5 @@
 import { useUser } from "@saleor/auth";
+import Button from "@saleor/components/Button";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import {
   usePermissionGroupDetailsQuery,
@@ -10,7 +11,6 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages } from "@saleor/intl";
-import { Button } from "@saleor/macaw-ui";
 import { extractMutationErrors } from "@saleor/misc";
 import MembersErrorDialog from "@saleor/permissionGroups/components/MembersErrorDialog";
 import {

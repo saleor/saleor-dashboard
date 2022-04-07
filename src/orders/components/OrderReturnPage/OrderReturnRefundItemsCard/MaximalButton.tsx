@@ -1,4 +1,5 @@
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import Button from "@saleor/components/Button";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

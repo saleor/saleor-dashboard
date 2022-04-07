@@ -1,9 +1,9 @@
 import { Card } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
+import Button from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import { InternalLink } from "@saleor/components/InternalLink";
 import { CategoryDetailsQuery } from "@saleor/graphql";
-import { Button } from "@saleor/macaw-ui";
 import { productAddUrl, productListUrl } from "@saleor/products/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

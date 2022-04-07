@@ -4,9 +4,10 @@ import {
   CircularProgress,
   Typography
 } from "@material-ui/core";
+import Button from "@saleor/components/Button";
 import useElementScroll from "@saleor/hooks/useElementScroll";
 import { buttonMessages } from "@saleor/intl";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import { isSelected } from "@saleor/utils/lists";
 import classNames from "classnames";

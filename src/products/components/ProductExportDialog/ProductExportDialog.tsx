@@ -5,6 +5,7 @@ import {
   DialogTitle,
   Typography
 } from "@material-ui/core";
+import Button from "@saleor/components/Button";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import makeCreatorSteps, { Step } from "@saleor/components/CreatorSteps";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
@@ -20,7 +21,7 @@ import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useWizard from "@saleor/hooks/useWizard";
 import { buttonMessages } from "@saleor/intl";
-import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { DialogProps, FetchMoreProps, RelayToFlat } from "@saleor/types";
 import getExportErrorMessage from "@saleor/utils/errors/export";
 import { toggle } from "@saleor/utils/lists";

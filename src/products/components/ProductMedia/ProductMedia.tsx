@@ -1,9 +1,10 @@
 import { Card, CardContent } from "@material-ui/core";
+import Button from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import ImageUpload from "@saleor/components/ImageUpload";
 import MediaTile from "@saleor/components/MediaTile";
 import { ProductMediaFragment, ProductMediaType } from "@saleor/graphql";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import { ProductMediaPopper } from "@saleor/products/components/ProductMediaPopper/ProductMediaPopper";
 import { ReorderAction } from "@saleor/types";
 import createMultiFileUploadHandler from "@saleor/utils/handlers/multiFileUploadHandler";

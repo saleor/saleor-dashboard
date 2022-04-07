@@ -6,6 +6,7 @@ import {
   Typography
 } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
+import Button from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
@@ -24,7 +25,7 @@ import {
   ProductFragment,
   RefreshLimitsQuery
 } from "@saleor/graphql";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import { isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";

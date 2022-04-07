@@ -1,5 +1,6 @@
 import { Card, TableCell, TableRow } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
+import Button from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
@@ -12,7 +13,7 @@ import {
   ProductVariantCreateDataQuery,
   ProductVariantDetailsQuery
 } from "@saleor/graphql";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import { ReorderAction } from "@saleor/types";
 import classNames from "classnames";
 import React from "react";

@@ -5,6 +5,7 @@ import {
   TableFooter,
   TableRow
 } from "@material-ui/core";
+import Button from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -13,7 +14,7 @@ import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { ShippingZoneFragment } from "@saleor/graphql";
-import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
 import { shippingZoneAddUrl } from "@saleor/shipping/urls";
 import { ListActions, ListProps } from "@saleor/types";

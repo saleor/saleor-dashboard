@@ -1,10 +1,11 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
 import AddressFormatter from "@saleor/components/AddressFormatter";
+import Button from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import { Hr } from "@saleor/components/Hr";
 import { CustomerDetailsFragment } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

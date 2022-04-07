@@ -1,8 +1,9 @@
+import Button from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { MenuFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, Button } from "@saleor/macaw-ui";
+import { Backlink } from "@saleor/macaw-ui";
 import { menuListUrl, MenuListUrlSortField } from "@saleor/navigation/urls";
 import { ListActions, PageListProps, SortPage } from "@saleor/types";
 import React from "react";

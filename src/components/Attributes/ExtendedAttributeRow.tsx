@@ -1,6 +1,7 @@
 import { Typography } from "@material-ui/core";
+import Button from "@saleor/components/Button";
 import Grid from "@saleor/components/Grid";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
 const useStyles = makeStyles(

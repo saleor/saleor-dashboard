@@ -1,4 +1,5 @@
 import { Card, TableCell, TableRow } from "@material-ui/core";
+import Button from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -9,7 +10,7 @@ import {
 } from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
 import { AttributeFragment, ProductAttributeType } from "@saleor/graphql";
-import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { ListActions, ReorderAction } from "@saleor/types";
 import React from "react";

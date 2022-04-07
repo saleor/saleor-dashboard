@@ -1,10 +1,11 @@
 import { TextField, Typography } from "@material-ui/core";
+import Button from "@saleor/components/Button";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { RequestPasswordResetMutation } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
-import { ArrowRightIcon, Button, IconButton } from "@saleor/macaw-ui";
+import { ArrowRightIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

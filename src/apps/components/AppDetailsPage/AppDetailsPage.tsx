@@ -1,4 +1,5 @@
 import { ButtonBase, Card, CardContent, Typography } from "@material-ui/core";
+import Button from "@saleor/components/Button";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
@@ -7,7 +8,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import Skeleton from "@saleor/components/Skeleton";
 import { AppQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, Button } from "@saleor/macaw-ui";
+import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";

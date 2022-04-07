@@ -7,6 +7,7 @@ import {
   TableRow,
   Typography
 } from "@material-ui/core";
+import Button from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -16,7 +17,7 @@ import {
   ShippingMethodTypeFragment
 } from "@saleor/graphql";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
-import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import classNames from "classnames";
 import React from "react";

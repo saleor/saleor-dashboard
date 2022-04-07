@@ -5,6 +5,7 @@ import {
   TableHead,
   TableRow
 } from "@material-ui/core";
+import Button from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
@@ -14,7 +15,7 @@ import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { ChannelDetailsFragment, RefreshLimitsQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { Backlink, DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";

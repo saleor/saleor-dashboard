@@ -1,4 +1,5 @@
 import { Card } from "@material-ui/core";
+import Button from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
@@ -8,7 +9,7 @@ import {
   WarehouseWithShippingFragment
 } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, Button } from "@saleor/macaw-ui";
+import { Backlink } from "@saleor/macaw-ui";
 import {
   PageListProps,
   SearchPageProps,

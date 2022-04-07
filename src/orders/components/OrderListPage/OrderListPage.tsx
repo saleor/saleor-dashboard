@@ -1,11 +1,12 @@
 import { Card } from "@material-ui/core";
+import Button from "@saleor/components/Button";
 import CardMenu from "@saleor/components/CardMenu";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
 import { OrderListQuery, RefreshLimitsQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import { OrderListUrlSortField } from "@saleor/orders/urls";
 import {
   FilterPageProps,

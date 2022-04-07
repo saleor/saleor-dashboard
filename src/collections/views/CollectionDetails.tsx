@@ -6,6 +6,7 @@ import {
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import AssignProductDialog from "@saleor/components/AssignProductDialog";
+import Button from "@saleor/components/Button";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -31,7 +32,6 @@ import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages, errorMessages } from "@saleor/intl";
-import { Button } from "@saleor/macaw-ui";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import { arrayDiff } from "@saleor/utils/arrays";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";

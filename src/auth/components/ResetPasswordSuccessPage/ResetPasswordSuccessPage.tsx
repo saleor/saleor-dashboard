@@ -1,6 +1,7 @@
 import { Typography } from "@material-ui/core";
+import Button from "@saleor/components/Button";
 import FormSpacer from "@saleor/components/FormSpacer";
-import { Button } from "@saleor/macaw-ui";
+import {} from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
