@@ -1,6 +1,7 @@
 import { Typography } from "@material-ui/core";
 import { TypographyProps } from "@material-ui/core/Typography";
 import { makeStyles } from "@saleor/macaw-ui";
+import { isExternalURL } from "@saleor/utils/urls";
 import classNames from "classnames";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
@@ -30,8 +31,6 @@ const useStyles = makeStyles(
   }),
   { name: "Link" }
 );
-
-const isExternalURL = url => /^https?:\/\//.test(url);
 
 interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   href?: string;
