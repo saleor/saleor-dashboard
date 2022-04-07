@@ -47,18 +47,15 @@ export default makeSearch<
 
         return {
           ...prev,
-          attribute: {
+          availableInGrid: {
             ...prev.availableInGrid,
-            choices: {
-              ...prev.availableInGrid,
-              edges: [
-                ...prev.availableInGrid.edges,
-                ...next.availableInGrid.edges
-              ],
-              pageInfo: next.availableInGrid.pageInfo
-            }
+            edges: [
+              ...prev.availableInGrid.edges,
+              ...next.availableInGrid.edges
+            ],
+            pageInfo: next.availableInGrid.pageInfo
           }
-        };
+        } as SearchAvailableInGridAttributesQuery;
       },
       {
         ...result.variables,

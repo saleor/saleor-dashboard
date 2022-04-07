@@ -3,26 +3,30 @@ import {
   CardActions,
   CardContent,
   CardHeader,
+  MenuItem,
   Typography
 } from "@material-ui/core";
 import { FormChange } from "@saleor/hooks/useForm";
 import { buttonMessages } from "@saleor/intl";
-import { Button, CloseIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import {
+  Button,
+  Choice,
+  CloseIcon,
+  IconButton,
+  makeStyles,
+  MultipleValueAutocomplete
+} from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import MultiAutocompleteSelectField, {
-  MultiAutocompleteChoiceType
-} from "../MultiAutocompleteSelectField";
 import messages from "./messages";
 
-export interface ColumnPickerContentProps extends Partial<FetchMoreProps> {
-  choices: MultiAutocompleteChoiceType[];
-  displayValues: MultiAutocompleteChoiceType[];
-  selectedColumns: string[];
+export interface ColumnPickerContentProps extends FetchMoreProps {
+  choices: Choice[];
+  initialValues: Choice[];
   onCancel: () => void;
-  onChange: FormChange;
+  onChange: FormChange<string[]>;
   onReset: () => void;
   onSave: () => void;
   onQueryChange: (query: string) => void;
@@ -52,13 +56,12 @@ const useStyles = makeStyles(
 const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
   const {
     choices,
-    displayValues,
-    hasMore,
-    selectedColumns,
+    initialValues,
+    loading,
     onCancel,
     onChange,
-    onFetchMore,
     onReset,
+    onFetchMore,
     onSave,
     onQueryChange
   } = props;
@@ -83,19 +86,29 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
         >
           {intl.formatMessage(messages.columnSubheader)}
         </Typography>
-        <MultiAutocompleteSelectField
+        <MultipleValueAutocomplete
           choices={choices}
+          enableReinitialize
+          fullWidth
           label={intl.formatMessage(messages.columnLabel)}
+          loading={loading}
           name="columns"
-          value={selectedColumns}
-          displayValues={displayValues}
+          initialValue={initialValues}
           onChange={onChange}
-          fetchChoices={onQueryChange}
-          hasMore={hasMore}
-          fetchOnFocus
-          onFetchMore={onFetchMore}
-          popperPlacement="top-end"
-        />
+          onInputChange={onQueryChange}
+          onScrollToBottom={onFetchMore}
+        >
+          {({ choices, getItemProps }) =>
+            choices.map((choice, choiceIndex) => (
+              <MenuItem
+                key={choice.value}
+                {...getItemProps({ item: choice, index: choiceIndex })}
+              >
+                {choice.label}
+              </MenuItem>
+            ))
+          }
+        </MultipleValueAutocomplete>
       </CardContent>
       <CardActions className={classes.actions}>
         <Button variant="primary" onClick={onSave}>

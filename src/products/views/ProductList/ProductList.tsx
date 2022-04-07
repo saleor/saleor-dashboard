@@ -54,7 +54,9 @@ import {
 } from "@saleor/products/urls";
 import useAttributeSearch from "@saleor/searches/useAttributeSearch";
 import useAttributeValueSearch from "@saleor/searches/useAttributeValueSearch";
-import useAvailableInGridAttributesSearch from "@saleor/searches/useAvailableInGridAttributesSearch";
+import useAvailableInGridAttributesSearch, {
+  availableInGridAttributes
+} from "@saleor/searches/useAvailableInGridAttributesSearch";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
@@ -277,12 +279,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     [params, settings.rowNumber]
   );
 
-  function filterColumnIds(columns: ProductListColumns[]) {
-    return columns
-      .filter(isAttributeColumnValue)
-      .map(getAttributeIdFromColumnValue);
-  }
-  const filteredColumnIds = filterColumnIds(settings.columns);
+  const filteredColumnIds = settings.columns
+    .filter(isAttributeColumnValue)
+    .map(getAttributeIdFromColumnValue);
 
   const { data, loading, refetch } = useProductListQuery({
     displayLoader: true,
@@ -294,10 +293,16 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   });
 
   const availableInGridAttributesOpts = useAvailableInGridAttributesSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
+    variables: {
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      first: 5
+    }
+    // skip: !availableInGridAttributesOpts?.result.data.availableInGrid.pageInfo
+    // .hasNextPage
   });
   const gridAttributes = useGridAttributesQuery({
-    variables: { ids: filteredColumnIds }
+    variables: { ids: filteredColumnIds },
+    skip: filteredColumnIds.length === 0
   });
 
   const [

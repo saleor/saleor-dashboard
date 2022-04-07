@@ -122,14 +122,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const intl = useIntl();
   const classes = useStyles(props);
 
-  const handleSave = (columns: ProductListColumns[]) =>
-    onUpdateListSettings("columns", columns);
-
-  const filterStructure = createFilterStructure(intl, filterOpts);
-
-  const filterDependency = filterStructure.find(getByName("channel"));
-
-  const availableColumns: MultiAutocompleteChoiceType[] = [
+  const staticColumns = [
     {
       label: intl.formatMessage(columnsMessages.availability),
       value: "availability" as ProductListColumns
@@ -145,16 +138,36 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     {
       label: intl.formatMessage(columnsMessages.updatedAt),
       value: "date" as ProductListColumns
-    },
-    ...uniqBy(
-      [...availableInGridAttributes, ...gridAttributes].map(
-        attribute =>
-          ({
-            label: attribute.name,
-            value: getAttributeColumnValue(attribute.id)
-          } as MultiAutocompleteChoiceType)
-      ),
-      "value"
+    }
+  ];
+
+  const initialColumnsChoices = React.useMemo(() => {
+    const selectedStaticColumns = staticColumns.filter(column =>
+      (settings.columns || []).includes(column.value)
+    );
+    const selectedAttributeColumns = gridAttributes.map(attribute => ({
+      label: attribute.name,
+      value: getAttributeColumnValue(attribute.id)
+    }));
+
+    return [...selectedStaticColumns, ...selectedAttributeColumns];
+  }, [gridAttributes, settings.columns]);
+
+  const handleSave = (columns: ProductListColumns[]) =>
+    onUpdateListSettings("columns", columns);
+
+  const filterStructure = createFilterStructure(intl, filterOpts);
+
+  const filterDependency = filterStructure.find(getByName("channel"));
+
+  const availableColumns: MultiAutocompleteChoiceType[] = [
+    ...staticColumns,
+    ...availableInGridAttributes.map(
+      attribute =>
+        ({
+          label: attribute.name,
+          value: getAttributeColumnValue(attribute.id)
+        } as MultiAutocompleteChoiceType)
     )
   ];
 
@@ -205,9 +218,9 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
         <ColumnPicker
           className={classes.columnPicker}
           availableColumns={availableColumns}
+          initialColumns={initialColumnsChoices}
           defaultColumns={defaultSettings.columns}
           hasMore={hasMore}
-          initialColumns={settings.columns}
           query={columnQuery}
           onQueryChange={onColumnQueryChange}
           onFetchMore={onFetchMore}

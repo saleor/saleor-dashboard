@@ -1,8 +1,8 @@
 import { ClickAwayListener, Grow, Popper } from "@material-ui/core";
+import { FormChange } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { ColumnsIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
-import { toggle } from "@saleor/utils/lists";
+import { Choice, ColumnsIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { FetchMoreProps } from "@saleor/types";
 import { score } from "fuzzaldrin";
 import sortBy from "lodash/sortBy";
 import React from "react";
@@ -13,21 +13,12 @@ import ColumnPickerContent, {
 } from "./ColumnPickerContent";
 
 export interface ColumnPickerProps
-  extends Omit<
-    ColumnPickerContentProps,
-    | "selectedColumns"
-    | "onCancel"
-    | "onColumnToggle"
-    | "onReset"
-    | "onSave"
-    | "onChange"
-    | "displayValues"
-    | "choices"
-  > {
+  extends FetchMoreProps,
+    Pick<ColumnPickerContentProps, "onQueryChange"> {
   className?: string;
   availableColumns: MultiAutocompleteChoiceType[];
   defaultColumns: string[];
-  initialColumns: string[];
+  initialColumns: Choice[];
   initialOpen?: boolean;
   query: string;
   onSave: (columns: string[]) => void;
@@ -36,8 +27,7 @@ export interface ColumnPickerProps
 const useStyles = makeStyles(
   theme => ({
     popper: {
-      marginTop: theme.spacing(1),
-      zIndex: 2
+      marginTop: theme.spacing(1)
     }
   }),
   {
@@ -50,7 +40,6 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
     className,
     availableColumns,
     defaultColumns,
-    hasMore,
     initialColumns,
     initialOpen = false,
     onSave,
@@ -59,27 +48,20 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
   } = props;
   const classes = useStyles(props);
   const anchor = React.useRef<HTMLDivElement>();
+  const selectedColumns = React.useRef(
+    initialColumns.map(({ value }) => value)
+  );
   const [isExpanded, setExpansionState] = React.useState(false);
-  const [selectedColumns, setSelectedColumns] = useStateFromProps(
+
+  // Component is uncontrolled but we need to reset it somehow, so we change
+  // initial prop after reset callback to force value refreshing
+  const [initialColumnsChoices, setInitialColumnsChoices] = useStateFromProps(
     initialColumns
   );
-  const [displayValues, setDisplayValues] = useStateFromProps<
-    MultiAutocompleteChoiceType[]
-  >(
-    initialColumns.map(value => ({
-      label: availableColumns.find(column => column.value === value)?.label,
-      value
-    }))
-  );
-  const onChange = createMultiAutocompleteSelectHandler(
-    event =>
-      setSelectedColumns(
-        toggle(event.target.value, selectedColumns, (a, b) => a === b)
-      ),
-    setDisplayValues,
-    displayValues,
-    availableColumns
-  );
+
+  const onChange: FormChange<string[]> = event => {
+    selectedColumns.current = event.target.value;
+  };
 
   React.useEffect(() => {
     setTimeout(() => setExpansionState(initialOpen), 100);
@@ -87,14 +69,22 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
 
   const handleCancel = () => {
     setExpansionState(false);
-    setSelectedColumns(initialColumns);
+    selectedColumns.current = initialColumns.map(({ value }) => value);
   };
 
-  const handleReset = () => setSelectedColumns(defaultColumns);
+  const handleReset = () => {
+    selectedColumns.current = defaultColumns;
+    const defaultColumnsChoices = defaultColumns.map(value => ({
+      label: availableColumns.find(column => column.value === value)?.label,
+      value
+    }));
+    setInitialColumnsChoices(defaultColumnsChoices);
+    onChange({ target: { name: "", value: defaultColumns } });
+  };
 
   const handleSave = () => {
     setExpansionState(false);
-    onSave(selectedColumns);
+    onSave(selectedColumns.current);
   };
 
   const choices = sortBy(
@@ -119,7 +109,6 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
           open={isExpanded}
           anchorEl={anchor.current}
           transition
-          disablePortal
           placement="bottom-end"
         >
           {({ TransitionProps, placement }) => (
@@ -132,8 +121,7 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
             >
               <ColumnPickerContent
                 choices={choices}
-                displayValues={displayValues}
-                selectedColumns={selectedColumns}
+                initialValues={initialColumnsChoices}
                 onCancel={handleCancel}
                 onChange={onChange}
                 onReset={handleReset}
