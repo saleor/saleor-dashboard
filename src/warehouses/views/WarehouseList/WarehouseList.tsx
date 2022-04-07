@@ -28,7 +28,6 @@ import { getSortParams } from "@saleor/utils/sort";
 import WarehouseDeleteDialog from "@saleor/warehouses/components/WarehouseDeleteDialog";
 import WarehouseListPage from "@saleor/warehouses/components/WarehouseListPage";
 import {
-  warehouseAddUrl,
   warehouseListUrl,
   WarehouseListUrlDialog,
   WarehouseListUrlQueryParams,
@@ -156,7 +155,6 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
         settings={settings}
         disabled={loading}
         pageInfo={pageInfo}
-        addHref={warehouseAddUrl}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onRemove={id => openModal("delete", { id })}

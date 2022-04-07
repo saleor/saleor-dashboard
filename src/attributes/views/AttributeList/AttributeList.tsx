@@ -36,7 +36,6 @@ import { maybe } from "../../../misc";
 import AttributeBulkDeleteDialog from "../../components/AttributeBulkDeleteDialog";
 import AttributeListPage from "../../components/AttributeListPage";
 import {
-  attributeAddUrl,
   attributeListUrl,
   AttributeListUrlDialog,
   AttributeListUrlQueryParams,
@@ -150,7 +149,6 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
         filterOpts={getFilterOpts(params)}
         initialSearch={params.query || ""}
         isChecked={isSelected}
-        addHref={attributeAddUrl()}
         onAll={resetFilters}
         onBack={() => navigate(configurationMenuUrl)}
         onFilterChange={changeFilters}

@@ -8,7 +8,10 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { PageListProps, SortPage } from "../../../types";
-import { PermissionGroupListUrlSortField } from "../../urls";
+import {
+  permissionGroupAddUrl,
+  PermissionGroupListUrlSortField
+} from "../../urls";
 import PermissionGroupList from "../PermissionGroupList";
 
 export interface PermissionGroupListPageProps
@@ -20,7 +23,6 @@ export interface PermissionGroupListPageProps
 }
 
 const PermissionGroupListPage: React.FC<PermissionGroupListPageProps> = ({
-  addHref,
   onBack,
   ...listProps
 }) => {
@@ -34,7 +36,7 @@ const PermissionGroupListPage: React.FC<PermissionGroupListPageProps> = ({
       <PageHeader title={intl.formatMessage(sectionNames.permissionGroups)}>
         <Button
           variant="primary"
-          href={addHref}
+          href={permissionGroupAddUrl}
           data-test-id="create-permission-group"
         >
           <FormattedMessage

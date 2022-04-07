@@ -1,4 +1,5 @@
 import { Card } from "@material-ui/core";
+import { collectionAddUrl } from "@saleor/collections/urls";
 import { Container } from "@saleor/components/Container";
 import { getByName } from "@saleor/components/Filter/utils";
 import FilterBar from "@saleor/components/FilterBar";
@@ -27,16 +28,12 @@ export interface CollectionListPageProps
     SearchPageProps,
     TabPageProps,
     FilterPageProps<CollectionFilterKeys, CollectionListFilterOpts>,
-    CollectionListProps {
-  channelsCount: number;
-}
+    CollectionListProps {}
 
 const CollectionListPage: React.FC<CollectionListPageProps> = ({
-  channelsCount,
   currentTab,
   disabled,
   initialSearch,
-  addHref,
   onAll,
   onSearchChange,
   onTabChange,
@@ -60,7 +57,7 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
         <Button
           disabled={disabled}
           variant="primary"
-          href={addHref}
+          href={collectionAddUrl()}
           data-test-id="create-collection"
         >
           <FormattedMessage

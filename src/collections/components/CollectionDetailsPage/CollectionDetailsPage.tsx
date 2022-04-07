@@ -29,6 +29,7 @@ export interface CollectionDetailsPageProps
   extends PageListProps,
     ListActions,
     ChannelProps {
+  onAdd: () => void;
   channelsCount: number;
   channelsErrors: CollectionChannelListingErrorFragment[];
   collection: CollectionDetailsQuery["collection"];
@@ -55,7 +56,6 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
   errors,
   hasChannelChanged,
   saveButtonBarState,
-  selectedChannelId,
   onBack,
   onCollectionRemove,
   onImageDelete,

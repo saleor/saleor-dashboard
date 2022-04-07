@@ -36,7 +36,7 @@ import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ProductListUrlSortField } from "../../urls";
+import { productAddUrl, ProductListUrlSortField } from "../../urls";
 import ProductList from "../ProductList";
 import { columnsMessages } from "../ProductList/messages";
 import {
@@ -56,7 +56,6 @@ export interface ProductListPageProps
   availableInGridAttributes: RelayToFlat<
     AvailableInGridAttributesQuery["availableInGrid"]
   >;
-  channelsCount: number;
   currencySymbol: string;
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   limits: RefreshLimitsQuery["shop"]["limits"];
@@ -86,7 +85,6 @@ const useStyles = makeStyles(
 
 export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const {
-    channelsCount,
     currencySymbol,
     currentTab,
     defaultSettings,
@@ -100,7 +98,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     settings,
     tabs,
     totalGridAttributes,
-    addHref,
     onAll,
     onExport,
     onFetchMore,
@@ -205,7 +202,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           options={extensionCreateButtonItems}
           data-test-id="add-product"
           disabled={limitReached}
-          href={addHref}
+          href={productAddUrl()}
         >
           <FormattedMessage
             defaultMessage="Create Product"

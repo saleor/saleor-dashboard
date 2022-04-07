@@ -1,5 +1,8 @@
 import { Card } from "@material-ui/core";
-import { AttributeListUrlSortField } from "@saleor/attributes/urls";
+import {
+  attributeAddUrl,
+  AttributeListUrlSortField
+} from "@saleor/attributes/urls";
 import FilterBar from "@saleor/components/FilterBar";
 import { AttributeFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
@@ -36,7 +39,6 @@ export interface AttributeListPageProps
 const AttributeListPage: React.FC<AttributeListPageProps> = ({
   filterOpts,
   initialSearch,
-  addHref,
   onBack,
   onFilterChange,
   onSearchChange,
@@ -59,7 +61,7 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
       </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.attributes)}>
         <Button
-          href={addHref}
+          href={attributeAddUrl()}
           variant="primary"
           data-test-id="create-attribute-button"
         >

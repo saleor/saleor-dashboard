@@ -31,7 +31,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import CollectionListPage from "../../components/CollectionListPage/CollectionListPage";
 import {
-  collectionAddUrl,
   collectionListUrl,
   CollectionListUrlDialog,
   CollectionListUrlQueryParams,
@@ -175,7 +174,6 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         currentTab={currentTab}
         initialSearch={params.query || ""}
         onSearchChange={handleSearchChange}
-        addHref={collectionAddUrl()}
         onAll={resetFilters}
         onTabChange={handleTabChange}
         onTabDelete={() => openModal("delete-search")}
@@ -209,7 +207,6 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         selected={listElements.length}
         toggle={toggle}
         toggleAll={toggleAll}
-        channelsCount={availableChannels?.length}
         selectedChannelId={selectedChannel?.id}
         filterOpts={filterOpts}
         onFilterChange={changeFilters}

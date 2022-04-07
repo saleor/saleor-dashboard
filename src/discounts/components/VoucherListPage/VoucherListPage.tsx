@@ -3,7 +3,7 @@ import Container from "@saleor/components/Container";
 import { getByName } from "@saleor/components/Filter/utils";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
-import { VoucherListUrlSortField } from "@saleor/discounts/urls";
+import { voucherAddUrl, VoucherListUrlSortField } from "@saleor/discounts/urls";
 import { VoucherFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Button } from "@saleor/macaw-ui";
@@ -38,7 +38,6 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
   currentTab,
   filterOpts,
   initialSearch,
-  addHref,
   onAll,
   onFilterChange,
   onSearchChange,
@@ -56,7 +55,11 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.vouchers)}>
-        <Button href={addHref} variant="primary" data-test-id="create-voucher">
+        <Button
+          href={voucherAddUrl()}
+          variant="primary"
+          data-test-id="create-voucher"
+        >
           <FormattedMessage
             defaultMessage="Create voucher"
             description="button"

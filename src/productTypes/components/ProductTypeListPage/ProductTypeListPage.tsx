@@ -5,7 +5,10 @@ import PageHeader from "@saleor/components/PageHeader";
 import { ProductTypeFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, Button } from "@saleor/macaw-ui";
-import { ProductTypeListUrlSortField } from "@saleor/productTypes/urls";
+import {
+  productTypeAddUrl,
+  ProductTypeListUrlSortField
+} from "@saleor/productTypes/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -37,7 +40,6 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
   currentTab,
   filterOpts,
   initialSearch,
-  addHref,
   onAll,
   onBack,
   onFilterChange,
@@ -60,7 +62,7 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
       <PageHeader title={intl.formatMessage(sectionNames.productTypes)}>
         <Button
           variant="primary"
-          href={addHref}
+          href={productTypeAddUrl()}
           data-test-id="add-product-type"
         >
           <FormattedMessage

@@ -5,7 +5,10 @@ import SearchBar from "@saleor/components/SearchBar";
 import { PageTypeFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, Button } from "@saleor/macaw-ui";
-import { PageTypeListUrlSortField } from "@saleor/pageTypes/urls";
+import {
+  pageTypeAddUrl,
+  PageTypeListUrlSortField
+} from "@saleor/pageTypes/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -31,7 +34,6 @@ export interface PageTypeListPageProps
 const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
   currentTab,
   initialSearch,
-  addHref,
   onAll,
   onBack,
   onSearchChange,
@@ -50,7 +52,7 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
       <PageHeader title={intl.formatMessage(sectionNames.pageTypes)}>
         <Button
           variant="primary"
-          href={addHref}
+          href={pageTypeAddUrl}
           data-test-id="create-page-type"
         >
           <FormattedMessage

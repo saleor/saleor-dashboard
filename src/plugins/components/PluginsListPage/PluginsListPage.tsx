@@ -37,7 +37,6 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
   initialSearch,
   filterOpts,
   tabs,
-  onAdd,
   onAll,
   onBack,
   onSearchChange,

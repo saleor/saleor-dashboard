@@ -30,7 +30,6 @@ import { useIntl } from "react-intl";
 import { configurationMenuUrl } from "../../../configuration";
 import PageTypeListPage from "../../components/PageTypeListPage";
 import {
-  pageTypeAddUrl,
   pageTypeListUrl,
   PageTypeListUrlDialog,
   PageTypeListUrlFilters,
@@ -181,7 +180,6 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
         disabled={loading}
         pageTypes={pageTypesData}
         pageInfo={pageInfo}
-        addHref={pageTypeAddUrl}
         onBack={() => navigate(configurationMenuUrl)}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}

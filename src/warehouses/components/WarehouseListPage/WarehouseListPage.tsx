@@ -16,7 +16,10 @@ import {
   TabPageProps
 } from "@saleor/types";
 import { hasLimits, isLimitReached } from "@saleor/utils/limits";
-import { WarehouseListUrlSortField } from "@saleor/warehouses/urls";
+import {
+  warehouseAddUrl,
+  WarehouseListUrlSortField
+} from "@saleor/warehouses/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -42,7 +45,6 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
   pageInfo,
   settings,
   tabs,
-  addHref,
   onAll,
   onBack,
   onNextPage,
@@ -85,7 +87,7 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
           data-test-id="create-warehouse"
           disabled={limitReached}
           variant="primary"
-          href={addHref}
+          href={warehouseAddUrl}
         >
           <FormattedMessage
             defaultMessage="Create Warehouse"

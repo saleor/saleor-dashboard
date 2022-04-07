@@ -25,7 +25,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import PageListPage from "../../components/PageListPage/PageListPage";
 import {
-  pageCreateUrl,
   pageListUrl,
   PageListUrlDialog,
   PageListUrlQueryParams,
@@ -120,7 +119,6 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
         settings={settings}
         pages={mapEdgesToItems(data?.pages)}
         pageInfo={pageInfo}
-        addHref={pageCreateUrl()}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}

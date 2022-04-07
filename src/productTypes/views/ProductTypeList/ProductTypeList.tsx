@@ -31,7 +31,6 @@ import { configurationMenuUrl } from "../../../configuration";
 import { maybe } from "../../../misc";
 import ProductTypeListPage from "../../components/ProductTypeListPage";
 import {
-  productTypeAddUrl,
   productTypeListUrl,
   ProductTypeListUrlDialog,
   ProductTypeListUrlQueryParams,
@@ -187,7 +186,6 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
         disabled={loading}
         productTypes={productTypesData}
         pageInfo={pageInfo}
-        addHref={productTypeAddUrl()}
         onBack={() => navigate(configurationMenuUrl)}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}

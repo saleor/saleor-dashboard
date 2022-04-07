@@ -1,5 +1,8 @@
 import { Card } from "@material-ui/core";
-import { CategoryListUrlSortField } from "@saleor/categories/urls";
+import {
+  categoryAddUrl,
+  CategoryListUrlSortField
+} from "@saleor/categories/urls";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
@@ -40,7 +43,6 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
   toggle,
   toggleAll,
   toolbar,
-  addHref,
   onAll,
   onNextPage,
   onPreviousPage,
@@ -57,7 +59,11 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.categories)}>
-        <Button variant="primary" href={addHref} data-test-id="create-category">
+        <Button
+          variant="primary"
+          href={categoryAddUrl()}
+          data-test-id="create-category"
+        >
           <FormattedMessage
             defaultMessage="Create category"
             description="button"

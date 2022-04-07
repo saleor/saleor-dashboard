@@ -72,7 +72,6 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   saveButtonBarState,
   subcategories,
   addCategoryHref,
-  addProductHref,
   onBack,
   getCategoryHref,
   onDelete,
@@ -208,7 +207,6 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               onNextPage={onNextPage}
               onPreviousPage={onPreviousPage}
               getRowHref={getProductHref}
-              addHref={addProductHref}
               toggle={toggle}
               toggleAll={toggleAll}
               selected={selected}

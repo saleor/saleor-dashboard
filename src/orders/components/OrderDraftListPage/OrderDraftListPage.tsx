@@ -34,6 +34,7 @@ export interface OrderDraftListPageProps
     TabPageProps {
   limits: RefreshLimitsQuery["shop"]["limits"];
   orders: RelayToFlat<OrderDraftListQuery["draftOrders"]>;
+  onAdd: () => void;
 }
 
 const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({

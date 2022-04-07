@@ -4,7 +4,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import { InternalLink } from "@saleor/components/InternalLink";
 import { CategoryDetailsQuery } from "@saleor/graphql";
 import { Button } from "@saleor/macaw-ui";
-import { productListUrl } from "@saleor/products/urls";
+import { productAddUrl, productListUrl } from "@saleor/products/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -22,7 +22,6 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
   products,
   disabled,
   pageInfo,
-  addHref,
   onNextPage,
   onPreviousPage,
   getRowHref,
@@ -64,7 +63,7 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
             <HorizontalSpacer />
             <Button
               variant="tertiary"
-              href={addHref}
+              href={productAddUrl()}
               data-test-id="add-products"
             >
               <FormattedMessage

@@ -32,6 +32,7 @@ export interface OrderListPageProps
   limits: RefreshLimitsQuery["shop"]["limits"];
   orders: RelayToFlat<OrderListQuery["orders"]>;
   onSettingsOpen: () => void;
+  onAdd: () => void;
 }
 
 const useStyles = makeStyles(

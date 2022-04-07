@@ -32,7 +32,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import VoucherListPage from "../../components/VoucherListPage";
 import {
-  voucherAddUrl,
   voucherListUrl,
   VoucherListUrlDialog,
   VoucherListUrlQueryParams,
@@ -197,7 +196,6 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
         vouchers={mapEdgesToItems(data?.vouchers)}
         disabled={loading}
         pageInfo={pageInfo}
-        addHref={voucherAddUrl()}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}

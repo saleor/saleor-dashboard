@@ -28,7 +28,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { CategoryListPage } from "../../components/CategoryListPage/CategoryListPage";
 import {
-  categoryAddUrl,
   categoryListUrl,
   CategoryListUrlDialog,
   CategoryListUrlFilters,
@@ -156,7 +155,6 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         tabs={tabs.map(tab => tab.name)}
         settings={settings}
         sort={getSortParams(params)}
-        addHref={categoryAddUrl()}
         getRowHref={id => categoryUrl(id)}
         onSort={handleSort}
         disabled={loading}

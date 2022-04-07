@@ -3,7 +3,10 @@ import { useUserPermissions } from "@saleor/auth/hooks/useUserPermissions";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
-import { CustomerListUrlSortField } from "@saleor/customers/urls";
+import {
+  customerAddUrl,
+  CustomerListUrlSortField
+} from "@saleor/customers/urls";
 import { ListCustomersQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Button } from "@saleor/macaw-ui";
@@ -38,7 +41,6 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
   currentTab,
   filterOpts,
   initialSearch,
-  addHref,
   onAll,
   onFilterChange,
   onSearchChange,
@@ -56,7 +58,11 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.customers)}>
-        <Button variant="primary" href={addHref} data-test-id="create-customer">
+        <Button
+          variant="primary"
+          href={customerAddUrl}
+          data-test-id="create-customer"
+        >
           <FormattedMessage
             defaultMessage="Create customer"
             description="button"

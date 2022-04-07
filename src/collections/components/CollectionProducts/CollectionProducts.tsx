@@ -56,13 +56,14 @@ const useStyles = makeStyles(
 export interface CollectionProductsProps extends PageListProps, ListActions {
   collection: CollectionDetailsQuery["collection"];
   onProductUnassign: (id: string, event: React.MouseEvent<any>) => void;
+  onAdd: () => void;
 }
 
 const CollectionProducts: React.FC<CollectionProductsProps> = props => {
   const {
     collection,
     disabled,
-    addHref,
+    onAdd,
     onNextPage,
     onPreviousPage,
     onProductUnassign,
@@ -104,7 +105,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
             data-test-id="add-product"
             disabled={disabled}
             variant="tertiary"
-            href={addHref}
+            onClick={onAdd}
           >
             <FormattedMessage
               defaultMessage="Assign product"

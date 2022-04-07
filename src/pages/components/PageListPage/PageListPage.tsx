@@ -5,6 +5,7 @@ import { PageFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { Button } from "@saleor/macaw-ui";
 import {
+  pageCreateUrl,
   PageListUrlDialog,
   PageListUrlQueryParams,
   PageListUrlSortField
@@ -30,7 +31,6 @@ export interface PageListPageProps
 }
 
 const PageListPage: React.FC<PageListPageProps> = ({
-  addHref,
   params,
   actionDialogOpts,
   ...listProps
@@ -40,7 +40,11 @@ const PageListPage: React.FC<PageListPageProps> = ({
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.pages)}>
-        <Button href={addHref} variant="primary" data-test-id="create-page">
+        <Button
+          href={pageCreateUrl()}
+          variant="primary"
+          data-test-id="create-page"
+        >
           <FormattedMessage defaultMessage="Create page" description="button" />
         </Button>
       </PageHeader>

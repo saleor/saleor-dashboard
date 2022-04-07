@@ -23,7 +23,6 @@ import { useIntl } from "react-intl";
 
 import PermissionGroupListPage from "../../components/PermissionGroupListPage";
 import {
-  permissionGroupAddUrl,
   permissionGroupDetailsUrl,
   permissionGroupListUrl,
   PermissionGroupListUrlDialog,
@@ -109,7 +108,6 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
         pageInfo={pageInfo}
         sort={getSortParams(params)}
         permissionGroups={permissionGroups}
-        addHref={permissionGroupAddUrl}
         onBack={() => navigate(configurationMenuUrl)}
         onDelete={id => openModal("remove", { id })}
         onNextPage={loadNextPage}

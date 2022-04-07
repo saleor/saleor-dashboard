@@ -29,7 +29,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import SaleListPage from "../../components/SaleListPage";
 import {
-  saleAddUrl,
   saleListUrl,
   SaleListUrlDialog,
   SaleListUrlQueryParams,
@@ -190,7 +189,6 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         settings={settings}
         disabled={loading}
         pageInfo={pageInfo}
-        addHref={saleAddUrl()}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onSort={handleSort}

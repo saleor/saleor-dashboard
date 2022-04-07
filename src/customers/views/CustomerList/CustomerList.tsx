@@ -31,7 +31,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import CustomerListPage from "../../components/CustomerListPage";
 import {
-  customerAddUrl,
   customerListUrl,
   CustomerListUrlDialog,
   CustomerListUrlQueryParams,
@@ -167,7 +166,6 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
         settings={settings}
         disabled={loading}
         pageInfo={pageInfo}
-        addHref={customerAddUrl}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}

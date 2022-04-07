@@ -92,8 +92,6 @@ export interface ListActions extends ListActionsWithoutToolbar {
 export interface PageListProps<TColumns extends string = string>
   extends ListProps<TColumns> {
   defaultSettings?: ListSettings<TColumns>;
-  addHref?: string;
-  onAdd?: () => void;
 }
 
 export interface SearchProps {
