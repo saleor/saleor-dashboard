@@ -37,6 +37,7 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
           fullWidth
           helperText={getWarehouseErrorMessage(formErrors.name, intl)}
           label={intl.formatMessage({
+            id: "llBnr+",
             defaultMessage: "Warehouse Name"
           })}
           name={"name" as keyof typeof data}

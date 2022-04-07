@@ -281,6 +281,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 <SeoForm
                   allowEmptySlug={true}
                   helperText={intl.formatMessage({
+                    id: "LKoIB1",
                     defaultMessage:
                       "Add search engine title and description to make this product easier to find"
                   })}
@@ -325,11 +326,13 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                     managePermissions={[PermissionEnum.MANAGE_PRODUCTS]}
                     messages={{
                       hiddenLabel: intl.formatMessage({
+                        id: "saKXY3",
                         defaultMessage: "Not published",
                         description: "product label"
                       }),
 
                       visibleLabel: intl.formatMessage({
+                        id: "qJedl0",
                         defaultMessage: "Published",
                         description: "product label"
                       })

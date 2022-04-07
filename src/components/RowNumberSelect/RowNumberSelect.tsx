@@ -47,7 +47,7 @@ const RowNumberSelect: React.FC<RowNumberSelectProps> = ({
   return (
     <div className={className}>
       <span className={classes.label}>
-        <FormattedMessage defaultMessage="No of Rows:" />
+        <FormattedMessage id="fNFEkh" defaultMessage="No of Rows:" />
       </span>
       <Select
         data-test-id="row-number-select"

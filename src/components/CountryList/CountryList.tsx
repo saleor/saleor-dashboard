@@ -97,6 +97,7 @@ const CountryList: React.FC<CountryListProps> = props => {
             data-test-id="assign-country"
           >
             <FormattedMessage
+              id="zZCCqz"
               defaultMessage="Assign countries"
               description="button"
             />
@@ -110,6 +111,7 @@ const CountryList: React.FC<CountryListProps> = props => {
               className={classNames(classes.wideColumn, classes.toLeft)}
             >
               <FormattedMessage
+                id="62Ywh2"
                 defaultMessage="{number} Countries"
                 description="number of countries"
                 values={{

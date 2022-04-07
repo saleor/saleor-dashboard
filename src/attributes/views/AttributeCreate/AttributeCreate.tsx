@@ -89,6 +89,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "jTifz+",
             defaultMessage: "Successfully created attribute"
           })
         });
@@ -100,7 +101,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   const id = params.id
-    ? parseInt(params.id, 0) + pageInfo.startCursor
+    ? parseInt(params.id, 10) + pageInfo.startCursor
     : undefined;
 
   const [openModal, closeModal] = createDialogActionHandlers<

@@ -37,6 +37,7 @@ export interface PageListFilterOpts {
 
 const messages = defineMessages({
   pageType: {
+    id: "Of19Pn",
     defaultMessage: "Page Types",
     description: "Types"
   }

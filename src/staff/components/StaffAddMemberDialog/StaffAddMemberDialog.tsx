@@ -88,6 +88,7 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
           <>
             <DialogTitle>
               <FormattedMessage
+                id="23g7PY"
                 defaultMessage="Invite Staff Member"
                 description="dialog header"
               />
@@ -144,6 +145,7 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
                 transitionState={confirmButtonState}
               >
                 <FormattedMessage
+                  id="hw9Fah"
                   defaultMessage="Send invite"
                   description="button"
                 />

@@ -79,13 +79,17 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
             <>
               <DialogTitle>
                 <FormattedMessage
+                  id="cvVIV/"
                   defaultMessage="Assign Countries"
                   description="dialog header"
                 />
               </DialogTitle>
               <DialogContent>
                 <Typography>
-                  <FormattedMessage defaultMessage="Choose countries, you want voucher to be limited to, from the list below" />
+                  <FormattedMessage
+                    id="dWK/Ck"
+                    defaultMessage="Choose countries, you want voucher to be limited to, from the list below"
+                  />
                 </Typography>
                 <FormSpacer />
                 <TextField
@@ -95,10 +99,12 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
                     change(event /* TO BE CHECKED: () => fetch(data.query)*/)
                   }
                   label={intl.formatMessage({
+                    id: "8EGagh",
                     defaultMessage: "Filter Countries",
                     description: "search box label"
                   })}
                   placeholder={intl.formatMessage({
+                    id: "dGqEJ9",
                     defaultMessage: "Search by country name",
                     description: "search box placeholder"
                   })}
@@ -109,6 +115,7 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
                 <FormSpacer />
                 <Typography variant="subtitle1">
                   <FormattedMessage
+                    id="wgA48T"
                     defaultMessage="Countries A to Z"
                     description="country selection"
                   />
@@ -166,6 +173,7 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
                   type="submit"
                 >
                   <FormattedMessage
+                    id="zZCCqz"
                     defaultMessage="Assign countries"
                     description="button"
                   />

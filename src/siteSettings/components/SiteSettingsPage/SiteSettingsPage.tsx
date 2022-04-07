@@ -175,6 +175,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                 errors={[...errors, ...validationErrors]}
                 disabled={disabled}
                 header={intl.formatMessage({
+                  id: "+jCDvp",
                   defaultMessage: "Store Information",
                   description: "section header"
                 })}

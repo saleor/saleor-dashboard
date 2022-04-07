@@ -17,10 +17,12 @@ export interface AttributeOrganizationProps {
 
 const messages = defineMessages({
   contentAttribute: {
+    id: "zbJHl7",
     defaultMessage: "Content Attribute",
     description: "attribute type"
   },
   productAttribute: {
+    id: "qkRuT0",
     defaultMessage: "Product Attribute",
     description: "attribute type"
   }
@@ -52,6 +54,7 @@ const AttributeOrganization: React.FC<AttributeOrganizationProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "nwvQPg",
           defaultMessage: "Organization",
           description: "section header"
         })}
@@ -72,9 +75,15 @@ const AttributeOrganization: React.FC<AttributeOrganizationProps> = props => {
             disabled={disabled}
             label={
               <>
-                <FormattedMessage defaultMessage="Attribute Class" />
+                <FormattedMessage
+                  id="v1pNHW"
+                  defaultMessage="Attribute Class"
+                />
                 <Typography variant="caption">
-                  <FormattedMessage defaultMessage="Define where this attribute should be used in Saleor system" />
+                  <FormattedMessage
+                    id="ErNH3D"
+                    defaultMessage="Define where this attribute should be used in Saleor system"
+                  />
                 </Typography>
               </>
             }
@@ -85,7 +94,7 @@ const AttributeOrganization: React.FC<AttributeOrganizationProps> = props => {
         ) : (
           <>
             <Typography className={classes.label} variant="caption">
-              <FormattedMessage defaultMessage="Attribute Class" />
+              <FormattedMessage id="v1pNHW" defaultMessage="Attribute Class" />
             </Typography>
             <Typography>
               {data.type === AttributeTypeEnum.PRODUCT_TYPE

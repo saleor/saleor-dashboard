@@ -222,6 +222,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         onConfirm={onSaleBulkDelete}
         open={params.action === "remove" && canOpenBulkActionDialog}
         title={intl.formatMessage({
+          id: "ZWIjvr",
           defaultMessage: "Delete Sales",
           description: "dialog header"
         })}
@@ -230,6 +231,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         {canOpenBulkActionDialog && (
           <DialogContentText>
             <FormattedMessage
+              id="FPzzh7"
               defaultMessage="{counter,plural,one{Are you sure you want to delete this sale?} other{Are you sure you want to delete {displayQuantity} sales?}}"
               description="dialog content"
               values={{

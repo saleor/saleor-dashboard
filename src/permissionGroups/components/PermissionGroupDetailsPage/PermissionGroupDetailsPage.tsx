@@ -121,10 +121,12 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
                 onChange={change}
                 errorMessage={permissionsError}
                 fullAccessLabel={intl.formatMessage({
+                  id: "mAabef",
                   defaultMessage: "Group has full access to the store",
                   description: "checkbox label"
                 })}
                 description={intl.formatMessage({
+                  id: "CYZse9",
                   defaultMessage:
                     "Expand or restrict group's permissions to access certain part of saleor system.",
                   description: "card description"

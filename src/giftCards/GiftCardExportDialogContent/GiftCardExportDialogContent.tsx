@@ -95,6 +95,7 @@ const GiftCardExportDialog: React.FC<Pick<DialogProps, "onClose"> & {
   const exportScopeLabels = {
     allItems: intl.formatMessage(
       {
+        id: "uQk8gB",
         defaultMessage: "All gift cards ({number})",
         description: "export all items to csv file"
       },
@@ -104,6 +105,7 @@ const GiftCardExportDialog: React.FC<Pick<DialogProps, "onClose"> & {
     ),
     selectedItems: intl.formatMessage(
       {
+        id: "n97Ii0",
         defaultMessage: "Selected giftCards ({number})",
         description: "export selected items to csv file"
       },

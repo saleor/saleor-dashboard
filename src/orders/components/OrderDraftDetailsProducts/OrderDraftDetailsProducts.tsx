@@ -75,23 +75,26 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
           <TableRow>
             <TableCell className={classes.colName}>
               <span className={classes.colNameLabel}>
-                <FormattedMessage defaultMessage="Product" />
+                <FormattedMessage id="x/ZVlU" defaultMessage="Product" />
               </span>
             </TableCell>
             <TableCell className={classes.colQuantity}>
               <FormattedMessage
+                id="nEWp+k"
                 defaultMessage="Quantity"
                 description="quantity of ordered products"
               />
             </TableCell>
             <TableCell className={classes.colPrice}>
               <FormattedMessage
+                id="32dfzI"
                 defaultMessage="Price"
                 description="price or ordered products"
               />
             </TableCell>
             <TableCell className={classes.colTotal}>
               <FormattedMessage
+                id="lVwmf5"
                 defaultMessage="Total"
                 description="total price of ordered products"
               />
@@ -119,7 +122,10 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
         ) : (
           <TableRow>
             <TableCell colSpan={5}>
-              <FormattedMessage defaultMessage="No Products added to Order" />
+              <FormattedMessage
+                id="UD7/q8"
+                defaultMessage="No Products added to Order"
+              />
             </TableCell>
           </TableRow>
         )}

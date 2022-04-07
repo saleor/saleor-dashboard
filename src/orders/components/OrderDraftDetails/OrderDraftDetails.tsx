@@ -39,6 +39,7 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "18wvf7",
           defaultMessage: "Order Details",
           description: "section header"
         })}
@@ -50,6 +51,7 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
               data-test-id="add-products-button"
             >
               <FormattedMessage
+                id="C50ahv"
                 defaultMessage="Add products"
                 description="button"
               />

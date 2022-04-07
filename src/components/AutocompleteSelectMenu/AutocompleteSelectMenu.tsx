@@ -185,7 +185,10 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
                     </>
                   ) : (
                     <MenuItem disabled component="div">
-                      <FormattedMessage defaultMessage="No results" />
+                      <FormattedMessage
+                        id="jHJmjf"
+                        defaultMessage="No results"
+                      />
                     </MenuItem>
                   )}
                 </Paper>

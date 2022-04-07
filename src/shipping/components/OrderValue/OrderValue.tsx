@@ -58,6 +58,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "yatGsm",
           defaultMessage: "Order Value",
           description: "card title"
         })}
@@ -69,11 +70,13 @@ export const OrderValue: React.FC<OrderValueProps> = ({
             label={
               <>
                 <FormattedMessage
+                  id="Dgp38J"
                   defaultMessage="Restrict order value"
                   description="checkbox label"
                 />
                 <Typography variant="caption">
                   {intl.formatMessage({
+                    id: "aZDHYr",
                     defaultMessage: "This rate will apply to all orders",
                     description: "price rates info"
                   })}
@@ -86,6 +89,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
           />
           <VerticalSpacer />
           <FormattedMessage
+            id="u5c/tR"
             defaultMessage="Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
             description="channels discount info"
           />
@@ -97,6 +101,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
               <TableCell className={classes.colName}>
                 <span>
                   <FormattedMessage
+                    id="UymotP"
                     defaultMessage="Channel name"
                     description="channel name"
                   />
@@ -105,6 +110,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
               <TableCell className={classes.colType}>
                 <span>
                   <FormattedMessage
+                    id="0FexL7"
                     defaultMessage="Min. value"
                     description="min price in channel"
                   />
@@ -113,6 +119,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
               <TableCell className={classes.colType}>
                 <span>
                   <FormattedMessage
+                    id="ER/yBq"
                     defaultMessage="Max. value"
                     description="max price in channel"
                   />
@@ -140,6 +147,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                         disabled={disabled}
                         error={!!minError}
                         label={intl.formatMessage({
+                          id: "kN6SLs",
                           defaultMessage: "Min Value"
                         })}
                         name={`minValue:${channel.name}`}
@@ -161,6 +169,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                         disabled={disabled}
                         error={!!maxError}
                         label={intl.formatMessage({
+                          id: "vjsfyn",
                           defaultMessage: "Max Value"
                         })}
                         name={`maxValue:${channel.name}`}

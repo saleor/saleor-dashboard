@@ -74,10 +74,7 @@ const HomeAnalyticsCard: React.FC<HomeAnalyticsCardProps> = props => {
             variant="caption"
             color="textSecondary"
           >
-            <FormattedMessage
-              defaultMessage="Today"
-              id="homeAnalyticsCardHeader"
-            />
+            <FormattedMessage id="zWgbGg" defaultMessage="Today" />
           </Typography>
           <Typography
             className={classes.value}

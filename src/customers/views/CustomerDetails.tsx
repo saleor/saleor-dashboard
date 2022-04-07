@@ -52,6 +52,7 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "PXatmC",
             defaultMessage: "Customer Removed"
           })
         });
@@ -145,6 +146,7 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
           })
         }
         title={intl.formatMessage({
+          id: "ey0lZj",
           defaultMessage: "Delete Customer",
           description: "dialog header"
         })}
@@ -153,6 +155,7 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
       >
         <DialogContentText>
           <FormattedMessage
+            id="2p0tZx"
             defaultMessage="Are you sure you want to delete {email}?"
             description="delete customer, dialog content"
             values={{

@@ -121,6 +121,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
           <CardSpacer />
           <SeoForm
             helperText={intl.formatMessage({
+              id: "wQdR8M",
               defaultMessage:
                 "Add search engine title and description to make this category easier to find"
             })}
@@ -144,6 +145,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               changeTab={changeTab}
             >
               <FormattedMessage
+                id="JDz5h8"
                 defaultMessage="Subcategories"
                 description="number of subcategories in category"
               />
@@ -154,6 +156,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               changeTab={changeTab}
             >
               <FormattedMessage
+                id="V+fkAO"
                 defaultMessage="Products"
                 description="number of products in category"
               />
@@ -164,6 +167,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
             <Card>
               <CardTitle
                 title={intl.formatMessage({
+                  id: "NivJal",
                   defaultMessage: "All Subcategories",
                   description: "section header"
                 })}
@@ -174,6 +178,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                     data-test-id="create-subcategory"
                   >
                     <FormattedMessage
+                      id="UycVMp"
                       defaultMessage="Create subcategory"
                       description="button"
                     />

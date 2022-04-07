@@ -24,6 +24,7 @@ const OrderSettings: React.FC<OrderSettingsProps> = ({
     <Card data-test-id="order-settings">
       <CardTitle
         title={intl.formatMessage({
+          id: "CLYlsu",
           defaultMessage: "Settings",
           description: "section header"
         })}
@@ -34,11 +35,13 @@ const OrderSettings: React.FC<OrderSettingsProps> = ({
           label={
             <>
               <FormattedMessage
+                id="RLYfMF"
                 defaultMessage="Automatically confirm all orders"
                 description="checkbox label"
               />
               <Typography variant="caption">
                 <FormattedMessage
+                  id="wpAXKX"
                   defaultMessage="All orders will be automatically confirmed and all payments will be captured."
                   description="checkbox label description"
                 />
@@ -56,11 +59,13 @@ const OrderSettings: React.FC<OrderSettingsProps> = ({
           label={
             <>
               <FormattedMessage
+                id="7UG1Lx"
                 defaultMessage="Automatically fulfill non shippable gift cards"
                 description="checkbox gift cards label"
               />
               <Typography variant="caption">
                 <FormattedMessage
+                  id="Nfh9QM"
                   defaultMessage="when activated non-shippable gift cards will be automatically set as fulfilled and sent to customer"
                   description="checkbox gift cards label description"
                 />

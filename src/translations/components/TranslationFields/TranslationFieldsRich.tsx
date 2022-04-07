@@ -51,6 +51,7 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
         error={undefined}
         helperText={undefined}
         label={intl.formatMessage({
+          id: "/vCXIP",
           defaultMessage: "Translation"
         })}
         name="translation"
@@ -65,7 +66,7 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
     </form>
   ) : initial === null ? (
     <Typography color="textSecondary">
-      <FormattedMessage defaultMessage="No translation yet" />
+      <FormattedMessage id="T/5OyA" defaultMessage="No translation yet" />
     </Typography>
   ) : (
     <Typography>

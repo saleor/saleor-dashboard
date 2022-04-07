@@ -83,6 +83,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       pushMessage({
         status: "success",
         text: intl.formatMessage({
+          id: "9RCuN3",
           defaultMessage: "Payment successfully captured"
         })
       });
@@ -95,6 +96,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       pushMessage({
         status: "success",
         text: intl.formatMessage({
+          id: "lL1HTg",
           defaultMessage: "Order marked as paid"
         })
       });
@@ -107,6 +109,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       pushMessage({
         status: "success",
         text: intl.formatMessage({
+          id: "W/Es0H",
           defaultMessage: "Order successfully cancelled"
         })
       });
@@ -119,6 +122,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       pushMessage({
         status: "success",
         text: intl.formatMessage({
+          id: "W/Es0H",
           defaultMessage: "Order successfully cancelled"
         })
       });
@@ -131,6 +135,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       pushMessage({
         status: "success",
         text: intl.formatMessage({
+          id: "L87bp7",
           defaultMessage: "Order payment successfully voided"
         })
       });
@@ -143,6 +148,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       pushMessage({
         status: "success",
         text: intl.formatMessage({
+          id: "KmPicj",
           defaultMessage: "Note successfully added"
         })
       });
@@ -154,6 +160,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       pushMessage({
         status: "success",
         text: intl.formatMessage({
+          id: "j2fPVo",
           defaultMessage: "Order successfully updated"
         })
       });
@@ -166,6 +173,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       pushMessage({
         status: "success",
         text: intl.formatMessage({
+          id: "j2fPVo",
           defaultMessage: "Order successfully updated"
         })
       });
@@ -180,6 +188,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       pushMessage({
         status: "success",
         text: intl.formatMessage({
+          id: "7U8GRy",
           defaultMessage: "Shipping method successfully updated"
         })
       });
@@ -192,6 +201,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       pushMessage({
         status: "success",
         text: intl.formatMessage({
+          id: "9OtpHt",
           defaultMessage: "Order line deleted"
         })
       });
@@ -203,6 +213,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       pushMessage({
         status: "success",
         text: intl.formatMessage({
+          id: "HlCkMT",
           defaultMessage: "Order line added"
         })
       });
@@ -215,6 +226,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       pushMessage({
         status: "success",
         text: intl.formatMessage({
+          id: "Fn3bE0",
           defaultMessage: "Order line updated"
         })
       });
@@ -235,6 +247,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       pushMessage({
         status: "success",
         text: intl.formatMessage({
+          id: "+sX7yS",
           defaultMessage: "Fulfillment successfully approved"
         })
       });
@@ -249,6 +262,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       pushMessage({
         status: "success",
         text: intl.formatMessage({
+          id: "uMpv1v",
           defaultMessage: "Fulfillment successfully cancelled"
         })
       });
@@ -263,6 +277,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       pushMessage({
         status: "success",
         text: intl.formatMessage({
+          id: "CZmloB",
           defaultMessage: "Fulfillment successfully updated"
         })
       });
@@ -275,6 +290,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       pushMessage({
         status: "success",
         text: intl.formatMessage({
+          id: "c4gbXr",
           defaultMessage: "Draft order successfully finalized"
         })
       });
@@ -285,10 +301,12 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     if (errs.length === 0) {
       pushMessage({
         text: intl.formatMessage({
+          id: "ND5x+V",
           defaultMessage:
             "We’re generating the invoice you requested. Please wait a couple of moments"
         }),
         title: intl.formatMessage({
+          id: "PKJqcq",
           defaultMessage: "Invoice is Generating"
         })
       });
@@ -311,6 +329,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     if (errs.length === 0) {
       pushMessage({
         text: intl.formatMessage({
+          id: "3u+4NZ",
           defaultMessage: "Invoice email sent"
         })
       });

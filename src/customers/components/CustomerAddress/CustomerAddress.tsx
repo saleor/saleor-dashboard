@@ -21,27 +21,34 @@ export interface CustomerAddressProps {
 
 const messages = defineMessages({
   defaultAddress: {
+    id: "hMRP6J",
     defaultMessage: "Default Address"
   },
   defaultBillingAddress: {
+    id: "VyzsWZ",
     defaultMessage: "Default Billing Address"
   },
   defaultShippingAddress: {
+    id: "nLML8Y",
     defaultMessage: "Default Shipping Address"
   },
   deleteAddress: {
+    id: "puikeb",
     defaultMessage: "Delete Address",
     description: "button"
   },
   editAddress: {
+    id: "w+8BfK",
     defaultMessage: "Edit Address",
     description: "button"
   },
   setDefaultBilling: {
+    id: "hLOEeb",
     defaultMessage: "Set as default billing address",
     description: "button"
   },
   setDefaultShipping: {
+    id: "+7OsyM",
     defaultMessage: "Set as default shipping address",
     description: "button"
   }

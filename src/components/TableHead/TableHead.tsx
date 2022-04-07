@@ -111,6 +111,7 @@ const TableHead: React.FC<TableHeadProps> = props => {
                 {selected && (
                   <Typography>
                     <FormattedMessage
+                      id="qu/hXD"
                       defaultMessage="Selected {number} items"
                       values={{
                         number: selected

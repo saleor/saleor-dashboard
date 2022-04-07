@@ -52,6 +52,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
     <Card className={classes.apps}>
       <CardTitle
         title={intl.formatMessage({
+          id: "ZeD2TK",
           defaultMessage: "Third-party Apps",
           description: "section header"
         })}
@@ -105,6 +106,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                       onClick={stopPropagation(onRowAboutClick(app.node.id))}
                     >
                       <FormattedMessage
+                        id="TBaMo2"
                         defaultMessage="About"
                         description="about app"
                       />
@@ -126,6 +128,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                 <TableCell className={classes.colName}>
                   <Typography className={classes.text} variant="body2">
                     <FormattedMessage
+                      id="9tgY4G"
                       defaultMessage="You don’t have any installed apps in your dashboard"
                       description="apps content"
                     />

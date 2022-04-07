@@ -46,6 +46,7 @@ const VoucherInfo = ({
           variant === "create" && (
             <Button onClick={onGenerateCode} data-test-id="generate-code">
               <FormattedMessage
+                id="mSLr9d"
                 defaultMessage="Generate Code"
                 description="voucher code, button"
               />
@@ -61,6 +62,7 @@ const VoucherInfo = ({
           helperText={getDiscountErrorMessage(formErrors.code, intl)}
           name={"code" as keyof VoucherDetailsPageFormData}
           label={intl.formatMessage({
+            id: "jvKNMP",
             defaultMessage: "Discount Code"
           })}
           value={data.code}

@@ -64,9 +64,9 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
     <Card data-test-id={testId}>
       <CardTitle
         title={intl.formatMessage({
+          id: "rr8fyf",
           defaultMessage: "Top Products",
-          description: "header",
-          id: "homeProductsListCardHeader"
+          description: "header"
         })}
       />
       <ResponsiveTable>
@@ -112,9 +112,9 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
                       </Typography>
                       <Typography color={"textSecondary"}>
                         <FormattedMessage
+                          id="0opVvi"
                           defaultMessage="{amount, plural,one {One ordered}other {{amount} Ordered}}"
                           description="number of ordered products"
-                          id="homeProductListCardOrders"
                           values={{
                             amount: variant.quantityOrdered
                           }}
@@ -143,8 +143,8 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
                 <TableCell colSpan={3} className={classes.noProducts}>
                   <Typography>
                     <FormattedMessage
+                      id="Q1Uzbb"
                       defaultMessage="No products found"
-                      id="homeProductsListCardNoProducts"
                     />
                   </Typography>
                 </TableCell>

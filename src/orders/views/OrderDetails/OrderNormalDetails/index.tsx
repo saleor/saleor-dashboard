@@ -172,6 +172,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
       <WindowTitle
         title={intl.formatMessage(
           {
+            id: "GbBCmr",
             defaultMessage: "Order #{orderNumber}",
             description: "window title"
           },

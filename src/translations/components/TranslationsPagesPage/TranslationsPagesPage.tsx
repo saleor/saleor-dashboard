@@ -45,6 +45,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
       <PageHeader
         title={intl.formatMessage(
           {
+            id: "oUWXLO",
             defaultMessage: 'Translation Page "{pageName}" - {languageCode}',
             description: "header"
           },
@@ -68,6 +69,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
         fields={[
           {
             displayName: intl.formatMessage({
+              id: "gvOzOl",
               defaultMessage: "Page Title"
             }),
             name: PageTranslationInputFieldName.title,
@@ -77,6 +79,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
           },
           {
             displayName: intl.formatMessage({
+              id: "gMwpNC",
               defaultMessage: "Content",
               description: "page content"
             }),
@@ -99,11 +102,13 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
         disabled={disabled}
         initialState={true}
         title={intl.formatMessage({
+          id: "TGX4T1",
           defaultMessage: "Search Engine Preview"
         })}
         fields={[
           {
             displayName: intl.formatMessage({
+              id: "HlEpii",
               defaultMessage: "Search Engine Title"
             }),
             name: PageTranslationInputFieldName.seoTitle,
@@ -113,6 +118,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
           },
           {
             displayName: intl.formatMessage({
+              id: "US3IPU",
               defaultMessage: "Search Engine Description"
             }),
             name: PageTranslationInputFieldName.seoDescription,
@@ -140,6 +146,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
                 id: attrVal.attributeValue.id,
                 displayName: intl.formatMessage(
                   {
+                    id: "PajjqE",
                     defaultMessage: "Attribute {number}",
                     description: "attribute list"
                   },

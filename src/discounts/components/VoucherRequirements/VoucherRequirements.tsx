@@ -51,10 +51,12 @@ const VoucherRequirements = ({
     errors
   );
   const minimalOrderValueText = intl.formatMessage({
+    id: "bh9+8A",
     defaultMessage: "Minimal order value",
     description: "voucher requirement"
   });
   const minimalQuantityText = intl.formatMessage({
+    id: "XT/ZvF",
     defaultMessage: "Minimum quantity of items",
     description: "voucher requirement"
   });
@@ -62,6 +64,7 @@ const VoucherRequirements = ({
   const requirementsPickerChoices = [
     {
       label: intl.formatMessage({
+        id: "u/hkKO",
         defaultMessage: "None",
         description: "voucher has no requirements"
       }),
@@ -81,6 +84,7 @@ const VoucherRequirements = ({
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "yhv3HX",
           defaultMessage: "Minimum Requirements",
           description: "voucher requirements, header"
         })}
@@ -99,7 +103,10 @@ const VoucherRequirements = ({
         {data.requirementsPicker === RequirementsPicker.ORDER ? (
           <>
             <Typography variant="caption">
-              <FormattedMessage defaultMessage="Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency" />
+              <FormattedMessage
+                id="K+ROF8"
+                defaultMessage="Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
+              />
             </Typography>
             <div className={classes.tableContainer}>
               <ResponsiveTable className={classes.table}>
@@ -111,6 +118,7 @@ const VoucherRequirements = ({
                   <TableCell className={classes.colName}>
                     <span>
                       <FormattedMessage
+                        id="Hj3T7P"
                         defaultMessage="Channel name"
                         description="column title"
                       />
@@ -119,6 +127,7 @@ const VoucherRequirements = ({
                   <TableCell className={classes.colType}>
                     <span>
                       <FormattedMessage
+                        id="GVinbz"
                         defaultMessage="Value"
                         description="column title"
                       />
@@ -171,7 +180,10 @@ const VoucherRequirements = ({
                     () => (
                       <TableRow>
                         <TableCell colSpan={numberOfColumns}>
-                          <FormattedMessage defaultMessage="No channels found" />
+                          <FormattedMessage
+                            id="/glQgs"
+                            defaultMessage="No channels found"
+                          />
                         </TableCell>
                       </TableRow>
                     )

@@ -11,14 +11,17 @@ import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 const messages = defineMessages({
   descriptionCharacterLimit: {
+    id: "ChAjJu",
     defaultMessage: "{numberOfCharacters} of {maxCharacters} characters",
     description: "character limit"
   },
   descriptionPlaceholder: {
+    id: "FkRNk+",
     defaultMessage: "Description of a shipping zone.",
     description: "field placeholder"
   },
   name: {
+    id: "YpukUN",
     defaultMessage: "Shipping zone name",
     description: "label"
   }

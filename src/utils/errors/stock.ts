@@ -10,6 +10,7 @@ import getProductErrorMessage from "./product";
 
 const messages = defineMessages({
   slugUnique: {
+    id: "QFBjlV",
     defaultMessage:
       "Stock for this warehouse already exists for this product variant",
     description: "error message"

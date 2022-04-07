@@ -43,6 +43,7 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
       <PageHeader
         title={intl.formatMessage(
           {
+            id: "XitW/z",
             defaultMessage:
               'Translation Category "{categoryName}" - {languageCode}'
           },
@@ -66,6 +67,7 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
         fields={[
           {
             displayName: intl.formatMessage({
+              id: "vEYtiq",
               defaultMessage: "Category Name"
             }),
             name: TranslationInputFieldName.name,
@@ -93,11 +95,13 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
         disabled={disabled}
         initialState={true}
         title={intl.formatMessage({
+          id: "TGX4T1",
           defaultMessage: "Search Engine Preview"
         })}
         fields={[
           {
             displayName: intl.formatMessage({
+              id: "HlEpii",
               defaultMessage: "Search Engine Title"
             }),
             name: TranslationInputFieldName.seoTitle,
@@ -107,6 +111,7 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
           },
           {
             displayName: intl.formatMessage({
+              id: "US3IPU",
               defaultMessage: "Search Engine Description"
             }),
             name: TranslationInputFieldName.seoDescription,

@@ -65,6 +65,7 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = ({ id }) => {
     <>
       <WindowTitle
         title={intl.formatMessage({
+          id: "JVaz1C",
           defaultMessage: "Create Webhook",
           description: "window title"
         })}

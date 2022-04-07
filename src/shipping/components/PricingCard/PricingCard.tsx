@@ -51,6 +51,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "TnTi/a",
           defaultMessage: "Pricing",
           description: "pricing card title"
         })}
@@ -58,6 +59,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({
       <CardContent className={classes.pricingContent}>
         <Typography variant="caption" className={classes.caption}>
           {intl.formatMessage({
+            id: "VvA7ai",
             defaultMessage:
               "Channels that don’t have assigned prices will use their parent channel to define the price. Price will be converted to channel’s currency",
             description: "info text"
@@ -68,6 +70,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({
             <TableCell className={classes.colName}>
               <span>
                 <FormattedMessage
+                  id="Hj3T7P"
                   defaultMessage="Channel name"
                   description="column title"
                 />
@@ -76,6 +79,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({
             <TableCell className={classes.colType}>
               <span>
                 <FormattedMessage
+                  id="1shOIS"
                   defaultMessage="Price"
                   description="column title"
                 />
@@ -96,6 +100,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({
                       disabled={disabled}
                       error={!!error}
                       label={intl.formatMessage({
+                        id: "1shOIS",
                         defaultMessage: "Price",
                         description: "column title"
                       })}

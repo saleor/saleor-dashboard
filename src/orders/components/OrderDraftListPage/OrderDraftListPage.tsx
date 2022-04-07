@@ -64,6 +64,7 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
           hasLimits(limits, "orders") &&
           intl.formatMessage(
             {
+              id: "w2eTzO",
               defaultMessage: "{count}/{max} orders",
               description: "placed orders counter"
             },
@@ -80,6 +81,7 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
           onClick={onAdd}
         >
           <FormattedMessage
+            id="LshEVn"
             defaultMessage="Create order"
             description="button"
           />
@@ -89,6 +91,7 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
       <Card>
         <FilterBar
           allTabLabel={intl.formatMessage({
+            id: "7a1S4K",
             defaultMessage: "All Drafts",
             description: "tab name"
           })}
@@ -96,6 +99,7 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
           filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
+            id: "NJEe12",
             defaultMessage: "Search Draft"
           })}
           tabs={tabs}

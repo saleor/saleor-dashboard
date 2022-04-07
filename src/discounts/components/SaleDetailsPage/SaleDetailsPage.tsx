@@ -212,9 +212,9 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   >
                     {intl.formatMessage(
                       {
+                        id: "ppLwx3",
                         defaultMessage: "Categories ({quantity})",
-                        description: "number of categories",
-                        id: "saleDetailsPageCategoriesQuantity"
+                        description: "number of categories"
                       },
                       {
                         quantity: maybe(
@@ -230,9 +230,9 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   >
                     {intl.formatMessage(
                       {
+                        id: "QdGzUf",
                         defaultMessage: "Collections ({quantity})",
-                        description: "number of collections",
-                        id: "saleDetailsPageCollectionsQuantity"
+                        description: "number of collections"
                       },
                       {
                         quantity: maybe(
@@ -249,9 +249,9 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   >
                     {intl.formatMessage(
                       {
+                        id: "bNw8PM",
                         defaultMessage: "Products ({quantity})",
-                        description: "number of products",
-                        id: "saleDetailsPageProductsQuantity"
+                        description: "number of products"
                       },
                       {
                         quantity: maybe(
@@ -268,9 +268,9 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   >
                     {intl.formatMessage(
                       {
+                        id: "HVlMK2",
                         defaultMessage: "Variants ({quantity})",
-                        description: "number of variants",
-                        id: "saleDetailsPageVariantsQuantity"
+                        description: "number of variants"
                       },
                       {
                         quantity: maybe(

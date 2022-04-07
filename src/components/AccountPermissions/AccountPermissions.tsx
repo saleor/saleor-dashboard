@@ -91,6 +91,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "Fbr4Vp",
           defaultMessage: "Permissions",
           description: "dialog header"
         })}
@@ -100,6 +101,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
           <CardContent>
             <Typography variant="body2">
               {intl.formatMessage({
+                id: "MVU6ol",
                 defaultMessage:
                   "This groups permissions exceeds your own. You are able only to manage permissions that you have.",
                 description: "exceeded permissions description"
@@ -110,6 +112,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
           <CardContent>
             <Typography variant="body2">
               {intl.formatMessage({
+                id: "6cS4Rd",
                 defaultMessage: "Available permissions",
                 description: "card section description"
               })}
@@ -191,6 +194,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
                         secondary={
                           perm.lastSource &&
                           intl.formatMessage({
+                            id: "VmMDLN",
                             defaultMessage:
                               "This group is last source of that permission",
                             description: "permission list item description"

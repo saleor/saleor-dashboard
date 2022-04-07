@@ -24,19 +24,29 @@ export const ChannelStatus: React.FC<ChannelStatusProps> = ({
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "TSJRiZ",
           defaultMessage: "Channel Status",
           description: "channel status title"
         })}
       />
       <CardContent>
         <Typography variant="caption" className={classes.label}>
-          <FormattedMessage defaultMessage="Status" description="status" />
+          <FormattedMessage
+            id="+tIkAe"
+            defaultMessage="Status"
+            description="status"
+          />
         </Typography>
         <Typography>
           {isActive ? (
-            <FormattedMessage defaultMessage="Active" description="active" />
+            <FormattedMessage
+              id="QiN4hv"
+              defaultMessage="Active"
+              description="active"
+            />
           ) : (
             <FormattedMessage
+              id="X8qjg3"
               defaultMessage="Inactive"
               description="inactive"
             />
@@ -49,11 +59,13 @@ export const ChannelStatus: React.FC<ChannelStatusProps> = ({
         >
           {isActive ? (
             <FormattedMessage
+              id="MHVglr"
               defaultMessage="Deactivate"
               description="deactivate"
             />
           ) : (
             <FormattedMessage
+              id="MQwT1W"
               defaultMessage="Activate"
               description="activate"
             />

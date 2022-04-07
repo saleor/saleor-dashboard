@@ -146,6 +146,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
             title={
               !pageExists
                 ? intl.formatMessage({
+                    id: "gr53VQ",
                     defaultMessage: "Create Page",
                     description: "page header"
                   })
@@ -174,6 +175,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 title={data.seoTitle}
                 titlePlaceholder={data.title}
                 helperText={intl.formatMessage({
+                  id: "jZbT0O",
                   defaultMessage:
                     "Add search engine title and description to make this page easier to find"
                 })}
@@ -208,11 +210,13 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 disabled={loading}
                 messages={{
                   hiddenLabel: intl.formatMessage({
+                    id: "/TK7QD",
                     defaultMessage: "Hidden",
                     description: "page label"
                   }),
                   hiddenSecondLabel: intl.formatMessage(
                     {
+                      id: "GZgjK7",
                       defaultMessage: "will be visible from {date}",
                       description: "page"
                     },
@@ -221,6 +225,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                     }
                   ),
                   visibleLabel: intl.formatMessage({
+                    id: "X26jCC",
                     defaultMessage: "Visible",
                     description: "page label"
                   })

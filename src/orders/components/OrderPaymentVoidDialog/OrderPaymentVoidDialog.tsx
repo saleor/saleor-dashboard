@@ -36,13 +36,17 @@ const OrderPaymentVoidDialog: React.FC<OrderPaymentVoidDialogProps> = ({
     <Dialog onClose={onClose} open={open}>
       <DialogTitle>
         <FormattedMessage
+          id="KszPFx"
           defaultMessage="Void Payment"
           description="dialog header"
         />
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <FormattedMessage defaultMessage="Are you sure you want to void this payment?" />
+          <FormattedMessage
+            id="euRfu+"
+            defaultMessage="Are you sure you want to void this payment?"
+          />
         </DialogContentText>
         {errors.length > 0 && (
           <>

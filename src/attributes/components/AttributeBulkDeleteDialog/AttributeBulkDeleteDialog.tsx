@@ -28,6 +28,7 @@ const AttributeBulkDeleteDialog: React.FC<AttributeBulkDeleteDialogProps> = ({
       onClose={onClose}
       onConfirm={onConfirm}
       title={intl.formatMessage({
+        id: "rKf4LU",
         defaultMessage: "Delete attributes",
         description: "dialog title"
       })}
@@ -35,6 +36,7 @@ const AttributeBulkDeleteDialog: React.FC<AttributeBulkDeleteDialogProps> = ({
     >
       <DialogContentText>
         <FormattedMessage
+          id="lG/MDw"
           defaultMessage="{counter,plural,one{Are you sure you want to delete this attribute?} other{Are you sure you want to delete {displayQuantity} attributes?}}"
           description="dialog content"
           values={{

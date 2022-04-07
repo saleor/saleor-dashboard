@@ -128,6 +128,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
             </Backlink>
             <PageHeader
               title={intl.formatMessage({
+                id: "PsclSa",
                 defaultMessage: "Create Voucher",
                 description: "page header"
               })}

@@ -49,9 +49,9 @@ const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
     <Dialog onClose={onClose} maxWidth="sm" fullWidth open={open}>
       <DialogTitle>
         <FormattedMessage
+          id="0OtaXa"
           defaultMessage="Create Menu"
           description="dialog header"
-          id="menuCreateDialogHeader"
         />
       </DialogTitle>
       <Form initial={initialForm} onSubmit={onConfirm}>
@@ -64,8 +64,8 @@ const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
                 fullWidth
                 helperText={getMenuErrorMessage(formErrors.name, intl)}
                 label={intl.formatMessage({
-                  defaultMessage: "Menu Title",
-                  id: "menuCreateDialogMenuTitleLabel"
+                  id: "jhh/D6",
+                  defaultMessage: "Menu Title"
                 })}
                 name={"name" as keyof MenuCreateDialogFormData}
                 value={data.name}

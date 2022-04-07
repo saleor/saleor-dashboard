@@ -89,6 +89,7 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "DovGIa",
             defaultMessage: "Permission Group Deleted"
           })
         });

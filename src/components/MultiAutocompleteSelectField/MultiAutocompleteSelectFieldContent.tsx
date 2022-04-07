@@ -235,6 +235,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
               >
                 <AddIcon className={classes.addIcon} color="primary" />
                 <FormattedMessage
+                  id="U2WgwW"
                   defaultMessage="Add new value: {value}"
                   description="add custom select input option"
                   values={{
@@ -311,7 +312,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
           component="div"
           data-test-id="multi-autocomplete-select-no-options"
         >
-          <FormattedMessage defaultMessage="No results found" />
+          <FormattedMessage id="hX5PAb" defaultMessage="No results found" />
         </MenuItem>
       )}
       {(hasMore || loading) && (

@@ -31,6 +31,7 @@ const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
   let errorMessage;
   if (error?.code === PermissionGroupErrorCode.OUT_OF_SCOPE_PERMISSION) {
     errorMessage = intl.formatMessage({
+      id: "O22NIZ",
       defaultMessage:
         "Cant's delete group which is out of your permission scope",
       description: "deletion error message"
@@ -46,6 +47,7 @@ const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
       onClose={onClose}
       onConfirm={onConfirm}
       title={intl.formatMessage({
+        id: "L6+p8a",
         defaultMessage: "Delete permission group",
         description: "dialog title"
       })}
@@ -53,6 +55,7 @@ const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
     >
       <DialogContentText>
         <FormattedMessage
+          id="sR0urA"
           defaultMessage="Are you sure you want to delete {name}?"
           description="dialog content"
           values={{

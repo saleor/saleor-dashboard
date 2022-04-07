@@ -69,6 +69,7 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
           </Backlink>
           <PageHeader
             title={intl.formatMessage({
+              id: "GjH9uy",
               defaultMessage: "Create New App",
               description: "header"
             })}
@@ -90,10 +91,12 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
               permissionsExceeded={false}
               onChange={change}
               fullAccessLabel={intl.formatMessage({
+                id: "D4nzdD",
                 defaultMessage: "Grant this app full access to the store",
                 description: "checkbox label"
               })}
               description={intl.formatMessage({
+                id: "flP8Hj",
                 defaultMessage:
                   "Expand or restrict app permissions to access certain part of Saleor system.",
                 description: "card description"

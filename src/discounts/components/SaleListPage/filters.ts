@@ -24,38 +24,47 @@ export interface SaleListFilterOpts {
 
 const messages = defineMessages({
   active: {
+    id: "AnqH4p",
     defaultMessage: "Active",
     description: "sale status"
   },
   channel: {
+    id: "1BNKCZ",
     defaultMessage: "Channel",
     description: "sale channel"
   },
   expired: {
+    id: "RBxYJf",
     defaultMessage: "Expired",
     description: "sale status"
   },
   fixed: {
+    id: "XDBeA+",
     defaultMessage: "Fixed amount",
     description: "discount type"
   },
   percentage: {
+    id: "s17U7u",
     defaultMessage: "Percentage",
     description: "discount type"
   },
   scheduled: {
+    id: "BanAhF",
     defaultMessage: "Scheduled",
     description: "sale status"
   },
   started: {
+    id: "zjHH6b",
     defaultMessage: "Started",
     description: "sale start date"
   },
   status: {
+    id: "SpngiS",
     defaultMessage: "Status",
     description: "sale status"
   },
   type: {
+    id: "KHZlmi",
     defaultMessage: "Discount Type"
   }
 });
