@@ -1,6 +1,8 @@
 /// <reference types="cypress"/>
 /// <reference types="../../support"/>
 
+import "cypress-iframe";
+
 import faker from "faker";
 
 import {
@@ -73,27 +75,27 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("should be able to create category. TC: SALEOR_0201", () => {
-      const categoryName = `${startsWith}${faker.datatype.number()}`;
+    // it("should be able to create category. TC: SALEOR_0201", () => {
+    //   const categoryName = `${startsWith}${faker.datatype.number()}`;
 
-      cy.visit(urlList.categories)
-        .get(CATEGORIES_LIST.addCategoryButton)
-        .click();
-      createCategory({ name: categoryName, description: categoryName })
-        .its("response.body.data.categoryCreate.category")
-        .then(newCategory => {
-          cy.log("id tworzonj katoegorii");
-          cy.log(newCategory.id);
-          cy.log(newCategory);
+    //   cy.visit(urlList.categories)
+    //     .get(CATEGORIES_LIST.addCategoryButton)
+    //     .click();
+    //   createCategory({ name: categoryName, description: categoryName })
+    //     .its("response.body.data.categoryCreate.category")
+    //     .then(newCategory => {
+    //       cy.log("id tworzonj katoegorii");
+    //       cy.log(newCategory.id);
+    //       cy.log(newCategory);
 
-          getCategory(newCategory.id);
-        })
-        .then(newCategory => {
-          expect(newCategory.name).to.eq(categoryName);
-          const descriptionResp = JSON.parse(newCategory.description);
-          expect(descriptionResp.blocks[0].data.text).to.eq(categoryName);
-        });
-    });
+    //       getCategory(newCategory.id);
+    //     })
+    //     .then(newCategory => {
+    //       expect(newCategory.name).to.eq(categoryName);
+    //       const descriptionResp = JSON.parse(newCategory.description);
+    //       expect(descriptionResp.blocks[0].data.text).to.eq(categoryName);
+    //     });
+    // });
 
     // it("should be able to create category as subcategory. TC: SALEOR_0202", () => {
     //   const categoryName = `${startsWith}${faker.datatype.number()}`;
@@ -196,9 +198,11 @@ filterTests({ definedTags: ["all"] }, () => {
       createCategory({
         name: firstCategoryName,
         description: firstCategoryName
-      }).then(categoryResp => {
-        firstCategory = categoryResp;
-      });
+      })
+        .its("response.body.data.categoryCreate.category")
+        .then(categoryResp => {
+          firstCategory = categoryResp;
+        });
       visitAddPage();
       createCategory({
         name: secondCategoryName,
@@ -207,10 +211,8 @@ filterTests({ definedTags: ["all"] }, () => {
         .its("response.body.data.categoryCreate.category")
         .then(categoryResp => {
           secondCategory = categoryResp;
-          cy.log("po utworzeniu drugiej kategorii");
           cy.visit(urlList.categories)
             .searchInTable(startsWith)
-            .get(categoryRow(firstCategory.id))
             .find(BUTTON_SELECTORS.checkbox)
             .click()
             .get(categoryRow(secondCategory.id))
@@ -222,6 +224,7 @@ filterTests({ definedTags: ["all"] }, () => {
             .get(BUTTON_SELECTORS.submit)
             .click()
             .waitForRequestAndCheckIfNoErrors("@CategoryBulkDelete");
+          cy.log(firstCategory.id);
           getCategory(firstCategory.id).should("be.null");
           getCategory(secondCategory.id).should("be.null");
         });

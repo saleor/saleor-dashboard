@@ -21,6 +21,7 @@ export function createCheckout({
     billingAddress,
     "billingAddress"
   );
+  cy.log("w funkcji tworzenia");
 
   const availableCollectionPointsLines = getValueWithDefault(
     returnAvailableCollectionPoints,
@@ -33,7 +34,7 @@ export function createCheckout({
   );
 
   const emailLine = getValueWithDefault(email, `email: "${email}"`);
-
+  cy.log("przed mutacją");
   const mutation = `mutation{
     checkoutCreate(input:{
       channel:"${channelSlug}"
@@ -72,6 +73,8 @@ export function createCheckout({
       }
     }
   }`;
+
+  cy.log(mutation);
   return cy
     .sendRequestWithQuery(mutation, auth)
     .its("body.data.checkoutCreate");
