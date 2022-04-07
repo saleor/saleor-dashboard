@@ -1,5 +1,4 @@
 import {
-  Button,
   ButtonGroup,
   ButtonGroupProps,
   ClickAwayListener,
@@ -10,6 +9,7 @@ import {
   Popper
 } from "@material-ui/core";
 import { ArrowDropDown as ArrowDropDownIcon } from "@material-ui/icons";
+import Button from "@saleor/components/Button";
 import React from "react";
 
 import { useStyles } from "./styles";
@@ -68,7 +68,7 @@ export const ButtonWithSelect: React.FC<ButtonWithSelectProps> = ({
         aria-label="button with select"
         {...props}
       >
-        <Button href={href} style={{ width: "100%" }}>
+        <Button variant="primary" href={href} style={{ width: "100%" }}>
           {children}
         </Button>
         {options.length > 0 && (
