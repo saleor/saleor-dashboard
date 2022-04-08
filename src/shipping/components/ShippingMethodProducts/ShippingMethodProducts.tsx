@@ -44,7 +44,7 @@ const useStyles = makeStyles(
 );
 
 export interface ShippingMethodProductsProps
-  extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">>,
+  extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
     ListActions {
   products: RelayToFlat<
     ShippingZoneQuery["shippingZone"]["shippingMethods"][0]["excludedProducts"]

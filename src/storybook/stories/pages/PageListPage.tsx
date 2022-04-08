@@ -15,7 +15,7 @@ import Decorator from "../../Decorator";
 
 const props: PageListPageProps = {
   ...listActionsProps,
-  ...pageListProps.defaultHref,
+  ...pageListProps.default,
   ...sortPageProps,
   pages: pageList,
   sort: {

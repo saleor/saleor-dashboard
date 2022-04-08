@@ -17,7 +17,7 @@ import React from "react";
 import Decorator from "../../Decorator";
 
 const props: AttributeListPageProps = {
-  ...pageListProps.defaultHref,
+  ...pageListProps.default,
   ...listActionsProps,
   ...tabPageProps,
   ...searchPageProps,

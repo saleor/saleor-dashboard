@@ -14,7 +14,7 @@ import AppsListPage, { AppsListPageProps } from "./AppsListPage";
 
 const props: AppsListPageProps = {
   ...listActionsProps,
-  ...pageListProps.defaultHref,
+  ...pageListProps.default,
   ...searchPageProps,
   ...sortPageProps,
   ...tabPageProps,
@@ -34,7 +34,6 @@ const props: AppsListPageProps = {
   onInstalledAppRemove: () => undefined,
   onNextPage: () => undefined,
   onPreviousPage: () => undefined,
-  onRowClick: () => undefined,
   onRowAboutClick: () => undefined
 };
 

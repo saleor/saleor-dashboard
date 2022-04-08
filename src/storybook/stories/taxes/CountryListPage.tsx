@@ -9,7 +9,7 @@ import Decorator from "../../Decorator";
 import { countries } from "./fixtures";
 
 const props: CountryListPageProps = {
-  ...pageListProps.defaultHref,
+  ...pageListProps.default,
   onBack: () => undefined,
   onSubmit: () => undefined,
   onTaxFetch: () => undefined,

@@ -59,7 +59,7 @@ export enum SaleDetailsPageTab {
 }
 
 export interface SaleDetailsPageProps
-  extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">>,
+  extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
     TabListActions<
       | "categoryListToolbar"
       | "collectionListToolbar"

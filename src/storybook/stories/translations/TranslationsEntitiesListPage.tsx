@@ -10,7 +10,7 @@ import TranslationsEntitiesListPage, {
 import Decorator from "../../Decorator";
 
 const props: TranslationsEntitiesListPageProps = {
-  ...pageListProps.defaultHref,
+  ...pageListProps.default,
   ...searchPageProps,
   children: null,
   filters: {

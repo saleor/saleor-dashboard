@@ -20,7 +20,7 @@ const channels = createChannelsDataWithDiscountPrice(
 
 const props: VoucherDetailsPageProps = {
   ...listActionsProps,
-  ...pageListProps.defaultHref,
+  ...pageListProps.default,
   activeTab: VoucherDetailsPageTab.products,
   allChannelsCount: channels.length,
   categoryListToolbar: null,

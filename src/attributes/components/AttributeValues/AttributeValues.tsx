@@ -25,7 +25,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface AttributeValuesProps
-  extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">> {
+  extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">> {
   disabled: boolean;
   values: RelayToFlat<AttributeValueListFragment>;
   onValueAdd: () => void;

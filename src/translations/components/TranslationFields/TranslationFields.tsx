@@ -26,7 +26,7 @@ import TranslationFieldsShort from "./TranslationFieldsShort";
 
 type Pagination = Pick<
   ListProps,
-  Exclude<keyof ListProps, "onRowClick" | "disabled">
+  Exclude<keyof ListProps, "getRowHref" | "disabled">
 >;
 
 export interface TranslationFieldsProps {

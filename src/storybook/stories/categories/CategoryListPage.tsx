@@ -18,7 +18,6 @@ import Decorator from "../../Decorator";
 const categoryTableProps: CategoryTableProps = {
   categories,
   onAdd: undefined,
-  onRowClick: () => undefined,
   ...listActionsProps,
   ...tabPageProps,
   ...pageListProps.default,

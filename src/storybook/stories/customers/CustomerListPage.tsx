@@ -20,7 +20,7 @@ import { MockedUserProvider } from "./MockedUserProvider";
 const props: CustomerListPageProps = {
   ...filterPageProps,
   ...listActionsProps,
-  ...pageListProps.defaultHref,
+  ...pageListProps.default,
   ...searchPageProps,
   ...sortPageProps,
   ...tabPageProps,
