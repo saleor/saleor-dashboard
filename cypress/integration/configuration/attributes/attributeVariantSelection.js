@@ -1,35 +1,30 @@
 /// <reference types="cypress"/>
 /// <reference types="../../../support"/>
 
-import { PRODUCT_DETAILS } from "../../../elements/catalog/products/product-details";
-import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
-import { productDetailsUrl } from "../../../fixtures/urlList";
-import { createAttribute } from "../../../support/api/requests/Attribute";
+import faker from "faker";
+
+import { addVariantUrl } from "../../../fixtures/urlList";
 import { createCategory } from "../../../support/api/requests/Category";
 import { getVariant } from "../../../support/api/requests/Product";
-import {
-  createTypeProduct,
-  productAttributeAssignmentUpdate
-} from "../../../support/api/requests/ProductType";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import {
   createProductInChannelWithoutVariants,
   deleteProductsStartsWith
 } from "../../../support/api/utils/products/productsUtils";
+import { createProductTypeWithNewVariantSelectionAttribute } from "../../../support/api/utils/productTypeUtils";
 import filterTests from "../../../support/filterTests";
 import { fillUpVariantDetails } from "../../../support/pages/catalog/products/VariantsPage";
 
 filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
-  describe("Create variant with variant selection attribute", () => {
+  describe("As an admin I want to use attributes in variant selection", () => {
     const startsWith = "VarSel";
 
     const attributesTypes = [
-      "DROPDOWN",
-      "MULTISELECT",
-      "BOOLEAN",
-      "NUMERIC",
-      "SWATCH",
-      "DATE"
+      { key: "DROPDOWN", TC: "SALEOR_0534" },
+      { key: "MULTISELECT", TC: "SALEOR_0535" },
+      { key: "BOOLEAN", TC: "SALEOR_0536" },
+      { key: "NUMERIC", TC: "SALEOR_0537" },
+      { key: "SWATCH", TC: "SALEOR_0538" }
     ];
     let channel;
     let category;
@@ -49,34 +44,22 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
     });
 
     attributesTypes.forEach(attributeType => {
-      it(`should create variant with ${attributeType} attribute`, () => {
-        const name = `${startsWith}${attributeType}`;
-        const inputType = attributeType;
+      it(`should create variant with ${attributeType.key} attribute. TC: ${attributeType.TC}`, () => {
+        const name = `${startsWith}${
+          attributeType.key
+        }${faker.datatype.number()}`;
+        const inputType = attributeType.key;
         const attributeValues = ["1", "2"];
         let productType;
-        let attribute;
 
-        createAttribute({
+        createProductTypeWithNewVariantSelectionAttribute({
           name,
           inputType,
           attributeValues
         })
-          .then(attributeResp => {
-            attribute = attributeResp;
-            createTypeProduct({
-              name,
-              attributeId: attribute.id,
-              productAttributes: false
-            });
-          })
-          .then(productTypeResp => {
+          .then(({ productType: productTypeResp }) => {
             productType = productTypeResp;
-            productAttributeAssignmentUpdate({
-              productTypeId: productType.id,
-              attributeId: attribute.id
-            });
-          })
-          .then(() => {
+
             createProductInChannelWithoutVariants({
               categoryId: category.id,
               productTypeId: productType.id,
@@ -86,19 +69,17 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
           })
           .then(productResp => {
             product = productResp;
-            cy.visit(productDetailsUrl(product.id))
-              .get(PRODUCT_DETAILS.addVariantsButton)
-              .click()
-              .get(PRODUCT_DETAILS.createSingleVariantCheckbox)
-              .click()
-              .get(BUTTON_SELECTORS.submit)
-              .click()
-              .addAliasToGraphRequest("VariantCreate");
+
+            cy.visit(addVariantUrl(product.id)).addAliasToGraphRequest(
+              "VariantCreate"
+            );
+
             fillUpVariantDetails({
               sku: name,
               attributeName: attributeValues[0],
-              attributeType
+              attributeType: inputType
             });
+
             cy.wait("@VariantCreate");
           })
           .then(({ response }) => {
@@ -108,6 +89,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
           })
           .then(({ attributes }) => {
             expect(attributes[0].attribute.inputType).to.eq(inputType);
+            cy.confirmationMessageShouldAppear();
           });
       });
     });

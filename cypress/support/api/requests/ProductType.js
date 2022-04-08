@@ -78,7 +78,7 @@ export function deleteProductType(productTypeId) {
 export function productAttributeAssignmentUpdate({
   productTypeId,
   attributeId,
-  variantSelection = true
+  variantSelection = false
 }) {
   const mutation = `mutation {
     productAttributeAssignmentUpdate(
