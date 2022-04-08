@@ -50,10 +50,14 @@ const Link: React.FC<LinkProps> = props => {
     onClick,
     disabled,
     href,
+    target,
+    rel,
     ...linkProps
   } = props;
 
   const classes = useStyles(props);
+
+  const opensNewTab = target === "_blank";
 
   const commonLinkProps = {
     className: classNames(className, {
@@ -71,6 +75,8 @@ const Link: React.FC<LinkProps> = props => {
       event.preventDefault();
       onClick(event);
     },
+    target,
+    rel: rel ?? (opensNewTab && isExternalURL) ? "noopener noreferer" : "",
     ...linkProps,
   };
 
