@@ -84,25 +84,27 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     null,
     OrderFulfillStockInput[]
   >(
-    (getToFulfillOrderLines(order?.lines) as OrderFulfillLineFragment[]).map(line => ({
-      data: null,
-      id: line.id,
-      label: line.variant?.attributes
-        .map(attribute =>
-          attribute.values
-            .map(attributeValue => attributeValue.name)
-            .join(" , ")
-        )
-        .join(" / "),
-      value: line?.variant?.preorder
-        ? null
-        : [
-            {
-              quantity: line.quantityToFulfill,
-              warehouse: warehouse?.id
-            }
-          ]
-    }))
+    (getToFulfillOrderLines(order?.lines) as OrderFulfillLineFragment[]).map(
+      line => ({
+        data: null,
+        id: line.id,
+        label: line.variant?.attributes
+          .map(attribute =>
+            attribute.values
+              .map(attributeValue => attributeValue.name)
+              .join(" , ")
+          )
+          .join(" / "),
+        value: line?.variant?.preorder
+          ? null
+          : [
+              {
+                quantity: line.quantityToFulfill,
+                warehouse: warehouse?.id
+              }
+            ]
+      })
+    )
   );
 
   const [
