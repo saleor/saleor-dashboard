@@ -15,10 +15,6 @@ import OrderChangeWarehouseDialog from "@saleor/orders/components/OrderChangeWar
 import { OrderCustomerAddressesEditDialogOutput } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/types";
 import OrderFulfillmentApproveDialog from "@saleor/orders/components/OrderFulfillmentApproveDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
-import {
-  getToFulfillOrderLines,
-  isLineAvailableInWarehouse
-} from "@saleor/orders/utils/data";
 import { PartialMutationProviderOutput } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
@@ -48,6 +44,7 @@ import {
   OrderUrlQueryParams
 } from "../../../urls";
 import { isAnyAddressEditModalOpen } from "../OrderDraftDetails";
+import { useDefaultWarehouse } from "./useDefaultWarehouse";
 
 interface OrderNormalDetailsProps {
   id: string;
@@ -75,10 +72,6 @@ interface OrderNormalDetailsProps {
   updatePrivateMetadataOpts: any;
   openModal: any;
   closeModal: any;
-}
-interface WarehousesAvailibility {
-  warehouse: WarehouseFragment;
-  linesAvailable: number;
 }
 
 export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
@@ -122,31 +115,10 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
     WarehouseFragment
   >(null);
 
-  React.useEffect(() => {
-    const warehousesAvailability: WarehousesAvailibility[] = warehouses?.map(
-      warehouse => {
-        if (!order?.lines) {
-          return undefined;
-        }
-        const linesToFulfill = getToFulfillOrderLines(order.lines);
-
-        const linesAvailable = linesToFulfill.filter(line =>
-          isLineAvailableInWarehouse(line, warehouse)
-        ).length;
-
-        return {
-          warehouse,
-          linesAvailable
-        };
-      }
-    );
-    const defaultWarehouse = order?.lines
-      ? warehousesAvailability?.reduce((prev, curr) =>
-          curr.linesAvailable > prev.linesAvailable ? curr : prev
-        ).warehouse
-      : undefined;
-    setFulfillmentWarehouse(defaultWarehouse);
-  }, [warehousesData, warehousesLoading, order]);
+  useDefaultWarehouse({ warehouses, order, setter: setFulfillmentWarehouse }, [
+    warehousesData,
+    warehousesLoading
+  ]);
 
   const {
     data: customerAddresses,

@@ -36,7 +36,7 @@ export interface OrderLineWithStockWarehouses {
   };
 }
 
-export function getToFulfillOrderLines(lines?: OrderFulfillLineFragment[]) {
+export function getToFulfillOrderLines(lines?: OrderLineStockDataFragment[]) {
   return lines?.filter(line => line.quantityToFulfill > 0) || [];
 }
 

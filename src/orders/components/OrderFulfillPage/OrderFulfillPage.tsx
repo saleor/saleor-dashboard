@@ -84,7 +84,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     null,
     OrderFulfillStockInput[]
   >(
-    getToFulfillOrderLines(order?.lines).map(line => ({
+    (getToFulfillOrderLines(order?.lines) as OrderFulfillLineFragment[]).map(line => ({
       data: null,
       id: line.id,
       label: line.variant?.attributes
