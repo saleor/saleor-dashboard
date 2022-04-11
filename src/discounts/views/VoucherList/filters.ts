@@ -99,8 +99,8 @@ export function getFilterVariables(
       params.status &&
       params.status.map(status => findValueInEnum(status, DiscountStatusEnum)),
     timesUsed: getGteLteVariables({
-      gte: parseInt(params.timesUsedFrom, 0),
-      lte: parseInt(params.timesUsedTo, 0)
+      gte: parseInt(params.timesUsedFrom, 10),
+      lte: parseInt(params.timesUsedTo, 10)
     })
   };
 }

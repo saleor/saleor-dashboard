@@ -101,7 +101,7 @@ function useForm<T extends FormData, TErrors>(
   const [errors, setErrors] = useState<FormErrors<T>>({});
   const [data, setData] = useStateFromProps(initialData, {
     mergeFunc: merge,
-    onRefresh: newData => handleRefresh(data, newData, handleSetChanged)
+    onRefresh: (data, newData) => handleRefresh(data, newData, handleSetChanged)
   });
 
   const basicFormDisableConditions = () => !hasChanged || disabled;
