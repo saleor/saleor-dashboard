@@ -1,5 +1,4 @@
 import {
-  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -13,6 +12,7 @@ import {
   Typography
 } from "@material-ui/core";
 import Debounce from "@saleor/components/Debounce";
+import Skeleton from "@saleor/components/Skeleton";
 import { OrderLineFragment } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
 import {
@@ -194,9 +194,7 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
             })}
           </RadioGroup>
         ) : (
-          <div className={classes.loader}>
-            <CircularProgress />
-          </div>
+          <Skeleton />
         )}
       </DialogTable>
       <ScrollShadow variant="bottom" show={bottomShadow}>

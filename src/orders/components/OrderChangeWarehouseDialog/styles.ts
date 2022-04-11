@@ -38,12 +38,6 @@ export const useStyles = makeStyles(
       fontSize: "14px",
       lineHeight: "160%",
       color: theme.palette.saleor.main[3]
-    },
-    loader: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      padding: theme.spacing(2)
     }
   }),
   { name: "OrderChangeWarehouseDialog" }
