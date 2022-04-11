@@ -7,13 +7,13 @@ import {
   OrderFulfillLineFragment,
   OrderFulfillStockInput,
   OrderLineFragment,
+  OrderLineStockDataFragment,
   OrderRefundDataQuery,
-  WarehouseFragment,
-  WarehouseListQuery
+  StockFragment,
+  WarehouseFragment
 } from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
-import { addressToAddressInput, WithOptional } from "@saleor/misc";
-import { RelayToFlat } from "@saleor/types";
+import { addressToAddressInput } from "@saleor/misc";
 
 import {
   LineItemData,
@@ -288,20 +288,8 @@ export const getVariantSearchAddress = (
   return { country: order.channel.defaultCountry.code as CountryCode };
 };
 
-export type OrderFulfillLineStockData = Pick<
-  OrderFulfillLineFragment,
-  "allocations" | "quantity" | "quantityToFulfill"
-> & { variant: Pick<OrderLineFragment["variant"], "stocks"> };
-
-export type Warehouse = WithOptional<
-  RelayToFlat<WarehouseListQuery["warehouses"]>[0],
-  "shippingZones"
->;
-
-export const getAllocatedQuantityForLine = <
-  T extends OrderFulfillLineStockData
->(
-  line: T,
+export const getAllocatedQuantityForLine = (
+  line: OrderLineStockDataFragment,
   warehouseId: string
 ) => {
   const warehouseAllocation = line.allocations.find(
@@ -310,11 +298,9 @@ export const getAllocatedQuantityForLine = <
   return warehouseAllocation?.quantity || 0;
 };
 
-export const getOrderLineAvailableQuantity = <
-  T extends OrderFulfillLineStockData
->(
-  line: T,
-  stock: OrderLineFragment["variant"]["stocks"][0]
+export const getOrderLineAvailableQuantity = (
+  line: OrderLineStockDataFragment,
+  stock: StockFragment
 ) => {
   if (!stock) {
     return 0;
@@ -336,13 +322,13 @@ export const getFulfillmentFormsetQuantity = (
 ) => formsetData.find(getById(line.id))?.value?.[0]?.quantity;
 
 export const getWarehouseStock = (
-  stocks: OrderLineFragment["variant"]["stocks"],
+  stocks: StockFragment[],
   warehouseId: string
 ) => stocks?.find(stock => stock.warehouse.id === warehouseId);
 
-export const isLineAvailableInWarehouse = <T extends OrderFulfillLineStockData>(
-  line: T,
-  warehouse: Warehouse
+export const isLineAvailableInWarehouse = (
+  line: OrderLineStockDataFragment,
+  warehouse: WarehouseFragment
 ) => {
   if (!line?.variant?.stocks) {
     return false;

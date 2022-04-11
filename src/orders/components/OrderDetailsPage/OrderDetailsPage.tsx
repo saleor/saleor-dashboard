@@ -12,7 +12,8 @@ import Skeleton from "@saleor/components/Skeleton";
 import {
   OrderDetailsFragment,
   OrderDetailsQuery,
-  OrderStatus
+  OrderStatus,
+  WarehouseFragment
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
@@ -22,7 +23,6 @@ import {
   makeStyles
 } from "@saleor/macaw-ui";
 import OrderChannelSectionCard from "@saleor/orders/components/OrderChannelSectionCard";
-import { Warehouse } from "@saleor/orders/utils/data";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
@@ -66,7 +66,7 @@ export interface OrderDetailsPageProps {
   }>;
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
-  selectedWarehouse?: Warehouse;
+  selectedWarehouse?: WarehouseFragment;
   onOrderLineAdd?: () => void;
   onOrderLineChange?: (
     id: string,

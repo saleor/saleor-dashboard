@@ -22,14 +22,15 @@ import {
   OrderFulfillDataQuery,
   OrderFulfillLineFragment,
   OrderFulfillStockInput,
-  ShopOrderSettingsFragment
+  ShopOrderSettingsFragment,
+  WarehouseFragment
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
 import { commonMessages } from "@saleor/intl";
 import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import { getToFulfillOrderLines, Warehouse } from "@saleor/orders/utils/data";
+import { getToFulfillOrderLines } from "@saleor/orders/utils/data";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -52,7 +53,7 @@ export interface OrderFulfillPageProps {
   errors: FulfillOrderMutation["orderFulfill"]["errors"];
   order: OrderFulfillDataQuery["order"];
   saveButtonBar: ConfirmButtonTransitionState;
-  warehouse: Warehouse;
+  warehouse: WarehouseFragment;
   shopSettings?: ShopOrderSettingsFragment;
   onBack: () => void;
   onSubmit: (data: OrderFulfillSubmitData) => SubmitPromise;

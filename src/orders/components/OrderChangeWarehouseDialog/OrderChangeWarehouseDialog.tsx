@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import Debounce from "@saleor/components/Debounce";
 import Skeleton from "@saleor/components/Skeleton";
-import { OrderLineFragment } from "@saleor/graphql";
+import { OrderLineFragment, WarehouseFragment } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
 import {
   Button,
@@ -25,10 +25,7 @@ import {
   SearchIcon,
   useElementScroll
 } from "@saleor/macaw-ui";
-import {
-  isLineAvailableInWarehouse,
-  Warehouse
-} from "@saleor/orders/utils/data";
+import { isLineAvailableInWarehouse } from "@saleor/orders/utils/data";
 import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
@@ -41,8 +38,8 @@ import { useStyles } from "./styles";
 export interface OrderChangeWarehouseDialogProps {
   open: boolean;
   lines: OrderLineFragment[];
-  currentWarehouse: Warehouse;
-  onConfirm: (warehouse: Warehouse) => void;
+  currentWarehouse: WarehouseFragment;
+  onConfirm: (warehouse: WarehouseFragment) => void;
   onClose();
 }
 

@@ -6,7 +6,8 @@ import {
   OrderUpdateMutation,
   OrderUpdateMutationVariables,
   useCustomerAddressesQuery,
-  useWarehouseListQuery
+  useWarehouseListQuery,
+  WarehouseFragment
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
@@ -16,8 +17,7 @@ import OrderFulfillmentApproveDialog from "@saleor/orders/components/OrderFulfil
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
 import {
   getToFulfillOrderLines,
-  isLineAvailableInWarehouse,
-  Warehouse
+  isLineAvailableInWarehouse
 } from "@saleor/orders/utils/data";
 import { PartialMutationProviderOutput } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -77,7 +77,7 @@ interface OrderNormalDetailsProps {
   closeModal: any;
 }
 interface WarehousesAvailibility {
-  warehouse: Warehouse;
+  warehouse: WarehouseFragment;
   linesAvailable: number;
 }
 
@@ -119,7 +119,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   const warehouses = mapEdgesToItems(warehousesData?.warehouses);
 
   const [fulfillmentWarehouse, setFulfillmentWarehouse] = React.useState<
-    Warehouse
+    WarehouseFragment
   >(null);
 
   React.useEffect(() => {

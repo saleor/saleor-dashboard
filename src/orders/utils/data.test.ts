@@ -542,6 +542,7 @@ describe("Get the total value of all replaced products", () => {
             {
               id: "stock_test_id1",
               warehouse: {
+                name: "warehouse_stock1",
                 id:
                   "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                 __typename: "Warehouse"
@@ -553,6 +554,7 @@ describe("Get the total value of all replaced products", () => {
             {
               id: "stock_test_id2",
               warehouse: {
+                name: "warehouse_stock2",
                 id:
                   "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                 __typename: "Warehouse"
@@ -633,6 +635,7 @@ describe("Get the total value of all replaced products", () => {
             {
               id: "stock_test_id1",
               warehouse: {
+                name: "warehouse_stock1",
                 id:
                   "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                 __typename: "Warehouse"
@@ -644,6 +647,7 @@ describe("Get the total value of all replaced products", () => {
             {
               id: "stock_test_id2",
               warehouse: {
+                name: "warehouse_stock2",
                 id:
                   "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                 __typename: "Warehouse"
@@ -725,6 +729,7 @@ describe("Get the total value of all replaced products", () => {
             {
               id: "stock_test_id1",
               warehouse: {
+                name: "warehouse_stock1",
                 id:
                   "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                 __typename: "Warehouse"
@@ -736,6 +741,7 @@ describe("Get the total value of all replaced products", () => {
             {
               id: "stock_test_id2",
               warehouse: {
+                name: "warehouse_stock2",
                 id:
                   "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                 __typename: "Warehouse"
@@ -823,6 +829,7 @@ describe("Get the total value of all replaced products", () => {
               {
                 id: "stock_test_id1",
                 warehouse: {
+                  name: "warehouse_stock1",
                   id:
                     "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                   __typename: "Warehouse"
@@ -834,6 +841,7 @@ describe("Get the total value of all replaced products", () => {
               {
                 id: "stock_test_id2",
                 warehouse: {
+                  name: "warehouse_stock2",
                   id:
                     "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                   __typename: "Warehouse"
@@ -920,6 +928,7 @@ describe("Get the total value of all replaced products", () => {
               {
                 id: "stock_test_id1",
                 warehouse: {
+                  name: "warehouse_stock1",
                   id:
                     "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                   __typename: "Warehouse"
@@ -931,6 +940,7 @@ describe("Get the total value of all replaced products", () => {
               {
                 id: "stock_test_id2",
                 warehouse: {
+                  name: "warehouse_stock2",
                   id:
                     "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                   __typename: "Warehouse"
@@ -1017,6 +1027,7 @@ describe("Get the total value of all replaced products", () => {
               {
                 id: "stock_test_id1",
                 warehouse: {
+                  name: "warehouse_stock1",
                   id:
                     "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                   __typename: "Warehouse"
@@ -1028,6 +1039,7 @@ describe("Get the total value of all replaced products", () => {
               {
                 id: "stock_test_id2",
                 warehouse: {
+                  name: "warehouse_stock2",
                   id:
                     "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                   __typename: "Warehouse"
@@ -1114,6 +1126,7 @@ describe("Get the total value of all replaced products", () => {
               {
                 id: "stock_test_id1",
                 warehouse: {
+                  name: "warehouse_stock1",
                   id:
                     "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                   __typename: "Warehouse"
@@ -1125,6 +1138,7 @@ describe("Get the total value of all replaced products", () => {
               {
                 id: "stock_test_id2",
                 warehouse: {
+                  name: "warehouse_stock2",
                   id:
                     "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                   __typename: "Warehouse"
@@ -1211,6 +1225,7 @@ describe("Get the total value of all replaced products", () => {
               {
                 id: "stock_test_id1",
                 warehouse: {
+                  name: "warehouse_stock1",
                   id:
                     "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                   __typename: "Warehouse"
@@ -1222,6 +1237,7 @@ describe("Get the total value of all replaced products", () => {
               {
                 id: "stock_test_id2",
                 warehouse: {
+                  name: "warehouse_stock2",
                   id:
                     "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                   __typename: "Warehouse"
@@ -1442,6 +1458,7 @@ describe("Get the total value of all selected products", () => {
             {
               id: "stock_test_id1",
               warehouse: {
+                name: "warehouse_stock1",
                 id:
                   "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                 __typename: "Warehouse"
@@ -1453,6 +1470,7 @@ describe("Get the total value of all selected products", () => {
             {
               id: "stock_test_id2",
               warehouse: {
+                name: "warehouse_stock2",
                 id:
                   "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                 __typename: "Warehouse"
@@ -1534,6 +1552,7 @@ describe("Get the total value of all selected products", () => {
             {
               id: "stock_test_id1",
               warehouse: {
+                name: "warehouse_stock1",
                 id:
                   "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                 __typename: "Warehouse"
@@ -1545,6 +1564,7 @@ describe("Get the total value of all selected products", () => {
             {
               id: "stock_test_id2",
               warehouse: {
+                name: "warehouse_stock2",
                 id:
                   "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                 __typename: "Warehouse"
@@ -1626,6 +1646,7 @@ describe("Get the total value of all selected products", () => {
             {
               id: "stock_test_id1",
               warehouse: {
+                name: "warehouse_stock1",
                 id:
                   "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                 __typename: "Warehouse"
@@ -1637,6 +1658,7 @@ describe("Get the total value of all selected products", () => {
             {
               id: "stock_test_id2",
               warehouse: {
+                name: "warehouse_stock2",
                 id:
                   "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                 __typename: "Warehouse"
@@ -1724,6 +1746,7 @@ describe("Get the total value of all selected products", () => {
               {
                 id: "stock_test_id1",
                 warehouse: {
+                  name: "warehouse_stock1",
                   id:
                     "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                   __typename: "Warehouse"
@@ -1735,6 +1758,7 @@ describe("Get the total value of all selected products", () => {
               {
                 id: "stock_test_id2",
                 warehouse: {
+                  name: "warehouse_stock2",
                   id:
                     "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                   __typename: "Warehouse"
@@ -1821,6 +1845,7 @@ describe("Get the total value of all selected products", () => {
               {
                 id: "stock_test_id1",
                 warehouse: {
+                  name: "warehouse_stock1",
                   id:
                     "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                   __typename: "Warehouse"
@@ -1832,6 +1857,7 @@ describe("Get the total value of all selected products", () => {
               {
                 id: "stock_test_id2",
                 warehouse: {
+                  name: "warehouse_stock2",
                   id:
                     "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                   __typename: "Warehouse"
@@ -1918,6 +1944,7 @@ describe("Get the total value of all selected products", () => {
               {
                 id: "stock_test_id1",
                 warehouse: {
+                  name: "warehouse_stock1",
                   id:
                     "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                   __typename: "Warehouse"
@@ -1929,6 +1956,7 @@ describe("Get the total value of all selected products", () => {
               {
                 id: "stock_test_id2",
                 warehouse: {
+                  name: "warehouse_stock2",
                   id:
                     "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                   __typename: "Warehouse"
@@ -2143,6 +2171,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
               {
                 id: "stock_test_id1",
                 warehouse: {
+                  name: "warehouse_stock1",
                   id:
                     "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                   __typename: "Warehouse"
@@ -2154,6 +2183,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
               {
                 id: "stock_test_id2",
                 warehouse: {
+                  name: "warehouse_stock2",
                   id:
                     "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                   __typename: "Warehouse"
@@ -2240,6 +2270,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
               {
                 id: "stock_test_id1",
                 warehouse: {
+                  name: "warehouse_stock1",
                   id:
                     "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                   __typename: "Warehouse"
@@ -2251,6 +2282,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
               {
                 id: "stock_test_id2",
                 warehouse: {
+                  name: "warehouse_stock2",
                   id:
                     "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                   __typename: "Warehouse"
@@ -2337,6 +2369,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
               {
                 id: "stock_test_id1",
                 warehouse: {
+                  name: "warehouse_stock1",
                   id:
                     "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                   __typename: "Warehouse"
@@ -2348,6 +2381,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
               {
                 id: "stock_test_id2",
                 warehouse: {
+                  name: "warehouse_stock2",
                   id:
                     "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                   __typename: "Warehouse"
