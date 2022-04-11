@@ -84,9 +84,10 @@ filterTests({ definedTags: ["all"] }, () => {
 
     it("should create hidden collection. TC: SALEOR_0301", () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
+      let collection;
+
       cy.visit(urlList.collections);
       cy.softExpectSkeletonIsVisible();
-      let collection;
 
       createCollection(collectionName, false, defaultChannel)
         .then(collectionResp => {
@@ -159,13 +160,13 @@ filterTests({ definedTags: ["all"] }, () => {
     it("create published collection with products hidden in listings. TC: SALEOR_0304", () => {
       // Products "hidden in listings" are not displayed in Category listings or search results,
       // but are listed on Collections
-      const randomName = `${startsWith}${faker.datatype.number()}`;
+      const collectionName = `${startsWith}${faker.datatype.number()}`;
       let collection;
       let createdProduct;
 
       productsUtils
         .createProductInChannel({
-          name: randomName,
+          name: collectionName,
           channelId: defaultChannel.id,
           productTypeId: productType.id,
           attributeId: attribute.id,
@@ -175,10 +176,10 @@ filterTests({ definedTags: ["all"] }, () => {
         .then(({ product: productResp }) => (createdProduct = productResp));
       cy.visit(urlList.collections);
       cy.softExpectSkeletonIsVisible();
-      createCollection(randomName, true, defaultChannel)
+      createCollection(collectionName, true, defaultChannel)
         .then(collectionResp => {
           collection = collectionResp;
-          assignProductsToCollection(randomName);
+          assignProductsToCollection(collectionName);
         })
         .then(() => {
           getCollection({
@@ -249,7 +250,6 @@ filterTests({ definedTags: ["all"] }, () => {
           .get(BUTTON_SELECTORS.submit)
           .click()
           .waitForRequestAndCheckIfNoErrors("@CollectionBulkDelete");
-        // .wait(4000);CollectionBulkDelete
 
         getCollection({ collectionId: firstCollection.id, auth: "auth" })
           .its("collection")
@@ -261,18 +261,20 @@ filterTests({ definedTags: ["all"] }, () => {
     });
 
     it("assign product to collection. TC: SALEOR_0307", () => {
+      cy.log("przed tworzeniem imion");
       const collectionName = `Assign-${startsWith}${faker.datatype.number()}`;
-      const randomName = `Product-To-Assign-${startsWith}${faker.datatype.number()}`;
+      const productName = `Product-To-Assign-${startsWith}${faker.datatype.number()}`;
 
       let collection;
       let productToAssign;
+      cy.log("before request");
 
       createCollectionRequest(collectionName).then(collectionResp => {
         collection = collectionResp;
 
         productsUtils
           .createProductInChannel({
-            name: randomName,
+            name: productName,
             channelId: defaultChannel.id,
             productTypeId: productType.id,
             attributeId: attribute.id,
@@ -297,7 +299,7 @@ filterTests({ definedTags: ["all"] }, () => {
 
     it("remove product from collection. TC: SALEOR_0308", () => {
       const collectionName = `Remove-With-Assigned-Product-${startsWith}${faker.datatype.number()}`;
-      const randomName = `Product-To-Assign-${startsWith}${faker.datatype.number()}`;
+      const productName = `Product-To-Assign-${startsWith}${faker.datatype.number()}`;
       let collection;
       let productToAssign;
 
@@ -306,7 +308,7 @@ filterTests({ definedTags: ["all"] }, () => {
 
         productsUtils
           .createProductInChannel({
-            name: randomName,
+            name: productName,
             channelId: defaultChannel.id,
             productTypeId: productType.id,
             attributeId: attribute.id,
