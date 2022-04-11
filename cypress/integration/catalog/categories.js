@@ -1,8 +1,6 @@
 /// <reference types="cypress"/>
 /// <reference types="../../support"/>
 
-import "cypress-iframe";
-
 import faker from "faker";
 
 import {
