@@ -1,9 +1,9 @@
 import isEqual from "lodash/isEqual";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 export interface UseStateFromPropsOpts<T> {
   mergeFunc?: (prevData: T, state: T, newData: T) => T;
-  onRefresh?: (data: T) => void;
+  onRefresh?: (prevData: T, data: T) => void;
 }
 
 function useStateFromProps<T>(
@@ -19,15 +19,19 @@ function useStateFromProps<T>(
   const { mergeFunc, onRefresh } = opts;
   const shouldUpdate = !isEqual(prevData, data);
 
-  if (shouldUpdate) {
-    const newData =
-      typeof mergeFunc === "function" ? mergeFunc(prevData, state, data) : data;
-    setState(newData);
-    setPrevData(data);
-    if (typeof onRefresh === "function") {
-      onRefresh(newData);
+  useEffect(() => {
+    if (shouldUpdate) {
+      const newData =
+        typeof mergeFunc === "function"
+          ? mergeFunc(prevData, state, data)
+          : data;
+      setState(newData);
+      setPrevData(data);
+      if (typeof onRefresh === "function") {
+        onRefresh(data, newData);
+      }
     }
-  }
+  }, [shouldUpdate]);
 
   return [state, setState];
 }
