@@ -37,7 +37,7 @@ function useChannelVariantListings(channels: ChannelData[]) {
           variantsIdsToRemove: diff.removed
         };
       }),
-    [initialChannelVariantListing, updatedChannelVariantListing]
+    [updatedChannelVariantListing]
   );
 
   const reset = () =>

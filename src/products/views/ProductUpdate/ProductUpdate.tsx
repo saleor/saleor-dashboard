@@ -281,11 +281,16 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const product = data?.product;
 
-  const allChannels: ChannelData[] = createChannelsDataWithPrice(
-    product,
-    availableChannels
-  ).sort((channel, nextChannel) =>
-    channel.name.localeCompare(nextChannel.name)
+  // useMemo saves, like, 46 rerenders here
+  const allChannels: ChannelData[] = React.useMemo(
+    () =>
+      createChannelsDataWithPrice(
+        product,
+        availableChannels
+      ).sort((channel, nextChannel) =>
+        channel.name.localeCompare(nextChannel.name)
+      ),
+    [product, availableChannels]
   );
 
   const [channelsData, setChannelsData] = useStateFromProps(allChannels);
