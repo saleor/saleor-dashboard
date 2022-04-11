@@ -7,6 +7,8 @@ jobs:
   deploy:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
     runs-on: ubuntu-latest
+    outputs:
+      base_URL: ${{ steps.set-domain.outputs.domain }}
     steps:
       - uses: actions/checkout@v2
 
@@ -130,7 +132,6 @@ jobs:
           fallback_uri: ${{ secrets.CYPRESS_API_URI }}
         run: |
           echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1 | { read custom_uri; if [ -z "$custom_uri" ]; then echo "$fallback_uri"; else echo "$custom_uri"; fi })"
-
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
@@ -165,7 +166,6 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
         with:
           command: npm run cy:run:critical
-          wait-on: ${{ steps.base_URL.outputs.base_URL }}
       - uses: actions/upload-artifact@v1
         with:
           name: cypress-videos
