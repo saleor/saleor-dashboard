@@ -36,8 +36,7 @@ jobs:
           CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
-          CYPRESS_MAILHOG: ${{ secrets.CYPRESS_MAILHOG }}
-A          
+          CYPRESS_MAILHOG: ${{ secrets.CYPRESS_MAILHOG }}      
         with:
           build: npm run build
           start: npx local-web-server --spa index.html
