@@ -31,8 +31,7 @@ import SaleListPage from "../../components/SaleListPage";
 import {
   saleListUrl,
   SaleListUrlDialog,
-  SaleListUrlQueryParams,
-  saleUrl
+  SaleListUrlQueryParams
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -193,7 +192,6 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         onPreviousPage={loadPreviousPage}
         onSort={handleSort}
         onUpdateListSettings={updateListSettings}
-        getRowHref={id => saleUrl(id)}
         isChecked={isSelected}
         selected={listElements.length}
         sort={getSortParams(params)}

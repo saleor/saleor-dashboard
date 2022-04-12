@@ -52,10 +52,7 @@ import { mapEdgesToItems } from "@saleor/utils/maps";
 import React, { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { categoryUrl } from "../../../categories/urls";
-import { collectionUrl } from "../../../collections/urls";
 import { maybe } from "../../../misc";
-import { productUrl } from "../../../products/urls";
 import { createUpdateHandler } from "./handlers";
 import { VOUCHER_UPDATE_FORM_ID } from "./types";
 
@@ -320,7 +317,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onCategoryAssign={() => openModal("assign-category")}
-        getCategoryHref={id => categoryUrl(id)}
         onCollectionAssign={() => openModal("assign-collection")}
         onCollectionUnassign={collectionId =>
           openModal("unassign-collection", {
@@ -346,14 +342,12 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
             ids: [categoryId]
           })
         }
-        getCollectionHref={id => collectionUrl(id)}
         onProductAssign={() => openModal("assign-product")}
         onProductUnassign={productId =>
           openModal("unassign-product", {
             ids: [productId]
           })
         }
-        getProductHref={id => productUrl(id)}
         activeTab={activeTab}
         onBack={() => navigate(voucherListUrl())}
         onTabClick={changeTab}

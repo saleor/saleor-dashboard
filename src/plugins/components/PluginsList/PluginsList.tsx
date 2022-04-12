@@ -6,7 +6,7 @@ import TableRowLink from "@saleor/components/TableRowLink";
 import { PluginBaseFragment } from "@saleor/graphql";
 import { EditIcon, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import { PluginListUrlSortField } from "@saleor/plugins/urls";
+import { PluginListUrlSortField, pluginUrl } from "@saleor/plugins/urls";
 import { ListProps, SortPage } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -40,7 +40,6 @@ const PluginList: React.FC<PluginListProps> = props => {
     onNextPage,
     pageInfo,
     sort,
-    getRowHref,
     onSort,
     onUpdateListSettings,
     onPreviousPage
@@ -75,7 +74,7 @@ const PluginList: React.FC<PluginListProps> = props => {
                 data-test-id="plugin"
                 hover={!!plugin}
                 className={!!plugin ? classes.link : undefined}
-                href={plugin && getRowHref(plugin.id)}
+                href={plugin && pluginUrl(plugin.id)}
                 key={plugin ? plugin.id : "skeleton"}
               >
                 <TableCell colSpan={5}>{plugin.name}</TableCell>

@@ -33,8 +33,7 @@ import CollectionListPage from "../../components/CollectionListPage/CollectionLi
 import {
   collectionListUrl,
   CollectionListUrlDialog,
-  CollectionListUrlQueryParams,
-  collectionUrl
+  CollectionListUrlQueryParams
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -188,7 +187,6 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         onUpdateListSettings={updateListSettings}
         pageInfo={pageInfo}
         sort={getSortParams(params)}
-        getRowHref={id => collectionUrl(id)}
         toolbar={
           <IconButton
             variant="secondary"

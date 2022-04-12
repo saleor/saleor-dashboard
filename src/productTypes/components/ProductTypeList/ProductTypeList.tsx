@@ -14,7 +14,10 @@ import TablePagination from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { ProductTypeFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { ProductTypeListUrlSortField } from "@saleor/productTypes/urls";
+import {
+  ProductTypeListUrlSortField,
+  productTypeUrl
+} from "@saleor/productTypes/urls";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -61,7 +64,6 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
     pageInfo,
     onNextPage,
     onPreviousPage,
-    getRowHref,
     onSort,
     isChecked,
     selected,
@@ -143,7 +145,7 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
                 className={!!productType ? classes.link : undefined}
                 hover={!!productType}
                 key={productType ? productType.id : "skeleton"}
-                href={productType && getRowHref(productType.id)}
+                href={productType && productTypeUrl(productType.id)}
                 selected={isSelected}
                 data-test-id={"id-" + maybe(() => productType.id)}
               >

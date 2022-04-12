@@ -10,6 +10,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { LanguageFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
+import { languageEntitiesUrl } from "@saleor/translations/urls";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -17,7 +18,6 @@ import { maybe, renderCollection } from "../../../misc";
 
 export interface TranslationsLanguageListProps {
   languages: LanguageFragment[];
-  getRowLink: (code: string) => string;
 }
 
 const useStyles = makeStyles(
@@ -33,7 +33,7 @@ const useStyles = makeStyles(
 );
 
 const TranslationsLanguageList: React.FC<TranslationsLanguageListProps> = props => {
-  const { languages, getRowLink } = props;
+  const { languages } = props;
 
   const classes = useStyles(props);
 
@@ -56,7 +56,7 @@ const TranslationsLanguageList: React.FC<TranslationsLanguageListProps> = props 
                 className={!!language ? classes.link : undefined}
                 hover={!!language}
                 key={language ? language.code : "skeleton"}
-                href={language && getRowLink(language.code)}
+                href={language && languageEntitiesUrl(language.code, {})}
               >
                 <TableCell className={classes.capitalize}>
                   {maybe<React.ReactNode>(

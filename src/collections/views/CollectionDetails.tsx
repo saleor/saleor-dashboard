@@ -42,7 +42,6 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getMutationErrors, getMutationState, maybe } from "../../misc";
-import { productUrl } from "../../products/urls";
 import CollectionDetailsPage from "../components/CollectionDetailsPage/CollectionDetailsPage";
 import { CollectionUpdateData } from "../components/CollectionDetailsPage/form";
 import {
@@ -315,7 +314,6 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
             }
           });
         }}
-        getRowHref={id => productUrl(id)}
         saveButtonBarState={formTransitionState}
         toolbar={
           <Button

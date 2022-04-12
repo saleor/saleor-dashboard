@@ -32,7 +32,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { PAGINATE_BY } from "../../config";
 import { extractMutationErrors, maybe } from "../../misc";
-import { productAddUrl, productUrl } from "../../products/urls";
+import { productAddUrl } from "../../products/urls";
 import {
   CategoryPageTab,
   CategoryUpdatePage
@@ -223,7 +223,6 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
             maybe(() => categoryUrl(data.category.parent.id), categoryListUrl())
           )
         }
-        getCategoryHref={id => categoryUrl(id)}
         onDelete={() => openModal("delete")}
         onImageDelete={() =>
           updateCategory({
@@ -248,7 +247,6 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         pageInfo={pageInfo}
-        getProductHref={id => productUrl(id)}
         onSubmit={handleSubmit}
         products={mapEdgesToItems(data?.category?.products)}
         saveButtonBarState={updateResult.status}

@@ -27,7 +27,7 @@ import { extractMutationErrors, getStringOrPlaceholder } from "@saleor/misc";
 import getAppErrorMessage from "@saleor/utils/errors/app";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import WebhookDeleteDialog from "@saleor/webhooks/components/WebhookDeleteDialog";
-import { webhookAddPath, webhookPath } from "@saleor/webhooks/urls";
+import { webhookAddPath } from "@saleor/webhooks/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -225,7 +225,6 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
         disabled={loading}
         errors={updateAppOpts.data?.appUpdate?.errors || []}
         token={token}
-        getWebhookUrl={id => webhookPath(id)}
         onApiUriClick={() => open(API_URI, "blank")}
         onBack={handleBack}
         onSubmit={handleSubmit}

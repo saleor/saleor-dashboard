@@ -48,8 +48,7 @@ import {
   productListUrl,
   ProductListUrlDialog,
   ProductListUrlQueryParams,
-  ProductListUrlSortField,
-  productUrl
+  ProductListUrlSortField
 } from "@saleor/products/urls";
 import useAttributeSearch from "@saleor/searches/useAttributeSearch";
 import useAttributeValueSearch from "@saleor/searches/useAttributeValueSearch";
@@ -406,7 +405,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
         pageInfo={pageInfo}
-        getRowHref={id => productUrl(id)}
         onAll={resetFilters}
         toolbar={
           <IconButton

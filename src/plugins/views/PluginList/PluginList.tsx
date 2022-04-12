@@ -24,8 +24,7 @@ import PluginsListPage from "../../components/PluginsListPage/PluginsListPage";
 import {
   pluginListUrl,
   PluginListUrlDialog,
-  PluginListUrlQueryParams,
-  pluginUrl
+  PluginListUrlQueryParams
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -139,7 +138,6 @@ export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
         onTabDelete={() => openModal("delete-search")}
         onTabChange={handleTabChange}
         onUpdateListSettings={updateListSettings}
-        getRowHref={id => pluginUrl(id)}
       />
       <SaveFilterTabDialog
         open={params.action === "save-search"}

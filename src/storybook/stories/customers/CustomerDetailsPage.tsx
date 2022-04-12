@@ -16,7 +16,6 @@ const props: Omit<CustomerDetailsPageProps, "classes"> = {
   onAddressManageClick: () => undefined,
   onBack: () => undefined,
   onDelete: () => undefined,
-  getRowHref: () => "",
   onSubmit: () => undefined,
   onViewAllOrdersClick: () => undefined,
   saveButtonBar: "default"

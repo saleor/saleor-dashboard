@@ -5,6 +5,7 @@ import {
   TableFooter,
   TableRow
 } from "@material-ui/core";
+import { collectionUrl } from "@saleor/collections/urls";
 import Button from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
@@ -35,7 +36,6 @@ const numberOfColumns = 4;
 const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
   const {
     discount: sale,
-    getRowHref,
     disabled,
     pageInfo,
     onCollectionAssign,
@@ -112,7 +112,7 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
                   selected={isSelected}
                   hover={!!collection}
                   key={collection ? collection.id : "skeleton"}
-                  href={collection && getRowHref(collection.id)}
+                  href={collection && collectionUrl(collection.id)}
                   className={classes.tableRow}
                 >
                   <TableCell padding="checkbox">

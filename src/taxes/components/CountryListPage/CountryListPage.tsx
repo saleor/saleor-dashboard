@@ -24,7 +24,6 @@ export interface CountryListPageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   shop: CountryListQuery["shop"];
   onBack: () => void;
-  getRowHref: (id: string) => string;
   onSubmit: (data: TaxesConfigurationFormData) => SubmitPromise;
   onTaxFetch: () => void;
 }
@@ -34,7 +33,6 @@ const CountryListPage: React.FC<CountryListPageProps> = ({
   saveButtonBarState,
   shop,
   onBack,
-  getRowHref,
   onSubmit,
   onTaxFetch
 }) => {
@@ -74,10 +72,7 @@ const CountryListPage: React.FC<CountryListPageProps> = ({
                 />
               </div>
               <div>
-                <CountryList
-                  countries={maybe(() => shop.countries)}
-                  getRowHref={getRowHref}
-                />
+                <CountryList countries={maybe(() => shop.countries)} />
               </div>
             </Grid>
           </Container>

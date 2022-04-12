@@ -11,7 +11,7 @@ import TablePagination from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import TooltipTableCellHeader from "@saleor/components/TooltipTableCellHeader";
 import { commonTooltipMessages } from "@saleor/components/TooltipTableCellHeader/messages";
-import { SaleListUrlSortField } from "@saleor/discounts/urls";
+import { SaleListUrlSortField, saleUrl } from "@saleor/discounts/urls";
 import { canBeSorted } from "@saleor/discounts/views/SaleList/sort";
 import { SaleFragment, SaleType } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -74,7 +74,6 @@ const SaleList: React.FC<SaleListProps> = props => {
     onNextPage,
     onPreviousPage,
     onUpdateListSettings,
-    getRowHref,
     onSort,
     pageInfo,
     sales,
@@ -188,7 +187,7 @@ const SaleList: React.FC<SaleListProps> = props => {
                 className={!!sale ? classes.tableRow : undefined}
                 hover={!!sale}
                 key={sale ? sale.id : "skeleton"}
-                href={sale && getRowHref(sale.id)}
+                href={sale && saleUrl(sale.id)}
                 selected={isSelected}
               >
                 <TableCell padding="checkbox">

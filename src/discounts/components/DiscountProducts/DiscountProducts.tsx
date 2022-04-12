@@ -17,6 +17,7 @@ import TablePagination from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { SaleDetailsFragment, VoucherDetailsFragment } from "@saleor/graphql";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { productUrl } from "@saleor/products/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -40,7 +41,6 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
     products,
     disabled,
     pageInfo,
-    getRowHref,
     onPreviousPage,
     onProductAssign,
     onProductUnassign,
@@ -121,7 +121,7 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
                 <TableRowLink
                   hover={!!product}
                   key={product ? product.id : "skeleton"}
-                  href={product && getRowHref(product.id)}
+                  href={product && productUrl(product.id)}
                   className={classes.tableRow}
                   selected={isSelected}
                 >

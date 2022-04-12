@@ -16,7 +16,7 @@ import TableRowLink from "@saleor/components/TableRowLink";
 import { MenuFragment } from "@saleor/graphql";
 import { DeleteIcon, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
-import { MenuListUrlSortField } from "@saleor/navigation/urls";
+import { MenuListUrlSortField, menuUrl } from "@saleor/navigation/urls";
 import { ListActions, ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
@@ -66,7 +66,6 @@ const MenuList: React.FC<MenuListProps> = props => {
     onNextPage,
     onPreviousPage,
     onUpdateListSettings,
-    getRowHref,
     onSort,
     pageInfo,
     selected,
@@ -147,7 +146,7 @@ const MenuList: React.FC<MenuListProps> = props => {
                 <TableRowLink
                   hover={!!menu}
                   key={menu ? menu.id : "skeleton"}
-                  href={menu && getRowHref(menu.id)}
+                  href={menu && menuUrl(menu.id)}
                   className={classes.row}
                   selected={isSelected}
                 >

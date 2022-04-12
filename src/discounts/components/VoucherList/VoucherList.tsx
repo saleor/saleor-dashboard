@@ -11,7 +11,7 @@ import TablePagination from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import TooltipTableCellHeader from "@saleor/components/TooltipTableCellHeader";
 import { commonTooltipMessages } from "@saleor/components/TooltipTableCellHeader/messages";
-import { VoucherListUrlSortField } from "@saleor/discounts/urls";
+import { VoucherListUrlSortField, voucherUrl } from "@saleor/discounts/urls";
 import { canBeSorted } from "@saleor/discounts/views/VoucherList/sort";
 import { DiscountValueTypeEnum, VoucherFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -91,7 +91,6 @@ const VoucherList: React.FC<VoucherListProps> = props => {
     onNextPage,
     onPreviousPage,
     onUpdateListSettings,
-    getRowHref,
     onSort,
     pageInfo,
     vouchers,
@@ -246,7 +245,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
                 hover={!!voucher}
                 key={voucher ? voucher.id : "skeleton"}
                 selected={isSelected}
-                href={voucher && getRowHref(voucher.id)}
+                href={voucher && voucherUrl(voucher.id)}
               >
                 <TableCell padding="checkbox">
                   <Checkbox

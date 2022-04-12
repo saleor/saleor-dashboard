@@ -13,6 +13,7 @@ import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { HomeQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
+import { productVariantEditUrl } from "@saleor/products/urls";
 import { RelayToFlat } from "@saleor/types";
 import classNames from "classnames";
 import React from "react";
@@ -52,11 +53,10 @@ const useStyles = makeStyles(
 interface HomeProductListProps {
   testId?: string;
   topProducts: RelayToFlat<HomeQuery["productTopToday"]>;
-  getRowHref: (productId: string, variantId: string) => string;
 }
 
 export const HomeProductList: React.FC<HomeProductListProps> = props => {
-  const { topProducts, getRowHref, testId } = props;
+  const { topProducts, testId } = props;
   const classes = useStyles(props);
 
   const intl = useIntl();
@@ -86,7 +86,7 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
                 className={classNames({
                   [classes.tableRow]: !!variant
                 })}
-                href={getRowHref(variant.product.id, variant.id)}
+                href={productVariantEditUrl(variant.product.id, variant.id)}
               >
                 <TableCellAvatar
                   className={classes.colAvatar}

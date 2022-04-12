@@ -5,6 +5,7 @@ import {
   TableFooter,
   TableRow
 } from "@material-ui/core";
+import { categoryUrl } from "@saleor/categories/urls";
 import Button from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
@@ -39,7 +40,6 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
     pageInfo,
     onCategoryAssign,
     onCategoryUnassign,
-    getRowHref,
     onPreviousPage,
     onNextPage,
     toolbar,
@@ -114,7 +114,7 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
                 <TableRowLink
                   hover={!!category}
                   key={category ? category.id : "skeleton"}
-                  href={category && getRowHref(category.id)}
+                  href={category && categoryUrl(category.id)}
                   className={classes.tableRow}
                   selected={isSelected}
                 >

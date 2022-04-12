@@ -19,8 +19,7 @@ import {
   channelAddUrl,
   channelsListUrl,
   ChannelsListUrlDialog,
-  ChannelsListUrlQueryParams,
-  channelUrl
+  ChannelsListUrlQueryParams
 } from "../../urls";
 
 interface ChannelsListProps {
@@ -100,7 +99,6 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
         limits={limitOpts.data?.shop.limits}
         navigateToChannelCreate={navigateToChannelCreate}
         onBack={() => navigate(configurationMenuUrl)}
-        getRowHref={id => channelUrl(id)}
         onRemove={id =>
           openModal("remove", {
             id

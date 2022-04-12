@@ -18,6 +18,7 @@ import TablePagination from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { CollectionDetailsQuery } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { productUrl } from "@saleor/products/urls";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -68,7 +69,6 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
     onNextPage,
     onPreviousPage,
     onProductUnassign,
-    getRowHref,
     pageInfo,
     isChecked,
     selected,
@@ -167,7 +167,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
                 <TableRowLink
                   className={classes.tableRow}
                   hover={!!product}
-                  href={product && getRowHref(product.id)}
+                  href={product && productUrl(product.id)}
                   key={product ? product.id : "skeleton"}
                   selected={isSelected}
                 >

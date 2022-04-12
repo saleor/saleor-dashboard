@@ -14,6 +14,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { CustomerDetailsQuery } from "@saleor/graphql";
 import { makeStyles, Pill } from "@saleor/macaw-ui";
+import { orderUrl } from "@saleor/orders/urls";
 import { RelayToFlat } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -35,11 +36,10 @@ const useStyles = makeStyles(
 export interface CustomerOrdersProps {
   orders: RelayToFlat<CustomerDetailsQuery["user"]["orders"]>;
   onViewAllOrdersClick: () => void;
-  getRowHref: (id: string) => string;
 }
 
 const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
-  const { orders, getRowHref, onViewAllOrdersClick } = props;
+  const { orders, onViewAllOrdersClick } = props;
   const classes = useStyles(props);
 
   const intl = useIntl();
@@ -102,7 +102,7 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
               <TableRowLink
                 hover={!!order}
                 className={!!order ? classes.link : undefined}
-                href={order && getRowHref(order.id)}
+                href={order && orderUrl(order.id)}
                 key={order ? order.id : "skeleton"}
               >
                 <TableCell>

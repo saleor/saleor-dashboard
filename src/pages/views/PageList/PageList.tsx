@@ -28,8 +28,7 @@ import PageListPage from "../../components/PageListPage/PageListPage";
 import {
   pageListUrl,
   PageListUrlDialog,
-  PageListUrlQueryParams,
-  pageUrl
+  PageListUrlQueryParams
 } from "../../urls";
 import { getFilterVariables, getSortQueryVariables } from "./sort";
 
@@ -123,7 +122,6 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
-        getRowHref={id => pageUrl(id)}
         onSort={handleSort}
         actionDialogOpts={{
           open: openModal,

@@ -26,9 +26,9 @@ export interface TranslatableEntity {
   };
 }
 
-export interface TranslationsEntitiesListProps
-  extends Omit<ListProps, "onRowClick"> {
+export interface TranslationsEntitiesListProps extends ListProps {
   entities: TranslatableEntity[];
+  getRowHref: (id: string) => string;
 }
 
 const useStyles = makeStyles(

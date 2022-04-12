@@ -10,6 +10,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { CountryListQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
+import { countryTaxRatesUrl } from "@saleor/taxes/urls";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -30,11 +31,10 @@ const useStyles = makeStyles(
 
 interface CountryListProps {
   countries: CountryListQuery["shop"]["countries"];
-  getRowHref: (id: string) => string;
 }
 
 const CountryList: React.FC<CountryListProps> = props => {
-  const { getRowHref, countries } = props;
+  const { countries } = props;
 
   const classes = useStyles(props);
 
@@ -63,7 +63,7 @@ const CountryList: React.FC<CountryListProps> = props => {
                   [classes.tableRow]: !!country
                 })}
                 hover={!!country}
-                href={country && getRowHref(country.code)}
+                href={country && countryTaxRatesUrl(country.code)}
                 key={country ? country.code : "skeleton"}
               >
                 <TableCell>

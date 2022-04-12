@@ -33,8 +33,7 @@ import ProductTypeListPage from "../../components/ProductTypeListPage";
 import {
   productTypeListUrl,
   ProductTypeListUrlDialog,
-  ProductTypeListUrlQueryParams,
-  productTypeUrl
+  ProductTypeListUrlQueryParams
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -189,7 +188,6 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
         onBack={() => navigate(configurationMenuUrl)}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
-        getRowHref={id => productTypeUrl(id)}
         onSort={handleSort}
         isChecked={isSelected}
         selected={selectedProductTypes.length}

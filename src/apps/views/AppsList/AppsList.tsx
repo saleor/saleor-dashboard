@@ -36,7 +36,6 @@ import {
   AppListUrlDialog,
   AppListUrlQueryParams,
   appsListUrl,
-  appUrl,
   customAppAddUrl,
   customAppUrl
 } from "../../urls";
@@ -314,7 +313,6 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
-        getRowHref={id => appUrl(id)}
         onRowAboutClick={id => () => navigate(appDetailsUrl(id))}
         onAppInstallRetry={onAppInstallRetry}
         getCustomAppHref={id => customAppUrl(id)}

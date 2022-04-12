@@ -16,6 +16,7 @@ import TablePagination from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { SaleDetailsFragment } from "@saleor/graphql";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { productVariantEditPath } from "@saleor/products/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -24,12 +25,9 @@ import { ListActions, ListProps, RelayToFlat } from "../../../types";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
-export interface SaleVariantsProps
-  extends Omit<ListProps, "onRowClick" | "getRowHref">,
-    ListActions {
+export interface SaleVariantsProps extends ListProps, ListActions {
   variants: RelayToFlat<SaleDetailsFragment["variants"]> | null;
   onVariantAssign: () => void;
-  getRowHref: (productId: string, variantId: string) => string;
   onVariantUnassign: (id: string) => void;
 }
 
@@ -40,7 +38,6 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
     variants,
     disabled,
     pageInfo,
-    getRowHref,
     onPreviousPage,
     onVariantAssign,
     onVariantUnassign,
@@ -123,7 +120,10 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
                 <TableRowLink
                   hover={!!variant}
                   key={variant ? variant.id : "skeleton"}
-                  href={variant && getRowHref(variant.product.id, variant.id)}
+                  href={
+                    variant &&
+                    productVariantEditPath(variant.product.id, variant.id)
+                  }
                   className={classes.tableRow}
                   selected={isSelected}
                 >

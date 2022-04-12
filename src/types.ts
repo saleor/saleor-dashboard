@@ -55,7 +55,6 @@ export interface ListProps<TColumns extends string = string> {
   settings?: ListSettings<TColumns>;
   onNextPage: () => void;
   onPreviousPage: () => void;
-  getRowHref: (id: string) => string;
   onUpdateListSettings?: <T extends keyof ListSettings<TColumns>>(
     key: T,
     value: ListSettings<TColumns>[T]

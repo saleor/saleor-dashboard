@@ -52,10 +52,8 @@ export interface CategoryUpdatePageProps
   onImageUpload(file: File);
   onNextPage();
   onPreviousPage();
-  getProductHref(id: string): string;
   onBack();
   onDelete();
-  getCategoryHref(id: string): string;
 }
 
 const CategoriesTab = Tab(CategoryPageTab.categories);
@@ -73,11 +71,9 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   subcategories,
   addCategoryHref,
   onBack,
-  getCategoryHref,
   onDelete,
   onNextPage,
   onPreviousPage,
-  getProductHref,
   onSubmit,
   onImageDelete,
   onImageUpload,
@@ -192,7 +188,6 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                 toolbar={subcategoryListToolbar}
                 onNextPage={onNextPage}
                 onPreviousPage={onPreviousPage}
-                getRowHref={getCategoryHref}
                 onSort={() => undefined}
               />
             </Card>
@@ -206,7 +201,6 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               pageInfo={pageInfo}
               onNextPage={onNextPage}
               onPreviousPage={onPreviousPage}
-              getRowHref={getProductHref}
               toggle={toggle}
               toggleAll={toggleAll}
               selected={selected}

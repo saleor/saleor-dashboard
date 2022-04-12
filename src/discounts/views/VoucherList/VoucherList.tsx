@@ -34,8 +34,7 @@ import VoucherListPage from "../../components/VoucherListPage";
 import {
   voucherListUrl,
   VoucherListUrlDialog,
-  VoucherListUrlQueryParams,
-  voucherUrl
+  VoucherListUrlQueryParams
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -199,7 +198,6 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
-        getRowHref={id => voucherUrl(id)}
         onSort={handleSort}
         isChecked={isSelected}
         selected={listElements.length}

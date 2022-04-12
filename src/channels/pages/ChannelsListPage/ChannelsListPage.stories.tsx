@@ -11,8 +11,7 @@ const props: ChannelsListPageProps = {
   limits,
   navigateToChannelCreate: () => undefined,
   onBack: () => undefined,
-  onRemove: () => undefined,
-  getRowHref: () => ""
+  onRemove: () => undefined
 };
 
 storiesOf("Views / Channels / Channels list", module)

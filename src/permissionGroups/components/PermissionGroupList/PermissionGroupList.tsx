@@ -13,7 +13,10 @@ import TableRowLink from "@saleor/components/TableRowLink";
 import { PermissionGroupFragment } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
-import { PermissionGroupListUrlSortField } from "@saleor/permissionGroups/urls";
+import {
+  permissionGroupDetailsUrl,
+  PermissionGroupListUrlSortField
+} from "@saleor/permissionGroups/urls";
 import { ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
@@ -68,7 +71,6 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
     onDelete,
     onNextPage,
     onPreviousPage,
-    getRowHref,
     onSort,
     sort
   } = props;
@@ -122,7 +124,9 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
               className={!!permissionGroup ? classes.link : undefined}
               hover={!!permissionGroup}
               key={permissionGroup ? permissionGroup.id : "skeleton"}
-              href={permissionGroup && getRowHref(permissionGroup.id)}
+              href={
+                permissionGroup && permissionGroupDetailsUrl(permissionGroup.id)
+              }
               data-test-id={"id-" + maybe(() => permissionGroup.id)}
             >
               <TableCell className={classes.colName}>

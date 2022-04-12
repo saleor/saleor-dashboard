@@ -162,7 +162,6 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
-        getRowHref={id => orderUrl(id)}
         onSort={handleSort}
         onSearchChange={handleSearchChange}
         onFilterChange={changeFilters}

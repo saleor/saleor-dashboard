@@ -3,17 +3,12 @@ import React from "react";
 
 import { maybe } from "../../misc";
 import TranslationsLanguageListPage from "../components/TranslationsLanguageListPage";
-import { languageEntitiesUrl } from "../urls";
 
 const TranslationsLanguageList: React.FC = () => {
   const shop = useShop();
 
   return (
-    <TranslationsLanguageListPage
-      languages={maybe(() => shop.languages)}
-      //   onAdd={undefined}
-      getRowHref={code => languageEntitiesUrl(code, {})}
-    />
+    <TranslationsLanguageListPage languages={maybe(() => shop.languages)} />
   );
 };
 TranslationsLanguageList.displayName = "TranslationsLanguageList";

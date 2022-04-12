@@ -6,6 +6,7 @@ import {
   TableRow,
   Typography
 } from "@material-ui/core";
+import { appUrl } from "@saleor/apps/urls";
 import CardTitle from "@saleor/components/CardTitle";
 import TablePagination from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
@@ -40,7 +41,6 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
   disabled,
   onNextPage,
   onPreviousPage,
-  getRowHref,
   onRowAboutClick,
   onUpdateListSettings,
   pageInfo,
@@ -81,7 +81,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                 <TableRowLink
                   key={app.node.id}
                   className={classes.tableRow}
-                  href={getRowHref(app.node.id)}
+                  href={appUrl(app.node.id)}
                 >
                   <TableCell className={classes.colName}>
                     <span data-tc="name" className={classes.appName}>

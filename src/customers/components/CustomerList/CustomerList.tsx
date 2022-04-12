@@ -10,7 +10,7 @@ import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
-import { CustomerListUrlSortField } from "@saleor/customers/urls";
+import { CustomerListUrlSortField, customerUrl } from "@saleor/customers/urls";
 import { ListCustomersQuery, PermissionEnum } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { getUserName, renderCollection } from "@saleor/misc";
@@ -58,7 +58,6 @@ const CustomerList: React.FC<CustomerListProps> = props => {
     onNextPage,
     onPreviousPage,
     onUpdateListSettings,
-    getRowHref,
     onSort,
     toolbar,
     toggle,
@@ -155,7 +154,7 @@ const CustomerList: React.FC<CustomerListProps> = props => {
                 hover={!!customer}
                 key={customer ? customer.id : "skeleton"}
                 selected={isSelected}
-                href={customer && getRowHref(customer.id)}
+                href={customer && customerUrl(customer.id)}
               >
                 <TableCell padding="checkbox">
                   <Checkbox

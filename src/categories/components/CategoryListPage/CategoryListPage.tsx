@@ -46,7 +46,6 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
   onAll,
   onNextPage,
   onPreviousPage,
-  getRowHref,
   onSearchChange,
   onTabChange,
   onTabDelete,
@@ -101,7 +100,6 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
           toolbar={toolbar}
           onNextPage={onNextPage}
           onPreviousPage={onPreviousPage}
-          getRowHref={getRowHref}
           onUpdateListSettings={onUpdateListSettings}
           {...listProps}
         />

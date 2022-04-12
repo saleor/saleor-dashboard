@@ -1,5 +1,8 @@
 import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
-import { AttributeListUrlSortField } from "@saleor/attributes/urls";
+import {
+  AttributeListUrlSortField,
+  attributeUrl
+} from "@saleor/attributes/urls";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
@@ -70,7 +73,6 @@ const AttributeList: React.FC<AttributeListProps> = ({
   isChecked,
   onNextPage,
   onPreviousPage,
-  getRowHref,
   pageInfo,
   selected,
   sort,
@@ -188,7 +190,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
                 selected={isSelected}
                 hover={!!attribute}
                 key={attribute ? attribute.id : "skeleton"}
-                href={attribute && getRowHref(attribute.id)}
+                href={attribute && attributeUrl(attribute.id)}
                 className={classes.link}
                 data-test-id={"id-" + maybe(() => attribute.id)}
               >

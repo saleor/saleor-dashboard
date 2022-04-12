@@ -15,7 +15,7 @@ import TableRowLink from "@saleor/components/TableRowLink";
 import { PageFragment } from "@saleor/graphql";
 import { makeStyles, Pill } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
-import { PageListUrlSortField } from "@saleor/pages/urls";
+import { PageListUrlSortField, pageUrl } from "@saleor/pages/urls";
 import { ListActions, ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
@@ -60,7 +60,6 @@ const PageList: React.FC<PageListProps> = props => {
     disabled,
     onNextPage,
     pageInfo,
-    getRowHref,
     onSort,
     onUpdateListSettings,
     onPreviousPage,
@@ -157,7 +156,7 @@ const PageList: React.FC<PageListProps> = props => {
                 <TableRowLink
                   hover={!!page}
                   className={!!page ? classes.link : undefined}
-                  href={page && getRowHref(page.id)}
+                  href={page && pageUrl(page.id)}
                   key={page ? page.id : "skeleton"}
                   selected={isSelected}
                 >

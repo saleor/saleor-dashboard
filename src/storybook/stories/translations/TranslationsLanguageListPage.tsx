@@ -8,8 +8,7 @@ import { languages } from "../../../translations/fixtures";
 import Decorator from "../../Decorator";
 
 const props: TranslationsLanguageListPageProps = {
-  languages,
-  getRowHref: () => ""
+  languages
 };
 
 storiesOf("Views / Translations / Language list", module)

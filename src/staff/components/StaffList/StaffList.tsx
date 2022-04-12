@@ -19,7 +19,10 @@ import {
   maybe,
   renderCollection
 } from "@saleor/misc";
-import { StaffListUrlSortField } from "@saleor/staff/urls";
+import {
+  StaffListUrlSortField,
+  staffMemberDetailsUrl
+} from "@saleor/staff/urls";
 import { ListProps, RelayToFlat, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import classNames from "classnames";
@@ -82,7 +85,6 @@ const StaffList: React.FC<StaffListProps> = props => {
     onNextPage,
     onPreviousPage,
     onUpdateListSettings,
-    getRowHref,
     onSort,
     pageInfo,
     sort,
@@ -153,7 +155,7 @@ const StaffList: React.FC<StaffListProps> = props => {
                 [classes.tableRow]: !!staffMember
               })}
               hover={!!staffMember}
-              href={staffMember && getRowHref(staffMember.id)}
+              href={staffMember && staffMemberDetailsUrl(staffMember.id)}
               key={staffMember ? staffMember.id : "skeleton"}
             >
               <TableCell>

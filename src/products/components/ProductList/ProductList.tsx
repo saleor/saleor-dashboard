@@ -31,7 +31,7 @@ import {
   getAttributeIdFromColumnValue,
   isAttributeColumnValue
 } from "@saleor/products/components/ProductListPage/utils";
-import { ProductListUrlSortField } from "@saleor/products/urls";
+import { ProductListUrlSortField, productUrl } from "@saleor/products/urls";
 import { canBeSorted } from "@saleor/products/views/ProductList/sort";
 import {
   ChannelProps,
@@ -144,7 +144,6 @@ export const ProductList: React.FC<ProductListProps> = props => {
     onNextPage,
     onPreviousPage,
     onUpdateListSettings,
-    getRowHref,
     onSort,
     selectedChannelId,
     filterDependency
@@ -344,7 +343,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   selected={isSelected}
                   hover={!!product}
                   key={product ? product.id : "skeleton"}
-                  href={product && getRowHref(product.id)}
+                  href={product && productUrl(product.id)}
                   className={classes.link}
                   data-test-id={"id-" + (product ? product?.id : "skeleton")}
                 >

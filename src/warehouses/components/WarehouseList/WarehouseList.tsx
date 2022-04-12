@@ -17,7 +17,10 @@ import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { ListProps, SortPage } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getArrowDirection } from "@saleor/utils/sort";
-import { WarehouseListUrlSortField } from "@saleor/warehouses/urls";
+import {
+  WarehouseListUrlSortField,
+  warehouseUrl
+} from "@saleor/warehouses/urls";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -77,7 +80,6 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
     onPreviousPage,
     onUpdateListSettings,
     onRemove,
-    getRowHref,
     onSort
   } = props;
 
@@ -127,7 +129,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
           warehouses,
           warehouse => (
             <TableRowLink
-              href={warehouse && getRowHref(warehouse.id)}
+              href={warehouse && warehouseUrl(warehouse.id)}
               className={classes.tableRow}
               hover={!!warehouse}
               key={warehouse ? warehouse.id : "skeleton"}

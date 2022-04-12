@@ -35,8 +35,7 @@ import ShippingZonesListPage from "../components/ShippingZonesListPage";
 import {
   shippingZonesListUrl,
   ShippingZonesListUrlDialog,
-  ShippingZonesListUrlQueryParams,
-  shippingZoneUrl
+  ShippingZonesListUrlQueryParams
 } from "../urls";
 
 interface ShippingZonesListProps {
@@ -155,7 +154,6 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
             id
           })
         }
-        getRowHref={id => shippingZoneUrl(id)}
         onSubmit={unit =>
           extractMutationErrors(
             updateDefaultWeightUnit({

@@ -14,6 +14,7 @@ import TableRowLink from "@saleor/components/TableRowLink";
 import { AppQuery } from "@saleor/graphql";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
+import { webhookPath } from "@saleor/webhooks/urls";
 import { isUnnamed } from "@saleor/webhooks/utils";
 import classNames from "classnames";
 import React from "react";
@@ -24,14 +25,12 @@ import { useStyles } from "./styles";
 export interface WebhooksListProps {
   webhooks: AppQuery["app"]["webhooks"];
   onRemove: (id: string) => void;
-  getRowHref: (id: string) => string;
   onCreate?: () => void;
 }
 
 const WebhooksList: React.FC<WebhooksListProps> = ({
   webhooks,
   onCreate,
-  getRowHref,
   onRemove
 }) => {
   const intl = useIntl();
@@ -86,7 +85,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
               <TableRowLink
                 hover={!!webhook}
                 className={!!webhook ? classes.tableRow : undefined}
-                href={webhook && getRowHref(webhook.id)}
+                href={webhook && webhookPath(webhook.id)}
                 key={webhook ? webhook.id : "skeleton"}
               >
                 <TableCell

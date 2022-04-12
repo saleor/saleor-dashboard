@@ -21,7 +21,7 @@ import {
   transformOrderStatus,
   transformPaymentStatus
 } from "@saleor/misc";
-import { OrderListUrlSortField } from "@saleor/orders/urls";
+import { OrderListUrlSortField, orderUrl } from "@saleor/orders/urls";
 import { ListProps, RelayToFlat, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
@@ -86,7 +86,6 @@ export const OrderList: React.FC<OrderListProps> = props => {
     onPreviousPage,
     onNextPage,
     onUpdateListSettings,
-    getRowHref,
     onSort,
     sort
   } = props;
@@ -201,7 +200,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
               data-test-id="order-table-row"
               hover={!!order}
               className={!!order ? classes.link : undefined}
-              href={order && getRowHref(order.id)}
+              href={order && orderUrl(order.id)}
               key={order ? order.id : "skeleton"}
             >
               <TableCell className={classes.colNumber}>

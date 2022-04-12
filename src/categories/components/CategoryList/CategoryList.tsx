@@ -1,5 +1,5 @@
 import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
-import { CategoryListUrlSortField } from "@saleor/categories/urls";
+import { CategoryListUrlSortField, categoryUrl } from "@saleor/categories/urls";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
@@ -68,7 +68,6 @@ const CategoryList: React.FC<CategoryListProps> = props => {
     onNextPage,
     onPreviousPage,
     onUpdateListSettings,
-    getRowHref,
     onSort
   } = props;
 
@@ -158,7 +157,7 @@ const CategoryList: React.FC<CategoryListProps> = props => {
               <TableRowLink
                 className={classes.tableRow}
                 hover={!!category}
-                href={category && getRowHref(category.id)}
+                href={category && categoryUrl(category.id)}
                 key={category ? category.id : "skeleton"}
                 selected={isSelected}
                 data-test-id={"id-" + maybe(() => category.id)}

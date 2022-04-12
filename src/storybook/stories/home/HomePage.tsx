@@ -21,7 +21,6 @@ const homePageProps: Omit<HomePageProps, "classes"> = {
   ordersToFulfillHref: "",
   ordersToCaptureHref: "",
   productsOutOfStockHref: "",
-  getProductHref: () => "",
   orders: shop.ordersToday.totalCount,
   ordersToCapture: shop.ordersToCapture.totalCount,
   ordersToFulfill: shop.ordersToFulfill.totalCount,

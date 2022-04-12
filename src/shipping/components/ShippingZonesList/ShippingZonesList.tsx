@@ -16,7 +16,7 @@ import TableRowLink from "@saleor/components/TableRowLink";
 import { ShippingZoneFragment } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
-import { shippingZoneAddUrl } from "@saleor/shipping/urls";
+import { shippingZoneAddUrl, shippingZoneUrl } from "@saleor/shipping/urls";
 import { ListActions, ListProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -57,7 +57,6 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
     onPreviousPage,
     onRemove,
     onUpdateListSettings,
-    getRowHref,
     pageInfo,
     shippingZones,
     isChecked,
@@ -141,7 +140,7 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
                   className={classes.row}
                   hover={!!shippingZone}
                   key={shippingZone ? shippingZone.id : "skeleton"}
-                  href={shippingZone && getRowHref(shippingZone.id)}
+                  href={shippingZone && shippingZoneUrl(shippingZone.id)}
                   selected={isSelected}
                 >
                   <TableCell padding="checkbox">

@@ -33,8 +33,7 @@ import {
   pageTypeListUrl,
   PageTypeListUrlDialog,
   PageTypeListUrlFilters,
-  PageTypeListUrlQueryParams,
-  pageTypeUrl
+  PageTypeListUrlQueryParams
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -183,7 +182,6 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
         onBack={() => navigate(configurationMenuUrl)}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
-        getRowHref={id => pageTypeUrl(id)}
         onSort={handleSort}
         isChecked={isSelected}
         selected={selectedPageTypes.length}

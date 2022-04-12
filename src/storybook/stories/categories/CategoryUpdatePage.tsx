@@ -23,13 +23,11 @@ const updateProps: Omit<CategoryUpdatePageProps, "classes"> = {
   addCategoryHref: "",
   addProductHref: "",
   onBack: () => undefined,
-  getCategoryHref: () => "",
   onDelete: () => undefined,
   onImageDelete: () => undefined,
   onImageUpload: () => undefined,
   onNextPage: undefined,
   onPreviousPage: undefined,
-  getProductHref: () => "",
   onSubmit: () => undefined,
   pageInfo: {
     hasNextPage: true,

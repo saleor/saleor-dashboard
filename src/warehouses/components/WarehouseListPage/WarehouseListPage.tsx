@@ -51,7 +51,6 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
   onNextPage,
   onPreviousPage,
   onRemove,
-  getRowHref,
   onSearchChange,
   onTabChange,
   onTabDelete,
@@ -133,7 +132,6 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
           onPreviousPage={onPreviousPage}
           onRemove={onRemove}
           onUpdateListSettings={onUpdateListSettings}
-          getRowHref={getRowHref}
           {...listProps}
         />
       </Card>

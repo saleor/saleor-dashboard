@@ -8,7 +8,7 @@ import TablePagination from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { PageTypeFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { PageTypeListUrlSortField } from "@saleor/pageTypes/urls";
+import { PageTypeListUrlSortField, pageTypeUrl } from "@saleor/pageTypes/urls";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -42,7 +42,6 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
     pageInfo,
     onNextPage,
     onPreviousPage,
-    getRowHref,
     onSort,
     isChecked,
     selected,
@@ -103,7 +102,7 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
                 className={!!pageType ? classes.link : undefined}
                 hover={!!pageType}
                 key={pageType ? pageType.id : "skeleton"}
-                href={pageType && getRowHref(pageType.id)}
+                href={pageType && pageTypeUrl(pageType.id)}
                 selected={isSelected}
                 data-test-id={"id-" + pageType?.id}
               >

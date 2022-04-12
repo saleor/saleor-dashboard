@@ -31,8 +31,7 @@ import {
   categoryListUrl,
   CategoryListUrlDialog,
   CategoryListUrlFilters,
-  CategoryListUrlQueryParams,
-  categoryUrl
+  CategoryListUrlQueryParams
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -155,7 +154,6 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         tabs={tabs.map(tab => tab.name)}
         settings={settings}
         sort={getSortParams(params)}
-        getRowHref={id => categoryUrl(id)}
         onSort={handleSort}
         disabled={loading}
         onNextPage={loadNextPage}

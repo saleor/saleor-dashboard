@@ -191,7 +191,6 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
-        getRowHref={id => staffMemberDetailsUrl(id)}
         onSort={handleSort}
       />
       <StaffAddMemberDialog

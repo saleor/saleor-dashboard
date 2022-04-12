@@ -16,7 +16,7 @@ import {
   transformOrderStatus,
   transformPaymentStatus
 } from "@saleor/misc";
-import { OrderDraftListUrlSortField } from "@saleor/orders/urls";
+import { OrderDraftListUrlSortField, orderUrl } from "@saleor/orders/urls";
 import { ListActions, ListProps, RelayToFlat, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
@@ -67,7 +67,6 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
     onPreviousPage,
     onNextPage,
     onUpdateListSettings,
-    getRowHref,
     onSort,
     isChecked,
     selected,
@@ -171,7 +170,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
                 data-test-id="draft-order-table-row"
                 hover={!!order}
                 className={!!order ? classes.link : undefined}
-                href={order && getRowHref(order.id)}
+                href={order && orderUrl(order.id)}
                 key={order ? order.id : "skeleton"}
                 selected={isSelected}
               >

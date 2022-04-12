@@ -33,8 +33,7 @@ import CustomerListPage from "../../components/CustomerListPage";
 import {
   customerListUrl,
   CustomerListUrlDialog,
-  CustomerListUrlQueryParams,
-  customerUrl
+  CustomerListUrlQueryParams
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -169,7 +168,6 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
-        getRowHref={id => customerUrl(id)}
         onSort={handleSort}
         toolbar={
           <IconButton

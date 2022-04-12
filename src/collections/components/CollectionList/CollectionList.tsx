@@ -1,5 +1,8 @@
 import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
-import { CollectionListUrlSortField } from "@saleor/collections/urls";
+import {
+  CollectionListUrlSortField,
+  collectionUrl
+} from "@saleor/collections/urls";
 import { canBeSorted } from "@saleor/collections/views/CollectionList/sort";
 import { ChannelsAvailabilityDropdown } from "@saleor/components/ChannelsAvailabilityDropdown";
 import {
@@ -73,7 +76,6 @@ const CollectionList: React.FC<CollectionListProps> = props => {
     onNextPage,
     onPreviousPage,
     onUpdateListSettings,
-    getRowHref,
     onSort,
     pageInfo,
     isChecked,
@@ -172,7 +174,7 @@ const CollectionList: React.FC<CollectionListProps> = props => {
               <TableRowLink
                 className={classes.tableRow}
                 hover={!!collection}
-                href={collection && getRowHref(collection.id)}
+                href={collection && collectionUrl(collection.id)}
                 key={collection ? collection.id : "skeleton"}
                 selected={isSelected}
                 data-test-id={"id-" + maybe(() => collection.id)}

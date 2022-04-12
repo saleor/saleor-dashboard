@@ -11,7 +11,7 @@ import React from "react";
 
 import { getDatePeriod, getUserName } from "../../misc";
 import { orderListUrl } from "../../orders/urls";
-import { productListUrl, productVariantEditUrl } from "../../products/urls";
+import { productListUrl } from "../../products/urls";
 import HomePage from "../components/HomePage";
 
 const HomeSection = () => {
@@ -32,9 +32,6 @@ const HomeSection = () => {
       orders={data?.ordersToday?.totalCount}
       sales={data?.salesToday?.gross}
       topProducts={mapEdgesToItems(data?.productTopToday)}
-      getProductHref={(productId, variantId) =>
-        productVariantEditUrl(productId, variantId)
-      }
       createNewChannelHref={channelsListUrl()}
       ordersToCaptureHref={orderListUrl({
         status: [OrderStatusFilter.READY_TO_CAPTURE],

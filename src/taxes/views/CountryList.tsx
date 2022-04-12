@@ -14,7 +14,6 @@ import { extractMutationErrors, maybe } from "../../misc";
 import CountryListPage, {
   TaxesConfigurationFormData
 } from "../components/CountryListPage";
-import { countryTaxRatesUrl } from "../urls";
 
 export const CountryList: React.FC = () => {
   const intl = useIntl();
@@ -76,7 +75,6 @@ export const CountryList: React.FC = () => {
         loading || fetchTaxesOpts.loading || updateTaxSettingsOpts.loading
       }
       onBack={() => navigate(configurationMenuUrl)}
-      getRowHref={code => countryTaxRatesUrl(code)}
       onSubmit={handleSubmit}
       onTaxFetch={fetchTaxes}
       saveButtonBarState={updateTaxSettingsOpts.status}

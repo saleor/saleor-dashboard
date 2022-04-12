@@ -38,8 +38,7 @@ import AttributeListPage from "../../components/AttributeListPage";
 import {
   attributeListUrl,
   AttributeListUrlDialog,
-  AttributeListUrlQueryParams,
-  attributeUrl
+  AttributeListUrlQueryParams
 } from "../../urls";
 import { getFilterQueryParam } from "./filters";
 import { getSortQueryVariables } from "./sort";
@@ -154,7 +153,6 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
         onFilterChange={changeFilters}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
-        getRowHref={id => attributeUrl(id)}
         onSearchChange={handleSearchChange}
         onSort={handleSort}
         onTabChange={handleTabChange}

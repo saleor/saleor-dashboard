@@ -10,6 +10,7 @@ import TableRowLink from "@saleor/components/TableRowLink";
 import { CategoryDetailsQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
+import { productUrl } from "@saleor/products/urls";
 import { ListActions, ListProps, RelayToFlat } from "@saleor/types";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -65,8 +66,7 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
     toggleAll,
     toolbar,
     onNextPage,
-    onPreviousPage,
-    getRowHref
+    onPreviousPage
   } = props;
 
   const classes = useStyles(props);
@@ -119,7 +119,7 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
                   selected={isSelected}
                   hover={!!product}
                   key={product ? product.id : "skeleton"}
-                  href={product && getRowHref(product.id)}
+                  href={product && productUrl(product.id)}
                   className={classes.link}
                 >
                   <TableCell padding="checkbox">

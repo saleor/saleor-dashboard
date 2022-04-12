@@ -199,7 +199,6 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         onAdd={() => openModal("create-order")}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
-        getRowHref={id => orderUrl(id)}
         onSort={handleSort}
         onUpdateListSettings={updateListSettings}
         isChecked={isSelected}

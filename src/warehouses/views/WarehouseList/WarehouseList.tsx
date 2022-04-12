@@ -30,8 +30,7 @@ import WarehouseListPage from "@saleor/warehouses/components/WarehouseListPage";
 import {
   warehouseListUrl,
   WarehouseListUrlDialog,
-  WarehouseListUrlQueryParams,
-  warehouseUrl
+  WarehouseListUrlQueryParams
 } from "@saleor/warehouses/urls";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -160,7 +159,6 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
         onRemove={id => openModal("delete", { id })}
         onSort={handleSort}
         onUpdateListSettings={updateListSettings}
-        getRowHref={id => warehouseUrl(id)}
         sort={getSortParams(params)}
       />
       <WarehouseDeleteDialog

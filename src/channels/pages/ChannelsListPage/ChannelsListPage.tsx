@@ -5,6 +5,7 @@ import {
   TableHead,
   TableRow
 } from "@material-ui/core";
+import { channelUrl } from "@saleor/channels/urls";
 import Button from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
@@ -28,7 +29,6 @@ export interface ChannelsListPageProps {
   limits: RefreshLimitsQuery["shop"]["limits"];
   navigateToChannelCreate: () => void;
   onBack: () => void;
-  getRowHref: (id: string) => string;
   onRemove: (id: string) => void;
 }
 
@@ -39,8 +39,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
   limits,
   navigateToChannelCreate,
   onBack,
-  onRemove,
-  getRowHref
+  onRemove
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -116,7 +115,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
                   hover={!!channel}
                   key={channel ? channel.id : "skeleton"}
                   className={classes.tableRow}
-                  href={channel && getRowHref(channel.id)}
+                  href={channel && channelUrl(channel.id)}
                 >
                   <TableCell className={classes.colName}>
                     <span data-test-id="name">
