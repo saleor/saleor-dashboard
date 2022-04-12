@@ -31,7 +31,7 @@ function useStateFromProps<T>(
         onRefresh(data, newData);
       }
     }
-  }, [shouldUpdate]);
+  });
 
   return [state, setState];
 }
