@@ -1,6 +1,6 @@
 {
   "baseUrl": "http://localhost:9000/",
-  "projectId": "k8be36",
+  "projectId": "51ef7c",
   "chromeWebSecurity": false,
   "videoUploadOnPasses": false,
   "defaultCommandTimeout": 15000,

@@ -34,6 +34,7 @@ declare namespace Cypress {
     fillUpAddressForm(address: {}): Chainable<any>;
     fillUpBasicAddress(address: {}): Chainable<any>;
     confirmationMessageShouldDisappear(): Chainable<any>;
+    confirmationMessageShouldAppear(): Chainable<any>;
     waitForProgressBarToNotExist(): Chainable<any>;
     waitForProgressBarToNotBeVisible(): Chainable<any>;
     visitAndWaitForProgressBarToDisappear(url: string): Chainable<any>;
@@ -46,7 +47,12 @@ declare namespace Cypress {
     sendRequestWithQuery(query: string): Chainable<any>;
     fillMultiSelect(selectSelector: string, option: string): Chainable<any>;
     createNewOption(selectSelector: string, newOption: string): Chainable<any>;
-    findElementOnTable(elementName: string): Chainable<any>;
+    findElementsAndMakeActionOnTable({
+      elementsGraphqlAlias: string,
+      elementsName: string,
+      elementsIds: string,
+      actionFunction
+    }): Chainable<any>;
     searchInTable(query: string): Chainable<any>;
     waitForRequestAndCheckIfNoErrors(alias: string): Chainable<any>;
     deleteElementWithReqAlias(alias: string): Chainable<any>;

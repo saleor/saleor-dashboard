@@ -221,7 +221,11 @@ const OrderCustomerAddressesEditForm: React.FC<OrderCustomerAddressesEditFormPro
     rest
   );
 
-  return <form onSubmit={props.submit}>{children(props)}</form>;
+  return (
+    <form onSubmit={props.submit} autoComplete="off">
+      {children(props)}
+    </form>
+  );
 };
 
 OrderCustomerAddressesEditForm.displayName = "OrderCustomerAddressesEditForm";

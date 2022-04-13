@@ -14,7 +14,7 @@ export const productTypeDeleteMutation = gql`
 `;
 
 export const productTypeBulkDeleteMutation = gql`
-  mutation ProductTypeBulkDelete($ids: [ID]!) {
+  mutation ProductTypeBulkDelete($ids: [ID!]!) {
     productTypeBulkDelete(ids: $ids) {
       errors {
         ...ProductTypeBulkDeleteErrorFragment
@@ -53,7 +53,7 @@ export const assignProductAttributeMutation = gql`
 `;
 
 export const unassignProductAttributeMutation = gql`
-  mutation UnassignProductAttribute($id: ID!, $ids: [ID]!) {
+  mutation UnassignProductAttribute($id: ID!, $ids: [ID!]!) {
     productAttributeUnassign(productTypeId: $id, attributeIds: $ids) {
       errors {
         ...ProductAttributeUnassignErrorFragment
@@ -101,7 +101,7 @@ export const productTypeAttributeReorder = gql`
 
 export const productAttributeAssignmentUpdate = gql`
   mutation ProductAttributeAssignmentUpdate(
-    $operations: [ProductAttributeAssignmentUpdateInput]!
+    $operations: [ProductAttributeAssignmentUpdateInput!]!
     $productTypeId: ID!
   ) {
     productAttributeAssignmentUpdate(

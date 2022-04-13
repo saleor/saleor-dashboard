@@ -32,6 +32,9 @@ export const urlList = {
   warehouses: "warehouses/"
 };
 
+export const addVariantUrl = productId =>
+  `${urlList.products}${productId}/${urlList.variants}add`;
+
 export const appDetailsUrl = appId => `${urlList.apps}custom/${appId}`;
 
 export const attributeDetailsUrl = attributeId =>
