@@ -6,7 +6,9 @@
     "mutationType": {
       "name": "Mutation"
     },
-    "subscriptionType": null,
+    "subscriptionType": {
+      "name": "Subscription"
+    },
     "types": [
       {
         "kind": "OBJECT",
@@ -2683,7 +2685,7 @@
       {
         "kind": "OBJECT",
         "name": "AppCreate",
-        "description": "Creates a new app. Requires one of the following permissions: MANAGE_APPS.",
+        "description": "Creates a new app. Requires the following permissions: AUTHENTICATED_STAFF_USER and MANAGE_APPS.",
         "fields": [
           {
             "name": "authToken",
@@ -3686,7 +3688,7 @@
       {
         "kind": "OBJECT",
         "name": "AppInstall",
-        "description": "Install new app by using app manifest. Requires one of the following permissions: MANAGE_APPS.",
+        "description": "Install new app by using app manifest. Requires the following permissions: AUTHENTICATED_STAFF_USER and MANAGE_APPS.",
         "fields": [
           {
             "name": "appErrors",
@@ -9370,6 +9372,29 @@
       },
       {
         "kind": "OBJECT",
+        "name": "CategoryCreated",
+        "description": null,
+        "fields": [
+          {
+            "name": "category",
+            "description": "New in Saleor 3.2. Look up a category. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Category",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "CategoryDelete",
         "description": "Deletes a category. Requires one of the following permissions: MANAGE_PRODUCTS.",
         "fields": [
@@ -9424,6 +9449,29 @@
           {
             "name": "category",
             "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Category",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CategoryDeleted",
+        "description": null,
+        "fields": [
+          {
+            "name": "category",
+            "description": "New in Saleor 3.2. Look up a category. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -10043,6 +10091,29 @@
           {
             "name": "category",
             "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Category",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CategoryUpdated",
+        "description": null,
+        "fields": [
+          {
+            "name": "category",
+            "description": "New in Saleor 3.2. Look up a category. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -11791,7 +11862,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "This field will be removed in Saleor 4.0. Always returns `True`."
+            "deprecationReason": "This field will be removed in Saleor 4.0. Always returns `true`."
           },
           {
             "name": "checkoutErrors",
@@ -11951,6 +12022,29 @@
           }
         ],
         "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CheckoutCreated",
+        "description": null,
+        "fields": [
+          {
+            "name": "checkout",
+            "description": "New in Saleor 3.2. Look up a Checkout. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Checkout",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -12951,6 +13045,69 @@
             "defaultValue": null,
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "price",
+            "description": "New in Saleor 3.1. Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "PositiveDecimal",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "CheckoutLineUpdateInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "quantity",
+            "description": "The number of items purchased. Optional for apps, required for any other users.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "variantId",
+            "description": "ID of the product variant.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "price",
+            "description": "New in Saleor 3.1. Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "PositiveDecimal",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "interfaces": null,
@@ -13511,6 +13668,29 @@
           }
         ],
         "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CheckoutUpdated",
+        "description": null,
+        "fields": [
+          {
+            "name": "checkout",
+            "description": "New in Saleor 3.2. Look up a Checkout. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Checkout",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -14648,6 +14828,42 @@
       },
       {
         "kind": "OBJECT",
+        "name": "CollectionCreated",
+        "description": null,
+        "fields": [
+          {
+            "name": "collection",
+            "description": "New in Saleor 3.2. Look up a collection. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Collection",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "CollectionDelete",
         "description": "Deletes a collection. Requires one of the following permissions: MANAGE_PRODUCTS.",
         "fields": [
@@ -14703,6 +14919,42 @@
             "name": "collection",
             "description": null,
             "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Collection",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CollectionDeleted",
+        "description": null,
+        "fields": [
+          {
+            "name": "collection",
+            "description": "New in Saleor 3.2. Look up a collection. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
             "type": {
               "kind": "OBJECT",
               "name": "Collection",
@@ -15665,6 +15917,42 @@
             "name": "collection",
             "description": null,
             "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Collection",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CollectionUpdated",
+        "description": null,
+        "fields": [
+          {
+            "name": "collection",
+            "description": "New in Saleor 3.2. Look up a collection. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
             "type": {
               "kind": "OBJECT",
               "name": "Collection",
@@ -17911,6 +18199,29 @@
       },
       {
         "kind": "OBJECT",
+        "name": "CustomerCreated",
+        "description": null,
+        "fields": [
+          {
+            "name": "user",
+            "description": "New in Saleor 3.2. Look up a user. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "User",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "CustomerDelete",
         "description": "Deletes a customer. Requires one of the following permissions: MANAGE_USERS.",
         "fields": [
@@ -18452,6 +18763,29 @@
           {
             "name": "user",
             "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "User",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CustomerUpdated",
+        "description": null,
+        "fields": [
+          {
+            "name": "user",
+            "description": "New in Saleor 3.2. Look up a user. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -20343,6 +20677,29 @@
       },
       {
         "kind": "OBJECT",
+        "name": "DraftOrderCreated",
+        "description": null,
+        "fields": [
+          {
+            "name": "order",
+            "description": "New in Saleor 3.2. Look up an order. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Order",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "DraftOrderDelete",
         "description": "Deletes a draft order. Requires one of the following permissions: MANAGE_ORDERS.",
         "fields": [
@@ -20397,6 +20754,29 @@
           {
             "name": "order",
             "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Order",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "DraftOrderDeleted",
+        "description": null,
+        "fields": [
+          {
+            "name": "order",
+            "description": "New in Saleor 3.2. Look up an order. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -20691,6 +21071,240 @@
       },
       {
         "kind": "OBJECT",
+        "name": "DraftOrderUpdated",
+        "description": null,
+        "fields": [
+          {
+            "name": "order",
+            "description": "New in Saleor 3.2. Look up an order. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Order",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "UNION",
+        "name": "Event",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": [
+          {
+            "kind": "OBJECT",
+            "name": "CategoryCreated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "CategoryUpdated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "CategoryDeleted",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "OrderCreated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "OrderUpdated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "OrderConfirmed",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "OrderFullyPaid",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "OrderCancelled",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "OrderFulfilled",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "DraftOrderCreated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "DraftOrderUpdated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "DraftOrderDeleted",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "ProductCreated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "ProductUpdated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "ProductDeleted",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "ProductVariantCreated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "ProductVariantUpdated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "ProductVariantOutOfStock",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "ProductVariantBackInStock",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "ProductVariantDeleted",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "SaleCreated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "SaleUpdated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "SaleDeleted",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "InvoiceRequested",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "InvoiceDeleted",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "InvoiceSent",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "FulfillmentCreated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "FulfillmentCanceled",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "CustomerCreated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "CustomerUpdated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "CollectionCreated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "CollectionUpdated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "CollectionDeleted",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "CheckoutCreated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "CheckoutUpdated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "PageCreated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "PageUpdated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "PageDeleted",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "TranslationCreated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "TranslationUpdated",
+            "ofType": null
+          }
+        ]
+      },
+      {
+        "kind": "OBJECT",
         "name": "EventDelivery",
         "description": "Event delivery.",
         "fields": [
@@ -20894,7 +21508,7 @@
           },
           {
             "name": "taskId",
-            "description": null,
+            "description": "Task id for delivery attempt.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -20906,7 +21520,7 @@
           },
           {
             "name": "duration",
-            "description": null,
+            "description": "Delivery attempt duration.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -20918,7 +21532,7 @@
           },
           {
             "name": "response",
-            "description": null,
+            "description": "Delivery attempt response content.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -20930,7 +21544,7 @@
           },
           {
             "name": "responseHeaders",
-            "description": null,
+            "description": "Response headers for delivery attempt.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -20941,8 +21555,20 @@
             "deprecationReason": null
           },
           {
+            "name": "responseStatusCode",
+            "description": "Delivery attempt response status code.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "requestHeaders",
-            "description": null,
+            "description": "Request headers for delivery attempt.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -22012,19 +22638,25 @@
         "enumValues": [
           {
             "name": "STATUS",
-            "description": "Sort export file by status.",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "CREATED_AT",
-            "description": "Sort export file by created at.",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "UPDATED_AT",
-            "description": "Sort export file by updated at.",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "LAST_MODIFIED_AT",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -23665,6 +24297,52 @@
           }
         ],
         "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "FulfillmentCanceled",
+        "description": null,
+        "fields": [
+          {
+            "name": "fulfillment",
+            "description": "New in Saleor 3.2. Look up a Fulfillment. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Fulfillment",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "FulfillmentCreated",
+        "description": null,
+        "fields": [
+          {
+            "name": "fulfillment",
+            "description": "New in Saleor 3.2. Look up a Fulfillment. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Fulfillment",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -27568,6 +28246,29 @@
       },
       {
         "kind": "OBJECT",
+        "name": "InvoiceDeleted",
+        "description": null,
+        "fields": [
+          {
+            "name": "invoice",
+            "description": "New in Saleor 3.2. Look up an Invoice. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Invoice",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "InvoiceError",
         "description": null,
         "fields": [
@@ -27832,6 +28533,29 @@
       },
       {
         "kind": "OBJECT",
+        "name": "InvoiceRequested",
+        "description": null,
+        "fields": [
+          {
+            "name": "invoice",
+            "description": "New in Saleor 3.2. Look up an Invoice. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Invoice",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "InvoiceSendNotification",
         "description": "Send an invoice notification to the customer. Requires one of the following permissions: MANAGE_ORDERS.",
         "fields": [
@@ -27886,6 +28610,29 @@
           {
             "name": "invoice",
             "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Invoice",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "InvoiceSent",
+        "description": null,
+        "fields": [
+          {
+            "name": "invoice",
+            "description": "New in Saleor 3.2. Look up an Invoice. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -27975,7 +28722,7 @@
       {
         "kind": "SCALAR",
         "name": "JSONString",
-        "description": "Allows use of a JSON String for input / output from the GraphQL schema.\n\nUse of this type is *not recommended* as you lose the benefits of having a defined, static\nschema (one of the key benefits of GraphQL).",
+        "description": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -35583,6 +36330,12 @@
           },
           {
             "name": "REQUIRED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NOT_UPDATED",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -44046,7 +44799,7 @@
                       "name": null,
                       "ofType": {
                         "kind": "INPUT_OBJECT",
-                        "name": "CheckoutLineInput",
+                        "name": "CheckoutLineUpdateInput",
                         "ofType": null
                       }
                     }
@@ -44382,6 +45135,47 @@
             "type": {
               "kind": "OBJECT",
               "name": "CheckoutLanguageCodeUpdate",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "orderCreateFromCheckout",
+            "description": "New in Saleor 3.2. Create new order from existing checkout. Note: this feature is in a preview state and can be subject to changes at later point. Requires one of the following permissions: HANDLE_CHECKOUTS.",
+            "args": [
+              {
+                "name": "id",
+                "description": "ID of a checkout that will be converted to an order.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "removeCheckout",
+                "description": "Determines if checkout should be removed after creating an order. Default true.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                },
+                "defaultValue": "true",
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "OrderCreateFromCheckout",
               "ofType": null
             },
             "isDeprecated": false,
@@ -45033,7 +45827,7 @@
           },
           {
             "name": "appCreate",
-            "description": "Creates a new app. Requires one of the following permissions: MANAGE_APPS.",
+            "description": "Creates a new app. Requires the following permissions: AUTHENTICATED_STAFF_USER and MANAGE_APPS.",
             "args": [
               {
                 "name": "input",
@@ -45223,7 +46017,7 @@
           },
           {
             "name": "appInstall",
-            "description": "Install new app by using app manifest. Requires one of the following permissions: MANAGE_APPS.",
+            "description": "Install new app by using app manifest. Requires the following permissions: AUTHENTICATED_STAFF_USER and MANAGE_APPS.",
             "args": [
               {
                 "name": "input",
@@ -48539,7 +49333,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "This field will be removed in Saleor 4.0. Use discounts field."
+            "deprecationReason": "This field will be removed in Saleor 4.0. Use the `discounts` field instead."
           },
           {
             "name": "discountName",
@@ -48551,7 +49345,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "This field will be removed in Saleor 4.0. Use discounts field."
+            "deprecationReason": "This field will be removed in Saleor 4.0. Use the `discounts` field instead."
           },
           {
             "name": "translatedDiscountName",
@@ -48563,7 +49357,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "This field will be removed in Saleor 4.0. Use discounts field. "
+            "deprecationReason": "This field will be removed in Saleor 4.0. Use the `discounts` field instead. "
           },
           {
             "name": "discounts",
@@ -48919,6 +49713,29 @@
       },
       {
         "kind": "OBJECT",
+        "name": "OrderCancelled",
+        "description": null,
+        "fields": [
+          {
+            "name": "order",
+            "description": "New in Saleor 3.2. Look up an order. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Order",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "OrderCapture",
         "description": "Capture an order. Requires one of the following permissions: MANAGE_ORDERS.",
         "fields": [
@@ -49061,6 +49878,29 @@
       },
       {
         "kind": "OBJECT",
+        "name": "OrderConfirmed",
+        "description": null,
+        "fields": [
+          {
+            "name": "order",
+            "description": "New in Saleor 3.2. Look up an order. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Order",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "OrderCountableConnection",
         "description": null,
         "fields": [
@@ -49155,6 +49995,262 @@
                 "name": "String",
                 "ofType": null
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "OrderCreateFromCheckout",
+        "description": "New in Saleor 3.2. Create new order from existing checkout. Note: this feature is in a preview state and can be subject to changes at later point. Requires one of the following permissions: HANDLE_CHECKOUTS.",
+        "fields": [
+          {
+            "name": "order",
+            "description": "Placed order.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Order",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "OrderCreateFromCheckoutError",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "OrderCreateFromCheckoutError",
+        "description": null,
+        "fields": [
+          {
+            "name": "field",
+            "description": "Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "message",
+            "description": "The error message.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "code",
+            "description": "The error code.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "OrderCreateFromCheckoutErrorCode",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "variants",
+            "description": "List of variant IDs which causes the error.",
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "lines",
+            "description": "List of line Ids which cause the error.",
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "OrderCreateFromCheckoutErrorCode",
+        "description": "An enumeration.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "GRAPHQL_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NOT_FOUND",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CHANNEL_INACTIVE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INSUFFICIENT_STOCK",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "VOUCHER_NOT_APPLICABLE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GIFT_CARD_NOT_APPLICABLE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "TAX_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_METHOD_NOT_SET",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "BILLING_ADDRESS_NOT_SET",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_ADDRESS_NOT_SET",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INVALID_SHIPPING_METHOD",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NO_LINES",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "EMAIL_NOT_SET",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "UNAVAILABLE_VARIANT_IN_CHANNEL",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "OrderCreated",
+        "description": null,
+        "fields": [
+          {
+            "name": "order",
+            "description": "New in Saleor 3.2. Look up an order. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Order",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -51377,6 +52473,52 @@
       },
       {
         "kind": "OBJECT",
+        "name": "OrderFulfilled",
+        "description": null,
+        "fields": [
+          {
+            "name": "order",
+            "description": "New in Saleor 3.2. Look up an order. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Order",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "OrderFullyPaid",
+        "description": null,
+        "fields": [
+          {
+            "name": "order",
+            "description": "New in Saleor 3.2. Look up an order. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Order",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "OrderLine",
         "description": "Represents order line of particular order.",
         "fields": [
@@ -53004,7 +54146,19 @@
           },
           {
             "name": "CREATION_DATE",
-            "description": "Sort orders by creation date.",
+            "description": "Sort orders by creation date. \n\nDEPRECATED: this field will be removed in Saleor 4.0.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CREATED_AT",
+            "description": "Sort orders by creation date. \n\nDEPRECATED: this field will be removed in Saleor 4.0.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "LAST_MODIFIED_AT",
+            "description": "Sort orders by last modified at.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -53393,6 +54547,29 @@
           }
         ],
         "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "OrderUpdated",
+        "description": null,
+        "fields": [
+          {
+            "name": "order",
+            "description": "New in Saleor 3.2. Look up an order. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Order",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -54340,6 +55517,29 @@
       },
       {
         "kind": "OBJECT",
+        "name": "PageCreated",
+        "description": null,
+        "fields": [
+          {
+            "name": "page",
+            "description": "New in Saleor 3.2. Look up a page. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Page",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "PageDelete",
         "description": "Deletes a page. Requires one of the following permissions: MANAGE_PAGES.",
         "fields": [
@@ -54394,6 +55594,29 @@
           {
             "name": "page",
             "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Page",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "PageDeleted",
+        "description": null,
+        "fields": [
+          {
+            "name": "page",
+            "description": "New in Saleor 3.2. Look up a page. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -56325,6 +57548,29 @@
           {
             "name": "page",
             "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Page",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "PageUpdated",
+        "description": null,
+        "fields": [
+          {
+            "name": "page",
+            "description": "New in Saleor 3.2. Look up a page. Note: this feature is in a preview state and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -61505,6 +62751,54 @@
       },
       {
         "kind": "OBJECT",
+        "name": "ProductCreated",
+        "description": null,
+        "fields": [
+          {
+            "name": "product",
+            "description": "New in Saleor 3.2. Look up a product. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Product",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "category",
+            "description": "New in Saleor 3.2. Look up a category. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Category",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "ProductDelete",
         "description": "Deletes a product. Requires one of the following permissions: MANAGE_PRODUCTS.",
         "fields": [
@@ -61563,6 +62857,54 @@
             "type": {
               "kind": "OBJECT",
               "name": "Product",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ProductDeleted",
+        "description": null,
+        "fields": [
+          {
+            "name": "product",
+            "description": "New in Saleor 3.2. Look up a product. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Product",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "category",
+            "description": "New in Saleor 3.2. Look up a category. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Category",
               "ofType": null
             },
             "isDeprecated": false,
@@ -61693,6 +63035,12 @@
           },
           {
             "name": "ATTRIBUTE_VARIANTS_DISABLED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "MEDIA_ALREADY_ASSIGNED",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -63137,6 +64485,18 @@
           {
             "name": "PUBLICATION_DATE",
             "description": "Sort products by publication date.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "PUBLISHED_AT",
+            "description": "Sort products by publication date.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "LAST_MODIFIED_AT",
+            "description": "Sort products by update date.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -65057,6 +66417,54 @@
       },
       {
         "kind": "OBJECT",
+        "name": "ProductUpdated",
+        "description": null,
+        "fields": [
+          {
+            "name": "product",
+            "description": "New in Saleor 3.2. Look up a product. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Product",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "category",
+            "description": "New in Saleor 3.2. Look up a category. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Category",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "ProductVariant",
         "description": "Represents a version of a product such as different size or color.",
         "fields": [
@@ -65572,6 +66980,54 @@
             "ofType": null
           }
         ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ProductVariantBackInStock",
+        "description": null,
+        "fields": [
+          {
+            "name": "productVariant",
+            "description": "New in Saleor 3.2. Look up a product variant. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ProductVariant",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "warehouse",
+            "description": "New in Saleor 3.2. Look up a warehouse. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Warehouse",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -66429,6 +67885,42 @@
       },
       {
         "kind": "OBJECT",
+        "name": "ProductVariantCreated",
+        "description": null,
+        "fields": [
+          {
+            "name": "productVariant",
+            "description": "New in Saleor 3.2. Look up a product variant. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ProductVariant",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "ProductVariantDelete",
         "description": "Deletes a product variant. Requires one of the following permissions: MANAGE_PRODUCTS.",
         "fields": [
@@ -66484,6 +67976,42 @@
             "name": "productVariant",
             "description": null,
             "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ProductVariant",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ProductVariantDeleted",
+        "description": null,
+        "fields": [
+          {
+            "name": "productVariant",
+            "description": "New in Saleor 3.2. Look up a product variant. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
             "type": {
               "kind": "OBJECT",
               "name": "ProductVariant",
@@ -66673,6 +68201,54 @@
           }
         ],
         "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ProductVariantOutOfStock",
+        "description": null,
+        "fields": [
+          {
+            "name": "productVariant",
+            "description": "New in Saleor 3.2. Look up a product variant. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ProductVariant",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "warehouse",
+            "description": "New in Saleor 3.2. Look up a warehouse. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Warehouse",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -66933,6 +68509,66 @@
         ],
         "inputFields": null,
         "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "ProductVariantSortField",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "LAST_MODIFIED_AT",
+            "description": "Sort products variants by last modified at.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "ProductVariantSortingInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "direction",
+            "description": "Specifies the direction in which to sort products.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "OrderDirection",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "field",
+            "description": "Sort productVariants by the selected field.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "ProductVariantSortField",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -67456,6 +69092,42 @@
             "name": "productVariant",
             "description": null,
             "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ProductVariant",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ProductVariantUpdated",
+        "description": null,
+        "fields": [
+          {
+            "name": "productVariant",
+            "description": "New in Saleor 3.2. Look up a product variant. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
             "type": {
               "kind": "OBJECT",
               "name": "ProductVariant",
@@ -68833,6 +70505,18 @@
                 "type": {
                   "kind": "INPUT_OBJECT",
                   "name": "ProductVariantFilterInput",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "sortBy",
+                "description": "Sort products variants.",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ProductVariantSortingInput",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -73180,6 +74864,42 @@
       },
       {
         "kind": "OBJECT",
+        "name": "SaleCreated",
+        "description": null,
+        "fields": [
+          {
+            "name": "sale",
+            "description": "New in Saleor 3.2. Look up a sale. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Sale",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "SaleDelete",
         "description": "Deletes a sale. Requires one of the following permissions: MANAGE_DISCOUNTS.",
         "fields": [
@@ -73235,6 +74955,42 @@
             "name": "sale",
             "description": null,
             "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Sale",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "SaleDeleted",
+        "description": null,
+        "fields": [
+          {
+            "name": "sale",
+            "description": "New in Saleor 3.2. Look up a sale. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
             "type": {
               "kind": "OBJECT",
               "name": "Sale",
@@ -73607,6 +75363,18 @@
             "description": "Sort sales by type.",
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "CREATED_AT",
+            "description": "Sort sales by created at.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "LAST_MODIFIED_AT",
+            "description": "Sort sales by last modified at.",
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "possibleTypes": null
@@ -73968,6 +75736,42 @@
             "name": "sale",
             "description": null,
             "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Sale",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "SaleUpdated",
+        "description": null,
+        "fields": [
+          {
+            "name": "sale",
+            "description": "New in Saleor 3.2. Look up a sale. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
             "type": {
               "kind": "OBJECT",
               "name": "Sale",
@@ -80156,6 +81960,29 @@
       },
       {
         "kind": "OBJECT",
+        "name": "Subscription",
+        "description": null,
+        "fields": [
+          {
+            "name": "event",
+            "description": "New in Saleor 3.2. Look up subscription event. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "Event",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "TaxType",
         "description": "Representation of tax types fetched from tax gateway.",
         "fields": [
@@ -80895,6 +82722,29 @@
       },
       {
         "kind": "OBJECT",
+        "name": "TranslationCreated",
+        "description": null,
+        "fields": [
+          {
+            "name": "translation",
+            "description": "New in Saleor 3.2. Look up a translation. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "TranslationTypes",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "TranslationError",
         "description": null,
         "fields": [
@@ -81035,6 +82885,95 @@
           }
         ],
         "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "UNION",
+        "name": "TranslationTypes",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": [
+          {
+            "kind": "OBJECT",
+            "name": "ProductTranslation",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "CollectionTranslation",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "CategoryTranslation",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "AttributeTranslation",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "AttributeValueTranslation",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "ProductVariantTranslation",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "PageTranslation",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "ShippingMethodTranslation",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "SaleTranslation",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "VoucherTranslation",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "MenuItemTranslation",
+            "ofType": null
+          }
+        ]
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TranslationUpdated",
+        "description": null,
+        "fields": [
+          {
+            "name": "translation",
+            "description": "New in Saleor 3.2. Look up a translation. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "TranslationTypes",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -81482,7 +83421,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "This field will be removed in Saleor 4.0. Use the `checkout_tokens` field to fetch the user checkouts."
+            "deprecationReason": "This field will be removed in Saleor 4.0. Use the `checkoutTokens` field to fetch the user checkouts."
           },
           {
             "name": "checkoutTokens",
@@ -82453,6 +84392,18 @@
           {
             "name": "ORDER_COUNT",
             "description": "Sort users by order count.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CREATED_AT",
+            "description": "Sort users by created at.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "LAST_MODIFIED_AT",
+            "description": "Sort users by last modified at.",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -86538,7 +88489,7 @@
           },
           {
             "name": "targetUrl",
-            "description": null,
+            "description": "Target URL for webhook.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -86554,7 +88505,7 @@
           },
           {
             "name": "isActive",
-            "description": null,
+            "description": "Informs if webhook is activated.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -86570,7 +88521,19 @@
           },
           {
             "name": "secretKey",
-            "description": null,
+            "description": "Used to create a hash signature with each payload.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "subscriptionQuery",
+            "description": "Used to define payloads for specific events.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -86780,6 +88743,18 @@
           {
             "name": "secretKey",
             "description": "The secret key used to create a hash signature with each payload.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "query",
+            "description": "New in Saleor 3.2. Subscription query used to define a webhook payload. Note: this feature is in a preview state and can be subject to changes at later point.",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -87101,6 +89076,24 @@
             "deprecationReason": null
           },
           {
+            "name": "CATEGORY_CREATED",
+            "description": "A new category created.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CATEGORY_UPDATED",
+            "description": "A category is updated.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CATEGORY_DELETED",
+            "description": "A category is deleted.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "ORDER_CREATED",
             "description": "A new order is placed.",
             "isDeprecated": false,
@@ -87341,43 +89334,61 @@
         "enumValues": [
           {
             "name": "ANY_EVENTS",
-            "description": null,
+            "description": "All the events.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CATEGORY_CREATED",
+            "description": "A new category created.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CATEGORY_UPDATED",
+            "description": "A category is updated.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CATEGORY_DELETED",
+            "description": "A category is deleted.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "ORDER_CREATED",
-            "description": null,
+            "description": "A new order is placed.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "ORDER_CONFIRMED",
-            "description": null,
+            "description": "An order is confirmed (status change unconfirmed -> unfulfilled) by a staff user using the OrderConfirm mutation. It also triggers when the user completes the checkout and the shop setting `automatically_confirm_all_new_orders` is enabled.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "ORDER_FULLY_PAID",
-            "description": null,
+            "description": "Payment is made and an order is fully paid.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "ORDER_UPDATED",
-            "description": null,
+            "description": "An order is updated; triggered for all changes related to an order; covers all other order webhooks, except for ORDER_CREATED.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "ORDER_CANCELLED",
-            "description": null,
+            "description": "An order is cancelled.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "ORDER_FULFILLED",
-            "description": null,
+            "description": "An order is fulfilled.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -87419,85 +89430,85 @@
           },
           {
             "name": "INVOICE_REQUESTED",
-            "description": null,
+            "description": "An invoice for order requested.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "INVOICE_DELETED",
-            "description": null,
+            "description": "An invoice is deleted.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "INVOICE_SENT",
-            "description": null,
+            "description": "Invoice has been sent.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "CUSTOMER_CREATED",
-            "description": null,
+            "description": "A new customer account is created.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "CUSTOMER_UPDATED",
-            "description": null,
+            "description": "A customer account is updated.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "COLLECTION_CREATED",
-            "description": null,
+            "description": "A new collection is created.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "COLLECTION_UPDATED",
-            "description": null,
+            "description": "A collection is updated.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "COLLECTION_DELETED",
-            "description": null,
+            "description": "A collection is deleted.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "PRODUCT_CREATED",
-            "description": null,
+            "description": "A new product is created.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "PRODUCT_UPDATED",
-            "description": null,
+            "description": "A product is updated.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "PRODUCT_DELETED",
-            "description": null,
+            "description": "A product is deleted.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "PRODUCT_VARIANT_CREATED",
-            "description": null,
+            "description": "A new product variant is created.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "PRODUCT_VARIANT_UPDATED",
-            "description": null,
+            "description": "A product variant is updated.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "PRODUCT_VARIANT_DELETED",
-            "description": null,
+            "description": "A product variant is deleted.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -87515,49 +89526,49 @@
           },
           {
             "name": "CHECKOUT_CREATED",
-            "description": null,
+            "description": "A new checkout is created.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "CHECKOUT_UPDATED",
-            "description": null,
+            "description": "A checkout is updated. It also triggers all updates related to the checkout.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "FULFILLMENT_CREATED",
-            "description": null,
+            "description": "A new fulfillment is created.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "FULFILLMENT_CANCELED",
-            "description": null,
+            "description": "A fulfillment is cancelled.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "NOTIFY_USER",
-            "description": null,
+            "description": "User notification triggered.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "PAGE_CREATED",
-            "description": null,
+            "description": "A new page is created.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "PAGE_UPDATED",
-            "description": null,
+            "description": "A page is updated.",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "PAGE_DELETED",
-            "description": null,
+            "description": "A page is deleted.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -87715,6 +89726,24 @@
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
+          {
+            "name": "CATEGORY_CREATED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CATEGORY_UPDATED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CATEGORY_DELETED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "ORDER_CREATED",
             "description": null,
@@ -88134,6 +90163,18 @@
           {
             "name": "secretKey",
             "description": "Use to create a hash signature with each payload.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "query",
+            "description": "New in Saleor 3.2. Subscription query used to define a webhook payload. Note: this feature is in a preview state and can be subject to changes at later point.",
             "type": {
               "kind": "SCALAR",
               "name": "String",
