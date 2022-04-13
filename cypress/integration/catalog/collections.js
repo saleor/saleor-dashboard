@@ -261,13 +261,11 @@ filterTests({ definedTags: ["all"] }, () => {
     });
 
     it("assign product to collection. TC: SALEOR_0307", () => {
-      cy.log("przed tworzeniem imion");
       const collectionName = `Assign-${startsWith}${faker.datatype.number()}`;
       const productName = `Product-To-Assign-${startsWith}${faker.datatype.number()}`;
 
       let collection;
       let productToAssign;
-      cy.log("before request");
 
       createCollectionRequest(collectionName).then(collectionResp => {
         collection = collectionResp;
@@ -318,12 +316,12 @@ filterTests({ definedTags: ["all"] }, () => {
           .then(({ product: productResp }) => {
             productToAssign = productResp;
 
-            cy.visit(collectionDetailsUrl(collection.id));
-
             addProductToCollection({
               collectionId: collection.id,
               productId: productToAssign.id
             });
+
+            cy.visit(collectionDetailsUrl(collection.id));
 
             getProductDetails(productToAssign.id, defaultChannel.slug, "auth")
               .its("body.data.product.collections")
