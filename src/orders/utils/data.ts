@@ -4,7 +4,6 @@ import {
   CountryCode,
   FulfillmentStatus,
   OrderDetailsFragment,
-  OrderFulfillLineFragment,
   OrderFulfillStockInput,
   OrderLineFragment,
   OrderLineStockDataFragment,

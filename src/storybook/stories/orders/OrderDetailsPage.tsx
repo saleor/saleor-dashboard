@@ -21,6 +21,7 @@ const order = orderFixture(placeholderImage);
 const props: Omit<OrderDetailsPageProps, "classes"> = {
   disabled: false,
   selectedWarehouse: undefined,
+  approvalErrors: [],
   onBack: () => undefined,
   onBillingAddressEdit: undefined,
   onFulfillmentApprove: () => undefined,

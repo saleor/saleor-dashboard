@@ -6,7 +6,6 @@ import {
   OrderUpdateMutation,
   OrderUpdateMutationVariables,
   useCustomerAddressesQuery,
-  useOrderFulfillmentApproveMutation,
   useWarehouseListQuery,
   WarehouseFragment
 } from "@saleor/graphql";

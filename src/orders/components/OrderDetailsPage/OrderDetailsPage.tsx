@@ -74,7 +74,7 @@ export interface OrderDetailsPageProps {
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   selectedWarehouse?: WarehouseFragment;
-  approvalErrors: OrderErrorFragment[];
+  approvalErrors?: OrderErrorFragment[];
   onOrderLineAdd?: () => void;
   onOrderLineChange?: (
     id: string,

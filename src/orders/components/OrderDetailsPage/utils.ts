@@ -1,8 +1,4 @@
-import {
-  FulfillmentFragment,
-  OrderDetailsFragment,
-  OrderFulfillStockInput
-} from "@saleor/graphql";
+import { FulfillmentFragment, OrderDetailsFragment } from "@saleor/graphql";
 import { OrderFulfillStockInputFormsetData } from "@saleor/orders/utils/data";
 
 import {

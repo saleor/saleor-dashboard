@@ -8,12 +8,7 @@ import {
 import ActionDialog from "@saleor/components/ActionDialog";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import {
-  OrderFulfillLineFragment,
-  OrderFulfillStockInput,
-  OrderLineFragment
-} from "@saleor/graphql";
-import { FormsetData } from "@saleor/hooks/useFormset";
+import { OrderFulfillLineFragment, OrderLineFragment } from "@saleor/graphql";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import {
