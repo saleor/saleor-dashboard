@@ -29,12 +29,6 @@ export type Scalars = {
    * String, Boolean, Int, Float, List or Object.
    */
   GenericScalar: any;
-  /**
-   * Allows use of a JSON String for input / output from the GraphQL schema.
-   *
-   * Use of this type is *not recommended* as you lose the benefits of having a defined, static
-   * schema (one of the key benefits of GraphQL).
-   */
   JSONString: any;
   /**
    * Positive Decimal scalar implementation.
@@ -668,6 +662,17 @@ export type CheckoutLineInput = {
   quantity: Scalars['Int'];
   /** ID of the product variant. */
   variantId: Scalars['ID'];
+  /** New in Saleor 3.1. Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used. Note: this feature is in a preview state and can be subject to changes at later point. */
+  price?: InputMaybe<Scalars['PositiveDecimal']>;
+};
+
+export type CheckoutLineUpdateInput = {
+  /** The number of items purchased. Optional for apps, required for any other users. */
+  quantity?: InputMaybe<Scalars['Int']>;
+  /** ID of the product variant. */
+  variantId: Scalars['ID'];
+  /** New in Saleor 3.1. Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used. Note: this feature is in a preview state and can be subject to changes at later point. */
+  price?: InputMaybe<Scalars['PositiveDecimal']>;
 };
 
 export enum CheckoutSortField {
@@ -1294,12 +1299,10 @@ export type ExportFileFilterInput = {
 };
 
 export enum ExportFileSortField {
-  /** Sort export file by status. */
   STATUS = 'STATUS',
-  /** Sort export file by created at. */
   CREATED_AT = 'CREATED_AT',
-  /** Sort export file by updated at. */
-  UPDATED_AT = 'UPDATED_AT'
+  UPDATED_AT = 'UPDATED_AT',
+  LAST_MODIFIED_AT = 'LAST_MODIFIED_AT'
 }
 
 export type ExportFileSortingInput = {
@@ -2531,7 +2534,8 @@ export enum MetadataErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   NOT_FOUND = 'NOT_FOUND',
-  REQUIRED = 'REQUIRED'
+  REQUIRED = 'REQUIRED',
+  NOT_UPDATED = 'NOT_UPDATED'
 }
 
 export type MetadataFilter = {
@@ -2588,6 +2592,24 @@ export type OrderAddNoteInput = {
   /** Note message. */
   message: Scalars['String'];
 };
+
+/** An enumeration. */
+export enum OrderCreateFromCheckoutErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  NOT_FOUND = 'NOT_FOUND',
+  CHANNEL_INACTIVE = 'CHANNEL_INACTIVE',
+  INSUFFICIENT_STOCK = 'INSUFFICIENT_STOCK',
+  VOUCHER_NOT_APPLICABLE = 'VOUCHER_NOT_APPLICABLE',
+  GIFT_CARD_NOT_APPLICABLE = 'GIFT_CARD_NOT_APPLICABLE',
+  TAX_ERROR = 'TAX_ERROR',
+  SHIPPING_METHOD_NOT_SET = 'SHIPPING_METHOD_NOT_SET',
+  BILLING_ADDRESS_NOT_SET = 'BILLING_ADDRESS_NOT_SET',
+  SHIPPING_ADDRESS_NOT_SET = 'SHIPPING_ADDRESS_NOT_SET',
+  INVALID_SHIPPING_METHOD = 'INVALID_SHIPPING_METHOD',
+  NO_LINES = 'NO_LINES',
+  EMAIL_NOT_SET = 'EMAIL_NOT_SET',
+  UNAVAILABLE_VARIANT_IN_CHANNEL = 'UNAVAILABLE_VARIANT_IN_CHANNEL'
+}
 
 export enum OrderDirection {
   /** Specifies an ascending sort order. */
@@ -2842,8 +2864,20 @@ export type OrderSettingsUpdateInput = {
 export enum OrderSortField {
   /** Sort orders by number. */
   NUMBER = 'NUMBER',
-  /** Sort orders by creation date. */
+  /**
+   * Sort orders by creation date.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0.
+   */
   CREATION_DATE = 'CREATION_DATE',
+  /**
+   * Sort orders by creation date.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0.
+   */
+  CREATED_AT = 'CREATED_AT',
+  /** Sort orders by last modified at. */
+  LAST_MODIFIED_AT = 'LAST_MODIFIED_AT',
   /** Sort orders by customer. */
   CUSTOMER = 'CUSTOMER',
   /** Sort orders by payment. */
@@ -3304,6 +3338,7 @@ export enum ProductErrorCode {
   ATTRIBUTE_ALREADY_ASSIGNED = 'ATTRIBUTE_ALREADY_ASSIGNED',
   ATTRIBUTE_CANNOT_BE_ASSIGNED = 'ATTRIBUTE_CANNOT_BE_ASSIGNED',
   ATTRIBUTE_VARIANTS_DISABLED = 'ATTRIBUTE_VARIANTS_DISABLED',
+  MEDIA_ALREADY_ASSIGNED = 'MEDIA_ALREADY_ASSIGNED',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -3444,6 +3479,10 @@ export enum ProductOrderField {
   PUBLISHED = 'PUBLISHED',
   /** Sort products by publication date. */
   PUBLICATION_DATE = 'PUBLICATION_DATE',
+  /** Sort products by publication date. */
+  PUBLISHED_AT = 'PUBLISHED_AT',
+  /** Sort products by update date. */
+  LAST_MODIFIED_AT = 'LAST_MODIFIED_AT',
   /** Sort products by collection. Note: This option is available only for the `Collection.products` query. */
   COLLECTION = 'COLLECTION',
   /** Sort products by rating. */
@@ -3591,6 +3630,18 @@ export type ProductVariantInput = {
   quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
 };
 
+export enum ProductVariantSortField {
+  /** Sort products variants by last modified at. */
+  LAST_MODIFIED_AT = 'LAST_MODIFIED_AT'
+}
+
+export type ProductVariantSortingInput = {
+  /** Specifies the direction in which to sort products. */
+  direction: OrderDirection;
+  /** Sort productVariants by the selected field. */
+  field: ProductVariantSortField;
+};
+
 export type PublishableChannelListingInput = {
   /** ID of a channel. */
   channelId: Scalars['ID'];
@@ -3665,7 +3716,11 @@ export enum SaleSortField {
   /** Sort sales by value. */
   VALUE = 'VALUE',
   /** Sort sales by type. */
-  TYPE = 'TYPE'
+  TYPE = 'TYPE',
+  /** Sort sales by created at. */
+  CREATED_AT = 'CREATED_AT',
+  /** Sort sales by last modified at. */
+  LAST_MODIFIED_AT = 'LAST_MODIFIED_AT'
 }
 
 export type SaleSortingInput = {
@@ -4067,7 +4122,11 @@ export enum UserSortField {
   /** Sort users by email. */
   EMAIL = 'EMAIL',
   /** Sort users by order count. */
-  ORDER_COUNT = 'ORDER_COUNT'
+  ORDER_COUNT = 'ORDER_COUNT',
+  /** Sort users by created at. */
+  CREATED_AT = 'CREATED_AT',
+  /** Sort users by last modified at. */
+  LAST_MODIFIED_AT = 'LAST_MODIFIED_AT'
 }
 
 export type UserSortingInput = {
@@ -4287,6 +4346,8 @@ export type WebhookCreateInput = {
   isActive?: InputMaybe<Scalars['Boolean']>;
   /** The secret key used to create a hash signature with each payload. */
   secretKey?: InputMaybe<Scalars['String']>;
+  /** New in Saleor 3.2. Subscription query used to define a webhook payload. Note: this feature is in a preview state and can be subject to changes at later point. */
+  query?: InputMaybe<Scalars['String']>;
 };
 
 /** An enumeration. */
@@ -4302,6 +4363,12 @@ export enum WebhookErrorCode {
 export enum WebhookEventTypeAsyncEnum {
   /** All the events. */
   ANY_EVENTS = 'ANY_EVENTS',
+  /** A new category created. */
+  CATEGORY_CREATED = 'CATEGORY_CREATED',
+  /** A category is updated. */
+  CATEGORY_UPDATED = 'CATEGORY_UPDATED',
+  /** A category is deleted. */
+  CATEGORY_DELETED = 'CATEGORY_DELETED',
   /** A new order is placed. */
   ORDER_CREATED = 'ORDER_CREATED',
   /** An order is confirmed (status change unconfirmed -> unfulfilled) by a staff user using the OrderConfirm mutation. It also triggers when the user completes the checkout and the shop setting `automatically_confirm_all_new_orders` is enabled. */
@@ -4372,12 +4439,25 @@ export enum WebhookEventTypeAsyncEnum {
 
 /** Enum determining type of webhook. */
 export enum WebhookEventTypeEnum {
+  /** All the events. */
   ANY_EVENTS = 'ANY_EVENTS',
+  /** A new category created. */
+  CATEGORY_CREATED = 'CATEGORY_CREATED',
+  /** A category is updated. */
+  CATEGORY_UPDATED = 'CATEGORY_UPDATED',
+  /** A category is deleted. */
+  CATEGORY_DELETED = 'CATEGORY_DELETED',
+  /** A new order is placed. */
   ORDER_CREATED = 'ORDER_CREATED',
+  /** An order is confirmed (status change unconfirmed -> unfulfilled) by a staff user using the OrderConfirm mutation. It also triggers when the user completes the checkout and the shop setting `automatically_confirm_all_new_orders` is enabled. */
   ORDER_CONFIRMED = 'ORDER_CONFIRMED',
+  /** Payment is made and an order is fully paid. */
   ORDER_FULLY_PAID = 'ORDER_FULLY_PAID',
+  /** An order is updated; triggered for all changes related to an order; covers all other order webhooks, except for ORDER_CREATED. */
   ORDER_UPDATED = 'ORDER_UPDATED',
+  /** An order is cancelled. */
   ORDER_CANCELLED = 'ORDER_CANCELLED',
+  /** An order is fulfilled. */
   ORDER_FULFILLED = 'ORDER_FULFILLED',
   DRAFT_ORDER_CREATED = 'DRAFT_ORDER_CREATED',
   DRAFT_ORDER_UPDATED = 'DRAFT_ORDER_UPDATED',
@@ -4385,29 +4465,51 @@ export enum WebhookEventTypeEnum {
   SALE_CREATED = 'SALE_CREATED',
   SALE_UPDATED = 'SALE_UPDATED',
   SALE_DELETED = 'SALE_DELETED',
+  /** An invoice for order requested. */
   INVOICE_REQUESTED = 'INVOICE_REQUESTED',
+  /** An invoice is deleted. */
   INVOICE_DELETED = 'INVOICE_DELETED',
+  /** Invoice has been sent. */
   INVOICE_SENT = 'INVOICE_SENT',
+  /** A new customer account is created. */
   CUSTOMER_CREATED = 'CUSTOMER_CREATED',
+  /** A customer account is updated. */
   CUSTOMER_UPDATED = 'CUSTOMER_UPDATED',
+  /** A new collection is created. */
   COLLECTION_CREATED = 'COLLECTION_CREATED',
+  /** A collection is updated. */
   COLLECTION_UPDATED = 'COLLECTION_UPDATED',
+  /** A collection is deleted. */
   COLLECTION_DELETED = 'COLLECTION_DELETED',
+  /** A new product is created. */
   PRODUCT_CREATED = 'PRODUCT_CREATED',
+  /** A product is updated. */
   PRODUCT_UPDATED = 'PRODUCT_UPDATED',
+  /** A product is deleted. */
   PRODUCT_DELETED = 'PRODUCT_DELETED',
+  /** A new product variant is created. */
   PRODUCT_VARIANT_CREATED = 'PRODUCT_VARIANT_CREATED',
+  /** A product variant is updated. */
   PRODUCT_VARIANT_UPDATED = 'PRODUCT_VARIANT_UPDATED',
+  /** A product variant is deleted. */
   PRODUCT_VARIANT_DELETED = 'PRODUCT_VARIANT_DELETED',
   PRODUCT_VARIANT_OUT_OF_STOCK = 'PRODUCT_VARIANT_OUT_OF_STOCK',
   PRODUCT_VARIANT_BACK_IN_STOCK = 'PRODUCT_VARIANT_BACK_IN_STOCK',
+  /** A new checkout is created. */
   CHECKOUT_CREATED = 'CHECKOUT_CREATED',
+  /** A checkout is updated. It also triggers all updates related to the checkout. */
   CHECKOUT_UPDATED = 'CHECKOUT_UPDATED',
+  /** A new fulfillment is created. */
   FULFILLMENT_CREATED = 'FULFILLMENT_CREATED',
+  /** A fulfillment is cancelled. */
   FULFILLMENT_CANCELED = 'FULFILLMENT_CANCELED',
+  /** User notification triggered. */
   NOTIFY_USER = 'NOTIFY_USER',
+  /** A new page is created. */
   PAGE_CREATED = 'PAGE_CREATED',
+  /** A page is updated. */
   PAGE_UPDATED = 'PAGE_UPDATED',
+  /** A page is deleted. */
   PAGE_DELETED = 'PAGE_DELETED',
   TRANSLATION_CREATED = 'TRANSLATION_CREATED',
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
@@ -4439,6 +4541,9 @@ export enum WebhookEventTypeSyncEnum {
 
 /** An enumeration. */
 export enum WebhookSampleEventTypeEnum {
+  CATEGORY_CREATED = 'CATEGORY_CREATED',
+  CATEGORY_UPDATED = 'CATEGORY_UPDATED',
+  CATEGORY_DELETED = 'CATEGORY_DELETED',
   ORDER_CREATED = 'ORDER_CREATED',
   ORDER_CONFIRMED = 'ORDER_CONFIRMED',
   ORDER_FULLY_PAID = 'ORDER_FULLY_PAID',
@@ -4500,6 +4605,8 @@ export type WebhookUpdateInput = {
   isActive?: InputMaybe<Scalars['Boolean']>;
   /** Use to create a hash signature with each payload. */
   secretKey?: InputMaybe<Scalars['String']>;
+  /** New in Saleor 3.2. Subscription query used to define a webhook payload. Note: this feature is in a preview state and can be subject to changes at later point. */
+  query?: InputMaybe<Scalars['String']>;
 };
 
 /** An enumeration. */
