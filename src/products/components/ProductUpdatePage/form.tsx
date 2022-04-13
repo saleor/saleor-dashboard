@@ -442,8 +442,11 @@ function useProductUpdateForm(
   const isSaveEnabled = !shouldEnableSave();
 
   const isSaveDisabled =
-    disabled || isSaveEnabled || (!hasChanged && !hasChannelChanged);
-  setIsSubmitDisabled(isSaveDisabled);
+    disabled || isSaveEnabled || !(hasChanged || hasChannelChanged);
+
+  useEffect(() => {
+    setIsSubmitDisabled(isSaveDisabled);
+  }, [isSaveDisabled]);
 
   return {
     change: handleChange,
