@@ -1182,6 +1182,22 @@ export const OrderEventFragmentDoc = gql`
   }
 }
     `;
+export const WarehouseFragmentDoc = gql`
+    fragment Warehouse on Warehouse {
+  id
+  name
+}
+    `;
+export const StockFragmentDoc = gql`
+    fragment Stock on Stock {
+  id
+  quantity
+  quantityAllocated
+  warehouse {
+    ...Warehouse
+  }
+}
+    ${WarehouseFragmentDoc}`;
 export const OrderLineFragmentDoc = gql`
     fragment OrderLine on OrderLine {
   id
@@ -1200,12 +1216,7 @@ export const OrderLineFragmentDoc = gql`
       endDate
     }
     stocks {
-      id
-      warehouse {
-        id
-      }
-      quantity
-      quantityAllocated
+      ...Stock
     }
   }
   productName
@@ -1245,7 +1256,7 @@ export const OrderLineFragmentDoc = gql`
     url
   }
 }
-    `;
+    ${StockFragmentDoc}`;
 export const FulfillmentFragmentDoc = gql`
     fragment Fulfillment on Fulfillment {
   id
@@ -1436,12 +1447,6 @@ export const ShopOrderSettingsFragmentDoc = gql`
   fulfillmentAllowUnpaid
 }
     `;
-export const WarehouseFragmentDoc = gql`
-    fragment Warehouse on Warehouse {
-  id
-  name
-}
-    `;
 export const OrderFulfillLineFragmentDoc = gql`
     fragment OrderFulfillLine on OrderLine {
   id
@@ -1470,12 +1475,7 @@ export const OrderFulfillLineFragmentDoc = gql`
       }
     }
     stocks {
-      id
-      warehouse {
-        ...Warehouse
-      }
-      quantity
-      quantityAllocated
+      ...Stock
     }
     trackInventory
   }
@@ -1483,7 +1483,25 @@ export const OrderFulfillLineFragmentDoc = gql`
     url
   }
 }
-    ${WarehouseFragmentDoc}`;
+    ${StockFragmentDoc}`;
+export const OrderLineStockDataFragmentDoc = gql`
+    fragment OrderLineStockData on OrderLine {
+  id
+  allocations {
+    quantity
+    warehouse {
+      id
+    }
+  }
+  quantity
+  quantityToFulfill
+  variant {
+    stocks {
+      ...Stock
+    }
+  }
+}
+    ${StockFragmentDoc}`;
 export const PageTypeFragmentDoc = gql`
     fragment PageType on PageType {
   id
@@ -1864,17 +1882,6 @@ export const ProductMediaFragmentDoc = gql`
   url
   type
   oembedData
-}
-    `;
-export const StockFragmentDoc = gql`
-    fragment Stock on Stock {
-  id
-  quantity
-  quantityAllocated
-  warehouse {
-    id
-    name
-  }
 }
     `;
 export const PreorderFragmentDoc = gql`
