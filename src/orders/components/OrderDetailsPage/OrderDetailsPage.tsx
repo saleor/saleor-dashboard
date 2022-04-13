@@ -12,7 +12,8 @@ import Skeleton from "@saleor/components/Skeleton";
 import {
   OrderDetailsFragment,
   OrderDetailsQuery,
-  OrderStatus
+  OrderStatus,
+  WarehouseFragment
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
@@ -28,7 +29,6 @@ import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { getMutationErrors, maybe } from "../../../misc";
-import { Warehouse } from "../OrderChangeWarehouseDialog/types";
 import OrderCustomer from "../OrderCustomer";
 import OrderCustomerNote from "../OrderCustomerNote";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
@@ -66,7 +66,7 @@ export interface OrderDetailsPageProps {
   }>;
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
-  selectedWarehouse?: Warehouse;
+  selectedWarehouse?: WarehouseFragment;
   onOrderLineAdd?: () => void;
   onOrderLineChange?: (
     id: string,

@@ -6,12 +6,12 @@ import {
   OrderUpdateMutation,
   OrderUpdateMutationVariables,
   useCustomerAddressesQuery,
-  useWarehouseListQuery
+  useWarehouseListQuery,
+  WarehouseFragment
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
 import OrderChangeWarehouseDialog from "@saleor/orders/components/OrderChangeWarehouseDialog";
-import { Warehouse } from "@saleor/orders/components/OrderChangeWarehouseDialog/types";
 import { OrderCustomerAddressesEditDialogOutput } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/types";
 import OrderFulfillmentApproveDialog from "@saleor/orders/components/OrderFulfillmentApproveDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
@@ -44,6 +44,7 @@ import {
   OrderUrlQueryParams
 } from "../../../urls";
 import { isAnyAddressEditModalOpen } from "../OrderDraftDetails";
+import { useDefaultWarehouse } from "./useDefaultWarehouse";
 
 interface OrderNormalDetailsProps {
   id: string;
@@ -111,33 +112,13 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   const warehouses = mapEdgesToItems(warehousesData?.warehouses);
 
   const [fulfillmentWarehouse, setFulfillmentWarehouse] = React.useState<
-    Warehouse
+    WarehouseFragment
   >(null);
 
-  React.useEffect(() => {
-    const warehousesAvailability = warehouses?.map(warehouse => {
-      if (!order?.lines) {
-        return undefined;
-      }
-
-      const linesAvailable = order.lines.filter(line =>
-        line?.variant?.stocks?.find(
-          stock => stock.warehouse.id === warehouse.id
-        )
-      ).length;
-
-      return {
-        warehouse,
-        linesAvailable
-      };
-    });
-    const defaultWarehouse = order?.lines
-      ? warehousesAvailability?.reduce((prev, curr) =>
-          curr.linesAvailable > prev.linesAvailable ? curr : prev
-        ).warehouse
-      : undefined;
-    setFulfillmentWarehouse(defaultWarehouse);
-  }, [warehousesData, warehousesLoading]);
+  useDefaultWarehouse({ warehouses, order, setter: setFulfillmentWarehouse }, [
+    warehousesData,
+    warehousesLoading
+  ]);
 
   const {
     data: customerAddresses,

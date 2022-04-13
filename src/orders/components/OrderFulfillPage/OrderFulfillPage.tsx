@@ -22,7 +22,8 @@ import {
   OrderFulfillDataQuery,
   OrderFulfillLineFragment,
   OrderFulfillStockInput,
-  ShopOrderSettingsFragment
+  ShopOrderSettingsFragment,
+  WarehouseFragment
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
@@ -34,7 +35,6 @@ import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { Warehouse } from "../OrderChangeWarehouseDialog/types";
 import OrderFulfillLine from "../OrderFulfillLine/OrderFulfillLine";
 import OrderFulfillStockExceededDialog from "../OrderFulfillStockExceededDialog";
 import { messages } from "./messages";
@@ -53,7 +53,7 @@ export interface OrderFulfillPageProps {
   errors: FulfillOrderMutation["orderFulfill"]["errors"];
   order: OrderFulfillDataQuery["order"];
   saveButtonBar: ConfirmButtonTransitionState;
-  warehouse: Warehouse;
+  warehouse: WarehouseFragment;
   shopSettings?: ShopOrderSettingsFragment;
   onBack: () => void;
   onSubmit: (data: OrderFulfillSubmitData) => SubmitPromise;
@@ -84,25 +84,27 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     null,
     OrderFulfillStockInput[]
   >(
-    getToFulfillOrderLines(order?.lines).map(line => ({
-      data: null,
-      id: line.id,
-      label: line.variant?.attributes
-        .map(attribute =>
-          attribute.values
-            .map(attributeValue => attributeValue.name)
-            .join(" , ")
-        )
-        .join(" / "),
-      value: line?.variant?.preorder
-        ? null
-        : [
-            {
-              quantity: line.quantityToFulfill,
-              warehouse: warehouse?.id
-            }
-          ]
-    }))
+    (getToFulfillOrderLines(order?.lines) as OrderFulfillLineFragment[]).map(
+      line => ({
+        data: null,
+        id: line.id,
+        label: line.variant?.attributes
+          .map(attribute =>
+            attribute.values
+              .map(attributeValue => attributeValue.name)
+              .join(" , ")
+          )
+          .join(" / "),
+        value: line?.variant?.preorder
+          ? null
+          : [
+              {
+                quantity: line.quantityToFulfill,
+                warehouse: warehouse?.id
+              }
+            ]
+      })
+    )
   );
 
   const [
