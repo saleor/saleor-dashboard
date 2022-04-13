@@ -35,7 +35,11 @@ export const ExternalAppProvider: React.FC = ({ children }) => {
       {children}
       <AppDialog open={open} onClose={handleClose} title={appData?.label}>
         {open && appData && (
-          <AppFrame src={appData.src} appToken={appData.appToken} />
+          <AppFrame
+            src={appData.src}
+            appToken={appData.appToken}
+            appId={appData.id}
+          />
         )}
       </AppDialog>
     </ExternalAppContext.Provider>
