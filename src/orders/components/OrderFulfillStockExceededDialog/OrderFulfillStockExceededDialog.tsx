@@ -10,14 +10,16 @@ import { CardSpacer } from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import {
   OrderFulfillLineFragment,
-  OrderFulfillStockInput
+  OrderFulfillStockInput,
+  OrderLineFragment
 } from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import {
   getFulfillmentFormsetQuantity,
-  getOrderLineAvailableQuantity
+  getOrderLineAvailableQuantity,
+  OrderFulfillStockInputFormsetData
 } from "@saleor/orders/utils/data";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -27,9 +29,9 @@ import { stockExceededDialogMessages as messages } from "./messages";
 import { useStyles } from "./styles";
 
 export interface OrderFulfillStockExceededDialogProps {
-  lines: OrderFulfillLineFragment[];
+  lines: Array<OrderFulfillLineFragment | OrderLineFragment>;
   open: boolean;
-  formsetData: FormsetData<null, OrderFulfillStockInput[]>;
+  formsetData: OrderFulfillStockInputFormsetData;
   warehouseId: string;
   confirmButtonState: ConfirmButtonTransitionState;
   onSubmit();

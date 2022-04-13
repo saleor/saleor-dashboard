@@ -10,8 +10,10 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import {
+  FulfillmentFragment,
   OrderDetailsFragment,
   OrderDetailsQuery,
+  OrderErrorFragment,
   OrderStatus,
   WarehouseFragment
 } from "@saleor/graphql";
@@ -34,12 +36,17 @@ import OrderCustomerNote from "../OrderCustomerNote";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import { FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts";
 import OrderFulfilledProductsCard from "../OrderFulfilledProductsCard";
+import OrderFulfillStockExceededDialog from "../OrderFulfillStockExceededDialog";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
 import OrderPayment from "../OrderPayment/OrderPayment";
 import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard";
 import Title from "./Title";
-import { filteredConditionalItems, hasAnyItemsReplaceable } from "./utils";
+import {
+  filteredConditionalItems,
+  hasAnyItemsReplaceable,
+  transformFuflillmentLinesToStockInputFormsetData
+} from "./utils";
 
 const useStyles = makeStyles(
   theme => ({
@@ -67,6 +74,7 @@ export interface OrderDetailsPageProps {
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   selectedWarehouse?: WarehouseFragment;
+  approvalErrors: OrderErrorFragment[];
   onOrderLineAdd?: () => void;
   onOrderLineChange?: (
     id: string,
@@ -119,6 +127,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     shop,
     saveButtonBarState,
     selectedWarehouse,
+    approvalErrors,
     onBack,
     onBillingAddressEdit,
     onFulfillmentApprove,
@@ -165,6 +174,22 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   const unfulfilled = (order?.lines || []).filter(
     line => line.quantityToFulfill > 0
   );
+
+  const [
+    currentApproval,
+    setCurrentApproval
+  ] = React.useState<FulfillmentFragment | null>(null);
+  const [stockExceeded, setStockExceeded] = React.useState(false);
+  React.useEffect(() => {
+    if (
+      approvalErrors.length &&
+      approvalErrors.every(err => err.code === "INSUFFICIENT_STOCK")
+    ) {
+      // eslint-disable-next-line no-console
+      console.log(currentApproval);
+      setStockExceeded(true);
+    }
+  }, [approvalErrors]);
 
   const handleSubmit = async (data: MetadataFormData) => {
     const metadata = isMetadataModified ? data.metadata : undefined;
@@ -276,9 +301,12 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                         onFulfillmentTrackingNumberUpdate(fulfillment.id)
                       }
                       onRefund={onPaymentRefund}
-                      onOrderFulfillmentApprove={() =>
-                        onFulfillmentApprove(fulfillment.id)
-                      }
+                      onOrderFulfillmentApprove={() => {
+                        if (fulfillment) {
+                          setCurrentApproval(fulfillment);
+                        }
+                        return onFulfillmentApprove(fulfillment.id);
+                      }}
                     />
                   </React.Fragment>
                 ))}
@@ -329,6 +357,18 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 <OrderCustomerNote note={maybe(() => order.customerNote)} />
               </div>
             </Grid>
+            <OrderFulfillStockExceededDialog
+              lines={order?.lines}
+              open={stockExceeded}
+              formsetData={transformFuflillmentLinesToStockInputFormsetData(
+                currentApproval?.lines,
+                selectedWarehouse?.id
+              )}
+              warehouseId={selectedWarehouse?.id}
+              onClose={() => setStockExceeded(false)}
+              confirmButtonState="default"
+              onSubmit={() => null}
+            />
             <Savebar
               labels={saveLabel}
               onCancel={onBack}

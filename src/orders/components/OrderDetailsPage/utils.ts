@@ -1,4 +1,9 @@
-import { OrderDetailsFragment } from "@saleor/graphql";
+import {
+  FulfillmentFragment,
+  OrderDetailsFragment,
+  OrderFulfillStockInput
+} from "@saleor/graphql";
+import { OrderFulfillStockInputFormsetData } from "@saleor/orders/utils/data";
 
 import {
   getFulfilledFulfillemnts,
@@ -29,3 +34,18 @@ export interface ConditionalItem {
 
 export const filteredConditionalItems = (items: ConditionalItem[]) =>
   items.filter(({ shouldExist }) => shouldExist).map(({ item }) => item);
+
+export const transformFuflillmentLinesToStockInputFormsetData = (
+  lines: FulfillmentFragment["lines"],
+  warehouseId: string
+): OrderFulfillStockInputFormsetData =>
+  lines?.map(line => ({
+    data: null,
+    id: line.id,
+    value: [
+      {
+        quantity: line.quantity,
+        warehouse: warehouseId
+      }
+    ]
+  }));

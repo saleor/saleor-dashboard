@@ -1,22 +1,19 @@
 import { TableCell, TableRow, Typography } from "@material-ui/core";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
-import {
-  OrderFulfillLineFragment,
-  OrderFulfillStockInput
-} from "@saleor/graphql";
-import { FormsetData } from "@saleor/hooks/useFormset";
+import { OrderFulfillLineFragment, OrderLineFragment } from "@saleor/graphql";
 import {
   getFulfillmentFormsetQuantity,
-  getOrderLineAvailableQuantity
+  getOrderLineAvailableQuantity,
+  OrderFulfillStockInputFormsetData
 } from "@saleor/orders/utils/data";
 import React from "react";
 
 import { useStyles } from "../OrderFulfillStockExceededDialog/styles";
 
 export interface OrderFulfillStockExceededDialogLineProps {
-  line: OrderFulfillLineFragment;
+  line: OrderFulfillLineFragment | OrderLineFragment;
   warehouseId: string;
-  formsetData: FormsetData<null, OrderFulfillStockInput[]>;
+  formsetData: OrderFulfillStockInputFormsetData;
 }
 
 const OrderFulfillStockExceededDialogLine: React.FC<OrderFulfillStockExceededDialogLineProps> = props => {
@@ -24,7 +21,7 @@ const OrderFulfillStockExceededDialogLine: React.FC<OrderFulfillStockExceededDia
 
   const classes = useStyles(props);
 
-  const stock = line.variant?.stocks.find(
+  const stock = line?.variant?.stocks.find(
     stock => stock.warehouse.id === warehouseId
   );
 
@@ -35,15 +32,17 @@ const OrderFulfillStockExceededDialogLine: React.FC<OrderFulfillStockExceededDia
         thumbnail={line?.thumbnail?.url}
       >
         {line?.productName}
-        <Typography color="textSecondary" variant="caption">
-          {line.variant?.attributes
-            .map(attribute =>
-              attribute.values
-                .map(attributeValue => attributeValue.name)
-                .join(", ")
-            )
-            .join(" / ")}
-        </Typography>
+        {line?.variant && "attributes" in line.variant && (
+          <Typography color="textSecondary" variant="caption">
+            {line.variant?.attributes
+              .map(attribute =>
+                attribute.values
+                  .map(attributeValue => attributeValue.name)
+                  .join(", ")
+              )
+              .join(" / ")}
+          </Typography>
+        )}
       </TableCellAvatar>
       <TableCell className={classes.colQuantity}>
         {getFulfillmentFormsetQuantity(formsetData, line)}

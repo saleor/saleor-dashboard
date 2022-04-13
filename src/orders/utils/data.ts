@@ -316,10 +316,14 @@ export const getOrderLineAvailableQuantity = (
   return availableQuantity;
 };
 
+export type OrderFulfillStockInputFormsetData = Array<
+  Pick<FormsetData<null, OrderFulfillStockInput[]>[0], "id" | "value">
+>;
+
 export const getFulfillmentFormsetQuantity = (
-  formsetData: FormsetData<null, OrderFulfillStockInput[]>,
-  line: OrderFulfillLineFragment
-) => formsetData.find(getById(line.id))?.value?.[0]?.quantity;
+  formsetData: OrderFulfillStockInputFormsetData,
+  line: OrderLineStockDataFragment
+) => formsetData?.find(getById(line.id))?.value?.[0]?.quantity;
 
 export const getWarehouseStock = (
   stocks: StockFragment[],

@@ -6,6 +6,7 @@ import {
   OrderUpdateMutation,
   OrderUpdateMutationVariables,
   useCustomerAddressesQuery,
+  useOrderFulfillmentApproveMutation,
   useWarehouseListQuery,
   WarehouseFragment
 } from "@saleor/graphql";
@@ -235,6 +236,10 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         onInvoiceSend={id => openModal("invoice-send", { id })}
         onWarehouseChange={() => openModal("change-warehouse")}
         onSubmit={handleSubmit}
+        approvalErrors={
+          orderFulfillmentApprove.opts.data?.orderFulfillmentApprove.errors ||
+          []
+        }
       />
       <OrderCannotCancelOrderDialog
         onClose={closeModal}
