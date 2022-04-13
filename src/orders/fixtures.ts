@@ -1134,6 +1134,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
                 {
                   id: "stock_test_id1",
                   warehouse: {
+                    name: "stock_warehouse1",
                     id:
                       "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                     __typename: "Warehouse"
@@ -1145,6 +1146,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
                 {
                   id: "stock_test_id2",
                   warehouse: {
+                    name: "stock_warehouse2",
                     id:
                       "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                     __typename: "Warehouse"
@@ -1240,6 +1242,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
                 {
                   id: "stock_test_id1",
                   warehouse: {
+                    name: "stock_warehouse1",
                     id:
                       "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                     __typename: "Warehouse"
@@ -1251,6 +1254,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
                 {
                   id: "stock_test_id2",
                   warehouse: {
+                    name: "stock_warehouse2",
                     id:
                       "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                     __typename: "Warehouse"
@@ -1354,6 +1358,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
           {
             id: "stock_test_id1",
             warehouse: {
+              name: "stock_warehouse1",
               id:
                 "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
               __typename: "Warehouse"
@@ -1365,6 +1370,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
           {
             id: "stock_test_id2",
             warehouse: {
+              name: "stock_warehouse2",
               id:
                 "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
               __typename: "Warehouse"
@@ -1446,6 +1452,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
           {
             id: "stock_test_id1",
             warehouse: {
+              name: "stock_warehouse1",
               id:
                 "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
               __typename: "Warehouse"
@@ -1457,6 +1464,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
           {
             id: "stock_test_id2",
             warehouse: {
+              name: "stock_warehouse2",
               id:
                 "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
               __typename: "Warehouse"
@@ -1676,6 +1684,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
           {
             id: "stock_test_id1",
             warehouse: {
+              name: "stock_warehouse1",
               id:
                 "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
               __typename: "Warehouse"
@@ -1687,6 +1696,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
           {
             id: "stock_test_id2",
             warehouse: {
+              name: "stock_warehouse2",
               id:
                 "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
               __typename: "Warehouse"
@@ -1767,6 +1777,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
           {
             id: "stock_test_id1",
             warehouse: {
+              name: "stock_warehouse1",
               id:
                 "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
               __typename: "Warehouse"
@@ -1778,6 +1789,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
           {
             id: "stock_test_id2",
             warehouse: {
+              name: "stock_warehouse2",
               id:
                 "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
               __typename: "Warehouse"

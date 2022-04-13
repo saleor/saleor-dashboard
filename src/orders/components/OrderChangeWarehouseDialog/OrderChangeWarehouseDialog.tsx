@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import Debounce from "@saleor/components/Debounce";
 import Skeleton from "@saleor/components/Skeleton";
-import { OrderLineFragment } from "@saleor/graphql";
+import { OrderLineFragment, WarehouseFragment } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
 import {
   Button,
@@ -25,6 +25,7 @@ import {
   SearchIcon,
   useElementScroll
 } from "@saleor/macaw-ui";
+import { isLineAvailableInWarehouse } from "@saleor/orders/utils/data";
 import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
@@ -33,14 +34,12 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { getById } from "../OrderReturnPage/utils";
 import { changeWarehouseDialogMessages as messages } from "./messages";
 import { useStyles } from "./styles";
-import { Warehouse } from "./types";
-import { isLineAvailableInWarehouse } from "./utils";
 
 export interface OrderChangeWarehouseDialogProps {
   open: boolean;
   lines: OrderLineFragment[];
-  currentWarehouse: Warehouse;
-  onConfirm: (warehouse: Warehouse) => void;
+  currentWarehouse: WarehouseFragment;
+  onConfirm: (warehouse: WarehouseFragment) => void;
   onClose();
 }
 
@@ -59,9 +58,16 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
   const bottomShadow = isScrolledToBottom(anchor, position, 20) === false;
 
   const [query, setQuery] = React.useState<string>("");
-  const [selectedWarehouseId, setSelectedWarehouseId] = React.useState<string>(
-    currentWarehouse?.id
-  );
+  const [selectedWarehouseId, setSelectedWarehouseId] = React.useState<
+    string | null
+  >(null);
+
+  React.useEffect(() => {
+    if (currentWarehouse?.id) {
+      setSelectedWarehouseId(currentWarehouse.id);
+    }
+  }, [currentWarehouse]);
+
   const { result: warehousesOpts, loadMore, search } = useWarehouseSearch({
     variables: {
       after: null,
@@ -71,13 +77,14 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
   });
   const filteredWarehouses = mapEdgesToItems(warehousesOpts?.data?.search);
 
+  const selectedWarehouse = filteredWarehouses?.find(
+    getById(selectedWarehouseId ?? "")
+  );
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedWarehouseId(e.target.value);
   };
   const handleSubmit = () => {
-    const selectedWarehouse = filteredWarehouses.find(
-      getById(selectedWarehouseId)
-    );
     onConfirm(selectedWarehouse);
     onClose();
   };
@@ -189,7 +196,12 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
       </DialogTable>
       <ScrollShadow variant="bottom" show={bottomShadow}>
         <DialogActions>
-          <Button onClick={handleSubmit} color="primary" variant="primary">
+          <Button
+            onClick={handleSubmit}
+            color="primary"
+            variant="primary"
+            disabled={!selectedWarehouse}
+          >
             {intl.formatMessage(buttonMessages.select)}
           </Button>
         </DialogActions>

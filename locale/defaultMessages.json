@@ -4321,9 +4321,9 @@
   "src_dot_orders_dot_components_dot_OrderCannotCancelOrderDialog_dot_775268031": {
     "string": "There are still fulfillments created for this order. Cancel the fulfillments first before you cancel the order."
   },
-  "src_dot_orders_dot_components_dot_OrderCardTitle_dot_cancelled": {
+  "src_dot_orders_dot_components_dot_OrderCardTitle_dot_canceled": {
     "context": "cancelled fulfillment, section header",
-    "string": "Cancelled ({quantity})"
+    "string": "Canceled ({quantity})"
   },
   "src_dot_orders_dot_components_dot_OrderCardTitle_dot_fulfilled": {
     "context": "section header",

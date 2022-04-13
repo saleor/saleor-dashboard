@@ -6,8 +6,7 @@ export const stockFragment = gql`
     quantity
     quantityAllocated
     warehouse {
-      id
-      name
+      ...Warehouse
     }
   }
 `;

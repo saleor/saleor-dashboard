@@ -88,12 +88,7 @@ export const fragmentOrderLine = gql`
         endDate
       }
       stocks {
-        id
-        warehouse {
-          id
-        }
-        quantity
-        quantityAllocated
+        ...Stock
       }
     }
     productName
@@ -368,17 +363,31 @@ export const fragmentOrderFulfillLine = gql`
         }
       }
       stocks {
-        id
-        warehouse {
-          ...Warehouse
-        }
-        quantity
-        quantityAllocated
+        ...Stock
       }
       trackInventory
     }
     thumbnail(size: 64) {
       url
+    }
+  }
+`;
+
+export const fragmentOrderLineStockData = gql`
+  fragment OrderLineStockData on OrderLine {
+    id
+    allocations {
+      quantity
+      warehouse {
+        id
+      }
+    }
+    quantity
+    quantityToFulfill
+    variant {
+      stocks {
+        ...Stock
+      }
     }
   }
 `;

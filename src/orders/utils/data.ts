@@ -8,7 +8,9 @@ import {
   OrderFulfillLineFragment,
   OrderFulfillStockInput,
   OrderLineFragment,
+  OrderLineStockDataFragment,
   OrderRefundDataQuery,
+  StockFragment,
   WarehouseFragment
 } from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
@@ -35,7 +37,7 @@ export interface OrderLineWithStockWarehouses {
   };
 }
 
-export function getToFulfillOrderLines(lines?: OrderFulfillLineFragment[]) {
+export function getToFulfillOrderLines(lines?: OrderLineStockDataFragment[]) {
   return lines?.filter(line => line.quantityToFulfill > 0) || [];
 }
 
@@ -298,7 +300,7 @@ export const getVariantSearchAddress = (
 };
 
 export const getAllocatedQuantityForLine = (
-  line: OrderFulfillLineFragment,
+  line: OrderLineStockDataFragment,
   warehouseId: string
 ) => {
   const warehouseAllocation = line.allocations.find(
@@ -308,8 +310,8 @@ export const getAllocatedQuantityForLine = (
 };
 
 export const getOrderLineAvailableQuantity = (
-  line: OrderFulfillLineFragment,
-  stock: OrderFulfillLineFragment["variant"]["stocks"][0]
+  line: OrderLineStockDataFragment,
+  stock: StockFragment
 ) => {
   if (!stock) {
     return 0;
@@ -331,6 +333,20 @@ export const getFulfillmentFormsetQuantity = (
 ) => formsetData.find(getById(line.id))?.value?.[0]?.quantity;
 
 export const getWarehouseStock = (
-  stocks: OrderFulfillLineFragment["variant"]["stocks"],
+  stocks: StockFragment[],
   warehouseId: string
 ) => stocks?.find(stock => stock.warehouse.id === warehouseId);
+
+export const isLineAvailableInWarehouse = (
+  line: OrderLineStockDataFragment,
+  warehouse: WarehouseFragment
+) => {
+  if (!line?.variant?.stocks) {
+    return false;
+  }
+  const stock = getWarehouseStock(line.variant.stocks, warehouse.id);
+  if (stock) {
+    return line.quantityToFulfill <= getOrderLineAvailableQuantity(line, stock);
+  }
+  return false;
+};
