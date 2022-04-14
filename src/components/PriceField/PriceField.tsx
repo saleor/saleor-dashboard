@@ -70,7 +70,7 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
     [currencySymbol]
   );
 
-  const handleChange: React.ChangeEventHandler = e => {
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = e => {
     let newValue = e.target.value;
     const splitCharacter = findPriceSeparator(newValue);
     const [integerPart, decimalPart] = e.target.value.split(splitCharacter);
