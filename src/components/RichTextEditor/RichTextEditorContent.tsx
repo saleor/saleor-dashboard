@@ -1,104 +1,39 @@
-import EditorJS, {
-  LogLevels,
-  OutputData,
-  ToolConstructable,
-  ToolSettings
-} from "@editorjs/editorjs";
-import Embed from "@editorjs/embed";
-import Header from "@editorjs/header";
-import List from "@editorjs/list";
-import Paragraph from "@editorjs/paragraph";
-import Quote from "@editorjs/quote";
-import strikethroughIcon from "@saleor/icons/StrikethroughIcon";
+import { LogLevels } from "@editorjs/editorjs";
+import { useId } from "@reach/auto-id";
 import classNames from "classnames";
-import createGenericInlineTool from "editorjs-inline-tool";
 import React from "react";
+import { createReactEditorJS } from "react-editor-js";
 
+import { tools } from "./consts";
+import { EditorJsProps } from "./RichTextEditor";
 import useStyles from "./styles";
-import { clean } from "./utils";
 
-export interface RichTextEditorContentProps {
+export interface RichTextEditorContentProps extends EditorJsProps {
+  id?: string;
   className?: string;
-  data: OutputData;
-  onReady?: () => void;
 }
 
-const inlineToolbar = ["link", "bold", "italic", "strikethrough"];
-
-export const tools: Record<string, ToolConstructable | ToolSettings> = {
-  embed: Embed,
-  header: {
-    class: Header,
-    config: {
-      defaultLevel: 1,
-      levels: [1, 2, 3]
-    },
-    inlineToolbar
-  },
-  list: {
-    class: List,
-    inlineToolbar
-  },
-  quote: {
-    class: Quote,
-    inlineToolbar
-  },
-  paragraph: {
-    class: Paragraph,
-    inlineToolbar
-  },
-  strikethrough: createGenericInlineTool({
-    sanitize: {
-      s: {}
-    },
-    shortcut: "CMD+S",
-    tagName: "s",
-    toolboxIcon: strikethroughIcon
-  })
-};
+const ReactEditorJS = createReactEditorJS();
 
 const RichTextEditorContent: React.FC<RichTextEditorContentProps> = ({
-  className,
-  data,
-  onReady
+  id: defaultId,
+  className
 }) => {
   const classes = useStyles({});
-
-  const editor = React.useRef<EditorJS>();
-  const editorContainer = React.useRef<HTMLDivElement>();
-  React.useEffect(
-    () => {
-      if (data !== undefined && !editor.current) {
-        const editorjs = new EditorJS({
-          data,
-          holder: editorContainer.current,
-          logLevel: "ERROR" as LogLevels,
-          onReady: () => {
-            editor.current = editorjs;
-
-            if (onReady) {
-              onReady();
-            }
-          },
-          readOnly: true,
-          tools
-        });
-      }
-
-      return () => {
-        clean(editor.current);
-        editor.current = null;
-      };
-    },
-    // Rerender editor only if changed from undefined to defined state
-    [data === undefined]
-  );
+  const id = useId(defaultId);
 
   return (
-    <div
-      className={classNames(classes.editor, classes.rootStatic, className)}
-      ref={editorContainer}
-    />
+    <ReactEditorJS
+      holder={id}
+      logLevel={"ERROR" as LogLevels.ERROR}
+      tools={tools}
+      readOnly={true}
+    >
+      <div
+        id={id}
+        className={classNames(classes.editor, classes.rootStatic, className)}
+      />
+    </ReactEditorJS>
   );
 };
 
