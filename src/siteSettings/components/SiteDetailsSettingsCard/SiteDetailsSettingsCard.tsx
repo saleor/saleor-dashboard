@@ -59,7 +59,7 @@ const SiteDetailsSettingsCard: React.FC<SiteDetailsSettingsCardProps> = ({
         />
         <FormSpacer />
         <TextField
-          disabled={disabled}
+          disabled={disabled || IS_CLOUD_INSTANCE}
           error={!!formErrors.domain}
           fullWidth
           name="domain"
@@ -70,7 +70,6 @@ const SiteDetailsSettingsCard: React.FC<SiteDetailsSettingsCardProps> = ({
           value={data.domain}
           onChange={onChange}
           InputProps={{
-            readOnly: IS_CLOUD_INSTANCE,
             inputProps: {
               autoComplete: "none"
             }

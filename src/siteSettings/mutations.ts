@@ -15,13 +15,13 @@ export const shopSettingsUpdate = gql`
         ...Shop
       }
     }
-    shopDomainUpdate(input: $shopDomainInput) @skip(if: $isCloudInstance) {
+    shopDomainUpdate(input: $shopDomainInput) {
       errors {
         ...ShopError
       }
       shop {
         domain {
-          host
+          host @skip(if: $isCloudInstance)
           url
         }
       }
