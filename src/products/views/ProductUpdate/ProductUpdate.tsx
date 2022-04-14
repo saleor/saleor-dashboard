@@ -297,7 +297,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const {
     channels: updatedChannels,
     channelsWithVariantsData,
-    hasChanged: hasChannelVariantListingChanged,
     setChannelVariantListing
   } = useChannelVariantListings(allChannels);
 

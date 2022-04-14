@@ -106,7 +106,7 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
       onSubmit={onSubmit}
       confirmLeave
     >
-      {({ change, data, hasChanged, submit }) => (
+      {({ change, data, submit }) => (
         <Container>
           <Backlink onClick={onBack}>{product}</Backlink>
           <PageHeader title={intl.formatMessage(messages.editMedia)} />
@@ -165,7 +165,7 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
             </div>
           </Grid>
           <Savebar
-            disabled={disabled || !onSubmit || !hasChanged}
+            disabled={disabled || !onSubmit}
             state={saveButtonBarState}
             onCancel={onBack}
             onDelete={onDelete}

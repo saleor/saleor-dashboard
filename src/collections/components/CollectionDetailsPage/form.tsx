@@ -76,8 +76,6 @@ function useCollectionUpdateForm(
     handleChange,
     data: formData,
     triggerChange,
-    setChanged,
-    hasChanged,
     formId,
     setIsSubmitDisabled
   } = useForm(getInitialData(collection, currentChannels), undefined, {
@@ -87,8 +85,7 @@ function useCollectionUpdateForm(
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit,
-    setChanged
+    onSubmit
   });
 
   const { setExitDialogSubmitRef } = useExitFormDialog({
@@ -139,7 +136,6 @@ function useCollectionUpdateForm(
       changeDescription,
       changeMetadata
     },
-    hasChanged,
     submit
   };
 }

@@ -253,8 +253,6 @@ function useProductUpdateForm(
     triggerChange,
     toggleValue,
     data: formData,
-    setChanged,
-    hasChanged,
     setIsSubmitDisabled
   } = form;
 
@@ -410,8 +408,7 @@ function useProductUpdateForm(
 
   const handleFormSubmit = useHandleFormSubmit({
     formId: form.formId,
-    onSubmit: handleSubmit,
-    setChanged
+    onSubmit: handleSubmit
   });
 
   const submit = async () => handleFormSubmit(getSubmitData());
@@ -477,7 +474,6 @@ function useProductUpdateForm(
       selectCollection: handleCollectionSelect,
       selectTaxRate: handleTaxTypeSelect
     },
-    hasChanged,
     submit,
     isSaveDisabled
   };

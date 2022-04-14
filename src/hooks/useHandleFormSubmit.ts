@@ -7,13 +7,11 @@ import { useContext } from "react";
 interface UseHandleFormSubmitProps<TData, TErrors> {
   formId?: FormId;
   onSubmit: (data: TData) => SubmitPromise<TErrors[]> | void;
-  setChanged: (changed: boolean) => void;
 }
 
 function useHandleFormSubmit<TData, TErrors>({
   formId,
-  onSubmit,
-  setChanged
+  onSubmit
 }: UseHandleFormSubmitProps<TData, TErrors>) {
   const { setIsSubmitting } = useExitFormDialog({
     formId
@@ -38,8 +36,6 @@ function useHandleFormSubmit<TData, TErrors>({
     setIsSubmitting(false);
 
     if (errors?.length === 0) {
-      setChanged(false);
-
       return [];
     }
 

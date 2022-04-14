@@ -84,7 +84,7 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
   return (
     <Dialog onClose={onClose} open={open}>
       <Form initial={initialForm} onSubmit={onConfirm}>
-        {({ change, data: formData, hasChanged }) => (
+        {({ change, data: formData }) => (
           <>
             <DialogTitle>
               <FormattedMessage
@@ -140,7 +140,6 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
               <BackButton onClick={onClose} />
               <ConfirmButton
                 data-test-id="submit"
-                disabled={!hasChanged}
                 type="submit"
                 transitionState={confirmButtonState}
               >

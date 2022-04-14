@@ -81,7 +81,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
 
   return (
     <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
-      {({ change, data, hasChanged, submit }) => (
+      {({ change, data, submit }) => (
         <Container>
           <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.navigation)}
@@ -132,7 +132,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
             </div>
           </Grid>
           <Savebar
-            disabled={disabled || (!hasChanged && treeOperations.length === 0)}
+            disabled={disabled || treeOperations.length === 0}
             onCancel={onBack}
             onDelete={onDelete}
             onSubmit={submit}

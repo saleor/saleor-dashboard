@@ -2,7 +2,7 @@ import { ChannelVoucherData } from "@saleor/channels/utils";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import Container from "@saleor/components/Container";
-import Form, { FormDataWithOpts } from "@saleor/components/Form";
+import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
@@ -89,7 +89,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     privateMetadata: []
   };
 
-  const checkIfSaveIsDisabled = (data: FormDataWithOpts<FormData>) =>
+  const checkIfSaveIsDisabled = (data: FormData) =>
     (data.discountType.toString() !== "SHIPPING" &&
       data.channelListings?.some(
         channel =>

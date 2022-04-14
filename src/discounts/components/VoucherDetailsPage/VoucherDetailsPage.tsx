@@ -189,7 +189,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
 
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, hasChanged, submit, triggerChange, set }) => {
+      {({ change, data, submit, triggerChange, set }) => {
         const handleDiscountTypeChange = createDiscountTypeChangeHandler(
           change
         );

@@ -114,16 +114,13 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   const {
     change,
     data: formData,
-    hasChanged,
-    setChanged,
     setIsSubmitDisabled,
     triggerChange
   } = useForm(initialForm, undefined, { confirmLeave: true, formId });
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit,
-    setChanged
+    onSubmit
   });
 
   const [description, changeDescription] = useRichText({

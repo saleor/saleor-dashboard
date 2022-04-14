@@ -2,7 +2,7 @@ import { ChannelSaleData, validateSalePrice } from "@saleor/channels/utils";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import Container from "@saleor/components/Container";
-import Form, { FormDataWithOpts } from "@saleor/components/Form";
+import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
@@ -155,9 +155,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
     privateMetadata: sale?.privateMetadata.map(mapMetadataItemToInput)
   };
 
-  const checkIfSaveIsDisabled = (
-    data: FormDataWithOpts<SaleDetailsPageFormData>
-  ) =>
+  const checkIfSaveIsDisabled = (data: SaleDetailsPageFormData) =>
     data.channelListings?.some(channel => validateSalePrice(data, channel)) ||
     disabled;
 

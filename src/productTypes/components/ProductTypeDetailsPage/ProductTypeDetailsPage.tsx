@@ -162,7 +162,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
       confirmLeave
       disabled={disabled}
     >
-      {({ change, data, isSaveDisabled, submit, setChanged }) => {
+      {({ change, data, isSaveDisabled, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
@@ -237,7 +237,6 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                         onAttributeReorder(event, ProductAttributeType.VARIANT)
                       }
                       onAttributeUnassign={onAttributeUnassign}
-                      onAttributeVariantSelection={setChanged}
                       setSelectedVariantAttributes={
                         setSelectedVariantAttributes
                       }

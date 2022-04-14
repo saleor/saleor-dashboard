@@ -56,7 +56,7 @@ const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDia
         />
       </DialogTitle>
       <Form initial={initial} onSubmit={onSubmit}>
-        {({ change, data, hasChanged }) => (
+        {({ change, data }) => (
           <>
             <DialogContent>
               <Typography className={classes.info}>
@@ -92,7 +92,7 @@ const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDia
             <DialogActions>
               <BackButton onClick={onClose} />
               <ConfirmButton
-                disabled={!hasChanged || !data.min}
+                disabled={!data.min}
                 transitionState={confirmButtonState}
                 type="submit"
                 data-test-id="submit"

@@ -90,7 +90,7 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
 
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-      {({ data, change, submit, hasChanged }) => (
+      {({ data, change, submit }) => (
         <Container>
           <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.permissionGroups)}
@@ -139,7 +139,7 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
               onCancel={onBack}
               onSubmit={submit}
               state={saveButtonBarState}
-              disabled={disabled || !(hasChanged || membersModified)}
+              disabled={disabled || !membersModified}
             />
           </div>
         </Container>
