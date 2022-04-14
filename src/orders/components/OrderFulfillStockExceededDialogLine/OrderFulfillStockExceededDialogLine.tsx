@@ -1,6 +1,6 @@
 import { TableCell, TableRow, Typography } from "@material-ui/core";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
-import { OrderFulfillLineFragment, OrderLineFragment } from "@saleor/graphql";
+import { FulfillmentFragment, OrderFulfillLineFragment } from "@saleor/graphql";
 import {
   getFulfillmentFormsetQuantity,
   getOrderLineAvailableQuantity,
@@ -11,14 +11,19 @@ import React from "react";
 import { useStyles } from "../OrderFulfillStockExceededDialog/styles";
 
 export interface OrderFulfillStockExceededDialogLineProps {
-  line: OrderFulfillLineFragment | OrderLineFragment;
+  line: OrderFulfillLineFragment | FulfillmentFragment["lines"][0];
   warehouseId: string;
   formsetData: OrderFulfillStockInputFormsetData;
 }
 
 const OrderFulfillStockExceededDialogLine: React.FC<OrderFulfillStockExceededDialogLineProps> = props => {
-  const { line, warehouseId, formsetData } = props;
+  const { line: genericLine, warehouseId, formsetData } = props;
 
+  if (!genericLine) {
+    return null;
+  }
+
+  const line = "orderLine" in genericLine ? genericLine.orderLine : genericLine;
   const classes = useStyles(props);
 
   const stock = line?.variant?.stocks.find(
@@ -32,7 +37,7 @@ const OrderFulfillStockExceededDialogLine: React.FC<OrderFulfillStockExceededDia
         thumbnail={line?.thumbnail?.url}
       >
         {line?.productName}
-        {line?.variant && "attributes" in line.variant && (
+        {"attributes" in line.variant && (
           <Typography color="textSecondary" variant="caption">
             {line.variant?.attributes
               .map(attribute =>

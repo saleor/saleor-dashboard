@@ -1,6 +1,8 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import {
+  FulfillmentFragment,
   FulfillmentStatus,
+  OrderDetailsQueryResult,
   OrderFulfillmentApproveMutation,
   OrderFulfillmentApproveMutationVariables,
   OrderUpdateMutation,
@@ -14,7 +16,9 @@ import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotC
 import OrderChangeWarehouseDialog from "@saleor/orders/components/OrderChangeWarehouseDialog";
 import { OrderCustomerAddressesEditDialogOutput } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/types";
 import OrderFulfillmentApproveDialog from "@saleor/orders/components/OrderFulfillmentApproveDialog";
+import OrderFulfillStockExceededDialog from "@saleor/orders/components/OrderFulfillStockExceededDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
+import { transformFuflillmentLinesToStockInputFormsetData } from "@saleor/orders/utils/data";
 import { PartialMutationProviderOutput } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
@@ -49,7 +53,7 @@ import { useDefaultWarehouse } from "./useDefaultWarehouse";
 interface OrderNormalDetailsProps {
   id: string;
   params: OrderUrlQueryParams;
-  data: any;
+  data: OrderDetailsQueryResult["data"];
   orderAddNote: any;
   orderInvoiceRequest: any;
   handleSubmit: any;
@@ -142,6 +146,24 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
 
   const handleBack = () => navigate(orderListUrl());
 
+  const [
+    currentApproval,
+    setCurrentApproval
+  ] = React.useState<FulfillmentFragment | null>(null);
+  const [stockExceeded, setStockExceeded] = React.useState(false);
+  const approvalErrors =
+    orderFulfillmentApprove.opts.data?.orderFulfillmentApprove.errors || [];
+  React.useEffect(() => {
+    if (
+      approvalErrors.length &&
+      approvalErrors.every(err => err.code === "INSUFFICIENT_STOCK")
+    ) {
+      // eslint-disable-next-line no-console
+      console.log(currentApproval);
+      setStockExceeded(true);
+    }
+  }, [approvalErrors]);
+
   return (
     <>
       <WindowTitle
@@ -157,6 +179,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
       />
       <OrderDetailsPage
         onOrderReturn={() => navigate(orderReturnUrl(id))}
+        setCurrentApproval={setCurrentApproval}
         disabled={
           updateMetadataOpts.loading || updatePrivateMetadataOpts.loading
         }
@@ -235,10 +258,6 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         onInvoiceSend={id => openModal("invoice-send", { id })}
         onWarehouseChange={() => openModal("change-warehouse")}
         onSubmit={handleSubmit}
-        approvalErrors={
-          orderFulfillmentApprove.opts.data?.orderFulfillmentApprove.errors ||
-          []
-        }
       />
       <OrderCannotCancelOrderDialog
         onClose={closeModal}
@@ -304,13 +323,30 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
           []
         }
         open={params.action === "approve-fulfillment"}
-        onConfirm={({ notifyCustomer }) =>
-          orderFulfillmentApprove.mutate({
+        onConfirm={({ notifyCustomer }) => {
+          setCurrentApproval(
+            order?.fulfillments.find(
+              fulfillment => fulfillment.id === params.id
+            )
+          );
+          return orderFulfillmentApprove.mutate({
             id: params.id,
             notifyCustomer
-          })
-        }
+          });
+        }}
         onClose={closeModal}
+      />
+      <OrderFulfillStockExceededDialog
+        lines={currentApproval?.lines}
+        formsetData={transformFuflillmentLinesToStockInputFormsetData(
+          currentApproval?.lines,
+          currentApproval?.warehouse.id
+        )}
+        open={stockExceeded}
+        warehouseId={currentApproval?.warehouse.id}
+        onClose={() => setStockExceeded(false)}
+        confirmButtonState="default"
+        onSubmit={() => null}
       />
       <OrderFulfillmentCancelDialog
         confirmButtonState={orderFulfillmentCancel.opts.status}

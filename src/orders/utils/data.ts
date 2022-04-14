@@ -2,6 +2,7 @@ import { IMoney, subtractMoney } from "@saleor/components/Money";
 import {
   AddressInput,
   CountryCode,
+  FulfillmentFragment,
   FulfillmentStatus,
   OrderDetailsFragment,
   OrderFulfillStockInput,
@@ -342,3 +343,18 @@ export const isLineAvailableInWarehouse = (
   }
   return false;
 };
+
+export const transformFuflillmentLinesToStockInputFormsetData = (
+  lines: FulfillmentFragment["lines"],
+  warehouseId: string
+): OrderFulfillStockInputFormsetData =>
+  lines?.map(line => ({
+    data: null,
+    id: line.orderLine.id,
+    value: [
+      {
+        quantity: line.quantity,
+        warehouse: warehouseId
+      }
+    ]
+  }));

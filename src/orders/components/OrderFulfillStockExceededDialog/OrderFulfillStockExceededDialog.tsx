@@ -8,7 +8,7 @@ import {
 import ActionDialog from "@saleor/components/ActionDialog";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import { OrderFulfillLineFragment, OrderLineFragment } from "@saleor/graphql";
+import { FulfillmentFragment, OrderFulfillLineFragment } from "@saleor/graphql";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import {
@@ -24,7 +24,7 @@ import { stockExceededDialogMessages as messages } from "./messages";
 import { useStyles } from "./styles";
 
 export interface OrderFulfillStockExceededDialogProps {
-  lines: Array<OrderFulfillLineFragment | OrderLineFragment>;
+  lines: Array<FulfillmentFragment["lines"][0] | OrderFulfillLineFragment>;
   open: boolean;
   formsetData: OrderFulfillStockInputFormsetData;
   warehouseId: string;
@@ -47,7 +47,8 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
   const intl = useIntl();
   const classes = useStyles(props);
 
-  const exceededLines = lines?.filter(line => {
+  const exceededLines = lines?.filter(el => {
+    const line = "orderLine" in el ? el.orderLine : el;
     const stock = line.variant?.stocks.find(
       stock => stock.warehouse.id === warehouseId
     );
