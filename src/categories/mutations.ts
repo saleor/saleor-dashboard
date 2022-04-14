@@ -36,7 +36,7 @@ export const categoryUpdateMutation = gql`
 `;
 
 export const categoryBulkDeleteMutation = gql`
-  mutation CategoryBulkDelete($ids: [ID]!) {
+  mutation CategoryBulkDelete($ids: [ID!]!) {
     categoryBulkDelete(ids: $ids) {
       errors {
         ...ProductError
