@@ -3,7 +3,7 @@ import { act, renderHook } from "@testing-library/react-hooks";
 import useStateFromProps from "./useStateFromProps";
 
 function setupHook() {
-  return renderHook(s => useStateFromProps(s), {
+  return renderHook(useStateFromProps, {
     initialProps: {
       a: 0
     }
