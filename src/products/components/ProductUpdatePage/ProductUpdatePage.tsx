@@ -91,7 +91,6 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   limits: RefreshLimitsQuery["shop"]["limits"];
   variants: ProductDetailsVariantFragment[];
   media: ProductFragment["media"];
-  hasChannelChanged: boolean;
   product: ProductFragment;
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -155,7 +154,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   fetchMoreCategories,
   fetchMoreCollections,
   media,
-  hasChannelChanged,
   header,
   limits,
   placeholderImage,
@@ -285,7 +283,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       fetchMoreReferenceProducts={fetchMoreReferenceProducts}
       assignReferencesAttributeId={assignReferencesAttributeId}
       disabled={disabled}
-      hasChannelChanged={hasChannelChanged}
     >
       {({ change, data, formErrors, handlers, submit, isSaveDisabled }) => (
         <>

@@ -72,7 +72,6 @@ export interface SaleDetailsPageProps
   sale: SaleDetailsFragment;
   allChannelsCount: number;
   channelListings: ChannelSaleFormData[];
-  hasChannelChanged: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onCategoryAssign: () => void;
@@ -108,7 +107,6 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   onRemove,
   onSubmit,
   onTabClick,
-  hasChannelChanged,
   openChannelsModal,
   pageInfo,
   sale,
@@ -161,8 +159,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
     data: FormDataWithOpts<SaleDetailsPageFormData>
   ) =>
     data.channelListings?.some(channel => validateSalePrice(data, channel)) ||
-    disabled ||
-    (!data.hasChanged && !hasChannelChanged);
+    disabled;
 
   return (
     <Form

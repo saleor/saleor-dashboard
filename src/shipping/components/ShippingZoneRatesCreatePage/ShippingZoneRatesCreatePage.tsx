@@ -34,7 +34,6 @@ export interface ShippingZoneRatesCreatePageProps extends WithFormId {
   allChannelsCount?: number;
   shippingChannels: ChannelShippingData[];
   disabled: boolean;
-  hasChannelChanged?: boolean;
   postalCodes?: ShippingMethodTypeFragment["postalCodeRules"];
   channelErrors: ShippingChannelsErrorFragment[];
   errors: ShippingErrorFragment[];
@@ -58,7 +57,6 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
   channelErrors,
   disabled,
   errors,
-  hasChannelChanged,
   onBack,
   onDelete,
   onSubmit,
@@ -124,11 +122,10 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
     onChannelsChange,
     triggerChange
   );
-  const formDisabled = data.channelListings?.some(channel =>
+  const isValid = !data.channelListings?.some(channel =>
     validatePrice(channel.price)
   );
-  const isSaveDisabled =
-    disabled || formDisabled || (!hasChanged && !hasChannelChanged);
+  const isSaveDisabled = disabled || !isValid;
   setIsSubmitDisabled(isSaveDisabled);
 
   return (

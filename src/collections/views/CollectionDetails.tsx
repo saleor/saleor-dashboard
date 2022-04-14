@@ -341,9 +341,6 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
         toggle={toggle}
         toggleAll={toggleAll}
         currentChannels={currentChannels}
-        hasChannelChanged={
-          collectionChannelsChoices?.length !== currentChannels?.length
-        }
         channelsCount={availableChannels.length}
         selectedChannelId={selectedChannel}
         openChannelsModal={handleChannelsModalOpen}

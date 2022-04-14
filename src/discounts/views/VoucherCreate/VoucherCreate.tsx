@@ -124,7 +124,6 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
       <VoucherCreatePage
         allChannelsCount={allChannels?.length}
         channelListings={currentChannels}
-        hasChannelChanged={allChannels?.length !== currentChannels?.length}
         disabled={voucherCreateOpts.loading || updateChannelsOpts.loading}
         errors={[
           ...(voucherCreateOpts.data?.voucherCreate.errors || []),

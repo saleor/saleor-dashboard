@@ -43,7 +43,6 @@ export interface ShippingZoneRatesPageProps
   allChannelsCount?: number;
   shippingChannels: ChannelShippingData[];
   disabled: boolean;
-  hasChannelChanged?: boolean;
   havePostalCodesChanged?: boolean;
   rate: ShippingZoneQuery["shippingZone"]["shippingMethods"][0];
   channelErrors: ShippingChannelsErrorFragment[];
@@ -73,7 +72,6 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   channelErrors,
   disabled,
   errors,
-  hasChannelChanged,
   havePostalCodesChanged,
   onBack,
   onDelete,
@@ -155,15 +153,13 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
     onChannelsChange,
     triggerChange
   );
-  const formDisabled = formData.channelListings?.some(channel =>
+  const isValid = !formData.channelListings?.some(channel =>
     validatePrice(channel.price)
   );
 
   const changeMetadata = makeMetadataChangeHandler(change);
-  const formIsUnchanged =
-    !hasChanged && !hasChannelChanged && !havePostalCodesChanged;
 
-  const isSaveDisabled = disabled || formDisabled || formIsUnchanged;
+  const isSaveDisabled = disabled || !isValid;
   setIsSubmitDisabled(isSaveDisabled);
 
   return (

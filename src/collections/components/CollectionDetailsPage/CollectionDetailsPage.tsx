@@ -34,7 +34,6 @@ export interface CollectionDetailsPageProps
   collection: CollectionDetailsQuery["collection"];
   currentChannels: ChannelCollectionData[];
   errors: CollectionErrorFragment[];
-  hasChannelChanged: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onCollectionRemove: () => void;
@@ -53,7 +52,6 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
   currentChannels = [],
   disabled,
   errors,
-  hasChannelChanged,
   saveButtonBarState,
   selectedChannelId,
   onBack,
@@ -74,7 +72,6 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
       setChannels={onChannelsChange}
       onSubmit={onSubmit}
       disabled={disabled}
-      hasChannelChanged={hasChannelChanged}
     >
       {({ change, data, handlers, submit, isSaveDisabled }) => (
         <Container>

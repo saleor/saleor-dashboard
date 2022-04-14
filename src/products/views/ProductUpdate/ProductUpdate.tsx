@@ -564,10 +564,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           />
         ))}
       <ProductUpdatePage
-        hasChannelChanged={
-          hasChannelVariantListingChanged ||
-          productChannelsChoices?.length !== currentChannels?.length
-        }
         isSimpleProduct={isSimpleProduct}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}

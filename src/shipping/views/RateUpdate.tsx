@@ -379,7 +379,6 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
           unassignProductOpts?.status === "loading" ||
           assignProductOpts?.status === "loading"
         }
-        hasChannelChanged={shippingChannels?.length !== currentChannels?.length}
         havePostalCodesChanged={state.havePostalCodesChanged}
         saveButtonBarState={updateShippingRateOpts.status}
         onDelete={() => openModal("remove")}

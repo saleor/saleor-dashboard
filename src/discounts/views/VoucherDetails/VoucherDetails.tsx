@@ -213,15 +213,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
 
   const canOpenBulkActionDialog = maybe(() => params.ids.length > 0);
 
-  const hasArrChanged = () => {
-    const { added, removed } = arrayDiff(
-      voucherChannelsChoices.map(choice => choice.id),
-      currentChannels.map(choice => choice.id)
-    );
-
-    return added.length !== 0 || removed.length !== 0;
-  };
-
   const handleUpdate = createUpdateHandler(
     data?.voucher,
     voucherChannelsChoices,
@@ -306,7 +297,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         voucher={data?.voucher}
         allChannelsCount={allChannels?.length}
         channelListings={currentChannels}
-        hasChannelChanged={hasArrChanged()}
         disabled={
           loading ||
           voucherCataloguesRemoveOpts.loading ||

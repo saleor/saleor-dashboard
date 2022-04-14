@@ -41,7 +41,6 @@ export interface FormData extends VoucherDetailsPageFormData {
 export interface VoucherCreatePageProps {
   allChannelsCount: number;
   channelListings: ChannelVoucherData[];
-  hasChannelChanged: boolean;
   disabled: boolean;
   errors: DiscountErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -60,7 +59,6 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   onBack,
   onChannelsChange,
   onSubmit,
-  hasChannelChanged,
   openChannelsModal
 }) => {
   const intl = useIntl();
@@ -99,8 +97,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
           (data.requirementsPicker === RequirementsPicker.ORDER &&
             validatePrice(channel.minSpent))
       )) ||
-    disabled ||
-    (!data.hasChanged && hasChannelChanged);
+    disabled;
 
   return (
     <Form

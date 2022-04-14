@@ -81,7 +81,6 @@ export interface VoucherDetailsPageProps
   voucher: VoucherDetailsFragment;
   allChannelsCount: number;
   channelListings: ChannelVoucherData[];
-  hasChannelChanged: boolean;
   onBack: () => void;
   onCategoryAssign: () => void;
   onCategoryUnassign: (id: string) => void;
@@ -130,7 +129,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   onProductClick,
   onProductUnassign,
   onTabClick,
-  hasChannelChanged,
   openChannelsModal,
   onRemove,
   onSubmit,
@@ -435,9 +433,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
               <Metadata data={data} onChange={changeMetadata} />
             </Grid>
             <Savebar
-              disabled={
-                disabled || formDisabled || (!hasChanged && !hasChannelChanged)
-              }
+              disabled={disabled || formDisabled}
               onCancel={onBack}
               onDelete={onRemove}
               onSubmit={submit}
