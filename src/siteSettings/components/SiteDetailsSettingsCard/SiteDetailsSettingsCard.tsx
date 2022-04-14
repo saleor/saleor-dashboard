@@ -64,7 +64,7 @@ const SiteDetailsSettingsCard: React.FC<SiteDetailsSettingsCardProps> = ({
           fullWidth
           name="domain"
           label={intl.formatMessage({
-            defaultMessage: "Store domain"
+            defaultMessage: "Store API URL"
           })}
           helperText={getShopErrorMessage(formErrors.domain, intl)}
           value={data.domain}
