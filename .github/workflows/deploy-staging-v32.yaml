@@ -61,7 +61,7 @@ jobs:
               "client_payload": {
                 "project": "DASHBOARD",
                 "environment": "SANDBOX",
-                "version": "${{ github.event.inputs.git_ref }}"
+                "version": "${{ github.event.inputs.git_ref || github.ref_name }}"
               }
             }'
 
