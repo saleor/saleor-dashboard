@@ -20,7 +20,7 @@ import {
 import { createDigitalAndPhysicalProductWithNewDataAndDefaultChannel } from "../../support/api/utils/products/productsUtils";
 import filterTests from "../../support/filterTests";
 
-filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
+filterTests({ definedTags: ["all", "refactored"] }, () => {
   describe("As an unlogged customer I want to order physical and digital products", () => {
     const startsWith = `CyPurchaseByType`;
     const email = `${startsWith}@example.com`;
