@@ -1,5 +1,6 @@
 import { InputAdornment, TextField, TextFieldProps } from "@material-ui/core";
 import { InputProps } from "@material-ui/core/Input";
+import { FormChange } from "@saleor/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
 import React, { useMemo } from "react";
 import { FormattedMessage } from "react-intl";
@@ -70,21 +71,27 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
     [currencySymbol]
   );
 
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = e => {
-    const splitCharacter = findPriceSeparator(e.target.value);
-    const [integerPart, decimalPart] = e.target.value.split(splitCharacter);
+  const handleChange: FormChange = e => {
+    let value = e.target.value;
+    const splitCharacter = findPriceSeparator(value);
+    const [integerPart, decimalPart] = value.split(splitCharacter);
 
     if (maxDecimalLength === 0 && decimalPart) {
       // this shouldn't happen - decimal character should be ignored
-      e.target.value = integerPart;
+      value = integerPart;
     }
 
     if (decimalPart?.length > maxDecimalLength) {
       const shortenedDecimalPart = decimalPart.slice(0, maxDecimalLength);
-      e.target.value = `${integerPart}${splitCharacter}${shortenedDecimalPart}`;
+      value = `${integerPart}${splitCharacter}${shortenedDecimalPart}`;
     }
 
-    onChange(e);
+    onChange({
+      target: {
+        name: e.target.name,
+        value
+      }
+    });
   };
 
   const handleKeyPress: TextFieldProps["onKeyDown"] = e => {
