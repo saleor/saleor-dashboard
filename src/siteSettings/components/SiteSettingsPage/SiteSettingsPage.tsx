@@ -40,7 +40,6 @@ export interface SiteSettingsPageFormData
   extends SiteSettingsPageAddressFormData {
   description: string;
   domain: string;
-  name: string;
   reserveStockDurationAnonymousUser: number;
   reserveStockDurationAuthenticatedUser: number;
   limitQuantityPerCheckout: number;
@@ -117,7 +116,6 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
     ...initialFormAddress,
     description: shop?.description || "",
     domain: shop?.domain.host || "",
-    name: shop?.name || "",
     reserveStockDurationAnonymousUser: shop?.reserveStockDurationAnonymousUser,
     reserveStockDurationAuthenticatedUser:
       shop?.reserveStockDurationAuthenticatedUser,

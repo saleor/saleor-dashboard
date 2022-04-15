@@ -26,7 +26,7 @@ const SiteDetailsSettingsCard: React.FC<SiteDetailsSettingsCardProps> = ({
 }) => {
   const intl = useIntl();
 
-  const formErrors = getFormErrors(["name", "domain", "description"], errors);
+  const formErrors = getFormErrors(["domain", "description"], errors);
 
   return (
     <Card>
@@ -34,30 +34,6 @@ const SiteDetailsSettingsCard: React.FC<SiteDetailsSettingsCardProps> = ({
         title={intl.formatMessage(commonMessages.generalInformations)}
       />
       <CardContent>
-        <TextField
-          disabled={disabled}
-          error={!!formErrors.name}
-          fullWidth
-          name="name"
-          label={intl.formatMessage({
-            defaultMessage: "Name of your store"
-          })}
-          helperText={
-            getShopErrorMessage(formErrors.name, intl) ||
-            intl.formatMessage({
-              defaultMessage:
-                "Name of your store is shown on tab in web browser"
-            })
-          }
-          value={data.name}
-          onChange={onChange}
-          InputProps={{
-            inputProps: {
-              autoComplete: "none"
-            }
-          }}
-        />
-        <FormSpacer />
         <TextField
           disabled={disabled || IS_CLOUD_INSTANCE}
           error={!!formErrors.domain}

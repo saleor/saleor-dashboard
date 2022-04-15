@@ -3,7 +3,7 @@ import { defineMessages } from "react-intl";
 export const messages = defineMessages({
   sectionDetailsDescription: {
     defaultMessage:
-      "These are general information about your store. They define what is the URL of your store and what is shown in browsers taskbar.",
+      "These are general information about your store. They define what is the URL of your store API and what is shown in browsers taskbar.",
     description: "section description"
   },
   sectionCheckoutTitle: {

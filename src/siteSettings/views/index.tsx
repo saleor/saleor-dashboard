@@ -80,8 +80,7 @@ export const SiteSettings: React.FC<SiteSettingsProps> = () => {
         variables: {
           addressInput,
           shopDomainInput: {
-            domain: data.domain,
-            name: data.name
+            domain: data.domain
           },
           shopSettingsInput: {
             description: data.description,
