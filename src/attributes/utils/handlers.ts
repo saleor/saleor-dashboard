@@ -220,7 +220,15 @@ export const prepareAttributesInput = ({
       attrInput.push(booleanInput);
       return attrInput;
     }
-    // for cases other than rich text and boolean
+    if (inputType === AttributeInputTypeEnum.RICH_TEXT) {
+      attrInput.push({
+        id: attr.id,
+        richText: attr.value[0]
+      });
+      return attrInput;
+    }
+
+    // for cases other than rich text, boolean and file
     // we can skip attribute
     if (!attr.value[0]) {
       return attrInput;
