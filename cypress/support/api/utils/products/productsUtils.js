@@ -92,7 +92,8 @@ export function createTypeAttributeAndCategoryForProduct({
       if (updateAssign) {
         productAttributeAssignmentUpdate({
           productTypeId: productType.id,
-          attributeId: attribute.id
+          attributeId: attribute.id,
+          variantSelection: true
         });
       }
       categoryRequest.createCategory({ name });
