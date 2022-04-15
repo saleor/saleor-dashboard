@@ -22,7 +22,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import SiteCheckoutSettingsCard from "../SiteCheckoutSettingsCard";
-import SiteSettingsDetailsCard from "../SiteDetailsSettingsCard";
 import { messages } from "./messages";
 
 export interface SiteSettingsPageAddressFormData {
@@ -39,7 +38,6 @@ export interface SiteSettingsPageAddressFormData {
 export interface SiteSettingsPageFormData
   extends SiteSettingsPageAddressFormData {
   description: string;
-  domain: string;
   reserveStockDurationAnonymousUser: number;
   reserveStockDurationAuthenticatedUser: number;
   limitQuantityPerCheckout: number;
@@ -115,7 +113,6 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
   const initialForm: SiteSettingsPageFormData = {
     ...initialFormAddress,
     description: shop?.description || "",
-    domain: shop?.domain.host || "",
     reserveStockDurationAnonymousUser: shop?.reserveStockDurationAnonymousUser,
     reserveStockDurationAuthenticatedUser:
       shop?.reserveStockDurationAuthenticatedUser,
@@ -152,19 +149,6 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
               underline={true}
             />
             <Grid variant="inverted">
-              <PageSectionHeader
-                title={intl.formatMessage(sectionNames.siteSettings)}
-                description={intl.formatMessage(
-                  messages.sectionDetailsDescription
-                )}
-              />
-              <SiteSettingsDetailsCard
-                data={data}
-                errors={errors}
-                disabled={disabled}
-                onChange={change}
-              />
-              <Hr className={classes.hr} />
               <PageSectionHeader
                 title={intl.formatMessage(messages.sectionCheckoutTitle)}
                 description={intl.formatMessage(

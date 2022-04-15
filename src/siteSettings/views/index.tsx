@@ -38,11 +38,8 @@ export const SiteSettings: React.FC<SiteSettingsProps> = () => {
   ] = useShopSettingsUpdateMutation({
     onCompleted: data => {
       if (
-        [
-          ...data.shopAddressUpdate.errors,
-          ...data.shopSettingsUpdate.errors,
-          ...(data.shopDomainUpdate?.errors || [])
-        ].length === 0
+        [...data.shopAddressUpdate.errors, ...data.shopSettingsUpdate.errors]
+          .length === 0
       ) {
         notify({
           status: "success",
@@ -53,7 +50,6 @@ export const SiteSettings: React.FC<SiteSettingsProps> = () => {
   });
 
   const errors = [
-    ...(updateShopSettingsOpts.data?.shopDomainUpdate?.errors || []),
     ...(updateShopSettingsOpts.data?.shopSettingsUpdate.errors || []),
     ...(updateShopSettingsOpts.data?.shopAddressUpdate.errors || [])
   ];
@@ -79,9 +75,6 @@ export const SiteSettings: React.FC<SiteSettingsProps> = () => {
       updateShopSettings({
         variables: {
           addressInput,
-          shopDomainInput: {
-            domain: data.domain
-          },
           shopSettingsInput: {
             description: data.description,
             reserveStockDurationAnonymousUser:
