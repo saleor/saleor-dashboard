@@ -53,6 +53,10 @@ export const productListFilterOpts: ProductListFilterOpts = {
       }
     ]
   },
+  metadata: {
+    active: false,
+    value: { key: "metadataKey", value: "metadataValue" }
+  },
   productKind: {
     active: false,
     value: "NORMAL",
