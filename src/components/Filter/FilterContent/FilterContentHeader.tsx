@@ -1,5 +1,5 @@
 import { Typography } from "@material-ui/core";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";

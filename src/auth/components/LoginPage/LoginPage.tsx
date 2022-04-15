@@ -5,7 +5,7 @@ import {
   Typography
 } from "@material-ui/core";
 import { UserContextError } from "@saleor/auth/types";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import { AvailableExternalAuthenticationsQuery } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";

@@ -7,7 +7,7 @@ import {
   Typography
 } from "@material-ui/core";
 import BackButton from "@saleor/components/BackButton";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { ProductFragment } from "@saleor/graphql";

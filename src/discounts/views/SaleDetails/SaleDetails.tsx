@@ -10,7 +10,7 @@ import AssignCategoriesDialog from "@saleor/components/AssignCategoryDialog";
 import AssignCollectionDialog from "@saleor/components/AssignCollectionDialog";
 import AssignProductDialog from "@saleor/components/AssignProductDialog";
 import AssignVariantDialog from "@saleor/components/AssignVariantDialog";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";

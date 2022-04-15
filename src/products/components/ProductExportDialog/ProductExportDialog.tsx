@@ -5,7 +5,7 @@ import {
   DialogTitle,
   Typography
 } from "@material-ui/core";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import makeCreatorSteps, { Step } from "@saleor/components/CreatorSteps";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";

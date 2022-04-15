@@ -6,7 +6,7 @@ import {
   Typography
 } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";

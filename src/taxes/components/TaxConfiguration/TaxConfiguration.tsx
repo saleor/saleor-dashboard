@@ -1,5 +1,5 @@
 import { Card, CardActions, CardContent } from "@material-ui/core";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";

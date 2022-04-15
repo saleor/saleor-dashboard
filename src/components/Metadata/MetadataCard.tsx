@@ -10,7 +10,7 @@ import {
   TextField,
   Typography
 } from "@material-ui/core";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import { MetadataInput } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
 import { DeleteIcon, ExpandIcon, IconButton } from "@saleor/macaw-ui";

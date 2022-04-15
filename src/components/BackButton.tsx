@@ -1,4 +1,4 @@
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import { buttonMessages } from "@saleor/intl";
 import { ButtonProps } from "@saleor/macaw-ui";
 import React from "react";

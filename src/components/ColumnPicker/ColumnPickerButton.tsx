@@ -1,6 +1,6 @@
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";

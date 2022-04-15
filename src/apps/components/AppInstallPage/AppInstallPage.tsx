@@ -1,7 +1,7 @@
 import saleorDarkLogoSmall from "@assets/images/logo-dark-small.svg";
 import plusIcon from "@assets/images/plus-icon.svg";
 import { Card, CardContent, Grid, Typography } from "@material-ui/core";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";

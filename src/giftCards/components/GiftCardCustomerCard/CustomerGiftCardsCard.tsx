@@ -1,6 +1,6 @@
 import { Card, CardActions, Dialog } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
 import Link from "@saleor/components/Link";

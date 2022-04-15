@@ -1,5 +1,5 @@
 import { CardActions, Typography } from "@material-ui/core";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import { FulfillmentStatus } from "@saleor/graphql";
 import { buttonMessages, commonMessages } from "@saleor/intl";
 import React from "react";

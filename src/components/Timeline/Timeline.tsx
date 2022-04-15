@@ -1,7 +1,7 @@
 import { Avatar, CardContent, TextField } from "@material-ui/core";
 import deepPurple from "@material-ui/core/colors/deepPurple";
 import PersonIcon from "@material-ui/icons/Person";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

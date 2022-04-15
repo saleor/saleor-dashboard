@@ -1,5 +1,5 @@
 import { Card, CardActions, CardContent } from "@material-ui/core";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import Form from "@saleor/components/Form";
 import SingleSelectField from "@saleor/components/SingleSelectField";

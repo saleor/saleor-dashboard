@@ -1,4 +1,4 @@
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import { buttonMessages } from "@saleor/intl";
 import React from "react";
 import { useIntl } from "react-intl";

@@ -1,5 +1,5 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

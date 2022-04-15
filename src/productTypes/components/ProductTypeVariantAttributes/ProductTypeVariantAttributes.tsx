@@ -1,6 +1,6 @@
 import { Card, TableCell, TableRow, Tooltip } from "@material-ui/core";
 import HelpOutline from "@material-ui/icons/HelpOutline";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";

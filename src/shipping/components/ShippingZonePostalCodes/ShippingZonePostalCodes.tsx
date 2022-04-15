@@ -7,7 +7,7 @@ import {
   TableRow,
   Typography
 } from "@material-ui/core";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";

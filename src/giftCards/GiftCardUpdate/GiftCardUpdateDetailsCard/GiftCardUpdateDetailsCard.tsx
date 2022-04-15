@@ -1,6 +1,6 @@
 import { Card, CardContent, Divider, Typography } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";

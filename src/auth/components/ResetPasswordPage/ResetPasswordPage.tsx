@@ -1,5 +1,5 @@
 import { TextField, Typography } from "@material-ui/core";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { RequestPasswordResetMutation } from "@saleor/graphql";

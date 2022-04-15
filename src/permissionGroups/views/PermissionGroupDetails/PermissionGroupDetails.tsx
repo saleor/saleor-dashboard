@@ -1,5 +1,5 @@
 import { useUser } from "@saleor/auth";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import {
   usePermissionGroupDetailsQuery,

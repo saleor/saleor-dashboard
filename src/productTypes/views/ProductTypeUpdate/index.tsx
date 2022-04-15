@@ -2,7 +2,7 @@ import { attributeUrl } from "@saleor/attributes/urls";
 import AssignAttributeDialog from "@saleor/components/AssignAttributeDialog";
 import AttributeUnassignDialog from "@saleor/components/AttributeUnassignDialog";
 import BulkAttributeUnassignDialog from "@saleor/components/BulkAttributeUnassignDialog";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import TypeDeleteWarningDialog from "@saleor/components/TypeDeleteWarningDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";

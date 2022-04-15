@@ -1,5 +1,5 @@
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import PageHeader from "@saleor/components/PageHeader";
 import GiftCardStatusChip from "@saleor/giftCards/components/GiftCardStatusChip/GiftCardStatusChip";
 import { sectionNames } from "@saleor/intl";

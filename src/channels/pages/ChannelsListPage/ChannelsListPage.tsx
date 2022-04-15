@@ -6,7 +6,7 @@ import {
   TableRow
 } from "@material-ui/core";
 import { channelUrl } from "@saleor/channels/urls";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";

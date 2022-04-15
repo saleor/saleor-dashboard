@@ -1,4 +1,4 @@
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import { makeStyles } from "@saleor/macaw-ui";
 import { SearchPageProps, TabPageProps } from "@saleor/types";
 import React from "react";

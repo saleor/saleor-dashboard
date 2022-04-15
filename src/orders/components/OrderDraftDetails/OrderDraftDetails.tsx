@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@material-ui/core";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import { OrderDetailsFragment } from "@saleor/graphql";
 import {

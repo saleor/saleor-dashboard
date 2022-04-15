@@ -5,7 +5,7 @@ import {
   DialogContentText,
   DialogTitle
 } from "@material-ui/core";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Form from "@saleor/components/Form";

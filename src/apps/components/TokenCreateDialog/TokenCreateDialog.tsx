@@ -8,7 +8,7 @@ import {
   Typography
 } from "@material-ui/core";
 import BackButton from "@saleor/components/BackButton";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";

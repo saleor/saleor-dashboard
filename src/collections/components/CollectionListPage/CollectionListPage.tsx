@@ -1,6 +1,6 @@
 import { Card } from "@material-ui/core";
 import { collectionAddUrl } from "@saleor/collections/urls";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import { Container } from "@saleor/components/Container";
 import { getByName } from "@saleor/components/Filter/utils";
 import FilterBar from "@saleor/components/FilterBar";

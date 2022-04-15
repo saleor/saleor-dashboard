@@ -4,7 +4,7 @@ import {
   CircularProgress,
   Typography
 } from "@material-ui/core";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import useElementScroll from "@saleor/hooks/useElementScroll";
 import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";

@@ -1,4 +1,4 @@
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { MenuFragment } from "@saleor/graphql";

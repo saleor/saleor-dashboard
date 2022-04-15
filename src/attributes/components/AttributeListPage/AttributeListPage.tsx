@@ -3,7 +3,7 @@ import {
   attributeAddUrl,
   AttributeListUrlSortField
 } from "@saleor/attributes/urls";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import FilterBar from "@saleor/components/FilterBar";
 import { AttributeFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";

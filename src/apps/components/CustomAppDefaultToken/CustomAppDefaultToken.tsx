@@ -1,6 +1,6 @@
 import { Card, CardContent, Paper, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import Link from "@saleor/components/Link";
 import useClipboard from "@saleor/hooks/useClipboard";
 import { IconButton } from "@saleor/macaw-ui";

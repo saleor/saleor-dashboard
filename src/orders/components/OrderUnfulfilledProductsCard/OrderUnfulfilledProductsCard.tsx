@@ -1,5 +1,5 @@
 import { Card, CardActions, TableBody, Typography } from "@material-ui/core";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { OrderLineFragment } from "@saleor/graphql";

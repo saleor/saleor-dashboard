@@ -1,6 +1,6 @@
 import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import { configurationMenuUrl } from "@saleor/configuration";
 import {
   useMenuBulkDeleteMutation,

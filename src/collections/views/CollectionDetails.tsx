@@ -6,7 +6,7 @@ import {
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import AssignProductDialog from "@saleor/components/AssignProductDialog";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";

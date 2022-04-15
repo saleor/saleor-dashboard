@@ -1,4 +1,4 @@
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import { IMessage } from "@saleor/components/messages";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { storiesOf } from "@storybook/react";

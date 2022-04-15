@@ -1,6 +1,6 @@
 import { Card } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import { InternalLink } from "@saleor/components/InternalLink";
 import { CategoryDetailsQuery } from "@saleor/graphql";

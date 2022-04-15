@@ -6,7 +6,7 @@ import {
   DialogTitle
 } from "@material-ui/core";
 import BackButton from "@saleor/components/BackButton";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";

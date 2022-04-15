@@ -1,5 +1,5 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
-import Button from "@saleor/components/Button";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
 import RequirePermissions from "@saleor/components/RequirePermissions";
