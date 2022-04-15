@@ -36,6 +36,7 @@ import {
   createFilterUtils,
   dedupeFilter,
   getGteLteVariables,
+  getKeyValueQueryParam,
   getMinMaxQueryParam,
   getMultipleValueQueryParam,
   getSingleEnumValueQueryParam,
@@ -165,6 +166,13 @@ export function getFilterOpts(
       onFetchMore: collections.search.loadMore,
       onSearchChange: collections.search.search,
       value: dedupeFilter(params.collections || [])
+    },
+    metadata: {
+      active: !!params.metadataKey,
+      value: {
+        key: params.metadataKey,
+        value: params.metadataValue ?? ""
+      }
     },
     productKind: {
       active: params?.productKind !== undefined,
@@ -313,6 +321,10 @@ export function getFilterVariables(
     attributes: getFilteredAttributeValue(params),
     categories: params.categories !== undefined ? params.categories : null,
     collections: params.collections !== undefined ? params.collections : null,
+    metadata:
+      params.metadataKey !== undefined
+        ? [{ key: params.metadataKey, value: params.metadataValue ?? "" }]
+        : null,
     price: isChannelSelected
       ? getGteLteVariables({
           gte: parseFloat(params.priceFrom),
@@ -392,6 +404,13 @@ export function getFilterQueryParam(
       return getSingleValueQueryParam(
         filter,
         ProductListUrlFiltersEnum.productKind
+      );
+
+    case ProductFilterKeys.metadata:
+      return getKeyValueQueryParam(
+        filter,
+        ProductListUrlFiltersEnum.metadataKey,
+        ProductListUrlFiltersEnum.metadataValue
       );
   }
 }

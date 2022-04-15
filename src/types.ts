@@ -202,6 +202,8 @@ export interface MutationResultAdditionalProps {
   status: ConfirmButtonTransitionState;
 }
 
+export type KeyValue = Record<"key" | "value", string>;
+
 export type MinMax = Record<"min" | "max", string>;
 
 export interface FilterOpts<T> {

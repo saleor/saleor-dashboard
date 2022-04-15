@@ -13,7 +13,8 @@ export enum FieldType {
   number,
   price,
   options,
-  text
+  text,
+  keyValue
 }
 
 export interface IFilterElementMutableData<T extends string = string> {

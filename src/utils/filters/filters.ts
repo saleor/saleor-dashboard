@@ -175,4 +175,23 @@ export function getMinMaxQueryParam<
   };
 }
 
+export function getKeyValueQueryParam<
+  TKey extends string,
+  TUrlKey extends string
+>(param: IFilterElement<TKey>, key: TUrlKey, keyValue: TUrlKey) {
+  const { active, value } = param;
+
+  if (!active) {
+    return {
+      [key]: undefined,
+      [keyValue]: undefined
+    };
+  }
+
+  return {
+    [key]: value[0],
+    [keyValue]: value[1]
+  };
+}
+
 export default createFilterUtils;

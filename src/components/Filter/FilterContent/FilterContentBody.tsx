@@ -4,11 +4,13 @@ import { FilterDateTimeField } from "@saleor/components/Filter/FilterContent/Fil
 import { FilterNumericField } from "@saleor/components/Filter/FilterContent/FilterNumericField";
 import { FilterSingleSelectField } from "@saleor/components/Filter/FilterContent/FilterSingleSelectField";
 import { useCommonStyles } from "@saleor/components/Filter/FilterContent/utils";
+import FormSpacer from "@saleor/components/FormSpacer";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import FilterAutocompleteField, {
   FilterAutocompleteDisplayValues
@@ -16,6 +18,7 @@ import FilterAutocompleteField, {
 import FilterOptionField from "../FilterOptionField";
 import { FilterReducerAction } from "../reducer";
 import { FieldType, IFilterElement } from "../types";
+import messages from "./messages";
 
 const useStyles = makeStyles(
   theme => ({
@@ -58,6 +61,7 @@ const FilterContentBody: React.FC<FilterContentBodyProps> = ({
   setAutocompleteDisplayValues,
   initialAutocompleteDisplayValues
 }) => {
+  const intl = useIntl();
   const classes = useStyles({});
   const commonClasses = useCommonStyles({});
 
@@ -159,6 +163,45 @@ const FilterContentBody: React.FC<FilterContentBodyProps> = ({
             />
           </div>
         ))}
+      {filter.type === FieldType.keyValue && (
+        <div>
+          <TextField
+            fullWidth
+            name={filter.name}
+            label={intl.formatMessage(messages.key)}
+            value={filter.value[0]}
+            onChange={event =>
+              onFilterPropertyChange({
+                payload: {
+                  name: filter.name,
+                  update: {
+                    value: [event.target.value, filter.value[1]]
+                  }
+                },
+                type: "set-property"
+              })
+            }
+          />
+          <FormSpacer />
+          <TextField
+            fullWidth
+            name={filter.name}
+            label={intl.formatMessage(messages.value)}
+            value={filter.value[1]}
+            onChange={event =>
+              onFilterPropertyChange({
+                payload: {
+                  name: filter.name,
+                  update: {
+                    value: [filter.value[0], event.target.value]
+                  }
+                },
+                type: "set-property"
+              })
+            }
+          />
+        </div>
+      )}
       {filter.type === FieldType.autocomplete && (
         <FilterAutocompleteField
           data-test-id={filterTestingContext + filter.name}
