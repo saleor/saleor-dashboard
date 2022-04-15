@@ -1,8 +1,6 @@
 /// <reference types="cypress"/>
 /// <reference types="../../support"/>
 
-import "cypress-wait-until";
-
 import faker from "faker";
 
 import {
