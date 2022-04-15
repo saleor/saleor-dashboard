@@ -71,21 +71,20 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
   );
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = e => {
-    let newValue = e.target.value;
-    const splitCharacter = findPriceSeparator(newValue);
+    const splitCharacter = findPriceSeparator(e.target.value);
     const [integerPart, decimalPart] = e.target.value.split(splitCharacter);
 
     if (maxDecimalLength === 0 && decimalPart) {
       // this shouldn't happen - decimal character should be ignored
-      newValue = integerPart;
+      e.target.value = integerPart;
     }
 
     if (decimalPart?.length > maxDecimalLength) {
       const shortenedDecimalPart = decimalPart.slice(0, maxDecimalLength);
-      newValue = `${integerPart}${splitCharacter}${shortenedDecimalPart}`;
+      e.target.value = `${integerPart}${splitCharacter}${shortenedDecimalPart}`;
     }
 
-    onChange({ ...e, target: { ...e.target, value: newValue } });
+    onChange(e);
   };
 
   const handleKeyPress: TextFieldProps["onKeyDown"] = e => {
