@@ -14,6 +14,7 @@ export function useSortRedirects(
 ) {
   const navigate = useNavigator();
 
+  const hasQuery = !!params.query.trim();
   useEffect(() => {
     const sortWithQuery = ProductListUrlSortField.rank;
     const sortWithoutQuery =
@@ -23,8 +24,8 @@ export function useSortRedirects(
     navigate(
       productListUrl({
         ...params,
-        asc: params.query ? false : params.asc,
-        sort: params.query ? sortWithQuery : sortWithoutQuery
+        asc: hasQuery ? false : params.asc,
+        sort: hasQuery ? sortWithQuery : sortWithoutQuery
       })
     );
   }, [params.query]);
