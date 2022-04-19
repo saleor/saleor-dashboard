@@ -18,6 +18,7 @@ import { OrderCustomerAddressesEditDialogOutput } from "@saleor/orders/component
 import OrderFulfillmentApproveDialog from "@saleor/orders/components/OrderFulfillmentApproveDialog";
 import OrderFulfillStockExceededDialog from "@saleor/orders/components/OrderFulfillStockExceededDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
+import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { transformFuflillmentLinesToStockInputFormsetData } from "@saleor/orders/utils/data";
 import { PartialMutationProviderOutput } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -326,9 +327,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         open={params.action === "approve-fulfillment"}
         onConfirm={({ notifyCustomer }) => {
           setCurrentApproval({
-            fulfillment: order?.fulfillments.find(
-              fulfillment => fulfillment.id === params.id
-            ),
+            fulfillment: order?.fulfillments.find(getById(params.id)),
             notifyCustomer
           });
           return orderFulfillmentApprove.mutate({
