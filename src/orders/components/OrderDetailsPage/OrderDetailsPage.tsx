@@ -68,9 +68,6 @@ export interface OrderDetailsPageProps {
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   selectedWarehouse?: WarehouseFragment;
-  setCurrentApproval?: React.Dispatch<
-    React.SetStateAction<FulfillmentFragment>
-  >;
   onOrderLineAdd?: () => void;
   onOrderLineChange?: (
     id: string,
@@ -123,7 +120,6 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     shop,
     saveButtonBarState,
     selectedWarehouse,
-    setCurrentApproval,
     onBack,
     onBillingAddressEdit,
     onFulfillmentApprove,
@@ -281,10 +277,9 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                         onFulfillmentTrackingNumberUpdate(fulfillment.id)
                       }
                       onRefund={onPaymentRefund}
-                      onOrderFulfillmentApprove={() => {
-                        setCurrentApproval(fulfillment);
-                        return onFulfillmentApprove(fulfillment.id);
-                      }}
+                      onOrderFulfillmentApprove={() =>
+                        onFulfillmentApprove(fulfillment.id)
+                      }
                     />
                   </React.Fragment>
                 ))}

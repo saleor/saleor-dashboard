@@ -77,6 +77,10 @@ interface OrderNormalDetailsProps {
   openModal: any;
   closeModal: any;
 }
+interface ApprovalState {
+  fulfillment: FulfillmentFragment;
+  notifyCustomer: boolean;
+}
 
 export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   id,
@@ -149,7 +153,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   const [
     currentApproval,
     setCurrentApproval
-  ] = React.useState<FulfillmentFragment | null>(null);
+  ] = React.useState<ApprovalState | null>(null);
   const [stockExceeded, setStockExceeded] = React.useState(false);
   const approvalErrors =
     orderFulfillmentApprove.opts.data?.orderFulfillmentApprove.errors || [];
@@ -158,8 +162,6 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
       approvalErrors.length &&
       approvalErrors.every(err => err.code === "INSUFFICIENT_STOCK")
     ) {
-      // eslint-disable-next-line no-console
-      console.log(currentApproval);
       setStockExceeded(true);
     }
   }, [approvalErrors]);
@@ -179,7 +181,6 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
       />
       <OrderDetailsPage
         onOrderReturn={() => navigate(orderReturnUrl(id))}
-        setCurrentApproval={setCurrentApproval}
         disabled={
           updateMetadataOpts.loading || updatePrivateMetadataOpts.loading
         }
@@ -324,11 +325,12 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         }
         open={params.action === "approve-fulfillment"}
         onConfirm={({ notifyCustomer }) => {
-          setCurrentApproval(
-            order?.fulfillments.find(
+          setCurrentApproval({
+            fulfillment: order?.fulfillments.find(
               fulfillment => fulfillment.id === params.id
-            )
-          );
+            ),
+            notifyCustomer
+          });
           return orderFulfillmentApprove.mutate({
             id: params.id,
             notifyCustomer
@@ -337,16 +339,23 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         onClose={closeModal}
       />
       <OrderFulfillStockExceededDialog
-        lines={currentApproval?.lines}
+        lines={currentApproval?.fulfillment.lines}
         formsetData={transformFuflillmentLinesToStockInputFormsetData(
-          currentApproval?.lines,
-          currentApproval?.warehouse.id
+          currentApproval?.fulfillment.lines,
+          currentApproval?.fulfillment.warehouse.id
         )}
         open={stockExceeded}
-        warehouseId={currentApproval?.warehouse.id}
+        warehouseId={currentApproval?.fulfillment.warehouse.id}
         onClose={() => setStockExceeded(false)}
         confirmButtonState="default"
-        onSubmit={() => null}
+        onSubmit={() => {
+          setStockExceeded(false);
+          return orderFulfillmentApprove.mutate({
+            id: params.id,
+            notifyCustomer: currentApproval?.notifyCustomer,
+            allowStockToBeExceeded: true
+          });
+        }}
       />
       <OrderFulfillmentCancelDialog
         confirmButtonState={orderFulfillmentCancel.opts.status}
