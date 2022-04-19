@@ -1,7 +1,7 @@
 import { TextField } from "@material-ui/core";
 import DebounceForm from "@saleor/components/DebounceForm";
 import Form from "@saleor/components/Form";
-import { OrderLineFragment } from "@saleor/graphql";
+import { OrderLineFragment, OrderLineInput } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import createNonNegativeValueChangeHandler from "@saleor/utils/handlers/nonNegativeValueChangeHandler";
 import React from "react";
@@ -18,14 +18,9 @@ const useStyles = makeStyles(
   }),
   { name: "TableLineForm" },
 );
-
-export interface FormData {
-  quantity: number;
-}
-
 interface TableLineFormProps {
   line: OrderLineFragment;
-  onOrderLineChange: (id: string, data: FormData) => void;
+  onOrderLineChange: (id: string, data: OrderLineInput) => void;
 }
 
 const TableLineForm: React.FC<TableLineFormProps> = ({
@@ -35,8 +30,15 @@ const TableLineForm: React.FC<TableLineFormProps> = ({
   const classes = useStyles({});
   const { id, quantity } = line;
 
+  const handleSubmit = (id: string, data: OrderLineInput) => {
+    if (!data || data.quantity < 1) {
+      return;
+    }
+    onOrderLineChange(id, { quantity: Math.floor(data.quantity) });
+  };
+
   return (
-    <Form initial={{ quantity }} onSubmit={data => onOrderLineChange(id, data)}>
+    <Form initial={{ quantity }} onSubmit={data => handleSubmit(id, data)}>
       {({ change, data, submit }) => {
         const handleQuantityChange = createNonNegativeValueChangeHandler(
           change,
