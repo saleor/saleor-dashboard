@@ -5,6 +5,7 @@ import {
   FulfillmentFragment,
   FulfillmentStatus,
   OrderDetailsFragment,
+  OrderFulfillLineFragment,
   OrderFulfillStockInput,
   OrderLineFragment,
   OrderLineStockDataFragment,
@@ -358,3 +359,12 @@ export const transformFuflillmentLinesToStockInputFormsetData = (
       }
     ]
   }));
+
+export const getAttributesCaption = (
+  attributes: OrderFulfillLineFragment["variant"]["attributes"]
+): string =>
+  attributes
+    .map(attribute =>
+      attribute.values.map(attributeValue => attributeValue.name).join(", ")
+    )
+    .join(" / ");

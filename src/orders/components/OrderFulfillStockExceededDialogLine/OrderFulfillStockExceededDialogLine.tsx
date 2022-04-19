@@ -2,6 +2,7 @@ import { TableCell, TableRow, Typography } from "@material-ui/core";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { FulfillmentFragment, OrderFulfillLineFragment } from "@saleor/graphql";
 import {
+  getAttributesCaption,
   getFulfillmentFormsetQuantity,
   getOrderLineAvailableQuantity,
   OrderFulfillStockInputFormsetData
@@ -39,13 +40,7 @@ const OrderFulfillStockExceededDialogLine: React.FC<OrderFulfillStockExceededDia
         {line?.productName}
         {"attributes" in line.variant && (
           <Typography color="textSecondary" variant="caption">
-            {line.variant?.attributes
-              .map(attribute =>
-                attribute.values
-                  .map(attributeValue => attributeValue.name)
-                  .join(", ")
-              )
-              .join(" / ")}
+            {getAttributesCaption(line.variant?.attributes)}
           </Typography>
         )}
       </TableCellAvatar>
