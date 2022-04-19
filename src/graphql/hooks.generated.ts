@@ -8388,8 +8388,12 @@ export type OrderFulfillmentUpdateTrackingMutationHookResult = ReturnType<typeof
 export type OrderFulfillmentUpdateTrackingMutationResult = Apollo.MutationResult<Types.OrderFulfillmentUpdateTrackingMutation>;
 export type OrderFulfillmentUpdateTrackingMutationOptions = Apollo.BaseMutationOptions<Types.OrderFulfillmentUpdateTrackingMutation, Types.OrderFulfillmentUpdateTrackingMutationVariables>;
 export const OrderFulfillmentApproveDocument = gql`
-    mutation OrderFulfillmentApprove($id: ID!, $notifyCustomer: Boolean!) {
-  orderFulfillmentApprove(id: $id, notifyCustomer: $notifyCustomer) {
+    mutation OrderFulfillmentApprove($id: ID!, $notifyCustomer: Boolean!, $allowStockToBeExceeded: Boolean) {
+  orderFulfillmentApprove(
+    id: $id
+    notifyCustomer: $notifyCustomer
+    allowStockToBeExceeded: $allowStockToBeExceeded
+  ) {
     errors {
       ...OrderError
     }
@@ -8417,6 +8421,7 @@ export type OrderFulfillmentApproveMutationFn = Apollo.MutationFunction<Types.Or
  *   variables: {
  *      id: // value for 'id'
  *      notifyCustomer: // value for 'notifyCustomer'
+ *      allowStockToBeExceeded: // value for 'allowStockToBeExceeded'
  *   },
  * });
  */

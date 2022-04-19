@@ -8,16 +8,13 @@ import {
 import ActionDialog from "@saleor/components/ActionDialog";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import {
-  OrderFulfillLineFragment,
-  OrderFulfillStockInput
-} from "@saleor/graphql";
-import { FormsetData } from "@saleor/hooks/useFormset";
+import { FulfillmentFragment, OrderFulfillLineFragment } from "@saleor/graphql";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import {
   getFulfillmentFormsetQuantity,
-  getOrderLineAvailableQuantity
+  getOrderLineAvailableQuantity,
+  OrderFulfillStockInputFormsetData
 } from "@saleor/orders/utils/data";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -27,9 +24,9 @@ import { stockExceededDialogMessages as messages } from "./messages";
 import { useStyles } from "./styles";
 
 export interface OrderFulfillStockExceededDialogProps {
-  lines: OrderFulfillLineFragment[];
+  lines: Array<FulfillmentFragment["lines"][0] | OrderFulfillLineFragment>;
   open: boolean;
-  formsetData: FormsetData<null, OrderFulfillStockInput[]>;
+  formsetData: OrderFulfillStockInputFormsetData;
   warehouseId: string;
   confirmButtonState: ConfirmButtonTransitionState;
   onSubmit();
@@ -50,7 +47,8 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
   const intl = useIntl();
   const classes = useStyles(props);
 
-  const exceededLines = lines?.filter(line => {
+  const exceededLines = lines?.filter(el => {
+    const line = "orderLine" in el ? el.orderLine : el;
     const stock = line.variant?.stocks.find(
       stock => stock.warehouse.id === warehouseId
     );

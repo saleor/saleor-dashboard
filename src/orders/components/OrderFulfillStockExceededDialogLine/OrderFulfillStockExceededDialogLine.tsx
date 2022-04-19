@@ -1,30 +1,33 @@
 import { TableCell, TableRow, Typography } from "@material-ui/core";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import { FulfillmentFragment, OrderFulfillLineFragment } from "@saleor/graphql";
 import {
-  OrderFulfillLineFragment,
-  OrderFulfillStockInput
-} from "@saleor/graphql";
-import { FormsetData } from "@saleor/hooks/useFormset";
-import {
+  getAttributesCaption,
   getFulfillmentFormsetQuantity,
-  getOrderLineAvailableQuantity
+  getOrderLineAvailableQuantity,
+  OrderFulfillStockInputFormsetData
 } from "@saleor/orders/utils/data";
 import React from "react";
 
 import { useStyles } from "../OrderFulfillStockExceededDialog/styles";
 
 export interface OrderFulfillStockExceededDialogLineProps {
-  line: OrderFulfillLineFragment;
+  line: OrderFulfillLineFragment | FulfillmentFragment["lines"][0];
   warehouseId: string;
-  formsetData: FormsetData<null, OrderFulfillStockInput[]>;
+  formsetData: OrderFulfillStockInputFormsetData;
 }
 
 const OrderFulfillStockExceededDialogLine: React.FC<OrderFulfillStockExceededDialogLineProps> = props => {
-  const { line, warehouseId, formsetData } = props;
+  const { line: genericLine, warehouseId, formsetData } = props;
 
+  if (!genericLine) {
+    return null;
+  }
+
+  const line = "orderLine" in genericLine ? genericLine.orderLine : genericLine;
   const classes = useStyles(props);
 
-  const stock = line.variant?.stocks.find(
+  const stock = line?.variant?.stocks.find(
     stock => stock.warehouse.id === warehouseId
   );
 
@@ -35,15 +38,11 @@ const OrderFulfillStockExceededDialogLine: React.FC<OrderFulfillStockExceededDia
         thumbnail={line?.thumbnail?.url}
       >
         {line?.productName}
-        <Typography color="textSecondary" variant="caption">
-          {line.variant?.attributes
-            .map(attribute =>
-              attribute.values
-                .map(attributeValue => attributeValue.name)
-                .join(", ")
-            )
-            .join(" / ")}
-        </Typography>
+        {"attributes" in line.variant && (
+          <Typography color="textSecondary" variant="caption">
+            {getAttributesCaption(line.variant?.attributes)}
+          </Typography>
+        )}
       </TableCellAvatar>
       <TableCell className={classes.colQuantity}>
         {getFulfillmentFormsetQuantity(formsetData, line)}
