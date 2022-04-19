@@ -14,7 +14,8 @@ export function useSortRedirects(
 ) {
   const navigate = useNavigator();
 
-  const hasQuery = !!params.query.trim();
+  const hasQuery = !!params.query?.trim();
+
   useEffect(() => {
     const sortWithQuery = ProductListUrlSortField.rank;
     const sortWithoutQuery =
