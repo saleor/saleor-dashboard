@@ -30,7 +30,10 @@ import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
 import { commonMessages } from "@saleor/intl";
 import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import { getToFulfillOrderLines } from "@saleor/orders/utils/data";
+import {
+  getAttributesCaption,
+  getToFulfillOrderLines
+} from "@saleor/orders/utils/data";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -88,13 +91,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
       line => ({
         data: null,
         id: line.id,
-        label: line.variant?.attributes
-          .map(attribute =>
-            attribute.values
-              .map(attributeValue => attributeValue.name)
-              .join(" , ")
-          )
-          .join(" / "),
+        label: getAttributesCaption(line?.variant?.attributes),
         value: line?.variant?.preorder
           ? null
           : [

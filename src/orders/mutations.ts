@@ -243,8 +243,16 @@ export const orderFulfillmentUpdateTrackingMutation = gql`
 `;
 
 export const orderFulfillmentApproveMutation = gql`
-  mutation OrderFulfillmentApprove($id: ID!, $notifyCustomer: Boolean!) {
-    orderFulfillmentApprove(id: $id, notifyCustomer: $notifyCustomer) {
+  mutation OrderFulfillmentApprove(
+    $id: ID!
+    $notifyCustomer: Boolean!
+    $allowStockToBeExceeded: Boolean
+  ) {
+    orderFulfillmentApprove(
+      id: $id
+      notifyCustomer: $notifyCustomer
+      allowStockToBeExceeded: $allowStockToBeExceeded
+    ) {
       errors {
         ...OrderError
       }

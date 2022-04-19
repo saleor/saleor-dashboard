@@ -2,6 +2,7 @@ import { IMoney, subtractMoney } from "@saleor/components/Money";
 import {
   AddressInput,
   CountryCode,
+  FulfillmentFragment,
   FulfillmentStatus,
   OrderDetailsFragment,
   OrderFulfillLineFragment,
@@ -316,10 +317,14 @@ export const getOrderLineAvailableQuantity = (
   return availableQuantity;
 };
 
+export type OrderFulfillStockInputFormsetData = Array<
+  Pick<FormsetData<null, OrderFulfillStockInput[]>[0], "id" | "value">
+>;
+
 export const getFulfillmentFormsetQuantity = (
-  formsetData: FormsetData<null, OrderFulfillStockInput[]>,
-  line: OrderFulfillLineFragment
-) => formsetData.find(getById(line.id))?.value?.[0]?.quantity;
+  formsetData: OrderFulfillStockInputFormsetData,
+  line: OrderLineStockDataFragment
+) => formsetData?.find(getById(line.id))?.value?.[0]?.quantity;
 
 export const getWarehouseStock = (
   stocks: StockFragment[],
@@ -339,3 +344,27 @@ export const isLineAvailableInWarehouse = (
   }
   return false;
 };
+
+export const transformFuflillmentLinesToStockInputFormsetData = (
+  lines: FulfillmentFragment["lines"],
+  warehouseId: string
+): OrderFulfillStockInputFormsetData =>
+  lines?.map(line => ({
+    data: null,
+    id: line.orderLine.id,
+    value: [
+      {
+        quantity: line.quantity,
+        warehouse: warehouseId
+      }
+    ]
+  }));
+
+export const getAttributesCaption = (
+  attributes: OrderFulfillLineFragment["variant"]["attributes"]
+): string =>
+  attributes
+    .map(attribute =>
+      attribute.values.map(attributeValue => attributeValue.name).join(", ")
+    )
+    .join(" / ");

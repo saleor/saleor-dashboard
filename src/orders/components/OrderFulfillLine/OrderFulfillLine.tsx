@@ -8,6 +8,7 @@ import {
 import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
 import { Tooltip, WarningIcon } from "@saleor/macaw-ui";
 import {
+  getAttributesCaption,
   getOrderLineAvailableQuantity,
   getWarehouseStock
 } from "@saleor/orders/utils/data";
@@ -88,13 +89,7 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
       >
         {line.productName}
         <Typography color="textSecondary" variant="caption">
-          {line.variant?.attributes
-            ?.map(attribute =>
-              attribute.values
-                .map(attributeValue => attributeValue.name)
-                .join(", ")
-            )
-            ?.join(" / ")}
+          {getAttributesCaption(line.variant?.attributes)}
         </Typography>
       </TableCellAvatar>
       <TableCell className={classes.colSku}>{line.variant?.sku}</TableCell>

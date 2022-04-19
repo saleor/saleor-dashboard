@@ -6144,6 +6144,7 @@ export type OrderFulfillmentUpdateTrackingMutation = { __typename: 'Mutation', o
 export type OrderFulfillmentApproveMutationVariables = Exact<{
   id: Scalars['ID'];
   notifyCustomer: Scalars['Boolean'];
+  allowStockToBeExceeded?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 
