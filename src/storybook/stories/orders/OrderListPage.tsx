@@ -66,6 +66,13 @@ const props: OrderListPageProps = {
     giftCard: {
       active: false,
       value: [OrderFilterGiftCard.bought, OrderFilterGiftCard.paid]
+    },
+    metadata: {
+      active: false,
+      value: {
+        key: "",
+        value: ""
+      }
     }
   },
   limits,

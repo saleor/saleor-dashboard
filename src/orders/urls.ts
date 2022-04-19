@@ -26,7 +26,9 @@ export enum OrderListUrlFiltersEnum {
   payment = "payment",
   query = "query",
   clickAndCollect = "clickAndCollect",
-  preorder = "preorder"
+  preorder = "preorder",
+  metadataKey = "metadataKey",
+  metadataValue = "metadataValue"
 }
 export enum OrderListUrlFiltersWithMultipleValues {
   status = "status",

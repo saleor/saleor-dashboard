@@ -17,6 +17,7 @@ import {
   createFilterUtils,
   dedupeFilter,
   getGteLteVariables,
+  getKeyValueQueryParam,
   getMinMaxQueryParam,
   getMultipleEnumValueQueryParam,
   getMultipleValueQueryParam,
@@ -86,6 +87,13 @@ export function getFilterOpts(
           findValueInEnum(paymentStatus, PaymentChargeStatusEnum)
         ) || []
       )
+    },
+    metadata: {
+      active: !!params?.metadataKey,
+      value: {
+        key: params.metadataKey,
+        value: params.metadataValue ?? ""
+      }
     }
   };
 }
@@ -120,7 +128,11 @@ export function getFilterVariables(
       undefined,
     giftCardUsed:
       params?.giftCard?.some(param => param === OrderFilterGiftCard.paid) ||
-      undefined
+      undefined,
+    metadata:
+      params.metadataKey !== undefined
+        ? [{ key: params.metadataKey, value: params.metadataValue ?? "" }]
+        : null
   };
 }
 
@@ -173,6 +185,13 @@ export function getFilterQueryParam(
         filter,
         OrderListUrlFiltersWithMultipleValues.giftCard,
         OrderFilterGiftCard
+      );
+
+    case OrderFilterKeys.metadata:
+      return getKeyValueQueryParam(
+        filter,
+        OrderListUrlFiltersEnum.metadataKey,
+        OrderListUrlFiltersEnum.metadataValue
       );
   }
 }
