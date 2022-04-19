@@ -62,7 +62,7 @@ function createFilterHandlers<
         after: undefined,
         before: undefined,
         activeTab: undefined,
-        query
+        query: query?.trim()
       })
     );
   };
