@@ -10,7 +10,6 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import {
-  FulfillmentFragment,
   OrderDetailsFragment,
   OrderDetailsQuery,
   OrderStatus,
