@@ -341,10 +341,10 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         lines={currentApproval?.fulfillment.lines}
         formsetData={transformFuflillmentLinesToStockInputFormsetData(
           currentApproval?.fulfillment.lines,
-          currentApproval?.fulfillment.warehouse.id
+          currentApproval?.fulfillment.warehouse?.id
         )}
         open={stockExceeded}
-        warehouseId={currentApproval?.fulfillment.warehouse.id}
+        warehouseId={currentApproval?.fulfillment.warehouse?.id}
         onClose={() => setStockExceeded(false)}
         confirmButtonState="default"
         onSubmit={() => {
