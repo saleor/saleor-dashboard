@@ -1,4 +1,4 @@
-name: TEST-ENV-DEPLOYMENT
+name: TEST-AUTOMATION
 # Build and deploy test instance for every pull request
 
 on: [pull_request]
@@ -48,20 +48,9 @@ jobs:
         run: |
           npm ci
 
-      - name: Get custom API_URI
-        id: api_uri
-        # Search for API_URI in PR description
-        env:
-          pull_request_body: ${{ github.event.pull_request.body }}
-          prefix: API_URI=
-          pattern: (http|https)://[a-zA-Z0-9.-]+/graphql/?
-        run: |
-          echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)"
-
       - name: Run build
         env:
-          # Use custom API_URI or the default one
-          API_URI: ${{ steps.api_uri.outputs.custom_api_uri || 'https://qa.staging.saleor.cloud/graphql/' }}
+          API_URI: https://automation-dashboard.staging.saleor.cloud/graphql/
           APP_MOUNT_URI: /
           STATIC_URL: /
           IS_CLOUD_INSTANCE: true
@@ -76,7 +65,7 @@ jobs:
         id: set-domain
         # Set test instance domain based on branch name slug
         run: |
-          echo "::set-output name=domain::${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks"
+          echo "::set-output name=domain::automation-${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -112,3 +101,50 @@ jobs:
           status: ${{ job.status }}
           env_url: https://${{ steps.set-domain.outputs.domain }}/storybook/index.html
           deployment_id: ${{ steps.storybook-deployment.outputs.deployment_id }}
+
+
+  cypress-run-critical:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-qa-${{ env.cache-name }}-
+            ${{ runner.os }}-qa-
+            ${{ runner.os }}-
+
+      - name: Install Dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: npm install
+
+      - name: Cypress run critical
+        uses: cypress-io/github-action@v2
+        env:
+          API_URI: https://automation-dashboard.staging.saleor.cloud/graphql/
+          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
+          CYPRESS_baseUrl: https://${{needs.deploy.outputs.base_URL}}
+          CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
+          CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
+          CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
+          CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+        with:
+          command: npm run cy:run:critical
+      - uses: actions/upload-artifact@v1
+        with:
+          name: cypress-videos
+          path: cypress/videos
