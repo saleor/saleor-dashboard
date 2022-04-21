@@ -1,8 +1,8 @@
 import {
+  FilterElement,
   FilterElementKeyValue,
   FilterElementRegular,
-  IFilter,
-  IFilterElement
+  IFilter
 } from "@saleor/components/Filter";
 import { findValueInEnum } from "@saleor/misc";
 import { ActiveTab } from "@saleor/types";
@@ -54,7 +54,7 @@ export function dedupeFilter<T>(array: T[]): T[] {
 export type GetFilterQueryParam<
   TFilterKeys extends string,
   TFilters extends {}
-> = (filter: IFilterElement<TFilterKeys>, params?: {}) => TFilters;
+> = (filter: FilterElement<TFilterKeys>, params?: {}) => TFilters;
 export function getFilterQueryParams<
   TFilterKeys extends string,
   TUrlFilters extends {}
@@ -87,7 +87,7 @@ export function getGteLteVariables<T>(variables: GteLte<T>): GteLte<T> | null {
 export function getSingleValueQueryParam<
   TKey extends string,
   TUrlKey extends string
->(param: IFilterElement<TKey>, key: TUrlKey) {
+>(param: FilterElement<TKey>, key: TUrlKey) {
   const { active, value } = param;
 
   if (!active) {
@@ -140,7 +140,7 @@ export function getMultipleEnumValueQueryParam<
 export function getMultipleValueQueryParam<
   TKey extends string,
   TUrlKey extends string
->(param: IFilterElement<TKey>, key: TUrlKey) {
+>(param: FilterElement<TKey>, key: TUrlKey) {
   const { active, value } = param;
 
   if (!active) {
@@ -157,7 +157,7 @@ export function getMultipleValueQueryParam<
 export function getMinMaxQueryParam<
   TKey extends string,
   TUrlKey extends string
->(param: IFilterElement<TKey>, keyFrom: TUrlKey, keyTo: TUrlKey) {
+>(param: FilterElement<TKey>, keyFrom: TUrlKey, keyTo: TUrlKey) {
   const { active, multiple, value } = param;
 
   if (!active) {

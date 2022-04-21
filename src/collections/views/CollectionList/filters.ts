@@ -2,10 +2,7 @@ import {
   CollectionFilterKeys,
   CollectionListFilterOpts
 } from "@saleor/collections/components/CollectionListPage";
-import {
-  FilterElementRegular,
-  IFilterElement
-} from "@saleor/components/Filter";
+import { FilterElement, FilterElementRegular } from "@saleor/components/Filter";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { CollectionFilterInput, CollectionPublished } from "@saleor/graphql";
 import { findValueInEnum, maybe } from "@saleor/misc";
@@ -53,7 +50,7 @@ export function getFilterVariables(
 }
 
 export function getFilterQueryParam(
-  filter: IFilterElement<CollectionFilterKeys>
+  filter: FilterElement<CollectionFilterKeys>
 ): CollectionListUrlFilters {
   const { name } = filter;
 

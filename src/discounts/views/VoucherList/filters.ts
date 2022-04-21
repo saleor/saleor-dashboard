@@ -1,7 +1,4 @@
-import {
-  FilterElementRegular,
-  IFilterElement
-} from "@saleor/components/Filter";
+import { FilterElement, FilterElementRegular } from "@saleor/components/Filter";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import {
   VoucherFilterKeys,
@@ -109,7 +106,7 @@ export function getFilterVariables(
 }
 
 export function getFilterQueryParam(
-  filter: IFilterElement<VoucherFilterKeys>
+  filter: FilterElement<VoucherFilterKeys>
 ): VoucherListUrlFilters {
   const { name } = filter;
 

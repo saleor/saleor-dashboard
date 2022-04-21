@@ -4,9 +4,8 @@ import { KeyValue } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { FilterFieldBaseProps } from "./FilterContent/utils";
 import { keyValueMessages } from "./messages";
-import { FieldType } from "./types";
+import { FieldType, FilterFieldBaseProps } from "./types";
 
 const useStyles = makeStyles(
   theme => ({

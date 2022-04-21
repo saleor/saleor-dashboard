@@ -18,7 +18,7 @@ import FilterOptionField from "../FilterOptionField";
 import { FilterReducerAction } from "../reducer";
 import {
   FieldType,
-  IFilterElement,
+  FilterElement,
   isFilterDateType,
   isFilterNumericType,
   isFilterType
@@ -46,7 +46,7 @@ const filterTestingContext = "filter-field-";
 
 export interface FilterContentBodyProps<K extends string> {
   children?: React.ReactNode;
-  filter: IFilterElement<K>;
+  filter: FilterElement<K>;
   currencySymbol?: string;
   initialAutocompleteDisplayValues: FilterAutocompleteDisplayValues;
   onFilterPropertyChange: <T extends FieldType>(
@@ -171,7 +171,7 @@ const FilterContentBody = <K extends string = string>({
         <FilterAutocompleteField
           data-test-id={filterTestingContext + filter.name}
           displayValues={autocompleteDisplayValues}
-          filterField={filter}
+          filter={filter}
           setDisplayValues={setAutocompleteDisplayValues}
           onFilterPropertyChange={onFilterPropertyChange}
           initialDisplayValues={initialAutocompleteDisplayValues}

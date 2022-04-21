@@ -2,7 +2,7 @@ import { FetchResult, MutationResult } from "@apollo/client";
 import { UserPermissionFragment } from "@saleor/graphql";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 
-import { IFilter, IFilterElement } from "./components/Filter";
+import { FilterElement, IFilter } from "./components/Filter";
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
 
 export interface UserError {
@@ -61,7 +61,7 @@ export interface ListProps<TColumns extends string = string> {
     value: ListSettings<TColumns>[T]
   ) => void;
   onListSettingsReset?: () => void;
-  filterDependency?: IFilterElement;
+  filterDependency?: FilterElement;
 }
 
 export interface SortPage<TSortKey extends string> {

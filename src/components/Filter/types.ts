@@ -3,7 +3,7 @@ import { FetchMoreProps, KeyValue, SearchPageProps } from "@saleor/types";
 import { MessageDescriptor } from "react-intl";
 
 import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
-import { FilterReducerAction } from "./reducer";
+import { FilterDispatchFunction } from "./useFilter";
 
 export enum FieldType {
   autocomplete = "autocomplete",
@@ -17,7 +17,7 @@ export enum FieldType {
   keyValue = "keyValue"
 }
 
-interface FilterElementCommonMutableData {
+interface FilterElementCommonData {
   active: boolean;
   multiple: boolean;
   options?: MultiAutocompleteChoiceType[];
@@ -42,63 +42,39 @@ export type FilterElementValueData =
   | RegularFilterElementData
   | KeyValueFilterElementData;
 
-export type IFilterElementMutableData = FilterElementCommonMutableData &
+export type IFilterElementMutableData = FilterElementCommonData &
   FilterElementValueData;
 
 export type IFilterElementMutableDataGeneric<
   T extends FieldType
 > = T extends FieldType.keyValue
-  ? KeyValueFilterElementData & FilterElementCommonMutableData
-  : RegularFilterElementData & FilterElementCommonMutableData;
+  ? KeyValueFilterElementData & FilterElementCommonData
+  : RegularFilterElementData & FilterElementCommonData;
 
-export type IFilterElement<K extends string = string> = Partial<
-  UnknownFilterElementData
-> &
-  FilterElementCommonMutableData &
-  Partial<FetchMoreProps & SearchPageProps> & {
-    autocomplete?: boolean;
-    displayValues?: MultiAutocompleteChoiceType[];
-    group?: K;
-    label: string;
-    name: K;
-    required?: boolean;
-    multipleFields?: IFilterElement[];
-    id?: string;
-    dependencies?: string[];
-    permissions?: PermissionEnum[];
-  };
+type FilterElementCommon<K extends string = string> = {
+  autocomplete?: boolean;
+  displayValues?: MultiAutocompleteChoiceType[];
+  group?: K;
+  label: string;
+  name: K;
+  required?: boolean;
+  id?: string;
+  dependencies?: string[];
+  permissions?: PermissionEnum[];
+  multipleFields?: Array<FilterElement<K>>;
+} & FilterElementCommonData &
+  Partial<FetchMoreProps & SearchPageProps>;
+
+export type FilterElement<K extends string = string> = FilterElementCommon<K> &
+  Partial<UnknownFilterElementData>;
 
 export type FilterElementRegular<
   K extends string = string
-> = RegularFilterElementData &
-  FilterElementCommonMutableData &
-  Partial<FetchMoreProps & SearchPageProps> & {
-    autocomplete?: boolean;
-    displayValues?: MultiAutocompleteChoiceType[];
-    group?: K;
-    label: string;
-    name: K;
-    required?: boolean;
-    multipleFields?: IFilterElement[];
-    id?: string;
-    dependencies?: string[];
-    permissions?: PermissionEnum[];
-  };
+> = FilterElementCommon<K> & RegularFilterElementData;
 
 export type FilterElementKeyValue<
   K extends string = string
-> = KeyValueFilterElementData &
-  FilterElementCommonMutableData &
-  Partial<FetchMoreProps & SearchPageProps> & {
-    group?: K;
-    label: string;
-    name: K;
-    required?: boolean;
-    multipleFields?: IFilterElement[];
-    id?: string;
-    dependencies?: string[];
-    permissions?: PermissionEnum[];
-  };
+> = FilterElementCommon<K> & KeyValueFilterElementData;
 
 export type FilterElementGeneric<
   K extends string,
@@ -108,23 +84,26 @@ export type FilterElementGeneric<
   : FilterElementRegular<K> & { type: T };
 
 export const isFilterDateType = <K extends string = string>(
-  filter: IFilterElement<K>
+  filter: FilterElement<K>
 ): filter is FilterElementGeneric<K, FieldType.date | FieldType.dateTime> =>
   filter.type === FieldType.date || filter.type === FieldType.dateTime;
 
 export const isFilterNumericType = <K extends string = string>(
-  filter: IFilterElement<K>
+  filter: FilterElement<K>
 ): filter is FilterElementGeneric<K, FieldType.number | FieldType.price> =>
   filter.type === FieldType.number || filter.type === FieldType.price;
 
 export const isFilterType = <T extends FieldType, K extends string = string>(
-  filter: IFilterElement<K>,
+  filter: FilterElement<K>,
   type: T
 ): filter is FilterElementGeneric<K, T> => filter.type === type;
 
-export interface FilterBaseFieldProps<K extends string = string> {
-  filterField: IFilterElement<K>;
-  onFilterPropertyChange: React.Dispatch<FilterReducerAction<K, FieldType>>;
+export interface FilterFieldBaseProps<
+  K extends string = string,
+  T extends FieldType | unknown = unknown
+> {
+  filter: T extends FieldType ? FilterElementGeneric<K, T> : FilterElement<K>;
+  onFilterPropertyChange: FilterDispatchFunction<K>;
 }
 
 export type FilterErrors = string[];
@@ -138,7 +117,7 @@ export type IFilter<
   K extends string = string,
   T extends FieldType | unknown = unknown
 > = T extends unknown
-  ? Array<IFilterElement<K>>
+  ? Array<FilterElement<K>>
   : T extends FieldType.keyValue
   ? Array<FilterElementKeyValue<K>>
   : Array<FilterElementRegular<K>>;

@@ -1,7 +1,4 @@
-import {
-  FilterElementRegular,
-  IFilterElement
-} from "@saleor/components/Filter";
+import { FilterElement, FilterElementRegular } from "@saleor/components/Filter";
 import { PluginConfigurationType, PluginFilterInput } from "@saleor/graphql";
 import { ChannelsWithLoadMoreProps } from "@saleor/hooks/useChannelsSearch";
 import { maybe, parseBoolean } from "@saleor/misc";
@@ -94,7 +91,7 @@ export function getFilterVariables(
 }
 
 export function getFilterQueryParam(
-  filter: IFilterElement<PluginFilterKeys>
+  filter: FilterElement<PluginFilterKeys>
 ): PluginListUrlFilters {
   const { name } = filter;
 

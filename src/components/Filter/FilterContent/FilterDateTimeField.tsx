@@ -1,12 +1,11 @@
 import { TextField } from "@material-ui/core";
-import { FieldType } from "@saleor/components/Filter";
+import { FieldType, FilterFieldBaseProps } from "@saleor/components/Filter";
 import Arrow from "@saleor/components/Filter/Arrow";
 import { splitDateTime } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import {
-  FilterFieldBaseProps,
   filterTestingContext,
   getDateFilterValue,
   getDateTimeFilterValue,

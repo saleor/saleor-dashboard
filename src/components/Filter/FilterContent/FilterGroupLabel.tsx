@@ -2,7 +2,7 @@ import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
-import { FilterFieldBaseProps } from "./utils";
+import { FilterFieldBaseProps } from "../types";
 
 const useStyles = makeStyles(
   theme => ({

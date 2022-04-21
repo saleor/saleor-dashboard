@@ -5,8 +5,7 @@ import classNames from "classnames";
 import React from "react";
 
 import Checkbox from "../Checkbox";
-import { FilterFieldBaseProps } from "./FilterContent/utils";
-import { FieldType } from "./types";
+import { FieldType, FilterFieldBaseProps } from "./types";
 
 const useStyles = makeStyles(
   theme => ({

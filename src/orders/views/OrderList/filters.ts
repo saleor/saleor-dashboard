@@ -12,9 +12,9 @@ import {
 } from "@saleor/orders/components/OrderListPage/filters";
 
 import {
+  FilterElement,
   FilterElementKeyValue,
-  FilterElementRegular,
-  IFilterElement
+  FilterElementRegular
 } from "../../../components/Filter";
 import {
   createFilterTabUtils,
@@ -140,7 +140,7 @@ export function getFilterVariables(
 }
 
 export function getFilterQueryParam(
-  filter: IFilterElement<OrderFilterKeys>
+  filter: FilterElement<OrderFilterKeys>
 ): OrderListUrlFilters {
   const { name } = filter;
 

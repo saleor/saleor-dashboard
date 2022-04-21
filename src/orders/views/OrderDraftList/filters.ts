@@ -1,4 +1,4 @@
-import { IFilterElement } from "@saleor/components/Filter";
+import { FilterElement } from "@saleor/components/Filter";
 import { OrderDraftFilterInput } from "@saleor/graphql";
 import { maybe } from "@saleor/misc";
 import {
@@ -59,7 +59,7 @@ export function getFilterVariables(
 }
 
 export function getFilterQueryParam(
-  filter: IFilterElement<OrderDraftFilterKeys>
+  filter: FilterElement<OrderDraftFilterKeys>
 ): OrderDraftListUrlFilters {
   const { name } = filter;
 

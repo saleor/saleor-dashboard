@@ -15,9 +15,9 @@ import { FilterAutocompleteDisplayValues } from "../FilterAutocompleteField";
 import { FilterReducerAction } from "../reducer";
 import {
   FieldType,
+  FilterElement,
   FilterErrorMessages,
   IFilter,
-  IFilterElement,
   InvalidFilters
 } from "../types";
 import FilterContentBody, { FilterContentBodyProps } from "./FilterContentBody";
@@ -105,11 +105,11 @@ const FilterContent: React.FC<FilterContentProps> = ({
   const expanderClasses = useExpanderStyles({});
   const summaryClasses = useSummaryStyles({});
 
-  const [openedFilter, setOpenedFilter] = useState<IFilterElement<string>>();
+  const [openedFilter, setOpenedFilter] = useState<FilterElement<string>>();
 
   const getAutocompleteValuesWithNewValues = (
     autocompleteDisplayValues: FilterAutocompleteDisplayValues,
-    filterField: IFilterElement<string>
+    filterField: FilterElement<string>
   ) => {
     if (filterField.type === FieldType.autocomplete) {
       return {
@@ -152,14 +152,14 @@ const FilterContent: React.FC<FilterContentProps> = ({
     initialAutocompleteDisplayValues
   };
 
-  const handleFilterAttributeFocus = (filter?: IFilterElement<string>) => {
+  const handleFilterAttributeFocus = (filter?: FilterElement<string>) => {
     setOpenedFilter(filter);
     if (onFilterAttributeFocus) {
       onFilterAttributeFocus(filter?.id);
     }
   };
 
-  const handleFilterOpen = (filter: IFilterElement<string>) => {
+  const handleFilterOpen = (filter: FilterElement<string>) => {
     if (filter.name !== openedFilter?.name) {
       handleFilterAttributeFocus(filter);
     } else {
@@ -170,7 +170,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
   const handleFilterPropertyGroupChange = function<
     K extends string,
     T extends FieldType
-  >(action: FilterReducerAction<K, T>, filter: IFilterElement<string>) {
+  >(action: FilterReducerAction<K, T>, filter: FilterElement<string>) {
     const switchToActive = action.payload.update.active;
     if (switchToActive && filter.name !== openedFilter?.name) {
       handleFilterAttributeFocus(filter);
@@ -195,7 +195,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
   };
 
   const getFilterFromCurrentData = function<T extends string>(
-    filter: IFilterElement<T>
+    filter: FilterElement<T>
   ) {
     return filters.find(({ name }) => filter.name === name);
   };

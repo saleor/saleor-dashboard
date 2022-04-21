@@ -31,9 +31,9 @@ import isArray from "lodash/isArray";
 import moment from "moment-timezone";
 
 import {
+  FilterElement,
   FilterElementKeyValue,
-  FilterElementRegular,
-  IFilterElement
+  FilterElementRegular
 } from "../../../components/Filter";
 import {
   createFilterTabUtils,
@@ -346,7 +346,7 @@ export function getFilterVariables(
 }
 
 export function getFilterQueryParam(
-  filter: IFilterElement<ProductFilterKeys>,
+  filter: FilterElement<ProductFilterKeys>,
   params: ProductListUrlFilters
 ): ProductListUrlFilters {
   const { active, group, name, value } = filter;

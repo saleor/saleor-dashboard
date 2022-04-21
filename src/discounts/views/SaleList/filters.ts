@@ -1,7 +1,4 @@
-import {
-  FilterElementRegular,
-  IFilterElement
-} from "@saleor/components/Filter";
+import { FilterElement, FilterElementRegular } from "@saleor/components/Filter";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import {
   SaleFilterKeys,
@@ -89,7 +86,7 @@ export function getFilterVariables(
 }
 
 export function getFilterQueryParam(
-  filter: IFilterElement<SaleFilterKeys>
+  filter: FilterElement<SaleFilterKeys>
 ): SaleListUrlFilters {
   const { name } = filter;
 

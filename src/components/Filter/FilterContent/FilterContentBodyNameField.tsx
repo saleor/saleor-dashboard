@@ -2,7 +2,7 @@ import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
-import { IFilterElement } from "../types";
+import { FilterElement } from "../types";
 import { FilterDispatchFunction } from "../useFilter";
 
 const useStyles = makeStyles(
@@ -18,7 +18,7 @@ const useStyles = makeStyles(
 );
 
 export interface FilterContentBodyNameFieldProps<K extends string = string> {
-  filter: IFilterElement<K>;
+  filter: FilterElement<K>;
   onFilterPropertyChange: FilterDispatchFunction<K>;
 }
 

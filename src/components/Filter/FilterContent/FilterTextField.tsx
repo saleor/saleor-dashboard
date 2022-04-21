@@ -1,9 +1,9 @@
 import { TextField } from "@material-ui/core";
 import React from "react";
 
-import { FieldType } from "../types";
+import { FieldType, FilterFieldBaseProps } from "../types";
 import useStyles from "./styles";
-import { FilterFieldBaseProps, filterTestingContext } from "./utils";
+import { filterTestingContext } from "./utils";
 
 export type FilterTextFieldProps = FilterFieldBaseProps<
   string,

@@ -1,7 +1,7 @@
 import { useEffect, useReducer } from "react";
 
 import reduceFilter, { FilterReducerAction } from "./reducer";
-import { FieldType, IFilter, IFilterElement } from "./types";
+import { FieldType, FilterElement, IFilter } from "./types";
 
 export type FilterDispatchFunction<K extends string = string> = <
   T extends FieldType
@@ -10,7 +10,7 @@ export type FilterDispatchFunction<K extends string = string> = <
 ) => void;
 
 export type UseFilter<K extends string> = [
-  Array<IFilterElement<K>>,
+  Array<FilterElement<K>>,
   FilterDispatchFunction<K>,
   () => void
 ];

@@ -1,14 +1,10 @@
 import { TextField } from "@material-ui/core";
-import { FieldType } from "@saleor/components/Filter";
+import { FieldType, FilterFieldBaseProps } from "@saleor/components/Filter";
 import Arrow from "@saleor/components/Filter/Arrow";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import {
-  FilterFieldBaseProps,
-  filterTestingContext,
-  useCommonStyles
-} from "./utils";
+import { filterTestingContext, useCommonStyles } from "./utils";
 
 type FilterNumericFieldProps = FilterFieldBaseProps<
   string,

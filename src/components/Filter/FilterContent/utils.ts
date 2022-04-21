@@ -3,23 +3,9 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { joinDateTime, splitDateTime } from "@saleor/misc";
 import { IntlShape } from "react-intl";
 
-import {
-  FieldType,
-  FilterElementGeneric,
-  FilterType,
-  IFilterElement
-} from "../types";
-import { FilterDispatchFunction } from "../useFilter";
+import { FilterType } from "../types";
 
 export const filterTestingContext = "filter-field-";
-
-export interface FilterFieldBaseProps<
-  K extends string = string,
-  T extends FieldType | unknown = unknown
-> {
-  filter: T extends FieldType ? FilterElementGeneric<K, T> : IFilterElement<K>;
-  onFilterPropertyChange: FilterDispatchFunction<K>;
-}
 
 export const useCommonStyles = makeStyles(
   theme => ({
