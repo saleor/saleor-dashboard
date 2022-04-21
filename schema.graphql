@@ -318,7 +318,7 @@ type App implements Node & ObjectWithMetadata {
   id: ID!
 
   """
-  List of private metadata items.Requires proper staff permissions to access.
+  List of private metadata items. Requires proper staff permissions to access.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -763,7 +763,7 @@ type Attribute implements Node & ObjectWithMetadata {
   id: ID!
 
   """
-  List of private metadata items.Requires proper staff permissions to access.
+  List of private metadata items. Requires proper staff permissions to access.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -1504,7 +1504,7 @@ type Category implements Node & ObjectWithMetadata {
   id: ID!
 
   """
-  List of private metadata items.Requires proper staff permissions to access.
+  List of private metadata items. Requires proper staff permissions to access.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -1897,7 +1897,7 @@ type Checkout implements Node & ObjectWithMetadata {
   id: ID!
 
   """
-  List of private metadata items.Requires proper staff permissions to access.
+  List of private metadata items. Requires proper staff permissions to access.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -1975,6 +1975,11 @@ type Checkout implements Node & ObjectWithMetadata {
 
   """Checkout language code."""
   languageCode: LanguageCodeEnum!
+
+  """
+  New in Saleor 3.2. List of transactions for the checkout. Requires one of the following permissions: MANAGE_CHECKOUTS, HANDLE_PAYMENTS. Note: this feature is in a preview state and can be subject to changes at later point.
+  """
+  transactions: [TransactionItem!]
 }
 
 """Adds a gift card or a voucher to a checkout."""
@@ -2338,7 +2343,7 @@ type Collection implements Node & ObjectWithMetadata {
   id: ID!
 
   """
-  List of private metadata items.Requires proper staff permissions to access.
+  List of private metadata items. Requires proper staff permissions to access.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -3286,7 +3291,7 @@ type DigitalContent implements Node & ObjectWithMetadata {
   id: ID!
 
   """
-  List of private metadata items.Requires proper staff permissions to access.
+  List of private metadata items. Requires proper staff permissions to access.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -3624,7 +3629,7 @@ type DraftOrderUpdated {
   order: Order
 }
 
-union Event = CategoryCreated | CategoryUpdated | CategoryDeleted | OrderCreated | OrderUpdated | OrderConfirmed | OrderFullyPaid | OrderCancelled | OrderFulfilled | DraftOrderCreated | DraftOrderUpdated | DraftOrderDeleted | ProductCreated | ProductUpdated | ProductDeleted | ProductVariantCreated | ProductVariantUpdated | ProductVariantOutOfStock | ProductVariantBackInStock | ProductVariantDeleted | SaleCreated | SaleUpdated | SaleDeleted | InvoiceRequested | InvoiceDeleted | InvoiceSent | FulfillmentCreated | FulfillmentCanceled | CustomerCreated | CustomerUpdated | CollectionCreated | CollectionUpdated | CollectionDeleted | CheckoutCreated | CheckoutUpdated | PageCreated | PageUpdated | PageDeleted | TranslationCreated | TranslationUpdated
+union Event = CategoryCreated | CategoryUpdated | CategoryDeleted | OrderCreated | OrderUpdated | OrderConfirmed | OrderFullyPaid | OrderCancelled | OrderFulfilled | DraftOrderCreated | DraftOrderUpdated | DraftOrderDeleted | ProductCreated | ProductUpdated | ProductDeleted | ProductVariantCreated | ProductVariantUpdated | ProductVariantOutOfStock | ProductVariantBackInStock | ProductVariantDeleted | SaleCreated | SaleUpdated | SaleDeleted | InvoiceRequested | InvoiceDeleted | InvoiceSent | FulfillmentCreated | FulfillmentCanceled | CustomerCreated | CustomerUpdated | CollectionCreated | CollectionUpdated | CollectionDeleted | CheckoutCreated | CheckoutUpdated | PageCreated | PageUpdated | PageDeleted | ShippingPriceCreated | ShippingPriceUpdated | ShippingPriceDeleted | ShippingZoneCreated | ShippingZoneUpdated | ShippingZoneDeleted | TranslationCreated | TranslationUpdated
 
 """Event delivery."""
 type EventDelivery implements Node {
@@ -4109,7 +4114,7 @@ type Fulfillment implements Node & ObjectWithMetadata {
   id: ID!
 
   """
-  List of private metadata items.Requires proper staff permissions to access.
+  List of private metadata items. Requires proper staff permissions to access.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -4271,7 +4276,7 @@ type GiftCard implements Node & ObjectWithMetadata {
   id: ID!
 
   """
-  List of private metadata items.Requires proper staff permissions to access.
+  List of private metadata items. Requires proper staff permissions to access.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -4876,7 +4881,7 @@ input IntRangeInput {
 """Represents an Invoice."""
 type Invoice implements ObjectWithMetadata & Job & Node {
   """
-  List of private metadata items.Requires proper staff permissions to access.
+  List of private metadata items. Requires proper staff permissions to access.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -5902,7 +5907,7 @@ type Menu implements Node & ObjectWithMetadata {
   id: ID!
 
   """
-  List of private metadata items.Requires proper staff permissions to access.
+  List of private metadata items. Requires proper staff permissions to access.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -6016,7 +6021,7 @@ type MenuItem implements Node & ObjectWithMetadata {
   id: ID!
 
   """
-  List of private metadata items.Requires proper staff permissions to access.
+  List of private metadata items. Requires proper staff permissions to access.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -7189,6 +7194,50 @@ type Mutation {
     """Fields required to check payment balance."""
     input: PaymentCheckBalanceInput!
   ): PaymentCheckBalance
+
+  """
+  New in Saleor 3.2. Create transaction for checkout or order. Note: this feature is in a preview state and can be subject to changes at later point. Requires one of the following permissions: HANDLE_PAYMENTS.
+  """
+  transactionCreate(
+    """The ID of the checkout or order."""
+    id: ID!
+
+    """Input data required to create a new transaction object."""
+    transaction: TransactionCreateInput!
+
+    """Data that defines a transaction event."""
+    transactionEvent: TransactionEventInput
+  ): TransactionCreate
+
+  """
+  New in Saleor 3.2. Create transaction for checkout or order. Note: this feature is in a preview state and can be subject to changes at later point. Requires one of the following permissions: HANDLE_PAYMENTS.
+  """
+  transactionUpdate(
+    """The ID of the transaction."""
+    id: ID!
+
+    """Input data required to create a new transaction object."""
+    transaction: TransactionUpdateInput
+
+    """Data that defines a transaction transaction."""
+    transactionEvent: TransactionEventInput
+  ): TransactionUpdate
+
+  """
+  New in Saleor 3.2. Request an action for payment transaction. Note: this feature is in a preview state and can be subject to changes at later point. Requires one of the following permissions: HANDLE_PAYMENTS, MANAGE_ORDERS.
+  """
+  transactionRequestAction(
+    """Determines the action type."""
+    actionType: TransactionActionEnum!
+
+    """
+    Transaction request amount. If empty for refund or capture, maximal possible amount will be used.
+    """
+    amount: PositiveDecimal
+
+    """The ID of the transaction."""
+    id: ID!
+  ): TransactionRequestAction
 
   """
   Creates a new page. Requires one of the following permissions: MANAGE_PAGES.
@@ -9110,7 +9159,7 @@ interface Node {
 
 interface ObjectWithMetadata {
   """
-  List of private metadata items.Requires proper staff permissions to access.
+  List of private metadata items. Requires proper staff permissions to access.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -9123,7 +9172,7 @@ type Order implements Node & ObjectWithMetadata {
   id: ID!
 
   """
-  List of private metadata items.Requires proper staff permissions to access.
+  List of private metadata items. Requires proper staff permissions to access.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -9185,6 +9234,11 @@ type Order implements Node & ObjectWithMetadata {
 
   """List of payments for the order."""
   payments: [Payment!]
+
+  """
+  New in Saleor 3.2. List of transactions for the order. Requires one of the following permissions: MANAGE_ORDERS, HANDLE_PAYMENTS. Note: this feature is in a preview state and can be subject to changes at later point.
+  """
+  transactions: [TransactionItem!]
 
   """Total amount of the order."""
   total: TaxedMoney!
@@ -9558,6 +9612,7 @@ enum OrderErrorCode {
   DUPLICATED_INPUT_ITEM
   NOT_AVAILABLE_IN_CHANNEL
   CHANNEL_INACTIVE
+  MISSING_TRANSACTION_ACTION_REQUEST_WEBHOOK
 }
 
 """History log of the order."""
@@ -9588,7 +9643,7 @@ type OrderEvent implements Node {
   """Amount of money."""
   amount: Float
 
-  """The payment ID from the payment gateway."""
+  """The payment reference from the payment provider."""
   paymentId: String
 
   """The payment gateway of the payment."""
@@ -9629,6 +9684,12 @@ type OrderEvent implements Node {
 
   """The discount applied to the order."""
   discount: OrderEventDiscountObject
+
+  """The status of payment's transaction."""
+  status: TransactionStatus
+
+  """The reference of payment's transaction."""
+  reference: String
 }
 
 type OrderEventCountableConnection {
@@ -9728,6 +9789,9 @@ enum OrderEventsEnum {
   PAYMENT_REFUNDED
   PAYMENT_VOIDED
   PAYMENT_FAILED
+  TRANSACTION_CAPTURE_REQUESTED
+  TRANSACTION_REFUND_REQUESTED
+  TRANSACTION_VOID_REQUESTED
   INVOICE_REQUESTED
   INVOICE_GENERATED
   INVOICE_UPDATED
@@ -10216,7 +10280,7 @@ type Page implements Node & ObjectWithMetadata {
   id: ID!
 
   """
-  List of private metadata items.Requires proper staff permissions to access.
+  List of private metadata items. Requires proper staff permissions to access.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -10536,7 +10600,7 @@ type PageType implements Node & ObjectWithMetadata {
   id: ID!
 
   """
-  List of private metadata items.Requires proper staff permissions to access.
+  List of private metadata items. Requires proper staff permissions to access.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -10709,7 +10773,7 @@ type Payment implements Node & ObjectWithMetadata {
   id: ID!
 
   """
-  List of private metadata items.Requires proper staff permissions to access.
+  List of private metadata items. Requires proper staff permissions to access.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -11273,7 +11337,7 @@ type Product implements Node & ObjectWithMetadata {
   id: ID!
 
   """
-  List of private metadata items.Requires proper staff permissions to access.
+  List of private metadata items. Requires proper staff permissions to access.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -12030,7 +12094,7 @@ type ProductType implements Node & ObjectWithMetadata {
   id: ID!
 
   """
-  List of private metadata items.Requires proper staff permissions to access.
+  List of private metadata items. Requires proper staff permissions to access.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -12273,7 +12337,7 @@ type ProductVariant implements Node & ObjectWithMetadata {
   id: ID!
 
   """
-  List of private metadata items.Requires proper staff permissions to access.
+  List of private metadata items. Requires proper staff permissions to access.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -13853,7 +13917,7 @@ type Sale implements Node & ObjectWithMetadata {
   id: ID!
 
   """
-  List of private metadata items.Requires proper staff permissions to access.
+  List of private metadata items. Requires proper staff permissions to access.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -14267,7 +14331,7 @@ type ShippingMethod implements Node & ObjectWithMetadata {
   id: ID!
 
   """
-  List of private metadata items.Requires proper staff permissions to access.
+  List of private metadata items. Requires proper staff permissions to access.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -14407,7 +14471,7 @@ type ShippingMethodType implements Node & ObjectWithMetadata {
   id: ID!
 
   """
-  List of private metadata items.Requires proper staff permissions to access.
+  List of private metadata items. Requires proper staff permissions to access.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -14506,6 +14570,24 @@ type ShippingPriceCreate {
   errors: [ShippingError!]!
 }
 
+type ShippingPriceCreated {
+  """
+  New in Saleor 3.2. Look up a shipping method. Note: this feature is in a preview state and can be subject to changes at later point.
+  """
+  shippingMethod(
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+  ): ShippingMethodType
+
+  """
+  New in Saleor 3.2. Look up a shipping zone. Note: this feature is in a preview state and can be subject to changes at later point.
+  """
+  shippingZone(
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+  ): ShippingZone
+}
+
 """
 Deletes a shipping price. Requires one of the following permissions: MANAGE_SHIPPING.
 """
@@ -14517,6 +14599,24 @@ type ShippingPriceDelete {
   shippingZone: ShippingZone
   shippingErrors: [ShippingError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
   errors: [ShippingError!]!
+}
+
+type ShippingPriceDeleted {
+  """
+  New in Saleor 3.2. Look up a shipping method. Note: this feature is in a preview state and can be subject to changes at later point.
+  """
+  shippingMethod(
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+  ): ShippingMethodType
+
+  """
+  New in Saleor 3.2. Look up a shipping zone. Note: this feature is in a preview state and can be subject to changes at later point.
+  """
+  shippingZone(
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+  ): ShippingZone
 }
 
 """
@@ -14606,6 +14706,24 @@ type ShippingPriceUpdate {
   errors: [ShippingError!]!
 }
 
+type ShippingPriceUpdated {
+  """
+  New in Saleor 3.2. Look up a shipping method. Note: this feature is in a preview state and can be subject to changes at later point.
+  """
+  shippingMethod(
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+  ): ShippingMethodType
+
+  """
+  New in Saleor 3.2. Look up a shipping zone. Note: this feature is in a preview state and can be subject to changes at later point.
+  """
+  shippingZone(
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+  ): ShippingZone
+}
+
 """
 Represents a shipping zone in the shop. Zones are the concept used only for grouping shipping methods in the dashboard, and are never exposed to the customers directly.
 """
@@ -14613,7 +14731,7 @@ type ShippingZone implements Node & ObjectWithMetadata {
   id: ID!
 
   """
-  List of private metadata items.Requires proper staff permissions to access.
+  List of private metadata items. Requires proper staff permissions to access.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -14701,6 +14819,16 @@ input ShippingZoneCreateInput {
   addChannels: [ID!]
 }
 
+type ShippingZoneCreated {
+  """
+  New in Saleor 3.2. Look up a shipping zone. Note: this feature is in a preview state and can be subject to changes at later point.
+  """
+  shippingZone(
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+  ): ShippingZone
+}
+
 """
 Deletes a shipping zone. Requires one of the following permissions: MANAGE_SHIPPING.
 """
@@ -14708,6 +14836,16 @@ type ShippingZoneDelete {
   shippingErrors: [ShippingError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
   errors: [ShippingError!]!
   shippingZone: ShippingZone
+}
+
+type ShippingZoneDeleted {
+  """
+  New in Saleor 3.2. Look up a shipping zone. Note: this feature is in a preview state and can be subject to changes at later point.
+  """
+  shippingZone(
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+  ): ShippingZone
 }
 
 input ShippingZoneFilterInput {
@@ -14750,6 +14888,16 @@ input ShippingZoneUpdateInput {
 
   """List of channels to unassign from the shipping zone."""
   removeChannels: [ID!]
+}
+
+type ShippingZoneUpdated {
+  """
+  New in Saleor 3.2. Look up a shipping zone. Note: this feature is in a preview state and can be subject to changes at later point.
+  """
+  shippingZone(
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+  ): ShippingZone
 }
 
 """
@@ -15407,6 +15555,157 @@ type Transaction implements Node {
   amount: Money
 }
 
+"""
+Represents possible actions on payment transaction.
+
+    The following actions are possible:
+    CAPTURE - Represents the capture action.
+    REFUND - Represents a refund action.
+    VOID - Represents a void action.
+    
+"""
+enum TransactionActionEnum {
+  CAPTURE
+  REFUND
+  VOID
+}
+
+"""
+New in Saleor 3.2. Create transaction for checkout or order. Note: this feature is in a preview state and can be subject to changes at later point. Requires one of the following permissions: HANDLE_PAYMENTS.
+"""
+type TransactionCreate {
+  transaction: TransactionItem
+  errors: [TransactionCreateError!]!
+}
+
+type TransactionCreateError {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: TransactionCreateErrorCode!
+}
+
+"""An enumeration."""
+enum TransactionCreateErrorCode {
+  INVALID
+  GRAPHQL_ERROR
+  NOT_FOUND
+  INCORRECT_CURRENCY
+  METADATA_KEY_REQUIRED
+}
+
+input TransactionCreateInput {
+  """Status of the transaction."""
+  status: String!
+
+  """Payment type used for this transaction."""
+  type: String!
+
+  """Reference of the transaction."""
+  reference: String
+
+  """List of all possible actions for the transaction"""
+  availableActions: [TransactionActionEnum!]
+
+  """Amount authorized by this transaction."""
+  amountAuthorized: MoneyInput
+
+  """Amount captured by this transaction."""
+  amountCaptured: MoneyInput
+
+  """Amount refunded by this transaction."""
+  amountRefunded: MoneyInput
+
+  """Amount voided by this transaction."""
+  amountVoided: MoneyInput
+
+  """Payment public metadata."""
+  metadata: [MetadataInput!]
+
+  """Payment private metadata."""
+  privateMetadata: [MetadataInput!]
+}
+
+"""Represents transaction's event."""
+type TransactionEvent implements Node {
+  """The ID of the object."""
+  id: ID!
+  createdAt: DateTime!
+
+  """Status of transaction's event."""
+  status: TransactionStatus!
+
+  """Reference of transaction's event."""
+  reference: String!
+
+  """Name of the transaction's event."""
+  name: String
+}
+
+input TransactionEventInput {
+  """Current status of the payment transaction."""
+  status: TransactionStatus!
+
+  """Reference of the transaction."""
+  reference: String
+
+  """Name of the transaction."""
+  name: String
+}
+
+"""
+New in Saleor 3.2. Represents a payment transaction. Note: this feature is in a preview state and can be subject to changes at later point.
+"""
+type TransactionItem implements Node & ObjectWithMetadata {
+  """The ID of the object."""
+  id: ID!
+
+  """
+  List of private metadata items. Requires proper staff permissions to access.
+  """
+  privateMetadata: [MetadataItem!]!
+
+  """List of public metadata items. Can be accessed without permissions."""
+  metadata: [MetadataItem!]!
+  createdAt: DateTime!
+  modifiedAt: DateTime!
+
+  """
+  List of actions that can be performed in the current state of a payment.
+  """
+  actions: [TransactionActionEnum!]!
+
+  """Total amount authorized for this payment."""
+  authorizedAmount: Money!
+
+  """Total amount refunded for this payment."""
+  refundedAmount: Money!
+
+  """Total amount voided for this payment."""
+  voidedAmount: Money!
+
+  """Total amount captured for this payment."""
+  capturedAmount: Money!
+
+  """Status of transaction."""
+  status: String!
+
+  """Type of transaction."""
+  type: String!
+
+  """Reference of transaction."""
+  reference: String!
+
+  """List of all transaction's events."""
+  events: [TransactionEvent!]!
+}
+
 """An enumeration."""
 enum TransactionKind {
   EXTERNAL
@@ -15419,6 +15718,104 @@ enum TransactionKind {
   VOID
   CONFIRM
   CANCEL
+}
+
+"""
+New in Saleor 3.2. Request an action for payment transaction. Note: this feature is in a preview state and can be subject to changes at later point. Requires one of the following permissions: HANDLE_PAYMENTS, MANAGE_ORDERS.
+"""
+type TransactionRequestAction {
+  transaction: TransactionItem
+  errors: [TransactionRequestActionError!]!
+}
+
+type TransactionRequestActionError {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: TransactionRequestActionErrorCode!
+}
+
+"""An enumeration."""
+enum TransactionRequestActionErrorCode {
+  INVALID
+  GRAPHQL_ERROR
+  NOT_FOUND
+  MISSING_TRANSACTION_ACTION_REQUEST_WEBHOOK
+}
+
+"""An enumeration."""
+enum TransactionStatus {
+  PENDING
+  SUCCESS
+  FAILURE
+}
+
+"""
+New in Saleor 3.2. Create transaction for checkout or order. Note: this feature is in a preview state and can be subject to changes at later point. Requires one of the following permissions: HANDLE_PAYMENTS.
+"""
+type TransactionUpdate {
+  transaction: TransactionItem
+  errors: [TransactionUpdateError!]!
+}
+
+type TransactionUpdateError {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: TransactionUpdateErrorCode!
+}
+
+"""An enumeration."""
+enum TransactionUpdateErrorCode {
+  INVALID
+  GRAPHQL_ERROR
+  NOT_FOUND
+  INCORRECT_CURRENCY
+  METADATA_KEY_REQUIRED
+}
+
+input TransactionUpdateInput {
+  """Status of the transaction."""
+  status: String
+
+  """Payment type used for this transaction."""
+  type: String
+
+  """Reference of the transaction."""
+  reference: String
+
+  """List of all possible actions for the transaction"""
+  availableActions: [TransactionActionEnum!]
+
+  """Amount authorized by this transaction."""
+  amountAuthorized: MoneyInput
+
+  """Amount captured by this transaction."""
+  amountCaptured: MoneyInput
+
+  """Amount refunded by this transaction."""
+  amountRefunded: MoneyInput
+
+  """Amount voided by this transaction."""
+  amountVoided: MoneyInput
+
+  """Payment public metadata."""
+  metadata: [MetadataInput!]
+
+  """Payment private metadata."""
+  privateMetadata: [MetadataInput!]
 }
 
 union TranslatableItem = ProductTranslatableContent | CollectionTranslatableContent | CategoryTranslatableContent | AttributeTranslatableContent | AttributeValueTranslatableContent | ProductVariantTranslatableContent | PageTranslatableContent | ShippingMethodTranslatableContent | SaleTranslatableContent | VoucherTranslatableContent | MenuItemTranslatableContent
@@ -15554,7 +15951,7 @@ type User implements Node & ObjectWithMetadata {
   id: ID!
 
   """
-  List of private metadata items.Requires proper staff permissions to access.
+  List of private metadata items. Requires proper staff permissions to access.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -15862,7 +16259,7 @@ type Voucher implements Node & ObjectWithMetadata {
   id: ID!
 
   """
-  List of private metadata items.Requires proper staff permissions to access.
+  List of private metadata items. Requires proper staff permissions to access.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -16226,7 +16623,7 @@ type Warehouse implements Node & ObjectWithMetadata {
   id: ID!
 
   """
-  List of private metadata items.Requires proper staff permissions to access.
+  List of private metadata items. Requires proper staff permissions to access.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -16675,6 +17072,25 @@ enum WebhookEventTypeAsyncEnum {
 
   """A page is deleted."""
   PAGE_DELETED
+
+  """A new shipping price is created."""
+  SHIPPING_PRICE_CREATED
+
+  """A shipping price is updated."""
+  SHIPPING_PRICE_UPDATED
+
+  """A shipping price is deleted."""
+  SHIPPING_PRICE_DELETED
+
+  """A new shipping zone is created."""
+  SHIPPING_ZONE_CREATED
+
+  """A shipping zone is updated."""
+  SHIPPING_ZONE_UPDATED
+
+  """A shipping zone is deleted."""
+  SHIPPING_ZONE_DELETED
+  TRANSACTION_ACTION_REQUEST
   TRANSLATION_CREATED
   TRANSLATION_UPDATED
 }
@@ -16790,6 +17206,25 @@ enum WebhookEventTypeEnum {
 
   """A page is deleted."""
   PAGE_DELETED
+
+  """A new shipping price is created."""
+  SHIPPING_PRICE_CREATED
+
+  """A shipping price is updated."""
+  SHIPPING_PRICE_UPDATED
+
+  """A shipping price is deleted."""
+  SHIPPING_PRICE_DELETED
+
+  """A new shipping zone is created."""
+  SHIPPING_ZONE_CREATED
+
+  """A shipping zone is updated."""
+  SHIPPING_ZONE_UPDATED
+
+  """A shipping zone is deleted."""
+  SHIPPING_ZONE_DELETED
+  TRANSACTION_ACTION_REQUEST
   TRANSLATION_CREATED
   TRANSLATION_UPDATED
   PAYMENT_AUTHORIZE
@@ -16859,6 +17294,13 @@ enum WebhookSampleEventTypeEnum {
   PAGE_CREATED
   PAGE_UPDATED
   PAGE_DELETED
+  SHIPPING_PRICE_CREATED
+  SHIPPING_PRICE_UPDATED
+  SHIPPING_PRICE_DELETED
+  SHIPPING_ZONE_CREATED
+  SHIPPING_ZONE_UPDATED
+  SHIPPING_ZONE_DELETED
+  TRANSACTION_ACTION_REQUEST
   TRANSLATION_CREATED
   TRANSLATION_UPDATED
 }

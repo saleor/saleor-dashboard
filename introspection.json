@@ -2202,7 +2202,7 @@
           },
           {
             "name": "privateMetadata",
-            "description": "List of private metadata items.Requires proper staff permissions to access.",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4792,7 +4792,7 @@
           },
           {
             "name": "privateMetadata",
-            "description": "List of private metadata items.Requires proper staff permissions to access.",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -8698,7 +8698,7 @@
           },
           {
             "name": "privateMetadata",
-            "description": "List of private metadata items.Requires proper staff permissions to access.",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -11005,7 +11005,7 @@
           },
           {
             "name": "privateMetadata",
-            "description": "List of private metadata items.Requires proper staff permissions to access.",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -11478,6 +11478,26 @@
                 "kind": "ENUM",
                 "name": "LanguageCodeEnum",
                 "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "transactions",
+            "description": "New in Saleor 3.2. List of transactions for the checkout. Requires one of the following permissions: MANAGE_CHECKOUTS, HANDLE_PAYMENTS. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "TransactionItem",
+                  "ofType": null
+                }
               }
             },
             "isDeprecated": false,
@@ -13752,7 +13772,7 @@
           },
           {
             "name": "privateMetadata",
-            "description": "List of private metadata items.Requires proper staff permissions to access.",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -19136,7 +19156,7 @@
           },
           {
             "name": "privateMetadata",
-            "description": "List of private metadata items.Requires proper staff permissions to access.",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -21289,6 +21309,36 @@
           {
             "kind": "OBJECT",
             "name": "PageDeleted",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "ShippingPriceCreated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "ShippingPriceUpdated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "ShippingPriceDeleted",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "ShippingZoneCreated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "ShippingZoneUpdated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "ShippingZoneDeleted",
             "ofType": null
           },
           {
@@ -23940,7 +23990,7 @@
           },
           {
             "name": "privateMetadata",
-            "description": "List of private metadata items.Requires proper staff permissions to access.",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -24840,7 +24890,7 @@
           },
           {
             "name": "privateMetadata",
-            "description": "List of private metadata items.Requires proper staff permissions to access.",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -27879,7 +27929,7 @@
         "fields": [
           {
             "name": "privateMetadata",
-            "description": "List of private metadata items.Requires proper staff permissions to access.",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -34141,7 +34191,7 @@
           },
           {
             "name": "privateMetadata",
-            "description": "List of private metadata items.Requires proper staff permissions to access.",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -34875,7 +34925,7 @@
           },
           {
             "name": "privateMetadata",
-            "description": "List of private metadata items.Requires proper staff permissions to access.",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -40333,6 +40383,173 @@
             "type": {
               "kind": "OBJECT",
               "name": "PaymentCheckBalance",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "transactionCreate",
+            "description": "New in Saleor 3.2. Create transaction for checkout or order. Note: this feature is in a preview state and can be subject to changes at later point. Requires one of the following permissions: HANDLE_PAYMENTS.",
+            "args": [
+              {
+                "name": "id",
+                "description": "The ID of the checkout or order.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "transaction",
+                "description": "Input data required to create a new transaction object.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "TransactionCreateInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "transactionEvent",
+                "description": "Data that defines a transaction event.",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "TransactionEventInput",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TransactionCreate",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "transactionUpdate",
+            "description": "New in Saleor 3.2. Create transaction for checkout or order. Note: this feature is in a preview state and can be subject to changes at later point. Requires one of the following permissions: HANDLE_PAYMENTS.",
+            "args": [
+              {
+                "name": "id",
+                "description": "The ID of the transaction.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "transaction",
+                "description": "Input data required to create a new transaction object.",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "TransactionUpdateInput",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "transactionEvent",
+                "description": "Data that defines a transaction transaction.",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "TransactionEventInput",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TransactionUpdate",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "transactionRequestAction",
+            "description": "New in Saleor 3.2. Request an action for payment transaction. Note: this feature is in a preview state and can be subject to changes at later point. Requires one of the following permissions: HANDLE_PAYMENTS, MANAGE_ORDERS.",
+            "args": [
+              {
+                "name": "actionType",
+                "description": "Determines the action type.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "TransactionActionEnum",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "amount",
+                "description": "Transaction request amount. If empty for refund or capture, maximal possible amount will be used.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "PositiveDecimal",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "id",
+                "description": "The ID of the transaction.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TransactionRequestAction",
               "ofType": null
             },
             "isDeprecated": false,
@@ -48266,6 +48483,16 @@
           },
           {
             "kind": "OBJECT",
+            "name": "TransactionEvent",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "TransactionItem",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
             "name": "User",
             "ofType": null
           },
@@ -48308,7 +48535,7 @@
         "fields": [
           {
             "name": "privateMetadata",
-            "description": "List of private metadata items.Requires proper staff permissions to access.",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -48471,6 +48698,11 @@
           },
           {
             "kind": "OBJECT",
+            "name": "TransactionItem",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
             "name": "User",
             "ofType": null
           },
@@ -48509,7 +48741,7 @@
           },
           {
             "name": "privateMetadata",
-            "description": "List of private metadata items.Requires proper staff permissions to access.",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -48952,6 +49184,26 @@
                 "ofType": {
                   "kind": "OBJECT",
                   "name": "Payment",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "transactions",
+            "description": "New in Saleor 3.2. List of transactions for the order. Requires one of the following permissions: MANAGE_ORDERS, HANDLE_PAYMENTS. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "TransactionItem",
                   "ofType": null
                 }
               }
@@ -51103,6 +51355,12 @@
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "MISSING_TRANSACTION_ACTION_REQUEST_WEBHOOK",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "possibleTypes": null
@@ -51226,7 +51484,7 @@
           },
           {
             "name": "paymentId",
-            "description": "The payment ID from the payment gateway.",
+            "description": "The payment reference from the payment provider.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -51411,6 +51669,30 @@
             "type": {
               "kind": "OBJECT",
               "name": "OrderEventDiscountObject",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "status",
+            "description": "The status of payment's transaction.",
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "TransactionStatus",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "reference",
+            "description": "The reference of payment's transaction.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
@@ -51933,6 +52215,24 @@
           },
           {
             "name": "PAYMENT_FAILED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "TRANSACTION_CAPTURE_REQUESTED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "TRANSACTION_REFUND_REQUESTED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "TRANSACTION_VOID_REQUESTED",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -54667,7 +54967,7 @@
           },
           {
             "name": "privateMetadata",
-            "description": "List of private metadata items.Requires proper staff permissions to access.",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -56608,7 +56908,7 @@
           },
           {
             "name": "privateMetadata",
-            "description": "List of private metadata items.Requires proper staff permissions to access.",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -57680,7 +57980,7 @@
           },
           {
             "name": "privateMetadata",
-            "description": "List of private metadata items.Requires proper staff permissions to access.",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -60849,7 +61149,7 @@
           },
           {
             "name": "privateMetadata",
-            "description": "List of private metadata items.Requires proper staff permissions to access.",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -65077,7 +65377,7 @@
           },
           {
             "name": "privateMetadata",
-            "description": "List of private metadata items.Requires proper staff permissions to access.",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -66486,7 +66786,7 @@
           },
           {
             "name": "privateMetadata",
-            "description": "List of private metadata items.Requires proper staff permissions to access.",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -73821,7 +74121,7 @@
           },
           {
             "name": "privateMetadata",
-            "description": "List of private metadata items.Requires proper staff permissions to access.",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -76152,7 +76452,7 @@
           },
           {
             "name": "privateMetadata",
-            "description": "List of private metadata items.Requires proper staff permissions to access.",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -76937,7 +77237,7 @@
           },
           {
             "name": "privateMetadata",
-            "description": "List of private metadata items.Requires proper staff permissions to access.",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -77464,6 +77764,67 @@
       },
       {
         "kind": "OBJECT",
+        "name": "ShippingPriceCreated",
+        "description": null,
+        "fields": [
+          {
+            "name": "shippingMethod",
+            "description": "New in Saleor 3.2. Look up a shipping method. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShippingMethodType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "shippingZone",
+            "description": "New in Saleor 3.2. Look up a shipping zone. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShippingZone",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "ShippingPriceDelete",
         "description": "Deletes a shipping price. Requires one of the following permissions: MANAGE_SHIPPING.",
         "fields": [
@@ -77535,6 +77896,67 @@
                   }
                 }
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ShippingPriceDeleted",
+        "description": null,
+        "fields": [
+          {
+            "name": "shippingMethod",
+            "description": "New in Saleor 3.2. Look up a shipping method. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShippingMethodType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "shippingZone",
+            "description": "New in Saleor 3.2. Look up a shipping zone. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShippingZone",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -78072,6 +78494,67 @@
       },
       {
         "kind": "OBJECT",
+        "name": "ShippingPriceUpdated",
+        "description": null,
+        "fields": [
+          {
+            "name": "shippingMethod",
+            "description": "New in Saleor 3.2. Look up a shipping method. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShippingMethodType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "shippingZone",
+            "description": "New in Saleor 3.2. Look up a shipping zone. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShippingZone",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "ShippingZone",
         "description": "Represents a shipping zone in the shop. Zones are the concept used only for grouping shipping methods in the dashboard, and are never exposed to the customers directly.",
         "fields": [
@@ -78093,7 +78576,7 @@
           },
           {
             "name": "privateMetadata",
-            "description": "List of private metadata items.Requires proper staff permissions to access.",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -78661,6 +79144,42 @@
       },
       {
         "kind": "OBJECT",
+        "name": "ShippingZoneCreated",
+        "description": null,
+        "fields": [
+          {
+            "name": "shippingZone",
+            "description": "New in Saleor 3.2. Look up a shipping zone. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShippingZone",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "ShippingZoneDelete",
         "description": "Deletes a shipping zone. Requires one of the following permissions: MANAGE_SHIPPING.",
         "fields": [
@@ -78716,6 +79235,42 @@
             "name": "shippingZone",
             "description": null,
             "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShippingZone",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ShippingZoneDeleted",
+        "description": null,
+        "fields": [
+          {
+            "name": "shippingZone",
+            "description": "New in Saleor 3.2. Look up a shipping zone. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
             "type": {
               "kind": "OBJECT",
               "name": "ShippingZone",
@@ -78988,6 +79543,42 @@
           }
         ],
         "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ShippingZoneUpdated",
+        "description": null,
+        "fields": [
+          {
+            "name": "shippingZone",
+            "description": "New in Saleor 3.2. Look up a shipping zone. Note: this feature is in a preview state and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "channel",
+                "description": "Slug of a channel for which the data should be returned.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShippingZone",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -82402,6 +82993,759 @@
       },
       {
         "kind": "ENUM",
+        "name": "TransactionActionEnum",
+        "description": "Represents possible actions on payment transaction.\n\n    The following actions are possible:\n    CAPTURE - Represents the capture action.\n    REFUND - Represents a refund action.\n    VOID - Represents a void action.\n    ",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "CAPTURE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "REFUND",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "VOID",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TransactionCreate",
+        "description": "New in Saleor 3.2. Create transaction for checkout or order. Note: this feature is in a preview state and can be subject to changes at later point. Requires one of the following permissions: HANDLE_PAYMENTS.",
+        "fields": [
+          {
+            "name": "transaction",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TransactionItem",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TransactionCreateError",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TransactionCreateError",
+        "description": null,
+        "fields": [
+          {
+            "name": "field",
+            "description": "Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "message",
+            "description": "The error message.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "code",
+            "description": "The error code.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "TransactionCreateErrorCode",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "TransactionCreateErrorCode",
+        "description": "An enumeration.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "INVALID",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GRAPHQL_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NOT_FOUND",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INCORRECT_CURRENCY",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "METADATA_KEY_REQUIRED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "TransactionCreateInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "status",
+            "description": "Status of the transaction.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "type",
+            "description": "Payment type used for this transaction.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "reference",
+            "description": "Reference of the transaction.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "availableActions",
+            "description": "List of all possible actions for the transaction",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "TransactionActionEnum",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "amountAuthorized",
+            "description": "Amount authorized by this transaction.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "MoneyInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "amountCaptured",
+            "description": "Amount captured by this transaction.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "MoneyInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "amountRefunded",
+            "description": "Amount refunded by this transaction.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "MoneyInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "amountVoided",
+            "description": "Amount voided by this transaction.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "MoneyInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "metadata",
+            "description": "Payment public metadata.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "privateMetadata",
+            "description": "Payment private metadata.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TransactionEvent",
+        "description": "Represents transaction's event.",
+        "fields": [
+          {
+            "name": "id",
+            "description": "The ID of the object.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "createdAt",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "status",
+            "description": "Status of transaction's event.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "TransactionStatus",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "reference",
+            "description": "Reference of transaction's event.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "name",
+            "description": "Name of the transaction's event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Node",
+            "ofType": null
+          }
+        ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "TransactionEventInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "status",
+            "description": "Current status of the payment transaction.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "TransactionStatus",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "reference",
+            "description": "Reference of the transaction.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "name",
+            "description": "Name of the transaction.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TransactionItem",
+        "description": "New in Saleor 3.2. Represents a payment transaction. Note: this feature is in a preview state and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "id",
+            "description": "The ID of the object.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "privateMetadata",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "MetadataItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "metadata",
+            "description": "List of public metadata items. Can be accessed without permissions.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "MetadataItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "createdAt",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "modifiedAt",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "actions",
+            "description": "List of actions that can be performed in the current state of a payment.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "TransactionActionEnum",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "authorizedAmount",
+            "description": "Total amount authorized for this payment.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Money",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "refundedAmount",
+            "description": "Total amount refunded for this payment.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Money",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "voidedAmount",
+            "description": "Total amount voided for this payment.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Money",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "capturedAmount",
+            "description": "Total amount captured for this payment.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Money",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "status",
+            "description": "Status of transaction.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "type",
+            "description": "Type of transaction.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "reference",
+            "description": "Reference of transaction.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "events",
+            "description": "List of all transaction's events.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TransactionEvent",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Node",
+            "ofType": null
+          },
+          {
+            "kind": "INTERFACE",
+            "name": "ObjectWithMetadata",
+            "ofType": null
+          }
+        ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
         "name": "TransactionKind",
         "description": "An enumeration.",
         "fields": null,
@@ -82469,6 +83813,462 @@
             "deprecationReason": null
           }
         ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TransactionRequestAction",
+        "description": "New in Saleor 3.2. Request an action for payment transaction. Note: this feature is in a preview state and can be subject to changes at later point. Requires one of the following permissions: HANDLE_PAYMENTS, MANAGE_ORDERS.",
+        "fields": [
+          {
+            "name": "transaction",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TransactionItem",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TransactionRequestActionError",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TransactionRequestActionError",
+        "description": null,
+        "fields": [
+          {
+            "name": "field",
+            "description": "Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "message",
+            "description": "The error message.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "code",
+            "description": "The error code.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "TransactionRequestActionErrorCode",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "TransactionRequestActionErrorCode",
+        "description": "An enumeration.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "INVALID",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GRAPHQL_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NOT_FOUND",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "MISSING_TRANSACTION_ACTION_REQUEST_WEBHOOK",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "TransactionStatus",
+        "description": "An enumeration.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "PENDING",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SUCCESS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "FAILURE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TransactionUpdate",
+        "description": "New in Saleor 3.2. Create transaction for checkout or order. Note: this feature is in a preview state and can be subject to changes at later point. Requires one of the following permissions: HANDLE_PAYMENTS.",
+        "fields": [
+          {
+            "name": "transaction",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TransactionItem",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TransactionUpdateError",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TransactionUpdateError",
+        "description": null,
+        "fields": [
+          {
+            "name": "field",
+            "description": "Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "message",
+            "description": "The error message.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "code",
+            "description": "The error code.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "TransactionUpdateErrorCode",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "TransactionUpdateErrorCode",
+        "description": "An enumeration.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "INVALID",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GRAPHQL_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NOT_FOUND",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INCORRECT_CURRENCY",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "METADATA_KEY_REQUIRED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "TransactionUpdateInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "status",
+            "description": "Status of the transaction.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "type",
+            "description": "Payment type used for this transaction.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "reference",
+            "description": "Reference of the transaction.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "availableActions",
+            "description": "List of all possible actions for the transaction",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "TransactionActionEnum",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "amountAuthorized",
+            "description": "Amount authorized by this transaction.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "MoneyInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "amountCaptured",
+            "description": "Amount captured by this transaction.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "MoneyInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "amountRefunded",
+            "description": "Amount refunded by this transaction.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "MoneyInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "amountVoided",
+            "description": "Amount voided by this transaction.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "MoneyInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "metadata",
+            "description": "Payment public metadata.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "privateMetadata",
+            "description": "Payment private metadata.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
         "possibleTypes": null
       },
       {
@@ -83265,7 +85065,7 @@
           },
           {
             "name": "privateMetadata",
-            "description": "List of private metadata items.Requires proper staff permissions to access.",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -85005,7 +86805,7 @@
           },
           {
             "name": "privateMetadata",
-            "description": "List of private metadata items.Requires proper staff permissions to access.",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -87152,7 +88952,7 @@
           },
           {
             "name": "privateMetadata",
-            "description": "List of private metadata items.Requires proper staff permissions to access.",
+            "description": "List of private metadata items. Requires proper staff permissions to access.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -89310,6 +91110,48 @@
             "deprecationReason": null
           },
           {
+            "name": "SHIPPING_PRICE_CREATED",
+            "description": "A new shipping price is created.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_PRICE_UPDATED",
+            "description": "A shipping price is updated.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_PRICE_DELETED",
+            "description": "A shipping price is deleted.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_ZONE_CREATED",
+            "description": "A new shipping zone is created.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_ZONE_UPDATED",
+            "description": "A shipping zone is updated.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_ZONE_DELETED",
+            "description": "A shipping zone is deleted.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "TRANSACTION_ACTION_REQUEST",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "TRANSLATION_CREATED",
             "description": null,
             "isDeprecated": false,
@@ -89569,6 +91411,48 @@
           {
             "name": "PAGE_DELETED",
             "description": "A page is deleted.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_PRICE_CREATED",
+            "description": "A new shipping price is created.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_PRICE_UPDATED",
+            "description": "A shipping price is updated.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_PRICE_DELETED",
+            "description": "A shipping price is deleted.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_ZONE_CREATED",
+            "description": "A new shipping zone is created.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_ZONE_UPDATED",
+            "description": "A shipping zone is updated.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_ZONE_DELETED",
+            "description": "A shipping zone is deleted.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "TRANSACTION_ACTION_REQUEST",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -89956,6 +91840,48 @@
           },
           {
             "name": "PAGE_DELETED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_PRICE_CREATED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_PRICE_UPDATED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_PRICE_DELETED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_ZONE_CREATED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_ZONE_UPDATED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHIPPING_ZONE_DELETED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "TRANSACTION_ACTION_REQUEST",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
