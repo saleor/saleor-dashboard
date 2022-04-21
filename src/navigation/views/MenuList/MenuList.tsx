@@ -15,8 +15,8 @@ import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import { buttonMessages, commonMessages } from "@saleor/intl";
-import { Button } from "@saleor/macaw-ui";
+import { commonMessages } from "@saleor/intl";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder, maybe } from "@saleor/misc";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ListViews } from "@saleor/types";
@@ -160,7 +160,9 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         toggle={toggle}
         toggleAll={toggleAll}
         toolbar={
-          <Button
+          <IconButton
+            variant="secondary"
+            color="primary"
             onClick={() =>
               navigate(
                 menuListUrl({
@@ -171,8 +173,8 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
               )
             }
           >
-            <FormattedMessage {...buttonMessages.remove} />
-          </Button>
+            <DeleteIcon />
+          </IconButton>
         }
       />
       <MenuCreateDialog

@@ -54,7 +54,7 @@ const useStyles = makeStyles(
   { name: "MenuList" }
 );
 
-const numberOfColumns = 3;
+const numberOfColumns = 4;
 
 const MenuList: React.FC<MenuListProps> = props => {
   const {
@@ -125,7 +125,7 @@ const MenuList: React.FC<MenuListProps> = props => {
         <TableFooter>
           <TableRow>
             <TablePagination
-              colSpan={getFooterColSpanWithBulkActions(menus, numberOfColumns)}
+              colSpan={numberOfColumns}
               settings={settings}
               hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
               onNextPage={onNextPage}
