@@ -1,3 +1,4 @@
+import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -12,7 +13,7 @@ import {
 } from "@saleor/graphql";
 import { ChangeEvent, SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { isSecretField } from "@saleor/plugins/utils";
 import React from "react";

@@ -1,4 +1,5 @@
 import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@saleor/attributes/utils/data";
+import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -19,7 +20,7 @@ import {
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import { ListSettings, ReorderAction } from "@saleor/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";

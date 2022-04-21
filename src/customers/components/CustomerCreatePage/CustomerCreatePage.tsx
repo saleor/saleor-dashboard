@@ -1,3 +1,4 @@
+import { Backlink } from "@saleor/components/Backlink";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -12,7 +13,7 @@ import {
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { extractMutationErrors } from "@saleor/misc";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";

@@ -5,6 +5,7 @@ import {
   TableHead,
   TableRow
 } from "@material-ui/core";
+import { Backlink } from "@saleor/components/Backlink";
 import { Container } from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
@@ -12,7 +13,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { CountryListQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

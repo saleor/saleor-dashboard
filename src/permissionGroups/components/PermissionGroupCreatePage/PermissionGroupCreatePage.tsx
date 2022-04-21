@@ -1,4 +1,5 @@
 import AccountPermissions from "@saleor/components/AccountPermissions";
+import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
@@ -6,7 +7,7 @@ import Savebar from "@saleor/components/Savebar";
 import { PermissionEnum, PermissionGroupErrorFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getPermissionGroupErrorMessage from "@saleor/utils/errors/permissionGroups";
 import React from "react";

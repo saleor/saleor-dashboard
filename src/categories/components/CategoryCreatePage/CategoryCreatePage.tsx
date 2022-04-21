@@ -1,3 +1,4 @@
+import { Backlink } from "@saleor/components/Backlink";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Metadata from "@saleor/components/Metadata";
@@ -6,7 +7,7 @@ import Savebar from "@saleor/components/Savebar";
 import SeoForm from "@saleor/components/SeoForm";
 import { ProductErrorFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 

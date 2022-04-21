@@ -1,10 +1,10 @@
 import { Card } from "@material-ui/core";
+import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
 import { PluginBaseFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Backlink } from "@saleor/macaw-ui";
 import { PluginListUrlSortField } from "@saleor/plugins/urls";
 import {
   FilterPageProps,

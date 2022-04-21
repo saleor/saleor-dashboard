@@ -6,6 +6,7 @@ import CannotDefineChannelsAvailabilityCard from "@saleor/channels/components/Ca
 import { ChannelData } from "@saleor/channels/utils";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@saleor/components/Attributes";
+import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import Container from "@saleor/components/Container";
@@ -31,7 +32,7 @@ import {
 } from "@saleor/graphql";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
 import { getChoices } from "@saleor/products/utils/data";
 import React from "react";

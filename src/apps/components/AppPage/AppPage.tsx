@@ -1,4 +1,5 @@
 import { Typography } from "@material-ui/core";
+import { Backlink } from "@saleor/components/Backlink";
 import { Button } from "@saleor/components/Button";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
@@ -6,7 +7,6 @@ import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import { AppQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Backlink } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

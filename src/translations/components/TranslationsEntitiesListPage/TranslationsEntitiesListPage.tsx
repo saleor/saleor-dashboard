@@ -1,9 +1,9 @@
 import { Card } from "@material-ui/core";
+import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import FilterTabs, { FilterTab } from "@saleor/components/TableFilter";
 import { LanguageFragment } from "@saleor/graphql";
-import { Backlink } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import React from "react";
 import { useIntl } from "react-intl";

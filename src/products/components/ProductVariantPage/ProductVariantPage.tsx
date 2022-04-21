@@ -8,6 +8,7 @@ import Attributes, {
   AttributeInput,
   VariantAttributeScope
 } from "@saleor/components/Attributes";
+import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
@@ -24,7 +25,7 @@ import {
   SearchProductsQuery,
   WarehouseFragment
 } from "@saleor/graphql";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";

@@ -1,3 +1,4 @@
+import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
@@ -7,7 +8,6 @@ import {
   LanguageCodeEnum
 } from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
-import { Backlink } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import {
   TranslationInputFieldName,

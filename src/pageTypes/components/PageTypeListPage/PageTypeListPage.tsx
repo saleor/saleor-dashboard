@@ -1,11 +1,11 @@
 import { Card } from "@material-ui/core";
+import { Backlink } from "@saleor/components/Backlink";
 import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
 import { PageTypeFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Backlink } from "@saleor/macaw-ui";
 import {
   pageTypeAddUrl,
   PageTypeListUrlSortField

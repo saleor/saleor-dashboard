@@ -1,3 +1,4 @@
+import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
@@ -10,7 +11,7 @@ import {
   WebhookEventTypeAsyncEnum,
   WebhookEventTypeSyncEnum
 } from "@saleor/graphql";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import WebhookEvents from "@saleor/webhooks/components/WebhookEvents";
 import WebhookInfo from "@saleor/webhooks/components/WebhookInfo";
 import WebhookStatus from "@saleor/webhooks/components/WebhookStatus";

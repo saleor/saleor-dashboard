@@ -1,4 +1,5 @@
 import AccountPermissions from "@saleor/components/AccountPermissions";
+import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
@@ -13,7 +14,7 @@ import {
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { MembersListUrlSortField } from "@saleor/permissionGroups/urls";
 import {
   extractPermissionCodes,

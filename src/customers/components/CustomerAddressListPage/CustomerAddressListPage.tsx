@@ -1,9 +1,10 @@
 import { Typography } from "@material-ui/core";
+import { Backlink } from "@saleor/components/Backlink";
 import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { AddressTypeEnum, CustomerAddressesFragment } from "@saleor/graphql";
-import { Backlink, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder, renderCollection } from "@saleor/misc";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
