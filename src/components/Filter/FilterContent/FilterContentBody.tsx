@@ -163,46 +163,13 @@ const FilterContentBody: React.FC<FilterContentBodyProps> = ({
             />
           </div>
         ))}
-      {filter.type === FieldType.keyValue && (
-        <div>
-          <TextField
-            fullWidth
-            name={filter.name}
-            label={intl.formatMessage(messages.key)}
-            value={filter.value[0]}
-            onChange={event =>
-              onFilterPropertyChange({
-                payload: {
-                  name: filter.name,
-                  update: {
-                    value: [event.target.value, filter.value[1]]
-                  }
-                },
-                type: "set-property"
-              })
-            }
-          />
-          <FormSpacer />
-          <TextField
-            fullWidth
-            name={filter.name}
-            label={intl.formatMessage(messages.value)}
-            value={filter.value[1]}
-            onChange={event =>
-              onFilterPropertyChange({
-                payload: {
-                  name: filter.name,
-                  update: {
-                    value: [filter.value[0], event.target.value]
-                  }
-                },
-                type: "set-property"
-              })
-            }
-          />
-        </div>
+      {isFilterType(filter, FieldType.keyValue) && (
+        <FilterKeyValueField
+          filter={filter}
+          onFilterPropertyChange={onFilterPropertyChange}
+        />
       )}
-      {filter.type === FieldType.autocomplete && (
+      {isFilterType(filter, FieldType.autocomplete) && (
         <FilterAutocompleteField
           data-test-id={filterTestingContext + filter.name}
           displayValues={autocompleteDisplayValues}
