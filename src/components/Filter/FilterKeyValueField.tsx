@@ -1,17 +1,12 @@
 import { TextField } from "@material-ui/core";
 import { Button, makeStyles } from "@saleor/macaw-ui";
+import { KeyValue } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { FilterFieldBaseProps } from "./FilterContent/utils";
 import { keyValueMessages } from "./messages";
-import { FilterBaseFieldProps, IFilterElement } from "./types";
-
-export interface KeyValueField {
-  key: string;
-  value?: string;
-}
-
-export type FilterKeyValueFieldProps = FilterBaseFieldProps<KeyValueField>;
+import { FieldType } from "./types";
 
 const useStyles = makeStyles(
   theme => ({
@@ -50,20 +45,25 @@ const getUpdateArrayFn = <T,>(key: "key" | "value") => (
   ];
 };
 
-const updateKeyFn = getUpdateArrayFn<KeyValueField>("key");
-const updateValueFn = getUpdateArrayFn<KeyValueField>("value");
-const createEmptyPair = (array: KeyValueField[]) => [...array, { key: "" }];
+const updateKeyFn = getUpdateArrayFn<KeyValue>("key");
+const updateValueFn = getUpdateArrayFn<KeyValue>("value");
+const createEmptyPair = (array: KeyValue[]) => [...array, { key: "" }];
 
-export const FilterKeyValueField = ({
-  filterField,
+type FilterKeyValueFieldProps<K extends string = string> = FilterFieldBaseProps<
+  K,
+  FieldType.keyValue
+>;
+
+export const FilterKeyValueField = <K extends string = string>({
+  filter,
   onFilterPropertyChange
-}: FilterKeyValueFieldProps) => {
+}: FilterKeyValueFieldProps<K>) => {
   const intl = useIntl();
   const classes = useStyles();
 
-  const values = filterField.value?.length
-    ? filterField.value
-    : ([{ key: "" }] as KeyValueField[]);
+  const values = filter.value?.length
+    ? filter.value
+    : ([{ key: "" }] as KeyValue[]);
 
   return (
     <div className={classes.formWrapper}>
@@ -72,13 +72,13 @@ export const FilterKeyValueField = ({
           <div className={classes.metadataField}>
             <TextField
               fullWidth
-              name={filterField.name}
+              name={filter.name}
               label={intl.formatMessage(keyValueMessages.key)}
               value={innerField.key}
               onChange={event =>
                 onFilterPropertyChange({
                   payload: {
-                    name: filterField.name,
+                    name: filter.name,
                     update: {
                       value: updateKeyFn(values, index, event.target.value)
                     }
@@ -89,13 +89,13 @@ export const FilterKeyValueField = ({
             />
             <TextField
               fullWidth
-              name={filterField.name}
+              name={filter.name}
               label={intl.formatMessage(keyValueMessages.value)}
               value={innerField.value ?? ""}
               onChange={event =>
                 onFilterPropertyChange({
                   payload: {
-                    name: filterField.name,
+                    name: filter.name,
                     update: {
                       value: updateValueFn(values, index, event.target.value)
                     }
@@ -113,7 +113,7 @@ export const FilterKeyValueField = ({
         onClick={() => {
           onFilterPropertyChange({
             payload: {
-              name: filterField.name,
+              name: filter.name,
               update: {
                 value: createEmptyPair(values)
               }

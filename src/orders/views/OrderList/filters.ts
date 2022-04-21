@@ -11,7 +11,11 @@ import {
   OrderListFilterOpts
 } from "@saleor/orders/components/OrderListPage/filters";
 
-import { IFilterElement } from "../../../components/Filter";
+import {
+  FilterElementKeyValue,
+  FilterElementRegular,
+  IFilterElement
+} from "../../../components/Filter";
 import {
   createFilterTabUtils,
   createFilterUtils,
@@ -24,6 +28,7 @@ import {
   getSingleValueQueryParam
 } from "../../../utils/filters";
 import {
+  OrderListFitersWithKeyValueValues,
   OrderListUrlFilters,
   OrderListUrlFiltersEnum,
   OrderListUrlFiltersWithMultipleValues,
@@ -89,11 +94,12 @@ export function getFilterOpts(
       )
     },
     metadata: {
-      active: !!params?.metadataKey,
-      value: {
-        key: params.metadataKey,
-        value: params.metadataValue ?? ""
-      }
+      active: !!params?.metadata?.length,
+      value: [
+        ...(params?.metadata
+          ? params.metadata.filter(pair => pair?.key !== undefined)
+          : [])
+      ]
     }
   };
 }
@@ -129,10 +135,7 @@ export function getFilterVariables(
     giftCardUsed:
       params?.giftCard?.some(param => param === OrderFilterGiftCard.paid) ||
       undefined,
-    metadata:
-      params.metadataKey !== undefined
-        ? [{ key: params.metadataKey, value: params.metadataValue ?? "" }]
-        : null
+    metadata: params?.metadata
   };
 }
 
@@ -159,14 +162,14 @@ export function getFilterQueryParam(
 
     case OrderFilterKeys.status:
       return getMultipleEnumValueQueryParam(
-        filter,
+        filter as FilterElementRegular<OrderFilterKeys.status>,
         OrderListUrlFiltersWithMultipleValues.status,
         OrderStatusFilter
       );
 
     case OrderFilterKeys.paymentStatus:
       return getMultipleEnumValueQueryParam(
-        filter,
+        filter as FilterElementRegular<OrderFilterKeys.paymentStatus>,
         OrderListUrlFiltersWithMultipleValues.paymentStatus,
         PaymentChargeStatusEnum
       );
@@ -182,16 +185,15 @@ export function getFilterQueryParam(
 
     case OrderFilterKeys.giftCard:
       return getMultipleEnumValueQueryParam(
-        filter,
+        filter as FilterElementRegular<OrderFilterKeys.giftCard>,
         OrderListUrlFiltersWithMultipleValues.giftCard,
         OrderFilterGiftCard
       );
 
     case OrderFilterKeys.metadata:
       return getKeyValueQueryParam(
-        filter,
-        OrderListUrlFiltersEnum.metadataKey,
-        OrderListUrlFiltersEnum.metadataValue
+        filter as FilterElementKeyValue<OrderFilterKeys.metadata>,
+        OrderListFitersWithKeyValueValues.metadata
       );
   }
 }

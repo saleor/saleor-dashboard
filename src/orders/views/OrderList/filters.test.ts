@@ -89,10 +89,12 @@ describe("Filtering URL params", () => {
     },
     metadata: {
       active: false,
-      value: {
-        key: "",
-        value: ""
-      }
+      value: [
+        {
+          key: "",
+          value: ""
+        }
+      ]
     }
   });
 

@@ -1,17 +1,16 @@
 import { TextField } from "@material-ui/core";
 import React from "react";
 
-import { FilterReducerAction } from "../reducer";
-import { FieldType, IFilterElement } from "../types";
+import { FieldType } from "../types";
 import useStyles from "./styles";
-import { filterTestingContext } from "./utils";
+import { FilterFieldBaseProps, filterTestingContext } from "./utils";
 
-export interface FilterTextFieldProps {
+export type FilterTextFieldProps = FilterFieldBaseProps<
+  string,
+  FieldType.text | FieldType.price | FieldType.date
+> & {
   currencySymbol: string | null;
-  filter: IFilterElement;
-  onFilterPropertyChange: React.Dispatch<FilterReducerAction<string>>;
-}
-
+};
 const FilterTextField: React.FC<FilterTextFieldProps> = ({
   currencySymbol,
   filter,

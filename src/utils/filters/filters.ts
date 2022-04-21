@@ -1,4 +1,9 @@
-import { IFilter, IFilterElement } from "@saleor/components/Filter";
+import {
+  FilterElementKeyValue,
+  FilterElementRegular,
+  IFilter,
+  IFilterElement
+} from "@saleor/components/Filter";
 import { findValueInEnum } from "@saleor/misc";
 import { ActiveTab } from "@saleor/types";
 import isArray from "lodash/isArray";
@@ -54,10 +59,10 @@ export function getFilterQueryParams<
   TFilterKeys extends string,
   TUrlFilters extends {}
 >(
-  filter: IFilter<TFilterKeys>,
+  filters: IFilter<TFilterKeys>,
   getFilterQueryParam: GetFilterQueryParam<TFilterKeys, TUrlFilters>
 ): TUrlFilters {
-  return filter.reduce(
+  return filters.reduce(
     (acc, filterField) => ({
       ...acc,
       ...getFilterQueryParam(filterField, acc)
@@ -100,7 +105,7 @@ export function getSingleEnumValueQueryParam<
   TKey extends string,
   TUrlKey extends string,
   TEnum extends {}
->(param: IFilterElement<TKey>, key: TUrlKey, haystack: TEnum) {
+>(param: FilterElementRegular<TKey>, key: TUrlKey, haystack: TEnum) {
   const { active, value } = param;
 
   if (!active) {
@@ -118,7 +123,7 @@ export function getMultipleEnumValueQueryParam<
   TKey extends string,
   TUrlKey extends string,
   TEnum extends {}
->(param: IFilterElement<TKey>, key: TUrlKey, haystack: TEnum) {
+>(param: FilterElementRegular<TKey>, key: TUrlKey, haystack: TEnum) {
   const { active, value } = param;
 
   if (!active) {
@@ -178,19 +183,19 @@ export function getMinMaxQueryParam<
 export function getKeyValueQueryParam<
   TKey extends string,
   TUrlKey extends string
->(param: IFilterElement<TKey>, key: TUrlKey, keyValue: TUrlKey) {
+>(param: FilterElementKeyValue<TKey>, key: TUrlKey) {
   const { active, value } = param;
 
   if (!active) {
     return {
-      [key]: undefined,
-      [keyValue]: undefined
+      [key]: undefined
     };
   }
 
+  const filledOutPairs = value.filter(keyValuePair => keyValuePair.key !== "");
+
   return {
-    [key]: value[0],
-    [keyValue]: value[1]
+    [key]: filledOutPairs
   };
 }
 

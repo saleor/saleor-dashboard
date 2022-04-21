@@ -30,7 +30,11 @@ import {
 import isArray from "lodash/isArray";
 import moment from "moment-timezone";
 
-import { IFilterElement } from "../../../components/Filter";
+import {
+  FilterElementKeyValue,
+  FilterElementRegular,
+  IFilterElement
+} from "../../../components/Filter";
 import {
   createFilterTabUtils,
   createFilterUtils,
@@ -47,6 +51,7 @@ import {
   ProductListUrlFilters,
   ProductListUrlFiltersAsDictWithMultipleValues,
   ProductListUrlFiltersEnum,
+  ProductListUrlFiltersWithKeyValueValues,
   ProductListUrlFiltersWithMultipleValues,
   ProductListUrlQueryParams
 } from "../../urls";
@@ -168,11 +173,12 @@ export function getFilterOpts(
       value: dedupeFilter(params.collections || [])
     },
     metadata: {
-      active: !!params.metadataKey,
-      value: {
-        key: params.metadataKey,
-        value: params.metadataValue ?? ""
-      }
+      active: !!params?.metadata?.length,
+      value: [
+        ...(params?.metadata
+          ? params.metadata.filter(pair => pair?.key !== undefined)
+          : [])
+      ]
     },
     productKind: {
       active: params?.productKind !== undefined,
@@ -321,10 +327,7 @@ export function getFilterVariables(
     attributes: getFilteredAttributeValue(params),
     categories: params.categories !== undefined ? params.categories : null,
     collections: params.collections !== undefined ? params.collections : null,
-    metadata:
-      params.metadataKey !== undefined
-        ? [{ key: params.metadataKey, value: params.metadataValue ?? "" }]
-        : null,
+    metadata: params?.metadata,
     price: isChannelSelected
       ? getGteLteVariables({
           gte: parseFloat(params.priceFrom),
@@ -389,7 +392,7 @@ export function getFilterQueryParam(
 
     case ProductFilterKeys.stock:
       return getSingleEnumValueQueryParam(
-        filter,
+        filter as FilterElementRegular<ProductFilterKeys.stock>,
         ProductListUrlFiltersEnum.stockStatus,
         StockAvailability
       );
@@ -408,9 +411,8 @@ export function getFilterQueryParam(
 
     case ProductFilterKeys.metadata:
       return getKeyValueQueryParam(
-        filter,
-        ProductListUrlFiltersEnum.metadataKey,
-        ProductListUrlFiltersEnum.metadataValue
+        filter as FilterElementKeyValue<ProductFilterKeys>,
+        ProductListUrlFiltersWithKeyValueValues.metadata
       );
   }
 }

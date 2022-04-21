@@ -1,4 +1,7 @@
-import { IFilterElement } from "@saleor/components/Filter";
+import {
+  FilterElementRegular,
+  IFilterElement
+} from "@saleor/components/Filter";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import {
   VoucherFilterKeys,
@@ -113,7 +116,7 @@ export function getFilterQueryParam(
   switch (name) {
     case VoucherFilterKeys.saleType:
       return getMultipleEnumValueQueryParam(
-        filter,
+        filter as FilterElementRegular<VoucherFilterKeys.saleType>,
         VoucherListUrlFiltersWithMultipleValues.type,
         VoucherDiscountType
       );
@@ -134,7 +137,7 @@ export function getFilterQueryParam(
 
     case VoucherFilterKeys.status:
       return getMultipleEnumValueQueryParam(
-        filter,
+        filter as FilterElementRegular<VoucherFilterKeys.status>,
         VoucherListUrlFiltersWithMultipleValues.status,
         DiscountStatusEnum
       );

@@ -2,7 +2,10 @@ import {
   CollectionFilterKeys,
   CollectionListFilterOpts
 } from "@saleor/collections/components/CollectionListPage";
-import { IFilterElement } from "@saleor/components/Filter";
+import {
+  FilterElementRegular,
+  IFilterElement
+} from "@saleor/components/Filter";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { CollectionFilterInput, CollectionPublished } from "@saleor/graphql";
 import { findValueInEnum, maybe } from "@saleor/misc";
@@ -57,7 +60,7 @@ export function getFilterQueryParam(
   switch (name) {
     case CollectionFilterKeys.status:
       return getSingleEnumValueQueryParam(
-        filter,
+        filter as FilterElementRegular<CollectionFilterKeys.status>,
         CollectionListUrlFiltersEnum.status,
         CollectionPublished
       );

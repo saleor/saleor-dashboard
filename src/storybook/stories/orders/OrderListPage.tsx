@@ -69,10 +69,7 @@ const props: OrderListPageProps = {
     },
     metadata: {
       active: false,
-      value: {
-        key: "",
-        value: ""
-      }
+      value: [{ key: "123", value: "123" }, { key: "321" }]
     }
   },
   limits,

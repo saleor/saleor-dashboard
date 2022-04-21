@@ -1,4 +1,7 @@
-import { IFilterElement } from "@saleor/components/Filter";
+import {
+  FilterElementRegular,
+  IFilterElement
+} from "@saleor/components/Filter";
 import { StaffMemberStatus, StaffUserInput } from "@saleor/graphql";
 import { findValueInEnum, maybe } from "@saleor/misc";
 import {
@@ -49,7 +52,7 @@ export function getFilterQueryParam(
   switch (name) {
     case StaffFilterKeys.status:
       return getSingleEnumValueQueryParam(
-        filter,
+        filter as FilterElementRegular<StaffFilterKeys.status>,
         StaffListUrlFiltersEnum.status,
         StaffMemberStatus
       );

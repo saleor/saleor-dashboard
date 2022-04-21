@@ -43,7 +43,7 @@ export interface ProductListFilterOpts {
   attributeChoices: FilterOpts<string[]> & AutocompleteFilterOpts;
   categories: FilterOpts<string[]> & AutocompleteFilterOpts;
   collections: FilterOpts<string[]> & AutocompleteFilterOpts;
-  metadata: FilterOpts<KeyValue>;
+  metadata: FilterOpts<KeyValue[]>;
   price: FilterOpts<MinMax>;
   productType: FilterOpts<string[]> & AutocompleteFilterOpts;
   stockStatus: FilterOpts<StockAvailability>;

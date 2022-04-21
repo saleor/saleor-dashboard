@@ -7,6 +7,7 @@ import {
   Dialog,
   Filters,
   FiltersAsDictWithMultipleValues,
+  FiltersWithKeyValueValues,
   FiltersWithMultipleValues,
   Pagination,
   SingleAction,
@@ -30,9 +31,7 @@ export enum ProductListUrlFiltersEnum {
   stockStatus = "stockStatus",
   query = "query",
   channel = "channel",
-  productKind = "productKind",
-  metadataKey = "metadataKey",
-  metadataValue = "metadataValue"
+  productKind = "productKind"
 }
 export enum ProductListUrlFiltersWithMultipleValues {
   categories = "categories",
@@ -42,8 +41,12 @@ export enum ProductListUrlFiltersWithMultipleValues {
 export enum ProductListUrlFiltersAsDictWithMultipleValues {
   attributes = "attributes"
 }
+export enum ProductListUrlFiltersWithKeyValueValues {
+  metadata = "metadata"
+}
 export type ProductListUrlFilters = Filters<ProductListUrlFiltersEnum> &
   FiltersWithMultipleValues<ProductListUrlFiltersWithMultipleValues> &
+  FiltersWithKeyValueValues<ProductListUrlFiltersWithKeyValueValues> &
   FiltersAsDictWithMultipleValues<
     ProductListUrlFiltersAsDictWithMultipleValues
   >;

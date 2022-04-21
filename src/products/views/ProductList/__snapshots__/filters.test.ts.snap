@@ -59,8 +59,12 @@ Object {
   "collections": Array [
     "Q29sbGVjdGlvbjoc",
   ],
-  "metadataKey": "metadataKey",
-  "metadataValue": "metadataValue",
+  "metadata": Array [
+    Object {
+      "key": "metadataKey",
+      "value": "metadataValue",
+    },
+  ],
   "priceFrom": "10",
   "priceTo": "20",
   "productKind": "NORMAL",
@@ -71,4 +75,4 @@ Object {
 }
 `;
 
-exports[`Filtering URL params should not be empty if active filters are present 2`] = `"channel=default-channel&metadataKey=metadataKey&metadataValue=metadataValue&productKind=NORMAL&stockStatus=IN_STOCK&priceFrom=10&priceTo=20&categories%5B%5D=878752&collections%5B%5D=Q29sbGVjdGlvbjoc&productTypes%5B%5D=UHJvZHVjdFR5cGU6MQ%3D%3D&attributes%5Bauthor%5D%5B%5D=john-doe&attributes%5Bauthor%5D%5B%5D=false&attributes%5Bbox-size%5D%5B%5D=100g&attributes%5Bbox-size%5D%5B%5D=500g&attributes%5Bbrand%5D%5B%5D=saleor&attributes%5Bbrand%5D%5B%5D=false&attributes%5Bcandy-box-size%5D%5B%5D=100g&attributes%5Bcandy-box-size%5D%5B%5D=500g&attributes%5Bcoffee-genre%5D%5B%5D=arabica&attributes%5Bcoffee-genre%5D%5B%5D=false&attributes%5Bcollar%5D%5B%5D=round&attributes%5Bcollar%5D%5B%5D=polo&attributes%5Bcolor%5D%5B%5D=blue&attributes%5Bcolor%5D%5B%5D=false&attributes%5Bcover%5D%5B%5D=soft&attributes%5Bcover%5D%5B%5D=middle-soft&attributes%5Bflavor%5D%5B%5D=sour&attributes%5Bflavor%5D%5B%5D=false&attributes%5Blanguage%5D%5B%5D=english&attributes%5Blanguage%5D%5B%5D=false&attributes%5Bpublisher%5D%5B%5D=mirumee-press&attributes%5Bpublisher%5D%5B%5D=false&attributes%5Bsize%5D%5B%5D=xs&attributes%5Bsize%5D%5B%5D=m"`;
+exports[`Filtering URL params should not be empty if active filters are present 2`] = `"channel=default-channel&metadata%5B%5D%5Bkey%5D=metadataKey&metadata%5B%5D%5Bvalue%5D=metadataValue&productKind=NORMAL&stockStatus=IN_STOCK&priceFrom=10&priceTo=20&categories%5B%5D=878752&collections%5B%5D=Q29sbGVjdGlvbjoc&productTypes%5B%5D=UHJvZHVjdFR5cGU6MQ%3D%3D&attributes%5Bauthor%5D%5B%5D=john-doe&attributes%5Bauthor%5D%5B%5D=false&attributes%5Bbox-size%5D%5B%5D=100g&attributes%5Bbox-size%5D%5B%5D=500g&attributes%5Bbrand%5D%5B%5D=saleor&attributes%5Bbrand%5D%5B%5D=false&attributes%5Bcandy-box-size%5D%5B%5D=100g&attributes%5Bcandy-box-size%5D%5B%5D=500g&attributes%5Bcoffee-genre%5D%5B%5D=arabica&attributes%5Bcoffee-genre%5D%5B%5D=false&attributes%5Bcollar%5D%5B%5D=round&attributes%5Bcollar%5D%5B%5D=polo&attributes%5Bcolor%5D%5B%5D=blue&attributes%5Bcolor%5D%5B%5D=false&attributes%5Bcover%5D%5B%5D=soft&attributes%5Bcover%5D%5B%5D=middle-soft&attributes%5Bflavor%5D%5B%5D=sour&attributes%5Bflavor%5D%5B%5D=false&attributes%5Blanguage%5D%5B%5D=english&attributes%5Blanguage%5D%5B%5D=false&attributes%5Bpublisher%5D%5B%5D=mirumee-press&attributes%5Bpublisher%5D%5B%5D=false&attributes%5Bsize%5D%5B%5D=xs&attributes%5Bsize%5D%5B%5D=m"`;

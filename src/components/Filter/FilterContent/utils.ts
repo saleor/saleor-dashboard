@@ -1,17 +1,24 @@
-import { FilterReducerAction } from "@saleor/components/Filter/reducer";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { makeStyles } from "@saleor/macaw-ui";
 import { joinDateTime, splitDateTime } from "@saleor/misc";
-import React from "react";
 import { IntlShape } from "react-intl";
 
-import { FilterType, IFilterElement } from "../types";
+import {
+  FieldType,
+  FilterElementGeneric,
+  FilterType,
+  IFilterElement
+} from "../types";
+import { FilterDispatchFunction } from "../useFilter";
 
 export const filterTestingContext = "filter-field-";
 
-export interface FilterFieldBaseProps<T extends string = string> {
-  filter: IFilterElement<T>;
-  onFilterPropertyChange: React.Dispatch<FilterReducerAction<T>>;
+export interface FilterFieldBaseProps<
+  K extends string = string,
+  T extends FieldType | unknown = unknown
+> {
+  filter: T extends FieldType ? FilterElementGeneric<K, T> : IFilterElement<K>;
+  onFilterPropertyChange: FilterDispatchFunction<K>;
 }
 
 export const useCommonStyles = makeStyles(

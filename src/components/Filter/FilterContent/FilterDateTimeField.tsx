@@ -13,7 +13,10 @@ import {
   useCommonStyles
 } from "./utils";
 
-type FilterDateTimeFieldProps = FilterFieldBaseProps<string>;
+type FilterDateTimeFieldProps = FilterFieldBaseProps<
+  string,
+  FieldType.dateTime | FieldType.date
+>;
 
 export const FilterDateTimeField: React.FC<FilterDateTimeFieldProps> = ({
   filter,

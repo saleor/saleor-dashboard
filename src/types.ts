@@ -165,6 +165,9 @@ export type FiltersWithMultipleValues<TFilters extends string> = Partial<
 export type FiltersAsDictWithMultipleValues<TFilters extends string> = Partial<
   Record<TFilters, Record<string, string[]>>
 >;
+export type FiltersWithKeyValueValues<TFilters extends string> = Partial<
+  Record<TFilters, KeyValue[]>
+>;
 export type Search = Partial<{
   query: string;
 }>;
@@ -202,7 +205,10 @@ export interface MutationResultAdditionalProps {
   status: ConfirmButtonTransitionState;
 }
 
-export type KeyValue = Record<"key" | "value", string>;
+export interface KeyValue {
+  key: string;
+  value?: string;
+}
 
 export type MinMax = Record<"min" | "max", string>;
 

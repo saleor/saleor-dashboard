@@ -10,7 +10,10 @@ import {
   useCommonStyles
 } from "./utils";
 
-type FilterNumericFieldProps = FilterFieldBaseProps<string> & {
+type FilterNumericFieldProps = FilterFieldBaseProps<
+  string,
+  FieldType.number | FieldType.price
+> & {
   currencySymbol: string | undefined;
 };
 

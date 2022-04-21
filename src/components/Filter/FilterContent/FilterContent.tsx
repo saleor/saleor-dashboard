@@ -77,16 +77,18 @@ const useSummaryStyles = makeStyles(
   { name: "FilterContentExpanderSummary" }
 );
 
-export interface FilterContentProps<T extends string = string> {
-  filters: IFilter<T>;
-  onFilterPropertyChange: React.Dispatch<FilterReducerAction<T>>;
+export interface FilterContentProps<K extends string = string> {
+  filters: IFilter<K>;
+  onFilterPropertyChange: <T extends FieldType>(
+    value: FilterReducerAction<K, T>
+  ) => void;
   onFilterAttributeFocus?: (id?: string) => void;
   onClear: () => void;
   onSubmit: () => void;
   currencySymbol?: string;
-  dataStructure: IFilter<T>;
-  errors?: InvalidFilters<T>;
-  errorMessages?: FilterErrorMessages<T>;
+  dataStructure: IFilter<K>;
+  errors?: InvalidFilters<K>;
+  errorMessages?: FilterErrorMessages<K>;
 }
 
 const FilterContent: React.FC<FilterContentProps> = ({
@@ -141,7 +143,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
   );
 
   const commonFilterBodyProps: Omit<
-    FilterContentBodyProps,
+    FilterContentBodyProps<string>,
     "filter" | "onFilterPropertyChange"
   > = {
     currencySymbol,
@@ -165,10 +167,10 @@ const FilterContent: React.FC<FilterContentProps> = ({
     }
   };
 
-  const handleFilterPropertyGroupChange = function<T extends string>(
-    action: FilterReducerAction<T>,
-    filter: IFilterElement<string>
-  ) {
+  const handleFilterPropertyGroupChange = function<
+    K extends string,
+    T extends FieldType
+  >(action: FilterReducerAction<K, T>, filter: IFilterElement<string>) {
     const switchToActive = action.payload.update.active;
     if (switchToActive && filter.name !== openedFilter?.name) {
       handleFilterAttributeFocus(filter);
@@ -181,9 +183,10 @@ const FilterContent: React.FC<FilterContentProps> = ({
     onFilterPropertyChange(action);
   };
 
-  const handleMultipleFieldPropertyChange = function<T extends string>(
-    action: FilterReducerAction<T>
-  ) {
+  const handleMultipleFieldPropertyChange = function<
+    K extends string,
+    T extends FieldType
+  >(action: FilterReducerAction<K, T>) {
     const { update } = action.payload;
     onFilterPropertyChange({
       ...action,

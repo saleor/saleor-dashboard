@@ -5,7 +5,8 @@ import classNames from "classnames";
 import React from "react";
 
 import Checkbox from "../Checkbox";
-import { FilterBaseFieldProps } from "./types";
+import { FilterFieldBaseProps } from "./FilterContent/utils";
+import { FieldType } from "./types";
 
 const useStyles = makeStyles(
   theme => ({
@@ -21,20 +22,19 @@ const useStyles = makeStyles(
   { name: "FilterOptionField" }
 );
 
-const FilterOptionField: React.FC<FilterBaseFieldProps> = ({
-  filterField,
-  onFilterPropertyChange,
-  ...rest
-}) => {
+const FilterOptionField: React.FC<FilterFieldBaseProps<
+  string,
+  FieldType.options
+>> = ({ filter, onFilterPropertyChange, ...rest }) => {
   const classes = useStyles({});
   const handleSelect = (value: string) =>
     onFilterPropertyChange({
       payload: {
-        name: filterField.name,
+        name: filter.name,
         update: {
           active: true,
-          value: filterField.multiple
-            ? toggle(value, filterField.value, (a, b) => a === b)
+          value: filter.multiple
+            ? toggle(value, filter.value, (a, b) => a === b)
             : [value]
         }
       },
@@ -43,30 +43,30 @@ const FilterOptionField: React.FC<FilterBaseFieldProps> = ({
 
   return (
     <div className={classes.root} {...rest}>
-      {filterField.options.map(option => (
+      {filter.options.map(option => (
         <div
           className={classNames(classes.option, {
-            [classes.optionRadio]: !filterField.multiple
+            [classes.optionRadio]: !filter.multiple
           })}
           key={option.value}
         >
           <FormControlLabel
             control={
-              filterField.multiple ? (
+              filter.multiple ? (
                 <Checkbox
                   data-test-id={"filter-option-" + option.value}
-                  checked={filterField.value.includes(option.value)}
+                  checked={filter.value.includes(option.value)}
                 />
               ) : (
                 <Radio
                   data-test-id={"filter-option-" + option.value}
-                  checked={filterField.value[0] === option.value}
+                  checked={filter.value[0] === option.value}
                   color="primary"
                 />
               )
             }
             label={option.label}
-            name={filterField.name}
+            name={filter.name}
             onChange={() => handleSelect(option.value)}
           />
         </div>

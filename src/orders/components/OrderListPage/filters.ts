@@ -43,7 +43,7 @@ export interface OrderListFilterOpts {
   clickAndCollect: FilterOpts<boolean>;
   preorder: FilterOpts<boolean>;
   giftCard: FilterOpts<OrderFilterGiftCard[]>;
-  metadata: FilterOpts<KeyValue>;
+  metadata: FilterOpts<KeyValue[]>;
 }
 
 const messages = defineMessages({
