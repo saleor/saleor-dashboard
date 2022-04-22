@@ -13,12 +13,9 @@ on:
         - https://automation-dashboard.staging.saleor.cloud/
         - https://master.staging.saleor.cloud/
         - https://latest.staging.saleor.cloud/
+        - https://qa.staging.saleor.cloud/
   schedule:
-    - cron: '00 3 * * 1-5'
-
-  pull_request: #To delete after tests
-    types: [reopened, synchronize, labeled, opened]
-    branches: ["*"]
+    - cron: '00 2 * * 1-5'
 
 jobs:
 
@@ -61,7 +58,7 @@ jobs:
 
   run-tests-in-parallel:
     needs: revert-automation-env-to-snap
-    if: always()
+    if: always() #Wait for revert-automation-env-to-snap, bot run always, even if skipped
     runs-on: ubuntu-latest
     container: cypress/browsers:node14.16.0-chrome89-ff86
     strategy:
