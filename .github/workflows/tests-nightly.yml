@@ -26,8 +26,6 @@ jobs:
     if: github.event.inputs.environment == null
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1
 
       - name: Setup Node
         uses: actions/setup-node@v1
@@ -36,7 +34,19 @@ jobs:
 
       - name: Install saleor cli
         id: install-saleor-cli
-        run: npm i saleor-cli
+        run: npm i -g saleor-cli
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules-cli
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-qa-${{ env.cache-name }}-
+            ${{ runner.os }}-qa-
+            ${{ runner.os }}-
 
       - name: Write config file
         id: write-config-file
