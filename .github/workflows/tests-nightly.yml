@@ -29,11 +29,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: Check npm version
-        run: echo "npm -v"
-
-      - name: Check node version
-        run: echo "node -v"
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
 
       - name: Install saleor cli
         id: install-saleor-cli
