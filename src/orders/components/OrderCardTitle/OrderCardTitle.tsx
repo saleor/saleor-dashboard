@@ -43,7 +43,7 @@ const useStyles = makeStyles(
 const messages = defineMessages({
   canceled: {
     defaultMessage: "Canceled ({quantity})",
-    description: "cancelled fulfillment, section header"
+    description: "canceled fulfillment, section header"
   },
   fulfilled: {
     defaultMessage: "Fulfilled ({quantity})",
