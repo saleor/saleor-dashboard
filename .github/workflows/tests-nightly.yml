@@ -23,7 +23,7 @@ on:
 jobs:
 
   revert-automation-env-to-snap:
-    if: github.event.inputs.environment == 'https://automation-dashboard.staging.saleor.cloud/'
+    if: github.event.inputs.environment == null
     runs-on: ubuntu-latest
     steps:
       - name: Install saleor cli
@@ -49,6 +49,8 @@ jobs:
         # run copies of the current job in parallel
         containers: [1, 2, 3, 4]
     steps:
+      - name: Echo url
+        run: echo "${{github.event.inputs.environment}}"
       - name: Checkout
         uses: actions/checkout@v1
 
@@ -67,9 +69,9 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         env:
-          API_URI: ${{ steps.api_uri.outputs.ENV_URI }}graphql/
+          API_URI: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
-          CYPRESS_baseUrl: ${{ steps.api_uri.outputs.ENV_URI }}dashboard/
+          CYPRESS_baseUrl: ${{ steps.get-env-uri.outputs.ENV_URI }}dashboard/
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
