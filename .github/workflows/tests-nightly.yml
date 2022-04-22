@@ -23,7 +23,8 @@ on:
 jobs:
 
   revert-automation-env-to-snap:
-    if: github.event.inputs.environment == null
+    # if: github.event.inputs.environment == null
+    if: github.event.inputs.environment == 'https://automation-dashboard.staging.saleor.cloud/'
     runs-on: ubuntu-latest
     steps:
 
@@ -61,6 +62,7 @@ jobs:
 
   run-tests-in-parallel:
     needs: revert-automation-env-to-snap
+    if: always()
     runs-on: ubuntu-latest
     container: cypress/browsers:node14.16.0-chrome89-ff86
     strategy:
