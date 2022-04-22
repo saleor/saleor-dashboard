@@ -23,7 +23,7 @@ on:
 jobs:
 
   revert-automation-env-to-snap:
-    if: github.event.inputs.environment === https://automation-dashboard.staging.saleor.cloud/
+    if: github.event.inputs.environment == https://automation-dashboard.staging.saleor.cloud/
     runs-on: ubuntu-latest
     steps:
       - name: Install saleor cli
