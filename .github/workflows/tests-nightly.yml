@@ -42,10 +42,11 @@ jobs:
         id: write-config-file
         env:
           ACCESS_TOKEN: ${{ secrets.CLOUD_ACCESS_TOKEN }}
-          SALEOR_CLI_ENV: staging
         run: echo '{"token":"Token ${{ secrets.CLOUD_ACCESS_TOKEN }},"telemetry":"false","organization_slug":"qa","organization_name":"QA","environment_id":"lHECN87U"}' > ~/.config/saleor.json
       
       - name: revert snapshot
+        env:
+          SALEOR_CLI_ENV: staging
         run: npx saleor backup restore I7rNqplv
 
   run-tests-in-parallel:
