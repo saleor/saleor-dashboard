@@ -1,5 +1,5 @@
 import { TextField } from "@material-ui/core";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { KeyValue } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -11,7 +11,7 @@ const useStyles = makeStyles(
   theme => ({
     metadataField: {
       display: "flex",
-      alignItems: "space-between",
+      alignItems: "center",
       gap: theme.spacing(0.5)
     },
     fieldsWrapper: {
@@ -26,6 +26,10 @@ const useStyles = makeStyles(
     },
     addButton: {
       alignSelf: "flex-end"
+    },
+    deleteButton: {
+      marginLeft: "0.25rem",
+      marginRight: "-0.75rem"
     }
   }),
   { name: "FilterKeyValueField" }
@@ -103,6 +107,23 @@ export const FilterKeyValueField = <K extends string = string>({
                 })
               }
             />
+            <IconButton
+              variant="secondary"
+              className={classes.deleteButton}
+              onClick={() => {
+                onFilterPropertyChange({
+                  payload: {
+                    name: filter.name,
+                    update: {
+                      value: values.filter((_, i) => i !== index)
+                    }
+                  },
+                  type: "set-property"
+                });
+              }}
+            >
+              <DeleteIcon />
+            </IconButton>
           </div>
         ))}
       </div>
