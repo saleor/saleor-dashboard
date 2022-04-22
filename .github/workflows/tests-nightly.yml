@@ -42,7 +42,7 @@ jobs:
         id: write-config-file
         env:
           ACCESS_TOKEN: ${{ secrets.CLOUD_ACCESS_TOKEN }}
-        run: echo '{"token":"Token ${{ secrets.CLOUD_ACCESS_TOKEN }},"telemetry":"false","organization_slug":"qa","organization_name":"QA","environment_id":"lHECN87U"}' > ~/.config/saleor.json
+        run: echo '{"token":"Token ${{ secrets.CLOUD_ACCESS_TOKEN }}","telemetry":"false","organization_slug":"qa","organization_name":"QA","environment_id":"lHECN87U"}' > ~/.config/saleor.json
       
       - name: revert snapshot
         env:
