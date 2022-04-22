@@ -143,11 +143,10 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
       });
     }
   };
-  const handleBack = () => navigate(appsListUrl());
   const customApp = data?.app;
 
   if (customApp === null) {
-    return <NotFoundPage onBack={handleBack} />;
+    return <NotFoundPage backHref={appsListUrl()} />;
   }
 
   const onTokenCreate = (data: AppTokenCreateMutation) => {
@@ -226,7 +225,6 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
         errors={updateAppOpts.data?.appUpdate?.errors || []}
         token={token}
         onApiUriClick={() => open(API_URI, "blank")}
-        onBack={handleBack}
         onSubmit={handleSubmit}
         onTokenClose={onTokenClose}
         onTokenCreate={() => openModal("create-token")}

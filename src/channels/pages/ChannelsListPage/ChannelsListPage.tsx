@@ -15,6 +15,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableRowLink from "@saleor/components/TableRowLink";
+import { configurationMenuUrl } from "@saleor/configuration";
 import { ChannelDetailsFragment, RefreshLimitsQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
@@ -29,7 +30,6 @@ export interface ChannelsListPageProps {
   channelsList: ChannelDetailsFragment[] | undefined;
   limits: RefreshLimitsQuery["shop"]["limits"];
   navigateToChannelCreate: () => void;
-  onBack: () => void;
   onRemove: (id: string) => void;
 }
 
@@ -39,7 +39,6 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
   channelsList,
   limits,
   navigateToChannelCreate,
-  onBack,
   onRemove
 }) => {
   const intl = useIntl();
@@ -49,7 +48,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink href={configurationMenuUrl}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
       <PageHeader

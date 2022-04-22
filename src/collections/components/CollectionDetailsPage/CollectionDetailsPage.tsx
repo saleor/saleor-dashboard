@@ -1,4 +1,5 @@
 import { ChannelCollectionData } from "@saleor/channels/utils";
+import { collectionListUrl } from "@saleor/collections/urls";
 import { Backlink } from "@saleor/components/Backlink";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
@@ -15,6 +16,7 @@ import {
   PermissionEnum
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
@@ -38,7 +40,6 @@ export interface CollectionDetailsPageProps
   errors: CollectionErrorFragment[];
   hasChannelChanged: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
-  onBack: () => void;
   onCollectionRemove: () => void;
   onImageDelete: () => void;
   onImageUpload: (file: File) => void;
@@ -57,7 +58,6 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
   errors,
   hasChannelChanged,
   saveButtonBarState,
-  onBack,
   onCollectionRemove,
   onImageDelete,
   onImageUpload,
@@ -67,6 +67,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
   ...collectionProductsProps
 }: CollectionDetailsPageProps) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   return (
     <CollectionUpdateForm
@@ -79,7 +80,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
     >
       {({ change, data, handlers, submit, isSaveDisabled }) => (
         <Container>
-          <Backlink onClick={onBack}>
+          <Backlink href={collectionListUrl()}>
             {intl.formatMessage(sectionNames.collections)}
           </Backlink>
           <PageHeader title={collection?.name} />
@@ -154,7 +155,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
           <Savebar
             state={saveButtonBarState}
             disabled={isSaveDisabled}
-            onCancel={onBack}
+            onCancel={() => navigate(collectionListUrl())}
             onDelete={onCollectionRemove}
             onSubmit={submit}
           />

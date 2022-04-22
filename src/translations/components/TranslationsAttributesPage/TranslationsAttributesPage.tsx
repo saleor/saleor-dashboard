@@ -11,6 +11,10 @@ import {
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
+import {
+  languageEntitiesUrl,
+  TranslatableEntities
+} from "@saleor/translations/urls";
 import { ListSettings } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -45,7 +49,6 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
   languageCode,
   data,
   saveButtonState,
-  onBack,
   onDiscard,
   onEdit,
   onLanguageChange,
@@ -62,7 +65,11 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink
+        href={languageEntitiesUrl(languageCode, {
+          tab: TranslatableEntities.attributes
+        })}
+      >
         {intl.formatMessage(sectionNames.translations)}
       </Backlink>
       <PageHeader

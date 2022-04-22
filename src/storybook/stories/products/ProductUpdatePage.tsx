@@ -57,7 +57,6 @@ const props: ProductUpdatePageProps = {
   media: product.media,
   limits,
   onAssignReferencesClick: () => undefined,
-  onBack: () => undefined,
   onCloseDialog: () => undefined,
   onDelete: () => undefined,
   onImageDelete: () => undefined,

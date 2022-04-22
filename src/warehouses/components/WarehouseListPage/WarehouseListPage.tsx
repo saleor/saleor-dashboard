@@ -5,6 +5,7 @@ import Container from "@saleor/components/Container";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
+import { configurationMenuUrl } from "@saleor/configuration";
 import {
   RefreshLimitsQuery,
   WarehouseWithShippingFragment
@@ -33,7 +34,6 @@ export interface WarehouseListPageProps
     TabPageProps {
   limits: RefreshLimitsQuery["shop"]["limits"];
   warehouses: WarehouseWithShippingFragment[];
-  onBack: () => void;
   onRemove: (id: string) => void;
 }
 
@@ -47,7 +47,6 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
   settings,
   tabs,
   onAll,
-  onBack,
   onNextPage,
   onPreviousPage,
   onRemove,
@@ -64,7 +63,7 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink href={configurationMenuUrl}>
         <FormattedMessage {...sectionNames.configuration} />
       </Backlink>
       <PageHeader

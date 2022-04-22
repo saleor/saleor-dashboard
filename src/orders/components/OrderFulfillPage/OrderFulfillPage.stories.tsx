@@ -10,7 +10,6 @@ import OrderFulfillPage, { OrderFulfillPageProps } from "./OrderFulfillPage";
 const props: OrderFulfillPageProps = {
   errors: [],
   loading: false,
-  onBack: () => undefined,
   onSubmit: () => undefined,
   order: orderToFulfill,
   saveButtonBar: "default",

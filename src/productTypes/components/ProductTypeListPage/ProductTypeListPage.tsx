@@ -4,6 +4,7 @@ import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
+import { configurationMenuUrl } from "@saleor/configuration";
 import { ProductTypeFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import {
@@ -34,7 +35,6 @@ export interface ProductTypeListPageProps
     SortPage<ProductTypeListUrlSortField>,
     TabPageProps {
   productTypes: ProductTypeFragment[];
-  onBack: () => void;
 }
 
 const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
@@ -42,7 +42,6 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
   filterOpts,
   initialSearch,
   onAll,
-  onBack,
   onFilterChange,
   onSearchChange,
   onTabChange,
@@ -57,7 +56,7 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink href={configurationMenuUrl}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.productTypes)}>

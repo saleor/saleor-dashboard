@@ -12,6 +12,7 @@ import {
   createChannelsChangeHandler,
   createDiscountTypeChangeHandler
 } from "@saleor/discounts/handlers";
+import { voucherListUrl } from "@saleor/discounts/urls";
 import { VOUCHER_CREATE_FORM_ID } from "@saleor/discounts/views/VoucherCreate/types";
 import {
   DiscountErrorFragment,
@@ -19,6 +20,7 @@ import {
   VoucherTypeEnum
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
@@ -46,7 +48,6 @@ export interface VoucherCreatePageProps {
   disabled: boolean;
   errors: DiscountErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  onBack: () => void;
   onChannelsChange: (data: ChannelVoucherData[]) => void;
   openChannelsModal: () => void;
   onSubmit: (data: FormData) => SubmitPromise;
@@ -58,13 +59,14 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   disabled,
   errors,
   saveButtonBarState,
-  onBack,
   onChannelsChange,
   onSubmit,
   hasChannelChanged,
   openChannelsModal
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
+
   const {
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
@@ -124,7 +126,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
 
         return (
           <Container>
-            <Backlink onClick={onBack}>
+            <Backlink href={voucherListUrl()}>
               {intl.formatMessage(sectionNames.vouchers)}
             </Backlink>
             <PageHeader
@@ -205,7 +207,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
             </Grid>
             <Savebar
               disabled={isSaveDisabled}
-              onCancel={onBack}
+              onCancel={() => navigate(voucherListUrl())}
               onSubmit={submit}
               state={saveButtonBarState}
             />

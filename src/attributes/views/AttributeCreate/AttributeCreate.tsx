@@ -33,7 +33,6 @@ import {
   attributeAddUrl,
   AttributeAddUrlDialog,
   AttributeAddUrlQueryParams,
-  attributeListUrl,
   attributeUrl
 } from "../../urls";
 import {
@@ -178,7 +177,6 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
       attribute={null}
       disabled={attributeCreateOpts.loading}
       errors={attributeCreateOpts.data?.attributeCreate.errors || []}
-      onBack={() => navigate(attributeListUrl())}
       onDelete={undefined}
       onSubmit={handleSubmit}
       onValueAdd={() => openModal("add-value")}

@@ -18,7 +18,6 @@ const props: WarehouseDetailsPageProps = {
   })),
   disabled: false,
   errors: [],
-  onBack: () => undefined,
   onDelete: () => undefined,
   onShippingZoneClick: () => undefined,
   onSubmit: () => undefined,

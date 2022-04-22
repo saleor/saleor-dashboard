@@ -1,4 +1,5 @@
 import { ButtonBase, Card, CardContent, Typography } from "@material-ui/core";
+import { appsListPath } from "@saleor/apps/urls";
 import { Backlink } from "@saleor/components/Backlink";
 import { Button } from "@saleor/components/Button";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -27,7 +28,6 @@ export interface AppDetailsPageProps {
   navigateToAppSettings: () => void;
   onAppActivateOpen: () => void;
   onAppDeactivateOpen: () => void;
-  onBack: () => void;
 }
 
 export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
@@ -36,15 +36,14 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
   navigateToApp,
   navigateToAppSettings,
   onAppActivateOpen,
-  onAppDeactivateOpen,
-  onBack
+  onAppDeactivateOpen
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink href={appsListPath}>
         {intl.formatMessage(sectionNames.apps)}
       </Backlink>
       <PageHeader

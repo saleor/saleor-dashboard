@@ -1,6 +1,5 @@
 import { getChannelsCurrencyChoices } from "@saleor/channels/utils";
 import { useShopLimitsQuery } from "@saleor/components/Shop/queries";
-import { configurationMenuUrl } from "@saleor/configuration";
 import {
   ChannelDeleteMutation,
   useChannelDeleteMutation,
@@ -98,7 +97,6 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
         channelsList={data?.channels}
         limits={limitOpts.data?.shop.limits}
         navigateToChannelCreate={navigateToChannelCreate}
-        onBack={() => navigate(configurationMenuUrl)}
         onRemove={id =>
           openModal("remove", {
             id

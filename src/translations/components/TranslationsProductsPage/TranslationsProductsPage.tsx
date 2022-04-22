@@ -10,6 +10,10 @@ import {
   TranslationInputFieldName,
   TranslationsEntitiesPageProps
 } from "@saleor/translations/types";
+import {
+  languageEntitiesUrl,
+  TranslatableEntities
+} from "@saleor/translations/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -31,7 +35,6 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
   languages,
   data,
   saveButtonState,
-  onBack,
   onDiscard,
   onEdit,
   onLanguageChange,
@@ -42,7 +45,11 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink
+        href={languageEntitiesUrl(languageCode, {
+          tab: TranslatableEntities.products
+        })}
+      >
         {intl.formatMessage(sectionNames.translations)}
       </Backlink>
       <PageHeader

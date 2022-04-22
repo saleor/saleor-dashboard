@@ -14,11 +14,7 @@ import { useIntl } from "react-intl";
 import { extractMutationErrors, maybe } from "../../misc";
 import TranslationsCollectionsPage from "../components/TranslationsCollectionsPage";
 import { TranslationField, TranslationInputFieldName } from "../types";
-import {
-  languageEntitiesUrl,
-  languageEntityUrl,
-  TranslatableEntities
-} from "../urls";
+import { languageEntityUrl, TranslatableEntities } from "../urls";
 import { getParsedTranslationInputData } from "../utils";
 
 export interface TranslationsCollectionsQueryParams {
@@ -102,13 +98,6 @@ const TranslationsCollections: React.FC<TranslationsCollectionsProps> = ({
       saveButtonState={updateTranslationsOpts.status}
       onEdit={onEdit}
       onDiscard={onDiscard}
-      onBack={() =>
-        navigate(
-          languageEntitiesUrl(languageCode, {
-            tab: TranslatableEntities.collections
-          })
-        )
-      }
       onLanguageChange={lang =>
         navigate(languageEntityUrl(lang, TranslatableEntities.collections, id))
       }

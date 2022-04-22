@@ -328,7 +328,6 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
           })
         }
         activeTab={activeTab}
-        onBack={() => navigate(saleListUrl())}
         onTabClick={changeTab}
         onSubmit={handleSubmit}
         onRemove={() => openModal("remove")}

@@ -1,3 +1,4 @@
+import { appsListUrl } from "@saleor/apps/urls";
 import AccountPermissions from "@saleor/components/AccountPermissions";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
@@ -12,6 +13,7 @@ import {
   ShopInfoQuery
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import {
   Backlink,
@@ -45,7 +47,6 @@ export interface CustomAppDetailsPageProps {
   app: AppUpdateMutation["appUpdate"]["app"];
   token: string;
   onApiUriClick: () => void;
-  onBack: () => void;
   onTokenDelete: (id: string) => void;
   onTokenClose: () => void;
   onTokenCreate: () => void;
@@ -68,7 +69,6 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
     app,
     token,
     onApiUriClick,
-    onBack,
     onTokenClose,
     onTokenCreate,
     onTokenDelete,
@@ -80,6 +80,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
   } = props;
   const intl = useIntl();
   const classes = useStyles({});
+  const navigate = useNavigator();
 
   const webhooks = app?.webhooks;
 
@@ -107,7 +108,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
     >
       {({ data, change, submit, isSaveDisabled }) => (
         <Container>
-          <Backlink onClick={onBack}>
+          <Backlink href={appsListUrl()}>
             {intl.formatMessage(sectionNames.apps)}
           </Backlink>
           <PageHeader title={app?.name}>
@@ -186,7 +187,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
           <Savebar
             disabled={isSaveDisabled}
             state={saveButtonBarState}
-            onCancel={onBack}
+            onCancel={() => navigate(appsListUrl())}
             onSubmit={submit}
           />
         </Container>

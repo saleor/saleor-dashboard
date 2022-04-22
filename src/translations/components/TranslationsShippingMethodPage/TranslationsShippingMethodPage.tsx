@@ -12,6 +12,10 @@ import {
   TranslationInputFieldName,
   TranslationsEntitiesPageProps
 } from "@saleor/translations/types";
+import {
+  languageEntitiesUrl,
+  TranslatableEntities
+} from "@saleor/translations/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -29,7 +33,6 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
   languages,
   data,
   saveButtonState,
-  onBack,
   onDiscard,
   onEdit,
   onLanguageChange,
@@ -39,7 +42,11 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink
+        href={languageEntitiesUrl(languageCode, {
+          tab: TranslatableEntities.shippingMethods
+        })}
+      >
         {intl.formatMessage(sectionNames.translations)}
       </Backlink>
       <PageHeader

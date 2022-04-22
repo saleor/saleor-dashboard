@@ -12,7 +12,6 @@ import Decorator from "../../Decorator";
 const props: PluginsDetailsPageProps = {
   disabled: false,
   errors: [],
-  onBack: () => undefined,
   onClear: () => undefined,
   onEdit: () => undefined,
   onSubmit: () => undefined,

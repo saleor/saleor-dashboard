@@ -19,7 +19,6 @@ import ProductTypeCreatePage, {
 import {
   productTypeAddUrl,
   ProductTypeAddUrlQueryParams,
-  productTypeListUrl,
   productTypeUrl
 } from "../urls";
 
@@ -113,7 +112,6 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({
         taxTypes={data?.taxTypes || []}
         kind={params.kind}
         onChangeKind={handleChangeKind}
-        onBack={() => navigate(productTypeListUrl())}
         onSubmit={handleSubmit}
       />
     </>

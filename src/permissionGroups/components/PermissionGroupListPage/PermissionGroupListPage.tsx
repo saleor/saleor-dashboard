@@ -3,6 +3,7 @@ import { Backlink } from "@saleor/components/Backlink";
 import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
+import { configurationMenuUrl } from "@saleor/configuration";
 import { PermissionGroupFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import React from "react";
@@ -19,19 +20,15 @@ export interface PermissionGroupListPageProps
   extends PageListProps,
     SortPage<PermissionGroupListUrlSortField> {
   permissionGroups: PermissionGroupFragment[];
-  onBack: () => void;
   onDelete: (id: string) => void;
 }
 
-const PermissionGroupListPage: React.FC<PermissionGroupListPageProps> = ({
-  onBack,
-  ...listProps
-}) => {
+const PermissionGroupListPage: React.FC<PermissionGroupListPageProps> = listProps => {
   const intl = useIntl();
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink href={configurationMenuUrl}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.permissionGroups)}>

@@ -11,6 +11,7 @@ import {
 import { ChannelData } from "@saleor/channels/utils";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@saleor/components/Attributes";
+import { Backlink } from "@saleor/components/Backlink";
 import CardMenu from "@saleor/components/CardMenu";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
@@ -37,12 +38,14 @@ import {
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { FormsetData } from "@saleor/hooks/useFormset";
+import useNavigator from "@saleor/hooks/useNavigator";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import ProductExternalMediaDialog from "@saleor/products/components/ProductExternalMediaDialog";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
+import { productListUrl } from "@saleor/products/urls";
 import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
 import {
   ChannelProps,
@@ -119,7 +122,6 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   onSubmit: (data: ProductUpdatePageSubmitData) => SubmitPromise;
   openChannelsModal: () => void;
   onAttributeSelectBlur: () => void;
-  onBack?();
   onDelete();
   onImageEdit?(id: string);
   onImageReorder?(event: { oldIndex: number; newIndex: number });
@@ -167,7 +169,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   taxTypes,
   referencePages = [],
   referenceProducts = [],
-  onBack,
   onDelete,
   allChannelsCount,
   currentChannels,
@@ -208,6 +209,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onAttributeSelectBlur
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
     product?.category?.name || ""
@@ -290,7 +292,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       {({ change, data, formErrors, handlers, submit, isSaveDisabled }) => (
         <>
           <Container>
-            <Backlink onClick={onBack}>
+            <Backlink href={productListUrl()}>
               {intl.formatMessage(sectionNames.products)}
             </Backlink>
             <PageHeader title={header}>
@@ -498,7 +500,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
               </div>
             </Grid>
             <Savebar
-              onCancel={onBack}
+              onCancel={() => navigate(productListUrl())}
               onDelete={onDelete}
               onSubmit={submit}
               state={saveButtonBarState}

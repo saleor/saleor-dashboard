@@ -3,13 +3,11 @@ import {
   useFetchTaxesMutation,
   useUpdateTaxSettingsMutation
 } from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { configurationMenuUrl } from "../../configuration";
 import { extractMutationErrors, maybe } from "../../misc";
 import CountryListPage, {
   TaxesConfigurationFormData
@@ -17,7 +15,6 @@ import CountryListPage, {
 
 export const CountryList: React.FC = () => {
   const intl = useIntl();
-  const navigate = useNavigator();
   const notify = useNotifier();
 
   const { data, loading } = useCountryListQuery({
@@ -74,7 +71,6 @@ export const CountryList: React.FC = () => {
       disabled={
         loading || fetchTaxesOpts.loading || updateTaxSettingsOpts.loading
       }
-      onBack={() => navigate(configurationMenuUrl)}
       onSubmit={handleSubmit}
       onTaxFetch={fetchTaxes}
       saveButtonBarState={updateTaxSettingsOpts.status}

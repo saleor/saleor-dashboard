@@ -10,6 +10,7 @@ import {
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { renderCollection } from "@saleor/misc";
+import { orderUrl } from "@saleor/orders/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -37,7 +38,6 @@ export interface OrderRefundPageProps {
   defaultType?: OrderRefundType;
   disabled: boolean;
   errors: OrderErrorFragment[];
-  onBack: () => void;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }
 
@@ -47,7 +47,6 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
     defaultType = OrderRefundType.PRODUCTS,
     disabled,
     errors = [],
-    onBack,
     onSubmit
   } = props;
 
@@ -74,7 +73,7 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
 
         return (
           <Container>
-            <Backlink onClick={onBack}>
+            <Backlink href={orderUrl(order?.id)}>
               {order?.number
                 ? intl.formatMessage(
                     {

@@ -3,6 +3,7 @@ import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
+import { configurationMenuUrl } from "@saleor/configuration";
 import { PluginBaseFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { PluginListUrlSortField } from "@saleor/plugins/urls";
@@ -29,7 +30,6 @@ export interface PluginsListPageProps
     SortPage<PluginListUrlSortField>,
     TabPageProps {
   plugins: PluginBaseFragment[];
-  onBack: () => void;
 }
 
 const PluginsListPage: React.FC<PluginsListPageProps> = ({
@@ -38,7 +38,6 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
   filterOpts,
   tabs,
   onAll,
-  onBack,
   onSearchChange,
   onFilterChange,
   onTabChange,
@@ -52,7 +51,7 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink href={configurationMenuUrl}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.plugins)} />

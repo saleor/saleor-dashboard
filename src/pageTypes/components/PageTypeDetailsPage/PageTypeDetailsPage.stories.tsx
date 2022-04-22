@@ -15,7 +15,6 @@ const props: Omit<PageTypeDetailsPageProps, "classes"> = {
   onAttributeClick: () => undefined,
   onAttributeReorder: () => undefined,
   onAttributeUnassign: () => undefined,
-  onBack: () => undefined,
   onDelete: () => undefined,
   onSubmit: () => undefined,
   pageTitle: pageType.name,

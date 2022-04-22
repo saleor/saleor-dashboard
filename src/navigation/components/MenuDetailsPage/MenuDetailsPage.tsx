@@ -7,8 +7,10 @@ import Grid from "@saleor/components/Grid";
 import Savebar from "@saleor/components/Savebar";
 import { MenuDetailsFragment, MenuErrorFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { menuListUrl } from "@saleor/navigation/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -30,7 +32,6 @@ export interface MenuDetailsPageProps {
   disabled: boolean;
   errors: MenuErrorFragment[];
   menu: MenuDetailsFragment;
-  onBack: () => void;
   onDelete: () => void;
   onItemAdd: () => void;
   onItemClick: (id: string, type: MenuItemType) => void;
@@ -43,7 +44,6 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   errors,
   menu,
   saveButtonState,
-  onBack,
   onDelete,
   onItemAdd,
   onItemClick,
@@ -51,6 +51,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   onSubmit
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   const initialForm: MenuDetailsFormData = {
     name: menu?.name ?? ""
@@ -84,7 +85,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
     <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
       {({ change, data, hasChanged, submit }) => (
         <Container>
-          <Backlink onClick={onBack}>
+          <Backlink href={menuListUrl()}>
             {intl.formatMessage(sectionNames.navigation)}
           </Backlink>
           <Grid variant="inverted">
@@ -134,7 +135,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
           </Grid>
           <Savebar
             disabled={disabled || (!hasChanged && treeOperations.length === 0)}
-            onCancel={onBack}
+            onCancel={() => navigate(menuListUrl())}
             onDelete={onDelete}
             onSubmit={submit}
             state={saveButtonState}

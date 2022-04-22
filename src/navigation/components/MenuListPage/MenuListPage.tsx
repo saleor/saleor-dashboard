@@ -2,6 +2,7 @@ import { Backlink } from "@saleor/components/Backlink";
 import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
+import { configurationMenuUrl } from "@saleor/configuration";
 import { MenuFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { menuListUrl, MenuListUrlSortField } from "@saleor/navigation/urls";
@@ -16,14 +17,10 @@ export interface MenuListPageProps
     ListActions,
     SortPage<MenuListUrlSortField> {
   menus: MenuFragment[];
-  onBack: () => void;
   onDelete: (id: string) => void;
 }
 
-const MenuListPage: React.FC<MenuListPageProps> = ({
-  onBack,
-  ...listProps
-}) => {
+const MenuListPage: React.FC<MenuListPageProps> = ({ ...listProps }) => {
   const intl = useIntl();
   const addUrl = menuListUrl({
     action: "add"
@@ -31,7 +28,7 @@ const MenuListPage: React.FC<MenuListPageProps> = ({
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink href={configurationMenuUrl}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.navigation)}>

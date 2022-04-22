@@ -2,7 +2,6 @@ import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
-import { configurationMenuUrl } from "@saleor/configuration";
 import { usePluginsQuery } from "@saleor/graphql";
 import { useChannelsSearchWithLoadMore } from "@saleor/hooks/useChannelsSearchWithLoadMore";
 import useListSettings from "@saleor/hooks/useListSettings";
@@ -128,7 +127,6 @@ export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
         sort={getSortParams(params)}
         tabs={getFilterTabs().map(tab => tab.name)}
         onAll={resetFilters}
-        onBack={() => navigate(configurationMenuUrl)}
         onFilterChange={changeFilters}
         onSearchChange={handleSearchChange}
         onNextPage={loadNextPage}

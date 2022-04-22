@@ -1,4 +1,3 @@
-import { customAppUrl } from "@saleor/apps/urls";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import {
   useAppQuery,
@@ -38,8 +37,6 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = ({ id }) => {
     }
   });
 
-  const handleBack = () => navigate(customAppUrl(id));
-
   const handleSubmit = (data: FormData) =>
     extractMutationErrors(
       webhookCreate({
@@ -71,9 +68,9 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = ({ id }) => {
       />
       <WebhookDetailsPage
         appName={data?.app?.name}
+        appId={id}
         disabled={false}
         errors={webhookCreateOpts.data?.webhookCreate.errors || []}
-        onBack={handleBack}
         onSubmit={handleSubmit}
         saveButtonBarState={webhookCreateOpts.status}
       />

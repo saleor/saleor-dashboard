@@ -1,7 +1,6 @@
 import { DialogContentText } from "@material-ui/core";
 import { useUser } from "@saleor/auth";
 import ActionDialog from "@saleor/components/ActionDialog";
-import { configurationMenuUrl } from "@saleor/configuration";
 import {
   useBulkDeleteShippingZoneMutation,
   useDeleteShippingZoneMutation,
@@ -145,7 +144,6 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
         }
         shippingZones={mapEdgesToItems(data?.shippingZones)}
         pageInfo={pageInfo}
-        onBack={() => navigate(configurationMenuUrl)}
         onUpdateListSettings={updateListSettings}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}

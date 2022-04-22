@@ -17,7 +17,6 @@ const props: Omit<CollectionCreatePageProps, "classes"> = {
   currentChannels: channels,
   disabled: false,
   errors: [],
-  onBack: () => undefined,
   onChannelsChange: () => undefined,
   onSubmit: () => undefined,
   openChannelsModal: () => undefined,

@@ -11,7 +11,6 @@ import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
-import { configurationMenuUrl } from "@saleor/configuration";
 import {
   useAttributeBulkDeleteMutation,
   useAttributeListQuery
@@ -149,7 +148,6 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
         initialSearch={params.query || ""}
         isChecked={isSelected}
         onAll={resetFilters}
-        onBack={() => navigate(configurationMenuUrl)}
         onFilterChange={changeFilters}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}

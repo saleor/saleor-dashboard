@@ -6,6 +6,10 @@ import { LanguageCodeEnum, VoucherTranslationFragment } from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
+import {
+  languageEntitiesUrl,
+  TranslatableEntities
+} from "@saleor/translations/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -27,7 +31,6 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
   languageCode,
   data,
   saveButtonState,
-  onBack,
   onDiscard,
   onEdit,
   onLanguageChange,
@@ -37,7 +40,11 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink
+        href={languageEntitiesUrl(languageCode, {
+          tab: TranslatableEntities.vouchers
+        })}
+      >
         {intl.formatMessage(sectionNames.translations)}
       </Backlink>
       <PageHeader

@@ -28,8 +28,7 @@ const props: TranslationsEntitiesListPageProps = {
     __typename: "LanguageDisplay",
     code: LanguageCodeEnum.EN,
     language: "English"
-  },
-  onBack: () => undefined
+  }
 };
 
 storiesOf("Views / Translations / Entity list", module)

@@ -1,4 +1,5 @@
 import { Typography } from "@material-ui/core";
+import { appsListPath } from "@saleor/apps/urls";
 import { Backlink } from "@saleor/components/Backlink";
 import { Button } from "@saleor/components/Button";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -18,16 +19,14 @@ import useSettingsBreadcrumbs from "./useSettingsBreadcrumbs";
 export interface AppPageProps {
   data: AppQuery["app"];
   url: string;
-  navigateToAbout: () => void;
-  onBack: () => void;
   onError: () => void;
+  aboutHref: string;
 }
 
 export const AppPage: React.FC<AppPageProps> = ({
   data,
   url,
-  navigateToAbout,
-  onBack,
+  aboutHref,
   onError
 }) => {
   const intl = useIntl();
@@ -36,7 +35,7 @@ export const AppPage: React.FC<AppPageProps> = ({
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink href={appsListPath}>
         {intl.formatMessage(sectionNames.apps)}
       </Backlink>
       <Grid variant="uniform">
@@ -64,7 +63,7 @@ export const AppPage: React.FC<AppPageProps> = ({
           </div>
         </div>
         <div className={classes.appSettingsHeader}>
-          <Button onClick={navigateToAbout} variant="primary">
+          <Button href={aboutHref} variant="primary">
             <FormattedMessage defaultMessage="About" description="button" />
           </Button>
           <Button

@@ -6,6 +6,7 @@ import {
 import { Backlink } from "@saleor/components/Backlink";
 import { Button } from "@saleor/components/Button";
 import FilterBar from "@saleor/components/FilterBar";
+import { configurationMenuUrl } from "@saleor/configuration";
 import { AttributeFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import React from "react";
@@ -34,13 +35,11 @@ export interface AttributeListPageProps
     SortPage<AttributeListUrlSortField>,
     TabPageProps {
   attributes: AttributeFragment[];
-  onBack: () => void;
 }
 
 const AttributeListPage: React.FC<AttributeListPageProps> = ({
   filterOpts,
   initialSearch,
-  onBack,
   onFilterChange,
   onSearchChange,
   currentTab,
@@ -57,7 +56,7 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink href={configurationMenuUrl}>
         <FormattedMessage {...sectionNames.configuration} />
       </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.attributes)}>

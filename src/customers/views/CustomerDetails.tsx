@@ -74,10 +74,8 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
-  const handleBack = () => navigate(customerListUrl());
-
   if (user === null) {
-    return <NotFoundPage onBack={handleBack} />;
+    return <NotFoundPage backHref={customerListUrl()} />;
   }
 
   const updateData = async (data: CustomerDetailsPageFormData) =>
@@ -116,7 +114,6 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
         errors={updateCustomerOpts.data?.customerUpdate.errors || []}
         saveButtonBar={updateCustomerOpts.status}
         onAddressManageClick={() => navigate(customerAddressesUrl(id))}
-        onBack={handleBack}
         onSubmit={handleSubmit}
         onDelete={() =>
           navigate(

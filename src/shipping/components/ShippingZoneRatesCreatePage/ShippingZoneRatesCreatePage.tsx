@@ -17,6 +17,7 @@ import {
 } from "@saleor/graphql";
 import useForm, { SubmitPromise } from "@saleor/hooks/useForm";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
 import OrderValue from "@saleor/shipping/components/OrderValue";
@@ -40,7 +41,7 @@ export interface ShippingZoneRatesCreatePageProps extends WithFormId {
   channelErrors: ShippingChannelsErrorFragment[];
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  onBack: () => void;
+  backUrl: string;
   onDelete?: () => void;
   onSubmit: (data: ShippingZoneRateCommonFormData) => SubmitPromise;
   onPostalCodeInclusionChange: (
@@ -60,7 +61,7 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
   disabled,
   errors,
   hasChannelChanged,
-  onBack,
+  backUrl,
   onDelete,
   onSubmit,
   onPostalCodeInclusionChange,
@@ -74,6 +75,8 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
   formId
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
+
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
   const initialForm: ShippingZoneRateCommonFormData = {
     channelListings: shippingChannels,
@@ -135,7 +138,7 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
   return (
     <form onSubmit={handleFormElementSubmit}>
       <Container>
-        <Backlink onClick={onBack}>
+        <Backlink href={backUrl}>
           <FormattedMessage defaultMessage="Shipping" />
         </Backlink>
         <PageHeader
@@ -208,7 +211,7 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
         </Grid>
         <Savebar
           disabled={isSaveDisabled}
-          onCancel={onBack}
+          onCancel={() => navigate(backUrl)}
           onDelete={onDelete}
           onSubmit={handleSubmit}
           state={saveButtonBarState}

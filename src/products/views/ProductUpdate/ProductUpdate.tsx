@@ -585,7 +585,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
         taxTypes={data?.taxTypes}
         variants={product?.variants}
-        onBack={handleBack}
         onDelete={() => openModal("remove")}
         onImageReorder={handleImageReorder}
         onMediaUrlUpload={handleMediaUrlUpload}

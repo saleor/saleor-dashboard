@@ -38,11 +38,7 @@ import OrderDraftCancelDialog from "../../../components/OrderDraftCancelDialog/O
 import OrderDraftPage from "../../../components/OrderDraftPage";
 import OrderProductAddDialog from "../../../components/OrderProductAddDialog";
 import OrderShippingMethodEditDialog from "../../../components/OrderShippingMethodEditDialog";
-import {
-  orderDraftListUrl,
-  OrderUrlDialog,
-  OrderUrlQueryParams
-} from "../../../urls";
+import { OrderUrlDialog, OrderUrlQueryParams } from "../../../urls";
 
 interface OrderDraftDetailsProps {
   id: string;
@@ -215,7 +211,6 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
             onDraftFinalize={() => orderDraftFinalize.mutate({ id })}
             onDraftRemove={() => openModal("cancel")}
             onOrderLineAdd={() => openModal("add-order-line")}
-            onBack={() => navigate(orderDraftListUrl())}
             order={order}
             onProductClick={id => () =>
               navigate(productUrl(encodeURIComponent(id)))}

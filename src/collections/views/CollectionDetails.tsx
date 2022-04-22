@@ -161,8 +161,6 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
   );
   const paginate = useLocalPaginator(setPaginationState);
 
-  const handleBack = () => navigate(collectionListUrl());
-
   const [selectedChannel] = useLocalStorage("collectionListChannel", "");
 
   const { data, loading } = useCollectionDetailsQuery({
@@ -172,7 +170,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
 
   const collection = data?.collection;
   if (collection === null) {
-    return <NotFoundPage onBack={handleBack} />;
+    return <NotFoundPage backHref={collectionListUrl()} />;
   }
   const allChannels = createCollectionChannels(
     availableChannels
@@ -281,7 +279,6 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
       )}
       <CollectionDetailsPage
         onAdd={() => openModal("assign")}
-        onBack={handleBack}
         disabled={loading || updateChannelsOpts.loading}
         collection={data?.collection}
         channelsErrors={

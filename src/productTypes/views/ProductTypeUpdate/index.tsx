@@ -112,7 +112,6 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
-  const handleBack = () => navigate(productTypeListUrl());
   const [
     selectedVariantAttributes,
     setSelectedVariantAttributes
@@ -307,7 +306,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
   };
 
   if (productType === null) {
-    return <NotFoundPage onBack={handleBack} />;
+    return <NotFoundPage backHref={productTypeListUrl()} />;
   }
 
   return (
@@ -343,7 +342,6 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
             })
           )
         }
-        onBack={handleBack}
         onDelete={() =>
           navigate(
             productTypeUrl(id, {

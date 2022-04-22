@@ -29,8 +29,6 @@ export const ChannelCreateView = ({}) => {
   const intl = useIntl();
   const shop = useShop();
 
-  const handleBack = () => navigate(channelsListUrl());
-
   const [createChannel, createChannelOpts] = useChannelCreateMutation({
     onCompleted: ({
       channelCreate: { errors, channel }
@@ -92,7 +90,7 @@ export const ChannelCreateView = ({}) => {
         })}
       />
       <Container>
-        <Backlink onClick={handleBack}>
+        <Backlink href={channelsListUrl()}>
           {intl.formatMessage(sectionNames.channels)}
         </Backlink>
         <PageHeader
@@ -112,7 +110,6 @@ export const ChannelCreateView = ({}) => {
           errors={createChannelOpts?.data?.channelCreate?.errors || []}
           currencyCodes={currencyCodeChoices}
           onSubmit={handleSubmit}
-          onBack={handleBack}
           saveButtonBarState={createChannelOpts.status}
           countries={shop?.countries || []}
         />

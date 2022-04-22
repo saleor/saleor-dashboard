@@ -25,7 +25,9 @@ import {
   SearchProductsQuery,
   WarehouseFragment
 } from "@saleor/graphql";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { productUrl } from "@saleor/products/urls";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -79,6 +81,7 @@ function byAttributeScope(scope: VariantAttributeScope) {
 }
 
 interface ProductVariantPageProps {
+  productId: string;
   assignReferencesAttributeId?: string;
   defaultVariantId?: string;
   defaultWeightUnit: string;
@@ -109,7 +112,6 @@ interface ProductVariantPageProps {
   onVariantReorder: ReorderAction;
   onAttributeSelectBlur: () => void;
   onAdd();
-  onBack();
   onDelete();
   onSubmit(data: ProductVariantUpdateSubmitData);
   onMediaSelect(id: string);
@@ -119,6 +121,7 @@ interface ProductVariantPageProps {
 }
 
 const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
+  productId,
   channels,
   channelErrors,
   defaultVariantId,
@@ -134,7 +137,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   referenceProducts = [],
   attributeValues,
   onAdd,
-  onBack,
   onDelete,
   onMediaSelect,
   onSubmit,
@@ -156,6 +158,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   onAttributeSelectBlur
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   const [isModalOpened, setModalStatus] = React.useState(false);
   const toggleModal = () => setModalStatus(!isModalOpened);
@@ -199,7 +202,9 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   return (
     <>
       <Container>
-        <Backlink onClick={onBack}>{variant?.product?.name}</Backlink>
+        <Backlink href={productUrl(productId)}>
+          {variant?.product?.name}
+        </Backlink>
         <PageHeader title={header}>
           {variant?.product?.defaultVariant?.id !== variant?.id && (
             <ProductVariantSetDefault
@@ -369,7 +374,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                 <Savebar
                   disabled={isSaveDisabled}
                   state={saveButtonBarState}
-                  onCancel={onBack}
+                  onCancel={() => navigate(productUrl(productId))}
                   onDelete={onDelete}
                   onSubmit={submit}
                 />

@@ -27,7 +27,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import TypeDeleteWarningDialog from "../../../components/TypeDeleteWarningDialog/TypeDeleteWarningDialog";
-import { configurationMenuUrl } from "../../../configuration";
 import { maybe } from "../../../misc";
 import ProductTypeListPage from "../../components/ProductTypeListPage";
 import {
@@ -185,7 +184,6 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
         disabled={loading}
         productTypes={productTypesData}
         pageInfo={pageInfo}
-        onBack={() => navigate(configurationMenuUrl)}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onSort={handleSort}

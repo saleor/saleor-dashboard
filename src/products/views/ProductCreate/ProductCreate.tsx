@@ -31,7 +31,6 @@ import {
   productAddUrl,
   ProductCreateUrlDialog,
   ProductCreateUrlQueryParams,
-  productListUrl,
   productUrl
 } from "@saleor/products/urls";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
@@ -182,8 +181,6 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     updateVariantChannelsOpts
   ] = useProductVariantChannelListingUpdateMutation({});
 
-  const handleBack = () => navigate(productListUrl());
-
   const [productCreate, productCreateOpts] = useProductCreateMutation({});
   const [deleteProduct] = useProductDeleteMutation({});
   const [
@@ -331,7 +328,6 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
           description: "page header"
         })}
         productTypes={productTypes}
-        onBack={handleBack}
         onSubmit={handleSubmit}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         saveButtonBarState={productCreateOpts.status}

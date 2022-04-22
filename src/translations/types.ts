@@ -34,7 +34,6 @@ export interface TranslationsEntitiesPageProps {
   languageCode: string;
   languages: LanguageFragment[];
   saveButtonState: ConfirmButtonTransitionState;
-  onBack: () => void;
   onEdit: (field: string) => void;
   onDiscard: () => void;
   onLanguageChange: (lang: string) => void;

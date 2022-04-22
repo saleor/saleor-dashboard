@@ -8,9 +8,9 @@ import CategoryCreatePage, {
 import Decorator from "../../Decorator";
 
 const createProps: CategoryCreatePageProps = {
+  backUrl: "",
   disabled: false,
   errors: [],
-  onBack: () => undefined,
   onSubmit: () => undefined,
   saveButtonBarState: "default"
 };

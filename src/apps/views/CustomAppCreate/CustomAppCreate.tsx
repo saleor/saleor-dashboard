@@ -11,7 +11,7 @@ import { useIntl } from "react-intl";
 import CustomAppCreatePage, {
   CustomAppCreatePageFormData
 } from "../../components/CustomAppCreatePage";
-import { appsListUrl, customAppUrl } from "../../urls";
+import { customAppUrl } from "../../urls";
 import { messages } from "./messages";
 
 interface CustomAppCreateProps {
@@ -35,8 +35,6 @@ export const CustomAppCreate: React.FC<CustomAppCreateProps> = ({
       setToken(data.appCreate.authToken);
     }
   };
-
-  const handleBack = () => navigate(appsListUrl());
 
   const [createApp, createAppOpts] = useAppCreateMutation({
     onCompleted: onSubmit
@@ -62,7 +60,6 @@ export const CustomAppCreate: React.FC<CustomAppCreateProps> = ({
       <CustomAppCreatePage
         disabled={false}
         errors={createAppOpts.data?.appCreate.errors || []}
-        onBack={handleBack}
         onSubmit={handleSubmit}
         permissions={shop?.permissions}
         saveButtonBarState={createAppOpts.status}

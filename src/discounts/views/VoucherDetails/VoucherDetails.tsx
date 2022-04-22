@@ -349,7 +349,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
           })
         }
         activeTab={activeTab}
-        onBack={() => navigate(voucherListUrl())}
         onTabClick={changeTab}
         onSubmit={handleSubmit}
         onRemove={() => openModal("remove")}

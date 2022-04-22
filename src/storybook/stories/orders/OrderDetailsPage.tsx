@@ -20,7 +20,6 @@ const order = orderFixture(placeholderImage);
 
 const props: Omit<OrderDetailsPageProps, "classes"> = {
   disabled: false,
-  onBack: () => undefined,
   onBillingAddressEdit: undefined,
   onFulfillmentApprove: () => undefined,
   onFulfillmentCancel: () => undefined,

@@ -4,7 +4,6 @@ import SaveFilterTabDialog, {
 } from "@saleor/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@saleor/components/Shop/queries";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { configurationMenuUrl } from "@saleor/configuration";
 import {
   useWarehouseDeleteMutation,
   useWarehouseListQuery
@@ -144,7 +143,6 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
         initialSearch={params.query || ""}
         onSearchChange={handleSearchChange}
         onAll={resetFilters}
-        onBack={() => navigate(configurationMenuUrl)}
         onTabChange={handleTabChange}
         onTabDelete={() => openModal("delete-search")}
         onTabSave={() => openModal("save-search")}

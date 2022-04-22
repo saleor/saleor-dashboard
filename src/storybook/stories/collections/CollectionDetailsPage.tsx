@@ -28,7 +28,6 @@ const props: Omit<CollectionDetailsPageProps, "classes"> = {
   disabled: false,
   errors: [],
   hasChannelChanged: false,
-  onBack: () => undefined,
   onChannelsChange: () => undefined,
   onCollectionRemove: () => undefined,
   onImageDelete: () => undefined,

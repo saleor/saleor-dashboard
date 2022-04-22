@@ -41,12 +41,12 @@ const defaultChannels = [
 ];
 
 const props: ShippingZoneRatesCreatePageProps = {
+  backUrl: "",
   formId: Symbol(),
   allChannelsCount: 3,
   channelErrors: [],
   disabled: false,
   errors: [],
-  onBack: () => undefined,
   onChannelsChange: () => undefined,
   onDelete: () => undefined,
   onPostalCodeAssign: () => undefined,

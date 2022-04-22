@@ -218,11 +218,6 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
         errors={updateResult.data?.categoryUpdate.errors || []}
         addCategoryHref={categoryAddUrl(id)}
         addProductHref={productAddUrl()}
-        onBack={() =>
-          navigate(
-            maybe(() => categoryUrl(data.category.parent.id), categoryListUrl())
-          )
-        }
         onDelete={() => openModal("delete")}
         onImageDelete={() =>
           updateCategory({

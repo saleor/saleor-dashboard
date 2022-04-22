@@ -6,8 +6,10 @@ import Grid from "@saleor/components/Grid";
 import Savebar from "@saleor/components/Savebar";
 import { PermissionEnum, PermissionGroupErrorFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { permissionGroupListUrl } from "@saleor/permissionGroups/urls";
 import { getFormErrors } from "@saleor/utils/errors";
 import getPermissionGroupErrorMessage from "@saleor/utils/errors/permissionGroups";
 import React from "react";
@@ -35,19 +37,18 @@ export interface PermissionGroupCreatePageProps {
   errors: PermissionGroupErrorFragment[];
   permissions: PermissionData[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  onBack: () => void;
   onSubmit: (data: PermissionGroupCreateFormData) => SubmitPromise;
 }
 
 const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
   disabled,
   permissions,
-  onBack,
   onSubmit,
   saveButtonBarState,
   errors
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   const formErrors = getFormErrors(["addPermissions"], errors || []);
   const permissionsError = getPermissionGroupErrorMessage(
@@ -64,7 +65,7 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
     >
       {({ data, change, submit, isSaveDisabled }) => (
         <Container>
-          <Backlink onClick={onBack}>
+          <Backlink href={permissionGroupListUrl()}>
             {intl.formatMessage(sectionNames.permissionGroups)}
           </Backlink>
           <Grid>
@@ -98,7 +99,7 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
           </Grid>
           <div>
             <Savebar
-              onCancel={onBack}
+              onCancel={() => navigate(permissionGroupListUrl())}
               onSubmit={submit}
               state={saveButtonBarState}
               disabled={isSaveDisabled}

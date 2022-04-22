@@ -14,11 +14,7 @@ import { useIntl } from "react-intl";
 
 import TranslationsSalesPage from "../components/TranslationsSalesPage";
 import { TranslationField, TranslationInputFieldName } from "../types";
-import {
-  languageEntitiesUrl,
-  languageEntityUrl,
-  TranslatableEntities
-} from "../urls";
+import { languageEntityUrl, TranslatableEntities } from "../urls";
 import { getParsedTranslationInputData } from "../utils";
 
 export interface TranslationsSalesQueryParams {
@@ -99,13 +95,6 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({
       languages={shop?.languages || []}
       languageCode={languageCode}
       saveButtonState={updateTranslationsOpts.status}
-      onBack={() =>
-        navigate(
-          languageEntitiesUrl(languageCode, {
-            tab: TranslatableEntities.sales
-          })
-        )
-      }
       onEdit={onEdit}
       onDiscard={onDiscard}
       onSubmit={handleSubmit}

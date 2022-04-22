@@ -1,4 +1,5 @@
 import { ChannelCollectionData } from "@saleor/channels/utils";
+import { collectionListUrl } from "@saleor/collections/urls";
 import { Backlink } from "@saleor/components/Backlink";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
@@ -14,6 +15,7 @@ import {
   PermissionEnum
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
@@ -30,7 +32,6 @@ export interface CollectionCreatePageProps {
   disabled: boolean;
   errors: CollectionErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  onBack: () => void;
   onSubmit: (data: CollectionCreateData) => SubmitPromise;
   onChannelsChange: (data: ChannelCollectionData[]) => void;
   openChannelsModal: () => void;
@@ -43,12 +44,12 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
   disabled,
   errors,
   saveButtonBarState,
-  onBack,
   onChannelsChange,
   openChannelsModal,
   onSubmit
 }: CollectionCreatePageProps) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   return (
     <CollectionCreateForm
@@ -59,7 +60,7 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
     >
       {({ change, data, handlers, submit, isSaveDisabled }) => (
         <Container>
-          <Backlink onClick={onBack}>
+          <Backlink href={collectionListUrl()}>
             {intl.formatMessage(sectionNames.collections)}
           </Backlink>
           <PageHeader
@@ -159,7 +160,7 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
           <Savebar
             state={saveButtonBarState}
             disabled={isSaveDisabled}
-            onCancel={onBack}
+            onCancel={() => navigate(collectionListUrl())}
             onSubmit={submit}
           />
         </Container>

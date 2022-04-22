@@ -49,12 +49,18 @@ const useStyles = makeStyles(
   { name: "NotFoundPage" }
 );
 
-interface NotFoundPageProps {
-  onBack: () => void;
-}
+type NotFoundPageProps =
+  | {
+      onBack: () => void;
+      backHref?: never;
+    }
+  | {
+      onBack?: never;
+      backHref: string;
+    };
 
 const NotFoundPage: React.FC<NotFoundPageProps> = props => {
-  const { onBack } = props;
+  const { onBack, backHref } = props;
 
   const classes = useStyles(props);
 
@@ -78,6 +84,7 @@ const NotFoundPage: React.FC<NotFoundPageProps> = props => {
               className={classes.button}
               variant="primary"
               onClick={onBack}
+              href={backHref}
             >
               <FormattedMessage
                 defaultMessage="Go back to dashboard"

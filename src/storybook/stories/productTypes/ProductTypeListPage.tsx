@@ -38,7 +38,6 @@ const props: ProductTypeListPageProps = {
     sort: ProductTypeListUrlSortField.name
   },
   ...tabPageProps,
-  onBack: () => undefined,
   productTypes
 };
 

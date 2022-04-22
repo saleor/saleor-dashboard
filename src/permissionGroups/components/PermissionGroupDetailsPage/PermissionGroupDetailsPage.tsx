@@ -13,9 +13,13 @@ import {
   UserPermissionFragment
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { MembersListUrlSortField } from "@saleor/permissionGroups/urls";
+import {
+  MembersListUrlSortField,
+  permissionGroupListUrl
+} from "@saleor/permissionGroups/urls";
 import {
   extractPermissionCodes,
   isGroupFullAccess
@@ -55,7 +59,6 @@ export interface PermissionGroupDetailsPageProps
   permissionsExceeded: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onAssign: () => void;
-  onBack: () => void;
   onUnassign: (ids: string[]) => void;
   onSubmit: (data: PermissionGroupDetailsPageFormData) => SubmitPromise;
 }
@@ -65,7 +68,6 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
   errors,
   members,
   membersModified,
-  onBack,
   onSubmit,
   permissionGroup,
   permissions,
@@ -74,6 +76,7 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   const initialForm: PermissionGroupDetailsPageFormData = {
     hasFullAccess: isGroupFullAccess(permissionGroup, permissions),
@@ -93,7 +96,7 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ data, change, submit, hasChanged }) => (
         <Container>
-          <Backlink onClick={onBack}>
+          <Backlink href={permissionGroupListUrl()}>
             {intl.formatMessage(sectionNames.permissionGroups)}
           </Backlink>
           <PageHeader title={permissionGroup?.name} />
@@ -135,7 +138,7 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
           </Grid>
           <div>
             <Savebar
-              onCancel={onBack}
+              onCancel={() => navigate(permissionGroupListUrl())}
               onSubmit={submit}
               state={saveButtonBarState}
               disabled={disabled || !(hasChanged || membersModified)}

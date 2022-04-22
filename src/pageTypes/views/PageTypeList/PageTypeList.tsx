@@ -27,7 +27,6 @@ import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { configurationMenuUrl } from "../../../configuration";
 import PageTypeListPage from "../../components/PageTypeListPage";
 import {
   pageTypeListUrl,
@@ -179,7 +178,6 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
         disabled={loading}
         pageTypes={pageTypesData}
         pageInfo={pageInfo}
-        onBack={() => navigate(configurationMenuUrl)}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onSort={handleSort}

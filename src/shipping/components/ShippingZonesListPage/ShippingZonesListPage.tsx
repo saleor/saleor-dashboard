@@ -3,6 +3,7 @@ import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import RequirePermissions from "@saleor/components/RequirePermissions";
+import { configurationMenuUrl } from "@saleor/configuration";
 import {
   PermissionEnum,
   ShippingZoneFragment,
@@ -23,7 +24,6 @@ export interface ShippingZonesListPageProps
     UserPermissionProps {
   defaultWeightUnit: WeightUnitsEnum;
   shippingZones: ShippingZoneFragment[];
-  onBack: () => void;
   onRemove: (id: string) => void;
   onSubmit: (unit: WeightUnitsEnum) => SubmitPromise;
 }
@@ -31,7 +31,6 @@ export interface ShippingZonesListPageProps
 const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
   defaultWeightUnit,
   disabled,
-  onBack,
   onSubmit,
   ...listProps
 }) => {
@@ -39,7 +38,7 @@ const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink href={configurationMenuUrl}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
       <PageHeader

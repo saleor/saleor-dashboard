@@ -23,7 +23,6 @@ const props: PageTypeListPageProps = {
     sort: PageTypeListUrlSortField.name
   },
   ...tabPageProps,
-  onBack: () => undefined,
   pageTypes
 };
 

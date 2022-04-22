@@ -14,11 +14,7 @@ import { useIntl } from "react-intl";
 
 import TranslationsShippingMethodPage from "../components/TranslationsShippingMethodPage";
 import { TranslationField, TranslationInputFieldName } from "../types";
-import {
-  languageEntitiesUrl,
-  languageEntityUrl,
-  TranslatableEntities
-} from "../urls";
+import { languageEntityUrl, TranslatableEntities } from "../urls";
 import { getParsedTranslationInputData } from "../utils";
 
 export interface TranslationsShippingMethodQueryParams {
@@ -98,13 +94,6 @@ const TranslationsShippingMethod: React.FC<TranslationsShippingMethodProps> = ({
       languages={shop?.languages || []}
       languageCode={languageCode}
       saveButtonState={updateTranslationsOpts.status}
-      onBack={() =>
-        navigate(
-          languageEntitiesUrl(languageCode, {
-            tab: TranslatableEntities.shippingMethods
-          })
-        )
-      }
       onEdit={onEdit}
       onDiscard={onDiscard}
       onSubmit={handleSubmit}

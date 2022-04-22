@@ -22,7 +22,9 @@ import {
   SearchProductsQuery,
   SearchWarehousesQuery
 } from "@saleor/graphql";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { productUrl } from "@saleor/products/urls";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -62,6 +64,7 @@ const messages = defineMessages({
 });
 
 interface ProductVariantCreatePageProps {
+  productId: string;
   disabled: boolean;
   errors: ProductErrorWithAttributesFragment[];
   header: string;
@@ -74,7 +77,6 @@ interface ProductVariantCreatePageProps {
   attributeValues: RelayToFlat<
     SearchAttributeValuesQuery["attribute"]["choices"]
   >;
-  onBack: () => void;
   onSubmit: (data: ProductVariantCreateData) => void;
   onVariantClick: (variantId: string) => void;
   onVariantReorder: ReorderAction;
@@ -92,6 +94,7 @@ interface ProductVariantCreatePageProps {
 }
 
 const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
+  productId,
   disabled,
   errors,
   header,
@@ -102,7 +105,6 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   referencePages = [],
   referenceProducts = [],
   attributeValues,
-  onBack,
   onSubmit,
   onVariantClick,
   onVariantReorder,
@@ -119,6 +121,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   onAttributeSelectBlur
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
 
@@ -154,7 +157,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
     >
       {({ change, data, formErrors, handlers, submit, isSaveDisabled }) => (
         <Container>
-          <Backlink onClick={onBack}>{product?.name}</Backlink>
+          <Backlink href={productUrl(productId)}>{product?.name}</Backlink>
           <PageHeader title={header} />
           <Grid variant="inverted">
             <div>
@@ -259,7 +262,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
               delete: intl.formatMessage(messages.deleteVariant)
             }}
             state={saveButtonBarState}
-            onCancel={onBack}
+            onCancel={() => navigate(productUrl(productId))}
             onSubmit={submit}
           />
           {canOpenAssignReferencesAttributeDialog && (

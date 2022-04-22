@@ -208,7 +208,6 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
       <ShippingZoneDetailsPage
         disabled={loading}
         errors={updateShippingZoneOpts.data?.shippingZoneUpdate.errors || []}
-        onBack={() => navigate(shippingZonesListUrl())}
         onCountryAdd={() => openModal("assign-country")}
         onCountryRemove={code =>
           openModal("unassign-country", {

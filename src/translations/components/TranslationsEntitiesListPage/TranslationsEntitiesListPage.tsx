@@ -8,13 +8,12 @@ import { maybe } from "@saleor/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { TranslatableEntities } from "../../urls";
+import { languageListUrl, TranslatableEntities } from "../../urls";
 
 export interface TranslationsEntitiesListPageProps {
   children: React.ReactNode;
   filters: TranslationsEntitiesFilters;
   language: LanguageFragment;
-  onBack: () => void;
 }
 
 export interface TranslationsEntitiesFilters {
@@ -43,7 +42,7 @@ const tabs: TranslationsEntitiesListFilterTab[] = [
 ];
 
 const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> = props => {
-  const { filters, language, onBack, children } = props;
+  const { filters, language, children } = props;
 
   const intl = useIntl();
   const queryTab = tabs.indexOf(filters.current);
@@ -51,7 +50,7 @@ const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> 
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink href={languageListUrl}>
         {intl.formatMessage({
           defaultMessage: "Languages"
         })}

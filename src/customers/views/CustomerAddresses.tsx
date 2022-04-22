@@ -21,8 +21,7 @@ import CustomerAddressListPage from "../components/CustomerAddressListPage";
 import {
   customerAddressesUrl,
   CustomerAddressesUrlDialog,
-  CustomerAddressesUrlQueryParams,
-  customerUrl
+  CustomerAddressesUrlQueryParams
 } from "../urls";
 
 interface CustomerAddressesProps {
@@ -113,7 +112,6 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
         customer={customerData?.data?.user}
         disabled={customerData?.loading}
         onAdd={() => openModal("add")}
-        onBack={() => navigate(customerUrl(id))}
         onEdit={id =>
           openModal("edit", {
             id

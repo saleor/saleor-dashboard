@@ -1,3 +1,4 @@
+import { customAppUrl } from "@saleor/apps/urls";
 import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -12,6 +13,7 @@ import {
   WebhookEventTypeSyncEnum
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import WebhookEvents from "@saleor/webhooks/components/WebhookEvents";
 import WebhookInfo from "@saleor/webhooks/components/WebhookInfo";
@@ -44,7 +46,6 @@ export interface WebhookDetailsPageProps {
   errors: WebhookErrorFragment[];
   webhook?: WebhookDetailsQuery["webhook"];
   saveButtonBarState: ConfirmButtonTransitionState;
-  onBack: () => void;
   onSubmit: (data: WebhookFormData) => SubmitPromise<any[]>;
 }
 
@@ -54,10 +55,10 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
   errors,
   webhook,
   saveButtonBarState,
-  onBack,
   onSubmit
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   const initialForm: WebhookFormData = {
     syncEvents: webhook?.syncEvents?.map(event => event.eventType) || [],
@@ -92,7 +93,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
 
         return (
           <Container>
-            <Backlink onClick={onBack}>{appName}</Backlink>
+            <Backlink href={customAppUrl(webhook?.app?.id)}>{appName}</Backlink>
             <PageHeader title={getHeaderTitle(intl, webhook)} />
             <Grid>
               <div>
@@ -122,7 +123,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
             <Savebar
               disabled={disabled || !hasChanged}
               state={saveButtonBarState}
-              onCancel={onBack}
+              onCancel={() => navigate(customAppUrl(webhook.app.id))}
               onSubmit={submit}
             />
           </Container>

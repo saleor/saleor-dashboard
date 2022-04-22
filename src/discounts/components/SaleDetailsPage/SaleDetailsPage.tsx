@@ -10,6 +10,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { Tab, TabContainer } from "@saleor/components/Tab";
 import { createSaleChannelsChangeHandler } from "@saleor/discounts/handlers";
+import { saleListUrl } from "@saleor/discounts/urls";
 import { SALE_UPDATE_FORM_ID } from "@saleor/discounts/views/SaleDetails/types";
 import {
   DiscountErrorFragment,
@@ -18,6 +19,7 @@ import {
   SaleType as SaleTypeEnum
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
@@ -75,7 +77,6 @@ export interface SaleDetailsPageProps
   channelListings: ChannelSaleFormData[];
   hasChannelChanged: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
-  onBack: () => void;
   onCategoryAssign: () => void;
   onCategoryUnassign: (id: string) => void;
   onCollectionAssign: () => void;
@@ -110,7 +111,6 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   pageInfo,
   sale,
   saveButtonBarState,
-  onBack,
   onCategoryAssign,
   onCategoryUnassign,
   onChannelsChange,
@@ -133,6 +133,8 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   toggleAll
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
+
   const {
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
@@ -176,7 +178,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
 
         return (
           <Container>
-            <Backlink onClick={onBack}>
+            <Backlink href={saleListUrl()}>
               {intl.formatMessage(sectionNames.sales)}
             </Backlink>
             <PageHeader title={sale?.name} />
@@ -366,7 +368,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
             </Grid>
             <Savebar
               disabled={isSaveDisabled}
-              onCancel={onBack}
+              onCancel={() => navigate(saleListUrl())}
               onDelete={onRemove}
               onSubmit={submit}
               state={saveButtonBarState}

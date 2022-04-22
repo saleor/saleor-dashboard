@@ -15,11 +15,7 @@ import { useIntl } from "react-intl";
 
 import TranslationsCategoriesPage from "../components/TranslationsCategoriesPage";
 import { TranslationField, TranslationInputFieldName } from "../types";
-import {
-  languageEntitiesUrl,
-  languageEntityUrl,
-  TranslatableEntities
-} from "../urls";
+import { languageEntityUrl, TranslatableEntities } from "../urls";
 import { getParsedTranslationInputData } from "../utils";
 
 export interface TranslationsCategoriesQueryParams {
@@ -100,13 +96,6 @@ const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({
       languageCode={languageCode}
       languages={shop?.languages || []}
       saveButtonState={updateTranslationsOpts.status}
-      onBack={() =>
-        navigate(
-          languageEntitiesUrl(languageCode, {
-            tab: TranslatableEntities.categories
-          })
-        )
-      }
       onEdit={onEdit}
       onDiscard={onDiscard}
       onLanguageChange={lang =>

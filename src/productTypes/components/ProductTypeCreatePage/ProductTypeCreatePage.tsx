@@ -12,10 +12,12 @@ import {
   WeightUnitsEnum
 } from "@saleor/graphql";
 import { ChangeEvent, FormChange, SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { makeProductTypeKindChangeHandler } from "@saleor/productTypes/handlers";
+import { productTypeListUrl } from "@saleor/productTypes/urls";
 import { UserError } from "@saleor/types";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
@@ -42,7 +44,6 @@ export interface ProductTypeCreatePageProps {
   taxTypes: ProductTypeDetailsQuery["taxTypes"];
   kind: ProductTypeKindEnum;
   onChangeKind: (kind: ProductTypeKindEnum) => void;
-  onBack: () => void;
   onSubmit: (data: ProductTypeForm) => SubmitPromise<any[]>;
 }
 
@@ -77,10 +78,11 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
   taxTypes,
   kind,
   onChangeKind,
-  onBack,
   onSubmit
 }: ProductTypeCreatePageProps) => {
   const intl = useIntl();
+  const navigate = useNavigator();
+
   const [taxTypeDisplayName, setTaxTypeDisplayName] = useStateFromProps("");
   const {
     makeChangeHandler: makeMetadataChangeHandler
@@ -108,7 +110,7 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
 
         return (
           <Container>
-            <Backlink onClick={onBack}>
+            <Backlink href={productTypeListUrl()}>
               {intl.formatMessage(sectionNames.productTypes)}
             </Backlink>
             <PageHeader title={pageTitle} />
@@ -149,7 +151,7 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
               </div>
             </Grid>
             <Savebar
-              onCancel={onBack}
+              onCancel={() => navigate(productTypeListUrl())}
               onSubmit={submit}
               disabled={isSaveDisabled}
               state={saveButtonBarState}

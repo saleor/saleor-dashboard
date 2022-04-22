@@ -12,7 +12,7 @@ import { extractMutationErrors, maybe } from "../../misc";
 import CustomerCreatePage, {
   CustomerCreatePageSubmitData
 } from "../components/CustomerCreatePage";
-import { customerListUrl, customerUrl } from "../urls";
+import { customerUrl } from "../urls";
 
 export const CustomerCreate: React.FC = () => {
   const navigate = useNavigator();
@@ -66,7 +66,6 @@ export const CustomerCreate: React.FC = () => {
         disabled={loading || createCustomerOpts.loading}
         errors={createCustomerOpts.data?.customerCreate.errors || []}
         saveButtonBar={createCustomerOpts.status}
-        onBack={() => navigate(customerListUrl())}
         onSubmit={handleSubmit}
       />
     </>

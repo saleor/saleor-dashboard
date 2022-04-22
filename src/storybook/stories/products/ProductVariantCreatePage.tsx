@@ -14,12 +14,12 @@ storiesOf("Views / Products / Create product variant", module)
   .addDecorator(Decorator)
   .add("default", () => (
     <ProductVariantCreatePage
+      productId=""
       weightUnit="kg"
       disabled={false}
       errors={[]}
       header="Add variant"
       product={product}
-      onBack={() => undefined}
       onSubmit={() => undefined}
       onVariantClick={undefined}
       onVariantReorder={() => undefined}
@@ -37,6 +37,7 @@ storiesOf("Views / Products / Create product variant", module)
   ))
   .add("with errors", () => (
     <ProductVariantCreatePage
+      productId=""
       weightUnit="kg"
       disabled={false}
       errors={[
@@ -64,7 +65,6 @@ storiesOf("Views / Products / Create product variant", module)
       }))}
       header="Add variant"
       product={product}
-      onBack={() => undefined}
       onSubmit={() => undefined}
       onVariantClick={undefined}
       onVariantReorder={() => undefined}
@@ -82,12 +82,12 @@ storiesOf("Views / Products / Create product variant", module)
   ))
   .add("when loading data", () => (
     <ProductVariantCreatePage
+      productId=""
       weightUnit="kg"
       disabled={true}
       errors={[]}
       header="Add variant"
       product={undefined}
-      onBack={() => undefined}
       onSubmit={() => undefined}
       onVariantClick={undefined}
       onVariantReorder={() => undefined}
@@ -105,6 +105,7 @@ storiesOf("Views / Products / Create product variant", module)
   ))
   .add("add first variant", () => (
     <ProductVariantCreatePage
+      productId=""
       weightUnit="kg"
       disabled={false}
       errors={[]}
@@ -113,7 +114,6 @@ storiesOf("Views / Products / Create product variant", module)
         ...product,
         variants: []
       }}
-      onBack={() => undefined}
       onSubmit={() => undefined}
       onVariantClick={undefined}
       onVariantReorder={() => undefined}
@@ -131,12 +131,12 @@ storiesOf("Views / Products / Create product variant", module)
   ))
   .add("no warehouses", () => (
     <ProductVariantCreatePage
+      productId=""
       weightUnit="kg"
       disabled={false}
       errors={[]}
       header="Add variant"
       product={product}
-      onBack={() => undefined}
       onSubmit={() => undefined}
       onVariantClick={undefined}
       onVariantReorder={() => undefined}

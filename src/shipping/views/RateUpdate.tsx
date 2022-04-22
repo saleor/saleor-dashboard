@@ -313,8 +313,6 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
     }
   };
 
-  const handleBack = () => navigate(shippingZoneUrl(id));
-
   return (
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.shipping)} />
@@ -382,8 +380,8 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
         havePostalCodesChanged={state.havePostalCodesChanged}
         saveButtonBarState={updateShippingRateOpts.status}
         onDelete={() => openModal("remove")}
+        backHref={shippingZoneUrl(id)}
         onSubmit={handleSubmit}
-        onBack={handleBack}
         rate={rate}
         errors={updateShippingRateOpts.data?.shippingPriceUpdate.errors || []}
         channelErrors={

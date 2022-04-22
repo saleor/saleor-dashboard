@@ -7,12 +7,14 @@ import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { PageErrorFragment } from "@saleor/graphql";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import {
   Backlink,
   ConfirmButtonTransitionState,
   makeStyles
 } from "@saleor/macaw-ui";
+import { pageTypeListUrl } from "@saleor/pageTypes/urls";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -27,7 +29,6 @@ export interface PageTypeCreatePageProps {
   errors: PageErrorFragment[];
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
-  onBack: () => void;
   onSubmit: (data: PageTypeForm) => void;
 }
 
@@ -50,9 +51,11 @@ const useStyles = makeStyles(
 );
 
 const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
-  const { disabled, errors, saveButtonBarState, onBack, onSubmit } = props;
+  const { disabled, errors, saveButtonBarState, onSubmit } = props;
   const classes = useStyles(props);
   const intl = useIntl();
+  const navigate = useNavigator();
+
   const {
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
@@ -69,7 +72,7 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
 
         return (
           <Container>
-            <Backlink onClick={onBack}>
+            <Backlink href={pageTypeListUrl()}>
               {intl.formatMessage(sectionNames.pageTypes)}
             </Backlink>
             <PageHeader
@@ -106,7 +109,7 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
               <div></div>
             </Grid>
             <Savebar
-              onCancel={onBack}
+              onCancel={() => navigate(pageTypeListUrl())}
               onSubmit={submit}
               disabled={isSaveDisabled}
               state={saveButtonBarState}

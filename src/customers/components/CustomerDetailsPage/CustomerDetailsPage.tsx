@@ -8,6 +8,7 @@ import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
 import RequirePermissions from "@saleor/components/RequirePermissions";
 import Savebar from "@saleor/components/Savebar";
+import { customerListUrl } from "@saleor/customers/urls";
 import CustomerGiftCardsCard from "@saleor/giftCards/components/GiftCardCustomerCard/CustomerGiftCardsCard";
 import {
   AccountErrorFragment,
@@ -15,6 +16,7 @@ import {
   PermissionEnum
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
@@ -42,7 +44,6 @@ export interface CustomerDetailsPageProps {
   disabled: boolean;
   errors: AccountErrorFragment[];
   saveButtonBar: ConfirmButtonTransitionState;
-  onBack: () => void;
   onSubmit: (
     data: CustomerDetailsPageFormData
   ) => SubmitPromise<AccountErrorFragment[]>;
@@ -56,13 +57,13 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
   disabled,
   errors,
   saveButtonBar,
-  onBack,
   onSubmit,
   onViewAllOrdersClick,
   onAddressManageClick,
   onDelete
 }: CustomerDetailsPageProps) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   const initialForm: CustomerDetailsPageFormData = {
     email: customer?.email || "",
@@ -90,7 +91,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
 
         return (
           <Container>
-            <Backlink onClick={onBack}>
+            <Backlink href={customerListUrl()}>
               {intl.formatMessage(sectionNames.customers)}
             </Backlink>
             <PageHeader title={getUserName(customer, true)} />
@@ -142,7 +143,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
               disabled={isSaveDisabled}
               state={saveButtonBar}
               onSubmit={submit}
-              onCancel={onBack}
+              onCancel={() => navigate(customerListUrl())}
               onDelete={onDelete}
             />
           </Container>

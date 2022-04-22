@@ -49,7 +49,6 @@ const props: AttributeListPageProps = {
       value: false
     }
   },
-  onBack: () => undefined,
   onSort: () => undefined,
   sort: {
     ...sortPageProps.sort,

@@ -1,4 +1,3 @@
-import { configurationMenuUrl } from "@saleor/configuration";
 import {
   PermissionGroupErrorFragment,
   usePermissionGroupDeleteMutation,
@@ -107,7 +106,6 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
         pageInfo={pageInfo}
         sort={getSortParams(params)}
         permissionGroups={permissionGroups}
-        onBack={() => navigate(configurationMenuUrl)}
         onDelete={id => openModal("remove", { id })}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}

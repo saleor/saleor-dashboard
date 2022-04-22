@@ -1,4 +1,5 @@
 import { Card } from "@material-ui/core";
+import { categoryListUrl, categoryUrl } from "@saleor/categories/urls";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
@@ -9,6 +10,7 @@ import SeoForm from "@saleor/components/SeoForm";
 import { Tab, TabContainer } from "@saleor/components/Tab";
 import { CategoryDetailsQuery, ProductErrorFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import {
   Backlink,
@@ -52,7 +54,6 @@ export interface CategoryUpdatePageProps
   onImageUpload(file: File);
   onNextPage();
   onPreviousPage();
-  onBack();
   onDelete();
 }
 
@@ -70,7 +71,6 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   saveButtonBarState,
   subcategories,
   addCategoryHref,
-  onBack,
   onDelete,
   onNextPage,
   onPreviousPage,
@@ -85,6 +85,11 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   toggleAll
 }: CategoryUpdatePageProps) => {
   const intl = useIntl();
+  const navigate = useNavigator();
+
+  const backHref = category?.parent?.id
+    ? categoryUrl(category?.parent?.id)
+    : categoryListUrl();
 
   return (
     <CategoryUpdateForm
@@ -94,7 +99,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
     >
       {({ data, change, handlers, submit, isSaveDisabled }) => (
         <Container>
-          <Backlink onClick={onBack}>
+          <Backlink href={backHref}>
             {intl.formatMessage(sectionNames.categories)}
           </Backlink>
           <PageHeader title={category?.name} />
@@ -209,7 +214,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
             />
           )}
           <Savebar
-            onCancel={onBack}
+            onCancel={() => navigate(backHref)}
             onDelete={onDelete}
             onSubmit={submit}
             state={saveButtonBarState}

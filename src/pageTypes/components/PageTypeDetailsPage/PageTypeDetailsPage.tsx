@@ -13,12 +13,14 @@ import {
   PageErrorFragment,
   PageTypeDetailsFragment
 } from "@saleor/graphql";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import {
   Backlink,
   ConfirmButtonTransitionState,
   makeStyles
 } from "@saleor/macaw-ui";
+import { pageTypeListUrl } from "@saleor/pageTypes/urls";
 import { ListActions, ReorderEvent } from "@saleor/types";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -44,7 +46,6 @@ export interface PageTypeDetailsPageProps {
   onAttributeClick: (id: string) => void;
   onAttributeReorder: (event: ReorderEvent, type: AttributeTypeEnum) => void;
   onAttributeUnassign: (id: string) => void;
-  onBack: () => void;
   onDelete: () => void;
   onSubmit: (data: PageTypeForm) => void;
 }
@@ -73,12 +74,13 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
     onAttributeUnassign,
     onAttributeReorder,
     onAttributeClick,
-    onBack,
     onDelete,
     onSubmit
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
+  const navigate = useNavigator();
+
   const {
     isMetadataModified,
     isPrivateMetadataModified,
@@ -121,7 +123,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
 
         return (
           <Container>
-            <Backlink onClick={onBack}>
+            <Backlink href={pageTypeListUrl()}>
               {intl.formatMessage(sectionNames.pageTypes)}
             </Backlink>
             <PageHeader title={pageTitle} />
@@ -176,7 +178,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
               <Metadata data={data} onChange={changeMetadata} />
             </Grid>
             <Savebar
-              onCancel={onBack}
+              onCancel={() => navigate(pageTypeListUrl())}
               onDelete={onDelete}
               onSubmit={submit}
               disabled={isSaveDisabled}

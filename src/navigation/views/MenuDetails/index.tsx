@@ -34,7 +34,7 @@ import {
   getItemType,
   unknownTypeError
 } from "../../components/MenuItems";
-import { menuListUrl, menuUrl, MenuUrlQueryParams } from "../../urls";
+import { menuUrl, MenuUrlQueryParams } from "../../urls";
 import {
   handleDelete,
   handleItemCreate,
@@ -195,7 +195,6 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
           ...(menuUpdateOpts.data?.menuUpdate.errors || [])
         ]}
         menu={maybe(() => data.menu)}
-        onBack={() => navigate(menuListUrl())}
         onDelete={() =>
           navigate(
             menuUrl(id, {

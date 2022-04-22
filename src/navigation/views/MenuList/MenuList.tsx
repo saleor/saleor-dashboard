@@ -1,7 +1,6 @@
 import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { Button } from "@saleor/components/Button";
-import { configurationMenuUrl } from "@saleor/configuration";
 import {
   useMenuBulkDeleteMutation,
   useMenuCreateMutation,
@@ -132,7 +131,6 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         disabled={loading}
         menus={mapEdgesToItems(data?.menus)}
         settings={settings}
-        onBack={() => navigate(configurationMenuUrl)}
         onDelete={id =>
           navigate(
             menuListUrl({

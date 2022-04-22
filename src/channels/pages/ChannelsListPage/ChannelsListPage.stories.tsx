@@ -10,7 +10,6 @@ const props: ChannelsListPageProps = {
   channelsList,
   limits,
   navigateToChannelCreate: () => undefined,
-  onBack: () => undefined,
   onRemove: () => undefined
 };
 

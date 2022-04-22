@@ -113,7 +113,6 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
         errors={updateWarehouseOpts.data?.updateWarehouse.errors || []}
         saveButtonBarState={updateWarehouseTransitionState}
         warehouse={data?.warehouse}
-        onBack={() => navigate(warehouseListUrl())}
         onDelete={() => openModal("delete")}
         onShippingZoneClick={id => navigate(shippingZoneUrl(id))}
         onSubmit={handleSubmit}

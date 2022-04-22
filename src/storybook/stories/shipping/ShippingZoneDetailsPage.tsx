@@ -15,7 +15,6 @@ const props: ShippingZoneDetailsPageProps = {
   ...searchPageProps,
   disabled: false,
   errors: [],
-  onBack: () => undefined,
   onCountryAdd: () => undefined,
   onCountryRemove: () => undefined,
   onDelete: () => undefined,

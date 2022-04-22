@@ -150,7 +150,6 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
           ?.orderFulfillmentRefundProducts.errors || [])
       ]}
       onSubmit={handleSubmit}
-      onBack={() => navigate(orderUrl(orderId))}
     />
   );
 };

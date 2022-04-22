@@ -23,7 +23,6 @@ const props: SaleDetailsPageProps = {
   disabled: false,
   errors: [],
   hasChannelChanged: false,
-  onBack: () => undefined,
   onCategoryAssign: () => undefined,
   onCategoryUnassign: () => undefined,
   onChannelsChange: () => undefined,

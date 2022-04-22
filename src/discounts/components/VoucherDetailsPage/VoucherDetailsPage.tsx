@@ -16,6 +16,7 @@ import {
   createDiscountTypeChangeHandler
 } from "@saleor/discounts/handlers";
 import { DiscountTypeEnum, RequirementsPicker } from "@saleor/discounts/types";
+import { voucherListUrl } from "@saleor/discounts/urls";
 import {
   DiscountErrorFragment,
   DiscountValueTypeEnum,
@@ -23,6 +24,7 @@ import {
   VoucherDetailsFragment,
   VoucherTypeEnum
 } from "@saleor/graphql";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
@@ -83,7 +85,6 @@ export interface VoucherDetailsPageProps
   allChannelsCount: number;
   channelListings: ChannelVoucherData[];
   hasChannelChanged: boolean;
-  onBack: () => void;
   onCategoryAssign: () => void;
   onCategoryUnassign: (id: string) => void;
   onCollectionAssign: () => void;
@@ -112,7 +113,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   pageInfo,
   saveButtonBarState,
   voucher,
-  onBack,
   onCategoryAssign,
   onCategoryUnassign,
   onChannelsChange,
@@ -139,6 +139,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   productListToolbar
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
+
   const {
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
@@ -208,7 +210,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
 
         return (
           <Container>
-            <Backlink onClick={onBack}>
+            <Backlink href={voucherListUrl()}>
               {intl.formatMessage(sectionNames.vouchers)}
             </Backlink>
             <PageHeader title={voucher?.code} />
@@ -422,7 +424,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
               disabled={
                 disabled || formDisabled || (!hasChanged && !hasChannelChanged)
               }
-              onCancel={onBack}
+              onCancel={() => navigate(voucherListUrl())}
               onDelete={onRemove}
               onSubmit={submit}
               state={saveButtonBarState}

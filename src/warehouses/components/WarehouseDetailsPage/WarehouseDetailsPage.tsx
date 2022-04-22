@@ -16,12 +16,14 @@ import {
 } from "@saleor/graphql";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { findValueInEnum, maybe } from "@saleor/misc";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices, mapEdgesToItems } from "@saleor/utils/maps";
+import { warehouseListUrl } from "@saleor/warehouses/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -39,7 +41,6 @@ export interface WarehouseDetailsPageProps {
   errors: WarehouseErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   warehouse: WarehouseDetailsFragment;
-  onBack: () => void;
   onDelete: () => void;
   onShippingZoneClick: (id: string) => void;
   onSubmit: (data: WarehouseDetailsPageFormData) => SubmitPromise;
@@ -51,12 +52,13 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
   errors,
   saveButtonBarState,
   warehouse,
-  onBack,
   onDelete,
   onShippingZoneClick,
   onSubmit
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
+
   const [displayCountry, setDisplayCountry] = useStateFromProps(
     warehouse?.address?.country.country || ""
   );
@@ -101,7 +103,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
 
         return (
           <Container>
-            <Backlink onClick={onBack}>
+            <Backlink href={warehouseListUrl()}>
               <FormattedMessage {...sectionNames.warehouses} />
             </Backlink>
             <PageHeader title={warehouse?.name} />
@@ -141,7 +143,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
             </Grid>
             <Savebar
               disabled={isSaveDisabled}
-              onCancel={onBack}
+              onCancel={() => navigate(warehouseListUrl())}
               onDelete={onDelete}
               onSubmit={submit}
               state={saveButtonBarState}

@@ -46,8 +46,6 @@ const GiftCardSettingsPage: React.FC = () => {
     updateGiftCardSettingsOpts
   ] = useGiftCardSettingsUpdateMutation({});
 
-  const navigateBack = () => navigate(giftCardsListPath);
-
   const handleSubmit = (formData: GiftCardSettingsFormData) => {
     updateGiftCardSettings({
       variables: {
@@ -65,7 +63,7 @@ const GiftCardSettingsPage: React.FC = () => {
 
   return (
     <Container>
-      <Backlink onClick={navigateBack}>
+      <Backlink href={giftCardsListPath}>
         {intl.formatMessage(sectionNames.giftCards)}
       </Backlink>
       <PageHeader
@@ -90,7 +88,7 @@ const GiftCardSettingsPage: React.FC = () => {
               errors={formErrors}
             />
             <Savebar
-              onCancel={navigateBack}
+              onCancel={() => navigate(giftCardsListPath)}
               onSubmit={submit}
               disabled={formLoading || !hasChanged}
               state={updateGiftCardSettingsOpts?.status}

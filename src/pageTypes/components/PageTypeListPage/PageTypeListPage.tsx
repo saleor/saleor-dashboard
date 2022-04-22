@@ -4,6 +4,7 @@ import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
+import { configurationMenuUrl } from "@saleor/configuration";
 import { PageTypeFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import {
@@ -29,14 +30,12 @@ export interface PageTypeListPageProps
     SortPage<PageTypeListUrlSortField>,
     TabPageProps {
   pageTypes: PageTypeFragment[];
-  onBack: () => void;
 }
 
 const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
   currentTab,
   initialSearch,
   onAll,
-  onBack,
   onSearchChange,
   onTabChange,
   onTabDelete,
@@ -47,7 +46,7 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
   const intl = useIntl();
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink href={configurationMenuUrl}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.pageTypes)}>

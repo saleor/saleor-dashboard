@@ -15,6 +15,7 @@ import {
   OrderStatus
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import {
   Backlink,
@@ -22,6 +23,7 @@ import {
   makeStyles
 } from "@saleor/macaw-ui";
 import OrderChannelSectionCard from "@saleor/orders/components/OrderChannelSectionCard";
+import { orderListUrl } from "@saleor/orders/urls";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
@@ -72,7 +74,6 @@ export interface OrderDetailsPageProps {
   ) => void;
   onOrderLineRemove?: (id: string) => void;
   onShippingMethodEdit?: () => void;
-  onBack();
   onBillingAddressEdit();
   onFulfillmentApprove(id: string);
   onFulfillmentCancel(id: string);
@@ -115,7 +116,6 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     order,
     shop,
     saveButtonBarState,
-    onBack,
     onBillingAddressEdit,
     onFulfillmentApprove,
     onFulfillmentCancel,
@@ -140,8 +140,9 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onSubmit
   } = props;
   const classes = useStyles(props);
-
+  const navigate = useNavigator();
   const intl = useIntl();
+
   const {
     isMetadataModified,
     isPrivateMetadataModified,
@@ -217,7 +218,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
 
         return (
           <Container>
-            <Backlink onClick={onBack}>
+            <Backlink href={orderListUrl()}>
               {intl.formatMessage(sectionNames.orders)}
             </Backlink>
             <PageHeader
@@ -324,7 +325,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
             </Grid>
             <Savebar
               labels={saveLabel}
-              onCancel={onBack}
+              onCancel={() => navigate(orderListUrl())}
               onSubmit={submit}
               state={saveButtonBarState}
               disabled={allowSave(hasChanged)}

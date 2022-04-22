@@ -14,7 +14,7 @@ import { useIntl } from "react-intl";
 import ShippingZoneCreatePage, {
   ShippingZoneCreateFormData
 } from "../components/ShippingZoneCreatePage";
-import { shippingZonesListUrl, shippingZoneUrl } from "../urls";
+import { shippingZoneUrl } from "../urls";
 
 const ShippingZoneCreate: React.FC<{}> = () => {
   const navigate = useNavigator();
@@ -62,7 +62,6 @@ const ShippingZoneCreate: React.FC<{}> = () => {
       }
       disabled={createShippingZoneOpts.loading}
       errors={createShippingZoneOpts.data?.shippingZoneCreate.errors || []}
-      onBack={() => navigate(shippingZonesListUrl())}
       onSubmit={handleSubmit}
       saveButtonBarState={createShippingZoneOpts.status}
     />

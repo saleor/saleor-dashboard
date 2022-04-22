@@ -58,7 +58,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
             text: intl.formatMessage(messages.successAlert)
           });
 
-          navigateToOrder(replaceOrder?.id);
+          navigate(orderUrl(replaceOrder?.id || orderId));
 
           return;
         }
@@ -98,15 +98,12 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
     );
   };
 
-  const navigateToOrder = (id?: string) => navigate(orderUrl(id || orderId));
-
   return (
     <OrderReturnPage
       errors={returnCreateOpts.data?.orderFulfillmentReturnProducts.errors}
       order={data?.order}
       loading={loading || returnCreateOpts.loading}
       onSubmit={handleSubmit}
-      onBack={() => navigateToOrder()}
     />
   );
 };

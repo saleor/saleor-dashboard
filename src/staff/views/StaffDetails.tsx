@@ -54,7 +54,6 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         action: undefined
       })
     );
-  const handleBack = () => navigate(staffListUrl());
 
   const { data, loading, refetch } = useStaffMemberDetailsQuery({
     displayLoader: true,
@@ -141,7 +140,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
   });
 
   if (staffMember === null) {
-    return <NotFoundPage onBack={handleBack} />;
+    return <NotFoundPage backHref={staffListUrl()} />;
   }
 
   const handleUpdate = (formData: StaffDetailsFormData) =>
@@ -172,7 +171,6 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         canEditStatus={!isUserSameAsViewer}
         canRemove={!isUserSameAsViewer}
         disabled={loading}
-        onBack={handleBack}
         initialSearch=""
         onChangePassword={() =>
           navigate(

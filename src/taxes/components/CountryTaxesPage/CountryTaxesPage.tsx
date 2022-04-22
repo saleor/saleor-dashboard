@@ -14,6 +14,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import { CountryListQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
+import { countryListUrl } from "@saleor/taxes/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -31,18 +32,17 @@ const useStyles = makeStyles(
 export interface CountryTaxesPageProps {
   countryName: string;
   taxCategories: CountryListQuery["shop"]["countries"][0]["vat"]["reducedRates"];
-  onBack: () => void;
 }
 
 const CountryTaxesPage: React.FC<CountryTaxesPageProps> = props => {
-  const { countryName, taxCategories, onBack } = props;
+  const { countryName, taxCategories } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink href={countryListUrl}>
         {intl.formatMessage(sectionNames.taxes)}
       </Backlink>
       <PageHeader

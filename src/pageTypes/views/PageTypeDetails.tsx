@@ -120,8 +120,6 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
-  const handleBack = () => navigate(pageTypeListUrl());
-
   const handlePageTypeUpdate = async (formData: PageTypeForm) => {
     const result = await updatePageType({
       variables: {
@@ -181,7 +179,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
   const pageType = data?.pageType;
 
   if (pageType === null) {
-    return <NotFoundPage onBack={handleBack} />;
+    return <NotFoundPage backHref={pageTypeListUrl()} />;
   }
 
   const closeModal = () => navigate(pageTypeUrl(id), { replace: true });
@@ -222,7 +220,6 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
             })
           )
         }
-        onBack={handleBack}
         onDelete={() =>
           navigate(
             pageTypeUrl(id, {

@@ -16,6 +16,7 @@ storiesOf("Views / Products / Product variant details", module)
   .addDecorator(Decorator)
   .add("when loaded data", () => (
     <ProductVariantPage
+      productId=""
       defaultWeightUnit="kg"
       header={variant.name || variant.sku}
       errors={[]}
@@ -23,7 +24,6 @@ storiesOf("Views / Products / Product variant details", module)
       channelErrors={[]}
       variant={variant}
       onAdd={() => undefined}
-      onBack={() => undefined}
       onDelete={undefined}
       onSetDefaultVariant={() => undefined}
       onMediaSelect={() => undefined}
@@ -46,13 +46,13 @@ storiesOf("Views / Products / Product variant details", module)
   ))
   .add("when loading data", () => (
     <ProductVariantPage
+      productId=""
       defaultWeightUnit="kg"
       header={undefined}
       errors={[]}
       channels={channels}
       channelErrors={[]}
       loading={true}
-      onBack={() => undefined}
       placeholderImage={placeholderImage}
       onAdd={() => undefined}
       onDelete={undefined}
@@ -77,6 +77,7 @@ storiesOf("Views / Products / Product variant details", module)
   ))
   .add("no warehouses", () => (
     <ProductVariantPage
+      productId=""
       defaultWeightUnit="kg"
       header={variant.name || variant.sku}
       errors={[]}
@@ -84,7 +85,6 @@ storiesOf("Views / Products / Product variant details", module)
       channelErrors={[]}
       variant={variant}
       onAdd={() => undefined}
-      onBack={() => undefined}
       onDelete={undefined}
       onSetDefaultVariant={() => undefined}
       onMediaSelect={() => undefined}
@@ -107,12 +107,12 @@ storiesOf("Views / Products / Product variant details", module)
   ))
   .add("attribute errors", () => (
     <ProductVariantPage
+      productId=""
       defaultWeightUnit="kg"
       header={variant.name || variant.sku}
       channels={channels}
       variant={variant}
       onAdd={() => undefined}
-      onBack={() => undefined}
       onDelete={undefined}
       onSetDefaultVariant={() => undefined}
       onMediaSelect={() => undefined}

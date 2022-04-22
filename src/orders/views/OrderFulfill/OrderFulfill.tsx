@@ -99,7 +99,6 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
       <OrderFulfillPage
         loading={loading || settingsLoading || fulfillOrderOpts.loading}
         errors={fulfillOrderOpts.data?.orderFulfill.errors}
-        onBack={() => navigate(orderUrl(orderId))}
         onSubmit={formData =>
           extractMutationErrors(
             fulfillOrder({

@@ -16,11 +16,13 @@ import {
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useLocale from "@saleor/hooks/useLocale";
+import useNavigator from "@saleor/hooks/useNavigator";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { getUserName } from "@saleor/misc";
 import UserStatus from "@saleor/staff/components/UserStatus";
+import { staffListUrl } from "@saleor/staff/urls";
 import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import React from "react";
@@ -51,7 +53,6 @@ export interface StaffDetailsPageProps extends SearchPageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   staffMember: StaffMemberDetailsFragment;
   errors: StaffErrorFragment[];
-  onBack: () => void;
   onChangePassword: () => void;
   onDelete: () => void;
   onImageDelete: () => void;
@@ -69,7 +70,6 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
   errors,
   fetchMorePermissionGroups,
   initialSearch,
-  onBack,
   onChangePassword,
   onDelete,
   onImageDelete,
@@ -81,7 +81,10 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
 }: StaffDetailsPageProps) => {
   const intl = useIntl();
   const classes = useStyles();
+  const navigate = useNavigator();
+
   const { locale, setLocale } = useLocale();
+
   const [
     permissionGroupsDisplayValues,
     setPermissionGroupsDisplayValues
@@ -121,7 +124,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
 
         return (
           <Container>
-            <Backlink onClick={onBack}>
+            <Backlink href={staffListUrl()}>
               {intl.formatMessage(sectionNames.staff)}
             </Backlink>
             <PageHeader title={getUserName(staffMember)} />
@@ -195,7 +198,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
             <Savebar
               disabled={isSaveDisabled}
               state={saveButtonBarState}
-              onCancel={onBack}
+              onCancel={() => navigate(staffListUrl())}
               onSubmit={submit}
               onDelete={canRemove ? onDelete : undefined}
             />

@@ -34,8 +34,7 @@ import UnassignMembersDialog from "../../components/UnassignMembersDialog";
 import {
   permissionGroupDetailsUrl,
   PermissionGroupDetailsUrlDialog,
-  PermissionGroupDetailsUrlQueryParams,
-  permissionGroupListUrl
+  PermissionGroupDetailsUrlQueryParams
 } from "../../urls";
 
 interface PermissionGroupDetailsProps {
@@ -155,7 +154,6 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
         permissionsExceeded={permissionsExceeded}
         members={membersList || []}
         membersModified={membersModified}
-        onBack={() => navigate(permissionGroupListUrl())}
         onAssign={() => openModal("assign")}
         onUnassign={ids => openModal("unassign", { ids })}
         errors={

@@ -113,8 +113,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     params
   );
 
-  const handleBack = () => navigate(productUrl(productId));
-
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
 
   const [assignMedia, assignMediaOpts] = useVariantMediaAssignMutation({});
@@ -357,13 +355,14 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
 
   if (variant === null) {
-    return <NotFoundPage onBack={handleBack} />;
+    return <NotFoundPage backHref={productUrl(productId)} />;
   }
 
   return (
     <>
       <WindowTitle title={data?.productVariant?.name} />
       <ProductVariantPage
+        productId={productId}
         defaultWeightUnit={shop?.defaultWeightUnit}
         defaultVariantId={data?.productVariant.product.defaultVariant?.id}
         errors={errors}
@@ -381,7 +380,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         header={variant?.name || variant?.sku}
         warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
         onAdd={() => navigate(productVariantAddUrl(productId))}
-        onBack={handleBack}
         onDelete={() => openModal("remove")}
         onMediaSelect={handleMediaSelect}
         onSubmit={async data => {

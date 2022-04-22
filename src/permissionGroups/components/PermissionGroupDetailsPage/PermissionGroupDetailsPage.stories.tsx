@@ -18,7 +18,6 @@ const props: PermissionGroupDetailsPageProps = {
   members: users,
   membersModified: false,
   onAssign: () => undefined,
-  onBack: () => undefined,
   onSort: () => undefined,
   onSubmit: () => undefined,
   onUnassign: () => undefined,
