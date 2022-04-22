@@ -18,7 +18,6 @@ import { maybe, renderCollection } from "@saleor/misc";
 import { MenuListUrlSortField } from "@saleor/navigation/urls";
 import { ListActions, ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
-import { getFooterColSpanWithBulkActions } from "@saleor/utils/tables";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
