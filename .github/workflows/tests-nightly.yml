@@ -23,8 +23,7 @@ on:
 jobs:
 
   revert-automation-env-to-snap:
-    # if: github.event.inputs.environment == null
-    if: github.event.inputs.environment == 'https://automation-dashboard.staging.saleor.cloud/'
+    if: github.event.inputs.environment == null
     runs-on: ubuntu-latest
     steps:
 
