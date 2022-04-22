@@ -31,7 +31,7 @@ jobs:
 
       - name: Install saleor cli
         id: install-saleor-cli
-        run: npm i -g saleor-cli
+        run: npm i saleor-cli
 
       - name: Write config file
         id: write-config-file
@@ -44,6 +44,7 @@ jobs:
         run: npx saleor backup restore I7rNqplv
 
   run-tests-in-parallel:
+    needs: revert-automation-env-to-snap
     runs-on: ubuntu-latest
     container: cypress/browsers:node14.16.0-chrome89-ff86
     strategy:
