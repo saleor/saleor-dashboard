@@ -16,7 +16,8 @@ export const appsList: AppsListQuery["apps"]["edges"] = [
       id: "QXBwOjE3Ng==",
       isActive: true,
       name: "app",
-      type: AppTypeEnum.THIRDPARTY
+      type: AppTypeEnum.THIRDPARTY,
+      appUrl: null
     }
   },
   {
@@ -26,7 +27,8 @@ export const appsList: AppsListQuery["apps"]["edges"] = [
       id: "QXBwOjE3Ng==",
       isActive: false,
       name: "app1",
-      type: AppTypeEnum.THIRDPARTY
+      type: AppTypeEnum.THIRDPARTY,
+      appUrl: "http://localhost:300"
     }
   }
 ];
@@ -39,7 +41,8 @@ export const customAppsList: AppsListQuery["apps"]["edges"] = [
       id: "QXBwOjE3Ng==",
       isActive: true,
       name: "app custom",
-      type: AppTypeEnum.LOCAL
+      type: AppTypeEnum.LOCAL,
+      appUrl: null
     }
   }
 ];

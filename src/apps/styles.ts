@@ -189,6 +189,10 @@ export const useStyles = makeStyles(
       paddingRight: theme.spacing(1),
       width: theme.spacing(14)
     },
+    appUrlWrapper: {
+      display: "inline-block",
+      marginLeft: theme.spacing(2.5)
+    },
     statusWrapper: {
       display: "inline-block",
       marginLeft: theme.spacing(2.5)

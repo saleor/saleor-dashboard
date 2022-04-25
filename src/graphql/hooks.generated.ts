@@ -3065,6 +3065,7 @@ export const AppsListDocument = gql`
         name
         isActive
         type
+        appUrl
       }
     }
   }

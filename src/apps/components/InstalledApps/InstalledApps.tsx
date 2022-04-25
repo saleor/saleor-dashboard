@@ -22,6 +22,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "../../styles";
 import AppsSkeleton from "../AppsSkeleton";
+import AppUrlLink from "../AppUrlLink";
 import DeactivatedText from "../DeactivatedText";
 
 export interface InstalledAppsProps extends ListProps {
@@ -85,6 +86,12 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                     <span data-tc="name" className={classes.appName}>
                       {app.node.name}
                     </span>
+                    <div className={classes.appUrlWrapper}>
+                      <AppUrlLink
+                        url={app.node.appUrl}
+                        onClick={onRowClick(app.node.id)}
+                      />
+                    </div>
                     {!app.node.isActive && (
                       <div className={classes.statusWrapper}>
                         <DeactivatedText />
