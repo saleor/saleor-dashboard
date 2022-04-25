@@ -68,8 +68,7 @@ interface ProductTypeVariantAttributesProps extends ListActions {
   onAttributeClick: (id: string) => void;
   onAttributeReorder: ReorderAction;
   onAttributeUnassign: (id: string) => void;
-  onAttributeVariantSelection?: (isActive: boolean) => void;
-  setSelectedVariantAttributes?: (data: string[]) => void;
+  setSelectedVariantAttributes: (data: string[]) => void;
 }
 
 function handleContainerAssign(
@@ -106,7 +105,6 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
     onAttributeClick,
     onAttributeReorder,
     onAttributeUnassign,
-    onAttributeVariantSelection,
     setSelectedVariantAttributes,
     selectedVariantAttributes
   } = props;
@@ -249,15 +247,14 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                         checked={isSelected}
                         disabled={disabled || variantSelectionDisabled}
                         disableClickPropagation
-                        onChange={() => {
-                          onAttributeVariantSelection(true);
+                        onChange={() =>
                           handleContainerAssign(
                             attribute.id,
                             isSelected,
                             selectedVariantAttributes,
                             setSelectedVariantAttributes
-                          );
-                        }}
+                          )
+                        }
                       />
                       {!!variantSelectionDisabled && (
                         <Tooltip
