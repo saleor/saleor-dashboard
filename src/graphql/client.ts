@@ -30,18 +30,8 @@ export const apolloClient = new ApolloClient({
       Weight: {
         merge: false
       },
-      Stock: {
-        merge: false
-      },
       Shop: {
         keyFields: []
-      },
-      ProductVariant: {
-        fields: {
-          stocks: {
-            merge: false
-          }
-        }
       }
     } as TypedTypePolicies
   }),
