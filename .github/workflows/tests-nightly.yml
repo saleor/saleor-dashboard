@@ -1,0 +1,103 @@
+name: Execute nightly tests
+
+on:
+  workflow_dispatch:
+    branches: ["main"]
+    inputs:
+      environment:
+        required: true 
+        description: 'Environment to run tests against'
+        default: 'https://automation-dashboard.staging.saleor.cloud/'
+        type: choice
+        options:
+        - https://automation-dashboard.staging.saleor.cloud/
+        - https://master.staging.saleor.cloud/
+        - https://latest.staging.saleor.cloud/
+        - https://qa.staging.saleor.cloud/
+  schedule:
+    - cron: '00 2 * * 1-5'
+
+jobs:
+
+  revert-automation-env-to-snap:
+    if: github.event.inputs.environment == null
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+      - name: Install saleor cli
+        id: install-saleor-cli
+        run: npm i -g saleor-cli
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules-cli
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-qa-${{ env.cache-name }}-
+            ${{ runner.os }}-qa-
+            ${{ runner.os }}-
+
+      - name: Write config file
+        id: write-config-file
+        env:
+          ACCESS_TOKEN: ${{ secrets.CLOUD_ACCESS_TOKEN }}
+        run: echo '{"token":"Token ${{ secrets.CLOUD_ACCESS_TOKEN }}","telemetry":"false","organization_slug":"qa","organization_name":"QA","environment_id":"lHECN87U"}' > ~/.config/saleor.json
+      
+      - name: revert snapshot
+        env:
+          SALEOR_CLI_ENV: staging
+        run: npx saleor backup restore I7rNqplv
+
+  run-tests-in-parallel:
+    needs: revert-automation-env-to-snap
+    if: always() #Wait for revert-automation-env-to-snap, bot run always, even if skipped
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node14.16.0-chrome89-ff86
+    strategy:
+      fail-fast: false
+      matrix:
+        # run copies of the current job in parallel
+        containers: [1, 2, 3, 4]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Get env
+        id: get-env-uri
+        env:
+          DEFAULT_ENV_URI: 'https://automation-dashboard.staging.saleor.cloud/'
+        run: |
+          echo "::set-output name=ENV_URI::${{ github.event.inputs.environment || env.DEFAULT_ENV_URI }}"
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        env:
+          API_URI: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
+          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
+          CYPRESS_baseUrl: ${{ steps.get-env-uri.outputs.ENV_URI }}dashboard/
+          CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
+          CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
+          CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
+          CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          parallel: true
+          group: 'UI - Chrome'
+          command: npm run cy:run:allEnv:parallel
+
+
+
