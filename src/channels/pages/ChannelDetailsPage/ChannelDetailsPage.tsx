@@ -96,11 +96,11 @@ const ChannelDetailsPage = function<TErrors>({
 
   const checkIfSaveIsDisabled = (data: FormData) => {
     const isValid =
-      !data.name ||
-      !data.slug ||
-      !data.currencyCode ||
-      !data.defaultCountry ||
-      !(data.name.trim().length > 0);
+      !!data.name &&
+      !!data.slug &&
+      !!data.currencyCode &&
+      !!data.defaultCountry &&
+      data.name.trim().length > 0;
 
     return disabled || !isValid;
   };
