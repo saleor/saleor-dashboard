@@ -2,7 +2,6 @@ import { gql } from "@apollo/client";
 
 export const shopSettingsUpdate = gql`
   mutation ShopSettingsUpdate(
-    $shopDomainInput: SiteDomainInput!
     $shopSettingsInput: ShopSettingsInput!
     $addressInput: AddressInput
     $isCloudInstance: Boolean!
@@ -13,17 +12,6 @@ export const shopSettingsUpdate = gql`
       }
       shop {
         ...Shop
-      }
-    }
-    shopDomainUpdate(input: $shopDomainInput) @skip(if: $isCloudInstance) {
-      errors {
-        ...ShopError
-      }
-      shop {
-        domain {
-          host
-          url
-        }
       }
     }
     shopAddressUpdate(input: $addressInput) {
