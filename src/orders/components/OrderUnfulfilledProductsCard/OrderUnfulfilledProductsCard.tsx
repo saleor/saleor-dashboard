@@ -58,7 +58,8 @@ const useStyles = makeStyles(
         },
         "&:last-child": {
           flex: "0 1 auto",
-          minWidth: 0
+          minWidth: 0,
+          marginLeft: theme.spacing(1)
         }
       }
     }
