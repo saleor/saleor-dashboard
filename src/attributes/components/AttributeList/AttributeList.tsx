@@ -158,7 +158,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
           onClick={() => onSort(AttributeListUrlSortField.useInFacetedSearch)}
         >
           <FormattedMessage
-            defaultMessage="Use in faceted search"
+            defaultMessage="Use as filter"
             description="attribute can be searched in storefront"
           />
         </TableCellHeader>
