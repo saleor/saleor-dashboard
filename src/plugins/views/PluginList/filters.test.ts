@@ -1,3 +1,4 @@
+import { FieldType } from "@saleor/components/Filter";
 import { PluginConfigurationType } from "@saleor/graphql";
 import {
   createFilterStructure,
@@ -73,6 +74,7 @@ describe("Filtering URL params", () => {
       [
         {
           name: PluginFilterKeys.active,
+          type: FieldType.options,
           label: "Active",
           multiple: false,
           active: true,
@@ -80,6 +82,7 @@ describe("Filtering URL params", () => {
         },
         {
           name: PluginFilterKeys.type,
+          type: FieldType.options,
           label: "Configuration type",
           multiple: false,
           active: true,

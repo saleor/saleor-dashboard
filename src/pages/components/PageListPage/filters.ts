@@ -1,4 +1,4 @@
-import { IFilter, IFilterElement } from "@saleor/components/Filter";
+import { FilterElement, IFilter } from "@saleor/components/Filter";
 import { SearchWithFetchMoreProps } from "@saleor/giftCards/GiftCardsList/GiftCardListSearchAndFilters/types";
 import { SearchPageTypesQuery } from "@saleor/graphql";
 import {
@@ -93,7 +93,7 @@ export function createFilterStructure(
 }
 
 export function getFilterQueryParam(
-  filter: IFilterElement<PageListFilterKeys>
+  filter: FilterElement<PageListFilterKeys>
 ): PageListUrlFilters {
   const { name } = filter;
 

@@ -2,16 +2,16 @@ import { TextField } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { FilterReducerAction } from "../reducer";
-import { FieldType, IFilterElement } from "../types";
+import { FieldType, FilterFieldBaseProps } from "../types";
 import useStyles from "./styles";
 import { filterTestingContext } from "./utils";
 
-export interface FilterRangeFieldProps {
+export type FilterRangeFieldProps = FilterFieldBaseProps<
+  string,
+  FieldType.price | FieldType.date
+> & {
   currencySymbol: string;
-  filter: IFilterElement;
-  onFilterPropertyChange: React.Dispatch<FilterReducerAction<string>>;
-}
+};
 
 const FilterRangeField: React.FC<FilterRangeFieldProps> = ({
   currencySymbol,

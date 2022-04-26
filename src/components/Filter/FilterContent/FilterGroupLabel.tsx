@@ -2,8 +2,7 @@ import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
-import { FilterReducerAction } from "../reducer";
-import { IFilterElement } from "../types";
+import { FilterFieldBaseProps } from "../types";
 
 const useStyles = makeStyles(
   theme => ({
@@ -17,10 +16,9 @@ const useStyles = makeStyles(
   { name: "FilterGroupLabel" }
 );
 
-export interface FilterGroupLabelProps<T extends string = string> {
-  filter: IFilterElement<T>;
-  onFilterPropertyChange: React.Dispatch<FilterReducerAction<T>>;
-}
+export type FilterGroupLabelProps<
+  K extends string = string
+> = FilterFieldBaseProps<K>;
 
 const FilterGroupLabel: React.FC<FilterGroupLabelProps> = ({
   filter,
