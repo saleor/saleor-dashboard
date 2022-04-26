@@ -14,6 +14,7 @@ import {
   ProductVariantDetailsQuery
 } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
+import { productVariantEditUrl } from "@saleor/products/urls";
 import { ReorderAction } from "@saleor/types";
 import classNames from "classnames";
 import React from "react";
@@ -67,11 +68,11 @@ interface ProductVariantNavigationProps {
   current?: string;
   defaultVariantId?: string;
   fallbackThumbnail: string;
+  productId: string;
   variants:
     | Array<ProductVariantDetailsQuery["productVariant"]>
     | ProductVariantCreateDataQuery["product"]["variants"];
   onAdd?: () => void;
-  onRowClick: (variantId: string) => void;
   onReorder: ReorderAction;
 }
 
@@ -80,9 +81,9 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
     current,
     defaultVariantId,
     fallbackThumbnail,
+    productId,
     variants,
     onAdd,
-    onRowClick,
     onReorder
   } = props;
 
@@ -114,7 +115,11 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
                 className={classNames(classes.link, {
                   [classes.tabActive]: isActive
                 })}
-                onClick={variant ? () => onRowClick(variant.id) : undefined}
+                href={
+                  variant
+                    ? productVariantEditUrl(productId, variant.id)
+                    : undefined
+                }
               >
                 <TableCellAvatar
                   className={classes.colAvatar}

@@ -12,7 +12,6 @@ import {
   useTheme
 } from "@saleor/macaw-ui";
 import { isDarkTheme } from "@saleor/misc";
-import { staffMemberDetailsUrl } from "@saleor/staff/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 import useRouter from "use-react-router";

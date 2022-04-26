@@ -43,7 +43,6 @@ export interface PageTypeDetailsPageProps {
   attributeList: ListActions;
   saveButtonBarState: ConfirmButtonTransitionState;
   onAttributeAdd: (type: AttributeTypeEnum) => void;
-  onAttributeClick: (id: string) => void;
   onAttributeReorder: (event: ReorderEvent, type: AttributeTypeEnum) => void;
   onAttributeUnassign: (id: string) => void;
   onDelete: () => void;
@@ -73,7 +72,6 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
     onAttributeAdd,
     onAttributeUnassign,
     onAttributeReorder,
-    onAttributeClick,
     onDelete,
     onSubmit
   } = props;
@@ -159,7 +157,6 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
                 disabled={disabled}
                 type={AttributeTypeEnum.PAGE_TYPE}
                 onAttributeAssign={onAttributeAdd}
-                onAttributeClick={onAttributeClick}
                 onAttributeReorder={(event: ReorderEvent) =>
                   onAttributeReorder(event, AttributeTypeEnum.PAGE_TYPE)
                 }

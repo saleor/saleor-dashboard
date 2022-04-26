@@ -72,8 +72,7 @@ import {
   ProductUrlDialog,
   ProductUrlQueryParams,
   productVariantAddUrl,
-  productVariantCreatorUrl,
-  productVariantEditUrl
+  productVariantCreatorUrl
 } from "../../urls";
 import {
   CHANNELS_AVAILIABILITY_MODAL_SELECTOR,
@@ -590,8 +589,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantAdd={handleVariantAdd}
         onVariantsAdd={() => openModal("add-variants")}
-        onVariantShow={variantId => () =>
-          navigate(productVariantEditUrl(product.id, variantId))}
         onVariantReorder={handleVariantReorder}
         onVariantEndPreorderDialogOpen={() => setIsEndPreorderModalOpened(true)}
         onImageUpload={handleImageUpload}

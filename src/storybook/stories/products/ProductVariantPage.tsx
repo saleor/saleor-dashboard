@@ -28,7 +28,6 @@ storiesOf("Views / Products / Product variant details", module)
       onSetDefaultVariant={() => undefined}
       onMediaSelect={() => undefined}
       onSubmit={() => undefined}
-      onVariantClick={() => undefined}
       onVariantReorder={() => undefined}
       saveButtonBarState="default"
       variantDeactivatePreoderButtonState="default"
@@ -59,7 +58,6 @@ storiesOf("Views / Products / Product variant details", module)
       onSetDefaultVariant={() => undefined}
       onMediaSelect={() => undefined}
       onSubmit={() => undefined}
-      onVariantClick={() => undefined}
       onVariantReorder={() => undefined}
       saveButtonBarState="default"
       variantDeactivatePreoderButtonState="default"
@@ -89,7 +87,6 @@ storiesOf("Views / Products / Product variant details", module)
       onSetDefaultVariant={() => undefined}
       onMediaSelect={() => undefined}
       onSubmit={() => undefined}
-      onVariantClick={() => undefined}
       onVariantReorder={() => undefined}
       saveButtonBarState="default"
       variantDeactivatePreoderButtonState="default"
@@ -117,7 +114,6 @@ storiesOf("Views / Products / Product variant details", module)
       onSetDefaultVariant={() => undefined}
       onMediaSelect={() => undefined}
       onSubmit={() => undefined}
-      onVariantClick={() => undefined}
       onVariantReorder={() => undefined}
       saveButtonBarState="default"
       variantDeactivatePreoderButtonState="default"

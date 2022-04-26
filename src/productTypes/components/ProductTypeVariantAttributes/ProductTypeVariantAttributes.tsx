@@ -1,5 +1,6 @@
 import { Card, TableCell, TableRow, Tooltip } from "@material-ui/core";
 import HelpOutline from "@material-ui/icons/HelpOutline";
+import { attributeUrl } from "@saleor/attributes/urls";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
@@ -66,7 +67,6 @@ interface ProductTypeVariantAttributesProps extends ListActions {
   testId?: string;
   selectedVariantAttributes: string[];
   onAttributeAssign: (type: ProductAttributeType) => void;
-  onAttributeClick: (id: string) => void;
   onAttributeReorder: ReorderAction;
   onAttributeUnassign: (id: string) => void;
   onAttributeVariantSelection?: (isActive: boolean) => void;
@@ -104,7 +104,6 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
     type,
     testId,
     onAttributeAssign,
-    onAttributeClick,
     onAttributeReorder,
     onAttributeUnassign,
     onAttributeVariantSelection,
@@ -209,11 +208,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                   selected={isVariantSelected}
                   className={!!attribute ? classes.link : undefined}
                   hover={!!attribute}
-                  onClick={
-                    !!attribute
-                      ? () => onAttributeClick(attribute.id)
-                      : undefined
-                  }
+                  href={attribute ? attributeUrl(attribute.id) : undefined}
                   key={maybe(() => attribute.id)}
                   index={attributeIndex || 0}
                   data-test-id={"id-" + +maybe(() => attribute.id)}

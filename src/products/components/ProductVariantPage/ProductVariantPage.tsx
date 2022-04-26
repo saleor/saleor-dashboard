@@ -115,7 +115,6 @@ interface ProductVariantPageProps {
   onDelete();
   onSubmit(data: ProductVariantUpdateSubmitData);
   onMediaSelect(id: string);
-  onVariantClick(variantId: string);
   onSetDefaultVariant();
   onWarehouseConfigure();
 }
@@ -140,7 +139,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   onDelete,
   onMediaSelect,
   onSubmit,
-  onVariantClick,
   onVariantPreorderDeactivate,
   variantDeactivatePreoderButtonState,
   onVariantReorder,
@@ -242,13 +240,9 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                       current={variant?.id}
                       defaultVariantId={defaultVariantId}
                       fallbackThumbnail={variant?.product?.thumbnail?.url}
+                      productId={productId}
                       variants={variant?.product.variants}
                       onAdd={onAdd}
-                      onRowClick={(variantId: string) => {
-                        if (variant) {
-                          return onVariantClick(variantId);
-                        }
-                      }}
                       onReorder={onVariantReorder}
                     />
                   </div>

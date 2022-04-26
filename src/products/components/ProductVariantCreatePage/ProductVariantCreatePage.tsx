@@ -106,7 +106,6 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   referenceProducts = [],
   attributeValues,
   onSubmit,
-  onVariantClick,
   onVariantReorder,
   onWarehouseConfigure,
   assignReferencesAttributeId,
@@ -164,11 +163,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
               <ProductVariantNavigation
                 fallbackThumbnail={product?.thumbnail?.url}
                 variants={product?.variants}
-                onRowClick={(variantId: string) => {
-                  if (product && product.variants) {
-                    return onVariantClick(variantId);
-                  }
-                }}
+                productId={productId}
                 onReorder={onVariantReorder}
               />
             </div>

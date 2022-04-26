@@ -59,7 +59,6 @@ export interface ProductTypeDetailsPageProps {
   taxTypes: ProductTypeDetailsQuery["taxTypes"];
   variantAttributeList: ListActions;
   onAttributeAdd: (type: ProductAttributeType) => void;
-  onAttributeClick: (id: string) => void;
   onAttributeReorder: (event: ReorderEvent, type: ProductAttributeType) => void;
   onAttributeUnassign: (id: string) => void;
   onDelete: () => void;
@@ -94,7 +93,6 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
   onAttributeAdd,
   onAttributeUnassign,
   onAttributeReorder,
-  onAttributeClick,
   onDelete,
   onHasVariantsToggle,
   onSubmit,
@@ -204,7 +202,6 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                   disabled={disabled}
                   type={ProductAttributeType.PRODUCT}
                   onAttributeAssign={onAttributeAdd}
-                  onAttributeClick={onAttributeClick}
                   onAttributeReorder={(event: ReorderEvent) =>
                     onAttributeReorder(event, ProductAttributeType.PRODUCT)
                   }
@@ -233,7 +230,6 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                       disabled={disabled}
                       type={ProductAttributeType.VARIANT}
                       onAttributeAssign={onAttributeAdd}
-                      onAttributeClick={onAttributeClick}
                       onAttributeReorder={(event: ReorderEvent) =>
                         onAttributeReorder(event, ProductAttributeType.VARIANT)
                       }

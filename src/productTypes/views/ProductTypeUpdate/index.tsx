@@ -1,4 +1,3 @@
-import { attributeUrl } from "@saleor/attributes/urls";
 import AssignAttributeDialog from "@saleor/components/AssignAttributeDialog";
 import AttributeUnassignDialog from "@saleor/components/AttributeUnassignDialog";
 import BulkAttributeUnassignDialog from "@saleor/components/BulkAttributeUnassignDialog";
@@ -332,7 +331,6 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
             })
           )
         }
-        onAttributeClick={attributeId => navigate(attributeUrl(attributeId))}
         onAttributeReorder={handleAttributeReorder}
         onAttributeUnassign={attributeId =>
           navigate(

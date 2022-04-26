@@ -389,9 +389,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
           return [...errors, ...channelErrors];
         }}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
-        onVariantClick={variantId => {
-          navigate(productVariantEditUrl(productId, variantId));
-        }}
         onVariantPreorderDeactivate={handleDeactivateVariantPreorder}
         variantDeactivatePreoderButtonState={deactivatePreoderOpts.status}
         onVariantReorder={handleVariantReorder}

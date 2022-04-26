@@ -26,6 +26,7 @@ import {
   RefreshLimitsQuery
 } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
+import { productVariantEditUrl } from "@saleor/products/urls";
 import { isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
@@ -210,7 +211,6 @@ interface ProductVariantsProps extends ListActions, ChannelProps {
   product: ProductFragment;
   variants: ProductDetailsVariantFragment[];
   onVariantReorder: ReorderAction;
-  onRowClick: (id: string) => () => void;
   onSetDefaultVariant(variant: ProductDetailsVariantFragment[][0]);
   onVariantAdd?();
   onVariantsAdd?();
@@ -224,7 +224,6 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
     limits,
     variants,
     product,
-    onRowClick,
     onVariantAdd,
     onVariantsAdd,
     onVariantReorder,
@@ -380,7 +379,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                   data-test-id="product-variant-row"
                   selected={isSelected}
                   hover={!!variant}
-                  onClick={onRowClick(variant.id)}
+                  href={productVariantEditUrl(product.id, variant.id)}
                   key={variant ? variant.id : "skeleton"}
                   index={variantIndex || 0}
                   className={classes.link}
