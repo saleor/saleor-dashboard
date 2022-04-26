@@ -54,7 +54,7 @@ jobs:
       - name: revert snapshot
         env:
           SALEOR_CLI_ENV: staging
-        run: npx saleor backup restore I7rNqplv
+        run: npx saleor backup restore MbdG5UXd
 
   run-tests-in-parallel:
     needs: revert-automation-env-to-snap
