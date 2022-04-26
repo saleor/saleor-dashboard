@@ -1,4 +1,4 @@
-import { IFilterElement } from "@saleor/components/Filter";
+import { FilterElement } from "@saleor/components/Filter";
 import {
   CustomerFilterKeys,
   CustomerListFilterOpts
@@ -70,7 +70,7 @@ export function getFilterVariables(
 }
 
 export function getFilterQueryParam(
-  filter: IFilterElement<CustomerFilterKeys>
+  filter: FilterElement<CustomerFilterKeys>
 ): CustomerListUrlFilters {
   const { name } = filter;
 

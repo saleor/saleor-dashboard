@@ -1,6 +1,5 @@
-import { FilterType } from "@saleor/components/Filter";
+import { FilterFieldBaseProps, FilterType } from "@saleor/components/Filter";
 import {
-  FilterFieldBaseProps,
   getIsFilterMultipleChoices,
   useCommonStyles
 } from "@saleor/components/Filter/FilterContent/utils";

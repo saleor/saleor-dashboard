@@ -3,8 +3,7 @@ import { stringify } from "qs";
 
 export function stringifyQs(params: {}): string {
   return stringify(params, {
-    indices: false,
-    arrayFormat: "brackets"
+    arrayFormat: "indices"
   });
 }
 

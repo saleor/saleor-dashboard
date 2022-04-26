@@ -2224,6 +2224,14 @@
   "src_dot_components_dot_Filter_dot_FilterContent_dot_996289613": {
     "string": "Filters"
   },
+  "src_dot_components_dot_Filter_dot_FilterContent_dot_key": {
+    "context": "key-value field input",
+    "string": "Key"
+  },
+  "src_dot_components_dot_Filter_dot_FilterContent_dot_value": {
+    "context": "key-value field input",
+    "string": "Value"
+  },
   "src_dot_components_dot_Filter_dot_UNKNOWN_ERROR": {
     "context": "filters error messages unknown error",
     "string": "Unknown error occurred"
@@ -2231,6 +2239,18 @@
   "src_dot_components_dot_Filter_dot_VALUE_REQUIRED": {
     "context": "filters error messages value required",
     "string": "Choose a value"
+  },
+  "src_dot_components_dot_Filter_dot_add": {
+    "context": "key-value field button add more key-value pairs",
+    "string": "Add more"
+  },
+  "src_dot_components_dot_Filter_dot_key": {
+    "context": "key-value field input",
+    "string": "Key"
+  },
+  "src_dot_components_dot_Filter_dot_value": {
+    "context": "key-value field input",
+    "string": "Value"
   },
   "src_dot_components_dot_Form_dot_cancelButton": {
     "context": "ExitFormPrompt cancel button",
@@ -4942,6 +4962,9 @@
     "context": "order",
     "string": "Paid with Gift Card"
   },
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_metadata": {
+    "string": "Metadata"
+  },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_placed": {
     "context": "order",
     "string": "Created"
@@ -6406,6 +6429,9 @@
   "src_dot_products_dot_components_dot_ProductListPage_dot_kind": {
     "context": "product kind",
     "string": "Product Kind"
+  },
+  "src_dot_products_dot_components_dot_ProductListPage_dot_metadata": {
+    "string": "Metadata"
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_outOfStock": {
     "context": "product status",

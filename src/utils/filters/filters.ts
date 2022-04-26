@@ -1,4 +1,9 @@
-import { IFilter, IFilterElement } from "@saleor/components/Filter";
+import {
+  FilterElement,
+  FilterElementKeyValue,
+  FilterElementRegular,
+  IFilter
+} from "@saleor/components/Filter";
 import { findValueInEnum } from "@saleor/misc";
 import { ActiveTab } from "@saleor/types";
 import isArray from "lodash/isArray";
@@ -49,15 +54,15 @@ export function dedupeFilter<T>(array: T[]): T[] {
 export type GetFilterQueryParam<
   TFilterKeys extends string,
   TFilters extends {}
-> = (filter: IFilterElement<TFilterKeys>, params?: {}) => TFilters;
+> = (filter: FilterElement<TFilterKeys>, params?: {}) => TFilters;
 export function getFilterQueryParams<
   TFilterKeys extends string,
   TUrlFilters extends {}
 >(
-  filter: IFilter<TFilterKeys>,
+  filters: IFilter<TFilterKeys>,
   getFilterQueryParam: GetFilterQueryParam<TFilterKeys, TUrlFilters>
 ): TUrlFilters {
-  return filter.reduce(
+  return filters.reduce(
     (acc, filterField) => ({
       ...acc,
       ...getFilterQueryParam(filterField, acc)
@@ -82,7 +87,7 @@ export function getGteLteVariables<T>(variables: GteLte<T>): GteLte<T> | null {
 export function getSingleValueQueryParam<
   TKey extends string,
   TUrlKey extends string
->(param: IFilterElement<TKey>, key: TUrlKey) {
+>(param: FilterElement<TKey>, key: TUrlKey) {
   const { active, value } = param;
 
   if (!active) {
@@ -100,7 +105,7 @@ export function getSingleEnumValueQueryParam<
   TKey extends string,
   TUrlKey extends string,
   TEnum extends {}
->(param: IFilterElement<TKey>, key: TUrlKey, haystack: TEnum) {
+>(param: FilterElementRegular<TKey>, key: TUrlKey, haystack: TEnum) {
   const { active, value } = param;
 
   if (!active) {
@@ -118,7 +123,7 @@ export function getMultipleEnumValueQueryParam<
   TKey extends string,
   TUrlKey extends string,
   TEnum extends {}
->(param: IFilterElement<TKey>, key: TUrlKey, haystack: TEnum) {
+>(param: FilterElementRegular<TKey>, key: TUrlKey, haystack: TEnum) {
   const { active, value } = param;
 
   if (!active) {
@@ -135,7 +140,7 @@ export function getMultipleEnumValueQueryParam<
 export function getMultipleValueQueryParam<
   TKey extends string,
   TUrlKey extends string
->(param: IFilterElement<TKey>, key: TUrlKey) {
+>(param: FilterElement<TKey>, key: TUrlKey) {
   const { active, value } = param;
 
   if (!active) {
@@ -152,7 +157,7 @@ export function getMultipleValueQueryParam<
 export function getMinMaxQueryParam<
   TKey extends string,
   TUrlKey extends string
->(param: IFilterElement<TKey>, keyFrom: TUrlKey, keyTo: TUrlKey) {
+>(param: FilterElement<TKey>, keyFrom: TUrlKey, keyTo: TUrlKey) {
   const { active, multiple, value } = param;
 
   if (!active) {
@@ -172,6 +177,25 @@ export function getMinMaxQueryParam<
   return {
     [keyFrom]: value[0],
     [keyTo]: value[0]
+  };
+}
+
+export function getKeyValueQueryParam<
+  TKey extends string,
+  TUrlKey extends string
+>(param: FilterElementKeyValue<TKey>, key: TUrlKey) {
+  const { active, value } = param;
+
+  if (!active) {
+    return {
+      [key]: undefined
+    };
+  }
+
+  const filledOutPairs = value.filter(keyValuePair => keyValuePair.key !== "");
+
+  return {
+    [key]: filledOutPairs
   };
 }
 

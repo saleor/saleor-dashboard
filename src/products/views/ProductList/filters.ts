@@ -30,12 +30,17 @@ import {
 import isArray from "lodash/isArray";
 import moment from "moment-timezone";
 
-import { IFilterElement } from "../../../components/Filter";
+import {
+  FilterElement,
+  FilterElementKeyValue,
+  FilterElementRegular
+} from "../../../components/Filter";
 import {
   createFilterTabUtils,
   createFilterUtils,
   dedupeFilter,
   getGteLteVariables,
+  getKeyValueQueryParam,
   getMinMaxQueryParam,
   getMultipleValueQueryParam,
   getSingleEnumValueQueryParam,
@@ -46,6 +51,7 @@ import {
   ProductListUrlFilters,
   ProductListUrlFiltersAsDictWithMultipleValues,
   ProductListUrlFiltersEnum,
+  ProductListUrlFiltersWithKeyValueValues,
   ProductListUrlFiltersWithMultipleValues,
   ProductListUrlQueryParams
 } from "../../urls";
@@ -165,6 +171,14 @@ export function getFilterOpts(
       onFetchMore: collections.search.loadMore,
       onSearchChange: collections.search.search,
       value: dedupeFilter(params.collections || [])
+    },
+    metadata: {
+      active: !!params?.metadata?.length,
+      value: [
+        ...(params?.metadata
+          ? params.metadata.filter(pair => pair?.key !== undefined)
+          : [])
+      ]
     },
     productKind: {
       active: params?.productKind !== undefined,
@@ -313,6 +327,7 @@ export function getFilterVariables(
     attributes: getFilteredAttributeValue(params),
     categories: params.categories !== undefined ? params.categories : null,
     collections: params.collections !== undefined ? params.collections : null,
+    metadata: params?.metadata,
     price: isChannelSelected
       ? getGteLteVariables({
           gte: parseFloat(params.priceFrom),
@@ -331,7 +346,7 @@ export function getFilterVariables(
 }
 
 export function getFilterQueryParam(
-  filter: IFilterElement<ProductFilterKeys>,
+  filter: FilterElement<ProductFilterKeys>,
   params: ProductListUrlFilters
 ): ProductListUrlFilters {
   const { active, group, name, value } = filter;
@@ -377,7 +392,7 @@ export function getFilterQueryParam(
 
     case ProductFilterKeys.stock:
       return getSingleEnumValueQueryParam(
-        filter,
+        filter as FilterElementRegular<ProductFilterKeys.stock>,
         ProductListUrlFiltersEnum.stockStatus,
         StockAvailability
       );
@@ -392,6 +407,12 @@ export function getFilterQueryParam(
       return getSingleValueQueryParam(
         filter,
         ProductListUrlFiltersEnum.productKind
+      );
+
+    case ProductFilterKeys.metadata:
+      return getKeyValueQueryParam(
+        filter as FilterElementKeyValue<ProductFilterKeys>,
+        ProductListUrlFiltersWithKeyValueValues.metadata
       );
   }
 }

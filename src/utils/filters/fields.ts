@@ -1,12 +1,17 @@
-import { FieldType, IFilterElement } from "@saleor/components/Filter";
+import { FieldType, FilterElementGeneric } from "@saleor/components/Filter";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import { FetchMoreProps, MinMax, SearchPageProps } from "@saleor/types";
+import {
+  FetchMoreProps,
+  KeyValue,
+  MinMax,
+  SearchPageProps
+} from "@saleor/types";
 
-export function createPriceField<T extends string>(
-  name: T,
+export function createPriceField<K extends string = string>(
+  name: K,
   label: string,
   defaultValue: MinMax
-): IFilterElement<T> {
+): FilterElementGeneric<K, FieldType.price> {
   return {
     active: false,
     label,
@@ -17,11 +22,26 @@ export function createPriceField<T extends string>(
   };
 }
 
-export function createDateField<T extends string>(
-  name: T,
+export function createKeyValueField<K extends string = string>(
+  name: K,
+  label: string,
+  defaultValue: KeyValue[]
+): FilterElementGeneric<K, FieldType.keyValue> {
+  return {
+    active: false,
+    label,
+    multiple: false,
+    name,
+    type: FieldType.keyValue,
+    value: defaultValue
+  };
+}
+
+export function createDateField<K extends string>(
+  name: K,
   label: string,
   defaultValue: MinMax
-): IFilterElement<T> {
+): FilterElementGeneric<K, FieldType.date> {
   return {
     active: false,
     label,
@@ -32,11 +52,11 @@ export function createDateField<T extends string>(
   };
 }
 
-export function createDateTimeField<T extends string>(
-  name: T,
+export function createDateTimeField<K extends string>(
+  name: K,
   label: string,
   defaultValue: MinMax
-): IFilterElement<T> {
+): FilterElementGeneric<K, FieldType.dateTime> {
   return {
     active: false,
     label,
@@ -47,11 +67,11 @@ export function createDateTimeField<T extends string>(
   };
 }
 
-export function createNumberField<T extends string>(
-  name: T,
+export function createNumberField<K extends string>(
+  name: K,
   label: string,
   defaultValue: MinMax
-): IFilterElement<T> {
+): FilterElementGeneric<K, FieldType.number> {
   return {
     active: false,
     label,
@@ -62,13 +82,13 @@ export function createNumberField<T extends string>(
   };
 }
 
-export function createOptionsField<T extends string>(
-  name: T,
+export function createOptionsField<K extends string>(
+  name: K,
   label: string,
   defaultValue: string[],
   multiple: boolean,
   options: MultiAutocompleteChoiceType[]
-): IFilterElement<T> {
+): FilterElementGeneric<K, FieldType.options> {
   return {
     active: false,
     label,
@@ -80,8 +100,8 @@ export function createOptionsField<T extends string>(
   };
 }
 
-export function createAutocompleteField<T extends string>(
-  name: T,
+export function createAutocompleteField<K extends string>(
+  name: K,
   label: string,
   defaultValue: string[] = [],
   displayValues: MultiAutocompleteChoiceType[],
@@ -89,7 +109,7 @@ export function createAutocompleteField<T extends string>(
   options: MultiAutocompleteChoiceType[],
   opts: FetchMoreProps & SearchPageProps,
   id?: string
-): IFilterElement<T> {
+): FilterElementGeneric<K, FieldType.autocomplete> {
   return {
     ...opts,
     active: false,
@@ -104,11 +124,11 @@ export function createAutocompleteField<T extends string>(
   };
 }
 
-export function createTextField<T extends string>(
-  name: T,
+export function createTextField<K extends string>(
+  name: K,
   label: string,
   defaultValue: string
-): IFilterElement<T> {
+): FilterElementGeneric<K, FieldType.text> {
   return {
     active: false,
     label,
@@ -119,12 +139,12 @@ export function createTextField<T extends string>(
   };
 }
 
-export function createBooleanField<T extends string>(
-  name: T,
+export function createBooleanField<K extends string>(
+  name: K,
   label: string,
   defaultValue: boolean | undefined,
   labels: Record<"positive" | "negative", string>
-): IFilterElement<T> {
+): FilterElementGeneric<K, FieldType.boolean> {
   return {
     active: false,
     label,

@@ -8,9 +8,10 @@ import Checkbox from "../Checkbox";
 import Hr from "../Hr";
 import Link from "../Link";
 import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
-import { FilterBaseFieldProps } from "./types";
+import { FieldType, FilterFieldBaseProps } from "./types";
 
-interface FilterAutocompleteFieldProps extends FilterBaseFieldProps {
+interface FilterAutocompleteFieldProps
+  extends FilterFieldBaseProps<string, FieldType.autocomplete> {
   displayValues: FilterAutocompleteDisplayValues;
   setDisplayValues: (values: FilterAutocompleteDisplayValues) => void;
   initialDisplayValues: FilterAutocompleteDisplayValues;
@@ -51,7 +52,7 @@ const useStyles = makeStyles(
 
 const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
   displayValues,
-  filterField,
+  filter,
   setDisplayValues,
   onFilterPropertyChange,
   initialDisplayValues,
@@ -59,9 +60,9 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
 }) => {
   const classes = useStyles({});
 
-  const fieldDisplayValues = displayValues[filterField.name];
-  const initialFieldDisplayValues = initialDisplayValues[filterField.name];
-  const availableOptions = filterField.options.filter(option =>
+  const fieldDisplayValues = displayValues[filter.name];
+  const initialFieldDisplayValues = initialDisplayValues[filter.name];
+  const availableOptions = filter.options.filter(option =>
     fieldDisplayValues.every(
       displayValue => displayValue.value !== option.value
     )
@@ -70,8 +71,8 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
     availableOptions.length === 0 && fieldDisplayValues.length === 0;
 
   const getUpdatedFilterValue = (option: MultiAutocompleteChoiceType) => {
-    if (filterField.multiple) {
-      return toggle(option.value, filterField.value, (a, b) => a === b);
+    if (filter.multiple) {
+      return toggle(option.value, filter.value, (a, b) => a === b);
     }
 
     return [option.value];
@@ -80,7 +81,7 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
   const handleChange = (option: MultiAutocompleteChoiceType) => {
     onFilterPropertyChange({
       payload: {
-        name: filterField.name,
+        name: filter.name,
         update: {
           active: true,
           value: getUpdatedFilterValue(option)
@@ -89,10 +90,10 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
       type: "set-property"
     });
 
-    if (filterField.multiple) {
+    if (filter.multiple) {
       setDisplayValues({
         ...displayValues,
-        [filterField.name]: toggle(
+        [filter.name]: toggle(
           option,
           fieldDisplayValues,
           (a, b) => a.value === b.value
@@ -102,7 +103,7 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
   };
 
   const isValueChecked = (displayValue: MultiAutocompleteChoiceType) =>
-    filterField.value.includes(displayValue.value);
+    filter.value.includes(displayValue.value);
 
   const filteredValuesChecked = initialFieldDisplayValues.filter(
     isValueChecked
@@ -116,18 +117,18 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
 
   return (
     <div {...rest}>
-      {filterField?.onSearchChange && (
+      {filter?.onSearchChange && (
         <TextField
           data-test-id="filter-field-autocomplete-input"
           className={classes.inputContainer}
           fullWidth
-          name={filterField.name + "_autocomplete"}
+          name={filter.name + "_autocomplete"}
           InputProps={{
             classes: {
               input: classes.input
             }
           }}
-          onChange={event => filterField.onSearchChange(event.target.value)}
+          onChange={event => filter.onSearchChange(event.target.value)}
         />
       )}
       {filteredValuesChecked.map(displayValue => (
@@ -136,13 +137,13 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
             control={
               <Checkbox
                 data-test-id={
-                  "filter-field-autocomplete-selected-" + filterField.value
+                  "filter-field-autocomplete-selected-" + filter.value
                 }
-                checked={filterField.value.includes(displayValue.value)}
+                checked={filter.value.includes(displayValue.value)}
               />
             }
             label={displayValue.label}
-            name={filterField.name}
+            name={filter.name}
             onChange={() => handleChange(displayValue)}
           />
         </div>
@@ -167,23 +168,23 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
             control={
               <Checkbox
                 data-test-id={
-                  "filter-field-autocomplete-option-" + filterField.value
+                  "filter-field-autocomplete-option-" + filter.value
                 }
-                checked={filterField.value.includes(option.value)}
+                checked={filter.value.includes(option.value)}
               />
             }
             label={option.label}
-            name={filterField.name}
+            name={filter.name}
             onChange={() => handleChange(option)}
           />
         </div>
       ))}
-      {filterField.hasMore && (
+      {filter.hasMore && (
         <Link
           data-test-id="filter-field-autocomplete-has-more"
           className={classes.showMore}
           underline
-          onClick={filterField.onFetchMore}
+          onClick={filter.onFetchMore}
         >
           <FormattedMessage
             defaultMessage="Show more"

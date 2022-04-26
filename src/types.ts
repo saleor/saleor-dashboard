@@ -2,7 +2,7 @@ import { FetchResult, MutationResult } from "@apollo/client";
 import { UserPermissionFragment } from "@saleor/graphql";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 
-import { IFilter, IFilterElement } from "./components/Filter";
+import { FilterElement, IFilter } from "./components/Filter";
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
 
 export interface UserError {
@@ -61,7 +61,7 @@ export interface ListProps<TColumns extends string = string> {
     value: ListSettings<TColumns>[T]
   ) => void;
   onListSettingsReset?: () => void;
-  filterDependency?: IFilterElement;
+  filterDependency?: FilterElement;
 }
 
 export interface SortPage<TSortKey extends string> {
@@ -165,6 +165,9 @@ export type FiltersWithMultipleValues<TFilters extends string> = Partial<
 export type FiltersAsDictWithMultipleValues<TFilters extends string> = Partial<
   Record<TFilters, Record<string, string[]>>
 >;
+export type FiltersWithKeyValueValues<TFilters extends string> = Partial<
+  Record<TFilters, KeyValue[]>
+>;
 export type Search = Partial<{
   query: string;
 }>;
@@ -200,6 +203,11 @@ export interface UserPermissionProps {
 
 export interface MutationResultAdditionalProps {
   status: ConfirmButtonTransitionState;
+}
+
+export interface KeyValue {
+  key: string;
+  value?: string;
 }
 
 export type MinMax = Record<"min" | "max", string>;

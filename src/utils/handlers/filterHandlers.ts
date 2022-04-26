@@ -24,7 +24,7 @@ function createFilterHandlers<
 }): CreateFilterHandlers<TFilterKeys> {
   const { getFilterQueryParam, navigate, createUrl, params, cleanupFn } = opts;
 
-  const changeFilters = (filter: IFilter<TFilterKeys>) => {
+  const changeFilters = (filters: IFilter<TFilterKeys>) => {
     if (!!cleanupFn) {
       cleanupFn();
     }
@@ -32,7 +32,7 @@ function createFilterHandlers<
     navigate(
       createUrl({
         ...params,
-        ...getFilterQueryParams(filter, getFilterQueryParam),
+        ...getFilterQueryParams(filters, getFilterQueryParam),
         activeTab: undefined
       })
     );
