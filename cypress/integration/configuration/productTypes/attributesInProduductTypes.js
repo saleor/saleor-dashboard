@@ -48,7 +48,7 @@ filterTests({ definedTags: ["all"] }, () => {
             .click()
             .addAliasToGraphRequest("AssignProductAttribute")
             .assignElements(startsWith, false)
-            .confirmationMessageShouldDisappear()
+            .confirmationMessageShouldAppear()
             .waitForRequestAndCheckIfNoErrors("@AssignProductAttribute");
           getProductType(productType.id);
         })
@@ -71,7 +71,7 @@ filterTests({ definedTags: ["all"] }, () => {
             .click()
             .addAliasToGraphRequest("AssignProductAttribute")
             .assignElements(startsWith, false)
-            .confirmationMessageShouldDisappear()
+            .confirmationMessageShouldAppear()
             .wait("@AssignProductAttribute");
           getProductType(productType.id);
         })
@@ -96,6 +96,7 @@ filterTests({ definedTags: ["all"] }, () => {
             productTypeDetailsUrl(productType.id)
           )
             .get(BUTTON_SELECTORS.deleteIcon)
+            .should("be.enabled")
             .click()
             .addAliasToGraphRequest("UnassignProductAttribute")
             .get(BUTTON_SELECTORS.submit)
@@ -123,6 +124,7 @@ filterTests({ definedTags: ["all"] }, () => {
           )
             .get(BUTTON_SELECTORS.deleteIcon)
             .click()
+            .should("be.enabled")
             .addAliasToGraphRequest("UnassignProductAttribute")
             .get(BUTTON_SELECTORS.submit)
             .click()
