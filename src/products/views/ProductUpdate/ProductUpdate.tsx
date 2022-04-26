@@ -67,7 +67,6 @@ import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 import { getMutationState } from "../../../misc";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
 import {
-  productImageUrl,
   productListUrl,
   productUrl,
   ProductUrlDialog,
@@ -394,8 +393,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const handleImageDelete = (id: string) => () =>
     deleteProductImage({ variables: { id } });
-  const handleImageEdit = (imageId: string) => () =>
-    navigate(productImageUrl(id, imageId));
 
   const handleSubmit = createMetadataUpdateHandler(
     product,
@@ -553,6 +550,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           />
         ))}
       <ProductUpdatePage
+        productId={id}
         hasChannelChanged={
           hasChannelVariantListingChanged ||
           productChannelsChoices?.length !== currentChannels?.length
@@ -597,7 +595,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onVariantReorder={handleVariantReorder}
         onVariantEndPreorderDialogOpen={() => setIsEndPreorderModalOpened(true)}
         onImageUpload={handleImageUpload}
-        onImageEdit={handleImageEdit}
         onImageDelete={handleImageDelete}
         toolbar={
           <IconButton

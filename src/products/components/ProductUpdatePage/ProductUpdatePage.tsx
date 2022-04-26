@@ -45,7 +45,7 @@ import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import ProductExternalMediaDialog from "@saleor/products/components/ProductExternalMediaDialog";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
-import { productListUrl } from "@saleor/products/urls";
+import { productImageUrl, productListUrl } from "@saleor/products/urls";
 import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
 import {
   ChannelProps,
@@ -72,6 +72,7 @@ import ProductUpdateForm, {
 } from "./form";
 
 export interface ProductUpdatePageProps extends ListActions, ChannelProps {
+  productId: string;
   channelsWithVariantsData: ChannelsWithVariantsData;
   setChannelsData: (data: ChannelData[]) => void;
   onChannelsChange: (data: ChannelData[]) => void;
@@ -123,7 +124,6 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   openChannelsModal: () => void;
   onAttributeSelectBlur: () => void;
   onDelete();
-  onImageEdit?(id: string);
   onImageReorder?(event: { oldIndex: number; newIndex: number });
   onImageUpload(file: File);
   onMediaUrlUpload(mediaUrl: string);
@@ -144,6 +144,7 @@ export interface ProductUpdatePageSubmitData extends ProductUpdatePageFormData {
 }
 
 export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
+  productId,
   defaultWeightUnit,
   disabled,
   categories: categoryChoiceList,
@@ -173,7 +174,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   allChannelsCount,
   currentChannels,
   onImageDelete,
-  onImageEdit,
   onImageReorder,
   onImageUpload,
   onMediaUrlUpload,
@@ -315,9 +315,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   placeholderImage={placeholderImage}
                   onImageDelete={onImageDelete}
                   onImageReorder={onImageReorder}
-                  onImageEdit={onImageEdit}
                   onImageUpload={onImageUpload}
                   openMediaUrlModal={() => setMediaUrlModalStatus(true)}
+                  getImageEditUrl={imageId =>
+                    productImageUrl(productId, imageId)
+                  }
                 />
                 <CardSpacer />
                 {data.attributes.length > 0 && (
