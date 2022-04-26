@@ -5,10 +5,6 @@ export const useStyles = makeStyles(
     container: {
       paddingTop: 0
     },
-    radioLabelContainer: {
-      display: "flex",
-      flexDirection: "column"
-    },
     searchBox: {
       marginTop: theme.spacing(2),
       marginBottom: theme.spacing(2)
@@ -25,9 +21,6 @@ export const useStyles = makeStyles(
       fontSize: "12px",
       lineHeight: "160%"
     },
-    warehouseCell: {
-      paddingLeft: 0
-    },
     helpText: {
       display: "inline",
       fontSize: "12px",
@@ -38,6 +31,15 @@ export const useStyles = makeStyles(
       fontSize: "14px",
       lineHeight: "160%",
       color: theme.palette.saleor.main[3]
+    },
+    radioLabelContainer: {
+      display: "flex",
+      flexDirection: "column"
+    },
+    warehouseName: {
+      maxWidth: "350px",
+      overflow: "hidden",
+      textOverflow: "ellipsis"
     }
   }),
   { name: "OrderChangeWarehouseDialog" }
