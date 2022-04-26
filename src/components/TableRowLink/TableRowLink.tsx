@@ -9,6 +9,7 @@ type MaterialTableRowPropsType = TableRowTypeMap["props"];
 
 export interface TableRowLinkProps
   extends Omit<MaterialTableRowPropsType, "onClick"> {
+  children?: React.ReactNode;
   href?: string;
   className?: string;
   linkClassName?: string;
@@ -24,12 +25,12 @@ const useStyles = makeStyles(
   { name: "TableRowLink" }
 );
 
-const TableRowLink: React.FC<TableRowLinkProps> = ({
+const TableRowLink = ({
   href,
   children,
   linkClassName,
   ...props
-}) => {
+}: TableRowLinkProps) => {
   const classes = useStyles();
 
   if (!href) {
