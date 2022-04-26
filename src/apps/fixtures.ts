@@ -28,7 +28,7 @@ export const appsList: AppsListQuery["apps"]["edges"] = [
       isActive: false,
       name: "app1",
       type: AppTypeEnum.THIRDPARTY,
-      appUrl: "http://localhost:300"
+      appUrl: "http://localhost:3000"
     }
   }
 ];
