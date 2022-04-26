@@ -5,11 +5,10 @@ import { Link, LinkProps } from "react-router-dom";
 
 type LinkType = React.FunctionComponent<LinkProps>;
 
-export const Backlink = (
-  props: BacklinkProps<"a"> & BacklinkProps<"button">
-) => {
-  const { href } = props;
-
+export const Backlink = ({
+  href,
+  ...props
+}: BacklinkProps<"a"> & BacklinkProps<"button">) => {
   if (href && !isExternalURL(href)) {
     return (
       <MacawBacklink<LinkType>
@@ -21,7 +20,7 @@ export const Backlink = (
   }
 
   if (href) {
-    return <MacawBacklink<"a"> {...props} />;
+    return <MacawBacklink<"a"> href={href} {...props} />;
   }
 
   return <MacawBacklink<"button"> {...props} />;
