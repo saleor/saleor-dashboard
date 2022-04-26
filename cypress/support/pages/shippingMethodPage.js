@@ -59,7 +59,8 @@ export function fillUpShippingZoneData({
     .get(BUTTON_SELECTORS.confirm)
     .click()
     .confirmationMessageShouldDisappear()
-    .addAliasToGraphRequest("UpdateShippingZone");
+    .addAliasToGraphRequest("UpdateShippingZone")
+    .reload();
 }
 
 export function changeWeightUnit(weightUnit) {
