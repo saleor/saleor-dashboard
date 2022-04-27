@@ -2,8 +2,8 @@ import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TablePagination from "@saleor/components/TablePagination";
-import TableRowLink from "@saleor/components/TableRowLink";
 import { PluginBaseFragment } from "@saleor/graphql";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { EditIcon, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { PluginListUrlSortField, pluginUrl } from "@saleor/plugins/urls";
@@ -45,6 +45,7 @@ const PluginList: React.FC<PluginListProps> = props => {
     onPreviousPage
   } = props;
   const classes = useStyles(props);
+  const navigate = useNavigator();
   const intl = useIntl();
 
   return (
@@ -70,11 +71,13 @@ const PluginList: React.FC<PluginListProps> = props => {
           plugins,
           plugin =>
             plugin ? (
-              <TableRowLink
+              <TableRow
                 data-test-id="plugin"
                 hover={!!plugin}
                 className={!!plugin ? classes.link : undefined}
-                href={plugin && pluginUrl(plugin.id)}
+                // FIXME: middle click doesn't work - issues with deployments
+                // shows 404 not found
+                onClick={() => plugin && navigate(pluginUrl(plugin.id))}
                 key={plugin ? plugin.id : "skeleton"}
               >
                 <TableCell colSpan={5}>{plugin.name}</TableCell>
@@ -83,7 +86,7 @@ const PluginList: React.FC<PluginListProps> = props => {
                 <TableCell align="right">
                   <EditIcon />
                 </TableCell>
-              </TableRowLink>
+              </TableRow>
             ) : (
               <TableRow>
                 <TableCell colSpan={totalColSpan}>
