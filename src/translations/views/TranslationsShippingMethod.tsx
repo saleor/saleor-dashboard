@@ -14,7 +14,6 @@ import { useIntl } from "react-intl";
 
 import TranslationsShippingMethodPage from "../components/TranslationsShippingMethodPage";
 import { TranslationField, TranslationInputFieldName } from "../types";
-import { languageEntityUrl, TranslatableEntities } from "../urls";
 import { getParsedTranslationInputData } from "../utils";
 
 export interface TranslationsShippingMethodQueryParams {
@@ -87,6 +86,7 @@ const TranslationsShippingMethod: React.FC<TranslationsShippingMethodProps> = ({
 
   return (
     <TranslationsShippingMethodPage
+      translationId={id}
       activeField={params.activeField}
       disabled={
         shippingMethodTranslations.loading || updateTranslationsOpts.loading
@@ -97,11 +97,6 @@ const TranslationsShippingMethod: React.FC<TranslationsShippingMethodProps> = ({
       onEdit={onEdit}
       onDiscard={onDiscard}
       onSubmit={handleSubmit}
-      onLanguageChange={lang =>
-        navigate(
-          languageEntityUrl(lang, TranslatableEntities.shippingMethods, id)
-        )
-      }
       data={
         translation?.__typename === "ShippingMethodTranslatableContent"
           ? translation

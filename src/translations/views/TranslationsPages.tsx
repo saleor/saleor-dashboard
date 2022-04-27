@@ -16,7 +16,6 @@ import { useIntl } from "react-intl";
 
 import TranslationsPagesPage from "../components/TranslationsPagesPage";
 import { PageTranslationInputFieldName, TranslationField } from "../types";
-import { languageEntityUrl, TranslatableEntities } from "../urls";
 import { getParsedTranslationInputData } from "../utils";
 
 export interface TranslationsPagesQueryParams {
@@ -114,6 +113,7 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
 
   return (
     <TranslationsPagesPage
+      translationId={id}
       activeField={params.activeField}
       disabled={pageTranslations.loading || updateTranslationsOpts.loading}
       languageCode={languageCode}
@@ -121,9 +121,6 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
       saveButtonState={updateTranslationsOpts.status}
       onEdit={onEdit}
       onDiscard={onDiscard}
-      onLanguageChange={lang =>
-        navigate(languageEntityUrl(lang, TranslatableEntities.pages, id))
-      }
       onSubmit={handleSubmit}
       onAttributeValueSubmit={handleAttributeValueSubmit}
       data={

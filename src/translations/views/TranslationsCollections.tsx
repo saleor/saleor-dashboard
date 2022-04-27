@@ -14,7 +14,6 @@ import { useIntl } from "react-intl";
 import { extractMutationErrors, maybe } from "../../misc";
 import TranslationsCollectionsPage from "../components/TranslationsCollectionsPage";
 import { TranslationField, TranslationInputFieldName } from "../types";
-import { languageEntityUrl, TranslatableEntities } from "../urls";
 import { getParsedTranslationInputData } from "../utils";
 
 export interface TranslationsCollectionsQueryParams {
@@ -89,6 +88,7 @@ const TranslationsCollections: React.FC<TranslationsCollectionsProps> = ({
 
   return (
     <TranslationsCollectionsPage
+      translationId={id}
       activeField={params.activeField}
       disabled={
         collectionTranslations.loading || updateTranslationsOpts.loading
@@ -98,9 +98,6 @@ const TranslationsCollections: React.FC<TranslationsCollectionsProps> = ({
       saveButtonState={updateTranslationsOpts.status}
       onEdit={onEdit}
       onDiscard={onDiscard}
-      onLanguageChange={lang =>
-        navigate(languageEntityUrl(lang, TranslatableEntities.collections, id))
-      }
       onSubmit={handleSubmit}
       data={
         translation?.__typename === "CollectionTranslatableContent"

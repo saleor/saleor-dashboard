@@ -8,6 +8,7 @@ import { getStringOrPlaceholder } from "@saleor/misc";
 import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
 import {
   languageEntitiesUrl,
+  languageEntityUrl,
   TranslatableEntities
 } from "@saleor/translations/urls";
 import React from "react";
@@ -25,6 +26,7 @@ export const fieldNames = {
 };
 
 const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
+  translationId,
   activeField,
   disabled,
   languages,
@@ -33,7 +35,6 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
   saveButtonState,
   onDiscard,
   onEdit,
-  onLanguageChange,
   onSubmit
 }) => {
   const intl = useIntl();
@@ -63,7 +64,13 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
         <LanguageSwitch
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
-          onLanguageChange={onLanguageChange}
+          getLanguageUrl={lang =>
+            languageEntityUrl(
+              lang,
+              TranslatableEntities.vouchers,
+              translationId
+            )
+          }
         />
       </PageHeader>
       <TranslationFields

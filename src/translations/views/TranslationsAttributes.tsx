@@ -23,7 +23,6 @@ import TranslationsAttributesPage, {
   fieldNames
 } from "../components/TranslationsAttributesPage";
 import { TranslationField } from "../types";
-import { languageEntityUrl, TranslatableEntities } from "../urls";
 
 export interface TranslationsAttributesQueryParams extends Pagination {
   activeField: string;
@@ -171,6 +170,7 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
 
   return (
     <TranslationsAttributesPage
+      translationId={id}
       activeField={params.activeField}
       disabled={
         attributeTranslations.loading ||
@@ -182,9 +182,6 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
       saveButtonState={saveButtonState}
       onEdit={onEdit}
       onDiscard={onDiscard}
-      onLanguageChange={lang =>
-        navigate(languageEntityUrl(lang, TranslatableEntities.attributes, id))
-      }
       onSubmit={handleSubmit}
       data={translation}
       settings={settings}

@@ -14,7 +14,6 @@ import { useIntl } from "react-intl";
 import { extractMutationErrors, maybe } from "../../misc";
 import TranslationsVouchersPage from "../components/TranslationsVouchersPage";
 import { TranslationField, TranslationInputFieldName } from "../types";
-import { languageEntityUrl, TranslatableEntities } from "../urls";
 import { getParsedTranslationInputData } from "../utils";
 
 export interface TranslationsVouchersQueryParams {
@@ -90,6 +89,7 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
 
   return (
     <TranslationsVouchersPage
+      translationId={id}
       activeField={params.activeField}
       disabled={voucherTranslations.loading || updateTranslationsOpts.loading}
       languages={maybe(() => shop.languages, [])}
@@ -97,9 +97,6 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
       saveButtonState={updateTranslationsOpts.status}
       onEdit={onEdit}
       onDiscard={onDiscard}
-      onLanguageChange={lang =>
-        navigate(languageEntityUrl(lang, TranslatableEntities.vouchers, id))
-      }
       onSubmit={handleSubmit}
       data={
         translation?.__typename === "VoucherTranslatableContent"

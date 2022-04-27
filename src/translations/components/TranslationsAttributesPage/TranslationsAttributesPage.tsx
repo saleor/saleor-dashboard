@@ -13,6 +13,7 @@ import { getStringOrPlaceholder } from "@saleor/misc";
 import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
 import {
   languageEntitiesUrl,
+  languageEntityUrl,
   TranslatableEntities
 } from "@saleor/translations/urls";
 import { ListSettings } from "@saleor/types";
@@ -43,6 +44,7 @@ export const fieldNames = {
 };
 
 const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
+  translationId,
   activeField,
   disabled,
   languages,
@@ -51,7 +53,6 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
   saveButtonState,
   onDiscard,
   onEdit,
-  onLanguageChange,
   onSubmit,
   settings,
   onUpdateListSettings,
@@ -88,7 +89,13 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
         <LanguageSwitch
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
-          onLanguageChange={onLanguageChange}
+          getLanguageUrl={lang =>
+            languageEntityUrl(
+              lang,
+              TranslatableEntities.attributes,
+              translationId
+            )
+          }
         />
       </PageHeader>
       <TranslationFields

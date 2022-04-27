@@ -15,6 +15,7 @@ import {
 } from "@saleor/translations/types";
 import {
   languageEntitiesUrl,
+  productVariantUrl,
   TranslatableEntities
 } from "@saleor/translations/urls";
 import React from "react";
@@ -32,6 +33,7 @@ export interface TranslationsProductsPageProps
 }
 
 const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
+  translationId,
   activeField,
   disabled,
   languageCode,
@@ -42,7 +44,6 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
   variantId,
   onDiscard,
   onEdit,
-  onLanguageChange,
   onSubmit,
   onAttributeValueSubmit
 }) => {
@@ -78,7 +79,9 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
         <LanguageSwitch
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
-          onLanguageChange={onLanguageChange}
+          getLanguageUrl={lang =>
+            productVariantUrl(lang, productId, translationId)
+          }
         />
       </PageHeader>
       <TranslationFields

@@ -12,6 +12,7 @@ import {
 } from "@saleor/translations/types";
 import {
   languageEntitiesUrl,
+  languageEntityUrl,
   TranslatableEntities
 } from "@saleor/translations/urls";
 import React from "react";
@@ -25,6 +26,7 @@ export interface TranslationsCategoriesPageProps
 }
 
 const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
+  translationId,
   activeField,
   disabled,
   languageCode,
@@ -33,7 +35,6 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
   saveButtonState,
   onDiscard,
   onEdit,
-  onLanguageChange,
   onSubmit
 }) => {
   const intl = useIntl();
@@ -62,7 +63,13 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
         <LanguageSwitch
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
-          onLanguageChange={onLanguageChange}
+          getLanguageUrl={lang =>
+            languageEntityUrl(
+              lang,
+              TranslatableEntities.categories,
+              translationId
+            )
+          }
         />
       </PageHeader>
       <TranslationFields

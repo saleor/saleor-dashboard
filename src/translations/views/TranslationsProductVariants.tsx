@@ -16,7 +16,6 @@ import { useIntl } from "react-intl";
 import { extractMutationErrors, maybe } from "../../misc";
 import TranslationsProductVariantsPage from "../components/TranslationsProductVariantsPage";
 import { TranslationField, TranslationInputFieldName } from "../types";
-import { productVariantUrl } from "../urls";
 import { getParsedTranslationInputData } from "../utils";
 
 export interface TranslationsProductVariantsQueryParams {
@@ -116,6 +115,7 @@ const TranslationsProductVariants: React.FC<TranslationsProductVariantsProps> = 
 
   return (
     <TranslationsProductVariantsPage
+      translationId={id}
       productId={productId}
       variantId={id}
       activeField={params.activeField}
@@ -127,9 +127,6 @@ const TranslationsProductVariants: React.FC<TranslationsProductVariantsProps> = 
       saveButtonState={updateTranslationsOpts.status}
       onEdit={onEdit}
       onDiscard={onDiscard}
-      onLanguageChange={lang =>
-        navigate(productVariantUrl(lang, productId, id))
-      }
       onSubmit={handleSubmit}
       onAttributeValueSubmit={handleAttributeValueSubmit}
       data={
