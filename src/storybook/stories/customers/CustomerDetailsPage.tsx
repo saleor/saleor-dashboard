@@ -16,7 +16,6 @@ const props: Omit<CustomerDetailsPageProps, "classes"> = {
   onAddressManageClick: () => undefined,
   onDelete: () => undefined,
   onSubmit: () => undefined,
-  onViewAllOrdersClick: () => undefined,
   saveButtonBar: "default"
 };
 

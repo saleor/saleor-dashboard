@@ -19,6 +19,7 @@ import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { orderListUrl } from "@saleor/orders/urls";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
@@ -47,7 +48,6 @@ export interface CustomerDetailsPageProps {
   onSubmit: (
     data: CustomerDetailsPageFormData
   ) => SubmitPromise<AccountErrorFragment[]>;
-  onViewAllOrdersClick: () => void;
   onAddressManageClick: () => void;
   onDelete: () => void;
 }
@@ -58,7 +58,6 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
   errors,
   saveButtonBar,
   onSubmit,
-  onViewAllOrdersClick,
   onAddressManageClick,
   onDelete
 }: CustomerDetailsPageProps) => {
@@ -117,7 +116,9 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
                 >
                   <CustomerOrders
                     orders={mapEdgesToItems(customer?.orders)}
-                    onViewAllOrdersClick={onViewAllOrdersClick}
+                    viewAllHref={orderListUrl({
+                      customer: customer?.email
+                    })}
                   />
                   <CardSpacer />
                 </RequirePermissions>

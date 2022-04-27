@@ -35,11 +35,11 @@ const useStyles = makeStyles(
 
 export interface CustomerOrdersProps {
   orders: RelayToFlat<CustomerDetailsQuery["user"]["orders"]>;
-  onViewAllOrdersClick: () => void;
+  viewAllHref: string;
 }
 
 const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
-  const { orders, onViewAllOrdersClick } = props;
+  const { orders, viewAllHref } = props;
   const classes = useStyles(props);
 
   const intl = useIntl();
@@ -58,7 +58,7 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
           description: "section header"
         })}
         toolbar={
-          <Button variant="tertiary" onClick={onViewAllOrdersClick}>
+          <Button variant="tertiary" href={viewAllHref}>
             <FormattedMessage
               defaultMessage="View all orders"
               description="button"

@@ -12,7 +12,6 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { extractMutationErrors, getStringOrPlaceholder } from "@saleor/misc";
-import { orderListUrl } from "@saleor/orders/urls";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -119,13 +118,6 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
           navigate(
             customerUrl(id, {
               action: "remove"
-            })
-          )
-        }
-        onViewAllOrdersClick={() =>
-          navigate(
-            orderListUrl({
-              customer: user?.email
             })
           )
         }
