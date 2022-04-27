@@ -99,7 +99,6 @@ filterTests({ definedTags: ["all", "refactored"] }, () => {
         billingAddress: address,
         auth: "token"
       })
-        .log({ checkout: checkoutResp })
         .then(({ checkout: checkoutResp }) => {
           checkout = checkoutResp;
           addPayment(checkout.id);

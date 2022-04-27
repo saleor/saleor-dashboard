@@ -22,8 +22,7 @@ import { deleteShippingStartsWith } from "../../support/api/utils/shippingUtils"
 import filterTests from "../../support/filterTests";
 import {
   createCategory,
-  updateCategory,
-  visitAddPage
+  updateCategory
 } from "../../support/pages/catalog/categoriesPage";
 
 filterTests({ definedTags: ["all"] }, () => {
@@ -151,28 +150,27 @@ filterTests({ definedTags: ["all"] }, () => {
     it("should be able to delete category. TC: SALEOR_0206", () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
 
-      visitAddPage();
-      createCategory({ name: categoryName, description: categoryName }).then(
-        categoryResp => {
-          cy.visit(categoryDetailsUrl(categoryResp.id))
-            .get(BUTTON_SELECTORS.deleteButton)
-            .click()
-            .addAliasToGraphRequest("CategoryDelete")
-            .get(BUTTON_SELECTORS.submit)
-            .click()
-            .waitForRequestAndCheckIfNoErrors("@CategoryDelete");
-          getCategory(categoryResp.id).should("be.null");
-        }
-      );
+      createCategoryRequest({
+        name: categoryName
+      }).then(categoryResp => {
+        cy.visit(categoryDetailsUrl(categoryResp.id))
+          .get(BUTTON_SELECTORS.deleteButton)
+          .click()
+          .addAliasToGraphRequest("CategoryDelete")
+          .get(BUTTON_SELECTORS.submit)
+          .click()
+          .waitForRequestAndCheckIfNoErrors("@CategoryDelete");
+        getCategory(categoryResp.id).should("be.null");
+      });
     });
 
     it("should be able to update category. TC: SALEOR_0207", () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
       const updatedName = `${startsWith}updatedCategory`;
 
-      visitAddPage();
-      createCategory({ name: categoryName, description: categoryName })
-        .its("response.body.data.categoryCreate.category")
+      createCategoryRequest({
+        name: categoryName
+      })
         .then(categoryResp => {
           cy.visitAndWaitForProgressBarToDisappear(
             categoryDetailsUrl(categoryResp.id)
@@ -194,40 +192,33 @@ filterTests({ definedTags: ["all"] }, () => {
       let firstCategory;
       let secondCategory;
 
-      visitAddPage();
-      createCategory({
-        name: firstCategoryName,
-        description: firstCategoryName
-      })
-        .its("response.body.data.categoryCreate.category")
-        .then(categoryResp => {
-          firstCategory = categoryResp;
-        });
-      visitAddPage();
-      createCategory({
-        name: secondCategoryName,
-        description: secondCategoryName
-      })
-        .its("response.body.data.categoryCreate.category")
-        .then(categoryResp => {
-          secondCategory = categoryResp;
-          cy.visit(urlList.categories)
-            .searchInTable(startsWith)
-            .get(categoryRow(firstCategory.id))
-            .find(BUTTON_SELECTORS.checkbox)
-            .click()
-            .get(categoryRow(secondCategory.id))
-            .find(BUTTON_SELECTORS.checkbox)
-            .click()
-            .get(BUTTON_SELECTORS.deleteIcon)
-            .click()
-            .addAliasToGraphRequest("CategoryBulkDelete")
-            .get(BUTTON_SELECTORS.submit)
-            .click()
-            .waitForRequestAndCheckIfNoErrors("@CategoryBulkDelete");
-          getCategory(firstCategory.id).should("be.null");
-          getCategory(secondCategory.id).should("be.null");
-        });
+      createCategoryRequest({
+        name: firstCategoryName
+      }).then(categoryResp => {
+        firstCategory = categoryResp;
+      });
+
+      createCategoryRequest({
+        name: secondCategoryName
+      }).then(categoryResp => {
+        secondCategory = categoryResp;
+        cy.visit(urlList.categories)
+          .searchInTable(startsWith)
+          .get(categoryRow(firstCategory.id))
+          .find(BUTTON_SELECTORS.checkbox)
+          .click()
+          .get(categoryRow(secondCategory.id))
+          .find(BUTTON_SELECTORS.checkbox)
+          .click()
+          .get(BUTTON_SELECTORS.deleteIcon)
+          .click()
+          .addAliasToGraphRequest("CategoryBulkDelete")
+          .get(BUTTON_SELECTORS.submit)
+          .click()
+          .waitForRequestAndCheckIfNoErrors("@CategoryBulkDelete");
+        getCategory(firstCategory.id).should("be.null");
+        getCategory(secondCategory.id).should("be.null");
+      });
     });
 
     it("should be able to remove subcategory from category. TC: SALEOR_0208", () => {
@@ -236,9 +227,9 @@ filterTests({ definedTags: ["all"] }, () => {
       let subCategory;
       let mainCategory;
 
-      visitAddPage();
-      createCategory({ name: mainCategoryName, description: mainCategoryName })
-        .its("response.body.data.categoryCreate.category")
+      createCategoryRequest({
+        name: mainCategoryName
+      })
         .then(categoryResp => {
           mainCategory = categoryResp;
           createCategoryRequest({

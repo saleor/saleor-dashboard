@@ -1,8 +1,6 @@
-import { CATEGORIES_LIST } from "../../../elements/catalog/categories/categories-list";
 import { CATEGORY_DETAILS } from "../../../elements/catalog/categories/category-details";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
-import { urlList } from "../../../fixtures/urlList";
 
 export function createCategory({ name, description }) {
   fillUpCategoryGeneralInfo({ name, description });
@@ -35,8 +33,4 @@ export function saveCategory(alias = "CategoryCreate") {
     .get(BUTTON_SELECTORS.confirm)
     .click()
     .waitForRequestAndCheckIfNoErrors(`@${alias}`);
-}
-
-export function visitAddPage() {
-  return cy.visit(urlList.categories + "add");
 }
