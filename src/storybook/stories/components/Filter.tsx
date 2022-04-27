@@ -2,6 +2,7 @@ import { FilterContent, FilterContentProps } from "@saleor/components/Filter";
 import useFilter from "@saleor/components/Filter/useFilter";
 import {
   createDateField,
+  createKeyValueField,
   createOptionsField,
   createPriceField
 } from "@saleor/utils/filters/fields";
@@ -61,6 +62,11 @@ const filtersData = [
       ]
     ),
     active: false
+  },
+  {
+    ...createKeyValueField("metadata", "Metadata", [
+      { key: "123", value: "123" }
+    ])
   }
 ];
 

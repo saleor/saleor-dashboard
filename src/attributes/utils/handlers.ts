@@ -195,20 +195,6 @@ function getFileInput(
   };
 }
 
-function getReferenceInput(attribute: AttributeInput) {
-  return {
-    id: attribute.id,
-    references: attribute.value
-  };
-}
-
-function getRichTextInput(attribute: AttributeInput) {
-  return {
-    id: attribute.id,
-    richText: attribute.value[0]
-  };
-}
-
 function getBooleanInput(attribute: AttributeInput) {
   return {
     id: attribute.id,
@@ -216,57 +202,66 @@ function getBooleanInput(attribute: AttributeInput) {
   };
 }
 
-function getDateInput(attribute: AttributeInput) {
-  return {
-    id: attribute.id,
-    date: attribute.value[0]
-  };
-}
-
-function getDateTimeInput(attribute: AttributeInput) {
-  return {
-    id: attribute.id,
-    dateTime: attribute.value[0]
-  };
-}
-
-function getDefaultInput(attribute: AttributeInput) {
-  return {
-    id: attribute.id,
-    values: ["", undefined, null].includes(attribute.value[0])
-      ? []
-      : attribute.value
-  };
-}
-
 export const prepareAttributesInput = ({
   attributes,
   updatedFileAttributes
 }: AttributesArgs): AttributeValueInput[] =>
-  attributes.map(attribute => {
-    switch (attribute.data.inputType) {
-      case AttributeInputTypeEnum.FILE:
-        return getFileInput(attribute, updatedFileAttributes);
-
-      case AttributeInputTypeEnum.REFERENCE:
-        return getReferenceInput(attribute);
-
-      case AttributeInputTypeEnum.RICH_TEXT:
-        return getRichTextInput(attribute);
-
-      case AttributeInputTypeEnum.BOOLEAN:
-        return getBooleanInput(attribute);
-
-      case AttributeInputTypeEnum.DATE:
-        return getDateInput(attribute);
-
-      case AttributeInputTypeEnum.DATE_TIME:
-        return getDateTimeInput(attribute);
-
-      default:
-        return getDefaultInput(attribute);
+  attributes.reduce((attrInput, attr) => {
+    const inputType = attr.data.inputType;
+    if (inputType === AttributeInputTypeEnum.FILE) {
+      const fileInput = getFileInput(attr, updatedFileAttributes);
+      if (fileInput.file) {
+        attrInput.push(fileInput);
+      }
+      return attrInput;
     }
-  });
+    if (inputType === AttributeInputTypeEnum.BOOLEAN) {
+      const booleanInput = getBooleanInput(attr);
+      attrInput.push(booleanInput);
+      return attrInput;
+    }
+    if (inputType === AttributeInputTypeEnum.RICH_TEXT) {
+      attrInput.push({
+        id: attr.id,
+        richText: attr.value[0]
+      });
+      return attrInput;
+    }
+
+    // for cases other than rich text, boolean and file
+    // we can skip attribute
+    if (!attr.value[0]) {
+      return attrInput;
+    }
+    if (inputType === AttributeInputTypeEnum.REFERENCE) {
+      attrInput.push({
+        id: attr.id,
+        references: attr.value
+      });
+      return attrInput;
+    }
+    if (inputType === AttributeInputTypeEnum.DATE) {
+      attrInput.push({
+        id: attr.id,
+        date: attr.value[0]
+      });
+      return attrInput;
+    }
+    if (inputType === AttributeInputTypeEnum.DATE_TIME) {
+      attrInput.push({
+        id: attr.id,
+        dateTime: attr.value[0]
+      });
+      return attrInput;
+    }
+
+    attrInput.push({
+      id: attr.id,
+      values: attr.value
+    });
+
+    return attrInput;
+  }, []);
 
 export const handleUploadMultipleFiles = async (
   attributesWithNewFileValue: FormsetData<null, File>,

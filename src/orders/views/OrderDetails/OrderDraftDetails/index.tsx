@@ -2,6 +2,8 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import {
   OrderDetailsQuery,
+  OrderDraftCancelMutation,
+  OrderDraftCancelMutationVariables,
   OrderDraftUpdateMutation,
   OrderDraftUpdateMutationVariables,
   StockAvailability,
@@ -56,7 +58,10 @@ interface OrderDraftDetailsProps {
     OrderDraftUpdateMutation,
     OrderDraftUpdateMutationVariables
   >;
-  orderDraftCancel: any;
+  orderDraftCancel: PartialMutationProviderOutput<
+    OrderDraftCancelMutation,
+    OrderDraftCancelMutationVariables
+  >;
   orderDraftFinalize: any;
   openModal: (action: OrderUrlDialog, newParams?: OrderUrlQueryParams) => void;
   closeModal: any;
@@ -166,6 +171,14 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
       input: data
     });
 
+  const handleOrderDraftCancel = async () => {
+    const errors = await extractMutationErrors(orderDraftCancel.mutate({ id }));
+    if (!errors.length) {
+      navigate(orderDraftListUrl());
+    }
+    return errors;
+  };
+
   return (
     <>
       <WindowTitle
@@ -225,7 +238,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
         confirmButtonState={orderDraftCancel.opts.status}
         errors={orderDraftCancel.opts.data?.draftOrderDelete.errors || []}
         onClose={closeModal}
-        onConfirm={() => orderDraftCancel.mutate({ id })}
+        onConfirm={handleOrderDraftCancel}
         open={params.action === "cancel"}
         orderNumber={getStringOrPlaceholder(order?.number)}
       />

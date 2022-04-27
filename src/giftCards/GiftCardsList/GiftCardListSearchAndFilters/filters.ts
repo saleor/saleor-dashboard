@@ -1,4 +1,4 @@
-import { IFilter, IFilterElement } from "@saleor/components/Filter";
+import { FilterElement, IFilter } from "@saleor/components/Filter";
 import {
   GiftCardFilterInput,
   SearchCustomersQuery,
@@ -127,7 +127,7 @@ export const getFilterOpts = ({
 });
 
 export function getFilterQueryParam(
-  filter: IFilterElement<GiftCardListFilterKeys>
+  filter: FilterElement<GiftCardListFilterKeys>
 ): GiftCardListUrlFilters {
   const { name } = filter;
 

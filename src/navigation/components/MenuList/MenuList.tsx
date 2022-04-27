@@ -18,7 +18,6 @@ import { maybe, renderCollection } from "@saleor/misc";
 import { MenuListUrlSortField } from "@saleor/navigation/urls";
 import { ListActions, ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
-import { getFooterColSpanWithBulkActions } from "@saleor/utils/tables";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -54,7 +53,7 @@ const useStyles = makeStyles(
   { name: "MenuList" }
 );
 
-const numberOfColumns = 3;
+const numberOfColumns = 4;
 
 const MenuList: React.FC<MenuListProps> = props => {
   const {
@@ -125,7 +124,7 @@ const MenuList: React.FC<MenuListProps> = props => {
         <TableFooter>
           <TableRow>
             <TablePagination
-              colSpan={getFooterColSpanWithBulkActions(menus, numberOfColumns)}
+              colSpan={numberOfColumns}
               settings={settings}
               hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
               onNextPage={onNextPage}

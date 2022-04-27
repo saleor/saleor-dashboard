@@ -2,7 +2,7 @@ import compact from "lodash/compact";
 
 import {
   FieldType,
-  IFilterElement,
+  FilterElement,
   InvalidFilters,
   ValidationErrorCode
 } from "./types";
@@ -12,13 +12,13 @@ export const getByName = (nameToCompare: string) => (obj: { name: string }) =>
 
 export const isAutocompleteFilterFieldValid = function<T extends string>({
   value
-}: IFilterElement<T>) {
+}: FilterElement<T>) {
   return !!compact(value).length;
 };
 
 export const isNumberFilterFieldValid = function<T extends string>({
   value
-}: IFilterElement<T>) {
+}: FilterElement<T>) {
   const [min, max] = value;
 
   if (!min && !max) {
@@ -29,7 +29,7 @@ export const isNumberFilterFieldValid = function<T extends string>({
 };
 
 export const isFilterFieldValid = function<T extends string>(
-  filter: IFilterElement<T>
+  filter: FilterElement<T>
 ) {
   const { type } = filter;
 
@@ -48,7 +48,7 @@ export const isFilterFieldValid = function<T extends string>(
 };
 
 export const isFilterValid = function<T extends string>(
-  filter: IFilterElement<T>
+  filter: FilterElement<T>
 ) {
   const { required, active } = filter;
 
@@ -60,8 +60,8 @@ export const isFilterValid = function<T extends string>(
 };
 
 export const extractInvalidFilters = function<T extends string>(
-  filtersData: Array<IFilterElement<T>>,
-  filtersDataStructure: Array<IFilterElement<T>>
+  filtersData: Array<FilterElement<T>>,
+  filtersDataStructure: Array<FilterElement<T>>
 ): InvalidFilters<T> {
   return filtersDataStructure.reduce(
     (invalidFilters, { name, multipleFields, dependencies }) => {

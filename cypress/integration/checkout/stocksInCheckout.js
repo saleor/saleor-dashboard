@@ -12,7 +12,7 @@ import { createWaitingForCaptureOrder } from "../../support/api/utils/ordersUtil
 import { createNewProductWithSeveralVariants } from "../../support/api/utils/products/productsUtils";
 import filterTests from "../../support/filterTests";
 
-filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
+filterTests({ definedTags: ["all", "refactored"] }, () => {
   describe("Manage products stocks in checkout", () => {
     const startsWith = "CyStocksCheckout-";
     const name = `${startsWith}${faker.datatype.number()}`;

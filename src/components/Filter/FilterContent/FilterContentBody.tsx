@@ -13,9 +13,16 @@ import React from "react";
 import FilterAutocompleteField, {
   FilterAutocompleteDisplayValues
 } from "../FilterAutocompleteField";
+import { FilterKeyValueField } from "../FilterKeyValueField";
 import FilterOptionField from "../FilterOptionField";
 import { FilterReducerAction } from "../reducer";
-import { FieldType, IFilterElement } from "../types";
+import {
+  FieldType,
+  FilterElement,
+  isFilterDateType,
+  isFilterNumericType,
+  isFilterType
+} from "../types";
 
 const useStyles = makeStyles(
   theme => ({
@@ -37,19 +44,21 @@ const useStyles = makeStyles(
 
 const filterTestingContext = "filter-field-";
 
-export interface FilterContentBodyProps<T extends string = string> {
+export interface FilterContentBodyProps<K extends string> {
   children?: React.ReactNode;
-  filter: IFilterElement<T>;
+  filter: FilterElement<K>;
   currencySymbol?: string;
   initialAutocompleteDisplayValues: FilterAutocompleteDisplayValues;
-  onFilterPropertyChange: React.Dispatch<FilterReducerAction<T>>;
+  onFilterPropertyChange: <T extends FieldType>(
+    value: FilterReducerAction<K, T>
+  ) => void;
   autocompleteDisplayValues: FilterAutocompleteDisplayValues;
   setAutocompleteDisplayValues: React.Dispatch<
     React.SetStateAction<Record<string, MultiAutocompleteChoiceType[]>>
   >;
 }
 
-const FilterContentBody: React.FC<FilterContentBodyProps> = ({
+const FilterContentBody = <K extends string = string>({
   filter,
   children,
   currencySymbol,
@@ -57,7 +66,7 @@ const FilterContentBody: React.FC<FilterContentBodyProps> = ({
   autocompleteDisplayValues,
   setAutocompleteDisplayValues,
   initialAutocompleteDisplayValues
-}) => {
+}: FilterContentBodyProps<K>) => {
   const classes = useStyles({});
   const commonClasses = useCommonStyles({});
 
@@ -65,17 +74,10 @@ const FilterContentBody: React.FC<FilterContentBodyProps> = ({
     return <Skeleton />;
   }
 
-  const isDateField = [FieldType.date, FieldType.dateTime].includes(
-    filter.type
-  );
-  const isNumericField = [FieldType.price, FieldType.number].includes(
-    filter.type
-  );
-
   return (
     <div className={classes.filterSettings}>
       {children}
-      {filter.type === FieldType.text && (
+      {isFilterType(filter, FieldType.text) && (
         <TextField
           data-test-id={filterTestingContext + filter.name}
           fullWidth
@@ -83,7 +85,7 @@ const FilterContentBody: React.FC<FilterContentBodyProps> = ({
           InputProps={{ classes: { input: commonClasses.input } }}
           value={filter.value[0]}
           onChange={event =>
-            onFilterPropertyChange({
+            onFilterPropertyChange<FieldType.text>({
               payload: {
                 name: filter.name,
                 update: {
@@ -95,7 +97,7 @@ const FilterContentBody: React.FC<FilterContentBodyProps> = ({
           }
         />
       )}
-      {isDateField && (
+      {isFilterDateType(filter) && (
         <>
           <FilterSingleSelectField
             filter={filter}
@@ -107,7 +109,7 @@ const FilterContentBody: React.FC<FilterContentBodyProps> = ({
           />
         </>
       )}
-      {isNumericField && (
+      {isFilterNumericType(filter) && (
         <>
           <FilterSingleSelectField
             filter={filter}
@@ -121,14 +123,14 @@ const FilterContentBody: React.FC<FilterContentBodyProps> = ({
         </>
       )}
 
-      {filter.type === FieldType.options && (
+      {isFilterType(filter, FieldType.options) && (
         <FilterOptionField
           data-test-id={filterTestingContext + filter.name}
-          filterField={filter}
+          filter={filter}
           onFilterPropertyChange={onFilterPropertyChange}
         />
       )}
-      {filter.type === FieldType.boolean &&
+      {isFilterType(filter, FieldType.boolean) &&
         filter.options.map(option => (
           <div
             className={classNames(classes.option, classes.optionRadio)}
@@ -159,11 +161,17 @@ const FilterContentBody: React.FC<FilterContentBodyProps> = ({
             />
           </div>
         ))}
-      {filter.type === FieldType.autocomplete && (
+      {isFilterType(filter, FieldType.keyValue) && (
+        <FilterKeyValueField
+          filter={filter}
+          onFilterPropertyChange={onFilterPropertyChange}
+        />
+      )}
+      {isFilterType(filter, FieldType.autocomplete) && (
         <FilterAutocompleteField
           data-test-id={filterTestingContext + filter.name}
           displayValues={autocompleteDisplayValues}
-          filterField={filter}
+          filter={filter}
           setDisplayValues={setAutocompleteDisplayValues}
           onFilterPropertyChange={onFilterPropertyChange}
           initialDisplayValues={initialAutocompleteDisplayValues}

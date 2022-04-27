@@ -3,12 +3,17 @@
 
 import faker from "faker";
 
+import { collectionRow } from "../../elements/catalog/collection-selectors";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { collectionDetailsUrl, urlList } from "../../fixtures/urlList";
 import { createChannel } from "../../support/api/requests/Channels";
-import { createCollection as createCollectionRequest } from "../../support/api/requests/Collections";
+import {
+  addProductToCollection,
+  createCollection as createCollectionRequest
+} from "../../support/api/requests/Collections";
 import { updateChannelInProduct } from "../../support/api/requests/Product";
 import { getCollection } from "../../support/api/requests/storeFront/Collections";
+import { getProductDetails } from "../../support/api/requests/storeFront/ProductDetails";
 import { searchInShop } from "../../support/api/requests/storeFront/Search";
 import { deleteCollectionsStartsWith } from "../../support/api/utils/catalog/collectionsUtils";
 import * as channelsUtils from "../../support/api/utils/channelsUtils";
@@ -23,11 +28,12 @@ import filterTests from "../../support/filterTests";
 import {
   assignProductsToCollection,
   createCollection,
+  removeProductsFromCollection,
   updateCollection
 } from "../../support/pages/catalog/collectionsPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Collections", () => {
+  describe("As an admin I want to manage collections.", () => {
     const startsWith = "CyCollections-";
     const name = `${startsWith}${faker.datatype.number()}`;
 
@@ -76,11 +82,12 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("should not display hidden collections", () => {
+    it("should create hidden collection. TC: SALEOR_0301", () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
+      let collection;
+
       cy.visit(urlList.collections);
       cy.softExpectSkeletonIsVisible();
-      let collection;
 
       createCollection(collectionName, false, defaultChannel)
         .then(collectionResp => {
@@ -99,7 +106,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should display collections", () => {
+    it("should create published collection. TC: SALEOR_0302", () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
       let collection;
 
@@ -121,7 +128,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should not display collection not set as available in channel", () => {
+    it("create collection not available for channel. TC: SALEOR_0303", () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
       let collection;
       let channel;
@@ -150,16 +157,16 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should display products hidden in listing", () => {
+    it("create published collection with products hidden in listings. TC: SALEOR_0304", () => {
       // Products "hidden in listings" are not displayed in Category listings or search results,
       // but are listed on Collections
-      const randomName = `${startsWith}${faker.datatype.number()}`;
+      const collectionName = `${startsWith}${faker.datatype.number()}`;
       let collection;
       let createdProduct;
 
       productsUtils
         .createProductInChannel({
-          name: randomName,
+          name: collectionName,
           channelId: defaultChannel.id,
           productTypeId: productType.id,
           attributeId: attribute.id,
@@ -169,10 +176,10 @@ filterTests({ definedTags: ["all"] }, () => {
         .then(({ product: productResp }) => (createdProduct = productResp));
       cy.visit(urlList.collections);
       cy.softExpectSkeletonIsVisible();
-      createCollection(randomName, true, defaultChannel)
+      createCollection(collectionName, true, defaultChannel)
         .then(collectionResp => {
           collection = collectionResp;
-          assignProductsToCollection(randomName);
+          assignProductsToCollection(collectionName);
         })
         .then(() => {
           getCollection({
@@ -199,7 +206,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should delete collection", () => {
+    it("should delete collection. TC: SALEOR_0305", () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
 
       createCollectionRequest(collectionName).then(collectionResp => {
@@ -216,7 +223,124 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("should update collection", () => {
+    it("delete several collections on collections list page. TC: SALEOR_0309", () => {
+      const deleteSeveral = "delete-several-";
+      const firstCollectionName = `${deleteSeveral}${startsWith}${faker.datatype.number()}`;
+      const secondCollectionName = `${deleteSeveral}${startsWith}${faker.datatype.number()}`;
+      let firstCollection;
+      let secondCollection;
+
+      createCollectionRequest(firstCollectionName).then(collectionResp => {
+        firstCollection = collectionResp;
+      });
+
+      createCollectionRequest(secondCollectionName).then(collectionResp => {
+        secondCollection = collectionResp;
+        cy.visit(urlList.collections)
+          .searchInTable(deleteSeveral)
+          .get(collectionRow(firstCollection.id))
+          .find(BUTTON_SELECTORS.checkbox)
+          .click()
+          .get(collectionRow(secondCollection.id))
+          .find(BUTTON_SELECTORS.checkbox)
+          .click()
+          .get(BUTTON_SELECTORS.deleteIcon)
+          .click()
+          .addAliasToGraphRequest("CollectionBulkDelete")
+          .get(BUTTON_SELECTORS.submit)
+          .click()
+          .waitForRequestAndCheckIfNoErrors("@CollectionBulkDelete");
+
+        getCollection({ collectionId: firstCollection.id, auth: "auth" })
+          .its("collection")
+          .should("be.null");
+        getCollection({ collectionId: secondCollection.id, auth: "auth" })
+          .its("collection")
+          .should("be.null");
+      });
+    });
+
+    it("assign product to collection. TC: SALEOR_0307", () => {
+      const collectionName = `Assign-${startsWith}${faker.datatype.number()}`;
+      const productName = `Product-To-Assign-${startsWith}${faker.datatype.number()}`;
+
+      let collection;
+      let productToAssign;
+
+      createCollectionRequest(collectionName).then(collectionResp => {
+        collection = collectionResp;
+
+        productsUtils
+          .createProductInChannel({
+            name: productName,
+            channelId: defaultChannel.id,
+            productTypeId: productType.id,
+            attributeId: attribute.id,
+            categoryId: category.id,
+            visibleInListings: false
+          })
+          .then(({ product: productResp }) => {
+            productToAssign = productResp;
+
+            cy.visit(collectionDetailsUrl(collection.id));
+            assignProductsToCollection(productToAssign.name);
+
+            getCollection({ collectionId: collection.id, auth: "auth" })
+              .its("collection.products.edges")
+              .should("have.length", 1)
+              .then(productArray => {
+                expect(productArray[0].node.id).to.equal(productToAssign.id);
+              });
+          });
+      });
+    });
+
+    it("remove product from collection. TC: SALEOR_0308", () => {
+      const collectionName = `Remove-With-Assigned-Product-${startsWith}${faker.datatype.number()}`;
+      const productName = `Product-To-Assign-${startsWith}${faker.datatype.number()}`;
+      let collection;
+      let productToAssign;
+
+      createCollectionRequest(collectionName).then(collectionResp => {
+        collection = collectionResp;
+
+        productsUtils
+          .createProductInChannel({
+            name: productName,
+            channelId: defaultChannel.id,
+            productTypeId: productType.id,
+            attributeId: attribute.id,
+            categoryId: category.id,
+            visibleInListings: false
+          })
+          .then(({ product: productResp }) => {
+            productToAssign = productResp;
+
+            addProductToCollection({
+              collectionId: collection.id,
+              productId: productToAssign.id
+            });
+
+            cy.visit(collectionDetailsUrl(collection.id));
+
+            getProductDetails(productToAssign.id, defaultChannel.slug, "auth")
+              .its("body.data.product.collections")
+              .should("have.length", 1);
+
+            getCollection({ collectionId: collection.id, auth: "auth" })
+              .its("collection.products.edges")
+              .should("have.length", 1);
+
+            removeProductsFromCollection(productToAssign.name);
+
+            getCollection({ collectionId: collection.id, auth: "auth" })
+              .its("collection.products.edges")
+              .should("be.empty");
+          });
+      });
+    });
+
+    it("should update collection. TC: SALEOR_0306", () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
       const updatedName = `${startsWith}updatedCollection`;
 

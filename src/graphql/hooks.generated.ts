@@ -3065,6 +3065,7 @@ export const AppsListDocument = gql`
         name
         isActive
         type
+        appUrl
       }
     }
   }
@@ -14124,24 +14125,13 @@ export type ChannelShippingZonesQueryHookResult = ReturnType<typeof useChannelSh
 export type ChannelShippingZonesLazyQueryHookResult = ReturnType<typeof useChannelShippingZonesLazyQuery>;
 export type ChannelShippingZonesQueryResult = Apollo.QueryResult<Types.ChannelShippingZonesQuery, Types.ChannelShippingZonesQueryVariables>;
 export const ShopSettingsUpdateDocument = gql`
-    mutation ShopSettingsUpdate($shopDomainInput: SiteDomainInput!, $shopSettingsInput: ShopSettingsInput!, $addressInput: AddressInput, $isCloudInstance: Boolean!) {
+    mutation ShopSettingsUpdate($shopSettingsInput: ShopSettingsInput!, $addressInput: AddressInput, $isCloudInstance: Boolean!) {
   shopSettingsUpdate(input: $shopSettingsInput) {
     errors {
       ...ShopError
     }
     shop {
       ...Shop
-    }
-  }
-  shopDomainUpdate(input: $shopDomainInput) @skip(if: $isCloudInstance) {
-    errors {
-      ...ShopError
-    }
-    shop {
-      domain {
-        host
-        url
-      }
     }
   }
   shopAddressUpdate(input: $addressInput) {
@@ -14173,7 +14163,6 @@ export type ShopSettingsUpdateMutationFn = Apollo.MutationFunction<Types.ShopSet
  * @example
  * const [shopSettingsUpdateMutation, { data, loading, error }] = useShopSettingsUpdateMutation({
  *   variables: {
- *      shopDomainInput: // value for 'shopDomainInput'
  *      shopSettingsInput: // value for 'shopSettingsInput'
  *      addressInput: // value for 'addressInput'
  *      isCloudInstance: // value for 'isCloudInstance'

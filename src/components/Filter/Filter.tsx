@@ -13,9 +13,9 @@ import { FormattedMessage } from "react-intl";
 
 import { FilterContent } from ".";
 import {
+  FilterElement,
   FilterErrorMessages,
   IFilter,
-  IFilterElement,
   InvalidFilters
 } from "./types";
 import useFilter from "./useFilter";
@@ -25,7 +25,7 @@ export interface FilterProps<TFilterKeys extends string = string> {
   currencySymbol?: string;
   errorMessages?: FilterErrorMessages<TFilterKeys>;
   menu: IFilter<TFilterKeys>;
-  onFilterAdd: (filter: Array<IFilterElement<string>>) => void;
+  onFilterAdd: (filter: Array<FilterElement<string>>) => void;
   onFilterAttributeFocus?: (id?: string) => void;
 }
 
