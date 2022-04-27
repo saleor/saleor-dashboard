@@ -14,8 +14,19 @@ on:
         - https://master.staging.saleor.cloud/
         - https://latest.staging.saleor.cloud/
         - https://qa.staging.saleor.cloud/
+        - Other
+      otherEnvironment:
+        required: false
+        description: 'Type env if "Other" option is selected'
+        type: string
+        default: 'https://vXX.staging.saleor.cloud/' 
+
   schedule:
     - cron: '00 2 * * 1-5'
+
+  pull_request: #Only for testing, to delete before merge
+    types: [reopened, synchronize, labeled, opened]
+    branches: ["*"]
 
 jobs:
 
@@ -70,12 +81,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
+      - name: Check if other env
+        id: get-typed-env-uri
+        if: ${{ github.event.inputs.environment == 'Other' }}
+        run: |
+          echo "::set-output name=ENV_URI::${{github.event.inputs.otherEnvironment}}"
+
       - name: Get env
         id: get-env-uri
         env:
           DEFAULT_ENV_URI: 'https://automation-dashboard.staging.saleor.cloud/'
+          TYPED_ENV_URI: ''
         run: |
-          echo "::set-output name=ENV_URI::${{ github.event.inputs.environment || env.DEFAULT_ENV_URI }}"
+          echo "::set-output name=ENV_URI::${{ steps.get-typed-env-uri.outputs.ENV_URI || github.event.inputs.environment || env.DEFAULT_ENV_URI }}"
 
       - name: Setup Node
         uses: actions/setup-node@v1
