@@ -13,7 +13,6 @@ import { IntlShape } from "react-intl";
 
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
 import { AddressType, AddressTypeInput } from "./customers/types";
-import { AddressFragment } from "./graphql";
 import {
   commonStatusMessages,
   errorMessages,
@@ -395,16 +394,6 @@ export function findInEnum<TEnum extends {}>(needle: string, haystack: TEnum) {
   }
 
   throw new Error(`Key ${needle} not found in enum`);
-}
-
-export function addressToAddressInput<T>(
-  address: T & AddressFragment
-): AddressInput {
-  const { id, __typename, ...rest } = address;
-  return {
-    ...rest,
-    country: findInEnum(address.country.code, CountryCode)
-  };
 }
 
 export function findValueInEnum<TEnum extends {}>(
