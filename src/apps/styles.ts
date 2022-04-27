@@ -40,6 +40,10 @@ export const useStyles = makeStyles(
         paddingRight: theme.spacing(3),
         textAlign: "right"
       },
+      alignItems: "center",
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "flex-end",
       textAlign: "right"
     },
     colInstallAction: {
@@ -206,6 +210,9 @@ export const useStyles = makeStyles(
       "& img": {
         marginRight: theme.spacing(1)
       }
+    },
+    appUrl: {
+      marginRight: theme.spacing(1)
     }
   }),
   { name: "AppList" }
