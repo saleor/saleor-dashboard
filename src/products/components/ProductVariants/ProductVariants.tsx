@@ -26,7 +26,10 @@ import {
   RefreshLimitsQuery
 } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { productVariantEditUrl } from "@saleor/products/urls";
+import {
+  productVariantAddUrl,
+  productVariantEditUrl
+} from "@saleor/products/urls";
 import { isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
@@ -206,13 +209,13 @@ function getAvailabilityLabel(
 }
 
 interface ProductVariantsProps extends ListActions, ChannelProps {
+  productId: string;
   disabled: boolean;
   limits: RefreshLimitsQuery["shop"]["limits"];
   product: ProductFragment;
   variants: ProductDetailsVariantFragment[];
   onVariantReorder: ReorderAction;
   onSetDefaultVariant(variant: ProductDetailsVariantFragment[][0]);
-  onVariantAdd?();
   onVariantsAdd?();
 }
 
@@ -220,11 +223,11 @@ const numberOfColumns = 7;
 
 export const ProductVariants: React.FC<ProductVariantsProps> = props => {
   const {
+    productId,
     disabled,
     limits,
     variants,
     product,
-    onVariantAdd,
     onVariantsAdd,
     onVariantReorder,
     onSetDefaultVariant,
@@ -253,7 +256,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
           hasVariants ? (
             <Button
               disabled={limitReached}
-              onClick={onVariantAdd}
+              href={productVariantAddUrl(productId)}
               variant="tertiary"
               data-test-id="button-add-variant"
             >

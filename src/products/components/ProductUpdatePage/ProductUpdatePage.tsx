@@ -127,7 +127,6 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   onImageUpload(file: File);
   onMediaUrlUpload(mediaUrl: string);
   onSeoClick?();
-  onVariantAdd?();
   onSetDefaultVariant(variant: ProductDetailsVariantFragment);
   onWarehouseConfigure();
 }
@@ -179,7 +178,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   openChannelsModal,
   onSeoClick,
   onSubmit,
-  onVariantAdd,
   channelsData,
   onVariantsAdd,
   onSetDefaultVariant,
@@ -352,11 +350,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 )}
                 {hasVariants ? (
                   <ProductVariants
+                    productId={productId}
                     disabled={disabled}
                     limits={limits}
                     variants={variants}
                     product={product}
-                    onVariantAdd={onVariantAdd}
                     onVariantsAdd={onVariantsAdd}
                     onVariantReorder={onVariantReorder}
                     onSetDefaultVariant={onSetDefaultVariant}
