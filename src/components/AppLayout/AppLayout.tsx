@@ -212,9 +212,6 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                         isDarkThemeEnabled={isDarkTheme(themeType)}
                         user={user}
                         onLogout={logout}
-                        onProfileClick={() =>
-                          navigate(staffMemberDetailsUrl(user?.id))
-                        }
                         onThemeToggle={toggleTheme}
                       />
                     </div>
