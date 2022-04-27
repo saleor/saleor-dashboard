@@ -10,10 +10,10 @@ import Decorator from "../../Decorator";
 import { MockedUserProvider } from "./MockedUserProvider";
 
 const props: Omit<CustomerDetailsPageProps, "classes"> = {
+  customerId: "123",
   customer,
   disabled: false,
   errors: [],
-  onAddressManageClick: () => undefined,
   onDelete: () => undefined,
   onSubmit: () => undefined,
   saveButtonBar: "default"

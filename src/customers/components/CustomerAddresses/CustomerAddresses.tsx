@@ -24,11 +24,11 @@ const useStyles = makeStyles(
 export interface CustomerAddressesProps {
   customer: CustomerDetailsFragment;
   disabled: boolean;
-  onAddressManageClick: () => void;
+  manageAddressHref: string;
 }
 
 const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
-  const { customer, disabled, onAddressManageClick } = props;
+  const { customer, disabled, manageAddressHref } = props;
   const classes = useStyles(props);
 
   const intl = useIntl();
@@ -45,7 +45,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
             data-test-id="manage-addresses"
             disabled={disabled}
             variant="tertiary"
-            onClick={onAddressManageClick}
+            href={manageAddressHref}
           >
             <FormattedMessage {...buttonMessages.manage} />
           </Button>

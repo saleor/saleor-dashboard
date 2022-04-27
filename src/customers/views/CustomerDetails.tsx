@@ -104,6 +104,7 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
     <>
       <WindowTitle title={user?.email} />
       <CustomerDetailsPage
+        customerId={id}
         customer={user}
         disabled={
           customerDetailsLoading ||
@@ -112,7 +113,6 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
         }
         errors={updateCustomerOpts.data?.customerUpdate.errors || []}
         saveButtonBar={updateCustomerOpts.status}
-        onAddressManageClick={() => navigate(customerAddressesUrl(id))}
         onSubmit={handleSubmit}
         onDelete={() =>
           navigate(

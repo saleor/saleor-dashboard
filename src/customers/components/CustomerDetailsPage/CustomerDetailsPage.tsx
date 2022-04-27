@@ -8,7 +8,7 @@ import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
 import RequirePermissions from "@saleor/components/RequirePermissions";
 import Savebar from "@saleor/components/Savebar";
-import { customerListUrl } from "@saleor/customers/urls";
+import { customerAddressesUrl, customerListUrl } from "@saleor/customers/urls";
 import CustomerGiftCardsCard from "@saleor/giftCards/components/GiftCardCustomerCard/CustomerGiftCardsCard";
 import {
   AccountErrorFragment,
@@ -41,6 +41,7 @@ export interface CustomerDetailsPageFormData extends MetadataFormData {
 }
 
 export interface CustomerDetailsPageProps {
+  customerId: string;
   customer: CustomerDetailsQuery["user"];
   disabled: boolean;
   errors: AccountErrorFragment[];
@@ -48,17 +49,16 @@ export interface CustomerDetailsPageProps {
   onSubmit: (
     data: CustomerDetailsPageFormData
   ) => SubmitPromise<AccountErrorFragment[]>;
-  onAddressManageClick: () => void;
   onDelete: () => void;
 }
 
 const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
+  customerId,
   customer,
   disabled,
   errors,
   saveButtonBar,
   onSubmit,
-  onAddressManageClick,
   onDelete
 }: CustomerDetailsPageProps) => {
   const intl = useIntl();
@@ -128,7 +128,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
                 <CustomerAddresses
                   customer={customer}
                   disabled={disabled}
-                  onAddressManageClick={onAddressManageClick}
+                  manageAddressHref={customerAddressesUrl(customerId)}
                 />
                 <CardSpacer />
                 <CustomerStats customer={customer} />
