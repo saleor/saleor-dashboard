@@ -36,7 +36,6 @@ import {
   AppListUrlDialog,
   AppListUrlQueryParams,
   appsListUrl,
-  customAppAddUrl,
   customAppUrl
 } from "../../urls";
 import { messages } from "./messages";
@@ -316,7 +315,6 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
         onRowAboutClick={id => () => navigate(appDetailsUrl(id))}
         onAppInstallRetry={onAppInstallRetry}
         getCustomAppHref={id => customAppUrl(id)}
-        navigateToCustomAppCreate={() => navigate(customAppAddUrl)}
         onInstalledAppRemove={id =>
           openModal("remove-app", {
             id
