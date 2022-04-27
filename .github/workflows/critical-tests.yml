@@ -5,7 +5,7 @@ on:
   workflow_run:
     workflows: [TEST-ENV-DEPLOYMENT]
     types: [completed]
-  
+
 jobs:
   cypress-run-critical:
     runs-on: ubuntu-latest
@@ -13,14 +13,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: Get API_URI
+      - name: Get API_URL
         id: api_uri
-        # Search for API_URI in PR description and use default if not defined
+        # Search for API_URL in PR description and use default if not defined
         env:
           pull_request_body: ${{ github.event.pull_request.body }}
-          prefix: API_URI=
+          prefix: API_URL=
           pattern: (http|https)://[a-zA-Z0-9.-]+/graphql/?
-          fallback_uri: ${{ secrets.CYPRESS_API_URI }}
+          fallback_uri: ${{ secrets.CYPRESS_API_URL }}
         run: |
           echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1 | { read custom_uri; if [ -z "$custom_uri" ]; then echo "$fallback_uri"; else echo "$custom_uri"; fi })"
       - name: Get base_URL
@@ -51,8 +51,8 @@ jobs:
       - name: Cypress run critical
         uses: cypress-io/github-action@v2
         env:
-          API_URI: ${{ steps.api_uri.outputs.custom_api_uri }}
-          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
+          API_URL: ${{ steps.api_uri.outputs.custom_api_uri }}
+          APP_MOUNT_URL: ${{ secrets.APP_MOUNT_URL }}
           CYPRESS_baseUrl: ${{ steps.base_URL.outputs.base_URL }}
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}

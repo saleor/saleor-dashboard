@@ -9,8 +9,8 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     env:
-      API_URI: /graphql/
-      APP_MOUNT_URI: /dashboard/
+      API_URL: /graphql/
+      APP_MOUNT_URL: /dashboard/
       STATIC_URL: /dashboard/static/
       SENTRY_ORG: saleor
       SENTRY_PROJECT: dashboard

@@ -5,25 +5,23 @@ on:
     branches: ["main"]
     inputs:
       environment:
-        required: true 
-        description: 'Environment to run tests against'
-        default: 'https://automation-dashboard.staging.saleor.cloud/'
+        required: true
+        description: "Environment to run tests against"
+        default: "https://automation-dashboard.staging.saleor.cloud/"
         type: choice
         options:
-        - https://automation-dashboard.staging.saleor.cloud/
-        - https://master.staging.saleor.cloud/
-        - https://latest.staging.saleor.cloud/
-        - https://qa.staging.saleor.cloud/
+          - https://automation-dashboard.staging.saleor.cloud/
+          - https://master.staging.saleor.cloud/
+          - https://latest.staging.saleor.cloud/
+          - https://qa.staging.saleor.cloud/
   schedule:
-    - cron: '00 2 * * 1-5'
+    - cron: "00 2 * * 1-5"
 
 jobs:
-
   revert-automation-env-to-snap:
     if: github.event.inputs.environment == null
     runs-on: ubuntu-latest
     steps:
-
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
@@ -50,7 +48,7 @@ jobs:
         env:
           ACCESS_TOKEN: ${{ secrets.CLOUD_ACCESS_TOKEN }}
         run: echo '{"token":"Token ${{ secrets.CLOUD_ACCESS_TOKEN }}","telemetry":"false","organization_slug":"qa","organization_name":"QA","environment_id":"lHECN87U"}' > ~/.config/saleor.json
-      
+
       - name: revert snapshot
         env:
           SALEOR_CLI_ENV: staging
@@ -73,9 +71,9 @@ jobs:
       - name: Get env
         id: get-env-uri
         env:
-          DEFAULT_ENV_URI: 'https://automation-dashboard.staging.saleor.cloud/'
+          DEFAULT_ENV_URL: "https://automation-dashboard.staging.saleor.cloud/"
         run: |
-          echo "::set-output name=ENV_URI::${{ github.event.inputs.environment || env.DEFAULT_ENV_URI }}"
+          echo "::set-output name=ENV_URL::${{ github.event.inputs.environment || env.DEFAULT_ENV_URL }}"
 
       - name: Setup Node
         uses: actions/setup-node@v1
@@ -85,9 +83,9 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         env:
-          API_URI: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
-          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
-          CYPRESS_baseUrl: ${{ steps.get-env-uri.outputs.ENV_URI }}dashboard/
+          API_URL: ${{ steps.get-env-uri.outputs.ENV_URL }}graphql/
+          APP_MOUNT_URL: ${{ secrets.APP_MOUNT_URL }}
+          CYPRESS_baseUrl: ${{ steps.get-env-uri.outputs.ENV_URL }}dashboard/
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
@@ -96,8 +94,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           parallel: true
-          group: 'UI - Chrome'
+          group: "UI - Chrome"
           command: npm run cy:run:allEnv:parallel
-
-
-

@@ -3,13 +3,13 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-ARG APP_MOUNT_URI
-ARG API_URI
+ARG APP_MOUNT_URL
+ARG API_URL
 ARG STATIC_URL
-ENV API_URI ${API_URI:-http://localhost:8000/graphql/}
-ENV APP_MOUNT_URI ${APP_MOUNT_URI:-/dashboard/}
+ENV API_URL ${API_URL:-http://localhost:8000/graphql/}
+ENV APP_MOUNT_URL ${APP_MOUNT_URL:-/dashboard/}
 ENV STATIC_URL ${STATIC_URL:-/dashboard/}
-RUN STATIC_URL=${STATIC_URL} API_URI=${API_URI} APP_MOUNT_URI=${APP_MOUNT_URI} npm run build
+RUN STATIC_URL=${STATIC_URL} API_URL=${API_URL} APP_MOUNT_URL=${APP_MOUNT_URL} npm run build
 
 FROM nginx:stable
 WORKDIR /app

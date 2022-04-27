@@ -1,5 +1,5 @@
 export const urlList = {
-  apiUri: Cypress.env("API_URI"),
+  apiUri: Cypress.env("API_URL"),
   addProduct: "products/add",
   apps: "apps/",
   attributes: "attributes/",
