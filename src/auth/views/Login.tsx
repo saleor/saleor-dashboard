@@ -1,4 +1,4 @@
-import { APP_DEFAULT_URI, APP_MOUNT_URI } from "@saleor/config";
+import { APP_DEFAULT_URL, APP_MOUNT_URL } from "@saleor/config";
 import { useAvailableExternalAuthenticationsQuery } from "@saleor/graphql";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -56,7 +56,7 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     const result = await requestLoginByExternalPlugin(pluginId, {
       redirectUri: urlJoin(
         window.location.origin,
-        APP_MOUNT_URI === APP_DEFAULT_URI ? "" : APP_MOUNT_URI,
+        APP_MOUNT_URL === APP_DEFAULT_URL ? "" : APP_MOUNT_URL,
         loginCallbackPath
       )
     });

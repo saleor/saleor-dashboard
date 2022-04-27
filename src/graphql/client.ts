@@ -4,13 +4,13 @@ import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { createFetch, createSaleorClient } from "@saleor/sdk";
 import { createUploadLink } from "apollo-upload-client";
 
-import { API_URI } from "../config";
+import { API_URL } from "../config";
 import introspectionQueryResultData from "./fragmentTypes.generated";
 import { TypedTypePolicies } from "./typePolicies.generated";
 
 export const link = createUploadLink({
   credentials: "include",
-  uri: API_URI,
+  uri: API_URL,
   fetch: createFetch()
 });
 
@@ -39,6 +39,6 @@ export const apolloClient = new ApolloClient({
 });
 
 export const saleorClient = createSaleorClient({
-  apiUrl: API_URI,
+  apiUrl: API_URL,
   channel: ""
 });

@@ -1,4 +1,4 @@
-import { APP_MOUNT_URI } from "@saleor/config";
+import { APP_MOUNT_URL } from "@saleor/config";
 import { useRequestPasswordResetMutation } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { commonMessages } from "@saleor/intl";
@@ -48,7 +48,7 @@ const ResetPasswordView: React.FC = () => {
           email: data.email,
           redirectUrl: urlJoin(
             window.location.origin,
-            APP_MOUNT_URI === "/" ? "" : APP_MOUNT_URI,
+            APP_MOUNT_URL === "/" ? "" : APP_MOUNT_URL,
             newPasswordUrl().replace(/\?/, "")
           )
         }
@@ -59,7 +59,7 @@ const ResetPasswordView: React.FC = () => {
     <ResetPasswordPage
       disabled={requestPasswordResetOpts.loading}
       error={error}
-      onBack={() => navigate(APP_MOUNT_URI)}
+      onBack={() => navigate(APP_MOUNT_URL)}
       onSubmit={handleSubmit}
     />
   );

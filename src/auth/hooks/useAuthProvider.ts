@@ -1,6 +1,6 @@
 import { ApolloClient } from "@apollo/client";
 import { IMessageContext } from "@saleor/components/messages";
-import { APP_DEFAULT_URI, APP_MOUNT_URI, DEMO_MODE } from "@saleor/config";
+import { APP_DEFAULT_URL, APP_MOUNT_URL, DEMO_MODE } from "@saleor/config";
 import { useUserDetailsQuery } from "@saleor/graphql";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -88,7 +88,7 @@ export function useAuthProvider({
   });
 
   const handleLogout = async () => {
-    const path = APP_MOUNT_URI === APP_DEFAULT_URI ? "" : APP_MOUNT_URI;
+    const path = APP_MOUNT_URL === APP_DEFAULT_URL ? "" : APP_MOUNT_URL;
     const returnTo = urlJoin(window.location.origin, path);
 
     const result = await logout({

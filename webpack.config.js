@@ -9,6 +9,7 @@ const SentryWebpackPlugin = require("@sentry/webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const chalk = require("chalk");
 
 require("dotenv").config();
 
@@ -39,6 +40,8 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
 const environmentPlugin = new webpack.EnvironmentPlugin({
   API_URI: "",
   APP_MOUNT_URI: "/",
+  API_URL: "",
+  APP_MOUNT_URL: "/",
   DEMO_MODE: false,
   ENVIRONMENT: "",
   GTM_ID: "",
@@ -49,15 +52,30 @@ const environmentPlugin = new webpack.EnvironmentPlugin({
 
 const dashboardBuildPath = "build/dashboard/";
 
+function deprecated(deprecatedName, validName) {
+  if (process.env[deprecatedName]) {
+    console.warn(
+      chalk.yellow(
+        `Environment variable ${chalk.bold(
+          deprecatedName
+        )} is deprecated. Use ${chalk.bold(validName)} instead.`
+      )
+    );
+  }
+}
+
 module.exports = speedMeasureWrapper((env, argv) => {
   const devMode = argv.mode !== "production";
 
   let fileLoaderPath;
   let output;
 
-  if (!process.env.API_URI) {
-    throw new Error("Environment variable API_URI not set");
+  if (!(process.env.API_URL ?? process.env.API_URI)) {
+    throw new Error("Environment variable API_URL not set");
   }
+
+  deprecated("API_URI", "API_URL");
+  deprecated("APP_MOUNT_URI", "APP_MOUNT_URL");
 
   const publicPath = process.env.STATIC_URL || "/";
   if (!devMode) {

@@ -5,7 +5,7 @@ import TokenDeleteDialog from "@saleor/apps/components/TokenDeleteDialog";
 import { appMessages } from "@saleor/apps/messages";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { API_URI } from "@saleor/config";
+import { API_URL } from "@saleor/config";
 import {
   AppTokenCreateMutation,
   AppTokenDeleteMutation,
@@ -221,12 +221,12 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
     <>
       <WindowTitle title={getStringOrPlaceholder(customApp?.name)} />
       <CustomAppDetailsPage
-        apiUri={API_URI}
+        apiUri={API_URL}
         disabled={loading}
         errors={updateAppOpts.data?.appUpdate?.errors || []}
         token={token}
         navigateToWebhookDetails={id => () => navigate(webhookPath(id))}
-        onApiUriClick={() => open(API_URI, "blank")}
+        onApiUriClick={() => open(API_URL, "blank")}
         onBack={handleBack}
         onSubmit={handleSubmit}
         onTokenClose={onTokenClose}
