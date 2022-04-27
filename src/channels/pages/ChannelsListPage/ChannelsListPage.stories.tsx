@@ -9,7 +9,6 @@ import ChannelsListPage, { ChannelsListPageProps } from "./ChannelsListPage";
 const props: ChannelsListPageProps = {
   channelsList,
   limits,
-  navigateToChannelCreate: () => undefined,
   onRemove: () => undefined
 };
 

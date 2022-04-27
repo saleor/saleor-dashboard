@@ -5,7 +5,7 @@ import {
   TableHead,
   TableRow
 } from "@material-ui/core";
-import { channelUrl } from "@saleor/channels/urls";
+import { channelAddUrl, channelUrl } from "@saleor/channels/urls";
 import { Backlink } from "@saleor/components/Backlink";
 import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
@@ -29,7 +29,6 @@ import { useStyles } from "./styles";
 export interface ChannelsListPageProps {
   channelsList: ChannelDetailsFragment[] | undefined;
   limits: RefreshLimitsQuery["shop"]["limits"];
-  navigateToChannelCreate: () => void;
   onRemove: (id: string) => void;
 }
 
@@ -38,7 +37,6 @@ const numberOfColumns = 2;
 export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
   channelsList,
   limits,
-  navigateToChannelCreate,
   onRemove
 }) => {
   const intl = useIntl();
@@ -69,7 +67,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
       >
         <Button
           disabled={limitReached}
-          onClick={navigateToChannelCreate}
+          href={channelAddUrl}
           variant="primary"
           data-test-id="add-channel"
         >

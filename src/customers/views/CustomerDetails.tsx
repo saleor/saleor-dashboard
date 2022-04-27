@@ -21,12 +21,7 @@ import CustomerDetailsPage, {
 } from "../components/CustomerDetailsPage";
 import { useCustomerDetails } from "../hooks/useCustomerDetails";
 import { CustomerDetailsProvider } from "../providers/CustomerDetailsProvider";
-import {
-  customerAddressesUrl,
-  customerListUrl,
-  customerUrl,
-  CustomerUrlQueryParams
-} from "../urls";
+import { customerListUrl, customerUrl, CustomerUrlQueryParams } from "../urls";
 
 interface CustomerDetailsViewProps {
   id: string;

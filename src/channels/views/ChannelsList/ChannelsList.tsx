@@ -15,7 +15,6 @@ import { useIntl } from "react-intl";
 import ChannelDeleteDialog from "../../components/ChannelDeleteDialog";
 import ChannelsListPage from "../../pages/ChannelsListPage";
 import {
-  channelAddUrl,
   channelsListUrl,
   ChannelsListUrlDialog,
   ChannelsListUrlQueryParams
@@ -78,8 +77,6 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
     data?.channels
   );
 
-  const navigateToChannelCreate = () => navigate(channelAddUrl);
-
   const handleRemoveConfirm = (channelId?: string) => {
     const inputVariables = channelId ? { input: { channelId } } : {};
 
@@ -96,7 +93,6 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
       <ChannelsListPage
         channelsList={data?.channels}
         limits={limitOpts.data?.shop.limits}
-        navigateToChannelCreate={navigateToChannelCreate}
         onRemove={id =>
           openModal("remove", {
             id
