@@ -59,7 +59,6 @@ const ResetPasswordView: React.FC = () => {
     <ResetPasswordPage
       disabled={requestPasswordResetOpts.loading}
       error={error}
-      onBack={() => navigate(APP_MOUNT_URI)}
       onSubmit={handleSubmit}
     />
   );
