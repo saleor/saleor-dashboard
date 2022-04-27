@@ -25,12 +25,12 @@ import { useStyles } from "./styles";
 export interface WebhooksListProps {
   webhooks: AppQuery["app"]["webhooks"];
   onRemove: (id: string) => void;
-  onCreate?: () => void;
+  createHref?: string;
 }
 
 const WebhooksList: React.FC<WebhooksListProps> = ({
   webhooks,
-  onCreate,
+  createHref,
   onRemove
 }) => {
   const intl = useIntl();
@@ -45,10 +45,10 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
           description: "header"
         })}
         toolbar={
-          !!onCreate && (
+          !!createHref && (
             <Button
               variant="secondary"
-              onClick={onCreate}
+              href={createHref}
               data-test-id="create-webhook"
             >
               <FormattedMessage

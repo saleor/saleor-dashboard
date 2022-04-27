@@ -53,7 +53,7 @@ export interface CustomAppDetailsPageProps {
   onSubmit: (
     data: CustomAppDetailsPageFormData
   ) => SubmitPromise<AppErrorFragment[]>;
-  onWebhookCreate: () => void;
+  webhookCreateHref: string;
   onWebhookRemove: (id: string) => void;
   onAppActivateOpen: () => void;
   onAppDeactivateOpen: () => void;
@@ -73,7 +73,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
     onTokenCreate,
     onTokenDelete,
     onSubmit,
-    onWebhookCreate,
+    webhookCreateHref,
     onWebhookRemove,
     onAppActivateOpen,
     onAppDeactivateOpen
@@ -161,7 +161,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
               <WebhooksList
                 webhooks={webhooks}
                 onRemove={onWebhookRemove}
-                onCreate={app?.isActive && onWebhookCreate}
+                createHref={app?.isActive && webhookCreateHref}
               />
             </div>
             <div>

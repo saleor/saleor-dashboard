@@ -233,7 +233,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
             id
           })
         }
-        onWebhookCreate={() => navigate(webhookAddPath(id))}
+        webhookCreateHref={webhookAddPath(id)}
         onWebhookRemove={id =>
           openModal("remove-webhook", {
             id
