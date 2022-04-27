@@ -1,5 +1,6 @@
 import { IMoney, subtractMoney } from "@saleor/components/Money";
 import {
+  AddressFragment,
   AddressInput,
   CountryCode,
   FulfillmentStatus,
@@ -12,7 +13,7 @@ import {
   WarehouseFragment
 } from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
-import { addressToAddressInput } from "@saleor/misc";
+import { findInEnum } from "@saleor/misc";
 
 import {
   LineItemData,
@@ -299,6 +300,16 @@ export const isStockError = (
 
   return isQuantityLargerThanAvailable || isError;
 };
+
+export function addressToAddressInput<T>(
+  address: T & AddressFragment
+): AddressInput {
+  const { id, __typename, ...rest } = address;
+  return {
+    ...rest,
+    country: findInEnum(address.country.code, CountryCode)
+  };
+}
 
 export const getVariantSearchAddress = (
   order: OrderDetailsFragment
