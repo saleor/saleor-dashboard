@@ -42,7 +42,6 @@ export interface WarehouseDetailsPageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   warehouse: WarehouseDetailsFragment;
   onDelete: () => void;
-  onShippingZoneClick: (id: string) => void;
   onSubmit: (data: WarehouseDetailsPageFormData) => SubmitPromise;
 }
 
@@ -53,7 +52,6 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
   saveButtonBarState,
   warehouse,
   onDelete,
-  onShippingZoneClick,
   onSubmit
 }) => {
   const intl = useIntl();
@@ -135,7 +133,6 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
                   zones={mapEdgesToItems(warehouse?.shippingZones)}
                   data={data}
                   disabled={disabled}
-                  onShippingZoneClick={onShippingZoneClick}
                   onChange={change}
                   setData={set}
                 />
