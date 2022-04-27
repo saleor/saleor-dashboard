@@ -28,24 +28,31 @@ const getUserOrApp = (event: GiftCardEventFragment): string | null => {
   return null;
 };
 
+const getUserOrAppUrl = (event: GiftCardEventFragment): string => {
+  if (event.user) {
+    return staffMemberDetailsUrl(event.user.id);
+  }
+  if (event.app) {
+    return appPath(event.app.id);
+  }
+  return null;
+};
+
 const getEventMessage = (event: GiftCardEventFragment, intl: IntlShape) => {
   const user = getUserOrApp(event);
+  const userUrl = getUserOrAppUrl(event);
 
   switch (event.type) {
     case GiftCardEventsEnum.ACTIVATED:
       return user
         ? intl.formatMessage(timelineMessages.activated, {
-            activatedBy: (
-              <Link href={staffMemberDetailsUrl(event.user.id)}>{user}</Link>
-            )
+            activatedBy: <Link href={userUrl}>{user}</Link>
           })
         : intl.formatMessage(timelineMessages.activatedAnonymous);
     case GiftCardEventsEnum.BALANCE_RESET:
       return user
         ? intl.formatMessage(timelineMessages.balanceReset, {
-            resetBy: (
-              <Link href={staffMemberDetailsUrl(event.user.id)}>{user}</Link>
-            )
+            resetBy: <Link href={userUrl}>{user}</Link>
           })
         : intl.formatMessage(timelineMessages.balanceResetAnonymous);
     case GiftCardEventsEnum.BOUGHT:
@@ -57,25 +64,19 @@ const getEventMessage = (event: GiftCardEventFragment, intl: IntlShape) => {
     case GiftCardEventsEnum.DEACTIVATED:
       return user
         ? intl.formatMessage(timelineMessages.deactivated, {
-            deactivatedBy: (
-              <Link href={staffMemberDetailsUrl(event.user.id)}>{user}</Link>
-            )
+            deactivatedBy: <Link href={userUrl}>{user}</Link>
           })
         : intl.formatMessage(timelineMessages.deactivatedAnonymous);
     case GiftCardEventsEnum.EXPIRY_DATE_UPDATED:
       return user
         ? intl.formatMessage(timelineMessages.expiryDateUpdate, {
-            expiryUpdatedBy: (
-              <Link href={staffMemberDetailsUrl(event.user.id)}>{user}</Link>
-            )
+            expiryUpdatedBy: <Link href={userUrl}>{user}</Link>
           })
         : intl.formatMessage(timelineMessages.expiryDateUpdateAnonymous);
     case GiftCardEventsEnum.ISSUED:
       return user
         ? intl.formatMessage(timelineMessages.issued, {
-            issuedBy: (
-              <Link href={staffMemberDetailsUrl(event.user.id)}>{user}</Link>
-            )
+            issuedBy: <Link href={userUrl}>{user}</Link>
           })
         : intl.formatMessage(timelineMessages.issuedAnonymous);
     case GiftCardEventsEnum.RESENT:
