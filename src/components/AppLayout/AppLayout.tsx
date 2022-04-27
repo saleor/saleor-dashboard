@@ -83,6 +83,7 @@ const useStyles = makeStyles(
       }
     },
     root: {
+      isolation: "isolate",
       [theme.breakpoints.up("md")]: {
         display: "flex"
       },
