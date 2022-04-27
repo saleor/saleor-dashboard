@@ -41,6 +41,26 @@ const useStyles = makeStyles(
       "&:hover": {
         backgroundColor: theme.palette.saleor.active[5],
         color: theme.palette.saleor.active[1]
+      },
+      "& > div": {
+        minWidth: 0,
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        textOverflow: "ellipsis"
+      }
+    },
+    cardTitle: {
+      justifyContent: "space-between",
+      "& > div": {
+        "&:first-child": {
+          flex: 0,
+          whiteSpace: "nowrap"
+        },
+        "&:last-child": {
+          flex: "0 1 auto",
+          minWidth: 0,
+          marginLeft: theme.spacing(1)
+        }
       }
     }
   }),
@@ -78,9 +98,10 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
           lines={lines}
           withStatus
           status="unfulfilled"
+          className={classes.cardTitle}
           toolbar={
             <div className={classes.toolbar} onClick={onWarehouseChange}>
-              {selectedWarehouse?.name ?? <Skeleton />}
+              <div>{selectedWarehouse?.name ?? <Skeleton />}</div>
               <ChevronIcon />
             </div>
           }

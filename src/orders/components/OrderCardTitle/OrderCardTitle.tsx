@@ -94,6 +94,7 @@ interface OrderCardTitleProps {
   orderNumber?: string;
   warehouseName?: string;
   withStatus?: boolean;
+  className?: string;
 }
 
 const selectStatus = (status: CardTitleStatus) => {
@@ -124,7 +125,8 @@ const OrderCardTitle: React.FC<OrderCardTitleProps> = ({
   orderNumber = "",
   warehouseName,
   withStatus = false,
-  toolbar
+  toolbar,
+  className
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -151,6 +153,7 @@ const OrderCardTitle: React.FC<OrderCardTitleProps> = ({
   return (
     <DefaultCardTitle
       toolbar={toolbar}
+      className={className}
       title={
         <div className={classes.title}>
           {withStatus && (

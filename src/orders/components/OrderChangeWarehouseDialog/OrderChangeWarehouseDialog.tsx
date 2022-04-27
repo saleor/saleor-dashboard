@@ -152,39 +152,39 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
               const someLinesUnavailable = unavailableLines?.length > 0;
               return (
                 <TableRow key={warehouse.id}>
-                  <TableCell className={classes.warehouseCell}>
-                    <div>
-                      <FormControlLabel
-                        value={warehouse.id}
-                        control={<Radio color="primary" />}
-                        label={
-                          <div className={classes.radioLabelContainer}>
+                  <TableCell>
+                    <FormControlLabel
+                      value={warehouse.id}
+                      control={<Radio color="primary" />}
+                      label={
+                        <div className={classes.radioLabelContainer}>
+                          <span className={classes.warehouseName}>
                             {warehouse.name}
-                            {someLinesUnavailable && (
-                              <Typography className={classes.supportText}>
-                                {unavailableLines.length === 1
-                                  ? intl.formatMessage(
-                                      messages.productUnavailable,
-                                      {
-                                        productName:
-                                          unavailableLines[0].productName
-                                      }
-                                    )
-                                  : intl.formatMessage(
-                                      messages.multipleProductsUnavailable,
-                                      { productCount: unavailableLines.length }
-                                    )}
-                              </Typography>
-                            )}
-                          </div>
-                        }
-                      />
-                      {currentWarehouse?.id === warehouse?.id && (
-                        <Typography className={classes.helpText}>
-                          {intl.formatMessage(messages.currentSelection)}
-                        </Typography>
-                      )}
-                    </div>
+                          </span>
+                          {someLinesUnavailable && (
+                            <Typography className={classes.supportText}>
+                              {unavailableLines.length === 1
+                                ? intl.formatMessage(
+                                    messages.productUnavailable,
+                                    {
+                                      productName:
+                                        unavailableLines[0].productName
+                                    }
+                                  )
+                                : intl.formatMessage(
+                                    messages.multipleProductsUnavailable,
+                                    { productCount: unavailableLines.length }
+                                  )}
+                            </Typography>
+                          )}
+                        </div>
+                      }
+                    />
+                    {currentWarehouse?.id === warehouse?.id && (
+                      <Typography className={classes.helpText}>
+                        {intl.formatMessage(messages.currentSelection)}
+                      </Typography>
+                    )}
                   </TableCell>
                 </TableRow>
               );
