@@ -24,10 +24,6 @@ on:
   schedule:
     - cron: '00 2 * * 1-5'
 
-  pull_request: #Only for testing, to delete before merge
-    types: [reopened, synchronize, labeled, opened]
-    branches: ["*"]
-
 jobs:
 
   revert-automation-env-to-snap:
