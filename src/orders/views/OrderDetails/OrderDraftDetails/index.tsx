@@ -38,7 +38,11 @@ import OrderDraftCancelDialog from "../../../components/OrderDraftCancelDialog/O
 import OrderDraftPage from "../../../components/OrderDraftPage";
 import OrderProductAddDialog from "../../../components/OrderProductAddDialog";
 import OrderShippingMethodEditDialog from "../../../components/OrderShippingMethodEditDialog";
-import { OrderUrlDialog, OrderUrlQueryParams } from "../../../urls";
+import {
+  orderDraftListUrl,
+  OrderUrlDialog,
+  OrderUrlQueryParams
+} from "../../../urls";
 
 interface OrderDraftDetailsProps {
   id: string;
