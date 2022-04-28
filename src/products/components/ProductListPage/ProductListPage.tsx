@@ -56,7 +56,6 @@ export interface ProductListPageProps
   availableInGridAttributes: RelayToFlat<
     SearchAvailableInGridAttributesQuery["availableInGrid"]
   >;
-  channelsCount: number;
   columnQuery: string;
   currencySymbol: string;
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
@@ -88,7 +87,6 @@ const useStyles = makeStyles(
 
 export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const {
-    channelsCount,
     columnQuery,
     currencySymbol,
     currentTab,

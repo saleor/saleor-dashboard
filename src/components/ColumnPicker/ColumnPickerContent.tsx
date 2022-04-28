@@ -7,11 +7,9 @@ import {
   Typography
 } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
-import useElementScroll from "@saleor/hooks/useElementScroll";
 import { FormChange } from "@saleor/hooks/useForm";
 import { buttonMessages } from "@saleor/intl";
 import {
-  Button,
   Choice,
   CloseIcon,
   IconButton,

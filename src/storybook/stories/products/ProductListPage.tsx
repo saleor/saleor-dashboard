@@ -38,7 +38,6 @@ const props: ProductListPageProps = {
   },
   activeAttributeSortId: undefined,
   availableInGridAttributes: attributes,
-  channelsCount: 6,
   columnQuery: "",
   onColumnQueryChange: () => undefined,
   currencySymbol: "USD",
