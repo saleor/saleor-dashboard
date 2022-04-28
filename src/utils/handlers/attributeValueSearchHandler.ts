@@ -60,6 +60,7 @@ function useAttributeValueSearchHandler(
   }, [state.id]);
 
   return {
+    query: state.query,
     loadMore,
     search: handleSearch,
     reset,

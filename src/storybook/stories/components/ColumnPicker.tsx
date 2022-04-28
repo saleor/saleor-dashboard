@@ -1,14 +1,14 @@
 import ColumnPicker, {
   ColumnPickerProps
 } from "@saleor/components/ColumnPicker";
-import { ColumnPickerChoice } from "@saleor/components/ColumnPicker/ColumnPickerContent";
+import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import CardDecorator from "@saleor/storybook/CardDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import Decorator from "../../Decorator";
 
-const columns: ColumnPickerChoice[] = [
+const availableColumns: MultiAutocompleteChoiceType[] = [
   { label: "Name", value: "name" },
   { label: "Value", value: "value" },
   { label: "Type", value: "type" },
@@ -25,11 +25,16 @@ const columns: ColumnPickerChoice[] = [
 ];
 
 const props: ColumnPickerProps = {
-  columns,
-  defaultColumns: [1, 3].map(index => columns[index].value),
-  initialColumns: [1, 3, 4, 6].map(index => columns[index].value),
+  availableColumns,
+  defaultColumns: [1, 3].map(index => availableColumns[index].value),
+  initialColumns: [1, 3, 4, 6].map(index => availableColumns[index].value),
   initialOpen: true,
-  onSave: () => undefined
+  hasMore: false,
+  onFetchMore: () => undefined,
+  loading: false,
+  onSave: () => undefined,
+  query: "",
+  onQueryChange: () => undefined
 };
 
 storiesOf("Generics / Column picker", module)
@@ -41,6 +46,4 @@ storiesOf("Generics / Column picker", module)
   .addDecorator(CardDecorator)
   .addDecorator(Decorator)
   .add("default", () => <ColumnPicker {...props} />)
-  .add("loading", () => (
-    <ColumnPicker {...props} hasMore={true} onFetchMore={() => undefined} />
-  ));
+  .add("loading", () => <ColumnPicker {...props} loading hasMore />);

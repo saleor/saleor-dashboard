@@ -357,3 +357,14 @@ export const exportFileFragment = gql`
     url
   }
 `;
+
+export const productListAttribute = gql`
+  fragment ProductListAttribute on SelectedAttribute {
+    attribute {
+      id
+    }
+    values {
+      ...AttributeValue
+    }
+  }
+`;

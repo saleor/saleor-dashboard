@@ -15,6 +15,7 @@ export interface UseSearchResult<TData, TVariables extends SearchVariables> {
   loadMore: () => void;
   result: QueryResult<TData, TVariables>;
   search: (query: string) => void;
+  query: string;
 }
 export type UseSearchOpts<TVariables extends SearchVariables> = Partial<{
   skip: boolean;
@@ -45,6 +46,7 @@ function makeSearch<TData, TVariables extends SearchVariables>(
     });
 
     return {
+      query: searchQuery,
       loadMore: () => loadMoreFn(result),
       result,
       search: debouncedSearch

@@ -49,6 +49,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { columnsMessages } from "./messages";
+import ProductListAttribute from "./ProductListAttribute";
 
 const useStyles = makeStyles(
   theme => ({
@@ -70,7 +71,10 @@ const useStyles = makeStyles(
       }
     },
     colAttribute: {
-      width: 150
+      width: 200,
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap"
     },
     colFill: {
       padding: 0,
@@ -124,7 +128,6 @@ interface ProductListProps
   activeAttributeSortId: string;
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   products: RelayToFlat<ProductListQuery["products"]>;
-  loading: boolean;
 }
 
 export const ProductList: React.FC<ProductListProps> = props => {
@@ -427,19 +430,10 @@ export const ProductList: React.FC<ProductListProps> = props => {
                         gridAttribute
                       )}
                     >
-                      {maybe<React.ReactNode>(() => {
-                        const attribute = product.attributes.find(
-                          attribute =>
-                            attribute.attribute.id ===
-                            getAttributeIdFromColumnValue(gridAttribute)
-                        );
-                        if (attribute) {
-                          return attribute.values
-                            .map(value => value.name)
-                            .join(", ");
-                        }
-                        return "-";
-                      }, <Skeleton />)}
+                      <ProductListAttribute
+                        attribute={gridAttribute}
+                        productAttributes={product?.attributes}
+                      />
                     </TableCell>
                   ))}
                   <DisplayColumn

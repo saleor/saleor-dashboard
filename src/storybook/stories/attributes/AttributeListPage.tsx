@@ -24,14 +24,6 @@ const props: AttributeListPageProps = {
   ...filterPageProps,
   attributes,
   filterOpts: {
-    availableInGrid: {
-      active: false,
-      value: false
-    },
-    filterableInDashboard: {
-      active: false,
-      value: false
-    },
     filterableInStorefront: {
       active: false,
       value: false

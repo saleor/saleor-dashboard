@@ -1,4 +1,9 @@
-import { Popper, TextField, Typography } from "@material-ui/core";
+import {
+  Popper,
+  PopperPlacementType,
+  TextField,
+  Typography
+} from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import CloseIcon from "@material-ui/icons/Close";
 import Debounce, { DebounceProps } from "@saleor/components/Debounce";
@@ -103,6 +108,7 @@ export interface MultiAutocompleteSelectFieldProps
   onBlur?: () => void;
   fetchOnFocus?: boolean;
   endAdornment?: React.ReactNode;
+  popperPlacement?: PopperPlacementType;
 }
 
 const DebounceAutocomplete: React.ComponentType<DebounceProps<
@@ -131,6 +137,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
     onFetchMore,
     fetchOnFocus,
     endAdornment,
+    popperPlacement = "bottom-end",
     ...rest
   } = props;
   const classes = useStyles(props);
@@ -210,6 +217,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                     inputProps={{
                       ...getInputProps({
                         placeholder,
+                        testId,
                         onClick: toggleMenu
                       }),
                       ...getMenuProps()
@@ -229,7 +237,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                         width: anchor.current.clientWidth,
                         zIndex: 1301
                       }}
-                      placement="bottom-end"
+                      placement={popperPlacement}
                     >
                       <MultiAutocompleteSelectFieldContent
                         add={

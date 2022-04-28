@@ -1,4 +1,5 @@
 import { DialogContentText } from "@material-ui/core";
+import { filterable } from "@saleor/attributes/utils/data";
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
@@ -15,7 +16,6 @@ import {
 import { Task } from "@saleor/containers/BackgroundTasks/types";
 import {
   ProductListQueryVariables,
-  useAvailableInGridAttributesQuery,
   useGridAttributesQuery,
   useInitialProductFilterAttributesQuery,
   useInitialProductFilterCategoriesQuery,
@@ -52,6 +52,7 @@ import {
 } from "@saleor/products/urls";
 import useAttributeSearch from "@saleor/searches/useAttributeSearch";
 import useAttributeValueSearch from "@saleor/searches/useAttributeValueSearch";
+import useAvailableInGridAttributesSearch from "@saleor/searches/useAvailableInGridAttributesSearch";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
@@ -274,12 +275,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     [params, settings.rowNumber]
   );
 
-  function filterColumnIds(columns: ProductListColumns[]) {
-    return columns
-      .filter(isAttributeColumnValue)
-      .map(getAttributeIdFromColumnValue);
-  }
-  const filteredColumnIds = filterColumnIds(settings.columns);
+  const filteredColumnIds = settings.columns
+    .filter(isAttributeColumnValue)
+    .map(getAttributeIdFromColumnValue);
 
   const { data, loading, refetch } = useProductListQuery({
     displayLoader: true,
@@ -290,11 +288,15 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     }
   });
 
-  const availableInGridAttributes = useAvailableInGridAttributesQuery({
-    variables: { first: 24 }
+  const availableInGridAttributesOpts = useAvailableInGridAttributesSearch({
+    variables: {
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      first: 5
+    }
   });
   const gridAttributes = useGridAttributesQuery({
-    variables: { ids: filteredColumnIds }
+    variables: { ids: filteredColumnIds },
+    skip: filteredColumnIds.length === 0
   });
 
   const [
@@ -317,7 +319,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const filterOpts = getFilterOpts(
     params,
-    mapEdgesToItems(initialFilterAttributes?.attributes) || [],
+    (mapEdgesToItems(initialFilterAttributes?.attributes) || []).filter(
+      filterable
+    ),
     searchAttributeValues,
     {
       initial: mapEdgesToItems(initialFilterCategories?.categories) || [],
@@ -351,8 +355,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         }}
         onSort={handleSort}
         availableInGridAttributes={
-          mapEdgesToItems(availableInGridAttributes?.data?.availableInGrid) ||
-          []
+          mapEdgesToItems(
+            availableInGridAttributesOpts.result?.data?.availableInGrid
+          ) || []
         }
         currencySymbol={selectedChannel?.currencyCode || ""}
         currentTab={currentTab}
@@ -360,47 +365,26 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         filterOpts={filterOpts}
         gridAttributes={mapEdgesToItems(gridAttributes?.data?.grid) || []}
         totalGridAttributes={maybe(
-          () => availableInGridAttributes.data.availableInGrid.totalCount,
+          () =>
+            availableInGridAttributesOpts.result.data.availableInGrid
+              .totalCount,
           0
         )}
         settings={settings}
-        loading={availableInGridAttributes.loading || gridAttributes.loading}
+        loading={
+          availableInGridAttributesOpts.result.loading || gridAttributes.loading
+        }
         hasMore={maybe(
           () =>
-            availableInGridAttributes.data.availableInGrid.pageInfo.hasNextPage,
+            availableInGridAttributesOpts.result.data.availableInGrid.pageInfo
+              .hasNextPage,
           false
         )}
         disabled={loading}
         limits={limitOpts.data?.shop.limits}
         products={mapEdgesToItems(data?.products)}
-        onFetchMore={() =>
-          availableInGridAttributes.loadMore(
-            (prev, next) => {
-              if (
-                prev.availableInGrid.pageInfo.endCursor ===
-                next.availableInGrid.pageInfo.endCursor
-              ) {
-                return prev;
-              }
-              return {
-                ...prev,
-                availableInGrid: {
-                  ...prev.availableInGrid,
-                  edges: [
-                    ...prev.availableInGrid.edges,
-                    ...next.availableInGrid.edges
-                  ],
-                  pageInfo: next.availableInGrid.pageInfo
-                }
-              };
-            },
-            {
-              after:
-                availableInGridAttributes.data.availableInGrid.pageInfo
-                  .endCursor
-            }
-          )
-        }
+        onColumnQueryChange={availableInGridAttributesOpts.search}
+        onFetchMore={availableInGridAttributesOpts.loadMore}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
@@ -433,6 +417,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         tabs={getFilterTabs().map(tab => tab.name)}
         onExport={() => openModal("export")}
         selectedChannelId={selectedChannel?.id}
+        columnQuery={availableInGridAttributesOpts.query}
       />
       <ActionDialog
         open={params.action === "delete"}
