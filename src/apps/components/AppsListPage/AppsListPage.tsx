@@ -10,7 +10,6 @@ import { useIntl } from "react-intl";
 import AppsInProgress from "../AppsInProgress/AppsInProgress";
 import CustomApps from "../CustomApps/CustomApps";
 import InstalledApps from "../InstalledApps/InstalledApps";
-import Marketplace from "../Marketplace";
 
 export interface AppsListPageProps extends ListProps {
   installedAppsList: AppsListQuery["apps"]["edges"];
@@ -65,8 +64,6 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
         getCustomAppHref={getCustomAppHref}
         onRemove={onCustomAppRemove}
       />
-      <CardSpacer />
-      <Marketplace />
     </Container>
   );
 };
