@@ -6,7 +6,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { validationMessages } from "../messages";
-import { FilterErrorMessages, FilterErrors, IFilterElement } from "../types";
+import { FilterElement, FilterErrorMessages, FilterErrors } from "../types";
 
 const useStyles = makeStyles(
   theme => ({
@@ -35,7 +35,7 @@ const useStyles = makeStyles(
 );
 
 interface FilterErrorsListProps<T extends string = string> {
-  filter: IFilterElement<T>;
+  filter: FilterElement<T>;
   errors?: FilterErrors;
   errorMessages?: FilterErrorMessages<T>;
 }

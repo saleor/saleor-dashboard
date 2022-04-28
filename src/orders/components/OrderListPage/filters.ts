@@ -7,10 +7,11 @@ import {
   orderStatusMessages,
   paymentStatusMessages
 } from "@saleor/intl";
-import { FilterOpts, MinMax } from "@saleor/types";
+import { FilterOpts, KeyValue, MinMax } from "@saleor/types";
 import {
   createBooleanField,
   createDateField,
+  createKeyValueField,
   createOptionsField,
   createTextField
 } from "@saleor/utils/filters/fields";
@@ -24,7 +25,8 @@ export enum OrderFilterKeys {
   clickAndCollect = "clickAndCollect",
   preorder = "preorder",
   channel = "channel",
-  giftCard = "giftCard"
+  giftCard = "giftCard",
+  metadata = "metadata"
 }
 
 export enum OrderFilterGiftCard {
@@ -41,6 +43,7 @@ export interface OrderListFilterOpts {
   clickAndCollect: FilterOpts<boolean>;
   preorder: FilterOpts<boolean>;
   giftCard: FilterOpts<OrderFilterGiftCard[]>;
+  metadata: FilterOpts<KeyValue[]>;
 }
 
 const messages = defineMessages({
@@ -75,6 +78,9 @@ const messages = defineMessages({
   giftCardOrdered: {
     defaultMessage: "Gift Card ordered",
     description: "order"
+  },
+  metadata: {
+    defaultMessage: "Metadata"
   }
 });
 
@@ -223,6 +229,14 @@ export function createFilterStructure(
         ]
       ),
       active: opts.paymentStatus.active
+    },
+    {
+      ...createKeyValueField(
+        OrderFilterKeys.metadata,
+        intl.formatMessage(messages.metadata),
+        opts.metadata.value
+      ),
+      active: opts.metadata.active
     },
     ...(opts?.channel?.value.length
       ? [

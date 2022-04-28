@@ -17,6 +17,7 @@ import {
 } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { ListProps } from "@saleor/types";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -92,6 +93,14 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                     )}
                   </TableCell>
                   <TableCell className={classes.colAction}>
+                    {app.node.appUrl && (
+                      <Typography
+                        className={clsx(classes.text, classes.appUrl)}
+                        variant="body2"
+                      >
+                        {app.node.appUrl}
+                      </Typography>
+                    )}
                     <Button
                       onClick={stopPropagation(onRowAboutClick(app.node.id))}
                     >

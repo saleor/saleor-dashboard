@@ -17,7 +17,6 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ChannelProps, ListActions, ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
-import { getFooterColSpanWithBulkActions } from "@saleor/utils/tables";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -82,7 +81,7 @@ const useStyles = makeStyles(
   { name: "VoucherList" }
 );
 
-const numberOfColumns = 6;
+const numberOfColumns = 7;
 
 const VoucherList: React.FC<VoucherListProps> = props => {
   const {
@@ -218,7 +217,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
       <TableFooter>
         <TableRow>
           <TablePagination
-            colSpan={getFooterColSpanWithBulkActions(vouchers, numberOfColumns)}
+            colSpan={numberOfColumns}
             settings={settings}
             hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
             onNextPage={onNextPage}

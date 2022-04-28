@@ -99,7 +99,12 @@ export const AppPage: React.FC<AppPageProps> = ({
       <CardSpacer />
       <div className={classes.iframeContainer}>
         {url && (
-          <AppFrame src={url} appToken={data.accessToken} onError={onError} />
+          <AppFrame
+            src={url}
+            appToken={data.accessToken}
+            onError={onError}
+            appId={data.id}
+          />
         )}
       </div>
       <CardSpacer />

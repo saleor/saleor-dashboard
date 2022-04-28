@@ -14,6 +14,7 @@ export interface ExitFormDialogData {
   shouldBlockNavigation: () => boolean;
   setIsSubmitting: (value: boolean) => void;
   submit: () => SubmitPromise;
+  leave: () => void;
   setIsSubmitDisabled: (value: boolean) => void;
 }
 
@@ -41,6 +42,7 @@ export const ExitFormDialogContext = React.createContext<ExitFormDialogData>({
   shouldBlockNavigation: () => false,
   setIsSubmitting: () => undefined,
   submit: () => Promise.resolve([]),
+  leave: () => undefined,
   setIsSubmitDisabled: () => undefined
 });
 
@@ -69,9 +71,9 @@ export function useExitFormDialogProvider() {
   const isSubmitting = useRef(defaultValues.isSubmitting);
   const formsData = useRef<FormsData>({});
   const blockNav = useRef(defaultValues.blockNav);
-  const navAction = useRef(defaultValues.navAction);
+  const navAction = useRef<typeof history.location>(defaultValues.navAction);
   const enableExitDialog = useRef(defaultValues.enableExitDialog);
-  const currentPath = useRef(window.location.pathname);
+  const currentLocation = useRef(history.location);
 
   const setIsSubmitting = (value: boolean) => {
     setEnableExitDialog(!value);
@@ -91,8 +93,8 @@ export function useExitFormDialogProvider() {
     formsData.current = defaultValues.formsData;
   };
 
-  const setCurrentPath = (newPath: string) => {
-    currentPath.current = newPath;
+  const setCurrentLocation = (newLocation: typeof history.location) => {
+    currentLocation.current = newLocation;
   };
 
   const setFormData = (id: symbol, newData: Partial<FormData>) => {
@@ -156,10 +158,10 @@ export function useExitFormDialogProvider() {
     return blockNav.current;
   };
 
-  const isOnlyQuerying = transition =>
-    // wee need to compare to current path and not window location
+  const isOnlyQuerying = (transition: typeof history.location) =>
+    // We need to compare to current path and not window location
     // so it works with browser back button as well
-    transition.pathname === currentPath.current;
+    transition.pathname === currentLocation.current.pathname;
 
   const handleNavigationBlock = () => {
     const unblock = history.block(transition => {
@@ -179,7 +181,7 @@ export function useExitFormDialogProvider() {
       }
 
       setStateDefaultValues();
-      setCurrentPath(transition.pathname);
+      setCurrentLocation(transition);
       return null;
     });
 
@@ -192,10 +194,10 @@ export function useExitFormDialogProvider() {
     setBlockNav(false);
     setDefaultFormsData();
 
-    setCurrentPath(navAction.current.pathname);
+    setCurrentLocation(navAction.current);
     // because our useNavigator navigate action may be blocked
     // by exit dialog we want to avoid using it doing this transition
-    routerHistory.push(navAction.current.pathname);
+    routerHistory.push(navAction.current.pathname + navAction.current.search);
     setStateDefaultValues();
   };
 
@@ -250,7 +252,8 @@ export function useExitFormDialogProvider() {
     setExitDialogSubmitRef: setSubmitRef,
     setIsSubmitting,
     submit: handleSubmit,
-    setIsSubmitDisabled
+    setIsSubmitDisabled,
+    leave: handleLeave
   };
 
   return {

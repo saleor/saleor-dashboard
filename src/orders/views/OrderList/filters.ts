@@ -11,18 +11,24 @@ import {
   OrderListFilterOpts
 } from "@saleor/orders/components/OrderListPage/filters";
 
-import { IFilterElement } from "../../../components/Filter";
+import {
+  FilterElement,
+  FilterElementKeyValue,
+  FilterElementRegular
+} from "../../../components/Filter";
 import {
   createFilterTabUtils,
   createFilterUtils,
   dedupeFilter,
   getGteLteVariables,
+  getKeyValueQueryParam,
   getMinMaxQueryParam,
   getMultipleEnumValueQueryParam,
   getMultipleValueQueryParam,
   getSingleValueQueryParam
 } from "../../../utils/filters";
 import {
+  OrderListFitersWithKeyValueValues,
   OrderListUrlFilters,
   OrderListUrlFiltersEnum,
   OrderListUrlFiltersWithMultipleValues,
@@ -86,6 +92,14 @@ export function getFilterOpts(
           findValueInEnum(paymentStatus, PaymentChargeStatusEnum)
         ) || []
       )
+    },
+    metadata: {
+      active: !!params?.metadata?.length,
+      value: [
+        ...(params?.metadata
+          ? params.metadata.filter(pair => pair?.key !== undefined)
+          : [])
+      ]
     }
   };
 }
@@ -120,12 +134,13 @@ export function getFilterVariables(
       undefined,
     giftCardUsed:
       params?.giftCard?.some(param => param === OrderFilterGiftCard.paid) ||
-      undefined
+      undefined,
+    metadata: params?.metadata
   };
 }
 
 export function getFilterQueryParam(
-  filter: IFilterElement<OrderFilterKeys>
+  filter: FilterElement<OrderFilterKeys>
 ): OrderListUrlFilters {
   const { name } = filter;
 
@@ -147,14 +162,14 @@ export function getFilterQueryParam(
 
     case OrderFilterKeys.status:
       return getMultipleEnumValueQueryParam(
-        filter,
+        filter as FilterElementRegular<OrderFilterKeys.status>,
         OrderListUrlFiltersWithMultipleValues.status,
         OrderStatusFilter
       );
 
     case OrderFilterKeys.paymentStatus:
       return getMultipleEnumValueQueryParam(
-        filter,
+        filter as FilterElementRegular<OrderFilterKeys.paymentStatus>,
         OrderListUrlFiltersWithMultipleValues.paymentStatus,
         PaymentChargeStatusEnum
       );
@@ -170,9 +185,15 @@ export function getFilterQueryParam(
 
     case OrderFilterKeys.giftCard:
       return getMultipleEnumValueQueryParam(
-        filter,
+        filter as FilterElementRegular<OrderFilterKeys.giftCard>,
         OrderListUrlFiltersWithMultipleValues.giftCard,
         OrderFilterGiftCard
+      );
+
+    case OrderFilterKeys.metadata:
+      return getKeyValueQueryParam(
+        filter as FilterElementKeyValue<OrderFilterKeys.metadata>,
+        OrderListFitersWithKeyValueValues.metadata
       );
   }
 }

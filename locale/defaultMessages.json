@@ -2224,6 +2224,14 @@
   "src_dot_components_dot_Filter_dot_FilterContent_dot_996289613": {
     "string": "Filters"
   },
+  "src_dot_components_dot_Filter_dot_FilterContent_dot_key": {
+    "context": "key-value field input",
+    "string": "Key"
+  },
+  "src_dot_components_dot_Filter_dot_FilterContent_dot_value": {
+    "context": "key-value field input",
+    "string": "Value"
+  },
   "src_dot_components_dot_Filter_dot_UNKNOWN_ERROR": {
     "context": "filters error messages unknown error",
     "string": "Unknown error occurred"
@@ -2231,6 +2239,18 @@
   "src_dot_components_dot_Filter_dot_VALUE_REQUIRED": {
     "context": "filters error messages value required",
     "string": "Choose a value"
+  },
+  "src_dot_components_dot_Filter_dot_add": {
+    "context": "key-value field button add more key-value pairs",
+    "string": "Add more"
+  },
+  "src_dot_components_dot_Filter_dot_key": {
+    "context": "key-value field input",
+    "string": "Key"
+  },
+  "src_dot_components_dot_Filter_dot_value": {
+    "context": "key-value field input",
+    "string": "Value"
   },
   "src_dot_components_dot_Form_dot_cancelButton": {
     "context": "ExitFormPrompt cancel button",
@@ -4942,6 +4962,9 @@
     "context": "order",
     "string": "Paid with Gift Card"
   },
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_metadata": {
+    "string": "Metadata"
+  },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_placed": {
     "context": "order",
     "string": "Created"
@@ -6407,6 +6430,9 @@
     "context": "product kind",
     "string": "Product Kind"
   },
+  "src_dot_products_dot_components_dot_ProductListPage_dot_metadata": {
+    "string": "Metadata"
+  },
   "src_dot_products_dot_components_dot_ProductListPage_dot_outOfStock": {
     "context": "product status",
     "string": "Out Of Stock"
@@ -7565,21 +7591,6 @@
     "context": "input helper text",
     "string": "Leaving this setting empty will mean that stock won’t be reserved"
   },
-  "src_dot_siteSettings_dot_components_dot_SiteDetailsSettingsCard_dot_1008586926": {
-    "string": "Name of your store is shown on tab in web browser"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteDetailsSettingsCard_dot_1170194728": {
-    "string": "Store domain"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteDetailsSettingsCard_dot_2286355060": {
-    "string": "Name of your store"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteDetailsSettingsCard_dot_3868874271": {
-    "string": "Store description"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteDetailsSettingsCard_dot_529433178": {
-    "string": "Store description is shown on taskbar after your store name"
-  },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_229184360": {
     "context": "section header",
     "string": "Store Information"
@@ -7599,10 +7610,6 @@
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_sectionCompanyTitle": {
     "context": "section title",
     "string": "Company Information"
-  },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_sectionDetailsDescription": {
-    "context": "section description",
-    "string": "These are general information about your store. They define what is the URL of your store and what is shown in browsers taskbar."
   },
   "src_dot_somethingWentWrong": {
     "string": "Saleor ran into an unexpected problem"

@@ -1,4 +1,4 @@
-import { IFilterElement } from "@saleor/components/Filter";
+import { FilterElement, FilterElementRegular } from "@saleor/components/Filter";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import {
   SaleFilterKeys,
@@ -86,14 +86,14 @@ export function getFilterVariables(
 }
 
 export function getFilterQueryParam(
-  filter: IFilterElement<SaleFilterKeys>
+  filter: FilterElement<SaleFilterKeys>
 ): SaleListUrlFilters {
   const { name } = filter;
 
   switch (name) {
     case SaleFilterKeys.saleType:
       return getSingleEnumValueQueryParam(
-        filter,
+        filter as FilterElementRegular<SaleFilterKeys.saleType>,
         SaleListUrlFiltersEnum.type,
         DiscountValueTypeEnum
       );
@@ -107,7 +107,7 @@ export function getFilterQueryParam(
 
     case SaleFilterKeys.status:
       return getMultipleEnumValueQueryParam(
-        filter,
+        filter as FilterElementRegular<SaleFilterKeys.status>,
         SaleListUrlFiltersWithMultipleValues.status,
         DiscountStatusEnum
       );

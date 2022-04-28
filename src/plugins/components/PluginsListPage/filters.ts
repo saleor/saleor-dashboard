@@ -1,4 +1,4 @@
-import { IFilter, IFilterElement } from "@saleor/components/Filter";
+import { IFilter } from "@saleor/components/Filter";
 import { PluginConfigurationType } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { AutocompleteFilterOpts, FilterOpts } from "@saleor/types";
@@ -52,6 +52,7 @@ export function createFilterStructure(
       active: opts.status.active,
       name: PluginFilterKeys.status,
       label: intl.formatMessage(messages.channelStatusSectionTitle),
+      multiple: false,
       multipleFields: [
         {
           required: true,
@@ -84,7 +85,7 @@ export function createFilterStructure(
           )
         }
       ]
-    } as IFilterElement<PluginFilterKeys.status>,
+    },
     {
       active: opts.type.active,
       name: PluginFilterKeys.type,

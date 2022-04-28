@@ -86,6 +86,15 @@ describe("Filtering URL params", () => {
     giftCard: {
       active: false,
       value: [OrderFilterGiftCard.paid, OrderFilterGiftCard.bought]
+    },
+    metadata: {
+      active: false,
+      value: [
+        {
+          key: "",
+          value: ""
+        }
+      ]
     }
   });
 

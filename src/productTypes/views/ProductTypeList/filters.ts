@@ -1,4 +1,4 @@
-import { IFilterElement } from "@saleor/components/Filter";
+import { FilterElement } from "@saleor/components/Filter";
 import {
   ProductTypeConfigurable,
   ProductTypeEnum,
@@ -55,7 +55,7 @@ export function getFilterVariables(
 }
 
 export function getFilterQueryParam(
-  filter: IFilterElement<ProductTypeFilterKeys>
+  filter: FilterElement<ProductTypeFilterKeys>
 ): ProductTypeListUrlFilters {
   const { name } = filter;
 

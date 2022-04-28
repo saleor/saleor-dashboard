@@ -30,6 +30,7 @@ export const appsList = gql`
           name
           isActive
           type
+          appUrl
         }
       }
     }

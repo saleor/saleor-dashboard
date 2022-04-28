@@ -15,9 +15,9 @@ import { FilterAutocompleteDisplayValues } from "../FilterAutocompleteField";
 import { FilterReducerAction } from "../reducer";
 import {
   FieldType,
+  FilterElement,
   FilterErrorMessages,
   IFilter,
-  IFilterElement,
   InvalidFilters
 } from "../types";
 import FilterContentBody, { FilterContentBodyProps } from "./FilterContentBody";
@@ -77,16 +77,18 @@ const useSummaryStyles = makeStyles(
   { name: "FilterContentExpanderSummary" }
 );
 
-export interface FilterContentProps<T extends string = string> {
-  filters: IFilter<T>;
-  onFilterPropertyChange: React.Dispatch<FilterReducerAction<T>>;
+export interface FilterContentProps<K extends string = string> {
+  filters: IFilter<K>;
+  onFilterPropertyChange: <T extends FieldType>(
+    value: FilterReducerAction<K, T>
+  ) => void;
   onFilterAttributeFocus?: (id?: string) => void;
   onClear: () => void;
   onSubmit: () => void;
   currencySymbol?: string;
-  dataStructure: IFilter<T>;
-  errors?: InvalidFilters<T>;
-  errorMessages?: FilterErrorMessages<T>;
+  dataStructure: IFilter<K>;
+  errors?: InvalidFilters<K>;
+  errorMessages?: FilterErrorMessages<K>;
 }
 
 const FilterContent: React.FC<FilterContentProps> = ({
@@ -103,11 +105,11 @@ const FilterContent: React.FC<FilterContentProps> = ({
   const expanderClasses = useExpanderStyles({});
   const summaryClasses = useSummaryStyles({});
 
-  const [openedFilter, setOpenedFilter] = useState<IFilterElement<string>>();
+  const [openedFilter, setOpenedFilter] = useState<FilterElement<string>>();
 
   const getAutocompleteValuesWithNewValues = (
     autocompleteDisplayValues: FilterAutocompleteDisplayValues,
-    filterField: IFilterElement<string>
+    filterField: FilterElement<string>
   ) => {
     if (filterField.type === FieldType.autocomplete) {
       return {
@@ -141,7 +143,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
   );
 
   const commonFilterBodyProps: Omit<
-    FilterContentBodyProps,
+    FilterContentBodyProps<string>,
     "filter" | "onFilterPropertyChange"
   > = {
     currencySymbol,
@@ -150,14 +152,14 @@ const FilterContent: React.FC<FilterContentProps> = ({
     initialAutocompleteDisplayValues
   };
 
-  const handleFilterAttributeFocus = (filter?: IFilterElement<string>) => {
+  const handleFilterAttributeFocus = (filter?: FilterElement<string>) => {
     setOpenedFilter(filter);
     if (onFilterAttributeFocus) {
       onFilterAttributeFocus(filter?.id);
     }
   };
 
-  const handleFilterOpen = (filter: IFilterElement<string>) => {
+  const handleFilterOpen = (filter: FilterElement<string>) => {
     if (filter.name !== openedFilter?.name) {
       handleFilterAttributeFocus(filter);
     } else {
@@ -165,10 +167,10 @@ const FilterContent: React.FC<FilterContentProps> = ({
     }
   };
 
-  const handleFilterPropertyGroupChange = function<T extends string>(
-    action: FilterReducerAction<T>,
-    filter: IFilterElement<string>
-  ) {
+  const handleFilterPropertyGroupChange = function<
+    K extends string,
+    T extends FieldType
+  >(action: FilterReducerAction<K, T>, filter: FilterElement<string>) {
     const switchToActive = action.payload.update.active;
     if (switchToActive && filter.name !== openedFilter?.name) {
       handleFilterAttributeFocus(filter);
@@ -181,9 +183,10 @@ const FilterContent: React.FC<FilterContentProps> = ({
     onFilterPropertyChange(action);
   };
 
-  const handleMultipleFieldPropertyChange = function<T extends string>(
-    action: FilterReducerAction<T>
-  ) {
+  const handleMultipleFieldPropertyChange = function<
+    K extends string,
+    T extends FieldType
+  >(action: FilterReducerAction<K, T>) {
     const { update } = action.payload;
     onFilterPropertyChange({
       ...action,
@@ -192,7 +195,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
   };
 
   const getFilterFromCurrentData = function<T extends string>(
-    filter: IFilterElement<T>
+    filter: FilterElement<T>
   ) {
     return filters.find(({ name }) => filter.name === name);
   };

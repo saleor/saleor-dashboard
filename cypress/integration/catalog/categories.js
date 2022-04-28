@@ -11,7 +11,10 @@ import { CATEGORY_DETAILS } from "../../elements/catalog/categories/category-det
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { categoryDetailsUrl, urlList } from "../../fixtures/urlList";
-import { getCategory } from "../../support/api/requests/Category";
+import {
+  createCategory as createCategoryRequest,
+  getCategory
+} from "../../support/api/requests/Category";
 import { deleteCategoriesStartsWith } from "../../support/api/utils/catalog/categoryUtils";
 import * as channelsUtils from "../../support/api/utils/channelsUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
@@ -147,7 +150,9 @@ filterTests({ definedTags: ["all"] }, () => {
     it("should be able to delete category. TC: SALEOR_0206", () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
 
-      createCategory({ name: categoryName }).then(categoryResp => {
+      createCategoryRequest({
+        name: categoryName
+      }).then(categoryResp => {
         cy.visit(categoryDetailsUrl(categoryResp.id))
           .get(BUTTON_SELECTORS.deleteButton)
           .click()
@@ -163,7 +168,9 @@ filterTests({ definedTags: ["all"] }, () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
       const updatedName = `${startsWith}updatedCategory`;
 
-      createCategory({ name: categoryName })
+      createCategoryRequest({
+        name: categoryName
+      })
         .then(categoryResp => {
           cy.visitAndWaitForProgressBarToDisappear(
             categoryDetailsUrl(categoryResp.id)
@@ -185,10 +192,15 @@ filterTests({ definedTags: ["all"] }, () => {
       let firstCategory;
       let secondCategory;
 
-      createCategory({ name: firstCategoryName }).then(categoryResp => {
+      createCategoryRequest({
+        name: firstCategoryName
+      }).then(categoryResp => {
         firstCategory = categoryResp;
       });
-      createCategory({ name: secondCategoryName }).then(categoryResp => {
+
+      createCategoryRequest({
+        name: secondCategoryName
+      }).then(categoryResp => {
         secondCategory = categoryResp;
         cy.visit(urlList.categories)
           .searchInTable(startsWith)
@@ -215,7 +227,9 @@ filterTests({ definedTags: ["all"] }, () => {
       let subCategory;
       let mainCategory;
 
-      createCategory({ name: mainCategoryName })
+      createCategoryRequest({
+        name: mainCategoryName
+      })
         .then(categoryResp => {
           mainCategory = categoryResp;
           createCategoryRequest({

@@ -48,8 +48,6 @@ export interface CustomerListProps
   customers: RelayToFlat<ListCustomersQuery["customers"]>;
 }
 
-const numberOfColumns = 3;
-
 const CustomerList: React.FC<CustomerListProps> = props => {
   const {
     settings,
@@ -71,16 +69,18 @@ const CustomerList: React.FC<CustomerListProps> = props => {
 
   const userPermissions = useUserPermissions();
 
+  const numberOfColumns = hasPermissions(userPermissions, [
+    PermissionEnum.MANAGE_ORDERS
+  ])
+    ? 4
+    : 3;
+
   const classes = useStyles(props);
 
   return (
     <ResponsiveTable>
       <TableHead
-        colSpan={
-          hasPermissions(userPermissions, [PermissionEnum.MANAGE_ORDERS])
-            ? numberOfColumns
-            : numberOfColumns - 1
-        }
+        colSpan={numberOfColumns}
         selected={selected}
         disabled={disabled}
         items={customers}
