@@ -217,6 +217,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                     inputProps={{
                       ...getInputProps({
                         placeholder,
+                        testId,
                         onClick: toggleMenu
                       }),
                       ...getMenuProps()
