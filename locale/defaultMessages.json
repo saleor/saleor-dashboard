@@ -2094,6 +2094,10 @@
     "context": "Status label when object is unpublished in a channel",
     "string": "Unpublished"
   },
+  "src_dot_components_dot_ColumnPicker_dot_2539195044": {
+    "context": "select visible columns button",
+    "string": "Columns"
+  },
   "src_dot_components_dot_ColumnPicker_dot_columnLabel": {
     "context": "input label",
     "string": "Selected columns"
