@@ -133,6 +133,7 @@ Cypress.Commands.add(
 
 Cypress.Commands.add("softExpectSkeletonIsVisible", () => {
   cy.get(SHARED_ELEMENTS.circularProgress).should("not.exist");
+  cy.get(SHARED_ELEMENTS.progressBar).should("be.visible");
   cy.get("body").then($body => {
     if ($body.find(SHARED_ELEMENTS.skeleton).length) {
       cy.softAssertVisibility(SHARED_ELEMENTS.skeleton);
