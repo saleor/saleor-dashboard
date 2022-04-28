@@ -1,6 +1,5 @@
 import { DiscountValueTypeEnum } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import OrderDiscountCommonModal, {
@@ -29,39 +28,61 @@ const basicProps: OrderDiscountCommonModalProps = {
   removeStatus: "default"
 };
 
-storiesOf("Orders / Order Discount common modal", module)
-  .addDecorator(Decorator)
-  .add("percentage without existing discount", () => (
-    <OrderDiscountCommonModal {...basicProps} />
-  ))
-  .add("percentage with existing discount", () => (
-    <OrderDiscountCommonModal
-      {...basicProps}
-      existingDiscount={{
-        calculationMode: DiscountValueTypeEnum.PERCENTAGE,
-        reason: "Cause customers want it cheap",
-        value: 25
-      }}
-    />
-  ))
-  .add("fixed amount with existing discount", () => (
-    <OrderDiscountCommonModal
-      {...basicProps}
-      existingDiscount={{
-        calculationMode: DiscountValueTypeEnum.FIXED,
-        reason: "Cause I say so",
-        value: 5.5
-      }}
-    />
-  ))
-  .add("fixed amount with loading confirm", () => (
-    <OrderDiscountCommonModal
-      {...basicProps}
-      confirmStatus="loading"
-      existingDiscount={{
-        calculationMode: DiscountValueTypeEnum.FIXED,
-        reason: "Cause I say so",
-        value: 5.5
-      }}
-    />
-  ));
+export default {
+  title: "Orders / Order Discount common modal",
+  decorators: [Decorator]
+};
+
+export const PercentageWithoutExistingDiscount = () => (
+  <OrderDiscountCommonModal {...basicProps} />
+);
+
+PercentageWithoutExistingDiscount.story = {
+  name: "percentage without existing discount"
+};
+
+export const PercentageWithExistingDiscount = () => (
+  <OrderDiscountCommonModal
+    {...basicProps}
+    existingDiscount={{
+      calculationMode: DiscountValueTypeEnum.PERCENTAGE,
+      reason: "Cause customers want it cheap",
+      value: 25
+    }}
+  />
+);
+
+PercentageWithExistingDiscount.story = {
+  name: "percentage with existing discount"
+};
+
+export const FixedAmountWithExistingDiscount = () => (
+  <OrderDiscountCommonModal
+    {...basicProps}
+    existingDiscount={{
+      calculationMode: DiscountValueTypeEnum.FIXED,
+      reason: "Cause I say so",
+      value: 5.5
+    }}
+  />
+);
+
+FixedAmountWithExistingDiscount.story = {
+  name: "fixed amount with existing discount"
+};
+
+export const FixedAmountWithLoadingConfirm = () => (
+  <OrderDiscountCommonModal
+    {...basicProps}
+    confirmStatus="loading"
+    existingDiscount={{
+      calculationMode: DiscountValueTypeEnum.FIXED,
+      reason: "Cause I say so",
+      value: 5.5
+    }}
+  />
+);
+
+FixedAmountWithLoadingConfirm.story = {
+  name: "fixed amount with loading confirm"
+};

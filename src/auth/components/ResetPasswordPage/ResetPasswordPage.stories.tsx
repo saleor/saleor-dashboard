@@ -1,7 +1,6 @@
 import CardDecorator from "@saleor/storybook/CardDecorator";
 import Decorator from "@saleor/storybook/Decorator";
 import { formError } from "@saleor/storybook/misc";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import ResetPasswordPage, { ResetPasswordPageProps } from "./ResetPasswordPage";
@@ -12,11 +11,28 @@ const props: ResetPasswordPageProps = {
   onBack: () => undefined,
   onSubmit: () => undefined
 };
-storiesOf("Views / Authentication / Reset password", module)
-  .addDecorator(CardDecorator)
-  .addDecorator(Decorator)
-  .add("default", () => <ResetPasswordPage {...props} />)
-  .add("loading", () => <ResetPasswordPage {...props} disabled={true} />)
-  .add("error", () => (
-    <ResetPasswordPage {...props} error={formError("").message} />
-  ));
+
+export default {
+  title: "Views / Authentication / Reset password",
+  decorators: [CardDecorator, Decorator]
+};
+
+export const Default = () => <ResetPasswordPage {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const Loading = () => <ResetPasswordPage {...props} disabled={true} />;
+
+Loading.story = {
+  name: "loading"
+};
+
+export const Error = () => (
+  <ResetPasswordPage {...props} error={formError("").message} />
+);
+
+Error.story = {
+  name: "error"
+};

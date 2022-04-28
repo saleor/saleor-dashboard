@@ -1,5 +1,4 @@
 import Decorator from "@saleor/storybook//Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import UnassignDialog, { UnassignDialogProps } from "./UnassignDialog";
@@ -12,6 +11,13 @@ const props: UnassignDialogProps = {
   open: true
 };
 
-storiesOf("Shipping / UnassignDialog", module)
-  .addDecorator(Decorator)
-  .add("default", () => <UnassignDialog {...props} />);
+export default {
+  title: "Shipping / UnassignDialog",
+  decorators: [Decorator]
+};
+
+export const Default = () => <UnassignDialog {...props} />;
+
+Default.story = {
+  name: "default"
+};

@@ -1,5 +1,4 @@
 import { ConfigurationTypeFieldEnum } from "@saleor/graphql";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import Decorator from "../../../storybook/Decorator";
@@ -22,15 +21,27 @@ const props: PluginSecretFieldDialogProps = {
   open: true
 };
 
-storiesOf("Views / Plugins / Edit secret field", module)
-  .addDecorator(Decorator)
-  .add("secret key", () => <PluginSecretFieldDialog {...props} />)
-  .add("password", () => (
-    <PluginSecretFieldDialog
-      {...props}
-      field={{
-        ...props.field,
-        type: ConfigurationTypeFieldEnum.PASSWORD
-      }}
-    />
-  ));
+export default {
+  title: "Views / Plugins / Edit secret field",
+  decorators: [Decorator]
+};
+
+export const SecretKey = () => <PluginSecretFieldDialog {...props} />;
+
+SecretKey.story = {
+  name: "secret key"
+};
+
+export const Password = () => (
+  <PluginSecretFieldDialog
+    {...props}
+    field={{
+      ...props.field,
+      type: ConfigurationTypeFieldEnum.PASSWORD
+    }}
+  />
+);
+
+Password.story = {
+  name: "password"
+};

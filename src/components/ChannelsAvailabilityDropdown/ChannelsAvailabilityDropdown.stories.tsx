@@ -1,6 +1,5 @@
 import { productChannels } from "@saleor/channels/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import ChannelsAvailabilityDropdown, {
@@ -11,6 +10,13 @@ const props: ChannelsAvailabilityDropdownProps = {
   channels: productChannels
 };
 
-storiesOf("Generics / ChannelsAvailabilityDropdown", module)
-  .addDecorator(Decorator)
-  .add("default", () => <ChannelsAvailabilityDropdown {...props} />);
+export default {
+  title: "Generics / ChannelsAvailabilityDropdown",
+  decorators: [Decorator]
+};
+
+export const Default = () => <ChannelsAvailabilityDropdown {...props} />;
+
+Default.story = {
+  name: "default"
+};

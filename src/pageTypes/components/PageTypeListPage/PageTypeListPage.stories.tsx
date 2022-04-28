@@ -1,5 +1,4 @@
 import { PageTypeListUrlSortField } from "@saleor/pageTypes/urls";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import {
@@ -27,10 +26,27 @@ const props: PageTypeListPageProps = {
   pageTypes
 };
 
-storiesOf("Views / Page types / Page types list", module)
-  .addDecorator(Decorator)
-  .add("default", () => <PageTypeListPage {...props} />)
-  .add("loading", () => (
-    <PageTypeListPage {...props} disabled={true} pageTypes={undefined} />
-  ))
-  .add("no data", () => <PageTypeListPage {...props} pageTypes={[]} />);
+export default {
+  title: "Views / Page types / Page types list",
+  decorators: [Decorator]
+};
+
+export const Default = () => <PageTypeListPage {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const Loading = () => (
+  <PageTypeListPage {...props} disabled={true} pageTypes={undefined} />
+);
+
+Loading.story = {
+  name: "loading"
+};
+
+export const NoData = () => <PageTypeListPage {...props} pageTypes={[]} />;
+
+NoData.story = {
+  name: "no data"
+};

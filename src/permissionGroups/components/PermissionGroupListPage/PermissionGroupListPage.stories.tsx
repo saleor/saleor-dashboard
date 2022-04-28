@@ -9,7 +9,6 @@ import PermissionGroupListPage, {
 import { permissionGroups } from "@saleor/permissionGroups/fixtures";
 import { PermissionGroupListUrlSortField } from "@saleor/permissionGroups/urls";
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 const props: PermissionGroupListPageProps = {
@@ -26,16 +25,33 @@ const props: PermissionGroupListPageProps = {
   }
 };
 
-storiesOf("Views / Permission Groups / Permission Group List", module)
-  .addDecorator(Decorator)
-  .add("default", () => <PermissionGroupListPage {...props} />)
-  .add("loading", () => (
-    <PermissionGroupListPage
-      {...props}
-      permissionGroups={undefined}
-      disabled={true}
-    />
-  ))
-  .add("no data", () => (
-    <PermissionGroupListPage {...props} permissionGroups={[]} disabled={true} />
-  ));
+export default {
+  title: "Views / Permission Groups / Permission Group List",
+  decorators: [Decorator]
+};
+
+export const Default = () => <PermissionGroupListPage {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const Loading = () => (
+  <PermissionGroupListPage
+    {...props}
+    permissionGroups={undefined}
+    disabled={true}
+  />
+);
+
+Loading.story = {
+  name: "loading"
+};
+
+export const NoData = () => (
+  <PermissionGroupListPage {...props} permissionGroups={[]} disabled={true} />
+);
+
+NoData.story = {
+  name: "no data"
+};

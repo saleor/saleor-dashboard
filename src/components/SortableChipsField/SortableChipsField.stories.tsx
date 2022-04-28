@@ -1,6 +1,5 @@
 import CardDecorator from "@saleor/storybook/CardDecorator";
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import SortableChipsField, {
@@ -20,15 +19,31 @@ const props: SortableChipsFieldProps = {
   ]
 };
 
-storiesOf("Generics / Sortable chips field", module)
-  .addDecorator(CardDecorator)
-  .addDecorator(Decorator)
-  .add("default", () => <SortableChipsField {...props} />)
-  .add("loading", () => <SortableChipsField {...props} loading={true} />)
-  .add("with error", () => (
-    <SortableChipsField
-      {...props}
-      error={true}
-      helperText="Something went wrong"
-    />
-  ));
+export default {
+  title: "Generics / Sortable chips field",
+  decorators: [CardDecorator, Decorator]
+};
+
+export const Default = () => <SortableChipsField {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const Loading = () => <SortableChipsField {...props} loading={true} />;
+
+Loading.story = {
+  name: "loading"
+};
+
+export const WithError = () => (
+  <SortableChipsField
+    {...props}
+    error={true}
+    helperText="Something went wrong"
+  />
+);
+
+WithError.story = {
+  name: "with error"
+};

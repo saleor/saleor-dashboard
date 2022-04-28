@@ -1,9 +1,15 @@
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import LoginLoading from ".";
 
-storiesOf("Views / Authentication / Verifying remembered user", module)
-  .addDecorator(Decorator)
-  .add("default", () => <LoginLoading />);
+export default {
+  title: "Views / Authentication / Verifying remembered user",
+  decorators: [Decorator]
+};
+
+export const Default = () => <LoginLoading />;
+
+Default.story = {
+  name: "default"
+};

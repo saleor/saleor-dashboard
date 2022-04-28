@@ -1,6 +1,5 @@
 import { Typography } from "@material-ui/core";
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import HorizontalSpacer from "./HorizontalSpacer";
@@ -15,22 +14,39 @@ const HelperWrapper: React.FC<HelperWrapperProps> = ({ children }) => (
 
 const Text: React.FC = () => <Typography>{"<- The spacer is here"}</Typography>;
 
-storiesOf("Generics / Horizontal Spacer", module)
-  .addDecorator(Decorator)
-  .add("without", () => (
-    <HelperWrapper>
-      <Typography>No spacer</Typography>
-    </HelperWrapper>
-  ))
-  .add("default", () => (
-    <HelperWrapper>
-      <HorizontalSpacer />
-      <Text />
-    </HelperWrapper>
-  ))
-  .add("with bigger spacing provided", () => (
-    <HelperWrapper>
-      <HorizontalSpacer spacing={4} />
-      <Text />
-    </HelperWrapper>
-  ));
+export default {
+  title: "Generics / Horizontal Spacer",
+  decorators: [Decorator]
+};
+
+export const Without = () => (
+  <HelperWrapper>
+    <Typography>No spacer</Typography>
+  </HelperWrapper>
+);
+
+Without.story = {
+  name: "without"
+};
+
+export const Default = () => (
+  <HelperWrapper>
+    <HorizontalSpacer />
+    <Text />
+  </HelperWrapper>
+);
+
+Default.story = {
+  name: "default"
+};
+
+export const WithBiggerSpacingProvided = () => (
+  <HelperWrapper>
+    <HorizontalSpacer spacing={4} />
+    <Text />
+  </HelperWrapper>
+);
+
+WithBiggerSpacingProvided.story = {
+  name: "with bigger spacing provided"
+};

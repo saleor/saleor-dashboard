@@ -8,7 +8,6 @@ import {
   users
 } from "@saleor/permissionGroups/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 const props: PermissionGroupDetailsPageProps = {
@@ -33,21 +32,38 @@ const props: PermissionGroupDetailsPageProps = {
   toolbar: null
 };
 
-storiesOf("Views / Permission Groups / Permission Group Details", module)
-  .addDecorator(Decorator)
-  .add("default", () => <PermissionGroupDetailsPage {...props} />)
-  .add("no members", () => (
-    <PermissionGroupDetailsPage
-      {...props}
-      members={[]}
-      permissionGroup={emptyPermissionGroup}
-    />
-  ))
-  .add("loading", () => (
-    <PermissionGroupDetailsPage
-      {...props}
-      disabled={true}
-      permissionGroup={undefined}
-      permissions={undefined}
-    />
-  ));
+export default {
+  title: "Views / Permission Groups / Permission Group Details",
+  decorators: [Decorator]
+};
+
+export const Default = () => <PermissionGroupDetailsPage {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const NoMembers = () => (
+  <PermissionGroupDetailsPage
+    {...props}
+    members={[]}
+    permissionGroup={emptyPermissionGroup}
+  />
+);
+
+NoMembers.story = {
+  name: "no members"
+};
+
+export const Loading = () => (
+  <PermissionGroupDetailsPage
+    {...props}
+    disabled={true}
+    permissionGroup={undefined}
+    permissions={undefined}
+  />
+);
+
+Loading.story = {
+  name: "loading"
+};

@@ -1,7 +1,6 @@
 import { shippingZone } from "@saleor/shipping/fixtures";
 import Decorator from "@saleor/storybook//Decorator";
 import { mapEdgesToItems } from "@saleor/utils/maps";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import ShippingMethodProducts, {
@@ -30,6 +29,13 @@ const props: ShippingMethodProductsProps = {
   toolbar: () => undefined
 };
 
-storiesOf("Shipping / ShippingMethodProducts", module)
-  .addDecorator(Decorator)
-  .add("default", () => <ShippingMethodProducts {...props} />);
+export default {
+  title: "Shipping / ShippingMethodProducts",
+  decorators: [Decorator]
+};
+
+export const Default = () => <ShippingMethodProducts {...props} />;
+
+Default.story = {
+  name: "default"
+};

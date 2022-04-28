@@ -6,7 +6,6 @@ import {
   TableRow
 } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import Decorator from "../../storybook/Decorator";
@@ -78,8 +77,25 @@ const InteractiveStory: React.FC = () => {
   );
 };
 
-storiesOf("Generics / Table header", module)
-  .addDecorator(Decorator)
-  .add("ascending", () => <Story direction="asc" />)
-  .add("descending", () => <Story direction="desc" />)
-  .add("interactive", () => <InteractiveStory />);
+export default {
+  title: "Generics / Table header",
+  decorators: [Decorator]
+};
+
+export const Ascending = () => <Story direction="asc" />;
+
+Ascending.story = {
+  name: "ascending"
+};
+
+export const Descending = () => <Story direction="desc" />;
+
+Descending.story = {
+  name: "descending"
+};
+
+export const Interactive = () => <InteractiveStory />;
+
+Interactive.story = {
+  name: "interactive"
+};

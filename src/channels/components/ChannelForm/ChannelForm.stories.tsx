@@ -1,7 +1,6 @@
 import { countries } from "@saleor/fixtures";
 import { CountryCode } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { channelCreateErrors } from "../../fixtures";
@@ -24,10 +23,27 @@ const props: ChannelFormProps = {
   onDefaultCountryChange: () => undefined
 };
 
-storiesOf("Views / Channels / Channel form", module)
-  .addDecorator(Decorator)
-  .add("default", () => <ChannelForm {...props} />)
-  .add("disabled", () => <ChannelForm {...props} disabled={true} />)
-  .add("with errors", () => (
-    <ChannelForm {...props} errors={channelCreateErrors} />
-  ));
+export default {
+  title: "Views / Channels / Channel form",
+  decorators: [Decorator]
+};
+
+export const Default = () => <ChannelForm {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const Disabled = () => <ChannelForm {...props} disabled={true} />;
+
+Disabled.story = {
+  name: "disabled"
+};
+
+export const WithErrors = () => (
+  <ChannelForm {...props} errors={channelCreateErrors} />
+);
+
+WithErrors.story = {
+  name: "with errors"
+};

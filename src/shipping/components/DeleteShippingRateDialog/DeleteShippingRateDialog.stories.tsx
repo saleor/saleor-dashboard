@@ -1,5 +1,4 @@
 import Decorator from "@saleor/storybook//Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import DeleteShippingRateDialog, {
@@ -14,9 +13,21 @@ const props: DeleteShippingRateDialogProps = {
   open: true
 };
 
-storiesOf("Shipping / DeleteShippingRateDialog", module)
-  .addDecorator(Decorator)
-  .add("default", () => <DeleteShippingRateDialog {...props} />)
-  .add("loading", () => (
-    <DeleteShippingRateDialog {...props} confirmButtonState="loading" />
-  ));
+export default {
+  title: "Shipping / DeleteShippingRateDialog",
+  decorators: [Decorator]
+};
+
+export const Default = () => <DeleteShippingRateDialog {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const Loading = () => (
+  <DeleteShippingRateDialog {...props} confirmButtonState="loading" />
+);
+
+Loading.story = {
+  name: "loading"
+};

@@ -1,6 +1,5 @@
 import CardDecorator from "@saleor/storybook/CardDecorator";
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import DraftOrderChannelSectionCard, {
@@ -11,10 +10,21 @@ const props: DraftOrderChannelSectionCardProps = {
   channelName: "Default Channel"
 };
 
-storiesOf("Orders / Draft order channel section", module)
-  .addDecorator(CardDecorator)
-  .addDecorator(Decorator)
-  .add("default", () => <DraftOrderChannelSectionCard {...props} />)
-  .add("loading", () => (
-    <DraftOrderChannelSectionCard {...props} channelName={undefined} />
-  ));
+export default {
+  title: "Orders / Draft order channel section",
+  decorators: [CardDecorator, Decorator]
+};
+
+export const Default = () => <DraftOrderChannelSectionCard {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const Loading = () => (
+  <DraftOrderChannelSectionCard {...props} channelName={undefined} />
+);
+
+Loading.story = {
+  name: "loading"
+};

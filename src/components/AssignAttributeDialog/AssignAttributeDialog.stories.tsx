@@ -4,7 +4,6 @@ import AssignAttributeDialog, {
 } from "@saleor/components/AssignAttributeDialog";
 import { fetchMoreProps } from "@saleor/fixtures";
 import { formError } from "@saleor/storybook/misc";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import Decorator from "../../storybook/Decorator";
@@ -23,12 +22,29 @@ const props: AssignAttributeDialogProps = {
   selected: [attributes[0].id, attributes[3].id]
 };
 
-storiesOf("Generics / Assign attributes dialog", module)
-  .addDecorator(Decorator)
-  .add("default", () => <AssignAttributeDialog {...props} />)
-  .add("loading", () => (
-    <AssignAttributeDialog {...props} attributes={undefined} loading={true} />
-  ))
-  .add("errors", () => (
-    <AssignAttributeDialog {...props} errors={[formError("").message]} />
-  ));
+export default {
+  title: "Generics / Assign attributes dialog",
+  decorators: [Decorator]
+};
+
+export const Default = () => <AssignAttributeDialog {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const Loading = () => (
+  <AssignAttributeDialog {...props} attributes={undefined} loading={true} />
+);
+
+Loading.story = {
+  name: "loading"
+};
+
+export const Errors = () => (
+  <AssignAttributeDialog {...props} errors={[formError("").message]} />
+);
+
+Errors.story = {
+  name: "errors"
+};

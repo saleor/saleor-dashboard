@@ -3,7 +3,6 @@ import { PermissionEnum, UserFragment } from "@saleor/graphql";
 import { product } from "@saleor/products/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
 import UserDecorator from "@saleor/storybook/UserDecorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import ChannelsAvailabilityCard, {
@@ -42,25 +41,36 @@ const props: ChannelsAvailabilityCardProps = {
   selectedChannelsCount: 3
 };
 
-storiesOf("Generics / Channels availability card", module)
-  .addDecorator(Decorator)
-  .addDecorator(UserDecorator(user))
-  .add("default", () => <ChannelsAvailabilityCard {...props} />)
-  .add("with onChange", () => (
-    <ChannelsAvailabilityCard
-      {...props}
-      channelsList={undefined}
-      channels={productChannels}
-      messages={{
-        availableLabel: "Available",
-        availableSecondLabel: "Will become available",
-        unavailableLabel: "Lorem Ipsum",
-        visibleSecondLabel: "Dolor Sit Amet",
-        hiddenSecondLabel: "Will become published",
-        hiddenLabel: "Hidden",
-        visibleLabel: "Visible",
-        availableDateText: "available from 07/30/2020",
-        setAvailabilityDateLabel: "xd4"
-      }}
-    />
-  ));
+export default {
+  title: "Generics / Channels availability card",
+  decorators: [Decorator, UserDecorator(user)]
+};
+
+export const Default = () => <ChannelsAvailabilityCard {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const WithOnChange = () => (
+  <ChannelsAvailabilityCard
+    {...props}
+    channelsList={undefined}
+    channels={productChannels}
+    messages={{
+      availableLabel: "Available",
+      availableSecondLabel: "Will become available",
+      unavailableLabel: "Lorem Ipsum",
+      visibleSecondLabel: "Dolor Sit Amet",
+      hiddenSecondLabel: "Will become published",
+      hiddenLabel: "Hidden",
+      visibleLabel: "Visible",
+      availableDateText: "available from 07/30/2020",
+      setAvailabilityDateLabel: "xd4"
+    }}
+  />
+);
+
+WithOnChange.story = {
+  name: "with onChange"
+};

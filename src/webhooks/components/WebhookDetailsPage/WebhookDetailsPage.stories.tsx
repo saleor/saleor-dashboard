@@ -1,6 +1,5 @@
 import { WebhookErrorCode } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { webhook } from "../../fixtures";
@@ -17,24 +16,54 @@ const props: WebhookDetailsPageProps = {
   saveButtonBarState: "default",
   webhook
 };
-storiesOf("Views / Apps / Webhooks / Webhook details", module)
-  .addDecorator(Decorator)
-  .add("default", () => <WebhookDetailsPage {...props} />)
-  .add("undefined", () => <WebhookDetailsPage {...props} webhook={undefined} />)
-  .add("unnamed", () => (
-    <WebhookDetailsPage {...props} webhook={{ ...webhook, name: null }} />
-  ))
-  .add("loading", () => (
-    <WebhookDetailsPage {...props} webhook={undefined} disabled={true} />
-  ))
-  .add("form errors", () => (
-    <WebhookDetailsPage
-      {...props}
-      errors={["name", "targetUrl", "secretKey", null].map(field => ({
-        __typename: "WebhookError",
-        code: WebhookErrorCode.INVALID,
-        field,
-        message: "Webhook invalid"
-      }))}
-    />
-  ));
+
+export default {
+  title: "Views / Apps / Webhooks / Webhook details",
+  decorators: [Decorator]
+};
+
+export const Default = () => <WebhookDetailsPage {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const Undefined = () => (
+  <WebhookDetailsPage {...props} webhook={undefined} />
+);
+
+Undefined.story = {
+  name: "undefined"
+};
+
+export const Unnamed = () => (
+  <WebhookDetailsPage {...props} webhook={{ ...webhook, name: null }} />
+);
+
+Unnamed.story = {
+  name: "unnamed"
+};
+
+export const Loading = () => (
+  <WebhookDetailsPage {...props} webhook={undefined} disabled={true} />
+);
+
+Loading.story = {
+  name: "loading"
+};
+
+export const FormErrors = () => (
+  <WebhookDetailsPage
+    {...props}
+    errors={["name", "targetUrl", "secretKey", null].map(field => ({
+      __typename: "WebhookError",
+      code: WebhookErrorCode.INVALID,
+      field,
+      message: "Webhook invalid"
+    }))}
+  />
+);
+
+FormErrors.story = {
+  name: "form errors"
+};

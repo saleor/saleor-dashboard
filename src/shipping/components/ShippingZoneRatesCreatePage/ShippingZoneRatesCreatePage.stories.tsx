@@ -3,7 +3,6 @@ import {
   ShippingMethodTypeEnum
 } from "@saleor/graphql";
 import Decorator from "@saleor/storybook//Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import ShippingZoneRatesCreatePage, {
@@ -75,20 +74,37 @@ const props: ShippingZoneRatesCreatePageProps = {
   variant: ShippingMethodTypeEnum.PRICE
 };
 
-storiesOf("Shipping / ShippingZoneRatesCreatePage page", module)
-  .addDecorator(Decorator)
-  .add("create price", () => <ShippingZoneRatesCreatePage {...props} />)
-  .add("loading", () => (
-    <ShippingZoneRatesCreatePage
-      {...props}
-      disabled={true}
-      saveButtonBarState={"loading"}
-    />
-  ))
-  .add("create weight", () => (
-    <ShippingZoneRatesCreatePage
-      {...props}
-      shippingChannels={channels}
-      variant={ShippingMethodTypeEnum.WEIGHT}
-    />
-  ));
+export default {
+  title: "Shipping / ShippingZoneRatesCreatePage page",
+  decorators: [Decorator]
+};
+
+export const CreatePrice = () => <ShippingZoneRatesCreatePage {...props} />;
+
+CreatePrice.story = {
+  name: "create price"
+};
+
+export const Loading = () => (
+  <ShippingZoneRatesCreatePage
+    {...props}
+    disabled={true}
+    saveButtonBarState={"loading"}
+  />
+);
+
+Loading.story = {
+  name: "loading"
+};
+
+export const CreateWeight = () => (
+  <ShippingZoneRatesCreatePage
+    {...props}
+    shippingChannels={channels}
+    variant={ShippingMethodTypeEnum.WEIGHT}
+  />
+);
+
+CreateWeight.story = {
+  name: "create weight"
+};

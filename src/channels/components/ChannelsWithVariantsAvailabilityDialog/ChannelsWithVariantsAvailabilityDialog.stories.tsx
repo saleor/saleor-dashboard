@@ -1,6 +1,5 @@
 import { ProductDetailsVariantFragment } from "@saleor/graphql";
 import CommonDecorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import ChannelsWithVariantsAvailabilityDialog, {
@@ -57,6 +56,15 @@ const props: ChannelsAvailabilityDialogProps = {
   open: true
 };
 
-storiesOf("Channels / Channels with Variants Availability Dialog", module)
-  .addDecorator(CommonDecorator)
-  .add("default", () => <ChannelsWithVariantsAvailabilityDialog {...props} />);
+export default {
+  title: "Channels / Channels with Variants Availability Dialog",
+  decorators: [CommonDecorator]
+};
+
+export const Default = () => (
+  <ChannelsWithVariantsAvailabilityDialog {...props} />
+);
+
+Default.story = {
+  name: "default"
+};

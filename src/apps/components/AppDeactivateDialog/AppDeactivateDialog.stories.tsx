@@ -1,5 +1,4 @@
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import AppDeactivateDialog, {
@@ -14,7 +13,19 @@ const props: AppDeactivateDialogProps = {
   open: true
 };
 
-storiesOf("Views / Apps / Deactivate app", module)
-  .addDecorator(Decorator)
-  .add("default", () => <AppDeactivateDialog {...props} />)
-  .add("unnamed app", () => <AppDeactivateDialog {...props} name={null} />);
+export default {
+  title: "Views / Apps / Deactivate app",
+  decorators: [Decorator]
+};
+
+export const Default = () => <AppDeactivateDialog {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const UnnamedApp = () => <AppDeactivateDialog {...props} name={null} />;
+
+UnnamedApp.story = {
+  name: "unnamed app"
+};

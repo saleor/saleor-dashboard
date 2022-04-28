@@ -1,5 +1,4 @@
 import { PageErrorCode } from "@saleor/graphql";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import Decorator from "../../../storybook/Decorator";
@@ -13,22 +12,39 @@ const props: Omit<PageTypeCreatePageProps, "classes"> = {
   saveButtonBarState: "default"
 };
 
-storiesOf("Views / Page types / Create page type", module)
-  .addDecorator(Decorator)
-  .add("default", () => <PageTypeCreatePage {...props} />)
-  .add("loading", () => <PageTypeCreatePage {...props} disabled={true} />)
-  .add("form errors", () => (
-    <PageTypeCreatePage
-      {...props}
-      errors={[
-        {
-          code: PageErrorCode.REQUIRED,
-          field: "name",
-          message: "Field is required"
-        }
-      ].map(err => ({
-        __typename: "PageError",
-        ...err
-      }))}
-    />
-  ));
+export default {
+  title: "Views / Page types / Create page type",
+  decorators: [Decorator]
+};
+
+export const Default = () => <PageTypeCreatePage {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const Loading = () => <PageTypeCreatePage {...props} disabled={true} />;
+
+Loading.story = {
+  name: "loading"
+};
+
+export const FormErrors = () => (
+  <PageTypeCreatePage
+    {...props}
+    errors={[
+      {
+        code: PageErrorCode.REQUIRED,
+        field: "name",
+        message: "Field is required"
+      }
+    ].map(err => ({
+      __typename: "PageError",
+      ...err
+    }))}
+  />
+);
+
+FormErrors.story = {
+  name: "form errors"
+};

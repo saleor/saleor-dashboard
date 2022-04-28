@@ -1,7 +1,6 @@
 import { countries } from "@saleor/fixtures";
 import { ChannelErrorFragment } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { channel, channelCreateErrors } from "../../fixtures";
@@ -48,21 +47,51 @@ const props: ChannelDetailsPageProps<ChannelErrorFragment[]> = {
   }
 };
 
-storiesOf("Views / Channels / Channel details", module)
-  .addDecorator(Decorator)
-  .add("default", () => <ChannelDetailsPage {...props} />)
-  .add("disabled", () => <ChannelDetailsPage {...props} disabled={true} />)
-  .add("loading", () => (
-    <ChannelDetailsPage {...props} saveButtonBarState={"loading"} />
-  ))
-  .add("with data", () => <ChannelDetailsPage {...props} channel={channel} />)
-  .add("without editable currency code", () => (
-    <ChannelDetailsPage
-      {...props}
-      currencyCodes={undefined}
-      channel={channel}
-    />
-  ))
-  .add("with errors", () => (
-    <ChannelDetailsPage {...props} errors={channelCreateErrors} />
-  ));
+export default {
+  title: "Views / Channels / Channel details",
+  decorators: [Decorator]
+};
+
+export const Default = () => <ChannelDetailsPage {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const Disabled = () => <ChannelDetailsPage {...props} disabled={true} />;
+
+Disabled.story = {
+  name: "disabled"
+};
+
+export const Loading = () => (
+  <ChannelDetailsPage {...props} saveButtonBarState={"loading"} />
+);
+
+Loading.story = {
+  name: "loading"
+};
+
+export const WithData = () => (
+  <ChannelDetailsPage {...props} channel={channel} />
+);
+
+WithData.story = {
+  name: "with data"
+};
+
+export const WithoutEditableCurrencyCode = () => (
+  <ChannelDetailsPage {...props} currencyCodes={undefined} channel={channel} />
+);
+
+WithoutEditableCurrencyCode.story = {
+  name: "without editable currency code"
+};
+
+export const WithErrors = () => (
+  <ChannelDetailsPage {...props} errors={channelCreateErrors} />
+);
+
+WithErrors.story = {
+  name: "with errors"
+};

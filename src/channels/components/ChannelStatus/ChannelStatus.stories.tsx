@@ -1,5 +1,4 @@
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import ChannelStatus, { ChannelStatusProps } from "./ChannelStatus";
@@ -10,7 +9,19 @@ const props: ChannelStatusProps = {
   updateChannelStatus: () => undefined
 };
 
-storiesOf("Views / Channels / Channel status", module)
-  .addDecorator(Decorator)
-  .add("inactive", () => <ChannelStatus {...props} />)
-  .add("active", () => <ChannelStatus {...props} isActive={true} />);
+export default {
+  title: "Views / Channels / Channel status",
+  decorators: [Decorator]
+};
+
+export const Inactive = () => <ChannelStatus {...props} />;
+
+Inactive.story = {
+  name: "inactive"
+};
+
+export const Active = () => <ChannelStatus {...props} isActive={true} />;
+
+Active.story = {
+  name: "active"
+};

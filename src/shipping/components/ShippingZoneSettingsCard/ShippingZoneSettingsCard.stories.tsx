@@ -1,7 +1,6 @@
 import { ChannelDetailsFragment } from "@saleor/graphql";
 import CentralPlacementDecorator from "@saleor/storybook/CentralPlacementDecorator";
 import CommonDecorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { ShippingZoneUpdateFormData } from "../../components/ShippingZoneDetailsPage/types";
@@ -54,7 +53,13 @@ const props: ShippingZoneSettingsCardProps = {
   onChannelChange: () => undefined
 };
 
-storiesOf("Shipping zones details / Settings Card", module)
-  .addDecorator(CommonDecorator)
-  .addDecorator(CentralPlacementDecorator)
-  .add("default", () => <ShippingZoneSettingsCard {...props} />);
+export default {
+  title: "Shipping zones details / Settings Card",
+  decorators: [CommonDecorator, CentralPlacementDecorator]
+};
+
+export const Default = () => <ShippingZoneSettingsCard {...props} />;
+
+Default.story = {
+  name: "default"
+};

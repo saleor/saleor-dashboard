@@ -1,5 +1,4 @@
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import AppActivateDialog, { AppActivateDialogProps } from "./AppActivateDialog";
@@ -12,7 +11,19 @@ const props: AppActivateDialogProps = {
   open: true
 };
 
-storiesOf("Views / Apps / Activate app", module)
-  .addDecorator(Decorator)
-  .add("default", () => <AppActivateDialog {...props} />)
-  .add("unnamed app", () => <AppActivateDialog {...props} name={null} />);
+export default {
+  title: "Views / Apps / Activate app",
+  decorators: [Decorator]
+};
+
+export const Default = () => <AppActivateDialog {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const UnnamedApp = () => <AppActivateDialog {...props} name={null} />;
+
+UnnamedApp.story = {
+  name: "unnamed app"
+};

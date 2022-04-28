@@ -4,7 +4,6 @@ import CardDecorator from "@saleor/storybook/CardDecorator";
 import Decorator from "@saleor/storybook/Decorator";
 import { ChoiceProvider } from "@saleor/storybook/mock";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import SingleAutocompleteSelectField, {
@@ -91,35 +90,91 @@ const contentProps: SingleAutocompleteSelectFieldContentProps = {
   selectedItem: suggestions[0].value
 };
 
-storiesOf("Generics / Select with autocomplete", module)
-  .addDecorator(CardDecorator)
-  .addDecorator(Decorator)
-  .add("default", () => (
-    <SingleAutocompleteSelectFieldContent {...contentProps} />
-  ))
-  .add("with add", () => (
-    <SingleAutocompleteSelectFieldContent
-      {...contentProps}
-      add={{
-        label: "Add New Collection",
-        onClick: () => undefined
-      }}
-    />
-  ))
-  .add("can load more", () => (
-    <SingleAutocompleteSelectFieldContent {...contentProps} hasMore={true} />
-  ))
-  .add("no data", () => (
-    <SingleAutocompleteSelectFieldContent {...contentProps} choices={[]} />
-  ))
-  .add("naked", () => <Story nakedInput />)
-  .add("naked and disabled", () => <Story nakedInput disabled />)
-  .add("interactive", () => <Story />)
-  .add("interactive with custom option", () => (
-    <Story allowCustomValues={true} />
-  ))
-  .add("interactive with empty option", () => <Story emptyOption={true} />)
-  .add("interactive with load more", () => <Story enableLoadMore={true} />)
-  .add("disabled", () => (
-    <Story enableLoadMore={true} {...contentProps} disabled />
-  ));
+export default {
+  title: "Generics / Select with autocomplete",
+  decorators: [CardDecorator, Decorator]
+};
+
+export const Default = () => (
+  <SingleAutocompleteSelectFieldContent {...contentProps} />
+);
+
+Default.story = {
+  name: "default"
+};
+
+export const WithAdd = () => (
+  <SingleAutocompleteSelectFieldContent
+    {...contentProps}
+    add={{
+      label: "Add New Collection",
+      onClick: () => undefined
+    }}
+  />
+);
+
+WithAdd.story = {
+  name: "with add"
+};
+
+export const CanLoadMore = () => (
+  <SingleAutocompleteSelectFieldContent {...contentProps} hasMore={true} />
+);
+
+CanLoadMore.story = {
+  name: "can load more"
+};
+
+export const NoData = () => (
+  <SingleAutocompleteSelectFieldContent {...contentProps} choices={[]} />
+);
+
+NoData.story = {
+  name: "no data"
+};
+
+export const Naked = () => <Story nakedInput />;
+
+Naked.story = {
+  name: "naked"
+};
+
+export const NakedAndDisabled = () => <Story nakedInput disabled />;
+
+NakedAndDisabled.story = {
+  name: "naked and disabled"
+};
+
+export const Interactive = () => <Story />;
+
+Interactive.story = {
+  name: "interactive"
+};
+
+export const InteractiveWithCustomOption = () => (
+  <Story allowCustomValues={true} />
+);
+
+InteractiveWithCustomOption.story = {
+  name: "interactive with custom option"
+};
+
+export const InteractiveWithEmptyOption = () => <Story emptyOption={true} />;
+
+InteractiveWithEmptyOption.story = {
+  name: "interactive with empty option"
+};
+
+export const InteractiveWithLoadMore = () => <Story enableLoadMore={true} />;
+
+InteractiveWithLoadMore.story = {
+  name: "interactive with load more"
+};
+
+export const Disabled = () => (
+  <Story enableLoadMore={true} {...contentProps} disabled />
+);
+
+Disabled.story = {
+  name: "disabled"
+};

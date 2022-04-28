@@ -2,7 +2,6 @@ import { OutputData } from "@editorjs/editorjs";
 import RichTextEditor from "@saleor/components/RichTextEditor";
 import CardDecorator from "@saleor/storybook/CardDecorator";
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import * as fixtures from "./fixtures.json";
@@ -21,10 +20,32 @@ const props: RichTextEditorProps = {
   onChange: () => undefined
 };
 
-storiesOf("Generics / Rich text editor", module)
-  .addDecorator(CardDecorator)
-  .addDecorator(Decorator)
-  .add("default", () => <RichTextEditor {...props} />)
-  .add("disabled", () => <RichTextEditor {...props} disabled={true} />)
-  .add("error", () => <RichTextEditor {...props} error={true} />)
-  .add("static", () => <RichTextEditorContent {...props} />);
+export default {
+  title: "Generics / Rich text editor",
+  decorators: [CardDecorator, Decorator],
+  excludeStories: ["data"]
+};
+
+export const Default = () => <RichTextEditor {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const Disabled = () => <RichTextEditor {...props} disabled={true} />;
+
+Disabled.story = {
+  name: "disabled"
+};
+
+export const Error = () => <RichTextEditor {...props} error={true} />;
+
+Error.story = {
+  name: "error"
+};
+
+export const Static = () => <RichTextEditorContent {...props} />;
+
+Static.story = {
+  name: "static"
+};

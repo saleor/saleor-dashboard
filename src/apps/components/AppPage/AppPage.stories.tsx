@@ -1,5 +1,4 @@
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { appDetails } from "../../fixtures";
@@ -13,9 +12,21 @@ const props: AppPageProps = {
   onError: () => undefined
 };
 
-storiesOf("Views / Apps / App", module)
-  .addDecorator(Decorator)
-  .add("default", () => <AppPage {...props} />)
-  .add("settings", () => (
-    <AppPage {...props} url={appDetails.configurationUrl} />
-  ));
+export default {
+  title: "Views / Apps / App",
+  decorators: [Decorator]
+};
+
+export const Default = () => <AppPage {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const Settings = () => (
+  <AppPage {...props} url={appDetails.configurationUrl} />
+);
+
+Settings.story = {
+  name: "settings"
+};

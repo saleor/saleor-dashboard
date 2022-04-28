@@ -1,5 +1,4 @@
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import WebhookDeleteDialog, {
@@ -14,7 +13,21 @@ const props: WebhookDeleteDialogProps = {
   open: true
 };
 
-storiesOf("Views / Apps / Webhooks / Delete webhook", module)
-  .addDecorator(Decorator)
-  .add("default", () => <WebhookDeleteDialog {...props} />)
-  .add("unnamed webhook", () => <WebhookDeleteDialog {...props} name={null} />);
+export default {
+  title: "Views / Apps / Webhooks / Delete webhook",
+  decorators: [Decorator]
+};
+
+export const Default = () => <WebhookDeleteDialog {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const UnnamedWebhook = () => (
+  <WebhookDeleteDialog {...props} name={null} />
+);
+
+UnnamedWebhook.story = {
+  name: "unnamed webhook"
+};

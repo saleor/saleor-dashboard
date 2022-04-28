@@ -11,7 +11,6 @@ import WarehouseListPage, {
   WarehouseListPageProps
 } from "@saleor/warehouses/components/WarehouseListPage";
 import { WarehouseListUrlSortField } from "@saleor/warehouses/urls";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { warehouseList } from "../../fixtures";
@@ -31,14 +30,43 @@ const props: WarehouseListPageProps = {
   warehouses: warehouseList
 };
 
-storiesOf("Views / Warehouses / Warehouse list", module)
-  .addDecorator(Decorator)
-  .add("default", () => <WarehouseListPage {...props} />)
-  .add("loading", () => (
-    <WarehouseListPage {...props} disabled={true} warehouses={undefined} />
-  ))
-  .add("no data", () => <WarehouseListPage {...props} warehouses={[]} />)
-  .add("no limits", () => <WarehouseListPage {...props} limits={undefined} />)
-  .add("limits reached", () => (
-    <WarehouseListPage {...props} limits={limitsReached} />
-  ));
+export default {
+  title: "Views / Warehouses / Warehouse list",
+  decorators: [Decorator]
+};
+
+export const Default = () => <WarehouseListPage {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const Loading = () => (
+  <WarehouseListPage {...props} disabled={true} warehouses={undefined} />
+);
+
+Loading.story = {
+  name: "loading"
+};
+
+export const NoData = () => <WarehouseListPage {...props} warehouses={[]} />;
+
+NoData.story = {
+  name: "no data"
+};
+
+export const NoLimits = () => (
+  <WarehouseListPage {...props} limits={undefined} />
+);
+
+NoLimits.story = {
+  name: "no limits"
+};
+
+export const LimitsReached = () => (
+  <WarehouseListPage {...props} limits={limitsReached} />
+);
+
+LimitsReached.story = {
+  name: "limits reached"
+};

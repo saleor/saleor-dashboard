@@ -1,5 +1,4 @@
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import OrderCustomerChangeDialog, {
@@ -12,13 +11,20 @@ const props: OrderCustomerChangeDialogProps = {
   open: true
 };
 
-storiesOf("Orders / OrderCustomerChangeDialog", module)
-  .addDecorator(Decorator)
-  .add("default", () => (
-    <OrderCustomerChangeDialog
-      {...props}
-      onClose={() => undefined}
-      onConfirm={() => undefined}
-      open={true}
-    />
-  ));
+export default {
+  title: "Orders / OrderCustomerChangeDialog",
+  decorators: [Decorator]
+};
+
+export const Default = () => (
+  <OrderCustomerChangeDialog
+    {...props}
+    onClose={() => undefined}
+    onConfirm={() => undefined}
+    open={true}
+  />
+);
+
+Default.story = {
+  name: "default"
+};

@@ -2,7 +2,6 @@ import {
   orderSettings as orderSettingsFixture,
   shopOrderSettings as shopOrderSettingsFixture
 } from "@saleor/orders/fixtures";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import Decorator from "../../../storybook/Decorator";
@@ -17,14 +16,26 @@ const props: OrderSettingsPageProps = {
   saveButtonBarState: "default"
 };
 
-storiesOf("Views / Orders / Order settings", module)
-  .addDecorator(Decorator)
-  .add("default", () => <OrderSettings {...props} />)
-  .add("loading", () => (
-    <OrderSettings
-      {...props}
-      disabled={true}
-      orderSettings={undefined}
-      shop={undefined}
-    />
-  ));
+export default {
+  title: "Views / Orders / Order settings",
+  decorators: [Decorator]
+};
+
+export const Default = () => <OrderSettings {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const Loading = () => (
+  <OrderSettings
+    {...props}
+    disabled={true}
+    orderSettings={undefined}
+    shop={undefined}
+  />
+);
+
+Loading.story = {
+  name: "loading"
+};

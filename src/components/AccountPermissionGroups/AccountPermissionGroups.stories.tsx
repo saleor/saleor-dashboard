@@ -5,7 +5,6 @@ import {
 } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
 import { RelayToFlat } from "@saleor/types";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
@@ -70,7 +69,21 @@ const props: AccountPermissionGroupsProps = {
   onSearchChange: () => undefined
 };
 
-storiesOf("Generics / Account Permission Groups Widget", module)
-  .addDecorator(Decorator)
-  .add("default", () => <AccountPermissionGroups {...props} />)
-  .add("error", () => <AccountPermissionGroups {...props} errors={errors} />);
+export default {
+  title: "Generics / Account Permission Groups Widget",
+  decorators: [Decorator]
+};
+
+export const Default = () => <AccountPermissionGroups {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const Error = () => (
+  <AccountPermissionGroups {...props} errors={errors} />
+);
+
+Error.story = {
+  name: "error"
+};

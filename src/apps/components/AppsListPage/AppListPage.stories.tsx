@@ -6,7 +6,6 @@ import {
   tabPageProps
 } from "@saleor/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { appsInProgress, appsList, customAppsList } from "../../fixtures";
@@ -38,24 +37,41 @@ const props: AppsListPageProps = {
   onRowAboutClick: () => undefined
 };
 
-storiesOf("Views / Apps / Apps list", module)
-  .addDecorator(Decorator)
-  .add("default", () => <AppsListPage {...props} />)
-  .add("loading", () => (
-    <AppsListPage
-      {...props}
-      appsInProgressList={undefined}
-      disabled={true}
-      loadingAppsInProgress={true}
-      installedAppsList={undefined}
-      customAppsList={undefined}
-    />
-  ))
-  .add("no data", () => (
-    <AppsListPage
-      {...props}
-      appsInProgressList={undefined}
-      installedAppsList={[]}
-      customAppsList={[]}
-    />
-  ));
+export default {
+  title: "Views / Apps / Apps list",
+  decorators: [Decorator]
+};
+
+export const Default = () => <AppsListPage {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const Loading = () => (
+  <AppsListPage
+    {...props}
+    appsInProgressList={undefined}
+    disabled={true}
+    loadingAppsInProgress={true}
+    installedAppsList={undefined}
+    customAppsList={undefined}
+  />
+);
+
+Loading.story = {
+  name: "loading"
+};
+
+export const NoData = () => (
+  <AppsListPage
+    {...props}
+    appsInProgressList={undefined}
+    installedAppsList={[]}
+    customAppsList={[]}
+  />
+);
+
+NoData.story = {
+  name: "no data"
+};

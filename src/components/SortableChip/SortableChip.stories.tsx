@@ -3,7 +3,6 @@ import SortableChip, {
 } from "@saleor/components/SortableChip";
 import CardDecorator from "@saleor/storybook/CardDecorator";
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 import { SortableContainer } from "react-sortable-hoc";
 
@@ -14,16 +13,27 @@ const props: SortableChipProps = {
   label: "Lorem Ipsum"
 };
 
-storiesOf("Generics / Sortable chip", module)
-  .addDecorator(CardDecorator)
-  .addDecorator(Decorator)
-  .add("default", () => (
-    <Container>
-      <SortableChip {...props} />
-    </Container>
-  ))
-  .add("with x", () => (
-    <Container>
-      <SortableChip {...props} onClose={() => undefined} />
-    </Container>
-  ));
+export default {
+  title: "Generics / Sortable chip",
+  decorators: [CardDecorator, Decorator]
+};
+
+export const Default = () => (
+  <Container>
+    <SortableChip {...props} />
+  </Container>
+);
+
+Default.story = {
+  name: "default"
+};
+
+export const WithX = () => (
+  <Container>
+    <SortableChip {...props} onClose={() => undefined} />
+  </Container>
+);
+
+WithX.story = {
+  name: "with x"
+};

@@ -1,7 +1,6 @@
 import BulkAttributeUnassignDialog, {
   BulkAttributeUnassignDialogProps
 } from "@saleor/components/BulkAttributeUnassignDialog";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import Decorator from "../../storybook/Decorator";
@@ -16,6 +15,13 @@ const props: BulkAttributeUnassignDialogProps = {
   title: "Unassign Attribute from Shoes"
 };
 
-storiesOf("Generics / Unassign multiple attributes", module)
-  .addDecorator(Decorator)
-  .add("default", () => <BulkAttributeUnassignDialog {...props} />);
+export default {
+  title: "Generics / Unassign multiple attributes",
+  decorators: [Decorator]
+};
+
+export const Default = () => <BulkAttributeUnassignDialog {...props} />;
+
+Default.story = {
+  name: "default"
+};

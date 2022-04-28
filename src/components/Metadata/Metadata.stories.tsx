@@ -1,6 +1,5 @@
 import useForm from "@saleor/hooks/useForm";
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { props } from "./fixtures";
@@ -12,8 +11,25 @@ const InteractiveStory: React.FC = () => {
   return <Metadata data={data} onChange={change} />;
 };
 
-storiesOf("Generics / Metadata", module)
-  .addDecorator(Decorator)
-  .add("default", () => <Metadata {...props} />)
-  .add("loading", () => <Metadata {...props} data={undefined} />)
-  .add("interactive", () => <InteractiveStory />);
+export default {
+  title: "Generics / Metadata",
+  decorators: [Decorator]
+};
+
+export const Default = () => <Metadata {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const Loading = () => <Metadata {...props} data={undefined} />;
+
+Loading.story = {
+  name: "loading"
+};
+
+export const Interactive = () => <InteractiveStory />;
+
+Interactive.story = {
+  name: "interactive"
+};

@@ -1,6 +1,5 @@
 import CardDecorator from "@saleor/storybook/CardDecorator";
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React, { useState } from "react";
 
 import FileUploadField, { FileUploadFieldProps } from "./FileUploadField";
@@ -35,34 +34,56 @@ const InteractiveStory: React.FC = () => {
   );
 };
 
-storiesOf("Generics / File upload field", module)
-  .addDecorator(CardDecorator)
-  .addDecorator(Decorator)
-  .add("default", () => <FileUploadField {...props} />)
-  .add("with ready to upload file", () => (
-    <FileUploadField
-      {...props}
-      file={{
-        label: "some_file.png",
-        value: "some_file.png"
-      }}
-    />
-  ))
-  .add("with uploaded file", () => (
-    <FileUploadField
-      {...props}
-      file={{
-        file: fixtures.UPLOADED_FILE,
-        label: "some_file_with_link.png",
-        value: "some_file_with_link.png"
-      }}
-    />
-  ))
-  .add("with error", () => (
-    <FileUploadField
-      {...props}
-      error={true}
-      helperText="Something went wrong"
-    />
-  ))
-  .add("interactive", () => <InteractiveStory />);
+export default {
+  title: "Generics / File upload field",
+  decorators: [CardDecorator, Decorator]
+};
+
+export const Default = () => <FileUploadField {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const WithReadyToUploadFile = () => (
+  <FileUploadField
+    {...props}
+    file={{
+      label: "some_file.png",
+      value: "some_file.png"
+    }}
+  />
+);
+
+WithReadyToUploadFile.story = {
+  name: "with ready to upload file"
+};
+
+export const WithUploadedFile = () => (
+  <FileUploadField
+    {...props}
+    file={{
+      file: fixtures.UPLOADED_FILE,
+      label: "some_file_with_link.png",
+      value: "some_file_with_link.png"
+    }}
+  />
+);
+
+WithUploadedFile.story = {
+  name: "with uploaded file"
+};
+
+export const WithError = () => (
+  <FileUploadField {...props} error={true} helperText="Something went wrong" />
+);
+
+WithError.story = {
+  name: "with error"
+};
+
+export const Interactive = () => <InteractiveStory />;
+
+Interactive.story = {
+  name: "interactive"
+};

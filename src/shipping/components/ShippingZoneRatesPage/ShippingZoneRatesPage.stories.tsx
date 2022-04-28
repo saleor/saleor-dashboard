@@ -1,7 +1,6 @@
 import { ShippingMethodTypeEnum } from "@saleor/graphql";
 import { shippingZone } from "@saleor/shipping/fixtures";
 import Decorator from "@saleor/storybook//Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import ShippingZoneRatesPage, {
@@ -68,31 +67,58 @@ const props: ShippingZoneRatesPageProps = {
   formId: Symbol()
 };
 
-storiesOf("Views / Shipping / Shipping rate", module)
-  .addDecorator(Decorator)
-  .add("create price rate", () => <ShippingZoneRatesPage {...props} />)
-  .add("create weight rate", () => (
-    <ShippingZoneRatesPage {...props} variant={ShippingMethodTypeEnum.WEIGHT} />
-  ))
-  .add("loading", () => (
-    <ShippingZoneRatesPage
-      {...props}
-      disabled={true}
-      rate={undefined}
-      saveButtonBarState={"loading"}
-    />
-  ))
-  .add("update price rate", () => (
-    <ShippingZoneRatesPage
-      {...props}
-      shippingChannels={channels}
-      rate={shippingZone.shippingMethods[2]}
-    />
-  ))
-  .add("update weight rate", () => (
-    <ShippingZoneRatesPage
-      {...props}
-      shippingChannels={channels}
-      variant={ShippingMethodTypeEnum.WEIGHT}
-    />
-  ));
+export default {
+  title: "Views / Shipping / Shipping rate",
+  decorators: [Decorator]
+};
+
+export const CreatePriceRate = () => <ShippingZoneRatesPage {...props} />;
+
+CreatePriceRate.story = {
+  name: "create price rate"
+};
+
+export const CreateWeightRate = () => (
+  <ShippingZoneRatesPage {...props} variant={ShippingMethodTypeEnum.WEIGHT} />
+);
+
+CreateWeightRate.story = {
+  name: "create weight rate"
+};
+
+export const Loading = () => (
+  <ShippingZoneRatesPage
+    {...props}
+    disabled={true}
+    rate={undefined}
+    saveButtonBarState={"loading"}
+  />
+);
+
+Loading.story = {
+  name: "loading"
+};
+
+export const UpdatePriceRate = () => (
+  <ShippingZoneRatesPage
+    {...props}
+    shippingChannels={channels}
+    rate={shippingZone.shippingMethods[2]}
+  />
+);
+
+UpdatePriceRate.story = {
+  name: "update price rate"
+};
+
+export const UpdateWeightRate = () => (
+  <ShippingZoneRatesPage
+    {...props}
+    shippingChannels={channels}
+    variant={ShippingMethodTypeEnum.WEIGHT}
+  />
+);
+
+UpdateWeightRate.story = {
+  name: "update weight rate"
+};

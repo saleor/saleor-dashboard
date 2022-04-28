@@ -1,6 +1,5 @@
 import { limits, limitsReached } from "@saleor/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { channelsList } from "../../fixtures";
@@ -15,11 +14,35 @@ const props: ChannelsListPageProps = {
   onRowClick: () => undefined
 };
 
-storiesOf("Views / Channels / Channels list", module)
-  .addDecorator(Decorator)
-  .add("default", () => <ChannelsListPage {...props} />)
-  .add("empty", () => <ChannelsListPage {...props} channelsList={[]} />)
-  .add("no limits", () => <ChannelsListPage {...props} limits={undefined} />)
-  .add("limits reached", () => (
-    <ChannelsListPage {...props} limits={limitsReached} />
-  ));
+export default {
+  title: "Views / Channels / Channels list",
+  decorators: [Decorator]
+};
+
+export const Default = () => <ChannelsListPage {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const Empty = () => <ChannelsListPage {...props} channelsList={[]} />;
+
+Empty.story = {
+  name: "empty"
+};
+
+export const NoLimits = () => (
+  <ChannelsListPage {...props} limits={undefined} />
+);
+
+NoLimits.story = {
+  name: "no limits"
+};
+
+export const LimitsReached = () => (
+  <ChannelsListPage {...props} limits={limitsReached} />
+);
+
+LimitsReached.story = {
+  name: "limits reached"
+};

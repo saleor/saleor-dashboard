@@ -2,7 +2,6 @@ import { channelsList } from "@saleor/channels/fixtures";
 import { ExportErrorCode, ExportProductsInput } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
 import { warehouseList } from "@saleor/warehouses/fixtures";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { attributes } from "../../../attributes/fixtures";
@@ -34,22 +33,39 @@ const props: ProductExportDialogProps = {
   warehouses: warehouseList
 };
 
-storiesOf("Views / Products / Export / Export settings", module)
-  .addDecorator(Decorator)
-  .add("interactive", () => <ProductExportDialog {...props} />)
-  .add("no products selected", () => (
-    <ProductExportDialog {...props} selectedProducts={0} />
-  ))
-  .add("errors", () => (
-    <ProductExportDialog
-      {...props}
-      errors={(["fileType", "scope", null] as Array<
-        keyof ExportProductsInput | null
-      >).map(field => ({
-        __typename: "ExportError",
-        code: ExportErrorCode.INVALID,
-        field,
-        message: "Export invalid"
-      }))}
-    />
-  ));
+export default {
+  title: "Views / Products / Export / Export settings",
+  decorators: [Decorator]
+};
+
+export const Interactive = () => <ProductExportDialog {...props} />;
+
+Interactive.story = {
+  name: "interactive"
+};
+
+export const NoProductsSelected = () => (
+  <ProductExportDialog {...props} selectedProducts={0} />
+);
+
+NoProductsSelected.story = {
+  name: "no products selected"
+};
+
+export const Errors = () => (
+  <ProductExportDialog
+    {...props}
+    errors={(["fileType", "scope", null] as Array<
+      keyof ExportProductsInput | null
+    >).map(field => ({
+      __typename: "ExportError",
+      code: ExportErrorCode.INVALID,
+      field,
+      message: "Export invalid"
+    }))}
+  />
+);
+
+Errors.story = {
+  name: "errors"
+};

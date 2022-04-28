@@ -1,7 +1,6 @@
 import { ProductDetailsVariantFragment } from "@saleor/graphql";
 import CentralPlacementDecorator from "@saleor/storybook/CentralPlacementDecorator";
 import CommonDecorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import ChannelsWithVariantsAvailabilityCard, {
@@ -102,7 +101,15 @@ const props: ChannelsWithVariantsAvailabilityCardProps = {
   openModal: () => undefined
 };
 
-storiesOf("Channels / Channels with variants availability card", module)
-  .addDecorator(CommonDecorator)
-  .addDecorator(CentralPlacementDecorator)
-  .add("default", () => <ChannelsWithVariantsAvailabilityCard {...props} />);
+export default {
+  title: "Channels / Channels with variants availability card",
+  decorators: [CommonDecorator, CentralPlacementDecorator]
+};
+
+export const Default = () => (
+  <ChannelsWithVariantsAvailabilityCard {...props} />
+);
+
+Default.story = {
+  name: "default"
+};

@@ -1,6 +1,5 @@
 import Decorator from "@saleor/storybook/Decorator";
 import { mapNodeToChoice } from "@saleor/utils/maps";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { channelsList } from "../../fixtures";
@@ -18,9 +17,21 @@ const props: ChannelDeleteDialogProps = {
   open: true
 };
 
-storiesOf("Views / Channels / Delete channel", module)
-  .addDecorator(Decorator)
-  .add("default", () => <ChannelDeleteDialog {...props} />)
-  .add("without channels to choose", () => (
-    <ChannelDeleteDialog {...props} channelsChoices={[]} />
-  ));
+export default {
+  title: "Views / Channels / Delete channel",
+  decorators: [Decorator]
+};
+
+export const Default = () => <ChannelDeleteDialog {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const WithoutChannelsToChoose = () => (
+  <ChannelDeleteDialog {...props} channelsChoices={[]} />
+);
+
+WithoutChannelsToChoose.story = {
+  name: "without channels to choose"
+};

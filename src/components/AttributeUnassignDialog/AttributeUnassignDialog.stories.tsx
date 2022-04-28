@@ -1,7 +1,6 @@
 import AttributeUnassignDialog, {
   AttributeUnassignDialogProps
 } from "@saleor/components/AttributeUnassignDialog";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import Decorator from "../../storybook/Decorator";
@@ -16,6 +15,13 @@ const props: AttributeUnassignDialogProps = {
   title: "Unassign Attribute from Shoes"
 };
 
-storiesOf("Generics / Unassign attribute", module)
-  .addDecorator(Decorator)
-  .add("default", () => <AttributeUnassignDialog {...props} />);
+export default {
+  title: "Generics / Unassign attribute",
+  decorators: [Decorator]
+};
+
+export const Default = () => <AttributeUnassignDialog {...props} />;
+
+Default.story = {
+  name: "default"
+};

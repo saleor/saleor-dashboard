@@ -1,6 +1,5 @@
 import Attributes, { AttributesProps } from "@saleor/components/Attributes";
 import { fetchMoreProps } from "@saleor/fixtures";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import Decorator from "../../storybook/Decorator";
@@ -23,10 +22,27 @@ const props: AttributesProps = {
   onAttributeSelectBlur: () => undefined
 };
 
-storiesOf("Attributes / Attributes", module)
-  .addDecorator(Decorator)
-  .add("default", () => <Attributes {...props} />)
-  .add("selected", () => (
-    <Attributes {...props} attributes={ATTRIBUTES_SELECTED} />
-  ))
-  .add("disabled", () => <Attributes {...props} disabled={true} />);
+export default {
+  title: "Attributes / Attributes",
+  decorators: [Decorator]
+};
+
+export const Default = () => <Attributes {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const Selected = () => (
+  <Attributes {...props} attributes={ATTRIBUTES_SELECTED} />
+);
+
+Selected.story = {
+  name: "selected"
+};
+
+export const Disabled = () => <Attributes {...props} disabled={true} />;
+
+Disabled.story = {
+  name: "disabled"
+};

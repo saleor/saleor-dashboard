@@ -1,6 +1,5 @@
 import Decorator from "@saleor/storybook/Decorator";
 import { mapNodeToChoice } from "@saleor/utils/maps";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { channelsList } from "../../fixtures";
@@ -19,6 +18,13 @@ const props: ChannelPickerDialogProps = {
   open: true
 };
 
-storiesOf("Views / Channels / Settings dialog", module)
-  .addDecorator(Decorator)
-  .add("default", () => <ChannelPickerDialog {...props} />);
+export default {
+  title: "Views / Channels / Settings dialog",
+  decorators: [Decorator]
+};
+
+export const Default = () => <ChannelPickerDialog {...props} />;
+
+Default.story = {
+  name: "default"
+};

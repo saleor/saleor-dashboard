@@ -1,6 +1,5 @@
 import { listActionsProps } from "@saleor/fixtures";
 import { PageErrorCode } from "@saleor/graphql";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import Decorator from "../../../storybook/Decorator";
@@ -23,38 +22,60 @@ const props: Omit<PageTypeDetailsPageProps, "classes"> = {
   saveButtonBarState: "default"
 };
 
-storiesOf("Views / Page types / Page type details", module)
-  .addDecorator(Decorator)
-  .add("default", () => <PageTypeDetailsPage {...props} />)
-  .add("loading", () => (
-    <PageTypeDetailsPage
-      {...props}
-      disabled={true}
-      pageTitle={undefined}
-      pageType={undefined}
-    />
-  ))
-  .add("no attributes", () => (
-    <PageTypeDetailsPage
-      {...props}
-      pageType={{
-        ...pageType,
-        attributes: []
-      }}
-    />
-  ))
-  .add("form errors", () => (
-    <PageTypeDetailsPage
-      {...props}
-      errors={[
-        {
-          code: PageErrorCode.REQUIRED,
-          field: "name",
-          message: "Field is required"
-        }
-      ].map(err => ({
-        __typename: "PageError",
-        ...err
-      }))}
-    />
-  ));
+export default {
+  title: "Views / Page types / Page type details",
+  decorators: [Decorator]
+};
+
+export const Default = () => <PageTypeDetailsPage {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const Loading = () => (
+  <PageTypeDetailsPage
+    {...props}
+    disabled={true}
+    pageTitle={undefined}
+    pageType={undefined}
+  />
+);
+
+Loading.story = {
+  name: "loading"
+};
+
+export const NoAttributes = () => (
+  <PageTypeDetailsPage
+    {...props}
+    pageType={{
+      ...pageType,
+      attributes: []
+    }}
+  />
+);
+
+NoAttributes.story = {
+  name: "no attributes"
+};
+
+export const FormErrors = () => (
+  <PageTypeDetailsPage
+    {...props}
+    errors={[
+      {
+        code: PageErrorCode.REQUIRED,
+        field: "name",
+        message: "Field is required"
+      }
+    ].map(err => ({
+      __typename: "PageError",
+      ...err
+    }))}
+  />
+);
+
+FormErrors.story = {
+  name: "form errors"
+};

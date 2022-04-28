@@ -1,5 +1,4 @@
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import MembersErrorDialog, {
@@ -13,9 +12,13 @@ const props: MembersErrorDialogProps = {
   open: true
 };
 
-storiesOf(
-  "Views / Permission Groups / Permission Group Unassign Error Modal",
-  module
-)
-  .addDecorator(Decorator)
-  .add("Unassign member", () => <MembersErrorDialog {...props} />);
+export default {
+  title: "Views / Permission Groups / Permission Group Unassign Error Modal",
+  decorators: [Decorator]
+};
+
+export const UnassignMember = () => <MembersErrorDialog {...props} />;
+
+UnassignMember.story = {
+  name: "Unassign member"
+};

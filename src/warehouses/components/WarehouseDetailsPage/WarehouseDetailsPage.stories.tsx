@@ -1,7 +1,6 @@
 import { countries } from "@saleor/fixtures";
 import { WarehouseErrorCode } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { warehouse } from "../../fixtures";
@@ -25,31 +24,49 @@ const props: WarehouseDetailsPageProps = {
   saveButtonBarState: "default",
   warehouse
 };
-storiesOf("Views / Warehouses / Warehouse details", module)
-  .addDecorator(Decorator)
-  .add("default", () => <WarehouseDetailsPage {...props} />)
-  .add("loading", () => (
-    <WarehouseDetailsPage {...props} warehouse={undefined} disabled={true} />
-  ))
-  .add("form errors", () => (
-    <WarehouseDetailsPage
-      {...props}
-      errors={([
-        "name",
-        "city",
-        "cityArea",
-        "companyName",
-        "country",
-        "countryArea",
-        "phone",
-        "postalCode",
-        "streetAddress1",
-        "streetAddress2"
-      ] as Array<keyof WarehouseDetailsPageFormData>).map(field => ({
-        __typename: "WarehouseError",
-        code: WarehouseErrorCode.INVALID,
-        field,
-        message: "Warehouse invalid"
-      }))}
-    />
-  ));
+
+export default {
+  title: "Views / Warehouses / Warehouse details",
+  decorators: [Decorator]
+};
+
+export const Default = () => <WarehouseDetailsPage {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const Loading = () => (
+  <WarehouseDetailsPage {...props} warehouse={undefined} disabled={true} />
+);
+
+Loading.story = {
+  name: "loading"
+};
+
+export const FormErrors = () => (
+  <WarehouseDetailsPage
+    {...props}
+    errors={([
+      "name",
+      "city",
+      "cityArea",
+      "companyName",
+      "country",
+      "countryArea",
+      "phone",
+      "postalCode",
+      "streetAddress1",
+      "streetAddress2"
+    ] as Array<keyof WarehouseDetailsPageFormData>).map(field => ({
+      __typename: "WarehouseError",
+      code: WarehouseErrorCode.INVALID,
+      field,
+      message: "Warehouse invalid"
+    }))}
+  />
+);
+
+FormErrors.story = {
+  name: "form errors"
+};

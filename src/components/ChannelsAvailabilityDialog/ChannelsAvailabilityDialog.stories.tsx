@@ -1,7 +1,6 @@
 import { channelsList } from "@saleor/channels/fixtures";
 import { createChannelsData } from "@saleor/channels/utils";
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import ChannelsAvailabilityDialog, {
@@ -21,12 +20,29 @@ const props: ChannelsAvailabilityDialogProps = {
   toggleAll: () => undefined
 };
 
-storiesOf("Generics / ChannelsAvailabilityDialog", module)
-  .addDecorator(Decorator)
-  .add("default", () => <ChannelsAvailabilityDialog {...props} />)
-  .add("with text", () => (
-    <ChannelsAvailabilityDialog {...props} contentType="order" />
-  ))
-  .add("disabled", () => (
-    <ChannelsAvailabilityDialog {...props} disabled={true} />
-  ));
+export default {
+  title: "Generics / ChannelsAvailabilityDialog",
+  decorators: [Decorator]
+};
+
+export const Default = () => <ChannelsAvailabilityDialog {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const WithText = () => (
+  <ChannelsAvailabilityDialog {...props} contentType="order" />
+);
+
+WithText.story = {
+  name: "with text"
+};
+
+export const Disabled = () => (
+  <ChannelsAvailabilityDialog {...props} disabled={true} />
+);
+
+Disabled.story = {
+  name: "disabled"
+};

@@ -1,6 +1,5 @@
 import CentralPlacementDecorator from "@saleor/storybook/CentralPlacementDecorator";
 import CommonDecorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import * as messages from "../../pageTypes/hooks/usePageTypeDelete/messages";
@@ -22,19 +21,47 @@ const props: TypeDeleteWarningDialogProps<TypeBaseData> = {
   deleteButtonState: "default"
 };
 
-storiesOf("TypeDeleteWarningDialog.stories", module)
-  .addDecorator(CommonDecorator)
-  .addDecorator(CentralPlacementDecorator)
-  .add("loading", () => <TypeDeleteWarningDialog {...props} isLoading={true} />)
-  .add("single type no assigned items", () => (
-    <TypeDeleteWarningDialog {...props} assignedItemsCount={0} />
-  ))
-  .add("single type some assigned items", () => (
-    <TypeDeleteWarningDialog {...props} />
-  ))
-  .add("multiple type no assigned items", () => (
-    <TypeDeleteWarningDialog {...props} assignedItemsCount={0} />
-  ))
-  .add("multiple types some assigned items", () => (
-    <TypeDeleteWarningDialog {...props} typesToDelete={["id-1", "id-2"]} />
-  ));
+export default {
+  title: "TypeDeleteWarningDialog.stories",
+  decorators: [CommonDecorator, CentralPlacementDecorator]
+};
+
+export const Loading = () => (
+  <TypeDeleteWarningDialog {...props} isLoading={true} />
+);
+
+Loading.story = {
+  name: "loading"
+};
+
+export const SingleTypeNoAssignedItems = () => (
+  <TypeDeleteWarningDialog {...props} assignedItemsCount={0} />
+);
+
+SingleTypeNoAssignedItems.story = {
+  name: "single type no assigned items"
+};
+
+export const SingleTypeSomeAssignedItems = () => (
+  <TypeDeleteWarningDialog {...props} />
+);
+
+SingleTypeSomeAssignedItems.story = {
+  name: "single type some assigned items"
+};
+
+export const MultipleTypeNoAssignedItems = () => (
+  <TypeDeleteWarningDialog {...props} assignedItemsCount={0} />
+);
+
+MultipleTypeNoAssignedItems.story = {
+  name: "multiple type no assigned items"
+};
+
+export const MultipleTypesSomeAssignedItems = () => (
+  <TypeDeleteWarningDialog {...props} typesToDelete={["id-1", "id-2"]} />
+);
+
+MultipleTypesSomeAssignedItems.story = {
+  name: "multiple types some assigned items"
+};

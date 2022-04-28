@@ -1,5 +1,4 @@
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { countries, order as orderFixture } from "../../fixtures";
@@ -21,44 +20,71 @@ const props: OrderCustomerAddressesEditDialogProps = {
   countries
 };
 
-storiesOf("Orders / Changing address in order", module)
-  .addDecorator(Decorator)
-  .add("address change when customer is changed", () => (
-    <OrderCustomerAddressesEditDialog
-      {...props}
-      customerAddresses={[
-        order.shippingAddress,
-        { ...order.billingAddress, id: "asdfghjfuunie" }
-      ]}
-    />
-  ))
-  .add("shipping address change", () => (
-    <OrderCustomerAddressesEditDialog
-      {...props}
-      variant={AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS}
-      customerAddresses={[
-        order.shippingAddress,
-        { ...order.billingAddress, id: "asdfghjfuunie" }
-      ]}
-    />
-  ))
-  .add("billing address change", () => (
-    <OrderCustomerAddressesEditDialog
-      {...props}
-      variant={AddressEditDialogVariant.CHANGE_BILLING_ADDRESS}
-      customerAddresses={[
-        order.shippingAddress,
-        { ...order.billingAddress, id: "asdfghjfuunie" }
-      ]}
-    />
-  ))
-  .add("no customer addresses", () => (
-    <OrderCustomerAddressesEditDialog {...props} customerAddresses={[]} />
-  ))
-  .add("loading", () => (
-    <OrderCustomerAddressesEditDialog
-      {...props}
-      loading={true}
-      confirmButtonState="loading"
-    />
-  ));
+export default {
+  title: "Orders / Changing address in order",
+  decorators: [Decorator]
+};
+
+export const AddressChangeWhenCustomerIsChanged = () => (
+  <OrderCustomerAddressesEditDialog
+    {...props}
+    customerAddresses={[
+      order.shippingAddress,
+      { ...order.billingAddress, id: "asdfghjfuunie" }
+    ]}
+  />
+);
+
+AddressChangeWhenCustomerIsChanged.story = {
+  name: "address change when customer is changed"
+};
+
+export const ShippingAddressChange = () => (
+  <OrderCustomerAddressesEditDialog
+    {...props}
+    variant={AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS}
+    customerAddresses={[
+      order.shippingAddress,
+      { ...order.billingAddress, id: "asdfghjfuunie" }
+    ]}
+  />
+);
+
+ShippingAddressChange.story = {
+  name: "shipping address change"
+};
+
+export const BillingAddressChange = () => (
+  <OrderCustomerAddressesEditDialog
+    {...props}
+    variant={AddressEditDialogVariant.CHANGE_BILLING_ADDRESS}
+    customerAddresses={[
+      order.shippingAddress,
+      { ...order.billingAddress, id: "asdfghjfuunie" }
+    ]}
+  />
+);
+
+BillingAddressChange.story = {
+  name: "billing address change"
+};
+
+export const NoCustomerAddresses = () => (
+  <OrderCustomerAddressesEditDialog {...props} customerAddresses={[]} />
+);
+
+NoCustomerAddresses.story = {
+  name: "no customer addresses"
+};
+
+export const Loading = () => (
+  <OrderCustomerAddressesEditDialog
+    {...props}
+    loading={true}
+    confirmButtonState="loading"
+  />
+);
+
+Loading.story = {
+  name: "loading"
+};

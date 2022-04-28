@@ -3,7 +3,6 @@ import useMultiAutocomplete from "@saleor/hooks/useMultiAutocomplete";
 import CardDecorator from "@saleor/storybook/CardDecorator";
 import Decorator from "@saleor/storybook/Decorator";
 import { ChoiceProvider } from "@saleor/storybook/mock";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import MultiAutocompleteSelectField, {
@@ -68,21 +67,57 @@ const contentProps: MultiAutocompleteSelectFieldContentProps = {
   onFetchMore: () => undefined
 };
 
-storiesOf("Generics / Multiple select with autocomplete", module)
-  .addDecorator(CardDecorator)
-  .addDecorator(Decorator)
-  .add("default", () => (
-    <MultiAutocompleteSelectFieldContent {...contentProps} />
-  ))
-  .add("can load more", () => (
-    <MultiAutocompleteSelectFieldContent {...contentProps} hasMore={true} />
-  ))
-  .add("no data", () => (
-    <MultiAutocompleteSelectFieldContent {...contentProps} choices={[]} />
-  ))
-  .add("interactive", () => <Story />)
-  .add("interactive with custom option", () => (
-    <Story allowCustomValues={true} />
-  ))
-  .add("interactive with load more", () => <Story enableLoadMore={true} />)
-  .add("interactive with error", () => <Story error={true} />);
+export default {
+  title: "Generics / Multiple select with autocomplete",
+  decorators: [CardDecorator, Decorator]
+};
+
+export const Default = () => (
+  <MultiAutocompleteSelectFieldContent {...contentProps} />
+);
+
+Default.story = {
+  name: "default"
+};
+
+export const CanLoadMore = () => (
+  <MultiAutocompleteSelectFieldContent {...contentProps} hasMore={true} />
+);
+
+CanLoadMore.story = {
+  name: "can load more"
+};
+
+export const NoData = () => (
+  <MultiAutocompleteSelectFieldContent {...contentProps} choices={[]} />
+);
+
+NoData.story = {
+  name: "no data"
+};
+
+export const Interactive = () => <Story />;
+
+Interactive.story = {
+  name: "interactive"
+};
+
+export const InteractiveWithCustomOption = () => (
+  <Story allowCustomValues={true} />
+);
+
+InteractiveWithCustomOption.story = {
+  name: "interactive with custom option"
+};
+
+export const InteractiveWithLoadMore = () => <Story enableLoadMore={true} />;
+
+InteractiveWithLoadMore.story = {
+  name: "interactive with load more"
+};
+
+export const InteractiveWithError = () => <Story error={true} />;
+
+InteractiveWithError.story = {
+  name: "interactive with error"
+};

@@ -1,6 +1,5 @@
 import { products } from "@saleor/shipping/fixtures";
 import Decorator from "@saleor/storybook//Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import ShippingMethodProductsAddDialog, {
@@ -19,6 +18,13 @@ const props: ShippingMethodProductsAddDialogProps = {
   products
 };
 
-storiesOf("Shipping / ShippingMethodProductsAddDialog", module)
-  .addDecorator(Decorator)
-  .add("default", () => <ShippingMethodProductsAddDialog {...props} />);
+export default {
+  title: "Shipping / ShippingMethodProductsAddDialog",
+  decorators: [Decorator]
+};
+
+export const Default = () => <ShippingMethodProductsAddDialog {...props} />;
+
+Default.story = {
+  name: "default"
+};

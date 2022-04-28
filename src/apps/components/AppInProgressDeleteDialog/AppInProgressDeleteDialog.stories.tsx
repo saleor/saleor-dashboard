@@ -1,5 +1,4 @@
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import AppInProgressDeleteDialog, {
@@ -14,9 +13,21 @@ const props: AppInProgressDeleteDialogProps = {
   open: true
 };
 
-storiesOf("Views / Apps / Delete app failed installation", module)
-  .addDecorator(Decorator)
-  .add("default", () => <AppInProgressDeleteDialog {...props} />)
-  .add("unnamed app", () => (
-    <AppInProgressDeleteDialog {...props} name={null} />
-  ));
+export default {
+  title: "Views / Apps / Delete app failed installation",
+  decorators: [Decorator]
+};
+
+export const Default = () => <AppInProgressDeleteDialog {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const UnnamedApp = () => (
+  <AppInProgressDeleteDialog {...props} name={null} />
+);
+
+UnnamedApp.story = {
+  name: "unnamed app"
+};

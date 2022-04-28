@@ -1,5 +1,4 @@
 import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { installApp } from "../../fixtures";
@@ -12,7 +11,19 @@ const props: AppInstallPageProps = {
   onSubmit: () => undefined
 };
 
-storiesOf("Views / Apps / Install App", module)
-  .addDecorator(Decorator)
-  .add("default", () => <AppInstallPage {...props} />)
-  .add("loading", () => <AppInstallPage {...props} loading={true} />);
+export default {
+  title: "Views / Apps / Install App",
+  decorators: [Decorator]
+};
+
+export const Default = () => <AppInstallPage {...props} />;
+
+Default.story = {
+  name: "default"
+};
+
+export const Loading = () => <AppInstallPage {...props} loading={true} />;
+
+Loading.story = {
+  name: "loading"
+};
