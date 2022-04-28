@@ -1,4 +1,9 @@
-import { InputBase, Popper, TextField } from "@material-ui/core";
+import {
+  InputBase,
+  Popper,
+  PopperPlacementType,
+  TextField
+} from "@material-ui/core";
 import { InputProps } from "@material-ui/core/Input";
 import { ExtendedFormHelperTextProps } from "@saleor/channels/components/ChannelForm/types";
 import { ChevronIcon, makeStyles } from "@saleor/macaw-ui";
@@ -62,6 +67,7 @@ export interface SingleAutocompleteSelectFieldProps
   FormHelperTextProps?: ExtendedFormHelperTextProps;
   nakedInput?: boolean;
   onBlur?: () => void;
+  popperPlacement?: PopperPlacementType;
 }
 
 const DebounceAutocomplete: React.ComponentType<DebounceProps<
@@ -93,6 +99,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
     FormHelperTextProps,
     nakedInput = false,
     onBlur,
+    popperPlacement = "bottom-end",
     ...rest
   } = props;
   const classes = useStyles(props);
@@ -250,7 +257,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                     anchorEl={anchor.current}
                     open={isOpen}
                     style={{ width: anchor.current.clientWidth, zIndex: 1301 }}
-                    placement="bottom-end"
+                    placement={popperPlacement}
                   >
                     <SingleAutocompleteSelectFieldContent
                       add={

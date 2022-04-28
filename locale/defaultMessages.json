@@ -1042,14 +1042,6 @@
   "src_dot_attributes_dot_components_dot_AttributeListPage_dot_3916653510": {
     "string": "Search Attribute"
   },
-  "src_dot_attributes_dot_components_dot_AttributeListPage_dot_availableInGrid": {
-    "context": "attribute can be column in product list table",
-    "string": "Can be used as column"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeListPage_dot_filterableInDashboard": {
-    "context": "use attribute in filtering",
-    "string": "Filterable in Dashboard"
-  },
   "src_dot_attributes_dot_components_dot_AttributeListPage_dot_filterableInStorefront": {
     "context": "use attribute in filtering",
     "string": "Filterable in Storefront"
@@ -1069,9 +1061,9 @@
   "src_dot_attributes_dot_components_dot_AttributeList_dot_1192828581": {
     "string": "No attributes found"
   },
-  "src_dot_attributes_dot_components_dot_AttributeList_dot_2186555805": {
+  "src_dot_attributes_dot_components_dot_AttributeList_dot_1708933569": {
     "context": "attribute can be searched in storefront",
-    "string": "Use in faceted search"
+    "string": "Use as filter"
   },
   "src_dot_attributes_dot_components_dot_AttributeList_dot_2235596452": {
     "context": "attribute can be searched in dashboard",
@@ -1132,7 +1124,7 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeProperties_dot_filterableInStorefront": {
     "context": "attribute is filterable in storefront",
-    "string": "Use in Faceted Navigation"
+    "string": "Use as filter"
   },
   "src_dot_attributes_dot_components_dot_AttributeProperties_dot_storefrontPropertiesTitle": {
     "context": "attribute properties regarding storefront",
@@ -2102,17 +2094,17 @@
     "context": "Status label when object is unpublished in a channel",
     "string": "Unpublished"
   },
-  "src_dot_components_dot_ColumnPicker_dot_1483881697": {
-    "context": "button",
-    "string": "Reset"
+  "src_dot_components_dot_ColumnPicker_dot_columnLabel": {
+    "context": "input label",
+    "string": "Selected columns"
   },
-  "src_dot_components_dot_ColumnPicker_dot_2539195044": {
-    "context": "select visible columns button",
-    "string": "Columns"
+  "src_dot_components_dot_ColumnPicker_dot_columnSubheader": {
+    "context": "header",
+    "string": "Column settings"
   },
-  "src_dot_components_dot_ColumnPicker_dot_2715399461": {
-    "context": "pick columns to display",
-    "string": "{numberOfSelected} columns selected out of {numberOfTotal}"
+  "src_dot_components_dot_ColumnPicker_dot_title": {
+    "context": "header",
+    "string": "Customize list"
   },
   "src_dot_components_dot_CompanyAddressInput_dot_1139500589": {
     "string": "Country"
@@ -7114,6 +7106,10 @@
   },
   "src_dot_requiredField": {
     "string": "This field is required"
+  },
+  "src_dot_reset": {
+    "context": "button",
+    "string": "Reset"
   },
   "src_dot_returned": {
     "context": "order status",

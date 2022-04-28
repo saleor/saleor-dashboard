@@ -2043,6 +2043,16 @@ export const ExportFileFragmentDoc = gql`
   url
 }
     `;
+export const ProductListAttributeFragmentDoc = gql`
+    fragment ProductListAttribute on SelectedAttribute {
+  attribute {
+    id
+  }
+  values {
+    ...AttributeValue
+  }
+}
+    ${AttributeValueFragmentDoc}`;
 export const ShippingMethodWithPostalCodesFragmentDoc = gql`
     fragment ShippingMethodWithPostalCodes on ShippingMethodType {
   id
@@ -11931,10 +11941,7 @@ export type ProductVariantPreorderDeactivateMutationResult = Apollo.MutationResu
 export type ProductVariantPreorderDeactivateMutationOptions = Apollo.BaseMutationOptions<Types.ProductVariantPreorderDeactivateMutation, Types.ProductVariantPreorderDeactivateMutationVariables>;
 export const InitialProductFilterAttributesDocument = gql`
     query InitialProductFilterAttributes {
-  attributes(
-    first: 100
-    filter: {filterableInDashboard: true, type: PRODUCT_TYPE}
-  ) {
+  attributes(first: 100, filter: {type: PRODUCT_TYPE}) {
     edges {
       node {
         id
@@ -12109,12 +12116,7 @@ export const ProductListDocument = gql`
         ...ProductWithChannelListings
         updatedAt
         attributes @include(if: $hasSelectedAttributes) {
-          attribute {
-            id
-          }
-          values {
-            ...AttributeValue
-          }
+          ...ProductListAttribute
         }
       }
     }
@@ -12128,7 +12130,7 @@ export const ProductListDocument = gql`
   }
 }
     ${ProductWithChannelListingsFragmentDoc}
-${AttributeValueFragmentDoc}`;
+${ProductListAttributeFragmentDoc}`;
 
 /**
  * __useProductListQuery__
@@ -12475,55 +12477,6 @@ export function useProductMediaByIdLazyQuery(baseOptions?: ApolloReactHooks.Lazy
 export type ProductMediaByIdQueryHookResult = ReturnType<typeof useProductMediaByIdQuery>;
 export type ProductMediaByIdLazyQueryHookResult = ReturnType<typeof useProductMediaByIdLazyQuery>;
 export type ProductMediaByIdQueryResult = Apollo.QueryResult<Types.ProductMediaByIdQuery, Types.ProductMediaByIdQueryVariables>;
-export const AvailableInGridAttributesDocument = gql`
-    query AvailableInGridAttributes($first: Int!, $after: String) {
-  availableInGrid: attributes(
-    first: $first
-    after: $after
-    filter: {availableInGrid: true, isVariantOnly: false, type: PRODUCT_TYPE}
-  ) {
-    edges {
-      node {
-        id
-        name
-      }
-    }
-    pageInfo {
-      ...PageInfo
-    }
-    totalCount
-  }
-}
-    ${PageInfoFragmentDoc}`;
-
-/**
- * __useAvailableInGridAttributesQuery__
- *
- * To run a query within a React component, call `useAvailableInGridAttributesQuery` and pass it any options that fit your needs.
- * When your component renders, `useAvailableInGridAttributesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useAvailableInGridAttributesQuery({
- *   variables: {
- *      first: // value for 'first'
- *      after: // value for 'after'
- *   },
- * });
- */
-export function useAvailableInGridAttributesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AvailableInGridAttributesQuery, Types.AvailableInGridAttributesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.AvailableInGridAttributesQuery, Types.AvailableInGridAttributesQueryVariables>(AvailableInGridAttributesDocument, options);
-      }
-export function useAvailableInGridAttributesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AvailableInGridAttributesQuery, Types.AvailableInGridAttributesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.AvailableInGridAttributesQuery, Types.AvailableInGridAttributesQueryVariables>(AvailableInGridAttributesDocument, options);
-        }
-export type AvailableInGridAttributesQueryHookResult = ReturnType<typeof useAvailableInGridAttributesQuery>;
-export type AvailableInGridAttributesLazyQueryHookResult = ReturnType<typeof useAvailableInGridAttributesLazyQuery>;
-export type AvailableInGridAttributesQueryResult = Apollo.QueryResult<Types.AvailableInGridAttributesQuery, Types.AvailableInGridAttributesQueryVariables>;
 export const GridAttributesDocument = gql`
     query GridAttributes($ids: [ID!]!) {
   grid: attributes(first: 25, filter: {ids: $ids}) {
@@ -12705,6 +12658,56 @@ export function useSearchAttributeValuesLazyQuery(baseOptions?: ApolloReactHooks
 export type SearchAttributeValuesQueryHookResult = ReturnType<typeof useSearchAttributeValuesQuery>;
 export type SearchAttributeValuesLazyQueryHookResult = ReturnType<typeof useSearchAttributeValuesLazyQuery>;
 export type SearchAttributeValuesQueryResult = Apollo.QueryResult<Types.SearchAttributeValuesQuery, Types.SearchAttributeValuesQueryVariables>;
+export const SearchAvailableInGridAttributesDocument = gql`
+    query SearchAvailableInGridAttributes($first: Int!, $after: String, $query: String!) {
+  availableInGrid: attributes(
+    first: $first
+    after: $after
+    filter: {isVariantOnly: false, type: PRODUCT_TYPE, search: $query}
+  ) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+    pageInfo {
+      ...PageInfo
+    }
+    totalCount
+  }
+}
+    ${PageInfoFragmentDoc}`;
+
+/**
+ * __useSearchAvailableInGridAttributesQuery__
+ *
+ * To run a query within a React component, call `useSearchAvailableInGridAttributesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchAvailableInGridAttributesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchAvailableInGridAttributesQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useSearchAvailableInGridAttributesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchAvailableInGridAttributesQuery, Types.SearchAvailableInGridAttributesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.SearchAvailableInGridAttributesQuery, Types.SearchAvailableInGridAttributesQueryVariables>(SearchAvailableInGridAttributesDocument, options);
+      }
+export function useSearchAvailableInGridAttributesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchAvailableInGridAttributesQuery, Types.SearchAvailableInGridAttributesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.SearchAvailableInGridAttributesQuery, Types.SearchAvailableInGridAttributesQueryVariables>(SearchAvailableInGridAttributesDocument, options);
+        }
+export type SearchAvailableInGridAttributesQueryHookResult = ReturnType<typeof useSearchAvailableInGridAttributesQuery>;
+export type SearchAvailableInGridAttributesLazyQueryHookResult = ReturnType<typeof useSearchAvailableInGridAttributesLazyQuery>;
+export type SearchAvailableInGridAttributesQueryResult = Apollo.QueryResult<Types.SearchAvailableInGridAttributesQuery, Types.SearchAvailableInGridAttributesQueryVariables>;
 export const SearchAvailablePageAttributesDocument = gql`
     query SearchAvailablePageAttributes($id: ID!, $after: String, $first: Int!, $query: String!) {
   pageType(id: $id) {
