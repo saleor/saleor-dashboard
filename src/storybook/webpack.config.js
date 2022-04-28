@@ -8,10 +8,10 @@ const resolve = resolvePath => path.resolve(__dirname, resolvePath);
 module.exports = ({ config }) => {
   config.module.rules.push({
     exclude: /node_modules/,
-    loader: "babel-loader",
+    loader: "esbuild-loader",
     options: {
-      configFile: resolve("../../babel.config.js"),
-      envName: "storybook"
+      loader: "tsx",
+      target: "es2015"
     },
     test: /\.(jsx?|tsx?)$/
   });
