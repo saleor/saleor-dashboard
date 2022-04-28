@@ -75,10 +75,11 @@ export const PERMISSIONS_OPTIONS = {
     user: ONE_PERMISSION_USERS.staff,
     permissions: [PERMISSIONS.staff],
     testCase: "TC: SALEOR_3414"
-  },
-  translations: {
-    user: ONE_PERMISSION_USERS.translations,
-    permissions: [PERMISSIONS.translations],
-    testCase: "TC: SALEOR_3416"
   }
+  // },
+  // translations: {
+  //   user: ONE_PERMISSION_USERS.translations,
+  //   permissions: [PERMISSIONS.translations],
+  //   testCase: "TC: SALEOR_3416"
+  // } // commented as part of  SALEOR-6705 task. Need to be fixed in future. Klaudia Jaroszewicz
 };

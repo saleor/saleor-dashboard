@@ -57,7 +57,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("should create variant in preorder", () => {
+    xit("should create variant in preorder", () => {
       let variant;
 
       cy.visit(productDetailsUrl(product.id))

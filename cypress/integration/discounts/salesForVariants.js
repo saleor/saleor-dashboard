@@ -17,7 +17,7 @@ import {
 } from "../../support/pages/discounts/salesPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Sales discounts for variant", () => {
+  xdescribe("Sales discounts for variant", () => {
     const startsWith = "CySales-";
 
     let productType;

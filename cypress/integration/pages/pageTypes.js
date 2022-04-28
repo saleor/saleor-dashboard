@@ -45,7 +45,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should assign attribute", () => {
+    xit("should assign attribute", () => {
       const randomName = startsWith + faker.datatype.number();
 
       createAttribute({ name: randomName, type: "PAGE_TYPE" });

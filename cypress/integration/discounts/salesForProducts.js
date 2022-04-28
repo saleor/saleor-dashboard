@@ -23,7 +23,7 @@ import {
 } from "../../support/pages/discounts/salesPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Sales discounts for products", () => {
+  xdescribe("Sales discounts for products", () => {
     const startsWith = "CySales-";
 
     let productType;
@@ -146,7 +146,7 @@ filterTests({ definedTags: ["all"] }, () => {
           });
         })
         .then(() => {
-          /* Uncomment after fixing SALEOR-3367 bug
+          /* Uncomment after fixing SALEOR-3367 bug 
            cy.clearSessionData()
           .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
           */

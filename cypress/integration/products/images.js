@@ -11,7 +11,7 @@ import { createNewProductWithNewDataAndDefaultChannel } from "../../support/api/
 import filterTests from "../../support/filterTests";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Tests for images", () => {
+  xdescribe("Tests for images", () => {
     beforeEach(() => {
       cy.clearSessionData().loginUserViaRequest();
     });

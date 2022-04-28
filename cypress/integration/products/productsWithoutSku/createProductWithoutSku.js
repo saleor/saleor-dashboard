@@ -103,7 +103,7 @@ filterTests({ definedTags: ["all", "critical"], version: "3.1.0" }, () => {
       );
     });
 
-    it("should create variant without sku by variant creator", () => {
+    xit("should create variant without sku by variant creator", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const price = 10;
       let createdProduct;

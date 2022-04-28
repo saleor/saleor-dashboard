@@ -115,7 +115,7 @@ filterTests({ definedTags: ["all"] }, () => {
       );
     });
 
-    it("should create order with selected channel", () => {
+    xit("should create order with selected channel", () => {
       cy.visit(urlList.orders)
         .get(ORDERS_SELECTORS.createOrder)
         .click();
