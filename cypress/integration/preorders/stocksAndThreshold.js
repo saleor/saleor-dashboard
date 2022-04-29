@@ -57,7 +57,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("should not be able to order more products then channel threshold", () => {
+    xit("should not be able to order more products then channel threshold", () => {
       cy.visit(variantDetailsUrl(product.id, variantsList[0].id))
         .get(VARIANTS_SELECTORS.channelThresholdInput)
         .type(5)

@@ -13,7 +13,7 @@ import filterTests from "../support/filterTests";
 import { updateTranslationToCategory } from "../support/pages/translationsPage";
 
 filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
-  describe("As an admin I want to manage translations", () => {
+  xdescribe("As an admin I want to manage translations", () => {
     const startsWith = "TestTranslations";
     const randomNumber = faker.datatype.number();
     const name = `${startsWith}${randomNumber}`;

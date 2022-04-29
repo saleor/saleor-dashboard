@@ -254,7 +254,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should be able to create voucher with limit to staff only. TC: SALEOR_1909", () => {
+    xit("should be able to create voucher with limit to staff only. TC: SALEOR_1909", () => {
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
       const voucherValue = 50;
       dataForCheckout.auth = "auth";
@@ -289,7 +289,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should be able to create voucher with minimum value of order. TC: SALEOR_1910", () => {
+    xit("should be able to create voucher with minimum value of order. TC: SALEOR_1910", () => {
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
       const voucherValue = 50;
       const minOrderValue = productPrice * 1.5;
@@ -321,7 +321,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should create voucher with min product quantity. TC: SALEOR_1911", () => {
+    xit("should create voucher with min product quantity. TC: SALEOR_1911", () => {
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
       const voucherValue = 50;
       const minAmountOfItems = 2;
