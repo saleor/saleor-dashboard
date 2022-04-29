@@ -1182,15 +1182,41 @@ export const OrderEventFragmentDoc = gql`
   }
 }
     `;
+export const WarehouseFragmentDoc = gql`
+    fragment Warehouse on Warehouse {
+  id
+  name
+}
+    `;
+export const StockFragmentDoc = gql`
+    fragment Stock on Stock {
+  id
+  quantity
+  quantityAllocated
+  warehouse {
+    ...Warehouse
+  }
+}
+    ${WarehouseFragmentDoc}`;
 export const OrderLineFragmentDoc = gql`
     fragment OrderLine on OrderLine {
   id
   isShippingRequired
+  allocations {
+    id
+    quantity
+    warehouse {
+      id
+    }
+  }
   variant {
     id
     quantityAvailable
     preorder {
       endDate
+    }
+    stocks {
+      ...Stock
     }
   }
   productName
@@ -1230,7 +1256,7 @@ export const OrderLineFragmentDoc = gql`
     url
   }
 }
-    `;
+    ${StockFragmentDoc}`;
 export const FulfillmentFragmentDoc = gql`
     fragment Fulfillment on Fulfillment {
   id
@@ -1421,6 +1447,61 @@ export const ShopOrderSettingsFragmentDoc = gql`
   fulfillmentAllowUnpaid
 }
     `;
+export const OrderFulfillLineFragmentDoc = gql`
+    fragment OrderFulfillLine on OrderLine {
+  id
+  isShippingRequired
+  productName
+  quantity
+  allocations {
+    quantity
+    warehouse {
+      id
+    }
+  }
+  quantityFulfilled
+  quantityToFulfill
+  variant {
+    id
+    name
+    sku
+    preorder {
+      endDate
+    }
+    attributes {
+      values {
+        id
+        name
+      }
+    }
+    stocks {
+      ...Stock
+    }
+    trackInventory
+  }
+  thumbnail(size: 64) {
+    url
+  }
+}
+    ${StockFragmentDoc}`;
+export const OrderLineStockDataFragmentDoc = gql`
+    fragment OrderLineStockData on OrderLine {
+  id
+  allocations {
+    quantity
+    warehouse {
+      id
+    }
+  }
+  quantity
+  quantityToFulfill
+  variant {
+    stocks {
+      ...Stock
+    }
+  }
+}
+    ${StockFragmentDoc}`;
 export const PageTypeFragmentDoc = gql`
     fragment PageType on PageType {
   id
@@ -1801,17 +1882,6 @@ export const ProductMediaFragmentDoc = gql`
   url
   type
   oembedData
-}
-    `;
-export const StockFragmentDoc = gql`
-    fragment Stock on Stock {
-  id
-  quantity
-  quantityAllocated
-  warehouse {
-    id
-    name
-  }
 }
     `;
 export const PreorderFragmentDoc = gql`
@@ -2566,12 +2636,6 @@ export const AttributeValueTranslatableContentFragmentDoc = gql`
   }
 }
     ${AttributeChoicesTranslationFragmentDoc}`;
-export const WarehouseFragmentDoc = gql`
-    fragment Warehouse on Warehouse {
-  id
-  name
-}
-    `;
 export const WarehouseWithShippingFragmentDoc = gql`
     fragment WarehouseWithShipping on Warehouse {
   ...Warehouse
@@ -8334,8 +8398,12 @@ export type OrderFulfillmentUpdateTrackingMutationHookResult = ReturnType<typeof
 export type OrderFulfillmentUpdateTrackingMutationResult = Apollo.MutationResult<Types.OrderFulfillmentUpdateTrackingMutation>;
 export type OrderFulfillmentUpdateTrackingMutationOptions = Apollo.BaseMutationOptions<Types.OrderFulfillmentUpdateTrackingMutation, Types.OrderFulfillmentUpdateTrackingMutationVariables>;
 export const OrderFulfillmentApproveDocument = gql`
-    mutation OrderFulfillmentApprove($id: ID!, $notifyCustomer: Boolean!) {
-  orderFulfillmentApprove(id: $id, notifyCustomer: $notifyCustomer) {
+    mutation OrderFulfillmentApprove($id: ID!, $notifyCustomer: Boolean!, $allowStockToBeExceeded: Boolean) {
+  orderFulfillmentApprove(
+    id: $id
+    notifyCustomer: $notifyCustomer
+    allowStockToBeExceeded: $allowStockToBeExceeded
+  ) {
     errors {
       ...OrderError
     }
@@ -8363,6 +8431,7 @@ export type OrderFulfillmentApproveMutationFn = Apollo.MutationFunction<Types.Or
  *   variables: {
  *      id: // value for 'id'
  *      notifyCustomer: // value for 'notifyCustomer'
+ *      allowStockToBeExceeded: // value for 'allowStockToBeExceeded'
  *   },
  * });
  */
@@ -9147,49 +9216,12 @@ export const OrderFulfillDataDocument = gql`
       }
     }
     lines {
-      id
-      isShippingRequired
-      productName
-      quantity
-      allocations {
-        quantity
-        warehouse {
-          id
-        }
-      }
-      quantityFulfilled
-      quantityToFulfill
-      variant {
-        id
-        name
-        sku
-        preorder {
-          endDate
-        }
-        attributes {
-          values {
-            id
-            name
-          }
-        }
-        stocks {
-          id
-          warehouse {
-            ...Warehouse
-          }
-          quantity
-          quantityAllocated
-        }
-        trackInventory
-      }
-      thumbnail(size: 64) {
-        url
-      }
+      ...OrderFulfillLine
     }
     number
   }
 }
-    ${WarehouseFragmentDoc}`;
+    ${OrderFulfillLineFragmentDoc}`;
 
 /**
  * __useOrderFulfillDataQuery__
@@ -13441,7 +13473,12 @@ export type SearchStaffMembersLazyQueryHookResult = ReturnType<typeof useSearchS
 export type SearchStaffMembersQueryResult = Apollo.QueryResult<Types.SearchStaffMembersQuery, Types.SearchStaffMembersQueryVariables>;
 export const SearchWarehousesDocument = gql`
     query SearchWarehouses($after: String, $first: Int!, $query: String!) {
-  search: warehouses(after: $after, first: $first, filter: {search: $query}) {
+  search: warehouses(
+    after: $after
+    first: $first
+    sortBy: {direction: ASC, field: NAME}
+    filter: {search: $query}
+  ) {
     edges {
       node {
         id

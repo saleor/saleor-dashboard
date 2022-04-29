@@ -14,7 +14,7 @@ const props: OrderFulfillPageProps = {
   onSubmit: () => undefined,
   order: orderToFulfill,
   saveButtonBar: "default",
-  warehouses: warehouseList
+  warehouse: warehouseList[0]
 };
 
 storiesOf("Views / Orders / Fulfill order", module)
@@ -25,7 +25,7 @@ storiesOf("Views / Orders / Fulfill order", module)
       {...props}
       loading={true}
       order={undefined}
-      warehouses={undefined}
+      warehouse={undefined}
     />
   ))
   .add("error", () => (
@@ -44,6 +44,4 @@ storiesOf("Views / Orders / Fulfill order", module)
       ]}
     />
   ))
-  .add("one warehouse", () => (
-    <OrderFulfillPage {...props} warehouses={warehouseList.slice(0, 1)} />
-  ));
+  .add("one warehouse", () => <OrderFulfillPage {...props} />);

@@ -12,7 +12,8 @@ import Skeleton from "@saleor/components/Skeleton";
 import {
   OrderDetailsFragment,
   OrderDetailsQuery,
-  OrderStatus
+  OrderStatus,
+  WarehouseFragment
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
@@ -65,6 +66,7 @@ export interface OrderDetailsPageProps {
   }>;
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
+  selectedWarehouse?: WarehouseFragment;
   onOrderLineAdd?: () => void;
   onOrderLineChange?: (
     id: string,
@@ -91,6 +93,7 @@ export interface OrderDetailsPageProps {
   onInvoiceClick(invoiceId: string);
   onInvoiceGenerate();
   onInvoiceSend(invoiceId: string);
+  onWarehouseChange?();
   onSubmit(data: MetadataFormData): SubmitPromise;
 }
 
@@ -115,6 +118,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     order,
     shop,
     saveButtonBarState,
+    selectedWarehouse,
     onBack,
     onBillingAddressEdit,
     onFulfillmentApprove,
@@ -137,6 +141,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onOrderLineChange,
     onOrderLineRemove,
     onShippingMethodEdit,
+    onWarehouseChange,
     onSubmit
   } = props;
   const classes = useStyles(props);
@@ -243,6 +248,8 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                     notAllowedToFulfillUnpaid={notAllowedToFulfillUnpaid}
                     lines={unfulfilled}
                     onFulfill={onOrderFulfill}
+                    onWarehouseChange={onWarehouseChange}
+                    selectedWarehouse={selectedWarehouse}
                   />
                 ) : (
                   <>

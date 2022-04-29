@@ -74,11 +74,21 @@ export const fragmentOrderLine = gql`
   fragment OrderLine on OrderLine {
     id
     isShippingRequired
+    allocations {
+      id
+      quantity
+      warehouse {
+        id
+      }
+    }
     variant {
       id
       quantityAvailable
       preorder {
         endDate
+      }
+      stocks {
+        ...Stock
       }
     }
     productName
@@ -322,5 +332,62 @@ export const fragmentShopOrderSettings = gql`
   fragment ShopOrderSettings on Shop {
     fulfillmentAutoApprove
     fulfillmentAllowUnpaid
+  }
+`;
+
+export const fragmentOrderFulfillLine = gql`
+  fragment OrderFulfillLine on OrderLine {
+    id
+    isShippingRequired
+    productName
+    quantity
+    allocations {
+      quantity
+      warehouse {
+        id
+      }
+    }
+    quantityFulfilled
+    quantityToFulfill
+    variant {
+      id
+      name
+      sku
+      preorder {
+        endDate
+      }
+      attributes {
+        values {
+          id
+          name
+        }
+      }
+      stocks {
+        ...Stock
+      }
+      trackInventory
+    }
+    thumbnail(size: 64) {
+      url
+    }
+  }
+`;
+
+export const fragmentOrderLineStockData = gql`
+  fragment OrderLineStockData on OrderLine {
+    id
+    allocations {
+      quantity
+      warehouse {
+        id
+      }
+    }
+    quantity
+    quantityToFulfill
+    variant {
+      stocks {
+        ...Stock
+      }
+    }
   }
 `;

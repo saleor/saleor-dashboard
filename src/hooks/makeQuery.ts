@@ -23,7 +23,7 @@ export { useLazyQuery, LazyQueryHookOptions } from "@apollo/client";
 const getPermissionKey = (permission: string) =>
   `PERMISSION_${permission}` as PrefixedPermissions;
 
-const allPermissions: Record<PrefixedPermissions, boolean> = Object.keys(
+export const allPermissions: Record<PrefixedPermissions, boolean> = Object.keys(
   PermissionEnum
 ).reduce(
   (prev, code) => ({
