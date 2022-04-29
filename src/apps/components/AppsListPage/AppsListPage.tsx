@@ -42,17 +42,6 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.apps)} />
-      {!!appsInProgress?.length && (
-        <>
-          <AppsInProgress
-            appsList={appsInProgress}
-            disabled={loadingAppsInProgress}
-            onAppInstallRetry={onAppInstallRetry}
-            onRemove={onAppInProgressRemove}
-          />
-          <CardSpacer />
-        </>
-      )}
       <InstalledApps
         appsList={installedAppsList}
         onRemove={onInstalledAppRemove}
@@ -64,6 +53,17 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
         getCustomAppHref={getCustomAppHref}
         onRemove={onCustomAppRemove}
       />
+      {!!appsInProgress?.length && (
+        <>
+          <CardSpacer />
+          <AppsInProgress
+            appsList={appsInProgress}
+            disabled={loadingAppsInProgress}
+            onAppInstallRetry={onAppInstallRetry}
+            onRemove={onAppInProgressRemove}
+          />
+        </>
+      )}
     </Container>
   );
 };
