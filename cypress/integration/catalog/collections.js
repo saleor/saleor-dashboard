@@ -82,7 +82,7 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("should create hidden collection. TC: SALEOR_0301", () => {
+    xit("should create hidden collection. TC: SALEOR_0301", () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
       let collection;
 
