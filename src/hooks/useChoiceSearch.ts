@@ -1,20 +1,12 @@
 import { Choice } from "@saleor/components/SingleSelectField";
-import { score } from "fuzzaldrin";
-import sortBy from "lodash/sortBy";
+import { filter } from "fuzzaldrin";
 import { useMemo, useState } from "react";
 
 function useChoiceSearch(choices: Array<Choice<string, string>>) {
   const [query, setQuery] = useState("");
 
   const sortedChoices = useMemo(
-    () =>
-      sortBy(
-        choices.map(choice => ({
-          ...choice,
-          score: -score(choice.label as string, query)
-        })),
-        "score"
-      ),
+    () => filter(choices, query, { key: "label" }) || [],
     [choices, query]
   );
 
