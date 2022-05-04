@@ -9,7 +9,7 @@ type MaterialTableRowPropsType = TableRowTypeMap["props"];
 
 export interface TableRowLinkProps
   extends Omit<MaterialTableRowPropsType, "onClick"> {
-  children?: React.ReactNode;
+  children: React.ReactNode;
   href?: string;
   className?: string;
   linkClassName?: string;
