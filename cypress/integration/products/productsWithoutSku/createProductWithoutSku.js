@@ -144,7 +144,7 @@ filterTests({ definedTags: ["all", "critical"], version: "3.1.0" }, () => {
         });
     });
 
-    it("should create variant without sku", () => {
+    xit("should create variant without sku", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const variants = [{ price: 7 }, { name: attributeValues[1], price: 16 }];
       let createdProduct;
