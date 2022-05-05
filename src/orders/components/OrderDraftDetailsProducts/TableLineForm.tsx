@@ -32,7 +32,7 @@ const TableLineForm: React.FC<TableLineFormProps> = ({
 
   const handleSubmit = (id: string, data: OrderLineInput) => {
     if (!data || data.quantity < 1) {
-      return;
+      data.quantity = 1;
     }
     onOrderLineChange(id, { quantity: Math.floor(data.quantity) });
   };
