@@ -72,6 +72,7 @@ export const ChannelCreateView = ({}) => {
   const currencyCodeChoices = currencyCodes.data.map(currencyData => ({
     label: intl.formatMessage(
       {
+        id: "J7mFhU",
         defaultMessage: "{code} - {countries}",
         description: "currency code select"
       },
@@ -87,6 +88,7 @@ export const ChannelCreateView = ({}) => {
     <>
       <WindowTitle
         title={intl.formatMessage({
+          id: "OrMr/k",
           defaultMessage: "Create Channel",
           description: "window title"
         })}
@@ -97,6 +99,7 @@ export const ChannelCreateView = ({}) => {
         </Backlink>
         <PageHeader
           title={intl.formatMessage({
+            id: "DnghuS",
             defaultMessage: "New Channel",
             description: "channel create"
           })}

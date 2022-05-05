@@ -155,6 +155,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
       <WindowTitle
         title={intl.formatMessage(
           {
+            id: "GbBCmr",
             defaultMessage: "Order #{orderNumber}",
             description: "window title"
           },

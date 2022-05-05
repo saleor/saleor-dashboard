@@ -59,6 +59,7 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "DP6b8U",
           defaultMessage: "Background Image (optional)",
           description: "section header"
         })}
@@ -102,6 +103,7 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
               name="backgroundImageAlt"
               label={intl.formatMessage(commonMessages.description)}
               helperText={intl.formatMessage({
+                id: "0iMYc+",
                 defaultMessage: "(Optional)",
                 description: "field is optional"
               })}

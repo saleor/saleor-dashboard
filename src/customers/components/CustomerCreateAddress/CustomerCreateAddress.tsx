@@ -47,13 +47,17 @@ const CustomerCreateAddress: React.FC<CustomerCreateAddressProps> = props => {
     <Card className={classes.overflow}>
       <CardTitle
         title={intl.formatMessage({
+          id: "jGGnSZ",
           defaultMessage: "Primary Address",
           description: "page header"
         })}
       />
       <CardContent className={classes.overflow}>
         <Typography>
-          <FormattedMessage defaultMessage="The primary address of this customer." />
+          <FormattedMessage
+            id="wNQzS/"
+            defaultMessage="The primary address of this customer."
+          />
         </Typography>
         <FormSpacer />
         <AddressEdit

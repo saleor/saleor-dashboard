@@ -34,7 +34,6 @@ export interface ShippingZoneRatesCreatePageProps extends WithFormId {
   allChannelsCount?: number;
   shippingChannels: ChannelShippingData[];
   disabled: boolean;
-  hasChannelChanged?: boolean;
   postalCodes?: ShippingMethodTypeFragment["postalCodeRules"];
   channelErrors: ShippingChannelsErrorFragment[];
   errors: ShippingErrorFragment[];
@@ -58,7 +57,6 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
   channelErrors,
   disabled,
   errors,
-  hasChannelChanged,
   onBack,
   onDelete,
   onSubmit,
@@ -89,16 +87,13 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
   const {
     change,
     data: formData,
-    hasChanged,
-    setChanged,
     setIsSubmitDisabled,
     triggerChange
   } = useForm(initialForm, undefined, { confirmLeave: true, formId });
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit,
-    setChanged
+    onSubmit
   });
 
   const [description, changeDescription] = useRichText({
@@ -124,27 +119,28 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
     onChannelsChange,
     triggerChange
   );
-  const formDisabled = data.channelListings?.some(channel =>
+  const isValid = !data.channelListings?.some(channel =>
     validatePrice(channel.price)
   );
-  const isSaveDisabled =
-    disabled || formDisabled || (!hasChanged && !hasChannelChanged);
+  const isSaveDisabled = disabled || !isValid;
   setIsSubmitDisabled(isSaveDisabled);
 
   return (
     <form onSubmit={handleFormElementSubmit}>
       <Container>
         <Backlink onClick={onBack}>
-          <FormattedMessage defaultMessage="Shipping" />
+          <FormattedMessage id="PRlD0A" defaultMessage="Shipping" />
         </Backlink>
         <PageHeader
           title={
             isPriceVariant
               ? intl.formatMessage({
+                  id: "RXPGi/",
                   defaultMessage: "Price Rate Create",
                   description: "page title"
                 })
               : intl.formatMessage({
+                  id: "NDm2Fe",
                   defaultMessage: "Weight Rate Create",
                   description: "page title"
                 })

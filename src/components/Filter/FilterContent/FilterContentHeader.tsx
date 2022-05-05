@@ -34,7 +34,7 @@ const FilterContentHeader: React.FC<FilterContentHeaderProps> = ({
   return (
     <div className={classes.container}>
       <Typography className={classes.label}>
-        <FormattedMessage defaultMessage="Filters" />
+        <FormattedMessage id="zSOvI0" defaultMessage="Filters" />
       </Typography>
       <div>
         <Button

@@ -64,6 +64,7 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
           data-test-id="create-attribute-button"
         >
           <FormattedMessage
+            id="IGvQ8k"
             defaultMessage="Create attribute"
             description="button"
           />
@@ -72,6 +73,7 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
       <Card>
         <FilterBar
           allTabLabel={intl.formatMessage({
+            id: "dKPMyh",
             defaultMessage: "All Attributes",
             description: "tab name"
           })}
@@ -79,6 +81,7 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
           filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
+            id: "1div9r",
             defaultMessage: "Search Attribute"
           })}
           tabs={tabs}

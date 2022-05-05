@@ -29,12 +29,14 @@ const WarehouseDeleteDialog: React.FC<WarehouseDeleteDialogProps> = ({
       onConfirm={onConfirm}
       variant="delete"
       title={intl.formatMessage({
+        id: "ny4zrH",
         defaultMessage: "Delete Warehouse",
         description: "dialog title"
       })}
     >
       <DialogContentText>
         <FormattedMessage
+          id="DTL7sE"
           defaultMessage="Are you sure you want to delete {warehouseName}?"
           description="dialog content"
           values={{

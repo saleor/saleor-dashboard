@@ -28,6 +28,7 @@ interface FormValues {
 
 const messages = defineMessages({
   buttonMessage: {
+    id: "4W/CKn",
     defaultMessage: "Upload URL",
     description: "modal button"
   }
@@ -57,6 +58,7 @@ const ProductExternalMediaDialog: React.FC<ProductExternalMediaDialogProps> = ({
             <DialogContent>
               <Typography>
                 <FormattedMessage
+                  id="zDvDnG"
                   defaultMessage="Media from the URL you supply will be shown in the media gallery. You will be able to define the order of the gallery."
                   description="modal header"
                 />

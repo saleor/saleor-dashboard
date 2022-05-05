@@ -58,6 +58,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
           <>
             <DialogTitle>
               <FormattedMessage
+                id="T5nU7u"
                 defaultMessage="Create Token"
                 description="header"
               />
@@ -66,11 +67,15 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
               {step === "form" ? (
                 <>
                   <Typography>
-                    <FormattedMessage defaultMessage="Access token is used to authenticate service accounts" />
+                    <FormattedMessage
+                      id="k0rGBI"
+                      defaultMessage="Access token is used to authenticate service accounts"
+                    />
                   </Typography>
                   <FormSpacer />
                   <TextField
                     label={intl.formatMessage({
+                      id: "0DRBjg",
                       defaultMessage: "Token Note"
                     })}
                     value={data.name}
@@ -82,12 +87,18 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
               ) : (
                 <>
                   <Typography>
-                    <FormattedMessage defaultMessage="We’ve created your token. Make sure to copy your new personal access token now. You won’t be able to see it again." />
+                    <FormattedMessage
+                      id="t9a9GQ"
+                      defaultMessage="We’ve created your token. Make sure to copy your new personal access token now. You won’t be able to see it again."
+                    />
                   </Typography>
                   <CardSpacer />
                   <Paper className={classes.paper} elevation={0}>
                     <Typography variant="caption">
-                      <FormattedMessage defaultMessage="Generated Token" />
+                      <FormattedMessage
+                        id="Kxiige"
+                        defaultMessage="Generated Token"
+                      />
                     </Typography>
                     <Typography data-test-id="generated-token">
                       {token}
@@ -97,6 +108,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                       onClick={() => handleCopy(token)}
                     >
                       <FormattedMessage
+                        id="HVFq//"
                         defaultMessage="Copy token"
                         description="button"
                       />
@@ -115,6 +127,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                     onClick={submit}
                   >
                     <FormattedMessage
+                      id="isM94c"
                       defaultMessage="Create"
                       description="create service token, button"
                     />

@@ -27,7 +27,6 @@ const props: Omit<CollectionDetailsPageProps, "classes"> = {
   currentChannels: channels,
   disabled: false,
   errors: [],
-  hasChannelChanged: false,
   onBack: () => undefined,
   onChannelsChange: () => undefined,
   onCollectionRemove: () => undefined,

@@ -60,16 +60,13 @@ function useCategoryUpdateForm(
     handleChange,
     data,
     triggerChange,
-    hasChanged,
-    setChanged,
     formId,
     setIsSubmitDisabled
   } = useForm(getInitialData(category), undefined, { confirmLeave: true });
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit,
-    setChanged
+    onSubmit
   });
 
   const { setExitDialogSubmitRef } = useExitFormDialog({
@@ -104,8 +101,7 @@ function useCategoryUpdateForm(
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
-  const isSaveDisabled = disabled || !hasChanged;
-  setIsSubmitDisabled(isSaveDisabled);
+  setIsSubmitDisabled(disabled);
 
   return {
     change: handleChange,
@@ -114,9 +110,8 @@ function useCategoryUpdateForm(
       changeDescription,
       changeMetadata
     },
-    hasChanged,
     submit,
-    isSaveDisabled
+    isSaveDisabled: disabled
   };
 }
 

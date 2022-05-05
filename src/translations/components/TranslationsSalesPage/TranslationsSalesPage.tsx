@@ -43,6 +43,7 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
       <PageHeader
         title={intl.formatMessage(
           {
+            id: "zjkAMs",
             defaultMessage: 'Translation Sale "{saleName}" - {languageCode}',
             description: "header"
           },
@@ -66,6 +67,7 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
         fields={[
           {
             displayName: intl.formatMessage({
+              id: "s40PZt",
               defaultMessage: "Sale Name"
             }),
             name: fieldNames.name,

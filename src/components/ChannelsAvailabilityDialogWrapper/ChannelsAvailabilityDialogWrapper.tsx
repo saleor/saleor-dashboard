@@ -53,19 +53,23 @@ export const useStyles = makeStyles(
 
 const messages = defineMessages({
   selectTitle: {
+    id: "7scATx",
     defaultMessage:
       "Select channels you want for {contentType} to be available on",
     description: "select title"
   },
   selectAllChannelsLabel: {
+    id: "zR9Ozi",
     defaultMessage: "Select All Channels",
     description: "select all channels label"
   },
   channelsAlphabeticallyTitle: {
+    id: "/lBLBI",
     defaultMessage: "Channels from A to Z",
     description: "channels alphabetically title"
   },
   notFoundTitle: {
+    id: "PctLol",
     defaultMessage: "No Channels Found",
     description: "no channels found title"
   }
@@ -95,6 +99,7 @@ export const ChannelsAvailabilityContentWrapper: React.FC<ChannelsAvailabilityCo
   const classes = useStyles({});
   const intl = useIntl();
   const searchText = intl.formatMessage({
+    id: "ybaLoZ",
     defaultMessage: "Search through channels"
   });
 

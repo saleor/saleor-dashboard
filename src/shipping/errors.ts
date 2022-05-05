@@ -4,14 +4,17 @@ import { defineMessages, IntlShape } from "react-intl";
 
 const messages = defineMessages({
   invalid: {
+    id: "57IYpr",
     defaultMessage: "Value is invalid",
     description: "error message"
   },
   price: {
+    id: "pwqwcy",
     defaultMessage: "Maximum price cannot be lower than minimum",
     description: "error message"
   },
   weight: {
+    id: "H27/Gy",
     defaultMessage: "Maximum weight cannot be lower than minimum",
     description: "error message"
   }

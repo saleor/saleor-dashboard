@@ -39,17 +39,17 @@ export function getIsFilterMultipleChoices(
   return [
     {
       label: intl.formatMessage({
+        id: "I+UwqI",
         defaultMessage: "equal to",
-        description: "is filter range or value",
-        id: "is filter range equal to value"
+        description: "is filter range or value"
       }),
       value: FilterType.SINGULAR
     },
     {
       label: intl.formatMessage({
+        id: "QBxN6z",
         defaultMessage: "between",
-        description: "is filter range or value",
-        id: "is filter range between value"
+        description: "is filter range or value"
       }),
       value: FilterType.MULTIPLE
     }

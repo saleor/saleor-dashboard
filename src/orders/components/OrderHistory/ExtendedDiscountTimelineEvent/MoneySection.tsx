@@ -24,30 +24,30 @@ const useStyles = makeStyles(
 
 export const messages = defineMessages({
   discount: {
+    id: "yJynYK",
     defaultMessage: "discount",
-    description: "discount value",
-    id: "discount value id"
+    description: "discount value"
   },
   fixedAmount: {
+    id: "Zhxu58",
     defaultMessage: "Fixed amount",
-    description: "Fixed amount subtitle",
-    id: "fixed amount subtitle id"
+    description: "Fixed amount subtitle"
   },
 
   newDiscountSectionTitle: {
+    id: "MTl5o6",
     defaultMessage: "New discount value",
-    description: "new discount label",
-    id: "new discount label id"
+    description: "new discount label"
   },
   oldDiscountSectionTitle: {
+    id: "2Sx05f",
     defaultMessage: "Previous discount value",
-    description: "Previous discount label",
-    id: "Previous discount label id"
+    description: "Previous discount label"
   },
   onlyDiscountSectionTitle: {
+    id: "ojHyj3",
     defaultMessage: "discount value",
-    description: "discount value label",
-    id: "discount value label id"
+    description: "discount value label"
   }
 });
 

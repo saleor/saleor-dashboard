@@ -21,10 +21,13 @@ const ResetPasswordSuccessPage: React.FC<ResetPasswordSuccessPageProps> = props 
   return (
     <>
       <Typography variant="h3" className={classes.header}>
-        <FormattedMessage defaultMessage="Reset password" />
+        <FormattedMessage id="Yy/yDL" defaultMessage="Reset password" />
       </Typography>
       <Typography>
-        <FormattedMessage defaultMessage="Success! In a few minutes you’ll receive a message with instructions on how to reset your password." />
+        <FormattedMessage
+          id="2ob30/"
+          defaultMessage="Success! In a few minutes you’ll receive a message with instructions on how to reset your password."
+        />
       </Typography>
       <FormSpacer />
       <Button
@@ -33,7 +36,11 @@ const ResetPasswordSuccessPage: React.FC<ResetPasswordSuccessPageProps> = props 
         onClick={onBack}
         type="submit"
       >
-        <FormattedMessage defaultMessage="Back to login" description="button" />
+        <FormattedMessage
+          id="2oyWT9"
+          defaultMessage="Back to login"
+          description="button"
+        />
       </Button>
     </>
   );

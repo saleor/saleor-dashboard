@@ -22,10 +22,12 @@ import {
 
 const messages = defineMessages({
   appTitle: {
+    id: "rVIlBs",
     defaultMessage: "Order #{orderNumber}",
     description: "page header with order number"
   },
   pageTitle: {
+    id: "BBIQxQ",
     defaultMessage: "Order no. {orderNumber} - Replace/Return",
     description: "page header"
   }

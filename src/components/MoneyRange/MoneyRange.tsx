@@ -18,6 +18,7 @@ export const MoneyRange: React.FC<MoneyRangeProps> = ({ from, to }) => {
         from && to
           ? intl.formatMessage(
               {
+                id: "zTdwWM",
                 defaultMessage: "{fromMoney} - {toMoney}",
                 description: "money"
               },
@@ -29,6 +30,7 @@ export const MoneyRange: React.FC<MoneyRangeProps> = ({ from, to }) => {
           : from && !to
           ? intl.formatMessage(
               {
+                id: "lW5uJO",
                 defaultMessage: "from {money}",
                 description: "money"
               },
@@ -39,6 +41,7 @@ export const MoneyRange: React.FC<MoneyRangeProps> = ({ from, to }) => {
           : !from && to
           ? intl.formatMessage(
               {
+                id: "hptDxW",
                 defaultMessage: "to {money}",
                 description: "money"
               },

@@ -49,6 +49,7 @@ function useSteps(): Array<Step<ProductExportStep>> {
   return [
     {
       label: intl.formatMessage({
+        id: "/68iG8",
         defaultMessage: "Information exported",
         description: "product export to csv file, header"
       }),
@@ -56,6 +57,7 @@ function useSteps(): Array<Step<ProductExportStep>> {
     },
     {
       label: intl.formatMessage({
+        id: "ki7Mr8",
         defaultMessage: "Export Settings",
         description: "product export to csv file, header"
       }),
@@ -216,6 +218,7 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
   const exportScopeLabels = {
     allItems: intl.formatMessage(
       {
+        id: "xtUXnK",
         defaultMessage: "All products ({number})",
         description: "export all items to csv file"
       },
@@ -225,6 +228,7 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
     ),
     selectedItems: intl.formatMessage(
       {
+        id: "qEZ463",
         defaultMessage: "Selected products ({number})",
         description: "export selected items to csv file"
       },

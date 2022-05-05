@@ -63,6 +63,7 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
           data-test-id="create-category"
         >
           <FormattedMessage
+            id="vof5TR"
             defaultMessage="Create category"
             description="button"
           />
@@ -71,12 +72,14 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
       <Card>
         <SearchBar
           allTabLabel={intl.formatMessage({
+            id: "vy7fjd",
             defaultMessage: "All Categories",
             description: "tab name"
           })}
           currentTab={currentTab}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
+            id: "JiXNEV",
             defaultMessage: "Search Category"
           })}
           tabs={tabs}

@@ -89,7 +89,11 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
         >
           <TableCell className={classes.colName}>
             <span className={classes.colNameHeader}>
-              <FormattedMessage defaultMessage="Name" description="product" />
+              <FormattedMessage
+                id="VQLIXd"
+                defaultMessage="Name"
+                description="product"
+              />
             </span>
           </TableCell>
         </TableHead>
@@ -141,7 +145,10 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage defaultMessage="No products found" />
+                  <FormattedMessage
+                    id="Q1Uzbb"
+                    defaultMessage="No products found"
+                  />
                 </TableCell>
               </TableRow>
             )

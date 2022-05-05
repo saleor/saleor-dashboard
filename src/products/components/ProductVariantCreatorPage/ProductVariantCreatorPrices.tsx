@@ -16,13 +16,21 @@ import SingleSelectField from "@saleor/components/SingleSelectField";
 import { ProductVariantAttributesFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import {
   ProductVariantCreateFormData,
   VariantCreatorPricesAndSkuMode
 } from "./form";
 import { getPriceAttributeValues } from "./utils";
+
+const messages = defineMessages({
+  price: {
+    id: "OgFBAj",
+    defaultMessage: "Price",
+    description: "input label"
+  }
+});
 
 const useStyles = makeStyles(
   theme => ({
@@ -94,6 +102,7 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "TPCRKr",
           defaultMessage: "Price",
           description: "variant price, header"
         })}
@@ -104,6 +113,7 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
             value="all"
             control={<Radio color="primary" />}
             label={intl.formatMessage({
+              id: "lra7Ej",
               defaultMessage: "Apply single price to all SKUs"
             })}
             onChange={() => onApplyToAllChange("all")}
@@ -127,11 +137,7 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
                           channel => channel.channelId === listing.id
                         )?.price
                       }
-                      label={intl.formatMessage({
-                        defaultMessage: "Price",
-                        description: "input label",
-                        id: "productVariantCreatePricesSetPricePlaceholder"
-                      })}
+                      label={intl.formatMessage(messages.price)}
                       currencySymbol={listing.currency}
                       onChange={event =>
                         onApplyToAllPriceChange(listing.id, event.target.value)
@@ -147,6 +153,7 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
             value="attribute"
             control={<Radio color="primary" />}
             label={intl.formatMessage({
+              id: "EGG8f+",
               defaultMessage: "Apply unique prices by attribute to each SKU"
             })}
             onChange={() => onApplyToAllChange("attribute")}
@@ -158,6 +165,7 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
                 <div className={classes.label}>
                   <Typography>
                     <FormattedMessage
+                      id="ucYPtV"
                       defaultMessage="Choose attribute"
                       description="variant attribute"
                     />
@@ -167,6 +175,7 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
                   <SingleSelectField
                     choices={attributeChoices}
                     label={intl.formatMessage({
+                      id: "lVZ5n7",
                       defaultMessage: "Attribute",
                       description: "variant attribute"
                     })}
@@ -197,12 +206,7 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
                               {listing.name}
                             </Typography>
                             <PriceField
-                              label={intl.formatMessage({
-                                defaultMessage: "Price",
-                                description: "input label",
-                                id:
-                                  "productVariantCreatePricesSetPricePlaceholder"
-                              })}
+                              label={intl.formatMessage(messages.price)}
                               currencySymbol={listing.currency}
                               value={
                                 attributesChannels.find(
@@ -231,6 +235,7 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
             value="skip"
             control={<Radio color="primary" />}
             label={intl.formatMessage({
+              id: "J0UdxG",
               defaultMessage: "Skip pricing for now"
             })}
             onChange={() => onApplyToAllChange("skip")}

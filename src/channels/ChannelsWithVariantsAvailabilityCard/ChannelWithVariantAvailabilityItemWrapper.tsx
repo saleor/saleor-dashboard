@@ -71,10 +71,12 @@ const useStyles = makeStyles(
 
 const messages = defineMessages({
   variantCountLabel: {
+    id: "1w06LC",
     defaultMessage: "{variantsCount} variants",
     description: "variants count label"
   },
   allVariantsLabel: {
+    id: "37U5su",
     defaultMessage: "All variants",
     description: "all variants label"
   }

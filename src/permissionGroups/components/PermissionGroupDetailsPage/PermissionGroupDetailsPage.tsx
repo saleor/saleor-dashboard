@@ -90,7 +90,7 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
 
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-      {({ data, change, submit, hasChanged }) => (
+      {({ data, change, submit }) => (
         <Container>
           <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.permissionGroups)}
@@ -121,10 +121,12 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
                 onChange={change}
                 errorMessage={permissionsError}
                 fullAccessLabel={intl.formatMessage({
+                  id: "mAabef",
                   defaultMessage: "Group has full access to the store",
                   description: "checkbox label"
                 })}
                 description={intl.formatMessage({
+                  id: "CYZse9",
                   defaultMessage:
                     "Expand or restrict group's permissions to access certain part of saleor system.",
                   description: "card description"
@@ -137,7 +139,7 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
               onCancel={onBack}
               onSubmit={submit}
               state={saveButtonBarState}
-              disabled={disabled || !(hasChanged || membersModified)}
+              disabled={disabled || !membersModified}
             />
           </div>
         </Container>

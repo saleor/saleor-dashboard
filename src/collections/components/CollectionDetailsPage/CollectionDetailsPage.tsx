@@ -34,7 +34,6 @@ export interface CollectionDetailsPageProps
   collection: CollectionDetailsQuery["collection"];
   currentChannels: ChannelCollectionData[];
   errors: CollectionErrorFragment[];
-  hasChannelChanged: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onCollectionRemove: () => void;
@@ -53,7 +52,6 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
   currentChannels = [],
   disabled,
   errors,
-  hasChannelChanged,
   saveButtonBarState,
   selectedChannelId,
   onBack,
@@ -74,7 +72,6 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
       setChannels={onChannelsChange}
       onSubmit={onSubmit}
       disabled={disabled}
-      hasChannelChanged={hasChannelChanged}
     >
       {({ change, data, handlers, submit, isSaveDisabled }) => (
         <Container>
@@ -113,6 +110,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                 disabled={disabled}
                 descriptionPlaceholder=""
                 helperText={intl.formatMessage({
+                  id: "Rj8LxK",
                   defaultMessage:
                     "Add search engine title and description to make this collection easier to find"
                 })}
@@ -130,11 +128,13 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                   managePermissions={[PermissionEnum.MANAGE_PRODUCTS]}
                   messages={{
                     hiddenLabel: intl.formatMessage({
+                      id: "V8FhTt",
                       defaultMessage: "Hidden",
                       description: "collection label"
                     }),
 
                     visibleLabel: intl.formatMessage({
+                      id: "9vQR6c",
                       defaultMessage: "Visible",
                       description: "collection label"
                     })

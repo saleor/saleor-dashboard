@@ -52,6 +52,7 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
           </Backlink>
           <PageHeader
             title={intl.formatMessage({
+              id: "Vu9nol",
               defaultMessage: "Order settings",
               description: "header"
             })}
@@ -60,7 +61,10 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
           <Grid variant="inverted">
             <div>
               <Typography>
-                <FormattedMessage defaultMessage="General Settings" />
+                <FormattedMessage
+                  id="yuiyES"
+                  defaultMessage="General Settings"
+                />
               </Typography>
             </div>
             <OrderSettings data={data} disabled={disabled} onChange={change} />

@@ -15,6 +15,7 @@ export type ListSettingsUpdate = <T extends keyof ListSettings>(
 
 const messages = defineMessages({
   noOfRows: {
+    id: "2HfSiT",
     defaultMessage: "No. of rows",
     description: "pagination"
   }

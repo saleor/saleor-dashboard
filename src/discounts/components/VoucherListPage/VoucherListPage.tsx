@@ -58,6 +58,7 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
       <PageHeader title={intl.formatMessage(sectionNames.vouchers)}>
         <Button onClick={onAdd} variant="primary" data-test-id="create-voucher">
           <FormattedMessage
+            id="GbhZJ4"
             defaultMessage="Create voucher"
             description="button"
           />
@@ -66,6 +67,7 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
       <Card>
         <FilterBar
           allTabLabel={intl.formatMessage({
+            id: "pNrF72",
             defaultMessage: "All Vouchers",
             description: "tab name"
           })}
@@ -73,6 +75,7 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
           filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
+            id: "IruP2T",
             defaultMessage: "Search Voucher"
           })}
           tabs={tabs}

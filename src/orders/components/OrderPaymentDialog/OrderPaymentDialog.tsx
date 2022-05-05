@@ -56,6 +56,7 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
           <>
             <DialogTitle>
               {intl.formatMessage({
+                id: "+PbHKD",
                 defaultMessage: "Capture Payment",
                 description: "dialog header"
               })}
@@ -66,6 +67,7 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
                 fullWidth
                 helperText={getOrderErrorMessage(formErrors.payment, intl)}
                 label={intl.formatMessage({
+                  id: "OhdPS1",
                   defaultMessage: "Amount",
                   description: "amount of refunded money"
                 })}

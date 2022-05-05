@@ -166,13 +166,17 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
             onClose={closeModal}
             open={params.action === "clear" && !!params.id}
             title={intl.formatMessage({
+              id: "N6lfS/",
               defaultMessage: "Authorization Field Delete",
               description: "header"
             })}
             onConfirm={() => handleFieldUpdate(null)}
           >
             <DialogContentText>
-              <FormattedMessage defaultMessage="The plugin may stop working after this field is cleared. Are you sure you want to proceed?" />
+              <FormattedMessage
+                id="JRfJD9"
+                defaultMessage="The plugin may stop working after this field is cleared. Are you sure you want to proceed?"
+              />
             </DialogContentText>
           </ActionDialog>
           <PluginSecretFieldDialog

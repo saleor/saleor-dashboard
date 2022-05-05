@@ -17,7 +17,6 @@ const GiftCardUpdatePage: React.FC = () => {
   const { navigateBack, openDeleteDialog } = useGiftCardUpdateDialogs();
 
   const {
-    hasChanged,
     submit,
     data,
     handlers: { changeMetadata }
@@ -43,7 +42,7 @@ const GiftCardUpdatePage: React.FC = () => {
       </Grid>
       <Savebar
         state={status}
-        disabled={loadingUpdate || !hasChanged}
+        disabled={loadingUpdate}
         onCancel={navigateBack}
         onSubmit={submit}
         onDelete={openDeleteDialog}

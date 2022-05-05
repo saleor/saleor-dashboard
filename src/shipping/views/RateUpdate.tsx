@@ -326,6 +326,7 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
           title={intl.formatMessage({
+            id: "EM730i",
             defaultMessage: "Manage Channel Availability"
           })}
           selected={channelListElements.length}
@@ -378,7 +379,6 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
           unassignProductOpts?.status === "loading" ||
           assignProductOpts?.status === "loading"
         }
-        hasChannelChanged={shippingChannels?.length !== currentChannels?.length}
         havePostalCodesChanged={state.havePostalCodesChanged}
         saveButtonBarState={updateShippingRateOpts.status}
         onDelete={() => openModal("remove")}
@@ -405,6 +405,7 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
         toolbar={
           <Button onClick={() => openModal("unassign-product")}>
             <FormattedMessage
+              id="YdeHZX"
               defaultMessage="Unassign"
               description="unassign products from shipping method, button"
             />

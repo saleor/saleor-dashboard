@@ -265,7 +265,10 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
                 () => (
                   <TableRow>
                     <TableCell colSpan={4}>
-                      <FormattedMessage defaultMessage="No products available in order channel matching given query" />
+                      <FormattedMessage
+                        id="WQnltU"
+                        defaultMessage="No products available in order channel matching given query"
+                      />
                     </TableCell>
                   </TableRow>
                 )

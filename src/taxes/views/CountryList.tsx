@@ -31,6 +31,7 @@ export const CountryList: React.FC = () => {
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "HtQGEH",
             defaultMessage: "Successfully fetched tax rates"
           })
         });

@@ -69,7 +69,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
 
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-      {({ data, hasChanged, submit, change }) => {
+      {({ data, submit, change }) => {
         const syncEventsChoices = disabled
           ? []
           : mapSyncEventsToChoices(Object.values(WebhookEventTypeSyncEnum));
@@ -119,7 +119,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
               </div>
             </Grid>
             <Savebar
-              disabled={disabled || !hasChanged}
+              disabled={disabled}
               state={saveButtonBarState}
               onCancel={onBack}
               onSubmit={submit}

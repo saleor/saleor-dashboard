@@ -54,6 +54,7 @@ const AccountPermissionGroups: React.FC<AccountPermissionGroupsProps> = props =>
       <MultiAutocompleteSelectField
         displayValues={displayValues}
         label={intl.formatMessage({
+          id: "C7eDb9",
           defaultMessage: "Permission groups"
         })}
         choices={disabled ? [] : choices}

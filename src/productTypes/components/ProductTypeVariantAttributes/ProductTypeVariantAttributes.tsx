@@ -68,8 +68,7 @@ interface ProductTypeVariantAttributesProps extends ListActions {
   onAttributeClick: (id: string) => void;
   onAttributeReorder: ReorderAction;
   onAttributeUnassign: (id: string) => void;
-  onAttributeVariantSelection?: (isActive: boolean) => void;
-  setSelectedVariantAttributes?: (data: string[]) => void;
+  setSelectedVariantAttributes: (data: string[]) => void;
 }
 
 function handleContainerAssign(
@@ -106,7 +105,6 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
     onAttributeClick,
     onAttributeReorder,
     onAttributeUnassign,
-    onAttributeVariantSelection,
     setSelectedVariantAttributes,
     selectedVariantAttributes
   } = props;
@@ -127,6 +125,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
     <Card data-test-id="variant-attributes">
       <CardTitle
         title={intl.formatMessage({
+          id: "skEK/i",
           defaultMessage: "Variant Attributes",
           description: "section header"
         })}
@@ -137,6 +136,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
             onClick={() => onAttributeAssign(ProductAttributeType[type])}
           >
             <FormattedMessage
+              id="uxPpRx"
               defaultMessage="Assign attribute"
               description="button"
             />
@@ -165,16 +165,18 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
             toolbar={toolbar}
           >
             <TableCell className={classes.colName}>
-              <FormattedMessage defaultMessage="Attribute name" />
+              <FormattedMessage id="kTr2o8" defaultMessage="Attribute name" />
             </TableCell>
             <TableCell className={classes.colName}>
               <FormattedMessage
+                id="nf3XSt"
                 defaultMessage="Slug"
                 description="attribute internal name"
               />
             </TableCell>
             <TableCell className={classes.colName}>
               <FormattedMessage
+                id="4k9rMQ"
                 defaultMessage="Variant Selection"
                 description="variant attribute checkbox"
               />
@@ -245,23 +247,21 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                         checked={isSelected}
                         disabled={disabled || variantSelectionDisabled}
                         disableClickPropagation
-                        onChange={() => {
-                          onAttributeVariantSelection(true);
+                        onChange={() =>
                           handleContainerAssign(
                             attribute.id,
                             isSelected,
                             selectedVariantAttributes,
                             setSelectedVariantAttributes
-                          );
-                        }}
+                          )
+                        }
                       />
                       {!!variantSelectionDisabled && (
                         <Tooltip
                           title={
                             <FormattedMessage
-                              defaultMessage={
-                                "{inputType} attributes cannot be used as variant selection attributes."
-                              }
+                              id="vlLyvk"
+                              defaultMessage="{inputType} attributes cannot be used as variant selection attributes."
                               values={{ inputType: readableAttributeInputType }}
                             />
                           }
@@ -287,7 +287,10 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage defaultMessage="No attributes found" />
+                  <FormattedMessage
+                    id="ztQgD8"
+                    defaultMessage="No attributes found"
+                  />
                 </TableCell>
               </TableRow>
             )

@@ -99,14 +99,17 @@ export interface OrderDetailsPageProps {
 
 const messages = defineMessages({
   cancelOrder: {
+    id: "9ZtJhn",
     defaultMessage: "Cancel order",
     description: "cancel button"
   },
   confirmOrder: {
+    id: "maxT+q",
     defaultMessage: "Confirm order",
     description: "save button"
   },
   returnOrder: {
+    id: "+RjQjs",
     defaultMessage: "Return / Replace order",
     description: "return button"
   }
@@ -189,9 +192,9 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     ? { confirm: intl.formatMessage(messages.confirmOrder) }
     : undefined;
 
-  const allowSave = (hasChanged: boolean) => {
+  const allowSave = () => {
     if (!isOrderUnconfirmed) {
-      return disabled || !hasChanged;
+      return disabled;
     } else if (!order?.lines?.length) {
       return true;
     }
@@ -217,7 +220,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
 
   return (
     <Form confirmLeave initial={initial} onSubmit={handleSubmit}>
-      {({ change, data, hasChanged, submit }) => {
+      {({ change, data, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
@@ -334,7 +337,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               onCancel={onBack}
               onSubmit={submit}
               state={saveButtonBarState}
-              disabled={allowSave(hasChanged)}
+              disabled={allowSave()}
             />
           </Container>
         );

@@ -56,6 +56,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
         <>
           <Typography variant="h3" className={classes.header}>
             <FormattedMessage
+              id="vzgZ3U"
               defaultMessage="Sign In"
               description="card header"
             />
@@ -84,6 +85,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               fullWidth
               autoComplete="password"
               label={intl.formatMessage({
+                id: "5sg7KC",
                 defaultMessage: "Password"
               })}
               name="password"
@@ -114,6 +116,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
             data-test-id="reset-password-link"
           >
             <FormattedMessage
+              id="3tbL7x"
               defaultMessage="Forgot password?"
               description="description"
             />
@@ -127,7 +130,11 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               type="submit"
               data-test-id="submit"
             >
-              <FormattedMessage defaultMessage="Sign in" description="button" />
+              <FormattedMessage
+                id="AubJ/S"
+                defaultMessage="Sign in"
+                description="button"
+              />
             </Button>
           </div>
           {externalAuthentications.length > 0 && (
@@ -137,6 +144,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               <FormSpacer />
               <Typography>
                 <FormattedMessage
+                  id="ENBELI"
                   defaultMessage="or login using"
                   description="description"
                 />

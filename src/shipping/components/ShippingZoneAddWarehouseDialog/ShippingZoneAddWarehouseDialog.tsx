@@ -101,6 +101,7 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
     >
       <DialogTitle>
         <FormattedMessage
+          id="yzYXW/"
           defaultMessage="Create New Warehouse"
           description="header, dialog"
         />
@@ -119,6 +120,7 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
                 <TextField
                   fullWidth
                   label={intl.formatMessage({
+                    id: "llBnr+",
                     defaultMessage: "Warehouse Name"
                   })}
                   name="name"

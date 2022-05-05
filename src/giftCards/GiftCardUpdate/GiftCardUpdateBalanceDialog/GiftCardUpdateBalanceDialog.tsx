@@ -80,7 +80,7 @@ const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({
     return result?.data?.giftCardUpdate?.errors;
   };
 
-  const { data, change, submit, reset, hasChanged } = useForm(
+  const { data, change, submit, reset } = useForm(
     initialFormData,
     handleSubmit
   );
@@ -103,7 +103,7 @@ const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({
       onClose={onClose}
       title={intl.formatMessage(messages.title)}
       confirmButtonState={status}
-      disabled={loading || !hasChanged}
+      disabled={loading}
     >
       <Typography>{intl.formatMessage(messages.subtitle)}</Typography>
       <CardSpacer />

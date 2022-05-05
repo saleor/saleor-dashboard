@@ -111,7 +111,11 @@ const SaleList: React.FC<SaleListProps> = props => {
           onClick={() => onSort(SaleListUrlSortField.name)}
           className={classes.colName}
         >
-          <FormattedMessage defaultMessage="Name" description="sale name" />
+          <FormattedMessage
+            id="F56hOz"
+            defaultMessage="Name"
+            description="sale name"
+          />
         </TableCellHeader>
         <TableCellHeader
           direction={
@@ -124,6 +128,7 @@ const SaleList: React.FC<SaleListProps> = props => {
           className={classes.colStart}
         >
           <FormattedMessage
+            id="iBSq6l"
             defaultMessage="Starts"
             description="sale start date"
           />
@@ -138,7 +143,11 @@ const SaleList: React.FC<SaleListProps> = props => {
           onClick={() => onSort(SaleListUrlSortField.endDate)}
           className={classes.colEnd}
         >
-          <FormattedMessage defaultMessage="Ends" description="sale end date" />
+          <FormattedMessage
+            id="giF5UV"
+            defaultMessage="Ends"
+            description="sale end date"
+          />
         </TableCellHeader>
         <TooltipTableCellHeader
           direction={
@@ -156,7 +165,11 @@ const SaleList: React.FC<SaleListProps> = props => {
           })}
           className={classes.colValue}
         >
-          <FormattedMessage defaultMessage="Value" description="sale value" />
+          <FormattedMessage
+            id="XZR590"
+            defaultMessage="Value"
+            description="sale value"
+          />
         </TooltipTableCellHeader>
       </TableHead>
       <TableFooter>
@@ -248,7 +261,7 @@ const SaleList: React.FC<SaleListProps> = props => {
           () => (
             <TableRow>
               <TableCell colSpan={numberOfColumns}>
-                <FormattedMessage defaultMessage="No sales found" />
+                <FormattedMessage id="51HE+Q" defaultMessage="No sales found" />
               </TableCell>
             </TableRow>
           )

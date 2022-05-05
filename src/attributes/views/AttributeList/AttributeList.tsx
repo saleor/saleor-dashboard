@@ -81,6 +81,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "lw9WIk",
             defaultMessage: "Attributes successfully delete",
             description: "deleted multiple attributes"
           })

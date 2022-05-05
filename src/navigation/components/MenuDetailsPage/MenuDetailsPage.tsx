@@ -81,7 +81,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
 
   return (
     <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
-      {({ change, data, hasChanged, submit }) => (
+      {({ change, data, submit }) => (
         <Container>
           <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.navigation)}
@@ -93,8 +93,8 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
               </Typography>
               <Typography>
                 <FormattedMessage
+                  id="E54eoT"
                   defaultMessage="Creating the navigation structure is done by dragging and dropping. Simply create a new menu item and then drag it into its destined place. You can move items inside one another to create a tree structure and drag items up and down to create a hierarchy"
-                  id="menuDetailsPageHelperText"
                 />
               </Typography>
             </div>
@@ -132,7 +132,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
             </div>
           </Grid>
           <Savebar
-            disabled={disabled || (!hasChanged && treeOperations.length === 0)}
+            disabled={disabled || treeOperations.length === 0}
             onCancel={onBack}
             onDelete={onDelete}
             onSubmit={submit}

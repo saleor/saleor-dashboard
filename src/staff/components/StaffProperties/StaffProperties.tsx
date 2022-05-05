@@ -136,6 +136,7 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
     <Card className={className}>
       <CardTitle
         title={intl.formatMessage({
+          id: "VTITVe",
           defaultMessage: "Staff Member Information",
           description: "section header"
         })}
@@ -162,6 +163,7 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
                     className={classes.avatarActionText}
                   >
                     <FormattedMessage
+                      id="+2VzH4"
                       defaultMessage="Change"
                       description="avatar change button"
                     />
@@ -173,6 +175,7 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
                         className={classes.avatarActionText}
                       >
                         <FormattedMessage
+                          id="11lR5V"
                           defaultMessage="Delete"
                           description="avatar delete button"
                         />

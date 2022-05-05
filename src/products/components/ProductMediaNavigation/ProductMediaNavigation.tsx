@@ -8,6 +8,7 @@ import { defineMessages, useIntl } from "react-intl";
 
 const messages = defineMessages({
   allMedia: {
+    id: "XUU9sU",
     defaultMessage: "All Media",
     description: "section header"
   }

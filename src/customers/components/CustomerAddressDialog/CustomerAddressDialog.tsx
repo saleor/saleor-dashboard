@@ -106,11 +106,13 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
               <DialogTitle>
                 {variant === "create" ? (
                   <FormattedMessage
+                    id="W0kQd+"
                     defaultMessage="Add Address"
                     description="dialog title"
                   />
                 ) : (
                   <FormattedMessage
+                    id="gQGUsN"
                     defaultMessage="Edit Address"
                     description="dialog title"
                   />

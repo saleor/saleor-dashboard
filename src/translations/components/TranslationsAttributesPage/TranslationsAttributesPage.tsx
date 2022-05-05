@@ -68,6 +68,7 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
       <PageHeader
         title={intl.formatMessage(
           {
+            id: "SPBLzT",
             defaultMessage:
               'Translation Attribute "{attribute}" - {languageCode}',
             description: "header"
@@ -92,6 +93,7 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
         fields={[
           {
             displayName: intl.formatMessage({
+              id: "DRMMDs",
               defaultMessage: "Attribute Name"
             }),
             name: fieldNames.attribute + ":" + data?.attribute.id,

@@ -9,10 +9,12 @@ import { getEmployeeNameLink } from "./utils";
 
 export const replacementCreatedMessages = defineMessages({
   description: {
+    id: "kvSYZh",
     defaultMessage: "was created for replaced products",
     description: "replacement created order history message description"
   },
   draftNumber: {
+    id: "kkIw+l",
     defaultMessage: "Draft #{orderNumber} ",
     description: "replacement created order history message draft number"
   }
@@ -20,10 +22,12 @@ export const replacementCreatedMessages = defineMessages({
 
 export const discountRemovedMessages = defineMessages({
   orderDiscountRemoved: {
+    id: "KXkdMH",
     defaultMessage: "Order discount was removed by ",
     description: "order discount removed title"
   },
   productDiscountRemoved: {
+    id: "A0Wlg7",
     defaultMessage: "{productName} discount was removed by",
     description: "product discount removed title"
   }

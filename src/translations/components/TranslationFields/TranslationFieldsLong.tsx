@@ -39,6 +39,7 @@ const TranslationFieldsLong: React.FC<TranslationFieldsLongProps> = ({
             fullWidth
             multiline
             label={intl.formatMessage({
+              id: "/vCXIP",
               defaultMessage: "Translation"
             })}
             name="translation"
@@ -56,7 +57,7 @@ const TranslationFieldsLong: React.FC<TranslationFieldsLongProps> = ({
     </Form>
   ) : initial === null ? (
     <Typography color="textSecondary">
-      <FormattedMessage defaultMessage="No translation yet" />
+      <FormattedMessage id="T/5OyA" defaultMessage="No translation yet" />
     </Typography>
   ) : (
     <Typography>{initial}</Typography>

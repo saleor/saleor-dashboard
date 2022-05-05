@@ -43,6 +43,7 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
       <PageHeader
         title={intl.formatMessage(
           {
+            id: "1tXSSK",
             defaultMessage:
               'Translation Voucher "{voucherName}" - {languageCode}',
             description: "header"
@@ -67,6 +68,7 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
         fields={[
           {
             displayName: intl.formatMessage({
+              id: "sfErC+",
               defaultMessage: "Voucher Name"
             }),
             name: fieldNames.name,

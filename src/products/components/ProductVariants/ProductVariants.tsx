@@ -42,6 +42,7 @@ function getWarehouseChoices(
   return [
     {
       label: intl.formatMessage({
+        id: "JtZ71e",
         defaultMessage: "All Warehouses",
         description: "filtering option"
       }),
@@ -139,6 +140,7 @@ function getAvailabilityLabel(
     if (variant.preorder.globalThreshold) {
       return intl.formatMessage(
         {
+          id: "80FeaT",
           defaultMessage: "{globalThreshold} Global threshold",
           description: "product variant preorder threshold"
         },
@@ -149,6 +151,7 @@ function getAvailabilityLabel(
     }
 
     return intl.formatMessage({
+      id: "qbqMpk",
       defaultMessage: "In preorder",
       description: "product variant preorder threshold"
     });
@@ -161,6 +164,7 @@ function getAvailabilityLabel(
       if (variantStock.quantity > 0) {
         return intl.formatMessage(
           {
+            id: "uVssds",
             defaultMessage:
               "{stockQuantity,plural,one{{stockQuantity} available} other{{stockQuantity} available}}",
             description: "product variant inventory"
@@ -171,12 +175,14 @@ function getAvailabilityLabel(
         );
       } else {
         return intl.formatMessage({
+          id: "7mK2vs",
           defaultMessage: "Unavailable",
           description: "product variant inventory"
         });
       }
     } else {
       return intl.formatMessage({
+        id: "9PmyrU",
         defaultMessage: "Not stocked",
         description: "product variant inventory"
       });
@@ -185,6 +191,7 @@ function getAvailabilityLabel(
     if (numAvailable > 0) {
       return intl.formatMessage(
         {
+          id: "wWYYBR",
           defaultMessage:
             "{numLocations,plural,one{{numAvailable} available at {numLocations} location} other{{numAvailable} available at {numLocations} locations}}",
           description: "product variant inventory"
@@ -196,6 +203,7 @@ function getAvailabilityLabel(
       );
     } else {
       return intl.formatMessage({
+        id: "6+sMz4",
         defaultMessage: "Unavailable in all locations",
         description: "product variant inventory"
       });
@@ -246,6 +254,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "1kdQdO",
           defaultMessage: "Variants",
           description: "section header"
         })}
@@ -258,6 +267,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
               data-test-id="button-add-variant"
             >
               <FormattedMessage
+                id="3VyHbJ"
                 defaultMessage="Create variant"
                 description="button"
               />
@@ -270,6 +280,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
               data-test-id="button-add-variants"
             >
               <FormattedMessage
+                id="HcjV6k"
                 defaultMessage="Create variants"
                 description="button"
               />
@@ -282,11 +293,15 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
         <LimitReachedAlert
           className={classes.alert}
           title={intl.formatMessage({
+            id: "FwHWUm",
             defaultMessage: "SKU limit reached",
             description: "alert"
           })}
         >
-          <FormattedMessage defaultMessage="You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
+          <FormattedMessage
+            id="5Vwnu+"
+            defaultMessage="You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits."
+          />
         </LimitReachedAlert>
       )}
 
@@ -294,6 +309,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
         <CardContent className={classes.warehouseSelectContainer}>
           <Typography className={classes.warehouseLabel}>
             <FormattedMessage
+              id="FSinkL"
               defaultMessage="Available inventory at:"
               description="variant stock status"
             />
@@ -309,7 +325,10 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
       ) : (
         <CardContent>
           <Typography color={hasVariants ? "textPrimary" : "textSecondary"}>
-            <FormattedMessage defaultMessage="Use variants for products that come in a variety of versions for example different sizes or colors" />
+            <FormattedMessage
+              id="rIJbNC"
+              defaultMessage="Use variants for products that come in a variety of versions for example different sizes or colors"
+            />
           </Typography>
         </CardContent>
       )}
@@ -335,16 +354,18 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
           >
             <TableCell className={classes.colName}>
               <FormattedMessage
+                id="OTek3r"
                 defaultMessage="Variant"
                 description="product variant name"
               />
             </TableCell>
             <TableCell className={classes.colSku}>
-              <FormattedMessage defaultMessage="SKU" />
+              <FormattedMessage id="k4brJy" defaultMessage="SKU" />
             </TableCell>
             <Hidden smDown>
               <TableCell className={classes.colPrice}>
                 <FormattedMessage
+                  id="n02c9W"
                   defaultMessage="Price"
                   description="product variant price"
                 />
@@ -352,6 +373,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
             </Hidden>
             <TableCell className={classes.colInventory}>
               <FormattedMessage
+                id="kL3C+K"
                 defaultMessage="Inventory"
                 description="product variant inventory status"
               />
@@ -397,6 +419,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                     {isDefault && (
                       <span className={classes.defaultVariant}>
                         {intl.formatMessage({
+                          id: "vZMs8f",
                           defaultMessage: "Default",
                           description: "default product variant indicator"
                         })}

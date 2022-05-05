@@ -1,6 +1,6 @@
-import { IntlConfig } from "react-intl";
+import { IntlConfig } from "react-intl/src/types";
 
-export const config: Partial<IntlConfig> = {
+export const config: IntlConfig = {
   defaultLocale: "en",
   locale: "en"
 };

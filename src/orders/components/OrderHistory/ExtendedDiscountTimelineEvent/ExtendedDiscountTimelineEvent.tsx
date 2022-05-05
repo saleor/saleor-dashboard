@@ -26,6 +26,7 @@ const useStyles = makeStyles(
 
 export const messages = defineMessages({
   reasonLabel: {
+    id: "kVOslW",
     defaultMessage: "Reason for discount",
     description: "reason for discount label"
   }

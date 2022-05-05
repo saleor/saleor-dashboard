@@ -84,6 +84,7 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "B/y6LC",
           defaultMessage: "Unfulfilled Products",
           description: "section header"
         })}
@@ -95,6 +96,7 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
           className={classes.notice}
         >
           <FormattedMessage
+            id="iUIn50"
             defaultMessage="Unfulfilled products will be restocked"
             description="section notice"
           />
@@ -105,6 +107,7 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
           data-test-id="set-maximal-quantity-unfulfilled-button"
         >
           <FormattedMessage
+            id="2W4EBM"
             defaultMessage="Set maximal quantities"
             description="button"
           />
@@ -115,24 +118,28 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
           <TableRow>
             <TableCell>
               <FormattedMessage
+                id="FNT4b+"
                 defaultMessage="Product"
                 description="tabel column header"
               />
             </TableCell>
             <TableCell>
               <FormattedMessage
+                id="5aiFbL"
                 defaultMessage="Price"
                 description="tabel column header"
               />
             </TableCell>
             <TableCell>
               <FormattedMessage
+                id="Tl+7X4"
                 defaultMessage="Refunded Qty"
                 description="tabel column header"
               />
             </TableCell>
             <TableCell>
               <FormattedMessage
+                id="+PclgM"
                 defaultMessage="Total"
                 description="tabel column header"
               />
@@ -194,6 +201,7 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
                         helperText={
                           isError &&
                           intl.formatMessage({
+                            id: "xoyCZ/",
                             defaultMessage: "Improper value",
                             description: "error message"
                           })
@@ -221,7 +229,10 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
             () => (
               <TableRow>
                 <TableCell colSpan={4}>
-                  <FormattedMessage defaultMessage="No products found" />
+                  <FormattedMessage
+                    id="Q1Uzbb"
+                    defaultMessage="No products found"
+                  />
                 </TableCell>
               </TableRow>
             )

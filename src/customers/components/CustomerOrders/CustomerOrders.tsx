@@ -52,12 +52,14 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "1LiVhv",
           defaultMessage: "Recent Orders",
           description: "section header"
         })}
         toolbar={
           <Button variant="tertiary" onClick={onViewAllOrdersClick}>
             <FormattedMessage
+              id="3+990c"
               defaultMessage="View all orders"
               description="button"
             />
@@ -69,24 +71,28 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
           <TableRow>
             <TableCell>
               <FormattedMessage
+                id="nTF6tG"
                 defaultMessage="No. of Order"
                 description="number of order"
               />
             </TableCell>
             <TableCell>
               <FormattedMessage
+                id="ri3kK9"
                 defaultMessage="Date"
                 description="order placement date"
               />
             </TableCell>
             <TableCell>
               <FormattedMessage
+                id="pURrk1"
                 defaultMessage="Status"
                 description="order status"
               />
             </TableCell>
             <TableCell className={classes.textRight}>
               <FormattedMessage
+                id="taX/V3"
                 defaultMessage="Total"
                 description="order total amount"
               />
@@ -141,7 +147,10 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
             () => (
               <TableRow>
                 <TableCell colSpan={6}>
-                  <FormattedMessage defaultMessage="No orders found" />
+                  <FormattedMessage
+                    id="RlfqSV"
+                    defaultMessage="No orders found"
+                  />
                 </TableCell>
               </TableRow>
             )

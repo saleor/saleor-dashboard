@@ -22,7 +22,6 @@ const props: SaleDetailsPageProps = {
   collectionListToolbar: null,
   disabled: false,
   errors: [],
-  hasChannelChanged: false,
   onBack: () => undefined,
   onCategoryAssign: () => undefined,
   onCategoryClick: () => undefined,

@@ -162,6 +162,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                     <Card>
                       <CardTitle
                         title={intl.formatMessage({
+                          id: "Fbr4Vp",
                           defaultMessage: "Permissions",
                           description: "dialog header"
                         })}
@@ -169,6 +170,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                       <CardContent>
                         <Typography>
                           {intl.formatMessage({
+                            id: "P+kVxW",
                             defaultMessage: "User is assigned to:",
                             description: "card description"
                           })}

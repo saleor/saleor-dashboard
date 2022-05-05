@@ -74,7 +74,7 @@ const GiftCardSettingsPage: React.FC = () => {
         underline={true}
       />
       <Form initial={initialData} onSubmit={handleSubmit}>
-        {({ data: formData, submit, hasChanged, change }) => (
+        {({ data: formData, submit, change }) => (
           <Grid variant="inverted">
             <div>
               <Typography>
@@ -92,7 +92,7 @@ const GiftCardSettingsPage: React.FC = () => {
             <Savebar
               onCancel={navigateBack}
               onSubmit={submit}
-              disabled={formLoading || !hasChanged}
+              disabled={formLoading}
               state={updateGiftCardSettingsOpts?.status}
             />
           </Grid>

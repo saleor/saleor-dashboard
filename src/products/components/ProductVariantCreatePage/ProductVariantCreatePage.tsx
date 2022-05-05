@@ -38,22 +38,27 @@ import ProductVariantCreateForm, {
 
 const messages = defineMessages({
   attributesHeader: {
+    id: "f3B4tc",
     defaultMessage: "Variant Attributes",
     description: "attributes, section header"
   },
   attributesSelectionHeader: {
+    id: "o6260f",
     defaultMessage: "Variant Selection Attributes",
     description: "attributes, section header"
   },
   deleteVariant: {
+    id: "7hNjaI",
     defaultMessage: "Delete Variant",
     description: "button"
   },
   saveVariant: {
+    id: "U9CIo7",
     defaultMessage: "Save variant",
     description: "button"
   },
   pricingCardSubtitle: {
+    id: "sw8Wl2",
     defaultMessage:
       "There is no channel to define prices for. You need to first add variant to channels to define prices.",
     description: "variant pricing section subtitle"

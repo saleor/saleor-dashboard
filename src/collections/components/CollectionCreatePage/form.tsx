@@ -79,8 +79,6 @@ function useCollectionCreateForm(
     handleChange,
     data: formData,
     triggerChange,
-    setChanged,
-    hasChanged,
     formId,
     setIsSubmitDisabled
   } = useForm(getInitialData(currentChannels), undefined, {
@@ -90,8 +88,7 @@ function useCollectionCreateForm(
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit,
-    setChanged
+    onSubmit
   });
 
   const { setExitDialogSubmitRef } = useExitFormDialog({
@@ -125,7 +122,7 @@ function useCollectionCreateForm(
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
-  const isSaveDisabled = disabled || !hasChanged;
+  const isSaveDisabled = disabled;
   setIsSubmitDisabled(isSaveDisabled);
 
   return {
@@ -136,7 +133,6 @@ function useCollectionCreateForm(
       changeDescription,
       changeMetadata
     },
-    hasChanged,
     submit,
     isSaveDisabled
   };

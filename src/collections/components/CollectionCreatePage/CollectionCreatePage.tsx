@@ -63,6 +63,7 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
           </Backlink>
           <PageHeader
             title={intl.formatMessage({
+              id: "Fxa6xp",
               defaultMessage: "Add Collection",
               description: "page header"
             })}
@@ -119,6 +120,7 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
                 disabled={disabled}
                 descriptionPlaceholder=""
                 helperText={intl.formatMessage({
+                  id: "Rj8LxK",
                   defaultMessage:
                     "Add search engine title and description to make this collection easier to find"
                 })}
@@ -135,11 +137,13 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
               <ChannelsAvailabilityCard
                 messages={{
                   hiddenLabel: intl.formatMessage({
+                    id: "V8FhTt",
                     defaultMessage: "Hidden",
                     description: "collection label"
                   }),
 
                   visibleLabel: intl.formatMessage({
+                    id: "9vQR6c",
                     defaultMessage: "Visible",
                     description: "collection label"
                   })

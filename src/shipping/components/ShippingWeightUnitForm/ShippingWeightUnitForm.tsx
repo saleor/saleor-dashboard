@@ -45,9 +45,11 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
                 value: WeightUnitsEnum[unit]
               }))}
               label={intl.formatMessage({
+                id: "Rp/Okl",
                 defaultMessage: "Shipping Weight Unit"
               })}
               hint={intl.formatMessage({
+                id: "4Kq3O6",
                 defaultMessage:
                   "This unit will be used as default shipping weight"
               })}

@@ -72,6 +72,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "NGc9kE",
             defaultMessage: "Page type deleted"
           })
         });
@@ -248,6 +249,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
               }
             >
               <FormattedMessage
+                id="WFG7Zk"
                 defaultMessage="Unassign"
                 description="unassign attribute from page type, button"
               />
@@ -307,6 +309,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
       )}
       <BulkAttributeUnassignDialog
         title={intl.formatMessage({
+          id: "Rpfa+t",
           defaultMessage: "Unassign Attribute from Page Type",
           description: "dialog header"
         })}
@@ -319,6 +322,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
       />
       <AttributeUnassignDialog
         title={intl.formatMessage({
+          id: "/L8wzi",
           defaultMessage: "Unassign Attribute From Page Type",
           description: "dialog header"
         })}

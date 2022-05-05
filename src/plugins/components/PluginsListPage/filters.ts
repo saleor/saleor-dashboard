@@ -30,14 +30,17 @@ export interface PluginListFilterOpts {
 
 const messages = defineMessages({
   channelStatusSectionTitle: {
+    id: "TC/EOG",
     defaultMessage: "Status in channel",
     description: "status section title"
   },
   channelStatusSectionSubtitle: {
+    id: "zQnYKn",
     defaultMessage: "Channel status",
     description: "status section subtitle"
   },
   configTypeSectionTitle: {
+    id: "cwoN25",
     defaultMessage: "Configuration Type",
     description: "config type section title"
   }
