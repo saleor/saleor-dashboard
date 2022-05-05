@@ -20,7 +20,6 @@ const GiftCardUpdatePage: React.FC = () => {
   const navigate = useNavigator();
 
   const {
-    hasChanged,
     submit,
     data,
     handlers: { changeMetadata }
@@ -46,8 +45,8 @@ const GiftCardUpdatePage: React.FC = () => {
       </Grid>
       <Savebar
         state={status}
-        disabled={loadingUpdate || !hasChanged}
         onCancel={() => navigate(giftCardsListPath)}
+        disabled={loadingUpdate}
         onSubmit={submit}
         onDelete={openDeleteDialog}
       />

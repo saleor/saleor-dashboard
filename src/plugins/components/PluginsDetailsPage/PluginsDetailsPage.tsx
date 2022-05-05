@@ -104,6 +104,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
             <PageHeader
               title={intl.formatMessage(
                 {
+                  id: "EtGDeK",
                   defaultMessage: "{pluginName} Details",
                   description: "header"
                 },

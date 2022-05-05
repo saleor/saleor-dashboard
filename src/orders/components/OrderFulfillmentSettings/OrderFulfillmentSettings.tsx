@@ -24,6 +24,7 @@ const OrderFulfillmentSettings: React.FC<OrderFulfillmentSettingsProps> = ({
     <Card data-test-id="order-fulfillment-settings">
       <CardTitle
         title={intl.formatMessage({
+          id: "G3ay2p",
           defaultMessage: "Fulfillment settings",
           description: "section header"
         })}
@@ -34,11 +35,13 @@ const OrderFulfillmentSettings: React.FC<OrderFulfillmentSettingsProps> = ({
           label={
             <>
               <FormattedMessage
+                id="05hqq6"
                 defaultMessage="Automatically approve all fulfillments"
                 description="checkbox label"
               />
               <Typography variant="caption">
                 <FormattedMessage
+                  id="XwQQ1f"
                   defaultMessage="All fulfillments will be automatically approved"
                   description="checkbox label description"
                 />
@@ -56,11 +59,13 @@ const OrderFulfillmentSettings: React.FC<OrderFulfillmentSettingsProps> = ({
           label={
             <>
               <FormattedMessage
+                id="2MKkgX"
                 defaultMessage="Allow fulfillment without payment"
                 description="checkbox label"
               />
               <Typography variant="caption">
                 <FormattedMessage
+                  id="l9ETHu"
                   defaultMessage="You will be able to fulfill products without capturing payment for the order."
                   description="checkbox label description"
                 />

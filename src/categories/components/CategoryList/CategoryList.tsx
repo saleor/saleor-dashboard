@@ -95,7 +95,7 @@ const CategoryList: React.FC<CategoryListProps> = props => {
           disabled={!isRoot}
           onClick={() => isRoot && onSort(CategoryListUrlSortField.name)}
         >
-          <FormattedMessage defaultMessage="Category Name" />
+          <FormattedMessage id="vEYtiq" defaultMessage="Category Name" />
         </TableCellHeader>
         <TableCellHeader
           direction={
@@ -110,6 +110,7 @@ const CategoryList: React.FC<CategoryListProps> = props => {
           }
         >
           <FormattedMessage
+            id="BHQrgz"
             defaultMessage="Subcategories"
             description="number of subcategories"
           />
@@ -127,6 +128,7 @@ const CategoryList: React.FC<CategoryListProps> = props => {
           }
         >
           <FormattedMessage
+            id="k8ZJ5L"
             defaultMessage="No. of Products"
             description="number of products"
           />
@@ -198,9 +200,15 @@ const CategoryList: React.FC<CategoryListProps> = props => {
             <TableRow>
               <TableCell colSpan={numberOfColumns}>
                 {isRoot ? (
-                  <FormattedMessage defaultMessage="No categories found" />
+                  <FormattedMessage
+                    id="dM86a2"
+                    defaultMessage="No categories found"
+                  />
                 ) : (
-                  <FormattedMessage defaultMessage="No subcategories found" />
+                  <FormattedMessage
+                    id="rrbzZt"
+                    defaultMessage="No subcategories found"
+                  />
                 )}
               </TableCell>
             </TableRow>

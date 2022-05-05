@@ -78,6 +78,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
     <Card data-test-id="product-attributes">
       <CardTitle
         title={intl.formatMessage({
+          id: "9scTQ0",
           defaultMessage: "Product Attributes",
           description: "section header"
         })}
@@ -89,6 +90,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
             onClick={() => onAttributeAssign(ProductAttributeType[type])}
           >
             <FormattedMessage
+              id="uxPpRx"
               defaultMessage="Assign attribute"
               description="button"
             />
@@ -114,10 +116,11 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
             toolbar={toolbar}
           >
             <TableCell className={classes.colName}>
-              <FormattedMessage defaultMessage="Attribute name" />
+              <FormattedMessage id="kTr2o8" defaultMessage="Attribute name" />
             </TableCell>
             <TableCell className={classes.colName}>
               <FormattedMessage
+                id="nf3XSt"
                 defaultMessage="Slug"
                 description="attribute internal name"
               />
@@ -181,7 +184,10 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage defaultMessage="No attributes found" />
+                  <FormattedMessage
+                    id="ztQgD8"
+                    defaultMessage="No attributes found"
+                  />
                 </TableCell>
               </TableRow>
             )

@@ -74,12 +74,14 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
       <CardTitle
         height="const"
         title={intl.formatMessage({
+          id: "h5r9+x",
           defaultMessage: "Shipping By Zone",
           description: "sort shipping methods by zone, section header"
         })}
         toolbar={
           <Button href={shippingZoneAddUrl} data-test-id="add-shipping-zone">
             <FormattedMessage
+              id="mIUNgR"
               defaultMessage="Create shipping zone"
               description="button"
             />
@@ -103,12 +105,13 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
         >
           <TableCell className={classes.colName}>
             <FormattedMessage
+              id="gRa/TS"
               defaultMessage="Name"
               description="shipping zone"
             />
           </TableCell>
           <TableCell className={classes.colCountries}>
-            <FormattedMessage defaultMessage="Countries" />
+            <FormattedMessage id="aMwxYb" defaultMessage="Countries" />
           </TableCell>
           <TableCell className={classes.colAction} />
         </TableHead>
@@ -186,7 +189,10 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage defaultMessage="No shipping zones found" />
+                  <FormattedMessage
+                    id="IhK1F3"
+                    defaultMessage="No shipping zones found"
+                  />
                 </TableCell>
               </TableRow>
             )

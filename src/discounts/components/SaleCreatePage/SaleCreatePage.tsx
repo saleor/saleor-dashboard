@@ -3,7 +3,7 @@ import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import Container from "@saleor/components/Container";
-import Form, { FormDataWithOpts } from "@saleor/components/Form";
+import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
@@ -82,10 +82,9 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
     privateMetadata: []
   };
 
-  const checkIfSaveIsDisabled = (data: FormDataWithOpts<FormData>) =>
+  const checkIfSaveIsDisabled = (data: FormData) =>
     data.channelListings?.some(channel => validateSalePrice(data, channel)) ||
-    disabled ||
-    !data.hasChanged;
+    disabled;
 
   return (
     <Form
@@ -111,6 +110,7 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
             </Backlink>
             <PageHeader
               title={intl.formatMessage({
+                id: "2E1xZ0",
                 defaultMessage: "Create Sale",
                 description: "page header"
               })}

@@ -26,14 +26,17 @@ export interface ShippingZoneCreateFormData {
 
 const messages = defineMessages({
   countries: {
+    id: "55LMJv",
     defaultMessage: "Countries",
     description: "country list header"
   },
   createZone: {
+    id: "6fxdUO",
     defaultMessage: "Create New Shipping Zone",
     description: "section header"
   },
   noCountriesAssigned: {
+    id: "y7mfbl",
     defaultMessage:
       "Currently, there are no countries assigned to this shipping zone"
   }

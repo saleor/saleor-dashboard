@@ -97,7 +97,7 @@ export const RadioGroupField: React.FC<RadioGroupFieldProps> = props => {
           ))
         ) : (
           <MenuItem disabled={true}>
-            <FormattedMessage defaultMessage="No results found" />
+            <FormattedMessage id="hX5PAb" defaultMessage="No results found" />
           </MenuItem>
         )}
       </RadioGroup>

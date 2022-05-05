@@ -124,6 +124,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       notify({
         status: "success",
         text: intl.formatMessage({
+          id: "BUKMzM",
           defaultMessage: "Variant removed"
         })
       });

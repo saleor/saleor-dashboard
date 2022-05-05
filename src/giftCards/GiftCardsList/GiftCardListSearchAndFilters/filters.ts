@@ -169,42 +169,52 @@ export function getFilterQueryParam(
 
 export const messages = defineMessages({
   balanceAmountLabel: {
+    id: "bVbEZ/",
     defaultMessage: "Amount",
     description: "amount filter label"
   },
   tagLabel: {
+    id: "mE+fru",
     defaultMessage: "Tags",
     description: "tag filter label"
   },
   currencyLabel: {
+    id: "osPBn1",
     defaultMessage: "Currency",
     description: "currency filter label"
   },
   productLabel: {
+    id: "Sjd7wm",
     defaultMessage: "Product",
     description: "product filter label"
   },
   usedByLabel: {
+    id: "WMGoqz",
     defaultMessage: "Used by",
     description: "used by filter label"
   },
   statusLabel: {
+    id: "D4CsYK",
     defaultMessage: "Status",
     description: "status filter label"
   },
   enabledOptionLabel: {
+    id: "vC8vyb",
     defaultMessage: "Enabled",
     description: "enabled status option label"
   },
   disabledOptionLabel: {
+    id: "+WTmpr",
     defaultMessage: "Disabled",
     description: "disabled status option label"
   },
   initialBalanceLabel: {
+    id: "VceXrc",
     defaultMessage: "Initial balance",
     description: "initial balance filter label"
   },
   currentBalanceLabel: {
+    id: "e/61NZ",
     defaultMessage: "Current balance",
     description: "current balance filter label"
   }

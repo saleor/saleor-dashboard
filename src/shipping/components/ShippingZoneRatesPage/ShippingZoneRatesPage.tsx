@@ -45,7 +45,6 @@ export interface ShippingZoneRatesPageProps
   allChannelsCount?: number;
   shippingChannels: ChannelShippingData[];
   disabled: boolean;
-  hasChannelChanged?: boolean;
   havePostalCodesChanged?: boolean;
   rate: ShippingZoneQuery["shippingZone"]["shippingMethods"][0];
   channelErrors: ShippingChannelsErrorFragment[];
@@ -75,7 +74,6 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   channelErrors,
   disabled,
   errors,
-  hasChannelChanged,
   havePostalCodesChanged,
   backHref,
   onDelete,
@@ -98,32 +96,35 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
 
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
 
-  const initialForm: Omit<ShippingZoneRateUpdateFormData, "description"> = {
-    channelListings: shippingChannels,
-    maxDays: rate?.maximumDeliveryDays?.toString() || "",
-    maxValue: rate?.maximumOrderWeight?.value.toString() || "",
-    metadata: rate?.metadata.map(mapMetadataItemToInput),
-    minDays: rate?.minimumDeliveryDays?.toString() || "",
-    minValue: rate?.minimumOrderWeight?.value.toString() || "",
-    name: rate?.name || "",
-    orderValueRestricted: !!rate?.channelListings.length,
-    privateMetadata: rate?.privateMetadata.map(mapMetadataItemToInput),
-    type: rate?.type || null
-  };
+  const initialForm: Omit<
+    ShippingZoneRateUpdateFormData,
+    "description"
+  > = React.useMemo(
+    () => ({
+      channelListings: shippingChannels,
+      maxDays: rate?.maximumDeliveryDays?.toString() || "",
+      maxValue: rate?.maximumOrderWeight?.value.toString() || "",
+      metadata: rate?.metadata.map(mapMetadataItemToInput),
+      minDays: rate?.minimumDeliveryDays?.toString() || "",
+      minValue: rate?.minimumOrderWeight?.value.toString() || "",
+      name: rate?.name || "",
+      orderValueRestricted: !!rate?.channelListings.length,
+      privateMetadata: rate?.privateMetadata.map(mapMetadataItemToInput),
+      type: rate?.type || null
+    }),
+    [shippingChannels, rate]
+  );
 
   const {
     change,
     data: formData,
-    hasChanged,
-    setChanged,
     setIsSubmitDisabled,
     triggerChange
   } = useForm(initialForm, undefined, { confirmLeave: true, formId });
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit,
-    setChanged
+    onSubmit
   });
 
   const [description, changeDescription] = useRichText({
@@ -153,22 +154,20 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
     onChannelsChange,
     triggerChange
   );
-  const formDisabled = formData.channelListings?.some(channel =>
+  const isValid = !formData.channelListings?.some(channel =>
     validatePrice(channel.price)
   );
 
   const changeMetadata = makeMetadataChangeHandler(change);
-  const formIsUnchanged =
-    !hasChanged && !hasChannelChanged && !havePostalCodesChanged;
 
-  const isSaveDisabled = disabled || formDisabled || formIsUnchanged;
+  const isSaveDisabled = disabled || !isValid;
   setIsSubmitDisabled(isSaveDisabled);
 
   return (
     <form onSubmit={handleFormElementSubmit}>
       <Container>
         <Backlink href={backHref}>
-          <FormattedMessage defaultMessage="Shipping" />
+          <FormattedMessage id="PRlD0A" defaultMessage="Shipping" />
         </Backlink>
         <PageHeader title={rate?.name} />
         <Grid>

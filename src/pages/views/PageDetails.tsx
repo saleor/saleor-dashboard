@@ -244,6 +244,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
         open={params.action === "remove"}
         confirmButtonState={pageRemoveOpts.status}
         title={intl.formatMessage({
+          id: "C1luwg",
           defaultMessage: "Delete Page",
           description: "dialog header"
         })}
@@ -253,6 +254,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
       >
         <DialogContentText>
           <FormattedMessage
+            id="4B32Ba"
             defaultMessage="Are you sure you want to delete {title}?"
             description="delete page"
             values={{

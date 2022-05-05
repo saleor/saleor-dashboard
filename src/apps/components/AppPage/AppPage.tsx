@@ -64,7 +64,11 @@ export const AppPage: React.FC<AppPageProps> = ({
         </div>
         <div className={classes.appSettingsHeader}>
           <Button href={aboutHref} variant="primary">
-            <FormattedMessage defaultMessage="About" description="button" />
+            <FormattedMessage
+              id="UCHtG6"
+              defaultMessage="About"
+              description="button"
+            />
           </Button>
           <Button
             component="a"
@@ -74,6 +78,7 @@ export const AppPage: React.FC<AppPageProps> = ({
             target="_blank"
           >
             <FormattedMessage
+              id="llC1q8"
               defaultMessage="App home page"
               description="button"
             />
@@ -86,6 +91,7 @@ export const AppPage: React.FC<AppPageProps> = ({
             target="_blank"
           >
             <FormattedMessage
+              id="hdcGSJ"
               defaultMessage="Support/FAQ"
               description="button"
             />

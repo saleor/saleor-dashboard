@@ -1,7 +1,6 @@
 import { ChannelData } from "@saleor/channels/utils";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { arrayDiff } from "@saleor/utils/arrays";
-import isEqual from "lodash/isEqual";
 import { useMemo } from "react";
 
 import { ChannelsWithVariantsData } from "./types";
@@ -18,11 +17,6 @@ function useChannelVariantListings(channels: ChannelData[]) {
     setUpdatedChannelVariantListing
   ] = useStateFromProps(initialChannelVariantListing);
 
-  const hasChanged = useMemo(
-    () => !isEqual(initialChannelVariantListing, updatedChannelVariantListing),
-    [initialChannelVariantListing, updatedChannelVariantListing]
-  );
-
   const channelsWithVariantsData = useMemo<ChannelsWithVariantsData>(
     () =>
       createFromChannels(channels, channel => {
@@ -37,7 +31,7 @@ function useChannelVariantListings(channels: ChannelData[]) {
           variantsIdsToRemove: diff.removed
         };
       }),
-    [initialChannelVariantListing, updatedChannelVariantListing]
+    [updatedChannelVariantListing]
   );
 
   const reset = () =>
@@ -53,7 +47,6 @@ function useChannelVariantListings(channels: ChannelData[]) {
     channelsWithVariantsData,
     channelVariantListing: updatedChannelVariantListing,
     setChannelVariantListing: setUpdatedChannelVariantListing,
-    hasChanged,
     reset
   };
 }

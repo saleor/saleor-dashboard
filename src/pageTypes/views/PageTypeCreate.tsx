@@ -29,6 +29,7 @@ export const PageTypeCreate: React.FC = () => {
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "5bJ26s",
             defaultMessage: "Successfully created page type"
           })
         });
@@ -62,9 +63,9 @@ export const PageTypeCreate: React.FC = () => {
     <>
       <WindowTitle
         title={intl.formatMessage({
+          id: "BftZHy",
           defaultMessage: "Create Page Type",
-          description: "window title",
-          id: "pageTypeCreateHeader"
+          description: "window title"
         })}
       />
       <PageTypeCreatePage

@@ -47,33 +47,27 @@ function useOrderSettingsForm(
   onSubmit: (data: OrderSettingsFormData) => SubmitPromise,
   disabled: boolean
 ): UseOrderSettingsFormResult {
-  const {
-    data,
-    handleChange,
-    formId,
-    hasChanged,
-    setChanged,
-    setIsSubmitDisabled
-  } = useForm(getOrderSeettingsFormData(orderSettings, shop), undefined, {
-    confirmLeave: true
-  });
+  const { data, handleChange, formId, setIsSubmitDisabled } = useForm(
+    getOrderSeettingsFormData(orderSettings, shop),
+    undefined,
+    {
+      confirmLeave: true
+    }
+  );
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit,
-    setChanged
+    onSubmit
   });
 
   const submit = () => handleFormSubmit(data);
-  const isSaveDisabled = disabled || !hasChanged;
-  setIsSubmitDisabled(isSaveDisabled);
+  setIsSubmitDisabled(disabled);
 
   return {
     change: handleChange,
     data,
-    hasChanged,
     submit,
-    isSaveDisabled
+    isSaveDisabled: disabled
   };
 }
 

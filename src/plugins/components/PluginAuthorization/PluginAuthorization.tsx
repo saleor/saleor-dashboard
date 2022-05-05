@@ -51,6 +51,7 @@ const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "6aBkJm",
           defaultMessage: "Authorization",
           description: "section header"
         })}

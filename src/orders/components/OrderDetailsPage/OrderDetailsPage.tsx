@@ -13,7 +13,8 @@ import Skeleton from "@saleor/components/Skeleton";
 import {
   OrderDetailsFragment,
   OrderDetailsQuery,
-  OrderStatus
+  OrderStatus,
+  WarehouseFragment
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -64,6 +65,7 @@ export interface OrderDetailsPageProps {
   }>;
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
+  selectedWarehouse?: WarehouseFragment;
   onOrderLineAdd?: () => void;
   onOrderLineChange?: (
     id: string,
@@ -89,19 +91,23 @@ export interface OrderDetailsPageProps {
   onInvoiceClick(invoiceId: string);
   onInvoiceGenerate();
   onInvoiceSend(invoiceId: string);
+  onWarehouseChange?();
   onSubmit(data: MetadataFormData): SubmitPromise;
 }
 
 const messages = defineMessages({
   cancelOrder: {
+    id: "9ZtJhn",
     defaultMessage: "Cancel order",
     description: "cancel button"
   },
   confirmOrder: {
+    id: "maxT+q",
     defaultMessage: "Confirm order",
     description: "save button"
   },
   returnOrder: {
+    id: "+RjQjs",
     defaultMessage: "Return / Replace order",
     description: "return button"
   }
@@ -113,6 +119,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     order,
     shop,
     saveButtonBarState,
+    selectedWarehouse,
     onBillingAddressEdit,
     onFulfillmentApprove,
     onFulfillmentCancel,
@@ -134,6 +141,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onOrderLineChange,
     onOrderLineRemove,
     onShippingMethodEdit,
+    onWarehouseChange,
     onSubmit
   } = props;
   const classes = useStyles(props);
@@ -182,9 +190,9 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     ? { confirm: intl.formatMessage(messages.confirmOrder) }
     : undefined;
 
-  const allowSave = (hasChanged: boolean) => {
+  const allowSave = () => {
     if (!isOrderUnconfirmed) {
-      return disabled || !hasChanged;
+      return disabled;
     } else if (!order?.lines?.length) {
       return true;
     }
@@ -210,7 +218,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
 
   return (
     <Form confirmLeave initial={initial} onSubmit={handleSubmit}>
-      {({ change, data, hasChanged, submit }) => {
+      {({ change, data, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
@@ -241,6 +249,8 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                     notAllowedToFulfillUnpaid={notAllowedToFulfillUnpaid}
                     lines={unfulfilled}
                     onFulfill={onOrderFulfill}
+                    onWarehouseChange={onWarehouseChange}
+                    selectedWarehouse={selectedWarehouse}
                   />
                 ) : (
                   <>
@@ -325,7 +335,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               onCancel={() => navigate(orderListUrl())}
               onSubmit={submit}
               state={saveButtonBarState}
-              disabled={allowSave(hasChanged)}
+              disabled={allowSave()}
             />
           </Container>
         );

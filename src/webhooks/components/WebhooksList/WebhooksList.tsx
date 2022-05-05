@@ -41,6 +41,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "jqnwW9",
           defaultMessage: "Webhooks",
           description: "header"
         })}
@@ -52,6 +53,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
               data-test-id="create-webhook"
             >
               <FormattedMessage
+                id="wlr0Si"
                 defaultMessage="Create Webhook"
                 description="button"
               />
@@ -64,6 +66,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
           <TableRow>
             <TableCellHeader>
               {intl.formatMessage({
+                id: "OTpV1t",
                 defaultMessage: "Name",
                 description: "webhook name"
               })}
@@ -72,6 +75,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
               className={classNames(classes.colAction, classes.colRight)}
             >
               {intl.formatMessage({
+                id: "a/QJBx",
                 defaultMessage: "Action",
                 description: "user action bar"
               })}
@@ -94,7 +98,10 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
                   })}
                 >
                   {isUnnamed(webhook) ? (
-                    <FormattedMessage defaultMessage="Unnamed webhook" />
+                    <FormattedMessage
+                      id="1eCau/"
+                      defaultMessage="Unnamed webhook"
+                    />
                   ) : (
                     webhook?.name || <Skeleton />
                   )}
@@ -120,6 +127,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
                   {intl.formatMessage({
+                    id: "wbjuR4",
                     defaultMessage: "No webhooks found"
                   })}
                 </TableCell>

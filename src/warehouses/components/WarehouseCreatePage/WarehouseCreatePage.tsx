@@ -82,6 +82,7 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
             </Backlink>
             <PageHeader
               title={intl.formatMessage({
+                id: "GhcypC",
                 defaultMessage: "Create Warehouse",
                 description: "header"
               })}
@@ -102,6 +103,7 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
                   displayCountry={displayCountry}
                   errors={[...errors, ...validationErrors]}
                   header={intl.formatMessage({
+                    id: "43Nlay",
                     defaultMessage: "Address Information",
                     description: "warehouse"
                   })}

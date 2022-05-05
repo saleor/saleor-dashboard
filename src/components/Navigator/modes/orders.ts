@@ -8,7 +8,7 @@ import { QuickSearchAction } from "../types";
 import messages from "./messages";
 
 export function isQueryValidOrderNumber(query: string): boolean {
-  return query === parseInt(query, 0).toString();
+  return query === parseInt(query, 10).toString();
 }
 
 export function getGqlOrderId(orderNumber: string): string {

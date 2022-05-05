@@ -180,9 +180,9 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
         data: {},
         label: (
           <FormattedMessage
+            id="fzDI3A"
             defaultMessage="Link to: {url}"
             description="add link to navigation"
-            id="menuItemDialogAddLink"
             values={{
               url: <strong>{url}</strong>
             }}
@@ -230,23 +230,23 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
       <DialogTitle>
         {!!initial
           ? intl.formatMessage({
+              id: "KKQUMK",
               defaultMessage: "Edit Item",
-              description: "edit menu item, header",
-              id: "menuItemDialogEditItem"
+              description: "edit menu item, header"
             })
           : intl.formatMessage({
+              id: "H3Uirw",
               defaultMessage: "Add Item",
-              description: "create new menu item, header",
-              id: "menuItemDialogAddItem"
+              description: "create new menu item, header"
             })}
       </DialogTitle>
       <DialogContent style={{ overflow: "visible" }}>
         <TextField
           disabled={disabled}
           label={intl.formatMessage({
+            id: "0Vyr8h",
             defaultMessage: "Name",
-            description: "menu item name",
-            id: "menuItemDialogNameLabel"
+            description: "menu item name"
           })}
           fullWidth
           value={data.name}
@@ -266,9 +266,9 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
           onChange={handleSelectChange}
           name="id"
           label={intl.formatMessage({
+            id: "Urh2N3",
             defaultMessage: "Link",
-            description: "label",
-            id: "menuItemDialogLinkLabel"
+            description: "label"
           })}
           displayValue={displayValue}
           loading={loading}
@@ -277,8 +277,8 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
           error={!!idError}
           helperText={getMenuErrorMessage(idError, intl)}
           placeholder={intl.formatMessage({
-            defaultMessage: "Start typing to begin search...",
-            id: "menuItemDialogLinkPlaceholder"
+            id: "28GZnc",
+            defaultMessage: "Start typing to begin search..."
           })}
           onInputChange={handleQueryChange}
         />

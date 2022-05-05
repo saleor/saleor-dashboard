@@ -83,6 +83,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "41z2Qi",
             defaultMessage: "Removed pages",
             description: "notification"
           })
@@ -100,6 +101,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "AzshS2",
             defaultMessage: "Published pages",
             description: "notification"
           })
@@ -138,6 +140,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
               }
             >
               <FormattedMessage
+                id="F8gsds"
                 defaultMessage="Unpublish"
                 description="unpublish page, button"
               />
@@ -150,6 +153,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
               }
             >
               <FormattedMessage
+                id="yEmwxD"
                 defaultMessage="Publish"
                 description="publish page, button"
               />
@@ -186,12 +190,14 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
           })
         }
         title={intl.formatMessage({
+          id: "wyvzh9",
           defaultMessage: "Publish Pages",
           description: "dialog header"
         })}
       >
         <DialogContentText>
           <FormattedMessage
+            id="WRPQMM"
             defaultMessage="{counter,plural,one{Are you sure you want to publish this page?} other{Are you sure you want to publish {displayQuantity} pages?}}"
             description="dialog content"
             values={{
@@ -214,11 +220,13 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
           })
         }
         title={intl.formatMessage({
+          id: "yHQQMQ",
           defaultMessage: "Unpublish Pages",
           description: "dialog header"
         })}
       >
         <FormattedMessage
+          id="Wd8vG7"
           defaultMessage="{counter,plural,one{Are you sure you want to unpublish this page?} other{Are you sure you want to unpublish {displayQuantity} pages?}}"
           description="dialog content"
           values={{
@@ -240,11 +248,13 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
         }
         variant="delete"
         title={intl.formatMessage({
+          id: "3Sz1/t",
           defaultMessage: "Delete Pages",
           description: "dialog header"
         })}
       >
         <FormattedMessage
+          id="UNwG+4"
           defaultMessage="{counter,plural,one{Are you sure you want to delete this page?} other{Are you sure you want to delete {displayQuantity} pages?}}"
           description="dialog content"
           values={{

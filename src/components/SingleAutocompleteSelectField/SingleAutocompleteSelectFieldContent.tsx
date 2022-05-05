@@ -221,7 +221,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                 {...emptyOptionProps}
               >
                 <Typography color="textSecondary">
-                  <FormattedMessage defaultMessage="None" />
+                  <FormattedMessage id="450Fty" defaultMessage="None" />
                 </Typography>
               </MenuItem>
             )}
@@ -253,6 +253,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                 data-test-type="custom"
               >
                 <FormattedMessage
+                  id="U2WgwW"
                   defaultMessage="Add new value: {value}"
                   description="add custom select input option"
                   values={{
@@ -310,7 +311,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
             component="div"
             data-test-id="single-autocomplete-select-no-options"
           >
-            <FormattedMessage defaultMessage="No results found" />
+            <FormattedMessage id="hX5PAb" defaultMessage="No results found" />
           </MenuItem>
         )}
       </div>

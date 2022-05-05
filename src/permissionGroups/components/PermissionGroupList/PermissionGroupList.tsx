@@ -91,15 +91,16 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
             className={classes.colName}
           >
             <FormattedMessage
+              id="szXISP"
               defaultMessage="Permission Group Name"
               description="permission group name"
             />
           </TableCellHeader>
           <TableCellHeader className={classes.colMembers} textAlign="right">
-            <FormattedMessage defaultMessage="Members" />
+            <FormattedMessage id="+a+2ug" defaultMessage="Members" />
           </TableCellHeader>
           <TableCell className={classes.colActionsHeader}>
-            <FormattedMessage defaultMessage="Actions" />
+            <FormattedMessage id="wL7VAE" defaultMessage="Actions" />
           </TableCell>
         </TableRow>
       </TableHead>
@@ -170,7 +171,10 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
           () => (
             <TableRow>
               <TableCell colSpan={numberOfColumns}>
-                <FormattedMessage defaultMessage="No permission groups found" />
+                <FormattedMessage
+                  id="CXn88q"
+                  defaultMessage="No permission groups found"
+                />
               </TableCell>
             </TableRow>
           )

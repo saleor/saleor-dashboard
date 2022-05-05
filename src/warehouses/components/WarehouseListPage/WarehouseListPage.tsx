@@ -72,6 +72,7 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
           hasLimits(limits, "warehouses") &&
           intl.formatMessage(
             {
+              id: "YkOzse",
               defaultMessage: "{count}/{max} warehouses used",
               description: "used warehouses counter"
             },
@@ -89,6 +90,7 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
           href={warehouseAddUrl}
         >
           <FormattedMessage
+            id="wmdHhD"
             defaultMessage="Create Warehouse"
             description="button"
           />
@@ -97,22 +99,28 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
       {limitReached && (
         <LimitReachedAlert
           title={intl.formatMessage({
+            id: "5HwLx9",
             defaultMessage: "Warehouse limit reached",
             description: "alert"
           })}
         >
-          <FormattedMessage defaultMessage="You have reached your warehouse limit, you will be no longer able to add warehouses to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
+          <FormattedMessage
+            id="kFQvXv"
+            defaultMessage="You have reached your warehouse limit, you will be no longer able to add warehouses to your store. If you would like to up your limit, contact your administration staff about raising your limits."
+          />
         </LimitReachedAlert>
       )}
       <Card>
         <SearchBar
           allTabLabel={intl.formatMessage({
+            id: "2yU+q9",
             defaultMessage: "All Warehouses",
             description: "tab name"
           })}
           currentTab={currentTab}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
+            id: "caMMWN",
             defaultMessage: "Search Warehouse"
           })}
           tabs={tabs}

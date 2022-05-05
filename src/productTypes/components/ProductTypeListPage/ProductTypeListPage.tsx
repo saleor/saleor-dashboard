@@ -66,6 +66,7 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
           data-test-id="add-product-type"
         >
           <FormattedMessage
+            id="QY7FSs"
             defaultMessage="create product type"
             description="button"
           />
@@ -74,6 +75,7 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
       <Card>
         <FilterBar
           allTabLabel={intl.formatMessage({
+            id: "1KSqnn",
             defaultMessage: "All Product Types",
             description: "tab name"
           })}
@@ -81,6 +83,7 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
           filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
+            id: "rpFdD1",
             defaultMessage: "Search Product Type"
           })}
           tabs={tabs}

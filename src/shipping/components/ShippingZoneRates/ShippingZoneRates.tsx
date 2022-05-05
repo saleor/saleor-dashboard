@@ -80,10 +80,12 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
         title={
           variant === "price"
             ? intl.formatMessage({
+                id: "FjrExY",
                 defaultMessage: "Price Based Rates",
                 description: "price based shipping methods, section header"
               })
             : intl.formatMessage({
+                id: "foB6wx",
                 defaultMessage: "Weight Based Rates",
                 description: "weight based shipping methods, section header"
               })
@@ -91,6 +93,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
         toolbar={
           <Button disabled={disabled} onClick={onRateAdd} data-test-id={testId}>
             <FormattedMessage
+              id="WR8rir"
               defaultMessage="Create rate"
               description="button"
             />
@@ -102,6 +105,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
           <TableRow>
             <TableCell className={classes.nameColumn}>
               <FormattedMessage
+                id="aPCrsp"
                 defaultMessage="Name"
                 description="shipping method name"
               />
@@ -109,16 +113,19 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
             <TableCell className={classes.valueColumn}>
               {variant === "price"
                 ? intl.formatMessage({
+                    id: "njUQPz",
                     defaultMessage: "Value Range",
                     description: "shipping method price range"
                   })
                 : intl.formatMessage({
+                    id: "aYhcie",
                     defaultMessage: "Weight Range",
                     description: "shipping method weight range"
                   })}
             </TableCell>
             <TableCell className={classes.nameColumn}>
               <FormattedMessage
+                id="EKoPNg"
                 defaultMessage="Price"
                 description="shipping method price"
               />
@@ -193,7 +200,10 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
             () => (
               <TableRow>
                 <TableCell colSpan={5}>
-                  <FormattedMessage defaultMessage="No shipping rates found" />
+                  <FormattedMessage
+                    id="RUzdUH"
+                    defaultMessage="No shipping rates found"
+                  />
                 </TableCell>
               </TableRow>
             )

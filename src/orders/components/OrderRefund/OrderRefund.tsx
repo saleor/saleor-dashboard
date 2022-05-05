@@ -22,10 +22,12 @@ interface OrderRefundProps {
 
 const messages = defineMessages({
   refundMiscellaneous: {
+    id: "LKpQYh",
     defaultMessage: "Miscellaneous Refund",
     description: "refund type"
   },
   refundProducts: {
+    id: "CLB1k9",
     defaultMessage: "Refund Products",
     description: "refund type"
   }
@@ -40,6 +42,7 @@ const OrderRefund: React.FC<OrderRefundProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "bqAJCT",
           defaultMessage: "Refund Order",
           description: "section header"
         })}

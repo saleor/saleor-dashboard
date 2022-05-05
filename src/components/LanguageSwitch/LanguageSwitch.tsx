@@ -107,6 +107,7 @@ const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
                     >
                       <Link to={getLanguageUrl(lang.code)}>
                         <FormattedMessage
+                          id="62T585"
                           defaultMessage="{languageName} - {languageCode}"
                           description="button"
                           values={{

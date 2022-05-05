@@ -56,6 +56,7 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
           data-test-id="create-page-type"
         >
           <FormattedMessage
+            id="6JlXeD"
             defaultMessage="Create page type"
             description="button"
           />
@@ -64,12 +65,14 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
       <Card>
         <SearchBar
           allTabLabel={intl.formatMessage({
+            id: "oVDZUb",
             defaultMessage: "All Page Types",
             description: "tab name"
           })}
           currentTab={currentTab}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
+            id: "umsU70",
             defaultMessage: "Search Page Type"
           })}
           tabs={tabs}

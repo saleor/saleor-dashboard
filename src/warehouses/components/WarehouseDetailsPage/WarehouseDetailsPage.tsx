@@ -121,6 +121,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
                   displayCountry={displayCountry}
                   errors={[...errors, ...validationErrors]}
                   header={intl.formatMessage({
+                    id: "43Nlay",
                     defaultMessage: "Address Information",
                     description: "warehouse"
                   })}

@@ -57,7 +57,6 @@ const props: ProductUpdatePageProps = {
   fetchMoreCategories: fetchMoreProps,
   fetchMoreCollections: fetchMoreProps,
   fetchMoreAttributeValues: fetchMoreProps,
-  hasChannelChanged: false,
   header: product.name,
   media: product.media,
   limits,

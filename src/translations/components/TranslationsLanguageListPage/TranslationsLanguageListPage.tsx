@@ -20,11 +20,13 @@ const TranslationsLanguageListPage: React.FC<TranslationsLanguageListPageProps> 
     <Container>
       <PageHeader
         title={intl.formatMessage({
+          id: "GsBRWL",
           defaultMessage: "Languages"
         })}
       >
         {/* <Button color="primary" variant="contained" onClick={onAdd}>
         <FormattedMessage
+      id="crvD6X"
       defaultMessage="Add Language"
       description="button"
     />

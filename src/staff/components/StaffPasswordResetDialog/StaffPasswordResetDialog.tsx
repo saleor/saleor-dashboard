@@ -54,6 +54,7 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
       <DialogTitle>
         <FormattedMessage
+          id="+kb2lM"
           defaultMessage="Change Password"
           description="dialog header"
         />
@@ -70,6 +71,7 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
                   intl
                 )}
                 label={intl.formatMessage({
+                  id: "GXdwyR",
                   defaultMessage: "Previous Password",
                   description: "input label"
                 })}
@@ -84,11 +86,13 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
                 helperText={
                   getAccountErrorMessage(formErrors.newPassword, intl) ||
                   intl.formatMessage({
+                    id: "qEJT8e",
                     defaultMessage:
                       "New password must be at least 8 characters long"
                   })
                 }
                 label={intl.formatMessage({
+                  id: "cMFlOp",
                   defaultMessage: "New Password",
                   description: "input label"
                 })}

@@ -185,6 +185,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             menuItems={[
               {
                 label: intl.formatMessage({
+                  id: "7FL+WZ",
                   defaultMessage: "Export Products",
                   description: "export products to csv file, button"
                 }),
@@ -201,6 +202,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           hasLimits(limits, "productVariants") &&
           intl.formatMessage(
             {
+              id: "Kw0jHS",
               defaultMessage: "{count}/{max} SKUs used",
               description: "created products counter"
             },
@@ -230,6 +232,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           href={productAddUrl()}
         >
           <FormattedMessage
+            id="JFmOfi"
             defaultMessage="Create Product"
             description="button"
           />
@@ -238,11 +241,15 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
       {limitReached && (
         <LimitReachedAlert
           title={intl.formatMessage({
+            id: "FwHWUm",
             defaultMessage: "SKU limit reached",
             description: "alert"
           })}
         >
-          <FormattedMessage defaultMessage="You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
+          <FormattedMessage
+            id="5Vwnu+"
+            defaultMessage="You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits."
+          />
         </LimitReachedAlert>
       )}
       <Card>
@@ -259,11 +266,13 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           onTabSave={onTabSave}
           tabs={tabs}
           allTabLabel={intl.formatMessage({
+            id: "aFLtLk",
             defaultMessage: "All Products",
             description: "tab name"
           })}
           filterStructure={filterStructure}
           searchPlaceholder={intl.formatMessage({
+            id: "kIvvax",
             defaultMessage: "Search Products..."
           })}
         />

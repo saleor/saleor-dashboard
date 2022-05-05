@@ -48,39 +48,48 @@ export interface OrderListFilterOpts {
 
 const messages = defineMessages({
   preorder: {
+    id: "JYvf8/",
     defaultMessage: "Preorder",
     description: "is preorder"
   },
   clickAndCollect: {
+    id: "biAxKR",
     defaultMessage: "Click&Collect",
     description: "click and collect"
   },
   channel: {
+    id: "lJP1iw",
     defaultMessage: "Channel",
     description: "order"
   },
   customer: {
+    id: "PzXIXh",
     defaultMessage: "Customer",
     description: "order"
   },
   placed: {
+    id: "a4qX2+",
     defaultMessage: "Created",
     description: "order"
   },
   giftCard: {
+    id: "JUQwne",
     defaultMessage: "Gift Card",
     description: "order"
   },
   giftCardPaid: {
+    id: "Kgxlsf",
     defaultMessage: "Paid with Gift Card",
     description: "order"
   },
   giftCardOrdered: {
+    id: "s5v6m0",
     defaultMessage: "Gift Card ordered",
     description: "order"
   },
   metadata: {
-    defaultMessage: "Metadata"
+    defaultMessage: "Metadata",
+    id: "8Q504V"
   }
 });
 

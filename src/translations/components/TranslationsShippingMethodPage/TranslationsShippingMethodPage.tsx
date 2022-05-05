@@ -53,6 +53,7 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
       <PageHeader
         title={intl.formatMessage(
           {
+            id: "1UKx20",
             defaultMessage:
               'Translation ShippingMethod "{shippingMethodName}" - {languageCode}',
             description: "header"
@@ -83,6 +84,7 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
         fields={[
           {
             displayName: intl.formatMessage({
+              id: "aPCrsp",
               defaultMessage: "Name",
               description: "shipping method name"
             }),
@@ -93,6 +95,7 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
           },
           {
             displayName: intl.formatMessage({
+              id: "GpqEl5",
               defaultMessage: "Description",
               description: "shipping method description"
             }),

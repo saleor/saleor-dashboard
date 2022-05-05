@@ -105,6 +105,7 @@ export const ProductImage: React.FC<ProductMediaProps> = ({
         onConfirm={handleDelete}
         open={params.action === "remove"}
         title={intl.formatMessage({
+          id: "uCn/rd",
           defaultMessage: "Delete Image",
           description: "dialog header"
         })}
@@ -112,7 +113,10 @@ export const ProductImage: React.FC<ProductMediaProps> = ({
         confirmButtonState={deleteResult.status}
       >
         <DialogContentText>
-          <FormattedMessage defaultMessage="Are you sure you want to delete this image?" />
+          <FormattedMessage
+            id="VEext+"
+            defaultMessage="Are you sure you want to delete this image?"
+          />
         </DialogContentText>
       </ActionDialog>
     </>

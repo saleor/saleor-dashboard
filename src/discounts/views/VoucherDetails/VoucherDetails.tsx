@@ -45,7 +45,6 @@ import { commonMessages, sectionNames } from "@saleor/intl";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
-import { arrayDiff } from "@saleor/utils/arrays";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -210,15 +209,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
 
   const canOpenBulkActionDialog = maybe(() => params.ids.length > 0);
 
-  const hasArrChanged = () => {
-    const { added, removed } = arrayDiff(
-      voucherChannelsChoices.map(choice => choice.id),
-      currentChannels.map(choice => choice.id)
-    );
-
-    return added.length !== 0 || removed.length !== 0;
-  };
-
   const handleUpdate = createUpdateHandler(
     data?.voucher,
     voucherChannelsChoices,
@@ -290,6 +280,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
           title={intl.formatMessage({
+            id: "EM730i",
             defaultMessage: "Manage Channel Availability"
           })}
           selected={channelListElements.length}
@@ -302,7 +293,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         voucher={data?.voucher}
         allChannelsCount={allChannels?.length}
         channelListings={currentChannels}
-        hasChannelChanged={hasArrChanged()}
         disabled={
           loading ||
           voucherCataloguesRemoveOpts.loading ||
@@ -364,9 +354,9 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
             }
           >
             <FormattedMessage
+              id="Gkip05"
               defaultMessage="Unassign"
               description="button"
-              id="voucherDetailsUnassignCategory"
             />
           </Button>
         }
@@ -379,9 +369,9 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
             }
           >
             <FormattedMessage
+              id="Gkip05"
               defaultMessage="Unassign"
               description="button"
-              id="voucherDetailsUnassignCollection"
             />
           </Button>
         }
@@ -394,9 +384,9 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
             }
           >
             <FormattedMessage
+              id="Gkip05"
               defaultMessage="Unassign"
               description="button"
-              id="voucherDetailsUnassignProduct"
             />
           </Button>
         }
@@ -497,6 +487,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
       <ActionDialog
         open={params.action === "unassign-category" && canOpenBulkActionDialog}
         title={intl.formatMessage({
+          id: "LOSNq0",
           defaultMessage: "Unassign Categories From Voucher",
           description: "dialog header"
         })}
@@ -504,6 +495,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         onClose={closeModal}
         onConfirm={() => handleCategoriesUnassign(params.ids)}
         confirmButtonLabel={intl.formatMessage({
+          id: "cNSLLO",
           defaultMessage: "Unassign and save",
           description: "button"
         })}
@@ -511,6 +503,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         {canOpenBulkActionDialog && (
           <DialogContentText>
             <FormattedMessage
+              id="GiJm1v"
               defaultMessage="{counter,plural,one{Are you sure you want to unassign this category?} other{Are you sure you want to unassign {displayQuantity} categories?}}"
               description="dialog content"
               values={{
@@ -526,6 +519,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
           params.action === "unassign-collection" && canOpenBulkActionDialog
         }
         title={intl.formatMessage({
+          id: "MmGlkp",
           defaultMessage: "Unassign Collections From Voucher",
           description: "dialog header"
         })}
@@ -533,6 +527,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         onClose={closeModal}
         onConfirm={() => handleCollectionsUnassign(params.ids)}
         confirmButtonLabel={intl.formatMessage({
+          id: "cNSLLO",
           defaultMessage: "Unassign and save",
           description: "button"
         })}
@@ -540,6 +535,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         {canOpenBulkActionDialog && (
           <DialogContentText>
             <FormattedMessage
+              id="UjoSZB"
               defaultMessage="{counter,plural,one{Are you sure you want to unassign this collection?} other{Are you sure you want to unassign {displayQuantity} collections?}}"
               description="dialog content"
               values={{
@@ -553,6 +549,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
       <ActionDialog
         open={params.action === "unassign-product" && canOpenBulkActionDialog}
         title={intl.formatMessage({
+          id: "cKCfSW",
           defaultMessage: "Unassign Products From Voucher",
           description: "dialog header"
         })}
@@ -560,6 +557,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         onClose={closeModal}
         onConfirm={() => handleProductsUnassign(params.ids)}
         confirmButtonLabel={intl.formatMessage({
+          id: "cNSLLO",
           defaultMessage: "Unassign and save",
           description: "button"
         })}
@@ -567,6 +565,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         {canOpenBulkActionDialog && (
           <DialogContentText>
             <FormattedMessage
+              id="AHK0K9"
               defaultMessage="{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
               description="dialog content"
               values={{
@@ -580,6 +579,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
       <ActionDialog
         open={params.action === "remove"}
         title={intl.formatMessage({
+          id: "Hgz44z",
           defaultMessage: "Delete Voucher",
           description: "dialog header"
         })}
@@ -594,6 +594,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
       >
         <DialogContentText>
           <FormattedMessage
+            id="NEJo1I"
             defaultMessage="Are you sure you want to delete {voucherCode}?"
             description="dialog content"
             values={{

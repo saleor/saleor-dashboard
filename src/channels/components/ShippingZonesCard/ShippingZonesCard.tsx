@@ -18,15 +18,18 @@ import { ShippingZonesProps } from "./types";
 
 const messages = defineMessages({
   title: {
+    id: "ANRRpG",
     defaultMessage: "Shipping Zones",
     description: "card title"
   },
   subtitle: {
+    id: "Ic7Wln",
     defaultMessage:
       "Select shipping zones that will be supplied via this channel. You can assign shipping zones to multiple channels.",
     description: "card subtitle"
   },
   allSelectedMessage: {
+    id: "+G9l7u",
     defaultMessage: "All available shipping zones have been selected",
     description: "all selected zones card message"
   }

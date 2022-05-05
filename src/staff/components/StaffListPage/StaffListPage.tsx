@@ -68,6 +68,7 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
           hasLimits(limits, "staffUsers") &&
           intl.formatMessage(
             {
+              id: "9xlPgt",
               defaultMessage: "{count}/{max} members",
               description: "used staff users counter"
             },
@@ -85,6 +86,7 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
           onClick={onAdd}
         >
           <FormattedMessage
+            id="4JcNaA"
             defaultMessage="Invite staff member"
             description="button"
           />
@@ -93,16 +95,21 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
       {reachedLimit && (
         <LimitReachedAlert
           title={intl.formatMessage({
+            id: "pA8Mlv",
             defaultMessage: "Staff Member limit reached",
             description: "alert"
           })}
         >
-          <FormattedMessage defaultMessage="You have reached your staff member limit, you will be no longer able to add staff members to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
+          <FormattedMessage
+            id="OaA0f9"
+            defaultMessage="You have reached your staff member limit, you will be no longer able to add staff members to your store. If you would like to up your limit, contact your administration staff about raising your limits."
+          />
         </LimitReachedAlert>
       )}
       <Card>
         <FilterBar
           allTabLabel={intl.formatMessage({
+            id: "YJ4TXc",
             defaultMessage: "All Staff Members",
             description: "tab name"
           })}
@@ -110,6 +117,7 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
           filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
+            id: "aDbrOK",
             defaultMessage: "Search Staff Member"
           })}
           tabs={tabs}

@@ -128,7 +128,10 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
                   {intl.formatMessage(commonMessages.generalInformations)}
                 </Typography>
                 <Typography variant="body2">
-                  <FormattedMessage defaultMessage="These are general information about this Content Type." />
+                  <FormattedMessage
+                    id="kZfIl/"
+                    defaultMessage="These are general information about this Content Type."
+                  />
                 </Typography>
               </div>
               <PageTypeDetails
@@ -141,12 +144,16 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
               <div>
                 <Typography>
                   <FormattedMessage
+                    id="iQxjow"
                     defaultMessage="Content Attributes"
                     description="section header"
                   />
                 </Typography>
                 <Typography variant="body2">
-                  <FormattedMessage defaultMessage="This list shows all attributes that will be assigned to pages that have this page type assigned." />
+                  <FormattedMessage
+                    id="lct0qd"
+                    defaultMessage="This list shows all attributes that will be assigned to pages that have this page type assigned."
+                  />
                 </Typography>
               </div>
               <PageTypeAttributes
@@ -164,6 +171,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
               <div>
                 <Typography>
                   <FormattedMessage
+                    id="OVOU1z"
                     defaultMessage="Metadata"
                     description="section header"
                   />

@@ -45,13 +45,18 @@ const UserChip: React.FC<UserChipProps> = ({
       <UserChipMenuItem data-test-id="account-settings-button">
         <Link to={staffMemberDetailsUrl(user?.id)}>
           <FormattedMessage
+            id="X8+Lpa"
             defaultMessage="Account Settings"
             description="button"
           />
         </Link>
       </UserChipMenuItem>
       <UserChipMenuItem onClick={onLogout} data-test-id="log-out-button">
-        <FormattedMessage defaultMessage="Log out" description="button" />
+        <FormattedMessage
+          id="qLbse5"
+          defaultMessage="Log out"
+          description="button"
+        />
       </UserChipMenuItem>
       <UserChipMenuItem
         leaveOpen
@@ -70,6 +75,7 @@ const UserChip: React.FC<UserChipProps> = ({
             />
           }
           label={intl.formatMessage({
+            id: "2r4cTE",
             defaultMessage: "Enable Dark Mode",
             description: "button"
           })}

@@ -46,6 +46,7 @@ const SaleValue: React.FC<SaleValueProps> = ({
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "wHdMAX",
           defaultMessage: "Value",
           description: "sale value, header"
         })}
@@ -53,6 +54,7 @@ const SaleValue: React.FC<SaleValueProps> = ({
       <CardContent className={classes.card}>
         <Typography variant="caption" className={classes.info}>
           <FormattedMessage
+            id="cehiWu"
             defaultMessage="Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
             description="channels sale info"
           />
@@ -67,6 +69,7 @@ const SaleValue: React.FC<SaleValueProps> = ({
           <TableCell className={classes.colName}>
             <span>
               <FormattedMessage
+                id="Hj3T7P"
                 defaultMessage="Channel name"
                 description="column title"
               />
@@ -75,6 +78,7 @@ const SaleValue: React.FC<SaleValueProps> = ({
           <TableCell className={classes.colType}>
             <span>
               <FormattedMessage
+                id="wHdMAX"
                 defaultMessage="Value"
                 description="sale value, header"
               />
@@ -119,7 +123,10 @@ const SaleValue: React.FC<SaleValueProps> = ({
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage defaultMessage="No channels found" />
+                  <FormattedMessage
+                    id="/glQgs"
+                    defaultMessage="No channels found"
+                  />
                 </TableCell>
               </TableRow>
             )

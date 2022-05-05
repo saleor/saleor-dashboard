@@ -73,6 +73,7 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
     <Card className={classes.card}>
       <CardTitle
         title={intl.formatMessage({
+          id: "Gzg8hy",
           defaultMessage: "Invoices",
           description: "section header"
         })}
@@ -80,6 +81,7 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
           onInvoiceGenerate && (
             <Button onClick={onInvoiceGenerate}>
               <FormattedMessage
+                id="e0RKe+"
                 defaultMessage="Generate"
                 description="generate invoice button"
               />
@@ -96,7 +98,10 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
           <Skeleton />
         ) : !generatedInvoices?.length ? (
           <Typography color="textSecondary">
-            <FormattedMessage defaultMessage="No invoices to be shown" />
+            <FormattedMessage
+              id="hPB89Y"
+              defaultMessage="No invoices to be shown"
+            />
           </Typography>
         ) : (
           <ResponsiveTable className={classes.invoicesTable}>
@@ -112,12 +117,14 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
                     onClick={() => onInvoiceClick(invoice.id)}
                   >
                     <FormattedMessage
+                      id="m6IBe5"
                       defaultMessage="Invoice"
                       description="invoice number prefix"
                     />{" "}
                     {invoice.number}
                     <Typography variant="caption">
                       <FormattedMessage
+                        id="F0AXNs"
                         defaultMessage="created"
                         description="invoice create date prefix"
                       />{" "}

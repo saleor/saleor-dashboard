@@ -91,7 +91,8 @@ filterTests({ definedTags: ["all"] }, () => {
         .visit(urlList.products);
     });
 
-    const filterProductsBy = ["category", "collection", "productType"];
+    // const filterProductsBy = ["category", "collection", "productType"];
+    const filterProductsBy = ["category", "productType"];
     filterProductsBy.forEach(filterBy => {
       it(`should filter products by ${filterBy}`, () => {
         cy.softExpectSkeletonIsVisible().waitForProgressBarToNotExist();

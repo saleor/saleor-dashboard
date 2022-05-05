@@ -30,13 +30,17 @@ const CustomerCreateNote: React.FC<CustomerCreateNoteProps> = ({
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "qNcoRY",
           defaultMessage: "Notes",
           description: "notes about customer header"
         })}
       />
       <CardContent>
         <Typography>
-          <FormattedMessage defaultMessage="Enter any extra infotmation regarding this customer." />
+          <FormattedMessage
+            id="w3sGrD"
+            defaultMessage="Enter any extra infotmation regarding this customer."
+          />
         </Typography>
         <FormSpacer />
         <TextField
@@ -47,6 +51,7 @@ const CustomerCreateNote: React.FC<CustomerCreateNoteProps> = ({
           name="note"
           helperText={getAccountErrorMessage(formErrors.note, intl)}
           label={intl.formatMessage({
+            id: "uUQ+Al",
             defaultMessage: "Note",
             description: "note about customer"
           })}

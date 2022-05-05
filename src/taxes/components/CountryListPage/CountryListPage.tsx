@@ -60,6 +60,7 @@ const CountryListPage: React.FC<CountryListPageProps> = ({
             </Backlink>
             <PageHeader
               title={intl.formatMessage({
+                id: "lnQAos",
                 defaultMessage: "Taxes",
                 description: "header"
               })}

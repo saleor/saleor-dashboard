@@ -81,8 +81,6 @@ function useOrderReturnForm(
 ): UseOrderRefundFormResult {
   const {
     handleChange,
-    setChanged,
-    hasChanged,
     data: formData,
     triggerChange,
     formId,
@@ -229,8 +227,7 @@ function useOrderReturnForm(
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit,
-    setChanged
+    onSubmit
   });
 
   const submit = () => handleFormSubmit(data);
@@ -269,7 +266,6 @@ function useOrderReturnForm(
       handleSetMaximalItemsQuantities,
       handleSetMaximalUnfulfiledItemsQuantities
     },
-    hasChanged,
     submit,
     isSaveDisabled
   };

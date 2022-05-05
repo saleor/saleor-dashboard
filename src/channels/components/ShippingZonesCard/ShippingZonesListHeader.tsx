@@ -41,6 +41,7 @@ const useStyles = makeStyles(
 
 const messages = defineMessages({
   title: {
+    id: "gtKcPf",
     defaultMessage: "{zonesCount} / {totalCount} shipping zones",
     description: "title"
   }

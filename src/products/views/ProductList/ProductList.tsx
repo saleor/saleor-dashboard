@@ -196,10 +196,12 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       if (data.exportProducts.errors.length === 0) {
         notify({
           text: intl.formatMessage({
+            id: "dPYqy0",
             defaultMessage:
               "We are currently exporting your requested CSV. As soon as it is available it will be sent to your email address"
           }),
           title: intl.formatMessage({
+            id: "5QKsu+",
             defaultMessage: "Exporting CSV",
             description: "waiting for export to end, header"
           })
@@ -429,6 +431,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           })
         }
         title={intl.formatMessage({
+          id: "F4WdSO",
           defaultMessage: "Delete Products",
           description: "dialog header"
         })}
@@ -436,6 +439,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       >
         <DialogContentText>
           <FormattedMessage
+            id="yDkmX7"
             defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
             description="dialog content"
             values={{

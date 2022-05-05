@@ -211,6 +211,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
       notify({
         status: "success",
         text: intl.formatMessage({
+          id: "F3Upht",
           defaultMessage: "Product type deleted"
         })
       });
@@ -366,6 +367,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
               }
             >
               <FormattedMessage
+                id="S7j+Wf"
                 defaultMessage="Unassign"
                 description="unassign attribute from product type, button"
               />
@@ -389,6 +391,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
               }
             >
               <FormattedMessage
+                id="S7j+Wf"
                 defaultMessage="Unassign"
                 description="unassign attribute from product type, button"
               />
@@ -459,6 +462,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
 
       <BulkAttributeUnassignDialog
         title={intl.formatMessage({
+          id: "r1aQ2f",
           defaultMessage: "Unassign Attribute from Product Type",
           description: "dialog header"
         })}
@@ -471,6 +475,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
       />
       <AttributeUnassignDialog
         title={intl.formatMessage({
+          id: "UJnqdm",
           defaultMessage: "Unassign Attribute From Product Type",
           description: "dialog header"
         })}

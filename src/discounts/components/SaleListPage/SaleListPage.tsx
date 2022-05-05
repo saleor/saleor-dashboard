@@ -61,12 +61,17 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
           variant="primary"
           data-test-id="create-sale"
         >
-          <FormattedMessage defaultMessage="Create Sale" description="button" />
+          <FormattedMessage
+            id="JHfbXR"
+            defaultMessage="Create Sale"
+            description="button"
+          />
         </Button>
       </PageHeader>
       <Card>
         <FilterBar
           allTabLabel={intl.formatMessage({
+            id: "Yjhgle",
             defaultMessage: "All Sales",
             description: "tab name"
           })}
@@ -74,6 +79,7 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
           filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
+            id: "MSD3A/",
             defaultMessage: "Search Sale"
           })}
           tabs={tabs}

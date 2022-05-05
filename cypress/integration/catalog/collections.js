@@ -82,7 +82,7 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("should create hidden collection. TC: SALEOR_0301", () => {
+    xit("should create hidden collection. TC: SALEOR_0301", () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
       let collection;
 
@@ -260,7 +260,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("assign product to collection. TC: SALEOR_0307", () => {
+    xit("assign product to collection. TC: SALEOR_0307", () => {
       const collectionName = `Assign-${startsWith}${faker.datatype.number()}`;
       const productName = `Product-To-Assign-${startsWith}${faker.datatype.number()}`;
 

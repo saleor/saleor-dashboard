@@ -70,13 +70,19 @@ const NotFoundPage: React.FC<NotFoundPageProps> = props => {
         <div className={classes.innerContainer}>
           <div>
             <Typography className={classes.header} variant="h3">
-              <FormattedMessage defaultMessage="Ooops!..." />
+              <FormattedMessage id="yH56V+" defaultMessage="Ooops!..." />
             </Typography>
             <Typography className={classes.header} variant="h4">
-              <FormattedMessage defaultMessage="Something's missing" />
+              <FormattedMessage
+                id="bj6pTd"
+                defaultMessage="Something's missing"
+              />
             </Typography>
             <Typography>
-              <FormattedMessage defaultMessage="Sorry, the page was not found" />
+              <FormattedMessage
+                id="nRiOg+"
+                defaultMessage="Sorry, the page was not found"
+              />
             </Typography>
           </div>
           <div>
@@ -87,6 +93,7 @@ const NotFoundPage: React.FC<NotFoundPageProps> = props => {
               href={backHref}
             >
               <FormattedMessage
+                id="95oJ5d"
                 defaultMessage="Go back to dashboard"
                 description="button"
               />

@@ -62,13 +62,17 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "/oaqFS",
           defaultMessage: "Value",
           description: "section header"
         })}
       />
       <CardContent>
         <Typography variant="caption">
-          <FormattedMessage defaultMessage="Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency" />
+          <FormattedMessage
+            id="K+ROF8"
+            defaultMessage="Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
+          />
         </Typography>
         <div className={classes.tableContainer}>
           <ResponsiveTable className={classes.table}>
@@ -76,6 +80,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
               <TableCell className={classes.colName}>
                 <span>
                   <FormattedMessage
+                    id="Hj3T7P"
                     defaultMessage="Channel name"
                     description="column title"
                   />
@@ -84,6 +89,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
               <TableCell className={classes.colType}>
                 <span>
                   <FormattedMessage
+                    id="1shOIS"
                     defaultMessage="Price"
                     description="column title"
                   />
@@ -131,6 +137,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
                               })
                             }
                             label={intl.formatMessage({
+                              id: "mmcHeH",
                               defaultMessage: "Discount Value"
                             })}
                             value={listing.discountValue || ""}
@@ -150,7 +157,10 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
                 () => (
                   <TableRow>
                     <TableCell colSpan={numberOfColumns}>
-                      <FormattedMessage defaultMessage="No channels found" />
+                      <FormattedMessage
+                        id="/glQgs"
+                        defaultMessage="No channels found"
+                      />
                     </TableCell>
                   </TableRow>
                 )
@@ -169,6 +179,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
               error={!!formErrors.type}
               hint={getDiscountErrorMessage(formErrors.type, intl)}
               label={intl.formatMessage({
+                id: "9UHfux",
                 defaultMessage: "Voucher Specific Information"
               })}
               name={"type" as keyof VoucherDetailsPageFormData}
@@ -183,11 +194,15 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
           label={
             <>
               <FormattedMessage
+                id="5c2JVF"
                 defaultMessage="Only once per order"
                 description="voucher application, switch button"
               />
               <Typography variant="caption">
-                <FormattedMessage defaultMessage="If this option is disabled, discount will be counted for every eligible product" />
+                <FormattedMessage
+                  id="ObRk1O"
+                  defaultMessage="If this option is disabled, discount will be counted for every eligible product"
+                />
               </Typography>
             </>
           }

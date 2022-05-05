@@ -97,6 +97,7 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
           className={classes.colName}
         >
           <FormattedMessage
+            id="hHOI7D"
             defaultMessage="Type Name"
             description="product type name"
           />
@@ -111,12 +112,14 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
           className={classes.colType}
         >
           <FormattedMessage
+            id="jyTwDR"
             defaultMessage="Type"
             description="product type is either simple or configurable"
           />
         </TableCellHeader>
         <TableCell className={classes.colTax}>
           <FormattedMessage
+            id="TalJlD"
             defaultMessage="Tax"
             description="tax rate for a product type"
           />
@@ -164,10 +167,12 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
                       <Typography variant="caption">
                         {maybe(() => productType.hasVariants)
                           ? intl.formatMessage({
+                              id: "X90t9n",
                               defaultMessage: "Configurable",
                               description: "product type"
                             })
                           : intl.formatMessage({
+                              id: "yNb+dT",
                               defaultMessage: "Simple product",
                               description: "product type"
                             })}
@@ -182,6 +187,7 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
                     productType.isShippingRequired ? (
                       <>
                         <FormattedMessage
+                          id="ADTNND"
                           defaultMessage="Physical"
                           description="product type"
                         />
@@ -189,6 +195,7 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
                     ) : (
                       <>
                         <FormattedMessage
+                          id="asdvmK"
                           defaultMessage="Digital"
                           description="product type"
                         />
@@ -211,7 +218,10 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
           () => (
             <TableRow>
               <TableCell colSpan={numberOfColumns}>
-                <FormattedMessage defaultMessage="No product types found" />
+                <FormattedMessage
+                  id="0nLsyM"
+                  defaultMessage="No product types found"
+                />
               </TableCell>
             </TableRow>
           )

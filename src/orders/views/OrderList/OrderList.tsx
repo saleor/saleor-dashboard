@@ -67,6 +67,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
       notify({
         status: "success",
         text: intl.formatMessage({
+          id: "6udlH+",
           defaultMessage: "Order draft successfully created"
         })
       });
@@ -188,7 +189,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
       />
       {!noChannel && (
         <ChannelPickerDialog
-          channelsChoices={mapNodeToChoice(availableChannels)}
+          channelsChoices={channelOpts}
           confirmButtonState="success"
           defaultChoice={channel.id}
           open={params.action === "create-order"}

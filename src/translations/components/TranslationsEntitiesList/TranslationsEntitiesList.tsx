@@ -64,12 +64,16 @@ const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props 
         <TableRow>
           <TableCell className={classes.wideColumn}>
             <FormattedMessage
+              id="X6PF8z"
               defaultMessage="Name"
               description="entity (product, collection, shipping method) name"
             />
           </TableCell>
           <TableCell className={classes.textRight}>
-            <FormattedMessage defaultMessage="Completed Translations" />
+            <FormattedMessage
+              id="LWmYSU"
+              defaultMessage="Completed Translations"
+            />
           </TableCell>
         </TableRow>
       </TableHead>
@@ -107,6 +111,7 @@ const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props 
                     () =>
                       intl.formatMessage(
                         {
+                          id: "ikRuLs",
                           defaultMessage: "{current} of {max}",
                           description: "translation progress"
                         },
@@ -120,7 +125,10 @@ const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props 
           () => (
             <TableRow>
               <TableCell colSpan={2}>
-                <FormattedMessage defaultMessage="No translatable entities found" />
+                <FormattedMessage
+                  id="vcwrgW"
+                  defaultMessage="No translatable entities found"
+                />
               </TableCell>
             </TableRow>
           )

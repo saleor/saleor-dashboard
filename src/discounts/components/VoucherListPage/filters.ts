@@ -27,42 +27,52 @@ export interface VoucherListFilterOpts {
 
 const messages = defineMessages({
   active: {
+    id: "amQg6f",
     defaultMessage: "Active",
     description: "voucher status"
   },
   channel: {
+    id: "NLybdq",
     defaultMessage: "Channel",
     description: "voucher channel"
   },
   expired: {
+    id: "t7UwLY",
     defaultMessage: "Expired",
     description: "voucher status"
   },
   fixed: {
+    id: "XDBeA+",
     defaultMessage: "Fixed amount",
     description: "discount type"
   },
   percentage: {
+    id: "s17U7u",
     defaultMessage: "Percentage",
     description: "discount type"
   },
   scheduled: {
+    id: "Jj0de8",
     defaultMessage: "Scheduled",
     description: "voucher status"
   },
   started: {
+    id: "ujFo4A",
     defaultMessage: "Started",
     description: "voucher start date"
   },
   status: {
+    id: "uy+tB8",
     defaultMessage: "Status",
     description: "voucher status"
   },
   timesUsed: {
+    id: "h75GAF",
     defaultMessage: "Times used",
     description: "voucher"
   },
   type: {
+    id: "KHZlmi",
     defaultMessage: "Discount Type"
   }
 });

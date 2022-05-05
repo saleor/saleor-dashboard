@@ -80,6 +80,7 @@ const FilterBar: React.FC<FilterBarProps> = props => {
           <FilterTab
             onClick={() => undefined}
             label={intl.formatMessage({
+              id: "qIgdO6",
               defaultMessage: "Custom Filter"
             })}
           />
@@ -102,6 +103,7 @@ const FilterBar: React.FC<FilterBarProps> = props => {
           (displayTabAction === "save" ? (
             <Button className={classes.tabActionButton} onClick={onTabSave}>
               <FormattedMessage
+                id="DEa1T1"
                 defaultMessage="Save Search"
                 description="button"
               />
@@ -110,6 +112,7 @@ const FilterBar: React.FC<FilterBarProps> = props => {
             displayTabAction === "delete" && (
               <Button className={classes.tabActionButton} onClick={onTabDelete}>
                 <FormattedMessage
+                  id="QCwBUI"
                   defaultMessage="Delete Search"
                   description="button"
                 />

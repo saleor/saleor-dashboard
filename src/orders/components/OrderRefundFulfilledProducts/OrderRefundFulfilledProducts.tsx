@@ -111,6 +111,7 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
           }
         >
           <FormattedMessage
+            id="2W4EBM"
             defaultMessage="Set maximal quantities"
             description="button"
           />
@@ -121,24 +122,28 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
           <TableRow>
             <TableCell>
               <FormattedMessage
+                id="FNT4b+"
                 defaultMessage="Product"
                 description="tabel column header"
               />
             </TableCell>
             <TableCell>
               <FormattedMessage
+                id="5aiFbL"
                 defaultMessage="Price"
                 description="tabel column header"
               />
             </TableCell>
             <TableCell>
               <FormattedMessage
+                id="Tl+7X4"
                 defaultMessage="Refunded Qty"
                 description="tabel column header"
               />
             </TableCell>
             <TableCell>
               <FormattedMessage
+                id="+PclgM"
                 defaultMessage="Total"
                 description="tabel column header"
               />
@@ -203,6 +208,7 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
                         helperText={
                           isError &&
                           intl.formatMessage({
+                            id: "xoyCZ/",
                             defaultMessage: "Improper value",
                             description: "error message"
                           })
@@ -230,7 +236,10 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
             () => (
               <TableRow>
                 <TableCell colSpan={4}>
-                  <FormattedMessage defaultMessage="No products found" />
+                  <FormattedMessage
+                    id="Q1Uzbb"
+                    defaultMessage="No products found"
+                  />
                 </TableCell>
               </TableRow>
             )

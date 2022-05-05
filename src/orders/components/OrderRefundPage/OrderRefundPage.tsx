@@ -77,6 +77,7 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
               {order?.number
                 ? intl.formatMessage(
                     {
+                      id: "rVIlBs",
                       defaultMessage: "Order #{orderNumber}",
                       description: "page header with order number"
                     },
@@ -85,6 +86,7 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
                     }
                   )
                 : intl.formatMessage({
+                    id: "6u4K7e",
                     defaultMessage: "Order",
                     description: "page header"
                   })}
@@ -92,6 +94,7 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
             <PageHeader
               title={intl.formatMessage(
                 {
+                  id: "0krqBj",
                   defaultMessage: "Order no. {orderNumber} - Refund",
                   description: "page header"
                 },

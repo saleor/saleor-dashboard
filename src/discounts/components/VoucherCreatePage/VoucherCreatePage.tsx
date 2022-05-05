@@ -3,7 +3,7 @@ import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import Container from "@saleor/components/Container";
-import Form, { FormDataWithOpts } from "@saleor/components/Form";
+import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
@@ -44,7 +44,6 @@ export interface FormData extends VoucherDetailsPageFormData {
 export interface VoucherCreatePageProps {
   allChannelsCount: number;
   channelListings: ChannelVoucherData[];
-  hasChannelChanged: boolean;
   disabled: boolean;
   errors: DiscountErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -61,7 +60,6 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   saveButtonBarState,
   onChannelsChange,
   onSubmit,
-  hasChannelChanged,
   openChannelsModal
 }) => {
   const intl = useIntl();
@@ -94,7 +92,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     privateMetadata: []
   };
 
-  const checkIfSaveIsDisabled = (data: FormDataWithOpts<FormData>) =>
+  const checkIfSaveIsDisabled = (data: FormData) =>
     (data.discountType.toString() !== "SHIPPING" &&
       data.channelListings?.some(
         channel =>
@@ -102,8 +100,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
           (data.requirementsPicker === RequirementsPicker.ORDER &&
             validatePrice(channel.minSpent))
       )) ||
-    disabled ||
-    (!data.hasChanged && hasChannelChanged);
+    disabled;
 
   return (
     <Form
@@ -131,6 +128,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
             </Backlink>
             <PageHeader
               title={intl.formatMessage({
+                id: "PsclSa",
                 defaultMessage: "Create Voucher",
                 description: "page header"
               })}

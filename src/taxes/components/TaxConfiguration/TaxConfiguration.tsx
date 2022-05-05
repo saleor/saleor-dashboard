@@ -39,6 +39,7 @@ export const TaxConfiguration: React.FC<TaxConfigurationProps> = props => {
         <ControlledCheckbox
           name={"includeTax" as keyof FormData}
           label={intl.formatMessage({
+            id: "4EuJKs",
             defaultMessage: "All products prices are entered with tax included"
           })}
           checked={data.includeTax}
@@ -49,6 +50,7 @@ export const TaxConfiguration: React.FC<TaxConfigurationProps> = props => {
         <ControlledCheckbox
           name={"showGross" as keyof FormData}
           label={intl.formatMessage({
+            id: "98isC5",
             defaultMessage: "Show gross prices to customers in the storefront"
           })}
           checked={data.showGross}
@@ -59,6 +61,7 @@ export const TaxConfiguration: React.FC<TaxConfigurationProps> = props => {
         <ControlledCheckbox
           name={"chargeTaxesOnShipping" as keyof FormData}
           label={intl.formatMessage({
+            id: "FNKhkx",
             defaultMessage: "Charge taxes on shipping rates"
           })}
           checked={data.chargeTaxesOnShipping}
@@ -69,7 +72,11 @@ export const TaxConfiguration: React.FC<TaxConfigurationProps> = props => {
       </CardContent>
       <CardActions>
         <Button disabled={disabled} onClick={onTaxFetch}>
-          <FormattedMessage defaultMessage="Fetch taxes" description="button" />
+          <FormattedMessage
+            id="+OV+Gj"
+            defaultMessage="Fetch taxes"
+            description="button"
+          />
         </Button>
       </CardActions>
     </Card>

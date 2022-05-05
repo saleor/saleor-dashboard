@@ -74,6 +74,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
           hasLimits(limits, "orders") &&
           intl.formatMessage(
             {
+              id: "zyceue",
               defaultMessage: "{count}/{max} orders",
               description: "placed order counter"
             },
@@ -90,6 +91,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
               menuItems={[
                 {
                   label: intl.formatMessage({
+                    id: "WbV1Xm",
                     defaultMessage: "Order Settings",
                     description: "button"
                   }),
@@ -107,6 +109,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
           data-test-id="create-order-button"
         >
           <FormattedMessage
+            id="LshEVn"
             defaultMessage="Create order"
             description="button"
           />
@@ -125,11 +128,13 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
           onTabSave={onTabSave}
           tabs={tabs}
           allTabLabel={intl.formatMessage({
+            id: "WRkCFt",
             defaultMessage: "All Orders",
             description: "tab name"
           })}
           filterStructure={filterStructure}
           searchPlaceholder={intl.formatMessage({
+            id: "wTHjt3",
             defaultMessage: "Search Orders..."
           })}
         />

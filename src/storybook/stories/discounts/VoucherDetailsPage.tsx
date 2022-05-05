@@ -27,7 +27,6 @@ const props: VoucherDetailsPageProps = {
   channelListings: channels,
   collectionListToolbar: null,
   errors: [],
-  hasChannelChanged: false,
   onCategoryAssign: () => undefined,
   onCategoryUnassign: () => undefined,
   onChannelsChange: () => undefined,

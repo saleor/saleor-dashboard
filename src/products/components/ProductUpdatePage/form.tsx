@@ -63,7 +63,7 @@ import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/single
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
@@ -193,7 +193,6 @@ export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
   product: ProductFragment;
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise;
   disabled: boolean;
-  hasChannelChanged: boolean;
 }
 
 const getStocksData = (
@@ -224,30 +223,36 @@ function useProductUpdateForm(
   product: ProductFragment,
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise,
   disabled: boolean,
-  hasChannelChanged: boolean,
   opts: UseProductUpdateFormOpts
 ): UseProductUpdateFormResult {
   const intl = useIntl();
-
-  const form = useForm(
-    getProductUpdatePageFormData(
+  const initial = useMemo(
+    () =>
+      getProductUpdatePageFormData(
+        product,
+        product?.variants,
+        opts.currentChannels,
+        opts.channelsData,
+        opts.channelsWithVariants
+      ),
+    [
       product,
-      product?.variants,
       opts.currentChannels,
       opts.channelsData,
       opts.channelsWithVariants
-    ),
-    undefined,
-    { confirmLeave: true, formId: PRODUCT_UPDATE_FORM_ID }
+    ]
   );
+
+  const form = useForm(initial, undefined, {
+    confirmLeave: true,
+    formId: PRODUCT_UPDATE_FORM_ID
+  });
 
   const {
     handleChange,
     triggerChange,
     toggleValue,
     data: formData,
-    setChanged,
-    hasChanged,
     setIsSubmitDisabled
   } = form;
 
@@ -403,15 +408,14 @@ function useProductUpdateForm(
 
   const handleFormSubmit = useHandleFormSubmit({
     formId: form.formId,
-    onSubmit: handleSubmit,
-    setChanged
+    onSubmit: handleSubmit
   });
 
   const submit = async () => handleFormSubmit(getSubmitData());
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
-  const shouldEnableSave = () => {
+  const isValid = () => {
     if (!data.name) {
       return false;
     }
@@ -439,11 +443,11 @@ function useProductUpdateForm(
     return true;
   };
 
-  const isSaveEnabled = !shouldEnableSave();
+  const isSaveDisabled = disabled || !isValid();
 
-  const isSaveDisabled =
-    disabled || isSaveEnabled || (!hasChanged && !hasChannelChanged);
-  setIsSubmitDisabled(isSaveDisabled);
+  useEffect(() => {
+    setIsSubmitDisabled(isSaveDisabled);
+  }, [isSaveDisabled]);
 
   return {
     change: handleChange,
@@ -470,7 +474,6 @@ function useProductUpdateForm(
       selectCollection: handleCollectionSelect,
       selectTaxRate: handleTaxTypeSelect
     },
-    hasChanged,
     submit,
     isSaveDisabled
   };
@@ -481,16 +484,9 @@ const ProductUpdateForm: React.FC<ProductUpdateFormProps> = ({
   product,
   onSubmit,
   disabled,
-  hasChannelChanged,
   ...rest
 }) => {
-  const props = useProductUpdateForm(
-    product,
-    onSubmit,
-    disabled,
-    hasChannelChanged,
-    rest
-  );
+  const props = useProductUpdateForm(product, onSubmit, disabled, rest);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };

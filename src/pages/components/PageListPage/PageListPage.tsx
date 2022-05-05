@@ -45,7 +45,11 @@ const PageListPage: React.FC<PageListPageProps> = ({
           variant="primary"
           data-test-id="create-page"
         >
-          <FormattedMessage defaultMessage="Create page" description="button" />
+          <FormattedMessage
+            id="AHRDWt"
+            defaultMessage="Create page"
+            description="button"
+          />
         </Button>
       </PageHeader>
       <Card>

@@ -174,6 +174,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
             onClick={() => openModal("unassign", { ids: listElements })}
           >
             {intl.formatMessage({
+              id: "15PiOX",
               defaultMessage: "Unassign",
               description: "button title"
             })}

@@ -98,6 +98,7 @@ const PluginList: React.FC<PluginListProps> = props => {
             <TableRow>
               <TableCell colSpan={totalColSpan}>
                 {intl.formatMessage({
+                  id: "Co2U4u",
                   defaultMessage: "No plugins found"
                 })}
               </TableCell>

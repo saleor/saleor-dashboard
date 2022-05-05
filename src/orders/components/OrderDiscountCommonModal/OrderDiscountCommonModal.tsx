@@ -69,34 +69,42 @@ const useStyles = makeStyles(
 
 const messages = defineMessages({
   buttonLabel: {
+    id: "QSnh4Y",
     defaultMessage: "Add",
     description: "add button label"
   },
   itemDiscountTitle: {
+    id: "WTj17Z",
     defaultMessage: "Discount Item",
     description: "dialog title item discount"
   },
   orderDiscountTitle: {
+    id: "YFDAaX",
     defaultMessage: "Discount this Order by:",
     description: "dialog title order discount"
   },
   percentageOption: {
+    id: "WUf3Iu",
     defaultMessage: "Percentage",
     description: "percentage option"
   },
   fixedAmountOption: {
+    id: "fo7nfa",
     defaultMessage: "Fixed Amount",
     description: "fixed amount"
   },
   invalidValue: {
+    id: "IN5iJz",
     defaultMessage: "Invalid value",
     description: "value input helper text"
   },
   discountValueLabel: {
+    id: "GAmGog",
     defaultMessage: "Discount value",
     description: "value input label"
   },
   discountReasonLabel: {
+    id: "nvSJNR",
     defaultMessage: "Reason",
     description: "discount reason input lavel"
   }

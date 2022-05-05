@@ -45,13 +45,17 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
           <>
             <Typography variant="h3" className={classes.header}>
               <FormattedMessage
+                id="WhKGPA"
                 defaultMessage="Set up new password"
                 description="page title"
               />
             </Typography>
             {!!error && <div className={classes.panel}>{error}</div>}
             <Typography variant="caption" color="textSecondary">
-              <FormattedMessage defaultMessage="Please set up a new password for your account. Repeat your new password to make sure you will be able to remember it." />
+              <FormattedMessage
+                id="m0Dz+2"
+                defaultMessage="Please set up a new password for your account. Repeat your new password to make sure you will be able to remember it."
+              />
             </Typography>
             <FormSpacer />
             <TextField
@@ -60,6 +64,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
               autoComplete="none"
               disabled={disabled}
               label={intl.formatMessage({
+                id: "Ev6SEF",
                 defaultMessage: "New Password"
               })}
               name="password"
@@ -77,6 +82,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
               autoComplete="none"
               disabled={disabled}
               label={intl.formatMessage({
+                id: "vfG+nh",
                 defaultMessage: "Confirm Password"
               })}
               name="confirmPassword"
@@ -86,6 +92,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
               helperText={
                 passwordError &&
                 intl.formatMessage({
+                  id: "7Chrsf",
                   defaultMessage: "Passwords do not match"
                 })
               }
@@ -103,6 +110,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
               type="submit"
             >
               <FormattedMessage
+                id="S22jIs"
                 defaultMessage="Set new password"
                 description="button"
               />

@@ -54,6 +54,7 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
       <PageHeader
         title={intl.formatMessage(
           {
+            id: "Bphmwe",
             defaultMessage:
               'Translation Collection "{collectionName}" - {languageCode}',
             description: "header"
@@ -84,6 +85,7 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
         fields={[
           {
             displayName: intl.formatMessage({
+              id: "VZsE96",
               defaultMessage: "Collection Name"
             }),
             name: TranslationInputFieldName.name,
@@ -111,11 +113,13 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
         disabled={disabled}
         initialState={true}
         title={intl.formatMessage({
+          id: "TGX4T1",
           defaultMessage: "Search Engine Preview"
         })}
         fields={[
           {
             displayName: intl.formatMessage({
+              id: "HlEpii",
               defaultMessage: "Search Engine Title"
             }),
             name: TranslationInputFieldName.seoTitle,
@@ -125,6 +129,7 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
           },
           {
             displayName: intl.formatMessage({
+              id: "US3IPU",
               defaultMessage: "Search Engine Description"
             }),
             name: TranslationInputFieldName.seoDescription,

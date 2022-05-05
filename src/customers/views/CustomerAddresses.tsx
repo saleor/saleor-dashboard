@@ -168,6 +168,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
         open={params.action === "remove"}
         variant="delete"
         title={intl.formatMessage({
+          id: "qLOBff",
           defaultMessage: "Delete Address",
           description: "dialog header"
         })}
@@ -182,7 +183,10 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
         }
       >
         <DialogContentText>
-          <FormattedMessage defaultMessage="Are you sure you want to delete this address from users address book?" />
+          <FormattedMessage
+            id="/kWzY1"
+            defaultMessage="Are you sure you want to delete this address from users address book?"
+          />
         </DialogContentText>
       </ActionDialog>
     </>

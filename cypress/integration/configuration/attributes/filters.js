@@ -20,7 +20,7 @@ import {
 } from "../../../support/pages/catalog/products/productsListPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Tests for using attributes in filters", () => {
+  xdescribe("Tests for using attributes in filters", () => {
     const startsWith = "AttrFilter";
 
     let attribute;

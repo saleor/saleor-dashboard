@@ -11,6 +11,7 @@ export interface WeightProps {
 
 const Weight: React.FC<WeightProps> = ({ weight }) => (
   <FormattedMessage
+    id="NtFVFS"
     defaultMessage="{value} {unit}"
     description="weight"
     values={weight}

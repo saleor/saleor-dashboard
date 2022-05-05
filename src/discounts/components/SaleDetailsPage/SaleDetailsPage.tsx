@@ -3,7 +3,7 @@ import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import Container from "@saleor/components/Container";
-import Form, { FormDataWithOpts } from "@saleor/components/Form";
+import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
@@ -75,7 +75,6 @@ export interface SaleDetailsPageProps
   sale: SaleDetailsFragment;
   allChannelsCount: number;
   channelListings: ChannelSaleFormData[];
-  hasChannelChanged: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onCategoryAssign: () => void;
   onCategoryUnassign: (id: string) => void;
@@ -106,7 +105,6 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   onRemove,
   onSubmit,
   onTabClick,
-  hasChannelChanged,
   openChannelsModal,
   pageInfo,
   sale,
@@ -152,12 +150,9 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
     privateMetadata: sale?.privateMetadata.map(mapMetadataItemToInput)
   };
 
-  const checkIfSaveIsDisabled = (
-    data: FormDataWithOpts<SaleDetailsPageFormData>
-  ) =>
+  const checkIfSaveIsDisabled = (data: SaleDetailsPageFormData) =>
     data.channelListings?.some(channel => validateSalePrice(data, channel)) ||
-    disabled ||
-    (!data.hasChanged && !hasChannelChanged);
+    disabled;
 
   return (
     <Form
@@ -207,9 +202,9 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   >
                     {intl.formatMessage(
                       {
+                        id: "ppLwx3",
                         defaultMessage: "Categories ({quantity})",
-                        description: "number of categories",
-                        id: "saleDetailsPageCategoriesQuantity"
+                        description: "number of categories"
                       },
                       {
                         quantity: maybe(
@@ -225,9 +220,9 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   >
                     {intl.formatMessage(
                       {
+                        id: "QdGzUf",
                         defaultMessage: "Collections ({quantity})",
-                        description: "number of collections",
-                        id: "saleDetailsPageCollectionsQuantity"
+                        description: "number of collections"
                       },
                       {
                         quantity: maybe(
@@ -244,9 +239,9 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   >
                     {intl.formatMessage(
                       {
+                        id: "bNw8PM",
                         defaultMessage: "Products ({quantity})",
-                        description: "number of products",
-                        id: "saleDetailsPageProductsQuantity"
+                        description: "number of products"
                       },
                       {
                         quantity: maybe(
@@ -263,9 +258,9 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   >
                     {intl.formatMessage(
                       {
+                        id: "HVlMK2",
                         defaultMessage: "Variants ({quantity})",
-                        description: "number of variants",
-                        id: "saleDetailsPageVariantsQuantity"
+                        description: "number of variants"
                       },
                       {
                         quantity: maybe(

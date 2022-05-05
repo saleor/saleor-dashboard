@@ -126,7 +126,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
           product: productId,
           sku: formData.sku,
           stocks: formData.stocks.map(stock => ({
-            quantity: parseInt(stock.value, 0) || 0,
+            quantity: parseInt(stock.value, 10) || 0,
             warehouse: stock.id
           })),
           trackInventory: true,
@@ -217,6 +217,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
     <>
       <WindowTitle
         title={intl.formatMessage({
+          id: "MyM2oR",
           defaultMessage: "Create variant",
           description: "window title"
         })}
@@ -226,6 +227,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         disabled={disableForm}
         errors={variantCreateResult.data?.productVariantCreate.errors || []}
         header={intl.formatMessage({
+          id: "T6dXGG",
           defaultMessage: "Create Variant",
           description: "header"
         })}

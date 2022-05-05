@@ -50,20 +50,25 @@ const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDia
     <Dialog open={open}>
       <DialogTitle>
         <FormattedMessage
+          id="2Xt+sw"
           defaultMessage="Add postal codes"
           description="dialog header"
         />
       </DialogTitle>
       <Form initial={initial} onSubmit={onSubmit}>
-        {({ change, data, hasChanged }) => (
+        {({ change, data }) => (
           <>
             <DialogContent>
               <Typography className={classes.info}>
-                <FormattedMessage defaultMessage="Please provide range of postal codes you want to add to the include/exclude list." />
+                <FormattedMessage
+                  id="8InCjD"
+                  defaultMessage="Please provide range of postal codes you want to add to the include/exclude list."
+                />
               </Typography>
               <Grid variant="uniform">
                 <TextField
                   label={intl.formatMessage({
+                    id: "1T1fP8",
                     defaultMessage: "Postal codes (start)",
                     description: "range input label"
                   })}
@@ -73,6 +78,7 @@ const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDia
                 />
                 <TextField
                   label={intl.formatMessage({
+                    id: "axFFaD",
                     defaultMessage: "Postal codes (end)",
                     description: "range input label"
                   })}
@@ -86,12 +92,13 @@ const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDia
             <DialogActions>
               <BackButton onClick={onClose} />
               <ConfirmButton
-                disabled={!hasChanged || !data.min}
+                disabled={!data.min}
                 transitionState={confirmButtonState}
                 type="submit"
                 data-test-id="submit"
               >
                 <FormattedMessage
+                  id="DM/Ha1"
                   defaultMessage="Add"
                   description="add postal code range, button"
                 />

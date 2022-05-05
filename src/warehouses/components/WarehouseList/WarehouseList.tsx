@@ -99,13 +99,17 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
             className={classes.colName}
             onClick={() => onSort(WarehouseListUrlSortField.name)}
           >
-            <FormattedMessage defaultMessage="Name" description="warehouse" />
+            <FormattedMessage
+              id="aCJwVq"
+              defaultMessage="Name"
+              description="warehouse"
+            />
           </TableCellHeader>
           <TableCell className={classes.colZones}>
-            <FormattedMessage defaultMessage="Shipping Zones" />
+            <FormattedMessage id="PFXGaR" defaultMessage="Shipping Zones" />
           </TableCell>
           <TableCell className={classes.colActions}>
-            <FormattedMessage defaultMessage="Actions" />
+            <FormattedMessage id="wL7VAE" defaultMessage="Actions" />
           </TableCell>
         </TableRow>
       </TableHead>
@@ -173,7 +177,10 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
           () => (
             <TableRow data-test-id="empty-list-message">
               <TableCell colSpan={numberOfColumns}>
-                <FormattedMessage defaultMessage="No warehouses found" />
+                <FormattedMessage
+                  id="2gsiR1"
+                  defaultMessage="No warehouses found"
+                />
               </TableCell>
             </TableRow>
           )

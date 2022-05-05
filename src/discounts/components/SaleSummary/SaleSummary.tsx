@@ -35,7 +35,11 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({
       <CardTitle title={intl.formatMessage(commonMessages.summary)} />
       <CardContent>
         <Typography variant="caption">
-          <FormattedMessage defaultMessage="Name" description="sale name" />
+          <FormattedMessage
+            id="F56hOz"
+            defaultMessage="Name"
+            description="sale name"
+          />
         </Typography>
         <Typography className={classes.ellipsis}>
           {maybe<React.ReactNode>(() => sale.name, <Skeleton />)}
@@ -43,7 +47,11 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({
         <FormSpacer />
 
         <Typography variant="caption">
-          <FormattedMessage defaultMessage="Value" description="sale value" />
+          <FormattedMessage
+            id="XZR590"
+            defaultMessage="Value"
+            description="sale value"
+          />
         </Typography>
         <Typography>
           {sale ? (

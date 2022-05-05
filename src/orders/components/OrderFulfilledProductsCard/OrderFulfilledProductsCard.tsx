@@ -8,9 +8,9 @@ import { mergeRepeatedOrderLines } from "@saleor/orders/utils/data";
 import React from "react";
 
 import { renderCollection } from "../../../misc";
+import OrderCardTitle from "../OrderCardTitle";
 import TableHeader from "../OrderProductsCardElements/OrderProductsCardHeader";
 import TableLine from "../OrderProductsCardElements/OrderProductsTableRow";
-import CardTitle from "../OrderReturnPage/OrderReturnRefundItemsCard/CardTitle";
 import ActionButtons from "./ActionButtons";
 import ExtraInfoLines from "./ExtraInfoLines";
 import useStyles from "./styles";
@@ -63,7 +63,7 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
   return (
     <>
       <Card>
-        <CardTitle
+        <OrderCardTitle
           withStatus
           lines={fulfillment?.lines}
           fulfillmentOrder={fulfillment?.fulfillmentOrder}
@@ -87,7 +87,7 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
           <TableHeader />
           <TableBody>
             {renderCollection(getLines(), line => (
-              <TableLine line={line} />
+              <TableLine key={line.id} line={line} />
             ))}
           </TableBody>
           <ExtraInfoLines fulfillment={fulfillment} />

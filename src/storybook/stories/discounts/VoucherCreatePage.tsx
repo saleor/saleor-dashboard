@@ -17,7 +17,6 @@ const props: VoucherCreatePageProps = {
   channelListings: channels,
   disabled: false,
   errors: [],
-  hasChannelChanged: false,
   onChannelsChange: () => undefined,
   onSubmit: () => undefined,
   openChannelsModal: () => undefined,

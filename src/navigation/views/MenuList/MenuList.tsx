@@ -84,8 +84,8 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         notify({
           status: "success",
           text: intl.formatMessage({
-            defaultMessage: "Created menu",
-            id: "menuListCreatedMenu"
+            id: "ugnggZ",
+            defaultMessage: "Created menu"
           })
         });
         navigate(menuUrl(data.menuCreate.menu.id));
@@ -99,8 +99,8 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         notify({
           status: "success",
           text: intl.formatMessage({
-            defaultMessage: "Deleted menu",
-            id: "menuListDeletedMenu"
+            id: "OwG/0z",
+            defaultMessage: "Deleted menu"
           })
         });
         closeModal();
@@ -190,15 +190,15 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         }
         variant="delete"
         title={intl.formatMessage({
+          id: "QzseV7",
           defaultMessage: "Delete Menu",
-          description: "dialog header",
-          id: "menuListDeleteMenuHeader"
+          description: "dialog header"
         })}
       >
         <DialogContentText>
           <FormattedMessage
+            id="bj1U23"
             defaultMessage="Are you sure you want to delete {menuName}?"
-            id="menuListDeleteMenuContent"
             values={{
               menuName: getStringOrPlaceholder(
                 mapEdgesToItems(data?.menus)?.find(getById(params.id))?.name
@@ -222,15 +222,15 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         }
         variant="delete"
         title={intl.formatMessage({
+          id: "1LBYpE",
           defaultMessage: "Delete Menus",
-          description: "dialog header",
-          id: "menuListDeleteMenusHeader"
+          description: "dialog header"
         })}
       >
         <DialogContentText>
           <FormattedMessage
+            id="svK+kv"
             defaultMessage="{counter,plural,one{Are you sure you want to delete this menu?} other{Are you sure you want to delete {displayQuantity} menus?}}"
-            id="menuListDeleteMenusContent"
             values={{
               counter: maybe(() => params.ids.length.toString(), "..."),
               displayQuantity: (
