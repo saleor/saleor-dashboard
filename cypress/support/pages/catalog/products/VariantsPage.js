@@ -68,7 +68,9 @@ export function createVariant({
     .get(VARIANTS_SELECTORS.skuInput)
     .should("be.enabled")
     .get(BUTTON_SELECTORS.back)
-    .click();
+    .click()
+    .get(PRODUCT_DETAILS.productNameInput)
+    .should("be.enabled");
   selectChannelForVariantAndFillUpPrices({
     channelName,
     variantName: attributeName,
