@@ -190,7 +190,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
       />
       {!noChannel && (
         <ChannelPickerDialog
-          channelsChoices={mapNodeToChoice(availableChannels)}
+          channelsChoices={channelOpts}
           confirmButtonState="success"
           defaultChoice={channel.id}
           open={params.action === "create-order"}
