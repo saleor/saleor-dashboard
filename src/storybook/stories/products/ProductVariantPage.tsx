@@ -23,7 +23,6 @@ storiesOf("Views / Products / Product variant details", module)
       channels={channels}
       channelErrors={[]}
       variant={variant}
-      onAdd={() => undefined}
       onDelete={undefined}
       onSetDefaultVariant={() => undefined}
       onMediaSelect={() => undefined}
@@ -53,7 +52,6 @@ storiesOf("Views / Products / Product variant details", module)
       channelErrors={[]}
       loading={true}
       placeholderImage={placeholderImage}
-      onAdd={() => undefined}
       onDelete={undefined}
       onSetDefaultVariant={() => undefined}
       onMediaSelect={() => undefined}
@@ -82,7 +80,6 @@ storiesOf("Views / Products / Product variant details", module)
       channels={channels}
       channelErrors={[]}
       variant={variant}
-      onAdd={() => undefined}
       onDelete={undefined}
       onSetDefaultVariant={() => undefined}
       onMediaSelect={() => undefined}
@@ -109,7 +106,6 @@ storiesOf("Views / Products / Product variant details", module)
       header={variant.name || variant.sku}
       channels={channels}
       variant={variant}
-      onAdd={() => undefined}
       onDelete={undefined}
       onSetDefaultVariant={() => undefined}
       onMediaSelect={() => undefined}

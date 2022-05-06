@@ -113,7 +113,6 @@ interface ProductVariantPageProps {
   variantDeactivatePreoderButtonState: ConfirmButtonTransitionState;
   onVariantReorder: ReorderAction;
   onAttributeSelectBlur: () => void;
-  onAdd();
   onDelete();
   onSubmit(data: ProductVariantUpdateSubmitData);
   onMediaSelect(id: string);
@@ -137,7 +136,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   referencePages = [],
   referenceProducts = [],
   attributeValues,
-  onAdd,
   onDelete,
   onMediaSelect,
   onSubmit,
@@ -239,12 +237,11 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                 <Grid variant="inverted">
                   <div>
                     <ProductVariantNavigation
+                      productId={productId}
                       current={variant?.id}
                       defaultVariantId={defaultVariantId}
                       fallbackThumbnail={variant?.product?.thumbnail?.url}
-                      productId={productId}
                       variants={variant?.product.variants}
-                      onAdd={onAdd}
                       onReorder={onVariantReorder}
                     />
                   </div>

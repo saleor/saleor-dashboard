@@ -52,7 +52,6 @@ import ProductVariantPage from "../components/ProductVariantPage";
 import { ProductVariantUpdateSubmitData } from "../components/ProductVariantPage/form";
 import {
   productUrl,
-  productVariantAddUrl,
   productVariantEditUrl,
   ProductVariantEditUrlDialog,
   ProductVariantEditUrlQueryParams
@@ -380,7 +379,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         variant={variant}
         header={variant?.name || variant?.sku}
         warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
-        onAdd={() => navigate(productVariantAddUrl(productId))}
         onDelete={() => openModal("remove")}
         onMediaSelect={handleMediaSelect}
         onSubmit={async data => {

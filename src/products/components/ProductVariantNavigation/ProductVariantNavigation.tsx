@@ -14,7 +14,10 @@ import {
   ProductVariantDetailsQuery
 } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { productVariantEditUrl } from "@saleor/products/urls";
+import {
+  productVariantAddUrl,
+  productVariantEditUrl
+} from "@saleor/products/urls";
 import { ReorderAction } from "@saleor/types";
 import classNames from "classnames";
 import React from "react";
@@ -69,10 +72,10 @@ interface ProductVariantNavigationProps {
   defaultVariantId?: string;
   fallbackThumbnail: string;
   productId: string;
+  isCreate?: boolean;
   variants:
     | Array<ProductVariantDetailsQuery["productVariant"]>
     | ProductVariantCreateDataQuery["product"]["variants"];
-  onAdd?: () => void;
   onReorder: ReorderAction;
 }
 
@@ -82,8 +85,8 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
     defaultVariantId,
     fallbackThumbnail,
     productId,
+    isCreate,
     variants,
-    onAdd,
     onReorder
   } = props;
 
@@ -141,10 +144,10 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
               </SortableTableRow>
             );
           })}
-          {onAdd ? (
+          {!isCreate ? (
             <TableRow>
               <TableCell colSpan={3}>
-                <Button onClick={onAdd}>
+                <Button href={productVariantAddUrl(productId)}>
                   <FormattedMessage
                     id="3C3Nj5"
                     defaultMessage="Add variant"
