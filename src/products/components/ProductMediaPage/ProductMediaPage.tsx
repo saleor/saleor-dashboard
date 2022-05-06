@@ -8,8 +8,10 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import { ProductMediaType } from "@saleor/graphql";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { commonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
+import { productUrl } from "@saleor/products/urls";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -61,6 +63,7 @@ const useStyles = makeStyles(
 );
 
 interface ProductMediaPageProps {
+  productId: string;
   mediaObj?: {
     id: string;
     alt: string;
@@ -75,7 +78,6 @@ interface ProductMediaPageProps {
   disabled: boolean;
   product: string;
   saveButtonBarState: ConfirmButtonTransitionState;
-  onBack: () => void;
   onDelete: () => void;
   onRowClick: (id: string) => () => void;
   onSubmit: (data: { description: string }) => void;
@@ -83,12 +85,12 @@ interface ProductMediaPageProps {
 
 const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
   const {
+    productId,
     disabled,
     mediaObj,
     media,
     product,
     saveButtonBarState,
-    onBack,
     onDelete,
     onRowClick,
     onSubmit
@@ -96,6 +98,7 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
 
   const classes = useStyles(props);
   const intl = useIntl();
+  const navigate = useNavigator();
 
   return (
     <Form
@@ -105,7 +108,7 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
     >
       {({ change, data, submit }) => (
         <Container>
-          <Backlink onClick={onBack}>{product}</Backlink>
+          <Backlink href={productUrl(productId)}>{product}</Backlink>
           <PageHeader title={intl.formatMessage(messages.editMedia)} />
           <Grid variant="inverted">
             <div>
@@ -164,7 +167,7 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
           <Savebar
             disabled={disabled || !onSubmit}
             state={saveButtonBarState}
-            onCancel={onBack}
+            onCancel={() => navigate(productUrl(productId))}
             onDelete={onDelete}
             onSubmit={submit}
           />
