@@ -368,6 +368,10 @@
     "context": "dialog header",
     "string": "Change customer shipping address"
   },
+  "142MJn": {
+    "context": "select visible columns button",
+    "string": "Columns"
+  },
   "15PiOX": {
     "context": "button title",
     "string": "Unassign"

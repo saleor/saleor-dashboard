@@ -49,6 +49,7 @@ const ColumnPickerButton: React.FC<ColumnPickerButtonProps> = props => {
       variant="secondary"
     >
       <FormattedMessage
+        id="142MJn"
         defaultMessage="Columns"
         description="select visible columns button"
       />
