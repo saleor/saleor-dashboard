@@ -87,7 +87,6 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
       <OrderFulfillPage
         loading={loading || settingsLoading || fulfillOrderOpts.loading}
         errors={fulfillOrderOpts.data?.orderFulfill.errors}
-        onBack={() => navigate(orderUrl(orderId))}
         onSubmit={async (formData: OrderFulfillSubmitData) => {
           const res = await fulfillOrder({
             variables: {

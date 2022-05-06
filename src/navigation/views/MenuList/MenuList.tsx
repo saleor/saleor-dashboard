@@ -1,6 +1,6 @@
 import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
-import { configurationMenuUrl } from "@saleor/configuration";
+import { Button } from "@saleor/components/Button";
 import {
   useMenuBulkDeleteMutation,
   useMenuCreateMutation,
@@ -15,8 +15,7 @@ import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import { commonMessages } from "@saleor/intl";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { buttonMessages, commonMessages } from "@saleor/intl";
 import { getStringOrPlaceholder, maybe } from "@saleor/misc";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ListViews } from "@saleor/types";
@@ -132,14 +131,6 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         disabled={loading}
         menus={mapEdgesToItems(data?.menus)}
         settings={settings}
-        onAdd={() =>
-          navigate(
-            menuListUrl({
-              action: "add"
-            })
-          )
-        }
-        onBack={() => navigate(configurationMenuUrl)}
         onDelete={id =>
           navigate(
             menuListUrl({
@@ -151,7 +142,6 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
-        onRowClick={id => () => navigate(menuUrl(id))}
         onSort={handleSort}
         pageInfo={pageInfo}
         isChecked={isSelected}
@@ -160,9 +150,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         toggle={toggle}
         toggleAll={toggleAll}
         toolbar={
-          <IconButton
-            variant="secondary"
-            color="primary"
+          <Button
             onClick={() =>
               navigate(
                 menuListUrl({
@@ -173,8 +161,8 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
               )
             }
           >
-            <DeleteIcon />
-          </IconButton>
+            <FormattedMessage {...buttonMessages.remove} />
+          </Button>
         }
       />
       <MenuCreateDialog

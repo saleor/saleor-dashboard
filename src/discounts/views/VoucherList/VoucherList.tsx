@@ -32,11 +32,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import VoucherListPage from "../../components/VoucherListPage";
 import {
-  voucherAddUrl,
   voucherListUrl,
   VoucherListUrlDialog,
-  VoucherListUrlQueryParams,
-  voucherUrl
+  VoucherListUrlQueryParams
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -197,11 +195,9 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
         vouchers={mapEdgesToItems(data?.vouchers)}
         disabled={loading}
         pageInfo={pageInfo}
-        onAdd={() => navigate(voucherAddUrl())}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
-        onRowClick={id => () => navigate(voucherUrl(id))}
         onSort={handleSort}
         isChecked={isSelected}
         selected={listElements.length}

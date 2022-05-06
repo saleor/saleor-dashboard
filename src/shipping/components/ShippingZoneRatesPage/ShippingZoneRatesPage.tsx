@@ -1,4 +1,5 @@
 import { ChannelShippingData } from "@saleor/channels/utils";
+import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import Container from "@saleor/components/Container";
@@ -18,7 +19,8 @@ import {
 } from "@saleor/graphql";
 import useForm, { SubmitPromise } from "@saleor/hooks/useForm";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import useNavigator from "@saleor/hooks/useNavigator";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
 import OrderValue from "@saleor/shipping/components/OrderValue";
 import OrderWeight from "@saleor/shipping/components/OrderWeight";
@@ -37,7 +39,7 @@ import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
 import { ShippingZoneRateUpdateFormData } from "./types";
 
 export interface ShippingZoneRatesPageProps
-  extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">>,
+  extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
     ListActions,
     WithFormId {
   allChannelsCount?: number;
@@ -49,7 +51,7 @@ export interface ShippingZoneRatesPageProps
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   postalCodeRules: ShippingZoneQuery["shippingZone"]["shippingMethods"][0]["postalCodeRules"];
-  onBack: () => void;
+  backHref: string;
   onDelete?: () => void;
   onSubmit: (data: ShippingZoneRateUpdateFormData) => SubmitPromise;
   onPostalCodeInclusionChange: (
@@ -73,7 +75,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   disabled,
   errors,
   havePostalCodesChanged,
-  onBack,
+  backHref,
   onDelete,
   onSubmit,
   onPostalCodeInclusionChange,
@@ -90,6 +92,8 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   formId,
   ...listProps
 }) => {
+  const navigate = useNavigator();
+
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
 
   const initialForm: Omit<
@@ -162,7 +166,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   return (
     <form onSubmit={handleFormElementSubmit}>
       <Container>
-        <Backlink onClick={onBack}>
+        <Backlink href={backHref}>
           <FormattedMessage id="PRlD0A" defaultMessage="Shipping" />
         </Backlink>
         <PageHeader title={rate?.name} />
@@ -236,7 +240,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
         </Grid>
         <Savebar
           disabled={isSaveDisabled}
-          onCancel={onBack}
+          onCancel={() => navigate(backHref)}
           onDelete={onDelete}
           onSubmit={handleSubmit}
           state={saveButtonBarState}

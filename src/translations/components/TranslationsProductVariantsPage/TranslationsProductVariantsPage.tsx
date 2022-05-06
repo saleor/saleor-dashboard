@@ -1,3 +1,4 @@
+import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
@@ -7,12 +8,16 @@ import {
   ProductVariantTranslationFragment
 } from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
-import { Backlink } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import {
   TranslationInputFieldName,
   TranslationsEntitiesPageProps
 } from "@saleor/translations/types";
+import {
+  languageEntitiesUrl,
+  productVariantUrl,
+  TranslatableEntities
+} from "@saleor/translations/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -28,6 +33,7 @@ export interface TranslationsProductsPageProps
 }
 
 const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
+  translationId,
   activeField,
   disabled,
   languageCode,
@@ -36,10 +42,8 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
   saveButtonState,
   productId,
   variantId,
-  onBack,
   onDiscard,
   onEdit,
-  onLanguageChange,
   onSubmit,
   onAttributeValueSubmit
 }) => {
@@ -47,7 +51,11 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink
+        href={languageEntitiesUrl(languageCode, {
+          tab: TranslatableEntities.products
+        })}
+      >
         {intl.formatMessage(sectionNames.products)}
       </Backlink>
       <PageHeader
@@ -72,7 +80,9 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
         <LanguageSwitch
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
-          onLanguageChange={onLanguageChange}
+          getLanguageUrl={lang =>
+            productVariantUrl(lang, productId, translationId)
+          }
         />
       </PageHeader>
       <TranslationFields

@@ -1,10 +1,11 @@
 import { Card, CardContent, TextField, Typography } from "@material-ui/core";
+import { Button } from "@saleor/components/Button";
 import {
   CollectionErrorFragment,
   PageErrorFragment,
   ProductErrorFragment
 } from "@saleor/graphql";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import { getFieldError, getProductErrorMessage } from "@saleor/utils/errors";
 import getPageErrorMessage from "@saleor/utils/errors/page";
 import classNames from "classnames";

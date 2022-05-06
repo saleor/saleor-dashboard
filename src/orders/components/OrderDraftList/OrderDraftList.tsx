@@ -7,6 +7,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { OrderDraftListQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import {
@@ -15,7 +16,7 @@ import {
   transformOrderStatus,
   transformPaymentStatus
 } from "@saleor/misc";
-import { OrderDraftListUrlSortField } from "@saleor/orders/urls";
+import { OrderDraftListUrlSortField, orderUrl } from "@saleor/orders/urls";
 import { ListActions, ListProps, RelayToFlat, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
@@ -66,7 +67,6 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
     onPreviousPage,
     onNextPage,
     onUpdateListSettings,
-    onRowClick,
     onSort,
     isChecked,
     selected,
@@ -168,11 +168,11 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
             const isSelected = order ? isChecked(order.id) : false;
 
             return (
-              <TableRow
+              <TableRowLink
                 data-test-id="draft-order-table-row"
                 hover={!!order}
                 className={!!order ? classes.link : undefined}
-                onClick={order ? onRowClick(order.id) : undefined}
+                href={order && orderUrl(order.id)}
                 key={order ? order.id : "skeleton"}
                 selected={isSelected}
               >
@@ -218,7 +218,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
                     <Skeleton />
                   )}
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             );
           },
           () => (

@@ -55,7 +55,6 @@ export interface ListProps<TColumns extends string = string> {
   settings?: ListSettings<TColumns>;
   onNextPage: () => void;
   onPreviousPage: () => void;
-  onRowClick: (id: string) => () => void;
   onUpdateListSettings?: <T extends keyof ListSettings<TColumns>>(
     key: T,
     value: ListSettings<TColumns>[T]
@@ -91,7 +90,6 @@ export interface ListActions extends ListActionsWithoutToolbar {
 export interface PageListProps<TColumns extends string = string>
   extends ListProps<TColumns> {
   defaultSettings?: ListSettings<TColumns>;
-  onAdd: () => void;
 }
 
 export interface SearchProps {

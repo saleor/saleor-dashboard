@@ -1,3 +1,5 @@
+import { customAppUrl } from "@saleor/apps/urls";
+import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
@@ -10,7 +12,8 @@ import {
   WebhookEventTypeAsyncEnum,
   WebhookEventTypeSyncEnum
 } from "@saleor/graphql";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import useNavigator from "@saleor/hooks/useNavigator";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import WebhookEvents from "@saleor/webhooks/components/WebhookEvents";
 import WebhookInfo from "@saleor/webhooks/components/WebhookInfo";
 import WebhookStatus from "@saleor/webhooks/components/WebhookStatus";
@@ -38,24 +41,25 @@ export interface FormData {
 
 export interface WebhookDetailsPageProps {
   appName: string;
+  appId: string;
   disabled: boolean;
   errors: WebhookErrorFragment[];
   webhook?: WebhookDetailsQuery["webhook"];
   saveButtonBarState: ConfirmButtonTransitionState;
-  onBack: () => void;
   onSubmit: (data: FormData) => void;
 }
 
 const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
   appName,
+  appId,
   disabled,
   errors,
   webhook,
   saveButtonBarState,
-  onBack,
   onSubmit
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   const initialForm: FormData = {
     syncEvents: webhook?.syncEvents?.map(event => event.eventType) || [],
@@ -90,7 +94,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
 
         return (
           <Container>
-            <Backlink onClick={onBack}>{appName}</Backlink>
+            <Backlink href={customAppUrl(appId)}>{appName}</Backlink>
             <PageHeader title={getHeaderTitle(intl, webhook)} />
             <Grid>
               <div>
@@ -120,7 +124,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
             <Savebar
               disabled={disabled}
               state={saveButtonBarState}
-              onCancel={onBack}
+              onCancel={() => navigate(customAppUrl(appId))}
               onSubmit={submit}
             />
           </Container>

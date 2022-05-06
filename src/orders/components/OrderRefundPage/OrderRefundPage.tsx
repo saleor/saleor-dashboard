@@ -1,3 +1,4 @@
+import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
@@ -8,8 +9,8 @@ import {
   OrderRefundDataQuery
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
-import { Backlink } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
+import { orderUrl } from "@saleor/orders/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -37,7 +38,6 @@ export interface OrderRefundPageProps {
   defaultType?: OrderRefundType;
   disabled: boolean;
   errors: OrderErrorFragment[];
-  onBack: () => void;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }
 
@@ -47,7 +47,6 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
     defaultType = OrderRefundType.PRODUCTS,
     disabled,
     errors = [],
-    onBack,
     onSubmit
   } = props;
 
@@ -74,7 +73,7 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
 
         return (
           <Container>
-            <Backlink onClick={onBack}>
+            <Backlink href={orderUrl(order?.id)}>
               {order?.number
                 ? intl.formatMessage(
                     {

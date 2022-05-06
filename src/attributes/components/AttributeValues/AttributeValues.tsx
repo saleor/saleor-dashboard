@@ -5,6 +5,7 @@ import {
   TableHead,
   TableRow
 } from "@material-ui/core";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
@@ -17,14 +18,14 @@ import {
   AttributeInputTypeEnum,
   AttributeValueListFragment
 } from "@saleor/graphql";
-import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { ListProps, RelayToFlat, ReorderAction } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface AttributeValuesProps
-  extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">> {
+  extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">> {
   disabled: boolean;
   values: RelayToFlat<AttributeValueListFragment>;
   onValueAdd: () => void;
@@ -160,7 +161,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
           {renderCollection(
             values,
             (value, valueIndex) => (
-              <SortableTableRow
+              <SortableTableRow<"row">
                 className={!!value ? classes.link : undefined}
                 hover={!!value}
                 onClick={!!value ? () => onValueUpdate(value.id) : undefined}

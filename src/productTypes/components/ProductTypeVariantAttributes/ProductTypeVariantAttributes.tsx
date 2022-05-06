@@ -1,5 +1,7 @@
 import { Card, TableCell, TableRow, Tooltip } from "@material-ui/core";
 import HelpOutline from "@material-ui/icons/HelpOutline";
+import { attributeUrl } from "@saleor/attributes/urls";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -10,7 +12,7 @@ import {
 } from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
 import { ProductAttributeType, ProductTypeDetailsQuery } from "@saleor/graphql";
-import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { ListActions, ReorderAction } from "@saleor/types";
 import capitalize from "lodash/capitalize";
@@ -65,7 +67,6 @@ interface ProductTypeVariantAttributesProps extends ListActions {
   testId?: string;
   selectedVariantAttributes: string[];
   onAttributeAssign: (type: ProductAttributeType) => void;
-  onAttributeClick: (id: string) => void;
   onAttributeReorder: ReorderAction;
   onAttributeUnassign: (id: string) => void;
   setSelectedVariantAttributes: (data: string[]) => void;
@@ -102,7 +103,6 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
     type,
     testId,
     onAttributeAssign,
-    onAttributeClick,
     onAttributeReorder,
     onAttributeUnassign,
     setSelectedVariantAttributes,
@@ -210,11 +210,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                   selected={isVariantSelected}
                   className={!!attribute ? classes.link : undefined}
                   hover={!!attribute}
-                  onClick={
-                    !!attribute
-                      ? () => onAttributeClick(attribute.id)
-                      : undefined
-                  }
+                  href={attribute ? attributeUrl(attribute.id) : undefined}
                   key={maybe(() => attribute.id)}
                   index={attributeIndex || 0}
                   data-test-id={"id-" + +maybe(() => attribute.id)}

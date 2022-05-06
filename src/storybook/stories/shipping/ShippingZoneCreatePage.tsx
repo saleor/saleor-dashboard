@@ -41,7 +41,6 @@ const props: ShippingZoneCreatePageProps = {
   restWorldCountries: mapCountriesToCountriesCodes(countries),
   disabled: false,
   errors: [],
-  onBack: () => undefined,
   onSubmit: () => undefined,
   saveButtonBarState: "default"
 };

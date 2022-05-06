@@ -10,9 +10,10 @@ import {
   TextField,
   Typography
 } from "@material-ui/core";
+import { Button } from "@saleor/components/Button";
 import { MetadataInput } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
-import { Button, DeleteIcon, ExpandIcon, IconButton } from "@saleor/macaw-ui";
+import { DeleteIcon, ExpandIcon, IconButton } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";

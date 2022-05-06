@@ -6,7 +6,6 @@ import {
   useWebhookUpdateMutation,
   WebhookEventTypeAsyncEnum
 } from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import React from "react";
@@ -21,7 +20,6 @@ export interface WebhooksDetailsProps {
 }
 
 export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
-  const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
 
@@ -42,14 +40,11 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
     }
   });
 
-  const handleOnBack = () =>
-    navigate(customAppUrl(webhookDetails.webhook.app.id));
-
   const webhook = webhookDetails?.webhook;
   const formErrors = webhookUpdateOpts.data?.webhookUpdate.errors || [];
 
   if (webhook === null) {
-    return <NotFoundPage onBack={handleOnBack} />;
+    return <NotFoundPage backHref={customAppUrl(webhook.app.id)} />;
   }
 
   const handleSubmit = (data: WebhookFormData) =>
@@ -79,12 +74,12 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
         title={getStringOrPlaceholder(webhookDetails?.webhook?.name)}
       />
       <WebhookDetailsPage
+        appId={webhook?.app?.id}
         appName={webhook?.app?.name}
         disabled={loading}
         errors={formErrors}
         saveButtonBarState={webhookUpdateOpts.status}
         webhook={webhook}
-        onBack={handleOnBack}
         onSubmit={handleSubmit}
       />
     </>

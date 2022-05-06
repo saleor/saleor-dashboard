@@ -37,6 +37,7 @@ const useNavigator = jest.spyOn(_useNavigator, "default");
 
 const props: ProductUpdatePageProps = {
   ...listActionsProps,
+  productId: "123",
   allChannelsCount: 5,
   categories: [product.category],
   channelsData: [],
@@ -60,7 +61,6 @@ const props: ProductUpdatePageProps = {
   media: product.media,
   limits,
   onAssignReferencesClick: () => undefined,
-  onBack: () => undefined,
   onChannelsChange: () => undefined,
   onCloseDialog: () => undefined,
   onDelete: () => undefined,
@@ -69,9 +69,7 @@ const props: ProductUpdatePageProps = {
   onMediaUrlUpload: () => undefined,
   onSetDefaultVariant: () => undefined,
   onSubmit,
-  onVariantAdd: () => undefined,
   onVariantReorder: () => undefined,
-  onVariantShow: () => undefined,
   onVariantsAdd: () => undefined,
   onVariantEndPreorderDialogOpen: () => undefined,
   onWarehouseConfigure: () => undefined,

@@ -5,15 +5,13 @@ import {
   TableRow,
   Typography
 } from "@material-ui/core";
+import { customAppAddUrl } from "@saleor/apps/urls";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { AppsListQuery } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
-import {
-  Button,
-  DeleteIcon,
-  IconButton,
-  ResponsiveTable
-} from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton, ResponsiveTable } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -24,16 +22,14 @@ import DeactivatedText from "../DeactivatedText";
 
 export interface CustomAppsProps {
   appsList: AppsListQuery["apps"]["edges"];
-  navigateToCustomApp: (id: string) => () => void;
-  navigateToCustomAppCreate?: () => void;
+  getCustomAppHref: (id: string) => string;
   onRemove: (id: string) => void;
 }
 
 const CustomApps: React.FC<CustomAppsProps> = ({
   appsList,
-  navigateToCustomAppCreate,
   onRemove,
-  navigateToCustomApp
+  getCustomAppHref
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -42,19 +38,17 @@ const CustomApps: React.FC<CustomAppsProps> = ({
     <Card className={classes.customApps}>
       <CardTitle
         toolbar={
-          !!navigateToCustomAppCreate && (
-            <Button
-              variant="secondary"
-              onClick={navigateToCustomAppCreate}
-              data-test-id="create-app"
-            >
-              <FormattedMessage
-                id="XB2Jj9"
-                defaultMessage="Create App"
-                description="create app button"
-              />
-            </Button>
-          )
+          <Button
+            variant="secondary"
+            href={customAppAddUrl}
+            data-test-id="create-app"
+          >
+            <FormattedMessage
+              id="XB2Jj9"
+              defaultMessage="Create App"
+              description="create app button"
+            />
+          </Button>
         }
         title={intl.formatMessage(commonMessages.customApps)}
       />
@@ -64,10 +58,10 @@ const CustomApps: React.FC<CustomAppsProps> = ({
             appsList,
             (app, index) =>
               app ? (
-                <TableRow
+                <TableRowLink
                   key={app.node.id}
                   className={classes.tableRow}
-                  onClick={navigateToCustomApp(app.node.id)}
+                  href={getCustomAppHref(app.node.id)}
                 >
                   <TableCell className={classes.colName}>
                     <span data-tc="name" className={classes.appName}>
@@ -88,7 +82,7 @@ const CustomApps: React.FC<CustomAppsProps> = ({
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               ) : (
                 <AppsSkeleton key={index} />
               ),

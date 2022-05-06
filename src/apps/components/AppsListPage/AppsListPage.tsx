@@ -17,8 +17,7 @@ export interface AppsListPageProps extends ListProps {
   customAppsList: AppsListQuery["apps"]["edges"];
   appsInProgressList?: AppsInstallationsQuery;
   loadingAppsInProgress: boolean;
-  navigateToCustomApp: (id: string) => () => void;
-  navigateToCustomAppCreate: () => void;
+  getCustomAppHref: (id: string) => string;
   onInstalledAppRemove: (id: string) => void;
   onCustomAppRemove: (id: string) => void;
   onAppInProgressRemove: (id: string) => void;
@@ -31,8 +30,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
   customAppsList,
   installedAppsList,
   loadingAppsInProgress,
-  navigateToCustomApp,
-  navigateToCustomAppCreate,
+  getCustomAppHref,
   onInstalledAppRemove,
   onCustomAppRemove,
   onAppInProgressRemove,
@@ -67,8 +65,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
       <CardSpacer />
       <CustomApps
         appsList={customAppsList}
-        navigateToCustomApp={navigateToCustomApp}
-        navigateToCustomAppCreate={navigateToCustomAppCreate}
+        getCustomAppHref={getCustomAppHref}
         onRemove={onCustomAppRemove}
       />
       <CardSpacer />

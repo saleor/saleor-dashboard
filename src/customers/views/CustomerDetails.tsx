@@ -12,7 +12,6 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { extractMutationErrors, getStringOrPlaceholder } from "@saleor/misc";
-import { orderListUrl, orderUrl } from "@saleor/orders/urls";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -22,12 +21,7 @@ import CustomerDetailsPage, {
 } from "../components/CustomerDetailsPage";
 import { useCustomerDetails } from "../hooks/useCustomerDetails";
 import { CustomerDetailsProvider } from "../providers/CustomerDetailsProvider";
-import {
-  customerAddressesUrl,
-  customerListUrl,
-  customerUrl,
-  CustomerUrlQueryParams
-} from "../urls";
+import { customerListUrl, customerUrl, CustomerUrlQueryParams } from "../urls";
 
 interface CustomerDetailsViewProps {
   id: string;
@@ -75,10 +69,8 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
-  const handleBack = () => navigate(customerListUrl());
-
   if (user === null) {
-    return <NotFoundPage onBack={handleBack} />;
+    return <NotFoundPage backHref={customerListUrl()} />;
   }
 
   const updateData = async (data: CustomerDetailsPageFormData) =>
@@ -108,6 +100,7 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
     <>
       <WindowTitle title={user?.email} />
       <CustomerDetailsPage
+        customerId={id}
         customer={user}
         disabled={
           customerDetailsLoading ||
@@ -116,21 +109,11 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
         }
         errors={updateCustomerOpts.data?.customerUpdate.errors || []}
         saveButtonBar={updateCustomerOpts.status}
-        onAddressManageClick={() => navigate(customerAddressesUrl(id))}
-        onBack={handleBack}
-        onRowClick={id => navigate(orderUrl(id))}
         onSubmit={handleSubmit}
         onDelete={() =>
           navigate(
             customerUrl(id, {
               action: "remove"
-            })
-          )
-        }
-        onViewAllOrdersClick={() =>
-          navigate(
-            orderListUrl({
-              customer: user?.email
             })
           )
         }

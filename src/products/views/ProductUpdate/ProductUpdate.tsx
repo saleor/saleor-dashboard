@@ -67,14 +67,12 @@ import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 import { getMutationState } from "../../../misc";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
 import {
-  productImageUrl,
   productListUrl,
   productUrl,
   ProductUrlDialog,
   ProductUrlQueryParams,
   productVariantAddUrl,
-  productVariantCreatorUrl,
-  productVariantEditUrl
+  productVariantCreatorUrl
 } from "../../urls";
 import {
   CHANNELS_AVAILIABILITY_MODAL_SELECTOR,
@@ -403,8 +401,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const handleImageDelete = (id: string) => () =>
     deleteProductImage({ variables: { id } });
-  const handleImageEdit = (imageId: string) => () =>
-    navigate(productImageUrl(id, imageId));
 
   const handleSubmit = createMetadataUpdateHandler(
     product,
@@ -563,6 +559,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           />
         ))}
       <ProductUpdatePage
+        productId={id}
         isSimpleProduct={isSimpleProduct}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
@@ -591,20 +588,15 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
         taxTypes={data?.taxTypes}
         variants={product?.variants}
-        onBack={handleBack}
         onDelete={() => openModal("remove")}
         onImageReorder={handleImageReorder}
         onMediaUrlUpload={handleMediaUrlUpload}
         onSubmit={handleSubmit}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
-        onVariantAdd={handleVariantAdd}
         onVariantsAdd={() => openModal("add-variants")}
-        onVariantShow={variantId => () =>
-          navigate(productVariantEditUrl(product.id, variantId))}
         onVariantReorder={handleVariantReorder}
         onVariantEndPreorderDialogOpen={() => setIsEndPreorderModalOpened(true)}
         onImageUpload={handleImageUpload}
-        onImageEdit={handleImageEdit}
         onImageDelete={handleImageDelete}
         toolbar={
           <IconButton

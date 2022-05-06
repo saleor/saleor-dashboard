@@ -1,4 +1,5 @@
 import { Typography } from "@material-ui/core";
+import { Backlink } from "@saleor/components/Backlink";
 import CardMenu from "@saleor/components/CardMenu";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { Container } from "@saleor/components/Container";
@@ -9,13 +10,11 @@ import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import { OrderDetailsFragment, SearchCustomersQuery } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import {
-  Backlink,
-  ConfirmButtonTransitionState,
-  makeStyles
-} from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import DraftOrderChannelSectionCard from "@saleor/orders/components/DraftOrderChannelSectionCard";
+import { orderDraftListUrl } from "@saleor/orders/urls";
 import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -45,7 +44,6 @@ export interface OrderDraftPageProps extends FetchMoreProps {
   usersLoading: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   fetchUsers: (query: string) => void;
-  onBack: () => void;
   onBillingAddressEdit: () => void;
   onCustomerEdit: (data: CustomerEditData) => void;
   onDraftFinalize: () => void;
@@ -69,7 +67,6 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
     fetchUsers,
     hasMore,
     saveButtonBarState,
-    onBack,
     onBillingAddressEdit,
     onCustomerEdit,
     onDraftFinalize,
@@ -87,12 +84,13 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
     usersLoading
   } = props;
   const classes = useStyles(props);
+  const navigate = useNavigator();
 
   const intl = useIntl();
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink href={orderDraftListUrl()}>
         {intl.formatMessage(sectionNames.draftOrders)}
       </Backlink>
       <PageHeader
@@ -159,7 +157,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
       <Savebar
         state={saveButtonBarState}
         disabled={disabled || !order?.canFinalize}
-        onCancel={onBack}
+        onCancel={() => navigate(orderDraftListUrl())}
         onSubmit={onDraftFinalize}
         labels={{
           confirm: intl.formatMessage({

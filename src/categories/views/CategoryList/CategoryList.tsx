@@ -28,12 +28,10 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { CategoryListPage } from "../../components/CategoryListPage/CategoryListPage";
 import {
-  categoryAddUrl,
   categoryListUrl,
   CategoryListUrlDialog,
   CategoryListUrlFilters,
-  CategoryListUrlQueryParams,
-  categoryUrl
+  CategoryListUrlQueryParams
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -156,8 +154,6 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         tabs={tabs.map(tab => tab.name)}
         settings={settings}
         sort={getSortParams(params)}
-        onAdd={() => navigate(categoryAddUrl())}
-        onRowClick={id => () => navigate(categoryUrl(id))}
         onSort={handleSort}
         disabled={loading}
         onNextPage={loadNextPage}

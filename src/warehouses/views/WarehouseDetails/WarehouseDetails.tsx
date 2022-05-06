@@ -16,7 +16,6 @@ import {
   getMutationStatus,
   getStringOrPlaceholder
 } from "@saleor/misc";
-import { shippingZoneUrl } from "@saleor/shipping/urls";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import WarehouseDeleteDialog from "@saleor/warehouses/components/WarehouseDeleteDialog";
 import WarehouseDetailsPage, {
@@ -113,9 +112,7 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
         errors={updateWarehouseOpts.data?.updateWarehouse.errors || []}
         saveButtonBarState={updateWarehouseTransitionState}
         warehouse={data?.warehouse}
-        onBack={() => navigate(warehouseListUrl())}
         onDelete={() => openModal("delete")}
-        onShippingZoneClick={id => navigate(shippingZoneUrl(id))}
         onSubmit={handleSubmit}
       />
       <WarehouseDeleteDialog

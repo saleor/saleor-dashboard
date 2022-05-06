@@ -31,11 +31,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import CustomerListPage from "../../components/CustomerListPage";
 import {
-  customerAddUrl,
   customerListUrl,
   CustomerListUrlDialog,
-  CustomerListUrlQueryParams,
-  customerUrl
+  CustomerListUrlQueryParams
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -167,11 +165,9 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
         settings={settings}
         disabled={loading}
         pageInfo={pageInfo}
-        onAdd={() => navigate(customerAddUrl)}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
-        onRowClick={id => () => navigate(customerUrl(id))}
         onSort={handleSort}
         toolbar={
           <IconButton

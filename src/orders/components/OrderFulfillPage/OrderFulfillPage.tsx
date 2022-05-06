@@ -7,6 +7,7 @@ import {
   TextField,
   Typography
 } from "@material-ui/core";
+import { Backlink } from "@saleor/components/Backlink";
 import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
@@ -27,9 +28,11 @@ import {
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { commonMessages } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
+import { orderUrl } from "@saleor/orders/urls";
 import {
   getAttributesCaption,
   getToFulfillOrderLines
@@ -58,7 +61,6 @@ export interface OrderFulfillPageProps {
   saveButtonBar: ConfirmButtonTransitionState;
   warehouse: WarehouseFragment;
   shopSettings?: ShopOrderSettingsFragment;
-  onBack: () => void;
   onSubmit: (data: OrderFulfillSubmitData) => SubmitPromise;
 }
 
@@ -76,12 +78,12 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     saveButtonBar,
     warehouse,
     shopSettings,
-    onBack,
     onSubmit
   } = props;
 
   const intl = useIntl();
   const classes = useStyles(props);
+  const navigate = useNavigator();
 
   const { change: formsetChange, data: formsetData } = useFormset<
     null,
@@ -165,7 +167,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink href={orderUrl(order?.id)}>
         {order?.number
           ? intl.formatMessage(messages.headerOrderNumber, {
               orderNumber: order.number
@@ -279,7 +281,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                   intl.formatMessage(commonMessages.cannotFullfillUnpaidOrder)
               }}
               onSubmit={submit}
-              onCancel={onBack}
+              onCancel={() => navigate(orderUrl(order?.id))}
             />
             <OrderFulfillStockExceededDialog
               open={displayStockExceededDialog}

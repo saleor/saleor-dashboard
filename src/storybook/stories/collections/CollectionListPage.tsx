@@ -23,7 +23,6 @@ const props: CollectionListPageProps = {
   ...pageListProps.default,
   ...filterPageProps,
   ...sortPageProps,
-  channelsCount: 2,
   sort: {
     ...sortPageProps.sort,
     sort: CollectionListUrlSortField.name

@@ -1,11 +1,11 @@
 import { Card, CardActions, CardContent } from "@material-ui/core";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import Form from "@saleor/components/Form";
 import SingleSelectField from "@saleor/components/SingleSelectField";
 import { WeightUnitsEnum } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { buttonMessages, sectionNames } from "@saleor/intl";
-import { Button } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

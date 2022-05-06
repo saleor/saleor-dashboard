@@ -9,6 +9,7 @@ import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import AssignCategoriesDialog from "@saleor/components/AssignCategoryDialog";
 import AssignCollectionDialog from "@saleor/components/AssignCollectionDialog";
 import AssignProductDialog from "@saleor/components/AssignProductDialog";
+import { Button } from "@saleor/components/Button";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
@@ -41,7 +42,6 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages, sectionNames } from "@saleor/intl";
-import { Button } from "@saleor/macaw-ui";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
@@ -51,10 +51,7 @@ import { mapEdgesToItems } from "@saleor/utils/maps";
 import React, { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { categoryUrl } from "../../../categories/urls";
-import { collectionUrl } from "../../../collections/urls";
 import { maybe } from "../../../misc";
-import { productUrl } from "../../../products/urls";
 import { createUpdateHandler } from "./handlers";
 import { VOUCHER_UPDATE_FORM_ID } from "./types";
 
@@ -310,7 +307,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onCategoryAssign={() => openModal("assign-category")}
-        onCategoryClick={id => () => navigate(categoryUrl(id))}
         onCollectionAssign={() => openModal("assign-collection")}
         onCollectionUnassign={collectionId =>
           openModal("unassign-collection", {
@@ -336,16 +332,13 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
             ids: [categoryId]
           })
         }
-        onCollectionClick={id => () => navigate(collectionUrl(id))}
         onProductAssign={() => openModal("assign-product")}
         onProductUnassign={productId =>
           openModal("unassign-product", {
             ids: [productId]
           })
         }
-        onProductClick={id => () => navigate(productUrl(id))}
         activeTab={activeTab}
-        onBack={() => navigate(voucherListUrl())}
         onTabClick={changeTab}
         onSubmit={handleSubmit}
         onRemove={() => openModal("remove")}

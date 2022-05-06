@@ -1,3 +1,4 @@
+import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import CountryList from "@saleor/components/CountryList";
@@ -7,8 +8,10 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { CountryFragment, ShippingErrorFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { shippingZonesListUrl } from "@saleor/shipping/urls";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -45,7 +48,6 @@ export interface ShippingZoneCreatePageProps {
   disabled: boolean;
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  onBack: () => void;
   onSubmit: (data: ShippingZoneCreateFormData) => SubmitPromise;
 }
 
@@ -54,11 +56,12 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
   restWorldCountries,
   disabled,
   errors,
-  onBack,
   onSubmit,
   saveButtonBarState
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
+
   const [isModalOpened, setModalStatus] = React.useState(false);
   const toggleModal = () => setModalStatus(!isModalOpened);
 
@@ -78,7 +81,7 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
       {({ change, data, isSaveDisabled, submit }) => (
         <>
           <Container>
-            <Backlink onClick={onBack}>
+            <Backlink href={shippingZonesListUrl()}>
               {intl.formatMessage(sectionNames.shipping)}
             </Backlink>
             <PageHeader title={intl.formatMessage(messages.createZone)} />
@@ -114,7 +117,7 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
             </Grid>
             <Savebar
               disabled={isSaveDisabled}
-              onCancel={onBack}
+              onCancel={() => navigate(shippingZonesListUrl())}
               onSubmit={submit}
               state={saveButtonBarState}
             />

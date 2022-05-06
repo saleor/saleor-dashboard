@@ -33,7 +33,6 @@ import ProductVariantCreatePage from "../components/ProductVariantCreatePage";
 import { ProductVariantCreateData } from "../components/ProductVariantCreatePage/form";
 import {
   productListUrl,
-  productUrl,
   productVariantAddUrl,
   ProductVariantAddUrlQueryParams,
   productVariantEditUrl
@@ -104,7 +103,6 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
     reorderProductVariants({ variables })
   );
 
-  const handleBack = () => navigate(productUrl(productId));
   const handleCreate = async (formData: ProductVariantCreateData) => {
     const uploadFilesResult = await handleUploadMultipleFiles(
       formData.attributesWithNewFileValue,
@@ -225,6 +223,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         })}
       />
       <ProductVariantCreatePage
+        productId={productId}
         disabled={disableForm}
         errors={variantCreateResult.data?.productVariantCreate.errors || []}
         header={intl.formatMessage({
@@ -234,7 +233,6 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         })}
         product={data?.product}
         attributeValues={attributeValues}
-        onBack={handleBack}
         onSubmit={handleSubmit}
         onVariantClick={handleVariantClick}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}

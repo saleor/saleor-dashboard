@@ -1,17 +1,16 @@
 import { DialogContentText } from "@material-ui/core";
-import { categoryUrl } from "@saleor/categories/urls";
 import {
   ChannelSaleData,
   createChannelsDataWithSaleDiscountPrice,
   createSortedChannelsDataFromSale
 } from "@saleor/channels/utils";
-import { collectionUrl } from "@saleor/collections/urls";
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import AssignCategoriesDialog from "@saleor/components/AssignCategoryDialog";
 import AssignCollectionDialog from "@saleor/components/AssignCollectionDialog";
 import AssignProductDialog from "@saleor/components/AssignProductDialog";
 import AssignVariantDialog from "@saleor/components/AssignVariantDialog";
+import { Button } from "@saleor/components/Button";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
@@ -42,9 +41,7 @@ import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages, sectionNames } from "@saleor/intl";
-import { Button } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
-import { productUrl, productVariantEditPath } from "@saleor/products/urls";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
@@ -304,7 +301,6 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onCategoryAssign={() => openModal("assign-category")}
-        onCategoryClick={id => () => navigate(categoryUrl(id))}
         onCollectionAssign={() => openModal("assign-collection")}
         onCollectionUnassign={collectionId =>
           openModal("unassign-collection", {
@@ -316,24 +312,19 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
             ids: [categoryId]
           })
         }
-        onCollectionClick={id => () => navigate(collectionUrl(id))}
         onProductAssign={() => openModal("assign-product")}
         onProductUnassign={productId =>
           openModal("unassign-product", {
             ids: [productId]
           })
         }
-        onProductClick={id => () => navigate(productUrl(id))}
         onVariantAssign={() => openModal("assign-variant")}
         onVariantUnassign={variantId =>
           openModal("unassign-variant", {
             ids: [variantId]
           })
         }
-        onVariantClick={(productId, variantId) => () =>
-          navigate(productVariantEditPath(productId, variantId))}
         activeTab={activeTab}
-        onBack={() => navigate(saleListUrl())}
         onTabClick={changeTab}
         onSubmit={handleSubmit}
         onRemove={() => openModal("remove")}

@@ -215,7 +215,6 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
         saveButtonBarState={pageUpdateOpts.status}
         page={pageDetails.data?.page}
         attributeValues={attributeValues}
-        onBack={() => navigate(pageListUrl())}
         onRemove={() =>
           navigate(
             pageUrl(id, {

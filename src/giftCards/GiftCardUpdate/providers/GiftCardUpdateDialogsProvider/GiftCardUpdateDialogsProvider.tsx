@@ -19,7 +19,6 @@ interface GiftCardUpdateDialogsProviderProps {
 }
 
 export interface GiftCardUpdateDialogsConsumerProps {
-  navigateBack: () => void;
   onClose: () => void;
   openSetBalanceDialog: () => void;
   openDeleteDialog: () => void;
@@ -59,8 +58,7 @@ const GiftCardUpdateDialogsProvider: React.FC<GiftCardUpdateDialogsProviderProps
     openSetBalanceDialog: () => openDialog(SET_BALANCE),
     openDeleteDialog: () => openDialog(DELETE),
     openResendCodeDialog: () => openDialog(RESEND_CODE),
-    onClose,
-    navigateBack
+    onClose
   };
 
   return (
@@ -75,7 +73,7 @@ const GiftCardUpdateDialogsProvider: React.FC<GiftCardUpdateDialogsProviderProps
           <GiftCardUpdatePageDeleteDialog
             onClose={onClose}
             open={isDialogOpen(DELETE)}
-            navigateBack={navigateBack}
+            onDelete={navigateBack}
           />
           <GiftCardResendCodeDialog
             open={isDialogOpen(RESEND_CODE)}

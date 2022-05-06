@@ -1,7 +1,6 @@
 import { DialogContentText } from "@material-ui/core";
 import { useUser } from "@saleor/auth";
 import ActionDialog from "@saleor/components/ActionDialog";
-import { configurationMenuUrl } from "@saleor/configuration";
 import {
   useBulkDeleteShippingZoneMutation,
   useDeleteShippingZoneMutation,
@@ -33,11 +32,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import ShippingZonesListPage from "../components/ShippingZonesListPage";
 import {
-  shippingZoneAddUrl,
   shippingZonesListUrl,
   ShippingZonesListUrlDialog,
-  ShippingZonesListUrlQueryParams,
-  shippingZoneUrl
+  ShippingZonesListUrlQueryParams
 } from "../urls";
 
 interface ShippingZonesListProps {
@@ -147,8 +144,6 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
         }
         shippingZones={mapEdgesToItems(data?.shippingZones)}
         pageInfo={pageInfo}
-        onAdd={() => navigate(shippingZoneAddUrl)}
-        onBack={() => navigate(configurationMenuUrl)}
         onUpdateListSettings={updateListSettings}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
@@ -157,7 +152,6 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
             id
           })
         }
-        onRowClick={id => () => navigate(shippingZoneUrl(id))}
         onSubmit={unit =>
           extractMutationErrors(
             updateDefaultWeightUnit({

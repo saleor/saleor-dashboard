@@ -1,5 +1,6 @@
 import { Card, TableCell, TableRow } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
@@ -12,7 +13,11 @@ import {
   ProductVariantCreateDataQuery,
   ProductVariantDetailsQuery
 } from "@saleor/graphql";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
+import {
+  productVariantAddUrl,
+  productVariantEditUrl
+} from "@saleor/products/urls";
 import { ReorderAction } from "@saleor/types";
 import classNames from "classnames";
 import React from "react";
@@ -66,11 +71,11 @@ interface ProductVariantNavigationProps {
   current?: string;
   defaultVariantId?: string;
   fallbackThumbnail: string;
+  productId: string;
+  isCreate?: boolean;
   variants:
     | Array<ProductVariantDetailsQuery["productVariant"]>
     | ProductVariantCreateDataQuery["product"]["variants"];
-  onAdd?: () => void;
-  onRowClick: (variantId: string) => void;
   onReorder: ReorderAction;
 }
 
@@ -79,9 +84,9 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
     current,
     defaultVariantId,
     fallbackThumbnail,
+    productId,
+    isCreate,
     variants,
-    onAdd,
-    onRowClick,
     onReorder
   } = props;
 
@@ -114,7 +119,11 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
                 className={classNames(classes.link, {
                   [classes.tabActive]: isActive
                 })}
-                onClick={variant ? () => onRowClick(variant.id) : undefined}
+                href={
+                  variant
+                    ? productVariantEditUrl(productId, variant.id)
+                    : undefined
+                }
               >
                 <TableCellAvatar
                   className={classes.colAvatar}
@@ -135,10 +144,10 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
               </SortableTableRow>
             );
           })}
-          {onAdd ? (
+          {!isCreate ? (
             <TableRow>
               <TableCell colSpan={3}>
-                <Button onClick={onAdd}>
+                <Button href={productVariantAddUrl(productId)}>
                   <FormattedMessage
                     id="3C3Nj5"
                     defaultMessage="Add variant"

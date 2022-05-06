@@ -1,6 +1,5 @@
 import { getChannelsCurrencyChoices } from "@saleor/channels/utils";
 import { useShopLimitsQuery } from "@saleor/components/Shop/queries";
-import { configurationMenuUrl } from "@saleor/configuration";
 import {
   ChannelDeleteMutation,
   useChannelDeleteMutation,
@@ -16,11 +15,9 @@ import { useIntl } from "react-intl";
 import ChannelDeleteDialog from "../../components/ChannelDeleteDialog";
 import ChannelsListPage from "../../pages/ChannelsListPage";
 import {
-  channelAddUrl,
   channelsListUrl,
   ChannelsListUrlDialog,
-  ChannelsListUrlQueryParams,
-  channelUrl
+  ChannelsListUrlQueryParams
 } from "../../urls";
 
 interface ChannelsListProps {
@@ -81,8 +78,6 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
     data?.channels
   );
 
-  const navigateToChannelCreate = () => navigate(channelAddUrl);
-
   const handleRemoveConfirm = (channelId?: string) => {
     const inputVariables = channelId ? { input: { channelId } } : {};
 
@@ -99,9 +94,6 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
       <ChannelsListPage
         channelsList={data?.channels}
         limits={limitOpts.data?.shop.limits}
-        navigateToChannelCreate={navigateToChannelCreate}
-        onBack={() => navigate(configurationMenuUrl)}
-        onRowClick={id => () => navigate(channelUrl(id))}
         onRemove={id =>
           openModal("remove", {
             id

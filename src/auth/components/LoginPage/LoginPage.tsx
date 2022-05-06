@@ -5,13 +5,16 @@ import {
   Typography
 } from "@material-ui/core";
 import { UserContextError } from "@saleor/auth/types";
+import { passwordResetUrl } from "@saleor/auth/urls";
+import { Button } from "@saleor/components/Button";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import { AvailableExternalAuthenticationsQuery } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
-import { Button, EyeIcon, IconButton } from "@saleor/macaw-ui";
+import { EyeIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { Link } from "react-router-dom";
 
 import useStyles from "../styles";
 import LoginForm, { LoginFormData } from "./form";
@@ -23,7 +26,6 @@ export interface LoginCardProps {
   loading: boolean;
   externalAuthentications?: AvailableExternalAuthenticationsQuery["shop"]["availableExternalAuthentications"];
   onExternalAuthentication: (pluginId: string) => void;
-  onPasswordRecovery: () => void;
   onSubmit?: (event: LoginFormData) => SubmitPromise;
 }
 
@@ -34,7 +36,6 @@ const LoginCard: React.FC<LoginCardProps> = props => {
     loading,
     externalAuthentications = [],
     onExternalAuthentication,
-    onPasswordRecovery,
     onSubmit
   } = props;
 
@@ -109,9 +110,9 @@ const LoginCard: React.FC<LoginCardProps> = props => {
             </IconButton>
           </div>
           <Typography
-            component="a"
+            component={Link}
             className={classes.link}
-            onClick={onPasswordRecovery}
+            to={passwordResetUrl}
             variant="body2"
             data-test-id="reset-password-link"
           >

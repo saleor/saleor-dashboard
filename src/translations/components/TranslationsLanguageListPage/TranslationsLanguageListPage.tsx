@@ -9,13 +9,10 @@ import TranslationsLanguageList from "../TranslationsLanguageList";
 
 export interface TranslationsLanguageListPageProps {
   languages: LanguageFragment[];
-  //   onAdd: () => void;
-  onRowClick: (code: string) => void;
 }
 
 const TranslationsLanguageListPage: React.FC<TranslationsLanguageListPageProps> = ({
-  languages,
-  onRowClick
+  languages
 }) => {
   const intl = useIntl();
 
@@ -36,7 +33,7 @@ const TranslationsLanguageListPage: React.FC<TranslationsLanguageListPageProps> 
        
       </Button> */}
       </PageHeader>
-      <TranslationsLanguageList languages={languages} onRowClick={onRowClick} />
+      <TranslationsLanguageList languages={languages} />
     </Container>
   );
 };

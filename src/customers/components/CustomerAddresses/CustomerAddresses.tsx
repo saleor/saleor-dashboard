@@ -1,10 +1,11 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
 import AddressFormatter from "@saleor/components/AddressFormatter";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import { Hr } from "@saleor/components/Hr";
 import { CustomerDetailsFragment } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -23,11 +24,11 @@ const useStyles = makeStyles(
 export interface CustomerAddressesProps {
   customer: CustomerDetailsFragment;
   disabled: boolean;
-  onAddressManageClick: () => void;
+  manageAddressHref: string;
 }
 
 const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
-  const { customer, disabled, onAddressManageClick } = props;
+  const { customer, disabled, manageAddressHref } = props;
   const classes = useStyles(props);
 
   const intl = useIntl();
@@ -45,7 +46,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
             data-test-id="manage-addresses"
             disabled={disabled}
             variant="tertiary"
-            onClick={onAddressManageClick}
+            href={manageAddressHref}
           >
             <FormattedMessage {...buttonMessages.manage} />
           </Button>

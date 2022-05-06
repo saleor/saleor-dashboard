@@ -1,10 +1,10 @@
 import { Card } from "@material-ui/core";
+import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
 import { OrderDraftListQuery, RefreshLimitsQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Button } from "@saleor/macaw-ui";
 import { OrderDraftListUrlSortField } from "@saleor/orders/urls";
 import {
   FilterPageProps,
@@ -34,6 +34,7 @@ export interface OrderDraftListPageProps
     TabPageProps {
   limits: RefreshLimitsQuery["shop"]["limits"];
   orders: RelayToFlat<OrderDraftListQuery["draftOrders"]>;
+  onAdd: () => void;
 }
 
 const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({

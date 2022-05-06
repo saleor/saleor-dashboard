@@ -32,7 +32,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { PAGINATE_BY } from "../../config";
 import { extractMutationErrors, maybe } from "../../misc";
-import { productAddUrl, productUrl } from "../../products/urls";
+import { productAddUrl } from "../../products/urls";
 import {
   CategoryPageTab,
   CategoryUpdatePage
@@ -217,14 +217,8 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
         category={maybe(() => data.category)}
         disabled={loading}
         errors={updateResult.data?.categoryUpdate.errors || []}
-        onAddCategory={() => navigate(categoryAddUrl(id))}
-        onAddProduct={() => navigate(productAddUrl())}
-        onBack={() =>
-          navigate(
-            maybe(() => categoryUrl(data.category.parent.id), categoryListUrl())
-          )
-        }
-        onCategoryClick={id => () => navigate(categoryUrl(id))}
+        addCategoryHref={categoryAddUrl(id)}
+        addProductHref={productAddUrl()}
         onDelete={() => openModal("delete")}
         onImageDelete={() =>
           updateCategory({
@@ -249,7 +243,6 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         pageInfo={pageInfo}
-        onProductClick={id => () => navigate(productUrl(id))}
         onSubmit={handleSubmit}
         products={mapEdgesToItems(data?.category?.products)}
         saveButtonBarState={updateResult.status}

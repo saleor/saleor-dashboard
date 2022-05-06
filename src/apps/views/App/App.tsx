@@ -45,8 +45,7 @@ export const App: React.FC<AppProps> = ({ id }) => {
     <AppPage
       data={data?.app}
       url={appCompleteUrl}
-      navigateToAbout={() => navigate(appDetailsUrl(id))}
-      onBack={() => navigate(appsListPath)}
+      aboutHref={appDetailsUrl(id)}
       onError={() =>
         notify({
           status: "error",

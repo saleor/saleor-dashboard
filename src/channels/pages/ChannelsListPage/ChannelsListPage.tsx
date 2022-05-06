@@ -5,15 +5,20 @@ import {
   TableHead,
   TableRow
 } from "@material-ui/core";
+import { channelAddUrl, channelUrl } from "@saleor/channels/urls";
+import { Backlink } from "@saleor/components/Backlink";
+import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
+import TableRowLink from "@saleor/components/TableRowLink";
+import { configurationMenuUrl } from "@saleor/configuration";
 import { ChannelDetailsFragment, RefreshLimitsQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
@@ -24,9 +29,6 @@ import { useStyles } from "./styles";
 export interface ChannelsListPageProps {
   channelsList: ChannelDetailsFragment[] | undefined;
   limits: RefreshLimitsQuery["shop"]["limits"];
-  navigateToChannelCreate: () => void;
-  onBack: () => void;
-  onRowClick: (id: string) => () => void;
   onRemove: (id: string) => void;
 }
 
@@ -35,10 +37,7 @@ const numberOfColumns = 2;
 export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
   channelsList,
   limits,
-  navigateToChannelCreate,
-  onBack,
-  onRemove,
-  onRowClick
+  onRemove
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -47,7 +46,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink href={configurationMenuUrl}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
       <PageHeader
@@ -69,7 +68,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
       >
         <Button
           disabled={limitReached}
-          onClick={navigateToChannelCreate}
+          href={channelAddUrl}
           variant="primary"
           data-test-id="add-channel"
         >
@@ -118,11 +117,11 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
             {renderCollection(
               channelsList,
               channel => (
-                <TableRow
+                <TableRowLink
                   hover={!!channel}
                   key={channel ? channel.id : "skeleton"}
                   className={classes.tableRow}
-                  onClick={!!channel ? onRowClick(channel.id) : undefined}
+                  href={channel && channelUrl(channel.id)}
                 >
                   <TableCell className={classes.colName}>
                     <span data-test-id="name">
@@ -144,7 +143,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
                       </IconButton>
                     )}
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               ),
               () => (
                 <TableRow>

@@ -11,7 +11,6 @@ import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
-import { configurationMenuUrl } from "@saleor/configuration";
 import {
   useAttributeBulkDeleteMutation,
   useAttributeListQuery
@@ -36,11 +35,9 @@ import { maybe } from "../../../misc";
 import AttributeBulkDeleteDialog from "../../components/AttributeBulkDeleteDialog";
 import AttributeListPage from "../../components/AttributeListPage";
 import {
-  attributeAddUrl,
   attributeListUrl,
   AttributeListUrlDialog,
-  AttributeListUrlQueryParams,
-  attributeUrl
+  AttributeListUrlQueryParams
 } from "../../urls";
 import { getFilterQueryParam } from "./filters";
 import { getSortQueryVariables } from "./sort";
@@ -151,13 +148,10 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
         filterOpts={getFilterOpts(params)}
         initialSearch={params.query || ""}
         isChecked={isSelected}
-        onAdd={() => navigate(attributeAddUrl())}
         onAll={resetFilters}
-        onBack={() => navigate(configurationMenuUrl)}
         onFilterChange={changeFilters}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
-        onRowClick={id => () => navigate(attributeUrl(id))}
         onSearchChange={handleSearchChange}
         onSort={handleSort}
         onTabChange={handleTabChange}

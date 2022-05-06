@@ -1,4 +1,5 @@
 import { ChannelSaleData, validateSalePrice } from "@saleor/channels/utils";
+import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import Container from "@saleor/components/Container";
@@ -9,6 +10,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { Tab, TabContainer } from "@saleor/components/Tab";
 import { createSaleChannelsChangeHandler } from "@saleor/discounts/handlers";
+import { saleListUrl } from "@saleor/discounts/urls";
 import { SALE_UPDATE_FORM_ID } from "@saleor/discounts/views/SaleDetails/types";
 import {
   DiscountErrorFragment,
@@ -17,8 +19,9 @@ import {
   SaleType as SaleTypeEnum
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
@@ -59,7 +62,7 @@ export enum SaleDetailsPageTab {
 }
 
 export interface SaleDetailsPageProps
-  extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">>,
+  extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
     TabListActions<
       | "categoryListToolbar"
       | "collectionListToolbar"
@@ -73,19 +76,14 @@ export interface SaleDetailsPageProps
   allChannelsCount: number;
   channelListings: ChannelSaleFormData[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  onBack: () => void;
   onCategoryAssign: () => void;
   onCategoryUnassign: (id: string) => void;
-  onCategoryClick: (id: string) => () => void;
   onCollectionAssign: () => void;
   onCollectionUnassign: (id: string) => void;
-  onCollectionClick: (id: string) => () => void;
   onProductAssign: () => void;
   onProductUnassign: (id: string) => void;
-  onProductClick: (id: string) => () => void;
   onVariantAssign: () => void;
   onVariantUnassign: (id: string) => void;
-  onVariantClick: (productId: string, variantId: string) => () => void;
   onRemove: () => void;
   onSubmit: (data: SaleDetailsPageFormData) => SubmitPromise<any[]>;
   onTabClick: (index: SaleDetailsPageTab) => void;
@@ -111,22 +109,17 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   pageInfo,
   sale,
   saveButtonBarState,
-  onBack,
   onCategoryAssign,
   onCategoryUnassign,
-  onCategoryClick,
   onChannelsChange,
   onCollectionAssign,
   onCollectionUnassign,
-  onCollectionClick,
   onNextPage,
   onPreviousPage,
   onProductAssign,
   onProductUnassign,
-  onProductClick,
   onVariantAssign,
   onVariantUnassign,
-  onVariantClick,
   categoryListToolbar,
   collectionListToolbar,
   productListToolbar,
@@ -138,6 +131,8 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   toggleAll
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
+
   const {
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
@@ -178,7 +173,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
 
         return (
           <Container>
-            <Backlink onClick={onBack}>
+            <Backlink href={saleListUrl()}>
               {intl.formatMessage(sectionNames.sales)}
             </Backlink>
             <PageHeader title={sale?.name} />
@@ -284,7 +279,6 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                     onCategoryUnassign={onCategoryUnassign}
                     onNextPage={onNextPage}
                     onPreviousPage={onPreviousPage}
-                    onRowClick={onCategoryClick}
                     pageInfo={pageInfo}
                     discount={sale}
                     isChecked={isChecked}
@@ -300,7 +294,6 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                     onCollectionUnassign={onCollectionUnassign}
                     onNextPage={onNextPage}
                     onPreviousPage={onPreviousPage}
-                    onRowClick={onCollectionClick}
                     pageInfo={pageInfo}
                     discount={sale}
                     isChecked={isChecked}
@@ -316,7 +309,6 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                     onPreviousPage={onPreviousPage}
                     onProductAssign={onProductAssign}
                     onProductUnassign={onProductUnassign}
-                    onRowClick={onProductClick}
                     pageInfo={pageInfo}
                     products={mapEdgesToItems(sale?.products)}
                     isChecked={isChecked}
@@ -332,7 +324,6 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                     onPreviousPage={onPreviousPage}
                     onVariantAssign={onVariantAssign}
                     onVariantUnassign={onVariantUnassign}
-                    onRowClick={onVariantClick}
                     pageInfo={pageInfo}
                     variants={mapEdgesToItems(sale?.variants)}
                     isChecked={isChecked}
@@ -372,7 +363,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
             </Grid>
             <Savebar
               disabled={isSaveDisabled}
-              onCancel={onBack}
+              onCancel={() => navigate(saleListUrl())}
               onDelete={onRemove}
               onSubmit={submit}
               state={saveButtonBarState}

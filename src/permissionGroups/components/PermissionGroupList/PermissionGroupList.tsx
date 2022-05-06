@@ -9,10 +9,14 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { PermissionGroupFragment } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
-import { PermissionGroupListUrlSortField } from "@saleor/permissionGroups/urls";
+import {
+  permissionGroupDetailsUrl,
+  PermissionGroupListUrlSortField
+} from "@saleor/permissionGroups/urls";
 import { ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
@@ -67,7 +71,6 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
     onDelete,
     onNextPage,
     onPreviousPage,
-    onRowClick,
     onSort,
     sort
   } = props;
@@ -118,12 +121,12 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
         {renderCollection(
           permissionGroups,
           permissionGroup => (
-            <TableRow
+            <TableRowLink
               className={!!permissionGroup ? classes.link : undefined}
               hover={!!permissionGroup}
               key={permissionGroup ? permissionGroup.id : "skeleton"}
-              onClick={
-                permissionGroup ? onRowClick(permissionGroup.id) : undefined
+              href={
+                permissionGroup && permissionGroupDetailsUrl(permissionGroup.id)
               }
               data-test-id={"id-" + maybe(() => permissionGroup.id)}
             >
@@ -163,7 +166,7 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
                   <Skeleton />
                 )}
               </TableCell>
-            </TableRow>
+            </TableRowLink>
           ),
           () => (
             <TableRow>

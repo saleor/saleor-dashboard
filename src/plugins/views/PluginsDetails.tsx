@@ -20,12 +20,7 @@ import PluginsDetailsPage, {
   PluginDetailsPageFormData
 } from "../components/PluginsDetailsPage";
 import PluginSecretFieldDialog from "../components/PluginSecretFieldDialog";
-import {
-  pluginListUrl,
-  pluginUrl,
-  PluginUrlDialog,
-  PluginUrlQueryParams
-} from "../urls";
+import { pluginUrl, PluginUrlDialog, PluginUrlQueryParams } from "../urls";
 import { isSecretField } from "../utils";
 import { getConfigByChannelId, isPluginGlobal } from "./utils";
 
@@ -142,7 +137,6 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
           !params.action ? pluginUpdateOpts.status : "default"
         }
         plugin={plugin}
-        onBack={() => navigate(pluginListUrl())}
         onClear={id =>
           openModal("clear", {
             id

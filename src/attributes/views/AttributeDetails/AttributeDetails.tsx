@@ -248,7 +248,6 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
       attribute={data?.attribute}
       disabled={loading}
       errors={attributeUpdateOpts.data?.attributeUpdate.errors || []}
-      onBack={() => navigate(attributeListUrl())}
       onDelete={() => openModal("remove")}
       onSubmit={handleSubmit}
       onValueAdd={() => openModal("add-value")}

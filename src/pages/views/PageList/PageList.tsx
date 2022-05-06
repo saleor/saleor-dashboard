@@ -1,5 +1,6 @@
 import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
+import { Button } from "@saleor/components/Button";
 import {
   usePageBulkPublishMutation,
   usePageBulkRemoveMutation,
@@ -13,7 +14,7 @@ import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -25,11 +26,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import PageListPage from "../../components/PageListPage/PageListPage";
 import {
-  pageCreateUrl,
   pageListUrl,
   PageListUrlDialog,
-  PageListUrlQueryParams,
-  pageUrl
+  PageListUrlQueryParams
 } from "../../urls";
 import { getFilterVariables, getSortQueryVariables } from "./sort";
 
@@ -122,11 +121,9 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
         settings={settings}
         pages={mapEdgesToItems(data?.pages)}
         pageInfo={pageInfo}
-        onAdd={() => navigate(pageCreateUrl())}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
-        onRowClick={id => () => navigate(pageUrl(id))}
         onSort={handleSort}
         actionDialogOpts={{
           open: openModal,

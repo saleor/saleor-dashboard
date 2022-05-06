@@ -1,14 +1,16 @@
 import { Card } from "@material-ui/core";
+import { Backlink } from "@saleor/components/Backlink";
+import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
+import { configurationMenuUrl } from "@saleor/configuration";
 import {
   RefreshLimitsQuery,
   WarehouseWithShippingFragment
 } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, Button } from "@saleor/macaw-ui";
 import {
   PageListProps,
   SearchPageProps,
@@ -16,7 +18,10 @@ import {
   TabPageProps
 } from "@saleor/types";
 import { hasLimits, isLimitReached } from "@saleor/utils/limits";
-import { WarehouseListUrlSortField } from "@saleor/warehouses/urls";
+import {
+  warehouseAddUrl,
+  WarehouseListUrlSortField
+} from "@saleor/warehouses/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -29,7 +34,6 @@ export interface WarehouseListPageProps
     TabPageProps {
   limits: RefreshLimitsQuery["shop"]["limits"];
   warehouses: WarehouseWithShippingFragment[];
-  onBack: () => void;
   onRemove: (id: string) => void;
 }
 
@@ -42,13 +46,10 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
   pageInfo,
   settings,
   tabs,
-  onAdd,
   onAll,
-  onBack,
   onNextPage,
   onPreviousPage,
   onRemove,
-  onRowClick,
   onSearchChange,
   onTabChange,
   onTabDelete,
@@ -62,7 +63,7 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink href={configurationMenuUrl}>
         <FormattedMessage {...sectionNames.configuration} />
       </Backlink>
       <PageHeader
@@ -86,7 +87,7 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
           data-test-id="create-warehouse"
           disabled={limitReached}
           variant="primary"
-          onClick={onAdd}
+          href={warehouseAddUrl}
         >
           <FormattedMessage
             id="wmdHhD"
@@ -134,11 +135,9 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
           disabled={disabled}
           pageInfo={pageInfo}
           settings={settings}
-          onAdd={onAdd}
           onNextPage={onNextPage}
           onPreviousPage={onPreviousPage}
           onRemove={onRemove}
-          onRowClick={onRowClick}
           onUpdateListSettings={onUpdateListSettings}
           {...listProps}
         />

@@ -5,13 +5,16 @@ import {
   TableHead,
   TableRow
 } from "@material-ui/core";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { AppQuery } from "@saleor/graphql";
-import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
+import { webhookPath } from "@saleor/webhooks/urls";
 import { isUnnamed } from "@saleor/webhooks/utils";
 import classNames from "classnames";
 import React from "react";
@@ -22,14 +25,12 @@ import { useStyles } from "./styles";
 export interface WebhooksListProps {
   webhooks: AppQuery["app"]["webhooks"];
   onRemove: (id: string) => void;
-  onRowClick: (id: string) => () => void;
-  onCreate?: () => void;
+  createHref?: string;
 }
 
 const WebhooksList: React.FC<WebhooksListProps> = ({
   webhooks,
-  onCreate,
-  onRowClick,
+  createHref,
   onRemove
 }) => {
   const intl = useIntl();
@@ -45,10 +46,10 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
           description: "header"
         })}
         toolbar={
-          !!onCreate && (
+          !!createHref && (
             <Button
               variant="secondary"
-              onClick={onCreate}
+              href={createHref}
               data-test-id="create-webhook"
             >
               <FormattedMessage
@@ -85,10 +86,10 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
           {renderCollection(
             webhooks,
             webhook => (
-              <TableRow
+              <TableRowLink
                 hover={!!webhook}
                 className={!!webhook ? classes.tableRow : undefined}
-                onClick={webhook ? onRowClick(webhook.id) : undefined}
+                href={webhook && webhookPath(webhook.id)}
                 key={webhook ? webhook.id : "skeleton"}
               >
                 <TableCell
@@ -120,7 +121,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
                     <DeleteIcon />
                   </IconButton>
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
             () => (
               <TableRow>

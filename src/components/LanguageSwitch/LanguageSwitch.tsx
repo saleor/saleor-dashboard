@@ -14,11 +14,12 @@ import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
+import { Link } from "react-router-dom";
 
 export interface LanguageSwitchProps {
   currentLanguage: LanguageCodeEnum;
   languages: LanguageFragment[];
-  onLanguageChange: (lang: LanguageCodeEnum) => void;
+  getLanguageUrl: (lang: LanguageCodeEnum) => string;
 }
 
 const useStyles = makeStyles(
@@ -54,8 +55,9 @@ const useStyles = makeStyles(
   }),
   { name: "LanguageSwitch" }
 );
+
 const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
-  const { currentLanguage, languages, onLanguageChange } = props;
+  const { currentLanguage, languages, getLanguageUrl } = props;
   const classes = useStyles(props);
 
   const [isExpanded, setExpandedState] = React.useState(false);
@@ -101,18 +103,19 @@ const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
                       className={classes.menuItem}
                       onClick={() => {
                         setExpandedState(false);
-                        onLanguageChange(lang.code);
                       }}
                     >
-                      <FormattedMessage
-                        id="62T585"
-                        defaultMessage="{languageName} - {languageCode}"
-                        description="button"
-                        values={{
-                          languageCode: lang.code,
-                          languageName: lang.language
-                        }}
-                      />
+                      <Link to={getLanguageUrl(lang.code)}>
+                        <FormattedMessage
+                          id="62T585"
+                          defaultMessage="{languageName} - {languageCode}"
+                          description="button"
+                          values={{
+                            languageCode: lang.code,
+                            languageName: lang.language
+                          }}
+                        />
+                      </Link>
                     </MenuItem>
                   ))}
                 </Menu>

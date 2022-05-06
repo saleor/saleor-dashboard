@@ -1,4 +1,5 @@
 import { Typography } from "@material-ui/core";
+import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -6,8 +7,10 @@ import Grid from "@saleor/components/Grid";
 import Savebar from "@saleor/components/Savebar";
 import { MenuDetailsFragment, MenuErrorFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { menuListUrl } from "@saleor/navigation/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -29,7 +32,6 @@ export interface MenuDetailsPageProps {
   disabled: boolean;
   errors: MenuErrorFragment[];
   menu: MenuDetailsFragment;
-  onBack: () => void;
   onDelete: () => void;
   onItemAdd: () => void;
   onItemClick: (id: string, type: MenuItemType) => void;
@@ -42,7 +44,6 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   errors,
   menu,
   saveButtonState,
-  onBack,
   onDelete,
   onItemAdd,
   onItemClick,
@@ -50,6 +51,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   onSubmit
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   const initialForm: MenuDetailsFormData = {
     name: menu?.name ?? ""
@@ -83,7 +85,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
     <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
       {({ change, data, submit }) => (
         <Container>
-          <Backlink onClick={onBack}>
+          <Backlink href={menuListUrl()}>
             {intl.formatMessage(sectionNames.navigation)}
           </Backlink>
           <Grid variant="inverted">
@@ -132,8 +134,8 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
             </div>
           </Grid>
           <Savebar
+            onCancel={() => navigate(menuListUrl())}
             disabled={disabled || treeOperations.length === 0}
-            onCancel={onBack}
             onDelete={onDelete}
             onSubmit={submit}
             state={saveButtonState}

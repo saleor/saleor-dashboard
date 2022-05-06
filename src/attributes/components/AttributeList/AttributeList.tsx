@@ -1,11 +1,15 @@
 import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
-import { AttributeListUrlSortField } from "@saleor/attributes/urls";
+import {
+  AttributeListUrlSortField,
+  attributeUrl
+} from "@saleor/attributes/urls";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { AttributeFragment } from "@saleor/graphql";
 import { translateBoolean } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -69,7 +73,6 @@ const AttributeList: React.FC<AttributeListProps> = ({
   isChecked,
   onNextPage,
   onPreviousPage,
-  onRowClick,
   pageInfo,
   selected,
   sort,
@@ -187,11 +190,11 @@ const AttributeList: React.FC<AttributeListProps> = ({
             const isSelected = attribute ? isChecked(attribute.id) : false;
 
             return (
-              <TableRow
+              <TableRowLink
                 selected={isSelected}
                 hover={!!attribute}
                 key={attribute ? attribute.id : "skeleton"}
-                onClick={attribute && onRowClick(attribute.id)}
+                href={attribute && attributeUrl(attribute.id)}
                 className={classes.link}
                 data-test-id={"id-" + maybe(() => attribute.id)}
               >
@@ -246,7 +249,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
                     <Skeleton />
                   )}
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             );
           },
           () => (

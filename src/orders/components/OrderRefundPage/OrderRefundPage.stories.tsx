@@ -10,7 +10,6 @@ import OrderRefundPage, { OrderRefundPageProps } from "./OrderRefundPage";
 const props: OrderRefundPageProps = {
   disabled: false,
   errors: [],
-  onBack: () => undefined,
   onSubmit: () => undefined,
   order: orderToRefund(placeholderImage)
 };

@@ -29,15 +29,14 @@ export interface TranslationField<T extends string = string> {
 }
 
 export interface TranslationsEntitiesPageProps {
+  translationId: string;
   activeField: string;
   disabled: boolean;
   languageCode: string;
   languages: LanguageFragment[];
   saveButtonState: ConfirmButtonTransitionState;
-  onBack: () => void;
   onEdit: (field: string) => void;
   onDiscard: () => void;
-  onLanguageChange: (lang: string) => void;
   onSubmit: (
     field: TranslationField,
     data: string | OutputData

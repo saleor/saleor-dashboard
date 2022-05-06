@@ -26,7 +26,6 @@ import { CollectionCreateData } from "../components/CollectionCreatePage/form";
 import {
   collectionAddUrl,
   CollectionCreateUrlQueryParams,
-  collectionListUrl,
   collectionUrl
 } from "../urls";
 import { COLLECTION_CREATE_FORM_ID } from "./consts";
@@ -180,7 +179,6 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
         channelsCount={availableChannels.length}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
-        onBack={() => navigate(collectionListUrl())}
         disabled={createCollectionOpts.loading || updateChannelsOpts.loading}
         onSubmit={handleSubmit}
         saveButtonBarState={createCollectionOpts.status}

@@ -31,11 +31,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import CollectionListPage from "../../components/CollectionListPage/CollectionListPage";
 import {
-  collectionAddUrl,
   collectionListUrl,
   CollectionListUrlDialog,
-  CollectionListUrlQueryParams,
-  collectionUrl
+  CollectionListUrlQueryParams
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -175,7 +173,6 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         currentTab={currentTab}
         initialSearch={params.query || ""}
         onSearchChange={handleSearchChange}
-        onAdd={() => navigate(collectionAddUrl())}
         onAll={resetFilters}
         onTabChange={handleTabChange}
         onTabDelete={() => openModal("delete-search")}
@@ -190,7 +187,6 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         onUpdateListSettings={updateListSettings}
         pageInfo={pageInfo}
         sort={getSortParams(params)}
-        onRowClick={id => () => navigate(collectionUrl(id))}
         toolbar={
           <IconButton
             variant="secondary"
@@ -209,7 +205,6 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         selected={listElements.length}
         toggle={toggle}
         toggleAll={toggleAll}
-        channelsCount={availableChannels?.length}
         selectedChannelId={selectedChannel?.id}
         filterOpts={filterOpts}
         onFilterChange={changeFilters}

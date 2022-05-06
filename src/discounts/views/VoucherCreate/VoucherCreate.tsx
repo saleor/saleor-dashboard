@@ -25,7 +25,6 @@ import VoucherCreatePage from "../../components/VoucherCreatePage";
 import {
   voucherAddUrl,
   VoucherCreateUrlQueryParams,
-  voucherListUrl,
   voucherUrl
 } from "../../urls";
 import { createHandler } from "./handlers";
@@ -129,7 +128,6 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
           ...(voucherCreateOpts.data?.voucherCreate.errors || []),
           ...(updateChannelsOpts.data?.voucherChannelListingUpdate.errors || [])
         ]}
-        onBack={() => navigate(voucherListUrl())}
         onSubmit={handleSubmit}
         saveButtonBarState={voucherCreateOpts.status}
         openChannelsModal={handleChannelsModalOpen}

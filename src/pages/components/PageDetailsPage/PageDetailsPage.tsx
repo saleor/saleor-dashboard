@@ -4,6 +4,7 @@ import {
 } from "@saleor/attributes/utils/data";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@saleor/components/Attributes";
+import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
@@ -22,8 +23,10 @@ import {
 } from "@saleor/graphql";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { pageListUrl } from "@saleor/pages/urls";
 import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import { mapNodeToChoice } from "@saleor/utils/maps";
 import React from "react";
@@ -46,7 +49,6 @@ export interface PageDetailsPageProps {
   attributeValues: RelayToFlat<
     SearchAttributeValuesQuery["attribute"]["choices"]
   >;
-  onBack: () => void;
   onRemove: () => void;
   onSubmit: (data: PageData) => SubmitPromise;
   fetchPageTypes?: (data: string) => void;
@@ -74,7 +76,6 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   saveButtonBarState,
   selectedPageType,
   attributeValues,
-  onBack,
   onRemove,
   onSubmit,
   fetchPageTypes,
@@ -93,6 +94,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
 }) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
+  const navigate = useNavigator();
 
   const pageExists = page !== null;
 
@@ -139,7 +141,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
     >
       {({ change, data, handlers, submit, isSaveDisabled }) => (
         <Container>
-          <Backlink onClick={onBack}>
+          <Backlink href={pageListUrl()}>
             {intl.formatMessage(sectionNames.pages)}
           </Backlink>
           <PageHeader
@@ -250,7 +252,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
           <Savebar
             disabled={isSaveDisabled}
             state={saveButtonBarState}
-            onCancel={onBack}
+            onCancel={() => navigate(pageListUrl())}
             onDelete={page === null ? undefined : onRemove}
             onSubmit={submit}
           />

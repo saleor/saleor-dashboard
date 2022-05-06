@@ -17,7 +17,6 @@ const props: Omit<OrderDraftPageProps, "classes"> = {
   ...fetchMoreProps,
   disabled: false,
   fetchUsers: () => undefined,
-  onBack: () => undefined,
   onBillingAddressEdit: undefined,
   onCustomerEdit: () => undefined,
   onDraftFinalize: () => undefined,

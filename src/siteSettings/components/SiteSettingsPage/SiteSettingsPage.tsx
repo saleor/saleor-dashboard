@@ -1,3 +1,4 @@
+import { Backlink } from "@saleor/components/Backlink";
 import CompanyAddressInput from "@saleor/components/CompanyAddressInput";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -6,16 +7,14 @@ import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
 import PageSectionHeader from "@saleor/components/PageSectionHeader";
 import Savebar from "@saleor/components/Savebar";
+import { configurationMenuUrl } from "@saleor/configuration";
 import { ShopErrorFragment, SiteSettingsQuery } from "@saleor/graphql";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages, sectionNames } from "@saleor/intl";
-import {
-  Backlink,
-  ConfirmButtonTransitionState,
-  makeStyles
-} from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React from "react";
@@ -48,7 +47,6 @@ export interface SiteSettingsPageProps {
   errors: ShopErrorFragment[];
   shop: SiteSettingsQuery["shop"];
   saveButtonBarState: ConfirmButtonTransitionState;
-  onBack: () => void;
   onSubmit: (data: SiteSettingsPageFormData) => SubmitPromise;
 }
 
@@ -81,16 +79,12 @@ const useStyles = makeStyles(
 );
 
 const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
-  const {
-    disabled,
-    errors,
-    saveButtonBarState,
-    shop,
-    onBack,
-    onSubmit
-  } = props;
+  const { disabled, errors, saveButtonBarState, shop, onSubmit } = props;
+
   const classes = useStyles(props);
   const intl = useIntl();
+  const navigate = useNavigator();
+
   const [displayCountry, setDisplayCountry] = useStateFromProps(
     shop?.companyAddress?.country.code || ""
   );
@@ -141,7 +135,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
 
         return (
           <Container>
-            <Backlink onClick={onBack}>
+            <Backlink href={configurationMenuUrl}>
               {intl.formatMessage(sectionNames.configuration)}
             </Backlink>
             <PageHeader
@@ -186,7 +180,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
             <Savebar
               state={saveButtonBarState}
               disabled={isSaveDisabled}
-              onCancel={onBack}
+              onCancel={() => navigate(configurationMenuUrl)}
               onSubmit={submit}
             />
           </Container>

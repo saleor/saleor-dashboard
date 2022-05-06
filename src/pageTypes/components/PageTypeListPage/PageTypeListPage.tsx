@@ -1,11 +1,16 @@
 import { Card } from "@material-ui/core";
+import { Backlink } from "@saleor/components/Backlink";
+import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
+import { configurationMenuUrl } from "@saleor/configuration";
 import { PageTypeFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, Button } from "@saleor/macaw-ui";
-import { PageTypeListUrlSortField } from "@saleor/pageTypes/urls";
+import {
+  pageTypeAddUrl,
+  PageTypeListUrlSortField
+} from "@saleor/pageTypes/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -25,15 +30,12 @@ export interface PageTypeListPageProps
     SortPage<PageTypeListUrlSortField>,
     TabPageProps {
   pageTypes: PageTypeFragment[];
-  onBack: () => void;
 }
 
 const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
   currentTab,
   initialSearch,
-  onAdd,
   onAll,
-  onBack,
   onSearchChange,
   onTabChange,
   onTabDelete,
@@ -44,13 +46,13 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
   const intl = useIntl();
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink href={configurationMenuUrl}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.pageTypes)}>
         <Button
           variant="primary"
-          onClick={onAdd}
+          href={pageTypeAddUrl}
           data-test-id="create-page-type"
         >
           <FormattedMessage

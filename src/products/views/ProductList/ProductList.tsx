@@ -45,12 +45,10 @@ import {
   isAttributeColumnValue
 } from "@saleor/products/components/ProductListPage/utils";
 import {
-  productAddUrl,
   productListUrl,
   ProductListUrlDialog,
   ProductListUrlQueryParams,
-  ProductListUrlSortField,
-  productUrl
+  ProductListUrlSortField
 } from "@saleor/products/urls";
 import useAttributeSearch from "@saleor/searches/useAttributeSearch";
 import useAttributeValueSearch from "@saleor/searches/useAttributeValueSearch";
@@ -384,7 +382,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
               .hasNextPage,
           false
         )}
-        onAdd={() => navigate(productAddUrl())}
         disabled={loading}
         limits={limitOpts.data?.shop.limits}
         products={mapEdgesToItems(data?.products)}
@@ -394,7 +391,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
         pageInfo={pageInfo}
-        onRowClick={id => () => navigate(productUrl(id))}
         onAll={resetFilters}
         toolbar={
           <IconButton
@@ -422,7 +418,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         initialSearch={params.query || ""}
         tabs={getFilterTabs().map(tab => tab.name)}
         onExport={() => openModal("export")}
-        channelsCount={availableChannels?.length}
         selectedChannelId={selectedChannel?.id}
         columnQuery={availableInGridAttributesOpts.query}
       />

@@ -26,6 +26,7 @@ const channels = createChannelsData(channelsList);
 
 const props: ProductUpdatePageProps = {
   ...listActionsProps,
+  productId: "123",
   allChannelsCount: 5,
   onChannelsChange: () => undefined,
   currentChannels: [],
@@ -56,7 +57,6 @@ const props: ProductUpdatePageProps = {
   media: product.media,
   limits,
   onAssignReferencesClick: () => undefined,
-  onBack: () => undefined,
   onCloseDialog: () => undefined,
   onDelete: () => undefined,
   onImageDelete: () => undefined,
@@ -64,9 +64,7 @@ const props: ProductUpdatePageProps = {
   onMediaUrlUpload: () => undefined,
   onSetDefaultVariant: () => undefined,
   onSubmit: () => undefined,
-  onVariantAdd: () => undefined,
   onVariantReorder: () => undefined,
-  onVariantShow: () => undefined,
   onVariantsAdd: () => undefined,
   onVariantEndPreorderDialogOpen: () => undefined,
   onWarehouseConfigure: () => undefined,

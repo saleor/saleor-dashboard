@@ -1,7 +1,6 @@
 import { appMessages } from "@saleor/apps/messages";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { useAppQuery } from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -21,20 +20,18 @@ export const AppSettings: React.FC<AppSettingsProps> = ({ id }) => {
 
   const appExists = data?.app !== null;
 
-  const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
 
   if (!appExists) {
-    return <NotFoundPage onBack={() => navigate(appsListPath)} />;
+    return <NotFoundPage backHref={appsListPath} />;
   }
 
   return (
     <AppPage
       data={data?.app}
       url={data?.app.configurationUrl}
-      navigateToAbout={() => navigate(appDetailsUrl(id))}
-      onBack={() => navigate(appsListPath)}
+      aboutHref={appDetailsUrl(id)}
       onError={() =>
         notify({
           status: "error",

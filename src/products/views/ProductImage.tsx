@@ -82,11 +82,11 @@ export const ProductImage: React.FC<ProductMediaProps> = ({
   return (
     <>
       <ProductMediaPage
+        productId={productId}
         disabled={loading}
         product={data?.product?.name}
         mediaObj={mediaObj || null}
         media={data?.product?.media}
-        onBack={handleBack}
         onDelete={() =>
           navigate(
             productImageUrl(productId, mediaId, {

@@ -1,10 +1,11 @@
 import { Card, CardActions, TableBody, Typography } from "@material-ui/core";
+import { Button } from "@saleor/components/Button";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { OrderLineFragment, WarehouseFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
-import { Button, ChevronIcon, makeStyles } from "@saleor/macaw-ui";
+import { ChevronIcon, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage } from "react-intl";

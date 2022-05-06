@@ -1,5 +1,8 @@
 import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
-import { CollectionListUrlSortField } from "@saleor/collections/urls";
+import {
+  CollectionListUrlSortField,
+  collectionUrl
+} from "@saleor/collections/urls";
 import { canBeSorted } from "@saleor/collections/views/CollectionList/sort";
 import { ChannelsAvailabilityDropdown } from "@saleor/components/ChannelsAvailabilityDropdown";
 import {
@@ -12,6 +15,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import TooltipTableCellHeader from "@saleor/components/TooltipTableCellHeader";
 import { commonTooltipMessages } from "@saleor/components/TooltipTableCellHeader/messages";
 import { CollectionListQuery } from "@saleor/graphql";
@@ -72,7 +76,6 @@ const CollectionList: React.FC<CollectionListProps> = props => {
     onNextPage,
     onPreviousPage,
     onUpdateListSettings,
-    onRowClick,
     onSort,
     pageInfo,
     isChecked,
@@ -169,10 +172,10 @@ const CollectionList: React.FC<CollectionListProps> = props => {
               listing => listing?.channel?.id === selectedChannelId
             );
             return (
-              <TableRow
+              <TableRowLink
                 className={classes.tableRow}
                 hover={!!collection}
-                onClick={collection ? onRowClick(collection.id) : undefined}
+                href={collection && collectionUrl(collection.id)}
                 key={collection ? collection.id : "skeleton"}
                 selected={isSelected}
                 data-test-id={"id-" + maybe(() => collection.id)}
@@ -213,7 +216,7 @@ const CollectionList: React.FC<CollectionListProps> = props => {
                       />
                     ))}
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             );
           },
           () => (

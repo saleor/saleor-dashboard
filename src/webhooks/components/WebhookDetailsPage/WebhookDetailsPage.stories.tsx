@@ -9,10 +9,10 @@ import WebhookDetailsPage, {
 } from "./WebhookDetailsPage";
 
 const props: WebhookDetailsPageProps = {
+  appId: "123",
   appName: "app",
   disabled: false,
   errors: [],
-  onBack: () => undefined,
   onSubmit: () => undefined,
   saveButtonBarState: "default",
   webhook

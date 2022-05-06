@@ -1,12 +1,12 @@
 import { Card } from "@material-ui/core";
+import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import { getByName } from "@saleor/components/Filter/utils";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
-import { SaleListUrlSortField } from "@saleor/discounts/urls";
+import { saleAddUrl, SaleListUrlSortField } from "@saleor/discounts/urls";
 import { SaleFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Button } from "@saleor/macaw-ui";
 import {
   ChannelProps,
   FilterPageProps,
@@ -39,7 +39,6 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
   currentTab,
   filterOpts,
   initialSearch,
-  onAdd,
   onAll,
   onFilterChange,
   onSearchChange,
@@ -57,7 +56,11 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.sales)}>
-        <Button onClick={onAdd} variant="primary" data-test-id="create-sale">
+        <Button
+          href={saleAddUrl()}
+          variant="primary"
+          data-test-id="create-sale"
+        >
           <FormattedMessage
             id="JHfbXR"
             defaultMessage="Create Sale"

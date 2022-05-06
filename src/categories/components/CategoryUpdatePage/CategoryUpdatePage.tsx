@@ -1,4 +1,6 @@
 import { Card } from "@material-ui/core";
+import { categoryListUrl, categoryUrl } from "@saleor/categories/urls";
+import { Backlink } from "@saleor/components/Backlink";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
@@ -9,12 +11,9 @@ import SeoForm from "@saleor/components/SeoForm";
 import { Tab, TabContainer } from "@saleor/components/Tab";
 import { CategoryDetailsQuery, ProductErrorFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import {
-  Backlink,
-  Button,
-  ConfirmButtonTransitionState
-} from "@saleor/macaw-ui";
+import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -45,17 +44,14 @@ export interface CategoryUpdatePageProps
     hasPreviousPage: boolean;
   };
   saveButtonBarState: ConfirmButtonTransitionState;
+  addProductHref: string;
+  addCategoryHref: string;
   onImageDelete: () => void;
   onSubmit: (data: CategoryUpdateData) => SubmitPromise;
   onImageUpload(file: File);
   onNextPage();
   onPreviousPage();
-  onProductClick(id: string): () => void;
-  onAddProduct();
-  onBack();
   onDelete();
-  onAddCategory();
-  onCategoryClick(id: string): () => void;
 }
 
 const CategoriesTab = Tab(CategoryPageTab.categories);
@@ -71,14 +67,10 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   products,
   saveButtonBarState,
   subcategories,
-  onAddCategory,
-  onAddProduct,
-  onBack,
-  onCategoryClick,
+  addCategoryHref,
   onDelete,
   onNextPage,
   onPreviousPage,
-  onProductClick,
   onSubmit,
   onImageDelete,
   onImageUpload,
@@ -90,6 +82,11 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   toggleAll
 }: CategoryUpdatePageProps) => {
   const intl = useIntl();
+  const navigate = useNavigator();
+
+  const backHref = category?.parent?.id
+    ? categoryUrl(category?.parent?.id)
+    : categoryListUrl();
 
   return (
     <CategoryUpdateForm
@@ -99,7 +96,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
     >
       {({ data, change, handlers, submit, isSaveDisabled }) => (
         <Container>
-          <Backlink onClick={onBack}>
+          <Backlink href={backHref}>
             {intl.formatMessage(sectionNames.categories)}
           </Backlink>
           <PageHeader title={category?.name} />
@@ -174,7 +171,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                 toolbar={
                   <Button
                     variant="tertiary"
-                    onClick={onAddCategory}
+                    href={addCategoryHref}
                     data-test-id="create-subcategory"
                   >
                     <FormattedMessage
@@ -198,7 +195,6 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                 toolbar={subcategoryListToolbar}
                 onNextPage={onNextPage}
                 onPreviousPage={onPreviousPage}
-                onRowClick={onCategoryClick}
                 onSort={() => undefined}
               />
             </Card>
@@ -212,8 +208,6 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               pageInfo={pageInfo}
               onNextPage={onNextPage}
               onPreviousPage={onPreviousPage}
-              onRowClick={onProductClick}
-              onAdd={onAddProduct}
               toggle={toggle}
               toggleAll={toggleAll}
               selected={selected}
@@ -222,7 +216,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
             />
           )}
           <Savebar
-            onCancel={onBack}
+            onCancel={() => navigate(backHref)}
             onDelete={onDelete}
             onSubmit={submit}
             state={saveButtonBarState}

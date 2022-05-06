@@ -88,9 +88,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
         saveButtonBarState={createCategoryResult.status}
         errors={createCategoryResult.data?.categoryCreate.errors || []}
         disabled={createCategoryResult.loading}
-        onBack={() =>
-          navigate(parentId ? categoryUrl(parentId) : categoryListUrl())
-        }
+        backUrl={parentId ? categoryUrl(parentId) : categoryListUrl()}
         onSubmit={handleSubmit}
       />
     </>

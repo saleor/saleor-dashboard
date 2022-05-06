@@ -29,11 +29,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import SaleListPage from "../../components/SaleListPage";
 import {
-  saleAddUrl,
   saleListUrl,
   SaleListUrlDialog,
-  SaleListUrlQueryParams,
-  saleUrl
+  SaleListUrlQueryParams
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -190,12 +188,10 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         settings={settings}
         disabled={loading}
         pageInfo={pageInfo}
-        onAdd={() => navigate(saleAddUrl())}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onSort={handleSort}
         onUpdateListSettings={updateListSettings}
-        onRowClick={id => () => navigate(saleUrl(id))}
         isChecked={isSelected}
         selected={listElements.length}
         sort={getSortParams(params)}

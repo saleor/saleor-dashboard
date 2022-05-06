@@ -12,6 +12,7 @@ import {
 } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
+import { shippingZoneUrl } from "@saleor/shipping/urls";
 import { RelayToFlat } from "@saleor/types";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -23,7 +24,6 @@ export interface WarehouseSettingsProps {
   zones: RelayToFlat<WarehouseWithShippingFragment["shippingZones"]>;
   disabled: boolean;
   data: WarehouseDetailsPageFormData;
-  onShippingZoneClick: (id: string) => void;
   onChange: (event: React.ChangeEvent<any>) => void;
   setData: (data: Partial<WarehouseDetailsPageFormData>) => void;
 }
@@ -49,7 +49,6 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
   disabled,
   data,
   onChange,
-  onShippingZoneClick,
   setData
 }) => {
   React.useEffect(() => {
@@ -156,7 +155,7 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
           zone =>
             zone ? (
               <div className={classes.link} key={zone.id}>
-                <Link underline onClick={() => onShippingZoneClick(zone.id)}>
+                <Link underline href={shippingZoneUrl(zone.id)}>
                   {zone.name}
                 </Link>
               </div>

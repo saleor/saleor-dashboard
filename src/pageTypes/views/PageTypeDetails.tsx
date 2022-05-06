@@ -1,7 +1,7 @@
-import { attributeUrl } from "@saleor/attributes/urls";
 import AssignAttributeDialog from "@saleor/components/AssignAttributeDialog";
 import AttributeUnassignDialog from "@saleor/components/AttributeUnassignDialog";
 import BulkAttributeUnassignDialog from "@saleor/components/BulkAttributeUnassignDialog";
+import { Button } from "@saleor/components/Button";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import TypeDeleteWarningDialog from "@saleor/components/TypeDeleteWarningDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -20,7 +20,6 @@ import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import { Button } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { ReorderEvent } from "@saleor/types";
 import getPageErrorMessage from "@saleor/utils/errors/page";
@@ -121,8 +120,6 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
-  const handleBack = () => navigate(pageTypeListUrl());
-
   const handlePageTypeUpdate = async (formData: PageTypeForm) => {
     const result = await updatePageType({
       variables: {
@@ -182,7 +179,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
   const pageType = data?.pageType;
 
   if (pageType === null) {
-    return <NotFoundPage onBack={handleBack} />;
+    return <NotFoundPage backHref={pageTypeListUrl()} />;
   }
 
   const closeModal = () => navigate(pageTypeUrl(id), { replace: true });
@@ -213,7 +210,6 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
             })
           )
         }
-        onAttributeClick={attributeId => navigate(attributeUrl(attributeId))}
         onAttributeReorder={handleAttributeReorder}
         onAttributeUnassign={attributeId =>
           navigate(
@@ -223,7 +219,6 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
             })
           )
         }
-        onBack={handleBack}
         onDelete={() =>
           navigate(
             pageTypeUrl(id, {

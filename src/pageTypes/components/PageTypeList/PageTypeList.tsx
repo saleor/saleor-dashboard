@@ -5,9 +5,10 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { PageTypeFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { PageTypeListUrlSortField } from "@saleor/pageTypes/urls";
+import { PageTypeListUrlSortField, pageTypeUrl } from "@saleor/pageTypes/urls";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -41,7 +42,6 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
     pageInfo,
     onNextPage,
     onPreviousPage,
-    onRowClick,
     onSort,
     isChecked,
     selected,
@@ -99,11 +99,11 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
           pageType => {
             const isSelected = pageType ? isChecked(pageType.id) : false;
             return (
-              <TableRow
+              <TableRowLink
                 className={!!pageType ? classes.link : undefined}
                 hover={!!pageType}
                 key={pageType ? pageType.id : "skeleton"}
-                onClick={pageType ? onRowClick(pageType.id) : undefined}
+                href={pageType && pageTypeUrl(pageType.id)}
                 selected={isSelected}
                 data-test-id={"id-" + pageType?.id}
               >
@@ -122,7 +122,7 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
                     <Skeleton />
                   )}
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             );
           },
           () => (

@@ -11,7 +11,6 @@ const props: CustomerAddressListPageProps = {
   customer,
   disabled: false,
   onAdd: () => undefined,
-  onBack: () => undefined,
   onEdit: () => undefined,
   onRemove: () => undefined,
   onSetAsDefault: () => undefined

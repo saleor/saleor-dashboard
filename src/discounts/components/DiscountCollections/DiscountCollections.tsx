@@ -5,14 +5,17 @@ import {
   TableFooter,
   TableRow
 } from "@material-ui/core";
+import { collectionUrl } from "@saleor/collections/urls";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { SaleDetailsFragment, VoucherDetailsFragment } from "@saleor/graphql";
-import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -33,12 +36,10 @@ const numberOfColumns = 4;
 const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
   const {
     discount: sale,
-
     disabled,
     pageInfo,
     onCollectionAssign,
     onCollectionUnassign,
-    onRowClick,
     onPreviousPage,
     onNextPage,
     isChecked,
@@ -107,11 +108,11 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
             collection => {
               const isSelected = collection ? isChecked(collection.id) : false;
               return (
-                <TableRow
+                <TableRowLink
                   selected={isSelected}
                   hover={!!collection}
                   key={collection ? collection.id : "skeleton"}
-                  onClick={collection && onRowClick(collection.id)}
+                  href={collection && collectionUrl(collection.id)}
                   className={classes.tableRow}
                 >
                   <TableCell padding="checkbox">
@@ -146,7 +147,7 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               );
             },
             () => (

@@ -12,7 +12,6 @@ const props: MenuDetailsPageProps = {
   disabled: false,
   errors: [],
   menu,
-  onBack: () => undefined,
   onDelete: () => undefined,
   onItemAdd: () => undefined,
   onItemClick: () => undefined,

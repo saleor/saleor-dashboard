@@ -1,12 +1,15 @@
 import { Card } from "@material-ui/core";
 import { useUserPermissions } from "@saleor/auth/hooks/useUserPermissions";
+import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
-import { CustomerListUrlSortField } from "@saleor/customers/urls";
+import {
+  customerAddUrl,
+  CustomerListUrlSortField
+} from "@saleor/customers/urls";
 import { ListCustomersQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Button } from "@saleor/macaw-ui";
 import {
   FilterPageProps,
   ListActions,
@@ -38,7 +41,6 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
   currentTab,
   filterOpts,
   initialSearch,
-  onAdd,
   onAll,
   onFilterChange,
   onSearchChange,
@@ -58,7 +60,7 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
       <PageHeader title={intl.formatMessage(sectionNames.customers)}>
         <Button
           variant="primary"
-          onClick={onAdd}
+          href={customerAddUrl}
           data-test-id="create-customer"
         >
           <FormattedMessage

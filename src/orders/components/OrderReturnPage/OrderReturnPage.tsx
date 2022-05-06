@@ -1,11 +1,12 @@
+import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import { OrderDetailsFragment, OrderErrorFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
-import { Backlink } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
+import { orderUrl } from "@saleor/orders/urls";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -37,19 +38,18 @@ export interface OrderReturnPageProps {
   order: OrderDetailsFragment;
   loading: boolean;
   errors?: OrderErrorFragment[];
-  onBack: () => void;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }
 
 const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
-  const { order, loading, errors = [], onBack, onSubmit } = props;
+  const { order, loading, errors = [], onSubmit } = props;
 
   const intl = useIntl();
   return (
     <OrderRefundForm order={order} onSubmit={onSubmit}>
       {({ data, handlers, change, submit, isSaveDisabled }) => (
         <Container>
-          <Backlink onClick={onBack}>
+          <Backlink href={orderUrl(order?.id)}>
             {intl.formatMessage(messages.appTitle, {
               orderNumber: order?.number
             })}

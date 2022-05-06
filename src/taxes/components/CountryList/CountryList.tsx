@@ -7,8 +7,10 @@ import {
 } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { CountryListQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
+import { countryTaxRatesUrl } from "@saleor/taxes/urls";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -29,11 +31,10 @@ const useStyles = makeStyles(
 
 interface CountryListProps {
   countries: CountryListQuery["shop"]["countries"];
-  onRowClick: (code: string) => void;
 }
 
 const CountryList: React.FC<CountryListProps> = props => {
-  const { onRowClick, countries } = props;
+  const { countries } = props;
 
   const classes = useStyles(props);
 
@@ -60,12 +61,12 @@ const CountryList: React.FC<CountryListProps> = props => {
           {renderCollection(
             countries,
             country => (
-              <TableRow
+              <TableRowLink
                 className={classNames({
                   [classes.tableRow]: !!country
                 })}
                 hover={!!country}
-                onClick={!!country ? () => onRowClick(country.code) : undefined}
+                href={country && countryTaxRatesUrl(country.code)}
                 key={country ? country.code : "skeleton"}
               >
                 <TableCell>
@@ -80,7 +81,7 @@ const CountryList: React.FC<CountryListProps> = props => {
                     <Skeleton />
                   )}
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
             () => (
               <TableRow>

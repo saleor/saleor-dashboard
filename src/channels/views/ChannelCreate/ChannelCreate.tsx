@@ -1,4 +1,5 @@
 import { FormData } from "@saleor/channels/components/ChannelForm/ChannelForm";
+import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -13,7 +14,6 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
 import useShop from "@saleor/hooks/useShop";
 import { sectionNames } from "@saleor/intl";
-import { Backlink } from "@saleor/macaw-ui";
 import { extractMutationErrors } from "@saleor/misc";
 import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
 import currencyCodes from "currency-codes";
@@ -28,8 +28,6 @@ export const ChannelCreateView = ({}) => {
   const notify = useNotifier();
   const intl = useIntl();
   const shop = useShop();
-
-  const handleBack = () => navigate(channelsListUrl());
 
   const [createChannel, createChannelOpts] = useChannelCreateMutation({
     onCompleted: ({
@@ -94,7 +92,7 @@ export const ChannelCreateView = ({}) => {
         })}
       />
       <Container>
-        <Backlink onClick={handleBack}>
+        <Backlink href={channelsListUrl()}>
           {intl.formatMessage(sectionNames.channels)}
         </Backlink>
         <PageHeader
@@ -115,7 +113,6 @@ export const ChannelCreateView = ({}) => {
           errors={createChannelOpts?.data?.channelCreate?.errors || []}
           currencyCodes={currencyCodeChoices}
           onSubmit={handleSubmit}
-          onBack={handleBack}
           saveButtonBarState={createChannelOpts.status}
           countries={shop?.countries || []}
         />

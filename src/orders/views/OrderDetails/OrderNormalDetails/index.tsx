@@ -42,7 +42,6 @@ import OrderPaymentDialog from "../../../components/OrderPaymentDialog";
 import OrderPaymentVoidDialog from "../../../components/OrderPaymentVoidDialog";
 import {
   orderFulfillUrl,
-  orderListUrl,
   orderRefundUrl,
   orderReturnUrl,
   orderUrl,
@@ -149,8 +148,6 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   const intl = useIntl();
   const [transactionReference, setTransactionReference] = React.useState("");
 
-  const handleBack = () => navigate(orderListUrl());
-
   const [
     currentApproval,
     setCurrentApproval
@@ -194,7 +191,6 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
             })
           )
         }
-        onBack={handleBack}
         order={order}
         shop={shop}
         saveButtonBarState={getMutationState(

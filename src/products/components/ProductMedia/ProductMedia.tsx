@@ -1,9 +1,10 @@
 import { Card, CardContent } from "@material-ui/core";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import ImageUpload from "@saleor/components/ImageUpload";
 import MediaTile from "@saleor/components/MediaTile";
 import { ProductMediaFragment, ProductMediaType } from "@saleor/graphql";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import { ProductMediaPopper } from "@saleor/products/components/ProductMediaPopper/ProductMediaPopper";
 import { ReorderAction } from "@saleor/types";
 import createMultiFileUploadHandler from "@saleor/utils/handlers/multiFileUploadHandler";
@@ -121,17 +122,13 @@ interface SortableMediaProps {
     alt?: string;
     url: string;
   };
-  onEdit: (id: string) => void;
+  editHref: string;
   onDelete: () => void;
 }
 
 const SortableMedia = SortableElement<SortableMediaProps>(
-  ({ media, onEdit, onDelete }) => (
-    <MediaTile
-      media={media}
-      onEdit={onEdit ? () => onEdit(media.id) : undefined}
-      onDelete={onDelete}
-    />
+  ({ media, editHref, onDelete }) => (
+    <MediaTile media={media} editHref={editHref} onDelete={onDelete} />
   )
 );
 
@@ -140,18 +137,18 @@ interface MediaListContainerProps {
   media: ProductMediaFragment[];
   preview: ProductMediaFragment[];
   onDelete: (id: string) => () => void;
-  onEdit: (id: string) => () => void;
+  getEditHref: (id: string) => string;
 }
 
 const MediaListContainer = SortableContainer<MediaListContainerProps>(
-  ({ media, preview, onDelete, onEdit, ...props }) => (
+  ({ media, preview, onDelete, getEditHref, ...props }) => (
     <div {...props}>
       {media.map((mediaObj, index) => (
         <SortableMedia
           key={`item-${index}`}
           index={index}
           media={mediaObj}
-          onEdit={onEdit ? onEdit(mediaObj.id) : null}
+          editHref={getEditHref(mediaObj.id)}
           onDelete={onDelete(mediaObj.id)}
         />
       ))}
@@ -168,8 +165,8 @@ interface ProductMediaProps {
   placeholderImage?: string;
   media: ProductMediaFragment[];
   loading?: boolean;
+  getImageEditUrl: (id: string) => string;
   onImageDelete: (id: string) => () => void;
-  onImageEdit: (id: string) => () => void;
   onImageReorder?: ReorderAction;
   onImageUpload(file: File);
   openMediaUrlModal();
@@ -179,7 +176,7 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
   const {
     media,
     placeholderImage,
-    onImageEdit,
+    getImageEditUrl,
     onImageDelete,
     onImageReorder,
     onImageUpload,
@@ -288,7 +285,7 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
                       [classes.rootDragActive]: isDragActive
                     })}
                     onDelete={onImageDelete}
-                    onEdit={onImageEdit}
+                    getEditHref={getImageEditUrl}
                   />
                 </CardContent>
               )}

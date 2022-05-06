@@ -2,8 +2,10 @@ import { FormControlLabel, Switch } from "@material-ui/core";
 import { UserFragment } from "@saleor/graphql";
 import { makeStyles, UserChipMenu, UserChipMenuItem } from "@saleor/macaw-ui";
 import { getUserInitials, getUserName } from "@saleor/misc";
+import { staffMemberDetailsUrl } from "@saleor/staff/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(
   () => ({
@@ -22,7 +24,6 @@ export interface UserChipProps {
   isDarkThemeEnabled: boolean;
   user: UserFragment;
   onLogout: () => void;
-  onProfileClick: () => void;
   onThemeToggle: () => void;
 }
 
@@ -30,7 +31,6 @@ const UserChip: React.FC<UserChipProps> = ({
   isDarkThemeEnabled,
   user,
   onLogout,
-  onProfileClick,
   onThemeToggle
 }) => {
   const classes = useStyles({});
@@ -42,15 +42,14 @@ const UserChip: React.FC<UserChipProps> = ({
       name={getUserName(user, true)}
       avatar={user?.avatar?.url}
     >
-      <UserChipMenuItem
-        onClick={onProfileClick}
-        data-test-id="account-settings-button"
-      >
-        <FormattedMessage
-          id="X8+Lpa"
-          defaultMessage="Account Settings"
-          description="button"
-        />
+      <UserChipMenuItem data-test-id="account-settings-button">
+        <Link to={staffMemberDetailsUrl(user?.id)}>
+          <FormattedMessage
+            id="X8+Lpa"
+            defaultMessage="Account Settings"
+            description="button"
+          />
+        </Link>
       </UserChipMenuItem>
       <UserChipMenuItem onClick={onLogout} data-test-id="log-out-button">
         <FormattedMessage

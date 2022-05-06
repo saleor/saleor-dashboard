@@ -12,7 +12,7 @@ import { useIntl } from "react-intl";
 import PermissionGroupCreatePage, {
   PermissionGroupCreateFormData
 } from "../../components/PermissionGroupCreatePage";
-import { permissionGroupDetailsUrl, permissionGroupListUrl } from "../../urls";
+import { permissionGroupDetailsUrl } from "../../urls";
 
 const PermissionGroupCreateView: React.FC = () => {
   const navigate = useNavigator();
@@ -86,7 +86,6 @@ const PermissionGroupCreateView: React.FC = () => {
         permissions={permissions}
         saveButtonBarState={createPermissionGroupResult.status}
         onSubmit={onSubmit}
-        onBack={() => navigate(permissionGroupListUrl())}
       />
     </>
   );
