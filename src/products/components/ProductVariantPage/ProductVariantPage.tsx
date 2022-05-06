@@ -169,9 +169,9 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   ] = React.useState(false);
 
   const variantMedia = variant?.media?.map(image => image.id);
-  const productMedia = variant?.product?.media?.sort((prev, next) =>
-    prev.sortOrder > next.sortOrder ? 1 : -1
-  );
+  const productMedia = [
+    ...(variant?.product?.media ?? [])
+  ]?.sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1));
   const media = productMedia
     ?.filter(image => variantMedia.indexOf(image.id) !== -1)
     .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1));
