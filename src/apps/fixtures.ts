@@ -17,7 +17,14 @@ export const appsList: AppsListQuery["apps"]["edges"] = [
       isActive: true,
       name: "app",
       type: AppTypeEnum.THIRDPARTY,
-      appUrl: null
+      appUrl: null,
+      permissions: [
+        {
+          __typename: "Permission",
+          code: PermissionEnum.MANAGE_USERS,
+          name: "Manage customers."
+        }
+      ]
     }
   },
   {
@@ -28,7 +35,19 @@ export const appsList: AppsListQuery["apps"]["edges"] = [
       isActive: false,
       name: "app1",
       type: AppTypeEnum.THIRDPARTY,
-      appUrl: "http://localhost:3000"
+      appUrl: "http://localhost:3000",
+      permissions: [
+        {
+          __typename: "Permission",
+          code: PermissionEnum.MANAGE_ORDERS,
+          name: "Manage orders."
+        },
+        {
+          __typename: "Permission",
+          code: PermissionEnum.MANAGE_USERS,
+          name: "Manage customers."
+        }
+      ]
     }
   }
 ];
@@ -42,7 +61,19 @@ export const customAppsList: AppsListQuery["apps"]["edges"] = [
       isActive: true,
       name: "app custom",
       type: AppTypeEnum.LOCAL,
-      appUrl: null
+      appUrl: null,
+      permissions: [
+        {
+          __typename: "Permission",
+          code: PermissionEnum.MANAGE_ORDERS,
+          name: "Manage orders."
+        },
+        {
+          __typename: "Permission",
+          code: PermissionEnum.MANAGE_USERS,
+          name: "Manage customers."
+        }
+      ]
     }
   }
 ];
