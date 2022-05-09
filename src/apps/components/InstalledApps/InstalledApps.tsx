@@ -6,18 +6,15 @@ import {
   TableRow,
   Typography
 } from "@material-ui/core";
-import { appUrl } from "@saleor/apps/urls";
+import { appDetailsUrl, appUrl } from "@saleor/apps/urls";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
+import { IconButton } from "@saleor/components/IconButton";
 import TablePagination from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { AppsListQuery } from "@saleor/graphql";
-import {
-  Button,
-  DeleteIcon,
-  IconButton,
-  ResponsiveTable
-} from "@saleor/macaw-ui";
-import { renderCollection, stopPropagation } from "@saleor/misc";
+import { DeleteIcon, ResponsiveTable } from "@saleor/macaw-ui";
+import { preventDefault, renderCollection } from "@saleor/misc";
 import { ListProps } from "@saleor/types";
 import clsx from "clsx";
 import React from "react";
@@ -30,7 +27,6 @@ import DeactivatedText from "../DeactivatedText";
 export interface InstalledAppsProps extends ListProps {
   appsList: AppsListQuery["apps"]["edges"];
   onRemove: (id: string) => void;
-  onRowAboutClick: (id: string) => () => void;
 }
 const numberOfColumns = 2;
 
@@ -41,7 +37,6 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
   disabled,
   onNextPage,
   onPreviousPage,
-  onRowAboutClick,
   onUpdateListSettings,
   pageInfo,
   ...props
@@ -103,9 +98,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                         {app.node.appUrl}
                       </Typography>
                     )}
-                    <Button
-                      onClick={stopPropagation(onRowAboutClick(app.node.id))}
-                    >
+                    <Button href={appDetailsUrl(app.node.id)}>
                       <FormattedMessage
                         id="TBaMo2"
                         defaultMessage="About"
@@ -115,7 +108,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                     <IconButton
                       variant="secondary"
                       color="primary"
-                      onClick={stopPropagation(() => onRemove(app.node.id))}
+                      onClick={preventDefault(() => onRemove(app.node.id))}
                     >
                       <DeleteIcon />
                     </IconButton>

@@ -12,7 +12,7 @@ import TableRowLink from "@saleor/components/TableRowLink";
 import { AppsListQuery } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { DeleteIcon, IconButton, ResponsiveTable } from "@saleor/macaw-ui";
-import { renderCollection, stopPropagation } from "@saleor/misc";
+import { renderCollection } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -77,7 +77,7 @@ const CustomApps: React.FC<CustomAppsProps> = ({
                     <IconButton
                       variant="secondary"
                       color="primary"
-                      onClick={stopPropagation(() => onRemove(app.node.id))}
+                      onClick={() => onRemove(app.node.id)}
                     >
                       <DeleteIcon />
                     </IconButton>

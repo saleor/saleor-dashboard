@@ -32,7 +32,6 @@ import AppInProgressDeleteDialog from "../../components/AppInProgressDeleteDialo
 import AppsListPage from "../../components/AppsListPage";
 import { EXTENSION_LIST_QUERY } from "../../queries";
 import {
-  appDetailsUrl,
   AppListUrlDialog,
   AppListUrlQueryParams,
   appsListUrl,
@@ -312,7 +311,6 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
-        onRowAboutClick={id => () => navigate(appDetailsUrl(id))}
         onAppInstallRetry={onAppInstallRetry}
         getCustomAppHref={id => customAppUrl(id)}
         onInstalledAppRemove={id =>
