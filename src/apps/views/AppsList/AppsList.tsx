@@ -15,7 +15,6 @@ import {
   useAppsInstallationsQuery,
   useAppsListQuery
 } from "@saleor/graphql";
-import useListSettings from "@saleor/hooks/useListSettings";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -309,7 +308,6 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
         appsInProgressList={appsInProgressData}
         loadingAppsInProgress={loadingAppsInProgress}
         disabled={loading || customAppsLoading}
-        settings={settings}
         pageInfo={pageInfo}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}

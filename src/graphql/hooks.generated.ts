@@ -3140,6 +3140,10 @@ export const AppsListDocument = gql`
         isActive
         type
         appUrl
+        permissions {
+          code
+          name
+        }
       }
     }
   }

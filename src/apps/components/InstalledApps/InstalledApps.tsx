@@ -1,5 +1,6 @@
 import {
   Card,
+  Switch,
   TableBody,
   TableCell,
   TableFooter,
@@ -14,14 +15,22 @@ import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableB
 import TablePagination from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { AppsListQuery } from "@saleor/graphql";
-import { DeleteIcon, ResponsiveTable } from "@saleor/macaw-ui";
-import { renderCollection } from "@saleor/misc";
+import {
+  DeleteIcon,
+  IconButton,
+  InfoIcon,
+  PermissionsIcon,
+  ResponsiveTable,
+  Tooltip
+} from "@saleor/macaw-ui";
+import { renderCollection, stopPropagation } from "@saleor/misc";
 import { ListProps } from "@saleor/types";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "../../styles";
+import { AppPermissions } from "../AppPermissions/AppPermissions";
 import AppsSkeleton from "../AppsSkeleton";
 import DeactivatedText from "../DeactivatedText";
 
@@ -44,6 +53,11 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
 }) => {
   const intl = useIntl();
   const classes = useStyles(props);
+
+  // TODO: Add handler
+  const getHandleToggle = app => e => {
+    // console.log(app);
+  };
 
   return (
     <Card className={classes.apps}>
@@ -69,11 +83,6 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                     <span data-tc="name" className={classes.appName}>
                       {app.node.name}
                     </span>
-                    {!app.node.isActive && (
-                      <div className={classes.statusWrapper}>
-                        <DeactivatedText />
-                      </div>
-                    )}
                   </TableCell>
                   <TableCell className={classes.colAction}>
                     {app.node.appUrl && (
@@ -85,14 +94,12 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                       </Typography>
                     )}
                     <TableButtonWrapper>
-                      <Button href={appDetailsUrl(app.node.id)}>
-                        <FormattedMessage
-                          id="TBaMo2"
-                          defaultMessage="About"
-                          description="about app"
-                        />
-                      </Button>
+                      <Switch
+                        checked={app.node.isActive}
+                        onChange={getHandleToggle(app)}
+                      />
                     </TableButtonWrapper>
+                    <AppPermissions permissions={app.node.permissions} />
                     <TableButtonWrapper>
                       <IconButton
                         variant="secondary"
