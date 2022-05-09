@@ -3,10 +3,10 @@ import {
   Switch,
   TableBody,
   TableCell,
-  TableFooter,
   TableRow,
   Typography
 } from "@material-ui/core";
+import { useAppListContext } from "@saleor/apps/context";
 import { appDetailsUrl, appUrl } from "@saleor/apps/urls";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
@@ -17,7 +17,6 @@ import TableRowLink from "@saleor/components/TableRowLink";
 import { AppsListQuery } from "@saleor/graphql";
 import {
   DeleteIcon,
-  IconButton,
   InfoIcon,
   PermissionsIcon,
   ResponsiveTable,
@@ -32,13 +31,13 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useStyles } from "../../styles";
 import { AppPermissions } from "../AppPermissions/AppPermissions";
 import AppsSkeleton from "../AppsSkeleton";
-import DeactivatedText from "../DeactivatedText";
+
+type App = AppsListQuery["apps"]["edges"][0]["node"];
 
 export interface InstalledAppsProps extends ListProps {
   appsList: AppsListQuery["apps"]["edges"];
   onRemove: (id: string) => void;
 }
-const numberOfColumns = 2;
 
 const InstalledApps: React.FC<InstalledAppsProps> = ({
   appsList,
@@ -47,16 +46,19 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
   disabled,
   onNextPage,
   onPreviousPage,
-  onUpdateListSettings,
   pageInfo,
   ...props
 }) => {
   const intl = useIntl();
   const classes = useStyles(props);
+  const { activateApp, deactivateApp } = useAppListContext();
 
-  // TODO: Add handler
-  const getHandleToggle = app => e => {
-    // console.log(app);
+  const getHandleToggle = (app: App) => () => {
+    if (app.isActive) {
+      deactivateApp(app.id);
+    } else {
+      activateApp(app.id);
+    }
   };
 
   return (
@@ -96,7 +98,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                     <TableButtonWrapper>
                       <Switch
                         checked={app.node.isActive}
-                        onChange={getHandleToggle(app)}
+                        onChange={getHandleToggle(app.node)}
                       />
                     </TableButtonWrapper>
                     <AppPermissions permissions={app.node.permissions} />

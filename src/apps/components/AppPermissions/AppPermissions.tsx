@@ -9,7 +9,7 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
-  theme => ({
+  () => ({
     list: {
       margin: 0,
       paddingLeft: "16px"
