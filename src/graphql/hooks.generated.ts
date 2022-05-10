@@ -11315,23 +11315,15 @@ export type VariantDeleteMutationResult = Apollo.MutationResult<Types.VariantDel
 export type VariantDeleteMutationOptions = Apollo.BaseMutationOptions<Types.VariantDeleteMutation, Types.VariantDeleteMutationVariables>;
 export const VariantUpdateDocument = gql`
     mutation VariantUpdate($addStocks: [StockInput!]!, $removeStocks: [ID!]!, $id: ID!, $attributes: [AttributeValueInput!], $sku: String, $quantityLimitPerCustomer: Int, $trackInventory: Boolean!, $stocks: [StockInput!]!, $preorder: PreorderSettingsInput, $weight: WeightScalar, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
-  productVariantUpdate(
-    id: $id
-    input: {attributes: $attributes, sku: $sku, trackInventory: $trackInventory, preorder: $preorder, weight: $weight, quantityLimitPerCustomer: $quantityLimitPerCustomer}
-  ) {
+  productVariantStocksDelete(warehouseIds: $removeStocks, variantId: $id) {
     errors {
-      ...ProductErrorWithAttributes
+      ...ProductVariantStocksDeleteError
     }
     productVariant {
-      ...ProductVariant
-    }
-  }
-  productVariantStocksUpdate(stocks: $stocks, variantId: $id) {
-    errors {
-      ...BulkStockError
-    }
-    productVariant {
-      ...ProductVariant
+      id
+      stocks {
+        ...Stock
+      }
     }
   }
   productVariantStocksCreate(stocks: $addStocks, variantId: $id) {
@@ -11345,23 +11337,31 @@ export const VariantUpdateDocument = gql`
       }
     }
   }
-  productVariantStocksDelete(warehouseIds: $removeStocks, variantId: $id) {
+  productVariantStocksUpdate(stocks: $stocks, variantId: $id) {
     errors {
-      ...ProductVariantStocksDeleteError
+      ...BulkStockError
     }
     productVariant {
-      id
-      stocks {
-        ...Stock
-      }
+      ...ProductVariant
+    }
+  }
+  productVariantUpdate(
+    id: $id
+    input: {attributes: $attributes, sku: $sku, trackInventory: $trackInventory, preorder: $preorder, weight: $weight, quantityLimitPerCustomer: $quantityLimitPerCustomer}
+  ) {
+    errors {
+      ...ProductErrorWithAttributes
+    }
+    productVariant {
+      ...ProductVariant
     }
   }
 }
-    ${ProductErrorWithAttributesFragmentDoc}
-${ProductVariantFragmentDoc}
-${BulkStockErrorFragmentDoc}
+    ${ProductVariantStocksDeleteErrorFragmentDoc}
 ${StockFragmentDoc}
-${ProductVariantStocksDeleteErrorFragmentDoc}`;
+${BulkStockErrorFragmentDoc}
+${ProductVariantFragmentDoc}
+${ProductErrorWithAttributesFragmentDoc}`;
 export type VariantUpdateMutationFn = Apollo.MutationFunction<Types.VariantUpdateMutation, Types.VariantUpdateMutationVariables>;
 
 /**
