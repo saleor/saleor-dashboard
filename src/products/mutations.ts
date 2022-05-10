@@ -210,6 +210,36 @@ export const variantUpdateMutation = gql`
     $lastValues: Int
     $beforeValues: String
   ) {
+    productVariantStocksDelete(warehouseIds: $removeStocks, variantId: $id) {
+      errors {
+        ...ProductVariantStocksDeleteError
+      }
+      productVariant {
+        id
+        stocks {
+          ...Stock
+        }
+      }
+    }
+    productVariantStocksCreate(stocks: $addStocks, variantId: $id) {
+      errors {
+        ...BulkStockError
+      }
+      productVariant {
+        id
+        stocks {
+          ...Stock
+        }
+      }
+    }
+    productVariantStocksUpdate(stocks: $stocks, variantId: $id) {
+      errors {
+        ...BulkStockError
+      }
+      productVariant {
+        ...ProductVariant
+      }
+    }
     productVariantUpdate(
       id: $id
       input: {
@@ -226,36 +256,6 @@ export const variantUpdateMutation = gql`
       }
       productVariant {
         ...ProductVariant
-      }
-    }
-    productVariantStocksUpdate(stocks: $stocks, variantId: $id) {
-      errors {
-        ...BulkStockError
-      }
-      productVariant {
-        ...ProductVariant
-      }
-    }
-    productVariantStocksCreate(stocks: $addStocks, variantId: $id) {
-      errors {
-        ...BulkStockError
-      }
-      productVariant {
-        id
-        stocks {
-          ...Stock
-        }
-      }
-    }
-    productVariantStocksDelete(warehouseIds: $removeStocks, variantId: $id) {
-      errors {
-        ...ProductVariantStocksDeleteError
-      }
-      productVariant {
-        id
-        stocks {
-          ...Stock
-        }
       }
     }
   }
