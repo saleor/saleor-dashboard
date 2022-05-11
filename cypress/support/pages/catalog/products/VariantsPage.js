@@ -46,6 +46,7 @@ export function createFirstVariant({
   cy.addAliasToGraphRequest("ProductVariantBulkCreate")
     .get(VARIANTS_SELECTORS.nextButton)
     .click()
+    .confirmationMessageShouldAppear()
     .waitForRequestAndCheckIfNoErrors("@ProductVariantBulkCreate")
     .waitForProgressBarToNotBeVisible()
     .get(AVAILABLE_CHANNELS_FORM.menageChannelsButton)
