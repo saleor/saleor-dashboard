@@ -33,23 +33,13 @@ const TableRowLink = ({
 }: TableRowLinkProps) => {
   const classes = useStyles();
 
-  const handleClickCapture = (e: React.MouseEvent<unknown>) => {
-    if ((e.target as HTMLElement).tagName !== "TD") {
-      e.preventDefault();
-    }
-  };
-
   if (!href || isExternalURL(href)) {
     return <TableRow {...props}>{children}</TableRow>;
   }
 
   return (
     <TableRow {...props}>
-      <Link
-        className={clsx(classes.link, linkClassName)}
-        to={href}
-        onClickCapture={handleClickCapture}
-      >
+      <Link className={clsx(classes.link, linkClassName)} to={href}>
         {children}
       </Link>
     </TableRow>
