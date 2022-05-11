@@ -23,6 +23,12 @@
       "GiftCardUpdated",
       "GiftCardDeleted",
       "GiftCardStatusChanged",
+      "MenuCreated",
+      "MenuUpdated",
+      "MenuDeleted",
+      "MenuItemCreated",
+      "MenuItemUpdated",
+      "MenuItemDeleted",
       "OrderCreated",
       "OrderUpdated",
       "OrderConfirmed",
@@ -64,8 +70,12 @@
       "ShippingZoneCreated",
       "ShippingZoneUpdated",
       "ShippingZoneDeleted",
+      "TransactionActionRequest",
       "TranslationCreated",
-      "TranslationUpdated"
+      "TranslationUpdated",
+      "VoucherCreated",
+      "VoucherUpdated",
+      "VoucherDeleted"
     ],
     "Job": [
       "AppInstallation",
@@ -147,6 +157,8 @@
       "StaffNotificationRecipient",
       "Stock",
       "Transaction",
+      "TransactionEvent",
+      "TransactionItem",
       "User",
       "Voucher",
       "VoucherChannelListing",
@@ -178,6 +190,7 @@
       "ShippingMethod",
       "ShippingMethodType",
       "ShippingZone",
+      "TransactionItem",
       "User",
       "Voucher",
       "Warehouse"
