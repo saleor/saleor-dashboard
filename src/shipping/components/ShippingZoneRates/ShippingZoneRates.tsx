@@ -12,6 +12,7 @@ import Money from "@saleor/components/Money";
 import MoneyRange from "@saleor/components/MoneyRange";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableRowLink from "@saleor/components/TableRowLink";
 import WeightRange from "@saleor/components/WeightRange";
 import { ShippingZoneDetailsFragment } from "@saleor/graphql";
@@ -180,20 +181,24 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                       <Skeleton />
                     )}
                   </TableCell>
-                  <IconButtonTableCell
-                    disabled={disabled}
-                    onClick={() => navigate(getRateEditHref(rate.id))}
-                    className={classes.buttonColumn}
-                  >
-                    <EditIcon />
-                  </IconButtonTableCell>
-                  <IconButtonTableCell
-                    disabled={disabled}
-                    onClick={() => onRateRemove(rate.id)}
-                    className={classes.buttonColumn}
-                  >
-                    <DeleteIcon />
-                  </IconButtonTableCell>
+                  <TableButtonWrapper>
+                    <IconButtonTableCell
+                      disabled={disabled}
+                      onClick={() => navigate(getRateEditHref(rate.id))}
+                      className={classes.buttonColumn}
+                    >
+                      <EditIcon />
+                    </IconButtonTableCell>
+                  </TableButtonWrapper>
+                  <TableButtonWrapper>
+                    <IconButtonTableCell
+                      disabled={disabled}
+                      onClick={() => onRateRemove(rate.id)}
+                      className={classes.buttonColumn}
+                    >
+                      <DeleteIcon />
+                    </IconButtonTableCell>
+                  </TableButtonWrapper>
                 </TableRowLink>
               );
             },

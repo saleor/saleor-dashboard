@@ -12,6 +12,7 @@ import Link from "@saleor/components/Link";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { customerUrl } from "@saleor/customers/urls";
 import GiftCardStatusChip from "@saleor/giftCards/components/GiftCardStatusChip/GiftCardStatusChip";
@@ -138,22 +139,26 @@ const GiftCardsListTable: React.FC = () => {
                   </TableCell>
                   <TableCell>
                     {product ? (
-                      <PillLink
-                        component={RouterLink}
-                        to={productUrl(product?.id)}
-                        onClick={onLinkClick}
-                      >
-                        {product?.name}
-                      </PillLink>
+                      <TableButtonWrapper>
+                        <PillLink
+                          component={RouterLink}
+                          to={productUrl(product?.id)}
+                          onClick={onLinkClick}
+                        >
+                          {product?.name}
+                        </PillLink>
+                      </TableButtonWrapper>
                     ) : (
                       PLACEHOLDER
                     )}
                   </TableCell>
                   <TableCell>
                     {usedBy ? (
-                      <Link href={customerUrl(usedBy?.id)}>
-                        {`${usedBy?.firstName} ${usedBy?.lastName}`}
-                      </Link>
+                      <TableButtonWrapper>
+                        <Link href={customerUrl(usedBy?.id)}>
+                          {`${usedBy?.firstName} ${usedBy?.lastName}`}
+                        </Link>
+                      </TableButtonWrapper>
                     ) : (
                       <Typography noWrap>
                         {usedByEmail || PLACEHOLDER}

@@ -10,11 +10,12 @@ import { appDetailsUrl, appUrl } from "@saleor/apps/urls";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import { IconButton } from "@saleor/components/IconButton";
+import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TablePagination from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { AppsListQuery } from "@saleor/graphql";
 import { DeleteIcon, ResponsiveTable } from "@saleor/macaw-ui";
-import { preventDefault, renderCollection } from "@saleor/misc";
+import { renderCollection } from "@saleor/misc";
 import { ListProps } from "@saleor/types";
 import clsx from "clsx";
 import React from "react";
@@ -98,20 +99,24 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                         {app.node.appUrl}
                       </Typography>
                     )}
-                    <Button href={appDetailsUrl(app.node.id)}>
-                      <FormattedMessage
-                        id="TBaMo2"
-                        defaultMessage="About"
-                        description="about app"
-                      />
-                    </Button>
-                    <IconButton
-                      variant="secondary"
-                      color="primary"
-                      onClick={preventDefault(() => onRemove(app.node.id))}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
+                    <TableButtonWrapper>
+                      <Button href={appDetailsUrl(app.node.id)}>
+                        <FormattedMessage
+                          id="TBaMo2"
+                          defaultMessage="About"
+                          description="about app"
+                        />
+                      </Button>
+                    </TableButtonWrapper>
+                    <TableButtonWrapper>
+                      <IconButton
+                        variant="secondary"
+                        color="primary"
+                        onClick={() => onRemove(app.node.id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableButtonWrapper>
                   </TableCell>
                 </TableRowLink>
               ) : (

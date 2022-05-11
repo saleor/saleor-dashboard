@@ -8,6 +8,7 @@ import {
 import { customAppAddUrl } from "@saleor/apps/urls";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
+import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { AppsListQuery } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
@@ -74,13 +75,15 @@ const CustomApps: React.FC<CustomAppsProps> = ({
                     )}
                   </TableCell>
                   <TableCell className={classes.colAction}>
-                    <IconButton
-                      variant="secondary"
-                      color="primary"
-                      onClick={() => onRemove(app.node.id)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
+                    <TableButtonWrapper>
+                      <IconButton
+                        variant="secondary"
+                        color="primary"
+                        onClick={() => onRemove(app.node.id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableButtonWrapper>
                   </TableCell>
                 </TableRowLink>
               ) : (
