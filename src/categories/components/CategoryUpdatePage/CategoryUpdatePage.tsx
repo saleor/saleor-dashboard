@@ -1,6 +1,11 @@
 import { Card } from "@material-ui/core";
-import { categoryListUrl, categoryUrl } from "@saleor/categories/urls";
+import {
+  categoryAddUrl,
+  categoryListUrl,
+  categoryUrl
+} from "@saleor/categories/urls";
 import { Backlink } from "@saleor/components/Backlink";
+import { Button } from "@saleor/components/Button";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
@@ -13,7 +18,7 @@ import { CategoryDetailsQuery, ProductErrorFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -32,6 +37,7 @@ export enum CategoryPageTab {
 
 export interface CategoryUpdatePageProps
   extends TabListActions<"productListToolbar" | "subcategoryListToolbar"> {
+  categoryId: string;
   changeTab: (index: CategoryPageTab) => void;
   currentTab: CategoryPageTab;
   errors: ProductErrorFragment[];
@@ -45,7 +51,6 @@ export interface CategoryUpdatePageProps
   };
   saveButtonBarState: ConfirmButtonTransitionState;
   addProductHref: string;
-  addCategoryHref: string;
   onImageDelete: () => void;
   onSubmit: (data: CategoryUpdateData) => SubmitPromise;
   onImageUpload(file: File);
@@ -58,6 +63,7 @@ const CategoriesTab = Tab(CategoryPageTab.categories);
 const ProductsTab = Tab(CategoryPageTab.products);
 
 export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
+  categoryId,
   changeTab,
   currentTab,
   category,
@@ -67,7 +73,6 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   products,
   saveButtonBarState,
   subcategories,
-  addCategoryHref,
   onDelete,
   onNextPage,
   onPreviousPage,
@@ -171,7 +176,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                 toolbar={
                   <Button
                     variant="tertiary"
-                    href={addCategoryHref}
+                    href={categoryAddUrl(categoryId)}
                     data-test-id="create-subcategory"
                   >
                     <FormattedMessage
