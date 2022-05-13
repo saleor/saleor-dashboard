@@ -9,10 +9,11 @@ import {
   SortableTableBody,
   SortableTableRow
 } from "@saleor/components/SortableTable";
+import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@saleor/components/TableHead";
 import { AttributeFragment, ProductAttributeType } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
+import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ReorderAction } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -167,16 +168,16 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
                     )}
                   </TableCell>
                   <TableCell className={classes.colAction}>
-                    <IconButton
-                      data-test-id="delete-icon"
-                      disabled={disabled}
-                      variant="secondary"
-                      onClick={stopPropagation(() =>
-                        onAttributeUnassign(attribute.id)
-                      )}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
+                    <TableButtonWrapper>
+                      <IconButton
+                        data-test-id="delete-icon"
+                        disabled={disabled}
+                        variant="secondary"
+                        onClick={() => onAttributeUnassign(attribute.id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableButtonWrapper>
                   </TableCell>
                 </SortableTableRow>
               );

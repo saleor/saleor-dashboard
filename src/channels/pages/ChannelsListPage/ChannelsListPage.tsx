@@ -13,6 +13,7 @@ import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { configurationMenuUrl } from "@saleor/configuration";
@@ -130,17 +131,19 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
                   </TableCell>
                   <TableCell className={classes.colAction}>
                     {channelsList?.length > 1 && (
-                      <IconButton
-                        variant="secondary"
-                        color="primary"
-                        onClick={
-                          channel
-                            ? stopPropagation(() => onRemove(channel.id))
-                            : undefined
-                        }
-                      >
-                        <DeleteIcon />
-                      </IconButton>
+                      <TableButtonWrapper>
+                        <IconButton
+                          variant="secondary"
+                          color="primary"
+                          onClick={
+                            channel
+                              ? stopPropagation(() => onRemove(channel.id))
+                              : undefined
+                          }
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableButtonWrapper>
                     )}
                   </TableCell>
                 </TableRowLink>

@@ -10,6 +10,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
@@ -154,16 +155,18 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
                     )}
                   </TableCell>
                   <TableCell className={classes.colActions}>
-                    <IconButton
-                      variant="secondary"
-                      disabled={!variant || disabled}
-                      onClick={event => {
-                        event.stopPropagation();
-                        onVariantUnassign(variant.id);
-                      }}
-                    >
-                      <DeleteIcon color="primary" />
-                    </IconButton>
+                    <TableButtonWrapper>
+                      <IconButton
+                        variant="secondary"
+                        disabled={!variant || disabled}
+                        onClick={event => {
+                          event.stopPropagation();
+                          onVariantUnassign(variant.id);
+                        }}
+                      >
+                        <DeleteIcon color="primary" />
+                      </IconButton>
+                    </TableButtonWrapper>
                   </TableCell>
                 </TableRowLink>
               );

@@ -9,6 +9,7 @@ import Checkbox from "@saleor/components/Checkbox";
 import IconButtonTableCell from "@saleor/components/IconButtonTableCell";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
@@ -164,13 +165,15 @@ const MenuList: React.FC<MenuListProps> = props => {
                       <Skeleton />
                     )}
                   </TableCell>
-                  <IconButtonTableCell
-                    className={classes.colAction}
-                    disabled={disabled}
-                    onClick={() => onDelete(menu.id)}
-                  >
-                    <DeleteIcon />
-                  </IconButtonTableCell>
+                  <TableButtonWrapper>
+                    <IconButtonTableCell
+                      className={classes.colAction}
+                      disabled={disabled}
+                      onClick={() => onDelete(menu.id)}
+                    >
+                      <DeleteIcon />
+                    </IconButtonTableCell>
+                  </TableButtonWrapper>
                 </TableRowLink>
               );
             },

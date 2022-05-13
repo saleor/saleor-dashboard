@@ -147,7 +147,10 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
           {!isCreate ? (
             <TableRow>
               <TableCell colSpan={3}>
-                <Button href={productVariantAddUrl(productId)}>
+                <Button
+                  href={productVariantAddUrl(productId)}
+                  data-test-id="button-add-variant"
+                >
                   <FormattedMessage
                     id="3C3Nj5"
                     defaultMessage="Add variant"

@@ -11,6 +11,7 @@ import { ChannelsAvailabilityDropdown } from "@saleor/components/ChannelsAvailab
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import TableHead from "@saleor/components/TableHead";
@@ -208,14 +209,16 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
                     )}
                   </TableCell>
                   <TableCell className={classes.colActions}>
-                    <IconButton
-                      data-test-id="delete-icon"
-                      variant="secondary"
-                      disabled={!product}
-                      onClick={event => onProductUnassign(product.id, event)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
+                    <TableButtonWrapper>
+                      <IconButton
+                        data-test-id="delete-icon"
+                        variant="secondary"
+                        disabled={!product}
+                        onClick={event => onProductUnassign(product.id, event)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableButtonWrapper>
                   </TableCell>
                 </TableRowLink>
               );
