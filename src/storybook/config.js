@@ -138,10 +138,6 @@ function loadStories() {
   // Site settings
   require("./stories/siteSettings/SiteSettingsPage");
 
-  // Taxes
-  require("./stories/taxes/CountryListPage");
-  require("./stories/taxes/CountryTaxesPage");
-
   // Translations
   require("./stories/translations/TranslationsEntitiesListPage");
   require("./stories/translations/TranslationsLanguageListPage");
