@@ -22,6 +22,7 @@ import {
 } from "@saleor/hooks/useFormset";
 import { FetchMoreProps, ReorderEvent } from "@saleor/types";
 import { move, toggle } from "@saleor/utils/lists";
+import isEqual from "lodash/isEqual";
 
 import { getFileValuesToUploadFromAttributes, isFileValueUnused } from "./data";
 
@@ -168,11 +169,6 @@ export function createAttributeValueReorderHandler(
   };
 }
 
-interface AttributesArgs {
-  attributes: AttributeInput[];
-  updatedFileAttributes: AttributeValueInput[];
-}
-
 function getFileInput(
   attribute: AttributeInput,
   updatedFileAttributes: AttributeValueInput[]
@@ -202,11 +198,34 @@ function getBooleanInput(attribute: AttributeInput) {
   };
 }
 
+function getAttributesMap(attributes: AttributeInput[] | null) {
+  if (attributes && attributes?.length !== 0) {
+    return new Map(
+      attributes.map(attribute => [attribute.id, attribute.value])
+    );
+  }
+  return new Map();
+}
+
+interface AttributesArgs {
+  attributes: AttributeInput[];
+  prevAttributes: AttributeInput[] | null;
+  updatedFileAttributes: AttributeValueInput[];
+}
+
 export const prepareAttributesInput = ({
   attributes,
+  prevAttributes,
   updatedFileAttributes
-}: AttributesArgs): AttributeValueInput[] =>
-  attributes.reduce((attrInput, attr) => {
+}: AttributesArgs): AttributeValueInput[] => {
+  const prevAttributesMap = getAttributesMap(prevAttributes);
+
+  return attributes.reduce((attrInput, attr) => {
+    const prevAttrValue = prevAttributesMap.get(attr.id);
+    if (isEqual(attr.value, prevAttrValue)) {
+      return attrInput;
+    }
+
     const inputType = attr.data.inputType;
     if (inputType === AttributeInputTypeEnum.FILE) {
       const fileInput = getFileInput(attr, updatedFileAttributes);
@@ -257,6 +276,7 @@ export const prepareAttributesInput = ({
 
     return attrInput;
   }, []);
+};
 
 export const handleUploadMultipleFiles = async (
   attributesWithNewFileValue: FormsetData<null, File>,

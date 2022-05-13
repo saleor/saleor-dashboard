@@ -36,6 +36,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
+import { getAttributeInputFromVariant } from "@saleor/products/utils/data";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
@@ -267,6 +268,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         addStocks: data.addStocks.map(mapFormsetStockToStockInput),
         attributes: prepareAttributesInput({
           attributes: data.attributes,
+          prevAttributes: getAttributeInputFromVariant(variant),
           updatedFileAttributes
         }),
         id: variantId,
