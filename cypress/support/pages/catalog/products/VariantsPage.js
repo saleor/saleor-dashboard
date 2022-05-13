@@ -46,6 +46,7 @@ export function createFirstVariant({
   cy.addAliasToGraphRequest("ProductVariantBulkCreate")
     .get(VARIANTS_SELECTORS.nextButton)
     .click()
+    .confirmationMessageShouldAppear()
     .waitForRequestAndCheckIfNoErrors("@ProductVariantBulkCreate")
     .waitForProgressBarToNotBeVisible()
     .get(AVAILABLE_CHANNELS_FORM.menageChannelsButton)
@@ -68,7 +69,9 @@ export function createVariant({
     .get(VARIANTS_SELECTORS.skuInput)
     .should("be.enabled")
     .get(BUTTON_SELECTORS.back)
-    .click();
+    .click()
+    .get(PRODUCT_DETAILS.productNameInput)
+    .should("be.enabled");
   selectChannelForVariantAndFillUpPrices({
     channelName,
     variantName: attributeName,
