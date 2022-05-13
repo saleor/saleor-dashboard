@@ -5,7 +5,7 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import { channelsListUrl } from "./urls";
-import ChannelsListComponent from "./views/TaxesList";
+import ChannelsListComponent from "./views/ChannelsList";
 
 const ChannelsList: React.FC<RouteComponentProps<{ id: string }>> = ({
   match
