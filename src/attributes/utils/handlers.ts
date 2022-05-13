@@ -228,11 +228,6 @@ export const prepareAttributesInput = ({
       return attrInput;
     }
 
-    // for cases other than rich text, boolean and file
-    // we can skip attribute
-    if (!attr.value[0]) {
-      return attrInput;
-    }
     if (inputType === AttributeInputTypeEnum.REFERENCE) {
       attrInput.push({
         id: attr.id,
