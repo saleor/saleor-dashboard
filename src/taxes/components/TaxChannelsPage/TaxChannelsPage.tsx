@@ -195,7 +195,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                 </ListItem>
               </ListHeader>
               {data.map(el => (
-                <ListItem key={el.id}>
+                <ListItem key={el.id} hover={false}>
                   <ListItemCell>{el.name}</ListItemCell>
                   <ListItemCell>
                     <Checkbox />
