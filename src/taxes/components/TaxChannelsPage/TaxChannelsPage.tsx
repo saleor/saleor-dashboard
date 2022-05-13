@@ -198,18 +198,10 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                 <ListItem key={el.id}>
                   <ListItemCell>{el.name}</ListItemCell>
                   <ListItemCell>
-                    <Checkbox
-                      name="check3"
-                      checked={true}
-                      onChange={() => null}
-                    />
+                    <Checkbox />
                   </ListItemCell>
                   <ListItemCell>
-                    <Checkbox
-                      name="check4"
-                      checked={false}
-                      onChange={() => null}
-                    />
+                    <Checkbox />
                   </ListItemCell>
                   <ListItemCell>
                     <IconButton variant="secondary">
