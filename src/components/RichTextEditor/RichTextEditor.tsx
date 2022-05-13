@@ -1,6 +1,5 @@
 import EditorJS, { LogLevels, OutputData } from "@editorjs/editorjs";
 import { FormControl, FormHelperText, InputLabel } from "@material-ui/core";
-import { PromiseQueue } from "@saleor/misc";
 import classNames from "classnames";
 import React from "react";
 
@@ -20,7 +19,6 @@ export interface RichTextEditorProps extends RichTextEditorContentProps {
 
 const RichTextEditor: React.FC<RichTextEditorProps> = ({
   data,
-  disabled,
   error,
   helperText,
   label,
@@ -33,7 +31,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   const [isFocused, setFocus] = React.useState(false);
   const editor = React.useRef<EditorJS>();
   const editorContainer = React.useRef<HTMLDivElement>();
-  const togglePromiseQueue = React.useRef(PromiseQueue()); // used to await subsequent toggle invocations
 
   React.useEffect(
     () => {
@@ -68,36 +65,9 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     [data === undefined]
   );
 
-  React.useEffect(() => {
-    const toggle = async () => {
-      if (!editor.current) {
-        return;
-      }
-
-      await editor.current.isReady;
-      if (editor.current?.readOnly) {
-        // readOnly.toggle() by itself does not enqueue the events and will result in a broken output if invocations overlap
-        // Remove this logic when this is fixed in EditorJS
-        togglePromiseQueue.current.add(() =>
-          editor.current.readOnly.toggle(disabled)
-        );
-
-        // Switching to readOnly with empty blocks present causes the editor to freeze
-        // Remove this logic when this is fixed in EditorJS
-        if (!disabled && !data?.blocks?.length) {
-          await togglePromiseQueue.current.queue;
-          editor.current.clear();
-        }
-      }
-    };
-
-    toggle();
-  }, [disabled]);
-
   return (
     <FormControl
       data-test-id={"rich-text-editor-" + name}
-      disabled={disabled}
       error={error}
       fullWidth
       variant="outlined"
@@ -108,7 +78,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
       <div
         className={classNames(classes.editor, classes.root, {
           [classes.rootActive]: isFocused,
-          [classes.rootDisabled]: disabled,
           [classes.rootError]: error
         })}
         ref={editorContainer}
