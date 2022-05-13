@@ -39,12 +39,12 @@ const defaultChannels = [
 ];
 
 const props: ShippingZoneRatesPageProps = {
+  backHref: "",
   allChannelsCount: 3,
   channelErrors: [],
   disabled: false,
   errors: [],
   isChecked: () => undefined,
-  onBack: () => undefined,
   onChannelsChange: () => undefined,
   onDelete: () => undefined,
   onNextPage: () => undefined,

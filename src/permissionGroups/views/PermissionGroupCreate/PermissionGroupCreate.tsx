@@ -12,7 +12,7 @@ import { useIntl } from "react-intl";
 import PermissionGroupCreatePage, {
   PermissionGroupCreateFormData
 } from "../../components/PermissionGroupCreatePage";
-import { permissionGroupDetailsUrl, permissionGroupListUrl } from "../../urls";
+import { permissionGroupDetailsUrl } from "../../urls";
 
 const PermissionGroupCreateView: React.FC = () => {
   const navigate = useNavigator();
@@ -30,6 +30,7 @@ const PermissionGroupCreateView: React.FC = () => {
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "eUjFjW",
             defaultMessage: "Permission group created"
           })
         });
@@ -74,6 +75,7 @@ const PermissionGroupCreateView: React.FC = () => {
     <>
       <WindowTitle
         title={intl.formatMessage({
+          id: "Irflxf",
           defaultMessage: "Create category",
           description: "window title"
         })}
@@ -84,7 +86,6 @@ const PermissionGroupCreateView: React.FC = () => {
         permissions={permissions}
         saveButtonBarState={createPermissionGroupResult.status}
         onSubmit={onSubmit}
-        onBack={() => navigate(permissionGroupListUrl())}
       />
     </>
   );

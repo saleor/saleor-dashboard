@@ -14,7 +14,6 @@ const useChannelsWithProductVariants = (
 ): UseChannelsWithProductVariants => {
   const {
     channelsWithVariantsData,
-    hasChanged,
     setChannelVariantListing,
     channelVariantListing,
     reset
@@ -53,7 +52,6 @@ const useChannelsWithProductVariants = (
     channelVariantListing,
     addVariantToChannel: handleAddVariant,
     removeVariantFromChannel: handleRemoveVariant,
-    hasChanged,
     toggleAllChannelVariants,
     toggleAllChannels,
     setChannelVariantListing,

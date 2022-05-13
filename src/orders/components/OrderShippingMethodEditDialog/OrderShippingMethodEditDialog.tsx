@@ -114,6 +114,7 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
     <Dialog onClose={onClose} open={open} classes={{ paper: classes.dialog }}>
       <DialogTitle>
         <FormattedMessage
+          id="V/YxJa"
           defaultMessage="Edit Shipping Method"
           description="dialog header"
         />

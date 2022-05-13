@@ -49,7 +49,6 @@ export interface CollectionUpdateFormProps {
   setChannels: (data: ChannelCollectionData[]) => void;
   onSubmit: (data: CollectionUpdateData) => Promise<any[]>;
   disabled: boolean;
-  hasChannelChanged: boolean;
 }
 
 const getInitialData = (
@@ -71,15 +70,12 @@ function useCollectionUpdateForm(
   currentChannels: ChannelCollectionData[],
   setChannels: (data: ChannelCollectionData[]) => void,
   onSubmit: (data: CollectionUpdateData) => Promise<any[]>,
-  disabled: boolean,
-  hasChannelChanged: boolean
+  disabled: boolean
 ): UseCollectionUpdateFormResult {
   const {
     handleChange,
     data: formData,
     triggerChange,
-    setChanged,
-    hasChanged,
     formId,
     setIsSubmitDisabled
   } = useForm(getInitialData(collection, currentChannels), undefined, {
@@ -89,8 +85,7 @@ function useCollectionUpdateForm(
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit,
-    setChanged
+    onSubmit
   });
 
   const { setExitDialogSubmitRef } = useExitFormDialog({
@@ -131,8 +126,7 @@ function useCollectionUpdateForm(
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
-  const isSaveDisabled = disabled || (!hasChanged && !hasChannelChanged);
-  setIsSubmitDisabled(isSaveDisabled);
+  setIsSubmitDisabled(disabled);
 
   return {
     change: handleChange,
@@ -142,9 +136,7 @@ function useCollectionUpdateForm(
       changeDescription,
       changeMetadata
     },
-    hasChanged,
-    submit,
-    isSaveDisabled
+    submit
   };
 }
 
@@ -154,16 +146,14 @@ const CollectionUpdateForm: React.FC<CollectionUpdateFormProps> = ({
   setChannels,
   children,
   onSubmit,
-  disabled,
-  hasChannelChanged
+  disabled
 }) => {
   const props = useCollectionUpdateForm(
     collection,
     currentChannels,
     setChannels,
     onSubmit,
-    disabled,
-    hasChannelChanged
+    disabled
   );
 
   return <form onSubmit={props.submit}>{children(props)}</form>;

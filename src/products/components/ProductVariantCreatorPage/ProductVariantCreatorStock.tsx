@@ -20,13 +20,20 @@ import {
 import { makeStyles } from "@saleor/macaw-ui";
 import { isSelected } from "@saleor/utils/lists";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import {
   ProductVariantCreateFormData,
   VariantCreatorPricesAndSkuMode
 } from "./form";
 import { getStockAttributeValues } from "./utils";
+
+const messages = defineMessages({
+  stock: {
+    id: "vuKrlW",
+    defaultMessage: "Stock"
+  }
+});
 
 const useStyles = makeStyles(
   theme => ({
@@ -122,6 +129,7 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "GQcp83",
           defaultMessage: "Stock and Warehousing",
           description: "variant stock, header"
         })}
@@ -130,9 +138,9 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
         {!warehouses.length ? (
           <Typography color="textSecondary">
             <FormattedMessage
+              id="oIMMcO"
               defaultMessage="There are no warehouses set up for your store. You can configure variants without providing stock quantities."
               description="no warehouses info"
-              id="productVariantCreatorWarehouseSectionDescription"
             />
           </Typography>
         ) : (
@@ -141,13 +149,14 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
               <>
                 <Typography className={classes.warehouseHeader} variant="h5">
                   <FormattedMessage
+                    id="Gjo89T"
                     defaultMessage="Warehouses"
                     description="header"
-                    id="productVariantCreatorWarehouseSectionHeader"
                   />
                 </Typography>
                 <Typography className={classes.warehouseSubheader}>
                   <FormattedMessage
+                    id="/Qb92c"
                     defaultMessage="Based on your selections we will create {numberOfProducts} products. Use this step to customize price and stocks for your new products"
                     values={{
                       numberOfProducts: data.attributes.reduce(
@@ -179,9 +188,9 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
             )}
             <Typography className={classes.stockHeader} variant="h5">
               <FormattedMessage
+                id="ABgQcF"
                 defaultMessage="Stock"
                 description="variant stock, header"
-                id="productVariantCreatorStockSectionHeader"
               />
             </Typography>
             <RadioGroup value={data.stock.mode}>
@@ -189,6 +198,7 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
                 value="all"
                 control={<Radio color="primary" />}
                 label={intl.formatMessage({
+                  id: "STp3Hl",
                   defaultMessage: "Apply single stock to all SKUs"
                 })}
                 onChange={() => onApplyToAllChange("all")}
@@ -211,10 +221,7 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
                           min: 0,
                           type: "number"
                         }}
-                        label={intl.formatMessage({
-                          defaultMessage: "Stock",
-                          id: "productVariantCreatePricesStockInputLabel"
-                        })}
+                        label={intl.formatMessage(messages.stock)}
                         value={data.stock.value[warehouseIndex]}
                         onChange={event =>
                           onApplyToAllStockChange(
@@ -232,6 +239,7 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
                 value="attribute"
                 control={<Radio color="primary" />}
                 label={intl.formatMessage({
+                  id: "L5rthO",
                   defaultMessage: "Apply unique stock by attribute to each SKU"
                 })}
                 onChange={() => onApplyToAllChange("attribute")}
@@ -243,6 +251,7 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
                     className={classes.shortInput}
                     choices={attributeChoices}
                     label={intl.formatMessage({
+                      id: "TDXskW",
                       defaultMessage: "Select Attribute",
                       description: "variant attribute"
                     })}
@@ -280,11 +289,7 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
                                       min: 0,
                                       type: "number"
                                     }}
-                                    label={intl.formatMessage({
-                                      defaultMessage: "Stock",
-                                      id:
-                                        "productVariantCreatePricesStockInputLabel"
-                                    })}
+                                    label={intl.formatMessage(messages.stock)}
                                     value={
                                       data.stock.values.find(
                                         value =>
@@ -321,6 +326,7 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
                 value="skip"
                 control={<Radio color="primary" />}
                 label={intl.formatMessage({
+                  id: "BIqhVQ",
                   defaultMessage: "Skip stock for now"
                 })}
                 onChange={() => onApplyToAllChange("skip")}

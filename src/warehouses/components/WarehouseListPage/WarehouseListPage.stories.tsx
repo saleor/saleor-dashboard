@@ -22,7 +22,6 @@ const props: WarehouseListPageProps = {
   ...sortPageProps,
   ...tabPageProps,
   limits,
-  onBack: () => undefined,
   onRemove: () => undefined,
   sort: {
     ...sortPageProps.sort,

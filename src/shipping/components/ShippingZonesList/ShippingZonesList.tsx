@@ -5,22 +5,24 @@ import {
   TableFooter,
   TableRow
 } from "@material-ui/core";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { ShippingZoneFragment } from "@saleor/graphql";
-import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
+import { shippingZoneAddUrl, shippingZoneUrl } from "@saleor/shipping/urls";
 import { ListActions, ListProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface ShippingZonesListProps extends ListProps, ListActions {
   shippingZones: ShippingZoneFragment[];
-  onAdd: () => void;
   onRemove: (id: string) => void;
 }
 
@@ -51,12 +53,10 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
   const {
     disabled,
     settings,
-    onAdd,
     onNextPage,
     onPreviousPage,
     onRemove,
     onUpdateListSettings,
-    onRowClick,
     pageInfo,
     shippingZones,
     isChecked,
@@ -74,12 +74,14 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
       <CardTitle
         height="const"
         title={intl.formatMessage({
+          id: "h5r9+x",
           defaultMessage: "Shipping By Zone",
           description: "sort shipping methods by zone, section header"
         })}
         toolbar={
-          <Button onClick={onAdd} data-test-id="add-shipping-zone">
+          <Button href={shippingZoneAddUrl} data-test-id="add-shipping-zone">
             <FormattedMessage
+              id="mIUNgR"
               defaultMessage="Create shipping zone"
               description="button"
             />
@@ -103,12 +105,13 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
         >
           <TableCell className={classes.colName}>
             <FormattedMessage
+              id="gRa/TS"
               defaultMessage="Name"
               description="shipping zone"
             />
           </TableCell>
           <TableCell className={classes.colCountries}>
-            <FormattedMessage defaultMessage="Countries" />
+            <FormattedMessage id="aMwxYb" defaultMessage="Countries" />
           </TableCell>
           <TableCell className={classes.colAction} />
         </TableHead>
@@ -136,11 +139,11 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
                 : false;
 
               return (
-                <TableRow
+                <TableRowLink
                   className={classes.row}
                   hover={!!shippingZone}
                   key={shippingZone ? shippingZone.id : "skeleton"}
-                  onClick={shippingZone && onRowClick(shippingZone.id)}
+                  href={shippingZone && shippingZoneUrl(shippingZone.id)}
                   selected={isSelected}
                 >
                   <TableCell padding="checkbox">
@@ -180,13 +183,16 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               );
             },
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage defaultMessage="No shipping zones found" />
+                  <FormattedMessage
+                    id="IhK1F3"
+                    defaultMessage="No shipping zones found"
+                  />
                 </TableCell>
               </TableRow>
             )

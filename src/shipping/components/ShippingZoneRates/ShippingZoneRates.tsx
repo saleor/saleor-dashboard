@@ -12,8 +12,10 @@ import Money from "@saleor/components/Money";
 import MoneyRange from "@saleor/components/MoneyRange";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import TableRowLink from "@saleor/components/TableRowLink";
 import WeightRange from "@saleor/components/WeightRange";
 import { ShippingZoneDetailsFragment } from "@saleor/graphql";
+import useNavigator from "@saleor/hooks/useNavigator";
 import {
   Button,
   DeleteIcon,
@@ -32,7 +34,7 @@ export interface ShippingZoneRatesProps extends ChannelProps {
   variant: "price" | "weight";
   testId?: string;
   onRateAdd: () => void;
-  onRateEdit: (id: string) => void;
+  getRateEditHref: (id: string) => string;
   onRateRemove: (id: string) => void;
 }
 
@@ -59,7 +61,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
   const {
     disabled,
     onRateAdd,
-    onRateEdit,
+    getRateEditHref,
     onRateRemove,
     rates,
     selectedChannelId,
@@ -68,6 +70,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
   } = props;
 
   const classes = useStyles(props);
+  const navigate = useNavigator();
   const intl = useIntl();
 
   return (
@@ -77,10 +80,12 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
         title={
           variant === "price"
             ? intl.formatMessage({
+                id: "FjrExY",
                 defaultMessage: "Price Based Rates",
                 description: "price based shipping methods, section header"
               })
             : intl.formatMessage({
+                id: "foB6wx",
                 defaultMessage: "Weight Based Rates",
                 description: "weight based shipping methods, section header"
               })
@@ -88,6 +93,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
         toolbar={
           <Button disabled={disabled} onClick={onRateAdd} data-test-id={testId}>
             <FormattedMessage
+              id="WR8rir"
               defaultMessage="Create rate"
               description="button"
             />
@@ -99,6 +105,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
           <TableRow>
             <TableCell className={classes.nameColumn}>
               <FormattedMessage
+                id="aPCrsp"
                 defaultMessage="Name"
                 description="shipping method name"
               />
@@ -106,16 +113,19 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
             <TableCell className={classes.valueColumn}>
               {variant === "price"
                 ? intl.formatMessage({
+                    id: "njUQPz",
                     defaultMessage: "Value Range",
                     description: "shipping method price range"
                   })
                 : intl.formatMessage({
+                    id: "aYhcie",
                     defaultMessage: "Weight Range",
                     description: "shipping method weight range"
                   })}
             </TableCell>
             <TableCell className={classes.nameColumn}>
               <FormattedMessage
+                id="EKoPNg"
                 defaultMessage="Price"
                 description="shipping method price"
               />
@@ -132,10 +142,10 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                 listing => listing.channel.id === selectedChannelId
               );
               return (
-                <TableRow
+                <TableRowLink
                   hover={!!rate}
                   key={rate ? rate.id : "skeleton"}
-                  onClick={!!rate ? () => onRateEdit(rate.id) : undefined}
+                  href={rate && getRateEditHref(rate.id)}
                 >
                   <TableCell className={classes.nameColumn}>
                     {maybe<React.ReactNode>(() => rate.name, <Skeleton />)}
@@ -172,7 +182,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                   </TableCell>
                   <IconButtonTableCell
                     disabled={disabled}
-                    onClick={() => onRateEdit(rate.id)}
+                    onClick={() => navigate(getRateEditHref(rate.id))}
                     className={classes.buttonColumn}
                   >
                     <EditIcon />
@@ -184,13 +194,16 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                   >
                     <DeleteIcon />
                   </IconButtonTableCell>
-                </TableRow>
+                </TableRowLink>
               );
             },
             () => (
               <TableRow>
                 <TableCell colSpan={5}>
-                  <FormattedMessage defaultMessage="No shipping rates found" />
+                  <FormattedMessage
+                    id="RUzdUH"
+                    defaultMessage="No shipping rates found"
+                  />
                 </TableCell>
               </TableRow>
             )

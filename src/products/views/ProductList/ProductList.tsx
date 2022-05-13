@@ -45,12 +45,10 @@ import {
   isAttributeColumnValue
 } from "@saleor/products/components/ProductListPage/utils";
 import {
-  productAddUrl,
   productListUrl,
   ProductListUrlDialog,
   ProductListUrlQueryParams,
-  ProductListUrlSortField,
-  productUrl
+  ProductListUrlSortField
 } from "@saleor/products/urls";
 import useAttributeSearch from "@saleor/searches/useAttributeSearch";
 import useAttributeValueSearch from "@saleor/searches/useAttributeValueSearch";
@@ -198,10 +196,12 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       if (data.exportProducts.errors.length === 0) {
         notify({
           text: intl.formatMessage({
+            id: "dPYqy0",
             defaultMessage:
               "We are currently exporting your requested CSV. As soon as it is available it will be sent to your email address"
           }),
           title: intl.formatMessage({
+            id: "5QKsu+",
             defaultMessage: "Exporting CSV",
             description: "waiting for export to end, header"
           })
@@ -382,7 +382,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
               .hasNextPage,
           false
         )}
-        onAdd={() => navigate(productAddUrl())}
         disabled={loading}
         limits={limitOpts.data?.shop.limits}
         products={mapEdgesToItems(data?.products)}
@@ -392,7 +391,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
         pageInfo={pageInfo}
-        onRowClick={id => () => navigate(productUrl(id))}
         onAll={resetFilters}
         toolbar={
           <IconButton
@@ -420,7 +418,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         initialSearch={params.query || ""}
         tabs={getFilterTabs().map(tab => tab.name)}
         onExport={() => openModal("export")}
-        channelsCount={availableChannels?.length}
         selectedChannelId={selectedChannel?.id}
         columnQuery={availableInGridAttributesOpts.query}
       />
@@ -434,6 +431,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           })
         }
         title={intl.formatMessage({
+          id: "F4WdSO",
           defaultMessage: "Delete Products",
           description: "dialog header"
         })}
@@ -441,6 +439,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       >
         <DialogContentText>
           <FormattedMessage
+            id="yDkmX7"
             defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
             description="dialog content"
             values={{

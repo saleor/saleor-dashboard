@@ -1,14 +1,9 @@
-import {
-  Card,
-  TableBody,
-  TableCell,
-  TableRow,
-  Typography
-} from "@material-ui/core";
+import { Card, TableBody, TableCell, Typography } from "@material-ui/core";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import RequirePermissions from "@saleor/components/RequirePermissions";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { PermissionEnum } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -36,19 +31,19 @@ interface HomeNotificationTableProps {
   ordersToCapture: number;
   ordersToFulfill: number;
   productsOutOfStock: number;
-  onCreateNewChannelClick: () => void;
-  onOrdersToFulfillClick: () => void;
-  onOrdersToCaptureClick: () => void;
-  onProductsOutOfStockClick: () => void;
+  createNewChannelHref: string;
+  ordersToFulfillHref: string;
+  ordersToCaptureHref: string;
+  productsOutOfStockHref: string;
   noChannel: boolean;
 }
 
 const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
   const {
-    onCreateNewChannelClick,
-    onOrdersToCaptureClick,
-    onOrdersToFulfillClick,
-    onProductsOutOfStockClick,
+    createNewChannelHref,
+    ordersToFulfillHref,
+    ordersToCaptureHref,
+    productsOutOfStockHref,
     ordersToCapture,
     ordersToFulfill,
     productsOutOfStock,
@@ -67,7 +62,7 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
             <RequirePermissions
               requiredPermissions={[PermissionEnum.MANAGE_CHANNELS]}
             >
-              <TableRow hover={true} onClick={onCreateNewChannelClick}>
+              <TableRowLink hover={true} href={createNewChannelHref}>
                 <TableCell>
                   <Typography>
                     {intl.formatMessage(messages.createNewChannel)}
@@ -76,13 +71,13 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
                 <TableCell className={classes.arrowIcon}>
                   <KeyboardArrowRight />
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             </RequirePermissions>
           )}
           <RequirePermissions
             requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
           >
-            <TableRow hover={true} onClick={onOrdersToFulfillClick}>
+            <TableRowLink hover={true} href={ordersToFulfillHref}>
               <TableCell data-test-id="orders-to-fulfill">
                 {ordersToFulfill === undefined ? (
                   <Skeleton />
@@ -101,8 +96,8 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
               <TableCell className={classes.arrowIcon}>
                 <KeyboardArrowRight />
               </TableCell>
-            </TableRow>
-            <TableRow hover={true} onClick={onOrdersToCaptureClick}>
+            </TableRowLink>
+            <TableRowLink hover={true} href={ordersToCaptureHref}>
               <TableCell data-test-id="orders-to-capture">
                 {ordersToCapture === undefined ? (
                   <Skeleton />
@@ -121,12 +116,12 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
               <TableCell className={classes.arrowIcon}>
                 <KeyboardArrowRight />
               </TableCell>
-            </TableRow>
+            </TableRowLink>
           </RequirePermissions>
           <RequirePermissions
             requiredPermissions={[PermissionEnum.MANAGE_PRODUCTS]}
           >
-            <TableRow hover={true} onClick={onProductsOutOfStockClick}>
+            <TableRowLink hover={true} href={productsOutOfStockHref}>
               <TableCell data-test-id="products-out-of-stock">
                 {productsOutOfStock === undefined ? (
                   <Skeleton />
@@ -145,7 +140,7 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
               <TableCell className={classes.arrowIcon}>
                 <KeyboardArrowRight />
               </TableCell>
-            </TableRow>
+            </TableRowLink>
           </RequirePermissions>
         </TableBody>
       </ResponsiveTable>

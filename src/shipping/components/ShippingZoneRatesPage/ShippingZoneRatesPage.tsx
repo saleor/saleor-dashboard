@@ -1,4 +1,5 @@
 import { ChannelShippingData } from "@saleor/channels/utils";
+import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import Container from "@saleor/components/Container";
@@ -18,7 +19,8 @@ import {
 } from "@saleor/graphql";
 import useForm, { SubmitPromise } from "@saleor/hooks/useForm";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import useNavigator from "@saleor/hooks/useNavigator";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
 import OrderValue from "@saleor/shipping/components/OrderValue";
 import OrderWeight from "@saleor/shipping/components/OrderWeight";
@@ -37,20 +39,19 @@ import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
 import { ShippingZoneRateUpdateFormData } from "./types";
 
 export interface ShippingZoneRatesPageProps
-  extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">>,
+  extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
     ListActions,
     WithFormId {
   allChannelsCount?: number;
   shippingChannels: ChannelShippingData[];
   disabled: boolean;
-  hasChannelChanged?: boolean;
   havePostalCodesChanged?: boolean;
   rate: ShippingZoneQuery["shippingZone"]["shippingMethods"][0];
   channelErrors: ShippingChannelsErrorFragment[];
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   postalCodeRules: ShippingZoneQuery["shippingZone"]["shippingMethods"][0]["postalCodeRules"];
-  onBack: () => void;
+  backHref: string;
   onDelete?: () => void;
   onSubmit: (data: ShippingZoneRateUpdateFormData) => SubmitPromise;
   onPostalCodeInclusionChange: (
@@ -73,9 +74,8 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   channelErrors,
   disabled,
   errors,
-  hasChannelChanged,
   havePostalCodesChanged,
-  onBack,
+  backHref,
   onDelete,
   onSubmit,
   onPostalCodeInclusionChange,
@@ -92,34 +92,39 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   formId,
   ...listProps
 }) => {
+  const navigate = useNavigator();
+
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
 
-  const initialForm: Omit<ShippingZoneRateUpdateFormData, "description"> = {
-    channelListings: shippingChannels,
-    maxDays: rate?.maximumDeliveryDays?.toString() || "",
-    maxValue: rate?.maximumOrderWeight?.value.toString() || "",
-    metadata: rate?.metadata.map(mapMetadataItemToInput),
-    minDays: rate?.minimumDeliveryDays?.toString() || "",
-    minValue: rate?.minimumOrderWeight?.value.toString() || "",
-    name: rate?.name || "",
-    orderValueRestricted: !!rate?.channelListings.length,
-    privateMetadata: rate?.privateMetadata.map(mapMetadataItemToInput),
-    type: rate?.type || null
-  };
+  const initialForm: Omit<
+    ShippingZoneRateUpdateFormData,
+    "description"
+  > = React.useMemo(
+    () => ({
+      channelListings: shippingChannels,
+      maxDays: rate?.maximumDeliveryDays?.toString() || "",
+      maxValue: rate?.maximumOrderWeight?.value.toString() || "",
+      metadata: rate?.metadata.map(mapMetadataItemToInput),
+      minDays: rate?.minimumDeliveryDays?.toString() || "",
+      minValue: rate?.minimumOrderWeight?.value.toString() || "",
+      name: rate?.name || "",
+      orderValueRestricted: !!rate?.channelListings.length,
+      privateMetadata: rate?.privateMetadata.map(mapMetadataItemToInput),
+      type: rate?.type || null
+    }),
+    [shippingChannels, rate]
+  );
 
   const {
     change,
     data: formData,
-    hasChanged,
-    setChanged,
     setIsSubmitDisabled,
     triggerChange
   } = useForm(initialForm, undefined, { confirmLeave: true, formId });
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit,
-    setChanged
+    onSubmit
   });
 
   const [description, changeDescription] = useRichText({
@@ -149,22 +154,20 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
     onChannelsChange,
     triggerChange
   );
-  const formDisabled = formData.channelListings?.some(channel =>
+  const isValid = !formData.channelListings?.some(channel =>
     validatePrice(channel.price)
   );
 
   const changeMetadata = makeMetadataChangeHandler(change);
-  const formIsUnchanged =
-    !hasChanged && !hasChannelChanged && !havePostalCodesChanged;
 
-  const isSaveDisabled = disabled || formDisabled || formIsUnchanged;
+  const isSaveDisabled = disabled || !isValid;
   setIsSubmitDisabled(isSaveDisabled);
 
   return (
     <form onSubmit={handleFormElementSubmit}>
       <Container>
-        <Backlink onClick={onBack}>
-          <FormattedMessage defaultMessage="Shipping" />
+        <Backlink href={backHref}>
+          <FormattedMessage id="PRlD0A" defaultMessage="Shipping" />
         </Backlink>
         <PageHeader title={rate?.name} />
         <Grid>
@@ -237,7 +240,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
         </Grid>
         <Savebar
           disabled={isSaveDisabled}
-          onCancel={onBack}
+          onCancel={() => navigate(backHref)}
           onDelete={onDelete}
           onSubmit={handleSubmit}
           state={saveButtonBarState}

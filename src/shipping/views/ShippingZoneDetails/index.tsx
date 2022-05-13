@@ -208,7 +208,6 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
       <ShippingZoneDetailsPage
         disabled={loading}
         errors={updateShippingZoneOpts.data?.shippingZoneUpdate.errors || []}
-        onBack={() => navigate(shippingZonesListUrl())}
         onCountryAdd={() => openModal("assign-country")}
         onCountryRemove={code =>
           openModal("unassign-country", {
@@ -221,7 +220,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
             shippingRateCreateUrl(id, { type: ShippingMethodTypeEnum.PRICE })
           )
         }
-        onPriceRateEdit={rateId => navigate(shippingRateEditUrl(id, rateId))}
+        getPriceRateEditHref={rateId => shippingRateEditUrl(id, rateId)}
         onRateRemove={rateId =>
           openModal("remove-rate", {
             id: rateId
@@ -235,7 +234,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
             shippingRateCreateUrl(id, { type: ShippingMethodTypeEnum.WEIGHT })
           )
         }
-        onWeightRateEdit={rateId => navigate(shippingRateEditUrl(id, rateId))}
+        getWeightRateEditHref={rateId => shippingRateEditUrl(id, rateId)}
         saveButtonBarState={updateShippingZoneOpts.status}
         shippingZone={data?.shippingZone}
         warehouses={mapEdgesToItems(searchWarehousesOpts?.data?.search) || []}
@@ -270,6 +269,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
         }
         open={params.action === "remove"}
         title={intl.formatMessage({
+          id: "k3EI/U",
           defaultMessage: "Delete Shipping Zone",
           description: "dialog header"
         })}
@@ -277,9 +277,9 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
       >
         <DialogContentText>
           <FormattedMessage
+            id="LsgHmZ"
             defaultMessage="Are you sure you want to delete {name}?"
             description="delete shipping zone"
-            id="shippingZoneDetailsDialogsDeleteShippingZone"
             values={{
               name: (
                 <strong>
@@ -330,17 +330,20 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
         }
         open={params.action === "unassign-country"}
         title={intl.formatMessage({
+          id: "M6s/9e",
           defaultMessage: "Remove from Shipping Zone",
           description: "unassign country, dialog header"
         })}
         variant="delete"
         confirmButtonLabel={intl.formatMessage({
+          id: "MXZuVP",
           defaultMessage: "Remove and save",
           description: "remove country from shipping zone and save, button"
         })}
       >
         <DialogContentText>
           <FormattedMessage
+            id="1zuQ2P"
             defaultMessage="Are you sure you want to remove {countryName} from this shipping zone?"
             description="unassign country"
             values={{

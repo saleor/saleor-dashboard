@@ -12,6 +12,7 @@ import WarehousesSection from "./WarehousesSection";
 
 const messages = defineMessages({
   title: {
+    id: "t/R8nK",
     defaultMessage: "Settings",
     description: "ShippingZoneSettingsCard title"
   }

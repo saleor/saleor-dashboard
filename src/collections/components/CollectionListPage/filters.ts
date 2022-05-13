@@ -18,10 +18,12 @@ export enum CollectionFilterKeys {
 
 const messages = defineMessages({
   hidden: {
+    id: "9eC0MZ",
     defaultMessage: "Hidden",
     description: "collection"
   },
   published: {
+    id: "lL3YJO",
     defaultMessage: "Published",
     description: "collection"
   }

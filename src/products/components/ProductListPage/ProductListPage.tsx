@@ -35,7 +35,7 @@ import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ProductListUrlSortField } from "../../urls";
+import { productAddUrl, ProductListUrlSortField } from "../../urls";
 import ProductList from "../ProductList";
 import { columnsMessages } from "../ProductList/messages";
 import {
@@ -56,7 +56,6 @@ export interface ProductListPageProps
   availableInGridAttributes: RelayToFlat<
     SearchAvailableInGridAttributesQuery["availableInGrid"]
   >;
-  channelsCount: number;
   columnQuery: string;
   currencySymbol: string;
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
@@ -88,7 +87,6 @@ const useStyles = makeStyles(
 
 export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const {
-    channelsCount,
     columnQuery,
     currencySymbol,
     currentTab,
@@ -103,7 +101,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     settings,
     tabs,
     totalGridAttributes,
-    onAdd,
     onAll,
     onColumnQueryChange,
     onExport,
@@ -188,6 +185,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             menuItems={[
               {
                 label: intl.formatMessage({
+                  id: "7FL+WZ",
                   defaultMessage: "Export Products",
                   description: "export products to csv file, button"
                 }),
@@ -204,6 +202,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           hasLimits(limits, "productVariants") &&
           intl.formatMessage(
             {
+              id: "Kw0jHS",
               defaultMessage: "{count}/{max} SKUs used",
               description: "created products counter"
             },
@@ -230,9 +229,10 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           options={extensionCreateButtonItems}
           data-test-id="add-product"
           disabled={limitReached}
-          onClick={onAdd}
+          href={productAddUrl()}
         >
           <FormattedMessage
+            id="JFmOfi"
             defaultMessage="Create Product"
             description="button"
           />
@@ -241,11 +241,15 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
       {limitReached && (
         <LimitReachedAlert
           title={intl.formatMessage({
+            id: "FwHWUm",
             defaultMessage: "SKU limit reached",
             description: "alert"
           })}
         >
-          <FormattedMessage defaultMessage="You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
+          <FormattedMessage
+            id="5Vwnu+"
+            defaultMessage="You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits."
+          />
         </LimitReachedAlert>
       )}
       <Card>
@@ -262,11 +266,13 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           onTabSave={onTabSave}
           tabs={tabs}
           allTabLabel={intl.formatMessage({
+            id: "aFLtLk",
             defaultMessage: "All Products",
             description: "tab name"
           })}
           filterStructure={filterStructure}
           searchPlaceholder={intl.formatMessage({
+            id: "kIvvax",
             defaultMessage: "Search Products..."
           })}
         />

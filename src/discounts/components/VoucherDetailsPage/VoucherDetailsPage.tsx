@@ -1,5 +1,6 @@
 import { Typography } from "@material-ui/core";
 import { ChannelVoucherData } from "@saleor/channels/utils";
+import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import Container from "@saleor/components/Container";
@@ -15,6 +16,7 @@ import {
   createDiscountTypeChangeHandler
 } from "@saleor/discounts/handlers";
 import { DiscountTypeEnum, RequirementsPicker } from "@saleor/discounts/types";
+import { voucherListUrl } from "@saleor/discounts/urls";
 import {
   DiscountErrorFragment,
   DiscountValueTypeEnum,
@@ -22,8 +24,9 @@ import {
   VoucherDetailsFragment,
   VoucherTypeEnum
 } from "@saleor/graphql";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -70,7 +73,7 @@ export interface VoucherDetailsPageFormData extends MetadataFormData {
 }
 
 export interface VoucherDetailsPageProps
-  extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">>,
+  extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
     TabListActions<
       "categoryListToolbar" | "collectionListToolbar" | "productListToolbar"
     >,
@@ -81,19 +84,14 @@ export interface VoucherDetailsPageProps
   voucher: VoucherDetailsFragment;
   allChannelsCount: number;
   channelListings: ChannelVoucherData[];
-  hasChannelChanged: boolean;
-  onBack: () => void;
   onCategoryAssign: () => void;
   onCategoryUnassign: (id: string) => void;
-  onCategoryClick: (id: string) => () => void;
   onCollectionAssign: () => void;
   onCollectionUnassign: (id: string) => void;
-  onCollectionClick: (id: string) => () => void;
   onCountryAssign: () => void;
   onCountryUnassign: (code: string) => void;
   onProductAssign: () => void;
   onProductUnassign: (id: string) => void;
-  onProductClick: (id: string) => () => void;
   onRemove: () => void;
   onSubmit: (data: VoucherDetailsPageFormData) => void;
   onTabClick: (index: VoucherDetailsPageTab) => void;
@@ -114,23 +112,18 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   pageInfo,
   saveButtonBarState,
   voucher,
-  onBack,
   onCategoryAssign,
-  onCategoryClick,
   onCategoryUnassign,
   onChannelsChange,
   onCountryAssign,
   onCountryUnassign,
   onCollectionAssign,
-  onCollectionClick,
   onCollectionUnassign,
   onNextPage,
   onPreviousPage,
   onProductAssign,
-  onProductClick,
   onProductUnassign,
   onTabClick,
-  hasChannelChanged,
   openChannelsModal,
   onRemove,
   onSubmit,
@@ -144,6 +137,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   productListToolbar
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
+
   const {
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
@@ -191,7 +186,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
 
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, hasChanged, submit, triggerChange, set }) => {
+      {({ change, data, submit, triggerChange, set }) => {
         const handleDiscountTypeChange = createDiscountTypeChangeHandler(
           change
         );
@@ -213,7 +208,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
 
         return (
           <Container>
-            <Backlink onClick={onBack}>
+            <Backlink href={voucherListUrl()}>
               {intl.formatMessage(sectionNames.vouchers)}
             </Backlink>
             <PageHeader title={voucher?.code} />
@@ -257,6 +252,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                       >
                         {intl.formatMessage(
                           {
+                            id: "ppLwx3",
                             defaultMessage: "Categories ({quantity})",
                             description: "number of categories"
                           },
@@ -276,6 +272,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                       >
                         {intl.formatMessage(
                           {
+                            id: "QdGzUf",
                             defaultMessage: "Collections ({quantity})",
                             description: "number of collections"
                           },
@@ -293,6 +290,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                       >
                         {intl.formatMessage(
                           {
+                            id: "bNw8PM",
                             defaultMessage: "Products ({quantity})",
                             description: "number of products"
                           },
@@ -313,7 +311,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                         onCategoryUnassign={onCategoryUnassign}
                         onNextPage={onNextPage}
                         onPreviousPage={onPreviousPage}
-                        onRowClick={onCategoryClick}
                         pageInfo={pageInfo}
                         discount={voucher}
                         isChecked={isChecked}
@@ -329,7 +326,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                         onCollectionUnassign={onCollectionUnassign}
                         onNextPage={onNextPage}
                         onPreviousPage={onPreviousPage}
-                        onRowClick={onCollectionClick}
                         pageInfo={pageInfo}
                         discount={voucher}
                         isChecked={isChecked}
@@ -345,7 +341,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                         onPreviousPage={onPreviousPage}
                         onProductAssign={onProductAssign}
                         onProductUnassign={onProductUnassign}
-                        onRowClick={onProductClick}
                         pageInfo={pageInfo}
                         products={mapEdgesToItems(voucher?.products)}
                         isChecked={isChecked}
@@ -363,16 +358,21 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                     countries={maybe(() => voucher.countries)}
                     disabled={disabled}
                     emptyText={intl.formatMessage({
+                      id: "jd/LWa",
                       defaultMessage: "Voucher applies to all countries"
                     })}
                     title={
                       <>
                         {intl.formatMessage({
+                          id: "ibnmEd",
                           defaultMessage: "Countries",
                           description: "voucher country range"
                         })}
                         <Typography variant="caption">
-                          <FormattedMessage defaultMessage="Voucher is limited to these countries" />
+                          <FormattedMessage
+                            id="glT6fm"
+                            defaultMessage="Voucher is limited to these countries"
+                          />
                         </Typography>
                       </>
                     }
@@ -427,10 +427,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
               <Metadata data={data} onChange={changeMetadata} />
             </Grid>
             <Savebar
-              disabled={
-                disabled || formDisabled || (!hasChanged && !hasChannelChanged)
-              }
-              onCancel={onBack}
+              onCancel={() => navigate(voucherListUrl())}
+              disabled={disabled || formDisabled}
               onDelete={onRemove}
               onSubmit={submit}
               state={saveButtonBarState}

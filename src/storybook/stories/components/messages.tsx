@@ -1,6 +1,6 @@
+import { Button } from "@saleor/components/Button";
 import { IMessage } from "@saleor/components/messages";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { Button } from "@saleor/macaw-ui";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

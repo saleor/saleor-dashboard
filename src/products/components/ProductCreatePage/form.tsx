@@ -215,9 +215,7 @@ function useProductCreateForm(
     triggerChange,
     toggleValue,
     handleChange,
-    hasChanged,
     data: formData,
-    setChanged,
     formId
   } = form;
 
@@ -349,8 +347,7 @@ function useProductCreateForm(
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit,
-    setChanged
+    onSubmit
   });
 
   const submit = () => handleFormSubmit(data);
@@ -361,7 +358,7 @@ function useProductCreateForm(
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
-  const shouldEnableSave = () => {
+  const isValid = () => {
     if (!data.name || !data.productType) {
       return false;
     }
@@ -389,15 +386,13 @@ function useProductCreateForm(
     return true;
   };
 
-  const isSaveEnabled = !shouldEnableSave();
-
-  const isSaveDisabled = loading || !onSubmit || isSaveEnabled || !hasChanged;
+  const isSaveDisabled = loading || !onSubmit || !isValid();
   setIsSubmitDisabled(isSaveDisabled);
 
   return {
     change: handleChange,
     data,
-    disabled: isSaveEnabled,
+    disabled: isSaveDisabled,
     formErrors: form.errors,
     handlers: {
       addStock: handleStockAdd,
@@ -420,7 +415,6 @@ function useProductCreateForm(
       selectProductType: handleProductTypeSelect,
       selectTaxRate: handleTaxTypeSelect
     },
-    hasChanged,
     submit,
     isSaveDisabled
   };

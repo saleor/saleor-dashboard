@@ -41,6 +41,7 @@ const CollectionDetails: React.FC<CollectionDetailsProps> = ({
       <CardContent>
         <TextField
           label={intl.formatMessage({
+            id: "/WXs6H",
             defaultMessage: "Name",
             description: "collection name"
           })}

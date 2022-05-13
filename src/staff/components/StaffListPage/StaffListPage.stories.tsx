@@ -30,7 +30,6 @@ const props: StaffListPageProps = {
   },
   limits,
   onAdd: undefined,
-  onBack: () => undefined,
   sort: {
     ...sortPageProps.sort,
     sort: StaffListUrlSortField.name

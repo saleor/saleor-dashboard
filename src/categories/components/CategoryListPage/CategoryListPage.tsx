@@ -1,11 +1,14 @@
 import { Card } from "@material-ui/core";
-import { CategoryListUrlSortField } from "@saleor/categories/urls";
+import {
+  categoryAddUrl,
+  CategoryListUrlSortField
+} from "@saleor/categories/urls";
+import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
 import { CategoryFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Button } from "@saleor/macaw-ui";
 import {
   ListActions,
   PageListProps,
@@ -40,11 +43,9 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
   toggle,
   toggleAll,
   toolbar,
-  onAdd,
   onAll,
   onNextPage,
   onPreviousPage,
-  onRowClick,
   onSearchChange,
   onTabChange,
   onTabDelete,
@@ -59,10 +60,11 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
       <PageHeader title={intl.formatMessage(sectionNames.categories)}>
         <Button
           variant="primary"
-          onClick={onAdd}
+          href={categoryAddUrl()}
           data-test-id="create-category"
         >
           <FormattedMessage
+            id="vof5TR"
             defaultMessage="Create category"
             description="button"
           />
@@ -71,12 +73,14 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
       <Card>
         <SearchBar
           allTabLabel={intl.formatMessage({
+            id: "vy7fjd",
             defaultMessage: "All Categories",
             description: "tab name"
           })}
           currentTab={currentTab}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
+            id: "JiXNEV",
             defaultMessage: "Search Category"
           })}
           tabs={tabs}
@@ -97,10 +101,8 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
           toggle={toggle}
           toggleAll={toggleAll}
           toolbar={toolbar}
-          onAdd={onAdd}
           onNextPage={onNextPage}
           onPreviousPage={onPreviousPage}
-          onRowClick={onRowClick}
           onUpdateListSettings={onUpdateListSettings}
           {...listProps}
         />

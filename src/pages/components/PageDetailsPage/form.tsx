@@ -129,16 +129,13 @@ function usePageForm(
   );
   const attributesWithNewFileValue = useFormset<null, File>([]);
 
-  const {
-    handleChange,
-    triggerChange,
-    setChanged,
-    hasChanged,
-    data: formData,
-    formId
-  } = useForm(getInitialFormData(page), undefined, {
-    confirmLeave: true
-  });
+  const { handleChange, triggerChange, data: formData, formId } = useForm(
+    getInitialFormData(page),
+    undefined,
+    {
+      confirmLeave: true
+    }
+  );
 
   const { setExitDialogSubmitRef, setIsSubmitDisabled } = useExitFormDialog({
     formId
@@ -230,8 +227,7 @@ function usePageForm(
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit: handleSubmit,
-    setChanged
+    onSubmit: handleSubmit
   });
 
   const submit = () => handleFormSubmit(getSubmitData());
@@ -240,7 +236,7 @@ function usePageForm(
 
   const valid = pageExists || !!opts.selectedPageType;
 
-  const isSaveDisabled = disabled || !hasChanged || !valid;
+  const isSaveDisabled = disabled || !valid;
   setIsSubmitDisabled(isSaveDisabled);
 
   return {
@@ -259,7 +255,6 @@ function usePageForm(
       selectAttributeReference: handleAttributeReferenceChange,
       selectPageType: handlePageTypeSelect
     },
-    hasChanged,
     submit,
     isSaveDisabled
   };

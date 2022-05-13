@@ -1,6 +1,7 @@
 import ShippingZonesCard from "@saleor/channels/components/ShippingZonesCard/ShippingZonesCard";
+import { channelsListUrl } from "@saleor/channels/urls";
 import CardSpacer from "@saleor/components/CardSpacer";
-import Form, { FormDataWithOpts } from "@saleor/components/Form";
+import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import Savebar from "@saleor/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
@@ -14,6 +15,7 @@ import {
 import { SearchData } from "@saleor/hooks/makeTopLevelSearch";
 import { getParsedSearchData } from "@saleor/hooks/makeTopLevelSearch/utils";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import {
@@ -41,7 +43,6 @@ export interface ChannelDetailsPageProps<TErrors> {
   fetchMoreShippingZones: FetchMoreProps;
   channelShippingZones?: ChannelShippingZones;
   countries: CountryFragment[];
-  onBack?: () => void;
   onDelete?: () => void;
   onSubmit: (data: FormData) => SubmitPromise<TErrors[]>;
   updateChannelStatus?: () => void;
@@ -55,7 +56,6 @@ const ChannelDetailsPage = function<TErrors>({
   disabledStatus,
   onSubmit,
   errors,
-  onBack,
   onDelete,
   saveButtonBarState,
   updateChannelStatus,
@@ -65,6 +65,8 @@ const ChannelDetailsPage = function<TErrors>({
   countries,
   channelShippingZones = []
 }: ChannelDetailsPageProps<TErrors>) {
+  const navigate = useNavigator();
+
   const [selectedCurrencyCode, setSelectedCurrencyCode] = useState("");
   const [
     selectedCountryDisplayName,
@@ -94,15 +96,15 @@ const ChannelDetailsPage = function<TErrors>({
         !shippingZonesToDisplay.some(({ id }) => id === searchedZoneId)
     );
 
-  const checkIfSaveIsDisabled = (data: FormDataWithOpts<FormData>) => {
-    const formDisabled =
-      !data.name ||
-      !data.slug ||
-      !data.currencyCode ||
-      !data.defaultCountry ||
-      !(data.name.trim().length > 0);
+  const checkIfSaveIsDisabled = (data: FormData) => {
+    const isValid =
+      !!data.name &&
+      !!data.slug &&
+      !!data.currencyCode &&
+      !!data.defaultCountry &&
+      data.name.trim().length > 0;
 
-    return disabled || formDisabled || !data.hasChanged;
+    return disabled || !isValid;
   };
 
   return (
@@ -202,7 +204,7 @@ const ChannelDetailsPage = function<TErrors>({
               </div>
             </Grid>
             <Savebar
-              onCancel={onBack}
+              onCancel={() => navigate(channelsListUrl())}
               onSubmit={submit}
               onDelete={onDelete}
               state={saveButtonBarState}

@@ -110,6 +110,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
   const visibleMessage = (date: string) =>
     intl.formatMessage(
       {
+        id: "UjsI4o",
         defaultMessage: "since {date}",
         description: "date"
       },
@@ -137,6 +138,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "akXDST",
           defaultMessage: "Visibility",
           description: "section header"
         })}
@@ -177,6 +179,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
         {!isPublished && (
           <DateVisibilitySelector
             buttonText={intl.formatMessage({
+              id: "U3BQKA",
               defaultMessage: "Set publication date"
             })}
             onInputClose={() =>
@@ -187,6 +190,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
               error={!!getFieldError(errors, "publicationDate")}
               disabled={disabled}
               label={intl.formatMessage({
+                id: "Jt3DwJ",
                 defaultMessage: "Publish on",
                 description: "publish on date"
               })}
@@ -257,6 +261,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
                   error={!!getFieldError(errors, "startDate")}
                   disabled={disabled}
                   label={intl.formatMessage({
+                    id: "Y7Vy19",
                     defaultMessage: "Set available on",
                     description: "available on date"
                   })}
@@ -297,12 +302,14 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
                     className={classNames(classes.label, classes.listingLabel)}
                   >
                     {intl.formatMessage({
+                      id: "0cVk9I",
                       defaultMessage: "Show in product listings"
                     })}
                   </p>
 
                   <span className={classes.secondLabel}>
                     {intl.formatMessage({
+                      id: "5ukAFZ",
                       defaultMessage:
                         "Disabling this checkbox will remove product from search and category pages. It will be available on collection pages."
                     })}

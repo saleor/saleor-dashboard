@@ -88,6 +88,7 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
         autohide: null,
         text: intl.formatMessage(
           {
+            id: "EM+30g",
             defaultMessage:
               "Our new feature to help you with your daily tasks. Run Navigator using {keyboardShortcut} shortcut.",
             description: "navigator notification"
@@ -100,6 +101,7 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
           }
         ),
         title: intl.formatMessage({
+          id: "Gxm7Qx",
           defaultMessage: "Navigator is here to help",
           description: "navigator notification title"
         })
@@ -159,6 +161,7 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
                   {hasViews(actions) && (
                     <NavigatorSection
                       label={intl.formatMessage({
+                        id: "YYkkhx",
                         defaultMessage: "Navigate to",
                         description: "navigator section header"
                       })}
@@ -171,6 +174,7 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
                   {hasActions(actions) && (
                     <NavigatorSection
                       label={intl.formatMessage({
+                        id: "me585h",
                         defaultMessage: "Quick Actions",
                         description: "navigator section header"
                       })}
@@ -183,6 +187,7 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
                   {hasCustomers(actions) && (
                     <NavigatorSection
                       label={intl.formatMessage({
+                        id: "4gT3eD",
                         defaultMessage: "Search in Customers",
                         description: "navigator section header"
                       })}
@@ -195,6 +200,7 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
                   {hasCatalog(actions) && (
                     <NavigatorSection
                       label={intl.formatMessage({
+                        id: "7Oorx5",
                         defaultMessage: "Search in Catalog",
                         description: "navigator section header"
                       })}

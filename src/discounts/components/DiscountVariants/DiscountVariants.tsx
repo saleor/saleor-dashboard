@@ -5,6 +5,7 @@ import {
   TableFooter,
   TableRow
 } from "@material-ui/core";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -12,8 +13,10 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { SaleDetailsFragment } from "@saleor/graphql";
-import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { productVariantEditPath } from "@saleor/products/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -21,12 +24,10 @@ import { maybe, renderCollection } from "../../../misc";
 import { ListActions, ListProps, RelayToFlat } from "../../../types";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
-export interface SaleVariantsProps
-  extends Omit<ListProps, "onRowClick">,
-    ListActions {
+
+export interface SaleVariantsProps extends ListProps, ListActions {
   variants: RelayToFlat<SaleDetailsFragment["variants"]> | null;
   onVariantAssign: () => void;
-  onRowClick: (productId: string, variantId: string) => () => void;
   onVariantUnassign: (id: string) => void;
 }
 
@@ -37,7 +38,6 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
     variants,
     disabled,
     pageInfo,
-    onRowClick,
     onPreviousPage,
     onVariantAssign,
     onVariantUnassign,
@@ -117,11 +117,12 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
               const isSelected = variant ? isChecked(variant.id) : false;
 
               return (
-                <TableRow
+                <TableRowLink
                   hover={!!variant}
                   key={variant ? variant.id : "skeleton"}
-                  onClick={
-                    variant && onRowClick(variant.product.id, variant.id)
+                  href={
+                    variant &&
+                    productVariantEditPath(variant.product.id, variant.id)
                   }
                   className={classes.tableRow}
                   selected={isSelected}
@@ -164,7 +165,7 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
                       <DeleteIcon color="primary" />
                     </IconButton>
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               );
             },
             () => (

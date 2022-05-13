@@ -20,18 +20,22 @@ export interface AttributeListFilterOpts {
 
 const messages = defineMessages({
   filterableInStorefront: {
+    id: "PsRG+v",
     defaultMessage: "Filterable in Storefront",
     description: "use attribute in filtering"
   },
   isVariantOnly: {
+    id: "rvk9ls",
     defaultMessage: "Variant Only",
     description: "attribute can be used only in variants"
   },
   valueRequired: {
+    id: "HQR2y0",
     defaultMessage: "Value Required",
     description: "attribute value is required"
   },
   visibleInStorefront: {
+    id: "cvbqJu",
     defaultMessage: "Visible on Product Page in Storefront",
     description: "attribute"
   }

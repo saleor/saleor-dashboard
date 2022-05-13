@@ -184,6 +184,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
       <WindowTitle
         title={intl.formatMessage(
           {
+            id: "TLNf6K",
             defaultMessage: "Draft Order #{orderNumber}",
             description: "window title"
           },
@@ -215,7 +216,6 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
             onDraftFinalize={() => orderDraftFinalize.mutate({ id })}
             onDraftRemove={() => openModal("cancel")}
             onOrderLineAdd={() => openModal("add-order-line")}
-            onBack={() => navigate(orderDraftListUrl())}
             order={order}
             onProductClick={id => () =>
               navigate(productUrl(encodeURIComponent(id)))}

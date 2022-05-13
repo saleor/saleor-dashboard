@@ -40,34 +40,42 @@ export interface OrderRefundAmountValuesProps {
 
 const messages = defineMessages({
   authorizedAmount: {
+    id: "L/O4LQ",
     defaultMessage: "Authorized Amount",
     description: "order refund amount"
   },
   maxRefund: {
+    id: "I7HyJZ",
     defaultMessage: "Max Refund",
     description: "order refund amount"
   },
   previouslyRefunded: {
+    id: "Q55cTG",
     defaultMessage: "Previously refunded",
     description: "order refund amount"
   },
   proposedRefundAmount: {
+    id: "wDUBLR",
     defaultMessage: "Proposed refund amount",
     description: "order refund amount"
   },
   refundTotalAmount: {
+    id: "C6bb6x",
     defaultMessage: "Refund total amount",
     description: "order refund amount"
   },
   replacedProductsValue: {
+    id: "i56GGQ",
     defaultMessage: "Replaced Products Value",
     description: "order refund amount"
   },
   selectedProductsValue: {
+    id: "kak5vT",
     defaultMessage: "Selected Products Value",
     description: "order refund amount"
   },
   shipmentCost: {
+    id: "WGp+Fw",
     defaultMessage: "Shipment Cost",
     description: "order refund amount"
   }

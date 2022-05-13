@@ -5,6 +5,7 @@ import {
   TableFooter,
   TableRow
 } from "@material-ui/core";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import { ChannelsAvailabilityDropdown } from "@saleor/components/ChannelsAvailabilityDropdown";
 import Checkbox from "@saleor/components/Checkbox";
@@ -14,8 +15,10 @@ import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { CollectionDetailsQuery } from "@saleor/graphql";
-import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { productUrl } from "@saleor/products/urls";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -55,6 +58,7 @@ const useStyles = makeStyles(
 export interface CollectionProductsProps extends PageListProps, ListActions {
   collection: CollectionDetailsQuery["collection"];
   onProductUnassign: (id: string, event: React.MouseEvent<any>) => void;
+  onAdd: () => void;
 }
 
 const CollectionProducts: React.FC<CollectionProductsProps> = props => {
@@ -65,7 +69,6 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
     onNextPage,
     onPreviousPage,
     onProductUnassign,
-    onRowClick,
     pageInfo,
     isChecked,
     selected,
@@ -87,6 +90,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
           !!collection ? (
             intl.formatMessage(
               {
+                id: "/dnWE8",
                 defaultMessage: "Products in {name}",
                 description: "products in collection"
               },
@@ -106,6 +110,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
             onClick={onAdd}
           >
             <FormattedMessage
+              id="scHVdW"
               defaultMessage="Assign product"
               description="button"
             />
@@ -124,6 +129,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
           <TableCell className={classes.colName}>
             <span className={classes.colNameLabel}>
               <FormattedMessage
+                id="6AMFki"
                 defaultMessage="Name"
                 description="product name"
               />
@@ -131,12 +137,14 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
           </TableCell>
           <TableCell className={classes.colType}>
             <FormattedMessage
+              id="k+HcTv"
               defaultMessage="Type"
               description="product type"
             />
           </TableCell>
           <TableCell className={classes.colPublished}>
             <FormattedMessage
+              id="Oe62bR"
               defaultMessage="Availability"
               description="product availability"
             />
@@ -161,10 +169,10 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
               const isSelected = product ? isChecked(product.id) : false;
 
               return (
-                <TableRow
+                <TableRowLink
                   className={classes.tableRow}
                   hover={!!product}
-                  onClick={!!product ? onRowClick(product.id) : undefined}
+                  href={product && productUrl(product.id)}
                   key={product ? product.id : "skeleton"}
                   selected={isSelected}
                 >
@@ -209,13 +217,16 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               );
             },
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage defaultMessage="No products found" />
+                  <FormattedMessage
+                    id="Q1Uzbb"
+                    defaultMessage="No products found"
+                  />
                 </TableCell>
               </TableRow>
             )

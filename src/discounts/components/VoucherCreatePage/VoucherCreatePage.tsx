@@ -1,8 +1,9 @@
 import { ChannelVoucherData } from "@saleor/channels/utils";
+import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import Container from "@saleor/components/Container";
-import Form, { FormDataWithOpts } from "@saleor/components/Form";
+import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
@@ -11,6 +12,7 @@ import {
   createChannelsChangeHandler,
   createDiscountTypeChangeHandler
 } from "@saleor/discounts/handlers";
+import { voucherListUrl } from "@saleor/discounts/urls";
 import { VOUCHER_CREATE_FORM_ID } from "@saleor/discounts/views/VoucherCreate/types";
 import {
   DiscountErrorFragment,
@@ -18,8 +20,9 @@ import {
   VoucherTypeEnum
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
@@ -41,11 +44,9 @@ export interface FormData extends VoucherDetailsPageFormData {
 export interface VoucherCreatePageProps {
   allChannelsCount: number;
   channelListings: ChannelVoucherData[];
-  hasChannelChanged: boolean;
   disabled: boolean;
   errors: DiscountErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  onBack: () => void;
   onChannelsChange: (data: ChannelVoucherData[]) => void;
   openChannelsModal: () => void;
   onSubmit: (data: FormData) => SubmitPromise;
@@ -57,13 +58,13 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   disabled,
   errors,
   saveButtonBarState,
-  onBack,
   onChannelsChange,
   onSubmit,
-  hasChannelChanged,
   openChannelsModal
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
+
   const {
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
@@ -91,7 +92,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     privateMetadata: []
   };
 
-  const checkIfSaveIsDisabled = (data: FormDataWithOpts<FormData>) =>
+  const checkIfSaveIsDisabled = (data: FormData) =>
     (data.discountType.toString() !== "SHIPPING" &&
       data.channelListings?.some(
         channel =>
@@ -99,8 +100,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
           (data.requirementsPicker === RequirementsPicker.ORDER &&
             validatePrice(channel.minSpent))
       )) ||
-    disabled ||
-    (!data.hasChanged && hasChannelChanged);
+    disabled;
 
   return (
     <Form
@@ -123,11 +123,12 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
 
         return (
           <Container>
-            <Backlink onClick={onBack}>
+            <Backlink href={voucherListUrl()}>
               {intl.formatMessage(sectionNames.vouchers)}
             </Backlink>
             <PageHeader
               title={intl.formatMessage({
+                id: "PsclSa",
                 defaultMessage: "Create Voucher",
                 description: "page header"
               })}
@@ -204,7 +205,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
             </Grid>
             <Savebar
               disabled={isSaveDisabled}
-              onCancel={onBack}
+              onCancel={() => navigate(voucherListUrl())}
               onSubmit={submit}
               state={saveButtonBarState}
             />

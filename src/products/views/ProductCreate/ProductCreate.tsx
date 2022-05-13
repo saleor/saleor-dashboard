@@ -31,7 +31,6 @@ import {
   productAddUrl,
   ProductCreateUrlDialog,
   ProductCreateUrlQueryParams,
-  productListUrl,
   productUrl
 } from "@saleor/products/urls";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
@@ -165,6 +164,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     notify({
       status: "success",
       text: intl.formatMessage({
+        id: "DO8+uV",
         defaultMessage: "Product created"
       })
     });
@@ -181,8 +181,6 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     updateVariantChannels,
     updateVariantChannelsOpts
   ] = useProductVariantChannelListingUpdateMutation({});
-
-  const handleBack = () => navigate(productListUrl());
 
   const [productCreate, productCreateOpts] = useProductCreateMutation({});
   const [deleteProduct] = useProductDeleteMutation({});
@@ -284,6 +282,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     <>
       <WindowTitle
         title={intl.formatMessage({
+          id: "PXx4Jk",
           defaultMessage: "Create Product",
           description: "window title"
         })}
@@ -296,6 +295,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
           title={intl.formatMessage({
+            id: "Eau5AV",
             defaultMessage: "Manage Products Channel Availability"
           })}
           confirmButtonState="default"
@@ -327,11 +327,11 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         fetchProductTypes={searchProductTypes}
         fetchAttributeValues={searchAttributeValues}
         header={intl.formatMessage({
+          id: "NBP8uu",
           defaultMessage: "New Product",
           description: "page header"
         })}
         productTypes={productTypes}
-        onBack={handleBack}
         onSubmit={handleSubmit}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         saveButtonBarState={productCreateOpts.status}

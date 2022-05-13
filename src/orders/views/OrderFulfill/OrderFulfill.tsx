@@ -47,6 +47,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "CYEnGq",
             defaultMessage: "Fulfilled Items",
             description: "order fulfilled success message"
           })
@@ -68,6 +69,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
           data?.order?.number
             ? intl.formatMessage(
                 {
+                  id: "2MKBk2",
                   defaultMessage: "Fulfill Order #{orderNumber}",
                   description: "window title"
                 },
@@ -76,6 +78,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
                 }
               )
             : intl.formatMessage({
+                id: "NzifUg",
                 defaultMessage: "Fulfill Order",
                 description: "window title"
               })
@@ -84,7 +87,6 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
       <OrderFulfillPage
         loading={loading || settingsLoading || fulfillOrderOpts.loading}
         errors={fulfillOrderOpts.data?.orderFulfill.errors}
-        onBack={() => navigate(orderUrl(orderId))}
         onSubmit={async (formData: OrderFulfillSubmitData) => {
           const res = await fulfillOrder({
             variables: {

@@ -123,10 +123,8 @@ function useProductVariantCreateForm(
   const form = useForm(initial, undefined, { confirmLeave: true });
 
   const {
-    setChanged,
     triggerChange,
     handleChange,
-    hasChanged,
     data: formData,
     formId,
     setIsSubmitDisabled
@@ -222,8 +220,7 @@ function useProductVariantCreateForm(
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit,
-    setChanged
+    onSubmit
   });
 
   const submit = () => handleFormSubmit(data);
@@ -257,7 +254,6 @@ function useProductVariantCreateForm(
       selectAttributeMultiple: handleAttributeMultiChange,
       selectAttributeReference: handleAttributeReferenceChange
     },
-    hasChanged,
     submit,
     isSaveDisabled
   };

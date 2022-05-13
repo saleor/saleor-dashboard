@@ -1,4 +1,11 @@
 import { Card } from "@material-ui/core";
+import {
+  categoryAddUrl,
+  categoryListUrl,
+  categoryUrl
+} from "@saleor/categories/urls";
+import { Backlink } from "@saleor/components/Backlink";
+import { Button } from "@saleor/components/Button";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
@@ -9,12 +16,9 @@ import SeoForm from "@saleor/components/SeoForm";
 import { Tab, TabContainer } from "@saleor/components/Tab";
 import { CategoryDetailsQuery, ProductErrorFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import {
-  Backlink,
-  Button,
-  ConfirmButtonTransitionState
-} from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -33,6 +37,7 @@ export enum CategoryPageTab {
 
 export interface CategoryUpdatePageProps
   extends TabListActions<"productListToolbar" | "subcategoryListToolbar"> {
+  categoryId: string;
   changeTab: (index: CategoryPageTab) => void;
   currentTab: CategoryPageTab;
   errors: ProductErrorFragment[];
@@ -45,23 +50,20 @@ export interface CategoryUpdatePageProps
     hasPreviousPage: boolean;
   };
   saveButtonBarState: ConfirmButtonTransitionState;
+  addProductHref: string;
   onImageDelete: () => void;
   onSubmit: (data: CategoryUpdateData) => SubmitPromise;
   onImageUpload(file: File);
   onNextPage();
   onPreviousPage();
-  onProductClick(id: string): () => void;
-  onAddProduct();
-  onBack();
   onDelete();
-  onAddCategory();
-  onCategoryClick(id: string): () => void;
 }
 
 const CategoriesTab = Tab(CategoryPageTab.categories);
 const ProductsTab = Tab(CategoryPageTab.products);
 
 export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
+  categoryId,
   changeTab,
   currentTab,
   category,
@@ -71,14 +73,9 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   products,
   saveButtonBarState,
   subcategories,
-  onAddCategory,
-  onAddProduct,
-  onBack,
-  onCategoryClick,
   onDelete,
   onNextPage,
   onPreviousPage,
-  onProductClick,
   onSubmit,
   onImageDelete,
   onImageUpload,
@@ -90,6 +87,11 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   toggleAll
 }: CategoryUpdatePageProps) => {
   const intl = useIntl();
+  const navigate = useNavigator();
+
+  const backHref = category?.parent?.id
+    ? categoryUrl(category?.parent?.id)
+    : categoryListUrl();
 
   return (
     <CategoryUpdateForm
@@ -99,7 +101,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
     >
       {({ data, change, handlers, submit, isSaveDisabled }) => (
         <Container>
-          <Backlink onClick={onBack}>
+          <Backlink href={backHref}>
             {intl.formatMessage(sectionNames.categories)}
           </Backlink>
           <PageHeader title={category?.name} />
@@ -121,6 +123,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
           <CardSpacer />
           <SeoForm
             helperText={intl.formatMessage({
+              id: "wQdR8M",
               defaultMessage:
                 "Add search engine title and description to make this category easier to find"
             })}
@@ -144,6 +147,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               changeTab={changeTab}
             >
               <FormattedMessage
+                id="JDz5h8"
                 defaultMessage="Subcategories"
                 description="number of subcategories in category"
               />
@@ -154,6 +158,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               changeTab={changeTab}
             >
               <FormattedMessage
+                id="V+fkAO"
                 defaultMessage="Products"
                 description="number of products in category"
               />
@@ -164,16 +169,18 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
             <Card>
               <CardTitle
                 title={intl.formatMessage({
+                  id: "NivJal",
                   defaultMessage: "All Subcategories",
                   description: "section header"
                 })}
                 toolbar={
                   <Button
                     variant="tertiary"
-                    onClick={onAddCategory}
+                    href={categoryAddUrl(categoryId)}
                     data-test-id="create-subcategory"
                   >
                     <FormattedMessage
+                      id="UycVMp"
                       defaultMessage="Create subcategory"
                       description="button"
                     />
@@ -193,7 +200,6 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                 toolbar={subcategoryListToolbar}
                 onNextPage={onNextPage}
                 onPreviousPage={onPreviousPage}
-                onRowClick={onCategoryClick}
                 onSort={() => undefined}
               />
             </Card>
@@ -207,8 +213,6 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               pageInfo={pageInfo}
               onNextPage={onNextPage}
               onPreviousPage={onPreviousPage}
-              onRowClick={onProductClick}
-              onAdd={onAddProduct}
               toggle={toggle}
               toggleAll={toggleAll}
               selected={selected}
@@ -217,7 +221,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
             />
           )}
           <Savebar
-            onCancel={onBack}
+            onCancel={() => navigate(backHref)}
             onDelete={onDelete}
             onSubmit={submit}
             state={saveButtonBarState}

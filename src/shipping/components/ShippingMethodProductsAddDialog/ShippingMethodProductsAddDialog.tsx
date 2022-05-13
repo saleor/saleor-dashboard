@@ -133,6 +133,7 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
     <Dialog onClose={handleClose} open={open} fullWidth maxWidth="sm">
       <DialogTitle>
         <FormattedMessage
+          id="xZhxBJ"
           defaultMessage="Assign Products"
           description="dialog header"
         />
@@ -144,9 +145,11 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
             value={query}
             onChange={onQueryChange}
             label={intl.formatMessage({
+              id: "/TF6BZ",
               defaultMessage: "Search Products"
             })}
             placeholder={intl.formatMessage({
+              id: "/TF6BZ",
               defaultMessage: "Search Products"
             })}
             fullWidth
@@ -215,7 +218,10 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
                   () => (
                     <TableRow>
                       <TableCell colSpan={4}>
-                        <FormattedMessage defaultMessage="No products matching given query" />
+                        <FormattedMessage
+                          id="5ZvuVw"
+                          defaultMessage="No products matching given query"
+                        />
                       </TableCell>
                     </TableRow>
                   )
@@ -234,6 +240,7 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
           onClick={handleSubmit}
         >
           <FormattedMessage
+            id="FzEew9"
             defaultMessage="Assign and save"
             description="assign products to shipping rate and save, button"
           />

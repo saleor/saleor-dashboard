@@ -6,6 +6,7 @@ import CannotDefineChannelsAvailabilityCard from "@saleor/channels/components/Ca
 import { ChannelData } from "@saleor/channels/utils";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@saleor/components/Attributes";
+import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import Container from "@saleor/components/Container";
@@ -29,10 +30,12 @@ import {
   SearchWarehousesQuery,
   TaxTypeFragment
 } from "@saleor/graphql";
+import useNavigator from "@saleor/hooks/useNavigator";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
+import { productListUrl } from "@saleor/products/urls";
 import { getChoices } from "@saleor/products/utils/data";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -90,7 +93,6 @@ interface ProductCreatePageProps {
   onAttributeSelectBlur: () => void;
   onCloseDialog: () => void;
   onSelectProductType: (productTypeId: string) => void;
-  onBack?();
   onSubmit?(data: ProductCreateData);
 }
 
@@ -117,7 +119,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   warehouses,
   taxTypes,
   selectedProductType,
-  onBack,
   fetchProductTypes,
   weightUnit,
   onSubmit,
@@ -137,6 +138,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   onAttributeSelectBlur
 }: ProductCreatePageProps) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   // Display values
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
@@ -210,7 +212,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
 
         return (
           <Container>
-            <Backlink onClick={onBack}>
+            <Backlink href={productListUrl()}>
               {intl.formatMessage(sectionNames.products)}
             </Backlink>
             <PageHeader title={header} />
@@ -281,6 +283,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 <SeoForm
                   allowEmptySlug={true}
                   helperText={intl.formatMessage({
+                    id: "LKoIB1",
                     defaultMessage:
                       "Add search engine title and description to make this product easier to find"
                   })}
@@ -325,11 +328,13 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                     managePermissions={[PermissionEnum.MANAGE_PRODUCTS]}
                     messages={{
                       hiddenLabel: intl.formatMessage({
+                        id: "saKXY3",
                         defaultMessage: "Not published",
                         description: "product label"
                       }),
 
                       visibleLabel: intl.formatMessage({
+                        id: "qJedl0",
                         defaultMessage: "Published",
                         description: "product label"
                       })
@@ -357,7 +362,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
               </div>
             </Grid>
             <Savebar
-              onCancel={onBack}
+              onCancel={() => navigate(productListUrl())}
               onSubmit={submit}
               state={saveButtonBarState}
               disabled={isSaveDisabled}

@@ -31,6 +31,7 @@ export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentPr
   const classes = useStyles({});
   const intl = useIntl();
   const searchText = intl.formatMessage({
+    id: "ybaLoZ",
     defaultMessage: "Search through channels"
   });
   const [query, onQueryChange] = React.useState("");
@@ -41,6 +42,7 @@ export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentPr
       {!!contentType && (
         <Typography className={classes.text} variant="caption">
           <FormattedMessage
+            id="tQuE1q"
             defaultMessage="Select channels you want for {contentType} to be available on"
             values={{ contentType }}
           />
@@ -64,7 +66,10 @@ export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentPr
               label={
                 toggleAllText || (
                   <Typography className={classes.label}>
-                    <FormattedMessage defaultMessage="Select all channels" />
+                    <FormattedMessage
+                      id="2/L4zZ"
+                      defaultMessage="Select all channels"
+                    />
                   </Typography>
                 )
               }
@@ -74,7 +79,7 @@ export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentPr
           </>
         )}
         <Typography className={classes.contentTitle}>
-          <FormattedMessage defaultMessage="Channels A to Z" />
+          <FormattedMessage id="EWCUdP" defaultMessage="Channels A to Z" />
         </Typography>
         <div
           className={classes.scrollArea}
@@ -102,7 +107,10 @@ export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentPr
             ))
           ) : (
             <div className={classes.notFound}>
-              <FormattedMessage defaultMessage="No Channels found" />
+              <FormattedMessage
+                id="B9yrkK"
+                defaultMessage="No Channels found"
+              />
             </div>
           )}
         </div>

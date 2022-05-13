@@ -43,37 +43,46 @@ const useStyles = makeStyles(
 const messages = defineMessages({
   canceled: {
     defaultMessage: "Canceled ({quantity})",
+    id: "mGcw06",
     description: "canceled fulfillment, section header"
   },
   fulfilled: {
+    id: "iJrw63",
     defaultMessage: "Fulfilled ({quantity})",
     description: "section header"
   },
   refunded: {
+    id: "oQhFlK",
     defaultMessage: "Refunded ({quantity})",
     description: "refunded fulfillment, section header"
   },
   refundedAndReturned: {
+    id: "jNSOSu",
     defaultMessage: "Refunded and Returned ({quantity})",
     description: "cancelled fulfillment, section header"
   },
   replaced: {
+    id: "3stu21",
     defaultMessage: "Replaced ({quantity})",
     description: "refunded fulfillment, section header"
   },
   returned: {
+    id: "eCRaHe",
     defaultMessage: "Returned ({quantity})",
     description: "refunded fulfillment, section header"
   },
   waitingForApproval: {
+    id: "9ssWj+",
     defaultMessage: "Waiting for approval ({quantity})",
     description: "unapproved fulfillment, section header"
   },
   unfulfilled: {
     defaultMessage: "Unfulfilled ({quantity})",
+    id: "Kc2/e7",
     description: "section header"
   },
   fulfilledFrom: {
+    id: "ZPOyI1",
     defaultMessage: "Fulfilled from {warehouseName}",
     description: "fulfilled fulfillment, section header"
   }

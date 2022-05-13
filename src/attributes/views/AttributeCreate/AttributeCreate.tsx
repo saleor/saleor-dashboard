@@ -33,7 +33,6 @@ import {
   attributeAddUrl,
   AttributeAddUrlDialog,
   AttributeAddUrlQueryParams,
-  attributeListUrl,
   attributeUrl
 } from "../../urls";
 import {
@@ -89,6 +88,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "jTifz+",
             defaultMessage: "Successfully created attribute"
           })
         });
@@ -100,7 +100,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   const id = params.id
-    ? parseInt(params.id, 0) + pageInfo.startCursor
+    ? parseInt(params.id, 10) + pageInfo.startCursor
     : undefined;
 
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -178,7 +178,6 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
       attribute={null}
       disabled={attributeCreateOpts.loading}
       errors={attributeCreateOpts.data?.attributeCreate.errors || []}
-      onBack={() => navigate(attributeListUrl())}
       onDelete={undefined}
       onSubmit={handleSubmit}
       onValueAdd={() => openModal("add-value")}

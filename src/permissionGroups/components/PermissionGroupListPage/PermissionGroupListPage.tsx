@@ -1,44 +1,44 @@
 import { Card } from "@material-ui/core";
+import { Backlink } from "@saleor/components/Backlink";
+import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
+import { configurationMenuUrl } from "@saleor/configuration";
 import { PermissionGroupFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, Button } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { PageListProps, SortPage } from "../../../types";
-import { PermissionGroupListUrlSortField } from "../../urls";
+import {
+  permissionGroupAddUrl,
+  PermissionGroupListUrlSortField
+} from "../../urls";
 import PermissionGroupList from "../PermissionGroupList";
 
 export interface PermissionGroupListPageProps
   extends PageListProps,
     SortPage<PermissionGroupListUrlSortField> {
   permissionGroups: PermissionGroupFragment[];
-  onBack: () => void;
   onDelete: (id: string) => void;
-  onRowClick: (id: string) => () => void;
 }
 
-const PermissionGroupListPage: React.FC<PermissionGroupListPageProps> = ({
-  onAdd,
-  onBack,
-  ...listProps
-}) => {
+const PermissionGroupListPage: React.FC<PermissionGroupListPageProps> = listProps => {
   const intl = useIntl();
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink href={configurationMenuUrl}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.permissionGroups)}>
         <Button
           variant="primary"
-          onClick={onAdd}
+          href={permissionGroupAddUrl}
           data-test-id="create-permission-group"
         >
           <FormattedMessage
+            id="5ftg/B"
             defaultMessage="create permission group"
             description="button"
           />

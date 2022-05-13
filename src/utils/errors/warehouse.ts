@@ -5,6 +5,7 @@ import { getCommonFormFieldErrorMessage } from "./common";
 
 const messages = defineMessages({
   slugUnique: {
+    id: "nKjLjT",
     defaultMessage: "Slug must be unique for each warehouse",
     description: "error message"
   }

@@ -13,7 +13,6 @@ const props: AttributePageProps = {
   attribute,
   disabled: false,
   errors: [],
-  onBack: () => undefined,
   onDelete: () => undefined,
   onSubmit: () => undefined,
   onValueAdd: () => undefined,

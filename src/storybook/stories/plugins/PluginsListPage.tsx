@@ -43,7 +43,6 @@ const props: PluginsListPageProps = {
       value: PluginConfigurationType.GLOBAL
     }
   },
-  onBack: () => undefined,
   plugins: pluginList,
   sort: {
     ...sortPageProps.sort,

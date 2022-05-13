@@ -3,9 +3,10 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TablePagination from "@saleor/components/TablePagination";
 import { PluginBaseFragment } from "@saleor/graphql";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { EditIcon, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import { PluginListUrlSortField } from "@saleor/plugins/urls";
+import { PluginListUrlSortField, pluginUrl } from "@saleor/plugins/urls";
 import { ListProps, SortPage } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -39,12 +40,12 @@ const PluginList: React.FC<PluginListProps> = props => {
     onNextPage,
     pageInfo,
     sort,
-    onRowClick,
     onSort,
     onUpdateListSettings,
     onPreviousPage
   } = props;
   const classes = useStyles(props);
+  const navigate = useNavigator();
   const intl = useIntl();
 
   return (
@@ -74,16 +75,16 @@ const PluginList: React.FC<PluginListProps> = props => {
                 data-test-id="plugin"
                 hover={!!plugin}
                 className={!!plugin ? classes.link : undefined}
-                onClick={plugin ? onRowClick(plugin.id) : undefined}
+                // FIXME: middle click doesn't work - issues with deployments
+                // shows 404 not found
+                onClick={() => plugin && navigate(pluginUrl(plugin.id))}
                 key={plugin ? plugin.id : "skeleton"}
               >
                 <TableCell colSpan={5}>{plugin.name}</TableCell>
                 <PluginChannelConfigurationCell plugin={plugin} />
                 <PluginChannelAvailabilityCell plugin={plugin} />
                 <TableCell align="right">
-                  <div onClick={plugin ? onRowClick(plugin.id) : undefined}>
-                    <EditIcon />
-                  </div>
+                  <EditIcon />
                 </TableCell>
               </TableRow>
             ) : (
@@ -97,6 +98,7 @@ const PluginList: React.FC<PluginListProps> = props => {
             <TableRow>
               <TableCell colSpan={totalColSpan}>
                 {intl.formatMessage({
+                  id: "Co2U4u",
                   defaultMessage: "No plugins found"
                 })}
               </TableCell>

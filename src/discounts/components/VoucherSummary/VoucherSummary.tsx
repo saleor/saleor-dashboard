@@ -38,7 +38,11 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({
       <CardTitle title={intl.formatMessage(commonMessages.summary)} />
       <CardContent>
         <Typography variant="caption">
-          <FormattedMessage defaultMessage="Code" description="voucher code" />
+          <FormattedMessage
+            id="JsPIOX"
+            defaultMessage="Code"
+            description="voucher code"
+          />
         </Typography>
         <Typography className={classes.ellipsis}>
           {maybe<React.ReactNode>(() => voucher.code, <Skeleton />)}
@@ -46,7 +50,11 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({
         <FormSpacer />
 
         <Typography variant="caption">
-          <FormattedMessage defaultMessage="Applies to" description="voucher" />
+          <FormattedMessage
+            id="bcf60I"
+            defaultMessage="Applies to"
+            description="voucher"
+          />
         </Typography>
         <Typography>
           {maybe<React.ReactNode>(
@@ -58,6 +66,7 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({
 
         <Typography variant="caption">
           <FormattedMessage
+            id="JV+EiM"
             defaultMessage="Value"
             description="voucher value"
           />
@@ -120,6 +129,7 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({
 
         <Typography variant="caption">
           <FormattedMessage
+            id="FOa+Xd"
             defaultMessage="Min. Order Value"
             description="voucher value requirement"
           />
@@ -139,6 +149,7 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({
 
         <Typography variant="caption">
           <FormattedMessage
+            id="HLqWXA"
             defaultMessage="Usage Limit"
             description="voucher value requirement"
           />

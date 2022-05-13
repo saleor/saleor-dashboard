@@ -1,4 +1,6 @@
+import { attributeListUrl } from "@saleor/attributes/urls";
 import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@saleor/attributes/utils/data";
+import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -18,8 +20,9 @@ import {
   MeasurementUnitsEnum
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import { ListSettings, ReorderAction } from "@saleor/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
@@ -39,7 +42,6 @@ export interface AttributePageProps {
   errors: AttributeErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   values: AttributeDetailsQuery["attribute"]["choices"];
-  onBack: () => void;
   onDelete: () => void;
   onSubmit: (data: AttributePageFormData) => SubmitPromise;
   onValueAdd: () => void;
@@ -78,7 +80,6 @@ const AttributePage: React.FC<AttributePageProps> = ({
   errors: apiErrors,
   saveButtonBarState,
   values,
-  onBack,
   onDelete,
   onSubmit,
   onValueAdd,
@@ -93,6 +94,8 @@ const AttributePage: React.FC<AttributePageProps> = ({
   children
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
+
   const {
     isMetadataModified,
     isPrivateMetadataModified,
@@ -177,13 +180,14 @@ const AttributePage: React.FC<AttributePageProps> = ({
         return (
           <>
             <Container>
-              <Backlink onClick={onBack}>
+              <Backlink href={attributeListUrl()}>
                 {intl.formatMessage(sectionNames.attributes)}
               </Backlink>
               <PageHeader
                 title={
                   attribute === null
                     ? intl.formatMessage({
+                        id: "8cUEPV",
                         defaultMessage: "Create New Attribute",
                         description: "page title"
                       })
@@ -246,7 +250,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
               <Savebar
                 disabled={isSaveDisabled}
                 state={saveButtonBarState}
-                onCancel={onBack}
+                onCancel={() => navigate(attributeListUrl())}
                 onSubmit={submit}
                 onDelete={attribute === null ? undefined : onDelete}
               />

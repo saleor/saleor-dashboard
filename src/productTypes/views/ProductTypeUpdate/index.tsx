@@ -1,7 +1,7 @@
-import { attributeUrl } from "@saleor/attributes/urls";
 import AssignAttributeDialog from "@saleor/components/AssignAttributeDialog";
 import AttributeUnassignDialog from "@saleor/components/AttributeUnassignDialog";
 import BulkAttributeUnassignDialog from "@saleor/components/BulkAttributeUnassignDialog";
+import { Button } from "@saleor/components/Button";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import TypeDeleteWarningDialog from "@saleor/components/TypeDeleteWarningDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -22,7 +22,6 @@ import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import { Button } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder, maybe } from "@saleor/misc";
 import useProductTypeDelete from "@saleor/productTypes/hooks/useProductTypeDelete";
 import useProductTypeOperations from "@saleor/productTypes/hooks/useProductTypeOperations";
@@ -112,7 +111,6 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
-  const handleBack = () => navigate(productTypeListUrl());
   const [
     selectedVariantAttributes,
     setSelectedVariantAttributes
@@ -213,6 +211,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
       notify({
         status: "success",
         text: intl.formatMessage({
+          id: "F3Upht",
           defaultMessage: "Product type deleted"
         })
       });
@@ -307,7 +306,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
   };
 
   if (productType === null) {
-    return <NotFoundPage onBack={handleBack} />;
+    return <NotFoundPage backHref={productTypeListUrl()} />;
   }
 
   return (
@@ -333,7 +332,6 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
             })
           )
         }
-        onAttributeClick={attributeId => navigate(attributeUrl(attributeId))}
         onAttributeReorder={handleAttributeReorder}
         onAttributeUnassign={attributeId =>
           navigate(
@@ -343,7 +341,6 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
             })
           )
         }
-        onBack={handleBack}
         onDelete={() =>
           navigate(
             productTypeUrl(id, {
@@ -370,6 +367,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
               }
             >
               <FormattedMessage
+                id="S7j+Wf"
                 defaultMessage="Unassign"
                 description="unassign attribute from product type, button"
               />
@@ -393,6 +391,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
               }
             >
               <FormattedMessage
+                id="S7j+Wf"
                 defaultMessage="Unassign"
                 description="unassign attribute from product type, button"
               />
@@ -463,6 +462,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
 
       <BulkAttributeUnassignDialog
         title={intl.formatMessage({
+          id: "r1aQ2f",
           defaultMessage: "Unassign Attribute from Product Type",
           description: "dialog header"
         })}
@@ -475,6 +475,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
       />
       <AttributeUnassignDialog
         title={intl.formatMessage({
+          id: "UJnqdm",
           defaultMessage: "Unassign Attribute From Product Type",
           description: "dialog header"
         })}

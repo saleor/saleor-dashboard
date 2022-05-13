@@ -1,10 +1,11 @@
 import { Card } from "@material-ui/core";
+import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { PageFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Button } from "@saleor/macaw-ui";
 import {
+  pageCreateUrl,
   PageListUrlDialog,
   PageListUrlQueryParams,
   PageListUrlSortField
@@ -30,7 +31,6 @@ export interface PageListPageProps
 }
 
 const PageListPage: React.FC<PageListPageProps> = ({
-  onAdd,
   params,
   actionDialogOpts,
   ...listProps
@@ -40,8 +40,16 @@ const PageListPage: React.FC<PageListPageProps> = ({
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.pages)}>
-        <Button onClick={onAdd} variant="primary" data-test-id="create-page">
-          <FormattedMessage defaultMessage="Create page" description="button" />
+        <Button
+          href={pageCreateUrl()}
+          variant="primary"
+          data-test-id="create-page"
+        >
+          <FormattedMessage
+            id="AHRDWt"
+            defaultMessage="Create page"
+            description="button"
+          />
         </Button>
       </PageHeader>
       <Card>

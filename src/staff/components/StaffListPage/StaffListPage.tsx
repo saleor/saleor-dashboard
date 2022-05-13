@@ -1,11 +1,13 @@
 import { Card } from "@material-ui/core";
+import { Backlink } from "@saleor/components/Backlink";
+import { Button } from "@saleor/components/Button";
 import { Container } from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
+import { configurationMenuUrl } from "@saleor/configuration";
 import { RefreshLimitsQuery, StaffListQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, Button } from "@saleor/macaw-ui";
 import { StaffListUrlSortField } from "@saleor/staff/urls";
 import {
   FilterPageProps,
@@ -33,7 +35,6 @@ export interface StaffListPageProps
   limits: RefreshLimitsQuery["shop"]["limits"];
   staffMembers: RelayToFlat<StaffListQuery["staffUsers"]>;
   onAdd: () => void;
-  onBack: () => void;
 }
 
 const StaffListPage: React.FC<StaffListPageProps> = ({
@@ -43,7 +44,6 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
   limits,
   onAdd,
   onAll,
-  onBack,
   onFilterChange,
   onSearchChange,
   onTabChange,
@@ -59,7 +59,7 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink href={configurationMenuUrl}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
       <PageHeader
@@ -68,6 +68,7 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
           hasLimits(limits, "staffUsers") &&
           intl.formatMessage(
             {
+              id: "9xlPgt",
               defaultMessage: "{count}/{max} members",
               description: "used staff users counter"
             },
@@ -85,6 +86,7 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
           onClick={onAdd}
         >
           <FormattedMessage
+            id="4JcNaA"
             defaultMessage="Invite staff member"
             description="button"
           />
@@ -93,16 +95,21 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
       {reachedLimit && (
         <LimitReachedAlert
           title={intl.formatMessage({
+            id: "pA8Mlv",
             defaultMessage: "Staff Member limit reached",
             description: "alert"
           })}
         >
-          <FormattedMessage defaultMessage="You have reached your staff member limit, you will be no longer able to add staff members to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
+          <FormattedMessage
+            id="OaA0f9"
+            defaultMessage="You have reached your staff member limit, you will be no longer able to add staff members to your store. If you would like to up your limit, contact your administration staff about raising your limits."
+          />
         </LimitReachedAlert>
       )}
       <Card>
         <FilterBar
           allTabLabel={intl.formatMessage({
+            id: "YJ4TXc",
             defaultMessage: "All Staff Members",
             description: "tab name"
           })}
@@ -110,6 +117,7 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
           filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
+            id: "aDbrOK",
             defaultMessage: "Search Staff Member"
           })}
           tabs={tabs}

@@ -5,6 +5,7 @@ import {
   DialogTitle,
   Typography
 } from "@material-ui/core";
+import { Button } from "@saleor/components/Button";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import makeCreatorSteps, { Step } from "@saleor/components/CreatorSteps";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
@@ -20,7 +21,7 @@ import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useWizard from "@saleor/hooks/useWizard";
 import { buttonMessages } from "@saleor/intl";
-import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { DialogProps, FetchMoreProps, RelayToFlat } from "@saleor/types";
 import getExportErrorMessage from "@saleor/utils/errors/export";
 import { toggle } from "@saleor/utils/lists";
@@ -49,6 +50,7 @@ function useSteps(): Array<Step<ProductExportStep>> {
   return [
     {
       label: intl.formatMessage({
+        id: "/68iG8",
         defaultMessage: "Information exported",
         description: "product export to csv file, header"
       }),
@@ -56,6 +58,7 @@ function useSteps(): Array<Step<ProductExportStep>> {
     },
     {
       label: intl.formatMessage({
+        id: "ki7Mr8",
         defaultMessage: "Export Settings",
         description: "product export to csv file, header"
       }),
@@ -216,6 +219,7 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
   const exportScopeLabels = {
     allItems: intl.formatMessage(
       {
+        id: "xtUXnK",
         defaultMessage: "All products ({number})",
         description: "export all items to csv file"
       },
@@ -225,6 +229,7 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
     ),
     selectedItems: intl.formatMessage(
       {
+        id: "qEZ463",
         defaultMessage: "Selected products ({number})",
         description: "export selected items to csv file"
       },

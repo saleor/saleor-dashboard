@@ -1,4 +1,5 @@
 import { Typography } from "@material-ui/core";
+import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import { Grid } from "@saleor/components/Grid";
@@ -12,7 +13,6 @@ import {
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import { Backlink } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -46,8 +46,6 @@ const GiftCardSettingsPage: React.FC = () => {
     updateGiftCardSettingsOpts
   ] = useGiftCardSettingsUpdateMutation({});
 
-  const navigateBack = () => navigate(giftCardsListPath);
-
   const handleSubmit = (formData: GiftCardSettingsFormData) => {
     updateGiftCardSettings({
       variables: {
@@ -65,7 +63,7 @@ const GiftCardSettingsPage: React.FC = () => {
 
   return (
     <Container>
-      <Backlink onClick={navigateBack}>
+      <Backlink href={giftCardsListPath}>
         {intl.formatMessage(sectionNames.giftCards)}
       </Backlink>
       <PageHeader
@@ -74,7 +72,7 @@ const GiftCardSettingsPage: React.FC = () => {
         underline={true}
       />
       <Form initial={initialData} onSubmit={handleSubmit}>
-        {({ data: formData, submit, hasChanged, change }) => (
+        {({ data: formData, submit, change }) => (
           <Grid variant="inverted">
             <div>
               <Typography>
@@ -90,9 +88,9 @@ const GiftCardSettingsPage: React.FC = () => {
               errors={formErrors}
             />
             <Savebar
-              onCancel={navigateBack}
+              onCancel={() => navigate(giftCardsListPath)}
               onSubmit={submit}
-              disabled={formLoading || !hasChanged}
+              disabled={formLoading}
               state={updateGiftCardSettingsOpts?.status}
             />
           </Grid>

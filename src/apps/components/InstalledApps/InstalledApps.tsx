@@ -6,8 +6,10 @@ import {
   TableRow,
   Typography
 } from "@material-ui/core";
+import { appUrl } from "@saleor/apps/urls";
 import CardTitle from "@saleor/components/CardTitle";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { AppsListQuery } from "@saleor/graphql";
 import {
   Button,
@@ -39,7 +41,6 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
   disabled,
   onNextPage,
   onPreviousPage,
-  onRowClick,
   onRowAboutClick,
   onUpdateListSettings,
   pageInfo,
@@ -52,6 +53,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
     <Card className={classes.apps}>
       <CardTitle
         title={intl.formatMessage({
+          id: "ZeD2TK",
           defaultMessage: "Third-party Apps",
           description: "section header"
         })}
@@ -77,10 +79,10 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
             appsList,
             (app, index) =>
               app ? (
-                <TableRow
+                <TableRowLink
                   key={app.node.id}
                   className={classes.tableRow}
-                  onClick={onRowClick(app.node.id)}
+                  href={appUrl(app.node.id)}
                 >
                   <TableCell className={classes.colName}>
                     <span data-tc="name" className={classes.appName}>
@@ -105,6 +107,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                       onClick={stopPropagation(onRowAboutClick(app.node.id))}
                     >
                       <FormattedMessage
+                        id="TBaMo2"
                         defaultMessage="About"
                         description="about app"
                       />
@@ -117,7 +120,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               ) : (
                 <AppsSkeleton key={index} />
               ),
@@ -126,6 +129,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                 <TableCell className={classes.colName}>
                   <Typography className={classes.text} variant="body2">
                     <FormattedMessage
+                      id="9tgY4G"
                       defaultMessage="You don’t have any installed apps in your dashboard"
                       description="apps content"
                     />

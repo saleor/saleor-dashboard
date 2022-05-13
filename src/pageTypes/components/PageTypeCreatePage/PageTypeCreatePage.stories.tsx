@@ -8,7 +8,6 @@ import PageTypeCreatePage, { PageTypeCreatePageProps } from ".";
 const props: Omit<PageTypeCreatePageProps, "classes"> = {
   disabled: false,
   errors: [],
-  onBack: () => undefined,
   onSubmit: () => undefined,
   saveButtonBarState: "default"
 };

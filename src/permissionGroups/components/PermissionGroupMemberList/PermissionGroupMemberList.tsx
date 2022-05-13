@@ -6,6 +6,7 @@ import {
   TableRow,
   Typography
 } from "@material-ui/core";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -13,7 +14,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import { PermissionGroupMemberFragment } from "@saleor/graphql";
-import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import {
   getUserInitials,
   getUserName,
@@ -115,6 +116,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "lGlDEH",
           defaultMessage: "Group members",
           description: "header"
         })}
@@ -126,6 +128,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
             disabled={disabled}
           >
             <FormattedMessage
+              id="OhFGpX"
               defaultMessage="Assign members"
               description="button"
             />
@@ -136,12 +139,14 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
         <CardContent className={classes.helperText}>
           <Typography color="textSecondary">
             <FormattedMessage
+              id="gVD1os"
               defaultMessage="You haven’t assigned any member to this permission group yet."
               description="empty list message"
             />
           </Typography>
           <Typography color="textSecondary">
             <FormattedMessage
+              id="zD7/M6"
               defaultMessage="Please use Assign Members button to do so."
               description="empty list message"
             />
@@ -168,6 +173,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
               }
             >
               <FormattedMessage
+                id="W32xfN"
                 defaultMessage="Name"
                 description="staff member full name"
               />
@@ -182,10 +188,10 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
                   : undefined
               }
             >
-              <FormattedMessage defaultMessage="Email Address" />
+              <FormattedMessage id="xxQxLE" defaultMessage="Email Address" />
             </TableCellHeader>
             <TableCellHeader textAlign="right">
-              <FormattedMessage defaultMessage="Actions" />
+              <FormattedMessage id="wL7VAE" defaultMessage="Actions" />
             </TableCellHeader>
           </TableHead>
           <TableBody>
@@ -235,11 +241,13 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
                           <Skeleton />
                         ) : user.isActive ? (
                           intl.formatMessage({
+                            id: "9Zlogd",
                             defaultMessage: "Active",
                             description: "staff member status"
                           })
                         ) : (
                           intl.formatMessage({
+                            id: "7WzUxn",
                             defaultMessage: "Inactive",
                             description: "staff member status"
                           })
@@ -274,7 +282,10 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
               () => (
                 <TableRow>
                   <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage defaultMessage="No members found" />
+                    <FormattedMessage
+                      id="qrWOxx"
+                      defaultMessage="No members found"
+                    />
                   </TableCell>
                 </TableRow>
               )

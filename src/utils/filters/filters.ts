@@ -33,7 +33,7 @@ function createFilterUtils<
       ? areFiltersApplied((params as unknown) as TQueryParams)
         ? tabs.length + 1
         : 0
-      : parseInt(params.activeTab, 0);
+      : parseInt(params.activeTab, 10);
   }
 
   return {

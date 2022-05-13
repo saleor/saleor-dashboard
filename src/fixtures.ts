@@ -9,7 +9,6 @@ import {
   FetchMoreProps,
   FilterPageProps,
   ListActions,
-  PageListProps,
   SearchPageProps,
   SortPage,
   TabPageProps
@@ -19,22 +18,24 @@ const pageInfo = {
   hasNextPage: true,
   hasPreviousPage: false
 };
-export const pageListProps: { [key: string]: PageListProps } = {
+export const pageListProps = {
   default: {
     disabled: false,
     onAdd: undefined,
+    addHref: "",
     onNextPage: undefined,
     onPreviousPage: undefined,
-    onRowClick: () => undefined,
+    getRowHref: () => "",
     pageInfo,
     settings: { rowNumber: 20 }
   },
   loading: {
     disabled: true,
     onAdd: undefined,
+    addHref: "",
     onNextPage: undefined,
     onPreviousPage: undefined,
-    onRowClick: () => undefined,
+    getRowHref: () => "",
     pageInfo,
     settings: undefined
   }

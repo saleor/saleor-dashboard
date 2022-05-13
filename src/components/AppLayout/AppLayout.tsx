@@ -12,7 +12,6 @@ import {
   useTheme
 } from "@saleor/macaw-ui";
 import { isDarkTheme } from "@saleor/misc";
-import { staffMemberDetailsUrl } from "@saleor/staff/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 import useRouter from "use-react-router";
@@ -26,6 +25,7 @@ import useAppChannel from "./AppChannelContext";
 import AppChannelSelect from "./AppChannelSelect";
 import { appLoaderHeight } from "./consts";
 import useMenuStructure from "./menuStructure";
+import { SidebarLink } from "./SidebarLink";
 import { isMenuActive } from "./utils";
 
 const useStyles = makeStyles(
@@ -83,6 +83,7 @@ const useStyles = makeStyles(
       }
     },
     root: {
+      isolation: "isolate",
       [theme.breakpoints.up("md")]: {
         display: "flex"
       },
@@ -171,6 +172,8 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             activeId={activeMenu}
             menuItems={menuStructure}
             onMenuItemClick={handleMenuItemClick}
+            logoHref="/"
+            linkComponent={SidebarLink}
           />
         )}
         <div className={classes.content}>
@@ -188,7 +191,9 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                     {!isMdUp && (
                       <SidebarDrawer
                         menuItems={menuStructure}
+                        logoHref="/"
                         onMenuItemClick={handleMenuItemClick}
+                        linkComponent={SidebarLink}
                       />
                     )}
                     <div className={classes.spacer} />
@@ -208,9 +213,6 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                         isDarkThemeEnabled={isDarkTheme(themeType)}
                         user={user}
                         onLogout={logout}
-                        onProfileClick={() =>
-                          navigate(staffMemberDetailsUrl(user?.id))
-                        }
                         onThemeToggle={toggleTheme}
                       />
                     </div>

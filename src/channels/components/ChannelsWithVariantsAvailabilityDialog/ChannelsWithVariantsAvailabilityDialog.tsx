@@ -19,6 +19,7 @@ import ChannelsWithVariantsAvailabilityDialogContent from "./ChannelsWithVariant
 
 const messages = defineMessages({
   title: {
+    id: "p/EWEZ",
     defaultMessage: "Manage Channels",
     description: "channels variants availability dialog title"
   }
@@ -42,7 +43,6 @@ export const ChannelsWithVariantsAvailabilityDialog: React.FC<ChannelsAvailabili
   const intl = useIntl();
   const {
     channelsWithVariantsData,
-    hasChanged,
     toggleAllChannels,
     addVariantToChannel,
     removeVariantFromChannel,
@@ -77,7 +77,6 @@ export const ChannelsWithVariantsAvailabilityDialog: React.FC<ChannelsAvailabili
       onClose={onClose}
       onConfirm={() => onConfirm(channelVariantListing)}
       title={intl.formatMessage(messages.title)}
-      disabled={!hasChanged}
     >
       <ChannelsAvailabilityContentWrapper
         hasAllSelected={hasAllChannelsSelected}

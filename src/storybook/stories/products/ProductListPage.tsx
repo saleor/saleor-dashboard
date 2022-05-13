@@ -38,7 +38,6 @@ const props: ProductListPageProps = {
   },
   activeAttributeSortId: undefined,
   availableInGridAttributes: attributes,
-  channelsCount: 6,
   columnQuery: "",
   onColumnQueryChange: () => undefined,
   currencySymbol: "USD",
@@ -72,7 +71,6 @@ storiesOf("Views / Products / Product list", module)
   .add("no channels", () => (
     <ProductListPage
       {...props}
-      channelsCount={0}
       selectedChannelId={""}
       products={products.map(product => ({ ...product, channelListings: [] }))}
     />

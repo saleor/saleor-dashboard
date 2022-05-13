@@ -7,6 +7,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { OrderDraftListQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import {
@@ -15,7 +16,7 @@ import {
   transformOrderStatus,
   transformPaymentStatus
 } from "@saleor/misc";
-import { OrderDraftListUrlSortField } from "@saleor/orders/urls";
+import { OrderDraftListUrlSortField, orderUrl } from "@saleor/orders/urls";
 import { ListActions, ListProps, RelayToFlat, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
@@ -66,7 +67,6 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
     onPreviousPage,
     onNextPage,
     onUpdateListSettings,
-    onRowClick,
     onSort,
     isChecked,
     selected,
@@ -110,7 +110,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
           onClick={() => onSort(OrderDraftListUrlSortField.number)}
           className={classes.colNumber}
         >
-          <FormattedMessage defaultMessage="No. of Order" />
+          <FormattedMessage id="ps0WUQ" defaultMessage="No. of Order" />
         </TableCellHeader>
         <TableCellHeader
           direction={
@@ -122,6 +122,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
           className={classes.colDate}
         >
           <FormattedMessage
+            id="mCP0UD"
             defaultMessage="Date"
             description="order draft creation date"
           />
@@ -135,10 +136,11 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
           onClick={() => onSort(OrderDraftListUrlSortField.customer)}
           className={classes.colCustomer}
         >
-          <FormattedMessage defaultMessage="Customer" />
+          <FormattedMessage id="hkENym" defaultMessage="Customer" />
         </TableCellHeader>
         <TableCellHeader textAlign="right" className={classes.colTotal}>
           <FormattedMessage
+            id="1Uj0Wd"
             defaultMessage="Total"
             description="order draft total price"
           />
@@ -166,11 +168,11 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
             const isSelected = order ? isChecked(order.id) : false;
 
             return (
-              <TableRow
+              <TableRowLink
                 data-test-id="draft-order-table-row"
                 hover={!!order}
                 className={!!order ? classes.link : undefined}
-                onClick={order ? onRowClick(order.id) : undefined}
+                href={order && orderUrl(order.id)}
                 key={order ? order.id : "skeleton"}
                 selected={isSelected}
               >
@@ -216,13 +218,16 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
                     <Skeleton />
                   )}
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             );
           },
           () => (
             <TableRow>
               <TableCell colSpan={numberOfColumns}>
-                <FormattedMessage defaultMessage="No draft orders found" />
+                <FormattedMessage
+                  id="KIh25E"
+                  defaultMessage="No draft orders found"
+                />
               </TableCell>
             </TableRow>
           )

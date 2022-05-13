@@ -12,7 +12,7 @@ import {
 import WarehouseCreatePage, {
   WarehouseCreatePageFormData
 } from "@saleor/warehouses/components/WarehouseCreatePage";
-import { warehouseListUrl, warehouseUrl } from "@saleor/warehouses/urls";
+import { warehouseUrl } from "@saleor/warehouses/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -60,6 +60,7 @@ const WarehouseCreate: React.FC = () => {
     <>
       <WindowTitle
         title={intl.formatMessage({
+          id: "GhcypC",
           defaultMessage: "Create Warehouse",
           description: "header"
         })}
@@ -69,7 +70,6 @@ const WarehouseCreate: React.FC = () => {
         disabled={createWarehouseOpts.loading}
         errors={createWarehouseOpts.data?.createWarehouse.errors || []}
         saveButtonBarState={createWarehouseTransitionState}
-        onBack={() => navigate(warehouseListUrl())}
         onSubmit={handleSubmit}
       />
     </>

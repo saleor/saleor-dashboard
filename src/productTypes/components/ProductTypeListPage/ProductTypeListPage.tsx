@@ -1,11 +1,16 @@
 import { Card } from "@material-ui/core";
+import { Backlink } from "@saleor/components/Backlink";
+import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
+import { configurationMenuUrl } from "@saleor/configuration";
 import { ProductTypeFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, Button } from "@saleor/macaw-ui";
-import { ProductTypeListUrlSortField } from "@saleor/productTypes/urls";
+import {
+  productTypeAddUrl,
+  ProductTypeListUrlSortField
+} from "@saleor/productTypes/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -30,16 +35,13 @@ export interface ProductTypeListPageProps
     SortPage<ProductTypeListUrlSortField>,
     TabPageProps {
   productTypes: ProductTypeFragment[];
-  onBack: () => void;
 }
 
 const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
   currentTab,
   filterOpts,
   initialSearch,
-  onAdd,
   onAll,
-  onBack,
   onFilterChange,
   onSearchChange,
   onTabChange,
@@ -54,16 +56,17 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink href={configurationMenuUrl}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.productTypes)}>
         <Button
           variant="primary"
-          onClick={onAdd}
+          href={productTypeAddUrl()}
           data-test-id="add-product-type"
         >
           <FormattedMessage
+            id="QY7FSs"
             defaultMessage="create product type"
             description="button"
           />
@@ -72,6 +75,7 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
       <Card>
         <FilterBar
           allTabLabel={intl.formatMessage({
+            id: "1KSqnn",
             defaultMessage: "All Product Types",
             description: "tab name"
           })}
@@ -79,6 +83,7 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
           filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
+            id: "rpFdD1",
             defaultMessage: "Search Product Type"
           })}
           tabs={tabs}

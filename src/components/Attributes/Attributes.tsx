@@ -105,10 +105,12 @@ const useStyles = makeStyles(
 
 const messages = defineMessages({
   attributesNumber: {
+    id: "z0gGP+",
     defaultMessage: "{number} Attributes",
     description: "number of attributes"
   },
   header: {
+    id: "3ukd9/",
     defaultMessage: "Attributes",
     description: "attributes, section header"
   }

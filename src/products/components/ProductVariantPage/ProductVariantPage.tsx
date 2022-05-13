@@ -8,6 +8,7 @@ import Attributes, {
   AttributeInput,
   VariantAttributeScope
 } from "@saleor/components/Attributes";
+import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
@@ -24,7 +25,9 @@ import {
   SearchProductsQuery,
   WarehouseFragment
 } from "@saleor/graphql";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import useNavigator from "@saleor/hooks/useNavigator";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { productUrl } from "@saleor/products/urls";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -47,10 +50,12 @@ import VariantDetailsChannelsAvailabilityCard from "./VariantDetailsChannelsAvai
 
 const messages = defineMessages({
   nonSelectionAttributes: {
+    id: "f3B4tc",
     defaultMessage: "Variant Attributes",
     description: "attributes, section header"
   },
   selectionAttributesHeader: {
+    id: "o6260f",
     defaultMessage: "Variant Selection Attributes",
     description: "attributes, section header"
   }
@@ -78,6 +83,7 @@ function byAttributeScope(scope: VariantAttributeScope) {
 }
 
 interface ProductVariantPageProps {
+  productId: string;
   assignReferencesAttributeId?: string;
   defaultVariantId?: string;
   defaultWeightUnit: string;
@@ -107,17 +113,15 @@ interface ProductVariantPageProps {
   variantDeactivatePreoderButtonState: ConfirmButtonTransitionState;
   onVariantReorder: ReorderAction;
   onAttributeSelectBlur: () => void;
-  onAdd();
-  onBack();
   onDelete();
   onSubmit(data: ProductVariantUpdateSubmitData);
   onMediaSelect(id: string);
-  onVariantClick(variantId: string);
   onSetDefaultVariant();
   onWarehouseConfigure();
 }
 
 const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
+  productId,
   channels,
   channelErrors,
   defaultVariantId,
@@ -132,12 +136,9 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   referencePages = [],
   referenceProducts = [],
   attributeValues,
-  onAdd,
-  onBack,
   onDelete,
   onMediaSelect,
   onSubmit,
-  onVariantClick,
   onVariantPreorderDeactivate,
   variantDeactivatePreoderButtonState,
   onVariantReorder,
@@ -155,6 +156,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   onAttributeSelectBlur
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   const [isModalOpened, setModalStatus] = React.useState(false);
   const toggleModal = () => setModalStatus(!isModalOpened);
@@ -165,9 +167,9 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   ] = React.useState(false);
 
   const variantMedia = variant?.media?.map(image => image.id);
-  const productMedia = variant?.product?.media?.sort((prev, next) =>
-    prev.sortOrder > next.sortOrder ? 1 : -1
-  );
+  const productMedia = [
+    ...(variant?.product?.media ?? [])
+  ]?.sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1));
   const media = productMedia
     ?.filter(image => variantMedia.indexOf(image.id) !== -1)
     .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1));
@@ -198,7 +200,9 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   return (
     <>
       <Container>
-        <Backlink onClick={onBack}>{variant?.product?.name}</Backlink>
+        <Backlink href={productUrl(productId)}>
+          {variant?.product?.name}
+        </Backlink>
         <PageHeader title={header}>
           {variant?.product?.defaultVariant?.id !== variant?.id && (
             <ProductVariantSetDefault
@@ -233,16 +237,11 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                 <Grid variant="inverted">
                   <div>
                     <ProductVariantNavigation
+                      productId={productId}
                       current={variant?.id}
                       defaultVariantId={defaultVariantId}
                       fallbackThumbnail={variant?.product?.thumbnail?.url}
                       variants={variant?.product.variants}
-                      onAdd={onAdd}
-                      onRowClick={(variantId: string) => {
-                        if (variant) {
-                          return onVariantClick(variantId);
-                        }
-                      }}
                       onReorder={onVariantReorder}
                     />
                   </div>
@@ -368,7 +367,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                 <Savebar
                   disabled={isSaveDisabled}
                   state={saveButtonBarState}
-                  onCancel={onBack}
+                  onCancel={() => navigate(productUrl(productId))}
                   onDelete={onDelete}
                   onSubmit={submit}
                 />

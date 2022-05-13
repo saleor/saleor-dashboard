@@ -6,17 +6,15 @@ import {
   StockAvailability,
   useHomeQuery
 } from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 
 import { getDatePeriod, getUserName } from "../../misc";
 import { orderListUrl } from "../../orders/urls";
-import { productListUrl, productVariantEditUrl } from "../../products/urls";
+import { productListUrl } from "../../products/urls";
 import HomePage from "../components/HomePage";
 
 const HomeSection = () => {
-  const navigate = useNavigator();
   const { user } = useUser();
   const { channel } = useAppChannel();
 
@@ -34,36 +32,19 @@ const HomeSection = () => {
       orders={data?.ordersToday?.totalCount}
       sales={data?.salesToday?.gross}
       topProducts={mapEdgesToItems(data?.productTopToday)}
-      onProductClick={(productId, variantId) =>
-        navigate(productVariantEditUrl(productId, variantId))
-      }
-      onCreateNewChannelClick={() => {
-        navigate(channelsListUrl());
-      }}
-      onOrdersToCaptureClick={() =>
-        navigate(
-          orderListUrl({
-            status: [OrderStatusFilter.READY_TO_CAPTURE],
-            channel: [channel?.id]
-          })
-        )
-      }
-      onOrdersToFulfillClick={() =>
-        navigate(
-          orderListUrl({
-            status: [OrderStatusFilter.READY_TO_FULFILL],
-            channel: [channel?.id]
-          })
-        )
-      }
-      onProductsOutOfStockClick={() =>
-        navigate(
-          productListUrl({
-            stockStatus: StockAvailability.OUT_OF_STOCK,
-            channel: channel?.slug
-          })
-        )
-      }
+      createNewChannelHref={channelsListUrl()}
+      ordersToCaptureHref={orderListUrl({
+        status: [OrderStatusFilter.READY_TO_CAPTURE],
+        channel: [channel?.id]
+      })}
+      ordersToFulfillHref={orderListUrl({
+        status: [OrderStatusFilter.READY_TO_FULFILL],
+        channel: [channel?.id]
+      })}
+      productsOutOfStockHref={productListUrl({
+        stockStatus: StockAvailability.OUT_OF_STOCK,
+        channel: channel?.slug
+      })}
       ordersToCapture={data?.ordersToCapture?.totalCount}
       ordersToFulfill={data?.ordersToFulfill?.totalCount}
       productsOutOfStock={data?.productsOutOfStock.totalCount}

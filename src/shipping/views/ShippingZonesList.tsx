@@ -1,7 +1,6 @@
 import { DialogContentText } from "@material-ui/core";
 import { useUser } from "@saleor/auth";
 import ActionDialog from "@saleor/components/ActionDialog";
-import { configurationMenuUrl } from "@saleor/configuration";
 import {
   useBulkDeleteShippingZoneMutation,
   useDeleteShippingZoneMutation,
@@ -33,11 +32,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import ShippingZonesListPage from "../components/ShippingZonesListPage";
 import {
-  shippingZoneAddUrl,
   shippingZonesListUrl,
   ShippingZonesListUrlDialog,
-  ShippingZonesListUrlQueryParams,
-  shippingZoneUrl
+  ShippingZonesListUrlQueryParams
 } from "../urls";
 
 interface ShippingZonesListProps {
@@ -147,8 +144,6 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
         }
         shippingZones={mapEdgesToItems(data?.shippingZones)}
         pageInfo={pageInfo}
-        onAdd={() => navigate(shippingZoneAddUrl)}
-        onBack={() => navigate(configurationMenuUrl)}
         onUpdateListSettings={updateListSettings}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
@@ -157,7 +152,6 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
             id
           })
         }
-        onRowClick={id => () => navigate(shippingZoneUrl(id))}
         onSubmit={unit =>
           extractMutationErrors(
             updateDefaultWeightUnit({
@@ -191,6 +185,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
         confirmButtonState={deleteShippingZoneOpts.status}
         variant="delete"
         title={intl.formatMessage({
+          id: "k3EI/U",
           defaultMessage: "Delete Shipping Zone",
           description: "dialog header"
         })}
@@ -203,6 +198,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
       >
         <DialogContentText>
           <FormattedMessage
+            id="qf/m5l"
             defaultMessage="Are you sure you want to delete {shippingZoneName} shipping zone?"
             values={{
               shippingZoneName: (
@@ -223,6 +219,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
         confirmButtonState={bulkDeleteShippingZoneOpts.status}
         variant="delete"
         title={intl.formatMessage({
+          id: "cpZLRH",
           defaultMessage: "Delete Shipping Zones",
           description: "dialog header"
         })}
@@ -235,6 +232,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
       >
         <DialogContentText>
           <FormattedMessage
+            id="C9pcQx"
             defaultMessage="{counter,plural,one{Are you sure you want to delete this shipping zone?} other{Are you sure you want to delete {displayQuantity} shipping zones?}}"
             description="dialog content"
             values={{

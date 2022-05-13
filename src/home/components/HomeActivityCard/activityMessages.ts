@@ -3,15 +3,19 @@ import { defineMessages, IntlShape } from "react-intl";
 
 const messages = defineMessages({
   draft: {
+    id: "sjRXXz",
     defaultMessage: "Order #{orderId} was placed from draft by {userEmail}"
   },
   draft_no_email: {
+    id: "BNTZLv",
     defaultMessage: "Order #{orderId} was placed from draft"
   },
   paid: {
+    id: "5SPHkk",
     defaultMessage: "Order #{orderId} was fully paid"
   },
   placed: {
+    id: "0dPP8O",
     defaultMessage: "Order #{orderId} was placed"
   }
 });

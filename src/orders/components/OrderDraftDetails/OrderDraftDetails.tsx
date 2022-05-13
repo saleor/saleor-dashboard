@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@material-ui/core";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import { OrderDetailsFragment } from "@saleor/graphql";
-import { Button } from "@saleor/macaw-ui";
 import {
   OrderDiscountContext,
   OrderDiscountContextConsumerProps
@@ -39,6 +39,7 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "18wvf7",
           defaultMessage: "Order Details",
           description: "section header"
         })}
@@ -50,6 +51,7 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
               data-test-id="add-products-button"
             >
               <FormattedMessage
+                id="C50ahv"
                 defaultMessage="Add products"
                 description="button"
               />

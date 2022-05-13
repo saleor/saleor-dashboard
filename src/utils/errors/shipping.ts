@@ -5,10 +5,12 @@ import { getCommonFormFieldErrorMessage } from "./common";
 
 const messages = defineMessages({
   alreadyExists: {
+    id: "VIABHy",
     defaultMessage: "Default shipping zone already exists",
     description: "error message"
   },
   lessThanMin: {
+    id: "AdmPca",
     defaultMessage: "Max value cannot be less than min value",
     description: "error message"
   }

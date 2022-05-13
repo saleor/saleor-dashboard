@@ -12,7 +12,6 @@ const props: OrderSettingsPageProps = {
   orderSettings: orderSettingsFixture,
   shop: shopOrderSettingsFixture,
   disabled: false,
-  onBack: () => undefined,
   onSubmit: () => undefined,
   saveButtonBarState: "default"
 };

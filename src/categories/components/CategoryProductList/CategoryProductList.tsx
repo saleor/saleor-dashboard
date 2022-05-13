@@ -6,9 +6,11 @@ import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { CategoryDetailsQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
+import { productUrl } from "@saleor/products/urls";
 import { ListActions, ListProps, RelayToFlat } from "@saleor/types";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -64,8 +66,7 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
     toggleAll,
     toolbar,
     onNextPage,
-    onPreviousPage,
-    onRowClick
+    onPreviousPage
   } = props;
 
   const classes = useStyles(props);
@@ -89,7 +90,11 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
         >
           <TableCell className={classes.colName}>
             <span className={classes.colNameHeader}>
-              <FormattedMessage defaultMessage="Name" description="product" />
+              <FormattedMessage
+                id="VQLIXd"
+                defaultMessage="Name"
+                description="product"
+              />
             </span>
           </TableCell>
         </TableHead>
@@ -113,12 +118,12 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
               const isSelected = product ? isChecked(product.id) : false;
 
               return (
-                <TableRow
+                <TableRowLink
                   data-test-id="product-row"
                   selected={isSelected}
                   hover={!!product}
                   key={product ? product.id : "skeleton"}
-                  onClick={product && onRowClick(product.id)}
+                  href={product && productUrl(product.id)}
                   className={classes.link}
                 >
                   <TableCell padding="checkbox">
@@ -135,13 +140,16 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
                   >
                     {product ? product.name : <Skeleton />}
                   </TableCellAvatar>
-                </TableRow>
+                </TableRowLink>
               );
             },
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage defaultMessage="No products found" />
+                  <FormattedMessage
+                    id="Q1Uzbb"
+                    defaultMessage="No products found"
+                  />
                 </TableCell>
               </TableRow>
             )

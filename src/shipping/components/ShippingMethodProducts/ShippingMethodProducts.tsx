@@ -6,6 +6,7 @@ import {
   TableRow,
   Typography
 } from "@material-ui/core";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -14,7 +15,7 @@ import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { ShippingZoneQuery } from "@saleor/graphql";
-import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { ListActions, ListProps, RelayToFlat } from "@saleor/types";
 import React from "react";
@@ -43,7 +44,7 @@ const useStyles = makeStyles(
 );
 
 export interface ShippingMethodProductsProps
-  extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">>,
+  extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
     ListActions {
   products: RelayToFlat<
     ShippingZoneQuery["shippingZone"]["shippingMethods"][0]["excludedProducts"]
@@ -77,12 +78,14 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "t3aiWF",
           defaultMessage: "Excluded Products",
           description: "section header"
         })}
         toolbar={
           <Button variant="tertiary" onClick={onProductAssign}>
             <FormattedMessage
+              id="U8eeLW"
               defaultMessage="Assign products"
               description="button"
             />
@@ -101,10 +104,10 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
               toolbar={toolbar}
             >
               <TableCell className={classes.colProductName}>
-                <FormattedMessage defaultMessage="Product Name" />
+                <FormattedMessage id="ZIc5lM" defaultMessage="Product Name" />
               </TableCell>
               <TableCell className={classes.colAction}>
-                <FormattedMessage defaultMessage="Actions" />
+                <FormattedMessage id="wL7VAE" defaultMessage="Actions" />
               </TableCell>
             </TableHead>
             <TableFooter>
@@ -128,7 +131,7 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
           {products?.length === 0 ? (
             <TableRow>
               <TableCell colSpan={5}>
-                <FormattedMessage defaultMessage="No Products" />
+                <FormattedMessage id="Gg4+K7" defaultMessage="No Products" />
               </TableCell>
             </TableRow>
           ) : (

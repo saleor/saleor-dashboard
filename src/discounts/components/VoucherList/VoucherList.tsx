@@ -8,9 +8,10 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import TooltipTableCellHeader from "@saleor/components/TooltipTableCellHeader";
 import { commonTooltipMessages } from "@saleor/components/TooltipTableCellHeader/messages";
-import { VoucherListUrlSortField } from "@saleor/discounts/urls";
+import { VoucherListUrlSortField, voucherUrl } from "@saleor/discounts/urls";
 import { canBeSorted } from "@saleor/discounts/views/VoucherList/sort";
 import { DiscountValueTypeEnum, VoucherFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -90,7 +91,6 @@ const VoucherList: React.FC<VoucherListProps> = props => {
     onNextPage,
     onPreviousPage,
     onUpdateListSettings,
-    onRowClick,
     onSort,
     pageInfo,
     vouchers,
@@ -127,7 +127,11 @@ const VoucherList: React.FC<VoucherListProps> = props => {
           onClick={() => onSort(VoucherListUrlSortField.code)}
           className={classes.colName}
         >
-          <FormattedMessage defaultMessage="Code" description="voucher code" />
+          <FormattedMessage
+            id="JsPIOX"
+            defaultMessage="Code"
+            description="voucher code"
+          />
         </TableCellHeader>
         <TooltipTableCellHeader
           direction={
@@ -146,6 +150,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
           })}
         >
           <FormattedMessage
+            id="tuYPlG"
             defaultMessage="Min. Spent"
             description="minimum amount of spent money to activate voucher"
           />
@@ -161,6 +166,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
           className={classes.colStart}
         >
           <FormattedMessage
+            id="5u7b3V"
             defaultMessage="Starts"
             description="voucher is active from date"
           />
@@ -176,6 +182,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
           className={classes.colEnd}
         >
           <FormattedMessage
+            id="b6L9n7"
             defaultMessage="Ends"
             description="voucher is active until date"
           />
@@ -197,6 +204,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
           })}
         >
           <FormattedMessage
+            id="JV+EiM"
             defaultMessage="Value"
             description="voucher value"
           />
@@ -211,7 +219,11 @@ const VoucherList: React.FC<VoucherListProps> = props => {
           onClick={() => onSort(VoucherListUrlSortField.limit)}
           className={classes.colUses}
         >
-          <FormattedMessage defaultMessage="Uses" description="voucher uses" />
+          <FormattedMessage
+            id="yHwvLL"
+            defaultMessage="Uses"
+            description="voucher uses"
+          />
         </TableCellHeader>
       </TableHead>
       <TableFooter>
@@ -240,12 +252,12 @@ const VoucherList: React.FC<VoucherListProps> = props => {
             const hasChannelsLoaded = voucher?.channelListings?.length;
 
             return (
-              <TableRow
+              <TableRowLink
                 className={!!voucher ? classes.tableRow : undefined}
                 hover={!!voucher}
                 key={voucher ? voucher.id : "skeleton"}
                 selected={isSelected}
-                onClick={voucher ? onRowClick(voucher.id) : undefined}
+                href={voucher && voucherUrl(voucher.id)}
               >
                 <TableCell padding="checkbox">
                   <Checkbox
@@ -287,10 +299,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
                     <Skeleton />
                   )}
                 </TableCell>
-                <TableCell
-                  className={classes.colValue}
-                  onClick={voucher ? onRowClick(voucher.id) : undefined}
-                >
+                <TableCell className={classes.colValue}>
                   {voucher?.code ? (
                     hasChannelsLoaded ? (
                       voucher.discountValueType ===
@@ -320,13 +329,16 @@ const VoucherList: React.FC<VoucherListProps> = props => {
                     <Skeleton />
                   )}
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             );
           },
           () => (
             <TableRow>
               <TableCell colSpan={numberOfColumns}>
-                <FormattedMessage defaultMessage="No vouchers found" />
+                <FormattedMessage
+                  id="U2mOqA"
+                  defaultMessage="No vouchers found"
+                />
               </TableCell>
             </TableRow>
           )

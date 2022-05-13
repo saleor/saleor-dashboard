@@ -4,9 +4,11 @@ import { defineMessages, IntlShape } from "react-intl";
 
 const messages = defineMessages({
   attributeSlugUnique: {
+    id: "eWV760",
     defaultMessage: "Attribute with this slug already exists"
   },
   attributeValueAlreadyExists: {
+    id: "J/QqOI",
     defaultMessage: "This value already exists within this attribute"
   }
 });

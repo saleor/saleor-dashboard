@@ -3,22 +3,18 @@ import {
   useFetchTaxesMutation,
   useUpdateTaxSettingsMutation
 } from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { configurationMenuUrl } from "../../configuration";
 import { extractMutationErrors, maybe } from "../../misc";
 import CountryListPage, {
   TaxesConfigurationFormData
 } from "../components/CountryListPage";
-import { countryTaxRatesUrl } from "../urls";
 
 export const CountryList: React.FC = () => {
   const intl = useIntl();
-  const navigate = useNavigator();
   const notify = useNotifier();
 
   const { data, loading } = useCountryListQuery({
@@ -31,6 +27,7 @@ export const CountryList: React.FC = () => {
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "HtQGEH",
             defaultMessage: "Successfully fetched tax rates"
           })
         });
@@ -75,8 +72,6 @@ export const CountryList: React.FC = () => {
       disabled={
         loading || fetchTaxesOpts.loading || updateTaxSettingsOpts.loading
       }
-      onBack={() => navigate(configurationMenuUrl)}
-      onRowClick={code => navigate(countryTaxRatesUrl(code))}
       onSubmit={handleSubmit}
       onTaxFetch={fetchTaxes}
       saveButtonBarState={updateTaxSettingsOpts.status}

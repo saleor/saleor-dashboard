@@ -15,7 +15,6 @@ const props: Omit<CustomerCreatePageProps, "classes"> = {
   ],
   disabled: false,
   errors: [],
-  onBack: () => undefined,
   onSubmit: () => undefined,
   saveButtonBar: "default"
 };

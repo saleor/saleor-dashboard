@@ -26,15 +26,13 @@ const props: AppsListPageProps = {
   disabled: false,
   installedAppsList: appsList,
   loadingAppsInProgress: false,
-  navigateToCustomApp: () => undefined,
-  navigateToCustomAppCreate: () => undefined,
+  getCustomAppHref: () => "",
   onAppInProgressRemove: () => undefined,
   onAppInstallRetry: () => undefined,
   onCustomAppRemove: () => undefined,
   onInstalledAppRemove: () => undefined,
   onNextPage: () => undefined,
   onPreviousPage: () => undefined,
-  onRowClick: () => undefined,
   onRowAboutClick: () => undefined
 };
 

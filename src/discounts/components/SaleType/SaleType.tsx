@@ -34,6 +34,7 @@ function createChoices(intl: IntlShape): RadioGroupFieldChoice[] {
   return [
     {
       label: intl.formatMessage({
+        id: "s17U7u",
         defaultMessage: "Percentage",
         description: "discount type"
       }),
@@ -41,6 +42,7 @@ function createChoices(intl: IntlShape): RadioGroupFieldChoice[] {
     },
     {
       label: intl.formatMessage({
+        id: "JnzDrI",
         defaultMessage: "Fixed Amount",
         description: "discount type"
       }),
@@ -61,6 +63,7 @@ const SaleType: React.FC<SaleTypeProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "WkxE8/",
           defaultMessage: "Discount Type",
           description: "percentage or fixed, header"
         })}

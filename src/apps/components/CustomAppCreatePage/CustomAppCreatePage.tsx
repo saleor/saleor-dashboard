@@ -1,4 +1,6 @@
+import { appsListUrl } from "@saleor/apps/urls";
 import AccountPermissions from "@saleor/components/AccountPermissions";
+import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
@@ -10,8 +12,9 @@ import {
   PermissionFragment
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAppErrorMessage from "@saleor/utils/errors/app";
 import React from "react";
@@ -29,22 +32,15 @@ export interface CustomAppCreatePageProps {
   errors: AppErrorFragment[];
   permissions: PermissionFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  onBack: () => void;
   onSubmit: (
     data: CustomAppCreatePageFormData
   ) => SubmitPromise<AppErrorFragment[]>;
 }
 
 const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
-  const {
-    disabled,
-    errors,
-    permissions,
-    saveButtonBarState,
-    onBack,
-    onSubmit
-  } = props;
+  const { disabled, errors, permissions, saveButtonBarState, onSubmit } = props;
   const intl = useIntl();
+  const navigate = useNavigator();
 
   const initialForm: CustomAppCreatePageFormData = {
     hasFullAccess: false,
@@ -64,11 +60,12 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
     >
       {({ data, change, submit, isSaveDisabled }) => (
         <Container>
-          <Backlink onClick={onBack}>
+          <Backlink href={appsListUrl()}>
             {intl.formatMessage(sectionNames.apps)}
           </Backlink>
           <PageHeader
             title={intl.formatMessage({
+              id: "GjH9uy",
               defaultMessage: "Create New App",
               description: "header"
             })}
@@ -90,10 +87,12 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
               permissionsExceeded={false}
               onChange={change}
               fullAccessLabel={intl.formatMessage({
+                id: "D4nzdD",
                 defaultMessage: "Grant this app full access to the store",
                 description: "checkbox label"
               })}
               description={intl.formatMessage({
+                id: "flP8Hj",
                 defaultMessage:
                   "Expand or restrict app permissions to access certain part of Saleor system.",
                 description: "card description"
@@ -103,7 +102,7 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
           <Savebar
             disabled={isSaveDisabled}
             state={saveButtonBarState}
-            onCancel={onBack}
+            onCancel={() => navigate(appsListUrl())}
             onSubmit={submit}
           />
         </Container>

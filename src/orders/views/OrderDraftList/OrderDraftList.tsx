@@ -78,6 +78,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "ra2O4j",
             defaultMessage: "Deleted draft orders"
           })
         });
@@ -93,6 +94,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
       notify({
         status: "success",
         text: intl.formatMessage({
+          id: "6udlH+",
           defaultMessage: "Order draft successfully created"
         })
       });
@@ -199,7 +201,6 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         onAdd={() => openModal("create-order")}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
-        onRowClick={id => () => navigate(orderUrl(id))}
         onSort={handleSort}
         onUpdateListSettings={updateListSettings}
         isChecked={isSelected}
@@ -227,6 +228,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         onConfirm={onOrderDraftBulkDelete}
         open={params.action === "remove"}
         title={intl.formatMessage({
+          id: "qbmeUI",
           defaultMessage: "Delete Order Drafts",
           description: "dialog header"
         })}
@@ -234,6 +236,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
       >
         <DialogContentText>
           <FormattedMessage
+            id="Q6VRrE"
             defaultMessage="{counter,plural,one{Are you sure you want to delete this order draft?} other{Are you sure you want to delete {displayQuantity} order drafts?}}"
             description="dialog content"
             values={{

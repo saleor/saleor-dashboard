@@ -180,8 +180,6 @@ function useProductVariantUpdateForm(
     handleChange,
     triggerChange,
     data: formData,
-    setChanged,
-    hasChanged,
     formId,
     setIsSubmitDisabled
   } = form;
@@ -327,15 +325,14 @@ function useProductVariantUpdateForm(
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit: handleSubmit,
-    setChanged
+    onSubmit: handleSubmit
   });
 
   const submit = () => handleFormSubmit(submitData);
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
-  const isSaveDisabled = loading || disabled || !hasChanged;
+  const isSaveDisabled = loading || disabled;
   setIsSubmitDisabled(isSaveDisabled);
 
   return {
@@ -358,7 +355,6 @@ function useProductVariantUpdateForm(
       selectAttributeMultiple: handleAttributeMultiChange,
       selectAttributeReference: handleAttributeReferenceChange
     },
-    hasChanged,
     submit,
     isSaveDisabled
   };

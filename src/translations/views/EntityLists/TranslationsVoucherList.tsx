@@ -1,5 +1,4 @@
 import { useVoucherTranslationsQuery } from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
 import usePaginator from "@saleor/hooks/usePaginator";
 import TranslationsEntitiesList from "@saleor/translations/components/TranslationsEntitiesList";
 import {
@@ -16,7 +15,6 @@ const TranslationsVoucherList: React.FC<TranslationsEntityListProps> = ({
   params,
   variables
 }) => {
-  const navigate = useNavigator();
   const paginate = usePaginator();
 
   const { data, loading } = useVoucherTranslationsQuery({
@@ -44,14 +42,8 @@ const TranslationsVoucherList: React.FC<TranslationsEntityListProps> = ({
             name: node.voucher?.name || "-"
           }
       )}
-      onRowClick={id =>
-        navigate(
-          languageEntityUrl(
-            variables.language,
-            TranslatableEntities.vouchers,
-            id
-          )
-        )
+      getRowHref={id =>
+        languageEntityUrl(variables.language, TranslatableEntities.vouchers, id)
       }
       onNextPage={loadNextPage}
       onPreviousPage={loadPreviousPage}

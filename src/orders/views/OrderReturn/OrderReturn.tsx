@@ -17,15 +17,18 @@ import ReturnFormDataParser from "./utils";
 
 export const messages = defineMessages({
   cannotRefundDescription: {
+    id: "XQBVEJ",
     defaultMessage:
       "We’ve encountered a problem while refunding the products. Product’s were not refunded. Please try again.",
     description: "order return error description when cannot refund"
   },
   cannotRefundTitle: {
+    id: "l9Lwjh",
     defaultMessage: "Couldn't refund products",
     description: "order return error title when cannot refund"
   },
   successAlert: {
+    id: "/z9uo1",
     defaultMessage: "Successfully returned products!",
     description: "order returned success message"
   }
@@ -58,7 +61,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
             text: intl.formatMessage(messages.successAlert)
           });
 
-          navigateToOrder(replaceOrder?.id);
+          navigate(orderUrl(replaceOrder?.id || orderId));
 
           return;
         }
@@ -98,15 +101,12 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
     );
   };
 
-  const navigateToOrder = (id?: string) => navigate(orderUrl(id || orderId));
-
   return (
     <OrderReturnPage
       errors={returnCreateOpts.data?.orderFulfillmentReturnProducts.errors}
       order={data?.order}
       loading={loading || returnCreateOpts.loading}
       onSubmit={handleSubmit}
-      onBack={() => navigateToOrder()}
     />
   );
 };

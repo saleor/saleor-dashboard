@@ -43,7 +43,9 @@ const useStyles = makeStyles(
       display: "flex",
       flexDirection: "row",
       alignItems: "center",
-      justifyContent: "space-between"
+      justifyContent: "space-between",
+      minWidth: 0,
+      textOverflow: "ellipsis"
     }
   }),
   {

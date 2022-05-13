@@ -12,13 +12,13 @@ export function parseEventData(event: ChangeEvent): EventData {
   if (event.target.name.includes(EventDataField.name)) {
     action = EventDataAction.update;
     field = EventDataField.name;
-    fieldIndex = parseInt(event.target.name.split(nameSeparator)[1], 0);
+    fieldIndex = parseInt(event.target.name.split(nameSeparator)[1], 10);
     value = event.target.value;
   }
   if (event.target.name.includes(EventDataField.value)) {
     action = EventDataAction.update;
     field = EventDataField.value;
-    fieldIndex = parseInt(event.target.name.split(nameSeparator)[1], 0);
+    fieldIndex = parseInt(event.target.name.split(nameSeparator)[1], 10);
     value = event.target.value;
   }
   if (event.target.name === EventDataAction.add) {
