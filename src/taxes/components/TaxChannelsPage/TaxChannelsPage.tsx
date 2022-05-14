@@ -19,8 +19,6 @@ import { sectionNames } from "@saleor/intl";
 import {
   Backlink,
   Button,
-  DeleteIcon,
-  IconButton,
   List,
   ListHeader,
   ListItem,
@@ -34,6 +32,8 @@ import { channelsListUrl } from "@saleor/taxes/urls";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+
+import TaxCountryExceptionListItem from "../TaxCountryExceptionListItem";
 
 interface TaxChannelsPageProps {
   data: any;
@@ -194,21 +194,11 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                   </ListItemCell>
                 </ListItem>
               </ListHeader>
-              {data.map(el => (
-                <ListItem key={el.id} hover={false}>
-                  <ListItemCell>{el.name}</ListItemCell>
-                  <ListItemCell>
-                    <Checkbox />
-                  </ListItemCell>
-                  <ListItemCell>
-                    <Checkbox />
-                  </ListItemCell>
-                  <ListItemCell>
-                    <IconButton variant="secondary">
-                      <DeleteIcon />
-                    </IconButton>
-                  </ListItemCell>
-                </ListItem>
+              {data.map(country => (
+                <TaxCountryExceptionListItem
+                  country={country}
+                  key={country.id}
+                />
               ))}
             </List>
           </Card>
