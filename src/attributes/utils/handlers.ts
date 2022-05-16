@@ -236,6 +236,11 @@ export const prepareAttributesInput = ({
     }
     if (inputType === AttributeInputTypeEnum.BOOLEAN) {
       const booleanInput = getBooleanInput(attr);
+      // previous comparison doesn't work because value was string
+      if (isEqual([booleanInput.boolean], prevAttrValue)) {
+        return attrInput;
+      }
+
       attrInput.push(booleanInput);
       return attrInput;
     }
