@@ -41,13 +41,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
       <Backlink onClick={onBack}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
-      <PageHeader
-        title={intl.formatMessage({
-          id: "lnQAos",
-          defaultMessage: "Taxes",
-          description: "header"
-        })}
-      />
+      <PageHeader title={intl.formatMessage(sectionNames.taxes)} />
       <PageTabs value="channels" onChange={handleTabChange}>
         <PageTab label={"Channels"} value="channels" />
         <PageTab label={"Countries"} value="countries" />
