@@ -1,8 +1,9 @@
-name: Deploy Dashboard 3.2 to staging
+name: Deploy Dashboard to staging
 on:
   push:
     tags:
-      - 3.2**
+      # Matches stable and pre-releases
+      - "[0-9]+.[0-9]+.[0-9]+*"
   workflow_dispatch:
     inputs:
       git_ref:
@@ -21,12 +22,19 @@ jobs:
       SENTRY_URL_PREFIX: "~/dashboard/static"
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      ENVIRONMENT: saleor-staging-v32
+      VERSION: ${{ github.event.inputs.git_ref || github.ref_name }}
       IS_CLOUD_INSTANCE: true
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: ${{ github.event.inputs.git_ref || '' }}
+          ref: ${{ env.VERSION }}
+      
+      - name: Set environment
+        # Convert version into staging deployment name (e.g 3.3.0 -> saleor-staging-v33)
+        run: |
+          set -x
+          environment=$(echo $VERSION | sed -n 's#\([0-9]\+\).\([0-9]\+\).*#saleor-staging-v\1\2#p')
+          echo "ENVIRONMENT=${environment}" >> $GITHUB_ENV
 
       - name: Package
         timeout-minutes: 15
@@ -61,7 +69,7 @@ jobs:
               "client_payload": {
                 "project": "DASHBOARD",
                 "environment": "SANDBOX",
-                "version": "${{ github.event.inputs.git_ref || github.ref_name }}"
+                "version": "${{ env.VERSION }}"
               }
             }'
 
