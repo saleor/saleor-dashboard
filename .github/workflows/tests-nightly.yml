@@ -104,7 +104,7 @@ jobs:
           node-version: 14
 
       - name: Cypress run
-        if: ${{ github.event.inputs.tests == 'All' }}
+        if: ${{ github.event.inputs.tests != 'Critical' }}
         uses: cypress-io/github-action@v2
         env:
           API_URI: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
