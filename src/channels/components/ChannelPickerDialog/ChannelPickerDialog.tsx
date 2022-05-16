@@ -50,6 +50,7 @@ const ChannelPickerDialog: React.FC<ChannelPickerDialogProps> = ({
           id: "nKwgxY",
           description: "select label"
         })}
+        data-test-id="channel-autocomplete"
         value={choice}
         onChange={e => setChoice(e.target.value)}
         onInputChange={search}
@@ -57,6 +58,7 @@ const ChannelPickerDialog: React.FC<ChannelPickerDialogProps> = ({
         {({ getItemProps, highlightedIndex }) =>
           result.map((choice, choiceIndex) => (
             <MenuItem
+              data-test-id="select-field-option"
               selected={highlightedIndex === choiceIndex}
               key={choice.value}
               {...getItemProps({ item: choice, index: choiceIndex })}
