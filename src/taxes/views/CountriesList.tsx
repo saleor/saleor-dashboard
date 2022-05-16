@@ -1,6 +1,7 @@
 import useNavigator from "@saleor/hooks/useNavigator";
 import React from "react";
 
+import TaxCountriesPage from "../components/TaxCountriesPage";
 import { countriesListUrl, taxTabSectionUrl } from "../urls";
 
 interface CountriesListProps {
@@ -25,7 +26,13 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id }) => {
     }
   }, [id, exampleData]);
 
-  return null;
+  return (
+    <TaxCountriesPage
+      data={exampleData}
+      selectedCountryId={id}
+      handleTabChange={handleTabChange}
+    />
+  );
 };
 
 export default CountriesList;
