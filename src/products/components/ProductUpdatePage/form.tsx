@@ -18,7 +18,6 @@ import { AttributeInput } from "@saleor/components/Attributes";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import {
   ProductFragment,
@@ -62,7 +61,10 @@ import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAu
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
-import useRichText from "@saleor/utils/richText/useRichText";
+import useRichText, {
+  RichTextContext,
+  RichTextContextValues
+} from "@saleor/utils/richText/useRichText";
 import React, { useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -147,7 +149,6 @@ export interface ProductUpdateHandlers
     Record<"selectAttributeFile", FormsetChange<File>>,
     Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
     Record<"addStock" | "deleteStock", (id: string) => void> {
-  changeDescription: RichTextEditorChange;
   changePreorderEndDate: FormChange;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
@@ -158,6 +159,7 @@ export interface UseProductUpdateFormResult
     ProductUpdateHandlers
   > {
   formErrors: FormErrors<ProductUpdateSubmitData>;
+  richText: RichTextContextValues;
 }
 
 export interface UseProductUpdateFormOpts
@@ -259,7 +261,7 @@ function useProductUpdateForm(
   const attributes = useFormset(getAttributeInputFromProduct(product));
   const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset(getStockInputFromProduct(product));
-  const [description, changeDescription] = useRichText({
+  const richText = useRichText({
     initial: product?.description,
     triggerChange
   });
@@ -382,18 +384,18 @@ function useProductUpdateForm(
       opts.referencePages,
       opts.referenceProducts
     ),
-    description: description.current,
+    description: null,
     stocks: stocks.data
   };
 
   // Need to make it function to always have description.current up to date
-  const getSubmitData = (): ProductUpdateSubmitData => ({
+  const getSubmitData = async (): Promise<ProductUpdateSubmitData> => ({
     ...data,
     ...getStocksData(product, stocks.data),
     ...getMetadata(data, isMetadataModified, isPrivateMetadataModified),
     attributes: attributes.data,
     attributesWithNewFileValue: attributesWithNewFileValue.data,
-    description: description.current
+    description: await richText.getValue()
   });
 
   const handleSubmit = async (data: ProductUpdateSubmitData) => {
@@ -411,7 +413,7 @@ function useProductUpdateForm(
     onSubmit: handleSubmit
   });
 
-  const submit = async () => handleFormSubmit(getSubmitData());
+  const submit = async () => handleFormSubmit(await getSubmitData());
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
@@ -458,7 +460,6 @@ function useProductUpdateForm(
       changeChannelPrice: handleChannelPriceChange,
       changeChannelPreorder: handleChannelPreorderChange,
       changeChannels: handleChannelsChange,
-      changeDescription,
       changeMetadata,
       changeStock: handleStockChange,
       changePreorderEndDate: handlePreorderEndDateChange,
@@ -475,7 +476,8 @@ function useProductUpdateForm(
       selectTaxRate: handleTaxTypeSelect
     },
     submit,
-    isSaveDisabled
+    isSaveDisabled,
+    richText
   };
 }
 
@@ -486,9 +488,20 @@ const ProductUpdateForm: React.FC<ProductUpdateFormProps> = ({
   disabled,
   ...rest
 }) => {
-  const props = useProductUpdateForm(product, onSubmit, disabled, rest);
+  const { richText, ...props } = useProductUpdateForm(
+    product,
+    onSubmit,
+    disabled,
+    rest
+  );
 
-  return <form onSubmit={props.submit}>{children(props)}</form>;
+  return (
+    <form onSubmit={props.submit}>
+      <RichTextContext.Provider value={richText}>
+        {children(props)}
+      </RichTextContext.Provider>
+    </form>
+  );
 };
 
 ProductUpdateForm.displayName = "ProductUpdateForm";

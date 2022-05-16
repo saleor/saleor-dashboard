@@ -9,16 +9,16 @@ import * as fixtures from "./fixtures.json";
 import { RichTextEditorProps } from "./RichTextEditor";
 import RichTextEditorContent from "./RichTextEditorContent";
 
-export const data: OutputData = fixtures.richTextEditor;
+export const defaultValue: OutputData = fixtures.richTextEditor;
 
 const props: RichTextEditorProps = {
-  data,
+  defaultValue,
   disabled: false,
   error: false,
   helperText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
   label: "Content",
   name: "content",
-  onChange: () => undefined
+  editorRef: null
 };
 
 storiesOf("Generics / Rich text editor", module)

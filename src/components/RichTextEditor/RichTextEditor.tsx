@@ -1,4 +1,4 @@
-import { LogLevels } from "@editorjs/editorjs";
+import { API, LogLevels, OutputData } from "@editorjs/editorjs";
 import { FormControl, FormHelperText, InputLabel } from "@material-ui/core";
 import { useId } from "@reach/auto-id";
 import { Props as ReactEditorJSProps } from "@react-editor-js/core";
@@ -11,13 +11,26 @@ import useStyles from "./styles";
 
 export type EditorJsProps = Omit<ReactEditorJSProps, "factory">;
 
-export interface RichTextEditorProps extends EditorJsProps {
+// https://github.com/Jungwoo-An/react-editor-js#how-to-access-editor-js-instance
+export interface EditorCore {
+  destroy(): Promise<void>;
+  clear(): Promise<void>;
+  save(): Promise<OutputData>;
+  render(data: OutputData): Promise<void>;
+}
+
+// onChange shouldn't be used due to issues with React and EditorJS integration
+export interface RichTextEditorProps extends Omit<EditorJsProps, "onChange"> {
   id?: string;
   disabled: boolean;
   error: boolean;
   helperText: string;
   label: string;
   name: string;
+  editorRef:
+    | React.RefCallback<EditorCore>
+    | React.MutableRefObject<EditorCore>
+    | null;
 }
 
 const ReactEditorJS = createReactEditorJS();
@@ -29,11 +42,26 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   label,
   name,
   helperText,
+  editorRef,
+  onInitialize,
   ...props
 }) => {
   const classes = useStyles({});
   const id = useId(defaultId);
   const [isFocused, setIsFocused] = React.useState(false);
+
+  const handleInitialize = React.useCallback(instance => {
+    if (onInitialize) {
+      onInitialize(instance);
+    }
+
+    if (typeof editorRef === "function") {
+      return editorRef(instance);
+    }
+    if (editorRef) {
+      return (editorRef.current = instance);
+    }
+  }, []);
 
   // We need to render FormControl first to get id from @reach/auto-id
   const [hasRendered, setHasRendereed] = React.useState(false);
@@ -60,6 +88,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
           tools={tools}
           // LogLeves is undefined at runtime
           logLevel={"ERROR" as LogLevels.ERROR}
+          onInitialize={handleInitialize}
           {...props}
         >
           <div

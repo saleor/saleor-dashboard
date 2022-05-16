@@ -293,13 +293,12 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 <CardMenu menuItems={extensionMenuItems} data-test-id="menu" />
               )}
             </PageHeader>
-            <Grid>
+            <Grid richText>
               <div>
                 <ProductDetailsForm
                   data={data}
                   disabled={disabled}
                   errors={errors}
-                  onDescriptionChange={handlers.changeDescription}
                   onChange={change}
                 />
                 <CardSpacer />
