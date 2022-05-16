@@ -70,6 +70,17 @@ jobs:
           SALEOR_CLI_ENV: staging
         run: npx saleor backup restore MbdG5UXd
 
+      - name: Notify Slack
+        if: ${{ failure() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_SNAP_RESTORE }}
+          SLACK_USERNAME: RevertSnapshotBot
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_TITLE: "Revert to snapshot job failed"
+          SLACK_MESSAGE: "https://github.com/saleor/saleor-dashboard/actions/workflows/tests-nightly.yml"
+          MSG_MINIMAL: true
+
   run-tests-in-parallel:
     needs: revert-automation-env-to-snap
     if: always() #Wait for revert-automation-env-to-snap, bot run always, even if skipped
