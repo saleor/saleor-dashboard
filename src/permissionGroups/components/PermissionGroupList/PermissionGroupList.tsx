@@ -7,6 +7,7 @@ import {
 } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
@@ -150,16 +151,18 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
                 {permissionGroup ? (
                   <>
                     {permissionGroup.userCanManage && (
-                      <IconButton
-                        variant="secondary"
-                        data-test-id="delete-icon"
-                        color="primary"
-                        onClick={stopPropagation(() =>
-                          onDelete(permissionGroup.id)
-                        )}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
+                      <TableButtonWrapper>
+                        <IconButton
+                          variant="secondary"
+                          data-test-id="delete-icon"
+                          color="primary"
+                          onClick={stopPropagation(() =>
+                            onDelete(permissionGroup.id)
+                          )}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableButtonWrapper>
                     )}
                   </>
                 ) : (

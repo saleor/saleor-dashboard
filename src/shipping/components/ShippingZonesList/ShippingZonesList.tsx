@@ -10,6 +10,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
@@ -171,17 +172,19 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
                     )}
                   </TableCell>
                   <TableCell className={classes.colAction}>
-                    <IconButton
-                      variant="secondary"
-                      color="primary"
-                      disabled={disabled}
-                      onClick={event => {
-                        event.stopPropagation();
-                        onRemove(shippingZone.id);
-                      }}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
+                    <TableButtonWrapper>
+                      <IconButton
+                        variant="secondary"
+                        color="primary"
+                        disabled={disabled}
+                        onClick={event => {
+                          event.stopPropagation();
+                          onRemove(shippingZone.id);
+                        }}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableButtonWrapper>
                   </TableCell>
                 </TableRowLink>
               );

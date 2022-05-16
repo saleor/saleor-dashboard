@@ -11,6 +11,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
@@ -136,16 +137,18 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
                     )}
                   </TableCell>
                   <TableCell className={classes.colActions}>
-                    <IconButton
-                      variant="secondary"
-                      disabled={!category || disabled}
-                      onClick={event => {
-                        event.stopPropagation();
-                        onCategoryUnassign(category.id);
-                      }}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
+                    <TableButtonWrapper>
+                      <IconButton
+                        variant="secondary"
+                        disabled={!category || disabled}
+                        onClick={event => {
+                          event.stopPropagation();
+                          onCategoryUnassign(category.id);
+                        }}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableButtonWrapper>
                   </TableCell>
                 </TableRowLink>
               );

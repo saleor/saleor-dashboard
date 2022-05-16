@@ -8,6 +8,7 @@ import {
 import EditIcon from "@material-ui/icons/Edit";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
@@ -163,13 +164,15 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
                   >
                     <EditIcon />
                   </IconButton>
-                  <IconButton
-                    variant="secondary"
-                    color="primary"
-                    onClick={stopPropagation(() => onRemove(warehouse.id))}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
+                  <TableButtonWrapper>
+                    <IconButton
+                      variant="secondary"
+                      color="primary"
+                      onClick={stopPropagation(() => onRemove(warehouse.id))}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableButtonWrapper>
                 </div>
               </TableCell>
             </TableRowLink>

@@ -1,9 +1,9 @@
 import { TableRow, TableRowTypeMap } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { isExternalURL } from "@saleor/utils/urls";
 import clsx from "classnames";
 import React from "react";
-
-import Link from "../Link";
+import { Link } from "react-router-dom";
 
 type MaterialTableRowPropsType = TableRowTypeMap["props"];
 
@@ -33,13 +33,13 @@ const TableRowLink = ({
 }: TableRowLinkProps) => {
   const classes = useStyles();
 
-  if (!href) {
+  if (!href || isExternalURL(href)) {
     return <TableRow {...props}>{children}</TableRow>;
   }
 
   return (
     <TableRow {...props}>
-      <Link className={clsx(classes.link, linkClassName)} href={href}>
+      <Link className={clsx(classes.link, linkClassName)} to={href}>
         {children}
       </Link>
     </TableRow>
