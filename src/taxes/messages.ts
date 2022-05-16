@@ -1,6 +1,21 @@
 import { defineMessages } from "react-intl";
 
 export const taxesMessages = defineMessages({
+  channelsSection: {
+    id: "b2DlTO",
+    defaultMessage: "Channels",
+    description: "Taxes section title"
+  },
+  countriesSection: {
+    id: "ZAaXfz",
+    defaultMessage: "Countries",
+    description: "Taxes section title"
+  },
+  taxClassesSection: {
+    id: "VmVQpG",
+    defaultMessage: "Tax Classes",
+    description: "Taxes section title"
+  },
   channelList: {
     id: "Tw92Ye",
     defaultMessage: "Channel Name",

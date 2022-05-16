@@ -6,7 +6,6 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import { sectionNames } from "@saleor/intl";
 import {
-  Backlink,
   Button,
   List,
   ListHeader,
@@ -39,9 +38,18 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.taxes)} />
       <PageTabs value="channels" onChange={handleTabChange}>
-        <PageTab label={"Channels"} value="channels" />
-        <PageTab label={"Countries"} value="countries" />
-        <PageTab label={"Tax classes"} value="classes" />
+        <PageTab
+          label={intl.formatMessage(taxesMessages.channelsSection)}
+          value="channels"
+        />
+        <PageTab
+          label={intl.formatMessage(taxesMessages.countriesSection)}
+          value="countries"
+        />
+        <PageTab
+          label={intl.formatMessage(taxesMessages.taxClassesSection)}
+          value="classes"
+        />
       </PageTabs>
       <VerticalSpacer spacing={2} />
       <Grid variant="inverted">
