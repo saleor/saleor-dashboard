@@ -9,10 +9,11 @@ import {
   SortableTableBody,
   SortableTableRow
 } from "@saleor/components/SortableTable";
+import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@saleor/components/TableHead";
 import { AttributeFragment, AttributeTypeEnum } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import { renderCollection, stopPropagation } from "@saleor/misc";
+import { renderCollection } from "@saleor/misc";
 import { ListActions, ReorderAction } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -155,14 +156,14 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
                     {attribute?.slug || <Skeleton />}
                   </TableCell>
                   <TableCell className={classes.colAction}>
-                    <IconButton
-                      variant="secondary"
-                      onClick={stopPropagation(() =>
-                        onAttributeUnassign(attribute.id)
-                      )}
-                    >
-                      <DeleteIcon color="primary" />
-                    </IconButton>
+                    <TableButtonWrapper>
+                      <IconButton
+                        variant="secondary"
+                        onClick={() => onAttributeUnassign(attribute.id)}
+                      >
+                        <DeleteIcon color="primary" />
+                      </IconButton>
+                    </TableButtonWrapper>
                   </TableCell>
                 </SortableTableRow>
               );

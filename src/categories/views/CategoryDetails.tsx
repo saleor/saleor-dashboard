@@ -39,7 +39,6 @@ import {
 } from "../components/CategoryUpdatePage/CategoryUpdatePage";
 import { CategoryUpdateData } from "../components/CategoryUpdatePage/form";
 import {
-  categoryAddUrl,
   categoryListUrl,
   categoryUrl,
   CategoryUrlDialog,
@@ -212,12 +211,12 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     <>
       <WindowTitle title={maybe(() => data.category.name)} />
       <CategoryUpdatePage
+        categoryId={id}
         changeTab={changeTab}
         currentTab={activeTab}
         category={maybe(() => data.category)}
         disabled={loading}
         errors={updateResult.data?.categoryUpdate.errors || []}
-        addCategoryHref={categoryAddUrl(id)}
         addProductHref={productAddUrl()}
         onDelete={() => openModal("delete")}
         onImageDelete={() =>

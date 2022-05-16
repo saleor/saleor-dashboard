@@ -11,6 +11,7 @@ import { ChannelsAvailabilityDropdown } from "@saleor/components/ChannelsAvailab
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
@@ -157,16 +158,18 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
                     )}
                   </TableCell>
                   <TableCell className={classes.colActions}>
-                    <IconButton
-                      variant="secondary"
-                      disabled={!product || disabled}
-                      onClick={event => {
-                        event.stopPropagation();
-                        onProductUnassign(product.id);
-                      }}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
+                    <TableButtonWrapper>
+                      <IconButton
+                        variant="secondary"
+                        disabled={!product || disabled}
+                        onClick={event => {
+                          event.stopPropagation();
+                          onProductUnassign(product.id);
+                        }}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableButtonWrapper>
                   </TableCell>
                 </TableRowLink>
               );

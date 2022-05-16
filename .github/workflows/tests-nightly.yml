@@ -3,6 +3,14 @@ name: Execute nightly tests
 on:
   workflow_dispatch:
     inputs:
+      tests:
+        required: true 
+        description: 'Select tests to run'
+        default: 'All'
+        type: choice
+        options:
+        - 'All'
+        - 'Critical'
       environment:
         required: true 
         description: 'Environment to run tests against'
@@ -96,6 +104,7 @@ jobs:
           node-version: 14
 
       - name: Cypress run
+        if: ${{ github.event.inputs.tests == 'All' }}
         uses: cypress-io/github-action@v2
         env:
           API_URI: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
@@ -111,6 +120,24 @@ jobs:
           parallel: true
           group: 'UI - Chrome'
           command: npm run cy:run:allEnv:parallel
+
+      - name: Cypress run
+        if: ${{ github.event.inputs.tests == 'Critical' }}
+        uses: cypress-io/github-action@v2
+        env:
+          API_URI: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
+          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
+          CYPRESS_baseUrl: ${{ steps.get-env-uri.outputs.ENV_URI }}dashboard/
+          CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
+          CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
+          CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
+          CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          parallel: true
+          group: 'UI - Chrome'
+          command: npm run cy:run:critical:parallel
 
 
 

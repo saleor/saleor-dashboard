@@ -9,6 +9,7 @@ import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { AppQuery } from "@saleor/graphql";
@@ -109,17 +110,19 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
                 <TableCell
                   className={classNames(classes.colAction, classes.colRight)}
                 >
-                  <IconButton
-                    variant="secondary"
-                    color="primary"
-                    onClick={
-                      webhook
-                        ? stopPropagation(() => onRemove(webhook.id))
-                        : undefined
-                    }
-                  >
-                    <DeleteIcon />
-                  </IconButton>
+                  <TableButtonWrapper>
+                    <IconButton
+                      variant="secondary"
+                      color="primary"
+                      onClick={
+                        webhook
+                          ? stopPropagation(() => onRemove(webhook.id))
+                          : undefined
+                      }
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableButtonWrapper>
                 </TableCell>
               </TableRowLink>
             ),

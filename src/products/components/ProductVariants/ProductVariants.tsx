@@ -19,6 +19,7 @@ import {
   SortableTableBody,
   SortableTableRow
 } from "@saleor/components/SortableTable";
+import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@saleor/components/TableHead";
 import {
   ProductDetailsVariantFragment,
@@ -459,17 +460,20 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                       )
                     )}
                   </TableCell>
-                  <TableCell
-                    className={classes.colActions}
-                    data-test-id="actions"
-                    onClick={e => e.stopPropagation()}
-                  >
-                    {variant?.id !== product?.defaultVariant?.id && (
-                      <ProductVariantSetDefault
-                        onSetDefaultVariant={() => onSetDefaultVariant(variant)}
-                      />
-                    )}
-                  </TableCell>
+                  <TableButtonWrapper>
+                    <TableCell
+                      className={classes.colActions}
+                      data-test-id="actions"
+                    >
+                      {variant?.id !== product?.defaultVariant?.id && (
+                        <ProductVariantSetDefault
+                          onSetDefaultVariant={() =>
+                            onSetDefaultVariant(variant)
+                          }
+                        />
+                      )}
+                    </TableCell>
+                  </TableButtonWrapper>
                 </SortableTableRow>
               );
             })}
