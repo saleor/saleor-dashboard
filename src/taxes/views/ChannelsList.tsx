@@ -1,4 +1,3 @@
-import { configurationMenuUrl } from "@saleor/configuration";
 import { useChannelsQuery } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import React from "react";
@@ -36,7 +35,6 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ id }) => {
       selectedChannelId={id}
       channels={channelsData?.channels}
       handleTabChange={handleTabChange}
-      onBack={() => navigate(configurationMenuUrl)}
     />
   );
 };

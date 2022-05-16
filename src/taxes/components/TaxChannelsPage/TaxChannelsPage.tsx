@@ -28,19 +28,15 @@ interface TaxChannelsPageProps {
   channels: any;
   selectedChannelId: string;
   handleTabChange: (tab: string) => void;
-  onBack: () => void;
 }
 
 export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
-  const { data, channels, selectedChannelId, handleTabChange, onBack } = props;
+  const { data, channels, selectedChannelId, handleTabChange } = props;
 
   const intl = useIntl();
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
-        {intl.formatMessage(sectionNames.configuration)}
-      </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.taxes)} />
       <PageTabs value="channels" onChange={handleTabChange}>
         <PageTab label={"Channels"} value="channels" />
