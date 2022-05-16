@@ -80,5 +80,10 @@ export const taxesMessages = defineMessages({
     id: "skklRz",
     defaultMessage: "Show gross prices in storefront",
     description: "table header column"
+  },
+  countryList: {
+    id: "DtJhMP",
+    defaultMessage: "Country List",
+    description: "card header title"
   }
 });
