@@ -1,3 +1,4 @@
+import { Container } from "@material-ui/core";
 import { AppFrame } from "@saleor/apps/components/AppFrame";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -21,13 +22,15 @@ const Component = () => {
   return (
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.marketplace)} />
-      <AppFrame
-        src={MARKETPLACE_URL}
-        // Marketplace doesn't require app token nor id
-        appToken=""
-        appId=""
-        className={classes.iframe}
-      />
+      <Container>
+        <AppFrame
+          src={MARKETPLACE_URL}
+          // Marketplace doesn't require app token nor id
+          appToken=""
+          appId=""
+          className={classes.iframe}
+        />
+      </Container>
     </>
   );
 };
