@@ -4,21 +4,10 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import { MARKETPLACE_URI } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-const useStyles = makeStyles(
-  () => ({
-    iframe: {
-      height: "100vh",
-      position: "sticky"
-    }
-  }),
-  {
-    name: "marketplaceStyles"
-  }
-);
+import { useStyles } from "./styles";
 
 const Component = () => {
   const classes = useStyles();
