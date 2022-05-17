@@ -58,7 +58,7 @@ export const TaxChannelsMenu: React.FC<TaxChannelsMenuProps> = ({
           {channels?.map(channel => (
             <ListItemLink
               key={channel.id}
-              className={clsx(classes.clickable, {
+              className={clsx(classes.clickable, classes.tableRow, {
                 [classes.selected]: channel.id === selectedChannelId
               })}
               href={channelsListUrl(channel.id)}
