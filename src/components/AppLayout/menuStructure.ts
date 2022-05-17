@@ -11,7 +11,7 @@ import {
   extensionMountPoints,
   useExtensions
 } from "@saleor/apps/useExtensions";
-import { MARKETPLACE_URI } from "@saleor/config";
+import { MARKETPLACE_URL } from "@saleor/config";
 import { configurationMenuUrl } from "@saleor/configuration";
 import { getConfigMenuItemsPermissions } from "@saleor/configuration/utils";
 import { giftCardListUrl } from "@saleor/giftCards/urls";
@@ -60,7 +60,7 @@ function useMenuStructure(
   // This will be deleted when Marketplace is released
   // Consider this solution as temporary
   const getAppSection = () => {
-    if (MARKETPLACE_URI) {
+    if (MARKETPLACE_URL) {
       return {
         ariaLabel: "apps_section",
         iconSrc: appsIcon,

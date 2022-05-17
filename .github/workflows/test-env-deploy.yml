@@ -57,21 +57,21 @@ jobs:
           pattern: (http|https)://[a-zA-Z0-9.-]+/graphql/?
         run: |
           echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)"
-      - name: Get MARKETPlACE_URI
-        id: marketplace_uri
+      - name: Get MARKETPLACE_URL
+        id: MARKETPLACE_URL
         # Search for MARKETPLACE_UI in PR description
         env:
           pull_request_body: ${{ github.event.pull_request.body }}
-          prefix: MARKETPLACE_URI=
+          prefix: MARKETPLACE_URL=
           pattern: (http|https)://[a-zA-Z0-9.-]+/graphql/?
         run: |
-          echo "::set-output name=custom_marketplace_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)"
+          echo "::set-output name=custom_marketplace_url::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)"
 
       - name: Run build
         env:
           # Use custom API_URI or the default one
           API_URI: ${{ steps.api_uri.outputs.custom_api_uri || 'https://qa.staging.saleor.cloud/graphql/' }}
-          MARKETPLACE_URI: ${{ steps.api_uri.outputs.custom_marketplace_uri }}
+          MARKETPLACE_URL: ${{ steps.api_uri.outputs.custom_marketplace_url }}
           APP_MOUNT_URI: /
           STATIC_URL: /
           IS_CLOUD_INSTANCE: true

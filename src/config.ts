@@ -8,7 +8,7 @@ export const APP_DEFAULT_URI = "/";
 export const API_URI = process.env.API_URI;
 export const SW_INTERVAL = parseInt(process.env.SW_INTERVAL, 10);
 export const IS_CLOUD_INSTANCE = process.env.IS_CLOUD_INSTANCE === "true";
-export const MARKETPLACE_URI = process.env.MARKETPLACE_URI;
+export const MARKETPLACE_URL = process.env.MARKETPLACE_URL;
 
 export const DEFAULT_INITIAL_SEARCH_DATA: SearchVariables = {
   after: null,
