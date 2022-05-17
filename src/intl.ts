@@ -382,6 +382,11 @@ export const sectionNames = defineMessages({
     defaultMessage: "Home",
     description: "home section name"
   },
+  marketplace: {
+    id: "E+M17x",
+    defaultMessage: "Marketplace",
+    description: "marketplace section name"
+  },
   navigation: {
     id: "9C7PZE",
     defaultMessage: "Navigation",

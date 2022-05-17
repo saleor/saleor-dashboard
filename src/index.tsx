@@ -47,6 +47,8 @@ import { giftCardsSectionUrlName } from "./giftCards/urls";
 import { apolloClient, saleorClient } from "./graphql/client";
 import HomePage from "./home";
 import { commonMessages } from "./intl";
+import MarketplaceSection from "./marketplace";
+import { marketplaceUrl } from "./marketplace/urls";
 import NavigationSection from "./navigation";
 import { navigationSection } from "./navigation/urls";
 import { NotFound } from "./NotFound";
@@ -249,6 +251,11 @@ const Routes: React.FC = () => {
                 permissions={[PermissionEnum.MANAGE_APPS]}
                 path={appsSection}
                 component={AppsSection}
+              />
+              <SectionRoute
+                permissions={[PermissionEnum.MANAGE_APPS]}
+                path={marketplaceUrl}
+                component={MarketplaceSection}
               />
               <SectionRoute
                 permissions={[PermissionEnum.MANAGE_PRODUCTS]}
