@@ -25,3 +25,4 @@ greatly reduce the amount of work needed to review your work. -->
 Modify API_URI if you want test instance to use custom backend. CYPRESS_API_URI is optional, use when necessary. -->
 
 API_URI=https://automation-dashboard.staging.saleor.cloud/graphql/
+MARKETPLACE_URL=https://marketplace-gray.vercel.app/
