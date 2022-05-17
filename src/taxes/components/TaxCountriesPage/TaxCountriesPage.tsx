@@ -7,7 +7,7 @@ import { PageTab, PageTabs } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import TaxCountriesMenu from "../TaxCountryMenu";
+import TaxCountriesMenu from "../TaxCountriesMenu";
 
 interface TaxCountriesPageProps {
   data: any;

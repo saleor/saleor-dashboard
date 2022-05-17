@@ -40,6 +40,9 @@ const useStyles = makeStyles(
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center"
+    },
+    tableRow: {
+      minHeight: "48px"
     }
   }),
   { name: "TaxCountriesMenu" }
@@ -67,7 +70,7 @@ export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
       <div className={classes.scrollWrapper}>
         <List gridTemplate={["1fr"]}>
           <ListHeader>
-            <ListItem>
+            <ListItem className={classes.tableRow}>
               <ListItemCell>
                 <FormattedMessage {...taxesMessages.countryNameHeader} />
               </ListItemCell>
@@ -76,7 +79,7 @@ export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
           {countries?.map(country => (
             <ListItem
               key={country.id}
-              className={clsx(classes.clickable, {
+              className={clsx(classes.clickable, classes.tableRow, {
                 [classes.selected]: country.id === selectedCountryId
               })}
               onClick={() => navigate(countriesListUrl(country.id))}
