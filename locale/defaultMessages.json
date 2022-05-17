@@ -4292,6 +4292,10 @@
     "context": "permission list item description",
     "string": "This group is last source of that permission"
   },
+  "VmVQpG": {
+    "context": "Taxes section title",
+    "string": "Tax Classes"
+  },
   "VrFy8e": {
     "string": "No notes from customer"
   },
@@ -4765,6 +4769,10 @@
     "context": "stock exceeded dialog description",
     "string": "Stock for items shown below are not enough to prepare fulfillment:"
   },
+  "ZAaXfz": {
+    "context": "Taxes section title",
+    "string": "Countries"
+  },
   "ZDJEat": {
     "context": "button",
     "string": "Load More"
@@ -4988,6 +4996,10 @@
   },
   "b1zuN9": {
     "string": "Price"
+  },
+  "b2DlTO": {
+    "context": "Taxes section title",
+    "string": "Channels"
   },
   "b6L9n7": {
     "context": "voucher is active until date",
@@ -6214,10 +6226,6 @@
   "lm9NSK": {
     "context": "password reset, button",
     "string": "Send an email with reset link"
-  },
-  "lnQAos": {
-    "context": "header",
-    "string": "Taxes"
   },
   "lqIzC8": {
     "string": "This field needs to be unique"
