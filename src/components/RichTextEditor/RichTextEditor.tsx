@@ -64,11 +64,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   }, []);
 
   // We need to render FormControl first to get id from @reach/auto-id
-  const [hasRendered, setHasRendereed] = React.useState(false);
-
-  React.useLayoutEffect(() => {
-    setHasRendereed(true);
-  }, []);
+  const hasRendered = useHasRendered();
 
   return (
     <FormControl
