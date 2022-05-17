@@ -11,12 +11,14 @@ import {
   extensionMountPoints,
   useExtensions
 } from "@saleor/apps/useExtensions";
+import { MARKETPLACE_URI } from "@saleor/config";
 import { configurationMenuUrl } from "@saleor/configuration";
 import { getConfigMenuItemsPermissions } from "@saleor/configuration/utils";
 import { giftCardListUrl } from "@saleor/giftCards/urls";
 import { PermissionEnum, UserFragment } from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { SidebarMenuItem } from "@saleor/macaw-ui";
+import { marketplaceUrl } from "@saleor/marketplace/urls";
 import { pageListPath } from "@saleor/pages/urls";
 import { IntlShape } from "react-intl";
 
@@ -53,6 +55,42 @@ function useMenuStructure(
     id: "extensions",
     ariaLabel: "apps",
     label: intl.formatMessage(sectionNames.appExtensions)
+  };
+
+  // This will be deleted when Marketplace is released
+  // Consider this solution as temporary
+  const getAppSection = () => {
+    if (MARKETPLACE_URI) {
+      return {
+        ariaLabel: "apps_section",
+        iconSrc: appsIcon,
+        label: intl.formatMessage(sectionNames.apps),
+        permissions: [PermissionEnum.MANAGE_APPS],
+        id: "apps_section",
+        children: [
+          {
+            label: intl.formatMessage(sectionNames.apps),
+            id: "apps",
+            url: appsListPath
+          },
+          {
+            ariaLabel: "marketplace",
+            label: intl.formatMessage(sectionNames.marketplace),
+            id: "marketplace",
+            url: marketplaceUrl
+          }
+        ]
+      };
+    }
+
+    return {
+      ariaLabel: "apps",
+      iconSrc: appsIcon,
+      label: intl.formatMessage(sectionNames.apps),
+      permissions: [PermissionEnum.MANAGE_APPS],
+      id: "apps",
+      url: appsListPath
+    };
   };
 
   const menuItems: FilterableMenuItem[] = [
@@ -202,14 +240,7 @@ function useMenuStructure(
       id: "pages",
       url: pageListPath
     },
-    {
-      ariaLabel: "apps",
-      iconSrc: appsIcon,
-      label: intl.formatMessage(sectionNames.apps),
-      permissions: [PermissionEnum.MANAGE_APPS],
-      id: "apps",
-      url: appsListPath
-    },
+    getAppSection(),
     {
       ariaLabel: "translations",
       children: extensions.NAVIGATION_TRANSLATIONS.length > 0 && [
