@@ -64,15 +64,10 @@ export const ButtonWithSelect: React.FC<ButtonWithSelectProps> = ({
 
   return (
     <>
-      <ButtonGroup
-        variant="contained"
-        color="primary"
-        ref={anchorRef}
-        aria-label="button with select"
-        {...props}
-      >
+      <ButtonGroup ref={anchorRef} aria-label="button with select" {...props}>
         <Button
           variant="primary"
+          color="primary"
           onClick={onClick}
           href={href}
           style={{ width: "100%" }}
@@ -81,8 +76,8 @@ export const ButtonWithSelect: React.FC<ButtonWithSelectProps> = ({
         </Button>
         {options.length > 0 && (
           <Button
+            variant="primary"
             color="primary"
-            size="small"
             aria-controls={open ? "button-with-select-menu" : undefined}
             aria-expanded={open ? "true" : undefined}
             aria-label="select different option"
