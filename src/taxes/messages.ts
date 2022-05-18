@@ -85,5 +85,25 @@ export const taxesMessages = defineMessages({
     id: "DtJhMP",
     defaultMessage: "Country List",
     description: "card header title"
+  },
+  taxClassRatesHeader: {
+    id: "QCKDe+",
+    defaultMessage: "Tax Class Rates",
+    description: "card header"
+  },
+  searchTaxClasses: {
+    id: "k5UOf3",
+    defaultMessage: "Search Tax Classes",
+    description: "search input placeholder"
+  },
+  taxNameHeader: {
+    id: "2W9nuT",
+    defaultMessage: "Tax Name",
+    description: "table header column"
+  },
+  taxRateHeader: {
+    id: "1MyMcE",
+    defaultMessage: "Tax Rate",
+    description: "table header column"
   }
 });
