@@ -1,10 +1,5 @@
 import { InputAdornment, TextField } from "@material-ui/core";
-import {
-  IconButton,
-  makeStyles,
-  MinusSmallIcon,
-  PlusSmallIcon
-} from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
 interface TaxInputProps {
@@ -40,19 +35,6 @@ export const TaxInput: React.FC<TaxInputProps> = ({
 }) => {
   const classes = useStyles();
 
-  const handleIncrement = () => {
-    const parsedValue = parseFloat(value);
-    if (parsedValue < 100) {
-      setVal(parsedValue + 1 > 100 ? "100" : (parsedValue + 1).toString());
-    }
-  };
-  const handleDecrement = () => {
-    const parsedValue = parseFloat(value);
-    if (parsedValue > 0) {
-      setVal(parsedValue - 1 < 0 ? "0" : (parsedValue - 1).toString());
-    }
-  };
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     const parsedValue = parseFloat(value);
@@ -77,16 +59,6 @@ export const TaxInput: React.FC<TaxInputProps> = ({
       value={value}
       InputProps={{
         startAdornment: <InputAdornment position="start">%</InputAdornment>,
-        endAdornment: (
-          <InputAdornment position="end">
-            <IconButton variant="secondary" onClick={handleDecrement}>
-              <MinusSmallIcon />
-            </IconButton>
-            <IconButton variant="secondary" onClick={handleIncrement}>
-              <PlusSmallIcon />
-            </IconButton>
-          </InputAdornment>
-        ),
         className: classes.hideSpinboxes
       }}
       inputProps={{ className: classes.inputPadding, min: 0, max: 100 }}
