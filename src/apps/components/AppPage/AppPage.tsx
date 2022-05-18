@@ -70,32 +70,6 @@ export const AppPage: React.FC<AppPageProps> = ({
               description="button"
             />
           </Button>
-          <Button
-            component="a"
-            href={data?.homepageUrl}
-            variant="primary"
-            data-tc="open-app"
-            target="_blank"
-          >
-            <FormattedMessage
-              id="llC1q8"
-              defaultMessage="App home page"
-              description="button"
-            />
-          </Button>
-          <Button
-            component="a"
-            href={data?.supportUrl}
-            variant="primary"
-            data-tc="open-support"
-            target="_blank"
-          >
-            <FormattedMessage
-              id="hdcGSJ"
-              defaultMessage="Support/FAQ"
-              description="button"
-            />
-          </Button>
         </div>
       </Grid>
       <CardSpacer />
