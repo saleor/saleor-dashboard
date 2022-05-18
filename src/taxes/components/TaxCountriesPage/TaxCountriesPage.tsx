@@ -55,6 +55,11 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
     taxClasses.map(item => item?.rate?.toString() ?? "")
   );
 
+  // @TODO: handle special characters in query
+  const filteredTaxClasses = taxClasses.filter(taxClass =>
+    taxClass.name.includes(query)
+  );
+
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.taxes)} />
@@ -102,7 +107,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
                 </ListItemCell>
               </ListItem>
             </ListHeader>
-            {taxClasses.map((taxClass, classIndex) => (
+            {filteredTaxClasses.map((taxClass, classIndex) => (
               <ListItem key={taxClass.id} hover={false}>
                 <ListItemCell>{taxClass.name}</ListItemCell>
                 <ListItemCell>
