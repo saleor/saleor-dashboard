@@ -146,7 +146,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
       </Card>
       <CardSpacer />
 
-      {(loading ?? data?.dataPrivacyUrl) && (
+      {(loading || data?.dataPrivacyUrl) && (
         <Card>
           <CardTitle
             title={intl.formatMessage({
