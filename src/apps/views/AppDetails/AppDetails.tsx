@@ -18,7 +18,6 @@ import AppDetailsPage from "../../components/AppDetailsPage";
 import {
   AppDetailsUrlDialog,
   AppDetailsUrlQueryParams,
-  appSettingsUrl,
   appsListPath,
   appUrl
 } from "../../urls";
@@ -121,7 +120,6 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
         data={data?.app}
         loading={loading}
         navigateToApp={() => navigate(appUrl(id))}
-        navigateToAppSettings={() => navigate(appSettingsUrl(id))}
         onAppActivateOpen={() => openModal("app-activate")}
         onAppDeactivateOpen={() => openModal("app-deactivate")}
       />

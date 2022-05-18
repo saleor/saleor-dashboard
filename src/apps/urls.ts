@@ -55,9 +55,6 @@ export const appInstallUrl = appInstallPath;
 export const appDetailsUrl = (id: string, params?: AppDetailsUrlQueryParams) =>
   appDetailsPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
-export const appSettingsUrl = (id: string, params?: AppDetailsUrlQueryParams) =>
-  appSettingsPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
-
 export const appUrl = (id: string, params?: AppDetailsUrlQueryParams) =>
   appPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 export const appDeepUrl = (
