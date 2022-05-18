@@ -16,6 +16,7 @@ import AppActivateDialog from "../../components/AppActivateDialog";
 import AppDeactivateDialog from "../../components/AppDeactivateDialog";
 import AppDetailsPage from "../../components/AppDetailsPage";
 import {
+  appDetailsUrl,
   AppDetailsUrlDialog,
   AppDetailsUrlQueryParams,
   appsListPath,
@@ -87,7 +88,7 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
   const [openModal, closeModal] = createDialogActionHandlers<
     AppDetailsUrlDialog,
     AppDetailsUrlQueryParams
-  >(navigate, params => appUrl(id, params), params);
+  >(navigate, params => appDetailsUrl(id, params), params);
 
   const handleActivateConfirm = () => {
     activateApp(mutationOpts);
