@@ -413,6 +413,10 @@
     "context": "section header",
     "string": "Recent Orders"
   },
+  "1MyMcE": {
+    "context": "table header column",
+    "string": "Tax Rate"
+  },
   "1T1fP8": {
     "context": "range input label",
     "string": "Postal codes (start)"
@@ -547,6 +551,10 @@
   "2W4EBM": {
     "context": "button",
     "string": "Set maximal quantities"
+  },
+  "2W9nuT": {
+    "context": "table header column",
+    "string": "Tax Name"
   },
   "2Xt+sw": {
     "context": "dialog header",
@@ -1910,6 +1918,10 @@
   },
   "DovGIa": {
     "string": "Permission Group Deleted"
+  },
+  "DtJhMP": {
+    "context": "card header title",
+    "string": "Country List"
   },
   "DzPVnj": {
     "context": "date time attribute type",
@@ -3547,6 +3559,10 @@
   "QBxN6z": {
     "context": "is filter range or value",
     "string": "between"
+  },
+  "QCKDe+": {
+    "context": "card header",
+    "string": "Tax Class Rates"
   },
   "QCwBUI": {
     "context": "button",
@@ -6001,6 +6017,10 @@
   },
   "k4brJy": {
     "string": "SKU"
+  },
+  "k5UOf3": {
+    "context": "search input placeholder",
+    "string": "Search Tax Classes"
   },
   "k5lHFp": {
     "context": "app data privacy link",
