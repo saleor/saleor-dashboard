@@ -9,7 +9,8 @@ import { useHasRendered } from "./hooks";
 import { EditorJsProps } from "./RichTextEditor";
 import useStyles from "./styles";
 
-export interface RichTextEditorContentProps extends EditorJsProps {
+export interface RichTextEditorContentProps
+  extends Omit<EditorJsProps, "defaultValue"> {
   id?: string;
   className?: string;
 }
@@ -19,6 +20,7 @@ const ReactEditorJS = createReactEditorJS();
 const RichTextEditorContent: React.FC<RichTextEditorContentProps> = ({
   id: defaultId,
   className,
+  value,
   ...props
 }) => {
   const classes = useStyles({});
@@ -37,6 +39,7 @@ const RichTextEditorContent: React.FC<RichTextEditorContentProps> = ({
       logLevel={"ERROR" as LogLevels.ERROR}
       tools={tools}
       {...props}
+      defaultValue={value}
       readOnly={true}
     >
       <div

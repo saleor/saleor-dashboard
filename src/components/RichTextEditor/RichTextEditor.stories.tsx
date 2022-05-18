@@ -27,4 +27,6 @@ storiesOf("Generics / Rich text editor", module)
   .add("default", () => <RichTextEditor {...props} />)
   .add("disabled", () => <RichTextEditor {...props} disabled={true} />)
   .add("error", () => <RichTextEditor {...props} error={true} />)
-  .add("static", () => <RichTextEditorContent {...props} />);
+  .add("static", () => (
+    <RichTextEditorContent {...props} value={defaultValue} />
+  ));
