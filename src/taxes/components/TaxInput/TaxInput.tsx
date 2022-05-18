@@ -72,6 +72,7 @@ export const TaxInput: React.FC<TaxInputProps> = ({
   return (
     <TextField
       type="number"
+      fullWidth
       placeholder={placeholder?.toString()}
       value={value}
       InputProps={{
