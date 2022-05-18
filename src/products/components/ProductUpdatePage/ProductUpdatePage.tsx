@@ -282,7 +282,15 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       assignReferencesAttributeId={assignReferencesAttributeId}
       disabled={disabled}
     >
-      {({ change, data, formErrors, handlers, submit, isSaveDisabled }) => (
+      {({
+        change,
+        data,
+        formErrors,
+        handlers,
+        submit,
+        isSaveDisabled,
+        attributeRichTextGetters
+      }) => (
         <>
           <Container>
             <Backlink href={productListUrl()}>
@@ -330,6 +338,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     fetchAttributeValues={fetchAttributeValues}
                     fetchMoreAttributeValues={fetchMoreAttributeValues}
                     onAttributeSelectBlur={onAttributeSelectBlur}
+                    richTextGetters={attributeRichTextGetters}
                   />
                 )}
                 <CardSpacer />

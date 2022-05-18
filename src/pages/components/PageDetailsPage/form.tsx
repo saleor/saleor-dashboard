@@ -1,5 +1,11 @@
 import { OutputData } from "@editorjs/editorjs";
-import { getAttributesDisplayData } from "@saleor/attributes/utils/data";
+import {
+  getAttributesDisplayData,
+  getRichTextAttributesFromMap,
+  getRichTextDataFromAttributes,
+  mergeAttributes,
+  RichTextProps
+} from "@saleor/attributes/utils/data";
 import {
   createAttributeChangeHandler,
   createAttributeFileChangeHandler,
@@ -38,9 +44,9 @@ import getPublicationData from "@saleor/utils/data/getPublicationData";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
+import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
 import useRichText, {
-  RichTextContext,
-  RichTextContextValues
+  RichTextContext
 } from "@saleor/utils/richText/useRichText";
 import React, { useEffect } from "react";
 
@@ -76,10 +82,16 @@ export interface PageUpdateHandlers {
   fetchMoreReferences: FetchMoreProps;
 }
 
-export interface UsePageUpdateFormResult
-  extends CommonUseFormResultWithHandlers<PageData, PageUpdateHandlers> {
+export interface UsePageUpdateFormOutput
+  extends CommonUseFormResultWithHandlers<PageData, PageUpdateHandlers>,
+    RichTextProps {
   valid: boolean;
 }
+
+export type UsePageUpdateFormRenderProps = Omit<
+  UsePageUpdateFormOutput,
+  "richText"
+>;
 
 export interface UsePageFormOpts {
   pageTypes?: RelayToFlat<SearchPageTypesQuery["search"]>;
@@ -95,7 +107,7 @@ export interface UsePageFormOpts {
 }
 
 export interface PageFormProps extends UsePageFormOpts {
-  children: (props: UsePageUpdateFormResult) => React.ReactNode;
+  children: (props: UsePageUpdateFormRenderProps) => React.ReactNode;
   page: PageDetailsFragment;
   onSubmit: (data: PageData) => SubmitPromise;
   disabled: boolean;
@@ -118,17 +130,8 @@ function usePageForm(
   onSubmit: (data: PageData) => SubmitPromise,
   disabled: boolean,
   opts: UsePageFormOpts
-): UsePageUpdateFormResult & { richText: RichTextContextValues } {
+): UsePageUpdateFormOutput {
   const pageExists = page !== null;
-
-  const attributes = useFormset(
-    pageExists
-      ? getAttributeInputFromPage(page)
-      : opts.selectedPageType
-      ? getAttributeInputFromPageType(opts.selectedPageType)
-      : []
-  );
-  const attributesWithNewFileValue = useFormset<null, File>([]);
 
   const { handleChange, triggerChange, data: formData, formId } = useForm(
     getInitialFormData(page),
@@ -137,6 +140,23 @@ function usePageForm(
       confirmLeave: true
     }
   );
+
+  const attributes = useFormset(
+    pageExists
+      ? getAttributeInputFromPage(page)
+      : opts.selectedPageType
+      ? getAttributeInputFromPageType(opts.selectedPageType)
+      : []
+  );
+
+  const {
+    getters: attributeRichTextGetters,
+    getValues: getAttributeRichTextValues
+  } = useMultipleRichText({
+    initial: getRichTextDataFromAttributes(attributes.data),
+    triggerChange
+  });
+  const attributesWithNewFileValue = useFormset<null, File>([]);
 
   const { setExitDialogSubmitRef, setIsSubmitDisabled } = useExitFormDialog({
     formId
@@ -218,6 +238,13 @@ function usePageForm(
     ...(await getData()),
     ...getMetadata(formData, isMetadataModified, isPrivateMetadataModified),
     ...getPublicationData(formData),
+    attributes: mergeAttributes(
+      attributes.data,
+      getRichTextAttributesFromMap(
+        attributes.data,
+        await getAttributeRichTextValues()
+      )
+    ),
     attributesWithNewFileValue: attributesWithNewFileValue.data
   });
 
@@ -262,7 +289,8 @@ function usePageForm(
     },
     submit,
     isSaveDisabled,
-    richText
+    richText,
+    attributeRichTextGetters
   };
 }
 

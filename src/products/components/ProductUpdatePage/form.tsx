@@ -1,5 +1,11 @@
 import { OutputData } from "@editorjs/editorjs";
-import { getAttributesDisplayData } from "@saleor/attributes/utils/data";
+import {
+  getAttributesDisplayData,
+  getRichTextAttributesFromMap,
+  getRichTextDataFromAttributes,
+  mergeAttributes,
+  RichTextProps
+} from "@saleor/attributes/utils/data";
 import {
   createAttributeChangeHandler,
   createAttributeFileChangeHandler,
@@ -61,9 +67,9 @@ import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAu
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
+import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
 import useRichText, {
-  RichTextContext,
-  RichTextContextValues
+  RichTextContext
 } from "@saleor/utils/richText/useRichText";
 import React, { useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -153,13 +159,20 @@ export interface ProductUpdateHandlers
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
 }
-export interface UseProductUpdateFormResult
+
+export interface UseProductUpdateFormOutput
   extends CommonUseFormResultWithHandlers<
-    ProductUpdateData,
-    ProductUpdateHandlers
-  > {
+      ProductUpdateData,
+      ProductUpdateHandlers
+    >,
+    RichTextProps {
   formErrors: FormErrors<ProductUpdateSubmitData>;
 }
+
+export type UseProductUpdateFormRenderProps = Omit<
+  UseProductUpdateFormOutput,
+  "richText"
+>;
 
 export interface UseProductUpdateFormOpts
   extends Record<
@@ -190,7 +203,7 @@ export interface UseProductUpdateFormOpts
 }
 
 export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
-  children: (props: UseProductUpdateFormResult) => React.ReactNode;
+  children: (props: UseProductUpdateFormRenderProps) => React.ReactNode;
   product: ProductFragment;
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise;
   disabled: boolean;
@@ -225,7 +238,7 @@ function useProductUpdateForm(
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise,
   disabled: boolean,
   opts: UseProductUpdateFormOpts
-): UseProductUpdateFormResult & { richText: RichTextContextValues } {
+): UseProductUpdateFormOutput {
   const intl = useIntl();
   const initial = useMemo(
     () =>
@@ -258,6 +271,13 @@ function useProductUpdateForm(
   } = form;
 
   const attributes = useFormset(getAttributeInputFromProduct(product));
+  const {
+    getters: attributeRichTextGetters,
+    getValues: getAttributeRichTextValues
+  } = useMultipleRichText({
+    initial: getRichTextDataFromAttributes(attributes.data),
+    triggerChange
+  });
   const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset(getStockInputFromProduct(product));
   const richText = useRichText({
@@ -391,7 +411,13 @@ function useProductUpdateForm(
     ...data,
     ...getStocksData(product, stocks.data),
     ...getMetadata(data, isMetadataModified, isPrivateMetadataModified),
-    attributes: attributes.data,
+    attributes: mergeAttributes(
+      attributes.data,
+      getRichTextAttributesFromMap(
+        attributes.data,
+        await getAttributeRichTextValues()
+      )
+    ),
     attributesWithNewFileValue: attributesWithNewFileValue.data,
     description: await richText.getValue()
   });
@@ -475,7 +501,8 @@ function useProductUpdateForm(
     },
     submit,
     isSaveDisabled,
-    richText
+    richText,
+    attributeRichTextGetters
   };
 }
 

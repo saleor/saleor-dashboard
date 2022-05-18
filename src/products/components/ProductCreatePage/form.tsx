@@ -1,5 +1,11 @@
 import { OutputData } from "@editorjs/editorjs";
-import { getAttributesDisplayData } from "@saleor/attributes/utils/data";
+import {
+  getAttributesDisplayData,
+  getRichTextAttributesFromMap,
+  getRichTextDataFromAttributes,
+  mergeAttributes,
+  RichTextProps
+} from "@saleor/attributes/utils/data";
 import {
   createAttributeChangeHandler,
   createAttributeFileChangeHandler,
@@ -55,9 +61,9 @@ import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
+import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
 import useRichText, {
-  RichTextContext,
-  RichTextContextValues
+  RichTextContext
 } from "@saleor/utils/richText/useRichText";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
@@ -125,14 +131,20 @@ export interface ProductCreateHandlers
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
 }
-export interface UseProductCreateFormResult
+export interface UseProductCreateFormOutput
   extends CommonUseFormResultWithHandlers<
-    ProductCreateData,
-    ProductCreateHandlers
-  > {
+      ProductCreateData,
+      ProductCreateHandlers
+    >,
+    RichTextProps {
   disabled: boolean;
   formErrors: FormErrors<ProductCreateData>;
 }
+
+export type UseProductCreateFormRenderProps = Omit<
+  UseProductCreateFormOutput,
+  "richText"
+>;
 
 export interface UseProductCreateFormOpts
   extends Record<
@@ -161,7 +173,7 @@ export interface UseProductCreateFormOpts
 }
 
 export interface ProductCreateFormProps extends UseProductCreateFormOpts {
-  children: (props: UseProductCreateFormResult) => React.ReactNode;
+  children: (props: UseProductCreateFormRenderProps) => React.ReactNode;
   initial?: Partial<ProductCreateFormData>;
   onSubmit: (data: ProductCreateData) => SubmitPromise;
   loading: boolean;
@@ -172,7 +184,7 @@ function useProductCreateForm(
   onSubmit: (data: ProductCreateData) => SubmitPromise,
   loading: boolean,
   opts: UseProductCreateFormOpts
-): UseProductCreateFormResult & { richText: RichTextContextValues } {
+): UseProductCreateFormOutput {
   const intl = useIntl();
   const defaultInitialFormData: ProductCreateFormData &
     Record<"productType", string> = {
@@ -225,6 +237,13 @@ function useProductCreateForm(
       ? getAttributeInputFromProductType(opts.selectedProductType)
       : []
   );
+  const {
+    getters: attributeRichTextGetters,
+    getValues: getAttributeRichTextValues
+  } = useMultipleRichText({
+    initial: getRichTextDataFromAttributes(attributes.data),
+    triggerChange
+  });
   const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset<ProductStockFormsetData>([]);
   const richText = useRichText({
@@ -346,7 +365,14 @@ function useProductCreateForm(
 
   const getData = async (): Promise<ProductCreateData> => ({
     ...data,
-    description: await richText.getValue()
+    description: await richText.getValue(),
+    attributes: mergeAttributes(
+      attributes.data,
+      getRichTextAttributesFromMap(
+        attributes.data,
+        await getAttributeRichTextValues()
+      )
+    )
   });
 
   const handleFormSubmit = useHandleFormSubmit({
@@ -420,7 +446,8 @@ function useProductCreateForm(
     },
     submit,
     isSaveDisabled,
-    richText
+    richText,
+    attributeRichTextGetters
   };
 }
 

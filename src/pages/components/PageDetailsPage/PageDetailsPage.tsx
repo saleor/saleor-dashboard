@@ -139,7 +139,14 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
       onSubmit={onSubmit}
       disabled={loading}
     >
-      {({ change, data, handlers, submit, isSaveDisabled }) => (
+      {({
+        change,
+        data,
+        handlers,
+        submit,
+        isSaveDisabled,
+        attributeRichTextGetters
+      }) => (
         <Container>
           <Backlink href={pageListUrl()}>
             {intl.formatMessage(sectionNames.pages)}
@@ -198,6 +205,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                   fetchAttributeValues={fetchAttributeValues}
                   fetchMoreAttributeValues={fetchMoreAttributeValues}
                   onAttributeSelectBlur={onAttributeSelectBlur}
+                  richTextGetters={attributeRichTextGetters}
                 />
               )}
               <CardSpacer />

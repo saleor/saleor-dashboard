@@ -206,7 +206,15 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       assignReferencesAttributeId={assignReferencesAttributeId}
       loading={loading}
     >
-      {({ change, data, formErrors, handlers, submit, isSaveDisabled }) => {
+      {({
+        change,
+        data,
+        formErrors,
+        handlers,
+        submit,
+        isSaveDisabled,
+        attributeRichTextGetters
+      }) => {
         // Comparing explicitly to false because `hasVariants` can be undefined
         const isSimpleProduct = data.productType?.hasVariants === false;
 
@@ -241,6 +249,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                     fetchAttributeValues={fetchAttributeValues}
                     fetchMoreAttributeValues={fetchMoreAttributeValues}
                     onAttributeSelectBlur={onAttributeSelectBlur}
+                    richTextGetters={attributeRichTextGetters}
                   />
                 )}
                 <CardSpacer />

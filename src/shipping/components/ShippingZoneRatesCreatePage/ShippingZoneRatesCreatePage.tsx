@@ -44,7 +44,7 @@ export interface ShippingZoneRatesCreatePageProps extends WithFormId {
   saveButtonBarState: ConfirmButtonTransitionState;
   backUrl: string;
   onDelete?: () => void;
-  onSubmit: (data: ShippingZoenRateCommonFormData) => SubmitPromise;
+  onSubmit: (data: ShippingZoneRateCommonFormData) => SubmitPromise;
   onPostalCodeInclusionChange: (
     inclusion: PostalCodeRuleInclusionTypeEnum
   ) => void;
