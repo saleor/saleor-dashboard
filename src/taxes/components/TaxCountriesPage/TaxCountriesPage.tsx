@@ -36,9 +36,8 @@ interface TaxCountriesPageProps {
 
 const useStyles = makeStyles(
   () => ({
-    spaceBetween: {
-      display: "flex",
-      justifyContent: "space-between"
+    inputPadding: {
+      padding: "16px 0 16px 0"
     }
   }),
   { name: "TaxCountriesPage" }
@@ -53,7 +52,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
   const [query, setQuery] = React.useState("");
 
   const [vals, setVals] = React.useState<any[]>(
-    data.map(item => item?.rate?.strigify() ?? "")
+    taxClasses.map(item => item?.rate?.toString() ?? "")
   );
 
   return (
@@ -89,6 +88,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
                   </InputAdornment>
                 )
               }}
+              inputProps={{ className: classes.inputPadding }}
             />
           </CardContent>
           <List gridTemplate={["5fr 2fr"]}>
