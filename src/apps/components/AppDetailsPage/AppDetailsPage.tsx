@@ -16,7 +16,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import ReactMarkdown from "react-markdown";
 
 import activateIcon from "../../../../assets/images/activate-icon.svg";
-import settingsIcon from "../../../../assets/images/settings-icon.svg";
 import supportIcon from "../../../../assets/images/support-icon.svg";
 import { useStyles } from "../../styles";
 import DeactivatedText from "../DeactivatedText";
@@ -25,7 +24,6 @@ export interface AppDetailsPageProps {
   loading: boolean;
   data: AppQuery["app"];
   navigateToApp: () => void;
-  navigateToAppSettings: () => void;
   onAppActivateOpen: () => void;
   onAppDeactivateOpen: () => void;
 }
@@ -34,7 +32,6 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
   data,
   loading,
   navigateToApp,
-  navigateToAppSettings,
   onAppActivateOpen,
   onAppDeactivateOpen
 }) => {
@@ -76,20 +73,6 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
                 description="link"
               />
             </ExternalLink>
-            {data.configurationUrl && (
-              <ButtonBase
-                className={classes.headerLinkContainer}
-                disableRipple
-                onClick={navigateToAppSettings}
-              >
-                <SVG src={settingsIcon} />
-                <FormattedMessage
-                  id="89PSdB"
-                  defaultMessage="Edit settings"
-                  description="link"
-                />
-              </ButtonBase>
-            )}
             <ButtonBase
               className={classes.headerLinkContainer}
               disableRipple
@@ -163,18 +146,17 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
       </Card>
       <CardSpacer />
 
-      <Card>
-        <CardTitle
-          title={intl.formatMessage({
-            id: "a55zOn",
-            defaultMessage: "Data privacy",
-            description: "section header"
-          })}
-        />
-        <CardContent>
-          {!loading ? (
-            <>
-              <Typography>{data?.dataPrivacy}</Typography>
+      {(loading ?? data?.dataPrivacyUrl) && (
+        <Card>
+          <CardTitle
+            title={intl.formatMessage({
+              id: "a55zOn",
+              defaultMessage: "Data privacy",
+              description: "section header"
+            })}
+          />
+          <CardContent>
+            {!loading ? (
               <ExternalLink
                 className={classes.linkContainer}
                 href={data?.dataPrivacyUrl}
@@ -186,12 +168,12 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
                   description="app privacy policy link"
                 />
               </ExternalLink>
-            </>
-          ) : (
-            <Skeleton />
-          )}
-        </CardContent>
-      </Card>
+            ) : (
+              <Skeleton />
+            )}
+          </CardContent>
+        </Card>
+      )}
       <CardSpacer />
     </Container>
   );
