@@ -51,11 +51,11 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
 
   const [query, setQuery] = React.useState("");
 
-  const [vals, setVals] = React.useState<any[]>(
+  const [vals, setVals] = React.useState<string[]>(
     taxClasses.map(item => item?.rate?.toString() ?? "")
   );
 
-  // @TODO: handle special characters in query
+  // @TODO: handle special characters in query, add case-insensitiveness
   const filteredTaxClasses = taxClasses.filter(taxClass =>
     taxClass.name.includes(query)
   );
