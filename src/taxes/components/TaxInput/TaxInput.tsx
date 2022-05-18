@@ -9,7 +9,7 @@ import React from "react";
 
 interface TaxInputProps {
   placeholder: number;
-  value: number;
+  value: string;
   setVal: (val: any) => void;
 }
 
@@ -39,6 +39,36 @@ export const TaxInput: React.FC<TaxInputProps> = ({
   setVal
 }) => {
   const classes = useStyles();
+
+  const handleIncrement = () => {
+    const parsedValue = parseFloat(value);
+    if (parsedValue < 100) {
+      setVal(parsedValue + 1 > 100 ? "100" : (parsedValue + 1).toString());
+    }
+  };
+  const handleDecrement = () => {
+    const parsedValue = parseFloat(value);
+    if (parsedValue > 0) {
+      setVal(parsedValue - 1 < 0 ? "0" : (parsedValue - 1).toString());
+    }
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    const parsedValue = parseFloat(value);
+    if (isNaN(parsedValue)) {
+      setVal(value);
+      return;
+    }
+    if (parsedValue < 0) {
+      setVal("0");
+    } else if (parsedValue > 100) {
+      setVal("100");
+    } else {
+      setVal(value);
+    }
+  };
+
   return (
     <TextField
       type="number"
@@ -48,18 +78,18 @@ export const TaxInput: React.FC<TaxInputProps> = ({
         startAdornment: <InputAdornment position="start">%</InputAdornment>,
         endAdornment: (
           <InputAdornment position="end">
-            <IconButton variant="secondary" onClick={() => setVal(value - 1)}>
+            <IconButton variant="secondary" onClick={handleDecrement}>
               <MinusSmallIcon />
             </IconButton>
-            <IconButton variant="secondary" onClick={() => setVal(value + 1)}>
+            <IconButton variant="secondary" onClick={handleIncrement}>
               <PlusSmallIcon />
             </IconButton>
           </InputAdornment>
         ),
         className: classes.hideSpinboxes
       }}
-      inputProps={{ className: classes.inputPadding, min: 0, max: 100 }} // fix minmax in handlers
-      onChange={e => setVal(e.target.value)}
+      inputProps={{ className: classes.inputPadding, min: 0, max: 100 }}
+      onChange={handleChange}
     />
   );
 };
