@@ -58,7 +58,7 @@ export const TaxInput: React.FC<TaxInputProps> = ({
         ),
         className: classes.hideSpinboxes
       }}
-      inputProps={{ className: classes.inputPadding }}
+      inputProps={{ className: classes.inputPadding, min: 0, max: 100 }} // fix minmax in handlers
       onChange={e => setVal(e.target.value)}
     />
   );
