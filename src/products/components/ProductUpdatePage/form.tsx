@@ -159,7 +159,6 @@ export interface UseProductUpdateFormResult
     ProductUpdateHandlers
   > {
   formErrors: FormErrors<ProductUpdateSubmitData>;
-  richText: RichTextContextValues;
 }
 
 export interface UseProductUpdateFormOpts
@@ -226,7 +225,7 @@ function useProductUpdateForm(
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise,
   disabled: boolean,
   opts: UseProductUpdateFormOpts
-): UseProductUpdateFormResult {
+): UseProductUpdateFormResult & { richText: RichTextContextValues } {
   const intl = useIntl();
   const initial = useMemo(
     () =>
@@ -388,7 +387,6 @@ function useProductUpdateForm(
     stocks: stocks.data
   };
 
-  // Need to make it function to always have description.current up to date
   const getSubmitData = async (): Promise<ProductUpdateSubmitData> => ({
     ...data,
     ...getStocksData(product, stocks.data),

@@ -223,7 +223,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   disabled={loading}
                   errors={errors}
                   onChange={change}
-                  onDescriptionChange={handlers.changeDescription}
                 />
                 <CardSpacer />
                 {data.attributes.length > 0 && (

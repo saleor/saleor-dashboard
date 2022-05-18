@@ -1,14 +1,13 @@
 import { Card, CardContent, TextField } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
-import RichTextEditor, {
-  RichTextEditorChange
-} from "@saleor/components/RichTextEditor";
+import RichTextEditor from "@saleor/components/RichTextEditor";
 import { PageErrorFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getPageErrorMessage from "@saleor/utils/errors/page";
+import { useRichTextContext } from "@saleor/utils/richText/useRichText";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -19,7 +18,6 @@ export interface PageInfoProps {
   disabled: boolean;
   errors: PageErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
-  onContentChange: RichTextEditorChange;
 }
 
 const useStyles = makeStyles(
@@ -32,11 +30,17 @@ const useStyles = makeStyles(
 );
 
 const PageInfo: React.FC<PageInfoProps> = props => {
-  const { data, disabled, errors, onChange, onContentChange } = props;
+  const { data, disabled, errors, onChange } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
 
+  const {
+    defaultValue,
+    editorRef,
+    isReadyForMount,
+    handleChange
+  } = useRichTextContext();
   const formErrors = getFormErrors(["title", "content"], errors);
 
   return (
@@ -60,19 +64,22 @@ const PageInfo: React.FC<PageInfoProps> = props => {
           onChange={onChange}
         />
         <FormSpacer />
-        <RichTextEditor
-          data={data.content}
-          disabled={disabled}
-          error={!!formErrors.content}
-          helperText={getPageErrorMessage(formErrors.content, intl)}
-          label={intl.formatMessage({
-            id: "gMwpNC",
-            defaultMessage: "Content",
-            description: "page content"
-          })}
-          name={"content" as keyof PageData}
-          onChange={onContentChange}
-        />
+        {isReadyForMount && (
+          <RichTextEditor
+            defaultValue={defaultValue}
+            editorRef={editorRef}
+            onChange={handleChange}
+            disabled={disabled}
+            error={!!formErrors.content}
+            helperText={getPageErrorMessage(formErrors.content, intl)}
+            label={intl.formatMessage({
+              id: "gMwpNC",
+              defaultMessage: "Content",
+              description: "page content"
+            })}
+            name={"content" as keyof PageData}
+          />
+        )}
       </CardContent>
     </Card>
   );

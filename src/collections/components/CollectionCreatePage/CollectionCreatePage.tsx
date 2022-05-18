@@ -77,7 +77,6 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
                 disabled={disabled}
                 errors={errors}
                 onChange={change}
-                onDescriptionChange={handlers.changeDescription}
               />
               <CardSpacer />
               <CollectionImage

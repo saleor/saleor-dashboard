@@ -1,7 +1,6 @@
 import { OutputData } from "@editorjs/editorjs";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
-import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { CategoryDetailsFragment } from "@saleor/graphql";
 import useForm, {
   CommonUseFormResult,
@@ -11,7 +10,10 @@ import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
-import useRichText from "@saleor/utils/richText/useRichText";
+import useRichText, {
+  RichTextContext,
+  RichTextContextValues
+} from "@saleor/utils/richText/useRichText";
 import React, { useEffect } from "react";
 
 export interface CategoryUpdateFormData extends MetadataFormData {
@@ -27,8 +29,8 @@ export interface CategoryUpdateData extends CategoryUpdateFormData {
 
 interface CategoryUpdateHandlers {
   changeMetadata: FormChange;
-  changeDescription: RichTextEditorChange;
 }
+
 export interface UseCategoryUpdateFormResult
   extends CommonUseFormResult<CategoryUpdateData> {
   handlers: CategoryUpdateHandlers;
@@ -55,10 +57,10 @@ function useCategoryUpdateForm(
   category: CategoryDetailsFragment,
   onSubmit: (data: CategoryUpdateData) => Promise<any[]>,
   disabled: boolean
-): UseCategoryUpdateFormResult {
+): UseCategoryUpdateFormResult & { richText: RichTextContextValues } {
   const {
     handleChange,
-    data,
+    data: formData,
     triggerChange,
     formId,
     setIsSubmitDisabled
@@ -73,7 +75,7 @@ function useCategoryUpdateForm(
     formId
   });
 
-  const [description, changeDescription] = useRichText({
+  const richText = useRichText({
     initial: category?.description,
     triggerChange
   });
@@ -86,18 +88,23 @@ function useCategoryUpdateForm(
 
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 
+  const data: CategoryUpdateData = {
+    ...formData,
+    description: null
+  };
+
   // Need to make it function to always have description.current up to date
-  const getData = (): CategoryUpdateData => ({
-    ...data,
-    description: description.current
+  const getData = async (): Promise<CategoryUpdateData> => ({
+    ...formData,
+    description: await richText.getValue()
   });
 
-  const getSubmitData = (): CategoryUpdateData => ({
-    ...getData(),
+  const getSubmitData = async (): Promise<CategoryUpdateData> => ({
+    ...(await getData()),
     ...getMetadata(data, isMetadataModified, isPrivateMetadataModified)
   });
 
-  const submit = () => handleFormSubmit(getSubmitData());
+  const submit = async () => handleFormSubmit(await getSubmitData());
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
@@ -105,13 +112,13 @@ function useCategoryUpdateForm(
 
   return {
     change: handleChange,
-    data: getData(),
+    data,
     handlers: {
-      changeDescription,
       changeMetadata
     },
     submit,
-    isSaveDisabled: disabled
+    isSaveDisabled: disabled,
+    richText
   };
 }
 
@@ -121,9 +128,19 @@ const CategoryUpdateForm: React.FC<CategoryUpdateFormProps> = ({
   onSubmit,
   disabled
 }) => {
-  const props = useCategoryUpdateForm(category, onSubmit, disabled);
+  const { richText, ...props } = useCategoryUpdateForm(
+    category,
+    onSubmit,
+    disabled
+  );
 
-  return <form onSubmit={props.submit}>{children(props)}</form>;
+  return (
+    <form onSubmit={props.submit}>
+      <RichTextContext.Provider value={richText}>
+        {children(props)}
+      </RichTextContext.Provider>
+    </form>
+  );
 };
 
 CategoryUpdateForm.displayName = "CategoryUpdateForm";

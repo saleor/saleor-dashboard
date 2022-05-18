@@ -162,7 +162,6 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 disabled={loading}
                 errors={errors}
                 onChange={change}
-                onContentChange={handlers.changeContent}
               />
               <CardSpacer />
               <SeoForm

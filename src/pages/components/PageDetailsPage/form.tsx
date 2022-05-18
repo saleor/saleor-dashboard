@@ -12,7 +12,6 @@ import {
 import { AttributeInput } from "@saleor/components/Attributes";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
-import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import {
   PageDetailsFragment,
   SearchPagesQuery,
@@ -39,7 +38,10 @@ import getPublicationData from "@saleor/utils/data/getPublicationData";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
-import useRichText from "@saleor/utils/richText/useRichText";
+import useRichText, {
+  RichTextContext,
+  RichTextContextValues
+} from "@saleor/utils/richText/useRichText";
 import React, { useEffect } from "react";
 
 export interface PageFormData extends MetadataFormData {
@@ -64,7 +66,6 @@ export interface PageSubmitData extends PageFormData {
 
 export interface PageUpdateHandlers {
   changeMetadata: FormChange;
-  changeContent: RichTextEditorChange;
   selectPageType: FormChange;
   selectAttribute: FormsetChange<string>;
   selectAttributeMulti: FormsetChange<string>;
@@ -117,7 +118,7 @@ function usePageForm(
   onSubmit: (data: PageData) => SubmitPromise,
   disabled: boolean,
   opts: UsePageFormOpts
-): UsePageUpdateFormResult {
+): UsePageUpdateFormResult & { richText: RichTextContextValues } {
   const pageExists = page !== null;
 
   const attributes = useFormset(
@@ -141,7 +142,7 @@ function usePageForm(
     formId
   });
 
-  const [content, changeContent] = useRichText({
+  const richText = useRichText({
     initial: pageExists ? page?.content : null,
     triggerChange
   });
@@ -195,8 +196,7 @@ function usePageForm(
     triggerChange
   );
 
-  // Need to make it function to always have content.current up to date
-  const getData = (): PageData => ({
+  const data: PageData = {
     ...formData,
     attributes: getAttributesDisplayData(
       attributes.data,
@@ -204,12 +204,18 @@ function usePageForm(
       opts.referencePages,
       opts.referenceProducts
     ),
-    content: content.current,
+    content: null,
     pageType: pageExists ? page?.pageType : opts.selectedPageType
+  };
+
+  // Need to make it function to always have content.current up to date
+  const getData = async (): Promise<PageData> => ({
+    ...data,
+    content: await richText.getValue()
   });
 
-  const getSubmitData = (): PageSubmitData => ({
-    ...getData(),
+  const getSubmitData = async (): Promise<PageSubmitData> => ({
+    ...(await getData()),
     ...getMetadata(formData, isMetadataModified, isPrivateMetadataModified),
     ...getPublicationData(formData),
     attributesWithNewFileValue: attributesWithNewFileValue.data
@@ -230,7 +236,7 @@ function usePageForm(
     onSubmit: handleSubmit
   });
 
-  const submit = () => handleFormSubmit(getSubmitData());
+  const submit = async () => handleFormSubmit(await getSubmitData());
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
@@ -241,10 +247,9 @@ function usePageForm(
 
   return {
     change: handleChange,
-    data: getData(),
+    data,
     valid,
     handlers: {
-      changeContent,
       changeMetadata,
       fetchMoreReferences: handleFetchMoreReferences,
       fetchReferences: handleFetchReferences,
@@ -256,7 +261,8 @@ function usePageForm(
       selectPageType: handlePageTypeSelect
     },
     submit,
-    isSaveDisabled
+    isSaveDisabled,
+    richText
   };
 }
 
@@ -267,9 +273,15 @@ const PageForm: React.FC<PageFormProps> = ({
   disabled,
   ...rest
 }) => {
-  const props = usePageForm(page, onSubmit, disabled, rest);
+  const { richText, ...props } = usePageForm(page, onSubmit, disabled, rest);
 
-  return <form onSubmit={props.submit}>{children(props)}</form>;
+  return (
+    <form onSubmit={props.submit}>
+      <RichTextContext.Provider value={richText}>
+        {children(props)}
+      </RichTextContext.Provider>
+    </form>
+  );
 };
 
 PageForm.displayName = "PageForm";

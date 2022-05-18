@@ -4,7 +4,6 @@ import { createChannelsChangeHandler } from "@saleor/collections/utils";
 import { COLLECTION_DETAILS_FORM_ID } from "@saleor/collections/views/consts";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
-import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { CollectionDetailsFragment } from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
@@ -14,7 +13,10 @@ import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
-import useRichText from "@saleor/utils/richText/useRichText";
+import useRichText, {
+  RichTextContext,
+  RichTextContextValues
+} from "@saleor/utils/richText/useRichText";
 import React, { useEffect } from "react";
 
 export interface CollectionUpdateFormData extends MetadataFormData {
@@ -31,7 +33,6 @@ export interface CollectionUpdateData extends CollectionUpdateFormData {
 
 interface CollectionUpdateHandlers {
   changeMetadata: FormChange;
-  changeDescription: RichTextEditorChange;
   changeChannels: (
     id: string,
     data: Omit<ChannelCollectionData, "name" | "id">
@@ -71,7 +72,7 @@ function useCollectionUpdateForm(
   setChannels: (data: ChannelCollectionData[]) => void,
   onSubmit: (data: CollectionUpdateData) => Promise<any[]>,
   disabled: boolean
-): UseCollectionUpdateFormResult {
+): UseCollectionUpdateFormResult & { richText: RichTextContextValues } {
   const {
     handleChange,
     data: formData,
@@ -92,7 +93,7 @@ function useCollectionUpdateForm(
     formId: COLLECTION_DETAILS_FORM_ID
   });
 
-  const [description, changeDescription] = useRichText({
+  const richText = useRichText({
     initial: collection?.description,
     triggerChange
   });
@@ -105,14 +106,19 @@ function useCollectionUpdateForm(
 
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 
-  // Need to make it function to always have description.current up to date
-  const getData = (): CollectionUpdateData => ({
+  const data: CollectionUpdateData = {
     ...formData,
-    description: description.current
+    description: null
+  };
+
+  // Need to make it function to always have description.current up to date
+  const getData = async (): Promise<CollectionUpdateData> => ({
+    ...formData,
+    description: await richText.getValue()
   });
 
-  const getSubmitData = (): CollectionUpdateData => ({
-    ...getData(),
+  const getSubmitData = async (): Promise<CollectionUpdateData> => ({
+    ...(await getData()),
     ...getMetadata(formData, isMetadataModified, isPrivateMetadataModified)
   });
 
@@ -122,7 +128,7 @@ function useCollectionUpdateForm(
     triggerChange
   );
 
-  const submit = () => handleFormSubmit(getSubmitData());
+  const submit = async () => handleFormSubmit(await getSubmitData());
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
@@ -130,13 +136,13 @@ function useCollectionUpdateForm(
 
   return {
     change: handleChange,
-    data: getData(),
+    data,
     handlers: {
       changeChannels: handleChannelChange,
-      changeDescription,
       changeMetadata
     },
-    submit
+    submit,
+    richText
   };
 }
 
@@ -148,7 +154,7 @@ const CollectionUpdateForm: React.FC<CollectionUpdateFormProps> = ({
   onSubmit,
   disabled
 }) => {
-  const props = useCollectionUpdateForm(
+  const { richText, ...props } = useCollectionUpdateForm(
     collection,
     currentChannels,
     setChannels,
@@ -156,7 +162,13 @@ const CollectionUpdateForm: React.FC<CollectionUpdateFormProps> = ({
     disabled
   );
 
-  return <form onSubmit={props.submit}>{children(props)}</form>;
+  return (
+    <form onSubmit={props.submit}>
+      <RichTextContext.Provider value={richText}>
+        {children(props)}
+      </RichTextContext.Provider>
+    </form>
+  );
 };
 
 CollectionUpdateForm.displayName = "CollectionUpdateForm";

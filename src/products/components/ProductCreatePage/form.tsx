@@ -17,7 +17,6 @@ import {
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import {
   ProductTypeQuery,
@@ -56,7 +55,10 @@ import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
-import useRichText from "@saleor/utils/richText/useRichText";
+import useRichText, {
+  RichTextContext,
+  RichTextContextValues
+} from "@saleor/utils/richText/useRichText";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
@@ -119,7 +121,6 @@ export interface ProductCreateHandlers
     Record<"selectAttributeFile", FormsetChange<File>>,
     Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
     Record<"addStock" | "deleteStock", (id: string) => void> {
-  changeDescription: RichTextEditorChange;
   changePreorderEndDate: FormChange;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
@@ -171,7 +172,7 @@ function useProductCreateForm(
   onSubmit: (data: ProductCreateData) => SubmitPromise,
   loading: boolean,
   opts: UseProductCreateFormOpts
-): UseProductCreateFormResult {
+): UseProductCreateFormResult & { richText: RichTextContextValues } {
   const intl = useIntl();
   const defaultInitialFormData: ProductCreateFormData &
     Record<"productType", string> = {
@@ -226,7 +227,7 @@ function useProductCreateForm(
   );
   const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset<ProductStockFormsetData>([]);
-  const [description, changeDescription] = useRichText({
+  const richText = useRichText({
     initial: null,
     triggerChange
   });
@@ -329,7 +330,7 @@ function useProductCreateForm(
     intl.formatMessage(errorMessages.preorderEndDateInFutureErrorText)
   );
 
-  const getData = (): ProductCreateData => ({
+  const data: ProductCreateData = {
     ...formData,
     attributes: getAttributesDisplayData(
       attributes.data,
@@ -338,19 +339,22 @@ function useProductCreateForm(
       opts.referenceProducts
     ),
     attributesWithNewFileValue: attributesWithNewFileValue.data,
-    description: description.current,
+    description: null,
     productType: opts.selectedProductType,
     stocks: stocks.data
-  });
+  };
 
-  const data = getData();
+  const getData = async (): Promise<ProductCreateData> => ({
+    ...data,
+    description: await richText.getValue()
+  });
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
     onSubmit
   });
 
-  const submit = () => handleFormSubmit(data);
+  const submit = async () => handleFormSubmit(await getData());
 
   const { setExitDialogSubmitRef, setIsSubmitDisabled } = useExitFormDialog({
     formId: PRODUCT_CREATE_FORM_ID
@@ -398,7 +402,6 @@ function useProductCreateForm(
       addStock: handleStockAdd,
       changeChannelPrice: handleChannelPriceChange,
       changeChannels: handleChannelsChange,
-      changeDescription,
       changeMetadata,
       changeStock: handleStockChange,
       changePreorderEndDate: handlePreorderEndDateChange,
@@ -416,7 +419,8 @@ function useProductCreateForm(
       selectTaxRate: handleTaxTypeSelect
     },
     submit,
-    isSaveDisabled
+    isSaveDisabled,
+    richText
   };
 }
 
@@ -427,9 +431,20 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({
   loading,
   ...rest
 }) => {
-  const props = useProductCreateForm(initial || {}, onSubmit, loading, rest);
+  const { richText, ...props } = useProductCreateForm(
+    initial || {},
+    onSubmit,
+    loading,
+    rest
+  );
 
-  return <form onSubmit={props.submit}>{children(props)}</form>;
+  return (
+    <form onSubmit={props.submit}>
+      <RichTextContext.Provider value={richText}>
+        {children(props)}
+      </RichTextContext.Provider>
+    </form>
+  );
 };
 
 ProductCreateForm.displayName = "ProductCreateForm";

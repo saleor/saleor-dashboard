@@ -4,9 +4,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
-import RichTextEditor, {
-  RichTextEditorChange
-} from "@saleor/components/RichTextEditor";
+import RichTextEditor from "@saleor/components/RichTextEditor";
 import { ProductErrorFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
@@ -33,7 +31,12 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
   onChange
 }) => {
   const intl = useIntl();
-  const { editorRef, defaultValue, isReadyForMount } = useRichTextContext();
+  const {
+    editorRef,
+    defaultValue,
+    isReadyForMount,
+    handleChange
+  } = useRichTextContext();
 
   const formErrors = getFormErrors(["name", "description", "rating"], errors);
   return (
@@ -61,6 +64,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
           <RichTextEditor
             editorRef={editorRef}
             defaultValue={defaultValue}
+            onChange={handleChange}
             disabled={disabled}
             error={!!formErrors.description}
             helperText={getProductErrorMessage(formErrors.description, intl)}
