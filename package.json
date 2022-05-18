@@ -45,7 +45,6 @@
     "cypress-mochawesome-reporter": "^2.3.0",
     "downshift": "^6.1.7",
     "editorjs-inline-tool": "^0.4.0",
-    "editorjs-undo": "^2.0.1",
     "faker": "^5.1.0",
     "fast-array-diff": "^0.2.0",
     "fuzzaldrin": "^2.1.0",

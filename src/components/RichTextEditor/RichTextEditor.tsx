@@ -1,4 +1,4 @@
-import { API, LogLevels, OutputData } from "@editorjs/editorjs";
+import { LogLevels, OutputData } from "@editorjs/editorjs";
 import { FormControl, FormHelperText, InputLabel } from "@material-ui/core";
 import { useId } from "@reach/auto-id";
 import { Props as ReactEditorJSProps } from "@react-editor-js/core";
@@ -7,6 +7,7 @@ import React from "react";
 import { createReactEditorJS } from "react-editor-js";
 
 import { tools } from "./consts";
+import { useHasRendered } from "./hooks";
 import useStyles from "./styles";
 
 export type EditorJsProps = Omit<ReactEditorJSProps, "factory">;
@@ -19,7 +20,6 @@ export interface EditorCore {
   render(data: OutputData): Promise<void>;
 }
 
-// onChange shouldn't be used due to issues with React and EditorJS integration
 export interface RichTextEditorProps extends Omit<EditorJsProps, "onChange"> {
   id?: string;
   disabled: boolean;
@@ -31,6 +31,8 @@ export interface RichTextEditorProps extends Omit<EditorJsProps, "onChange"> {
     | React.RefCallback<EditorCore>
     | React.MutableRefObject<EditorCore>
     | null;
+  // onChange with value shouldn't be used due to issues with React and EditorJS integration
+  onChange?: () => void;
 }
 
 const ReactEditorJS = createReactEditorJS();
@@ -44,22 +46,23 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   helperText,
   editorRef,
   onInitialize,
+  onReady,
   ...props
 }) => {
   const classes = useStyles({});
   const id = useId(defaultId);
   const [isFocused, setIsFocused] = React.useState(false);
 
-  const handleInitialize = React.useCallback(instance => {
+  const handleInitialize = React.useCallback((editor: EditorCore) => {
     if (onInitialize) {
-      onInitialize(instance);
+      onInitialize(editor);
     }
 
     if (typeof editorRef === "function") {
-      return editorRef(instance);
+      return editorRef(editor);
     }
     if (editorRef) {
-      return (editorRef.current = instance);
+      return (editorRef.current = editor);
     }
   }, []);
 
