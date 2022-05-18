@@ -23,7 +23,7 @@ const useStyles = makeStyles(
       },
       // firefox
       "& input": {
-        appearence: "textfield"
+        "-moz-appearance": "textfield"
       }
     },
     inputPadding: {
