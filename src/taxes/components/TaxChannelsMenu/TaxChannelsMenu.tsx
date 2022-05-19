@@ -1,6 +1,6 @@
 import { Card } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
-import useNavigator from "@saleor/hooks/useNavigator";
+import ListItemLink from "@saleor/components/ListItemLink";
 import {
   List,
   ListHeader,
@@ -39,7 +39,6 @@ export const TaxChannelsMenu: React.FC<TaxChannelsMenuProps> = ({
   channels,
   selectedChannelId
 }) => {
-  const navigate = useNavigator();
   const classes = useStyles();
   return (
     <Card>
@@ -53,15 +52,15 @@ export const TaxChannelsMenu: React.FC<TaxChannelsMenuProps> = ({
             </ListItem>
           </ListHeader>
           {channels?.map(channel => (
-            <ListItem
+            <ListItemLink
               key={channel.id}
               className={clsx(classes.clickable, {
                 [classes.selected]: channel.id === selectedChannelId
               })}
-              onClick={() => navigate(channelsListUrl(channel.id))}
+              href={channelsListUrl(channel.id)}
             >
               <ListItemCell>{channel.name}</ListItemCell>
-            </ListItem>
+            </ListItemLink>
           )) ?? <Skeleton />}
         </List>
       </div>
