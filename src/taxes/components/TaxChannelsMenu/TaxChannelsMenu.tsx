@@ -25,7 +25,7 @@ const useStyles = makeStyles(
       cursor: "pointer"
     },
     scrollWrapper: {
-      overflow: "scroll",
+      overflowY: "scroll",
       maxHeight: 600
     },
     selected: {
