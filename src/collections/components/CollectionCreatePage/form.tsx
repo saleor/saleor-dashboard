@@ -11,10 +11,11 @@ import useForm, {
 } from "@saleor/hooks/useForm";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
-import useRichText, {
+import {
   RichTextContext,
   RichTextContextValues
-} from "@saleor/utils/richText/useRichText";
+} from "@saleor/utils/richText/context";
+import useRichText from "@saleor/utils/richText/useRichText";
 import React, { useEffect } from "react";
 
 export interface CollectionCreateFormData extends MetadataFormData {

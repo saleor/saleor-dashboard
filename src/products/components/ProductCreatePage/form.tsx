@@ -61,10 +61,9 @@ import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
+import { RichTextContext } from "@saleor/utils/richText/context";
 import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
-import useRichText, {
-  RichTextContext
-} from "@saleor/utils/richText/useRichText";
+import useRichText from "@saleor/utils/richText/useRichText";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 

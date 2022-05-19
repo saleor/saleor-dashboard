@@ -8,7 +8,7 @@ import RichTextEditor from "@saleor/components/RichTextEditor";
 import { ProductErrorFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
-import { useRichTextContext } from "@saleor/utils/richText/useRichText";
+import { useRichTextContext } from "@saleor/utils/richText/context";
 import React from "react";
 import { useIntl } from "react-intl";
 

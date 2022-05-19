@@ -28,11 +28,11 @@ import {
   mapNodeToChoice,
   mapPagesToChoices
 } from "@saleor/utils/maps";
+import { RichTextContextValues } from "@saleor/utils/richText/context";
 import {
   GetRichTextValues,
   RichTextGetters
 } from "@saleor/utils/richText/useMultipleRichText";
-import { RichTextContextValues } from "@saleor/utils/richText/useRichText";
 
 import { AttributePageFormData } from "../components/AttributePage";
 

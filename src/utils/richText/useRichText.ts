@@ -1,19 +1,13 @@
 import { OutputData } from "@editorjs/editorjs";
 import { EditorCore } from "@saleor/components/RichTextEditor";
-import { createContext, useContext, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 interface UseRichTextOptions {
   initial: string | null;
   triggerChange: () => void;
 }
 
-export type RichTextContextValues = ReturnType<typeof useRichText>;
-
-export const RichTextContext = createContext<RichTextContextValues | null>(
-  null
-);
-
-function useRichText({ initial, triggerChange }: UseRichTextOptions) {
+export function useRichText({ initial, triggerChange }: UseRichTextOptions) {
   const editorRef = useRef<EditorCore>(null);
   const [isReadyForMount, setIsReadyForMount] = useState(false);
 
@@ -47,14 +41,5 @@ function useRichText({ initial, triggerChange }: UseRichTextOptions) {
     isReadyForMount
   };
 }
-
-export const useRichTextContext = () => {
-  const value = useContext(RichTextContext);
-  if (!value) {
-    throw new Error("useRichTextContext used outside of RichTextContext");
-  }
-
-  return value;
-};
 
 export default useRichText;

@@ -31,9 +31,8 @@ import { createChannelsChangeHandler } from "@saleor/shipping/handlers";
 import { ListActions, ListProps } from "@saleor/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
-import useRichText, {
-  RichTextContext
-} from "@saleor/utils/richText/useRichText";
+import { RichTextContext } from "@saleor/utils/richText/context";
+import useRichText from "@saleor/utils/richText/useRichText";
 import React, { FormEventHandler } from "react";
 import { FormattedMessage } from "react-intl";
 

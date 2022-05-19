@@ -25,9 +25,8 @@ import OrderWeight from "@saleor/shipping/components/OrderWeight";
 import PricingCard from "@saleor/shipping/components/PricingCard";
 import ShippingRateInfo from "@saleor/shipping/components/ShippingRateInfo";
 import { createChannelsChangeHandler } from "@saleor/shipping/handlers";
-import useRichText, {
-  RichTextContext
-} from "@saleor/utils/richText/useRichText";
+import { RichTextContext } from "@saleor/utils/richText/context";
+import useRichText from "@saleor/utils/richText/useRichText";
 import React, { FormEventHandler } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

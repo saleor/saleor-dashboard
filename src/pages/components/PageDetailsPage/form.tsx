@@ -44,10 +44,9 @@ import getPublicationData from "@saleor/utils/data/getPublicationData";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
+import { RichTextContext } from "@saleor/utils/richText/context";
 import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
-import useRichText, {
-  RichTextContext
-} from "@saleor/utils/richText/useRichText";
+import useRichText from "@saleor/utils/richText/useRichText";
 import React, { useEffect } from "react";
 
 export interface PageFormData extends MetadataFormData {

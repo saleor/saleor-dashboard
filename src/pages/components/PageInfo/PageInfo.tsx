@@ -7,7 +7,7 @@ import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getPageErrorMessage from "@saleor/utils/errors/page";
-import { useRichTextContext } from "@saleor/utils/richText/useRichText";
+import { useRichTextContext } from "@saleor/utils/richText/context";
 import React from "react";
 import { useIntl } from "react-intl";
 

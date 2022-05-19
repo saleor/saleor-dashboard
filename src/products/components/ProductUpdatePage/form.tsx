@@ -67,10 +67,9 @@ import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAu
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
+import { RichTextContext } from "@saleor/utils/richText/context";
 import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
-import useRichText, {
-  RichTextContext
-} from "@saleor/utils/richText/useRichText";
+import useRichText from "@saleor/utils/richText/useRichText";
 import React, { useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 
