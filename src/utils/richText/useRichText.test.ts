@@ -3,25 +3,8 @@ import { renderHook } from "@testing-library/react-hooks";
 
 import useRichText from "./useRichText";
 
-type Fixtures = Record<"short" | "long", OutputData>;
+type Fixtures = Record<"short", OutputData>;
 const fixtures: Fixtures = {
-  long: {
-    blocks: [
-      {
-        data: {
-          level: 1,
-          text: "Some header"
-        },
-        type: "header"
-      },
-      {
-        data: {
-          text: "Some text"
-        },
-        type: "paragraph"
-      }
-    ]
-  },
   short: {
     blocks: [
       {
@@ -34,40 +17,65 @@ const fixtures: Fixtures = {
   }
 };
 
+const triggerChange = jest.fn();
+
 describe("useRichText", () => {
-  it("properly saves data in form", () => {
-    const triggerChange = jest.fn();
-    const hook = renderHook(() =>
-      useRichText({
-        initial: null,
-        triggerChange
-      })
+  it("properly informs RichTextEditor when data is ready to mount", () => {
+    // eslint-disable-next-line prefer-const
+    let initial: string | undefined;
+    const { result, rerender } = renderHook(() =>
+      useRichText({ initial, triggerChange })
     );
 
-    const [data, change] = hook.result.current;
-    expect(data.current).toMatchObject({ blocks: [] });
+    expect(result.current.isReadyForMount).toBe(false);
 
-    change(fixtures.short);
+    initial = JSON.stringify(fixtures.short); // for JSON.parse()
+    rerender();
 
-    expect(data.current).toMatchObject(fixtures.short);
-    expect(triggerChange).toHaveBeenCalled();
+    expect(result.current.defaultValue).toStrictEqual(fixtures.short);
+    expect(result.current.isReadyForMount).toBe(true);
   });
 
-  it("properly updates data in form", () => {
-    const triggerChange = jest.fn();
-    const hook = renderHook(() =>
-      useRichText({
-        initial: JSON.stringify(fixtures.short),
-        triggerChange
-      })
+  it("returns undefined when JSON cannot be parsed", () => {
+    // eslint-disable-next-line prefer-const
+    let initial: string | undefined;
+    const { result, rerender } = renderHook(() =>
+      useRichText({ initial, triggerChange })
     );
 
-    const [data, change] = hook.result.current;
-    expect(data.current).toMatchObject(fixtures.short);
+    expect(result.current.isReadyForMount).toBe(false);
 
-    change(fixtures.long);
+    initial = "this-isnt-valid-json";
+    rerender();
 
-    expect(data.current).toMatchObject(fixtures.long);
+    expect(result.current.defaultValue).toBe(undefined);
+    expect(result.current.isReadyForMount).toBe(false);
+  });
+
+  it("runs editorJS .save() when getValue is called", async () => {
+    const saveFn = jest.fn(async () => fixtures.short);
+    const { result } = renderHook(() =>
+      useRichText({ initial: "", triggerChange })
+    );
+    result.current.editorRef.current = {
+      save: saveFn,
+      destroy: jest.fn(),
+      clear: jest.fn(),
+      render: jest.fn()
+    };
+
+    expect(await result.current.getValue()).toStrictEqual(fixtures.short);
+    expect(saveFn).toHaveBeenCalled();
+  });
+
+  it("calls triggerChange when change is made in the editor", () => {
+    triggerChange.mockClear();
+    const { result } = renderHook(() =>
+      useRichText({ initial: "", triggerChange })
+    );
+
+    result.current.handleChange();
+
     expect(triggerChange).toHaveBeenCalled();
   });
 });
