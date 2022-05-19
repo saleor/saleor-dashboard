@@ -7,22 +7,14 @@ import {
   Typography
 } from "@material-ui/core";
 import { useAppListContext } from "@saleor/apps/context";
-import { appDetailsUrl, appUrl } from "@saleor/apps/urls";
-import { Button } from "@saleor/components/Button";
+import { appUrl } from "@saleor/apps/urls";
 import CardTitle from "@saleor/components/CardTitle";
 import { IconButton } from "@saleor/components/IconButton";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
-import TablePagination from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { AppsListQuery } from "@saleor/graphql";
-import {
-  DeleteIcon,
-  InfoIcon,
-  PermissionsIcon,
-  ResponsiveTable,
-  Tooltip
-} from "@saleor/macaw-ui";
-import { renderCollection, stopPropagation } from "@saleor/misc";
+import { DeleteIcon, ResponsiveTable } from "@saleor/macaw-ui";
+import { renderCollection } from "@saleor/misc";
 import { ListProps } from "@saleor/types";
 import clsx from "clsx";
 import React from "react";
