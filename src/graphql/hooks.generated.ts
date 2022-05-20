@@ -53,6 +53,18 @@ export const AppPermissionFragmentDoc = gql`
   code
 }
     `;
+export const AppListItemFragmentDoc = gql`
+    fragment AppListItem on App {
+  id
+  name
+  isActive
+  type
+  appUrl
+  permissions {
+    ...AppPermission
+  }
+}
+    ${AppPermissionFragmentDoc}`;
 export const AttributeFragmentDoc = gql`
     fragment Attribute on Attribute {
   id
@@ -3141,19 +3153,12 @@ export const AppsListDocument = gql`
     totalCount
     edges {
       node {
-        id
-        name
-        isActive
-        type
-        appUrl
-        permissions {
-          ...AppPermission
-        }
+        ...AppListItem
       }
     }
   }
 }
-    ${AppPermissionFragmentDoc}`;
+    ${AppListItemFragmentDoc}`;
 
 /**
  * __useAppsListQuery__

@@ -12,7 +12,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import { IconButton } from "@saleor/components/IconButton";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableRowLink from "@saleor/components/TableRowLink";
-import { AppsListQuery } from "@saleor/graphql";
+import { AppListItemFragment, AppsListQuery } from "@saleor/graphql";
 import { DeleteIcon, ResponsiveTable } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { ListProps } from "@saleor/types";
@@ -23,8 +23,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useStyles } from "../../styles";
 import { AppPermissions } from "../AppPermissions/AppPermissions";
 import AppsSkeleton from "../AppsSkeleton";
-
-type App = AppsListQuery["apps"]["edges"][0]["node"];
 
 export interface InstalledAppsProps extends ListProps {
   appsList: AppsListQuery["apps"]["edges"];
@@ -45,7 +43,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
   const classes = useStyles(props);
   const { activateApp, deactivateApp } = useAppListContext();
 
-  const getHandleToggle = (app: App) => () => {
+  const getHandleToggle = (app: AppListItemFragment) => () => {
     if (app.isActive) {
       deactivateApp(app.id);
     } else {

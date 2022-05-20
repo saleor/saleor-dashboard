@@ -26,14 +26,7 @@ export const appsList = gql`
       totalCount
       edges {
         node {
-          id
-          name
-          isActive
-          type
-          appUrl
-          permissions {
-            ...AppPermission
-          }
+          ...AppListItem
         }
       }
     }

@@ -32,6 +32,19 @@ export const appFragment = gql`
   }
 `;
 
+export const appListItemFragment = gql`
+  fragment AppListItem on App {
+    id
+    name
+    isActive
+    type
+    appUrl
+    permissions {
+      ...AppPermission
+    }
+  }
+`;
+
 export const appPermissionFragment = gql`
   fragment AppPermission on Permission {
     name
