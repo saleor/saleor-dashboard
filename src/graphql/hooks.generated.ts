@@ -47,6 +47,12 @@ export const AppFragmentDoc = gql`
   }
 }
     ${WebhookFragmentDoc}`;
+export const AppPermissionFragmentDoc = gql`
+    fragment AppPermission on Permission {
+  name
+  code
+}
+    `;
 export const AttributeFragmentDoc = gql`
     fragment Attribute on Attribute {
   id
@@ -3141,14 +3147,13 @@ export const AppsListDocument = gql`
         type
         appUrl
         permissions {
-          code
-          name
+          ...AppPermission
         }
       }
     }
   }
 }
-    `;
+    ${AppPermissionFragmentDoc}`;
 
 /**
  * __useAppsListQuery__

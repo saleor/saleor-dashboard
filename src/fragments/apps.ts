@@ -31,3 +31,10 @@ export const appFragment = gql`
     }
   }
 `;
+
+export const appPermissionFragment = gql`
+  fragment AppPermission on Permission {
+    name
+    code
+  }
+`;

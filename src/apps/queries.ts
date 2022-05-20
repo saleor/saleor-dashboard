@@ -32,8 +32,7 @@ export const appsList = gql`
           type
           appUrl
           permissions {
-            code
-            name
+            ...AppPermission
           }
         }
       }
