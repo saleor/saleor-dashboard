@@ -6,10 +6,9 @@ export interface AppListContextValues {
   deactivateApp: (appId: string) => void;
 }
 
-export const AppListContext = React.createContext<AppListContextValues>({
-  activateApp: () => {},
-  deactivateApp: () => {}
-});
+export const AppListContext = React.createContext<
+  AppListContextValues | undefined
+>(undefined);
 
 export const useAppListContext = () => {
   const context = React.useContext(AppListContext);
