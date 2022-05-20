@@ -1,6 +1,4 @@
 import { ButtonBase, Card, CardContent, Typography } from "@material-ui/core";
-import { appsListPath } from "@saleor/apps/urls";
-import { Backlink } from "@saleor/components/Backlink";
 import { Button } from "@saleor/components/Button";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
@@ -9,7 +7,6 @@ import ExternalLink from "@saleor/components/ExternalLink";
 import PageHeader from "@saleor/components/PageHeader";
 import Skeleton from "@saleor/components/Skeleton";
 import { AppQuery } from "@saleor/graphql";
-import { sectionNames } from "@saleor/intl";
 import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -43,9 +40,6 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
 
   return (
     <Container>
-      <Backlink href={appsListPath}>
-        {intl.formatMessage(sectionNames.apps)}
-      </Backlink>
       <PageHeader
         title={
           <>

@@ -1,4 +1,3 @@
-import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
@@ -8,11 +7,10 @@ import {
   AttributeTranslationDetailsFragment,
   LanguageCodeEnum
 } from "@saleor/graphql";
-import { commonMessages, sectionNames } from "@saleor/intl";
+import { commonMessages } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
 import {
-  languageEntitiesUrl,
   languageEntityUrl,
   TranslatableEntities
 } from "@saleor/translations/urls";
@@ -66,13 +64,6 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
 
   return (
     <Container>
-      <Backlink
-        href={languageEntitiesUrl(languageCode, {
-          tab: TranslatableEntities.attributes
-        })}
-      >
-        {intl.formatMessage(sectionNames.translations)}
-      </Backlink>
       <PageHeader
         title={intl.formatMessage(
           {

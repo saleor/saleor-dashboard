@@ -1,5 +1,4 @@
 import { ChannelSaleData, validateSalePrice } from "@saleor/channels/utils";
-import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import Container from "@saleor/components/Container";
@@ -20,7 +19,6 @@ import {
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -173,9 +171,6 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
 
         return (
           <Container>
-            <Backlink href={saleListUrl()}>
-              {intl.formatMessage(sectionNames.sales)}
-            </Backlink>
             <PageHeader title={sale?.name} />
             <Grid>
               <div>

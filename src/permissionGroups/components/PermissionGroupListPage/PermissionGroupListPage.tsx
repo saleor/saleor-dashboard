@@ -1,9 +1,7 @@
 import { Card } from "@material-ui/core";
-import { Backlink } from "@saleor/components/Backlink";
 import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
-import { configurationMenuUrl } from "@saleor/configuration";
 import { PermissionGroupFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import React from "react";
@@ -28,9 +26,6 @@ const PermissionGroupListPage: React.FC<PermissionGroupListPageProps> = listProp
 
   return (
     <Container>
-      <Backlink href={configurationMenuUrl}>
-        {intl.formatMessage(sectionNames.configuration)}
-      </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.permissionGroups)}>
         <Button
           variant="primary"

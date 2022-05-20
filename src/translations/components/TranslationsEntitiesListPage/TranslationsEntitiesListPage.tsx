@@ -1,5 +1,4 @@
 import { Card } from "@material-ui/core";
-import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import FilterTabs, { FilterTab } from "@saleor/components/TableFilter";
@@ -8,7 +7,7 @@ import { maybe } from "@saleor/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { languageListUrl, TranslatableEntities } from "../../urls";
+import { TranslatableEntities } from "../../urls";
 
 export interface TranslationsEntitiesListPageProps {
   children: React.ReactNode;
@@ -50,12 +49,6 @@ const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> 
 
   return (
     <Container>
-      <Backlink href={languageListUrl}>
-        {intl.formatMessage({
-          id: "GsBRWL",
-          defaultMessage: "Languages"
-        })}
-      </Backlink>
       <PageHeader
         title={intl.formatMessage(
           {

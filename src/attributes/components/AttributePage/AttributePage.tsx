@@ -1,6 +1,5 @@
 import { attributeListUrl } from "@saleor/attributes/urls";
 import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@saleor/attributes/utils/data";
-import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -21,7 +20,6 @@ import {
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import { ListSettings, ReorderAction } from "@saleor/types";
@@ -180,9 +178,6 @@ const AttributePage: React.FC<AttributePageProps> = ({
         return (
           <>
             <Container>
-              <Backlink href={attributeListUrl()}>
-                {intl.formatMessage(sectionNames.attributes)}
-              </Backlink>
               <PageHeader
                 title={
                   attribute === null

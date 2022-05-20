@@ -1,11 +1,9 @@
 import { Card } from "@material-ui/core";
-import { Backlink } from "@saleor/components/Backlink";
 import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
-import { configurationMenuUrl } from "@saleor/configuration";
 import {
   RefreshLimitsQuery,
   WarehouseWithShippingFragment
@@ -63,9 +61,6 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
 
   return (
     <Container>
-      <Backlink href={configurationMenuUrl}>
-        <FormattedMessage {...sectionNames.configuration} />
-      </Backlink>
       <PageHeader
         title={intl.formatMessage(sectionNames.warehouses)}
         limitText={

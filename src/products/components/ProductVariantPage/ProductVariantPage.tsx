@@ -8,7 +8,6 @@ import Attributes, {
   AttributeInput,
   VariantAttributeScope
 } from "@saleor/components/Attributes";
-import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
@@ -200,9 +199,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   return (
     <>
       <Container>
-        <Backlink href={productUrl(productId)}>
-          {variant?.product?.name}
-        </Backlink>
         <PageHeader title={header}>
           {variant?.product?.defaultVariant?.id !== variant?.id && (
             <ProductVariantSetDefault

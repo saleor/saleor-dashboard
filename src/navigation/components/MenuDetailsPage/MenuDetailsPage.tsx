@@ -1,5 +1,4 @@
 import { Typography } from "@material-ui/core";
-import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -85,9 +84,6 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
     <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
       {({ change, data, submit }) => (
         <Container>
-          <Backlink href={menuListUrl()}>
-            {intl.formatMessage(sectionNames.navigation)}
-          </Backlink>
           <Grid variant="inverted">
             <div>
               <Typography variant="h5">

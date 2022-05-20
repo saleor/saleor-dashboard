@@ -3,10 +3,8 @@ import {
   attributeAddUrl,
   AttributeListUrlSortField
 } from "@saleor/attributes/urls";
-import { Backlink } from "@saleor/components/Backlink";
 import { Button } from "@saleor/components/Button";
 import FilterBar from "@saleor/components/FilterBar";
-import { configurationMenuUrl } from "@saleor/configuration";
 import { AttributeFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import React from "react";
@@ -56,9 +54,6 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
 
   return (
     <Container>
-      <Backlink href={configurationMenuUrl}>
-        <FormattedMessage {...sectionNames.configuration} />
-      </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.attributes)}>
         <Button
           href={attributeAddUrl()}

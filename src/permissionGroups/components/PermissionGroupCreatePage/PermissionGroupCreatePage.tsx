@@ -1,5 +1,4 @@
 import AccountPermissions from "@saleor/components/AccountPermissions";
-import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
@@ -7,7 +6,6 @@ import Savebar from "@saleor/components/Savebar";
 import { PermissionEnum, PermissionGroupErrorFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { permissionGroupListUrl } from "@saleor/permissionGroups/urls";
 import { getFormErrors } from "@saleor/utils/errors";
@@ -65,9 +63,6 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
     >
       {({ data, change, submit, isSaveDisabled }) => (
         <Container>
-          <Backlink href={permissionGroupListUrl()}>
-            {intl.formatMessage(sectionNames.permissionGroups)}
-          </Backlink>
           <Grid>
             <div>
               <PermissionGroupInfo

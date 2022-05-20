@@ -1,5 +1,4 @@
 import { validateSalePrice } from "@saleor/channels/utils";
-import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import Container from "@saleor/components/Container";
@@ -16,7 +15,6 @@ import {
   SaleType as SaleTypeEnum
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
-import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
@@ -105,9 +103,6 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
 
         return (
           <Container>
-            <Backlink onClick={onBack}>
-              {intl.formatMessage(sectionNames.sales)}
-            </Backlink>
             <PageHeader
               title={intl.formatMessage({
                 id: "2E1xZ0",

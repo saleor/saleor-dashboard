@@ -1,4 +1,3 @@
-import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -14,14 +13,12 @@ import {
 import { ChangeEvent, FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { makeProductTypeKindChangeHandler } from "@saleor/productTypes/handlers";
 import { productTypeListUrl } from "@saleor/productTypes/urls";
 import { UserError } from "@saleor/types";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
-import { useIntl } from "react-intl";
 
 import ProductTypeDetails from "../ProductTypeDetails/ProductTypeDetails";
 import ProductTypeShipping from "../ProductTypeShipping/ProductTypeShipping";
@@ -80,7 +77,6 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
   onChangeKind,
   onSubmit
 }: ProductTypeCreatePageProps) => {
-  const intl = useIntl();
   const navigate = useNavigator();
 
   const [taxTypeDisplayName, setTaxTypeDisplayName] = useStateFromProps("");
@@ -110,9 +106,6 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
 
         return (
           <Container>
-            <Backlink href={productTypeListUrl()}>
-              {intl.formatMessage(sectionNames.productTypes)}
-            </Backlink>
             <PageHeader title={pageTitle} />
             <Grid>
               <div>

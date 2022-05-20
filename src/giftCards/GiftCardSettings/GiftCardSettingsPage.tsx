@@ -1,5 +1,4 @@
 import { Typography } from "@material-ui/core";
-import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import { Grid } from "@saleor/components/Grid";
@@ -12,7 +11,6 @@ import {
   useGiftCardSettingsUpdateMutation
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
 import { getFormErrors } from "@saleor/utils/errors";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -63,9 +61,6 @@ const GiftCardSettingsPage: React.FC = () => {
 
   return (
     <Container>
-      <Backlink href={giftCardsListPath}>
-        {intl.formatMessage(sectionNames.giftCards)}
-      </Backlink>
       <PageHeader
         preview
         title={intl.formatMessage(messages.title)}

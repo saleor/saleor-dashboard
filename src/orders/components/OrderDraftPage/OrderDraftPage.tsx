@@ -1,5 +1,4 @@
 import { Typography } from "@material-ui/core";
-import { Backlink } from "@saleor/components/Backlink";
 import CardMenu from "@saleor/components/CardMenu";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { Container } from "@saleor/components/Container";
@@ -11,7 +10,6 @@ import Skeleton from "@saleor/components/Skeleton";
 import { OrderDetailsFragment, SearchCustomersQuery } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import DraftOrderChannelSectionCard from "@saleor/orders/components/DraftOrderChannelSectionCard";
 import { orderDraftListUrl } from "@saleor/orders/urls";
@@ -90,9 +88,6 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
 
   return (
     <Container>
-      <Backlink href={orderDraftListUrl()}>
-        {intl.formatMessage(sectionNames.draftOrders)}
-      </Backlink>
       <PageHeader
         className={classes.header}
         inline

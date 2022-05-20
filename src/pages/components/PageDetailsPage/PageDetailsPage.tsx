@@ -4,7 +4,6 @@ import {
 } from "@saleor/attributes/utils/data";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@saleor/components/Attributes";
-import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
@@ -24,7 +23,6 @@ import {
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { pageListUrl } from "@saleor/pages/urls";
 import { FetchMoreProps, RelayToFlat } from "@saleor/types";
@@ -141,9 +139,6 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
     >
       {({ change, data, handlers, submit, isSaveDisabled }) => (
         <Container>
-          <Backlink href={pageListUrl()}>
-            {intl.formatMessage(sectionNames.pages)}
-          </Backlink>
           <PageHeader
             title={
               !pageExists

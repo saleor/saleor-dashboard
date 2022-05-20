@@ -1,4 +1,3 @@
-import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import CountryList from "@saleor/components/CountryList";
@@ -9,7 +8,6 @@ import Savebar from "@saleor/components/Savebar";
 import { CountryFragment, ShippingErrorFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { shippingZonesListUrl } from "@saleor/shipping/urls";
 import React from "react";
@@ -81,9 +79,6 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
       {({ change, data, isSaveDisabled, submit }) => (
         <>
           <Container>
-            <Backlink href={shippingZonesListUrl()}>
-              {intl.formatMessage(sectionNames.shipping)}
-            </Backlink>
             <PageHeader title={intl.formatMessage(messages.createZone)} />
             <Grid>
               <div>

@@ -1,4 +1,3 @@
-import { Backlink } from "@saleor/components/Backlink";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -17,13 +16,11 @@ import {
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { orderListUrl } from "@saleor/orders/urls";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
-import { useIntl } from "react-intl";
 
 import { getUserName } from "../../../misc";
 import CustomerAddresses from "../CustomerAddresses";
@@ -61,7 +58,6 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
   onSubmit,
   onDelete
 }: CustomerDetailsPageProps) => {
-  const intl = useIntl();
   const navigate = useNavigator();
 
   const initialForm: CustomerDetailsPageFormData = {
@@ -90,9 +86,6 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
 
         return (
           <Container>
-            <Backlink href={customerListUrl()}>
-              {intl.formatMessage(sectionNames.customers)}
-            </Backlink>
             <PageHeader title={getUserName(customer, true)} />
             <Grid>
               <div>

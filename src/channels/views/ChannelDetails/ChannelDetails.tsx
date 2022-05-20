@@ -1,7 +1,6 @@
 import ChannelDeleteDialog from "@saleor/channels/components/ChannelDeleteDialog";
 import { FormData } from "@saleor/channels/components/ChannelForm/ChannelForm";
 import { getChannelsCurrencyChoices } from "@saleor/channels/utils";
-import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -23,7 +22,6 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
 import useShop from "@saleor/hooks/useShop";
-import { sectionNames } from "@saleor/intl";
 import { extractMutationErrors } from "@saleor/misc";
 import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
 import getChannelsErrorMessage from "@saleor/utils/errors/channels";
@@ -186,9 +184,6 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
         })}
       />
       <Container>
-        <Backlink href={channelsListUrl()}>
-          {intl.formatMessage(sectionNames.channels)}
-        </Backlink>
         <PageHeader title={data?.channel?.name} />
         <ChannelDetailsPage
           channelShippingZones={channelShippingZonesData?.shippingZones?.edges?.map(

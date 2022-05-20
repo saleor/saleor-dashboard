@@ -1,4 +1,3 @@
-import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
@@ -10,7 +9,6 @@ import {
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { renderCollection } from "@saleor/misc";
-import { orderUrl } from "@saleor/orders/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -73,24 +71,6 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
 
         return (
           <Container>
-            <Backlink href={orderUrl(order?.id)}>
-              {order?.number
-                ? intl.formatMessage(
-                    {
-                      id: "rVIlBs",
-                      defaultMessage: "Order #{orderNumber}",
-                      description: "page header with order number"
-                    },
-                    {
-                      orderNumber: order.number
-                    }
-                  )
-                : intl.formatMessage({
-                    id: "6u4K7e",
-                    defaultMessage: "Order",
-                    description: "page header"
-                  })}
-            </Backlink>
             <PageHeader
               title={intl.formatMessage(
                 {

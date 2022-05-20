@@ -1,4 +1,3 @@
-import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
@@ -6,14 +5,13 @@ import {
   LanguageCodeEnum,
   ShippingMethodTranslationFragment
 } from "@saleor/graphql";
-import { commonMessages, sectionNames } from "@saleor/intl";
+import { commonMessages } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import {
   TranslationInputFieldName,
   TranslationsEntitiesPageProps
 } from "@saleor/translations/types";
 import {
-  languageEntitiesUrl,
   languageEntityUrl,
   TranslatableEntities
 } from "@saleor/translations/urls";
@@ -43,13 +41,6 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
 
   return (
     <Container>
-      <Backlink
-        href={languageEntitiesUrl(languageCode, {
-          tab: TranslatableEntities.shippingMethods
-        })}
-      >
-        {intl.formatMessage(sectionNames.translations)}
-      </Backlink>
       <PageHeader
         title={intl.formatMessage(
           {

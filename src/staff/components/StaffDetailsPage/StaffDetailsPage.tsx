@@ -1,6 +1,5 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
 import AccountPermissionGroups from "@saleor/components/AccountPermissionGroups";
-import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
@@ -18,7 +17,6 @@ import { SubmitPromise } from "@saleor/hooks/useForm";
 import useLocale from "@saleor/hooks/useLocale";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { getUserName } from "@saleor/misc";
 import UserStatus from "@saleor/staff/components/UserStatus";
@@ -124,9 +122,6 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
 
         return (
           <Container>
-            <Backlink href={staffListUrl()}>
-              {intl.formatMessage(sectionNames.staff)}
-            </Backlink>
             <PageHeader title={getUserName(staffMember)} />
             <Grid>
               <div>

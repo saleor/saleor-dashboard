@@ -1,5 +1,4 @@
 import { customAppUrl } from "@saleor/apps/urls";
-import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
@@ -50,7 +49,6 @@ export interface WebhookDetailsPageProps {
 }
 
 const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
-  appName,
   disabled,
   errors,
   webhook,
@@ -93,7 +91,6 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
 
         return (
           <Container>
-            <Backlink href={customAppUrl(webhook?.app?.id)}>{appName}</Backlink>
             <PageHeader title={getHeaderTitle(intl, webhook)} />
             <Grid>
               <div>

@@ -1,6 +1,5 @@
 import { ChannelCollectionData } from "@saleor/channels/utils";
 import { collectionListUrl } from "@saleor/collections/urls";
-import { Backlink } from "@saleor/components/Backlink";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import { Container } from "@saleor/components/Container";
@@ -17,7 +16,6 @@ import {
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -77,9 +75,6 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
     >
       {({ change, data, handlers, submit, isSaveDisabled }) => (
         <Container>
-          <Backlink href={collectionListUrl()}>
-            {intl.formatMessage(sectionNames.collections)}
-          </Backlink>
           <PageHeader title={collection?.name} />
           <Grid>
             <div>

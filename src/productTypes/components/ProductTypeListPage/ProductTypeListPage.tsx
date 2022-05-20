@@ -1,10 +1,8 @@
 import { Card } from "@material-ui/core";
-import { Backlink } from "@saleor/components/Backlink";
 import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
-import { configurationMenuUrl } from "@saleor/configuration";
 import { ProductTypeFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import {
@@ -56,9 +54,6 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
 
   return (
     <Container>
-      <Backlink href={configurationMenuUrl}>
-        {intl.formatMessage(sectionNames.configuration)}
-      </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.productTypes)}>
         <Button
           variant="primary"

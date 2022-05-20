@@ -1,9 +1,7 @@
 import { Typography } from "@material-ui/core";
-import { Backlink } from "@saleor/components/Backlink";
 import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
-import { customerUrl } from "@saleor/customers/urls";
 import { AddressTypeEnum, CustomerAddressesFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder, renderCollection } from "@saleor/misc";
@@ -95,11 +93,6 @@ const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props =>
 
   return (
     <Container>
-      <Backlink href={customerUrl(customer?.id)}>
-        {fullName.trim().length > 0
-          ? intl.formatMessage(messages.fullNameDetail, { fullName })
-          : intl.formatMessage(messages.noNameToShow)}
-      </Backlink>
       {!isEmpty && (
         <PageHeader
           title={

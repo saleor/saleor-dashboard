@@ -1,5 +1,4 @@
 import { Typography } from "@material-ui/core";
-import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
@@ -10,7 +9,6 @@ import {
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { orderListUrl } from "@saleor/orders/urls";
 import React from "react";
@@ -43,9 +41,6 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
     >
       {({ data, submit, change, isSaveDisabled }) => (
         <Container>
-          <Backlink href={orderListUrl()}>
-            {intl.formatMessage(sectionNames.orders)}
-          </Backlink>
           <PageHeader
             title={intl.formatMessage({
               id: "Vu9nol",

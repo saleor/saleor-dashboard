@@ -1,11 +1,9 @@
 import { Card } from "@material-ui/core";
-import { Backlink } from "@saleor/components/Backlink";
 import { Button } from "@saleor/components/Button";
 import { Container } from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
-import { configurationMenuUrl } from "@saleor/configuration";
 import { RefreshLimitsQuery, StaffListQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { StaffListUrlSortField } from "@saleor/staff/urls";
@@ -59,9 +57,6 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
 
   return (
     <Container>
-      <Backlink href={configurationMenuUrl}>
-        {intl.formatMessage(sectionNames.configuration)}
-      </Backlink>
       <PageHeader
         title={intl.formatMessage(sectionNames.staff)}
         limitText={

@@ -1,5 +1,4 @@
 import { ChannelShippingData } from "@saleor/channels/utils";
-import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import Container from "@saleor/components/Container";
@@ -33,7 +32,6 @@ import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
 import React, { FormEventHandler } from "react";
-import { FormattedMessage } from "react-intl";
 
 import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
 import { ShippingZoneRateUpdateFormData } from "./types";
@@ -166,9 +164,6 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   return (
     <form onSubmit={handleFormElementSubmit}>
       <Container>
-        <Backlink href={backHref}>
-          <FormattedMessage id="PRlD0A" defaultMessage="Shipping" />
-        </Backlink>
         <PageHeader title={rate?.name} />
         <Grid>
           <div>

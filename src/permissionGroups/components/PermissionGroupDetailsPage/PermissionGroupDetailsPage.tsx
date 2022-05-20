@@ -1,5 +1,4 @@
 import AccountPermissions from "@saleor/components/AccountPermissions";
-import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
@@ -14,7 +13,6 @@ import {
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import {
   MembersListUrlSortField,
@@ -96,9 +94,6 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ data, change, submit }) => (
         <Container>
-          <Backlink href={permissionGroupListUrl()}>
-            {intl.formatMessage(sectionNames.permissionGroups)}
-          </Backlink>
           <PageHeader title={permissionGroup?.name} />
 
           <Grid>

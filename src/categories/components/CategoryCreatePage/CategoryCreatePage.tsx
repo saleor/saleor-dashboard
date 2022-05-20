@@ -1,4 +1,3 @@
-import { Backlink } from "@saleor/components/Backlink";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Metadata from "@saleor/components/Metadata";
@@ -7,7 +6,6 @@ import Savebar from "@saleor/components/Savebar";
 import SeoForm from "@saleor/components/SeoForm";
 import { ProductErrorFragment } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -37,9 +35,6 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
     <CategoryCreateForm onSubmit={onSubmit} disabled={disabled}>
       {({ data, change, handlers, submit, isSaveDisabled }) => (
         <Container>
-          <Backlink href={backUrl}>
-            {intl.formatMessage(sectionNames.categories)}
-          </Backlink>
           <PageHeader
             title={intl.formatMessage({
               id: "cgsY/X",

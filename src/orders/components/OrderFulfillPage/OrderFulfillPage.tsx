@@ -7,7 +7,6 @@ import {
   TextField,
   Typography
 } from "@material-ui/core";
-import { Backlink } from "@saleor/components/Backlink";
 import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
@@ -167,13 +166,6 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
 
   return (
     <Container>
-      <Backlink href={orderUrl(order?.id)}>
-        {order?.number
-          ? intl.formatMessage(messages.headerOrderNumber, {
-              orderNumber: order.number
-            })
-          : intl.formatMessage(messages.headerOrder)}
-      </Backlink>
       <PageHeader
         title={intl.formatMessage(messages.headerOrderNumberAddFulfillment, {
           orderNumber: order?.number

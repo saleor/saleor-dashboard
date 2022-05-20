@@ -1,16 +1,13 @@
-import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import RequirePermissions from "@saleor/components/RequirePermissions";
-import { configurationMenuUrl } from "@saleor/configuration";
 import {
   PermissionEnum,
   ShippingZoneFragment,
   WeightUnitsEnum
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
-import { sectionNames } from "@saleor/intl";
 import { ListActions, PageListProps, UserPermissionProps } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -38,9 +35,6 @@ const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
 
   return (
     <Container>
-      <Backlink href={configurationMenuUrl}>
-        {intl.formatMessage(sectionNames.configuration)}
-      </Backlink>
       <PageHeader
         title={intl.formatMessage({
           id: "uULcph",

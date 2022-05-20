@@ -1,4 +1,3 @@
-import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -13,7 +12,6 @@ import {
 } from "@saleor/graphql";
 import { ChangeEvent, SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { pluginListUrl } from "@saleor/plugins/urls";
@@ -98,9 +96,6 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
         };
         return (
           <Container>
-            <Backlink href={pluginListUrl()}>
-              {intl.formatMessage(sectionNames.plugins)}
-            </Backlink>
             <PageHeader
               title={intl.formatMessage(
                 {

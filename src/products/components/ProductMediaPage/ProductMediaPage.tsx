@@ -1,5 +1,4 @@
 import { Card, CardContent, TextField } from "@material-ui/core";
-import { Backlink } from "@saleor/components/Backlink";
 import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -89,7 +88,6 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
     disabled,
     mediaObj,
     media,
-    product,
     saveButtonBarState,
     onDelete,
     onRowClick,
@@ -108,7 +106,6 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
     >
       {({ change, data, submit }) => (
         <Container>
-          <Backlink href={productUrl(productId)}>{product}</Backlink>
           <PageHeader title={intl.formatMessage(messages.editMedia)} />
           <Grid variant="inverted">
             <div>

@@ -1,4 +1,3 @@
-import { Backlink } from "@saleor/components/Backlink";
 import { Container } from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
@@ -8,7 +7,6 @@ import { configurationMenuUrl } from "@saleor/configuration";
 import { CountryListQuery } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -55,9 +53,6 @@ const CountryListPage: React.FC<CountryListPageProps> = ({
       {({ change, data, isSaveDisabled, submit }) => (
         <>
           <Container>
-            <Backlink href={configurationMenuUrl}>
-              {intl.formatMessage(sectionNames.configuration)}
-            </Backlink>
             <PageHeader
               title={intl.formatMessage({
                 id: "lnQAos",

@@ -1,4 +1,3 @@
-import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CompanyAddressInput from "@saleor/components/CompanyAddressInput";
 import Container from "@saleor/components/Container";
@@ -15,13 +14,12 @@ import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
 import { warehouseListUrl } from "@saleor/warehouses/urls";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import WarehouseInfo from "../WarehouseInfo";
 
@@ -77,9 +75,6 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
 
         return (
           <Container>
-            <Backlink href={warehouseListUrl()}>
-              <FormattedMessage {...sectionNames.warehouses} />
-            </Backlink>
             <PageHeader
               title={intl.formatMessage({
                 id: "GhcypC",

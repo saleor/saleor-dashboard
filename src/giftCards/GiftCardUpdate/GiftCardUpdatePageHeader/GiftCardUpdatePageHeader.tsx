@@ -1,10 +1,7 @@
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
-import { Backlink } from "@saleor/components/Backlink";
 import { Button } from "@saleor/components/Button";
 import PageHeader from "@saleor/components/PageHeader";
 import GiftCardStatusChip from "@saleor/giftCards/components/GiftCardStatusChip/GiftCardStatusChip";
-import { giftCardsListPath } from "@saleor/giftCards/urls";
-import { sectionNames } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -35,9 +32,6 @@ const GiftCardUpdatePageHeader: React.FC = () => {
 
   return (
     <>
-      <Backlink href={giftCardsListPath}>
-        {intl.formatMessage(sectionNames.giftCards)}
-      </Backlink>
       <PageHeader
         preview
         inline

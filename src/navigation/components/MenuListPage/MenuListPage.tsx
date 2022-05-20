@@ -1,8 +1,6 @@
-import { Backlink } from "@saleor/components/Backlink";
 import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
-import { configurationMenuUrl } from "@saleor/configuration";
 import { MenuFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { menuListUrl, MenuListUrlSortField } from "@saleor/navigation/urls";
@@ -28,9 +26,6 @@ const MenuListPage: React.FC<MenuListPageProps> = ({ ...listProps }) => {
 
   return (
     <Container>
-      <Backlink href={configurationMenuUrl}>
-        {intl.formatMessage(sectionNames.configuration)}
-      </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.navigation)}>
         <Button variant="primary" href={addUrl} data-test-id="add-menu">
           <FormattedMessage

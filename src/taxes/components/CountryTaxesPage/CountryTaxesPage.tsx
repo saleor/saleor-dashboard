@@ -5,16 +5,13 @@ import {
   TableHead,
   TableRow
 } from "@material-ui/core";
-import { Backlink } from "@saleor/components/Backlink";
 import { Container } from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { CountryListQuery } from "@saleor/graphql";
-import { sectionNames } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import { countryListUrl } from "@saleor/taxes/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -42,9 +39,6 @@ const CountryTaxesPage: React.FC<CountryTaxesPageProps> = props => {
 
   return (
     <Container>
-      <Backlink href={countryListUrl}>
-        {intl.formatMessage(sectionNames.taxes)}
-      </Backlink>
       <PageHeader
         title={
           countryName

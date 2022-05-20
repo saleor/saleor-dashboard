@@ -1,4 +1,3 @@
-import { Backlink } from "@saleor/components/Backlink";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -14,13 +13,12 @@ import {
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { extractMutationErrors } from "@saleor/misc";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { AddressTypeInput } from "../../types";
 import CustomerCreateAddress from "../CustomerCreateAddress/CustomerCreateAddress";
@@ -152,9 +150,6 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
 
         return (
           <Container>
-            <Backlink href={customerListUrl()}>
-              <FormattedMessage {...sectionNames.customers} />
-            </Backlink>
             <PageHeader
               title={intl.formatMessage({
                 id: "N76zUg",

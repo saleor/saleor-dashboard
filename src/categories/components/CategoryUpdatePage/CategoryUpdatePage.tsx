@@ -4,7 +4,6 @@ import {
   categoryListUrl,
   categoryUrl
 } from "@saleor/categories/urls";
-import { Backlink } from "@saleor/components/Backlink";
 import { Button } from "@saleor/components/Button";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
@@ -17,7 +16,6 @@ import { Tab, TabContainer } from "@saleor/components/Tab";
 import { CategoryDetailsQuery, ProductErrorFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -101,9 +99,6 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
     >
       {({ data, change, handlers, submit, isSaveDisabled }) => (
         <Container>
-          <Backlink href={backHref}>
-            {intl.formatMessage(sectionNames.categories)}
-          </Backlink>
           <PageHeader title={category?.name} />
           <CategoryDetailsForm
             data={data}

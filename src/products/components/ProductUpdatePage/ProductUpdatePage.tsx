@@ -11,7 +11,6 @@ import {
 import { ChannelData } from "@saleor/channels/utils";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@saleor/components/Attributes";
-import { Backlink } from "@saleor/components/Backlink";
 import CardMenu from "@saleor/components/CardMenu";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
@@ -40,7 +39,6 @@ import { SubmitPromise } from "@saleor/hooks/useForm";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import ProductExternalMediaDialog from "@saleor/products/components/ProductExternalMediaDialog";
@@ -285,9 +283,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       {({ change, data, formErrors, handlers, submit, isSaveDisabled }) => (
         <>
           <Container>
-            <Backlink href={productListUrl()}>
-              {intl.formatMessage(sectionNames.products)}
-            </Backlink>
             <PageHeader title={header}>
               {extensionMenuItems.length > 0 && (
                 <CardMenu menuItems={extensionMenuItems} data-test-id="menu" />

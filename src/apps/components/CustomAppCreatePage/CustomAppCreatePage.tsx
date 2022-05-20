@@ -1,6 +1,5 @@
 import { appsListUrl } from "@saleor/apps/urls";
 import AccountPermissions from "@saleor/components/AccountPermissions";
-import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
@@ -13,7 +12,6 @@ import {
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAppErrorMessage from "@saleor/utils/errors/app";
@@ -60,9 +58,6 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
     >
       {({ data, change, submit, isSaveDisabled }) => (
         <Container>
-          <Backlink href={appsListUrl()}>
-            {intl.formatMessage(sectionNames.apps)}
-          </Backlink>
           <PageHeader
             title={intl.formatMessage({
               id: "GjH9uy",

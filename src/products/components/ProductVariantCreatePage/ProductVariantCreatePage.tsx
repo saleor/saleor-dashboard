@@ -7,7 +7,6 @@ import Attributes, {
   AttributeInput,
   VariantAttributeScope
 } from "@saleor/components/Attributes";
-import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
@@ -161,7 +160,6 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
     >
       {({ change, data, formErrors, handlers, submit, isSaveDisabled }) => (
         <Container>
-          <Backlink href={productUrl(productId)}>{product?.name}</Backlink>
           <PageHeader title={header} />
           <Grid variant="inverted">
             <div>
