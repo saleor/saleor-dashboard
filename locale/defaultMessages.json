@@ -928,10 +928,6 @@
     "context": "e-mail or full name",
     "string": "Customer"
   },
-  "5c2JVF": {
-    "context": "voucher application, switch button",
-    "string": "Only once per order"
-  },
   "5dLpx0": {
     "context": "references attribute type",
     "string": "References"
@@ -4637,6 +4633,10 @@
   "Y3pCRX": {
     "context": "attribute can be searched in storefront",
     "string": "Use as filter"
+  },
+  "Y3zr/B": {
+    "context": "voucher application, switch button",
+    "string": "Apply only to a single cheapest eligible product"
   },
   "Y4cy0i": {
     "context": "dialog header",
