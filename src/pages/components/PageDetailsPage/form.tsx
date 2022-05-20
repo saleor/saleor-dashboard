@@ -227,16 +227,11 @@ function usePageForm(
     pageType: pageExists ? page?.pageType : opts.selectedPageType
   };
 
-  // Need to make it function to always have content.current up to date
-  const getData = async (): Promise<PageData> => ({
-    ...data,
-    content: await richText.getValue()
-  });
-
   const getSubmitData = async (): Promise<PageSubmitData> => ({
-    ...(await getData()),
+    ...data,
     ...getMetadata(formData, isMetadataModified, isPrivateMetadataModified),
     ...getPublicationData(formData),
+    content: await richText.getValue(),
     attributes: mergeAttributes(
       attributes.data,
       getRichTextAttributesFromMap(
