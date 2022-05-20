@@ -4,8 +4,6 @@ import AppDeactivateDialog from "@saleor/apps/components/AppDeactivateDialog";
 import { AppListContext, AppListContextValues } from "@saleor/apps/context";
 import { defaultListSettings } from "@saleor/config";
 import {
-  AppDeleteFailedInstallationMutation,
-  AppDeleteMutation,
   AppsInstallationsQuery,
   AppsListQuery,
   AppSortField,
@@ -27,7 +25,6 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import { ListViews } from "@saleor/types";
-import getAppErrorMessage from "@saleor/utils/errors/app";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React, { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
@@ -138,57 +135,36 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   };
   const [retryInstallApp] = useAppRetryInstallMutation({
     onCompleted: data => {
-      const errors = data.appRetryInstall.errors;
-      if (!errors.length) {
+      if (!data?.appRetryInstall?.errors?.length) {
         const appInstallation = data.appRetryInstall.appInstallation;
         setActiveInstallations(installations => [
           ...installations,
           { id: appInstallation.id, name: appInstallation.appName }
         ]);
-      } else {
-        errors.forEach(error =>
-          notify({ status: "error", text: getAppErrorMessage(error, intl) })
-        );
       }
     }
   });
   const [activateApp, activateAppResult] = useAppActivateMutation({
     onCompleted: data => {
-      const errors = data?.appActivate?.errors;
-      if (errors?.length === 0) {
+      if (!data?.appActivate?.errors?.length) {
         notify({
           status: "success",
           text: intl.formatMessage(messages.appActivated)
         });
         refetch();
         closeModal();
-      } else {
-        errors.forEach(error =>
-          notify({
-            status: "error",
-            text: getAppErrorMessage(error, intl)
-          })
-        );
       }
     }
   });
   const [deactivateApp, deactivateAppResult] = useAppDeactivateMutation({
     onCompleted: data => {
-      const errors = data?.appDeactivate?.errors;
-      if (errors.length === 0) {
+      if (!data?.appDeactivate?.errors?.length) {
         notify({
           status: "success",
           text: intl.formatMessage(messages.appDeactivated)
         });
         refetch();
         closeModal();
-      } else {
-        errors.forEach(error =>
-          notify({
-            status: "error",
-            text: getAppErrorMessage(error, intl)
-          })
-        );
       }
     }
   });
@@ -197,30 +173,18 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     AppListUrlQueryParams
   >(navigate, appsListUrl, params);
 
-  const onAppRemove = (data: AppDeleteMutation) => {
-    const errors = data.appDelete.errors;
-    if (errors.length === 0) {
-      if (data.appDelete.app.type === AppTypeEnum.LOCAL) {
-        customAppsRefetch();
-      } else {
-        refetch();
-      }
-      closeModal();
-      refetchExtensionList();
-      removeAppNotify();
-    } else {
-      errors.forEach(error =>
-        notify({
-          status: "error",
-          text: getAppErrorMessage(error, intl)
-        })
-      );
-    }
-  };
-
   const [deleteApp, deleteAppOpts] = useAppDeleteMutation({
     onCompleted: data => {
-      onAppRemove(data);
+      if (!data?.appDelete?.errors?.length) {
+        if (data.appDelete.app.type === AppTypeEnum.LOCAL) {
+          customAppsRefetch();
+        } else {
+          refetch();
+        }
+        closeModal();
+        refetchExtensionList();
+        removeAppNotify();
+      }
     }
   });
   const [
@@ -228,7 +192,11 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     deleteInProgressAppOpts
   ] = useAppDeleteFailedInstallationMutation({
     onCompleted: data => {
-      onAppInProgressRemove(data);
+      if (!data?.appDeleteFailedInstallation?.errors?.length) {
+        removeAppNotify();
+        appsInProgressRefetch();
+        closeModal();
+      }
     }
   });
 
@@ -309,21 +277,6 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const handleDeactivateAppConfirm = () =>
     deactivateApp({ variables: { id: params.id } });
 
-  const onAppInProgressRemove = (data: AppDeleteFailedInstallationMutation) => {
-    const errors = data.appDeleteFailedInstallation.errors;
-    if (errors.length === 0) {
-      removeAppNotify();
-      appsInProgressRefetch();
-      closeModal();
-    } else {
-      errors.forEach(error =>
-        notify({
-          status: "error",
-          text: getAppErrorMessage(error, intl)
-        })
-      );
-    }
-  };
   const onAppInstallRetry = (id: string) =>
     retryInstallApp({ variables: { id } });
 
