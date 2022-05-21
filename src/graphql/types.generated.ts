@@ -49,7 +49,11 @@ export type Scalars = {
    */
   PositiveDecimal: any;
   UUID: any;
-  /** Variables of this type must be set to null in mutations. They will be replaced with a filename from a following multipart part containing a binary file. See: https://github.com/jaydenseric/graphql-multipart-request-spec. */
+  /**
+   * Variables of this type must be set to null in mutations. They will be replaced
+   * with a filename from a following multipart part containing a binary file. See:
+   * https://github.com/jaydenseric/graphql-multipart-request-spec.
+   */
   Upload: any;
   WeightScalar: any;
   /** _Any value scalar as defined by Federation spec. */
@@ -196,7 +200,6 @@ export enum AppExtensionMountEnum {
  *
  *     POPUP - app's extension will be mounted as a popup window
  *     APP_PAGE - redirect to app's page
- *
  */
 export enum AppExtensionTargetEnum {
   POPUP = 'POPUP',
@@ -250,9 +253,15 @@ export type AppTokenInput = {
 
 /** Enum determining type of your App. */
 export enum AppTypeEnum {
-  /** Local Saleor App. The app is fully manageable from dashboard. You can change assigned permissions, add webhooks, or authentication token */
+  /**
+   * Local Saleor App. The app is fully manageable from dashboard. You can change
+   * assigned permissions, add webhooks, or authentication token
+   */
   LOCAL = 'LOCAL',
-  /** Third party external App. Installation is fully automated. Saleor uses a defined App manifest to gather all required information. */
+  /**
+   * Third party external App. Installation is fully automated. Saleor uses a
+   * defined App manifest to gather all required information.
+   */
   THIRDPARTY = 'THIRDPARTY'
 }
 
@@ -357,7 +366,10 @@ export type AttributeInput = {
   valuesRange?: InputMaybe<IntRangeInput>;
   /** The date/time range that the returned values should be in. */
   dateTime?: InputMaybe<DateTimeRangeInput>;
-  /** The date range that the returned values should be in. In case of date/time attributes, the UTC midnight of the given date is used. */
+  /**
+   * The date range that the returned values should be in. In case of date/time
+   * attributes, the UTC midnight of the given date is used.
+   */
   date?: InputMaybe<DateRangeInput>;
   /** The boolean value of the attribute. */
   boolean?: InputMaybe<Scalars['Boolean']>;
@@ -581,7 +593,9 @@ export type ChannelCreateInput = {
   /** Currency of the channel. */
   currencyCode: Scalars['String'];
   /**
-   * Default country for the channel. Default country can be used in checkout to determine the stock quantities or calculate taxes when the country was not explicitly provided.
+   * Default country for the channel. Default country can be used in checkout to
+   * determine the stock quantities or calculate taxes when the country was not
+   * explicitly provided.
    *
    * Added in Saleor 3.1.
    */
@@ -616,7 +630,9 @@ export type ChannelUpdateInput = {
   /** Slug of the channel. */
   slug?: InputMaybe<Scalars['String']>;
   /**
-   * Default country for the channel. Default country can be used in checkout to determine the stock quantities or calculate taxes when the country was not explicitly provided.
+   * Default country for the channel. Default country can be used in checkout to
+   * determine the stock quantities or calculate taxes when the country was not
+   * explicitly provided.
    *
    * Added in Saleor 3.1.
    */
@@ -634,7 +650,10 @@ export type CheckoutCreateInput = {
   lines: Array<CheckoutLineInput>;
   /** The customer's email address. */
   email?: InputMaybe<Scalars['String']>;
-  /** The mailing address to where the checkout will be shipped. Note: the address will be ignored if the checkout doesn't contain shippable items. */
+  /**
+   * The mailing address to where the checkout will be shipped. Note: the address
+   * will be ignored if the checkout doesn't contain shippable items.
+   */
   shippingAddress?: InputMaybe<AddressInput>;
   /** Billing address of the customer. */
   billingAddress?: InputMaybe<AddressInput>;
@@ -687,7 +706,9 @@ export type CheckoutLineInput = {
   /** ID of the product variant. */
   variantId: Scalars['ID'];
   /**
-   * Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used.
+   * Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS`
+   * permission. When the line with the same variant will be provided multiple
+   * times, the last price will be used.
    *
    * Added in Saleor 3.1.
    *
@@ -702,7 +723,9 @@ export type CheckoutLineUpdateInput = {
   /** ID of the product variant. */
   variantId: Scalars['ID'];
   /**
-   * Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used.
+   * Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS`
+   * permission. When the line with the same variant will be provided multiple
+   * times, the last price will be used.
    *
    * Added in Saleor 3.1.
    *
@@ -1118,8 +1141,18 @@ export enum CountryCode {
 }
 
 export type CountryFilterInput = {
-  /** Boolean for filtering countries by having shipping zone assigned.If 'true', return countries with shipping zone assigned.If 'false', return countries without any shipping zone assigned.If the argument is not provided (null), return all countries. */
+  /**
+   * Boolean for filtering countries by having shipping zone assigned.If 'true',
+   * return countries with shipping zone assigned.If 'false', return countries
+   * without any shipping zone assigned.If the argument is not provided (null),
+   * return all countries.
+   */
   attachedToShippingZones?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type CountryRateInput = {
+  countryCode: CountryCode;
+  rate: Scalars['Float'];
 };
 
 /** An enumeration. */
@@ -2607,7 +2640,11 @@ export type MenuItemMoveInput = {
   itemId: Scalars['ID'];
   /** ID of the parent menu. If empty, menu will be top level menu. */
   parentId?: InputMaybe<Scalars['ID']>;
-  /** The new relative sorting position of the item (from -inf to +inf). 1 moves the item one position forward, -1 moves the item one position backward, 0 leaves the item unchanged. */
+  /**
+   * The new relative sorting position of the item (from -inf to +inf). 1 moves the
+   * item one position forward, -1 moves the item one position backward, 0 leaves
+   * the item unchanged.
+   */
   sortOrder?: InputMaybe<Scalars['Int']>;
 };
 
@@ -2670,7 +2707,11 @@ export type MoneyInput = {
 export type MoveProductInput = {
   /** The ID of the product to move. */
   productId: Scalars['ID'];
-  /** The relative sorting position of the product (from -inf to +inf) starting from the first given product's actual position.1 moves the item one position forward, -1 moves the item one position backward, 0 leaves the item unchanged. */
+  /**
+   * The relative sorting position of the product (from -inf to +inf) starting from
+   * the first given product's actual position.1 moves the item one position
+   * forward, -1 moves the item one position backward, 0 leaves the item unchanged.
+   */
   sortOrder?: InputMaybe<Scalars['Int']>;
 };
 
@@ -2963,7 +3004,10 @@ export enum OrderSettingsErrorCode {
 }
 
 export type OrderSettingsUpdateInput = {
-  /** When disabled, all new orders from checkout will be marked as unconfirmed. When enabled orders from checkout will become unfulfilled immediately. */
+  /**
+   * When disabled, all new orders from checkout will be marked as unconfirmed.
+   * When enabled orders from checkout will become unfulfilled immediately.
+   */
   automaticallyConfirmAllNewOrders?: InputMaybe<Scalars['Boolean']>;
   /** When enabled, all non-shippable gift card orders will be fulfilled automatically. */
   automaticallyFulfillNonShippableGiftCard?: InputMaybe<Scalars['Boolean']>;
@@ -3239,9 +3283,16 @@ export type PaymentInput = {
   gateway: Scalars['String'];
   /** Client-side generated payment token, representing customer's billing data in a secure manner. */
   token?: InputMaybe<Scalars['String']>;
-  /** Total amount of the transaction, including all taxes and discounts. If no amount is provided, the checkout total will be used. */
+  /**
+   * Total amount of the transaction, including all taxes and discounts. If no
+   * amount is provided, the checkout total will be used.
+   */
   amount?: InputMaybe<Scalars['PositiveDecimal']>;
-  /** URL of a storefront view where user should be redirected after requiring additional actions. Payment with additional actions will not be finished if this field is not provided. */
+  /**
+   * URL of a storefront view where user should be redirected after requiring
+   * additional actions. Payment with additional actions will not be finished if
+   * this field is not provided.
+   */
   returnUrl?: InputMaybe<Scalars['String']>;
   /**
    * Payment store type.
@@ -3455,13 +3506,15 @@ export type ProductChannelListingAddInput = {
   /** Determine if product should be available for purchase. */
   isAvailableForPurchase?: InputMaybe<Scalars['Boolean']>;
   /**
-   * A start date from which a product will be available for purchase. When not set and isAvailable is set to True, the current day is assumed.
+   * A start date from which a product will be available for purchase. When not set
+   * and isAvailable is set to True, the current day is assumed.
    *
    * DEPRECATED: this field will be removed in Saleor 4.0. Use `availableForPurchaseAt` field instead.
    */
   availableForPurchaseDate?: InputMaybe<Scalars['Date']>;
   /**
-   * A start date time from which a product will be available for purchase. When not set and `isAvailable` is set to True, the current day is assumed.
+   * A start date time from which a product will be available for purchase. When
+   * not set and `isAvailable` is set to True, the current day is assumed.
    *
    * Added in Saleor 3.3.
    */
@@ -3694,7 +3747,11 @@ export type ProductTypeInput = {
   slug?: InputMaybe<Scalars['String']>;
   /** The product type kind. */
   kind?: InputMaybe<ProductTypeKindEnum>;
-  /** Determines if product of this type has multiple variants. This option mainly simplifies product management in the dashboard. There is always at least one variant created under the hood. */
+  /**
+   * Determines if product of this type has multiple variants. This option mainly
+   * simplifies product management in the dashboard. There is always at least one
+   * variant created under the hood.
+   */
   hasVariants?: InputMaybe<Scalars['Boolean']>;
   /** List of attributes shared among all product variants. */
   productAttributes?: InputMaybe<Array<Scalars['ID']>>;
@@ -3737,7 +3794,10 @@ export type ProductVariantBulkCreateInput = {
   attributes: Array<BulkAttributeValueInput>;
   /** Stock keeping unit. */
   sku?: InputMaybe<Scalars['String']>;
-  /** Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item. */
+  /**
+   * Determines if the inventory of this variant should be tracked. If false, the
+   * quantity won't change when customers buy this item.
+   */
   trackInventory?: InputMaybe<Scalars['Boolean']>;
   /** Weight of the Product Variant. */
   weight?: InputMaybe<Scalars['WeightScalar']>;
@@ -3785,7 +3845,10 @@ export type ProductVariantCreateInput = {
   attributes: Array<AttributeValueInput>;
   /** Stock keeping unit. */
   sku?: InputMaybe<Scalars['String']>;
-  /** Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item. */
+  /**
+   * Determines if the inventory of this variant should be tracked. If false, the
+   * quantity won't change when customers buy this item.
+   */
   trackInventory?: InputMaybe<Scalars['Boolean']>;
   /** Weight of the Product Variant. */
   weight?: InputMaybe<Scalars['WeightScalar']>;
@@ -3824,7 +3887,10 @@ export type ProductVariantInput = {
   attributes?: InputMaybe<Array<AttributeValueInput>>;
   /** Stock keeping unit. */
   sku?: InputMaybe<Scalars['String']>;
-  /** Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item. */
+  /**
+   * Determines if the inventory of this variant should be tracked. If false, the
+   * quantity won't change when customers buy this item.
+   */
   trackInventory?: InputMaybe<Scalars['Boolean']>;
   /** Weight of the Product Variant. */
   weight?: InputMaybe<Scalars['WeightScalar']>;
@@ -3880,7 +3946,11 @@ export type PublishableChannelListingInput = {
 export type ReorderInput = {
   /** The ID of the item to move. */
   id: Scalars['ID'];
-  /** The new relative sorting position of the item (from -inf to +inf). 1 moves the item one position forward, -1 moves the item one position backward, 0 leaves the item unchanged. */
+  /**
+   * The new relative sorting position of the item (from -inf to +inf). 1 moves the
+   * item one position forward, -1 moves the item one position backward, 0 leaves
+   * the item unchanged.
+   */
   sortOrder?: InputMaybe<Scalars['Int']>;
 };
 
@@ -4267,6 +4337,95 @@ export enum StorePaymentMethodEnum {
   OFF_SESSION = 'OFF_SESSION',
   /** Storage is disabled. The payment is not stored. */
   NONE = 'NONE'
+}
+
+export enum TaxClassCreateErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM'
+}
+
+export type TaxClassCreateInput = {
+  name: Scalars['String'];
+  updateCountryRates?: InputMaybe<Array<CountryRateInput>>;
+};
+
+export enum TaxClassDeleteErrorCode {
+  CANNOT_REMOVE_DEFAULT_CLASS = 'CANNOT_REMOVE_DEFAULT_CLASS',
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR'
+}
+
+export type TaxClassFilterInput = {
+  ids?: InputMaybe<Array<Scalars['ID']>>;
+  countries?: InputMaybe<Array<CountryCode>>;
+};
+
+export type TaxClassRateInput = {
+  taxClassId: Scalars['ID'];
+  rate?: InputMaybe<Scalars['Float']>;
+};
+
+export enum TaxClassSortingField {
+  NAME = 'NAME'
+}
+
+export type TaxClassSortingInput = {
+  direction: OrderDirection;
+  field: TaxClassSortingField;
+};
+
+export enum TaxClassUpdateErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR'
+}
+
+export type TaxClassUpdateInput = {
+  name?: InputMaybe<Scalars['String']>;
+  updateCountryRates?: InputMaybe<Array<CountryRateInput>>;
+  removeCountryRates?: InputMaybe<Array<CountryCode>>;
+};
+
+export type TaxConfigurationFilterInput = {
+  ids?: InputMaybe<Array<Scalars['ID']>>;
+};
+
+export type TaxConfigurationPerCountryInput = {
+  countryCode: CountryCode;
+  chargeTaxes: Scalars['Boolean'];
+  displayGrossPrices: Scalars['Boolean'];
+};
+
+export enum TaxConfigurationSortingField {
+  CHANNEL = 'CHANNEL'
+}
+
+export type TaxConfigurationSortingInput = {
+  direction: OrderDirection;
+  field: TaxConfigurationSortingField;
+};
+
+export enum TaxConfigurationUpdateErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM'
+}
+
+export type TaxConfigurationUpdateInput = {
+  chargeTaxes?: InputMaybe<Scalars['Boolean']>;
+  displayGrossPrices?: InputMaybe<Scalars['Boolean']>;
+  pricesEnteredWithTax?: InputMaybe<Scalars['Boolean']>;
+  updateCountriesConfiguration?: InputMaybe<Array<TaxConfigurationPerCountryInput>>;
+  removeCountriesConfiguration?: InputMaybe<Array<CountryCode>>;
+};
+
+export enum TaxCountryConfigurationUpdateErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR'
+}
+
+export type TaxCountryConfigurationUpdateInput = {
+  countryCode: CountryCode;
+  updateTaxClassRates?: InputMaybe<Array<TaxClassRateInput>>;
+};
+
+export enum TaxCountryDeleteConfigurationErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR'
 }
 
 export type TimePeriodInputType = {
@@ -4657,11 +4816,18 @@ export enum WebhookEventTypeAsyncEnum {
   GIFT_CARD_STATUS_CHANGED = 'GIFT_CARD_STATUS_CHANGED',
   /** A new order is placed. */
   ORDER_CREATED = 'ORDER_CREATED',
-  /** An order is confirmed (status change unconfirmed -> unfulfilled) by a staff user using the OrderConfirm mutation. It also triggers when the user completes the checkout and the shop setting `automatically_confirm_all_new_orders` is enabled. */
+  /**
+   * An order is confirmed (status change unconfirmed -> unfulfilled) by a staff
+   * user using the OrderConfirm mutation. It also triggers when the user completes
+   * the checkout and the shop setting `automatically_confirm_all_new_orders` is enabled.
+   */
   ORDER_CONFIRMED = 'ORDER_CONFIRMED',
   /** Payment is made and an order is fully paid. */
   ORDER_FULLY_PAID = 'ORDER_FULLY_PAID',
-  /** An order is updated; triggered for all changes related to an order; covers all other order webhooks, except for ORDER_CREATED. */
+  /**
+   * An order is updated; triggered for all changes related to an order; covers all
+   * other order webhooks, except for ORDER_CREATED.
+   */
   ORDER_UPDATED = 'ORDER_UPDATED',
   /** An order is cancelled. */
   ORDER_CANCELLED = 'ORDER_CANCELLED',
@@ -4763,11 +4929,18 @@ export enum WebhookEventTypeEnum {
   GIFT_CARD_STATUS_CHANGED = 'GIFT_CARD_STATUS_CHANGED',
   /** A new order is placed. */
   ORDER_CREATED = 'ORDER_CREATED',
-  /** An order is confirmed (status change unconfirmed -> unfulfilled) by a staff user using the OrderConfirm mutation. It also triggers when the user completes the checkout and the shop setting `automatically_confirm_all_new_orders` is enabled. */
+  /**
+   * An order is confirmed (status change unconfirmed -> unfulfilled) by a staff
+   * user using the OrderConfirm mutation. It also triggers when the user completes
+   * the checkout and the shop setting `automatically_confirm_all_new_orders` is enabled.
+   */
   ORDER_CONFIRMED = 'ORDER_CONFIRMED',
   /** Payment is made and an order is fully paid. */
   ORDER_FULLY_PAID = 'ORDER_FULLY_PAID',
-  /** An order is updated; triggered for all changes related to an order; covers all other order webhooks, except for ORDER_CREATED. */
+  /**
+   * An order is updated; triggered for all changes related to an order; covers all
+   * other order webhooks, except for ORDER_CREATED.
+   */
   ORDER_UPDATED = 'ORDER_UPDATED',
   /** An order is cancelled. */
   ORDER_CANCELLED = 'ORDER_CANCELLED',
