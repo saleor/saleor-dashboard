@@ -3,7 +3,7 @@ import { PRODUCT_DETAILS } from "../../../../elements/catalog/products/product-d
 import { VARIANTS_SELECTORS } from "../../../../elements/catalog/products/variants-selectors";
 import { AVAILABLE_CHANNELS_FORM } from "../../../../elements/channels/available-channels-form";
 import { BUTTON_SELECTORS } from "../../../../elements/shared/button-selectors";
-import { SHARED_ELEMENTS } from "../../../../elements/shared/sharedElements";
+import { urlList } from "../../../../fixtures/urlList";
 import { formatDate } from "../../../formatData/formatDate";
 import { selectChannelVariantInDetailsPage } from "../../channelsPage";
 import { fillUpPriceList } from "./priceListComponent";
@@ -60,7 +60,8 @@ export function createVariant({
   price,
   costPrice = price,
   channelName,
-  quantity = 10
+  quantity = 10,
+  productId
 }) {
   cy.get(PRODUCT_DETAILS.addVariantsButton).click();
   fillUpVariantDetails({ attributeName, sku, warehouseName, quantity });
@@ -68,8 +69,7 @@ export function createVariant({
     .click()
     .get(VARIANTS_SELECTORS.skuInput)
     .should("be.enabled")
-    .get(BUTTON_SELECTORS.back)
-    .click()
+    .visit(`${urlList.products}${productId}`)
     .get(PRODUCT_DETAILS.productNameInput)
     .should("be.enabled");
   selectChannelForVariantAndFillUpPrices({
@@ -159,8 +159,7 @@ export function selectChannelForVariantAndFillUpPrices({
     .waitForRequestAndCheckIfNoErrors("@ProductVariantChannelListingUpdate")
     .get(PRICE_LIST.priceInput)
     .should("be.enabled")
-    .get(BUTTON_SELECTORS.back)
-    .click()
+    .go("back")
     .waitForProgressBarToNotBeVisible()
     .get(AVAILABLE_CHANNELS_FORM.menageChannelsButton)
     .should("be.visible");

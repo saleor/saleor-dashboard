@@ -18,10 +18,7 @@ import {
   createVariant,
   variantsShouldBeVisible
 } from "../../support/pages/catalog/products/VariantsPage";
-import {
-  enterHomePageChangeChannelAndReturn,
-  selectChannelInHeader
-} from "../../support/pages/channelsPage";
+import { selectChannelInHeader } from "../../support/pages/channelsPage";
 
 filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
   describe("As an admin I should be able to create variant", () => {
@@ -133,7 +130,8 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
             sku: secondVariantSku,
             attributeName: variants[1].name,
             price: variants[1].price,
-            channelName: defaultChannel.name
+            channelName: defaultChannel.name,
+            productId: createdProduct.id
           });
         })
         .then(() => {

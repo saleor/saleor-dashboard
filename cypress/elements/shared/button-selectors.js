@@ -1,5 +1,4 @@
 export const BUTTON_SELECTORS = {
-  back: '[data-test-id="app-header-back-button"]',
   submit: '[data-test-id="submit"]',
   confirm: '[data-test="button-bar-confirm"]',
   goBackButton: "[data-test-id='app-header-back-button']",
