@@ -3414,9 +3414,6 @@
     "context": "dialog header",
     "string": "Cancel Order"
   },
-  "PRlD0A": {
-    "string": "Shipping"
-  },
   "PTW56s": {
     "context": "alert",
     "string": "Channel limit reached"
