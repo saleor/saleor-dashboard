@@ -98,7 +98,8 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
             {intl.formatMessage(
               disabledMessage || {
                 id: "e48Igh",
-                defaultMessage: "There is no channel to define prices for",
+                defaultMessage:
+                  "Assign this variant to a channel in the product channel manager to define prices",
                 description: "variant pricing section subtitle"
               }
             )}
