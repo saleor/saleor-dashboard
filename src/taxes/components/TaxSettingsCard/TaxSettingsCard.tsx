@@ -29,7 +29,9 @@ const useStyles = makeStyles(
       textTransform: "uppercase"
     },
     showCheckboxShadows: {
-      overflow: "visible"
+      "&&": {
+        overflow: "visible"
+      }
     }
   }),
   { name: "TaxSettingsCard" }
@@ -74,7 +76,7 @@ export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = () => {
               value="test2"
             />
           </RadioGroup>
-          <div>
+          <div className={classes.showCheckboxShadows}>
             <Typography className={classes.supportHeader}>
               <FormattedMessage {...taxesMessages.renderedPrices} />
             </Typography>
