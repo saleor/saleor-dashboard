@@ -11,7 +11,7 @@ import {
 } from "@saleor/macaw-ui";
 import { taxesMessages } from "@saleor/taxes/messages";
 import { channelsListUrl } from "@saleor/taxes/urls";
-import clsx from "clsx";
+import clsx from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
