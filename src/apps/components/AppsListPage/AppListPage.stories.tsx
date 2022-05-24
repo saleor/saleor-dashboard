@@ -1,3 +1,4 @@
+import { AppListContext } from "@saleor/apps/context";
 import {
   listActionsProps,
   pageListProps,
@@ -37,6 +38,13 @@ const props: AppsListPageProps = {
 
 storiesOf("Views / Apps / Apps list", module)
   .addDecorator(Decorator)
+  .addDecorator(story => (
+    <AppListContext.Provider
+      value={{ activateApp: () => undefined, deactivateApp: () => undefined }}
+    >
+      {story()}
+    </AppListContext.Provider>
+  ))
   .add("default", () => <AppsListPage {...props} />)
   .add("loading", () => (
     <AppsListPage
