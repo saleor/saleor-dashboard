@@ -30,7 +30,10 @@ const useStyles = makeStyles(
       maxHeight: 600
     },
     selected: {
-      borderLeft: `4px solid ${theme.palette.saleor.active[1]}`
+      borderLeft: `4px solid ${theme.palette.saleor.active[1]}`,
+      "& div": {
+        marginLeft: "-4px"
+      }
     }
   }),
   { name: "TaxChannelsMenu" }
