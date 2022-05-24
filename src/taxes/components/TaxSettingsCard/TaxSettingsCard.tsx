@@ -15,10 +15,6 @@ import { taxesMessages } from "@saleor/taxes/messages";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-interface TaxSettingsCardProps {
-  data?: any;
-}
-
 const useStyles = makeStyles(
   () => ({
     supportHeader: {
@@ -37,7 +33,7 @@ const useStyles = makeStyles(
   { name: "TaxSettingsCard" }
 );
 
-export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = () => {
+export const TaxSettingsCard: React.FC = () => {
   const intl = useIntl();
   const classes = useStyles();
 
