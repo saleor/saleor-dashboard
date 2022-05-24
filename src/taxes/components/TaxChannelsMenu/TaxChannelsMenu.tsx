@@ -1,6 +1,6 @@
 import { Card } from "@material-ui/core";
-import { Skeleton } from "@material-ui/lab";
 import ListItemLink from "@saleor/components/ListItemLink";
+import Skeleton from "@saleor/components/Skeleton";
 import { TaxConfigurationFragment } from "@saleor/graphql";
 import {
   List,
