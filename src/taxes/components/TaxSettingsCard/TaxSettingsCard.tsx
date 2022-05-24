@@ -61,6 +61,7 @@ export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = () => {
           <RadioGroup
             value={radioTest}
             onChange={e => setRadioTest(e.target.value)}
+            className={classes.showCheckboxShadows}
           >
             <Typography className={classes.supportHeader}>
               <FormattedMessage {...taxesMessages.enteredPrices} />

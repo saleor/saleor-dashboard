@@ -3,10 +3,10 @@ import { TaxConfigurationFragment } from "@saleor/graphql";
 export const taxConfigurations: TaxConfigurationFragment[] = [
   {
     __typename: "TaxConfiguration",
-    id: "taxConfigurations.edges.0.node.id",
+    id: "taxConf1",
     channel: {
       __typename: "Channel",
-      id: "taxConfigurations.edges.0.node.channel.id",
+      id: "taxChannel1",
       name: "Channel USD"
     },
     displayGrossPrices: true,
@@ -29,10 +29,10 @@ export const taxConfigurations: TaxConfigurationFragment[] = [
   },
   {
     __typename: "TaxConfiguration",
-    id: "taxConfigurations.edges.1.node.id",
+    id: "taxConf2",
     channel: {
       __typename: "Channel",
-      id: "taxConfigurations.edges.1.node.channel.id",
+      id: "taxChannel2",
       name: "Channel PLN"
     },
     displayGrossPrices: false,
