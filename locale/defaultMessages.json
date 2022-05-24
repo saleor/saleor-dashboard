@@ -86,6 +86,9 @@
     "context": "error message",
     "string": "This attribute is already assigned."
   },
+  "+iV0gu": {
+    "string": "Internal Apps"
+  },
   "+iVKR1": {
     "context": "assign attribute value button",
     "string": "Assign value"
@@ -1657,6 +1660,10 @@
   },
   "BtErCZ": {
     "string": "Search Plugins..."
+  },
+  "BvmnJq": {
+    "context": "section header",
+    "string": "Third Party Apps"
   },
   "Bx367s": {
     "context": "product is hidden",
@@ -3930,10 +3937,6 @@
     "context": "order subtotal price",
     "string": "Subtotal"
   },
-  "TBaMo2": {
-    "context": "about app",
-    "string": "About"
-  },
   "TC/EOG": {
     "context": "status section title",
     "string": "Status in channel"
@@ -4808,10 +4811,6 @@
   "Zd3Eew": {
     "context": "subsection header",
     "string": "Shipping Address"
-  },
-  "ZeD2TK": {
-    "context": "section header",
-    "string": "Third-party Apps"
   },
   "Zg0dRo": {
     "context": "dialog description",
@@ -7505,9 +7504,6 @@
     "context": "section header",
     "string": "Plugin Information and Status"
   },
-  "w4R/SO": {
-    "string": "Local Apps"
-  },
   "w6Gau0": {
     "context": "deactivate named app",
     "string": "Are you sure you want to disable {name}? Your data will be kept until you reactivate the app. You will be still billed for the app."
@@ -7629,6 +7625,10 @@
   },
   "xJQX5t": {
     "string": "No staff members found"
+  },
+  "xNfh4L": {
+    "context": "app permissions tooltip header",
+    "string": "App permissions"
   },
   "xOEZjV": {
     "context": "attribute's label",
