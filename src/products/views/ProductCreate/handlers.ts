@@ -102,6 +102,7 @@ export function createHandler(
       input: {
         attributes: prepareAttributesInput({
           attributes: formData.attributes,
+          prevAttributes: null,
           updatedFileAttributes
         }),
         category: formData.category,

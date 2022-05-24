@@ -119,6 +119,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
         input: {
           attributes: prepareAttributesInput({
             attributes: formData.attributes,
+            prevAttributes: null,
             updatedFileAttributes
           }),
           content: getParsedDataForJsonStringField(formData.content),

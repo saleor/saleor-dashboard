@@ -1,6 +1,7 @@
 import {
   ButtonGroup,
   ButtonGroupProps,
+  ButtonProps,
   ClickAwayListener,
   Grow,
   MenuItem,
@@ -21,15 +22,17 @@ interface Option {
 }
 
 export interface ButtonWithSelectProps
-  extends Omit<ButtonGroupProps, "onClick"> {
+  extends Omit<ButtonGroupProps, "onClick">,
+    Pick<ButtonProps, "onClick"> {
   options: Option[];
-  href: string;
+  href?: string;
 }
 
 export const ButtonWithSelect: React.FC<ButtonWithSelectProps> = ({
   options,
   children,
   href,
+  onClick,
   ...props
 }) => {
   const [open, setOpen] = React.useState(false);
@@ -61,20 +64,20 @@ export const ButtonWithSelect: React.FC<ButtonWithSelectProps> = ({
 
   return (
     <>
-      <ButtonGroup
-        variant="contained"
-        color="primary"
-        ref={anchorRef}
-        aria-label="button with select"
-        {...props}
-      >
-        <Button variant="primary" href={href} style={{ width: "100%" }}>
+      <ButtonGroup ref={anchorRef} aria-label="button with select" {...props}>
+        <Button
+          variant="primary"
+          color="primary"
+          onClick={onClick}
+          href={href}
+          style={{ width: "100%" }}
+        >
           {children}
         </Button>
         {options.length > 0 && (
           <Button
+            variant="primary"
             color="primary"
-            size="small"
             aria-controls={open ? "button-with-select-menu" : undefined}
             aria-expanded={open ? "true" : undefined}
             aria-label="select different option"

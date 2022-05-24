@@ -1,5 +1,10 @@
 import { Card } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
+import {
+  extensionMountPoints,
+  mapToMenuItems,
+  useExtensions
+} from "@saleor/apps/useExtensions";
+import { ButtonWithSelect } from "@saleor/components/ButtonWithSelect";
 import CardMenu from "@saleor/components/CardMenu";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
@@ -66,6 +71,12 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   const filterStructure = createFilterStructure(intl, filterOpts);
   const limitsReached = isLimitReached(limits, "orders");
 
+  const { ORDER_OVERVIEW_CREATE, ORDER_OVERVIEW_MORE_ACTIONS } = useExtensions(
+    extensionMountPoints.ORDER_LIST
+  );
+  const extensionMenuItems = mapToMenuItems(ORDER_OVERVIEW_MORE_ACTIONS);
+  const extensionCreateButtonItems = mapToMenuItems(ORDER_OVERVIEW_CREATE);
+
   return (
     <Container>
       <PageHeader
@@ -96,24 +107,25 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
                     description: "button"
                   }),
                   onSelect: onSettingsOpen
-                }
+                },
+                ...extensionMenuItems
               ]}
             />
           )
         }
       >
-        <Button
+        <ButtonWithSelect
           disabled={limitsReached}
-          variant="primary"
-          onClick={onAdd}
+          options={extensionCreateButtonItems}
           data-test-id="create-order-button"
+          onClick={onAdd}
         >
           <FormattedMessage
             id="LshEVn"
             defaultMessage="Create order"
             description="button"
           />
-        </Button>
+        </ButtonWithSelect>
       </PageHeader>
       {limitsReached && <OrderLimitReached />}
       <Card>

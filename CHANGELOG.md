@@ -4,6 +4,7 @@ All notable, unreleased changes to this project will be documented in this file.
 
 ## [Unreleased]
 - Added links instead of imperative navigation with onClick - #1969 by @taniotanio7
+- Fixed clearing attribute values - #2047 by @witoszekdev
 
 ## 3.1
 ### PREVIEW FEATURES
