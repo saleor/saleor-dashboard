@@ -1,6 +1,7 @@
 import { Card } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import ListItemLink from "@saleor/components/ListItemLink";
+import { TaxConfigurationFragment } from "@saleor/graphql";
 import {
   List,
   ListHeader,
@@ -15,7 +16,7 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 interface TaxChannelsMenuProps {
-  channels: any;
+  channels: Array<TaxConfigurationFragment["channel"]>;
   selectedChannelId: string;
 }
 

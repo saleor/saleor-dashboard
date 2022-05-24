@@ -1,8 +1,9 @@
-import { useChannelsQuery } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
+import useShop from "@saleor/hooks/useShop";
 import React from "react";
 
 import TaxChannelsPage from "../components/TaxChannelsPage";
+import { taxConfigurations } from "../fixtures";
 import { channelsListUrl, taxTabSectionUrl } from "../urls";
 
 interface ChannelsListProps {
@@ -11,29 +12,23 @@ interface ChannelsListProps {
 
 export const ChannelsList: React.FC<ChannelsListProps> = ({ id }) => {
   const navigate = useNavigator();
+  const shop = useShop();
 
   const handleTabChange = (tab: string) => {
     navigate(taxTabSectionUrl(tab));
   };
 
-  // sample channels data before connecting to new api
-  const { data: channelsData } = useChannelsQuery();
-
   React.useEffect(() => {
-    if (id === "undefined" && channelsData?.channels) {
-      navigate(channelsListUrl(channelsData.channels[0].id));
+    if (id === "undefined" && taxConfigurations) {
+      navigate(channelsListUrl(taxConfigurations[0].channel.id));
     }
-  }, [id, channelsData]);
+  }, [id, taxConfigurations]);
 
   return (
     <TaxChannelsPage
-      // again, sample data before connecting to new api
-      data={[
-        { id: "129837", name: "Brazil" },
-        { id: "9182739", name: "Andora" }
-      ]}
+      taxConfigurations={taxConfigurations} // sample data
+      countries={shop?.countries}
       selectedChannelId={id}
-      channels={channelsData?.channels}
       handleTabChange={handleTabChange}
     />
   );

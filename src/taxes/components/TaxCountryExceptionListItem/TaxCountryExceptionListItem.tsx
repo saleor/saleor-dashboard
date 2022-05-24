@@ -1,4 +1,5 @@
 import { Checkbox } from "@material-ui/core";
+import { TaxConfigurationPerCountryFragment } from "@saleor/graphql";
 import {
   DeleteIcon,
   IconButton,
@@ -8,14 +9,15 @@ import {
 import React from "react";
 
 interface TaxCountryExceptionListItemProps {
-  country: any;
+  country: TaxConfigurationPerCountryFragment;
+  countryName: string;
 }
 
 export const TaxCountryExceptionListItem: React.FC<TaxCountryExceptionListItemProps> = ({
-  country
+  countryName
 }) => (
   <ListItem hover={false}>
-    <ListItemCell>{country.name}</ListItemCell>
+    <ListItemCell>{countryName}</ListItemCell>
     <ListItemCell>
       <Checkbox />
     </ListItemCell>

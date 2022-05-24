@@ -4,6 +4,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
+import { CountryFragment, TaxConfigurationFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import {
   Button,
@@ -23,16 +24,25 @@ import TaxCountryExceptionListItem from "../TaxCountryExceptionListItem";
 import TaxSettingsCard from "../TaxSettingsCard";
 
 interface TaxChannelsPageProps {
-  data: any;
-  channels: any;
+  taxConfigurations: TaxConfigurationFragment[];
+  countries: CountryFragment[];
   selectedChannelId: string;
   handleTabChange: (tab: string) => void;
 }
 
 export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
-  const { data, channels, selectedChannelId, handleTabChange } = props;
+  const {
+    taxConfigurations,
+    countries,
+    selectedChannelId,
+    handleTabChange
+  } = props;
 
   const intl = useIntl();
+
+  const currentTaxConfiguration = taxConfigurations.find(
+    taxConfigurations => taxConfigurations.channel.id === selectedChannelId
+  );
 
   return (
     <Container>
@@ -54,7 +64,9 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
       <VerticalSpacer spacing={2} />
       <Grid variant="inverted">
         <TaxChannelsMenu
-          channels={channels}
+          channels={taxConfigurations.map(
+            taxConfiguration => taxConfiguration.channel
+          )}
           selectedChannelId={selectedChannelId}
         />
         <div>
@@ -83,10 +95,15 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                   </ListItemCell>
                 </ListItem>
               </ListHeader>
-              {data.map(country => (
+              {currentTaxConfiguration?.countries.map(country => (
                 <TaxCountryExceptionListItem
                   country={country}
-                  key={country.id}
+                  countryName={
+                    countries?.find(
+                      shopCountry => shopCountry.code === country.countryCode
+                    )?.country
+                  }
+                  key={country.countryCode}
                 />
               ))}
             </List>
