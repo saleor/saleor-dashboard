@@ -194,8 +194,8 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
           label={
             <>
               <FormattedMessage
-                id="5c2JVF"
-                defaultMessage="Only once per order"
+                id="Y3zr/B"
+                defaultMessage="Apply only to a single cheapest eligible product"
                 description="voucher application, switch button"
               />
               <Typography variant="caption">
