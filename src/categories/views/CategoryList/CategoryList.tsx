@@ -14,7 +14,8 @@ import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
-  createPaginationState
+  createPaginationState,
+  PaginatorContext
 } from "@saleor/hooks/usePaginator";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
@@ -49,7 +50,6 @@ interface CategoryListProps {
 
 export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   const navigate = useNavigator();
-  const paginate = usePaginator();
 
   const { isSelected, listElements, toggle, toggleAll, reset } = useBulkActions(
     params.ids
@@ -117,11 +117,11 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     handleTabChange(tabs.length + 1);
   };
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    maybe(() => data.categories.pageInfo),
+  const paginationValues = usePaginator({
+    pageInfo: maybe(() => data.categories.pageInfo),
     paginationState,
-    params
-  );
+    queryString: params
+  });
 
   const handleCategoryBulkDelete = (data: CategoryBulkDeleteMutation) => {
     if (data.categoryBulkDelete.errors.length === 0) {
@@ -141,7 +141,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   const handleSort = createSortHandler(navigate, categoryListUrl, params);
 
   return (
-    <>
+    <PaginatorContext.Provider value={paginationValues}>
       <CategoryListPage
         categories={mapEdgesToItems(data?.categories)}
         currentTab={currentTab}
@@ -156,10 +156,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         sort={getSortParams(params)}
         onSort={handleSort}
         disabled={loading}
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
-        pageInfo={pageInfo}
         isChecked={isSelected}
         selected={listElements.length}
         toggle={toggle}
@@ -235,7 +232,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         onSubmit={handleTabDelete}
         tabName={maybe(() => tabs[currentTab - 1].name, "...")}
       />
-    </>
+    </PaginatorContext.Provider>
   );
 };
 export default CategoryList;

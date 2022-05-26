@@ -1,5 +1,6 @@
 import placeholderImage from "@assets/images/placeholder255x255.png";
 import { ProductErrorCode } from "@saleor/graphql";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -42,6 +43,7 @@ const updateProps: Omit<CategoryUpdatePageProps, "classes"> = {
 
 storiesOf("Views / Categories / Update category", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("default", () => <CategoryUpdatePage {...updateProps} />)
   .add("products", () => (
     <CategoryUpdatePage

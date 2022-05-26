@@ -36,7 +36,6 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
   disabled,
   initialSearch,
   isChecked,
-  pageInfo,
   selected,
   settings,
   tabs,
@@ -44,8 +43,6 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
   toggleAll,
   toolbar,
   onAll,
-  onNextPage,
-  onPreviousPage,
   onSearchChange,
   onTabChange,
   onTabDelete,
@@ -95,14 +92,11 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
           disabled={disabled}
           isChecked={isChecked}
           isRoot={true}
-          pageInfo={pageInfo}
           selected={selected}
           settings={settings}
           toggle={toggle}
           toggleAll={toggleAll}
           toolbar={toolbar}
-          onNextPage={onNextPage}
-          onPreviousPage={onPreviousPage}
           onUpdateListSettings={onUpdateListSettings}
           {...listProps}
         />
