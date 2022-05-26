@@ -11,9 +11,7 @@ import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
-import TablePagination, {
-  TablePaginationWithContext
-} from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { OrderListQuery } from "@saleor/graphql";
 import { makeStyles, Pill } from "@saleor/macaw-ui";
