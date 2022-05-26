@@ -3,7 +3,7 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import { ChannelShippingData } from "@saleor/channels/utils";
@@ -16,7 +16,7 @@ import { ShippingChannelsErrorFragment } from "@saleor/graphql";
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import {
   getFormChannelError,
-  getFormChannelErrors
+  getFormChannelErrors,
 } from "@saleor/utils/errors";
 import getShippingErrorMessage from "@saleor/utils/errors/shipping";
 import React from "react";
@@ -45,13 +45,13 @@ export const OrderValue: React.FC<OrderValueProps> = ({
   orderValueRestricted,
   disabled,
   onChannelsChange,
-  onChange
+  onChange,
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
   const formErrors = getFormChannelErrors(
     ["maximumOrderPrice", "minimumOrderPrice"],
-    errors
+    errors,
   );
 
   return (
@@ -60,7 +60,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
         title={intl.formatMessage({
           id: "yatGsm",
           defaultMessage: "Order Value",
-          description: "card title"
+          description: "card title",
         })}
       />
       <div className={classes.content}>
@@ -78,7 +78,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                   {intl.formatMessage({
                     id: "aZDHYr",
                     defaultMessage: "This rate will apply to all orders",
-                    description: "price rates info"
+                    description: "price rates info",
                   })}
                 </Typography>
               </>
@@ -130,11 +130,11 @@ export const OrderValue: React.FC<OrderValueProps> = ({
               {channels?.map(channel => {
                 const minError = getFormChannelError(
                   formErrors.minimumOrderPrice,
-                  channel.id
+                  channel.id,
                 );
                 const maxError = getFormChannelError(
                   formErrors.maximumOrderPrice,
-                  channel.id
+                  channel.id,
                 );
 
                 return (
@@ -148,14 +148,14 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                         error={!!minError}
                         label={intl.formatMessage({
                           id: "kN6SLs",
-                          defaultMessage: "Min Value"
+                          defaultMessage: "Min Value",
                         })}
                         name={`minValue:${channel.name}`}
                         value={channel.minValue}
                         onChange={e =>
                           onChannelsChange(channel.id, {
                             ...channel,
-                            minValue: e.target.value
+                            minValue: e.target.value,
                           })
                         }
                         currencySymbol={channel.currency}
@@ -170,7 +170,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                         error={!!maxError}
                         label={intl.formatMessage({
                           id: "vjsfyn",
-                          defaultMessage: "Max Value"
+                          defaultMessage: "Max Value",
                         })}
                         name={`maxValue:${channel.name}`}
                         value={channel.maxValue}
@@ -178,7 +178,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                         onChange={e =>
                           onChannelsChange(channel.id, {
                             ...channel,
-                            maxValue: e.target.value
+                            maxValue: e.target.value,
                           })
                         }
                         currencySymbol={channel.currency}

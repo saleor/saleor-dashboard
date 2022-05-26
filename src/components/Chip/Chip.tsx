@@ -17,20 +17,20 @@ const useStyles = makeStyles(
       cursor: "pointer",
       fontSize: 16,
       marginLeft: theme.spacing(),
-      verticalAlign: "middle"
+      verticalAlign: "middle",
     },
     label: {
-      color: theme.palette.common.white
+      color: theme.palette.common.white,
     },
     root: {
       background: fade(theme.palette.primary.main, 0.8),
       borderRadius: 18,
       display: "inline-block",
       marginRight: theme.spacing(2),
-      padding: "6px 12px"
-    }
+      padding: "6px 12px",
+    },
   }),
-  { name: "Chip" }
+  { name: "Chip" },
 );
 const Chip: React.FC<ChipProps> = props => {
   const { className, label, onClose } = props;

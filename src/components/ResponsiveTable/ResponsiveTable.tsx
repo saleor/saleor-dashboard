@@ -7,19 +7,19 @@ const useStyles = makeStyles(
     root: {
       [theme.breakpoints.up("md")]: {
         "&& table": {
-          tableLayout: "fixed"
-        }
+          tableLayout: "fixed",
+        },
       },
       "& table": {
-        tableLayout: "auto"
+        tableLayout: "auto",
       },
       overflowX: "auto",
-      width: "100%"
-    }
+      width: "100%",
+    },
   }),
   {
-    name: "ResponsiveTable"
-  }
+    name: "ResponsiveTable",
+  },
 );
 
 interface ResponsiveTableProps {

@@ -2,7 +2,7 @@ import { OutputData } from "@editorjs/editorjs";
 import {
   LanguageCodeEnum,
   useCategoryTranslationDetailsQuery,
-  useUpdateCategoryTranslationsMutation
+  useUpdateCategoryTranslationsMutation,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -29,7 +29,7 @@ export interface TranslationsCategoriesProps {
 const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({
   id,
   languageCode,
-  params
+  params,
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
@@ -37,32 +37,32 @@ const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({
   const intl = useIntl();
 
   const categoryTranslations = useCategoryTranslationDetailsQuery({
-    variables: { id, language: languageCode }
+    variables: { id, language: languageCode },
   });
 
   const [
     updateTranslations,
-    updateTranslationsOpts
+    updateTranslationsOpts,
   ] = useUpdateCategoryTranslationsMutation({
     onCompleted: data => {
       if (data.categoryTranslate.errors.length === 0) {
         categoryTranslations.refetch();
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
+          text: intl.formatMessage(commonMessages.savedChanges),
         });
         navigate("?", { replace: true });
       }
-    }
+    },
   });
 
   const onEdit = (field: string) =>
     navigate(
       "?" +
         stringifyQs({
-          activeField: field
+          activeField: field,
         }),
-      { replace: true }
+      { replace: true },
     );
 
   const onDiscard = () => {
@@ -71,7 +71,7 @@ const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({
 
   const handleSubmit = (
     { name: fieldName }: TranslationField<TranslationInputFieldName>,
-    data: string | OutputData
+    data: string | OutputData,
   ) =>
     extractMutationErrors(
       updateTranslations({
@@ -79,11 +79,11 @@ const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({
           id,
           input: getParsedTranslationInputData({
             data,
-            fieldName
+            fieldName,
           }),
-          language: languageCode
-        }
-      })
+          language: languageCode,
+        },
+      }),
     );
 
   const translation = categoryTranslations?.data?.translation;

@@ -11,7 +11,7 @@ const user = {
   __typename: staffMember.__typename,
   avatar: {
     __typename: staffMember.avatar.__typename,
-    url: staffMember.avatar.url
+    url: staffMember.avatar.url,
   },
   email: staffMember.email,
   firstName: "Adam Evan",
@@ -19,12 +19,12 @@ const user = {
   isStaff: true,
   lastName: "Newton",
   note: null,
-  userPermissions: staffMember.userPermissions
+  userPermissions: staffMember.userPermissions,
 };
 
 const versions = {
   dashboardVersion: "3.0.0-b.3",
-  coreVersion: "3.0.0-b.15"
+  coreVersion: "3.0.0-b.15",
 };
 
 const Story: React.FC<{ user: UserFragment }> = ({ user }) => {
@@ -46,7 +46,7 @@ storiesOf("Views / Configuration", module)
     <Story
       user={{
         ...user,
-        userPermissions: user.userPermissions.slice(2, 6)
+        userPermissions: user.userPermissions.slice(2, 6),
       }}
     />
   ));

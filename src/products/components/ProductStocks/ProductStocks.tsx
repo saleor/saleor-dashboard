@@ -12,11 +12,11 @@ import {
   TableHead,
   TableRow,
   TextField,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import {
   ChannelData,
-  ChannelPriceAndPreorderArgs
+  ChannelPriceAndPreorderArgs,
 } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
@@ -34,7 +34,7 @@ import {
   IconButton,
   ICONBUTTON_SIZE,
   makeStyles,
-  PlusIcon
+  PlusIcon,
 } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
@@ -79,7 +79,7 @@ export interface ProductStocksProps {
   warehouses: WarehouseFragment[];
   onVariantChannelListingChange?: (
     id: string,
-    data: Partial<ChannelPriceAndPreorderArgs>
+    data: Partial<ChannelPriceAndPreorderArgs>,
   ) => void;
   onChange: FormsetChange;
   onChangePreorderEndDate: FormChange;
@@ -94,92 +94,92 @@ const useStyles = makeStyles(
   theme => ({
     colAction: {
       padding: 0,
-      width: `calc(${ICONBUTTON_SIZE}px + ${theme.spacing(1)})`
+      width: `calc(${ICONBUTTON_SIZE}px + ${theme.spacing(1)})`,
     },
     colName: {},
     colQuantity: {
       textAlign: "right",
-      width: 150
+      width: 150,
     },
     colSoldUnits: {
       textAlign: "right",
-      width: 150
+      width: 150,
     },
     colThreshold: {
       textAlign: "right",
-      width: 180
+      width: 180,
     },
     editWarehouses: {
-      marginRight: theme.spacing(-1)
+      marginRight: theme.spacing(-1),
     },
     input: {
       padding: theme.spacing(1.5),
-      textAlign: "right"
+      textAlign: "right",
     },
     menuItem: {
       "&:not(:last-of-type)": {
-        marginBottom: theme.spacing(2)
-      }
+        marginBottom: theme.spacing(2),
+      },
     },
     noWarehouseInfo: {
-      marginTop: theme.spacing()
+      marginTop: theme.spacing(),
     },
     paper: {
-      padding: theme.spacing(2)
+      padding: theme.spacing(2),
     },
     popper: {
       marginTop: theme.spacing(1),
-      zIndex: 2
+      zIndex: 2,
     },
     quantityContainer: {
-      paddingTop: theme.spacing()
+      paddingTop: theme.spacing(),
     },
     quantityHeader: {
       alignItems: "center",
       display: "flex",
-      justifyContent: "space-between"
+      justifyContent: "space-between",
     },
     skuInputContainer: {
       display: "grid",
       gridColumnGap: theme.spacing(3),
-      gridTemplateColumns: "repeat(2, 1fr)"
+      gridTemplateColumns: "repeat(2, 1fr)",
     },
     dateTimeInputs: {
       marginTop: theme.spacing(2),
-      marginBottom: theme.spacing(2)
+      marginBottom: theme.spacing(2),
     },
     preorderInfo: {
       marginBottom: theme.spacing(2),
       marginTop: theme.spacing(2),
-      display: "block"
+      display: "block",
     },
     caption: {
-      fontSize: 14
+      fontSize: 14,
     },
     thresholdRow: {
       display: "grid",
       gridColumnGap: theme.spacing(3),
       gridTemplateColumns: "3fr 1fr",
-      marginTop: theme.spacing(1)
+      marginTop: theme.spacing(1),
     },
     thresholdInput: {
-      maxWidth: 400
+      maxWidth: 400,
     },
     preorderItemsLeftCount: {
       fontSize: 14,
       paddingTop: theme.spacing(2),
-      textAlign: "center"
+      textAlign: "center",
     },
     preorderLimitInfo: {
-      marginTop: theme.spacing(3)
+      marginTop: theme.spacing(3),
     },
     preview: {
-      marginLeft: theme.spacing(1)
-    }
+      marginLeft: theme.spacing(1),
+    },
   }),
   {
-    name: "ProductStocks"
-  }
+    name: "ProductStocks",
+  },
 );
 
 const ProductStocks: React.FC<ProductStocksProps> = ({
@@ -198,7 +198,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
   onVariantChannelListingChange,
   onWarehouseStockAdd,
   onWarehouseStockDelete,
-  onWarehouseConfigure
+  onWarehouseConfigure,
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
@@ -208,12 +208,12 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
 
   const warehousesToAssign =
     warehouses?.filter(
-      warehouse => !stocks.some(stock => stock.id === warehouse.id)
+      warehouse => !stocks.some(stock => stock.id === warehouse.id),
     ) || [];
   const formErrors = getFormErrors(["sku"], errors);
 
   const onThresholdChange = createNonNegativeValueChangeHandler(
-    onFormDataChange
+    onFormDataChange,
   );
 
   return (
@@ -222,7 +222,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
         title={intl.formatMessage({
           id: "4qe6hO",
           defaultMessage: "Inventory",
-          description: "product stock, section header"
+          description: "product stock, section header",
         })}
       />
       <CardContent>
@@ -234,7 +234,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
             helperText={getProductErrorMessage(formErrors.sku, intl)}
             label={intl.formatMessage({
               id: "xB7BTp",
-              defaultMessage: "SKU (Stock Keeping Unit)"
+              defaultMessage: "SKU (Stock Keeping Unit)",
             })}
             name="sku"
             onChange={onFormDataChange}
@@ -318,7 +318,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                     values={{
                       a: chunks => (
                         <Link onClick={onWarehouseConfigure}>{chunks}</Link>
-                      )
+                      ),
                     }}
                   />
                 </>
@@ -331,7 +331,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                     values={{
                       a: chunks => (
                         <Link onClick={onWarehouseConfigure}>{chunks}</Link>
-                      )
+                      ),
                     }}
                   />
                 </>
@@ -376,7 +376,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
           <TableBody>
             {renderCollection(stocks, stock => {
               const handleQuantityChange = createNonNegativeValueChangeHandler(
-                event => onChange(stock.id, event.target.value)
+                event => onChange(stock.id, event.target.value),
               );
 
               return (
@@ -395,7 +395,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                       inputProps={{
                         className: classes.input,
                         min: 0,
-                        type: "number"
+                        type: "number",
                       }}
                       onChange={handleQuantityChange}
                       value={stock.value}
@@ -448,7 +448,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                           <Grow
                             {...TransitionProps}
                             style={{
-                              transformOrigin: "right top"
+                              transformOrigin: "right top",
                             }}
                           >
                             <Paper className={classes.paper} elevation={8}>
@@ -481,7 +481,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
               id: "REVk27",
               defaultMessage:
                 "Set up an end date of preorder. When end date will be reached product will be automatically taken from preorder to standard selling",
-              description: "info text"
+              description: "info text",
             })}
           </Typography>
 
@@ -498,8 +498,8 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                   onChangePreorderEndDate({
                     target: {
                       name: "preorderEndDateTime",
-                      value: event
-                    }
+                      value: event,
+                    },
                   })
                 }
               />
@@ -513,19 +513,19 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
               onFormDataChange({
                 target: {
                   name: "hasPreorderEndDate",
-                  value: !data.hasPreorderEndDate
-                }
+                  value: !data.hasPreorderEndDate,
+                },
               })
             }
           >
             {data.hasPreorderEndDate
               ? intl.formatMessage({
                   id: "2qJc9y",
-                  defaultMessage: "CANCEL END DATE"
+                  defaultMessage: "CANCEL END DATE",
                 })
               : intl.formatMessage({
                   id: "7Ii5ZQ",
-                  defaultMessage: "SETUP END DATE"
+                  defaultMessage: "SETUP END DATE",
                 })}
           </Button>
           <Typography variant="caption" className={classes.preorderLimitInfo}>
@@ -533,24 +533,24 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
               id: "Gz+4CI",
               defaultMessage:
                 "Preordered products will be available in all warehouses. You can set a threshold for sold quantity. Leaving input blank will be interpreted as no limit to sale. Sold items will be allocated at the warehouse assigned to chosen shipping zone.",
-              description: "info text"
+              description: "info text",
             })}
           </Typography>
           <div className={classes.thresholdRow}>
             <TextField
               inputProps={{
-                min: 0
+                min: 0,
               }}
               disabled={disabled}
               fullWidth
               helperText={intl.formatMessage({
                 id: "NcY4ph",
                 defaultMessage:
-                  "Threshold that cannot be exceeded even if per channel thresholds are still available"
+                  "Threshold that cannot be exceeded even if per channel thresholds are still available",
               })}
               label={intl.formatMessage({
                 id: "RJ5QxE",
-                defaultMessage: "Global threshold"
+                defaultMessage: "Global threshold",
               })}
               name="globalThreshold"
               onChange={onThresholdChange}
@@ -567,14 +567,14 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                       {
                         id: "7wkGxW",
                         defaultMessage: "{unitsLeft} units left",
-                        description: "app has been installed"
+                        description: "app has been installed",
                       },
-                      { unitsLeft }
+                      { unitsLeft },
                     )
                   : intl.formatMessage({
                       id: "CEavJt",
                       defaultMessage: "Unlimited",
-                      description: "section header"
+                      description: "section header",
                     })}
               </Typography>
             )}
@@ -636,11 +636,11 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                       inputProps={{
                         className: classes.input,
                         min: 0,
-                        type: "number"
+                        type: "number",
                       }}
                       placeholder={intl.formatMessage({
                         id: "ekXood",
-                        defaultMessage: "Unlimited"
+                        defaultMessage: "Unlimited",
                       })}
                       onChange={e => {
                         onVariantChannelListingChange(listing.id, {
@@ -649,7 +649,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                           preorderThreshold:
                             e.target.value === ""
                               ? undefined
-                              : Number(e.target.value)
+                              : Number(e.target.value),
                         });
                       }}
                       value={listing?.preorderThreshold ?? ""}

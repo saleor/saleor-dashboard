@@ -13,7 +13,7 @@ export enum TranslatableEntities {
   vouchers = "vouchers",
   pages = "pages",
   attributes = "attributes",
-  shippingMethods = "shippingMethods"
+  shippingMethods = "shippingMethods",
 }
 
 const translationsSection = "/translations/";
@@ -30,7 +30,7 @@ export type LanguageEntitiesUrlQueryParams = Pagination &
   }>;
 export const languageEntitiesUrl = (
   code: string,
-  params: LanguageEntitiesUrlQueryParams
+  params: LanguageEntitiesUrlQueryParams,
 ) => languageEntitiesPath(code) + "?" + stringifyQs(params);
 
 export const languageEntityPath = (
@@ -49,12 +49,12 @@ export const languageEntityUrl = (
 export const productVariantUrl = (
   code: string,
   productId: string,
-  variantId: string
+  variantId: string,
 ) =>
   languageEntityUrl(
     code,
     TranslatableEntities.products,
     productId,
     TranslatableEntities.productVariants,
-    variantId
+    variantId,
   );

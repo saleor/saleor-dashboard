@@ -3,7 +3,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow
+  TableRow,
 } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
@@ -20,13 +20,13 @@ import { maybe, renderCollection } from "../../../misc";
 const useStyles = makeStyles(
   {
     tableRow: {
-      cursor: "pointer"
+      cursor: "pointer",
     },
     textRight: {
-      textAlign: "right"
-    }
+      textAlign: "right",
+    },
   },
-  { name: "CountryList" }
+  { name: "CountryList" },
 );
 
 interface CountryListProps {
@@ -63,7 +63,7 @@ const CountryList: React.FC<CountryListProps> = props => {
             country => (
               <TableRowLink
                 className={classNames({
-                  [classes.tableRow]: !!country
+                  [classes.tableRow]: !!country,
                 })}
                 hover={!!country}
                 href={country && countryTaxRatesUrl(country.code)}
@@ -78,7 +78,7 @@ const CountryList: React.FC<CountryListProps> = props => {
                 <TableCell className={classes.textRight}>
                   {maybe<React.ReactNode>(
                     () => country.vat.reducedRates.length,
-                    <Skeleton />
+                    <Skeleton />,
                   )}
                 </TableCell>
               </TableRowLink>
@@ -92,7 +92,7 @@ const CountryList: React.FC<CountryListProps> = props => {
                   />
                 </TableCell>
               </TableRow>
-            )
+            ),
           )}
         </TableBody>
       </ResponsiveTable>

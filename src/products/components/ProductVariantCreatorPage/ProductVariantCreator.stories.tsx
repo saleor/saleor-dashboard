@@ -13,10 +13,10 @@ import {
   ChannelPrice,
   Price,
   ProductVariantCreateFormData,
-  Stock
+  Stock,
 } from "./form";
 import ProductVariantCreatorContent, {
-  ProductVariantCreatorContentProps
+  ProductVariantCreatorContentProps,
 } from "./ProductVariantCreatorContent";
 import ProductVariantCreatorPage from "./ProductVariantCreatorPage";
 import { ProductVariantCreatorStep } from "./types";
@@ -26,7 +26,7 @@ const selectedWarehouses = [0, 1, 3].map(index => warehouseList[index]);
 
 const channels: ChannelPrice[] = productChannels.map(channel => ({
   channelId: channel.channel.id,
-  price: channel.pricing?.priceRange?.start?.net.amount.toString()
+  price: channel.pricing?.priceRange?.start?.net.amount.toString(),
 }));
 
 const price: Price = {
@@ -35,25 +35,25 @@ const price: Price = {
   mode: "attribute",
   values: selectedAttributes[0].choices.edges.map(attribute => ({
     slug: attribute.node.slug,
-    value: channels
-  }))
+    value: channels,
+  })),
 };
 
 const stock: Stock = {
   attribute: selectedAttributes[0].id,
   mode: "attribute",
   value: selectedWarehouses.map(
-    (_, warehouseIndex) => (warehouseIndex + 2) * 3
+    (_, warehouseIndex) => (warehouseIndex + 2) * 3,
   ),
   values: selectedAttributes[0].choices.edges.map(
     (attribute, attributeIndex) => ({
       slug: attribute.node.slug,
       value: selectedWarehouses.map(
         (_, warehouseIndex) =>
-          selectedAttributes.length * 10 - attributeIndex - warehouseIndex * 3
-      )
-    })
-  )
+          selectedAttributes.length * 10 - attributeIndex - warehouseIndex * 3,
+      ),
+    }),
+  ),
 };
 
 const dataAttributes = selectedAttributes.map(attribute => ({
@@ -62,9 +62,9 @@ const dataAttributes = selectedAttributes.map(attribute => ({
   values: attribute.choices.edges
     .map(value => ({
       slug: value.node.slug,
-      value: value.node
+      value: value.node,
     }))
-    .filter((_, valueIndex) => valueIndex % 2 !== 1)
+    .filter((_, valueIndex) => valueIndex % 2 !== 1),
 }));
 
 const errors: BulkProductErrorFragment[] = [
@@ -74,8 +74,8 @@ const errors: BulkProductErrorFragment[] = [
     code: ProductErrorCode.UNIQUE,
     field: "sku",
     index: 3,
-    message: "Uniwue bulk product error"
-  }
+    message: "Uniwue bulk product error",
+  },
 ];
 
 const data: ProductVariantCreateFormData = {
@@ -87,9 +87,9 @@ const data: ProductVariantCreateFormData = {
     price,
     stock,
     variants: [],
-    warehouses: selectedWarehouses.map(warehouse => warehouse.id)
+    warehouses: selectedWarehouses.map(warehouse => warehouse.id),
   }),
-  warehouses: selectedWarehouses.map(warehouse => warehouse.id)
+  warehouses: selectedWarehouses.map(warehouse => warehouse.id),
 };
 const props: ProductVariantCreatorContentProps = {
   attributes: [0, 1, 4, 6].map(index => attributes[index]),
@@ -100,18 +100,18 @@ const props: ProductVariantCreatorContentProps = {
     currency: listing.pricing?.priceRange?.start?.net.currency,
     id: listing.channel.id,
     name: listing.channel.name,
-    price: listing.pricing?.priceRange?.start?.net?.amount.toString() || ""
+    price: listing.pricing?.priceRange?.start?.net?.amount.toString() || "",
   })),
   data: {
     ...data,
-    variants: createVariants(data)
+    variants: createVariants(data),
   },
   dispatchFormDataAction: () => undefined,
   errors: [],
   variantsLeft: 6,
   step: ProductVariantCreatorStep.values,
   warehouses: warehouseList,
-  onAttributeSelectBlur: () => undefined
+  onAttributeSelectBlur: () => undefined,
 };
 
 storiesOf("Views / Products / Create multiple variants", module)
@@ -121,7 +121,7 @@ storiesOf("Views / Products / Create multiple variants", module)
 
 storiesOf(
   "Views / Products / Create multiple variants / prices and SKUs",
-  module
+  module,
 )
   .addDecorator(storyFn => <Container>{storyFn()}</Container>)
   .addDecorator(Decorator)
@@ -132,8 +132,8 @@ storiesOf(
         ...data,
         stock: {
           ...data.stock,
-          mode: "all"
-        }
+          mode: "all",
+        },
       }}
       step={ProductVariantCreatorStep.prices}
     />
@@ -145,9 +145,9 @@ storiesOf(
         ...data,
         stock: {
           ...data.stock,
-          mode: "all"
+          mode: "all",
         },
-        warehouses: [data.warehouses[0]]
+        warehouses: [data.warehouses[0]],
       }}
       step={ProductVariantCreatorStep.prices}
       warehouses={[props.warehouses[0]]}
@@ -164,7 +164,7 @@ storiesOf(
       {...props}
       data={{
         ...data,
-        warehouses: [data.warehouses[0]]
+        warehouses: [data.warehouses[0]],
       }}
       step={ProductVariantCreatorStep.prices}
       warehouses={[props.warehouses[0]]}
@@ -175,7 +175,7 @@ storiesOf(
       {...props}
       data={{
         ...data,
-        warehouses: []
+        warehouses: [],
       }}
       step={ProductVariantCreatorStep.prices}
       warehouses={[]}
@@ -208,8 +208,8 @@ storiesOf("Views / Products / Create multiple variants", module)
         ...limitsReached,
         currentUsage: {
           ...limitsReached.currentUsage,
-          productVariants: limitsReached.currentUsage.productVariants - 6
-        }
+          productVariants: limitsReached.currentUsage.productVariants - 6,
+        },
       }}
       onSubmit={() => undefined}
     />

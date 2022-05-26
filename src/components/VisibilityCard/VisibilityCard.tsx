@@ -20,40 +20,40 @@ const useStyles = makeStyles(
   theme => ({
     checkbox: {
       alignItems: "flex-start",
-      marginTop: 10
+      marginTop: 10,
     },
     children: {
       "& button": {
-        margin: "0 9px"
+        margin: "0 9px",
       },
       "& label": {
-        marginTop: theme.spacing(2.5)
-      }
+        marginTop: theme.spacing(2.5),
+      },
     },
     date: {
       "& svg": {
-        fill: theme.palette.primary.main
+        fill: theme.palette.primary.main,
       },
-      marginTop: theme.spacing(1)
+      marginTop: theme.spacing(1),
     },
     label: {
       lineHeight: 1.2,
       marginBottom: 5,
-      marginTop: 0
+      marginTop: 0,
     },
     listingLabel: {
-      marginTop: 9
+      marginTop: 9,
     },
     secondLabel: {
       color: theme.palette.text.hint,
       fontSize: 12,
-      marginBottom: theme.spacing(2)
+      marginBottom: theme.spacing(2),
     },
     switchField: {
-      marginTop: theme.spacing(1)
-    }
+      marginTop: theme.spacing(1),
+    },
   }),
-  { name: "VisibilityCard" }
+  { name: "VisibilityCard" },
 );
 
 interface Message {
@@ -93,12 +93,12 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
       isAvailableForPurchase: isAvailable,
       isPublished,
       publicationDate,
-      visibleInListings
+      visibleInListings,
     },
     errors,
     disabled,
     messages,
-    onChange
+    onChange,
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -112,23 +112,23 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
       {
         id: "UjsI4o",
         defaultMessage: "since {date}",
-        description: "date"
+        description: "date",
       },
       {
-        date: localizeDate(date, "L")
-      }
+        date: localizeDate(date, "L"),
+      },
     );
 
   const handleRadioFieldChange = (type: keyof DateFields) => (
-    e: ChangeEvent
+    e: ChangeEvent,
   ) => {
     const { value } = e.target;
     if (!value) {
       onChange({
         target: {
           name: type,
-          value: null
-        }
+          value: null,
+        },
       });
     }
     return onChange(e);
@@ -140,7 +140,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
         title={intl.formatMessage({
           id: "akXDST",
           defaultMessage: "Visibility",
-          description: "section header"
+          description: "section header",
         })}
       />
       <CardContent>
@@ -180,7 +180,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
           <DateVisibilitySelector
             buttonText={intl.formatMessage({
               id: "U3BQKA",
-              defaultMessage: "Set publication date"
+              defaultMessage: "Set publication date",
             })}
             onInputClose={() =>
               onChange({ target: { name: "publicationDate", value: null } })
@@ -192,7 +192,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
               label={intl.formatMessage({
                 id: "Jt3DwJ",
                 defaultMessage: "Publish on",
-                description: "publish on date"
+                description: "publish on date",
               })}
               name="publicationDate"
               type="date"
@@ -202,7 +202,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
               onChange={onChange}
               className={classes.date}
               InputLabelProps={{
-                shrink: true
+                shrink: true,
               }}
             />
           </DateVisibilitySelector>
@@ -253,7 +253,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
                 buttonText={messages.setAvailabilityDateLabel}
                 onInputClose={() =>
                   onChange({
-                    target: { name: "availableForPurchase", value: null }
+                    target: { name: "availableForPurchase", value: null },
                   })
                 }
               >
@@ -263,7 +263,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
                   label={intl.formatMessage({
                     id: "Y7Vy19",
                     defaultMessage: "Set available on",
-                    description: "available on date"
+                    description: "available on date",
                   })}
                   name="availableForPurchase"
                   type="date"
@@ -273,7 +273,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
                   onChange={onChange}
                   className={classes.date}
                   InputLabelProps={{
-                    shrink: true
+                    shrink: true,
                   }}
                 />
               </DateVisibilitySelector>
@@ -303,7 +303,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
                   >
                     {intl.formatMessage({
                       id: "0cVk9I",
-                      defaultMessage: "Show in product listings"
+                      defaultMessage: "Show in product listings",
                     })}
                   </p>
 
@@ -311,7 +311,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
                     {intl.formatMessage({
                       id: "5ukAFZ",
                       defaultMessage:
-                        "Disabling this checkbox will remove product from search and category pages. It will be available on collection pages."
+                        "Disabling this checkbox will remove product from search and category pages. It will be available on collection pages.",
                     })}
                   </span>
                 </>

@@ -13,11 +13,11 @@ export interface Actions<K, V> {
 // We hide some setters from the returned map to disable autocompletion
 type Return<K, V> = [
   Omit<Map<K, V>, "set" | "clear" | "delete">,
-  Actions<K, V>
+  Actions<K, V>,
 ];
 
 function useMap<K, V>(
-  initialState: MapOrEntries<K, V> = new Map()
+  initialState: MapOrEntries<K, V> = new Map(),
 ): Return<K, V> {
   const [map, setMap] = useState(() => new Map(initialState));
 
@@ -47,7 +47,7 @@ function useMap<K, V>(
 
     reset: useCallback(() => {
       setMap(() => new Map());
-    }, [])
+    }, []),
   };
 
   return [map, actions];

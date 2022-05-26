@@ -9,7 +9,7 @@ const props: TokenDeleteDialogProps = {
   name: "Slack",
   onClose: () => undefined,
   onConfirm: () => undefined,
-  open: true
+  open: true,
 };
 
 storiesOf("Views / Apps / Custom app details / Token delete", module)

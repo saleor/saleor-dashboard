@@ -7,7 +7,7 @@ function useChoiceSearch(choices: Array<Choice<string, string>>) {
 
   const sortedChoices = useMemo(
     () => filter(choices, query, { key: "label" }) || [],
-    [choices, query]
+    [choices, query],
   );
 
   return { search: setQuery, result: sortedChoices };

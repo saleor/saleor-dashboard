@@ -1,7 +1,7 @@
 import {
   AccountErrorCode,
   SearchPermissionGroupsQuery,
-  StaffErrorFragment
+  StaffErrorFragment,
 } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
 import { RelayToFlat } from "@saleor/types";
@@ -16,35 +16,35 @@ const availablePermissionGroups: RelayToFlat<SearchPermissionGroupsQuery["search
     __typename: "Group",
     id: "R3JvdXA6MQ==",
     name: "Unmanagable by user",
-    userCanManage: false
+    userCanManage: false,
   },
   {
     __typename: "Group",
     id: "R3JvdXA6Mg==",
     name: "Default group",
-    userCanManage: true
+    userCanManage: true,
   },
   {
     __typename: "Group",
     id: "R3JvdXA6Mz==",
     name: "Translators",
-    userCanManage: false
+    userCanManage: false,
   },
   {
     __typename: "Group",
     id: "R3JvdXA6My==",
     name: "CMS",
-    userCanManage: true
-  }
+    userCanManage: true,
+  },
 ];
 
 const displayValues: MultiAutocompleteChoiceType[] = [
   { disabled: true, label: "Unmanagable by user", value: "R3JvdXA6MQ==" },
-  { disabled: false, label: "Default group", value: "R3JvdXA6Mg==" }
+  { disabled: false, label: "Default group", value: "R3JvdXA6Mg==" },
 ];
 
 const formData = {
-  permissionGroups: ["R3JvdXA6MQ==", "R3JvdXA6Mg=="]
+  permissionGroups: ["R3JvdXA6MQ==", "R3JvdXA6Mg=="],
 };
 
 const errors: StaffErrorFragment[] = [
@@ -52,8 +52,8 @@ const errors: StaffErrorFragment[] = [
     __typename: "StaffError",
     code: AccountErrorCode.OUT_OF_SCOPE_GROUP,
     field: "addGroups",
-    message: "Group out of scope"
-  }
+    message: "Group out of scope",
+  },
 ];
 
 const props: AccountPermissionGroupsProps = {
@@ -67,7 +67,7 @@ const props: AccountPermissionGroupsProps = {
   loading: false,
   onChange: () => undefined,
   onFetchMore: () => undefined,
-  onSearchChange: () => undefined
+  onSearchChange: () => undefined,
 };
 
 storiesOf("Generics / Account Permission Groups Widget", module)

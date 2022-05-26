@@ -1,6 +1,6 @@
 import {
   IconButton as MacawIconButton,
-  IconButtonProps
+  IconButtonProps,
 } from "@saleor/macaw-ui";
 import { isExternalURL } from "@saleor/utils/urls";
 import React from "react";
@@ -15,11 +15,11 @@ const _IconButton: React.FC<any> = React.forwardRef(
     }
 
     return <MacawIconButton href={href} {...props} ref={ref} />;
-  }
+  },
 );
 
 export const IconButton = _IconButton as <
   T extends React.ElementType = "button"
 >(
-  props: IconButtonProps<T>
+  props: IconButtonProps<T>,
 ) => ReturnType<typeof _IconButton>;

@@ -3,7 +3,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  TextField
+  TextField,
 } from "@material-ui/core";
 import BackButton from "@saleor/components/BackButton";
 import CompanyAddressForm from "@saleor/components/CompanyAddressInput/CompanyAddressForm";
@@ -14,7 +14,7 @@ import Hr from "@saleor/components/Hr";
 import { AddressTypeInput } from "@saleor/customers/types";
 import {
   CountryWithCodeFragment,
-  WarehouseErrorFragment
+  WarehouseErrorFragment,
 } from "@saleor/graphql";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -53,18 +53,18 @@ const initialForm: ShippingZoneAddWarehouseDialogSubmitData = {
   phone: "",
   postalCode: "",
   streetAddress1: "",
-  streetAddress2: ""
+  streetAddress2: "",
 };
 
 const useStyles = makeStyles(
   {
     overflow: {
-      overflowY: "visible"
-    }
+      overflowY: "visible",
+    },
   },
   {
-    name: "ShippingZoneAddWarehouseDialog"
-  }
+    name: "ShippingZoneAddWarehouseDialog",
+  },
 );
 
 const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogProps> = ({
@@ -74,17 +74,17 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
   errors: apiErrors,
   open,
   onClose,
-  onSubmit
+  onSubmit,
 }) => {
   const classes = useStyles({});
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps("");
   const {
     errors: validationErrors,
-    submit: handleSubmit
+    submit: handleSubmit,
   } = useAddressValidation(onSubmit);
   const errors = useModalDialogErrors(
     [...apiErrors, ...validationErrors],
-    open
+    open,
   );
   useModalDialogOpen(open, {});
   const intl = useIntl();
@@ -111,7 +111,7 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
           const handleCountrySelect = createSingleAutocompleteSelectHandler(
             change,
             setCountryDisplayName,
-            countryChoices
+            countryChoices,
           );
 
           return (
@@ -121,7 +121,7 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
                   fullWidth
                   label={intl.formatMessage({
                     id: "llBnr+",
-                    defaultMessage: "Warehouse Name"
+                    defaultMessage: "Warehouse Name",
                   })}
                   name="name"
                   value={data.name}

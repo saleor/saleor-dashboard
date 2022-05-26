@@ -3,7 +3,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { CardSpacer } from "@saleor/components/CardSpacer";
@@ -14,7 +14,7 @@ import { renderCollection } from "@saleor/misc";
 import {
   getFulfillmentFormsetQuantity,
   getOrderLineAvailableQuantity,
-  OrderFulfillStockInputFormsetData
+  OrderFulfillStockInputFormsetData,
 } from "@saleor/orders/utils/data";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -41,7 +41,7 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
     warehouseId,
     confirmButtonState,
     onClose,
-    onSubmit
+    onSubmit,
   } = props;
 
   const intl = useIntl();
@@ -50,7 +50,7 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
   const exceededLines = lines?.filter(el => {
     const line = "orderLine" in el ? el.orderLine : el;
     const stock = line.variant?.stocks.find(
-      stock => stock.warehouse.id === warehouseId
+      stock => stock.warehouse.id === warehouseId,
     );
 
     return (

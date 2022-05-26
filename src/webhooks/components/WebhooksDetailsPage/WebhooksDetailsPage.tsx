@@ -10,7 +10,7 @@ import {
   WebhookDetailsQuery,
   WebhookErrorFragment,
   WebhookEventTypeAsyncEnum,
-  WebhookEventTypeSyncEnum
+  WebhookEventTypeSyncEnum,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -20,11 +20,11 @@ import WebhookInfo from "@saleor/webhooks/components/WebhookInfo";
 import WebhookStatus from "@saleor/webhooks/components/WebhookStatus";
 import {
   createAsyncEventsSelectHandler,
-  createSyncEventsSelectHandler
+  createSyncEventsSelectHandler,
 } from "@saleor/webhooks/handlers";
 import {
   mapAsyncEventsToChoices,
-  mapSyncEventsToChoices
+  mapSyncEventsToChoices,
 } from "@saleor/webhooks/utils";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -55,7 +55,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
   errors,
   webhook,
   saveButtonBarState,
-  onSubmit
+  onSubmit,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -66,7 +66,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
     isActive: !!webhook?.isActive,
     name: webhook?.name || "",
     secretKey: webhook?.secretKey || "",
-    targetUrl: webhook?.targetUrl || ""
+    targetUrl: webhook?.targetUrl || "",
   };
 
   return (
@@ -79,16 +79,16 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
           ? []
           : mapAsyncEventsToChoices(
               Object.values(WebhookEventTypeAsyncEnum),
-              data.asyncEvents
+              data.asyncEvents,
             );
 
         const handleSyncEventsSelect = createSyncEventsSelectHandler(
           change,
-          data.syncEvents
+          data.syncEvents,
         );
         const handleAsyncEventsSelect = createAsyncEventsSelectHandler(
           change,
-          data.asyncEvents
+          data.asyncEvents,
         );
 
         return (

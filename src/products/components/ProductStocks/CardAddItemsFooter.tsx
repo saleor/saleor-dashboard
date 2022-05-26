@@ -14,10 +14,10 @@ const useStyles = makeStyles(
       justifyContent: "space-between",
       alignItems: "center",
       width: "100%",
-      position: "relative"
-    }
+      position: "relative",
+    },
   }),
-  { name: "CardAddItemsFooter" }
+  { name: "CardAddItemsFooter" },
 );
 
 interface CardAddItemsFooterProps {
@@ -35,7 +35,7 @@ const CardAddItemsFooter: React.FC<CardAddItemsFooterProps> = ({
   onAdd,
   testIds,
   ref,
-  children
+  children,
 }) => {
   const intl = useIntl();
   const classes = useStyles({});

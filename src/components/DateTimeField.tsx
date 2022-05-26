@@ -3,7 +3,7 @@ import { TextFieldProps } from "@material-ui/core/TextField";
 import { getErrorMessage } from "@saleor/components/Attributes/utils";
 import {
   PageErrorWithAttributesFragment,
-  ProductErrorWithAttributesFragment
+  ProductErrorWithAttributesFragment,
 } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { joinDateTime, splitDateTime } from "@saleor/misc";
@@ -21,7 +21,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   error,
   name,
   onChange,
-  value
+  value,
 }) => {
   const intl = useIntl();
 

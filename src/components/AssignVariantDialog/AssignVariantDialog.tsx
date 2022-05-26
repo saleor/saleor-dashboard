@@ -7,7 +7,7 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  TextField
+  TextField,
 } from "@material-ui/core";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import Money from "@saleor/components/Money";
@@ -19,7 +19,7 @@ import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
 import {
   getById,
-  getByUnmatchingId
+  getByUnmatchingId,
 } from "@saleor/orders/components/OrderReturnPage/utils";
 import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
 import { DialogProps, FetchMoreProps, RelayToFlat } from "@saleor/types";
@@ -51,7 +51,7 @@ export interface AssignVariantDialogProps extends FetchMoreProps, DialogProps {
 
 function isVariantSelected(
   variant: SearchVariant,
-  selectedVariantsToProductsMap: SearchVariant[]
+  selectedVariantsToProductsMap: SearchVariant[],
 ): boolean {
   return !!selectedVariantsToProductsMap.find(getById(variant.id));
 }
@@ -61,19 +61,20 @@ const handleProductAssign = (
   productIndex: number,
   productsWithAllVariantsSelected: boolean[],
   variants: SearchVariant[],
-  setVariants: SetVariantsAction
+  setVariants: SetVariantsAction,
 ) =>
   productsWithAllVariantsSelected[productIndex]
     ? setVariants(
         variants.filter(
-          selectedVariant => !product.variants.find(getById(selectedVariant.id))
-        )
+          selectedVariant =>
+            !product.variants.find(getById(selectedVariant.id)),
+        ),
       )
     : setVariants([
         ...variants,
         ...product.variants.filter(
-          productVariant => !variants.find(getById(productVariant.id))
-        )
+          productVariant => !variants.find(getById(productVariant.id)),
+        ),
       ]);
 
 const handleVariantAssign = (
@@ -82,7 +83,7 @@ const handleVariantAssign = (
   productIndex: number,
   variants: SearchVariant[],
   selectedVariantsToProductsMap: boolean[][],
-  setVariants: SetVariantsAction
+  setVariants: SetVariantsAction,
 ) =>
   selectedVariantsToProductsMap[productIndex][variantIndex]
     ? setVariants(variants.filter(getByUnmatchingId(variant.id)))
@@ -90,12 +91,12 @@ const handleVariantAssign = (
 
 function hasAllVariantsSelected(
   productVariants: SearchVariant[],
-  selectedVariantsToProductsMap: SearchVariant[]
+  selectedVariantsToProductsMap: SearchVariant[],
 ): boolean {
   return productVariants.reduce(
     (acc, productVariant) =>
       acc && !!selectedVariantsToProductsMap.find(getById(productVariant.id)),
-    true
+    true,
   );
 }
 
@@ -111,7 +112,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
     onClose,
     onFetch,
     onFetchMore,
-    onSubmit
+    onSubmit,
   } = props;
   const classes = useStyles(props);
   const scrollableDialogClasses = useScrollableDialogStyle({});
@@ -125,13 +126,13 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
 
   const selectedVariantsToProductsMap = productChoices
     ? productChoices.map(product =>
-        product.variants.map(variant => isVariantSelected(variant, variants))
+        product.variants.map(variant => isVariantSelected(variant, variants)),
       )
     : [];
 
   const productsWithAllVariantsSelected = productChoices
     ? productChoices.map(product =>
-        hasAllVariantsSelected(product.variants, variants)
+        hasAllVariantsSelected(product.variants, variants),
       )
     : [];
 
@@ -158,7 +159,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
           fullWidth
           InputProps={{
             autoComplete: "off",
-            endAdornment: loading && <CircularProgress size={16} />
+            endAdornment: loading && <CircularProgress size={16} />,
           }}
         />
       </DialogContent>
@@ -200,7 +201,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
                               productIndex,
                               productsWithAllVariantsSelected,
                               variants,
-                              setVariants
+                              setVariants,
                             )
                           }
                         />
@@ -236,7 +237,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
                                   productIndex,
                                   variants,
                                   selectedVariantsToProductsMap,
-                                  setVariants
+                                  setVariants,
                                 )
                               }
                             />
@@ -247,7 +248,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
                               <FormattedMessage
                                 {...messages.assignVariantDialogSKU}
                                 values={{
-                                  sku: variant.sku
+                                  sku: variant.sku,
                                 }}
                               />
                             </div>
@@ -258,7 +259,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
                             )}
                           </TableCell>
                         </TableRow>
-                      )
+                      ),
                     )}
                   </React.Fragment>
                 ),
@@ -271,7 +272,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
                       />
                     </TableCell>
                   </TableRow>
-                )
+                ),
               )}
             </TableBody>
           </ResponsiveTable>

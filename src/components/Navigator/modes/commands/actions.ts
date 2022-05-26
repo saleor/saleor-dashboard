@@ -26,7 +26,7 @@ export function searchInCommands(
   intl: IntlShape,
   navigate: UseNavigatorResult,
   createOrder: MutationFunction<OrderDraftCreateMutation, {}>,
-  setMode: (mode: QuickSearchMode) => void
+  setMode: (mode: QuickSearchMode) => void,
 ): QuickSearchActionInput[] {
   const actions: Command[] = [
     {
@@ -34,57 +34,57 @@ export function searchInCommands(
       onClick: () => {
         navigate(categoryAddUrl());
         return false;
-      }
+      },
     },
     {
       label: intl.formatMessage(messages.createCollection),
       onClick: () => {
         navigate(collectionAddUrl());
         return false;
-      }
+      },
     },
     {
       label: intl.formatMessage(messages.createProduct),
       onClick: () => {
         navigate(productAddUrl());
         return false;
-      }
+      },
     },
     {
       label: intl.formatMessage(messages.createPermissionGroup),
       onClick: () => {
         navigate(permissionGroupAddUrl);
         return false;
-      }
+      },
     },
     {
       label: intl.formatMessage(messages.createCustomer),
       onClick: () => {
         navigate(customerAddUrl);
         return false;
-      }
+      },
     },
     {
       label: intl.formatMessage(messages.createVoucher),
       onClick: () => {
         navigate(voucherAddUrl());
         return false;
-      }
+      },
     },
     {
       label: intl.formatMessage(messages.createOrder),
       onClick: () => {
         createOrder();
         return false;
-      }
+      },
     },
     {
       label: intl.formatMessage(messages.helpMode),
       onClick: () => {
         setMode("help");
         return true;
-      }
-    }
+      },
+    },
   ];
 
   return actions.map(action => ({
@@ -92,7 +92,7 @@ export function searchInCommands(
     onClick: action.onClick,
     score: score(action.label, search),
     text: action.label,
-    type: "action"
+    type: "action",
   }));
 }
 
@@ -101,7 +101,7 @@ function getCommandModeActions(
   intl: IntlShape,
   navigate: UseNavigatorResult,
   createOrder: MutationFunction<OrderDraftCreateMutation, {}>,
-  setMode: (mode: QuickSearchMode) => void
+  setMode: (mode: QuickSearchMode) => void,
 ): QuickSearchActionInput[] {
   return [...searchInCommands(query, intl, navigate, createOrder, setMode)]
     .filter(action => action.score >= threshold)

@@ -11,13 +11,13 @@ const useStyles = makeStyles(
   () => ({
     switch: {
       "&&:hover": {
-        background: "transparent"
-      }
-    }
+        background: "transparent",
+      },
+    },
   }),
   {
-    name: "UserChip"
-  }
+    name: "UserChip",
+  },
 );
 
 export interface UserChipProps {
@@ -31,7 +31,7 @@ const UserChip: React.FC<UserChipProps> = ({
   isDarkThemeEnabled,
   user,
   onLogout,
-  onThemeToggle
+  onThemeToggle,
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
@@ -67,7 +67,7 @@ const UserChip: React.FC<UserChipProps> = ({
           control={
             <Switch
               classes={{
-                switchBase: classes.switch
+                switchBase: classes.switch,
               }}
               checked={isDarkThemeEnabled}
               color="primary"
@@ -77,7 +77,7 @@ const UserChip: React.FC<UserChipProps> = ({
           label={intl.formatMessage({
             id: "2r4cTE",
             defaultMessage: "Enable Dark Mode",
-            description: "button"
+            description: "button",
           })}
           onChange={onThemeToggle}
         />

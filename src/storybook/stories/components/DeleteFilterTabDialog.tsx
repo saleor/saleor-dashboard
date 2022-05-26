@@ -1,5 +1,5 @@
 import DeleteFilterTabDialog, {
-  DeleteFilterTabDialogProps
+  DeleteFilterTabDialogProps,
 } from "@saleor/components/DeleteFilterTabDialog";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -11,7 +11,7 @@ const props: DeleteFilterTabDialogProps = {
   onClose: () => undefined,
   onSubmit: () => undefined,
   open: true,
-  tabName: "Out of stock"
+  tabName: "Out of stock",
 };
 
 storiesOf("Generics / Delete filter tab", module)

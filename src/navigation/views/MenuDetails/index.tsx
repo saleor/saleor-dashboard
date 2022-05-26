@@ -6,7 +6,7 @@ import {
   useMenuDetailsQuery,
   useMenuItemCreateMutation,
   useMenuItemUpdateMutation,
-  useMenuUpdateMutation
+  useMenuUpdateMutation,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -22,31 +22,31 @@ import { collectionUrl } from "../../../collections/urls";
 import { extractMutationErrors, maybe } from "../../../misc";
 import { pageUrl } from "../../../pages/urls";
 import MenuDetailsPage, {
-  MenuDetailsSubmitData
+  MenuDetailsSubmitData,
 } from "../../components/MenuDetailsPage";
 import { findNode, getNode } from "../../components/MenuDetailsPage/tree";
 import MenuItemDialog, {
   MenuItemDialogFormData,
-  MenuItemType
+  MenuItemType,
 } from "../../components/MenuItemDialog";
 import {
   getItemId,
   getItemType,
-  unknownTypeError
+  unknownTypeError,
 } from "../../components/MenuItems";
 import { menuUrl, MenuUrlQueryParams } from "../../urls";
 import {
   handleDelete,
   handleItemCreate,
   handleItemUpdate,
-  handleUpdate
+  handleUpdate,
 } from "./successHandlers";
 import {
   getInitialDisplayValue,
   getMenuItemCreateInputData,
   getMenuItemInputData,
   getMoves,
-  getRemoveIds
+  getRemoveIds,
 } from "./utils";
 
 interface MenuDetailsProps {
@@ -59,33 +59,33 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
   const notify = useNotifier();
   const intl = useIntl();
   const categorySearch = useCategorySearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
   const collectionSearch = useCollectionSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
   const pageSearch = usePageSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
 
   const { data, loading, refetch } = useMenuDetailsQuery({
-    variables: { id }
+    variables: { id },
   });
 
   const [menuDelete, menuDeleteOpts] = useMenuDeleteMutation({
-    onCompleted: data => handleDelete(data, navigate, notify, intl)
+    onCompleted: data => handleDelete(data, navigate, notify, intl),
   });
 
   const [menuUpdate, menuUpdateOpts] = useMenuUpdateMutation({
-    onCompleted: data => handleUpdate(data, notify, refetch, intl)
+    onCompleted: data => handleUpdate(data, notify, refetch, intl),
   });
 
   const [menuItemCreate, menuItemCreateOpts] = useMenuItemCreateMutation({
-    onCompleted: data => handleItemCreate(data, notify, closeModal, intl)
+    onCompleted: data => handleItemCreate(data, notify, closeModal, intl),
   });
 
   const [menuItemUpdate, menuItemUpdateOpts] = useMenuItemUpdateMutation({
-    onCompleted: data => handleItemUpdate(data, id, navigate, notify, intl)
+    onCompleted: data => handleItemUpdate(data, id, navigate, notify, intl),
   });
 
   const closeModal = () =>
@@ -93,9 +93,9 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
       menuUrl(id, {
         ...params,
         action: undefined,
-        id: undefined
+        id: undefined,
       }),
-      { replace: true }
+      { replace: true },
     );
 
   const handleItemClick = (id: string, type: MenuItemType) => {
@@ -140,9 +140,9 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
     extractMutationErrors(
       menuItemCreate({
         variables: {
-          input: getMenuItemCreateInputData(id, data)
-        }
-      })
+          input: getMenuItemCreateInputData(id, data),
+        },
+      }),
     );
 
   const handleMenuItemUpdate = (data: MenuItemDialogFormData) =>
@@ -150,19 +150,19 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
       menuItemUpdate({
         variables: {
           id: params.id,
-          input: getMenuItemInputData(data)
-        }
-      })
+          input: getMenuItemInputData(data),
+        },
+      }),
     );
 
   const menuItem = maybe(() =>
-    getNode(data.menu.items, findNode(data.menu.items, params.id))
+    getNode(data.menu.items, findNode(data.menu.items, params.id)),
   );
 
   const initialMenuItemUpdateFormData: MenuItemDialogFormData = {
     id: maybe(() => getItemId(menuItem)),
     name: maybe(() => menuItem.name, "..."),
-    type: maybe<MenuItemType>(() => getItemType(menuItem), "category")
+    type: maybe<MenuItemType>(() => getItemType(menuItem), "category"),
   };
 
   // This is a workaround to let know <MenuDetailsPage />
@@ -174,14 +174,14 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
         id,
         moves: getMoves(data),
         name: data.name,
-        removeIds: getRemoveIds(data)
-      }
+        removeIds: getRemoveIds(data),
+      },
     });
 
     return [
       ...result.data.menuItemBulkDelete.errors,
       ...result.data.menuItemMove.errors,
-      ...result.data.menuUpdate.errors
+      ...result.data.menuUpdate.errors,
     ];
   };
 
@@ -192,21 +192,21 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
         errors={[
           ...(menuUpdateOpts.data?.menuUpdate.errors || []),
           ...(menuUpdateOpts.data?.menuItemMove.errors || []),
-          ...(menuUpdateOpts.data?.menuUpdate.errors || [])
+          ...(menuUpdateOpts.data?.menuUpdate.errors || []),
         ]}
         menu={maybe(() => data.menu)}
         onDelete={() =>
           navigate(
             menuUrl(id, {
-              action: "remove"
-            })
+              action: "remove",
+            }),
           )
         }
         onItemAdd={() =>
           navigate(
             menuUrl(id, {
-              action: "add-item"
-            })
+              action: "add-item",
+            }),
           )
         }
         onItemClick={handleItemClick}
@@ -214,8 +214,8 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
           navigate(
             menuUrl(id, {
               action: "edit-item",
-              id: itemId
-            })
+              id: itemId,
+            }),
           )
         }
         onSubmit={handleSubmit}
@@ -232,7 +232,7 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
         title={intl.formatMessage({
           id: "QzseV7",
           defaultMessage: "Delete Menu",
-          description: "dialog header"
+          description: "dialog header",
         })}
       >
         <DialogContentText>
@@ -240,7 +240,7 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
             id="G/SYtU"
             defaultMessage="Are you sure you want to delete menu {menuName}?"
             values={{
-              menuName: <strong>{maybe(() => data.menu.name, "...")}</strong>
+              menuName: <strong>{maybe(() => data.menu.name, "...")}</strong>,
             }}
           />
         </DialogContentText>

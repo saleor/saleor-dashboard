@@ -9,7 +9,7 @@ export const menuListPath = navigationSection;
 export type MenuListUrlDialog = "add" | "remove" | "remove-many";
 export enum MenuListUrlSortField {
   name = "name",
-  items = "items"
+  items = "items",
 }
 export type MenuListUrlSort = Sort<MenuListUrlSortField>;
 export type MenuListUrlQueryParams = BulkAction &

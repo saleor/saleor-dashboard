@@ -11,14 +11,14 @@ const useStyles = makeStyles(
   theme => ({
     option: {
       left: theme.spacing(-0.5),
-      position: "relative"
+      position: "relative",
     },
     optionRadio: {
-      left: theme.spacing(-0.25)
+      left: theme.spacing(-0.25),
     },
-    root: {}
+    root: {},
   }),
-  { name: "FilterOptionField" }
+  { name: "FilterOptionField" },
 );
 
 const FilterOptionField: React.FC<FilterFieldBaseProps<
@@ -34,10 +34,10 @@ const FilterOptionField: React.FC<FilterFieldBaseProps<
           active: true,
           value: filter.multiple
             ? toggle(value, filter.value, (a, b) => a === b)
-            : [value]
-        }
+            : [value],
+        },
       },
-      type: "set-property"
+      type: "set-property",
     });
 
   return (
@@ -45,7 +45,7 @@ const FilterOptionField: React.FC<FilterFieldBaseProps<
       {filter.options.map(option => (
         <div
           className={classNames(classes.option, {
-            [classes.optionRadio]: !filter.multiple
+            [classes.optionRadio]: !filter.multiple,
           })}
           key={option.value}
         >

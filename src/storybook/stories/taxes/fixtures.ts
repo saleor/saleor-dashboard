@@ -7,67 +7,67 @@ export const countries: CountryList = [
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "AD",
     country: "Andora",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "AE",
     country: "Zjednoczone Emiraty Arabskie",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "AF",
     country: "Afganistan",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "AG",
     country: "Antigua i Barbuda",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "AI",
     country: "Anguilla",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "AL",
     country: "Albania",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "AM",
     country: "Armenia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "AO",
     country: "Angola",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "AQ",
     country: "Antarktyda",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "AR",
     country: "Argentyna",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "AS",
     country: "Samoa Amerykańskie",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -79,88 +79,88 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "BOOKS"
+          rateType: "BOOKS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "FOODSTUFFS"
+          rateType: "FOODSTUFFS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "HOTELS"
+          rateType: "HOTELS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "NEWSPAPERS"
+          rateType: "NEWSPAPERS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "PASSENGER_TRANSPORT"
+          rateType: "PASSENGER_TRANSPORT",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "PHARMACEUTICALS"
-        }
+          rateType: "PHARMACEUTICALS",
+        },
       ],
-      standardRate: 20
-    }
+      standardRate: 20,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "AU",
     country: "Australia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "AW",
     country: "Aruba",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "AX",
     country: "Wyspy Alandzkie",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "AZ",
     country: "Azerbejdżan",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "BA",
     country: "Bośnia i Hercegowina",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "BB",
     country: "Barbados",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "BD",
     country: "Bangladesz",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -172,62 +172,62 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 12,
-          rateType: "RESTAURANTS"
+          rateType: "RESTAURANTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "BOOKS"
+          rateType: "BOOKS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "FOODSTUFFS"
+          rateType: "FOODSTUFFS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "HOTELS"
+          rateType: "HOTELS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "MEDICAL"
+          rateType: "MEDICAL",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "NEWSPAPERS"
+          rateType: "NEWSPAPERS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "PHARMACEUTICALS"
+          rateType: "PHARMACEUTICALS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "WATER"
-        }
+          rateType: "WATER",
+        },
       ],
-      standardRate: 21
-    }
+      standardRate: 21,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "BF",
     country: "Burkina Faso",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -239,203 +239,203 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "HOTELS"
-        }
+          rateType: "HOTELS",
+        },
       ],
-      standardRate: 20
-    }
+      standardRate: 20,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "BH",
     country: "Bahrajn",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "BI",
     country: "Burundi",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "BJ",
     country: "Benin",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "BL",
     country: "Saint-Barthélemy",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "BM",
     country: "Bermudy",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "BN",
     country: "Brunei",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "BO",
     country: "Boliwia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "BQ",
     country: "Bonaire, Sint Eustatius i Saba",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "BR",
     country: "Brazylia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "BS",
     country: "Bahamy",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "BT",
     country: "Bhutan",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "BV",
     country: "Wyspa Bouveta",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "BW",
     country: "Botswana",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "BY",
     country: "Białoruś",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "BZ",
     country: "Belize",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "CA",
     country: "Kanada",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "CC",
     country: "Wyspy Kokosowe",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "CD",
     country: "Kongo",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "CF",
     country: "Republika Środkowoafrykańska",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "CG",
     country: "Kongo",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "CH",
     country: "Szwajcaria",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "CI",
     country: "Wybrzeże Kości Słoniowej",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "CK",
     country: "Wyspy Cooka",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "CL",
     country: "Chile",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "CM",
     country: "Kamerun",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "CN",
     country: "Chiny",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "CO",
     country: "Kolumbia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "CR",
     country: "Kostaryka",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "CU",
     country: "Kuba",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "CV",
     country: "Republika Zielonego Przylądka",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "CW",
     country: "Curaçao",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "CX",
     country: "Wyspa Bożego Narodzenia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -447,61 +447,61 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "ADMISSION_TO_SPORTING_EVENTS"
+          rateType: "ADMISSION_TO_SPORTING_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "BOOKS"
+          rateType: "BOOKS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "FOODSTUFFS"
+          rateType: "FOODSTUFFS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "MEDICAL"
+          rateType: "MEDICAL",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "NEWSPAPERS"
+          rateType: "NEWSPAPERS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "PASSENGER_TRANSPORT"
+          rateType: "PASSENGER_TRANSPORT",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "PHARMACEUTICALS"
+          rateType: "PHARMACEUTICALS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "HOTELS"
+          rateType: "HOTELS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "RESTAURANTS"
-        }
+          rateType: "RESTAURANTS",
+        },
       ],
-      standardRate: 19
-    }
+      standardRate: 19,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -513,61 +513,61 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "BABY_FOODSTUFFS"
+          rateType: "BABY_FOODSTUFFS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "BOOKS"
+          rateType: "BOOKS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "MEDICAL"
+          rateType: "MEDICAL",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "PHARMACEUTICALS"
+          rateType: "PHARMACEUTICALS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 15,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 15,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 15,
-          rateType: "ADMISSION_TO_SPORTING_EVENTS"
+          rateType: "ADMISSION_TO_SPORTING_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 15,
-          rateType: "FOODSTUFFS"
+          rateType: "FOODSTUFFS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 15,
-          rateType: "HOTELS"
+          rateType: "HOTELS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 15,
-          rateType: "NEWSPAPERS"
+          rateType: "NEWSPAPERS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 15,
-          rateType: "PASSENGER_TRANSPORT"
-        }
+          rateType: "PASSENGER_TRANSPORT",
+        },
       ],
-      standardRate: 21
-    }
+      standardRate: 21,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -579,52 +579,52 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 7,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 7,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 7,
-          rateType: "BOOKS"
+          rateType: "BOOKS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 7,
-          rateType: "FOODSTUFFS"
+          rateType: "FOODSTUFFS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 7,
-          rateType: "HOTELS"
+          rateType: "HOTELS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 7,
-          rateType: "MEDICAL"
+          rateType: "MEDICAL",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 7,
-          rateType: "NEWSPAPERS"
+          rateType: "NEWSPAPERS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 7,
-          rateType: "PASSENGER_TRANSPORT"
-        }
+          rateType: "PASSENGER_TRANSPORT",
+        },
       ],
-      standardRate: 19
-    }
+      standardRate: 19,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "DJ",
     country: "Dżibuti",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -633,32 +633,32 @@ export const countries: CountryList = [
     vat: {
       __typename: "VAT" as "VAT",
       reducedRates: [],
-      standardRate: 25
-    }
+      standardRate: 25,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "DM",
     country: "Dominika",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "DO",
     country: "Dominikana",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "DZ",
     country: "Algeria",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "EC",
     country: "Ekwador",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -670,44 +670,44 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "BOOKS"
+          rateType: "BOOKS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "HOTELS"
+          rateType: "HOTELS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "MEDICAL"
+          rateType: "MEDICAL",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "PHARMACEUTICALS"
-        }
+          rateType: "PHARMACEUTICALS",
+        },
       ],
-      standardRate: 20
-    }
+      standardRate: 20,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "EG",
     country: "Egipt",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "EH",
     country: "Sahara Zachodnia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "ER",
     country: "Erytrea",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -719,58 +719,58 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_SPORTING_EVENTS"
+          rateType: "ADMISSION_TO_SPORTING_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "MEDICAL"
+          rateType: "MEDICAL",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "PASSENGER_TRANSPORT"
+          rateType: "PASSENGER_TRANSPORT",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "PHARMACEUTICALS"
+          rateType: "PHARMACEUTICALS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 4,
-          rateType: "FOODSTUFFS"
+          rateType: "FOODSTUFFS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 4,
-          rateType: "NEWSPAPERS"
-        }
+          rateType: "NEWSPAPERS",
+        },
       ],
-      standardRate: 21
-    }
+      standardRate: 21,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "ET",
     country: "Etiopia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "EU",
     country: "Unia Europejska",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -782,80 +782,80 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_SPORTING_EVENTS"
+          rateType: "ADMISSION_TO_SPORTING_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "BOOKS"
+          rateType: "BOOKS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "HOTELS"
+          rateType: "HOTELS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "NEWSPAPERS"
+          rateType: "NEWSPAPERS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "PASSENGER_TRANSPORT"
+          rateType: "PASSENGER_TRANSPORT",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "PHARMACEUTICALS"
+          rateType: "PHARMACEUTICALS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 14,
-          rateType: "FOODSTUFFS"
+          rateType: "FOODSTUFFS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 14,
-          rateType: "RESTAURANTS"
-        }
+          rateType: "RESTAURANTS",
+        },
       ],
-      standardRate: 24
-    }
+      standardRate: 24,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "FJ",
     country: "Fidżi",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "FK",
     country: "Falklandy",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "FM",
     country: "Mikronezja",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "FO",
     country: "Wyspy Owcze",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -867,77 +867,77 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ACCOMMODATION"
+          rateType: "ACCOMMODATION",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_SPORTING_EVENTS"
+          rateType: "ADMISSION_TO_SPORTING_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "HOTELS"
+          rateType: "HOTELS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "PASSENGER_TRANSPORT"
+          rateType: "PASSENGER_TRANSPORT",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "RESTAURANTS"
+          rateType: "RESTAURANTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 2.1,
-          rateType: "NEWSPAPERS"
+          rateType: "NEWSPAPERS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 2.1,
-          rateType: "PHARMACEUTICALS"
+          rateType: "PHARMACEUTICALS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5.5,
-          rateType: "BOOKS"
+          rateType: "BOOKS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5.5,
-          rateType: "E_BOOKS"
+          rateType: "E_BOOKS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5.5,
-          rateType: "FOODSTUFFS"
+          rateType: "FOODSTUFFS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5.5,
-          rateType: "MEDICAL"
-        }
+          rateType: "MEDICAL",
+        },
       ],
-      standardRate: 20
-    }
+      standardRate: 20,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "GA",
     country: "Gabon",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -949,112 +949,112 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 0,
-          rateType: "BOOKS"
+          rateType: "BOOKS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 0,
-          rateType: "CHILDRENS_CLOTHING"
+          rateType: "CHILDRENS_CLOTHING",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 0,
-          rateType: "FOODSTUFFS"
+          rateType: "FOODSTUFFS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 0,
-          rateType: "MEDICAL"
+          rateType: "MEDICAL",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 0,
-          rateType: "NEWSPAPERS"
+          rateType: "NEWSPAPERS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 0,
-          rateType: "PASSENGER_TRANSPORT"
+          rateType: "PASSENGER_TRANSPORT",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 0,
-          rateType: "PHARMACEUTICALS"
+          rateType: "PHARMACEUTICALS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "PROPERTY_RENOVATIONS"
-        }
+          rateType: "PROPERTY_RENOVATIONS",
+        },
       ],
-      standardRate: 20
-    }
+      standardRate: 20,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "GD",
     country: "Grenada",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "GE",
     country: "Gruzja",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "GF",
     country: "Gujana Francuska",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "GG",
     country: "Guernsey",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "GH",
     country: "Ghana",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "GI",
     country: "Gibraltar",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "GL",
     country: "Grenlandia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "GM",
     country: "Gambia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "GN",
     country: "Gwinea",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "GP",
     country: "Gwadelupa",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "GQ",
     country: "Gwinea Równikowa",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -1066,99 +1066,99 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 13,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 13,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 13,
-          rateType: "ADMISSION_TO_SPORTING_EVENTS"
+          rateType: "ADMISSION_TO_SPORTING_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 13,
-          rateType: "FOODSTUFFS"
+          rateType: "FOODSTUFFS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 13,
-          rateType: "MEDICAL"
+          rateType: "MEDICAL",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 13,
-          rateType: "PHARMACEUTICALS"
+          rateType: "PHARMACEUTICALS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6.5,
-          rateType: "BOOKS"
+          rateType: "BOOKS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6.5,
-          rateType: "HOTELS"
+          rateType: "HOTELS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6.5,
-          rateType: "NEWSPAPERS"
-        }
+          rateType: "NEWSPAPERS",
+        },
       ],
-      standardRate: 24
-    }
+      standardRate: 24,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "GS",
     country: "Georgia Południowa i Sandwich Południowy",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "GT",
     country: "Gwatemala",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "GU",
     country: "Guam",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "GW",
     country: "Gwinea Bissau",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "GY",
     country: "Gujana",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "HK",
     country: "Hongkong",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "HM",
     country: "Wyspy Heard i McDonalda",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "HN",
     country: "Honduras",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -1170,22 +1170,22 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 13,
-          rateType: "HOTELS"
+          rateType: "HOTELS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 13,
-          rateType: "NEWSPAPERS"
-        }
+          rateType: "NEWSPAPERS",
+        },
       ],
-      standardRate: 25
-    }
+      standardRate: 25,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "HT",
     country: "Haiti",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -1197,37 +1197,37 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 18,
-          rateType: "FOODSTUFFS"
+          rateType: "FOODSTUFFS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 18,
-          rateType: "HOTELS"
+          rateType: "HOTELS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "BOOKS"
+          rateType: "BOOKS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "MEDICAL"
+          rateType: "MEDICAL",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "PHARMACEUTICALS"
-        }
+          rateType: "PHARMACEUTICALS",
+        },
       ],
-      standardRate: 27
-    }
+      standardRate: 27,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "ID",
     country: "Indonezja",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -1239,98 +1239,98 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 0,
-          rateType: "BOOKS"
+          rateType: "BOOKS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 0,
-          rateType: "CHILDRENS_CLOTHING"
+          rateType: "CHILDRENS_CLOTHING",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 0,
-          rateType: "MEDICAL"
+          rateType: "MEDICAL",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 4.8,
-          rateType: "FOODSTUFFS"
+          rateType: "FOODSTUFFS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "ADMISSION_TO_SPORTING_EVENTS"
+          rateType: "ADMISSION_TO_SPORTING_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "HOTELS"
+          rateType: "HOTELS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "NEWSPAPERS"
+          rateType: "NEWSPAPERS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "RESTAURANTS"
-        }
+          rateType: "RESTAURANTS",
+        },
       ],
-      standardRate: 23
-    }
+      standardRate: 23,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "IL",
     country: "Izrael",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "IM",
     country: "Wyspa Man",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "IN",
     country: "Indie",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "IO",
     country: "Brytyjskie Terytorium Oceanu Indyjskiego",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "IQ",
     country: "Irak",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "IR",
     country: "Iran",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "IS",
     country: "Islandia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -1342,188 +1342,188 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "HOTELS"
+          rateType: "HOTELS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "PASSENGER_TRANSPORT"
+          rateType: "PASSENGER_TRANSPORT",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "PHARMACEUTICALS"
+          rateType: "PHARMACEUTICALS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "RESTAURANTS"
+          rateType: "RESTAURANTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 4,
-          rateType: "BOOKS"
+          rateType: "BOOKS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 4,
-          rateType: "E_BOOKS"
+          rateType: "E_BOOKS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 4,
-          rateType: "FOODSTUFFS"
+          rateType: "FOODSTUFFS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 4,
-          rateType: "MEDICAL"
-        }
+          rateType: "MEDICAL",
+        },
       ],
-      standardRate: 22
-    }
+      standardRate: 22,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "JE",
     country: "Jersey",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "JM",
     country: "Jamajka",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "JO",
     country: "Jordania",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "JP",
     country: "Japonia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "KE",
     country: "Kenia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "KG",
     country: "Kirgistan",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "KH",
     country: "Kambodża",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "KI",
     country: "Kiribati",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "KM",
     country: "Komory",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "KN",
     country: "Saint Kitts i Nevis",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "KP",
     country: "Korea Północna",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "KR",
     country: "Korea Południowa",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "KW",
     country: "Kuwejt",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "KY",
     country: "Kajmany",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "KZ",
     country: "Kazachstan",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "LA",
     country: "Laos",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "LB",
     country: "Liban",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "LC",
     country: "Saint Lucia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "LI",
     country: "Liechtenstein",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "LK",
     country: "Sri Lanka",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "LR",
     country: "Liberia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "LS",
     country: "Lesotho",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -1535,21 +1535,21 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "MEDICAL"
+          rateType: "MEDICAL",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "PHARMACEUTICALS"
+          rateType: "PHARMACEUTICALS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "BOOKS"
-        }
+          rateType: "BOOKS",
+        },
       ],
-      standardRate: 21
-    }
+      standardRate: 21,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -1561,91 +1561,91 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 14,
-          rateType: "ADVERTISING"
+          rateType: "ADVERTISING",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 14,
-          rateType: "DOMESTIC_FUEL"
+          rateType: "DOMESTIC_FUEL",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 14,
-          rateType: "WINE"
+          rateType: "WINE",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 3,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 3,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 3,
-          rateType: "ADMISSION_TO_SPORTING_EVENTS"
+          rateType: "ADMISSION_TO_SPORTING_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 3,
-          rateType: "BOOKS"
+          rateType: "BOOKS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 3,
-          rateType: "E_BOOKS"
+          rateType: "E_BOOKS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 3,
-          rateType: "FOODSTUFFS"
+          rateType: "FOODSTUFFS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 3,
-          rateType: "HOTELS"
+          rateType: "HOTELS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 3,
-          rateType: "MEDICAL"
+          rateType: "MEDICAL",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 3,
-          rateType: "NEWSPAPERS"
+          rateType: "NEWSPAPERS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 3,
-          rateType: "PASSENGER_TRANSPORT"
+          rateType: "PASSENGER_TRANSPORT",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 3,
-          rateType: "PHARMACEUTICALS"
+          rateType: "PHARMACEUTICALS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 3,
-          rateType: "RESTAURANTS"
+          rateType: "RESTAURANTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 8,
-          rateType: "BIKES"
+          rateType: "BIKES",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 8,
-          rateType: "DOMESTIC_SERVICES"
-        }
+          rateType: "DOMESTIC_SERVICES",
+        },
       ],
-      standardRate: 17
-    }
+      standardRate: 17,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -1657,133 +1657,133 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 12,
-          rateType: "BOOKS"
+          rateType: "BOOKS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 12,
-          rateType: "HOTELS"
+          rateType: "HOTELS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 12,
-          rateType: "MEDICAL"
+          rateType: "MEDICAL",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 12,
-          rateType: "NEWSPAPERS"
+          rateType: "NEWSPAPERS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 12,
-          rateType: "PHARMACEUTICALS"
-        }
+          rateType: "PHARMACEUTICALS",
+        },
       ],
-      standardRate: 21
-    }
+      standardRate: 21,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "LY",
     country: "Libia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "MA",
     country: "Maroko",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "MC",
     country: "Monako",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "MD",
     country: "Mołdawia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "ME",
     country: "Czarnogóra",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "MF",
     country: "Saint-Martin",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "MG",
     country: "Madagaskar",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "MH",
     country: "Wyspy Marshalla",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "MK",
     country: "Macedonia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "ML",
     country: "Mali",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "MM",
     country: "Mjanma",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "MN",
     country: "Mongolia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "MO",
     country: "Makau",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "MP",
     country: "Mariany Północne",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "MQ",
     country: "Martynika",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "MR",
     country: "Mauretania",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "MS",
     country: "Montserrat",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -1795,118 +1795,118 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 0,
-          rateType: "FOODSTUFFS"
+          rateType: "FOODSTUFFS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 0,
-          rateType: "PHARMACEUTICALS"
+          rateType: "PHARMACEUTICALS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "BOOKS"
+          rateType: "BOOKS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "E_BOOKS"
+          rateType: "E_BOOKS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "MEDICAL"
+          rateType: "MEDICAL",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "NEWSPAPERS"
+          rateType: "NEWSPAPERS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 7,
-          rateType: "HOTELS"
-        }
+          rateType: "HOTELS",
+        },
       ],
-      standardRate: 18
-    }
+      standardRate: 18,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "MU",
     country: "Mauritius",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "MV",
     country: "Malediwy",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "MW",
     country: "Malawi",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "MX",
     country: "Meksyk",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "MY",
     country: "Malezja",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "MZ",
     country: "Mozambik",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "NA",
     country: "Namibia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "NC",
     country: "Nowa Kaledonia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "NE",
     country: "Niger",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "NF",
     country: "Norfolk",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "NG",
     country: "Nigeria",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "NI",
     country: "Nikaragua",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -1918,123 +1918,123 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "ACCOMMODATION"
+          rateType: "ACCOMMODATION",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "BOOKS"
+          rateType: "BOOKS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "FOODSTUFFS"
+          rateType: "FOODSTUFFS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "HOTELS"
+          rateType: "HOTELS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "MEDICAL"
+          rateType: "MEDICAL",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "PASSENGER_TRANSPORT"
+          rateType: "PASSENGER_TRANSPORT",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "PHARMACEUTICALS"
-        }
+          rateType: "PHARMACEUTICALS",
+        },
       ],
-      standardRate: 21
-    }
+      standardRate: 21,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "NO",
     country: "Norwegia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "NP",
     country: "Nepal",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "NR",
     country: "Nauru",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "NU",
     country: "Niue",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "NZ",
     country: "Nowa Zelandia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "OM",
     country: "Oman",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "PA",
     country: "Panama",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "PE",
     country: "Peru",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "PF",
     country: "Polinezja Francuska",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "PG",
     country: "Papua-Nowa Gwinea",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "PH",
     country: "Filipiny",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "PK",
     country: "Pakistan",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -2046,80 +2046,80 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "FOODSTUFFS"
+          rateType: "FOODSTUFFS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 8,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 8,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 8,
-          rateType: "ADMISSION_TO_SPORTING_EVENTS"
+          rateType: "ADMISSION_TO_SPORTING_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 8,
-          rateType: "HOTELS"
+          rateType: "HOTELS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 8,
-          rateType: "MEDICAL"
+          rateType: "MEDICAL",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 8,
-          rateType: "NEWSPAPERS"
+          rateType: "NEWSPAPERS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 8,
-          rateType: "PASSENGER_TRANSPORT"
+          rateType: "PASSENGER_TRANSPORT",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 8,
-          rateType: "PHARMACEUTICALS"
+          rateType: "PHARMACEUTICALS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 8,
-          rateType: "RESTAURANTS"
-        }
+          rateType: "RESTAURANTS",
+        },
       ],
-      standardRate: 23
-    }
+      standardRate: 23,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "PM",
     country: "Saint-Pierre i Miquelon",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "PN",
     country: "Pitcairn",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "PR",
     country: "Portoryko",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "PS",
     country: "Palestyna",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -2131,70 +2131,70 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 13,
-          rateType: "AGRICULTURAL_SUPPLIES"
+          rateType: "AGRICULTURAL_SUPPLIES",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "BOOKS"
+          rateType: "BOOKS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "FOODSTUFFS"
+          rateType: "FOODSTUFFS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "HOTELS"
+          rateType: "HOTELS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "MEDICAL"
+          rateType: "MEDICAL",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "NEWSPAPERS"
+          rateType: "NEWSPAPERS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "PASSENGER_TRANSPORT"
+          rateType: "PASSENGER_TRANSPORT",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "PHARMACEUTICALS"
-        }
+          rateType: "PHARMACEUTICALS",
+        },
       ],
-      standardRate: 23
-    }
+      standardRate: 23,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "PW",
     country: "Palau",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "PY",
     country: "Paragwaj",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "QA",
     country: "Katar",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "RE",
     country: "Reunion",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -2206,93 +2206,93 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "SOCIAL_HOUSING"
+          rateType: "SOCIAL_HOUSING",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "BOOKS"
+          rateType: "BOOKS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "FOODSTUFFS"
+          rateType: "FOODSTUFFS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "HOTELS"
+          rateType: "HOTELS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "MEDICAL"
+          rateType: "MEDICAL",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "NEWSPAPERS"
+          rateType: "NEWSPAPERS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "PHARMACEUTICALS"
-        }
+          rateType: "PHARMACEUTICALS",
+        },
       ],
-      standardRate: 19
-    }
+      standardRate: 19,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "RS",
     country: "Serbia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "RU",
     country: "Rosja",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "RW",
     country: "Rwanda",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "SA",
     country: "Arabia Saudyjska",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "SB",
     country: "Wyspy Salomona",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "SC",
     country: "Seszele",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "SD",
     country: "Sudan",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -2304,28 +2304,28 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 12,
-          rateType: "FOODSTUFFS"
+          rateType: "FOODSTUFFS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "BOOKS"
-        }
+          rateType: "BOOKS",
+        },
       ],
-      standardRate: 25
-    }
+      standardRate: 25,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "SG",
     country: "Singapur",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "SH",
     country: "Wyspa Świętej Heleny, Wyspa Wniebowstąpienia i Tristan da Cunha",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -2337,57 +2337,57 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9.5,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9.5,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9.5,
-          rateType: "ADMISSION_TO_SPORTING_EVENTS"
+          rateType: "ADMISSION_TO_SPORTING_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9.5,
-          rateType: "BOOKS"
+          rateType: "BOOKS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9.5,
-          rateType: "FOODSTUFFS"
+          rateType: "FOODSTUFFS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9.5,
-          rateType: "HOTELS"
+          rateType: "HOTELS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9.5,
-          rateType: "MEDICAL"
+          rateType: "MEDICAL",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9.5,
-          rateType: "NEWSPAPERS"
+          rateType: "NEWSPAPERS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9.5,
-          rateType: "PHARMACEUTICALS"
-        }
+          rateType: "PHARMACEUTICALS",
+        },
       ],
-      standardRate: 22
-    }
+      standardRate: 22,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "SJ",
     country: "Svalbard i Jan Mayen",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
@@ -2399,369 +2399,369 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "BOOKS"
+          rateType: "BOOKS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "FOODSTUFFS"
+          rateType: "FOODSTUFFS",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "MEDICAL"
+          rateType: "MEDICAL",
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "PHARMACEUTICALS"
-        }
+          rateType: "PHARMACEUTICALS",
+        },
       ],
-      standardRate: 20
-    }
+      standardRate: 20,
+    },
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "SL",
     country: "Sierra Leone",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "SM",
     country: "San Marino",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "SN",
     country: "Senegal",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "SO",
     country: "Somalia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "SR",
     country: "Surinam",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "SS",
     country: "Sudan Południowy",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "ST",
     country: "Wyspy Świętego Tomasza i Książęca",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "SV",
     country: "Salwador",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "SX",
     country: "Sint Maarten",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "SY",
     country: "Syria",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "SZ",
     country: "Suazi",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "TC",
     country: "Turks i Caicos",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "TD",
     country: "Czad",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "TF",
     country: "Francuskie Terytoria Południowe i Antarktyczne",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "TG",
     country: "Togo",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "TH",
     country: "Tajlandia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "TJ",
     country: "Tadżykistan",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "TK",
     country: "Tokelau",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "TL",
     country: "Timor Wschodni",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "TM",
     country: "Turkmenistan",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "TN",
     country: "Tunezja",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "TO",
     country: "Tonga",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "TR",
     country: "Turcja",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "TT",
     country: "Trynidad i Tobago",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "TV",
     country: "Tuvalu",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "TW",
     country: "Tajwan",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "TZ",
     country: "Tanzania",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "UA",
     country: "Ukraina",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "UG",
     country: "Uganda",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "UM",
     country: "Dalekie Wyspy Mniejsze Stanów Zjednoczonych",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "US",
     country: "Stany Zjednoczone Ameryki",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "UY",
     country: "Urugwaj",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "UZ",
     country: "Uzbekistan",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "VA",
     country: "Watykan",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "VC",
     country: "Saint Vincent i Grenadyny",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "VE",
     country: "Wenezuela",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "VG",
     country: "Brytyjskie Wyspy Dziewicze",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "VI",
     country: "Wyspy Dziewicze Stanów Zjednoczonych",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "VN",
     country: "Wietnam",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "VU",
     country: "Vanuatu",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "WF",
     country: "Wallis i Futuna",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "WS",
     country: "Samoa",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "YE",
     country: "Jemen",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "YT",
     country: "Majotta",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "ZA",
     country: "Republika Południowej Afryki",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "ZM",
     country: "Zambia",
-    vat: null
+    vat: null,
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "ZW",
     country: "Zimbabwe",
-    vat: null
-  }
+    vat: null,
+  },
 ].filter(country => country.vat);
 
 export const taxTypes: TaxTypeFragment[] = [
   {
     description: "accommodation",
     taxCode: "accommodation",
-    __typename: "TaxType"
+    __typename: "TaxType",
   },
   {
     description: "admission to cultural events",
     taxCode: "admission to cultural events",
-    __typename: "TaxType"
+    __typename: "TaxType",
   },
   {
     description: "admission to entertainment events",
     taxCode: "admission to entertainment events",
-    __typename: "TaxType"
+    __typename: "TaxType",
   },
   {
     description: "admission to sporting events",
     taxCode: "admission to sporting events",
-    __typename: "TaxType"
+    __typename: "TaxType",
   },
   { description: "advertising", taxCode: "advertising", __typename: "TaxType" },
   {
     description: "agricultural supplies",
     taxCode: "agricultural supplies",
-    __typename: "TaxType"
+    __typename: "TaxType",
   },
   {
     description: "baby foodstuffs",
     taxCode: "baby foodstuffs",
-    __typename: "TaxType"
+    __typename: "TaxType",
   },
   { description: "bikes", taxCode: "bikes", __typename: "TaxType" },
   { description: "books", taxCode: "books", __typename: "TaxType" },
   {
     description: "childrens clothing",
     taxCode: "childrens clothing",
-    __typename: "TaxType"
+    __typename: "TaxType",
   },
   {
     description: "domestic fuel",
     taxCode: "domestic fuel",
-    __typename: "TaxType"
+    __typename: "TaxType",
   },
   {
     description: "domestic services",
     taxCode: "domestic services",
-    __typename: "TaxType"
+    __typename: "TaxType",
   },
   { description: "e-books", taxCode: "e-books", __typename: "TaxType" },
   { description: "foodstuffs", taxCode: "foodstuffs", __typename: "TaxType" },
@@ -2771,25 +2771,25 @@ export const taxTypes: TaxTypeFragment[] = [
   {
     description: "passenger transport",
     taxCode: "passenger transport",
-    __typename: "TaxType"
+    __typename: "TaxType",
   },
   {
     description: "pharmaceuticals",
     taxCode: "pharmaceuticals",
-    __typename: "TaxType"
+    __typename: "TaxType",
   },
   {
     description: "property renovations",
     taxCode: "property renovations",
-    __typename: "TaxType"
+    __typename: "TaxType",
   },
   { description: "restaurants", taxCode: "restaurants", __typename: "TaxType" },
   {
     description: "social housing",
     taxCode: "social housing",
-    __typename: "TaxType"
+    __typename: "TaxType",
   },
   { description: "standard", taxCode: "standard", __typename: "TaxType" },
   { description: "water", taxCode: "water", __typename: "TaxType" },
-  { description: "wine", taxCode: "wine", __typename: "TaxType" }
+  { description: "wine", taxCode: "wine", __typename: "TaxType" },
 ];

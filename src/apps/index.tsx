@@ -17,7 +17,7 @@ import {
   appsListPath,
   customAppAddPath,
   customAppPath,
-  CustomAppUrlQueryParams
+  CustomAppUrlQueryParams,
 } from "./urls";
 import AppView from "./views/App";
 import AppDetailsView from "./views/AppDetails";
@@ -28,7 +28,7 @@ import CustomAppCreateView from "./views/CustomAppCreate";
 import CustomAppDetailsView from "./views/CustomAppDetails";
 
 const AppDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
-  match
+  match,
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: AppDetailsUrlQueryParams = qs;
@@ -39,7 +39,7 @@ const AppDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
 };
 
 const AppSettings: React.FC<RouteComponentProps<{ id: string }>> = ({
-  match
+  match,
 }) => <AppSettingsView id={decodeURIComponent(match.params.id)} />;
 
 const App: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => (
@@ -61,7 +61,7 @@ interface CustomAppDetailsProps extends RouteComponentProps<{ id?: string }> {
 const CustomAppDetails: React.FC<CustomAppDetailsProps> = ({
   match,
   token,
-  onTokenClose
+  onTokenClose,
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: CustomAppUrlQueryParams = qs;

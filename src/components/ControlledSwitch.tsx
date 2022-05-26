@@ -5,10 +5,10 @@ import React from "react";
 const useStyles = makeStyles(
   () => ({
     labelText: {
-      fontSize: 14
-    }
+      fontSize: 14,
+    },
   }),
-  { name: "ControlledSwitch" }
+  { name: "ControlledSwitch" },
 );
 
 interface ControlledSwitchProps {
@@ -29,7 +29,7 @@ export const ControlledSwitch: React.FC<ControlledSwitchProps> = props => {
     label,
     name,
     secondLabel,
-    uncheckedLabel
+    uncheckedLabel,
   } = props;
 
   const classes = useStyles(props);

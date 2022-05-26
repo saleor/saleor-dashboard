@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 import {
   SearchGiftCardTagsDocument,
   SearchGiftCardTagsQuery,
-  SearchGiftCardTagsQueryVariables
+  SearchGiftCardTagsQueryVariables,
 } from "@saleor/graphql";
 import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
 

@@ -10,7 +10,7 @@ interface IAppState {
 
 export const initialAppState: IAppState = {
   error: null,
-  loading: false
+  loading: false,
 };
 
 export default IAppState;

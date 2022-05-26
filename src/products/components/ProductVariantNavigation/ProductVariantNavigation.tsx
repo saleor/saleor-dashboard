@@ -6,17 +6,17 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import {
   SortableTableBody,
-  SortableTableRow
+  SortableTableRow,
 } from "@saleor/components/SortableTable";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import {
   ProductVariantCreateDataQuery,
-  ProductVariantDetailsQuery
+  ProductVariantDetailsQuery,
 } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import {
   productVariantAddUrl,
-  productVariantEditUrl
+  productVariantEditUrl,
 } from "@saleor/products/urls";
 import { ReorderAction } from "@saleor/types";
 import classNames from "classnames";
@@ -28,26 +28,26 @@ import { renderCollection } from "../../../misc";
 const useStyles = makeStyles(
   theme => ({
     colAvatar: {
-      width: 64
+      width: 64,
     },
     colName: {
-      paddingLeft: 0
+      paddingLeft: 0,
     },
     defaultVariant: {
       color: fade(theme.palette.text.secondary, 0.6),
-      display: "block"
+      display: "block",
     },
     firstVariant: {
-      width: 104
+      width: 104,
     },
     link: {
-      cursor: "pointer"
+      cursor: "pointer",
     },
     noHandle: {
       "&&&": {
-        paddingRight: theme.spacing(3)
+        paddingRight: theme.spacing(3),
       },
-      textAlign: "right"
+      textAlign: "right",
     },
     tabActive: {
       "& > td:first-child": {
@@ -58,13 +58,13 @@ const useStyles = makeStyles(
           left: 0,
           position: "absolute",
           top: 0,
-          width: 2
+          width: 2,
         },
-        position: "relative"
-      }
-    }
+        position: "relative",
+      },
+    },
   }),
-  { name: "ProductVariantNavigation" }
+  { name: "ProductVariantNavigation" },
 );
 
 interface ProductVariantNavigationProps {
@@ -87,7 +87,7 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
     productId,
     isCreate,
     variants,
-    onReorder
+    onReorder,
   } = props;
 
   const classes = useStyles(props);
@@ -99,7 +99,7 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
         title={intl.formatMessage({
           id: "1kdQdO",
           defaultMessage: "Variants",
-          description: "section header"
+          description: "section header",
         })}
       />
       <ResponsiveTable>
@@ -108,7 +108,7 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
             const isDefault = variant && variant.id === defaultVariantId;
             const isActive = variant && variant.id === current;
             const thumbnail = variant?.media?.filter(
-              mediaObj => mediaObj.type === "IMAGE"
+              mediaObj => mediaObj.type === "IMAGE",
             )[0];
 
             return (
@@ -117,7 +117,7 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
                 key={variant ? variant.id : "skeleton"}
                 index={variantIndex || 0}
                 className={classNames(classes.link, {
-                  [classes.tabActive]: isActive
+                  [classes.tabActive]: isActive,
                 })}
                 href={
                   variant
@@ -136,7 +136,7 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
                       {intl.formatMessage({
                         id: "vZMs8f",
                         defaultMessage: "Default",
-                        description: "default product variant indicator"
+                        description: "default product variant indicator",
                       })}
                     </span>
                   )}
@@ -168,8 +168,8 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
                   classes.tabActive,
                   classes.noHandle,
                   {
-                    [classes.firstVariant]: variants?.length === 0
-                  }
+                    [classes.firstVariant]: variants?.length === 0,
+                  },
                 )}
                 thumbnail={null}
                 colSpan={2}

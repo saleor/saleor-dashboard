@@ -12,10 +12,10 @@ const useStyles = makeStyles(
   () => ({
     container: {
       maxWidth: 500,
-      zIndex: 1000
-    }
+      zIndex: 1000,
+    },
   }),
-  { name: "PluginChannelsAvailabilityStatusPopup" }
+  { name: "PluginChannelsAvailabilityStatusPopup" },
 );
 
 interface PluginAvailabilityStatusPopupProps {
@@ -27,7 +27,7 @@ interface PluginAvailabilityStatusPopupProps {
 const PluginAvailabilityStatusPopup: React.FC<PluginAvailabilityStatusPopupProps> = ({
   plugin,
   isOpen,
-  anchor
+  anchor,
 }) => {
   const classes = useStyles({});
 

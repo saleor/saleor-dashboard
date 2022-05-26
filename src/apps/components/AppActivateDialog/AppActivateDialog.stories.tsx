@@ -9,7 +9,7 @@ const props: AppActivateDialogProps = {
   name: "App",
   onClose: () => undefined,
   onConfirm: () => undefined,
-  open: true
+  open: true,
 };
 
 storiesOf("Views / Apps / Activate app", module)

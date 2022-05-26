@@ -13,79 +13,79 @@ const useStyles = makeStyles(
     title: {
       width: "100%",
       display: "flex",
-      justifyContent: "flex-start"
+      justifyContent: "flex-start",
     },
     orderNumber: {
       display: "inline",
-      marginLeft: theme.spacing(1)
+      marginLeft: theme.spacing(1),
     },
     warehouseName: {
       float: "right",
       alignSelf: "center",
       color: theme.palette.text.secondary,
-      margin: `auto ${theme.spacing(1)} auto auto`
+      margin: `auto ${theme.spacing(1)} auto auto`,
     },
     cardHeader: {
       fontSize: "24px",
       fontWeight: 500,
       lineHeight: "29px",
       letterSpacing: "0.02em",
-      textAlign: "left"
+      textAlign: "left",
     },
     indicator: {
       display: "flex",
-      alignItems: "center"
-    }
+      alignItems: "center",
+    },
   }),
-  { name: "OrderCardTitle" }
+  { name: "OrderCardTitle" },
 );
 
 const messages = defineMessages({
   canceled: {
     defaultMessage: "Canceled ({quantity})",
     id: "mGcw06",
-    description: "canceled fulfillment, section header"
+    description: "canceled fulfillment, section header",
   },
   fulfilled: {
     id: "iJrw63",
     defaultMessage: "Fulfilled ({quantity})",
-    description: "section header"
+    description: "section header",
   },
   refunded: {
     id: "oQhFlK",
     defaultMessage: "Refunded ({quantity})",
-    description: "refunded fulfillment, section header"
+    description: "refunded fulfillment, section header",
   },
   refundedAndReturned: {
     id: "jNSOSu",
     defaultMessage: "Refunded and Returned ({quantity})",
-    description: "cancelled fulfillment, section header"
+    description: "cancelled fulfillment, section header",
   },
   replaced: {
     id: "3stu21",
     defaultMessage: "Replaced ({quantity})",
-    description: "refunded fulfillment, section header"
+    description: "refunded fulfillment, section header",
   },
   returned: {
     id: "eCRaHe",
     defaultMessage: "Returned ({quantity})",
-    description: "refunded fulfillment, section header"
+    description: "refunded fulfillment, section header",
   },
   waitingForApproval: {
     id: "9ssWj+",
     defaultMessage: "Waiting for approval ({quantity})",
-    description: "unapproved fulfillment, section header"
+    description: "unapproved fulfillment, section header",
   },
   unfulfilled: {
     defaultMessage: "Unfulfilled ({quantity})",
     id: "Kc2/e7",
-    description: "section header"
+    description: "section header",
   },
   fulfilledFrom: {
     id: "ZPOyI1",
     defaultMessage: "Fulfilled from {warehouseName}",
-    description: "fulfilled fulfillment, section header"
-  }
+    description: "fulfilled fulfillment, section header",
+  },
 });
 
 type CardTitleStatus = FulfillmentStatus | "unfulfilled";
@@ -135,7 +135,7 @@ const OrderCardTitle: React.FC<OrderCardTitleProps> = ({
   warehouseName,
   withStatus = false,
   toolbar,
-  className
+  className,
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -152,11 +152,11 @@ const OrderCardTitle: React.FC<OrderCardTitleProps> = ({
       ? lines.reduce(
           (resultQuantity, line) =>
             resultQuantity + (line.quantityToFulfill ?? line.quantity),
-          0
+          0,
         )
       : lines.reduce(
           (resultQuantity, { quantity }) => resultQuantity + quantity,
-          0
+          0,
         );
 
   return (
@@ -174,7 +174,7 @@ const OrderCardTitle: React.FC<OrderCardTitleProps> = ({
           <Typography className={classes.cardHeader}>
             {intl.formatMessage(messageForStatus, {
               fulfillmentName,
-              quantity: totalQuantity
+              quantity: totalQuantity,
             })}
           </Typography>
           {!!warehouseName && (
@@ -182,7 +182,7 @@ const OrderCardTitle: React.FC<OrderCardTitleProps> = ({
               <FormattedMessage
                 {...messages.fulfilledFrom}
                 values={{
-                  warehouseName
+                  warehouseName,
                 }}
               />
             </Typography>

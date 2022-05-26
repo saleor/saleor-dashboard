@@ -1,7 +1,7 @@
 import { ProductOrder, ProductOrderField } from "@saleor/graphql";
 import {
   ProductListUrlQueryParams,
-  ProductListUrlSortField
+  ProductListUrlSortField,
 } from "@saleor/products/urls";
 import { getOrderDirection } from "@saleor/utils/sort";
 
@@ -9,7 +9,7 @@ export const DEFAULT_SORT_KEY = ProductListUrlSortField.name;
 
 export function canBeSorted(
   sort: ProductListUrlSortField,
-  isChannelSelected: boolean
+  isChannelSelected: boolean,
 ) {
   switch (sort) {
     case ProductListUrlSortField.name:
@@ -27,7 +27,7 @@ export function canBeSorted(
 }
 
 export function getSortQueryField(
-  sort: ProductListUrlSortField
+  sort: ProductListUrlSortField,
 ): ProductOrderField {
   switch (sort) {
     case ProductListUrlSortField.name:
@@ -49,7 +49,7 @@ export function getSortQueryField(
 
 export function getSortQueryVariables(
   params: ProductListUrlQueryParams,
-  isChannelSelected: boolean
+  isChannelSelected: boolean,
 ): ProductOrder {
   if (!canBeSorted(params.sort, isChannelSelected)) {
     return;
@@ -59,13 +59,13 @@ export function getSortQueryVariables(
   if (params.sort === ProductListUrlSortField.attribute) {
     return {
       attributeId: params.attributeId,
-      direction
+      direction,
     };
   }
 
   const field = getSortQueryField(params.sort);
   return {
     direction,
-    field
+    field,
   };
 }

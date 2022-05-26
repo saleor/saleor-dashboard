@@ -2,7 +2,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import {
   productListUrl,
   ProductListUrlQueryParams,
-  ProductListUrlSortField
+  ProductListUrlSortField,
 } from "@saleor/products/urls";
 import { useEffect } from "react";
 
@@ -10,7 +10,7 @@ import { canBeSorted, DEFAULT_SORT_KEY } from "./sort";
 
 export function useSortRedirects(
   params: ProductListUrlQueryParams,
-  isChannelSelected: boolean
+  isChannelSelected: boolean,
 ) {
   const navigate = useNavigator();
 
@@ -26,8 +26,8 @@ export function useSortRedirects(
       productListUrl({
         ...params,
         asc: hasQuery ? false : params.asc,
-        sort: hasQuery ? sortWithQuery : sortWithoutQuery
-      })
+        sort: hasQuery ? sortWithQuery : sortWithoutQuery,
+      }),
     );
   }, [params.query]);
 
@@ -36,8 +36,8 @@ export function useSortRedirects(
       navigate(
         productListUrl({
           ...params,
-          sort: DEFAULT_SORT_KEY
-        })
+          sort: DEFAULT_SORT_KEY,
+        }),
       );
     }
   }, [params]);

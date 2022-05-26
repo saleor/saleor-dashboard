@@ -5,7 +5,7 @@ import {
   ProductMediaType,
   ProductVariantCreateDataQuery,
   ProductVariantFragment,
-  WeightUnitsEnum
+  WeightUnitsEnum,
 } from "@saleor/graphql";
 import { RelayToFlat } from "@saleor/types";
 import { warehouseList } from "@saleor/warehouses/fixtures";
@@ -15,7 +15,7 @@ import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.j
 const content = richTextEditorFixtures.richTextEditor;
 
 export const product: (
-  placeholderImage: string
+  placeholderImage: string,
 ) => ProductFragment &
   ProductVariantCreateDataQuery["product"] = placeholderImage => ({
   __typename: "Product" as "Product",
@@ -38,7 +38,7 @@ export const product: (
             hasNextPage: false,
             hasPreviousPage: false,
             startCursor: "WyIwIiwgIjQ5Il0=",
-            __typename: "PageInfo"
+            __typename: "PageInfo",
           },
           edges: [
             {
@@ -55,8 +55,8 @@ export const product: (
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
+                value: null,
+              },
             },
             {
               __typename: "AttributeValueCountableEdge",
@@ -72,11 +72,11 @@ export const product: (
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
-            }
-          ]
-        }
+                value: null,
+              },
+            },
+          ],
+        },
       },
       values: [
         {
@@ -90,9 +90,9 @@ export const product: (
           boolean: null,
           date: null,
           dateTime: null,
-          value: null
-        }
-      ]
+          value: null,
+        },
+      ],
     },
     {
       __typename: "SelectedAttribute",
@@ -112,7 +112,7 @@ export const product: (
             hasNextPage: false,
             hasPreviousPage: false,
             startCursor: "WyIwIiwgIjQ5Il0=",
-            __typename: "PageInfo"
+            __typename: "PageInfo",
           },
           edges: [
             {
@@ -129,8 +129,8 @@ export const product: (
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
+                value: null,
+              },
             },
             {
               __typename: "AttributeValueCountableEdge",
@@ -146,8 +146,8 @@ export const product: (
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
+                value: null,
+              },
             },
             {
               __typename: "AttributeValueCountableEdge",
@@ -163,8 +163,8 @@ export const product: (
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
+                value: null,
+              },
             },
             {
               __typename: "AttributeValueCountableEdge",
@@ -180,11 +180,11 @@ export const product: (
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
-            }
-          ]
-        }
+                value: null,
+              },
+            },
+          ],
+        },
       },
       values: [
         {
@@ -198,16 +198,16 @@ export const product: (
           boolean: null,
           date: null,
           dateTime: null,
-          value: null
-        }
-      ]
-    }
+          value: null,
+        },
+      ],
+    },
   ],
   availableForPurchase: null,
   category: {
     __typename: "Category",
     id: "Q2F0ZWdvcnk6MQ==",
-    name: "Apparel"
+    name: "Apparel",
   },
   channelListings: [
     {
@@ -217,7 +217,7 @@ export const product: (
         __typename: "Channel",
         currencyCode: "USD",
         id: "123",
-        name: "Channel1"
+        name: "Channel1",
       },
       isAvailableForPurchase: false,
       isPublished: true,
@@ -230,21 +230,21 @@ export const product: (
             net: {
               __typename: "Money",
               amount: 1.2,
-              currency: "USD"
-            }
+              currency: "USD",
+            },
           },
           stop: {
             __typename: "TaxedMoney",
             net: {
               __typename: "Money",
               amount: 3.5,
-              currency: "USD"
-            }
-          }
-        }
+              currency: "USD",
+            },
+          },
+        },
       },
       publicationDate: "2020-07-14",
-      visibleInListings: true
+      visibleInListings: true,
     },
     {
       __typename: "ProductChannelListing",
@@ -253,7 +253,7 @@ export const product: (
         __typename: "Channel",
         currencyCode: "USD",
         id: "124",
-        name: "Channel2"
+        name: "Channel2",
       },
       isAvailableForPurchase: false,
       isPublished: false,
@@ -266,30 +266,30 @@ export const product: (
             net: {
               __typename: "Money",
               amount: 1.2,
-              currency: "USD"
-            }
+              currency: "USD",
+            },
           },
           stop: {
             __typename: "TaxedMoney",
             net: {
               __typename: "Money",
               amount: 3.5,
-              currency: "USD"
-            }
-          }
-        }
+              currency: "USD",
+            },
+          },
+        },
       },
       publicationDate: "2020-07-30",
-      visibleInListings: true
-    }
+      visibleInListings: true,
+    },
   ],
   chargeTaxes: true,
   collections: [
     {
       __typename: "Collection",
       id: "Q29sbGVjdGlvbjoy",
-      name: "Winter sale"
-    }
+      name: "Winter sale",
+    },
   ],
   defaultVariant: { __typename: "ProductVariant", id: "pv75934" },
   description: JSON.stringify(content),
@@ -306,7 +306,7 @@ export const product: (
       sortOrder: 0,
       type: ProductMediaType.IMAGE,
       oembedData: "{}",
-      url: placeholderImage
+      url: placeholderImage,
     },
     {
       __typename: "ProductMedia",
@@ -315,7 +315,7 @@ export const product: (
       sortOrder: 2,
       type: ProductMediaType.IMAGE,
       oembedData: "{}",
-      url: placeholderImage
+      url: placeholderImage,
     },
     {
       __typename: "ProductMedia",
@@ -324,7 +324,7 @@ export const product: (
       sortOrder: 1,
       type: ProductMediaType.IMAGE,
       oembedData: "{}",
-      url: placeholderImage
+      url: placeholderImage,
     },
     {
       __typename: "ProductMedia",
@@ -333,7 +333,7 @@ export const product: (
       sortOrder: 3,
       type: ProductMediaType.IMAGE,
       oembedData: "{}",
-      url: placeholderImage
+      url: placeholderImage,
     },
     {
       __typename: "ProductMedia",
@@ -342,15 +342,15 @@ export const product: (
       sortOrder: 4,
       type: ProductMediaType.IMAGE,
       oembedData: "{}",
-      url: placeholderImage
-    }
+      url: placeholderImage,
+    },
   ],
   metadata: [
     {
       __typename: "MetadataItem",
       key: "integration.id",
-      value: "100023123"
-    }
+      value: "100023123",
+    },
   ],
   name: "Ergonomic Plastic Bacon",
   privateMetadata: [],
@@ -376,7 +376,7 @@ export const product: (
             hasNextPage: false,
             hasPreviousPage: false,
             startCursor: "WyIwIiwgIjQ5Il0=",
-            __typename: "PageInfo"
+            __typename: "PageInfo",
           },
           edges: [
             {
@@ -387,7 +387,7 @@ export const product: (
                 file: {
                   __typename: "File",
                   contentType: "image/png",
-                  url: "some-non-existing-url"
+                  url: "some-non-existing-url",
                 },
                 id: "gdghdgdhkkdae",
                 name: "File First Value",
@@ -397,12 +397,12 @@ export const product: (
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
-            }
-          ]
-        }
-      }
+                value: null,
+              },
+            },
+          ],
+        },
+      },
     ],
     selectionVariantAttributes: [
       {
@@ -421,7 +421,7 @@ export const product: (
             hasNextPage: false,
             hasPreviousPage: false,
             startCursor: "WyIwIiwgIjQ5Il0=",
-            __typename: "PageInfo"
+            __typename: "PageInfo",
           },
           edges: [
             {
@@ -438,8 +438,8 @@ export const product: (
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
+                value: null,
+              },
             },
             {
               __typename: "AttributeValueCountableEdge",
@@ -455,17 +455,17 @@ export const product: (
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
-            }
-          ]
-        }
-      }
+                value: null,
+              },
+            },
+          ],
+        },
+      },
     ],
     taxType: {
       __typename: "TaxType",
       description: "standard",
-      taxCode: "standard"
+      taxCode: "standard",
     },
     variantAttributes: [
       {
@@ -482,7 +482,7 @@ export const product: (
             hasNextPage: false,
             hasPreviousPage: false,
             startCursor: "WyIwIiwgIjQ5Il0=",
-            __typename: "PageInfo"
+            __typename: "PageInfo",
           },
           edges: [
             {
@@ -493,7 +493,7 @@ export const product: (
                 file: {
                   __typename: "File",
                   contentType: "image/png",
-                  url: "some-non-existing-url"
+                  url: "some-non-existing-url",
                 },
                 id: "gdghdgdhkkdae",
                 name: "File First Value",
@@ -503,11 +503,11 @@ export const product: (
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
-            }
-          ]
-        }
+                value: null,
+              },
+            },
+          ],
+        },
       },
       {
         __typename: "Attribute",
@@ -523,7 +523,7 @@ export const product: (
             hasNextPage: false,
             hasPreviousPage: false,
             startCursor: "WyIwIiwgIjQ5Il0=",
-            __typename: "PageInfo"
+            __typename: "PageInfo",
           },
           edges: [
             {
@@ -540,8 +540,8 @@ export const product: (
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
+                value: null,
+              },
             },
             {
               __typename: "AttributeValueCountableEdge",
@@ -557,13 +557,13 @@ export const product: (
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
-            }
-          ]
-        }
-      }
-    ]
+                value: null,
+              },
+            },
+          ],
+        },
+      },
+    ],
   },
   publicationDate: "2018-08-25T18:45:54.125Z",
   purchaseCost: {
@@ -572,14 +572,14 @@ export const product: (
       __typename: "Money",
       amount: 339.39,
       currency: "NZD",
-      localized: "339.39 NZD"
+      localized: "339.39 NZD",
     },
     stop: {
       __typename: "Money",
       amount: 678.78,
       currency: "NZD",
-      localized: "678.78 NZD"
-    }
+      localized: "678.78 NZD",
+    },
   },
   rating: 100,
   seoDescription: "Seo description",
@@ -589,7 +589,7 @@ export const product: (
   taxType: {
     __typename: "TaxType",
     description: "standard",
-    taxCode: "standard"
+    taxCode: "standard",
   },
   thumbnail: { __typename: "Image" as "Image", url: placeholderImage },
   url: "/example-url",
@@ -606,15 +606,15 @@ export const product: (
           id: "pi92837",
           type: ProductMediaType.IMAGE,
           oembedData: "{}",
-          url: placeholderImage
+          url: placeholderImage,
         },
         {
           __typename: "ProductMedia",
           id: "pi92838",
           type: ProductMediaType.IMAGE,
           oembedData: "{}",
-          url: placeholderImage
-        }
+          url: placeholderImage,
+        },
       ],
       name: "Cordoba Oro",
       sku: "87192-94370",
@@ -624,23 +624,23 @@ export const product: (
           id: "1",
           quantity: 1,
           quantityAllocated: 0,
-          warehouse: warehouseList[0]
+          warehouse: warehouseList[0],
         },
         {
           __typename: "Stock",
           id: "2",
           quantity: 4,
           quantityAllocated: 2,
-          warehouse: warehouseList[1]
-        }
+          warehouse: warehouseList[1],
+        },
       ],
       trackInventory: true,
       preorder: {
         __typename: "PreorderData",
         endDate: null,
         globalSoldUnits: null,
-        globalThreshold: 0
-      }
+        globalThreshold: 0,
+      },
     },
     {
       __typename: "ProductVariant",
@@ -652,23 +652,23 @@ export const product: (
             __typename: "Channel",
             currencyCode: "USD",
             id: "123",
-            name: "Channel1"
+            name: "Channel1",
           },
           costPrice: {
             __typename: "Money",
             amount: 10,
-            currency: "USD"
+            currency: "USD",
           },
           price: {
             __typename: "Money",
             amount: 1,
-            currency: "USD"
+            currency: "USD",
           },
           preorderThreshold: {
             __typename: "PreorderThreshold",
             quantity: 0,
-            soldUnits: 0
-          }
+            soldUnits: 0,
+          },
         },
         {
           __typename: "ProductVariantChannelListing",
@@ -676,24 +676,24 @@ export const product: (
             __typename: "Channel",
             currencyCode: "USD",
             id: "124",
-            name: "Channel2"
+            name: "Channel2",
           },
           costPrice: {
             __typename: "Money",
             amount: 10,
-            currency: "USD"
+            currency: "USD",
           },
           price: {
             __typename: "Money",
             amount: 1,
-            currency: "USD"
+            currency: "USD",
           },
           preorderThreshold: {
             __typename: "PreorderThreshold",
             quantity: 0,
-            soldUnits: 0
-          }
-        }
+            soldUnits: 0,
+          },
+        },
       ],
       id: "pv68615",
       margin: 7,
@@ -703,15 +703,15 @@ export const product: (
           id: "pi81234",
           type: ProductMediaType.IMAGE,
           oembedData: "{}",
-          url: placeholderImage
+          url: placeholderImage,
         },
         {
           __typename: "ProductMedia",
           id: "pi1236912",
           type: ProductMediaType.IMAGE,
           oembedData: "{}",
-          url: placeholderImage
-        }
+          url: placeholderImage,
+        },
       ],
       name: "silver",
       sku: "69055-15190",
@@ -721,27 +721,27 @@ export const product: (
           id: "1",
           quantity: 13,
           quantityAllocated: 2,
-          warehouse: warehouseList[0]
-        }
+          warehouse: warehouseList[0],
+        },
       ],
       trackInventory: false,
       preorder: {
         __typename: "PreorderData",
         endDate: null,
         globalSoldUnits: null,
-        globalThreshold: 0
-      }
-    }
+        globalThreshold: 0,
+      },
+    },
   ],
   visibleInListings: true,
   weight: {
     __typename: "Weight",
     unit: WeightUnitsEnum.KG,
-    value: 5
-  }
+    value: 5,
+  },
 });
 export const products = (
-  placeholderImage: string
+  placeholderImage: string,
 ): RelayToFlat<ProductListQuery["products"]> => [
   {
     __typename: "Product",
@@ -755,7 +755,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         isAvailableForPurchase: false,
         isPublished: true,
@@ -768,21 +768,21 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-14",
-        visibleInListings: true
+        visibleInListings: true,
       },
       {
         __typename: "ProductChannelListing",
@@ -791,7 +791,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "124",
-          name: "Channel2"
+          name: "Channel2",
         },
         isAvailableForPurchase: false,
         isPublished: false,
@@ -804,22 +804,22 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-30",
-        visibleInListings: true
-      }
+        visibleInListings: true,
+      },
     ],
     id: "UHJvZHVjdDo2MQ==",
     name: "Nebula Night Sky Paint",
@@ -827,12 +827,12 @@ export const products = (
       __typename: "ProductType",
       hasVariants: true,
       id: "UHJvZHVjdFR5cGU6Nw==",
-      name: "Paint"
+      name: "Paint",
     },
     thumbnail: {
       __typename: "Image",
-      url: placeholderImage
-    }
+      url: placeholderImage,
+    },
   },
   {
     __typename: "Product",
@@ -846,7 +846,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         isAvailableForPurchase: false,
         isPublished: true,
@@ -859,21 +859,21 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-14",
-        visibleInListings: false
+        visibleInListings: false,
       },
       {
         __typename: "ProductChannelListing",
@@ -882,7 +882,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "124",
-          name: "Channel2"
+          name: "Channel2",
         },
         isAvailableForPurchase: false,
         isPublished: false,
@@ -895,22 +895,22 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-30",
-        visibleInListings: false
-      }
+        visibleInListings: false,
+      },
     ],
     id: "UHJvZHVjdDo2NA==",
     name: "Light Speed Yellow Paint",
@@ -918,12 +918,12 @@ export const products = (
       __typename: "ProductType",
       hasVariants: true,
       id: "UHJvZHVjdFR5cGU6Nw==",
-      name: "Paint"
+      name: "Paint",
     },
     thumbnail: {
       __typename: "Image",
-      url: placeholderImage
-    }
+      url: placeholderImage,
+    },
   },
   {
     __typename: "Product",
@@ -937,7 +937,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         isAvailableForPurchase: false,
         isPublished: true,
@@ -950,21 +950,21 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-14",
-        visibleInListings: false
+        visibleInListings: false,
       },
       {
         __typename: "ProductChannelListing",
@@ -973,7 +973,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "124",
-          name: "Channel2"
+          name: "Channel2",
         },
         isAvailableForPurchase: false,
         isPublished: false,
@@ -986,22 +986,22 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-30",
-        visibleInListings: false
-      }
+        visibleInListings: false,
+      },
     ],
     id: "UHJvZHVjdDo2NQ==",
     name: "Hyperspace Turquoise Paint",
@@ -1009,12 +1009,12 @@ export const products = (
       __typename: "ProductType",
       hasVariants: true,
       id: "UHJvZHVjdFR5cGU6Nw==",
-      name: "Paint"
+      name: "Paint",
     },
     thumbnail: {
       __typename: "Image",
-      url: placeholderImage
-    }
+      url: placeholderImage,
+    },
   },
   {
     __typename: "Product",
@@ -1024,7 +1024,7 @@ export const products = (
         __typename: "SelectedAttribute",
         attribute: {
           __typename: "Attribute",
-          id: "QXR0cmlidXRlOjE2"
+          id: "QXR0cmlidXRlOjE2",
         },
         values: [
           {
@@ -1037,10 +1037,10 @@ export const products = (
             boolean: null,
             date: null,
             dateTime: null,
-            value: null
-          }
-        ]
-      }
+            value: null,
+          },
+        ],
+      },
     ],
     channelListings: [
       {
@@ -1050,7 +1050,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         isAvailableForPurchase: false,
         isPublished: true,
@@ -1063,21 +1063,21 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-14",
-        visibleInListings: false
+        visibleInListings: false,
       },
       {
         __typename: "ProductChannelListing",
@@ -1086,7 +1086,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "124",
-          name: "Channel2"
+          name: "Channel2",
         },
         isAvailableForPurchase: false,
         isPublished: false,
@@ -1099,22 +1099,22 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-30",
-        visibleInListings: false
-      }
+        visibleInListings: false,
+      },
     ],
     id: "UHJvZHVjdDo3NQ==",
     name: "Pineapple Juice",
@@ -1122,12 +1122,12 @@ export const products = (
       __typename: "ProductType",
       hasVariants: true,
       id: "UHJvZHVjdFR5cGU6OQ==",
-      name: "Juice"
+      name: "Juice",
     },
     thumbnail: {
       __typename: "Image",
-      url: placeholderImage
-    }
+      url: placeholderImage,
+    },
   },
   {
     __typename: "Product",
@@ -1137,7 +1137,7 @@ export const products = (
         __typename: "SelectedAttribute",
         attribute: {
           __typename: "Attribute",
-          id: "QXR0cmlidXRlOjE2"
+          id: "QXR0cmlidXRlOjE2",
         },
         values: [
           {
@@ -1150,10 +1150,10 @@ export const products = (
             boolean: null,
             date: null,
             dateTime: null,
-            value: null
-          }
-        ]
-      }
+            value: null,
+          },
+        ],
+      },
     ],
     channelListings: [
       {
@@ -1163,7 +1163,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         isAvailableForPurchase: false,
         isPublished: true,
@@ -1176,21 +1176,21 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-14",
-        visibleInListings: false
+        visibleInListings: false,
       },
       {
         __typename: "ProductChannelListing",
@@ -1199,7 +1199,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "124",
-          name: "Channel2"
+          name: "Channel2",
         },
         isAvailableForPurchase: false,
         isPublished: false,
@@ -1212,22 +1212,22 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-30",
-        visibleInListings: false
-      }
+        visibleInListings: false,
+      },
     ],
     id: "UHJvZHVjdDo3Ng==",
     name: "Coconut Juice",
@@ -1235,12 +1235,12 @@ export const products = (
       __typename: "ProductType",
       hasVariants: true,
       id: "UHJvZHVjdFR5cGU6OQ==",
-      name: "Juice"
+      name: "Juice",
     },
     thumbnail: {
       __typename: "Image",
-      url: placeholderImage
-    }
+      url: placeholderImage,
+    },
   },
   {
     __typename: "Product",
@@ -1250,7 +1250,7 @@ export const products = (
         __typename: "SelectedAttribute",
         attribute: {
           __typename: "Attribute",
-          id: "QXR0cmlidXRlOjE2"
+          id: "QXR0cmlidXRlOjE2",
         },
         values: [
           {
@@ -1263,10 +1263,10 @@ export const products = (
             boolean: null,
             date: null,
             dateTime: null,
-            value: null
-          }
-        ]
-      }
+            value: null,
+          },
+        ],
+      },
     ],
     channelListings: [
       {
@@ -1276,7 +1276,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         isAvailableForPurchase: false,
         isPublished: true,
@@ -1289,21 +1289,21 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-14",
-        visibleInListings: false
+        visibleInListings: false,
       },
 
       {
@@ -1313,7 +1313,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "124",
-          name: "Channel2"
+          name: "Channel2",
         },
         isAvailableForPurchase: false,
         isPublished: false,
@@ -1326,22 +1326,22 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-30",
-        visibleInListings: false
-      }
+        visibleInListings: false,
+      },
     ],
     id: "UHJvZHVjdDo3Mg==",
     name: "Apple Juice",
@@ -1349,12 +1349,12 @@ export const products = (
       __typename: "ProductType",
       hasVariants: true,
       id: "UHJvZHVjdFR5cGU6OQ==",
-      name: "Juice"
+      name: "Juice",
     },
     thumbnail: {
       __typename: "Image",
-      url: placeholderImage
-    }
+      url: placeholderImage,
+    },
   },
   {
     __typename: "Product",
@@ -1364,7 +1364,7 @@ export const products = (
         __typename: "SelectedAttribute",
         attribute: {
           __typename: "Attribute",
-          id: "QXR0cmlidXRlOjE2"
+          id: "QXR0cmlidXRlOjE2",
         },
         values: [
           {
@@ -1377,10 +1377,10 @@ export const products = (
             boolean: null,
             date: null,
             dateTime: null,
-            value: null
-          }
-        ]
-      }
+            value: null,
+          },
+        ],
+      },
     ],
     channelListings: [
       {
@@ -1390,7 +1390,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         isAvailableForPurchase: false,
         isPublished: true,
@@ -1403,21 +1403,21 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-14",
-        visibleInListings: false
+        visibleInListings: false,
       },
       {
         __typename: "ProductChannelListing",
@@ -1426,7 +1426,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "124",
-          name: "Channel2"
+          name: "Channel2",
         },
         isAvailableForPurchase: false,
         isPublished: false,
@@ -1439,22 +1439,22 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-30",
-        visibleInListings: false
-      }
+        visibleInListings: false,
+      },
     ],
     id: "UHJvZHVjdDo3MQ==",
     name: "Orange Juice",
@@ -1462,12 +1462,12 @@ export const products = (
       __typename: "ProductType",
       hasVariants: true,
       id: "UHJvZHVjdFR5cGU6OQ==",
-      name: "Juice"
+      name: "Juice",
     },
     thumbnail: {
       __typename: "Image",
-      url: placeholderImage
-    }
+      url: placeholderImage,
+    },
   },
   {
     __typename: "Product",
@@ -1477,7 +1477,7 @@ export const products = (
         __typename: "SelectedAttribute",
         attribute: {
           __typename: "Attribute",
-          id: "QXR0cmlidXRlOjE2"
+          id: "QXR0cmlidXRlOjE2",
         },
         values: [
           {
@@ -1490,10 +1490,10 @@ export const products = (
             boolean: null,
             date: null,
             dateTime: null,
-            value: null
-          }
-        ]
-      }
+            value: null,
+          },
+        ],
+      },
     ],
     channelListings: [
       {
@@ -1503,7 +1503,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         isAvailableForPurchase: false,
         isPublished: true,
@@ -1516,21 +1516,21 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-14",
-        visibleInListings: false
+        visibleInListings: false,
       },
       {
         __typename: "ProductChannelListing",
@@ -1539,7 +1539,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "124",
-          name: "Channel2"
+          name: "Channel2",
         },
         isAvailableForPurchase: false,
         isPublished: false,
@@ -1552,22 +1552,22 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-30",
-        visibleInListings: false
-      }
+        visibleInListings: false,
+      },
     ],
     id: "UHJvZHVjdDo3NA==",
     name: "Banana Juice",
@@ -1575,12 +1575,12 @@ export const products = (
       __typename: "ProductType",
       hasVariants: true,
       id: "UHJvZHVjdFR5cGU6OQ==",
-      name: "Juice"
+      name: "Juice",
     },
     thumbnail: {
       __typename: "Image",
-      url: placeholderImage
-    }
+      url: placeholderImage,
+    },
   },
   {
     __typename: "Product",
@@ -1590,7 +1590,7 @@ export const products = (
         __typename: "SelectedAttribute",
         attribute: {
           __typename: "Attribute",
-          id: "QXR0cmlidXRlOjE2"
+          id: "QXR0cmlidXRlOjE2",
         },
         values: [
           {
@@ -1603,10 +1603,10 @@ export const products = (
             boolean: null,
             date: null,
             dateTime: null,
-            value: null
-          }
-        ]
-      }
+            value: null,
+          },
+        ],
+      },
     ],
     channelListings: [
       {
@@ -1616,7 +1616,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         isAvailableForPurchase: false,
         isPublished: true,
@@ -1629,21 +1629,21 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-14",
-        visibleInListings: true
+        visibleInListings: true,
       },
       {
         __typename: "ProductChannelListing",
@@ -1652,7 +1652,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "124",
-          name: "Channel2"
+          name: "Channel2",
         },
         isAvailableForPurchase: false,
         isPublished: false,
@@ -1665,22 +1665,22 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-30",
-        visibleInListings: true
-      }
+        visibleInListings: true,
+      },
     ],
     id: "UHJvZHVjdDo3OQ==",
     name: "Bean Juice",
@@ -1688,12 +1688,12 @@ export const products = (
       __typename: "ProductType",
       hasVariants: true,
       id: "UHJvZHVjdFR5cGU6OQ==",
-      name: "Juice"
+      name: "Juice",
     },
     thumbnail: {
       __typename: "Image",
-      url: placeholderImage
-    }
+      url: placeholderImage,
+    },
   },
   {
     __typename: "Product",
@@ -1703,7 +1703,7 @@ export const products = (
         __typename: "SelectedAttribute",
         attribute: {
           __typename: "Attribute",
-          id: "QXR0cmlidXRlOjE2"
+          id: "QXR0cmlidXRlOjE2",
         },
         values: [
           {
@@ -1716,10 +1716,10 @@ export const products = (
             boolean: null,
             date: null,
             dateTime: null,
-            value: null
-          }
-        ]
-      }
+            value: null,
+          },
+        ],
+      },
     ],
     channelListings: [
       {
@@ -1729,7 +1729,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         isAvailableForPurchase: false,
         isPublished: true,
@@ -1742,21 +1742,21 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-14",
-        visibleInListings: false
+        visibleInListings: false,
       },
       {
         __typename: "ProductChannelListing",
@@ -1765,7 +1765,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "124",
-          name: "Channel2"
+          name: "Channel2",
         },
         isAvailableForPurchase: false,
         isPublished: false,
@@ -1778,22 +1778,22 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-30",
-        visibleInListings: false
-      }
+        visibleInListings: false,
+      },
     ],
     id: "UHJvZHVjdDo3Mw==",
     name: "Carrot Juice",
@@ -1801,12 +1801,12 @@ export const products = (
       __typename: "ProductType",
       hasVariants: true,
       id: "UHJvZHVjdFR5cGU6OQ==",
-      name: "Juice"
+      name: "Juice",
     },
     thumbnail: {
       __typename: "Image",
-      url: placeholderImage
-    }
+      url: placeholderImage,
+    },
   },
   {
     __typename: "Product",
@@ -1816,7 +1816,7 @@ export const products = (
         __typename: "SelectedAttribute",
         attribute: {
           __typename: "Attribute",
-          id: "QXR0cmlidXRlOjE2"
+          id: "QXR0cmlidXRlOjE2",
         },
         values: [
           {
@@ -1829,10 +1829,10 @@ export const products = (
             boolean: null,
             date: null,
             dateTime: null,
-            value: null
-          }
-        ]
-      }
+            value: null,
+          },
+        ],
+      },
     ],
     channelListings: [
       {
@@ -1842,7 +1842,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         isAvailableForPurchase: false,
         isPublished: true,
@@ -1855,21 +1855,21 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-14",
-        visibleInListings: true
+        visibleInListings: true,
       },
       {
         __typename: "ProductChannelListing",
@@ -1878,7 +1878,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "124",
-          name: "Channel2"
+          name: "Channel2",
         },
         isAvailableForPurchase: false,
         isPublished: false,
@@ -1891,22 +1891,22 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-30",
-        visibleInListings: true
-      }
+        visibleInListings: true,
+      },
     ],
     id: "UHJvZHVjdDo3OA==",
     name: "Green Juice",
@@ -1914,12 +1914,12 @@ export const products = (
       __typename: "ProductType",
       hasVariants: true,
       id: "UHJvZHVjdFR5cGU6OQ==",
-      name: "Juice"
+      name: "Juice",
     },
     thumbnail: {
       __typename: "Image",
-      url: placeholderImage
-    }
+      url: placeholderImage,
+    },
   },
   {
     __typename: "Product",
@@ -1929,7 +1929,7 @@ export const products = (
         __typename: "SelectedAttribute",
         attribute: {
           __typename: "Attribute",
-          id: "QXR0cmlidXRlOjI1"
+          id: "QXR0cmlidXRlOjI1",
         },
         values: [
           {
@@ -1942,10 +1942,10 @@ export const products = (
             boolean: null,
             date: null,
             dateTime: null,
-            value: null
-          }
-        ]
-      }
+            value: null,
+          },
+        ],
+      },
     ],
     channelListings: [
       {
@@ -1955,7 +1955,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         isAvailableForPurchase: false,
         isPublished: true,
@@ -1968,21 +1968,21 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-14",
-        visibleInListings: true
+        visibleInListings: true,
       },
       {
         __typename: "ProductChannelListing",
@@ -1991,7 +1991,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "124",
-          name: "Channel2"
+          name: "Channel2",
         },
         isAvailableForPurchase: false,
         isPublished: false,
@@ -2004,22 +2004,22 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-30",
-        visibleInListings: true
-      }
+        visibleInListings: true,
+      },
     ],
     id: "UHJvZHVjdDo4OQ==",
     name: "Code Division T-shirt",
@@ -2027,12 +2027,12 @@ export const products = (
       __typename: "ProductType",
       hasVariants: true,
       id: "UHJvZHVjdFR5cGU6MTQ=",
-      name: "Top (clothing)"
+      name: "Top (clothing)",
     },
     thumbnail: {
       __typename: "Image",
-      url: placeholderImage
-    }
+      url: placeholderImage,
+    },
   },
   {
     __typename: "Product",
@@ -2042,7 +2042,7 @@ export const products = (
         __typename: "SelectedAttribute",
         attribute: {
           __typename: "Attribute",
-          id: "QXR0cmlidXRlOjI1"
+          id: "QXR0cmlidXRlOjI1",
         },
         values: [
           {
@@ -2055,10 +2055,10 @@ export const products = (
             boolean: null,
             date: null,
             dateTime: null,
-            value: null
-          }
-        ]
-      }
+            value: null,
+          },
+        ],
+      },
     ],
     channelListings: [
       {
@@ -2068,7 +2068,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         isAvailableForPurchase: false,
         isPublished: true,
@@ -2081,21 +2081,21 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-14",
-        visibleInListings: true
+        visibleInListings: true,
       },
       {
         __typename: "ProductChannelListing",
@@ -2104,7 +2104,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "124",
-          name: "Channel2"
+          name: "Channel2",
         },
         isAvailableForPurchase: false,
         isPublished: false,
@@ -2117,22 +2117,22 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-30",
-        visibleInListings: true
-      }
+        visibleInListings: true,
+      },
     ],
     id: "UHJvZHVjdDoxMDc=",
     name: "Polo Shirt",
@@ -2140,12 +2140,12 @@ export const products = (
       __typename: "ProductType",
       hasVariants: true,
       id: "UHJvZHVjdFR5cGU6MTQ=",
-      name: "Top (clothing)"
+      name: "Top (clothing)",
     },
     thumbnail: {
       __typename: "Image",
-      url: placeholderImage
-    }
+      url: placeholderImage,
+    },
   },
   {
     __typename: "Product",
@@ -2155,7 +2155,7 @@ export const products = (
         __typename: "SelectedAttribute",
         attribute: {
           __typename: "Attribute",
-          id: "QXR0cmlidXRlOjI1"
+          id: "QXR0cmlidXRlOjI1",
         },
         values: [
           {
@@ -2168,10 +2168,10 @@ export const products = (
             boolean: null,
             date: null,
             dateTime: null,
-            value: null
-          }
-        ]
-      }
+            value: null,
+          },
+        ],
+      },
     ],
     channelListings: [
       {
@@ -2181,7 +2181,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         isAvailableForPurchase: false,
         isPublished: true,
@@ -2194,21 +2194,21 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-14",
-        visibleInListings: false
+        visibleInListings: false,
       },
       {
         __typename: "ProductChannelListing",
@@ -2217,7 +2217,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "124",
-          name: "Channel2"
+          name: "Channel2",
         },
         isAvailableForPurchase: false,
         isPublished: false,
@@ -2230,22 +2230,22 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-30",
-        visibleInListings: false
-      }
+        visibleInListings: false,
+      },
     ],
     id: "UHJvZHVjdDoxMDg=",
     name: "Polo Shirt",
@@ -2253,12 +2253,12 @@ export const products = (
       __typename: "ProductType",
       hasVariants: true,
       id: "UHJvZHVjdFR5cGU6MTQ=",
-      name: "Top (clothing)"
+      name: "Top (clothing)",
     },
     thumbnail: {
       __typename: "Image",
-      url: placeholderImage
-    }
+      url: placeholderImage,
+    },
   },
   {
     __typename: "Product",
@@ -2268,7 +2268,7 @@ export const products = (
         __typename: "SelectedAttribute",
         attribute: {
           __typename: "Attribute",
-          id: "QXR0cmlidXRlOjI1"
+          id: "QXR0cmlidXRlOjI1",
         },
         values: [
           {
@@ -2281,10 +2281,10 @@ export const products = (
             boolean: null,
             date: null,
             dateTime: null,
-            value: null
-          }
-        ]
-      }
+            value: null,
+          },
+        ],
+      },
     ],
     channelListings: [
       {
@@ -2294,7 +2294,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         isAvailableForPurchase: false,
         isPublished: true,
@@ -2307,21 +2307,21 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-14",
-        visibleInListings: false
+        visibleInListings: false,
       },
       {
         __typename: "ProductChannelListing",
@@ -2330,7 +2330,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "124",
-          name: "Channel2"
+          name: "Channel2",
         },
         isAvailableForPurchase: false,
         isPublished: false,
@@ -2343,22 +2343,22 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-30",
-        visibleInListings: false
-      }
+        visibleInListings: false,
+      },
     ],
     id: "UHJvZHVjdDoxMDk=",
     name: "Polo Shirt",
@@ -2366,12 +2366,12 @@ export const products = (
       __typename: "ProductType",
       hasVariants: true,
       id: "UHJvZHVjdFR5cGU6MTQ=",
-      name: "Top (clothing)"
+      name: "Top (clothing)",
     },
     thumbnail: {
       __typename: "Image",
-      url: placeholderImage
-    }
+      url: placeholderImage,
+    },
   },
   {
     __typename: "Product",
@@ -2381,7 +2381,7 @@ export const products = (
         __typename: "SelectedAttribute",
         attribute: {
           __typename: "Attribute",
-          id: "QXR0cmlidXRlOjI1"
+          id: "QXR0cmlidXRlOjI1",
         },
         values: [
           {
@@ -2394,10 +2394,10 @@ export const products = (
             boolean: null,
             date: null,
             dateTime: null,
-            value: null
-          }
-        ]
-      }
+            value: null,
+          },
+        ],
+      },
     ],
     channelListings: [
       {
@@ -2407,7 +2407,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         isAvailableForPurchase: false,
         isPublished: true,
@@ -2420,21 +2420,21 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-14",
-        visibleInListings: true
+        visibleInListings: true,
       },
       {
         __typename: "ProductChannelListing",
@@ -2443,7 +2443,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "124",
-          name: "Channel2"
+          name: "Channel2",
         },
         isAvailableForPurchase: false,
         isPublished: false,
@@ -2456,22 +2456,22 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-30",
-        visibleInListings: true
-      }
+        visibleInListings: true,
+      },
     ],
     id: "UHJvZHVjdDoxMTA=",
     name: "Polo Shirt",
@@ -2479,12 +2479,12 @@ export const products = (
       __typename: "ProductType",
       hasVariants: true,
       id: "UHJvZHVjdFR5cGU6MTQ=",
-      name: "Top (clothing)"
+      name: "Top (clothing)",
     },
     thumbnail: {
       __typename: "Image",
-      url: placeholderImage
-    }
+      url: placeholderImage,
+    },
   },
   {
     __typename: "Product",
@@ -2494,7 +2494,7 @@ export const products = (
         __typename: "SelectedAttribute",
         attribute: {
           __typename: "Attribute",
-          id: "QXR0cmlidXRlOjI1"
+          id: "QXR0cmlidXRlOjI1",
         },
         values: [
           {
@@ -2507,10 +2507,10 @@ export const products = (
             boolean: null,
             date: null,
             dateTime: null,
-            value: null
-          }
-        ]
-      }
+            value: null,
+          },
+        ],
+      },
     ],
     channelListings: [
       {
@@ -2520,7 +2520,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         isAvailableForPurchase: false,
         isPublished: true,
@@ -2533,21 +2533,21 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-14",
-        visibleInListings: false
+        visibleInListings: false,
       },
       {
         __typename: "ProductChannelListing",
@@ -2556,7 +2556,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "124",
-          name: "Channel2"
+          name: "Channel2",
         },
         isAvailableForPurchase: false,
         isPublished: false,
@@ -2569,22 +2569,22 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-30",
-        visibleInListings: false
-      }
+        visibleInListings: false,
+      },
     ],
     id: "UHJvZHVjdDoxMTU=",
     name: "Black Hoodie",
@@ -2592,12 +2592,12 @@ export const products = (
       __typename: "ProductType",
       hasVariants: true,
       id: "UHJvZHVjdFR5cGU6MTQ=",
-      name: "Top (clothing)"
+      name: "Top (clothing)",
     },
     thumbnail: {
       __typename: "Image",
-      url: placeholderImage
-    }
+      url: placeholderImage,
+    },
   },
   {
     __typename: "Product",
@@ -2607,7 +2607,7 @@ export const products = (
         __typename: "SelectedAttribute",
         attribute: {
           __typename: "Attribute",
-          id: "QXR0cmlidXRlOjI1"
+          id: "QXR0cmlidXRlOjI1",
         },
         values: [
           {
@@ -2620,10 +2620,10 @@ export const products = (
             boolean: null,
             date: null,
             dateTime: null,
-            value: null
-          }
-        ]
-      }
+            value: null,
+          },
+        ],
+      },
     ],
     channelListings: [
       {
@@ -2633,7 +2633,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         isAvailableForPurchase: false,
         isPublished: true,
@@ -2646,21 +2646,21 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-14",
-        visibleInListings: true
+        visibleInListings: true,
       },
       {
         __typename: "ProductChannelListing",
@@ -2669,7 +2669,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "124",
-          name: "Channel2"
+          name: "Channel2",
         },
         isAvailableForPurchase: false,
         isPublished: false,
@@ -2682,22 +2682,22 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-30",
-        visibleInListings: true
-      }
+        visibleInListings: true,
+      },
     ],
     id: "UHJvZHVjdDoxMTY=",
     name: "Blue Hoodie",
@@ -2705,12 +2705,12 @@ export const products = (
       __typename: "ProductType",
       hasVariants: true,
       id: "UHJvZHVjdFR5cGU6MTQ=",
-      name: "Top (clothing)"
+      name: "Top (clothing)",
     },
     thumbnail: {
       __typename: "Image",
-      url: placeholderImage
-    }
+      url: placeholderImage,
+    },
   },
   {
     __typename: "Product",
@@ -2720,7 +2720,7 @@ export const products = (
         __typename: "SelectedAttribute",
         attribute: {
           __typename: "Attribute",
-          id: "QXR0cmlidXRlOjI1"
+          id: "QXR0cmlidXRlOjI1",
         },
         values: [
           {
@@ -2733,10 +2733,10 @@ export const products = (
             boolean: null,
             date: null,
             dateTime: null,
-            value: null
-          }
-        ]
-      }
+            value: null,
+          },
+        ],
+      },
     ],
     channelListings: [
       {
@@ -2746,7 +2746,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         isAvailableForPurchase: false,
         isPublished: true,
@@ -2759,21 +2759,21 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-14",
-        visibleInListings: true
+        visibleInListings: true,
       },
       {
         __typename: "ProductChannelListing",
@@ -2782,7 +2782,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "124",
-          name: "Channel2"
+          name: "Channel2",
         },
         isAvailableForPurchase: false,
         isPublished: false,
@@ -2795,22 +2795,22 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-30",
-        visibleInListings: true
-      }
+        visibleInListings: true,
+      },
     ],
     id: "UHJvZHVjdDoxMTc=",
     name: "Mustard Hoodie",
@@ -2818,12 +2818,12 @@ export const products = (
       __typename: "ProductType",
       hasVariants: true,
       id: "UHJvZHVjdFR5cGU6MTQ=",
-      name: "Top (clothing)"
+      name: "Top (clothing)",
     },
     thumbnail: {
       __typename: "Image",
-      url: placeholderImage
-    }
+      url: placeholderImage,
+    },
   },
   {
     __typename: "Product",
@@ -2833,7 +2833,7 @@ export const products = (
         __typename: "SelectedAttribute",
         attribute: {
           __typename: "Attribute",
-          id: "QXR0cmlidXRlOjIz"
+          id: "QXR0cmlidXRlOjIz",
         },
         values: [
           {
@@ -2846,10 +2846,10 @@ export const products = (
             boolean: null,
             date: null,
             dateTime: null,
-            value: null
-          }
-        ]
-      }
+            value: null,
+          },
+        ],
+      },
     ],
     channelListings: [
       {
@@ -2859,7 +2859,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         isAvailableForPurchase: false,
         isPublished: true,
@@ -2872,21 +2872,21 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-14",
-        visibleInListings: true
+        visibleInListings: true,
       },
       {
         __typename: "ProductChannelListing",
@@ -2895,7 +2895,7 @@ export const products = (
           __typename: "Channel",
           currencyCode: "USD",
           id: "124",
-          name: "Channel2"
+          name: "Channel2",
         },
         isAvailableForPurchase: false,
         isPublished: false,
@@ -2908,22 +2908,22 @@ export const products = (
               net: {
                 __typename: "Money",
                 amount: 1.2,
-                currency: "USD"
-              }
+                currency: "USD",
+              },
             },
             stop: {
               __typename: "TaxedMoney",
               net: {
                 __typename: "Money",
                 amount: 3.5,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         publicationDate: "2020-07-30",
-        visibleInListings: true
-      }
+        visibleInListings: true,
+      },
     ],
     id: "UHJvZHVjdDo4NQ==",
     name: "Colored Parrot Cushion",
@@ -2931,13 +2931,13 @@ export const products = (
       __typename: "ProductType",
       hasVariants: true,
       id: "UHJvZHVjdFR5cGU6MTI=",
-      name: "Cushion"
+      name: "Cushion",
     },
     thumbnail: {
       __typename: "Image",
-      url: placeholderImage
-    }
-  }
+      url: placeholderImage,
+    },
+  },
 ];
 
 export const variant = (placeholderImage: string): ProductVariantFragment => ({
@@ -2949,23 +2949,23 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
         __typename: "Channel",
         currencyCode: "USD",
         id: "test1",
-        name: "Test channel"
+        name: "Test channel",
       },
       costPrice: {
         __typename: "Money",
         amount: 10,
-        currency: "USD"
+        currency: "USD",
       },
       price: {
         __typename: "Money",
         amount: 10,
-        currency: "USD"
+        currency: "USD",
       },
       preorderThreshold: {
         __typename: "PreorderThreshold",
         quantity: 0,
-        soldUnits: 0
-      }
+        soldUnits: 0,
+      },
     },
     {
       __typename: "ProductVariantChannelListing",
@@ -2973,24 +2973,24 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
         __typename: "Channel",
         currencyCode: "USD",
         id: "test2",
-        name: "Test channel other"
+        name: "Test channel other",
       },
       costPrice: {
         __typename: "Money",
         amount: 10,
-        currency: "USD"
+        currency: "USD",
       },
       price: {
         __typename: "Money",
         amount: 20,
-        currency: "USD"
+        currency: "USD",
       },
       preorderThreshold: {
         __typename: "PreorderThreshold",
         quantity: 0,
-        soldUnits: 0
-      }
-    }
+        soldUnits: 0,
+      },
+    },
   ],
   id: "var1",
   quantityLimitPerCustomer: 300,
@@ -3000,36 +3000,36 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
       id: "img1",
       type: ProductMediaType.IMAGE,
       oembedData: "{}",
-      url: placeholderImage
+      url: placeholderImage,
     },
     {
       __typename: "ProductMedia",
       id: "img2",
       type: ProductMediaType.IMAGE,
       oembedData: "{}",
-      url: placeholderImage
+      url: placeholderImage,
     },
     {
       __typename: "ProductMedia",
       id: "img7",
       type: ProductMediaType.IMAGE,
       oembedData: "{}",
-      url: placeholderImage
+      url: placeholderImage,
     },
     {
       __typename: "ProductMedia",
       id: "img8",
       type: ProductMediaType.IMAGE,
       oembedData: "{}",
-      url: placeholderImage
-    }
+      url: placeholderImage,
+    },
   ],
   metadata: [
     {
       __typename: "MetadataItem",
       key: "integration.id",
-      value: "100023123"
-    }
+      value: "100023123",
+    },
   ],
   name: "Extended Hard",
   nonSelectionAttributes: [
@@ -3051,7 +3051,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
             hasNextPage: false,
             hasPreviousPage: false,
             startCursor: "WyIwIiwgIjQ5Il0=",
-            __typename: "PageInfo"
+            __typename: "PageInfo",
           },
           edges: [
             {
@@ -3062,7 +3062,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
                 file: {
                   __typename: "File",
                   contentType: "image/png",
-                  url: "some-non-existing-url"
+                  url: "some-non-existing-url",
                 },
                 id: "gdghdgdhkkdae",
                 name: "File First Value",
@@ -3072,11 +3072,11 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
-            }
-          ]
-        }
+                value: null,
+              },
+            },
+          ],
+        },
       },
       values: [
         {
@@ -3084,7 +3084,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
           file: {
             __typename: "File",
             contentType: "image/png",
-            url: "some-non-existing-url"
+            url: "some-non-existing-url",
           },
           id: "gdghdgdhkkdae",
           name: "File First Value",
@@ -3094,10 +3094,10 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
           boolean: null,
           date: null,
           dateTime: null,
-          value: null
-        }
-      ]
-    }
+          value: null,
+        },
+      ],
+    },
   ],
   privateMetadata: [],
   product: {
@@ -3111,8 +3111,8 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
           __typename: "Channel",
           currencyCode: "USD",
           id: "test1",
-          name: "Test channel"
-        }
+          name: "Test channel",
+        },
       },
       {
         __typename: "ProductChannelListing",
@@ -3122,13 +3122,13 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
           __typename: "Channel",
           currencyCode: "USD",
           id: "test2",
-          name: "Test channel other"
-        }
-      }
+          name: "Test channel other",
+        },
+      },
     ],
     defaultVariant: {
       __typename: "ProductVariant",
-      id: "var1"
+      id: "var1",
     },
     id: "prod1",
     media: [
@@ -3139,7 +3139,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
         sortOrder: 1,
         type: ProductMediaType.IMAGE,
         oembedData: "{}",
-        url: placeholderImage
+        url: placeholderImage,
       },
       {
         __typename: "ProductMedia",
@@ -3148,7 +3148,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
         sortOrder: 4,
         type: ProductMediaType.IMAGE,
         oembedData: "{}",
-        url: placeholderImage
+        url: placeholderImage,
       },
       {
         __typename: "ProductMedia",
@@ -3157,7 +3157,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
         sortOrder: 2,
         type: ProductMediaType.IMAGE,
         oembedData: "{}",
-        url: placeholderImage
+        url: placeholderImage,
       },
       {
         __typename: "ProductMedia",
@@ -3166,7 +3166,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
         sortOrder: 3,
         type: ProductMediaType.IMAGE,
         oembedData: "{}",
-        url: placeholderImage
+        url: placeholderImage,
       },
       {
         __typename: "ProductMedia",
@@ -3175,7 +3175,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
         sortOrder: 0,
         type: ProductMediaType.IMAGE,
         oembedData: "{}",
-        url: placeholderImage
+        url: placeholderImage,
       },
       {
         __typename: "ProductMedia",
@@ -3184,7 +3184,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
         sortOrder: 1,
         type: ProductMediaType.IMAGE,
         oembedData: "{}",
-        url: placeholderImage
+        url: placeholderImage,
       },
       {
         __typename: "ProductMedia",
@@ -3193,7 +3193,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
         sortOrder: 0,
         type: ProductMediaType.IMAGE,
         oembedData: "{}",
-        url: placeholderImage
+        url: placeholderImage,
       },
       {
         __typename: "ProductMedia",
@@ -3202,7 +3202,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
         sortOrder: 2,
         type: ProductMediaType.IMAGE,
         oembedData: "{}",
-        url: placeholderImage
+        url: placeholderImage,
       },
       {
         __typename: "ProductMedia",
@@ -3211,8 +3211,8 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
         sortOrder: 2,
         type: ProductMediaType.IMAGE,
         oembedData: "{}",
-        url: placeholderImage
-      }
+        url: placeholderImage,
+      },
     ],
     name: "Our Awesome Book",
     thumbnail: { __typename: "Image" as "Image", url: placeholderImage },
@@ -3226,11 +3226,11 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
             id: "23123",
             type: ProductMediaType.IMAGE,
             oembedData: "{}",
-            url: placeholderImage
-          }
+            url: placeholderImage,
+          },
         ],
         name: "Extended Hard",
-        sku: "13-1337"
+        sku: "13-1337",
       },
       {
         __typename: "ProductVariant",
@@ -3241,11 +3241,11 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
             id: "23123",
             type: ProductMediaType.IMAGE,
             oembedData: "{}",
-            url: placeholderImage
-          }
+            url: placeholderImage,
+          },
         ],
         name: "Extended Soft",
-        sku: "13-1338"
+        sku: "13-1338",
       },
       {
         __typename: "ProductVariant",
@@ -3256,11 +3256,11 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
             id: "23123",
             type: ProductMediaType.IMAGE,
             oembedData: "{}",
-            url: placeholderImage
-          }
+            url: placeholderImage,
+          },
         ],
         name: "Normal Hard",
-        sku: "13-1339"
+        sku: "13-1339",
       },
       {
         __typename: "ProductVariant",
@@ -3271,13 +3271,13 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
             id: "23123",
             type: ProductMediaType.IMAGE,
             oembedData: "{}",
-            url: placeholderImage
-          }
+            url: placeholderImage,
+          },
         ],
         name: "Normal Soft",
-        sku: "13-1340"
-      }
-    ]
+        sku: "13-1340",
+      },
+    ],
   },
   selectionAttributes: [
     {
@@ -3298,7 +3298,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
             hasNextPage: false,
             hasPreviousPage: false,
             startCursor: "WyIwIiwgIjQ5Il0=",
-            __typename: "PageInfo"
+            __typename: "PageInfo",
           },
           edges: [
             {
@@ -3315,8 +3315,8 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
+                value: null,
+              },
             },
             {
               __typename: "AttributeValueCountableEdge",
@@ -3332,11 +3332,11 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
-            }
-          ]
-        }
+                value: null,
+              },
+            },
+          ],
+        },
       },
       values: [
         {
@@ -3350,9 +3350,9 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
           boolean: null,
           date: null,
           dateTime: null,
-          value: null
-        }
-      ]
+          value: null,
+        },
+      ],
     },
     {
       __typename: "SelectedAttribute",
@@ -3372,7 +3372,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
             hasNextPage: false,
             hasPreviousPage: false,
             startCursor: "WyIwIiwgIjQ5Il0=",
-            __typename: "PageInfo"
+            __typename: "PageInfo",
           },
           edges: [
             {
@@ -3389,8 +3389,8 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
+                value: null,
+              },
             },
             {
               __typename: "AttributeValueCountableEdge",
@@ -3406,8 +3406,8 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
+                value: null,
+              },
             },
             {
               __typename: "AttributeValueCountableEdge",
@@ -3423,8 +3423,8 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
+                value: null,
+              },
             },
             {
               __typename: "AttributeValueCountableEdge",
@@ -3440,11 +3440,11 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
-            }
-          ]
-        }
+                value: null,
+              },
+            },
+          ],
+        },
       },
       values: [
         {
@@ -3458,10 +3458,10 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
           boolean: null,
           date: null,
           dateTime: null,
-          value: null
-        }
-      ]
-    }
+          value: null,
+        },
+      ],
+    },
   ],
   sku: "1230959124123",
   stocks: [
@@ -3473,8 +3473,8 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
       warehouse: {
         __typename: "Warehouse",
         id: "123",
-        name: "Warehouse 1"
-      }
+        name: "Warehouse 1",
+      },
     },
     {
       __typename: "Stock",
@@ -3484,22 +3484,22 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
       warehouse: {
         __typename: "Warehouse",
         id: "1234",
-        name: "Warehouse 2"
-      }
-    }
+        name: "Warehouse 2",
+      },
+    },
   ],
   trackInventory: true,
   preorder: {
     __typename: "PreorderData",
     endDate: null,
     globalSoldUnits: null,
-    globalThreshold: 0
+    globalThreshold: 0,
   },
   weight: {
     __typename: "Weight",
     unit: WeightUnitsEnum.KG,
-    value: 6
-  }
+    value: 6,
+  },
 });
 export const variantMedia = (placeholderImage: string) =>
   variant(placeholderImage).media;

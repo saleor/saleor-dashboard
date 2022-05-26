@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import MenuCreateDialog, {
-  MenuCreateDialogProps
+  MenuCreateDialogProps,
 } from "../../../navigation/components/MenuCreateDialog";
 import Decorator from "../../Decorator";
 
@@ -13,7 +13,7 @@ const props: MenuCreateDialogProps = {
   errors: [],
   onClose: () => undefined,
   onConfirm: () => undefined,
-  open: true
+  open: true,
 };
 
 storiesOf("Navigation / Menu create", module)
@@ -29,7 +29,7 @@ storiesOf("Navigation / Menu create", module)
         __typename: "MenuError",
         code: MenuErrorCode.INVALID,
         field,
-        message: "Invalid field"
+        message: "Invalid field",
       }))}
     />
   ));

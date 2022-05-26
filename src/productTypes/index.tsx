@@ -13,7 +13,7 @@ import {
   ProductTypeListUrlQueryParams,
   ProductTypeListUrlSortField,
   productTypePath,
-  ProductTypeUrlQueryParams
+  ProductTypeUrlQueryParams,
 } from "./urls";
 import ProductTypeCreateComponent from "./views/ProductTypeCreate";
 import ProductTypeListComponent from "./views/ProductTypeList";
@@ -23,7 +23,7 @@ const ProductTypeList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: ProductTypeListUrlQueryParams = asSortParams(
     qs,
-    ProductTypeListUrlSortField
+    ProductTypeListUrlSortField,
   );
   return <ProductTypeListComponent params={params} />;
 };

@@ -3,7 +3,7 @@ import { OrderDraftFilterInput } from "@saleor/graphql";
 import { maybe } from "@saleor/misc";
 import {
   OrderDraftFilterKeys,
-  OrderDraftListFilterOpts
+  OrderDraftListFilterOpts,
 } from "@saleor/orders/components/OrderDraftListPage";
 
 import {
@@ -11,55 +11,55 @@ import {
   createFilterUtils,
   getGteLteVariables,
   getMinMaxQueryParam,
-  getSingleValueQueryParam
+  getSingleValueQueryParam,
 } from "../../../utils/filters";
 import {
   OrderDraftListUrlFilters,
   OrderDraftListUrlFiltersEnum,
-  OrderDraftListUrlQueryParams
+  OrderDraftListUrlQueryParams,
 } from "../../urls";
 
 export const ORDER_DRAFT_FILTERS_KEY = "orderDraftFilters";
 
 export function getFilterOpts(
-  params: OrderDraftListUrlFilters
+  params: OrderDraftListUrlFilters,
 ): OrderDraftListFilterOpts {
   return {
     created: {
       active: maybe(
         () =>
           [params.createdFrom, params.createdTo].some(
-            field => field !== undefined
+            field => field !== undefined,
           ),
-        false
+        false,
       ),
       value: {
         max: maybe(() => params.createdTo),
-        min: maybe(() => params.createdFrom)
-      }
+        min: maybe(() => params.createdFrom),
+      },
     },
     customer: {
       active: !!maybe(() => params.customer),
-      value: params.customer
-    }
+      value: params.customer,
+    },
   };
 }
 
 export function getFilterVariables(
-  params: OrderDraftListUrlFilters
+  params: OrderDraftListUrlFilters,
 ): OrderDraftFilterInput {
   return {
     created: getGteLteVariables({
       gte: params.createdFrom,
-      lte: params.createdTo
+      lte: params.createdTo,
     }),
     customer: params.customer,
-    search: params.query
+    search: params.query,
   };
 }
 
 export function getFilterQueryParam(
-  filter: FilterElement<OrderDraftFilterKeys>
+  filter: FilterElement<OrderDraftFilterKeys>,
 ): OrderDraftListUrlFilters {
   const { name } = filter;
 
@@ -68,13 +68,13 @@ export function getFilterQueryParam(
       return getMinMaxQueryParam(
         filter,
         OrderDraftListUrlFiltersEnum.createdFrom,
-        OrderDraftListUrlFiltersEnum.createdTo
+        OrderDraftListUrlFiltersEnum.createdTo,
       );
 
     case OrderDraftFilterKeys.customer:
       return getSingleValueQueryParam(
         filter,
-        OrderDraftListUrlFiltersEnum.customer
+        OrderDraftListUrlFiltersEnum.customer,
       );
   }
 }
@@ -82,13 +82,13 @@ export function getFilterQueryParam(
 export const {
   deleteFilterTab,
   getFilterTabs,
-  saveFilterTab
+  saveFilterTab,
 } = createFilterTabUtils<OrderDraftListUrlFilters>(ORDER_DRAFT_FILTERS_KEY);
 
 export const {
   areFiltersApplied,
   getActiveFilters,
-  getFiltersCurrentTab
+  getFiltersCurrentTab,
 } = createFilterUtils<OrderDraftListUrlQueryParams, OrderDraftListUrlFilters>(
-  OrderDraftListUrlFiltersEnum
+  OrderDraftListUrlFiltersEnum,
 );

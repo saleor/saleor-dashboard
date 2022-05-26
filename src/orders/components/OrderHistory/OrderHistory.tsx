@@ -7,12 +7,12 @@ import {
   TimelineAddNote,
   TimelineEvent,
   TimelineEventProps,
-  TimelineNote
+  TimelineNote,
 } from "@saleor/components/Timeline";
 import {
   OrderEventFragment,
   OrderEventsEmailsEnum,
-  OrderEventsEnum
+  OrderEventsEnum,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -38,25 +38,25 @@ export const getEventMessage = (event: OrderEventFragment, intl: IntlShape) => {
       return intl.formatMessage({
         id: "zRrcOG",
         defaultMessage: "Order was cancelled",
-        description: "order history message"
+        description: "order history message",
       });
     case OrderEventsEnum.ADDED_PRODUCTS:
       return intl.formatMessage({
         id: "U1eJIw",
         defaultMessage: "Products were added to an order",
-        description: "order history message"
+        description: "order history message",
       });
     case OrderEventsEnum.DRAFT_CREATED:
       return intl.formatMessage({
         id: "hWO1SD",
         defaultMessage: "Draft order was created",
-        description: "order history message"
+        description: "order history message",
       });
     case OrderEventsEnum.REMOVED_PRODUCTS:
       return intl.formatMessage({
         id: "fehqPs",
         defaultMessage: "Products were deleted from an order",
-        description: "order history message"
+        description: "order history message",
       });
     case OrderEventsEnum.EMAIL_SENT:
       switch (event.emailType) {
@@ -64,73 +64,73 @@ export const getEventMessage = (event: OrderEventFragment, intl: IntlShape) => {
           return intl.formatMessage({
             id: "OzHN0Z",
             defaultMessage: "Links to the order's digital goods were sent",
-            description: "order history message"
+            description: "order history message",
           });
         case OrderEventsEmailsEnum.FULFILLMENT_CONFIRMATION:
           return intl.formatMessage({
             id: "aq5ZiN",
             defaultMessage: "Fulfillment confirmation was sent to customer",
-            description: "order history message"
+            description: "order history message",
           });
         case OrderEventsEmailsEnum.CONFIRMED:
           return intl.formatMessage({
             id: "cqZ5UH",
             defaultMessage: "Order confirmation was sent to customer",
-            description: "order history message"
+            description: "order history message",
           });
         case OrderEventsEmailsEnum.PAYMENT_CONFIRMATION:
           return intl.formatMessage({
             id: "4Z6BtA",
             defaultMessage: "Payment confirmation was sent to customer",
-            description: "order history message"
+            description: "order history message",
           });
         case OrderEventsEmailsEnum.SHIPPING_CONFIRMATION:
           return intl.formatMessage({
             id: "BCPrmK",
             defaultMessage: "Shipping details was sent to customer",
-            description: "order history message"
+            description: "order history message",
           });
         case OrderEventsEmailsEnum.TRACKING_UPDATED:
           return intl.formatMessage({
             id: "j3yE7I",
             defaultMessage: "Shipping tracking number was sent to customer",
-            description: "order history message"
+            description: "order history message",
           });
         case OrderEventsEmailsEnum.ORDER_CANCEL:
           return intl.formatMessage({
             id: "06bR4Z",
             defaultMessage: "Order cancel information was sent to customer",
-            description: "order history message"
+            description: "order history message",
           });
         case OrderEventsEmailsEnum.ORDER_CONFIRMATION:
           return intl.formatMessage({
             id: "oQ27V4",
             defaultMessage: "Order placed information was sent to customer",
-            description: "order history message"
+            description: "order history message",
           });
         case OrderEventsEmailsEnum.ORDER_REFUND:
           return intl.formatMessage({
             id: "9piUVz",
             defaultMessage: "Order refund information was sent to customer",
-            description: "order history message"
+            description: "order history message",
           });
       }
     case OrderEventsEnum.FULFILLMENT_CANCELED:
       return intl.formatMessage({
         id: "GLy2UR",
         defaultMessage: "Fulfillment was cancelled",
-        description: "order history message"
+        description: "order history message",
       });
     case OrderEventsEnum.INVOICE_REQUESTED:
       return intl.formatMessage(
         {
           id: "chvryR",
           defaultMessage: "Invoice was requested by {requestedBy}",
-          description: "order history message"
+          description: "order history message",
         },
         {
-          requestedBy: getUserOrApp()
-        }
+          requestedBy: getUserOrApp(),
+        },
       );
     case OrderEventsEnum.INVOICE_GENERATED:
       return intl.formatMessage(
@@ -138,91 +138,91 @@ export const getEventMessage = (event: OrderEventFragment, intl: IntlShape) => {
           id: "pTpx0p",
           defaultMessage:
             "Invoice no. {invoiceNumber} was generated by {generatedBy}",
-          description: "order history message"
+          description: "order history message",
         },
         {
           generatedBy: getUserOrApp(),
-          invoiceNumber: event.invoiceNumber
-        }
+          invoiceNumber: event.invoiceNumber,
+        },
       );
     case OrderEventsEnum.INVOICE_UPDATED:
       return intl.formatMessage(
         {
           id: "6RQKxH",
           defaultMessage: "Invoice no. {invoiceNumber} was updated",
-          description: "order history message"
+          description: "order history message",
         },
         {
-          invoiceNumber: event.invoiceNumber
-        }
+          invoiceNumber: event.invoiceNumber,
+        },
       );
     case OrderEventsEnum.INVOICE_SENT:
       return intl.formatMessage(
         {
           id: "qddy2Z",
           defaultMessage: "Invoice was sent to customer by {sentBy}",
-          description: "order history message"
+          description: "order history message",
         },
         {
-          sentBy: getUserOrApp()
-        }
+          sentBy: getUserOrApp(),
+        },
       );
     case OrderEventsEnum.FULFILLMENT_AWAITS_APPROVAL:
       return intl.formatMessage({
         id: "PcPMjC",
         defaultMessage: "Fulfillment awaits approval",
-        description: "order history message"
+        description: "order history message",
       });
     case OrderEventsEnum.FULFILLMENT_FULFILLED_ITEMS:
       return intl.formatMessage(
         {
           id: "nHmugP",
           defaultMessage: "Fulfilled {quantity} items",
-          description: "order history message"
+          description: "order history message",
         },
         {
-          quantity: event.quantity
-        }
+          quantity: event.quantity,
+        },
       );
     case OrderEventsEnum.FULFILLMENT_REFUNDED:
       return intl.formatMessage(
         {
           id: "D3WUc/",
           defaultMessage: "Order was refunded by {refundedBy}",
-          description: "order history message"
+          description: "order history message",
         },
         {
-          refundedBy: getUserOrApp()
-        }
+          refundedBy: getUserOrApp(),
+        },
       );
     case OrderEventsEnum.FULFILLMENT_RESTOCKED_ITEMS:
       return intl.formatMessage(
         {
           id: "wOeIR4",
           defaultMessage: "Restocked {quantity} items",
-          description: "order history message"
+          description: "order history message",
         },
         {
-          quantity: event.quantity
-        }
+          quantity: event.quantity,
+        },
       );
     case OrderEventsEnum.NOTE_ADDED:
       return intl.formatMessage({
         id: "6WRFp2",
         defaultMessage: "Note was added to the order",
-        description: "order history message"
+        description: "order history message",
       });
     case OrderEventsEnum.ORDER_FULLY_PAID:
       return intl.formatMessage({
         id: "P/EDn1",
         defaultMessage: "Order was fully paid",
-        description: "order history message"
+        description: "order history message",
       });
     case OrderEventsEnum.ORDER_MARKED_AS_PAID:
       return intl.formatMessage({
         id: "fkplbE",
         defaultMessage: "Order was marked as paid",
-        description: "order history message"
+        description: "order history message",
       });
     case OrderEventsEnum.OTHER:
       return event.message;
@@ -231,71 +231,71 @@ export const getEventMessage = (event: OrderEventFragment, intl: IntlShape) => {
         {
           id: "Fl3ORD",
           defaultMessage: "Oversold {quantity} items",
-          description: "order history message"
+          description: "order history message",
         },
         {
-          quantity: event.quantity
-        }
+          quantity: event.quantity,
+        },
       );
     case OrderEventsEnum.PAYMENT_CAPTURED:
       return intl.formatMessage({
         id: "2yV+s8",
         defaultMessage: "Payment was captured",
-        description: "order history message"
+        description: "order history message",
       });
     case OrderEventsEnum.PAYMENT_FAILED:
       return intl.formatMessage({
         id: "TCR639",
         defaultMessage: "Payment failed",
-        description: "order history message"
+        description: "order history message",
       });
     case OrderEventsEnum.PAYMENT_REFUNDED:
       return intl.formatMessage({
         id: "3fgyFh",
         defaultMessage: "Payment was refunded",
-        description: "order history message"
+        description: "order history message",
       });
     case OrderEventsEnum.PAYMENT_VOIDED:
       return intl.formatMessage({
         id: "8RnPGF",
         defaultMessage: "Payment was voided",
-        description: "order history message"
+        description: "order history message",
       });
     case OrderEventsEnum.PLACED:
       return intl.formatMessage({
         id: "GJAX0z",
         defaultMessage: "Order was placed",
-        description: "order history message"
+        description: "order history message",
       });
     case OrderEventsEnum.PLACED_FROM_DRAFT:
       return intl.formatMessage({
         id: "OKGd/k",
         defaultMessage: "Order was created from draft",
-        description: "order history message"
+        description: "order history message",
       });
     case OrderEventsEnum.TRACKING_UPDATED:
       return intl.formatMessage({
         id: "e92Uxp",
         defaultMessage: "Updated fulfillment group's tracking number",
-        description: "order history message"
+        description: "order history message",
       });
     case OrderEventsEnum.UPDATED_ADDRESS:
       return intl.formatMessage({
         id: "RLTaAR",
         defaultMessage: "Order address was updated",
-        description: "order history message"
+        description: "order history message",
       });
     case OrderEventsEnum.PAYMENT_AUTHORIZED:
       return intl.formatMessage({
         id: "GVM/fi",
         defaultMessage: "Payment was authorized",
-        description: "order history message"
+        description: "order history message",
       });
     case OrderEventsEnum.CONFIRMED:
       return intl.formatMessage({
         id: "ubasgL",
         defaultMessage: "Order was confirmed",
-        description: "order history message"
+        description: "order history message",
       });
     case OrderEventsEnum.EXTERNAL_SERVICE_NOTIFICATION:
       return event.message;
@@ -309,21 +309,21 @@ export interface FormData {
 const useStyles = makeStyles(
   theme => ({
     eventSubtitle: {
-      marginTop: theme.spacing(1)
+      marginTop: theme.spacing(1),
     },
     header: {
       fontWeight: 500,
-      marginBottom: theme.spacing(1)
+      marginBottom: theme.spacing(1),
     },
     linesTableCell: {
-      paddingRight: theme.spacing(3)
+      paddingRight: theme.spacing(3),
     },
     root: { marginTop: theme.spacing(4) },
     user: {
-      marginBottom: theme.spacing(1)
-    }
+      marginBottom: theme.spacing(1),
+    },
   }),
-  { name: "OrderHistory" }
+  { name: "OrderHistory" },
 );
 
 interface OrderHistoryProps {
@@ -339,7 +339,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
   const intl = useIntl();
 
   const getTimelineEventTitleProps = (
-    event: OrderEventFragment
+    event: OrderEventFragment,
   ): Partial<TimelineEventProps> => {
     const { type, message } = event;
 
@@ -350,7 +350,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
     if (isTimelineEventOfType("secondaryTitle", type)) {
       return {
         secondaryTitle: intl.formatMessage(...getEventSecondaryTitle(event)),
-        title
+        title,
       };
     }
 

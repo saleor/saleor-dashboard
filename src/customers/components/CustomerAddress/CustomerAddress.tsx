@@ -22,55 +22,55 @@ export interface CustomerAddressProps {
 const messages = defineMessages({
   defaultAddress: {
     id: "hMRP6J",
-    defaultMessage: "Default Address"
+    defaultMessage: "Default Address",
   },
   defaultBillingAddress: {
     id: "VyzsWZ",
-    defaultMessage: "Default Billing Address"
+    defaultMessage: "Default Billing Address",
   },
   defaultShippingAddress: {
     id: "nLML8Y",
-    defaultMessage: "Default Shipping Address"
+    defaultMessage: "Default Shipping Address",
   },
   deleteAddress: {
     id: "puikeb",
     defaultMessage: "Delete Address",
-    description: "button"
+    description: "button",
   },
   editAddress: {
     id: "w+8BfK",
     defaultMessage: "Edit Address",
-    description: "button"
+    description: "button",
   },
   setDefaultBilling: {
     id: "hLOEeb",
     defaultMessage: "Set as default billing address",
-    description: "button"
+    description: "button",
   },
   setDefaultShipping: {
     id: "+7OsyM",
     defaultMessage: "Set as default shipping address",
-    description: "button"
-  }
+    description: "button",
+  },
 });
 
 const useStyles = makeStyles(
   {
     actions: {
-      flexDirection: "row"
+      flexDirection: "row",
     },
     actionsContainer: {
       display: "flex",
       flexDirection: "column",
       height: "100%",
-      justifyContent: "flex-end"
+      justifyContent: "flex-end",
     },
     card: {
       display: "flex",
-      flexDirection: "column"
-    }
+      flexDirection: "column",
+    },
   },
-  { name: "CustomerAddress" }
+  { name: "CustomerAddress" },
 );
 const CustomerAddress: React.FC<CustomerAddressProps> = props => {
   const {
@@ -80,7 +80,7 @@ const CustomerAddress: React.FC<CustomerAddressProps> = props => {
     isDefaultShippingAddress,
     onEdit,
     onRemove,
-    onSetAsDefault
+    onSetAsDefault,
   } = props;
   const classes = useStyles(props);
 
@@ -112,23 +112,23 @@ const CustomerAddress: React.FC<CustomerAddressProps> = props => {
               {
                 label: intl.formatMessage(messages.setDefaultShipping),
                 onSelect: () => onSetAsDefault(AddressTypeEnum.SHIPPING),
-                testId: "set-default-shipping-address"
+                testId: "set-default-shipping-address",
               },
               {
                 label: intl.formatMessage(messages.setDefaultBilling),
                 onSelect: () => onSetAsDefault(AddressTypeEnum.BILLING),
-                testId: "set-default-billing-address"
+                testId: "set-default-billing-address",
               },
               {
                 label: intl.formatMessage(messages.editAddress),
                 onSelect: () => onEdit(),
-                testId: "edit-address"
+                testId: "edit-address",
               },
               {
                 label: intl.formatMessage(messages.deleteAddress),
                 onSelect: () => onRemove(),
-                testId: "delete-address"
-              }
+                testId: "delete-address",
+              },
             ]}
           />
         }

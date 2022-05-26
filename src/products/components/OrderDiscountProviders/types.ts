@@ -8,7 +8,7 @@ export interface OrderDiscountData extends OrderDiscountCommonInput {
 }
 
 export type GetOrderLineDiscountContextConsumerProps = (
-  orderLineId: string
+  orderLineId: string,
 ) => OrderLineDiscountContextConsumerProps;
 
 export interface OrderLineDiscountData extends OrderDiscountCommonInput {

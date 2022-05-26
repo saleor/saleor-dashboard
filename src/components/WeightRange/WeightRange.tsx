@@ -18,7 +18,7 @@ const WeightRange: React.FC<WeightRangeProps> = ({ from, to }) =>
         fromUnit: from.unit,
         fromValue: from.value,
         toUnit: to.unit,
-        toValue: to.value
+        toValue: to.value,
       }}
     />
   ) : from && !to ? (

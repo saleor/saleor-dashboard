@@ -16,10 +16,10 @@ import {
   limitsReached,
   listActionsProps,
   pageListProps,
-  sortPageProps
+  sortPageProps,
 } from "../../../fixtures";
 import ProductListPage, {
-  ProductListPageProps
+  ProductListPageProps,
 } from "../../../products/components/ProductListPage";
 import Decorator from "../../Decorator";
 
@@ -34,8 +34,8 @@ const props: ProductListPageProps = {
     ...sortPageProps,
     sort: {
       ...sortPageProps.sort,
-      sort: ProductListUrlSortField.name
-    }
+      sort: ProductListUrlSortField.name,
+    },
   },
   activeAttributeSortId: undefined,
   availableInGridAttributes: attributes,
@@ -51,9 +51,9 @@ const props: ProductListPageProps = {
   selectedChannelId: "123",
   settings: {
     ...pageListProps.default.settings,
-    columns: ["availability", "productType", "price"]
+    columns: ["availability", "productType", "price"],
   },
-  totalGridAttributes: attributes.length
+  totalGridAttributes: attributes.length,
 };
 
 storiesOf("Views / Products / Product list", module)

@@ -4,7 +4,7 @@ import {
   pageListProps,
   searchPageProps,
   sortPageProps,
-  tabPageProps
+  tabPageProps,
 } from "@saleor/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
 import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
@@ -22,7 +22,7 @@ const props: AppsListPageProps = {
   ...tabPageProps,
   appsInProgressList: {
     __typename: "Query",
-    appsInstallations: appsInProgress
+    appsInstallations: appsInProgress,
   },
   customAppsList,
   disabled: false,
@@ -32,7 +32,7 @@ const props: AppsListPageProps = {
   onAppInProgressRemove: () => undefined,
   onAppInstallRetry: () => undefined,
   onCustomAppRemove: () => undefined,
-  onInstalledAppRemove: () => undefined
+  onInstalledAppRemove: () => undefined,
 };
 
 storiesOf("Views / Apps / Apps list", module)

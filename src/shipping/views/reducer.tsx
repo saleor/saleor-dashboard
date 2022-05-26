@@ -1,6 +1,6 @@
 import {
   PostalCodeRuleInclusionTypeEnum,
-  ShippingMethodWithPostalCodesFragment
+  ShippingMethodWithPostalCodesFragment,
 } from "@saleor/graphql";
 
 export interface PostalCodesState {
@@ -13,7 +13,7 @@ export interface PostalCodesState {
 
 function postalCodesReducer(
   prevState: PostalCodesState,
-  newState: PostalCodesState
+  newState: PostalCodesState,
 ) {
   return { ...prevState, ...newState };
 }

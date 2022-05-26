@@ -10,7 +10,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   error,
   label,
   name,
-  helperText
+  helperText,
 }) => (
   <FormControl
     data-test-id={"rich-text-editor-" + name}

@@ -14,7 +14,7 @@ export const ShopContext = React.createContext<ShopContext>(undefined);
 export const ShopProvider: React.FC = ({ children }) => {
   const { authenticated } = useUser();
   const { data } = useShopInfoQuery({
-    skip: !authenticated
+    skip: !authenticated,
   });
 
   return (

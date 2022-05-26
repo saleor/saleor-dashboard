@@ -3,7 +3,7 @@ import NotFoundPage from "@saleor/components/NotFoundPage";
 import {
   useAppActivateMutation,
   useAppDeactivateMutation,
-  useAppQuery
+  useAppQuery,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -20,7 +20,7 @@ import {
   AppDetailsUrlDialog,
   AppDetailsUrlQueryParams,
   appsListPath,
-  appUrl
+  appUrl,
 } from "../../urls";
 
 interface AppDetailsProps {
@@ -31,7 +31,7 @@ interface AppDetailsProps {
 export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
   const { data, loading, refetch } = useAppQuery({
     displayLoader: true,
-    variables: { id }
+    variables: { id },
   });
 
   const appExists = data?.app !== null;
@@ -46,7 +46,7 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
       if (errors?.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(appMessages.appActivated)
+          text: intl.formatMessage(appMessages.appActivated),
         });
         refetch();
         closeModal();
@@ -55,12 +55,12 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
           errors.forEach(error =>
             notify({
               status: "error",
-              text: getAppErrorMessage(error, intl)
-            })
+              text: getAppErrorMessage(error, intl),
+            }),
           );
         }
       }
-    }
+    },
   });
   const [deactivateApp, deactivateAppResult] = useAppDeactivateMutation({
     onCompleted: data => {
@@ -68,7 +68,7 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
       if (errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(appMessages.appDeactivated)
+          text: intl.formatMessage(appMessages.appDeactivated),
         });
         refetch();
         closeModal();
@@ -77,12 +77,12 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
           errors.forEach(error =>
             notify({
               status: "error",
-              text: getAppErrorMessage(error, intl)
-            })
+              text: getAppErrorMessage(error, intl),
+            }),
           );
         }
       }
-    }
+    },
   });
 
   const [openModal, closeModal] = createDialogActionHandlers<

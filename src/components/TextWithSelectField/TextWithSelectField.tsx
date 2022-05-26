@@ -1,6 +1,6 @@
 import { TextField } from "@material-ui/core";
 import SingleSelectField, {
-  Choices
+  Choices,
 } from "@saleor/components/SingleSelectField";
 import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import classNames from "classnames";
@@ -35,7 +35,7 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
   textFieldProps,
   selectFieldProps,
   helperText,
-  isError
+  isError,
 }) => {
   const classes = useStyles();
 
@@ -44,13 +44,13 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
     value: textFieldValue,
     label: textFieldLabel,
     type: textFieldType,
-    minValue: textFieldMinValue
+    minValue: textFieldMinValue,
   } = textFieldProps;
 
   const {
     name: selectFieldName,
     value: selectFieldValue,
-    className: selectFieldClassName
+    className: selectFieldClassName,
   } = selectFieldProps;
 
   const handleSelectChange = (event: ChangeEvent) => {
@@ -58,7 +58,7 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
     // we need to save the other part of the field as well
     const inputTarget = {
       value: textFieldValue,
-      name: textFieldName
+      name: textFieldName,
     };
 
     change(event);
@@ -70,7 +70,7 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
 
     const otherTarget = {
       value: selectFieldValue,
-      name: selectFieldName
+      name: selectFieldName,
     };
 
     // handle parsing in case of text field of type number
@@ -81,7 +81,7 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
 
     change({
       ...event,
-      target: { ...event.target, value: parsedValue, name: event.target.name }
+      target: { ...event.target, value: parsedValue, name: event.target.name },
     });
     change({ target: otherTarget });
   };
@@ -96,11 +96,11 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
         name={textFieldName}
         label={textFieldLabel}
         inputProps={{
-          min: textFieldMinValue
+          min: textFieldMinValue,
         }}
         InputProps={{
           className: classNames(classes.textField, {
-            [classes.textFieldCentered]: !textFieldLabel
+            [classes.textFieldCentered]: !textFieldLabel,
           }),
           endAdornment: (
             <SingleSelectField
@@ -112,12 +112,12 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
                 classes: {
                   input: classes.noBackground,
                   root: classes.input,
-                  notchedOutline: classes.noBorder
-                }
+                  notchedOutline: classes.noBorder,
+                },
               }}
               choices={choices}
             />
-          )
+          ),
         }}
         onChange={handleTextChange}
         value={textFieldValue}

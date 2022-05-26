@@ -1,7 +1,7 @@
 import {
   IMessage,
   IMessageContext,
-  MessageContext
+  MessageContext,
 } from "@saleor/components/messages";
 import { useContext } from "react";
 

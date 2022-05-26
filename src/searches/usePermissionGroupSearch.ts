@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 import {
   SearchPermissionGroupsDocument,
   SearchPermissionGroupsQuery,
-  SearchPermissionGroupsQueryVariables
+  SearchPermissionGroupsQueryVariables,
 } from "@saleor/graphql";
 import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
 

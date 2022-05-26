@@ -26,13 +26,13 @@ export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentPr
   onChange,
   selected = 0,
   toggleAll,
-  toggleAllText
+  toggleAllText,
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
   const searchText = intl.formatMessage({
     id: "ybaLoZ",
-    defaultMessage: "Search through channels"
+    defaultMessage: "Search through channels",
   });
   const [query, onQueryChange] = React.useState("");
   const filteredChannels = filter(channels, query, { key: "name" });

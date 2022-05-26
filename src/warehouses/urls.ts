@@ -8,19 +8,19 @@ import {
   Pagination,
   SingleAction,
   Sort,
-  TabActionDialog
+  TabActionDialog,
 } from "../types";
 
 export const warehouseSection = "/warehouses/";
 
 export const warehouseListPath = warehouseSection;
 export enum WarehouseListUrlFiltersEnum {
-  query = "query"
+  query = "query",
 }
 export type WarehouseListUrlFilters = Filters<WarehouseListUrlFiltersEnum>;
 export type WarehouseListUrlDialog = "delete" | TabActionDialog;
 export enum WarehouseListUrlSortField {
-  name = "name"
+  name = "name",
 }
 export type WarehouseListUrlSort = Sort<WarehouseListUrlSortField>;
 export type WarehouseListUrlQueryParams = ActiveTab &

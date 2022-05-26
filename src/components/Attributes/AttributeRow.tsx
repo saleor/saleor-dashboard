@@ -11,7 +11,7 @@ import {
   getMultiDisplayValue,
   getReferenceDisplayValue,
   getSingleChoices,
-  getSingleDisplayValue
+  getSingleDisplayValue,
 } from "@saleor/components/Attributes/utils";
 import Checkbox from "@saleor/components/Checkbox";
 import { DateTimeField } from "@saleor/components/DateTimeField";
@@ -43,7 +43,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
   fetchAttributeValues,
   fetchMoreAttributeValues,
   onAttributeSelectBlur,
-  richTextGetters
+  richTextGetters,
 }) => {
   const intl = useIntl();
   const classes = useStyles();
@@ -62,7 +62,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             onValueDelete={value =>
               onReferencesRemove(
                 attribute.id,
-                attribute.value?.filter(id => id !== value)
+                attribute.value?.filter(id => id !== value),
               )
             }
             onValueReorder={event => onReferencesReorder(attribute.id, event)}
@@ -85,7 +85,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             error={!!error}
             helperText={getErrorMessage(error, intl)}
             inputProps={{
-              name: `attribute:${attribute.label}`
+              name: `attribute:${attribute.label}`,
             }}
           />
         </BasicAttributeRow>
@@ -129,7 +129,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
         getShouldMount,
         getDefaultValue,
         getMountEditor,
-        getHandleChange
+        getHandleChange,
       } = richTextGetters;
       const defaultValue = getDefaultValue(attribute.id);
       return (
@@ -167,10 +167,10 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
                   <InputAdornment position="end">
                     {getMeasurementUnitMessage(
                       attribute.data.unit,
-                      intl.formatMessage
+                      intl.formatMessage,
                     )}
                   </InputAdornment>
-                )
+                ),
               }
             }
           />

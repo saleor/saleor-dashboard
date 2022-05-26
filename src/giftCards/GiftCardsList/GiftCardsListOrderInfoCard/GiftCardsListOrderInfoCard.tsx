@@ -15,7 +15,7 @@ const GiftCardsListOrderInfoCard: React.FC = () => (
         values={{
           link: content => (
             <Link href={orderGiftCardBoughtPath()}>{content}</Link>
-          )
+          ),
         }}
       />
     </Typography>

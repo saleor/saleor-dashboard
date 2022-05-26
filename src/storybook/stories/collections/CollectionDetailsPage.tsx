@@ -7,7 +7,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import CollectionDetailsPage, {
-  CollectionDetailsPageProps
+  CollectionDetailsPageProps,
 } from "../../../collections/components/CollectionDetailsPage";
 import { collection as collectionFixture } from "../../../collections/fixtures";
 import { listActionsProps, pageListProps } from "../../../fixtures";
@@ -15,7 +15,7 @@ import Decorator from "../../Decorator";
 
 const collection = collectionFixture(
   placeholderCollectionImage,
-  placeholderProductImage
+  placeholderProductImage,
 );
 const channels = createCollectionChannelsData(collection);
 
@@ -36,7 +36,7 @@ const props: Omit<CollectionDetailsPageProps, "classes"> = {
   onSubmit: () => undefined,
   openChannelsModal: () => undefined,
   saveButtonBarState: "default",
-  selectedChannelId: "123"
+  selectedChannelId: "123",
 };
 
 storiesOf("Views / Collections / Collection detailsCollection details", module)
@@ -53,16 +53,16 @@ storiesOf("Views / Collections / Collection detailsCollection details", module)
         {
           code: CollectionErrorCode.REQUIRED,
           field: "name",
-          message: "Collection field name required"
+          message: "Collection field name required",
         },
         {
           code: CollectionErrorCode.REQUIRED,
           field: "description",
-          message: "Collection field description required"
-        }
+          message: "Collection field description required",
+        },
       ].map(err => ({
         __typename: "CollectionError",
-        ...err
+        ...err,
       }))}
     />
   ))
@@ -73,8 +73,8 @@ storiesOf("Views / Collections / Collection detailsCollection details", module)
         ...collection,
         products: {
           ...collection.products,
-          edges: []
-        }
+          edges: [],
+        },
       }}
     />
   ));

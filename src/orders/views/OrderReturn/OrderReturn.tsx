@@ -1,7 +1,7 @@
 import {
   OrderErrorCode,
   useFulfillmentReturnProductsMutation,
-  useOrderDetailsQuery
+  useOrderDetailsQuery,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -20,18 +20,18 @@ export const messages = defineMessages({
     id: "XQBVEJ",
     defaultMessage:
       "We’ve encountered a problem while refunding the products. Product’s were not refunded. Please try again.",
-    description: "order return error description when cannot refund"
+    description: "order return error description when cannot refund",
   },
   cannotRefundTitle: {
     id: "l9Lwjh",
     defaultMessage: "Couldn't refund products",
-    description: "order return error title when cannot refund"
+    description: "order return error title when cannot refund",
   },
   successAlert: {
     id: "/z9uo1",
     defaultMessage: "Successfully returned products!",
-    description: "order returned success message"
-  }
+    description: "order returned success message",
+  },
 });
 
 interface OrderReturnProps {
@@ -46,19 +46,19 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
   const { data, loading } = useOrderDetailsQuery({
     displayLoader: true,
     variables: {
-      id: orderId
-    }
+      id: orderId,
+    },
   });
 
   const [returnCreate, returnCreateOpts] = useFulfillmentReturnProductsMutation(
     {
       onCompleted: ({
-        orderFulfillmentReturnProducts: { errors, replaceOrder }
+        orderFulfillmentReturnProducts: { errors, replaceOrder },
       }) => {
         if (!errors.length) {
           notify({
             status: "success",
-            text: intl.formatMessage(messages.successAlert)
+            text: intl.formatMessage(messages.successAlert),
           });
 
           navigate(orderUrl(replaceOrder?.id || orderId));
@@ -71,7 +71,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
             autohide: 5000,
             status: "error",
             text: intl.formatMessage(messages.cannotRefundDescription),
-            title: intl.formatMessage(messages.cannotRefundTitle)
+            title: intl.formatMessage(messages.cannotRefundTitle),
           });
 
           return;
@@ -80,10 +80,10 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
         notify({
           autohide: 5000,
           status: "error",
-          text: intl.formatMessage(commonMessages.somethingWentWrong)
+          text: intl.formatMessage(commonMessages.somethingWentWrong),
         });
-      }
-    }
+      },
+    },
   );
 
   const handleSubmit = async (formData: OrderReturnFormData) => {
@@ -95,9 +95,9 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
       returnCreate({
         variables: {
           id: data.order.id,
-          input: new ReturnFormDataParser(data.order, formData).getParsedData()
-        }
-      })
+          input: new ReturnFormDataParser(data.order, formData).getParsedData(),
+        },
+      }),
     );
   };
 

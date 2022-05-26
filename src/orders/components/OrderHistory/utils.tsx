@@ -5,7 +5,7 @@ import { staffMemberDetailsUrl } from "@saleor/staff/urls";
 import { MessageDescriptor } from "react-intl";
 
 export const getEventSecondaryTitle = (
-  event: OrderEventFragment
+  event: OrderEventFragment,
 ): [MessageDescriptor, any?] => {
   switch (event.type) {
     case OrderEventsEnum.ORDER_MARKED_AS_PAID: {
@@ -13,9 +13,9 @@ export const getEventSecondaryTitle = (
         {
           defaultMessage: "Transaction Reference {transactionReference}",
           description: "transaction reference",
-          id: "transaction-reference-order-history"
+          id: "transaction-reference-order-history",
         },
-        { transactionReference: event.transactionReference }
+        { transactionReference: event.transactionReference },
       ];
     }
   }
@@ -26,7 +26,7 @@ const timelineEventTypes = {
     OrderEventsEnum.ORDER_DISCOUNT_ADDED,
     OrderEventsEnum.ORDER_DISCOUNT_UPDATED,
     OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED,
-    OrderEventsEnum.ORDER_DISCOUNT_AUTOMATICALLY_UPDATED
+    OrderEventsEnum.ORDER_DISCOUNT_AUTOMATICALLY_UPDATED,
   ],
   extendable: [
     OrderEventsEnum.FULFILLMENT_REFUNDED,
@@ -37,19 +37,19 @@ const timelineEventTypes = {
     OrderEventsEnum.ORDER_DISCOUNT_ADDED,
     OrderEventsEnum.ORDER_DISCOUNT_AUTOMATICALLY_UPDATED,
     OrderEventsEnum.ORDER_DISCOUNT_UPDATED,
-    OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED
+    OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED,
   ],
   linked: [
     OrderEventsEnum.ORDER_REPLACEMENT_CREATED,
     OrderEventsEnum.ORDER_DISCOUNT_DELETED,
-    OrderEventsEnum.ORDER_LINE_DISCOUNT_REMOVED
+    OrderEventsEnum.ORDER_LINE_DISCOUNT_REMOVED,
   ],
   note: [OrderEventsEnum.NOTE_ADDED],
   rawMessage: [
     OrderEventsEnum.OTHER,
-    OrderEventsEnum.EXTERNAL_SERVICE_NOTIFICATION
+    OrderEventsEnum.EXTERNAL_SERVICE_NOTIFICATION,
   ],
-  secondaryTitle: [OrderEventsEnum.ORDER_MARKED_AS_PAID]
+  secondaryTitle: [OrderEventsEnum.ORDER_MARKED_AS_PAID],
 };
 
 export const isTimelineEventOfType = (
@@ -60,7 +60,7 @@ export const isTimelineEventOfType = (
     | "note"
     | "linked"
     | "discount",
-  eventType: OrderEventsEnum
+  eventType: OrderEventsEnum,
 ) => !!timelineEventTypes[type]?.includes(eventType);
 
 export const isTimelineEventOfDiscountType = (eventType: OrderEventsEnum) =>
@@ -69,7 +69,7 @@ export const isTimelineEventOfDiscountType = (eventType: OrderEventsEnum) =>
 const selectEmployeeName = ({
   firstName,
   lastName,
-  email
+  email,
 }: OrderEventFragment["user"]) => {
   if (!!firstName) {
     return getFullName({ firstName, lastName }).trim();
@@ -87,13 +87,13 @@ export const getEmployeeNameLink = (event: OrderEventFragment) => {
 
   return {
     link: staffMemberDetailsUrl(id),
-    text: selectEmployeeName(event.user)
+    text: selectEmployeeName(event.user),
   };
 };
 
 export const hasOrderLineDiscountWithNoPreviousValue = ({
   type,
-  lines
+  lines,
 }: OrderEventFragment) =>
   type === OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED &&
   lines?.[0]?.discount &&
@@ -111,16 +111,16 @@ export const getOrderNumberLink = (event: OrderEventFragment) => {
 
 const hasEnsuredOrderEventFields = (
   event: OrderEventFragment,
-  fields: Array<keyof OrderEventFragment>
+  fields: Array<keyof OrderEventFragment>,
 ) => !fields.some((field: keyof OrderEventFragment) => !event[field]);
 
 export const getOrderNumberLinkObject = ({
   id,
-  number
+  number,
 }: {
   id: string;
   number: string;
 }) => ({
   link: orderUrl(id),
-  text: `#${number}`
+  text: `#${number}`,
 });

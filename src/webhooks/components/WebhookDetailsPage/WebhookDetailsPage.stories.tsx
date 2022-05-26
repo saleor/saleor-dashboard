@@ -5,7 +5,7 @@ import React from "react";
 
 import { webhook } from "../../fixtures";
 import WebhookDetailsPage, {
-  WebhookDetailsPageProps
+  WebhookDetailsPageProps,
 } from "./WebhookDetailsPage";
 
 const props: WebhookDetailsPageProps = {
@@ -15,7 +15,7 @@ const props: WebhookDetailsPageProps = {
   errors: [],
   onSubmit: () => undefined,
   saveButtonBarState: "default",
-  webhook
+  webhook,
 };
 storiesOf("Views / Apps / Webhooks / Webhook details", module)
   .addDecorator(Decorator)
@@ -34,7 +34,7 @@ storiesOf("Views / Apps / Webhooks / Webhook details", module)
         __typename: "WebhookError",
         code: WebhookErrorCode.INVALID,
         field,
-        message: "Webhook invalid"
+        message: "Webhook invalid",
       }))}
     />
   ));

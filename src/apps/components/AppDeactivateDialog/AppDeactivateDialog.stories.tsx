@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import AppDeactivateDialog, {
-  AppDeactivateDialogProps
+  AppDeactivateDialogProps,
 } from "./AppDeactivateDialog";
 
 const props: AppDeactivateDialogProps = {
@@ -11,7 +11,7 @@ const props: AppDeactivateDialogProps = {
   name: "App",
   onClose: () => undefined,
   onConfirm: () => undefined,
-  open: true
+  open: true,
 };
 
 storiesOf("Views / Apps / Deactivate app", module)

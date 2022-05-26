@@ -9,7 +9,7 @@ export interface CountryTaxesParams {
 
 export const CountryTaxes: React.FC<CountryTaxesParams> = ({ code }) => {
   const { data } = useCountryListQuery({
-    displayLoader: true
+    displayLoader: true,
   });
 
   const country = data?.shop.countries.find(country => country.code === code);

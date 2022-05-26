@@ -4,11 +4,11 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import ChannelsAvailabilityDropdown, {
-  ChannelsAvailabilityDropdownProps
+  ChannelsAvailabilityDropdownProps,
 } from "./ChannelsAvailabilityDropdown";
 
 const props: ChannelsAvailabilityDropdownProps = {
-  channels: productChannels
+  channels: productChannels,
 };
 
 storiesOf("Generics / ChannelsAvailabilityDropdown", module)

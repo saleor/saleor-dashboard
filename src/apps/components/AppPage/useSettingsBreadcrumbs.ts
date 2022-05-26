@@ -5,7 +5,7 @@ import {
   ExtensionMessageEvent,
   ExtensionMessageType,
   sendMessageToExtension,
-  useExtensionMessage
+  useExtensionMessage,
 } from "@saleor/macaw-ui";
 import { useState } from "react";
 
@@ -14,7 +14,7 @@ function useSettingsBreadcrumbs(): UseSettingsBreadcrumbs {
   const [breadcrumbs, setBreadcrumbs] = useState<Breadcrumb[]>([]);
 
   const handleBreadcrumbSet = (
-    event: ExtensionMessageEvent<BreadcrumbChangeMessage>
+    event: ExtensionMessageEvent<BreadcrumbChangeMessage>,
   ) => {
     if (event.data.type === ExtensionMessageType.BREADCRUMB_SET) {
       setBreadcrumbs(event.data.breadcrumbs);
@@ -27,9 +27,9 @@ function useSettingsBreadcrumbs(): UseSettingsBreadcrumbs {
     sendMessageToExtension<BreadcrumbClickMessage>(
       {
         breadcrumb: value,
-        type: ExtensionMessageType.BREADCRUMB_CLICK
+        type: ExtensionMessageType.BREADCRUMB_CLICK,
       },
-      "*"
+      "*",
     );
 
   return [breadcrumbs, handleBreadcrumbClick];

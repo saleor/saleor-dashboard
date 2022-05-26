@@ -21,7 +21,7 @@ interface AcionButtonsProps {
 const statusesToShow = [
   FulfillmentStatus.FULFILLED,
   FulfillmentStatus.RETURNED,
-  FulfillmentStatus.WAITING_FOR_APPROVAL
+  FulfillmentStatus.WAITING_FOR_APPROVAL,
 ];
 
 const ActionButtons: React.FC<AcionButtonsProps> = ({
@@ -31,7 +31,7 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
   fulfillmentAllowUnpaid,
   onTrackingCodeAdd,
   onRefund,
-  onApprove
+  onApprove,
 }) => {
   const classes = useStyles();
 

@@ -5,8 +5,8 @@ export const useStyles = makeStyles(
     strike: {
       textDecoration: "line-through",
       color: theme.palette.grey[400],
-      fontSize: "smaller"
-    }
+      fontSize: "smaller",
+    },
   }),
-  { name: "DiscountedPrice" }
+  { name: "DiscountedPrice" },
 );

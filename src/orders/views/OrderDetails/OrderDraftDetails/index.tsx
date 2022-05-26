@@ -7,14 +7,14 @@ import {
   OrderDraftUpdateMutation,
   OrderDraftUpdateMutationVariables,
   StockAvailability,
-  useCustomerAddressesQuery
+  useCustomerAddressesQuery,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { CustomerEditData } from "@saleor/orders/components/OrderCustomer";
 import { OrderCustomerAddressesEditDialogOutput } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/types";
 import {
   CustomerChangeActionEnum,
-  OrderCustomerChangeData
+  OrderCustomerChangeData,
 } from "@saleor/orders/components/OrderCustomerChangeDialog/form";
 import OrderCustomerChangeDialog from "@saleor/orders/components/OrderCustomerChangeDialog/OrderCustomerChangeDialog";
 import { getVariantSearchAddress } from "@saleor/orders/utils/data";
@@ -30,7 +30,7 @@ import { useIntl } from "react-intl";
 import { customerUrl } from "../../../../customers/urls";
 import {
   extractMutationErrors,
-  getStringOrPlaceholder
+  getStringOrPlaceholder,
 } from "../../../../misc";
 import { productUrl } from "../../../../products/urls";
 import OrderAddressFields from "../../../components/OrderAddressFields/OrderAddressFields";
@@ -41,7 +41,7 @@ import OrderShippingMethodEditDialog from "../../../components/OrderShippingMeth
 import {
   orderDraftListUrl,
   OrderUrlDialog,
-  OrderUrlQueryParams
+  OrderUrlQueryParams,
 } from "../../../urls";
 
 interface OrderDraftDetailsProps {
@@ -71,7 +71,7 @@ export const isAnyAddressEditModalOpen = (uri: string | undefined): boolean =>
   [
     "edit-customer-addresses",
     "edit-shipping-address",
-    "edit-billing-address"
+    "edit-billing-address",
   ].includes(uri);
 
 export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
@@ -88,7 +88,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   orderDraftCancel,
   orderDraftFinalize,
   openModal,
-  closeModal
+  closeModal,
 }) => {
   const order = data.order;
   const navigate = useNavigator();
@@ -96,33 +96,33 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   const {
     loadMore,
     search: variantSearch,
-    result: variantSearchOpts
+    result: variantSearchOpts,
   } = useOrderVariantSearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       channel: order.channel.slug,
       address: getVariantSearchAddress(order),
       isPublished: true,
-      stockAvailability: StockAvailability.IN_STOCK
-    }
+      stockAvailability: StockAvailability.IN_STOCK,
+    },
   });
 
   const {
     loadMore: loadMoreCustomers,
     search: searchUsers,
-    result: users
+    result: users,
   } = useCustomerSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
 
   const {
     data: customerAddresses,
-    loading: customerAddressesLoading
+    loading: customerAddressesLoading,
   } = useCustomerAddressesQuery({
     variables: {
-      id: order?.user?.id
+      id: order?.user?.id,
     },
-    skip: !order?.user?.id || !isAnyAddressEditModalOpen(params.action)
+    skip: !order?.user?.id || !isAnyAddressEditModalOpen(params.action),
   });
 
   const intl = useIntl();
@@ -131,7 +131,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     user,
     userEmail,
     prevUser,
-    prevUserEmail
+    prevUserEmail,
   }: CustomerEditData) => {
     const sameUser = user && user === prevUser;
     const sameUserEmail = userEmail && userEmail === prevUserEmail;
@@ -143,8 +143,8 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
       id,
       input: {
         user,
-        userEmail
-      }
+        userEmail,
+      },
     });
 
     if (result?.data?.draftOrderUpdate?.errors?.length) {
@@ -164,11 +164,11 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   };
 
   const handleCustomerChangeAddresses = async (
-    data: Partial<OrderCustomerAddressesEditDialogOutput>
+    data: Partial<OrderCustomerAddressesEditDialogOutput>,
   ): Promise<any> =>
     orderDraftUpdate.mutate({
       id,
-      input: data
+      input: data,
     });
 
   const handleOrderDraftCancel = async () => {
@@ -186,11 +186,11 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
           {
             id: "TLNf6K",
             defaultMessage: "Draft Order #{orderNumber}",
-            description: "window title"
+            description: "window title",
           },
           {
-            orderNumber: getStringOrPlaceholder(data?.order?.number)
-          }
+            orderNumber: getStringOrPlaceholder(data?.order?.number),
+          },
         )}
       />
 
@@ -202,8 +202,8 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
               extractMutationErrors(
                 orderAddNote.mutate({
                   input: variables,
-                  order: id
-                })
+                  order: id,
+                }),
               )
             }
             users={mapEdgesToItems(users?.data?.search)}
@@ -226,7 +226,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
             onOrderLineChange={(id, data) =>
               orderLineUpdate.mutate({
                 id,
-                input: data
+                input: data,
               })
             }
             saveButtonBarState="default"
@@ -255,8 +255,8 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
           orderShippingMethodUpdate.mutate({
             id,
             input: {
-              shippingMethod: variables.shippingMethod
-            }
+              shippingMethod: variables.shippingMethod,
+            },
           })
         }
       />
@@ -277,9 +277,9 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
               id,
               input: variants.map(variant => ({
                 quantity: 1,
-                variantId: variant.id
-              }))
-            })
+                variantId: variant.id,
+              })),
+            }),
           )
         }
       />

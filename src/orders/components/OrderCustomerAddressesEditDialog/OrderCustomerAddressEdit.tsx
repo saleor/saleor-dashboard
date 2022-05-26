@@ -9,7 +9,7 @@ import { AddressTypeInput } from "@saleor/customers/types";
 import {
   AccountErrorFragment,
   AddressFragment,
-  OrderErrorFragment
+  OrderErrorFragment,
 } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
 import React from "react";
@@ -52,7 +52,7 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
     onChangeFormAddress,
     onChangeFormAddressCountry,
     onEdit,
-    showCard = true
+    showCard = true,
   } = props;
 
   const classes = useStyles(props);
@@ -101,7 +101,7 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
             <CardSpacer />
             <CustomerAddressChoiceCard
               address={customerAddresses.find(
-                getById(selectedCustomerAddressId)
+                getById(selectedCustomerAddressId),
               )}
               editable
               onEditClick={onEdit}

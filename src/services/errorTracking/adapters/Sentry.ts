@@ -13,7 +13,7 @@ export const SentryAdapter = (config: Config): TrackerMethods => {
       Sentry.init({
         dsn: config.dsn,
         environment: config.environment,
-        ignoreErrors: ["Editor's content can not be saved in read-only mode"]
+        ignoreErrors: ["Editor's content can not be saved in read-only mode"],
       });
       return true;
     }
@@ -29,6 +29,6 @@ export const SentryAdapter = (config: Config): TrackerMethods => {
   return {
     captureException,
     init,
-    setUserData
+    setUserData,
   };
 };

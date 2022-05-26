@@ -2,7 +2,7 @@ import { buttonMessages, commonMessages } from "@saleor/intl";
 import {
   ConfirmButton as MacawConfirmButton,
   ConfirmButtonLabels,
-  ConfirmButtonProps as MacawConfirmButtonProps
+  ConfirmButtonProps as MacawConfirmButtonProps,
 } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -20,11 +20,11 @@ export const ConfirmButton: React.FC<ConfirmButtonProps> = ({
 
   const defaultLabels: ConfirmButtonLabels = {
     confirm: intl.formatMessage(buttonMessages.save),
-    error: intl.formatMessage(commonMessages.error)
+    error: intl.formatMessage(commonMessages.error),
   };
   const componentLabels: ConfirmButtonLabels = {
     ...defaultLabels,
-    ...labels
+    ...labels,
   };
 
   return <MacawConfirmButton labels={componentLabels} {...rest} />;

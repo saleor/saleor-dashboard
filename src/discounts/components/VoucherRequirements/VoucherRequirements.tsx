@@ -5,7 +5,7 @@ import {
   TableCell,
   TableRow,
   TextField,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import { FormSpacer } from "@saleor/components/FormSpacer";
@@ -41,24 +41,24 @@ const VoucherRequirements = ({
   disabled,
   errors,
   onChange,
-  onChannelChange
+  onChannelChange,
 }: VoucherRequirementsProps) => {
   const classes = useStyles({});
   const intl = useIntl();
 
   const formErrors = getFormErrors(
     ["minSpent", "minCheckoutItemsQuantity"],
-    errors
+    errors,
   );
   const minimalOrderValueText = intl.formatMessage({
     id: "bh9+8A",
     defaultMessage: "Minimal order value",
-    description: "voucher requirement"
+    description: "voucher requirement",
   });
   const minimalQuantityText = intl.formatMessage({
     id: "XT/ZvF",
     defaultMessage: "Minimum quantity of items",
-    description: "voucher requirement"
+    description: "voucher requirement",
   });
 
   const requirementsPickerChoices = [
@@ -66,18 +66,18 @@ const VoucherRequirements = ({
       label: intl.formatMessage({
         id: "u/hkKO",
         defaultMessage: "None",
-        description: "voucher has no requirements"
+        description: "voucher has no requirements",
       }),
-      value: RequirementsPicker.NONE
+      value: RequirementsPicker.NONE,
     },
     {
       label: minimalOrderValueText,
-      value: RequirementsPicker.ORDER
+      value: RequirementsPicker.ORDER,
     },
     {
       label: minimalQuantityText,
-      value: RequirementsPicker.ITEM
-    }
+      value: RequirementsPicker.ITEM,
+    },
   ];
 
   return (
@@ -86,7 +86,7 @@ const VoucherRequirements = ({
         title={intl.formatMessage({
           id: "yhv3HX",
           defaultMessage: "Minimum Requirements",
-          description: "voucher requirements, header"
+          description: "voucher requirements, header",
         })}
       />
       <CardContent>
@@ -98,7 +98,7 @@ const VoucherRequirements = ({
           onChange={onChange}
         />
         {[RequirementsPicker.ORDER, RequirementsPicker.ITEM].includes(
-          data.requirementsPicker
+          data.requirementsPicker,
         ) && <FormSpacer />}
         {data.requirementsPicker === RequirementsPicker.ORDER ? (
           <>
@@ -139,7 +139,7 @@ const VoucherRequirements = ({
                     data.channelListings,
                     (listing, index) => {
                       const error = formErrors.minSpent?.channels?.find(
-                        id => id === listing.id
+                        id => id === listing.id,
                       );
                       return (
                         <TableRow key={listing?.id || `skeleton-${index}`}>
@@ -157,7 +157,7 @@ const VoucherRequirements = ({
                                   error
                                     ? getDiscountErrorMessage(
                                         formErrors.minSpent,
-                                        intl
+                                        intl,
                                       )
                                     : ""
                                 }
@@ -166,7 +166,7 @@ const VoucherRequirements = ({
                                 value={listing.minSpent || ""}
                                 onChange={e =>
                                   onChannelChange(listing.id, {
-                                    minSpent: e.target.value
+                                    minSpent: e.target.value,
                                   })
                                 }
                               />
@@ -186,7 +186,7 @@ const VoucherRequirements = ({
                           />
                         </TableCell>
                       </TableRow>
-                    )
+                    ),
                   )}
                 </TableBody>
               </ResponsiveTable>
@@ -198,7 +198,7 @@ const VoucherRequirements = ({
             error={!!formErrors.minCheckoutItemsQuantity}
             helperText={getDiscountErrorMessage(
               formErrors.minCheckoutItemsQuantity,
-              intl
+              intl,
             )}
             label={minimalQuantityText}
             name={

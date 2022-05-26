@@ -4,81 +4,81 @@ export const messages = defineMessages({
   headerOrder: {
     id: "6u4K7e",
     defaultMessage: "Order",
-    description: "page header"
+    description: "page header",
   },
   headerOrderNumber: {
     id: "kPIZ65",
     defaultMessage: "Order #{orderNumber}",
-    description: "page header"
+    description: "page header",
   },
   headerOrderNumberAddFulfillment: {
     id: "CJpx4E",
     defaultMessage: "Order no. {orderNumber} - Add Fulfillment",
-    description: "page header"
+    description: "page header",
   },
   submitFulfillment: {
     id: "BLX9dz",
     defaultMessage: "Fulfill",
-    description: "fulfill order, button"
+    description: "fulfill order, button",
   },
   submitPrepareFulfillment: {
     id: "Uh9R9m",
     defaultMessage: "Prepare fulfillment",
-    description: "prepare order fulfillment, button"
+    description: "prepare order fulfillment, button",
   },
   itemsReadyToShip: {
     id: "N5UuEK",
     defaultMessage: "Items ready to ship",
-    description: "header"
+    description: "header",
   },
   productName: {
     id: "vW3tb6",
     defaultMessage: "Product name",
-    description: "name"
+    description: "name",
   },
   sku: {
     id: "fw+VAN",
     defaultMessage: "SKU",
-    description: "product's sku"
+    description: "product's sku",
   },
   quantityToFulfill: {
     id: "Kg0Fiu",
     defaultMessage: "Quantity to fulfill",
-    description: "quantity of fulfilled products"
+    description: "quantity of fulfilled products",
   },
   quantity: {
     defaultMessage: "Quantity",
     id: "0mhR+F",
-    description: "Header row quantity label"
+    description: "Header row quantity label",
   },
   stock: {
     defaultMessage: "Stock",
     id: "tZnV8L",
-    description: "Header row stock label"
+    description: "Header row stock label",
   },
   noStock: {
     id: "z9wQ/U",
     defaultMessage: "No Stock",
-    description: "no variant stock in warehouse"
+    description: "no variant stock in warehouse",
   },
   sentShipmentDetails: {
     id: "0VDwAP",
     defaultMessage: "Send shipment details to customer",
-    description: "checkbox label"
+    description: "checkbox label",
   },
   shipmentInformation: {
     defaultMessage: "Shipment information",
     id: "lF+VJQ",
-    description: "Shipment information card header"
+    description: "Shipment information card header",
   },
   trackingNumber: {
     defaultMessage: "Tracking number",
     id: "zbrHAw",
-    description: "Tracking number input label"
+    description: "Tracking number input label",
   },
   fulfillingFrom: {
     defaultMessage: "Fulfilling from {warehouseName}",
     id: "oiaUni",
-    description: "Support text under page header"
-  }
+    description: "Support text under page header",
+  },
 });

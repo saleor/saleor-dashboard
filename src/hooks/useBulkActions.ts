@@ -9,7 +9,7 @@ function useBulkActions(initial: string[] = []) {
     remove,
     reset,
     set,
-    toggle
+    toggle,
   } = useListActions<string>(initial);
 
   function toggleAll(items: Node[], selected: number) {
@@ -27,7 +27,7 @@ function useBulkActions(initial: string[] = []) {
     remove,
     reset,
     toggle,
-    toggleAll
+    toggleAll,
   };
 }
 export default useBulkActions;

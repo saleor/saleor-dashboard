@@ -7,7 +7,7 @@ import {
   MenuItem,
   MenuList,
   Paper,
-  Popper
+  Popper,
 } from "@material-ui/core";
 import { ArrowDropDown as ArrowDropDownIcon } from "@material-ui/icons";
 import { Button } from "@saleor/components/Button";
@@ -41,7 +41,7 @@ export const ButtonWithSelect: React.FC<ButtonWithSelectProps> = ({
 
   const handleMenuItemClick = (
     event: React.MouseEvent<HTMLLIElement, MouseEvent>,
-    onClick: (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
+    onClick: (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => void,
   ) => {
     onClick(event);
     setOpen(false);

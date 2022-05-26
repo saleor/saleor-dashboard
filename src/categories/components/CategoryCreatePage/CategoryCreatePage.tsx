@@ -28,7 +28,7 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
   onSubmit,
   errors,
   saveButtonBarState,
-  backUrl
+  backUrl,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -44,7 +44,7 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
             title={intl.formatMessage({
               id: "cgsY/X",
               defaultMessage: "Create New Category",
-              description: "page header"
+              description: "page header",
             })}
           />
           <div>
@@ -60,7 +60,7 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
               helperText={intl.formatMessage({
                 id: "wQdR8M",
                 defaultMessage:
-                  "Add search engine title and description to make this category easier to find"
+                  "Add search engine title and description to make this category easier to find",
               })}
               slug={data.slug}
               slugPlaceholder={data.name}

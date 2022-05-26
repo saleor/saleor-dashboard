@@ -4,7 +4,7 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
@@ -16,7 +16,7 @@ import {
   Indicator,
   ResponsiveTable,
   Tooltip,
-  TooltipMountWrapper
+  TooltipMountWrapper,
 } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import classNames from "classnames";
@@ -48,7 +48,7 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
         title={intl.formatMessage({
           id: "nIrjSR",
           defaultMessage: "Ongoing Installations",
-          description: "section header"
+          description: "section header",
         })}
       />
       <ResponsiveTable>
@@ -62,7 +62,7 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
                 <TableCell
                   className={classNames(
                     classes.colAction,
-                    classes.colInstallAction
+                    classes.colInstallAction,
                   )}
                 >
                   <Typography variant="body2" className={classes.text}>
@@ -81,7 +81,7 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
                 <TableCell
                   className={classNames(
                     classes.colAction,
-                    classes.colInstallAction
+                    classes.colInstallAction,
                   )}
                 >
                   <Typography variant="body2" className={classes.error}>

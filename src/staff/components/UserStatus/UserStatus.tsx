@@ -19,7 +19,7 @@ const AppStatus: React.FC<AppStatusProps> = ({
   data,
   disabled,
   label,
-  onChange
+  onChange,
 }) => {
   const intl = useIntl();
 

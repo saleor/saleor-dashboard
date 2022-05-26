@@ -3,7 +3,7 @@ import {
   AppExtensionMountEnum,
   ExtensionListQuery,
   PermissionEnum,
-  useExtensionListQuery
+  useExtensionListQuery,
 } from "@saleor/graphql";
 import { RelayToFlat } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -23,11 +23,11 @@ export interface Extension {
 export const extensionMountPoints = {
   PRODUCT_LIST: [
     AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
-    AppExtensionMountEnum.PRODUCT_OVERVIEW_MORE_ACTIONS
+    AppExtensionMountEnum.PRODUCT_OVERVIEW_MORE_ACTIONS,
   ],
   ORDER_LIST: [
     AppExtensionMountEnum.ORDER_OVERVIEW_CREATE,
-    AppExtensionMountEnum.ORDER_OVERVIEW_MORE_ACTIONS
+    AppExtensionMountEnum.ORDER_OVERVIEW_MORE_ACTIONS,
   ],
   ORDER_DETAILS: [AppExtensionMountEnum.ORDER_DETAILS_MORE_ACTIONS],
   PRODUCT_DETAILS: [AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS],
@@ -37,13 +37,13 @@ export const extensionMountPoints = {
     AppExtensionMountEnum.NAVIGATION_DISCOUNTS,
     AppExtensionMountEnum.NAVIGATION_ORDERS,
     AppExtensionMountEnum.NAVIGATION_PAGES,
-    AppExtensionMountEnum.NAVIGATION_TRANSLATIONS
-  ]
+    AppExtensionMountEnum.NAVIGATION_TRANSLATIONS,
+  ],
 };
 
 const filterAndMapToTarget = (
   extensions: RelayToFlat<ExtensionListQuery["appExtensions"]>,
-  openApp: (appData: AppData) => void
+  openApp: (appData: AppData) => void,
 ): Extension[] =>
   extensions.map(
     ({ id, accessToken, permissions, url, label, mount, target, app }) => ({
@@ -55,44 +55,44 @@ const filterAndMapToTarget = (
       label,
       mount,
       open: () =>
-        openApp({ id: app.id, appToken: accessToken, src: url, label, target })
-    })
+        openApp({ id: app.id, appToken: accessToken, src: url, label, target }),
+    }),
   );
 
 export const mapToMenuItems = (extensions: Extension[]) =>
   extensions.map(({ label, id, open }) => ({
     label,
     testId: `extension-${id}`,
-    onSelect: open
+    onSelect: open,
   }));
 
 export const useExtensions = <T extends AppExtensionMountEnum>(
-  mountList: T[]
+  mountList: T[],
 ): Record<T, Extension[]> => {
   const { openApp } = useExternalApp();
   const permissions = useUserPermissions();
   const extensionsPermissions = permissions?.find(
-    perm => perm.code === PermissionEnum.MANAGE_APPS
+    perm => perm.code === PermissionEnum.MANAGE_APPS,
   );
 
   const { data } = useExtensionListQuery({
     fetchPolicy: "cache-first",
     variables: {
       filter: {
-        mount: mountList
-      }
+        mount: mountList,
+      },
     },
-    skip: !extensionsPermissions
+    skip: !extensionsPermissions,
   });
 
   const extensions = filterAndMapToTarget(
     mapEdgesToItems(data?.appExtensions) || [],
-    openApp
+    openApp,
   );
 
   const extensionsMap = mountList.reduce(
     (extensionsMap, mount) => ({ ...extensionsMap, [mount]: [] }),
-    {} as Record<T, Extension[]>
+    {} as Record<T, Extension[]>,
   );
 
   return extensions.reduce(
@@ -100,9 +100,9 @@ export const useExtensions = <T extends AppExtensionMountEnum>(
       ...prevExtensionsMap,
       [extension.mount]: [
         ...(prevExtensionsMap[extension.mount] || []),
-        extension
-      ]
+        extension,
+      ],
     }),
-    extensionsMap
+    extensionsMap,
   );
 };

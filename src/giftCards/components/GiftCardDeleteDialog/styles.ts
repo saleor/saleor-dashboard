@@ -5,8 +5,8 @@ export const useGiftCardDeleteDialogContentStyles = makeStyles(
     progressContainer: {
       width: "100%",
       display: "flex",
-      justifyContent: "center"
-    }
+      justifyContent: "center",
+    },
   }),
-  { name: "GiftCardDeleteDialogContent" }
+  { name: "GiftCardDeleteDialogContent" },
 );

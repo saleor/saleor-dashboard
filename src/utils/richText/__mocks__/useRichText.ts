@@ -2,13 +2,13 @@ import { useRichText } from "../useRichText";
 
 const useRichTextMocked = ({
   initial,
-  triggerChange
+  triggerChange,
 }): ReturnType<typeof useRichText> => ({
   editorRef: { current: null },
   defaultValue: initial ? JSON.parse(initial) : undefined,
   getValue: async () => ({ blocks: [] }),
   handleChange: triggerChange,
-  isReadyForMount: true
+  isReadyForMount: true,
 });
 
 export default useRichTextMocked;

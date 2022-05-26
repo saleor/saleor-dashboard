@@ -17,23 +17,23 @@ const messages = defineMessages({
   maxDays: {
     id: "v17Lly",
     defaultMessage: "Max Delivery Time",
-    description: "label"
+    description: "label",
   },
   minDays: {
     id: "GD/bom",
     defaultMessage: "Min Delivery Time",
-    description: "label"
+    description: "label",
   },
   name: {
     id: "FkDObY",
     defaultMessage: "Shipping rate name",
-    description: "label"
+    description: "label",
   },
   description: {
     id: "TLYeo5",
     defaultMessage: "Shipping Rate Description",
-    description: "label"
-  }
+    description: "label",
+  },
 });
 
 const useStyles = makeStyles(
@@ -44,14 +44,14 @@ const useStyles = makeStyles(
       gridRowGap: theme.spacing(1),
       gridTemplateColumns: "1fr 1fr 1fr",
       [theme.breakpoints.down("md")]: {
-        gridTemplateColumns: "1fr 1fr"
+        gridTemplateColumns: "1fr 1fr",
       },
       [theme.breakpoints.down("xs")]: {
-        gridTemplateColumns: "1fr"
-      }
-    }
+        gridTemplateColumns: "1fr",
+      },
+    },
   }),
-  { name: "ShippingRateInfo" }
+  { name: "ShippingRateInfo" },
 );
 
 export interface ShippingRateInfoProps {
@@ -76,12 +76,12 @@ const ShippingRateInfo: React.FC<ShippingRateInfoProps> = props => {
     defaultValue,
     editorRef,
     isReadyForMount,
-    handleChange
+    handleChange,
   } = useRichTextContext();
 
   const formErrors = getFormErrors(
     ["name", "description", "minDays", "maxDays"],
-    errors
+    errors,
   );
 
   return (
@@ -129,7 +129,7 @@ const ShippingRateInfo: React.FC<ShippingRateInfoProps> = props => {
             type="number"
             inputProps={{
               min: 0,
-              type: "number"
+              type: "number",
             }}
             InputProps={{ inputProps: { min: 0 } }}
             name="minDays"
@@ -145,7 +145,7 @@ const ShippingRateInfo: React.FC<ShippingRateInfoProps> = props => {
             type="number"
             inputProps={{
               min: 0,
-              type: "number"
+              type: "number",
             }}
             InputProps={{ inputProps: { min: 0 } }}
             name="maxDays"

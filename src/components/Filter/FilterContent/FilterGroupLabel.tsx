@@ -8,12 +8,12 @@ const useStyles = makeStyles(
   theme => ({
     container: {
       "&:not(:last-of-type)": {
-        borderBottom: `1px solid ${theme.palette.divider}`
+        borderBottom: `1px solid ${theme.palette.divider}`,
       },
-      padding: theme.spacing(1, 2.5)
-    }
+      padding: theme.spacing(1, 2.5),
+    },
   }),
-  { name: "FilterGroupLabel" }
+  { name: "FilterGroupLabel" },
 );
 
 export type FilterGroupLabelProps<
@@ -22,7 +22,7 @@ export type FilterGroupLabelProps<
 
 const FilterGroupLabel: React.FC<FilterGroupLabelProps> = ({
   filter,
-  onFilterPropertyChange
+  onFilterPropertyChange,
 }) => {
   const classes = useStyles({});
 
@@ -46,10 +46,10 @@ const FilterGroupLabel: React.FC<FilterGroupLabelProps> = ({
             payload: {
               name: filter.name,
               update: {
-                active: !filter.active
-              }
+                active: !filter.active,
+              },
             },
-            type: "set-property"
+            type: "set-property",
           })
         }
       />

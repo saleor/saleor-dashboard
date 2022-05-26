@@ -3,7 +3,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
@@ -33,7 +33,7 @@ const ProductVariantCreateDialog: React.FC<ProductVariantCreateDialogProps> = pr
   const classes = useStyles(props);
 
   const initialForm = {
-    option: ProductVariantCreateOptionEnum.MULTIPLE
+    option: ProductVariantCreateOptionEnum.MULTIPLE,
   };
 
   const handleSubmit = (form: ProductVariantCreateDialogForm) => {
@@ -44,13 +44,13 @@ const ProductVariantCreateDialog: React.FC<ProductVariantCreateDialogProps> = pr
     {
       title: messages.optionMultipleTitle,
       subtitle: messages.optionMultipleDescription,
-      type: ProductVariantCreateOptionEnum.MULTIPLE
+      type: ProductVariantCreateOptionEnum.MULTIPLE,
     },
     {
       title: messages.optionSingleTitle,
       subtitle: messages.optionSingleDescription,
-      type: ProductVariantCreateOptionEnum.SINGLE
-    }
+      type: ProductVariantCreateOptionEnum.SINGLE,
+    },
   ];
 
   return (
@@ -81,7 +81,7 @@ const ProductVariantCreateDialog: React.FC<ProductVariantCreateDialogProps> = pr
                       </Typography>
                     </div>
                   ),
-                  value: option.type
+                  value: option.type,
                 }))}
                 name="option"
                 value={data.option}

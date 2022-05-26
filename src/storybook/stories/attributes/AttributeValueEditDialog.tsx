@@ -4,7 +4,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import AttributeValueEditDialog, {
-  AttributeValueEditDialogProps
+  AttributeValueEditDialogProps,
 } from "../../../attributes/components/AttributeValueEditDialog";
 import Decorator from "../../Decorator";
 
@@ -15,7 +15,7 @@ const props: AttributeValueEditDialogProps = {
   errors: [],
   onClose: () => undefined,
   onSubmit: () => undefined,
-  open: true
+  open: true,
 };
 
 storiesOf("Attributes / Attribute value edit", module)
@@ -29,8 +29,8 @@ storiesOf("Attributes / Attribute value edit", module)
           __typename: "AttributeError",
           code: AttributeErrorCode.INVALID,
           field: "name",
-          message: "Attribue code invalid"
-        }
+          message: "Attribue code invalid",
+        },
       ]}
     />
   ));

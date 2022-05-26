@@ -7,135 +7,135 @@ export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
   {
     avatar: {
       __typename: "Image" as "Image",
-      url: avatarImage
+      url: avatarImage,
     },
     email: "admin@example.com",
     firstName: "Chris",
     id: "VXNlcjoyMQ==",
     isActive: true,
-    lastName: "Cooper"
+    lastName: "Cooper",
   },
   {
     avatar: {
       __typename: "Image" as "Image",
-      url: avatarImage
+      url: avatarImage,
     },
     email: "admin@example.com",
     firstName: "Jacob",
     id: "VXNlcjoyMQ==",
     isActive: false,
-    lastName: "Smith"
+    lastName: "Smith",
   },
   {
     avatar: {
       __typename: "Image" as "Image",
-      url: avatarImage
+      url: avatarImage,
     },
     email: "admin@example.com",
     firstName: "Jacob",
     id: "VXNlcjoyMQ==",
     isActive: true,
-    lastName: "Smith"
+    lastName: "Smith",
   },
   {
     avatar: {
       __typename: "Image" as "Image",
-      url: avatarImage
+      url: avatarImage,
     },
     email: "admin@example.com",
     firstName: "Jacob",
     id: "VXNlcjoyMQ==",
     isActive: true,
-    lastName: "Smith"
+    lastName: "Smith",
   },
   {
     avatar: {
       __typename: "Image" as "Image",
-      url: avatarImage
+      url: avatarImage,
     },
     email: "admin@example.com",
     firstName: "Jacob",
     id: "VXNlcjoyMQ==",
     isActive: true,
-    lastName: "Smith"
+    lastName: "Smith",
   },
   {
     avatar: {
       __typename: "Image" as "Image",
-      url: avatarImage
+      url: avatarImage,
     },
     email: "admin@example.com",
     firstName: "Jacob",
     id: "VXNlcjoyMQ==",
     isActive: true,
-    lastName: "Smith"
+    lastName: "Smith",
   },
   {
     avatar: {
       __typename: "Image" as "Image",
-      url: avatarImage
+      url: avatarImage,
     },
     email: "admin@example.com",
     firstName: "Jacob",
     id: "VXNlcjoyMQ==",
     isActive: false,
-    lastName: "Smith"
+    lastName: "Smith",
   },
   {
     avatar: {
       __typename: "Image" as "Image",
-      url: avatarImage
+      url: avatarImage,
     },
     email: "admin@example.com",
     firstName: "Jacob",
     id: "VXNlcjoyMQ==",
     isActive: true,
-    lastName: "Smith"
+    lastName: "Smith",
   },
   {
     avatar: {
       __typename: "Image" as "Image",
-      url: avatarImage
+      url: avatarImage,
     },
     email: "admin@example.com",
     firstName: "Jacob",
     id: "VXNlcjoyMQ==",
     isActive: true,
-    lastName: "Smith"
+    lastName: "Smith",
   },
   {
     avatar: {
       __typename: "Image" as "Image",
-      url: avatarImage
+      url: avatarImage,
     },
     email: "admin@example.com",
     firstName: "Jacob",
     id: "VXNlcjoyMQ==",
     isActive: false,
-    lastName: "Smith"
+    lastName: "Smith",
   },
   {
     avatar: {
       __typename: "Image" as "Image",
-      url: avatarImage
+      url: avatarImage,
     },
     email: "admin@example.com",
     firstName: "Jacob",
     id: "VXNlcjoyMQ==",
     isActive: false,
-    lastName: "Smith"
+    lastName: "Smith",
   },
   {
     avatar: {
       __typename: "Image" as "Image",
-      url: avatarImage
+      url: avatarImage,
     },
     email: "admin@example.com",
     firstName: "Jacob",
     id: "VXNlcjoyMQ==",
     isActive: true,
-    lastName: "Smith"
-  }
+    lastName: "Smith",
+  },
 ].map(staffMember => ({ __typename: "User" as "User", ...staffMember }));
 export const staffMember: StaffMemberDetailsFragment = {
   __typename: "User",
@@ -148,6 +148,6 @@ export const staffMember: StaffMemberDetailsFragment = {
   permissionGroups: [],
   userPermissions: permissions.map(p => ({
     ...p,
-    __typename: "UserPermission"
-  }))
+    __typename: "UserPermission",
+  })),
 };

@@ -4,7 +4,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
 import {
   ConfigurationItemFragment,
-  ConfigurationTypeFieldEnum
+  ConfigurationTypeFieldEnum,
 } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -21,20 +21,20 @@ interface PluginAuthorizationProps {
 const useStyles = makeStyles(
   theme => ({
     button: {
-      marginLeft: theme.spacing()
+      marginLeft: theme.spacing(),
     },
     hr: {
-      margin: theme.spacing(2, 0)
+      margin: theme.spacing(2, 0),
     },
     item: {
       alignItems: "center",
-      display: "flex"
+      display: "flex",
     },
     spacer: {
-      flex: 1
-    }
+      flex: 1,
+    },
   }),
-  { name: "PluginAuthorization" }
+  { name: "PluginAuthorization" },
 );
 
 const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
@@ -44,7 +44,7 @@ const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
   const intl = useIntl();
 
   const secretFields = fields.filter(field =>
-    isSecretField(fields, field.name)
+    isSecretField(fields, field.name),
   );
 
   return (
@@ -53,7 +53,7 @@ const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
         title={intl.formatMessage({
           id: "6aBkJm",
           defaultMessage: "Authorization",
-          description: "section header"
+          description: "section header",
         })}
       />
       <CardContent>

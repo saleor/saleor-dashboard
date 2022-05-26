@@ -3,7 +3,7 @@ import { OrderDetailsFragment } from "@saleor/graphql";
 import {
   getFulfilledFulfillemnts,
   getUnfulfilledLines,
-  getWaitingFulfillments
+  getWaitingFulfillments,
 } from "../OrderReturnPage/utils";
 
 export const hasAnyItemsReplaceable = (order?: OrderDetailsFragment) => {

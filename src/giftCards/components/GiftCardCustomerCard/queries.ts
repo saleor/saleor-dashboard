@@ -14,5 +14,5 @@ export const customerGiftCardListQuery = gql`
 `;
 
 export const CUSTOMER_GIFT_CARD_LIST_QUERY = getOperationAST(
-  customerGiftCardListQuery
+  customerGiftCardListQuery,
 ).name.value;

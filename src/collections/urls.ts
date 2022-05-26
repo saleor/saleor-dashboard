@@ -9,7 +9,7 @@ import {
   Filters,
   Pagination,
   Sort,
-  TabActionDialog
+  TabActionDialog,
 } from "../types";
 
 const collectionSectionUrl = "/collections/";
@@ -18,14 +18,14 @@ export const collectionListPath = collectionSectionUrl;
 export enum CollectionListUrlFiltersEnum {
   status = "status",
   query = "query",
-  channel = "channel"
+  channel = "channel",
 }
 export type CollectionListUrlFilters = Filters<CollectionListUrlFiltersEnum>;
 export type CollectionListUrlDialog = "remove" | TabActionDialog;
 export enum CollectionListUrlSortField {
   name = "name",
   available = "available",
-  productCount = "products"
+  productCount = "products",
 }
 export type CollectionListUrlSort = Sort<CollectionListUrlSortField>;
 export type CollectionListUrlQueryParams = ActiveTab &

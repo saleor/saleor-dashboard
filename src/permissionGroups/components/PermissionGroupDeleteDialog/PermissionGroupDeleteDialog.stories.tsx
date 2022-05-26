@@ -1,9 +1,9 @@
 import {
   PermissionGroupErrorCode,
-  PermissionGroupErrorFragment
+  PermissionGroupErrorFragment,
 } from "@saleor/graphql";
 import PermissionGroupDeleteDialog, {
-  PermissionDeleteDialogProps
+  PermissionDeleteDialogProps,
 } from "@saleor/permissionGroups/components/PermissionGroupDeleteDialog";
 import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
@@ -13,14 +13,14 @@ const permissionsError: PermissionGroupErrorFragment = {
   __typename: "PermissionGroupError",
   code: PermissionGroupErrorCode.OUT_OF_SCOPE_PERMISSION,
   field: null,
-  message: "Permission out of scope"
+  message: "Permission out of scope",
 };
 
 const requiredError: PermissionGroupErrorFragment = {
   __typename: "PermissionGroupError",
   code: PermissionGroupErrorCode.REQUIRED,
   field: null,
-  message: "Permission required"
+  message: "Permission required",
 };
 
 const props: PermissionDeleteDialogProps = {
@@ -28,7 +28,7 @@ const props: PermissionDeleteDialogProps = {
   name: "Full Access",
   onClose: () => undefined,
   onConfirm: () => undefined,
-  open: true
+  open: true,
 };
 
 storiesOf("Views / Permission Groups / Permission Group Delete", module)

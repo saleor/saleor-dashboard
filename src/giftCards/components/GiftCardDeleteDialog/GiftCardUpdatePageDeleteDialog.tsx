@@ -13,7 +13,7 @@ type GiftCardUpdatePageDeleteDialogProps = DialogProps & {
 const GiftCardUpdatePageDeleteDialog: React.FC<GiftCardUpdatePageDeleteDialogProps> = ({
   onClose,
   open,
-  onDelete
+  onDelete,
 }) => {
   const { giftCard } = useGiftCardDetails();
 
@@ -21,7 +21,7 @@ const GiftCardUpdatePageDeleteDialog: React.FC<GiftCardUpdatePageDeleteDialogPro
     id: giftCard?.id,
     onClose,
     onSuccess: onDelete,
-    refetchQueries: [GIFT_CARD_LIST_QUERY]
+    refetchQueries: [GIFT_CARD_LIST_QUERY],
   });
 
   return (

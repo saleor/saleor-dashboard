@@ -7,8 +7,8 @@ export const useStyles = makeStyles(
       width: 216,
       height: 216,
       backgroundSize: "cover",
-      backgroundPosition: "center"
-    }
+      backgroundPosition: "center",
+    },
   }),
-  { name: "AttributeSwatchField" }
+  { name: "AttributeSwatchField" },
 );

@@ -1,7 +1,7 @@
 import {
   ConfigurationItemFragment,
   ConfigurationItemInput,
-  ConfigurationTypeFieldEnum
+  ConfigurationTypeFieldEnum,
 } from "@saleor/graphql";
 
 import { getConfigurationInput } from "./PluginsDetails";
@@ -9,7 +9,7 @@ import { getConfigurationInput } from "./PluginsDetails";
 const baseConfig: Omit<ConfigurationItemFragment, "name" | "type" | "value"> = {
   __typename: "ConfigurationItem",
   helpText: "",
-  label: ""
+  label: "",
 };
 
 const config: ConfigurationItemFragment[] = [
@@ -17,45 +17,45 @@ const config: ConfigurationItemFragment[] = [
     ...baseConfig,
     name: "field-1",
     type: ConfigurationTypeFieldEnum.STRING,
-    value: "val1"
+    value: "val1",
   },
   {
     ...baseConfig,
     name: "field-2",
     type: ConfigurationTypeFieldEnum.STRING,
-    value: "val2"
+    value: "val2",
   },
   {
     ...baseConfig,
     name: "field-3",
     type: ConfigurationTypeFieldEnum.PASSWORD,
-    value: ""
+    value: "",
   },
   {
     ...baseConfig,
     name: "field-4",
     type: ConfigurationTypeFieldEnum.SECRET,
-    value: "val4"
-  }
+    value: "val4",
+  },
 ];
 
 const input: ConfigurationItemInput[] = [
   {
     name: "field-1",
-    value: "value1"
+    value: "value1",
   },
   {
     name: "field-2",
-    value: "value2"
+    value: "value2",
   },
   {
     name: "field-3",
-    value: "value3"
+    value: "value3",
   },
   {
     name: "field-4",
-    value: "value4"
-  }
+    value: "value4",
+  },
 ];
 
 test("Ensure that no secret is sent in input", () => {
@@ -66,15 +66,15 @@ test("Ensure that no secret is sent in input", () => {
     output.find(
       field =>
         config.find(configField => configField.name === field.name).type ===
-        ConfigurationTypeFieldEnum.PASSWORD
-    )
+        ConfigurationTypeFieldEnum.PASSWORD,
+    ),
   ).toBeFalsy();
   expect(
     output.find(
       field =>
         config.find(configField => configField.name === field.name).type ===
-        ConfigurationTypeFieldEnum.SECRET
-    )
+        ConfigurationTypeFieldEnum.SECRET,
+    ),
   ).toBeFalsy();
 });
 

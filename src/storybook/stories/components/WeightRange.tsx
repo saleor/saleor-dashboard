@@ -8,12 +8,12 @@ import Decorator from "../../Decorator";
 const props: WeightRangeProps = {
   from: {
     unit: "kg",
-    value: 4.2
+    value: 4.2,
   },
   to: {
     unit: "kg",
-    value: 81.9
-  }
+    value: 81.9,
+  },
 };
 
 storiesOf("Generics / Weight range", module)

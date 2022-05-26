@@ -43,7 +43,7 @@ export const ExitFormDialogContext = React.createContext<ExitFormDialogData>({
   setIsSubmitting: () => undefined,
   submit: () => Promise.resolve([]),
   leave: () => undefined,
-  setIsSubmitDisabled: () => undefined
+  setIsSubmitDisabled: () => undefined,
 });
 
 const defaultValues = {
@@ -54,7 +54,7 @@ const defaultValues = {
   submit: null,
   enableExitDialog: false,
   isSubmitting: false,
-  formsData: {}
+  formsData: {},
 };
 
 export function useExitFormDialogProvider() {
@@ -102,7 +102,7 @@ export function useExitFormDialogProvider() {
 
     formsData.current = {
       ...formsData.current,
-      [id]: updatedFormData
+      [id]: updatedFormData,
     };
   };
 
@@ -110,7 +110,7 @@ export function useExitFormDialogProvider() {
   // but doesn't cause re-renders
   const setSubmitRef = <T extends () => SubmitPromise<any[]>>(
     id: symbol,
-    submitFn: T
+    submitFn: T,
   ) => {
     setFormData(id, { submitFn });
   };
@@ -144,7 +144,7 @@ export function useExitFormDialogProvider() {
 
   const getFormsDataValuesArray = () =>
     Object.getOwnPropertySymbols(formsData.current).map(
-      key => formsData.current[key]
+      key => formsData.current[key],
     );
 
   const hasAnyFormsDirty = () =>
@@ -218,7 +218,7 @@ export function useExitFormDialogProvider() {
     setIsSubmitting(true);
 
     const errors = await Promise.all(
-      getDirtyFormsSubmitFn().map(submitFn => submitFn())
+      getDirtyFormsSubmitFn().map(submitFn => submitFn()),
     );
 
     setIsSubmitting(false);
@@ -253,7 +253,7 @@ export function useExitFormDialogProvider() {
     setIsSubmitting,
     submit: handleSubmit,
     setIsSubmitDisabled,
-    leave: handleLeave
+    leave: handleLeave,
   };
 
   return {
@@ -263,7 +263,7 @@ export function useExitFormDialogProvider() {
     handleLeave,
     handleClose,
     shouldBlockNav,
-    isSubmitDisabled
+    isSubmitDisabled,
   };
 }
 
@@ -275,7 +275,7 @@ const ExitFormDialogProvider = ({ children }) => {
     providerData,
     showDialog,
     shouldBlockNav,
-    isSubmitDisabled
+    isSubmitDisabled,
   } = useExitFormDialogProvider();
 
   useBeforeUnload(e => {

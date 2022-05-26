@@ -4,7 +4,7 @@ import {
   getRichTextAttributesFromMap,
   getRichTextDataFromAttributes,
   mergeAttributes,
-  RichTextProps
+  RichTextProps,
 } from "@saleor/attributes/utils/data";
 import {
   createAttributeChangeHandler,
@@ -13,7 +13,7 @@ import {
   createAttributeReferenceChangeHandler,
   createAttributeValueReorderHandler,
   createFetchMoreReferencesHandler,
-  createFetchReferencesHandler
+  createFetchReferencesHandler,
 } from "@saleor/attributes/utils/handlers";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
@@ -22,21 +22,21 @@ import {
   PageDetailsFragment,
   SearchPagesQuery,
   SearchPageTypesQuery,
-  SearchProductsQuery
+  SearchProductsQuery,
 } from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
-  SubmitPromise
+  SubmitPromise,
 } from "@saleor/hooks/useForm";
 import useFormset, {
   FormsetChange,
-  FormsetData
+  FormsetData,
 } from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import {
   getAttributeInputFromPage,
-  getAttributeInputFromPageType
+  getAttributeInputFromPageType,
 } from "@saleor/pages/utils/data";
 import { createPageTypeSelectHandler } from "@saleor/pages/utils/handlers";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
@@ -121,14 +121,14 @@ const getInitialFormData = (page?: PageDetailsFragment): PageFormData => ({
   seoDescription: page?.seoDescription || "",
   seoTitle: page?.seoTitle || "",
   slug: page?.slug || "",
-  title: page?.title || ""
+  title: page?.title || "",
 });
 
 function usePageForm(
   page: PageDetailsFragment,
   onSubmit: (data: PageData) => SubmitPromise,
   disabled: boolean,
-  opts: UsePageFormOpts
+  opts: UsePageFormOpts,
 ): UsePageUpdateFormOutput {
   const pageExists = page !== null;
 
@@ -136,8 +136,8 @@ function usePageForm(
     getInitialFormData(page),
     undefined,
     {
-      confirmLeave: true
-    }
+      confirmLeave: true,
+    },
   );
 
   const attributes = useFormset(
@@ -145,75 +145,75 @@ function usePageForm(
       ? getAttributeInputFromPage(page)
       : opts.selectedPageType
       ? getAttributeInputFromPageType(opts.selectedPageType)
-      : []
+      : [],
   );
 
   const {
     getters: attributeRichTextGetters,
-    getValues: getAttributeRichTextValues
+    getValues: getAttributeRichTextValues,
   } = useMultipleRichText({
     initial: getRichTextDataFromAttributes(attributes.data),
-    triggerChange
+    triggerChange,
   });
   const attributesWithNewFileValue = useFormset<null, File>([]);
 
   const { setExitDialogSubmitRef, setIsSubmitDisabled } = useExitFormDialog({
-    formId
+    formId,
   });
 
   const richText = useRichText({
     initial: pageExists ? page?.content : null,
     loading: pageExists ? !page : false,
-    triggerChange
+    triggerChange,
   });
 
   const {
     isMetadataModified,
     isPrivateMetadataModified,
-    makeChangeHandler: makeMetadataChangeHandler
+    makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
 
   const changeMetadata = makeMetadataChangeHandler(handleChange);
   const handlePageTypeSelect = createPageTypeSelectHandler(
     opts.onSelectPageType,
-    triggerChange
+    triggerChange,
   );
   const handleAttributeChange = createAttributeChangeHandler(
     attributes.change,
-    triggerChange
+    triggerChange,
   );
   const handleAttributeMultiChange = createAttributeMultiChangeHandler(
     attributes.change,
     attributes.data,
-    triggerChange
+    triggerChange,
   );
   const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(
     attributes.change,
-    triggerChange
+    triggerChange,
   );
   const handleFetchReferences = createFetchReferencesHandler(
     attributes.data,
     opts.assignReferencesAttributeId,
     opts.fetchReferencePages,
-    opts.fetchReferenceProducts
+    opts.fetchReferenceProducts,
   );
   const handleFetchMoreReferences = createFetchMoreReferencesHandler(
     attributes.data,
     opts.assignReferencesAttributeId,
     opts.fetchMoreReferencePages,
-    opts.fetchMoreReferenceProducts
+    opts.fetchMoreReferenceProducts,
   );
   const handleAttributeFileChange = createAttributeFileChangeHandler(
     attributes.change,
     attributesWithNewFileValue.data,
     attributesWithNewFileValue.add,
     attributesWithNewFileValue.change,
-    triggerChange
+    triggerChange,
   );
   const handleAttributeValueReorder = createAttributeValueReorderHandler(
     attributes.change,
     attributes.data,
-    triggerChange
+    triggerChange,
   );
 
   const data: PageData = {
@@ -222,10 +222,10 @@ function usePageForm(
       attributes.data,
       attributesWithNewFileValue.data,
       opts.referencePages,
-      opts.referenceProducts
+      opts.referenceProducts,
     ),
     content: null,
-    pageType: pageExists ? page?.pageType : opts.selectedPageType
+    pageType: pageExists ? page?.pageType : opts.selectedPageType,
   };
 
   const getSubmitData = async (): Promise<PageSubmitData> => ({
@@ -237,10 +237,10 @@ function usePageForm(
       attributes.data,
       getRichTextAttributesFromMap(
         attributes.data,
-        await getAttributeRichTextValues()
-      )
+        await getAttributeRichTextValues(),
+      ),
     ),
-    attributesWithNewFileValue: attributesWithNewFileValue.data
+    attributesWithNewFileValue: attributesWithNewFileValue.data,
   });
 
   const handleSubmit = async (data: PageData) => {
@@ -255,7 +255,7 @@ function usePageForm(
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit: handleSubmit
+    onSubmit: handleSubmit,
   });
 
   const submit = async () => handleFormSubmit(await getSubmitData());
@@ -280,12 +280,12 @@ function usePageForm(
       selectAttributeFile: handleAttributeFileChange,
       selectAttributeMulti: handleAttributeMultiChange,
       selectAttributeReference: handleAttributeReferenceChange,
-      selectPageType: handlePageTypeSelect
+      selectPageType: handlePageTypeSelect,
     },
     submit,
     isSaveDisabled,
     richText,
-    attributeRichTextGetters
+    attributeRichTextGetters,
   };
 }
 

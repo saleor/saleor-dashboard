@@ -2,12 +2,12 @@ import placeholderImg from "@assets/images/placeholder255x255.png";
 import {
   getAttributesAfterFileAttributesUpdate,
   mergeAttributeValueDeleteErrors,
-  mergeFileUploadErrors
+  mergeFileUploadErrors,
 } from "@saleor/attributes/utils/data";
 import {
   handleDeleteMultipleAttributeValues,
   handleUploadMultipleFiles,
-  prepareAttributesInput
+  prepareAttributesInput,
 } from "@saleor/attributes/utils/handlers";
 import { createVariantChannels } from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
@@ -29,7 +29,7 @@ import {
   useVariantMediaAssignMutation,
   useVariantMediaUnassignMutation,
   useVariantUpdateMutation,
-  useWarehouseListQuery
+  useWarehouseListQuery,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -55,7 +55,7 @@ import {
   productUrl,
   productVariantEditUrl,
   ProductVariantEditUrlDialog,
-  ProductVariantEditUrlQueryParams
+  ProductVariantEditUrlQueryParams,
 } from "../urls";
 import { mapFormsetStockToStockInput } from "../utils/data";
 import { createVariantReorderHandler } from "./ProductUpdate/handlers";
@@ -69,14 +69,14 @@ interface ProductUpdateProps {
 export const ProductVariant: React.FC<ProductUpdateProps> = ({
   variantId,
   productId,
-  params
+  params,
 }) => {
   const shop = useShop();
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
   const [errors, setErrors] = useState<ProductErrorWithAttributesFragment[]>(
-    []
+    [],
   );
   useEffect(() => {
     setErrors([]);
@@ -85,23 +85,23 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   const warehouses = useWarehouseListQuery({
     displayLoader: true,
     variables: {
-      first: 50
-    }
+      first: 50,
+    },
   });
 
   const { data, loading } = useProductVariantDetailsQuery({
     displayLoader: true,
     variables: {
       id: variantId,
-      firstValues: 10
-    }
+      firstValues: 10,
+    },
   });
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   const [
     updateChannels,
-    updateChannelsOpts
+    updateChannelsOpts,
   ] = useProductVariantChannelListingUpdateMutation({});
 
   const [openModal] = createDialogActionHandlers<
@@ -110,14 +110,14 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   >(
     navigate,
     params => productVariantEditUrl(productId, variantId, params),
-    params
+    params,
   );
 
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
 
   const [assignMedia, assignMediaOpts] = useVariantMediaAssignMutation({});
   const [unassignMedia, unassignMediaOpts] = useVariantMediaUnassignMutation(
-    {}
+    {},
   );
   const [deleteVariant, deleteVariantOpts] = useVariantDeleteMutation({
     onCompleted: () => {
@@ -125,11 +125,11 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         status: "success",
         text: intl.formatMessage({
           id: "BUKMzM",
-          defaultMessage: "Variant removed"
-        })
+          defaultMessage: "Variant removed",
+        }),
       });
       navigate(productUrl(productId));
-    }
+    },
   });
 
   const [updateVariant, updateVariantOpts] = useVariantUpdateMutation({
@@ -137,25 +137,25 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       if (data.productVariantUpdate.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
+          text: intl.formatMessage(commonMessages.savedChanges),
         });
       }
       setErrors(data.productVariantUpdate.errors);
-    }
+    },
   });
 
   const [
     deleteAttributeValue,
-    deleteAttributeValueOpts
+    deleteAttributeValueOpts,
   ] = useAttributeValueDeleteMutation({});
 
   const handleSubmitChannels = async (
     data: ProductVariantUpdateSubmitData,
-    variant: ProductVariantFragment
+    variant: ProductVariantFragment,
   ) => {
     const channelsHaveChanged = data.channelListings.some(channel => {
       const variantChannel = variant.channelListings.find(
-        variantChannel => variantChannel.channel.id === channel.id
+        variantChannel => variantChannel.channel.id === channel.id,
       );
 
       const priceHasChanged =
@@ -183,10 +183,10 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
               channelId: listing.id,
               costPrice: listing.value.costPrice || null,
               price: listing.value.price,
-              preorderThreshold: listing.value.preorderThreshold
-            }))
-          }
-        })
+              preorderThreshold: listing.value.preorderThreshold,
+            })),
+          },
+        }),
       );
     }
 
@@ -198,21 +198,21 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
 
   const [
     deactivatePreorder,
-    deactivatePreoderOpts
+    deactivatePreoderOpts,
   ] = useProductVariantPreorderDeactivateMutation({});
   const handleDeactivateVariantPreorder = (id: string) =>
     deactivatePreorder({ variables: { id } });
 
   const [
     reorderProductVariants,
-    reorderProductVariantsOpts
+    reorderProductVariantsOpts,
   ] = useProductVariantReorderMutation({});
 
   const onSetDefaultVariant = useOnSetDefaultVariant(productId, variant);
 
   const handleVariantReorder = createVariantReorderHandler(
     variant?.product,
-    variables => reorderProductVariants({ variables })
+    variables => reorderProductVariants({ variables }),
   );
 
   const disableFormSave =
@@ -232,15 +232,15 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         unassignMedia({
           variables: {
             mediaId: id,
-            variantId: variant.id
-          }
+            variantId: variant.id,
+          },
         });
       } else {
         assignMedia({
           variables: {
             mediaId: id,
-            variantId: variant.id
-          }
+            variantId: variant.id,
+          },
         });
       }
     }
@@ -249,18 +249,18 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   const handleUpdate = async (data: ProductVariantUpdateSubmitData) => {
     const uploadFilesResult = await handleUploadMultipleFiles(
       data.attributesWithNewFileValue,
-      variables => uploadFile({ variables })
+      variables => uploadFile({ variables }),
     );
 
     const deleteAttributeValuesResult = await handleDeleteMultipleAttributeValues(
       data.attributesWithNewFileValue,
       variant?.nonSelectionAttributes,
-      variables => deleteAttributeValue({ variables })
+      variables => deleteAttributeValue({ variables }),
     );
 
     const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
       data.attributesWithNewFileValue,
-      uploadFilesResult
+      uploadFilesResult,
     );
 
     const result = await updateVariant({
@@ -269,7 +269,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         attributes: prepareAttributesInput({
           attributes: data.attributes,
           prevAttributes: getAttributeInputFromVariant(variant),
-          updatedFileAttributes
+          updatedFileAttributes,
         }),
         id: variantId,
         removeStocks: data.removeStocks,
@@ -282,12 +282,12 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
               globalThreshold: data.globalThreshold
                 ? parseInt(data.globalThreshold, 10)
                 : null,
-              endDate: data?.preorderEndDateTime || null
+              endDate: data?.preorderEndDateTime || null,
             }
           : null,
         weight: weight(data.weight),
-        firstValues: 10
-      }
+        firstValues: 10,
+      },
     });
     await handleSubmitChannels(data, variant);
 
@@ -297,60 +297,60 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       ...result.data?.productVariantStocksCreate.errors,
       ...result.data?.productVariantStocksDelete.errors,
       ...result.data?.productVariantStocksUpdate.errors,
-      ...result.data?.productVariantUpdate.errors
+      ...result.data?.productVariantUpdate.errors,
     ];
   };
   const handleSubmit = createMetadataUpdateHandler(
     data?.productVariant,
     handleUpdate,
     variables => updateMetadata({ variables }),
-    variables => updatePrivateMetadata({ variables })
+    variables => updatePrivateMetadata({ variables }),
   );
 
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
       productVariantEditUrl(productId, variantId, {
         action: "assign-attribute-value",
-        id: attribute.id
-      })
+        id: attribute.id,
+      }),
     );
 
   const {
     loadMore: loadMorePages,
     search: searchPages,
-    result: searchPagesOpts
+    result: searchPagesOpts,
   } = usePageSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
   const {
     loadMore: loadMoreProducts,
     search: searchProducts,
-    result: searchProductsOpts
+    result: searchProductsOpts,
   } = useProductSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
     result: searchAttributeValuesOpts,
-    reset: searchAttributeReset
+    reset: searchAttributeReset,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
 
   const fetchMoreReferencePages = {
     hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchPagesOpts.loading,
-    onFetchMore: loadMorePages
+    onFetchMore: loadMorePages,
   };
   const fetchMoreReferenceProducts = {
     hasMore: searchProductsOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchProductsOpts.loading,
-    onFetchMore: loadMoreProducts
+    onFetchMore: loadMoreProducts,
   };
   const fetchMoreAttributeValues = {
     hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo
       ?.hasNextPage,
     loading: !!searchAttributeValuesOpts.loading,
-    onFetchMore: loadMoreAttributeValues
+    onFetchMore: loadMoreAttributeValues,
   };
 
   const attributeValues =
@@ -418,8 +418,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         onConfirm={() =>
           deleteVariant({
             variables: {
-              id: variantId
-            }
+              id: variantId,
+            },
           })
         }
         open={params.action === "remove"}

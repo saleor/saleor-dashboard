@@ -6,7 +6,7 @@ import {
   Paper,
   Popper,
   TextField,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { TextFieldProps } from "@material-ui/core/TextField";
 import DropdownIcon from "@material-ui/icons/ArrowDropDown";
@@ -31,13 +31,13 @@ const useStyles = makeStyles(
     adornment: {
       alignItems: "center",
       cursor: "pointer",
-      display: "flex"
+      display: "flex",
     },
     menu: {
-      zIndex: 10
-    }
+      zIndex: 10,
+    },
   },
-  { name: "TextFieldWithChoice" }
+  { name: "TextFieldWithChoice" },
 );
 
 const TextFieldWithChoice: React.FC<TextFieldWithChoiceProps> = props => {
@@ -56,14 +56,14 @@ const TextFieldWithChoice: React.FC<TextFieldWithChoiceProps> = props => {
           <MenuToggle ariaOwns="user-menu">
             {({
               open: menuOpen,
-              actions: { open: openMenu, close: closeMenu }
+              actions: { open: openMenu, close: closeMenu },
             }) => {
               const handleSelect = value => {
                 onChange({
                   target: {
                     name: ChoiceProps.name,
-                    value
-                  }
+                    value,
+                  },
                 } as any);
                 closeMenu();
               };
@@ -95,7 +95,7 @@ const TextFieldWithChoice: React.FC<TextFieldWithChoiceProps> = props => {
                           transformOrigin:
                             placement === "bottom"
                               ? "right top"
-                              : "right bottom"
+                              : "right bottom",
                         }}
                       >
                         <Paper>
@@ -122,7 +122,7 @@ const TextFieldWithChoice: React.FC<TextFieldWithChoiceProps> = props => {
               );
             }}
           </MenuToggle>
-        )
+        ),
       }}
     />
   );

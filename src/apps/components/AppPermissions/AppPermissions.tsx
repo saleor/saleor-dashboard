@@ -3,7 +3,7 @@ import {
   IconButton,
   makeStyles,
   PermissionsIcon,
-  Tooltip
+  Tooltip,
 } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -12,10 +12,10 @@ const useStyles = makeStyles(
   () => ({
     list: {
       margin: 0,
-      paddingLeft: "16px"
-    }
+      paddingLeft: "16px",
+    },
   }),
-  { name: "AppPermissions" }
+  { name: "AppPermissions" },
 );
 
 interface AppPermissionsProps {

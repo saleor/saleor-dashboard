@@ -7,7 +7,7 @@ import useNavigator from "./useNavigator";
 export function usePaginationReset<T extends Pagination>(
   urlFunc: (params: T) => string,
   params: T,
-  rowNumber: number
+  rowNumber: number,
 ) {
   const navigate = useNavigator();
 
@@ -16,21 +16,21 @@ export function usePaginationReset<T extends Pagination>(
       navigate(
         urlFunc({
           ...params,
-          ...DEFAULT_INITIAL_PAGINATION_DATA
+          ...DEFAULT_INITIAL_PAGINATION_DATA,
         }),
-        { replace: true }
+        { replace: true },
       ),
-    [rowNumber]
+    [rowNumber],
   );
 
   useEffect(
     () =>
       navigate(
         urlFunc({
-          ...params
+          ...params,
         }),
-        { replace: true }
+        { replace: true },
       ),
-    [params.before, params.after]
+    [params.before, params.after],
   );
 }

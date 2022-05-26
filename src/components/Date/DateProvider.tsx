@@ -12,13 +12,13 @@ export class DateProvider extends React.Component<{}, DateProviderState> {
   intervalId: number;
 
   state = {
-    date: Date.now()
+    date: Date.now(),
   };
 
   componentDidMount() {
     this.intervalId = window.setInterval(
       () => this.setState({ date: Date.now() }),
-      10000
+      10000,
     );
   }
 

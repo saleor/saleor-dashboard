@@ -10,7 +10,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import PermissionGroupCreatePage, {
-  PermissionGroupCreateFormData
+  PermissionGroupCreateFormData,
 } from "../../components/PermissionGroupCreatePage";
 import { permissionGroupDetailsUrl } from "../../urls";
 
@@ -23,7 +23,7 @@ const PermissionGroupCreateView: React.FC = () => {
 
   const [
     createPermissionGroup,
-    createPermissionGroupResult
+    createPermissionGroupResult,
   ] = usePermissionGroupCreateMutation({
     onCompleted: data => {
       if (data?.permissionGroupCreate?.errors.length === 0) {
@@ -31,14 +31,14 @@ const PermissionGroupCreateView: React.FC = () => {
           status: "success",
           text: intl.formatMessage({
             id: "eUjFjW",
-            defaultMessage: "Permission group created"
-          })
+            defaultMessage: "Permission group created",
+          }),
         });
         navigate(
-          permissionGroupDetailsUrl(data.permissionGroupCreate.group.id)
+          permissionGroupDetailsUrl(data.permissionGroupCreate.group.id),
         );
       }
-    }
+    },
   });
 
   const errors =
@@ -53,10 +53,10 @@ const PermissionGroupCreateView: React.FC = () => {
               ? shop.permissions.map(perm => perm.code)
               : formData.permissions,
             addUsers: [],
-            name: formData.name
-          }
-        }
-      })
+            name: formData.name,
+          },
+        },
+      }),
     );
 
   const userPermissions = user?.user.userPermissions.map(p => p.code) || [];
@@ -67,8 +67,8 @@ const PermissionGroupCreateView: React.FC = () => {
         ({
           ...p,
           disabled: !userPermissions.includes(p.code),
-          lastSource: false
-        } as PermissionData)
+          lastSource: false,
+        } as PermissionData),
     ) || [];
 
   return (
@@ -77,7 +77,7 @@ const PermissionGroupCreateView: React.FC = () => {
         title={intl.formatMessage({
           id: "Irflxf",
           defaultMessage: "Create category",
-          description: "window title"
+          description: "window title",
         })}
       />
       <PermissionGroupCreatePage

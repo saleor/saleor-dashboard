@@ -3,7 +3,7 @@ import usePaginator, { PaginatorContext } from "@saleor/hooks/usePaginator";
 import TranslationsEntitiesList from "@saleor/translations/components/TranslationsEntitiesList";
 import {
   languageEntityUrl,
-  TranslatableEntities
+  TranslatableEntities,
 } from "@saleor/translations/urls";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
@@ -13,17 +13,17 @@ import { sumCompleted } from "./utils";
 
 const TranslationsCategoryList: React.FC<TranslationsEntityListProps> = ({
   params,
-  variables
+  variables,
 }) => {
   const { data, loading } = useCategoryTranslationsQuery({
     displayLoader: true,
-    variables
+    variables,
   });
 
   const paginationValues = usePaginator({
     pageInfo: data?.translations?.pageInfo,
     paginationState: variables,
-    queryString: params
+    queryString: params,
   });
 
   return (
@@ -38,19 +38,19 @@ const TranslationsCategoryList: React.FC<TranslationsEntityListProps> = ({
                   node.translation?.description,
                   node.translation?.name,
                   node.translation?.seoDescription,
-                  node.translation?.seoTitle
+                  node.translation?.seoTitle,
                 ]),
-                max: 4
+                max: 4,
               },
               id: node?.category?.id,
-              name: node?.category?.name
-            }
+              name: node?.category?.name,
+            },
         )}
         getRowHref={id =>
           languageEntityUrl(
             variables.language,
             TranslatableEntities.categories,
-            id
+            id,
           )
         }
       />

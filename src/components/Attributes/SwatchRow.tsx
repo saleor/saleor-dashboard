@@ -3,7 +3,7 @@ import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import BasicAttributeRow from "@saleor/components/Attributes/BasicAttributeRow";
 import {
   getErrorMessage,
-  getSingleDisplayValue
+  getSingleDisplayValue,
 } from "@saleor/components/Attributes/utils";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
 import { getBySlug } from "@saleor/products/components/ProductVariantCreatorPage/utils";
@@ -31,7 +31,7 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
   attribute,
   disabled,
   error,
-  onChange
+  onChange,
 }) => {
   const classes = useStyles();
   const intl = useIntl();
@@ -57,7 +57,7 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
               {name}
             </>
           ),
-          value: slug
+          value: slug,
         }))}
         disabled={disabled}
         displayValue={getSingleDisplayValue(attribute, attributeValues)}
@@ -81,7 +81,7 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
                 }
               />
             </InputAdornment>
-          )
+          ),
         }}
         {...fetchMoreAttributeValues}
       />

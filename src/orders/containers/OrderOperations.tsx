@@ -52,7 +52,7 @@ import {
   useOrderMarkAsPaidMutation,
   useOrderShippingMethodUpdateMutation,
   useOrderUpdateMutation,
-  useOrderVoidMutation
+  useOrderVoidMutation,
 } from "@saleor/graphql";
 import React from "react";
 
@@ -138,7 +138,7 @@ interface OrderOperationsProps {
   onOrderFulfillmentApprove: (data: OrderFulfillmentApproveMutation) => void;
   onOrderFulfillmentCancel: (data: OrderFulfillmentCancelMutation) => void;
   onOrderFulfillmentUpdate: (
-    data: OrderFulfillmentUpdateTrackingMutation
+    data: OrderFulfillmentUpdateTrackingMutation,
   ) => void;
   onOrderCancel: (data: OrderCancelMutation) => void;
   onOrderVoid: (data: OrderVoidMutation) => void;
@@ -176,61 +176,61 @@ const OrderOperations: React.FC<OrderOperationsProps> = ({
   onOrderFulfillmentUpdate,
   onOrderMarkAsPaid,
   onInvoiceRequest,
-  onInvoiceSend
+  onInvoiceSend,
 }) => {
   const orderVoid = useOrderVoidMutation({
-    onCompleted: onOrderVoid
+    onCompleted: onOrderVoid,
   });
   const orderCancel = useOrderCancelMutation({
-    onCompleted: onOrderCancel
+    onCompleted: onOrderCancel,
   });
   const paymentCapture = useOrderCaptureMutation({
-    onCompleted: onPaymentCapture
+    onCompleted: onPaymentCapture,
   });
   const addNote = useOrderAddNoteMutation({
-    onCompleted: onNoteAdd
+    onCompleted: onNoteAdd,
   });
   const update = useOrderUpdateMutation({
-    onCompleted: onUpdate
+    onCompleted: onUpdate,
   });
   const updateDraft = useOrderDraftUpdateMutation({
-    onCompleted: onDraftUpdate
+    onCompleted: onDraftUpdate,
   });
   const updateShippingMethod = useOrderShippingMethodUpdateMutation({
-    onCompleted: onShippingMethodUpdate
+    onCompleted: onShippingMethodUpdate,
   });
   const deleteOrderLine = useOrderLineDeleteMutation({
-    onCompleted: onOrderLineDelete
+    onCompleted: onOrderLineDelete,
   });
   const addOrderLine = useOrderLinesAddMutation({
-    onCompleted: onOrderLinesAdd
+    onCompleted: onOrderLinesAdd,
   });
   const updateOrderLine = useOrderLineUpdateMutation({
-    onCompleted: onOrderLineUpdate
+    onCompleted: onOrderLineUpdate,
   });
   const approveFulfillment = useOrderFulfillmentApproveMutation({
-    onCompleted: onOrderFulfillmentApprove
+    onCompleted: onOrderFulfillmentApprove,
   });
   const cancelFulfillment = useOrderFulfillmentCancelMutation({
-    onCompleted: onOrderFulfillmentCancel
+    onCompleted: onOrderFulfillmentCancel,
   });
   const updateTrackingNumber = useOrderFulfillmentUpdateTrackingMutation({
-    onCompleted: onOrderFulfillmentUpdate
+    onCompleted: onOrderFulfillmentUpdate,
   });
   const finalizeDraft = useOrderDraftFinalizeMutation({
-    onCompleted: onDraftFinalize
+    onCompleted: onDraftFinalize,
   });
   const cancelDraft = useOrderDraftCancelMutation({
-    onCompleted: onDraftCancel
+    onCompleted: onDraftCancel,
   });
   const markAsPaid = useOrderMarkAsPaidMutation({
-    onCompleted: onOrderMarkAsPaid
+    onCompleted: onOrderMarkAsPaid,
   });
   const invoiceRequest = useInvoiceRequestMutation({
-    onCompleted: onInvoiceRequest
+    onCompleted: onInvoiceRequest,
   });
   const invoiceEmailSend = useInvoiceEmailSendMutation({
-    onCompleted: onInvoiceSend
+    onCompleted: onInvoiceSend,
   });
 
   return (
@@ -244,7 +244,7 @@ const OrderOperations: React.FC<OrderOperationsProps> = ({
         orderFulfillmentApprove: getMutationProviderData(...approveFulfillment),
         orderFulfillmentCancel: getMutationProviderData(...cancelFulfillment),
         orderFulfillmentUpdateTracking: getMutationProviderData(
-          ...updateTrackingNumber
+          ...updateTrackingNumber,
         ),
         orderInvoiceRequest: getMutationProviderData(...invoiceRequest),
         orderInvoiceSend: getMutationProviderData(...invoiceEmailSend),
@@ -254,10 +254,10 @@ const OrderOperations: React.FC<OrderOperationsProps> = ({
         orderPaymentCapture: getMutationProviderData(...paymentCapture),
         orderPaymentMarkAsPaid: getMutationProviderData(...markAsPaid),
         orderShippingMethodUpdate: getMutationProviderData(
-          ...updateShippingMethod
+          ...updateShippingMethod,
         ),
         orderUpdate: getMutationProviderData(...update),
-        orderVoid: getMutationProviderData(...orderVoid)
+        orderVoid: getMutationProviderData(...orderVoid),
       })}
     </>
   );

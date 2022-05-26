@@ -2,7 +2,7 @@ import { GiftCardUrlSortField } from "./types";
 
 export function canBeSorted(
   sort: GiftCardUrlSortField,
-  isCurrencySelected: boolean
+  isCurrencySelected: boolean,
 ) {
   switch (sort) {
     case GiftCardUrlSortField.balance:

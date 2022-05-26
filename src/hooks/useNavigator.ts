@@ -8,19 +8,19 @@ export type UseNavigatorResult = (
     replace?: boolean;
     preserveQs?: boolean;
     resetScroll?: boolean;
-  }
+  },
 ) => void;
 function useNavigator(): UseNavigatorResult {
   const {
     location: { search },
-    history
+    history,
   } = useRouter();
 
   const { shouldBlockNavigation } = useContext(ExitFormDialogContext);
 
   return (
     url: string,
-    { replace = false, preserveQs = false, resetScroll = false } = {}
+    { replace = false, preserveQs = false, resetScroll = false } = {},
   ) => {
     if (shouldBlockNavigation()) {
       return;

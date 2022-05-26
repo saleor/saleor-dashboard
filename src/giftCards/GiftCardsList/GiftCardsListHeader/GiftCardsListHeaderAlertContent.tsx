@@ -15,12 +15,12 @@ interface GiftCardsListHeaderAlertContentProps {
 
 const GiftCardsListHeaderAlertContent: React.FC<GiftCardsListHeaderAlertContentProps> = ({
   giftCardProductTypesExist,
-  giftCardProductsExist
+  giftCardProductsExist,
 }) => {
   const classes = useStyles({});
 
   const giftCardProductTypeUrl = productTypeAddUrl({
-    kind: ProductTypeKindEnum.GIFT_CARD
+    kind: ProductTypeKindEnum.GIFT_CARD,
   });
 
   const giftCardCreateGiftCardProductUrl = productAddUrl();
@@ -34,7 +34,7 @@ const GiftCardsListHeaderAlertContent: React.FC<GiftCardsListHeaderAlertContentP
             <Link href={giftCardProductTypeUrl} className={classes.alertLink}>
               <FormattedMessage {...messages.createGiftCardProductType} />
             </Link>
-          )
+          ),
         }}
       />
     );
@@ -52,7 +52,7 @@ const GiftCardsListHeaderAlertContent: React.FC<GiftCardsListHeaderAlertContentP
             >
               <FormattedMessage {...messages.createGiftCardProduct} />
             </Link>
-          )
+          ),
         }}
       />
     );

@@ -11,7 +11,7 @@ import {
   FilterPageProps,
   PageListProps,
   SortPage,
-  TabPageProps
+  TabPageProps,
 } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -20,7 +20,7 @@ import PluginsList from "../PluginsList/PluginsList";
 import {
   createFilterStructure,
   PluginFilterKeys,
-  PluginListFilterOpts
+  PluginListFilterOpts,
 } from "./filters";
 import { pluginsFilterErrorMessages } from "./messages";
 
@@ -70,12 +70,12 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
           allTabLabel={intl.formatMessage({
             id: "aOelhW",
             defaultMessage: "All Plugins",
-            description: "tab name"
+            description: "tab name",
           })}
           filterStructure={filterStructure}
           searchPlaceholder={intl.formatMessage({
             id: "BtErCZ",
-            defaultMessage: "Search Plugins..."
+            defaultMessage: "Search Plugins...",
           })}
         />
         <PluginsList {...listProps} />

@@ -19,7 +19,7 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
   data,
   disabled,
   errors,
-  onChange
+  onChange,
 }) => {
   const intl = useIntl();
 
@@ -38,15 +38,15 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
           helperText={getWarehouseErrorMessage(formErrors.name, intl)}
           label={intl.formatMessage({
             id: "llBnr+",
-            defaultMessage: "Warehouse Name"
+            defaultMessage: "Warehouse Name",
           })}
           name={"name" as keyof typeof data}
           value={data.name}
           onChange={onChange}
           InputProps={{
             inputProps: {
-              autoComplete: "none"
-            }
+              autoComplete: "none",
+            },
           }}
         />
       </CardContent>

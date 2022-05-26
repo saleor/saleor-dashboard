@@ -10,11 +10,11 @@ export interface DisplayColumnProps<TColumn extends string = string> {
 const DisplayColumn: React.FC<DisplayColumnProps> = ({
   displayColumns,
   children,
-  column
+  column,
 }) => {
   const display = React.useMemo(
     () => isSelected(column, displayColumns, (a, b) => a === b),
-    [column, displayColumns]
+    [column, displayColumns],
   );
 
   return <>{display && children}</>;

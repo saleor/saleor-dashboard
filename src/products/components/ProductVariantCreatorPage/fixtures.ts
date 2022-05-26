@@ -6,13 +6,13 @@ import {
   createInitialForm,
   Price,
   ProductVariantCreateFormData,
-  Stock
+  Stock,
 } from "./form";
 
 export const channels: ChannelPriceData[] = [
   { currency: "USD", id: "channel-1", name: "Channel1", price: "1" },
   { currency: "USD", id: "channel-2", name: "Channel2", price: "2" },
-  { currency: "USD", id: "channel-3", name: "Channel3", price: "3" }
+  { currency: "USD", id: "channel-3", name: "Channel3", price: "3" },
 ];
 
 export const attributes = [
@@ -34,9 +34,9 @@ export const attributes = [
           boolean: null,
           date: null,
           dateTime: null,
-          value: null
-        }
-      }))
+          value: null,
+        },
+      })),
   },
   {
     id: "attr-2",
@@ -56,9 +56,9 @@ export const attributes = [
           boolean: null,
           date: null,
           dateTime: null,
-          value: null
-        }
-      }))
+          value: null,
+        },
+      })),
   },
   {
     id: "attr-3",
@@ -78,9 +78,9 @@ export const attributes = [
           boolean: null,
           date: null,
           dateTime: null,
-          value: null
-        }
-      }))
+          value: null,
+        },
+      })),
   },
   {
     id: "attr-4",
@@ -100,33 +100,33 @@ export const attributes = [
           boolean: null,
           date: null,
           dateTime: null,
-          value: null
-        }
-      }))
-  }
+          value: null,
+        },
+      })),
+  },
 ];
 
 export const warehouses: WarehouseFragment[] = [
   {
     __typename: "Warehouse",
     id: "wh-1",
-    name: "Warehouse 1"
+    name: "Warehouse 1",
   },
   {
     __typename: "Warehouse",
     id: "wh-2",
-    name: "Warehouse 2"
+    name: "Warehouse 2",
   },
   {
     __typename: "Warehouse",
     id: "wh-3",
-    name: "Warehouse 3"
+    name: "Warehouse 3",
   },
   {
     __typename: "Warehouse",
     id: "wh-4",
-    name: "Warehouse 4"
-  }
+    name: "Warehouse 4",
+  },
 ];
 
 export const secondStep: ProductVariantCreateFormData = {
@@ -135,19 +135,19 @@ export const secondStep: ProductVariantCreateFormData = {
     {
       id: attributes[0].id,
       valueRequired: attributes[0].valueRequired,
-      values: []
+      values: [],
     },
     {
       id: attributes[1].id,
       valueRequired: attributes[1].valueRequired,
-      values: []
+      values: [],
     },
     {
       id: attributes[3].id,
       valueRequired: attributes[3].valueRequired,
-      values: []
-    }
-  ]
+      values: [],
+    },
+  ],
 };
 
 export const thirdStep: ProductVariantCreateFormData = {
@@ -156,24 +156,24 @@ export const thirdStep: ProductVariantCreateFormData = {
     {
       id: attributes[0].id,
       valueRequired: attributes[0].valueRequired,
-      values: [0, 6].map(index => attributes[0].values[index])
+      values: [0, 6].map(index => attributes[0].values[index]),
     },
     {
       id: attributes[1].id,
       valueRequired: attributes[1].valueRequired,
-      values: [1, 3].map(index => attributes[1].values[index])
+      values: [1, 3].map(index => attributes[1].values[index]),
     },
     {
       id: attributes[3].id,
       valueRequired: attributes[3].valueRequired,
-      values: [0, 4].map(index => attributes[3].values[index])
-    }
+      values: [0, 4].map(index => attributes[3].values[index]),
+    },
   ],
   stock: {
     ...secondStep.stock,
-    value: warehouses.map(() => 0)
+    value: warehouses.map(() => 0),
   },
-  warehouses: warehouses.map(warehouse => warehouse.id)
+  warehouses: warehouses.map(warehouse => warehouse.id),
 };
 
 const price: Price = {
@@ -181,7 +181,7 @@ const price: Price = {
   channels: [
     { channelId: channels[0].id, price: "0" },
     { channelId: channels[1].id, price: "2" },
-    { channelId: channels[2].id, price: "2" }
+    { channelId: channels[2].id, price: "2" },
   ],
   mode: "attribute",
   values: [
@@ -190,18 +190,18 @@ const price: Price = {
       value: [
         { channelId: channels[0].id, price: "0" },
         { channelId: channels[1].id, price: "2" },
-        { channelId: channels[2].id, price: "2" }
-      ]
+        { channelId: channels[2].id, price: "2" },
+      ],
     },
     {
       slug: thirdStep.attributes[1].values[1].slug,
       value: [
         { channelId: channels[0].id, price: "0" },
         { channelId: channels[1].id, price: "2" },
-        { channelId: channels[2].id, price: "2" }
-      ]
-    }
-  ]
+        { channelId: channels[2].id, price: "2" },
+      ],
+    },
+  ],
 };
 const stock: Stock = {
   attribute: thirdStep.attributes[2].id,
@@ -210,13 +210,13 @@ const stock: Stock = {
   values: [
     {
       slug: thirdStep.attributes[2].values[0].slug,
-      value: [50, 20, 45, 75]
+      value: [50, 20, 45, 75],
     },
     {
       slug: thirdStep.attributes[2].values[1].slug,
-      value: [80, 50, 85, 105]
-    }
-  ]
+      value: [80, 50, 85, 105],
+    },
+  ],
 };
 export const fourthStep: ProductVariantCreateFormData = {
   ...thirdStep,
@@ -225,6 +225,6 @@ export const fourthStep: ProductVariantCreateFormData = {
   variants: createVariants({
     ...thirdStep,
     price,
-    stock
-  })
+    stock,
+  }),
 };

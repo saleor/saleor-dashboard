@@ -2,11 +2,11 @@ import { OutputData } from "@editorjs/editorjs";
 import {
   extensionMountPoints,
   mapToMenuItems,
-  useExtensions
+  useExtensions,
 } from "@saleor/apps/useExtensions";
 import {
   getAttributeValuesFromReferences,
-  mergeAttributeValues
+  mergeAttributeValues,
 } from "@saleor/attributes/utils/data";
 import { ChannelData } from "@saleor/channels/utils";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
@@ -34,7 +34,7 @@ import {
   SearchPagesQuery,
   SearchProductsQuery,
   TaxTypeFragment,
-  WarehouseFragment
+  WarehouseFragment,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { FormsetData } from "@saleor/hooks/useFormset";
@@ -52,7 +52,7 @@ import {
   FetchMoreProps,
   ListActions,
   RelayToFlat,
-  ReorderAction
+  ReorderAction,
 } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -68,7 +68,7 @@ import ProductTaxes from "../ProductTaxes";
 import ProductVariants from "../ProductVariants";
 import ProductUpdateForm, {
   ProductUpdateData,
-  ProductUpdateHandlers
+  ProductUpdateHandlers,
 } from "./form";
 
 export interface ProductUpdatePageProps extends ListActions, ChannelProps {
@@ -200,25 +200,25 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onCloseDialog,
   channelsWithVariantsData,
   onChannelsChange,
-  onAttributeSelectBlur
+  onAttributeSelectBlur,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
 
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
-    product?.category?.name || ""
+    product?.category?.name || "",
   );
 
   const [mediaUrlModalStatus, setMediaUrlModalStatus] = useStateFromProps(
-    isMediaUrlModalVisible || false
+    isMediaUrlModalVisible || false,
   );
 
   const [selectedCollections, setSelectedCollections] = useStateFromProps(
-    getChoices(maybe(() => product.collections, []))
+    getChoices(maybe(() => product.collections, [])),
   );
 
   const [selectedTaxType, setSelectedTaxType] = useStateFromProps(
-    product?.taxType.description
+    product?.taxType.description,
   );
 
   const categories = getChoices(categoryChoiceList);
@@ -227,7 +227,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   const taxTypeChoices =
     taxTypes?.map(taxType => ({
       label: taxType.description,
-      value: taxType.taxCode
+      value: taxType.taxCode,
     })) || [];
 
   const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
@@ -235,21 +235,21 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   const handleAssignReferenceAttribute = (
     attributeValues: string[],
     data: ProductUpdateData,
-    handlers: ProductUpdateHandlers
+    handlers: ProductUpdateHandlers,
   ) => {
     handlers.selectAttributeReference(
       assignReferencesAttributeId,
       mergeAttributeValues(
         assignReferencesAttributeId,
         attributeValues,
-        data.attributes
-      )
+        data.attributes,
+      ),
     );
     onCloseDialog();
   };
 
   const { PRODUCT_DETAILS_MORE_ACTIONS } = useExtensions(
-    extensionMountPoints.PRODUCT_DETAILS
+    extensionMountPoints.PRODUCT_DETAILS,
   );
 
   const extensionMenuItems = mapToMenuItems(PRODUCT_DETAILS_MORE_ACTIONS);

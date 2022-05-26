@@ -3,7 +3,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  TextField
+  TextField,
 } from "@material-ui/core";
 import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -19,7 +19,7 @@ export interface SaveFilterTabDialogFormData {
 }
 
 const initialForm: SaveFilterTabDialogFormData = {
-  name: ""
+  name: "",
 };
 
 export interface SaveFilterTabDialogProps {
@@ -33,7 +33,7 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
   confirmButtonState,
   onClose,
   onSubmit,
-  open
+  open,
 }) => {
   const intl = useIntl();
   const [errors, setErrors] = React.useState(false);
@@ -65,7 +65,7 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
                 label={intl.formatMessage({
                   id: "QcIFCs",
                   defaultMessage: "Search Name",
-                  description: "save search tab"
+                  description: "save search tab",
                 })}
                 name={"name" as keyof SaveFilterTabDialogFormData}
                 value={data.name}

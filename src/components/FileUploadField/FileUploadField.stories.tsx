@@ -11,11 +11,11 @@ const props: FileUploadFieldProps = {
   file: { label: undefined, value: undefined },
   inputProps: {
     name: "country",
-    placeholder: "Select country"
+    placeholder: "Select country",
   },
   loading: false,
   onFileDelete: () => undefined,
-  onFileUpload: () => undefined
+  onFileUpload: () => undefined,
 };
 
 const InteractiveStory: React.FC = () => {
@@ -27,7 +27,7 @@ const InteractiveStory: React.FC = () => {
       loading={false}
       file={{
         label: file?.name,
-        value: file?.name
+        value: file?.name,
       }}
       onFileUpload={file => setFile(file)}
       onFileDelete={() => setFile(null)}
@@ -44,7 +44,7 @@ storiesOf("Generics / File upload field", module)
       {...props}
       file={{
         label: "some_file.png",
-        value: "some_file.png"
+        value: "some_file.png",
       }}
     />
   ))
@@ -54,7 +54,7 @@ storiesOf("Generics / File upload field", module)
       file={{
         file: fixtures.UPLOADED_FILE,
         label: "some_file_with_link.png",
-        value: "some_file_with_link.png"
+        value: "some_file_with_link.png",
       }}
     />
   ))

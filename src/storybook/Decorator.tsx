@@ -18,7 +18,7 @@ export const Decorator = storyFn => (
       <RawLocaleProvider
         value={{
           locale: Locale.EN,
-          setLocale: () => undefined
+          setLocale: () => undefined,
         }}
       >
         <DateProvider value={+new Date("2018-08-07T14:30:44+00:00")}>
@@ -29,7 +29,7 @@ export const Decorator = storyFn => (
                   <MessageManagerProvider>
                     <div
                       style={{
-                        padding: 24
+                        padding: 24,
                       }}
                     >
                       {storyFn()}

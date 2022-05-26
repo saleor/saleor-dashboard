@@ -10,7 +10,7 @@ const useStyles = makeStyles(
       ...theme.typography.body1,
       color: theme.palette.saleor.main[1],
       fontWeight: 500,
-      letterSpacing: "0.02rem"
+      letterSpacing: "0.02rem",
     };
 
     return {
@@ -20,36 +20,36 @@ const useStyles = makeStyles(
         color: theme.palette.text.secondary,
         marginRight: theme.spacing(1),
         textAlign: "center",
-        width: 32
+        width: 32,
       },
       input: {
         "&::placeholder": {
-          color: theme.palette.saleor.main[3]
+          color: theme.palette.saleor.main[3],
         },
         ...typography,
         background: "transparent",
         border: "none",
         outline: 0,
         padding: 0,
-        width: "100%"
+        width: "100%",
       },
       root: {
         background: theme.palette.background.paper,
         display: "flex",
         padding: theme.spacing(2, 3),
-        height: 72
+        height: 72,
       },
       searchIcon: {
         alignSelf: "center",
         width: 32,
         height: 32,
-        marginRight: theme.spacing(1)
-      }
+        marginRight: theme.spacing(1),
+      },
     };
   },
   {
-    name: "NavigatorInput"
-  }
+    name: "NavigatorInput",
+  },
 );
 
 interface NavigatorInputProps
@@ -89,36 +89,36 @@ const NavigatorInput = React.forwardRef<HTMLInputElement, NavigatorInputProps>(
               ? intl.formatMessage({
                   id: "8B8E+3",
                   defaultMessage: "Order Number",
-                  description: "navigator placeholder"
+                  description: "navigator placeholder",
                 })
               : mode === "commands"
               ? intl.formatMessage({
                   id: "NqxvFh",
                   defaultMessage: "Type Command",
-                  description: "navigator placeholder"
+                  description: "navigator placeholder",
                 })
               : mode === "catalog"
               ? intl.formatMessage({
                   id: "AOI4LW",
                   defaultMessage: "Search in Catalog",
-                  description: "navigator placeholder"
+                  description: "navigator placeholder",
                 })
               : mode === "customers"
               ? intl.formatMessage({
                   id: "TpPx7V",
                   defaultMessage: "Search Customer",
-                  description: "navigator placeholder"
+                  description: "navigator placeholder",
                 })
               : mode === "default"
               ? intl.formatMessage(
                   {
                     id: "BooQvo",
                     defaultMessage: "Type {key} to see available actions",
-                    description: "navigator placeholder"
+                    description: "navigator placeholder",
                   },
                   {
-                    key: "'?'"
-                  }
+                    key: "'?'",
+                  },
                 )
               : null
           }
@@ -127,7 +127,7 @@ const NavigatorInput = React.forwardRef<HTMLInputElement, NavigatorInputProps>(
         />
       </div>
     );
-  }
+  },
 );
 
 NavigatorInput.displayName = "NavigatorInput";

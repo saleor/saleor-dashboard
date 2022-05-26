@@ -11,10 +11,10 @@ interface UseHandleFormSubmitProps<TData, TErrors> {
 
 function useHandleFormSubmit<TData, TErrors>({
   formId,
-  onSubmit
+  onSubmit,
 }: UseHandleFormSubmitProps<TData, TErrors>) {
   const { setIsSubmitting } = useExitFormDialog({
-    formId
+    formId,
   });
   const messageContext = useContext(MessageContext);
 

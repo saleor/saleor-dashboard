@@ -2,7 +2,7 @@ import { Card } from "@material-ui/core";
 import {
   categoryAddUrl,
   categoryListUrl,
-  categoryUrl
+  categoryUrl,
 } from "@saleor/categories/urls";
 import { Backlink } from "@saleor/components/Backlink";
 import { Button } from "@saleor/components/Button";
@@ -32,7 +32,7 @@ import CategoryUpdateForm, { CategoryUpdateData } from "./form";
 
 export enum CategoryPageTab {
   categories = "categories",
-  products = "products"
+  products = "products",
 }
 
 export interface CategoryUpdatePageProps
@@ -75,7 +75,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   selected,
   subcategoryListToolbar,
   toggle,
-  toggleAll
+  toggleAll,
 }: CategoryUpdatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -115,7 +115,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
             helperText={intl.formatMessage({
               id: "wQdR8M",
               defaultMessage:
-                "Add search engine title and description to make this category easier to find"
+                "Add search engine title and description to make this category easier to find",
             })}
             errors={errors}
             title={data.seoTitle}
@@ -161,7 +161,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                 title={intl.formatMessage({
                   id: "NivJal",
                   defaultMessage: "All Subcategories",
-                  description: "section header"
+                  description: "section header",
                 })}
                 toolbar={
                   <Button

@@ -9,7 +9,7 @@ interface OrderCustomerNoteProps {
 }
 
 export const OrderCustomerNote: React.FC<OrderCustomerNoteProps> = ({
-  note
+  note,
 }) => {
   const intl = useIntl();
 
@@ -19,7 +19,7 @@ export const OrderCustomerNote: React.FC<OrderCustomerNoteProps> = ({
         title={intl.formatMessage({
           id: "puALFo",
           defaultMessage: "Notes",
-          description: "notes about customer, header"
+          description: "notes about customer, header",
         })}
       />
       <CardContent>

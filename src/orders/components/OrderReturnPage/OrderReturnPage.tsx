@@ -18,20 +18,20 @@ import {
   getFulfilledFulfillemnts,
   getParsedLines,
   getUnfulfilledLines,
-  getWaitingFulfillments
+  getWaitingFulfillments,
 } from "./utils";
 
 const messages = defineMessages({
   appTitle: {
     id: "rVIlBs",
     defaultMessage: "Order #{orderNumber}",
-    description: "page header with order number"
+    description: "page header with order number",
   },
   pageTitle: {
     id: "BBIQxQ",
     defaultMessage: "Order no. {orderNumber} - Replace/Return",
-    description: "page header"
-  }
+    description: "page header",
+  },
 });
 
 export interface OrderReturnPageProps {
@@ -51,12 +51,12 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
         <Container>
           <Backlink href={orderUrl(order?.id)}>
             {intl.formatMessage(messages.appTitle, {
-              orderNumber: order?.number
+              orderNumber: order?.number,
             })}
           </Backlink>
           <PageHeader
             title={intl.formatMessage(messages.pageTitle, {
-              orderNumber: order?.number
+              orderNumber: order?.number,
             })}
           />
           <Grid>
@@ -91,13 +91,13 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                       itemsSelections={data.itemsToBeReplaced}
                       onChangeQuantity={handlers.changeWaitingItemsQuantity}
                       onSetMaxQuantity={handlers.handleSetMaximalItemsQuantities(
-                        id
+                        id,
                       )}
                       onChangeSelected={handlers.changeItemsToBeReplaced}
                     />
                     <CardSpacer />
                   </React.Fragment>
-                )
+                ),
               )}
               {renderCollection(
                 getFulfilledFulfillemnts(order),
@@ -112,13 +112,13 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                       itemsSelections={data.itemsToBeReplaced}
                       onChangeQuantity={handlers.changeFulfiledItemsQuantity}
                       onSetMaxQuantity={handlers.handleSetMaximalItemsQuantities(
-                        id
+                        id,
                       )}
                       onChangeSelected={handlers.changeItemsToBeReplaced}
                     />
                     <CardSpacer />
                   </React.Fragment>
-                )
+                ),
               )}
             </div>
             <div>

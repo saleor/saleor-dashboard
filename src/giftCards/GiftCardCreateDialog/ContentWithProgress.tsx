@@ -15,15 +15,15 @@ export const useStyles = makeStyles(
       justifyContent: "center",
       height: "100%",
       width: "100%",
-      padding: theme.spacing(3)
-    }
+      padding: theme.spacing(3),
+    },
   }),
-  { name: "ContentWithProgress" }
+  { name: "ContentWithProgress" },
 );
 
 const ContentWithProgress: React.FC<ContentWithProgressProps> = ({
   containerClassName,
-  children
+  children,
 }) => {
   const classes = useStyles({});
 

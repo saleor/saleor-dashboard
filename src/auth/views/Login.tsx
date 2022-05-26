@@ -23,20 +23,20 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     requestLoginByExternalPlugin,
     loginByExternalPlugin,
     authenticating,
-    error
+    error,
   } = useUser();
   const {
     data: externalAuthentications,
-    loading: externalAuthenticationsLoading
+    loading: externalAuthenticationsLoading,
   } = useAvailableExternalAuthenticationsQuery();
   const [
     requestedExternalPluginId,
-    setRequestedExternalPluginId
+    setRequestedExternalPluginId,
   ] = useLocalStorage("requestedExternalPluginId", null);
 
   const [fallbackUri, setFallbackUri] = useLocalStorage(
     "externalLoginFallbackUri",
-    null
+    null,
   );
 
   const handleSubmit = async (data: LoginFormData) => {
@@ -53,8 +53,8 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
       redirectUri: urlJoin(
         window.location.origin,
         APP_MOUNT_URI === APP_DEFAULT_URI ? "" : APP_MOUNT_URI,
-        loginCallbackPath
-      )
+        loginCallbackPath,
+      ),
     });
     const data = JSON.parse(result?.authenticationData || "");
     if (data && !result?.errors?.length) {
@@ -66,7 +66,7 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
   const handleExternalAuthentication = async (code: string, state: string) => {
     const result = await loginByExternalPlugin(requestedExternalPluginId, {
       code,
-      state
+      state,
     });
     setRequestedExternalPluginId(null);
     if (result && !result?.errors?.length) {

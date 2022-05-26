@@ -1,6 +1,6 @@
 import {
   useGiftCardActivateMutation,
-  useGiftCardDeactivateMutation
+  useGiftCardDeactivateMutation,
 } from "@saleor/graphql";
 import useNotifier from "@saleor/hooks/useNotifier";
 import commonErrorMessages from "@saleor/utils/errors/common";
@@ -18,7 +18,7 @@ interface useGiftCardActivateToggleProps {
 const useGiftCardActivateToggle = ({
   onActivateActionComplete,
   onDeactivateActionComplete,
-  isActive
+  isActive,
 }: useGiftCardActivateToggleProps) => {
   const intl = useIntl();
   const notify = useNotifier();
@@ -30,7 +30,7 @@ const useGiftCardActivateToggle = ({
       if (!!errors?.length) {
         notify({
           status: "error",
-          text: intl.formatMessage(commonErrorMessages.unknownError)
+          text: intl.formatMessage(commonErrorMessages.unknownError),
         });
 
         return;
@@ -38,19 +38,19 @@ const useGiftCardActivateToggle = ({
 
       notify({
         status: "success",
-        text: intl.formatMessage(messages.successfullyEnabledTitle)
+        text: intl.formatMessage(messages.successfullyEnabledTitle),
       });
 
       if (!!onActivateActionComplete) {
         onActivateActionComplete();
       }
     },
-    refetchQueries: [GIFT_CARD_DETAILS_QUERY]
+    refetchQueries: [GIFT_CARD_DETAILS_QUERY],
   });
 
   const [
     giftCardDeactivate,
-    giftCardDeactivateOpts
+    giftCardDeactivateOpts,
   ] = useGiftCardDeactivateMutation({
     onCompleted: data => {
       const errors = data?.giftCardDeactivate?.errors;
@@ -58,21 +58,21 @@ const useGiftCardActivateToggle = ({
       if (!!errors?.length) {
         notify({
           status: "error",
-          text: intl.formatMessage(commonErrorMessages.unknownError)
+          text: intl.formatMessage(commonErrorMessages.unknownError),
         });
         return;
       }
 
       notify({
         status: "success",
-        text: intl.formatMessage(messages.successfullyDisabledTitle)
+        text: intl.formatMessage(messages.successfullyDisabledTitle),
       });
 
       if (!!onDeactivateActionComplete) {
         onDeactivateActionComplete();
       }
     },
-    refetchQueries: [GIFT_CARD_DETAILS_QUERY]
+    refetchQueries: [GIFT_CARD_DETAILS_QUERY],
   });
 
   const currentOpts = isActive ? giftCardDeactivateOpts : giftCardActivateOpts;
@@ -82,7 +82,7 @@ const useGiftCardActivateToggle = ({
     giftCardActivateOpts,
     giftCardDeactivate,
     giftCardDeactivateOpts,
-    currentOpts
+    currentOpts,
   };
 };
 

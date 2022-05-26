@@ -1,6 +1,6 @@
 import Timeline, {
   TimelineEvent,
-  TimelineNote
+  TimelineNote,
 } from "@saleor/components/Timeline";
 import { storiesOf } from "@storybook/react";
 import React from "react";

@@ -12,39 +12,39 @@ const useStyles = makeStyles(
   theme => ({
     colName: {},
     colNameLabel: {
-      marginLeft: AVATAR_MARGIN
+      marginLeft: AVATAR_MARGIN,
     },
     colPrice: {
-      textAlign: "right"
+      textAlign: "right",
     },
     colQuantity: {
-      textAlign: "center"
+      textAlign: "center",
     },
     colSku: {
       textAlign: "right",
-      textOverflow: "ellipsis"
+      textOverflow: "ellipsis",
     },
     colTotal: {
-      textAlign: "right"
+      textAlign: "right",
     },
     infoLabel: {
-      display: "inline-block"
+      display: "inline-block",
     },
     infoLabelWithMargin: {
-      marginBottom: theme.spacing()
+      marginBottom: theme.spacing(),
     },
     infoRow: {
-      padding: theme.spacing(2, 3)
+      padding: theme.spacing(2, 3),
     },
     orderNumber: {
       display: "inline",
-      marginLeft: theme.spacing(1)
+      marginLeft: theme.spacing(1),
     },
     statusBar: {
-      paddingTop: 0
-    }
+      paddingTop: 0,
+    },
   }),
-  { name: "TableLine" }
+  { name: "TableLine" },
 );
 
 interface TableLineProps {
@@ -54,7 +54,7 @@ interface TableLineProps {
 
 const TableLine: React.FC<TableLineProps> = ({
   line: lineData,
-  isOrderLine = false
+  isOrderLine = false,
 }) => {
   const classes = useStyles({});
   const { quantity, quantityToFulfill } = lineData as OrderLineFragment;
@@ -66,7 +66,7 @@ const TableLine: React.FC<TableLineProps> = ({
   const line = isOrderLine
     ? ({
         ...lineData,
-        orderLine: lineData
+        orderLine: lineData,
       } as OrderDetailsFragment["fulfillments"][0]["lines"][0])
     : (lineData as OrderDetailsFragment["fulfillments"][0]["lines"][0]);
 
@@ -97,7 +97,7 @@ const TableLine: React.FC<TableLineProps> = ({
         <Money
           money={{
             amount: line.quantity * line.orderLine.unitPrice.gross.amount,
-            currency: line.orderLine.unitPrice.gross.currency
+            currency: line.orderLine.unitPrice.gross.currency,
           }}
         />
       </TableCell>

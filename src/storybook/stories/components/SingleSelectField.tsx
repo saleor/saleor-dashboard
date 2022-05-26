@@ -9,7 +9,7 @@ const choices = [
   { label: "Apparel", value: "1" },
   { label: "Groceries", value: "2" },
   { label: "Books", value: "3" },
-  { label: "Accessories", value: "4" }
+  { label: "Accessories", value: "4" },
 ];
 
 const manyChoices = [
@@ -28,14 +28,14 @@ const manyChoices = [
   { label: "Keyboards", value: "13" },
   { label: "LEDs", value: "14" },
   { label: "Cars", value: "15" },
-  { label: "Petrol", value: "16" }
+  { label: "Petrol", value: "16" },
 ];
 
 const disabledChoices = [
   { label: "Apparel", value: "1" },
   { label: "Groceries", value: "2", disabled: true },
   { label: "Books", value: "3", disabled: true },
-  { label: "Accessories", value: "4" }
+  { label: "Accessories", value: "4" },
 ];
 
 storiesOf("Generics / SingleSelectField", module)

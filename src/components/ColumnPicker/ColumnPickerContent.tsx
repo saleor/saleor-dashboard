@@ -4,7 +4,7 @@ import {
   CardContent,
   CardHeader,
   MenuItem,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import { FormChange } from "@saleor/hooks/useForm";
@@ -14,7 +14,7 @@ import {
   CloseIcon,
   IconButton,
   makeStyles,
-  MultipleValueAutocomplete
+  MultipleValueAutocomplete,
 } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import React from "react";
@@ -37,20 +37,20 @@ const useStyles = makeStyles(
     actions: {
       flexDirection: "row-reverse",
       gap: theme.spacing(1),
-      paddingBottom: theme.spacing(2)
+      paddingBottom: theme.spacing(2),
     },
     content: {
       paddingBottom: theme.spacing(2),
-      width: 450
+      width: 450,
     },
     subHeader: {
       fontWeight: 500,
       letterSpacing: "0.1rem",
       textTransform: "uppercase",
-      marginBottom: theme.spacing(1)
-    }
+      marginBottom: theme.spacing(1),
+    },
   }),
-  { name: "ColumnPickerContent" }
+  { name: "ColumnPickerContent" },
 );
 
 const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
@@ -63,7 +63,7 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
     onReset,
     onFetchMore,
     onSave,
-    onQueryChange
+    onQueryChange,
   } = props;
   const classes = useStyles();
   const intl = useIntl();

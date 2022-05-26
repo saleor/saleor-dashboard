@@ -1,5 +1,5 @@
 import BulkAttributeUnassignDialog, {
-  BulkAttributeUnassignDialogProps
+  BulkAttributeUnassignDialogProps,
 } from "@saleor/components/BulkAttributeUnassignDialog";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -13,7 +13,7 @@ const props: BulkAttributeUnassignDialogProps = {
   onClose: () => undefined,
   onConfirm: () => undefined,
   open: true,
-  title: "Unassign Attribute from Shoes"
+  title: "Unassign Attribute from Shoes",
 };
 
 storiesOf("Generics / Unassign multiple attributes", module)

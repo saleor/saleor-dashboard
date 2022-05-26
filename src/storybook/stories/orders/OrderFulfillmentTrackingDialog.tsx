@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import OrderFulfillmentTrackingDialog, {
-  OrderFulfillmentTrackingDialogProps
+  OrderFulfillmentTrackingDialogProps,
 } from "../../../orders/components/OrderFulfillmentTrackingDialog";
 import Decorator from "../../Decorator";
 
@@ -13,7 +13,7 @@ const props: OrderFulfillmentTrackingDialogProps = {
   onClose: () => undefined,
   onConfirm: () => undefined,
   open: true,
-  trackingNumber: "21kn7526v1"
+  trackingNumber: "21kn7526v1",
 };
 
 storiesOf("Orders / OrderFulfillmentTrackingDialog", module)
@@ -28,15 +28,15 @@ storiesOf("Orders / OrderFulfillmentTrackingDialog", module)
           code: OrderErrorCode.GRAPHQL_ERROR,
           field: null,
           addressType: null,
-          message: "Graphql Error"
+          message: "Graphql Error",
         },
         {
           __typename: "OrderError",
           code: OrderErrorCode.INVALID,
           field: "trackingNumber",
           addressType: null,
-          message: "Tracking number field invalid"
-        }
+          message: "Tracking number field invalid",
+        },
       ]}
     />
   ));

@@ -27,7 +27,7 @@ export const AppPage: React.FC<AppPageProps> = ({
   data,
   url,
   aboutHref,
-  onError
+  onError,
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -44,7 +44,7 @@ export const AppPage: React.FC<AppPageProps> = ({
             <Typography
               className={classNames(
                 classes.breadcrumb,
-                classes.breadcrumbDisabled
+                classes.breadcrumbDisabled,
               )}
               variant="h5"
             >
