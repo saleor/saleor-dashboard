@@ -310,7 +310,8 @@ export const paginatorContextValues: PaginatorContextValues = {
   hasNextPage: false,
   hasPreviousPage: false,
   nextPageHref: "",
-  prevPageHref: ""
+  prevPageHref: "",
+  paginatorType: "link"
 };
 
 export const searchPageProps: SearchPageProps = {
