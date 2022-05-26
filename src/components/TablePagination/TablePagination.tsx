@@ -33,6 +33,7 @@ export interface PaginationProps
   onUpdateListSettings?: ListSettingsUpdate;
   prevHref?: string;
   nextHref?: string;
+  disabled?: boolean;
 }
 export const TablePagination: React.FC<PaginationProps> = ({
   component,
@@ -41,6 +42,9 @@ export const TablePagination: React.FC<PaginationProps> = ({
   onUpdateListSettings,
   nextHref,
   prevHref,
+  hasNextPage,
+  hasPreviousPage,
+  disabled,
   ...rest
 }) => {
   const intl = useIntl();
@@ -50,6 +54,8 @@ export const TablePagination: React.FC<PaginationProps> = ({
     <Wrapper colSpan={colSpan || 1000}>
       <Pagination<LinkProps>
         {...rest}
+        hasNextPage={hasNextPage && !disabled}
+        hasPreviousPage={hasPreviousPage && !disabled}
         labels={{
           noOfRows: intl.formatMessage(messages.noOfRows)
         }}

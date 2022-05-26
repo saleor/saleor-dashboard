@@ -4,6 +4,7 @@ import OrderListPage, {
   OrderListPageProps
 } from "@saleor/orders/components/OrderListPage";
 import { OrderListUrlSortField } from "@saleor/orders/urls";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -83,6 +84,7 @@ const props: OrderListPageProps = {
 
 storiesOf("Views / Orders / Order list", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("default", () => <OrderListPage {...props} />)
   .add("loading", () => (
     <OrderListPage

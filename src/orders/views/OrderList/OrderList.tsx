@@ -14,7 +14,8 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
-  createPaginationState
+  createPaginationState,
+  PaginatorContext
 } from "@saleor/hooks/usePaginator";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
@@ -53,7 +54,6 @@ interface OrderListProps {
 export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const paginate = usePaginator();
   const { updateListSettings, settings } = useListSettings(
     ListViews.ORDER_LIST
   );
@@ -140,16 +140,16 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     variables: queryVariables
   });
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    data?.orders?.pageInfo,
+  const paginationValues = usePaginator({
+    pageInfo: data?.orders?.pageInfo,
     paginationState,
-    params
-  );
+    queryString: params
+  });
 
   const handleSort = createSortHandler(navigate, orderListUrl, params);
 
   return (
-    <>
+    <PaginatorContext.Provider value={paginationValues}>
       <OrderListPage
         settings={settings}
         currentTab={currentTab}
@@ -157,11 +157,8 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         filterOpts={getFilterOpts(params, channelOpts)}
         limits={limitOpts.data?.shop.limits}
         orders={mapEdgesToItems(data?.orders)}
-        pageInfo={pageInfo}
         sort={getSortParams(params)}
         onAdd={() => openModal("create-order")}
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
         onSort={handleSort}
         onSearchChange={handleSearchChange}
@@ -203,7 +200,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
           }
         />
       )}
-    </>
+    </PaginatorContext.Provider>
   );
 };
 
