@@ -1,4 +1,5 @@
 import { LanguageCodeEnum } from "@saleor/graphql";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -33,6 +34,7 @@ const props: TranslationsEntitiesListPageProps = {
 
 storiesOf("Views / Translations / Entity list", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("default", () => (
     <TranslationsEntitiesListPage {...props}>
       <TranslationsEntitiesList

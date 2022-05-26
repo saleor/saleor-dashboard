@@ -7,7 +7,7 @@ import {
 } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
@@ -46,14 +46,7 @@ const useStyles = makeStyles(
   { name: "TranslationsEntitiesList" }
 );
 const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props => {
-  const {
-    disabled,
-    entities,
-    onNextPage,
-    onPreviousPage,
-    getRowHref,
-    pageInfo
-  } = props;
+  const { disabled, entities, getRowHref } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
@@ -79,17 +72,7 @@ const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props 
       </TableHead>
       <TableFooter>
         <TableRow>
-          <TablePagination
-            colSpan={2}
-            hasNextPage={
-              pageInfo && !disabled ? pageInfo.hasNextPage : undefined
-            }
-            onNextPage={onNextPage}
-            hasPreviousPage={
-              pageInfo && !disabled ? pageInfo.hasPreviousPage : undefined
-            }
-            onPreviousPage={onPreviousPage}
-          />
+          <TablePaginationWithContext colSpan={2} disabled={disabled} />
         </TableRow>
       </TableFooter>
       <TableBody>

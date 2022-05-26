@@ -29,12 +29,6 @@ export interface TranslationsAttributesPageProps
   data: AttributeTranslationDetailsFragment;
   settings?: ListSettings;
   onUpdateListSettings?: ListSettingsUpdate;
-  pageInfo: {
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
-  };
-  onNextPage: () => void;
-  onPreviousPage: () => void;
 }
 
 export const fieldNames = {
@@ -55,10 +49,7 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
   onEdit,
   onSubmit,
   settings,
-  onUpdateListSettings,
-  pageInfo,
-  onNextPage,
-  onPreviousPage
+  onUpdateListSettings
 }) => {
   const intl = useIntl();
 
@@ -134,10 +125,7 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
           richTextResetKey={languageCode}
           pagination={{
             settings,
-            onUpdateListSettings,
-            pageInfo,
-            onNextPage,
-            onPreviousPage
+            onUpdateListSettings
           }}
           onEdit={onEdit}
           onDiscard={onDiscard}
