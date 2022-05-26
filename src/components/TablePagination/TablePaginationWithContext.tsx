@@ -5,7 +5,12 @@ import TablePagination, { PaginationProps } from "./TablePagination";
 
 export type TablePaginationWithContextProps = Omit<
   PaginationProps,
-  "nextHref" | "prevHref"
+  | "nextHref"
+  | "prevHref"
+  | "hasNextPage"
+  | "hasPreviousPage"
+  | "onNextPage"
+  | "onPreviousPage"
 >;
 export const TablePaginationWithContext = (
   props: TablePaginationWithContextProps
