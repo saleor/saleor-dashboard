@@ -30,9 +30,12 @@ const useStyles = makeStyles(
       maxHeight: 600
     },
     selected: {
-      borderLeft: `4px solid ${theme.palette.saleor.active[1]}`,
-      "& div": {
-        marginLeft: "-4px"
+      "&&&&::before": {
+        position: "absolute",
+        left: 0,
+        width: "4px",
+        height: "100%",
+        backgroundColor: theme.palette.saleor.active[1]
       }
     }
   }),
