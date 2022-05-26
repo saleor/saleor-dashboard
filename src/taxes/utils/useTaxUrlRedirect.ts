@@ -3,7 +3,7 @@
  * However, when we load the page for the first time we don't know
  * the first taxConfigurationId, we need to query it first. So this hook
  * redirects from generic url (/taxes/channels/) to the one with id.
- * Its use is similar in countries and taxes views
+ * Its use is similar in countries and tax classes views.
  */
 
 import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
