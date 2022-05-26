@@ -53,7 +53,6 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
               disabled={disabled}
               errors={errors}
               onChange={change}
-              onDescriptionChange={handlers.changeDescription}
             />
             <CardSpacer />
             <SeoForm

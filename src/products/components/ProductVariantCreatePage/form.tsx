@@ -1,4 +1,10 @@
-import { getAttributesDisplayData } from "@saleor/attributes/utils/data";
+import {
+  getAttributesDisplayData,
+  getRichTextAttributesFromMap,
+  getRichTextDataFromAttributes,
+  mergeAttributes,
+  RichTextProps
+} from "@saleor/attributes/utils/data";
 import {
   createAttributeChangeHandler,
   createAttributeFileChangeHandler,
@@ -32,6 +38,7 @@ import { getVariantAttributeInputFromProduct } from "@saleor/products/utils/data
 import { createPreorderEndDateChangeHandler } from "@saleor/products/utils/handlers";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
+import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
@@ -80,18 +87,19 @@ export interface ProductVariantCreateHandlers
   fetchMoreReferences: FetchMoreProps;
 }
 
-export interface UseProductVariantCreateFormResult
+export interface UseProductVariantCreateFormOutput
   extends CommonUseFormResultWithHandlers<
-    ProductVariantCreateData,
-    ProductVariantCreateHandlers
-  > {
+      ProductVariantCreateData,
+      ProductVariantCreateHandlers
+    >,
+    Omit<RichTextProps, "richText"> {
   formErrors: FormErrors<ProductVariantCreateData>;
   disabled: boolean;
 }
 
 export interface ProductVariantCreateFormProps
   extends UseProductVariantCreateFormOpts {
-  children: (props: UseProductVariantCreateFormResult) => React.ReactNode;
+  children: (props: UseProductVariantCreateFormOutput) => React.ReactNode;
   product: ProductVariantCreateDataQuery["product"];
   onSubmit: (data: ProductVariantCreateData) => void;
   disabled: boolean;
@@ -116,7 +124,7 @@ function useProductVariantCreateForm(
   onSubmit: (data: ProductVariantCreateData) => void,
   disabled: boolean,
   opts: UseProductVariantCreateFormOpts
-): UseProductVariantCreateFormResult {
+): UseProductVariantCreateFormOutput {
   const intl = useIntl();
   const attributeInput = getVariantAttributeInputFromProduct(product);
 
@@ -131,6 +139,13 @@ function useProductVariantCreateForm(
   } = form;
 
   const attributes = useFormset(attributeInput);
+  const {
+    getters: attributeRichTextGetters,
+    getValues: getAttributeRichTextValues
+  } = useMultipleRichText({
+    initial: getRichTextDataFromAttributes(attributes.data),
+    triggerChange
+  });
   const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset<ProductStockFormsetData, string>([]);
 
@@ -218,12 +233,23 @@ function useProductVariantCreateForm(
     stocks: stocks.data
   };
 
+  const getSubmitData = async (): Promise<ProductVariantCreateData> => ({
+    ...data,
+    attributes: mergeAttributes(
+      attributes.data,
+      getRichTextAttributesFromMap(
+        attributes.data,
+        await getAttributeRichTextValues()
+      )
+    )
+  });
+
   const handleFormSubmit = useHandleFormSubmit({
     formId,
     onSubmit
   });
 
-  const submit = () => handleFormSubmit(data);
+  const submit = async () => handleFormSubmit(await getSubmitData());
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
@@ -255,7 +281,8 @@ function useProductVariantCreateForm(
       selectAttributeReference: handleAttributeReferenceChange
     },
     submit,
-    isSaveDisabled
+    isSaveDisabled,
+    attributeRichTextGetters
   };
 }
 

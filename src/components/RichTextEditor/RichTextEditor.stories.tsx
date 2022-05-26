@@ -9,16 +9,16 @@ import * as fixtures from "./fixtures.json";
 import { RichTextEditorProps } from "./RichTextEditor";
 import RichTextEditorContent from "./RichTextEditorContent";
 
-export const data: OutputData = fixtures.richTextEditor;
+export const defaultValue: OutputData = fixtures.richTextEditor;
 
 const props: RichTextEditorProps = {
-  data,
+  defaultValue,
   disabled: false,
   error: false,
   helperText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
   label: "Content",
   name: "content",
-  onChange: () => undefined
+  editorRef: null
 };
 
 storiesOf("Generics / Rich text editor", module)
@@ -27,4 +27,6 @@ storiesOf("Generics / Rich text editor", module)
   .add("default", () => <RichTextEditor {...props} />)
   .add("disabled", () => <RichTextEditor {...props} disabled={true} />)
   .add("error", () => <RichTextEditor {...props} error={true} />)
-  .add("static", () => <RichTextEditorContent {...props} />);
+  .add("static", () => (
+    <RichTextEditorContent {...props} value={defaultValue} />
+  ));

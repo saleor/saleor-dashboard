@@ -110,7 +110,6 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
             disabled={disabled}
             errors={errors}
             onChange={change}
-            onDescriptionChange={handlers.changeDescription}
           />
           <CardSpacer />
           <CategoryBackground

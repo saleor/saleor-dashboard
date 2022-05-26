@@ -1,4 +1,10 @@
-import { getAttributesDisplayData } from "@saleor/attributes/utils/data";
+import {
+  getAttributesDisplayData,
+  getRichTextAttributesFromMap,
+  getRichTextDataFromAttributes,
+  mergeAttributes,
+  RichTextProps
+} from "@saleor/attributes/utils/data";
 import {
   createAttributeChangeHandler,
   createAttributeFileChangeHandler,
@@ -50,6 +56,7 @@ import { arrayDiff } from "@saleor/utils/arrays";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
+import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
@@ -119,9 +126,10 @@ export interface ProductVariantUpdateHandlers
 
 export interface UseProductVariantUpdateFormResult
   extends CommonUseFormResultWithHandlers<
-    ProductVariantUpdateData,
-    ProductVariantUpdateHandlers
-  > {
+      ProductVariantUpdateData,
+      ProductVariantUpdateHandlers
+    >,
+    Omit<RichTextProps, "richText"> {
   formErrors: FormErrors<ProductVariantUpdateData>;
   disabled: boolean;
 }
@@ -189,6 +197,13 @@ function useProductVariantUpdateForm(
   });
 
   const attributes = useFormset(attributeInput);
+  const {
+    getters: attributeRichTextGetters,
+    getValues: getAttributeRichTextValues
+  } = useMultipleRichText({
+    initial: getRichTextDataFromAttributes(attributes.data),
+    triggerChange
+  });
   const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset(stockInput);
   const channels = useFormset(channelsInput);
@@ -302,16 +317,22 @@ function useProductVariantUpdateForm(
       data.hasPreorderEndDate &&
       !!form.errors.preorderEndDateTime);
 
-  const submitData: ProductVariantUpdateSubmitData = {
+  const getSubmitData = async (): Promise<ProductVariantUpdateSubmitData> => ({
     ...formData,
     ...getMetadata(formData, isMetadataModified, isPrivateMetadataModified),
     addStocks,
-    attributes: attributes.data,
+    attributes: mergeAttributes(
+      attributes.data,
+      getRichTextAttributesFromMap(
+        attributes.data,
+        await getAttributeRichTextValues()
+      )
+    ),
     attributesWithNewFileValue: attributesWithNewFileValue.data,
     channelListings: channels.data,
     removeStocks: stockDiff.removed,
     updateStocks
-  };
+  });
 
   const handleSubmit = async (data: ProductVariantUpdateSubmitData) => {
     const errors = await onSubmit(data);
@@ -328,7 +349,7 @@ function useProductVariantUpdateForm(
     onSubmit: handleSubmit
   });
 
-  const submit = () => handleFormSubmit(submitData);
+  const submit = async () => handleFormSubmit(await getSubmitData());
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
@@ -356,7 +377,8 @@ function useProductVariantUpdateForm(
       selectAttributeReference: handleAttributeReferenceChange
     },
     submit,
-    isSaveDisabled
+    isSaveDisabled,
+    attributeRichTextGetters
   };
 }
 

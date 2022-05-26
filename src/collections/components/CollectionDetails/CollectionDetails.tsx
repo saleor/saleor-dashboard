@@ -2,12 +2,11 @@ import { OutputData } from "@editorjs/editorjs";
 import { Card, CardContent, TextField } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
-import RichTextEditor, {
-  RichTextEditorChange
-} from "@saleor/components/RichTextEditor";
+import RichTextEditor from "@saleor/components/RichTextEditor";
 import { CollectionErrorFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
+import { useRichTextContext } from "@saleor/utils/richText/context";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -19,18 +18,21 @@ export interface CollectionDetailsProps {
   disabled: boolean;
   errors: CollectionErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
-  onDescriptionChange: RichTextEditorChange;
 }
 
 const CollectionDetails: React.FC<CollectionDetailsProps> = ({
   disabled,
   data,
   onChange,
-  onDescriptionChange,
   errors
 }) => {
   const intl = useIntl();
-
+  const {
+    defaultValue,
+    editorRef,
+    isReadyForMount,
+    handleChange
+  } = useRichTextContext();
   const formErrors = getFormErrors(["name", "description"], errors);
 
   return (
@@ -54,15 +56,18 @@ const CollectionDetails: React.FC<CollectionDetailsProps> = ({
           fullWidth
         />
         <FormSpacer />
-        <RichTextEditor
-          data={data.description}
-          error={!!formErrors.description}
-          helperText={getProductErrorMessage(formErrors.description, intl)}
-          label={intl.formatMessage(commonMessages.description)}
-          name="description"
-          disabled={disabled}
-          onChange={onDescriptionChange}
-        />
+        {isReadyForMount && (
+          <RichTextEditor
+            defaultValue={defaultValue}
+            editorRef={editorRef}
+            onChange={handleChange}
+            error={!!formErrors.description}
+            helperText={getProductErrorMessage(formErrors.description, intl)}
+            label={intl.formatMessage(commonMessages.description)}
+            name="description"
+            disabled={disabled}
+          />
+        )}
       </CardContent>
     </Card>
   );

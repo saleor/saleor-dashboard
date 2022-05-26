@@ -224,7 +224,15 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           assignReferencesAttributeId={assignReferencesAttributeId}
           loading={loading}
         >
-          {({ change, data, formErrors, isSaveDisabled, handlers, submit }) => {
+          {({
+            change,
+            data,
+            formErrors,
+            isSaveDisabled,
+            handlers,
+            submit,
+            attributeRichTextGetters
+          }) => {
             const nonSelectionAttributes = data.attributes.filter(
               byAttributeScope(VariantAttributeScope.NOT_VARIANT_SELECTION)
             );
@@ -250,7 +258,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     {nonSelectionAttributes.length > 0 && (
                       <>
                         <Attributes
-                          entityId={variant?.id}
                           title={intl.formatMessage(
                             messages.nonSelectionAttributes
                           )}
@@ -268,6 +275,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                           fetchAttributeValues={fetchAttributeValues}
                           fetchMoreAttributeValues={fetchMoreAttributeValues}
                           onAttributeSelectBlur={onAttributeSelectBlur}
+                          richTextGetters={attributeRichTextGetters}
                         />
                         <CardSpacer />
                       </>
@@ -275,7 +283,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     {selectionAttributes.length > 0 && (
                       <>
                         <Attributes
-                          entityId={variant?.id}
                           title={intl.formatMessage(
                             messages.selectionAttributesHeader
                           )}
@@ -293,6 +300,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                           fetchAttributeValues={fetchAttributeValues}
                           fetchMoreAttributeValues={fetchMoreAttributeValues}
                           onAttributeSelectBlur={onAttributeSelectBlur}
+                          richTextGetters={attributeRichTextGetters}
                         />
                         <CardSpacer />
                       </>

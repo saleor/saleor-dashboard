@@ -159,7 +159,15 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
       assignReferencesAttributeId={assignReferencesAttributeId}
       disabled={disabled}
     >
-      {({ change, data, formErrors, handlers, submit, isSaveDisabled }) => (
+      {({
+        change,
+        data,
+        formErrors,
+        handlers,
+        submit,
+        isSaveDisabled,
+        attributeRichTextGetters
+      }) => (
         <Container>
           <Backlink href={productUrl(productId)}>{product?.name}</Backlink>
           <PageHeader title={header} />
@@ -193,6 +201,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 fetchAttributeValues={fetchAttributeValues}
                 fetchMoreAttributeValues={fetchMoreAttributeValues}
                 onAttributeSelectBlur={onAttributeSelectBlur}
+                richTextGetters={attributeRichTextGetters}
               />
               <CardSpacer />
               <Attributes
@@ -215,6 +224,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 fetchAttributeValues={fetchAttributeValues}
                 fetchMoreAttributeValues={fetchMoreAttributeValues}
                 onAttributeSelectBlur={onAttributeSelectBlur}
+                richTextGetters={attributeRichTextGetters}
               />
               <CardSpacer />
               <ProductVariantCheckoutSettings

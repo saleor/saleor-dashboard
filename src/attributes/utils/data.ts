@@ -28,6 +28,11 @@ import {
   mapNodeToChoice,
   mapPagesToChoices
 } from "@saleor/utils/maps";
+import { RichTextContextValues } from "@saleor/utils/richText/context";
+import {
+  GetRichTextValues,
+  RichTextGetters
+} from "@saleor/utils/richText/useMultipleRichText";
 
 import { AttributePageFormData } from "../components/AttributePage";
 
@@ -35,6 +40,11 @@ type AtributesOfFiles = Pick<
   AttributeValueInput,
   "file" | "id" | "values" | "contentType"
 >;
+
+export interface RichTextProps {
+  richText: RichTextContextValues;
+  attributeRichTextGetters: RichTextGetters<string>;
+}
 
 export const ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES = [
   AttributeInputTypeEnum.DROPDOWN,
@@ -256,6 +266,41 @@ export const mergeAttributeValues = (
     ? [...attribute.value, ...attributeValues]
     : attributeValues;
 };
+
+export const mergeAttributes = (
+  ...attributeLists: AttributeInput[][]
+): AttributeInput[] =>
+  attributeLists.reduce((prev, attributes) => {
+    const newAttributeIds = new Set(attributes.map(attr => attr.id));
+    return [
+      ...prev.filter(attr => !newAttributeIds.has(attr.id)),
+      ...attributes
+    ];
+  }, []);
+
+export function getRichTextAttributesFromMap(
+  attributes: AttributeInput[],
+  values: GetRichTextValues
+): AttributeInput[] {
+  return attributes
+    .filter(({ data }) => data.inputType === AttributeInputTypeEnum.RICH_TEXT)
+    .map(attribute => ({
+      ...attribute,
+      value: [JSON.stringify(values[attribute.id])]
+    }));
+}
+
+export function getRichTextDataFromAttributes(
+  attributes: AttributeInput[] = []
+): Record<string, string> {
+  const keyValuePairs = attributes
+    .filter(
+      attribute => attribute.data.inputType === AttributeInputTypeEnum.RICH_TEXT
+    )
+    .map(attribute => [attribute.id, attribute.value[0]]);
+
+  return Object.fromEntries(keyValuePairs);
+}
 
 export const getFileValuesToUploadFromAttributes = (
   attributesWithNewFileValue: FormsetData<null, File>

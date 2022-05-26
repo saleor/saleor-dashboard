@@ -20,7 +20,13 @@ const props: AttributesProps = {
   onReferencesReorder: () => undefined,
   fetchAttributeValues: () => undefined,
   fetchMoreAttributeValues: fetchMoreProps,
-  onAttributeSelectBlur: () => undefined
+  onAttributeSelectBlur: () => undefined,
+  richTextGetters: {
+    getDefaultValue: () => undefined,
+    getHandleChange: () => () => undefined,
+    getMountEditor: () => () => undefined,
+    getShouldMount: () => true
+  }
 };
 
 storiesOf("Attributes / Attributes", module)

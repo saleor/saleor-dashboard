@@ -88,7 +88,6 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                 disabled={disabled}
                 errors={errors}
                 onChange={change}
-                onDescriptionChange={handlers.changeDescription}
               />
               <CardSpacer />
               <CollectionImage

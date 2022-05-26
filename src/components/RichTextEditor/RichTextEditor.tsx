@@ -1,98 +1,73 @@
-import EditorJS, { LogLevels, OutputData } from "@editorjs/editorjs";
+import { LogLevels, OutputData } from "@editorjs/editorjs";
 import { FormControl, FormHelperText, InputLabel } from "@material-ui/core";
-import { PromiseQueue } from "@saleor/misc";
+import { useId } from "@reach/auto-id";
+import { Props as ReactEditorJSProps } from "@react-editor-js/core";
 import classNames from "classnames";
 import React from "react";
+import { createReactEditorJS } from "react-editor-js";
 
-import { RichTextEditorContentProps, tools } from "./RichTextEditorContent";
+import { tools } from "./consts";
+import { useHasRendered } from "./hooks";
 import useStyles from "./styles";
-import { clean } from "./utils";
 
-export type RichTextEditorChange = (data: OutputData) => void;
-export interface RichTextEditorProps extends RichTextEditorContentProps {
+export type EditorJsProps = Omit<ReactEditorJSProps, "factory">;
+
+// https://github.com/Jungwoo-An/react-editor-js#how-to-access-editor-js-instance
+export interface EditorCore {
+  destroy(): Promise<void>;
+  clear(): Promise<void>;
+  save(): Promise<OutputData>;
+  render(data: OutputData): Promise<void>;
+}
+
+export interface RichTextEditorProps extends Omit<EditorJsProps, "onChange"> {
+  id?: string;
   disabled: boolean;
   error: boolean;
   helperText: string;
   label: string;
   name: string;
-  onChange: RichTextEditorChange;
+  editorRef:
+    | React.RefCallback<EditorCore>
+    | React.MutableRefObject<EditorCore>
+    | null;
+  // onChange with value shouldn't be used due to issues with React and EditorJS integration
+  onChange?: () => void;
 }
 
+const ReactEditorJS = createReactEditorJS();
+
 const RichTextEditor: React.FC<RichTextEditorProps> = ({
-  data,
+  id: defaultId,
   disabled,
   error,
-  helperText,
   label,
   name,
-  onChange,
-  onReady
+  helperText,
+  editorRef,
+  onInitialize,
+  onReady,
+  ...props
 }) => {
   const classes = useStyles({});
+  const id = useId(defaultId);
+  const [isFocused, setIsFocused] = React.useState(false);
 
-  const [isFocused, setFocus] = React.useState(false);
-  const editor = React.useRef<EditorJS>();
-  const editorContainer = React.useRef<HTMLDivElement>();
-  const togglePromiseQueue = React.useRef(PromiseQueue()); // used to await subsequent toggle invocations
+  const handleInitialize = React.useCallback((editor: EditorCore) => {
+    if (onInitialize) {
+      onInitialize(editor);
+    }
 
-  React.useEffect(
-    () => {
-      if (data !== undefined && !editor.current) {
-        editor.current = new EditorJS({
-          data,
-          holder: editorContainer.current,
-          logLevel: "ERROR" as LogLevels,
-          onChange: async api => {
-            const savedData = await api.saver.save();
-            onChange(savedData);
-          },
-          onReady: () => {
-            // FIXME: This throws an error and is not working
-            // const undo = new Undo({ editor });
-            // undo.initialize(data);
+    if (typeof editorRef === "function") {
+      return editorRef(editor);
+    }
+    if (editorRef) {
+      return (editorRef.current = editor);
+    }
+  }, []);
 
-            if (onReady) {
-              onReady();
-            }
-          },
-          tools
-        });
-      }
-
-      return () => {
-        clean(editor.current);
-        editor.current = null;
-      };
-    },
-    // Rerender editor only if changed from undefined to defined state
-    [data === undefined]
-  );
-
-  React.useEffect(() => {
-    const toggle = async () => {
-      if (!editor.current) {
-        return;
-      }
-
-      await editor.current.isReady;
-      if (editor.current?.readOnly) {
-        // readOnly.toggle() by itself does not enqueue the events and will result in a broken output if invocations overlap
-        // Remove this logic when this is fixed in EditorJS
-        togglePromiseQueue.current.add(() =>
-          editor.current.readOnly.toggle(disabled)
-        );
-
-        // Switching to readOnly with empty blocks present causes the editor to freeze
-        // Remove this logic when this is fixed in EditorJS
-        if (!disabled && !data?.blocks?.length) {
-          await togglePromiseQueue.current.queue;
-          editor.current.clear();
-        }
-      }
-    };
-
-    toggle();
-  }, [disabled]);
+  // We need to render FormControl first to get id from @reach/auto-id
+  const hasRendered = useHasRendered();
 
   return (
     <FormControl
@@ -105,16 +80,28 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
       <InputLabel focused={true} shrink={true}>
         {label}
       </InputLabel>
-      <div
-        className={classNames(classes.editor, classes.root, {
-          [classes.rootActive]: isFocused,
-          [classes.rootDisabled]: disabled,
-          [classes.rootError]: error
-        })}
-        ref={editorContainer}
-        onFocus={() => setFocus(true)}
-        onBlur={() => setFocus(false)}
-      />
+      {hasRendered && (
+        <ReactEditorJS
+          // match with the id of holder div
+          holder={id}
+          tools={tools}
+          // LogLeves is undefined at runtime
+          logLevel={"ERROR" as LogLevels.ERROR}
+          onInitialize={handleInitialize}
+          {...props}
+        >
+          <div
+            id={id}
+            className={classNames(classes.editor, classes.root, {
+              [classes.rootActive]: isFocused,
+              [classes.rootDisabled]: disabled,
+              [classes.rootError]: error
+            })}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+          />
+        </ReactEditorJS>
+      )}
       <FormHelperText>{helperText}</FormHelperText>
     </FormControl>
   );

@@ -15,6 +15,7 @@ import {
 import { FormsetAtomicData } from "@saleor/hooks/useFormset";
 import { IconButton, makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
+import { RichTextGetters } from "@saleor/utils/richText/useMultipleRichText";
 import classNames from "classnames";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
@@ -46,7 +47,7 @@ export interface AttributesProps extends AttributeRowHandlers {
     ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment
   >;
   title?: React.ReactNode;
-  entityId?: string;
+  richTextGetters: RichTextGetters<string>;
 }
 
 const useStyles = makeStyles(
@@ -122,7 +123,7 @@ const Attributes: React.FC<AttributesProps> = ({
   errors,
   title,
   onAttributeSelectBlur,
-  entityId = "_defaultId",
+  richTextGetters,
   ...props
 }) => {
   const intl = useIntl();
@@ -170,11 +171,11 @@ const Attributes: React.FC<AttributesProps> = ({
                 <React.Fragment key={attribute.id}>
                   {attributeIndex > 0 && <Hr />}
                   <AttributeRow
-                    entityId={entityId}
                     attribute={attribute}
                     attributeValues={attributeValues}
                     error={error}
                     onAttributeSelectBlur={onAttributeSelectBlur}
+                    richTextGetters={richTextGetters}
                     {...props}
                   />
                 </React.Fragment>

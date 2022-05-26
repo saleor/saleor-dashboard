@@ -7,6 +7,7 @@ export interface GridProps {
   children: React.ReactNodeArray | React.ReactNode;
   className?: string;
   variant?: GridVariant;
+  richText?: boolean;
 }
 
 const useStyles = makeStyles(
@@ -31,13 +32,18 @@ const useStyles = makeStyles(
     },
     uniform: {
       gridTemplateColumns: "1fr 1fr"
+    },
+    richText: {
+      "&& > div": {
+        overflow: "visible"
+      }
     }
   }),
   { name: "Grid" }
 );
 
 export const Grid: React.FC<GridProps> = props => {
-  const { className, children, variant } = props;
+  const { className, children, variant, richText } = props;
 
   const classes = useStyles(props);
 
@@ -46,7 +52,8 @@ export const Grid: React.FC<GridProps> = props => {
       className={classNames(className, classes.root, {
         [classes.default]: variant === "default",
         [classes.inverted]: variant === "inverted",
-        [classes.uniform]: variant === "uniform"
+        [classes.uniform]: variant === "uniform",
+        [classes.richText]: richText
       })}
     >
       {children}
