@@ -13,7 +13,8 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
-  createPaginationState
+  createPaginationState,
+  PaginatorContext
 } from "@saleor/hooks/usePaginator";
 import { buttonMessages, commonMessages } from "@saleor/intl";
 import { getStringOrPlaceholder, maybe } from "@saleor/misc";
@@ -36,7 +37,6 @@ interface MenuListProps {
 const MenuList: React.FC<MenuListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const paginate = usePaginator();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
@@ -72,11 +72,11 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
     variables: queryVariables
   });
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    maybe(() => data.menus.pageInfo),
+  const paginationValues = usePaginator({
+    pageInfo: maybe(() => data.menus.pageInfo),
     paginationState,
-    params
-  );
+    queryString: params
+  });
 
   const [menuCreate, menuCreateOpts] = useMenuCreateMutation({
     onCompleted: data => {
@@ -126,7 +126,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
   const handleSort = createSortHandler(navigate, menuListUrl, params);
 
   return (
-    <>
+    <PaginatorContext.Provider value={paginationValues}>
       <MenuListPage
         disabled={loading}
         menus={mapEdgesToItems(data?.menus)}
@@ -139,11 +139,8 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
             })
           )
         }
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
         onSort={handleSort}
-        pageInfo={pageInfo}
         isChecked={isSelected}
         selected={listElements.length}
         sort={getSortParams(params)}
@@ -242,7 +239,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
           />
         </DialogContentText>
       </ActionDialog>
-    </>
+    </PaginatorContext.Provider>
   );
 };
 export default MenuList;
