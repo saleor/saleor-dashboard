@@ -91,13 +91,37 @@ function usePaginator({
   return {
     nextPageHref,
     prevPageHref,
+    paginatorType: "link" as const,
     ...newPageInfo
   };
 }
 
 export default usePaginator;
 
-export type PaginatorContextValues = ReturnType<typeof usePaginator>;
+export interface PaginatorContextValuesCommon {
+  hasNextPage?: boolean;
+  hasPreviousPage?: boolean;
+  endCursor?: string;
+  startCursor?: string;
+}
+
+export type PaginatorContextValues = PaginatorContextValuesCommon &
+  (
+    | {
+        paginatorType: "link";
+        nextPageHref?: string;
+        prevPageHref?: string;
+        loadNextPage?: never;
+        loadPreviousPage?: never;
+      }
+    | {
+        paginatorType: "click";
+        nextPageHref?: never;
+        prevPageHref?: never;
+        loadNextPage: () => void;
+        loadPreviousPage: () => void;
+      }
+  );
 
 export const PaginatorContext = createContext<PaginatorContextValues | null>(
   null

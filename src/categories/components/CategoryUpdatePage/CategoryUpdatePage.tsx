@@ -45,17 +45,11 @@ export interface CategoryUpdatePageProps
   category: CategoryDetailsQuery["category"];
   products: RelayToFlat<CategoryDetailsQuery["category"]["products"]>;
   subcategories: RelayToFlat<CategoryDetailsQuery["category"]["children"]>;
-  pageInfo: {
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
-  };
   saveButtonBarState: ConfirmButtonTransitionState;
   addProductHref: string;
   onImageDelete: () => void;
   onSubmit: (data: CategoryUpdateData) => SubmitPromise;
   onImageUpload(file: File);
-  onNextPage();
-  onPreviousPage();
   onDelete();
 }
 
@@ -69,13 +63,10 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   category,
   disabled,
   errors,
-  pageInfo,
   products,
   saveButtonBarState,
   subcategories,
   onDelete,
-  onNextPage,
-  onPreviousPage,
   onSubmit,
   onImageDelete,
   onImageUpload,
@@ -191,14 +182,11 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                 disabled={disabled}
                 isChecked={isChecked}
                 isRoot={false}
-                pageInfo={pageInfo}
                 selected={selected}
                 sort={undefined}
                 toggle={toggle}
                 toggleAll={toggleAll}
                 toolbar={subcategoryListToolbar}
-                onNextPage={onNextPage}
-                onPreviousPage={onPreviousPage}
                 onSort={() => undefined}
               />
             </Card>
@@ -209,9 +197,6 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               categoryName={category?.name}
               products={products}
               disabled={disabled}
-              pageInfo={pageInfo}
-              onNextPage={onNextPage}
-              onPreviousPage={onPreviousPage}
               toggle={toggle}
               toggleAll={toggleAll}
               selected={selected}

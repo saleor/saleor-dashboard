@@ -5,7 +5,9 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import TableHead from "@saleor/components/TableHead";
-import TablePagination from "@saleor/components/TablePagination";
+import TablePagination, {
+  TablePaginationWithContext
+} from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { CategoryDetailsQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -59,14 +61,11 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
   const {
     disabled,
     isChecked,
-    pageInfo,
     products,
     selected,
     toggle,
     toggleAll,
-    toolbar,
-    onNextPage,
-    onPreviousPage
+    toolbar
   } = props;
 
   const classes = useStyles(props);
@@ -100,15 +99,7 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
         </TableHead>
         <TableFooter>
           <TableRow>
-            <TablePagination
-              colSpan={numberOfColumns}
-              hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-              onNextPage={onNextPage}
-              hasPreviousPage={
-                pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-              }
-              onPreviousPage={onPreviousPage}
-            />
+            <TablePaginationWithContext colSpan={numberOfColumns} />
           </TableRow>
         </TableFooter>
         <TableBody>

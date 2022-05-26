@@ -21,6 +21,7 @@ import useLocalPaginator, {
 } from "@saleor/hooks/useLocalPaginator";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { PaginatorContext } from "@saleor/hooks/usePaginator";
 import { commonMessages, errorMessages } from "@saleor/intl";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -174,7 +175,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     CategoryUrlQueryParams
   >(navigate, params => categoryUrl(id, params), params);
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
+  const { pageInfo, ...paginationFunctions } = paginate(
     activeTab === CategoryPageTab.categories
       ? maybe(() => data.category.children.pageInfo)
       : maybe(() => data.category.products.pageInfo),
@@ -208,7 +209,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   );
 
   return (
-    <>
+    <PaginatorContext.Provider value={{ ...pageInfo, ...paginationFunctions }}>
       <WindowTitle title={maybe(() => data.category.name)} />
       <CategoryUpdatePage
         categoryId={id}
@@ -239,9 +240,6 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
             }
           })
         }
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
-        pageInfo={pageInfo}
         onSubmit={handleSubmit}
         products={mapEdgesToItems(data?.category?.products)}
         saveButtonBarState={updateResult.status}
@@ -371,7 +369,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
           />
         </DialogContentText>
       </ActionDialog>
-    </>
+    </PaginatorContext.Provider>
   );
 };
 export default CategoryDetails;

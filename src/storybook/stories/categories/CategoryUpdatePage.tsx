@@ -26,13 +26,7 @@ const updateProps: Omit<CategoryUpdatePageProps, "classes"> = {
   onDelete: () => undefined,
   onImageDelete: () => undefined,
   onImageUpload: () => undefined,
-  onNextPage: undefined,
-  onPreviousPage: undefined,
   onSubmit: () => undefined,
-  pageInfo: {
-    hasNextPage: true,
-    hasPreviousPage: true
-  },
   productListToolbar: null,
   products: mapEdgesToItems(category.products),
   saveButtonBarState: "default",

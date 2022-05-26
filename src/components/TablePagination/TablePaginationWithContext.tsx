@@ -18,9 +18,25 @@ export const TablePaginationWithContext = (
   const {
     hasNextPage,
     hasPreviousPage,
-    nextPageHref,
-    prevPageHref
+    paginatorType,
+    ...paginationProps
   } = usePaginatorContext();
+
+  if (paginatorType === "click") {
+    const { loadNextPage, loadPreviousPage } = paginationProps;
+
+    return (
+      <TablePagination
+        {...props}
+        hasNextPage={hasNextPage}
+        hasPreviousPage={hasPreviousPage}
+        onNextPage={loadNextPage}
+        onPreviousPage={loadPreviousPage}
+      />
+    );
+  }
+
+  const { prevPageHref, nextPageHref } = paginationProps;
 
   return (
     <TablePagination
