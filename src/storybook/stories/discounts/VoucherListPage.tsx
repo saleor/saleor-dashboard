@@ -68,6 +68,7 @@ const props: VoucherListPageProps = {
 
 storiesOf("Views / Discounts / Voucher list", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("default", () => <VoucherListPage {...props} />)
   .add("loading", () => <VoucherListPage {...props} vouchers={undefined} />)
   .add("no data", () => <VoucherListPage {...props} vouchers={[]} />)
