@@ -34,7 +34,8 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
-  createPaginationState
+  createPaginationState,
+  PaginatorContext
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
@@ -86,7 +87,6 @@ interface ProductListProps {
 export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const paginate = usePaginator();
   const { queue } = useBackgroundTask();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
@@ -341,14 +341,14 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     channelOpts
   );
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    data?.products?.pageInfo,
+  const paginationValues = usePaginator({
+    pageInfo: data?.products?.pageInfo,
     paginationState,
-    params
-  );
+    queryString: params
+  });
 
   return (
-    <>
+    <PaginatorContext.Provider value={paginationValues}>
       <ProductListPage
         activeAttributeSortId={params.attributeId}
         sort={{
@@ -387,10 +387,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         products={mapEdgesToItems(data?.products)}
         onColumnQueryChange={availableInGridAttributesOpts.search}
         onFetchMore={availableInGridAttributesOpts.loadMore}
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
-        pageInfo={pageInfo}
         onAll={resetFilters}
         toolbar={
           <IconButton
@@ -497,7 +494,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         onSubmit={handleFilterTabDelete}
         tabName={maybe(() => tabs[currentTab - 1].name, "...")}
       />
-    </>
+    </PaginatorContext.Provider>
   );
 };
 export default ProductList;
