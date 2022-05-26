@@ -57,6 +57,15 @@ export interface ListProps<TColumns extends string = string> {
   filterDependency?: FilterElement;
 }
 
+export interface PaginateListProps {
+  pageInfo?: {
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  };
+  onNextPage: () => void;
+  onPreviousPage: () => void;
+}
+
 export interface SortPage<TSortKey extends string> {
   sort: Sort<TSortKey>;
   onSort: (field: TSortKey, id?: string) => void;
