@@ -2,45 +2,19 @@ import { Card } from "@material-ui/core";
 import ListItemLink from "@saleor/components/ListItemLink";
 import Skeleton from "@saleor/components/Skeleton";
 import { TaxConfigurationFragment } from "@saleor/graphql";
-import {
-  List,
-  ListHeader,
-  ListItem,
-  ListItemCell,
-  makeStyles
-} from "@saleor/macaw-ui";
+import { List, ListHeader, ListItem, ListItemCell } from "@saleor/macaw-ui";
 import { taxesMessages } from "@saleor/taxes/messages";
 import { channelsListUrl } from "@saleor/taxes/urls";
 import clsx from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
+import { useStyles } from "./styles";
+
 interface TaxChannelsMenuProps {
   channels: Array<TaxConfigurationFragment["channel"]>;
   selectedChannelId: string;
 }
-
-const useStyles = makeStyles(
-  theme => ({
-    clickable: {
-      cursor: "pointer"
-    },
-    scrollWrapper: {
-      overflowY: "scroll",
-      maxHeight: 600
-    },
-    selected: {
-      "&&&&::before": {
-        position: "absolute",
-        left: 0,
-        width: "4px",
-        height: "100%",
-        backgroundColor: theme.palette.saleor.active[1]
-      }
-    }
-  }),
-  { name: "TaxChannelsMenu" }
-);
 
 export const TaxChannelsMenu: React.FC<TaxChannelsMenuProps> = ({
   channels,

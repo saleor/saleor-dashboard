@@ -10,28 +10,11 @@ import {
 } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import Grid from "@saleor/components/Grid";
-import { makeStyles } from "@saleor/macaw-ui";
 import { taxesMessages } from "@saleor/taxes/messages";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-const useStyles = makeStyles(
-  () => ({
-    supportHeader: {
-      fontWeight: 500,
-      fontSize: "12px",
-      lineHeight: "160%",
-      letterSpacing: "0.1em",
-      textTransform: "uppercase"
-    },
-    showCheckboxShadows: {
-      "&&": {
-        overflow: "visible"
-      }
-    }
-  }),
-  { name: "TaxSettingsCard" }
-);
+import { useStyles } from "./styles";
 
 export const TaxSettingsCard: React.FC = () => {
   const intl = useIntl();
