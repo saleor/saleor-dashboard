@@ -8,9 +8,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
-import TablePagination, {
-  TablePaginationWithContext
-} from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { CustomerListUrlSortField, customerUrl } from "@saleor/customers/urls";
 import { ListCustomersQuery, PermissionEnum } from "@saleor/graphql";
