@@ -40,6 +40,7 @@ import useLocalPaginator, {
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { PaginatorContext } from "@saleor/hooks/usePaginator";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
@@ -251,7 +252,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
       }
     });
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
+  const { pageInfo, ...paginationValues } = paginate(
     tabPageInfo,
     paginationState
   );
@@ -269,7 +270,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
   );
 
   return (
-    <>
+    <PaginatorContext.Provider value={{ ...pageInfo, ...paginationValues }}>
       <WindowTitle title={intl.formatMessage(sectionNames.sales)} />
       {!!allChannels?.length && (
         <ChannelsAvailabilityDialog
@@ -295,11 +296,8 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
         disabled={loading || saleCataloguesRemoveOpts.loading}
         errors={saleUpdateOpts.data?.saleUpdate.errors || []}
         selectedChannelId={selectedChannel}
-        pageInfo={pageInfo}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
         onCategoryAssign={() => openModal("assign-category")}
         onCollectionAssign={() => openModal("assign-collection")}
         onCollectionUnassign={collectionId =>
@@ -589,7 +587,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
           />
         </DialogContentText>
       </ActionDialog>
-    </>
+    </PaginatorContext.Provider>
   );
 };
 export default SaleDetails;
