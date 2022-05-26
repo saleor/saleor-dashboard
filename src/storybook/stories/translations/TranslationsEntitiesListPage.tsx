@@ -50,12 +50,6 @@ storiesOf("Views / Translations / Entity list", module)
           }
         ]}
         getRowHref={() => ""}
-        onNextPage={() => undefined}
-        onPreviousPage={() => undefined}
-        pageInfo={{
-          hasNextPage: true,
-          hasPreviousPage: false
-        }}
       />
     </TranslationsEntitiesListPage>
   ));

@@ -1,6 +1,7 @@
 import { ShippingMethodTypeEnum } from "@saleor/graphql";
 import { shippingZone } from "@saleor/shipping/fixtures";
 import Decorator from "@saleor/storybook//Decorator";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -47,11 +48,9 @@ const props: ShippingZoneRatesPageProps = {
   isChecked: () => undefined,
   onChannelsChange: () => undefined,
   onDelete: () => undefined,
-  onNextPage: () => undefined,
   onPostalCodeAssign: () => undefined,
   onPostalCodeInclusionChange: () => undefined,
   onPostalCodeUnassign: () => undefined,
-  onPreviousPage: () => undefined,
   onProductAssign: () => undefined,
   onProductUnassign: () => undefined,
   onSubmit: () => undefined,

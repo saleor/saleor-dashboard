@@ -1,5 +1,6 @@
 import { VoucherListUrlSortField } from "@saleor/discounts/urls";
 import { DiscountStatusEnum, VoucherDiscountType } from "@saleor/graphql";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
