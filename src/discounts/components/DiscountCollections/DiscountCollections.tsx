@@ -13,7 +13,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@saleor/components/TableHead";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { SaleDetailsFragment, VoucherDetailsFragment } from "@saleor/graphql";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
@@ -38,11 +38,8 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
   const {
     discount: sale,
     disabled,
-    pageInfo,
     onCollectionAssign,
     onCollectionUnassign,
-    onPreviousPage,
-    onNextPage,
     isChecked,
     selected,
     toggle,
@@ -92,15 +89,7 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
         </TableHead>
         <TableFooter>
           <TableRow>
-            <TablePagination
-              colSpan={numberOfColumns}
-              hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-              onNextPage={onNextPage}
-              hasPreviousPage={
-                pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-              }
-              onPreviousPage={onPreviousPage}
-            />
+            <TablePaginationWithContext colSpan={numberOfColumns} />
           </TableRow>
         </TableFooter>
         <TableBody>
