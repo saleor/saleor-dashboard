@@ -70,6 +70,7 @@ const props: ShippingZoneRatesPageProps = {
 
 storiesOf("Views / Shipping / Shipping rate", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("create price rate", () => <ShippingZoneRatesPage {...props} />)
   .add("create weight rate", () => (
     <ShippingZoneRatesPage {...props} variant={ShippingMethodTypeEnum.WEIGHT} />

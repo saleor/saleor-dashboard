@@ -13,7 +13,9 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import TableHead from "@saleor/components/TableHead";
-import TablePagination from "@saleor/components/TablePagination";
+import TablePagination, {
+  TablePaginationWithContext
+} from "@saleor/components/TablePagination";
 import { ShippingZoneQuery } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
@@ -58,10 +60,7 @@ const numberOfColumns = 3;
 const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
   const {
     disabled,
-    pageInfo,
     products,
-    onNextPage,
-    onPreviousPage,
     onProductAssign,
     onProductUnassign,
     isChecked,
@@ -112,16 +111,9 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
             </TableHead>
             <TableFooter>
               <TableRow>
-                <TablePagination
+                <TablePaginationWithContext
                   colSpan={numberOfColumns}
-                  hasNextPage={
-                    pageInfo && !disabled ? pageInfo.hasNextPage : false
-                  }
-                  onNextPage={onNextPage}
-                  hasPreviousPage={
-                    pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-                  }
-                  onPreviousPage={onPreviousPage}
+                  disabled={disabled}
                 />
               </TableRow>
             </TableFooter>
