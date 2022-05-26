@@ -43,12 +43,9 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
   disabled,
   limits,
   initialSearch,
-  pageInfo,
   settings,
   tabs,
   onAll,
-  onNextPage,
-  onPreviousPage,
   onRemove,
   onSearchChange,
   onTabChange,
@@ -133,10 +130,7 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
         <WarehouseList
           warehouses={warehouses}
           disabled={disabled}
-          pageInfo={pageInfo}
           settings={settings}
-          onNextPage={onNextPage}
-          onPreviousPage={onPreviousPage}
           onRemove={onRemove}
           onUpdateListSettings={onUpdateListSettings}
           {...listProps}

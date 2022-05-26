@@ -13,7 +13,8 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
-  createPaginationState
+  createPaginationState,
+  PaginatorContext
 } from "@saleor/hooks/usePaginator";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { getMutationStatus, maybe } from "@saleor/misc";
@@ -51,7 +52,6 @@ export interface WarehouseListProps {
 const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const paginate = usePaginator();
   const { updateListSettings, settings } = useListSettings(
     ListViews.SALES_LIST
   );
@@ -125,18 +125,18 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
     handleTabChange(tabs.length + 1);
   };
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    maybe(() => data.warehouses.pageInfo),
+  const paginationValues = usePaginator({
+    pageInfo: maybe(() => data.warehouses.pageInfo),
     paginationState,
-    params
-  );
+    queryString: params
+  });
 
   const handleSort = createSortHandler(navigate, warehouseListUrl, params);
 
   const deleteTransitionState = getMutationStatus(deleteWarehouseOpts);
 
   return (
-    <>
+    <PaginatorContext.Provider value={paginationValues}>
       <WindowTitle title={intl.formatMessage(sectionNames.warehouses)} />
       <WarehouseListPage
         currentTab={currentTab}
@@ -151,9 +151,6 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
         warehouses={mapEdgesToItems(data?.warehouses)}
         settings={settings}
         disabled={loading}
-        pageInfo={pageInfo}
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
         onRemove={id => openModal("delete", { id })}
         onSort={handleSort}
         onUpdateListSettings={updateListSettings}
@@ -185,7 +182,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
         onSubmit={handleTabDelete}
         tabName={maybe(() => tabs[currentTab - 1].name, "...")}
       />
-    </>
+    </PaginatorContext.Provider>
   );
 };
 
