@@ -1,5 +1,6 @@
 import { SaleListUrlSortField } from "@saleor/discounts/urls";
 import { DiscountStatusEnum, DiscountValueTypeEnum } from "@saleor/graphql";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -59,6 +60,7 @@ const props: SaleListPageProps = {
 
 storiesOf("Views / Discounts / Sale list", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("default", () => <SaleListPage {...props} />)
   .add("loading", () => <SaleListPage {...props} sales={undefined} />)
   .add("no data", () => <SaleListPage {...props} sales={[]} />)
