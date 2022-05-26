@@ -97,9 +97,11 @@ function usePaginator({
 
 export default usePaginator;
 
-export const PaginatorContext = createContext<ReturnType<
-  typeof usePaginator
-> | null>(null);
+export type PaginatorContextValues = ReturnType<typeof usePaginator>;
+
+export const PaginatorContext = createContext<PaginatorContextValues | null>(
+  null
+);
 
 export const usePaginatorContext = () => {
   const context = useContext(PaginatorContext);

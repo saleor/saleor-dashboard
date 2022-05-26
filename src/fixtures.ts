@@ -5,6 +5,7 @@ import {
   UserDetailsQuery
 } from "@saleor/graphql";
 
+import { PaginatorContextValues } from "./hooks/usePaginator";
 import {
   FetchMoreProps,
   FilterPageProps,
@@ -301,6 +302,15 @@ export const tabPageProps: TabPageProps = {
   onTabDelete: () => undefined,
   onTabSave: () => undefined,
   tabs: ["Tab X"]
+};
+
+export const paginatorContextValues: PaginatorContextValues = {
+  endCursor: "",
+  startCursor: "",
+  hasNextPage: false,
+  hasPreviousPage: false,
+  nextPageHref: "",
+  prevPageHref: ""
 };
 
 export const searchPageProps: SearchPageProps = {
