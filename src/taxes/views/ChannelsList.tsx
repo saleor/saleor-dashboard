@@ -26,6 +26,10 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ id }) => {
     navigate
   });
 
+  if (id === "undefined" && taxConfigurations) {
+    return null;
+  }
+
   return (
     <TaxChannelsPage
       taxConfigurations={taxConfigurations} // TODO: change fixture to query data
