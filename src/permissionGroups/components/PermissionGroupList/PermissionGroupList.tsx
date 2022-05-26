@@ -9,7 +9,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellHeader from "@saleor/components/TableCellHeader";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { PermissionGroupFragment } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
@@ -65,16 +65,7 @@ interface PermissionGroupListProps
 }
 
 const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
-  const {
-    disabled,
-    permissionGroups,
-    pageInfo,
-    onDelete,
-    onNextPage,
-    onPreviousPage,
-    onSort,
-    sort
-  } = props;
+  const { disabled, permissionGroups, onDelete, onSort, sort } = props;
   const classes = useStyles(props);
 
   return (
@@ -107,14 +98,9 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
       </TableHead>
       <TableFooter>
         <TableRow>
-          <TablePagination
+          <TablePaginationWithContext
             colSpan={numberOfColumns}
-            hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-            onNextPage={onNextPage}
-            hasPreviousPage={
-              pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-            }
-            onPreviousPage={onPreviousPage}
+            disabled={disabled}
           />
         </TableRow>
       </TableFooter>
