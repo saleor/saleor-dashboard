@@ -26,7 +26,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ id }) => {
 
   return (
     <TaxChannelsPage
-      taxConfigurations={taxConfigurations} // sample data
+      taxConfigurations={taxConfigurations} // TODO: change fixture to query data
       countries={shop?.countries}
       selectedChannelId={id}
       handleTabChange={handleTabChange}
