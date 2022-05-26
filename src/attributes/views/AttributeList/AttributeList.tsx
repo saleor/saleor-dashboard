@@ -18,7 +18,8 @@ import {
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
-  createPaginationState
+  createPaginationState,
+  PaginatorContext
 } from "@saleor/hooks/usePaginator";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -48,7 +49,6 @@ interface AttributeListProps {
 
 const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
   const navigate = useNavigator();
-  const paginate = usePaginator();
   const notify = useNotifier();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
@@ -131,16 +131,16 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
     handleTabChange(tabs.length + 1);
   };
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    maybe(() => data.attributes.pageInfo),
+  const paginationValues = usePaginator({
+    pageInfo: maybe(() => data.attributes.pageInfo),
     paginationState,
-    params
-  );
+    queryString: params
+  });
 
   const handleSort = createSortHandler(navigate, attributeListUrl, params);
 
   return (
-    <>
+    <PaginatorContext.Provider value={paginationValues}>
       <AttributeListPage
         attributes={mapEdgesToItems(data?.attributes)}
         currentTab={currentTab}
@@ -150,14 +150,11 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
         isChecked={isSelected}
         onAll={resetFilters}
         onFilterChange={changeFilters}
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
         onSearchChange={handleSearchChange}
         onSort={handleSort}
         onTabChange={handleTabChange}
         onTabDelete={() => openModal("delete-search")}
         onTabSave={() => openModal("save-search")}
-        pageInfo={pageInfo}
         selected={listElements.length}
         sort={getSortParams(params)}
         tabs={tabs.map(tab => tab.name)}
@@ -199,7 +196,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
         onSubmit={handleTabDelete}
         tabName={maybe(() => tabs[currentTab - 1].name, "...")}
       />
-    </>
+    </PaginatorContext.Provider>
   );
 };
 AttributeList.displayName = "AttributeList";
