@@ -12,13 +12,13 @@ import { FormattedMessage } from "react-intl";
 import { useStyles } from "./styles";
 
 interface TaxChannelsMenuProps {
-  channels: Array<TaxConfigurationFragment["channel"]>;
-  selectedChannelId: string;
+  configurations: TaxConfigurationFragment[];
+  selectedConfigurationId: string;
 }
 
 export const TaxChannelsMenu: React.FC<TaxChannelsMenuProps> = ({
-  channels,
-  selectedChannelId
+  configurations,
+  selectedConfigurationId
 }) => {
   const classes = useStyles();
   return (
@@ -32,15 +32,15 @@ export const TaxChannelsMenu: React.FC<TaxChannelsMenuProps> = ({
               </ListItemCell>
             </ListItem>
           </ListHeader>
-          {channels?.map(channel => (
+          {configurations?.map(configuration => (
             <ListItemLink
-              key={channel.id}
+              key={configuration.id}
               className={clsx(classes.clickable, {
-                [classes.selected]: channel.id === selectedChannelId
+                [classes.selected]: configuration.id === selectedConfigurationId
               })}
-              href={channelsListUrl(channel.id)}
+              href={channelsListUrl(configuration.id)}
             >
-              <ListItemCell>{channel.name}</ListItemCell>
+              <ListItemCell>{configuration.channel.name}</ListItemCell>
             </ListItemLink>
           )) ?? <Skeleton />}
         </List>

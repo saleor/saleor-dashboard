@@ -26,7 +26,7 @@ import TaxSettingsCard from "./TaxSettingsCard";
 interface TaxChannelsPageProps {
   taxConfigurations: TaxConfigurationFragment[];
   countries: CountryFragment[];
-  selectedChannelId: string;
+  selectedConfigurationId: string;
   handleTabChange: (tab: string) => void;
 }
 
@@ -34,14 +34,14 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
   const {
     taxConfigurations,
     countries,
-    selectedChannelId,
+    selectedConfigurationId,
     handleTabChange
   } = props;
 
   const intl = useIntl();
 
   const currentTaxConfiguration = taxConfigurations.find(
-    taxConfigurations => taxConfigurations.channel.id === selectedChannelId
+    taxConfigurations => taxConfigurations.id === selectedConfigurationId
   );
 
   return (
@@ -64,10 +64,8 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
       <VerticalSpacer spacing={2} />
       <Grid variant="inverted">
         <TaxChannelsMenu
-          channels={taxConfigurations.map(
-            taxConfiguration => taxConfiguration.channel
-          )}
-          selectedChannelId={selectedChannelId}
+          configurations={taxConfigurations}
+          selectedConfigurationId={currentTaxConfiguration?.id}
         />
         <div>
           <TaxSettingsCard />

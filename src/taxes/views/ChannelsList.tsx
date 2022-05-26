@@ -5,6 +5,7 @@ import React from "react";
 import { taxConfigurations } from "../fixtures";
 import TaxChannelsPage from "../pages/TaxChannelsPage";
 import { channelsListUrl, taxTabSectionUrl } from "../urls";
+import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
 
 interface ChannelsListProps {
   id: string;
@@ -18,17 +19,18 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ id }) => {
     navigate(taxTabSectionUrl(tab));
   };
 
-  React.useEffect(() => {
-    if (id === "undefined" && taxConfigurations) {
-      navigate(channelsListUrl(taxConfigurations[0].channel.id));
-    }
-  }, [id, taxConfigurations]);
+  useTaxUrlRedirect({
+    id,
+    data: taxConfigurations,
+    urlFunction: channelsListUrl,
+    navigate
+  });
 
   return (
     <TaxChannelsPage
       taxConfigurations={taxConfigurations} // TODO: change fixture to query data
       countries={shop?.countries}
-      selectedChannelId={id}
+      selectedConfigurationId={id}
       handleTabChange={handleTabChange}
     />
   );

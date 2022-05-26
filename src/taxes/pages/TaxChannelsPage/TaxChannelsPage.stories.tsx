@@ -9,7 +9,7 @@ import TaxChannelsPage from "./TaxChannelsPage";
 const props = {
   taxConfigurations,
   countries,
-  selectedChannelId: taxConfigurations[0].channel.id,
+  selectedConfigurationId: taxConfigurations[0].id,
   handleTabChange: () => undefined
 };
 
