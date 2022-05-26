@@ -2,8 +2,8 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useShop from "@saleor/hooks/useShop";
 import React from "react";
 
-import TaxChannelsPage from "../components/TaxChannelsPage";
 import { taxConfigurations } from "../fixtures";
+import TaxChannelsPage from "../pages/TaxChannelsPage";
 import { channelsListUrl, taxTabSectionUrl } from "../urls";
 
 interface ChannelsListProps {

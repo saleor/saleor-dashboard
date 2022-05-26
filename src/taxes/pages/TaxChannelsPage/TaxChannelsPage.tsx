@@ -19,9 +19,9 @@ import { taxesMessages } from "@saleor/taxes/messages";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import TaxChannelsMenu from "../TaxChannelsMenu";
-import TaxCountryExceptionListItem from "../TaxCountryExceptionListItem";
-import TaxSettingsCard from "../TaxSettingsCard";
+import TaxChannelsMenu from "./TaxChannelsMenu";
+import TaxCountryExceptionListItem from "./TaxCountryExceptionListItem";
+import TaxSettingsCard from "./TaxSettingsCard";
 
 interface TaxChannelsPageProps {
   taxConfigurations: TaxConfigurationFragment[];
