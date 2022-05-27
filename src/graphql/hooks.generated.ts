@@ -2078,6 +2078,7 @@ export const ProductVariantFragmentDoc = gql`
       url
     }
     channelListings {
+      id
       publicationDate
       isPublished
       channel {

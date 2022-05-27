@@ -308,6 +308,7 @@ export const fragmentVariant = gql`
         url
       }
       channelListings {
+        id
         publicationDate
         isPublished
         channel {
