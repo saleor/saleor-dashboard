@@ -1,4 +1,10 @@
 {
+  "parsingError": {
+    "time": 1603898483525,
+    "blocks": [
+      {"type": "parsingError", "data": ""}
+    ]
+  },
   "richTextEditor": {
     "time": 1603898483525,
     "blocks": [

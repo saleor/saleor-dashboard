@@ -7,6 +7,8 @@ import Quote from "@editorjs/quote";
 import strikethroughIcon from "@saleor/icons/StrikethroughIcon";
 import createGenericInlineTool from "editorjs-inline-tool";
 
+import { ParsingError } from "./ParsingError";
+
 const inlineToolbar = ["link", "bold", "italic", "strikethrough"];
 
 export const tools: Record<string, ToolConstructable | ToolSettings> = {
@@ -38,5 +40,8 @@ export const tools: Record<string, ToolConstructable | ToolSettings> = {
     shortcut: "CMD+S",
     tagName: "s",
     toolboxIcon: strikethroughIcon
-  })
+  }),
+  parsingError: {
+    class: ParsingError
+  }
 };

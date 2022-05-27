@@ -29,4 +29,10 @@ storiesOf("Generics / Rich text editor", module)
   .add("error", () => <RichTextEditor {...props} error={true} />)
   .add("static", () => (
     <RichTextEditorContent {...props} value={defaultValue} />
+  ))
+  .add("parsing error", () => (
+    <RichTextEditor
+      {...props}
+      defaultValue={fixtures.parsingError as OutputData}
+    />
   ));
