@@ -36,7 +36,7 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
   const isPreorder = !!line.variant?.preorder;
   const lineFormQuantity = isPreorder
     ? 0
-    : formsetData[lineIndex].value?.[0]?.quantity;
+    : formsetData[lineIndex]?.value?.[0]?.quantity;
 
   const overfulfill = lineFormQuantity > line.quantityToFulfill;
   const warehouseStock = getWarehouseStock(line?.variant?.stocks, warehouseId);
