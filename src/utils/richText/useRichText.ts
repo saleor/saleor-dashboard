@@ -24,6 +24,11 @@ export function useRichText({ initial, triggerChange }: UseRichTextOptions) {
   };
 
   const defaultValue = useMemo<OutputData | undefined>(() => {
+    if (initial === undefined) {
+      setIsReadyForMount(true);
+      return "";
+    }
+
     try {
       const result = JSON.parse(initial);
       setIsReadyForMount(true);
