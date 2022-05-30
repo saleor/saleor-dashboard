@@ -163,6 +163,7 @@ function usePageForm(
 
   const richText = useRichText({
     initial: pageExists ? page?.content : null,
+    loading: pageExists ? !page : false,
     triggerChange
   });
 

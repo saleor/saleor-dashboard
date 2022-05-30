@@ -4,10 +4,15 @@ import { useMemo, useRef, useState } from "react";
 
 interface UseRichTextOptions {
   initial: string | null;
+  loading?: boolean;
   triggerChange: () => void;
 }
 
-export function useRichText({ initial, triggerChange }: UseRichTextOptions) {
+export function useRichText({
+  initial,
+  loading,
+  triggerChange
+}: UseRichTextOptions) {
   const editorRef = useRef<EditorCore>(null);
   const [isReadyForMount, setIsReadyForMount] = useState(false);
 
@@ -24,6 +29,10 @@ export function useRichText({ initial, triggerChange }: UseRichTextOptions) {
   };
 
   const defaultValue = useMemo<OutputData | undefined>(() => {
+    if (loading) {
+      return;
+    }
+
     if (initial === undefined) {
       setIsReadyForMount(true);
       return "";

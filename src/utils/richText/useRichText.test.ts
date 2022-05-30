@@ -23,13 +23,15 @@ describe("useRichText", () => {
   it("properly informs RichTextEditor when data is ready to mount", () => {
     // eslint-disable-next-line prefer-const
     let initial: string | undefined;
+    let loading = true;
     const { result, rerender } = renderHook(() =>
-      useRichText({ initial, triggerChange })
+      useRichText({ initial, loading, triggerChange })
     );
 
     expect(result.current.isReadyForMount).toBe(false);
 
     initial = JSON.stringify(fixtures.short); // for JSON.parse()
+    loading = false;
     rerender();
 
     expect(result.current.defaultValue).toStrictEqual(fixtures.short);
@@ -39,13 +41,15 @@ describe("useRichText", () => {
   it("returns undefined when JSON cannot be parsed", () => {
     // eslint-disable-next-line prefer-const
     let initial: string | undefined;
+    let loading = true;
     const { result, rerender } = renderHook(() =>
-      useRichText({ initial, triggerChange })
+      useRichText({ initial, loading, triggerChange })
     );
 
     expect(result.current.isReadyForMount).toBe(false);
 
     initial = "this-isnt-valid-json";
+    loading = false;
     rerender();
 
     expect(result.current.defaultValue).toBe(undefined);
