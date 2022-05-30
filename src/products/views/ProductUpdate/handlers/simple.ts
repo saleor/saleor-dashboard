@@ -158,7 +158,9 @@ export function createSimpleProductUpdateHandler(
           }
         });
 
-        await updateChannels(getChannelsVariables(product, allChannels, data));
+        await updateChannels({
+          variables: getChannelsVariables(product, allChannels, data)
+        });
 
         const result = await updateSimpleProduct(
           getSimpleProductVariables(productVariables, data, variantId)

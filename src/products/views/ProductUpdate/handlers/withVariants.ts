@@ -102,7 +102,9 @@ export function createProductWithVariantsUpdateHandler(
     const result = await updateProduct(productVariables);
     errors = [...errors, ...result.data.productUpdate.errors];
 
-    await updateChannels(getChannelsVariables(product, allChannels, data));
+    await updateChannels({
+      variables: getChannelsVariables(product, allChannels, data)
+    });
 
     return errors;
   };
