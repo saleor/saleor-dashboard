@@ -104,13 +104,13 @@ const ChannelWithVariantsAvailabilityItemWrapper: React.FC<ChannelAvailabilityIt
   const intl = useIntl();
 
   const { name } = channels.find(getById(channelId));
-  const { selectedVariantsIds } = channelsWithVariantsData[channelId];
+  const { availableVariants } = channelsWithVariantsData[channelId];
 
-  const variantsCount = selectedVariantsIds.length;
+  const variantsCount = availableVariants.length;
 
   const variantsLabel = areAllChannelVariantsSelected(
     variants?.map(variant => variant.id),
-    selectedVariantsIds,
+    availableVariants,
   )
     ? messages.allVariantsLabel
     : messages.variantCountLabel;

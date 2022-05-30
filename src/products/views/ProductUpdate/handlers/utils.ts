@@ -97,20 +97,13 @@ const shouldUpdateChannel = (
   return hasDataChanged && !isRemovingChannel;
 };
 
-const channelVariablesKeys = [
-  "availableForPurchaseDate",
-  "isAvailableForPurchase",
-  "isPublished",
-  "publicationDate",
-  "channelId",
-  "visibleInListings",
-  "addVariants",
-  "removeVariants",
-] as const;
 export const getChannelsVariables = (
-  { id, variants }: ProductFragment,
+  { id, variants }: Pick<ProductFragment, "id" | "variants">,
   allChannels: ChannelData[],
-  { channelsWithVariants, channelsData }: ProductUpdateSubmitData,
+  {
+    channelsWithVariants,
+    channelsData,
+  }: Pick<ProductUpdateSubmitData, "channelsWithVariants" | "channelsData">,
 ): ProductChannelListingUpdateMutationVariables => {
   const initialChannelWithVariants = getParsedChannelsWithVariantsDataFromChannels(
     channelsData,
@@ -122,7 +115,7 @@ export const getChannelsVariables = (
       channelId: id,
       availableForPurchaseDate: availableForPurchase,
       addVariants: arrayDiff(
-        initialChannelWithVariants[id].selectedVariantsIds,
+        initialChannelWithVariants[id].availableVariants,
         channelsWithVariants[id].variantsIdsToAdd,
       ).added,
       removeVariants: channelsWithVariants[id].variantsIdsToRemove,
@@ -134,10 +127,16 @@ export const getChannelsVariables = (
       shouldUpdateChannel(initialChannelWithVariants, variants, allChannels),
     )
     .map(input =>
-      pick<typeof input, typeof channelVariablesKeys[number]>(
-        input,
-        channelVariablesKeys,
-      ),
+      pick(input, [
+        "availableForPurchaseDate",
+        "isAvailableForPurchase",
+        "isPublished",
+        "publicationDate",
+        "channelId",
+        "visibleInListings",
+        "addVariants",
+        "removeVariants",
+      ]),
     );
 
   const channelsIdsToBeRemoved = listings

@@ -34,7 +34,7 @@ const props: ProductUpdatePageProps = {
   categories: [product.category],
   channelsWithVariantsData: {
     channel1: {
-      selectedVariantsIds: ["variantA"],
+      availableVariants: ["variantA"],
       variantsIdsToRemove: ["variantB"],
       variantsIdsToAdd: [],
     },
