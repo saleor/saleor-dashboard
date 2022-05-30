@@ -27,7 +27,7 @@ import { productTypeListUrl } from "@saleor/productTypes/urls";
 import { shippingZonesListUrl } from "@saleor/shipping/urls";
 import { siteSettingsUrl } from "@saleor/siteSettings/urls";
 import { staffListUrl } from "@saleor/staff/urls";
-import { taxSection } from "@saleor/taxes/urls";
+import { channelsListUrl as taxesListUrl } from "@saleor/taxes/urls";
 import { warehouseSection } from "@saleor/warehouses/urls";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
@@ -83,10 +83,10 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           icon: <Taxes />,
           permissions: [PermissionEnum.MANAGE_SETTINGS],
           title: intl.formatMessage(sectionNames.taxes),
-          url: taxSection,
-          testId: "configuration-menu-taxes",
-        },
-      ],
+          url: taxesListUrl(),
+          testId: "configuration-menu-taxes"
+        }
+      ]
     },
     {
       label: intl.formatMessage({
