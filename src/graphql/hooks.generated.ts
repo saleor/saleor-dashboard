@@ -1934,6 +1934,16 @@ export const ProductDetailsVariantFragmentDoc = gql`
   sku
   name
   margin
+  attributes {
+    attribute {
+      id
+      name
+    }
+    values {
+      id
+      name
+    }
+  }
   media {
     url(size: 200)
   }

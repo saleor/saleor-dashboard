@@ -26,11 +26,9 @@ import {
   useProductMediaReorderMutation,
   useProductVariantBulkDeleteMutation,
   useProductVariantPreorderDeactivateMutation,
-  useProductVariantReorderMutation,
   useWarehouseListQuery,
 } from "@saleor/graphql";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
-import useBulkActions from "@saleor/hooks/useBulkActions";
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -38,7 +36,6 @@ import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
 import useShop from "@saleor/hooks/useShop";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages, errorMessages } from "@saleor/intl";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import ProductVariantCreateDialog from "@saleor/products/components/ProductVariantCreateDialog";
 import ProductVariantEndPreorderDialog from "@saleor/products/components/ProductVariantEndPreorderDialog";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
@@ -62,6 +59,7 @@ import {
   ProductUrlQueryParams,
   productVariantAddUrl,
   productVariantCreatorUrl,
+  productVariantEditUrl,
 } from "../../urls";
 import {
   CHANNELS_AVAILIABILITY_MODAL_SELECTOR,
@@ -70,7 +68,6 @@ import {
 import {
   createImageReorderHandler,
   createImageUploadHandler,
-  createVariantReorderHandler,
 } from "./handlers";
 import { useProductUpdateHandler } from "./handlers/useProductUpdateHandler";
 import useChannelVariantListings from "./useChannelVariantListings";
@@ -107,9 +104,6 @@ interface ProductUpdateProps {
 export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    params.ids,
-  );
   const intl = useIntl();
   const {
     loadMore: loadMoreCategories,
@@ -163,7 +157,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const isSimpleProduct = !data?.product?.productType?.hasVariants;
 
-  const { availableChannels, channel } = useAppChannel(!isSimpleProduct);
+  const { availableChannels } = useAppChannel(!isSimpleProduct);
 
   const limitOpts = useShopLimitsQuery({
     variables: {
@@ -224,7 +218,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     onCompleted: data => {
       if (data.productVariantBulkDelete.errors.length === 0) {
         closeModal();
-        reset();
         refetch();
         limitOpts.refetch();
       }
@@ -327,11 +320,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     null,
   );
 
-  const [
-    reorderProductVariants,
-    reorderProductVariantsOpts,
-  ] = useProductVariantReorderMutation({});
-
   const handleBack = () => navigate(productListUrl());
 
   const handleVariantAdd = () => navigate(productVariantAddUrl(id));
@@ -347,10 +335,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   );
   const handleImageReorder = createImageReorderHandler(product, variables =>
     reorderProductImages({ variables }),
-  );
-
-  const handleVariantReorder = createVariantReorderHandler(product, variables =>
-    reorderProductVariants({ variables }),
   );
 
   const handleDeactivatePreorder = async () => {
@@ -379,7 +363,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     createProductImageOpts.loading ||
     deleteProductOpts.loading ||
     reorderProductImagesOpts.loading ||
-    reorderProductVariantsOpts.loading ||
     deactivatePreoderOpts.loading ||
     createProductMediaOpts.loading ||
     loading;
@@ -463,6 +446,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           />
         ))}
       <ProductUpdatePage
+        channels={availableChannels}
         productId={id}
         isSimpleProduct={isSimpleProduct}
         openChannelsModal={handleChannelsModalOpen}
@@ -497,31 +481,21 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onMediaUrlUpload={handleMediaUrlUpload}
         onSubmit={submit}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
-        onVariantsAdd={() => openModal("add-variants")}
-        onVariantReorder={handleVariantReorder}
+        onVariantBulkDelete={ids =>
+          openModal("remove-variants", {
+            ids,
+          })
+        }
+        onVariantShow={variantId =>
+          navigate(productVariantEditUrl(product.id, variantId), {
+            resetScroll: true,
+          })
+        }
         onVariantEndPreorderDialogOpen={() => setIsEndPreorderModalOpened(true)}
         onImageUpload={handleImageUpload}
         onImageDelete={handleImageDelete}
-        toolbar={
-          <IconButton
-            variant="secondary"
-            color="primary"
-            onClick={() =>
-              openModal("remove-variants", {
-                ids: listElements,
-              })
-            }
-          >
-            <DeleteIcon />
-          </IconButton>
-        }
-        isChecked={isSelected}
-        selected={listElements.length}
-        toggle={toggle}
-        toggleAll={toggleAll}
         fetchMoreCategories={fetchMoreCategories}
         fetchMoreCollections={fetchMoreCollections}
-        selectedChannelId={channel?.id}
         assignReferencesAttributeId={
           params.action === "assign-attribute-value" && params.id
         }

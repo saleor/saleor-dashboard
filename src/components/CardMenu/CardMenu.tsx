@@ -32,6 +32,7 @@ export interface CardMenuProps {
   disabled?: boolean;
   menuItems: CardMenuItem[];
   outlined?: boolean;
+  Icon?: React.ElementType<{}>;
 }
 
 const useStyles = makeStyles(
@@ -64,7 +65,14 @@ const useStyles = makeStyles(
 );
 
 const CardMenu: React.FC<CardMenuProps> = props => {
-  const { className, disabled, menuItems, outlined, ...rest } = props;
+  const {
+    className,
+    disabled,
+    menuItems,
+    outlined,
+    Icon: icon,
+    ...rest
+  } = props;
   const classes = useStyles(props);
 
   const anchorRef = useRef<HTMLButtonElement | null>(null);
@@ -120,6 +128,8 @@ const CardMenu: React.FC<CardMenuProps> = props => {
 
   const isWithLoading = menuItems.some(({ withLoading }) => withLoading);
 
+  const Icon = icon ?? MoreIcon;
+
   return (
     <div className={className} {...rest}>
       <IconButton
@@ -134,7 +144,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
         variant={outlined ? "primary" : "secondary"}
         state={open ? "active" : "default"}
       >
-        <MoreIcon />
+        <Icon />
       </IconButton>
       <Popper
         placement="bottom-end"

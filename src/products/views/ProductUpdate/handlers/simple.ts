@@ -126,8 +126,28 @@ export function createSimpleProductUpdateHandler(
       firstValues: VALUES_PAGINATE_BY
     };
 
-    // Failsafe if somehow product did not have any variant created before
-    if (!product.variants.length) {
+    if (product.variants.length) {
+      const result = await updateSimpleProduct(
+        getSimpleProductVariables(
+          productVariables,
+          data,
+          product.variants[0].id
+        )
+      );
+      errors = [...errors, ...getSimpleProductErrors(result.data)];
+
+      await updateChannels({
+        variables: getSimpleChannelsVariables(data, product)
+      });
+
+      updateVariantChannels({
+        variables: {
+          id: product.variants[0].id,
+          input: getVariantChannelsInput(data)
+        }
+      });
+      // Failsafe if somehow product did not have any variant created before
+    } else {
       const productVariantResult = await productVariantCreate({
         variables: {
           input: {
@@ -167,24 +187,6 @@ export function createSimpleProductUpdateHandler(
         );
         errors = [...errors, ...getSimpleProductErrors(result.data)];
       }
-    } else {
-      const result = await updateSimpleProduct(
-        getSimpleProductVariables(
-          productVariables,
-          data,
-          product.variants[0].id
-        )
-      );
-      errors = [...errors, ...getSimpleProductErrors(result.data)];
-
-      await updateChannels(getSimpleChannelsVariables(data, product));
-
-      updateVariantChannels({
-        variables: {
-          id: product.variants[0].id,
-          input: getVariantChannelsInput(data)
-        }
-      });
     }
 
     return errors;

@@ -1,7 +1,13 @@
 import { ClickAwayListener, Grow, Popper } from "@material-ui/core";
 import { FormChange } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { Choice, ColumnsIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import {
+  Choice,
+  ColumnsIcon,
+  IconButton,
+  IconButtonProps,
+  makeStyles
+} from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import { score } from "fuzzaldrin";
 import sortBy from "lodash/sortBy";
@@ -20,6 +26,7 @@ export interface ColumnPickerProps
   defaultColumns: string[];
   initialColumns: Choice[];
   initialOpen?: boolean;
+  IconButtonProps?: IconButtonProps;
   query: string;
   onSave: (columns: string[]) => void;
 }
@@ -44,6 +51,7 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
     initialOpen = false,
     onSave,
     query,
+    IconButtonProps = {},
     ...rest
   } = props;
   const classes = useStyles(props);
@@ -99,6 +107,7 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
     <ClickAwayListener onClickAway={() => setExpansionState(false)}>
       <div ref={anchor} className={className}>
         <IconButton
+          {...IconButtonProps}
           state={isExpanded ? "active" : "default"}
           onClick={() => setExpansionState(prevState => !prevState)}
         >
