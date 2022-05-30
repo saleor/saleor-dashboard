@@ -1,9 +1,7 @@
 import urlJoin from "url-join";
 
 export const taxSection = "/taxes/";
+export const taxTabSectionUrl = (tab: string) => urlJoin(taxSection, tab);
 
-export const countryListPath = taxSection;
-export const countryListUrl = taxSection;
-
-export const countryTaxRatesPath = (code: string) => urlJoin(taxSection, code);
-export const countryTaxRatesUrl = countryTaxRatesPath;
+export const channelsListUrl = (id?: string) =>
+  id ? urlJoin(taxTabSectionUrl("channels"), id) : taxTabSectionUrl("channels");

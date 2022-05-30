@@ -4,15 +4,12 @@ import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
-import { countryListPath, countryTaxRatesPath } from "./urls";
-import CountryList from "./views/CountryList";
-import CountryTaxesComponent, {
-  CountryTaxesParams,
-} from "./views/CountryTaxes";
+import { channelsListUrl } from "./urls";
+import ChannelsListComponent from "./views/ChannelsList";
 
-const CountryTaxes: React.FC<RouteComponentProps<CountryTaxesParams>> = ({
-  match,
-}) => <CountryTaxesComponent code={match.params.code} />;
+const ChannelsList: React.FC<RouteComponentProps<{ id: string }>> = ({
+  match
+}) => <ChannelsListComponent id={decodeURIComponent(match.params.id)} />;
 
 const Component = () => {
   const intl = useIntl();
@@ -21,12 +18,8 @@ const Component = () => {
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.taxes)} />
       <Switch>
-        <Route exact path={countryListPath} component={CountryList} />
-        <Route
-          exact
-          path={countryTaxRatesPath(":code")}
-          component={CountryTaxes}
-        />
+        <Route path={channelsListUrl(":id")} component={ChannelsList} />
+        <Route path={channelsListUrl()} component={ChannelsList} />
       </Switch>
     </>
   );

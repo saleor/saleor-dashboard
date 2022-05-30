@@ -1,5 +1,5 @@
 overwrite: true
-schema: ./introspection.json
+schema: ./schema.graphql
 generates:
   ./src/graphql/fragmentTypes.generated.ts:
     plugins:
