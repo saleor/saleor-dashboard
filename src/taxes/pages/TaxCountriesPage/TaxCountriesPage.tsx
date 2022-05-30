@@ -24,8 +24,8 @@ import { taxesMessages } from "@saleor/taxes/messages";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import TaxCountriesMenu from "../TaxCountriesMenu";
-import TaxInput from "../TaxInput";
+import TaxInput from "../../components/TaxInput";
+import TaxCountriesMenu from "./TaxCountriesMenu";
 
 interface TaxCountriesPageProps {
   data: any;

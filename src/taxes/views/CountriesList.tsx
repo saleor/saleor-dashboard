@@ -1,7 +1,7 @@
 import useNavigator from "@saleor/hooks/useNavigator";
 import React from "react";
 
-import TaxCountriesPage from "../components/TaxCountriesPage";
+import TaxCountriesPage from "../pages/TaxCountriesPage";
 import { countriesListUrl, taxTabSectionUrl } from "../urls";
 
 interface CountriesListProps {
