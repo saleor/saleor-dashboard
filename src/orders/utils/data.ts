@@ -286,16 +286,6 @@ export function addressToAddressInput<T>(
   };
 }
 
-export function addressToAddressInput<T>(
-  address: T & AddressFragment
-): AddressInput {
-  const { id, __typename, ...rest } = address;
-  return {
-    ...rest,
-    country: findInEnum(address.country.code, CountryCode)
-  };
-}
-
 export const getVariantSearchAddress = (
   order: OrderDetailsFragment
 ): AddressInput => {
