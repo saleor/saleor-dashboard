@@ -2,6 +2,7 @@ import { Card, CardContent, TextField } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import RichTextEditor from "@saleor/components/RichTextEditor";
+import { RichTextEditorLoading } from "@saleor/components/RichTextEditor/RichTextEditorLoading";
 import { PageErrorFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -64,7 +65,7 @@ const PageInfo: React.FC<PageInfoProps> = props => {
           onChange={onChange}
         />
         <FormSpacer />
-        {isReadyForMount && (
+        {isReadyForMount ? (
           <RichTextEditor
             defaultValue={defaultValue}
             editorRef={editorRef}
@@ -72,6 +73,15 @@ const PageInfo: React.FC<PageInfoProps> = props => {
             disabled={disabled}
             error={!!formErrors.content}
             helperText={getPageErrorMessage(formErrors.content, intl)}
+            label={intl.formatMessage({
+              id: "gMwpNC",
+              defaultMessage: "Content",
+              description: "page content"
+            })}
+            name={"content" as keyof PageData}
+          />
+        ) : (
+          <RichTextEditorLoading
             label={intl.formatMessage({
               id: "gMwpNC",
               defaultMessage: "Content",

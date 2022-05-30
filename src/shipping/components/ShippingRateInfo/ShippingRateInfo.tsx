@@ -3,6 +3,7 @@ import { Card, CardContent, TextField } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import RichTextEditor from "@saleor/components/RichTextEditor";
+import { RichTextEditorLoading } from "@saleor/components/RichTextEditor/RichTextEditorLoading";
 import { ShippingErrorFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -100,7 +101,7 @@ const ShippingRateInfo: React.FC<ShippingRateInfoProps> = props => {
           onChange={onChange}
         />
         <CardSpacer />
-        {isReadyForMount && (
+        {isReadyForMount ? (
           <RichTextEditor
             defaultValue={defaultValue}
             editorRef={editorRef}
@@ -108,6 +109,11 @@ const ShippingRateInfo: React.FC<ShippingRateInfoProps> = props => {
             disabled={disabled}
             error={!!formErrors.description}
             helperText={getShippingErrorMessage(formErrors.description, intl)}
+            label={intl.formatMessage(messages.description)}
+            name="description"
+          />
+        ) : (
+          <RichTextEditorLoading
             label={intl.formatMessage(messages.description)}
             name="description"
           />
