@@ -39,7 +39,10 @@ import {
   VariantCreateMutationVariables
 } from "@saleor/graphql";
 import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
-import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
+import {
+  getAttributeInputFromProduct,
+  mapFormsetStockToStockInput
+} from "@saleor/products/utils/data";
 import { ReorderEvent } from "@saleor/types";
 import { move } from "@saleor/utils/lists";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
@@ -116,6 +119,7 @@ export function createUpdateHandler(
       input: {
         attributes: prepareAttributesInput({
           attributes: data.attributes,
+          prevAttributes: getAttributeInputFromProduct(product),
           updatedFileAttributes
         }),
         category: data.category,

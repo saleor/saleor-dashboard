@@ -2,7 +2,6 @@ import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
-import { configurationMenuUrl } from "@saleor/configuration";
 import { usePluginsQuery } from "@saleor/graphql";
 import { useChannelsSearchWithLoadMore } from "@saleor/hooks/useChannelsSearchWithLoadMore";
 import useListSettings from "@saleor/hooks/useListSettings";
@@ -24,8 +23,7 @@ import PluginsListPage from "../../components/PluginsListPage/PluginsListPage";
 import {
   pluginListUrl,
   PluginListUrlDialog,
-  PluginListUrlQueryParams,
-  pluginUrl
+  PluginListUrlQueryParams
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -128,9 +126,7 @@ export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
         pageInfo={pageInfo}
         sort={getSortParams(params)}
         tabs={getFilterTabs().map(tab => tab.name)}
-        onAdd={() => navigate(configurationMenuUrl)}
         onAll={resetFilters}
-        onBack={() => navigate(configurationMenuUrl)}
         onFilterChange={changeFilters}
         onSearchChange={handleSearchChange}
         onNextPage={loadNextPage}
@@ -140,7 +136,6 @@ export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
         onTabDelete={() => openModal("delete-search")}
         onTabChange={handleTabChange}
         onUpdateListSettings={updateListSettings}
-        onRowClick={id => () => navigate(pluginUrl(id))}
       />
       <SaveFilterTabDialog
         open={params.action === "save-search"}

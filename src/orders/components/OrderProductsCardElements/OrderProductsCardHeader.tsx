@@ -68,30 +68,35 @@ const TableHeader = () => {
         <TableRow>
           <TableCell className={classes.colName}>
             <FormattedMessage
+              id="WE8IFE"
               defaultMessage="Product"
               description="product name"
             />
           </TableCell>
           <TableCell className={classes.colSku}>
             <FormattedMessage
+              id="8J81ri"
               defaultMessage="SKU"
               description="ordered product sku"
             />
           </TableCell>
           <TableCell className={classes.colQuantity}>
             <FormattedMessage
+              id="tvpAXl"
               defaultMessage="Quantity"
               description="ordered product quantity"
             />
           </TableCell>
           <TableCell className={classes.colPrice}>
             <FormattedMessage
+              id="b810WJ"
               defaultMessage="Price"
               description="product price"
             />
           </TableCell>
           <TableCell className={classes.colTotal}>
             <FormattedMessage
+              id="qT6YYk"
               defaultMessage="Total"
               description="order line total price"
             />

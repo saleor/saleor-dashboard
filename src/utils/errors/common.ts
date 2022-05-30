@@ -3,12 +3,15 @@ import { defineMessages, IntlShape } from "react-intl";
 
 const commonErrorMessages = defineMessages({
   graphqlError: {
+    id: "c5pMZ8",
     defaultMessage: "API error"
   },
   invalid: {
+    id: "577R2r",
     defaultMessage: "Invalid value"
   },
   unknownError: {
+    id: "qDwvZ4",
     defaultMessage: "Unknown error"
   }
 });

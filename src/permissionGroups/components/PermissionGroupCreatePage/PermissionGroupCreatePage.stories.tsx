@@ -10,7 +10,6 @@ import React from "react";
 const props: PermissionGroupCreatePageProps = {
   disabled: false,
   errors: [],
-  onBack: () => undefined,
   onSubmit: () => undefined,
   permissions,
   saveButtonBarState: undefined

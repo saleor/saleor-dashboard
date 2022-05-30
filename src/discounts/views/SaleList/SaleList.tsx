@@ -29,11 +29,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import SaleListPage from "../../components/SaleListPage";
 import {
-  saleAddUrl,
   saleListUrl,
   SaleListUrlDialog,
-  SaleListUrlQueryParams,
-  saleUrl
+  SaleListUrlQueryParams
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -190,12 +188,10 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         settings={settings}
         disabled={loading}
         pageInfo={pageInfo}
-        onAdd={() => navigate(saleAddUrl())}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onSort={handleSort}
         onUpdateListSettings={updateListSettings}
-        onRowClick={id => () => navigate(saleUrl(id))}
         isChecked={isSelected}
         selected={listElements.length}
         sort={getSortParams(params)}
@@ -222,6 +218,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         onConfirm={onSaleBulkDelete}
         open={params.action === "remove" && canOpenBulkActionDialog}
         title={intl.formatMessage({
+          id: "ZWIjvr",
           defaultMessage: "Delete Sales",
           description: "dialog header"
         })}
@@ -230,6 +227,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         {canOpenBulkActionDialog && (
           <DialogContentText>
             <FormattedMessage
+              id="FPzzh7"
               defaultMessage="{counter,plural,one{Are you sure you want to delete this sale?} other{Are you sure you want to delete {displayQuantity} sales?}}"
               description="dialog content"
               values={{

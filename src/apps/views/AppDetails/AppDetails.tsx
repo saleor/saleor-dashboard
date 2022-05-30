@@ -98,7 +98,7 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
   };
 
   if (!appExists) {
-    return <NotFoundPage onBack={() => navigate(appsListPath)} />;
+    return <NotFoundPage backHref={appsListPath} />;
   }
 
   return (
@@ -124,7 +124,6 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
         navigateToAppSettings={() => navigate(appSettingsUrl(id))}
         onAppActivateOpen={() => openModal("app-activate")}
         onAppDeactivateOpen={() => openModal("app-deactivate")}
-        onBack={() => navigate(appsListPath)}
       />
     </>
   );

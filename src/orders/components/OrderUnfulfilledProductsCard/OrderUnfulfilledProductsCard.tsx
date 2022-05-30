@@ -1,16 +1,18 @@
 import { Card, CardActions, TableBody, Typography } from "@material-ui/core";
+import { Button } from "@saleor/components/Button";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import { OrderLineFragment } from "@saleor/graphql";
+import Skeleton from "@saleor/components/Skeleton";
+import { OrderLineFragment, WarehouseFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import { ChevronIcon, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
+import OrderCardTitle from "../OrderCardTitle";
 import TableHeader from "../OrderProductsCardElements/OrderProductsCardHeader";
 import TableLine from "../OrderProductsCardElements/OrderProductsTableRow";
-import CardTitle from "../OrderReturnPage/OrderReturnRefundItemsCard/CardTitle";
 
 const useStyles = makeStyles(
   theme => ({
@@ -26,6 +28,41 @@ const useStyles = makeStyles(
         }
       },
       tableLayout: "fixed"
+    },
+    toolbar: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      cursor: "pointer",
+      borderRadius: "4px",
+      paddingTop: theme.spacing(1),
+      paddingBottom: theme.spacing(1),
+      paddingRight: theme.spacing(0.5),
+      paddingLeft: theme.spacing(1.5),
+      "&:hover": {
+        backgroundColor: theme.palette.saleor.active[5],
+        color: theme.palette.saleor.active[1]
+      },
+      "& > div": {
+        minWidth: 0,
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        textOverflow: "ellipsis"
+      }
+    },
+    cardTitle: {
+      justifyContent: "space-between",
+      "& > div": {
+        "&:first-child": {
+          flex: 0,
+          whiteSpace: "nowrap"
+        },
+        "&:last-child": {
+          flex: "0 1 auto",
+          minWidth: 0,
+          marginLeft: theme.spacing(1)
+        }
+      }
     }
   }),
   { name: "OrderUnfulfilledItems" }
@@ -36,6 +73,8 @@ interface OrderUnfulfilledProductsCardProps {
   notAllowedToFulfillUnpaid: boolean;
   lines: OrderLineFragment[];
   onFulfill: () => void;
+  selectedWarehouse: WarehouseFragment;
+  onWarehouseChange: () => null;
 }
 
 const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> = props => {
@@ -43,7 +82,9 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
     showFulfillmentAction,
     notAllowedToFulfillUnpaid,
     lines,
-    onFulfill
+    onFulfill,
+    selectedWarehouse,
+    onWarehouseChange
   } = props;
   const classes = useStyles({});
 
@@ -54,23 +95,38 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
   return (
     <>
       <Card>
-        <CardTitle withStatus status="unfulfilled" />
+        <OrderCardTitle
+          lines={lines}
+          withStatus
+          status="unfulfilled"
+          className={classes.cardTitle}
+          toolbar={
+            <div className={classes.toolbar} onClick={onWarehouseChange}>
+              <div>{selectedWarehouse?.name ?? <Skeleton />}</div>
+              <ChevronIcon />
+            </div>
+          }
+        />
         <ResponsiveTable className={classes.table}>
           <TableHeader />
           <TableBody>
             {renderCollection(lines, line => (
-              <TableLine isOrderLine line={line} />
+              <TableLine key={line.id} isOrderLine line={line} />
             ))}
           </TableBody>
         </ResponsiveTable>
         {showFulfillmentAction && (
-          <CardActions>
+          <CardActions className={classes.actions}>
             <Button
-              variant="tertiary"
+              variant="primary"
               onClick={onFulfill}
               disabled={notAllowedToFulfillUnpaid}
             >
-              <FormattedMessage defaultMessage="Fulfill" description="button" />
+              <FormattedMessage
+                id="/Xwjww"
+                defaultMessage="Fulfill"
+                description="button"
+              />
             </Button>
             {notAllowedToFulfillUnpaid && (
               <Typography color="error" variant="caption">

@@ -17,7 +17,6 @@ const props: WarehouseCreatePageProps = {
   })),
   disabled: false,
   errors: [],
-  onBack: () => undefined,
   onSubmit: () => undefined,
   saveButtonBarState: "default"
 };

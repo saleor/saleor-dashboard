@@ -3,13 +3,15 @@ import {
   AddressFragment,
   AddressInput,
   CountryCode,
+  FulfillmentFragment,
   FulfillmentStatus,
-  FulfillOrderMutation,
   OrderDetailsFragment,
-  OrderErrorCode,
-  OrderFulfillDataQuery,
+  OrderFulfillLineFragment,
+  OrderFulfillStockInput,
   OrderLineFragment,
+  OrderLineStockDataFragment,
   OrderRefundDataQuery,
+  StockFragment,
   WarehouseFragment
 } from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
@@ -36,9 +38,7 @@ export interface OrderLineWithStockWarehouses {
   };
 }
 
-export function getToFulfillOrderLines(
-  lines?: OrderFulfillDataQuery["order"]["lines"]
-) {
+export function getToFulfillOrderLines(lines?: OrderLineStockDataFragment[]) {
   return lines?.filter(line => line.quantityToFulfill > 0) || [];
 }
 
@@ -276,30 +276,15 @@ export function mergeRepeatedOrderLines(
   }, Array<OrderDetailsFragment["fulfillments"][0]["lines"][0]>());
 }
 
-export const isStockError = (
-  overfulfill: boolean,
-  formsetStock: { quantity: number },
-  availableQuantity: number,
-  warehouse: WarehouseFragment,
-  line: OrderFulfillDataQuery["order"]["lines"][0],
-  errors: FulfillOrderMutation["orderFulfill"]["errors"]
-) => {
-  if (overfulfill) {
-    return true;
-  }
-
-  const isQuantityLargerThanAvailable =
-    line.variant.trackInventory && formsetStock.quantity > availableQuantity;
-
-  const isError = !!errors?.find(
-    err =>
-      err.warehouse === warehouse.id &&
-      err.orderLines.find((id: string) => id === line.id) &&
-      err.code === OrderErrorCode.INSUFFICIENT_STOCK
-  );
-
-  return isQuantityLargerThanAvailable || isError;
-};
+export function addressToAddressInput<T>(
+  address: T & AddressFragment
+): AddressInput {
+  const { id, __typename, ...rest } = address;
+  return {
+    ...rest,
+    country: findInEnum(address.country.code, CountryCode)
+  };
+}
 
 export function addressToAddressInput<T>(
   address: T & AddressFragment
@@ -324,3 +309,83 @@ export const getVariantSearchAddress = (
 
   return { country: order.channel.defaultCountry.code as CountryCode };
 };
+
+export const getAllocatedQuantityForLine = (
+  line: OrderLineStockDataFragment,
+  warehouseId: string
+) => {
+  const warehouseAllocation = line.allocations.find(
+    allocation => allocation.warehouse.id === warehouseId
+  );
+  return warehouseAllocation?.quantity || 0;
+};
+
+export const getOrderLineAvailableQuantity = (
+  line: OrderLineStockDataFragment,
+  stock: StockFragment
+) => {
+  if (!stock) {
+    return 0;
+  }
+  const allocatedQuantityForLine = getAllocatedQuantityForLine(
+    line,
+    stock.warehouse.id
+  );
+
+  const availableQuantity =
+    stock.quantity - stock.quantityAllocated + allocatedQuantityForLine;
+
+  return availableQuantity;
+};
+
+export type OrderFulfillStockInputFormsetData = Array<
+  Pick<FormsetData<null, OrderFulfillStockInput[]>[0], "id" | "value">
+>;
+
+export const getFulfillmentFormsetQuantity = (
+  formsetData: OrderFulfillStockInputFormsetData,
+  line: OrderLineStockDataFragment
+) => formsetData?.find(getById(line.id))?.value?.[0]?.quantity;
+
+export const getWarehouseStock = (
+  stocks: StockFragment[],
+  warehouseId: string
+) => stocks?.find(stock => stock.warehouse.id === warehouseId);
+
+export const isLineAvailableInWarehouse = (
+  line: OrderLineStockDataFragment,
+  warehouse: WarehouseFragment
+) => {
+  if (!line?.variant?.stocks) {
+    return false;
+  }
+  const stock = getWarehouseStock(line.variant.stocks, warehouse.id);
+  if (stock) {
+    return line.quantityToFulfill <= getOrderLineAvailableQuantity(line, stock);
+  }
+  return false;
+};
+
+export const transformFuflillmentLinesToStockInputFormsetData = (
+  lines: FulfillmentFragment["lines"],
+  warehouseId: string
+): OrderFulfillStockInputFormsetData =>
+  lines?.map(line => ({
+    data: null,
+    id: line.orderLine.id,
+    value: [
+      {
+        quantity: line.quantity,
+        warehouse: warehouseId
+      }
+    ]
+  }));
+
+export const getAttributesCaption = (
+  attributes: OrderFulfillLineFragment["variant"]["attributes"]
+): string =>
+  attributes
+    .map(attribute =>
+      attribute.values.map(attributeValue => attributeValue.name).join(", ")
+    )
+    .join(" / ");

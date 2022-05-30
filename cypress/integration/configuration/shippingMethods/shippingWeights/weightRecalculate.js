@@ -18,7 +18,7 @@ import filterTests from "../../../../support/filterTests";
 import { changeWeightUnit } from "../../../../support/pages/shippingMethodPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("As a staff user I want to change shop default weight unit", () => {
+  xdescribe("As a staff user I want to change shop default weight unit", () => {
     const startsWith = "RecalculateWeight";
     const name = `${startsWith}${faker.datatype.number()}`;
 

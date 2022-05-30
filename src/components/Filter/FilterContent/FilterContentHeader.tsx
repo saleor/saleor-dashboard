@@ -1,6 +1,7 @@
 import { Typography } from "@material-ui/core";
+import { Button } from "@saleor/components/Button";
 import { buttonMessages } from "@saleor/intl";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -34,7 +35,7 @@ const FilterContentHeader: React.FC<FilterContentHeaderProps> = ({
   return (
     <div className={classes.container}>
       <Typography className={classes.label}>
-        <FormattedMessage defaultMessage="Filters" />
+        <FormattedMessage id="zSOvI0" defaultMessage="Filters" />
       </Typography>
       <div>
         <Button

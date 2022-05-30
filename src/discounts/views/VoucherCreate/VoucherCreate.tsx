@@ -25,7 +25,6 @@ import VoucherCreatePage from "../../components/VoucherCreatePage";
 import {
   voucherAddUrl,
   VoucherCreateUrlQueryParams,
-  voucherListUrl,
   voucherUrl
 } from "../../urls";
 import { createHandler } from "./handlers";
@@ -81,6 +80,7 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "Q8mpW3",
             defaultMessage: "Successfully created voucher"
           })
         });
@@ -110,6 +110,7 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
           title={intl.formatMessage({
+            id: "Eau5AV",
             defaultMessage: "Manage Products Channel Availability"
           })}
           confirmButtonState="default"
@@ -122,13 +123,11 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
       <VoucherCreatePage
         allChannelsCount={allChannels?.length}
         channelListings={currentChannels}
-        hasChannelChanged={allChannels?.length !== currentChannels?.length}
         disabled={voucherCreateOpts.loading || updateChannelsOpts.loading}
         errors={[
           ...(voucherCreateOpts.data?.voucherCreate.errors || []),
           ...(updateChannelsOpts.data?.voucherChannelListingUpdate.errors || [])
         ]}
-        onBack={() => navigate(voucherListUrl())}
         onSubmit={handleSubmit}
         saveButtonBarState={voucherCreateOpts.status}
         openChannelsModal={handleChannelsModalOpen}

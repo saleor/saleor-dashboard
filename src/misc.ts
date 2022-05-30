@@ -333,12 +333,26 @@ export function getUserInitials(user?: User) {
     : undefined;
 }
 
-interface AnyEvent {
+interface AnyEventWithPropagation {
   stopPropagation: () => void;
 }
-export function stopPropagation(cb: (event?: AnyEvent) => void) {
-  return (event: AnyEvent) => {
+export function stopPropagation<T extends AnyEventWithPropagation>(
+  cb: (event?: T) => void
+) {
+  return (event: T) => {
     event.stopPropagation();
+    cb(event);
+  };
+}
+
+interface AnyEventWithPreventDefault {
+  preventDefault: () => void;
+}
+export function preventDefault<T extends AnyEventWithPreventDefault>(
+  cb: (event?: T) => void
+) {
+  return (event: T) => {
+    event.preventDefault();
     cb(event);
   };
 }
@@ -514,3 +528,6 @@ export const combinedMultiAutocompleteChoices = (
 
 export const isInDevelopment =
   !process.env.NODE_ENV || process.env.NODE_ENV === "development";
+
+export type WithOptional<T, K extends keyof T> = Omit<T, K> &
+  Partial<Pick<T, K>>;

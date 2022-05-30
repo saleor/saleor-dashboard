@@ -6,17 +6,18 @@ import {
   TableRow,
   Typography
 } from "@material-ui/core";
+import { appDetailsUrl, appUrl } from "@saleor/apps/urls";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
+import { IconButton } from "@saleor/components/IconButton";
+import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { AppsListQuery } from "@saleor/graphql";
-import {
-  Button,
-  DeleteIcon,
-  IconButton,
-  ResponsiveTable
-} from "@saleor/macaw-ui";
-import { renderCollection, stopPropagation } from "@saleor/misc";
+import { DeleteIcon, ResponsiveTable } from "@saleor/macaw-ui";
+import { renderCollection } from "@saleor/misc";
 import { ListProps } from "@saleor/types";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -27,7 +28,6 @@ import DeactivatedText from "../DeactivatedText";
 export interface InstalledAppsProps extends ListProps {
   appsList: AppsListQuery["apps"]["edges"];
   onRemove: (id: string) => void;
-  onRowAboutClick: (id: string) => () => void;
 }
 const numberOfColumns = 2;
 
@@ -38,8 +38,6 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
   disabled,
   onNextPage,
   onPreviousPage,
-  onRowClick,
-  onRowAboutClick,
   onUpdateListSettings,
   pageInfo,
   ...props
@@ -51,6 +49,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
     <Card className={classes.apps}>
       <CardTitle
         title={intl.formatMessage({
+          id: "ZeD2TK",
           defaultMessage: "Third-party Apps",
           description: "section header"
         })}
@@ -76,10 +75,10 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
             appsList,
             (app, index) =>
               app ? (
-                <TableRow
+                <TableRowLink
                   key={app.node.id}
                   className={classes.tableRow}
-                  onClick={onRowClick(app.node.id)}
+                  href={appUrl(app.node.id)}
                 >
                   <TableCell className={classes.colName}>
                     <span data-tc="name" className={classes.appName}>
@@ -92,23 +91,34 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                     )}
                   </TableCell>
                   <TableCell className={classes.colAction}>
-                    <Button
-                      onClick={stopPropagation(onRowAboutClick(app.node.id))}
-                    >
-                      <FormattedMessage
-                        defaultMessage="About"
-                        description="about app"
-                      />
-                    </Button>
-                    <IconButton
-                      variant="secondary"
-                      color="primary"
-                      onClick={stopPropagation(() => onRemove(app.node.id))}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
+                    {app.node.appUrl && (
+                      <Typography
+                        className={clsx(classes.text, classes.appUrl)}
+                        variant="body2"
+                      >
+                        {app.node.appUrl}
+                      </Typography>
+                    )}
+                    <TableButtonWrapper>
+                      <Button href={appDetailsUrl(app.node.id)}>
+                        <FormattedMessage
+                          id="TBaMo2"
+                          defaultMessage="About"
+                          description="about app"
+                        />
+                      </Button>
+                    </TableButtonWrapper>
+                    <TableButtonWrapper>
+                      <IconButton
+                        variant="secondary"
+                        color="primary"
+                        onClick={() => onRemove(app.node.id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableButtonWrapper>
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               ) : (
                 <AppsSkeleton key={index} />
               ),
@@ -117,6 +127,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                 <TableCell className={classes.colName}>
                   <Typography className={classes.text} variant="body2">
                     <FormattedMessage
+                      id="9tgY4G"
                       defaultMessage="You don’t have any installed apps in your dashboard"
                       description="apps content"
                     />

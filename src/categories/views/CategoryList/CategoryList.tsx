@@ -28,12 +28,10 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { CategoryListPage } from "../../components/CategoryListPage/CategoryListPage";
 import {
-  categoryAddUrl,
   categoryListUrl,
   CategoryListUrlDialog,
   CategoryListUrlFilters,
-  CategoryListUrlQueryParams,
-  categoryUrl
+  CategoryListUrlQueryParams
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -156,8 +154,6 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         tabs={tabs.map(tab => tab.name)}
         settings={settings}
         sort={getSortParams(params)}
-        onAdd={() => navigate(categoryAddUrl())}
-        onRowClick={id => () => navigate(categoryUrl(id))}
         onSort={handleSort}
         disabled={loading}
         onNextPage={loadNextPage}
@@ -203,6 +199,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         }
         open={params.action === "delete"}
         title={intl.formatMessage({
+          id: "sG0w22",
           defaultMessage: "Delete categories",
           description: "dialog title"
         })}
@@ -210,6 +207,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
       >
         <DialogContentText>
           <FormattedMessage
+            id="Pp/7T7"
             defaultMessage="{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
             values={{
               counter: maybe(() => params.ids.length),
@@ -218,7 +216,10 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
           />
         </DialogContentText>
         <DialogContentText>
-          <FormattedMessage defaultMessage="Remember this will also delete all products assigned to this category." />
+          <FormattedMessage
+            id="e+L+q3"
+            defaultMessage="Remember this will also delete all products assigned to this category."
+          />
         </DialogContentText>
       </ActionDialog>
       <SaveFilterTabDialog

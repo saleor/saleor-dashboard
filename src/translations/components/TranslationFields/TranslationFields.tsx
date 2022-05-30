@@ -26,7 +26,7 @@ import TranslationFieldsShort from "./TranslationFieldsShort";
 
 type Pagination = Pick<
   ListProps,
-  Exclude<keyof ListProps, "onRowClick" | "disabled">
+  Exclude<keyof ListProps, "getRowHref" | "disabled">
 >;
 
 export interface TranslationFieldsProps {
@@ -153,10 +153,11 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
         <CardContent className={classes.cardContent}>
           <Grid className={classes.grid} variant="uniform">
             <Typography className={classes.columnHeader} variant="body1">
-              <FormattedMessage defaultMessage="Original String" />
+              <FormattedMessage id="Xtd0AT" defaultMessage="Original String" />
             </Typography>
             <Typography className={classes.columnHeader} variant="body1">
               <FormattedMessage
+                id="bVY7j0"
                 defaultMessage="Translation"
                 description="Translated Name"
               />
@@ -280,6 +281,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
         <CardContent>
           <Typography className={classes.cardCaption} variant="caption">
             <FormattedMessage
+              id="bh+Keo"
               defaultMessage="{numberOfFields} Translations, {numberOfTranslatedFields} Completed"
               values={{
                 numberOfFields: fields.length,

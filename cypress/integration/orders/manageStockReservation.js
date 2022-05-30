@@ -22,7 +22,7 @@ import {
 } from "../../support/pages/siteSettings";
 
 filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
-  describe("As an admin I want to manage stock reservation", () => {
+  xdescribe("As an admin I want to manage stock reservation", () => {
     const startsWith = "manageStocks";
     const name = `${startsWith}${faker.datatype.number()}`;
     const productQuantity = 10;

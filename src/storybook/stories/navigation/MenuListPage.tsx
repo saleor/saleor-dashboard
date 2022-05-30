@@ -18,7 +18,6 @@ const props: MenuListPageProps = {
   ...listActionsProps,
   ...sortPageProps,
   menus: menuList,
-  onBack: () => undefined,
   onDelete: () => undefined,
   sort: {
     ...sortPageProps.sort,

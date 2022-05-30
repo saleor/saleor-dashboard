@@ -1,4 +1,3 @@
-import { configurationMenuUrl } from "@saleor/configuration";
 import {
   PermissionGroupErrorFragment,
   usePermissionGroupDeleteMutation,
@@ -23,8 +22,6 @@ import { useIntl } from "react-intl";
 
 import PermissionGroupListPage from "../../components/PermissionGroupListPage";
 import {
-  permissionGroupAddUrl,
-  permissionGroupDetailsUrl,
   permissionGroupListUrl,
   PermissionGroupListUrlDialog,
   PermissionGroupListUrlQueryParams
@@ -89,6 +86,7 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "DovGIa",
             defaultMessage: "Permission Group Deleted"
           })
         });
@@ -109,13 +107,10 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
         pageInfo={pageInfo}
         sort={getSortParams(params)}
         permissionGroups={permissionGroups}
-        onAdd={() => navigate(permissionGroupAddUrl)}
-        onBack={() => navigate(configurationMenuUrl)}
         onDelete={id => openModal("remove", { id })}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
-        onRowClick={id => () => navigate(permissionGroupDetailsUrl(id))}
         onSort={handleSort}
       />
       <PermissionGroupDeleteDialog

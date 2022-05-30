@@ -27,15 +27,12 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import TypeDeleteWarningDialog from "../../../components/TypeDeleteWarningDialog/TypeDeleteWarningDialog";
-import { configurationMenuUrl } from "../../../configuration";
 import { maybe } from "../../../misc";
 import ProductTypeListPage from "../../components/ProductTypeListPage";
 import {
-  productTypeAddUrl,
   productTypeListUrl,
   ProductTypeListUrlDialog,
-  ProductTypeListUrlQueryParams,
-  productTypeUrl
+  ProductTypeListUrlQueryParams
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -187,11 +184,8 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
         disabled={loading}
         productTypes={productTypesData}
         pageInfo={pageInfo}
-        onAdd={() => navigate(productTypeAddUrl())}
-        onBack={() => navigate(configurationMenuUrl)}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
-        onRowClick={id => () => navigate(productTypeUrl(id))}
         onSort={handleSort}
         isChecked={isSelected}
         selected={selectedProductTypes.length}

@@ -27,7 +27,7 @@ import { extractMutationErrors, getStringOrPlaceholder } from "@saleor/misc";
 import getAppErrorMessage from "@saleor/utils/errors/app";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import WebhookDeleteDialog from "@saleor/webhooks/components/WebhookDeleteDialog";
-import { webhookAddPath, webhookPath } from "@saleor/webhooks/urls";
+import { webhookAddPath } from "@saleor/webhooks/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -143,11 +143,10 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
       });
     }
   };
-  const handleBack = () => navigate(appsListUrl());
   const customApp = data?.app;
 
   if (customApp === null) {
-    return <NotFoundPage onBack={handleBack} />;
+    return <NotFoundPage backHref={appsListUrl()} />;
   }
 
   const onTokenCreate = (data: AppTokenCreateMutation) => {
@@ -225,9 +224,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
         disabled={loading}
         errors={updateAppOpts.data?.appUpdate?.errors || []}
         token={token}
-        navigateToWebhookDetails={id => () => navigate(webhookPath(id))}
         onApiUriClick={() => open(API_URI, "blank")}
-        onBack={handleBack}
         onSubmit={handleSubmit}
         onTokenClose={onTokenClose}
         onTokenCreate={() => openModal("create-token")}
@@ -236,7 +233,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
             id
           })
         }
-        onWebhookCreate={() => navigate(webhookAddPath(id))}
+        webhookCreateHref={webhookAddPath(id)}
         onWebhookRemove={id =>
           openModal("remove-webhook", {
             id

@@ -1,6 +1,7 @@
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import { Button } from "@saleor/components/Button";
+import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -48,6 +49,7 @@ const ColumnPickerButton: React.FC<ColumnPickerButtonProps> = props => {
       variant="secondary"
     >
       <FormattedMessage
+        id="142MJn"
         defaultMessage="Columns"
         description="select visible columns button"
       />

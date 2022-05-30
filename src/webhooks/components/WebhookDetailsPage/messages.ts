@@ -5,14 +5,17 @@ import { defineMessages, IntlShape } from "react-intl";
 
 export const messages = defineMessages({
   header: {
+    id: "snUby7",
     defaultMessage: "Unnamed Webhook Details",
     description: "header"
   },
   headerNamed: {
+    id: "OPtrMg",
     defaultMessage: "{webhookName} Details",
     description: "header"
   },
   headerCreate: {
+    id: "Ryh3iR",
     defaultMessage: "Create Webhook",
     description: "header"
   }

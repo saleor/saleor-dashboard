@@ -1,4 +1,5 @@
 import AccountPermissions from "@saleor/components/AccountPermissions";
+import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
@@ -12,9 +13,13 @@ import {
   UserPermissionFragment
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { MembersListUrlSortField } from "@saleor/permissionGroups/urls";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import {
+  MembersListUrlSortField,
+  permissionGroupListUrl
+} from "@saleor/permissionGroups/urls";
 import {
   extractPermissionCodes,
   isGroupFullAccess
@@ -54,7 +59,6 @@ export interface PermissionGroupDetailsPageProps
   permissionsExceeded: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onAssign: () => void;
-  onBack: () => void;
   onUnassign: (ids: string[]) => void;
   onSubmit: (data: PermissionGroupDetailsPageFormData) => SubmitPromise;
 }
@@ -64,7 +68,6 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
   errors,
   members,
   membersModified,
-  onBack,
   onSubmit,
   permissionGroup,
   permissions,
@@ -73,6 +76,7 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   const initialForm: PermissionGroupDetailsPageFormData = {
     hasFullAccess: isGroupFullAccess(permissionGroup, permissions),
@@ -90,9 +94,9 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
 
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-      {({ data, change, submit, hasChanged }) => (
+      {({ data, change, submit }) => (
         <Container>
-          <Backlink onClick={onBack}>
+          <Backlink href={permissionGroupListUrl()}>
             {intl.formatMessage(sectionNames.permissionGroups)}
           </Backlink>
           <PageHeader title={permissionGroup?.name} />
@@ -121,10 +125,12 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
                 onChange={change}
                 errorMessage={permissionsError}
                 fullAccessLabel={intl.formatMessage({
+                  id: "mAabef",
                   defaultMessage: "Group has full access to the store",
                   description: "checkbox label"
                 })}
                 description={intl.formatMessage({
+                  id: "CYZse9",
                   defaultMessage:
                     "Expand or restrict group's permissions to access certain part of saleor system.",
                   description: "card description"
@@ -134,10 +140,10 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
           </Grid>
           <div>
             <Savebar
-              onCancel={onBack}
+              onCancel={() => navigate(permissionGroupListUrl())}
               onSubmit={submit}
               state={saveButtonBarState}
-              disabled={disabled || !(hasChanged || membersModified)}
+              disabled={disabled || !membersModified}
             />
           </div>
         </Container>

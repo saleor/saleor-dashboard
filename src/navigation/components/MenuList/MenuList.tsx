@@ -9,13 +9,15 @@ import Checkbox from "@saleor/components/Checkbox";
 import IconButtonTableCell from "@saleor/components/IconButtonTableCell";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { MenuFragment } from "@saleor/graphql";
 import { DeleteIcon, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
-import { MenuListUrlSortField } from "@saleor/navigation/urls";
+import { MenuListUrlSortField, menuUrl } from "@saleor/navigation/urls";
 import { ListActions, ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
@@ -65,7 +67,6 @@ const MenuList: React.FC<MenuListProps> = props => {
     onNextPage,
     onPreviousPage,
     onUpdateListSettings,
-    onRowClick,
     onSort,
     pageInfo,
     selected,
@@ -98,10 +99,7 @@ const MenuList: React.FC<MenuListProps> = props => {
             onClick={() => onSort(MenuListUrlSortField.name)}
             className={classes.colTitle}
           >
-            <FormattedMessage
-              defaultMessage="Menu Title"
-              id="menuListMenutitle"
-            />
+            <FormattedMessage id="jhh/D6" defaultMessage="Menu Title" />
           </TableCellHeader>
           <TableCellHeader
             direction={
@@ -114,9 +112,9 @@ const MenuList: React.FC<MenuListProps> = props => {
             className={classes.colItems}
           >
             <FormattedMessage
+              id="0nL1D6"
               defaultMessage="Items"
               description="number of menu items"
-              id="menuListItems"
             />
           </TableCellHeader>
           <TableCell className={classes.colAction} />
@@ -143,10 +141,10 @@ const MenuList: React.FC<MenuListProps> = props => {
               const isSelected = menu ? isChecked(menu.id) : false;
 
               return (
-                <TableRow
+                <TableRowLink
                   hover={!!menu}
                   key={menu ? menu.id : "skeleton"}
-                  onClick={menu && onRowClick(menu.id)}
+                  href={menu && menuUrl(menu.id)}
                   className={classes.row}
                   selected={isSelected}
                 >
@@ -167,22 +165,24 @@ const MenuList: React.FC<MenuListProps> = props => {
                       <Skeleton />
                     )}
                   </TableCell>
-                  <IconButtonTableCell
-                    className={classes.colAction}
-                    disabled={disabled}
-                    onClick={() => onDelete(menu.id)}
-                  >
-                    <DeleteIcon />
-                  </IconButtonTableCell>
-                </TableRow>
+                  <TableButtonWrapper>
+                    <IconButtonTableCell
+                      className={classes.colAction}
+                      disabled={disabled}
+                      onClick={() => onDelete(menu.id)}
+                    >
+                      <DeleteIcon />
+                    </IconButtonTableCell>
+                  </TableButtonWrapper>
+                </TableRowLink>
               );
             },
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
                   <FormattedMessage
+                    id="DWs4ba"
                     defaultMessage="No menus found"
-                    id="menuListNoMenus"
                   />
                 </TableCell>
               </TableRow>

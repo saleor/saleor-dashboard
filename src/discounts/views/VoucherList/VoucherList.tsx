@@ -32,11 +32,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import VoucherListPage from "../../components/VoucherListPage";
 import {
-  voucherAddUrl,
   voucherListUrl,
   VoucherListUrlDialog,
-  VoucherListUrlQueryParams,
-  voucherUrl
+  VoucherListUrlQueryParams
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -197,11 +195,9 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
         vouchers={mapEdgesToItems(data?.vouchers)}
         disabled={loading}
         pageInfo={pageInfo}
-        onAdd={() => navigate(voucherAddUrl())}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
-        onRowClick={id => () => navigate(voucherUrl(id))}
         onSort={handleSort}
         isChecked={isSelected}
         selected={listElements.length}
@@ -229,6 +225,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
         onConfirm={onVoucherBulkDelete}
         open={params.action === "remove" && canOpenBulkActionDialog}
         title={intl.formatMessage({
+          id: "Q0JJ4F",
           defaultMessage: "Delete Vouchers",
           description: "dialog header"
         })}
@@ -237,6 +234,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
         {canOpenBulkActionDialog && (
           <DialogContentText>
             <FormattedMessage
+              id="O9QPe1"
               defaultMessage="{counter,plural,one{Are you sure you want to delete this voucher?} other{Are you sure you want to delete {displayQuantity} vouchers?}}"
               description="dialog content"
               values={{

@@ -20,12 +20,7 @@ import PluginsDetailsPage, {
   PluginDetailsPageFormData
 } from "../components/PluginsDetailsPage";
 import PluginSecretFieldDialog from "../components/PluginSecretFieldDialog";
-import {
-  pluginListUrl,
-  pluginUrl,
-  PluginUrlDialog,
-  PluginUrlQueryParams
-} from "../urls";
+import { pluginUrl, PluginUrlDialog, PluginUrlQueryParams } from "../urls";
 import { isSecretField } from "../utils";
 import { getConfigByChannelId, isPluginGlobal } from "./utils";
 
@@ -142,7 +137,6 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
           !params.action ? pluginUpdateOpts.status : "default"
         }
         plugin={plugin}
-        onBack={() => navigate(pluginListUrl())}
         onClear={id =>
           openModal("clear", {
             id
@@ -166,13 +160,17 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
             onClose={closeModal}
             open={params.action === "clear" && !!params.id}
             title={intl.formatMessage({
+              id: "N6lfS/",
               defaultMessage: "Authorization Field Delete",
               description: "header"
             })}
             onConfirm={() => handleFieldUpdate(null)}
           >
             <DialogContentText>
-              <FormattedMessage defaultMessage="The plugin may stop working after this field is cleared. Are you sure you want to proceed?" />
+              <FormattedMessage
+                id="JRfJD9"
+                defaultMessage="The plugin may stop working after this field is cleared. Are you sure you want to proceed?"
+              />
             </DialogContentText>
           </ActionDialog>
           <PluginSecretFieldDialog

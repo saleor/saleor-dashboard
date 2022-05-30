@@ -1,3 +1,4 @@
+import { Backlink } from "@saleor/components/Backlink";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -7,6 +8,7 @@ import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
 import RequirePermissions from "@saleor/components/RequirePermissions";
 import Savebar from "@saleor/components/Savebar";
+import { customerAddressesUrl, customerListUrl } from "@saleor/customers/urls";
 import CustomerGiftCardsCard from "@saleor/giftCards/components/GiftCardCustomerCard/CustomerGiftCardsCard";
 import {
   AccountErrorFragment,
@@ -14,8 +16,10 @@ import {
   PermissionEnum
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { orderListUrl } from "@saleor/orders/urls";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
@@ -37,33 +41,28 @@ export interface CustomerDetailsPageFormData extends MetadataFormData {
 }
 
 export interface CustomerDetailsPageProps {
+  customerId: string;
   customer: CustomerDetailsQuery["user"];
   disabled: boolean;
   errors: AccountErrorFragment[];
   saveButtonBar: ConfirmButtonTransitionState;
-  onBack: () => void;
   onSubmit: (
     data: CustomerDetailsPageFormData
   ) => SubmitPromise<AccountErrorFragment[]>;
-  onViewAllOrdersClick: () => void;
-  onRowClick: (id: string) => void;
-  onAddressManageClick: () => void;
   onDelete: () => void;
 }
 
 const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
+  customerId,
   customer,
   disabled,
   errors,
   saveButtonBar,
-  onBack,
   onSubmit,
-  onViewAllOrdersClick,
-  onRowClick,
-  onAddressManageClick,
   onDelete
 }: CustomerDetailsPageProps) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   const initialForm: CustomerDetailsPageFormData = {
     email: customer?.email || "",
@@ -91,7 +90,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
 
         return (
           <Container>
-            <Backlink onClick={onBack}>
+            <Backlink href={customerListUrl()}>
               {intl.formatMessage(sectionNames.customers)}
             </Backlink>
             <PageHeader title={getUserName(customer, true)} />
@@ -117,8 +116,9 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
                 >
                   <CustomerOrders
                     orders={mapEdgesToItems(customer?.orders)}
-                    onViewAllOrdersClick={onViewAllOrdersClick}
-                    onRowClick={onRowClick}
+                    viewAllHref={orderListUrl({
+                      customer: customer?.email
+                    })}
                   />
                   <CardSpacer />
                 </RequirePermissions>
@@ -128,7 +128,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
                 <CustomerAddresses
                   customer={customer}
                   disabled={disabled}
-                  onAddressManageClick={onAddressManageClick}
+                  manageAddressHref={customerAddressesUrl(customerId)}
                 />
                 <CardSpacer />
                 <CustomerStats customer={customer} />
@@ -144,7 +144,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
               disabled={isSaveDisabled}
               state={saveButtonBar}
               onSubmit={submit}
-              onCancel={onBack}
+              onCancel={() => navigate(customerListUrl())}
               onDelete={onDelete}
             />
           </Container>

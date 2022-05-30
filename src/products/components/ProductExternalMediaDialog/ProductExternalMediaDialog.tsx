@@ -7,11 +7,11 @@ import {
   Typography
 } from "@material-ui/core";
 import BackButton from "@saleor/components/BackButton";
+import { Button } from "@saleor/components/Button";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { ProductFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
-import { Button } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
@@ -28,6 +28,7 @@ interface FormValues {
 
 const messages = defineMessages({
   buttonMessage: {
+    id: "4W/CKn",
     defaultMessage: "Upload URL",
     description: "modal button"
   }
@@ -57,6 +58,7 @@ const ProductExternalMediaDialog: React.FC<ProductExternalMediaDialogProps> = ({
             <DialogContent>
               <Typography>
                 <FormattedMessage
+                  id="zDvDnG"
                   defaultMessage="Media from the URL you supply will be shown in the media gallery. You will be able to define the order of the gallery."
                   description="modal header"
                 />

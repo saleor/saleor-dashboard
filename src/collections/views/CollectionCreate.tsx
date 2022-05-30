@@ -26,7 +26,6 @@ import { CollectionCreateData } from "../components/CollectionCreatePage/form";
 import {
   collectionAddUrl,
   CollectionCreateUrlQueryParams,
-  collectionListUrl,
   collectionUrl
 } from "../urls";
 import { COLLECTION_CREATE_FORM_ID } from "./consts";
@@ -148,6 +147,7 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
     <>
       <WindowTitle
         title={intl.formatMessage({
+          id: "ttMauu",
           defaultMessage: "Create collection",
           description: "window title"
         })}
@@ -161,6 +161,7 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
           title={intl.formatMessage({
+            id: "I1Mz7h",
             defaultMessage: "Manage Collection Channel Availability"
           })}
           confirmButtonState="default"
@@ -178,7 +179,6 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
         channelsCount={availableChannels.length}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
-        onBack={() => navigate(collectionListUrl())}
         disabled={createCollectionOpts.loading || updateChannelsOpts.loading}
         onSubmit={handleSubmit}
         saveButtonBarState={createCollectionOpts.status}

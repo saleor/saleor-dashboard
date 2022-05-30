@@ -20,6 +20,7 @@ import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import TooltipTableCellHeader from "@saleor/components/TooltipTableCellHeader";
 import { commonTooltipMessages } from "@saleor/components/TooltipTableCellHeader/messages";
 import { ProductListColumns } from "@saleor/config";
@@ -30,7 +31,7 @@ import {
   getAttributeIdFromColumnValue,
   isAttributeColumnValue
 } from "@saleor/products/components/ProductListPage/utils";
-import { ProductListUrlSortField } from "@saleor/products/urls";
+import { ProductListUrlSortField, productUrl } from "@saleor/products/urls";
 import { canBeSorted } from "@saleor/products/views/ProductList/sort";
 import {
   ChannelProps,
@@ -48,6 +49,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { columnsMessages } from "./messages";
+import ProductListAttribute from "./ProductListAttribute";
 
 const useStyles = makeStyles(
   theme => ({
@@ -69,7 +71,10 @@ const useStyles = makeStyles(
       }
     },
     colAttribute: {
-      width: 150
+      width: 200,
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap"
     },
     colFill: {
       padding: 0,
@@ -123,7 +128,6 @@ interface ProductListProps
   activeAttributeSortId: string;
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   products: RelayToFlat<ProductListQuery["products"]>;
-  loading: boolean;
 }
 
 export const ProductList: React.FC<ProductListProps> = props => {
@@ -143,7 +147,6 @@ export const ProductList: React.FC<ProductListProps> = props => {
     onNextPage,
     onPreviousPage,
     onUpdateListSettings,
-    onRowClick,
     onSort,
     selectedChannelId,
     filterDependency
@@ -204,7 +207,11 @@ export const ProductList: React.FC<ProductListProps> = props => {
             onClick={() => onSort(ProductListUrlSortField.name)}
           >
             <span className={classes.colNameHeader}>
-              <FormattedMessage defaultMessage="Name" description="product" />
+              <FormattedMessage
+                id="VQLIXd"
+                defaultMessage="Name"
+                description="product"
+              />
             </span>
           </TableCellHeader>
           <DisplayColumn column="productType" displayColumns={settings.columns}>
@@ -339,11 +346,11 @@ export const ProductList: React.FC<ProductListProps> = props => {
               );
 
               return (
-                <TableRow
+                <TableRowLink
                   selected={isSelected}
                   hover={!!product}
                   key={product ? product.id : "skeleton"}
-                  onClick={product && onRowClick(product.id)}
+                  href={product && productUrl(product.id)}
                   className={classes.link}
                   data-test-id={"id-" + (product ? product?.id : "skeleton")}
                 >
@@ -365,11 +372,13 @@ export const ProductList: React.FC<ProductListProps> = props => {
                           <Typography variant="caption">
                             {product.productType.hasVariants ? (
                               <FormattedMessage
+                                id="X90t9n"
                                 defaultMessage="Configurable"
                                 description="product type"
                               />
                             ) : (
                               <FormattedMessage
+                                id="Jz/Cb+"
                                 defaultMessage="Simple"
                                 description="product type"
                               />
@@ -427,19 +436,10 @@ export const ProductList: React.FC<ProductListProps> = props => {
                         gridAttribute
                       )}
                     >
-                      {maybe<React.ReactNode>(() => {
-                        const attribute = product.attributes.find(
-                          attribute =>
-                            attribute.attribute.id ===
-                            getAttributeIdFromColumnValue(gridAttribute)
-                        );
-                        if (attribute) {
-                          return attribute.values
-                            .map(value => value.name)
-                            .join(", ");
-                        }
-                        return "-";
-                      }, <Skeleton />)}
+                      <ProductListAttribute
+                        attribute={gridAttribute}
+                        productAttributes={product?.attributes}
+                      />
                     </TableCell>
                   ))}
                   <DisplayColumn
@@ -472,13 +472,16 @@ export const ProductList: React.FC<ProductListProps> = props => {
                       )}
                     </TableCell>
                   </DisplayColumn>
-                </TableRow>
+                </TableRowLink>
               );
             },
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage defaultMessage="No products found" />
+                  <FormattedMessage
+                    id="Q1Uzbb"
+                    defaultMessage="No products found"
+                  />
                 </TableCell>
               </TableRow>
             )

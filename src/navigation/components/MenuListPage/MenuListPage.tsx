@@ -1,9 +1,11 @@
+import { Backlink } from "@saleor/components/Backlink";
+import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
+import { configurationMenuUrl } from "@saleor/configuration";
 import { MenuFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, Button } from "@saleor/macaw-ui";
-import { MenuListUrlSortField } from "@saleor/navigation/urls";
+import { menuListUrl, MenuListUrlSortField } from "@saleor/navigation/urls";
 import { ListActions, PageListProps, SortPage } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -15,27 +17,26 @@ export interface MenuListPageProps
     ListActions,
     SortPage<MenuListUrlSortField> {
   menus: MenuFragment[];
-  onBack: () => void;
   onDelete: (id: string) => void;
 }
 
-const MenuListPage: React.FC<MenuListPageProps> = ({
-  onAdd,
-  onBack,
-  ...listProps
-}) => {
+const MenuListPage: React.FC<MenuListPageProps> = ({ ...listProps }) => {
   const intl = useIntl();
+  const addUrl = menuListUrl({
+    action: "add"
+  });
+
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink href={configurationMenuUrl}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.navigation)}>
-        <Button variant="primary" onClick={onAdd} data-test-id="add-menu">
+        <Button variant="primary" href={addUrl} data-test-id="add-menu">
           <FormattedMessage
+            id="JXRYQg"
             defaultMessage="Create Menu"
             description="button"
-            id="menuListPageAddMenu"
           />
         </Button>
       </PageHeader>

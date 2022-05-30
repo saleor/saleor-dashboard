@@ -10,7 +10,6 @@ import { countries } from "./fixtures";
 
 const props: CountryListPageProps = {
   ...pageListProps.default,
-  onBack: () => undefined,
   onSubmit: () => undefined,
   onTaxFetch: () => undefined,
   saveButtonBarState: "default",

@@ -1,15 +1,20 @@
+import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
 import { CategoryTranslationFragment, LanguageCodeEnum } from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
-import { Backlink } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import {
   TranslationInputFieldName,
   TranslationsEntitiesPageProps
 } from "@saleor/translations/types";
+import {
+  languageEntitiesUrl,
+  languageEntityUrl,
+  TranslatableEntities
+} from "@saleor/translations/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -21,28 +26,32 @@ export interface TranslationsCategoriesPageProps
 }
 
 const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
+  translationId,
   activeField,
   disabled,
   languageCode,
   languages,
   data,
   saveButtonState,
-  onBack,
   onDiscard,
   onEdit,
-  onLanguageChange,
   onSubmit
 }) => {
   const intl = useIntl();
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink
+        href={languageEntitiesUrl(languageCode, {
+          tab: TranslatableEntities.categories
+        })}
+      >
         {intl.formatMessage(sectionNames.translations)}
       </Backlink>
       <PageHeader
         title={intl.formatMessage(
           {
+            id: "XitW/z",
             defaultMessage:
               'Translation Category "{categoryName}" - {languageCode}'
           },
@@ -55,7 +64,13 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
         <LanguageSwitch
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
-          onLanguageChange={onLanguageChange}
+          getLanguageUrl={lang =>
+            languageEntityUrl(
+              lang,
+              TranslatableEntities.categories,
+              translationId
+            )
+          }
         />
       </PageHeader>
       <TranslationFields
@@ -66,6 +81,7 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
         fields={[
           {
             displayName: intl.formatMessage({
+              id: "vEYtiq",
               defaultMessage: "Category Name"
             }),
             name: TranslationInputFieldName.name,
@@ -93,11 +109,13 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
         disabled={disabled}
         initialState={true}
         title={intl.formatMessage({
+          id: "TGX4T1",
           defaultMessage: "Search Engine Preview"
         })}
         fields={[
           {
             displayName: intl.formatMessage({
+              id: "HlEpii",
               defaultMessage: "Search Engine Title"
             }),
             name: TranslationInputFieldName.seoTitle,
@@ -107,6 +125,7 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
           },
           {
             displayName: intl.formatMessage({
+              id: "US3IPU",
               defaultMessage: "Search Engine Description"
             }),
             name: TranslationInputFieldName.seoDescription,

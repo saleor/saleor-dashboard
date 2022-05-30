@@ -9,11 +9,7 @@ import useRouter from "use-react-router";
 import { useUser } from "..";
 import LoginPage from "../components/LoginPage";
 import { LoginFormData } from "../components/LoginPage/types";
-import {
-  loginCallbackPath,
-  LoginUrlQueryParams,
-  passwordResetUrl
-} from "../urls";
+import { loginCallbackPath, LoginUrlQueryParams } from "../urls";
 
 interface LoginViewProps {
   params: LoginUrlQueryParams;
@@ -97,7 +93,6 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
       }
       loading={externalAuthenticationsLoading || authenticating}
       onExternalAuthentication={handleRequestExternalAuthentication}
-      onPasswordRecovery={() => navigate(passwordResetUrl)}
       onSubmit={handleSubmit}
     />
   );

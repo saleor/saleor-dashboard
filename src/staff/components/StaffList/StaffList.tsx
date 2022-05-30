@@ -10,6 +10,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { StaffListQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import {
@@ -18,7 +19,10 @@ import {
   maybe,
   renderCollection
 } from "@saleor/misc";
-import { StaffListUrlSortField } from "@saleor/staff/urls";
+import {
+  StaffListUrlSortField,
+  staffMemberDetailsUrl
+} from "@saleor/staff/urls";
 import { ListProps, RelayToFlat, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import classNames from "classnames";
@@ -81,7 +85,6 @@ const StaffList: React.FC<StaffListProps> = props => {
     onNextPage,
     onPreviousPage,
     onUpdateListSettings,
-    onRowClick,
     onSort,
     pageInfo,
     sort,
@@ -110,6 +113,7 @@ const StaffList: React.FC<StaffListProps> = props => {
             className={classes.wideColumn}
           >
             <FormattedMessage
+              id="W32xfN"
               defaultMessage="Name"
               description="staff member full name"
             />
@@ -122,7 +126,7 @@ const StaffList: React.FC<StaffListProps> = props => {
             }
             onClick={() => onSort(StaffListUrlSortField.email)}
           >
-            <FormattedMessage defaultMessage="Email Address" />
+            <FormattedMessage id="xxQxLE" defaultMessage="Email Address" />
           </TableCellHeader>
         </TableRow>
       </TableHead>
@@ -147,12 +151,12 @@ const StaffList: React.FC<StaffListProps> = props => {
         {renderCollection(
           staffMembers,
           staffMember => (
-            <TableRow
+            <TableRowLink
               className={classNames({
                 [classes.tableRow]: !!staffMember
               })}
               hover={!!staffMember}
-              onClick={!!staffMember ? onRowClick(staffMember.id) : undefined}
+              href={staffMember && staffMemberDetailsUrl(staffMember.id)}
               key={staffMember ? staffMember.id : "skeleton"}
             >
               <TableCell>
@@ -176,10 +180,12 @@ const StaffList: React.FC<StaffListProps> = props => {
                     () =>
                       staffMember.isActive
                         ? intl.formatMessage({
+                            id: "9Zlogd",
                             defaultMessage: "Active",
                             description: "staff member status"
                           })
                         : intl.formatMessage({
+                            id: "7WzUxn",
                             defaultMessage: "Inactive",
                             description: "staff member status"
                           }),
@@ -190,12 +196,15 @@ const StaffList: React.FC<StaffListProps> = props => {
               <TableCell>
                 {maybe<React.ReactNode>(() => staffMember.email, <Skeleton />)}
               </TableCell>
-            </TableRow>
+            </TableRowLink>
           ),
           () => (
             <TableRow>
               <TableCell colSpan={numberOfColumns}>
-                <FormattedMessage defaultMessage="No staff members found" />
+                <FormattedMessage
+                  id="xJQX5t"
+                  defaultMessage="No staff members found"
+                />
               </TableCell>
             </TableRow>
           )

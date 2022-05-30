@@ -13,7 +13,7 @@ import {
 import filterTests from "../../support/filterTests";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Tests for site settings", () => {
+  xdescribe("Tests for site settings", () => {
     let address;
 
     before(() => {

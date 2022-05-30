@@ -1,3 +1,4 @@
+import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
@@ -8,9 +9,13 @@ import {
   LanguageCodeEnum
 } from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
-import { Backlink } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
+import {
+  languageEntitiesUrl,
+  languageEntityUrl,
+  TranslatableEntities
+} from "@saleor/translations/urls";
 import { ListSettings } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -39,16 +44,15 @@ export const fieldNames = {
 };
 
 const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
+  translationId,
   activeField,
   disabled,
   languages,
   languageCode,
   data,
   saveButtonState,
-  onBack,
   onDiscard,
   onEdit,
-  onLanguageChange,
   onSubmit,
   settings,
   onUpdateListSettings,
@@ -62,12 +66,17 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink
+        href={languageEntitiesUrl(languageCode, {
+          tab: TranslatableEntities.attributes
+        })}
+      >
         {intl.formatMessage(sectionNames.translations)}
       </Backlink>
       <PageHeader
         title={intl.formatMessage(
           {
+            id: "SPBLzT",
             defaultMessage:
               'Translation Attribute "{attribute}" - {languageCode}',
             description: "header"
@@ -81,7 +90,13 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
         <LanguageSwitch
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
-          onLanguageChange={onLanguageChange}
+          getLanguageUrl={lang =>
+            languageEntityUrl(
+              lang,
+              TranslatableEntities.attributes,
+              translationId
+            )
+          }
         />
       </PageHeader>
       <TranslationFields
@@ -92,6 +107,7 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
         fields={[
           {
             displayName: intl.formatMessage({
+              id: "DRMMDs",
               defaultMessage: "Attribute Name"
             }),
             name: fieldNames.attribute + ":" + data?.attribute.id,

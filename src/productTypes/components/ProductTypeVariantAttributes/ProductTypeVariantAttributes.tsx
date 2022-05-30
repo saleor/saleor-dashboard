@@ -1,5 +1,7 @@
 import { Card, TableCell, TableRow, Tooltip } from "@material-ui/core";
 import HelpOutline from "@material-ui/icons/HelpOutline";
+import { attributeUrl } from "@saleor/attributes/urls";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -8,10 +10,11 @@ import {
   SortableTableBody,
   SortableTableRow
 } from "@saleor/components/SortableTable";
+import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@saleor/components/TableHead";
 import { ProductAttributeType, ProductTypeDetailsQuery } from "@saleor/graphql";
-import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ReorderAction } from "@saleor/types";
 import capitalize from "lodash/capitalize";
 import React, { useEffect } from "react";
@@ -65,11 +68,9 @@ interface ProductTypeVariantAttributesProps extends ListActions {
   testId?: string;
   selectedVariantAttributes: string[];
   onAttributeAssign: (type: ProductAttributeType) => void;
-  onAttributeClick: (id: string) => void;
   onAttributeReorder: ReorderAction;
   onAttributeUnassign: (id: string) => void;
-  onAttributeVariantSelection?: (isActive: boolean) => void;
-  setSelectedVariantAttributes?: (data: string[]) => void;
+  setSelectedVariantAttributes: (data: string[]) => void;
 }
 
 function handleContainerAssign(
@@ -103,10 +104,8 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
     type,
     testId,
     onAttributeAssign,
-    onAttributeClick,
     onAttributeReorder,
     onAttributeUnassign,
-    onAttributeVariantSelection,
     setSelectedVariantAttributes,
     selectedVariantAttributes
   } = props;
@@ -127,6 +126,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
     <Card data-test-id="variant-attributes">
       <CardTitle
         title={intl.formatMessage({
+          id: "skEK/i",
           defaultMessage: "Variant Attributes",
           description: "section header"
         })}
@@ -137,6 +137,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
             onClick={() => onAttributeAssign(ProductAttributeType[type])}
           >
             <FormattedMessage
+              id="uxPpRx"
               defaultMessage="Assign attribute"
               description="button"
             />
@@ -165,16 +166,18 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
             toolbar={toolbar}
           >
             <TableCell className={classes.colName}>
-              <FormattedMessage defaultMessage="Attribute name" />
+              <FormattedMessage id="kTr2o8" defaultMessage="Attribute name" />
             </TableCell>
             <TableCell className={classes.colName}>
               <FormattedMessage
+                id="nf3XSt"
                 defaultMessage="Slug"
                 description="attribute internal name"
               />
             </TableCell>
             <TableCell className={classes.colName}>
               <FormattedMessage
+                id="4k9rMQ"
                 defaultMessage="Variant Selection"
                 description="variant attribute checkbox"
               />
@@ -208,11 +211,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                   selected={isVariantSelected}
                   className={!!attribute ? classes.link : undefined}
                   hover={!!attribute}
-                  onClick={
-                    !!attribute
-                      ? () => onAttributeClick(attribute.id)
-                      : undefined
-                  }
+                  href={attribute ? attributeUrl(attribute.id) : undefined}
                   key={maybe(() => attribute.id)}
                   index={attributeIndex || 0}
                   data-test-id={"id-" + +maybe(() => attribute.id)}
@@ -245,23 +244,21 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                         checked={isSelected}
                         disabled={disabled || variantSelectionDisabled}
                         disableClickPropagation
-                        onChange={() => {
-                          onAttributeVariantSelection(true);
+                        onChange={() =>
                           handleContainerAssign(
                             attribute.id,
                             isSelected,
                             selectedVariantAttributes,
                             setSelectedVariantAttributes
-                          );
-                        }}
+                          )
+                        }
                       />
                       {!!variantSelectionDisabled && (
                         <Tooltip
                           title={
                             <FormattedMessage
-                              defaultMessage={
-                                "{inputType} attributes cannot be used as variant selection attributes."
-                              }
+                              id="vlLyvk"
+                              defaultMessage="{inputType} attributes cannot be used as variant selection attributes."
                               values={{ inputType: readableAttributeInputType }}
                             />
                           }
@@ -272,14 +269,14 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                     </div>
                   </TableCell>
                   <TableCell className={classes.colAction}>
-                    <IconButton
-                      data-test-id="delete-icon"
-                      onClick={stopPropagation(() =>
-                        onAttributeUnassign(attribute.id)
-                      )}
-                    >
-                      <DeleteIcon color="primary" />
-                    </IconButton>
+                    <TableButtonWrapper>
+                      <IconButton
+                        data-test-id="delete-icon"
+                        onClick={() => onAttributeUnassign(attribute.id)}
+                      >
+                        <DeleteIcon color="primary" />
+                      </IconButton>
+                    </TableButtonWrapper>
                   </TableCell>
                 </SortableTableRow>
               );
@@ -287,7 +284,10 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage defaultMessage="No attributes found" />
+                  <FormattedMessage
+                    id="ztQgD8"
+                    defaultMessage="No attributes found"
+                  />
                 </TableCell>
               </TableRow>
             )

@@ -38,8 +38,8 @@ const MenuProperties: React.FC<MenuPropertiesProps> = ({
           name={"name" as keyof MenuDetailsFormData}
           fullWidth
           label={intl.formatMessage({
-            defaultMessage: "Menu Title",
-            id: "menuPropertiesMenuTitle"
+            id: "jhh/D6",
+            defaultMessage: "Menu Title"
           })}
           helperText={getMenuErrorMessage(formErrors.name, intl)}
           value={data.name}

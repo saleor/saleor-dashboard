@@ -1,3 +1,4 @@
+import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
@@ -7,12 +8,16 @@ import {
   LanguageCodeEnum
 } from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
-import { Backlink } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import {
   TranslationInputFieldName,
   TranslationsEntitiesPageProps
 } from "@saleor/translations/types";
+import {
+  languageEntitiesUrl,
+  languageEntityUrl,
+  TranslatableEntities
+} from "@saleor/translations/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -24,28 +29,32 @@ export interface TranslationsCollectionsPageProps
 }
 
 const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = ({
+  translationId,
   activeField,
   disabled,
   languageCode,
   languages,
   data,
   saveButtonState,
-  onBack,
   onDiscard,
   onEdit,
-  onLanguageChange,
   onSubmit
 }) => {
   const intl = useIntl();
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink
+        href={languageEntitiesUrl(languageCode, {
+          tab: TranslatableEntities.collections
+        })}
+      >
         {intl.formatMessage(sectionNames.translations)}
       </Backlink>
       <PageHeader
         title={intl.formatMessage(
           {
+            id: "Bphmwe",
             defaultMessage:
               'Translation Collection "{collectionName}" - {languageCode}',
             description: "header"
@@ -59,7 +68,13 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
         <LanguageSwitch
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
-          onLanguageChange={onLanguageChange}
+          getLanguageUrl={lang =>
+            languageEntityUrl(
+              lang,
+              TranslatableEntities.collections,
+              translationId
+            )
+          }
         />
       </PageHeader>
       <TranslationFields
@@ -70,6 +85,7 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
         fields={[
           {
             displayName: intl.formatMessage({
+              id: "VZsE96",
               defaultMessage: "Collection Name"
             }),
             name: TranslationInputFieldName.name,
@@ -97,11 +113,13 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
         disabled={disabled}
         initialState={true}
         title={intl.formatMessage({
+          id: "TGX4T1",
           defaultMessage: "Search Engine Preview"
         })}
         fields={[
           {
             displayName: intl.formatMessage({
+              id: "HlEpii",
               defaultMessage: "Search Engine Title"
             }),
             name: TranslationInputFieldName.seoTitle,
@@ -111,6 +129,7 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
           },
           {
             displayName: intl.formatMessage({
+              id: "US3IPU",
               defaultMessage: "Search Engine Description"
             }),
             name: TranslationInputFieldName.seoDescription,

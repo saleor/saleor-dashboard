@@ -1,4 +1,6 @@
 import { ChannelCollectionData } from "@saleor/channels/utils";
+import { collectionListUrl } from "@saleor/collections/urls";
+import { Backlink } from "@saleor/components/Backlink";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import { Container } from "@saleor/components/Container";
@@ -14,8 +16,9 @@ import {
   PermissionEnum
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -29,14 +32,13 @@ export interface CollectionDetailsPageProps
   extends PageListProps,
     ListActions,
     ChannelProps {
+  onAdd: () => void;
   channelsCount: number;
   channelsErrors: CollectionChannelListingErrorFragment[];
   collection: CollectionDetailsQuery["collection"];
   currentChannels: ChannelCollectionData[];
   errors: CollectionErrorFragment[];
-  hasChannelChanged: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
-  onBack: () => void;
   onCollectionRemove: () => void;
   onImageDelete: () => void;
   onImageUpload: (file: File) => void;
@@ -53,10 +55,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
   currentChannels = [],
   disabled,
   errors,
-  hasChannelChanged,
   saveButtonBarState,
-  selectedChannelId,
-  onBack,
   onCollectionRemove,
   onImageDelete,
   onImageUpload,
@@ -66,6 +65,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
   ...collectionProductsProps
 }: CollectionDetailsPageProps) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   return (
     <CollectionUpdateForm
@@ -74,11 +74,10 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
       setChannels={onChannelsChange}
       onSubmit={onSubmit}
       disabled={disabled}
-      hasChannelChanged={hasChannelChanged}
     >
       {({ change, data, handlers, submit, isSaveDisabled }) => (
         <Container>
-          <Backlink onClick={onBack}>
+          <Backlink href={collectionListUrl()}>
             {intl.formatMessage(sectionNames.collections)}
           </Backlink>
           <PageHeader title={collection?.name} />
@@ -89,7 +88,6 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                 disabled={disabled}
                 errors={errors}
                 onChange={change}
-                onDescriptionChange={handlers.changeDescription}
               />
               <CardSpacer />
               <CollectionImage
@@ -113,6 +111,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                 disabled={disabled}
                 descriptionPlaceholder=""
                 helperText={intl.formatMessage({
+                  id: "Rj8LxK",
                   defaultMessage:
                     "Add search engine title and description to make this collection easier to find"
                 })}
@@ -130,11 +129,13 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                   managePermissions={[PermissionEnum.MANAGE_PRODUCTS]}
                   messages={{
                     hiddenLabel: intl.formatMessage({
+                      id: "V8FhTt",
                       defaultMessage: "Hidden",
                       description: "collection label"
                     }),
 
                     visibleLabel: intl.formatMessage({
+                      id: "9vQR6c",
                       defaultMessage: "Visible",
                       description: "collection label"
                     })
@@ -153,7 +154,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
           <Savebar
             state={saveButtonBarState}
             disabled={isSaveDisabled}
-            onCancel={onBack}
+            onCancel={() => navigate(collectionListUrl())}
             onDelete={onCollectionRemove}
             onSubmit={submit}
           />

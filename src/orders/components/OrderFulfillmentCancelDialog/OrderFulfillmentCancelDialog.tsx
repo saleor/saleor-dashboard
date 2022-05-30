@@ -86,13 +86,17 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
             <>
               <DialogTitle>
                 <FormattedMessage
+                  id="bb4nSp"
                   defaultMessage="Cancel Fulfillment"
                   description="dialog header"
                 />
               </DialogTitle>
               <DialogContent className={classes.enableOverflow}>
                 <DialogContentText className={classes.paragraph}>
-                  <FormattedMessage defaultMessage="Are you sure you want to cancel fulfillment? Canceling a fulfillment will restock products at a selected warehouse." />
+                  <FormattedMessage
+                    id="xco5tZ"
+                    defaultMessage="Are you sure you want to cancel fulfillment? Canceling a fulfillment will restock products at a selected warehouse."
+                  />
                 </DialogContentText>
                 <div
                   className={classes.selectCcontainer}
@@ -102,6 +106,7 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
                     choices={choices}
                     displayValue={displayValue}
                     label={intl.formatMessage({
+                      id: "aHc89n",
                       defaultMessage: "Select Warehouse",
                       description: "select warehouse to restock items"
                     })}

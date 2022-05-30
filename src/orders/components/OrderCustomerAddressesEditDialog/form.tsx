@@ -99,15 +99,7 @@ function useOrderCustomerAddressesEditForm(
     ...providedInitialFormData
   };
 
-  const {
-    handleChange,
-    hasChanged,
-    change,
-    data: formData,
-    setChanged
-  } = useForm({
-    ...initialData
-  });
+  const { handleChange, change, data: formData } = useForm(initialData);
 
   const { setExitDialogSubmitRef } = useExitFormDialog();
 
@@ -181,8 +173,7 @@ function useOrderCustomerAddressesEditForm(
   };
 
   const handleFormSubmit = useHandleFormSubmit({
-    onSubmit,
-    setChanged
+    onSubmit
   });
 
   const handleSubmit = () => handleFormSubmit(data);
@@ -198,7 +189,6 @@ function useOrderCustomerAddressesEditForm(
   return {
     change: handleChange,
     submit,
-    hasChanged,
     data,
     handlers: {
       changeCustomerAddress: handleCustomerAddressChange,

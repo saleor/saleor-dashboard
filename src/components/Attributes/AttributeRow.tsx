@@ -10,7 +10,6 @@ import {
   getMultiChoices,
   getMultiDisplayValue,
   getReferenceDisplayValue,
-  getRichTextData,
   getSingleChoices,
   getSingleDisplayValue
 } from "@saleor/components/Attributes/utils";
@@ -43,8 +42,8 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
   onChange,
   fetchAttributeValues,
   fetchMoreAttributeValues,
-  entityId,
-  onAttributeSelectBlur
+  onAttributeSelectBlur,
+  richTextGetters
 }) => {
   const intl = useIntl();
   const classes = useStyles();
@@ -126,18 +125,27 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
         />
       );
     case AttributeInputTypeEnum.RICH_TEXT:
+      const {
+        getShouldMount,
+        getDefaultValue,
+        getMountEditor,
+        getHandleChange
+      } = richTextGetters;
+      const defaultValue = getDefaultValue(attribute.id);
       return (
         <BasicAttributeRow label={attribute.label}>
-          <RichTextEditor
-            key={entityId} // temporary workaround, TODO: refactor rich text editor
-            name={`attribute:${attribute.label}`}
-            disabled={disabled}
-            error={!!error}
-            label={intl.formatMessage(attributeRowMessages.valueLabel)}
-            helperText={getErrorMessage(error, intl)}
-            onChange={data => onChange(attribute.id, JSON.stringify(data))}
-            data={getRichTextData(attribute)}
-          />
+          {getShouldMount(attribute.id) && (
+            <RichTextEditor
+              defaultValue={defaultValue}
+              editorRef={getMountEditor(attribute.id)}
+              onChange={getHandleChange(attribute.id)}
+              name={`attribute:${attribute.label}`}
+              disabled={disabled}
+              error={!!error}
+              label={intl.formatMessage(attributeRowMessages.valueLabel)}
+              helperText={getErrorMessage(error, intl)}
+            />
+          )}
         </BasicAttributeRow>
       );
     case AttributeInputTypeEnum.NUMERIC:

@@ -18,7 +18,7 @@ describe("Filtering query params", () => {
 
   it("should not be empty object if params given", () => {
     const params: AttributeListUrlFilters = {
-      availableInGrid: true.toString()
+      isVariantOnly: true.toString()
     };
     const filterVariables = getFilterVariables(params);
 
@@ -30,14 +30,6 @@ describe("Filtering URL params", () => {
   const intl = createIntl(config);
 
   const filters = createFilterStructure(intl, {
-    availableInGrid: {
-      active: false,
-      value: true
-    },
-    filterableInDashboard: {
-      active: false,
-      value: true
-    },
     filterableInStorefront: {
       active: false,
       value: true

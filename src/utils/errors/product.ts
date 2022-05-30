@@ -10,49 +10,63 @@ import commonErrorMessages, { getCommonFormFieldErrorMessage } from "./common";
 
 const messages = defineMessages({
   alreadyExists: {
+    id: "2NgTCJ",
     defaultMessage: "A product with this SKU already exists"
   },
   attributeAlreadyAssigned: {
+    id: "aggaJg",
     defaultMessage:
       "This attribute has already been assigned to this product type"
   },
   attributeCannotBeAssigned: {
+    id: "u24Ppd",
     defaultMessage: "This attribute cannot be assigned to this product type"
   },
   attributeRequired: {
+    id: "cd13nN",
     defaultMessage: "All attributes should have value",
     description: "product attribute error"
   },
   attributeVariantsDisabled: {
+    id: "lLwtgs",
     defaultMessage: "Variants are disabled in this product type"
   },
   duplicated: {
+    id: "AY7Tuz",
     defaultMessage: "The same object cannot be in both lists"
   },
   duplicatedInputItem: {
+    id: "pFVX6g",
     defaultMessage: "Variant with these attributes already exists"
   },
   nameAlreadyTaken: {
+    id: "FuAV5G",
     defaultMessage: "This name is already taken. Please provide another."
   },
   priceInvalid: {
+    id: "mYs3tb",
     defaultMessage: "Product price cannot be lower than 0."
   },
   skuUnique: {
+    id: "rZf1qL",
     defaultMessage: "SKUs must be unique",
     description: "bulk variant create error"
   },
   unsupportedMediaProvider: {
+    id: "DILs4b",
     defaultMessage: "Unsupported media provider or incorrect URL"
   },
   variantNoDigitalContent: {
+    id: "Z6QAbw",
     defaultMessage: "This variant does not have any digital content"
   },
   variantUnique: {
+    id: "i3Mvj8",
     defaultMessage: "This variant already exists",
     description: "product attribute error"
   },
   noCategorySet: {
+    id: "3AqOxp",
     defaultMessage: "Product category not set",
     description: "no category set error"
   }

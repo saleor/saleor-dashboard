@@ -6,6 +6,7 @@ import {
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import AssignProductDialog from "@saleor/components/AssignProductDialog";
+import { Button } from "@saleor/components/Button";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -31,7 +32,6 @@ import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages, errorMessages } from "@saleor/intl";
-import { Button } from "@saleor/macaw-ui";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import { arrayDiff } from "@saleor/utils/arrays";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -42,7 +42,6 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getMutationErrors, getMutationState, maybe } from "../../misc";
-import { productUrl } from "../../products/urls";
 import CollectionDetailsPage from "../components/CollectionDetailsPage/CollectionDetailsPage";
 import { CollectionUpdateData } from "../components/CollectionDetailsPage/form";
 import {
@@ -116,6 +115,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
           notify({
             status: "success",
             text: intl.formatMessage({
+              id: "56vUeQ",
               defaultMessage: "Added product to collection"
             })
           });
@@ -134,6 +134,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "WW+Ruy",
             defaultMessage: "Deleted product from collection"
           })
         });
@@ -149,6 +150,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "Q8wHwJ",
             defaultMessage: "Deleted collection"
           })
         });
@@ -162,8 +164,6 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
   );
   const paginate = useLocalPaginator(setPaginationState);
 
-  const handleBack = () => navigate(collectionListUrl());
-
   const [selectedChannel] = useLocalStorage("collectionListChannel", "");
 
   const { data, loading } = useCollectionDetailsQuery({
@@ -173,7 +173,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
 
   const collection = data?.collection;
   if (collection === null) {
-    return <NotFoundPage onBack={handleBack} />;
+    return <NotFoundPage backHref={collectionListUrl()} />;
   }
   const allChannels = createCollectionChannels(
     availableChannels
@@ -272,6 +272,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
           title={intl.formatMessage({
+            id: "I1Mz7h",
             defaultMessage: "Manage Collection Channel Availability"
           })}
           confirmButtonState="default"
@@ -282,7 +283,6 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
       )}
       <CollectionDetailsPage
         onAdd={() => openModal("assign")}
-        onBack={handleBack}
         disabled={loading || updateChannelsOpts.loading}
         collection={data?.collection}
         channelsErrors={
@@ -315,7 +315,6 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
             }
           });
         }}
-        onRowClick={id => () => navigate(productUrl(id))}
         saveButtonBarState={formTransitionState}
         toolbar={
           <Button
@@ -326,6 +325,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
             }
           >
             <FormattedMessage
+              id="67V0c0"
               defaultMessage="Unassign"
               description="unassign product from collection, button"
             />
@@ -336,9 +336,6 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
         toggle={toggle}
         toggleAll={toggleAll}
         currentChannels={currentChannels}
-        hasChannelChanged={
-          collectionChannelsChoices?.length !== currentChannels?.length
-        }
         channelsCount={availableChannels.length}
         selectedChannelId={selectedChannel}
         openChannelsModal={handleChannelsModalOpen}
@@ -375,6 +372,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
         }
         open={params.action === "remove"}
         title={intl.formatMessage({
+          id: "+wpvnk",
           defaultMessage: "Delete Collection",
           description: "dialog title"
         })}
@@ -382,6 +380,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
       >
         <DialogContentText>
           <FormattedMessage
+            id="pVFoOk"
             defaultMessage="Are you sure you want to delete {collectionName}?"
             values={{
               collectionName: (
@@ -405,12 +404,14 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
         }
         open={params.action === "unassign"}
         title={intl.formatMessage({
+          id: "5OtU+V",
           defaultMessage: "Unassign products from collection",
           description: "dialog title"
         })}
       >
         <DialogContentText>
           <FormattedMessage
+            id="AulH/n"
             defaultMessage="{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
             values={{
               counter: maybe(() => params.ids.length),
@@ -434,13 +435,17 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
         }
         open={params.action === "removeImage"}
         title={intl.formatMessage({
+          id: "fzk04H",
           defaultMessage: "Delete image",
           description: "dialog title"
         })}
         variant="delete"
       >
         <DialogContentText>
-          <FormattedMessage defaultMessage="Are you sure you want to delete collection's image?" />
+          <FormattedMessage
+            id="MxhVZv"
+            defaultMessage="Are you sure you want to delete collection's image?"
+          />
         </DialogContentText>
       </ActionDialog>
     </>

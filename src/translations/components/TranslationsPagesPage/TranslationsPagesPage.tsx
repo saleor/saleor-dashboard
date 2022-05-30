@@ -1,15 +1,20 @@
+import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
 import { LanguageCodeEnum, PageTranslationFragment } from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
-import { Backlink } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import {
   PageTranslationInputFieldName,
   TranslationsEntitiesPageProps
 } from "@saleor/translations/types";
+import {
+  languageEntitiesUrl,
+  languageEntityUrl,
+  TranslatableEntities
+} from "@saleor/translations/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -22,16 +27,15 @@ export interface TranslationsPagesPageProps
 }
 
 const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
+  translationId,
   activeField,
   disabled,
   languageCode,
   languages,
   data,
   saveButtonState,
-  onBack,
   onDiscard,
   onEdit,
-  onLanguageChange,
   onSubmit,
   onAttributeValueSubmit
 }) => {
@@ -39,12 +43,17 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink
+        href={languageEntitiesUrl(languageCode, {
+          tab: TranslatableEntities.pages
+        })}
+      >
         {intl.formatMessage(sectionNames.translations)}
       </Backlink>
       <PageHeader
         title={intl.formatMessage(
           {
+            id: "oUWXLO",
             defaultMessage: 'Translation Page "{pageName}" - {languageCode}',
             description: "header"
           },
@@ -57,7 +66,9 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
         <LanguageSwitch
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
-          onLanguageChange={onLanguageChange}
+          getLanguageUrl={lang =>
+            languageEntityUrl(lang, TranslatableEntities.pages, translationId)
+          }
         />
       </PageHeader>
       <TranslationFields
@@ -68,6 +79,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
         fields={[
           {
             displayName: intl.formatMessage({
+              id: "gvOzOl",
               defaultMessage: "Page Title"
             }),
             name: PageTranslationInputFieldName.title,
@@ -77,6 +89,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
           },
           {
             displayName: intl.formatMessage({
+              id: "gMwpNC",
               defaultMessage: "Content",
               description: "page content"
             }),
@@ -99,11 +112,13 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
         disabled={disabled}
         initialState={true}
         title={intl.formatMessage({
+          id: "TGX4T1",
           defaultMessage: "Search Engine Preview"
         })}
         fields={[
           {
             displayName: intl.formatMessage({
+              id: "HlEpii",
               defaultMessage: "Search Engine Title"
             }),
             name: PageTranslationInputFieldName.seoTitle,
@@ -113,6 +128,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
           },
           {
             displayName: intl.formatMessage({
+              id: "US3IPU",
               defaultMessage: "Search Engine Description"
             }),
             name: PageTranslationInputFieldName.seoDescription,
@@ -140,6 +156,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
                 id: attrVal.attributeValue.id,
                 displayName: intl.formatMessage(
                   {
+                    id: "PajjqE",
                     defaultMessage: "Attribute {number}",
                     description: "attribute list"
                   },

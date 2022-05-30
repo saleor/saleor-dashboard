@@ -36,6 +36,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
+import { getAttributeInputFromVariant } from "@saleor/products/utils/data";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
@@ -52,7 +53,6 @@ import ProductVariantPage from "../components/ProductVariantPage";
 import { ProductVariantUpdateSubmitData } from "../components/ProductVariantPage/form";
 import {
   productUrl,
-  productVariantAddUrl,
   productVariantEditUrl,
   ProductVariantEditUrlDialog,
   ProductVariantEditUrlQueryParams
@@ -113,8 +113,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     params
   );
 
-  const handleBack = () => navigate(productUrl(productId));
-
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
 
   const [assignMedia, assignMediaOpts] = useVariantMediaAssignMutation({});
@@ -126,6 +124,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       notify({
         status: "success",
         text: intl.formatMessage({
+          id: "BUKMzM",
           defaultMessage: "Variant removed"
         })
       });
@@ -269,6 +268,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         addStocks: data.addStocks.map(mapFormsetStockToStockInput),
         attributes: prepareAttributesInput({
           attributes: data.attributes,
+          prevAttributes: getAttributeInputFromVariant(variant),
           updatedFileAttributes
         }),
         id: variantId,
@@ -357,13 +357,14 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
 
   if (variant === null) {
-    return <NotFoundPage onBack={handleBack} />;
+    return <NotFoundPage backHref={productUrl(productId)} />;
   }
 
   return (
     <>
       <WindowTitle title={data?.productVariant?.name} />
       <ProductVariantPage
+        productId={productId}
         defaultWeightUnit={shop?.defaultWeightUnit}
         defaultVariantId={data?.productVariant.product.defaultVariant?.id}
         errors={errors}
@@ -380,8 +381,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         variant={variant}
         header={variant?.name || variant?.sku}
         warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
-        onAdd={() => navigate(productVariantAddUrl(productId))}
-        onBack={handleBack}
         onDelete={() => openModal("remove")}
         onMediaSelect={handleMediaSelect}
         onSubmit={async data => {
@@ -391,9 +390,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
           return [...errors, ...channelErrors];
         }}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
-        onVariantClick={variantId => {
-          navigate(productVariantEditUrl(productId, variantId));
-        }}
         onVariantPreorderDeactivate={handleDeactivateVariantPreorder}
         variantDeactivatePreoderButtonState={deactivatePreoderOpts.status}
         onVariantReorder={handleVariantReorder}

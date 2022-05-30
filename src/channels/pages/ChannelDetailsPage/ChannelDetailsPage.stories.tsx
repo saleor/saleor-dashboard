@@ -17,7 +17,6 @@ const props: ChannelDetailsPageProps<ChannelErrorFragment[]> = {
   disabled: false,
   disabledStatus: false,
   errors: [],
-  onBack: () => undefined,
   onSubmit: () => undefined,
   saveButtonBarState: "default",
   updateChannelStatus: () => undefined,

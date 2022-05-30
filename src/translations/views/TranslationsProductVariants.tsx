@@ -16,11 +16,6 @@ import { useIntl } from "react-intl";
 import { extractMutationErrors, maybe } from "../../misc";
 import TranslationsProductVariantsPage from "../components/TranslationsProductVariantsPage";
 import { TranslationField, TranslationInputFieldName } from "../types";
-import {
-  languageEntitiesUrl,
-  productVariantUrl,
-  TranslatableEntities
-} from "../urls";
 import { getParsedTranslationInputData } from "../utils";
 
 export interface TranslationsProductVariantsQueryParams {
@@ -120,6 +115,7 @@ const TranslationsProductVariants: React.FC<TranslationsProductVariantsProps> = 
 
   return (
     <TranslationsProductVariantsPage
+      translationId={id}
       productId={productId}
       variantId={id}
       activeField={params.activeField}
@@ -129,18 +125,8 @@ const TranslationsProductVariants: React.FC<TranslationsProductVariantsProps> = 
       languageCode={languageCode}
       languages={maybe(() => shop.languages, [])}
       saveButtonState={updateTranslationsOpts.status}
-      onBack={() =>
-        navigate(
-          languageEntitiesUrl(languageCode, {
-            tab: TranslatableEntities.products
-          })
-        )
-      }
       onEdit={onEdit}
       onDiscard={onDiscard}
-      onLanguageChange={lang =>
-        navigate(productVariantUrl(lang, productId, id))
-      }
       onSubmit={handleSubmit}
       onAttributeValueSubmit={handleAttributeValueSubmit}
       data={

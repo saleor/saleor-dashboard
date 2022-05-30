@@ -59,6 +59,7 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "jU9GPX",
           defaultMessage: "Organize Content",
           description: "section header"
         })}
@@ -70,8 +71,8 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
             disabled={disabled}
             displayValue={pageTypeInputDisplayValue}
             label={intl.formatMessage({
-              defaultMessage: "Select content type",
-              id: "pageTypeInputLabel"
+              id: "W5SK5c",
+              defaultMessage: "Select content type"
             })}
             error={!!formErrors.pageType}
             helperText={getPageErrorMessage(formErrors.pageType, intl)}
@@ -88,7 +89,7 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
         ) : (
           <>
             <Typography className={classes.label} variant="caption">
-              <FormattedMessage defaultMessage="Content type" />
+              <FormattedMessage id="ufD5Jr" defaultMessage="Content type" />
             </Typography>
             <Typography>{pageType?.name}</Typography>
           </>

@@ -1,5 +1,11 @@
 import { OutputData } from "@editorjs/editorjs";
-import { getAttributesDisplayData } from "@saleor/attributes/utils/data";
+import {
+  getAttributesDisplayData,
+  getRichTextAttributesFromMap,
+  getRichTextDataFromAttributes,
+  mergeAttributes,
+  RichTextProps
+} from "@saleor/attributes/utils/data";
 import {
   createAttributeChangeHandler,
   createAttributeFileChangeHandler,
@@ -18,7 +24,6 @@ import { AttributeInput } from "@saleor/components/Attributes";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import {
   ProductFragment,
@@ -62,8 +67,10 @@ import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAu
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
+import { RichTextContext } from "@saleor/utils/richText/context";
+import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
 import useRichText from "@saleor/utils/richText/useRichText";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
@@ -147,18 +154,24 @@ export interface ProductUpdateHandlers
     Record<"selectAttributeFile", FormsetChange<File>>,
     Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
     Record<"addStock" | "deleteStock", (id: string) => void> {
-  changeDescription: RichTextEditorChange;
   changePreorderEndDate: FormChange;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
 }
-export interface UseProductUpdateFormResult
+
+export interface UseProductUpdateFormOutput
   extends CommonUseFormResultWithHandlers<
-    ProductUpdateData,
-    ProductUpdateHandlers
-  > {
+      ProductUpdateData,
+      ProductUpdateHandlers
+    >,
+    RichTextProps {
   formErrors: FormErrors<ProductUpdateSubmitData>;
 }
+
+export type UseProductUpdateFormRenderProps = Omit<
+  UseProductUpdateFormOutput,
+  "richText"
+>;
 
 export interface UseProductUpdateFormOpts
   extends Record<
@@ -189,11 +202,10 @@ export interface UseProductUpdateFormOpts
 }
 
 export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
-  children: (props: UseProductUpdateFormResult) => React.ReactNode;
+  children: (props: UseProductUpdateFormRenderProps) => React.ReactNode;
   product: ProductFragment;
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise;
   disabled: boolean;
-  hasChannelChanged: boolean;
 }
 
 const getStocksData = (
@@ -224,37 +236,50 @@ function useProductUpdateForm(
   product: ProductFragment,
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise,
   disabled: boolean,
-  hasChannelChanged: boolean,
   opts: UseProductUpdateFormOpts
-): UseProductUpdateFormResult {
+): UseProductUpdateFormOutput {
   const intl = useIntl();
-
-  const form = useForm(
-    getProductUpdatePageFormData(
+  const initial = useMemo(
+    () =>
+      getProductUpdatePageFormData(
+        product,
+        product?.variants,
+        opts.currentChannels,
+        opts.channelsData,
+        opts.channelsWithVariants
+      ),
+    [
       product,
-      product?.variants,
       opts.currentChannels,
       opts.channelsData,
       opts.channelsWithVariants
-    ),
-    undefined,
-    { confirmLeave: true, formId: PRODUCT_UPDATE_FORM_ID }
+    ]
   );
+
+  const form = useForm(initial, undefined, {
+    confirmLeave: true,
+    formId: PRODUCT_UPDATE_FORM_ID
+  });
 
   const {
     handleChange,
     triggerChange,
     toggleValue,
     data: formData,
-    setChanged,
-    hasChanged,
     setIsSubmitDisabled
   } = form;
 
   const attributes = useFormset(getAttributeInputFromProduct(product));
+  const {
+    getters: attributeRichTextGetters,
+    getValues: getAttributeRichTextValues
+  } = useMultipleRichText({
+    initial: getRichTextDataFromAttributes(attributes.data),
+    triggerChange
+  });
   const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset(getStockInputFromProduct(product));
-  const [description, changeDescription] = useRichText({
+  const richText = useRichText({
     initial: product?.description,
     triggerChange
   });
@@ -377,18 +402,23 @@ function useProductUpdateForm(
       opts.referencePages,
       opts.referenceProducts
     ),
-    description: description.current,
+    description: null,
     stocks: stocks.data
   };
 
-  // Need to make it function to always have description.current up to date
-  const getSubmitData = (): ProductUpdateSubmitData => ({
+  const getSubmitData = async (): Promise<ProductUpdateSubmitData> => ({
     ...data,
     ...getStocksData(product, stocks.data),
     ...getMetadata(data, isMetadataModified, isPrivateMetadataModified),
-    attributes: attributes.data,
+    attributes: mergeAttributes(
+      attributes.data,
+      getRichTextAttributesFromMap(
+        attributes.data,
+        await getAttributeRichTextValues()
+      )
+    ),
     attributesWithNewFileValue: attributesWithNewFileValue.data,
-    description: description.current
+    description: await richText.getValue()
   });
 
   const handleSubmit = async (data: ProductUpdateSubmitData) => {
@@ -403,15 +433,14 @@ function useProductUpdateForm(
 
   const handleFormSubmit = useHandleFormSubmit({
     formId: form.formId,
-    onSubmit: handleSubmit,
-    setChanged
+    onSubmit: handleSubmit
   });
 
-  const submit = async () => handleFormSubmit(getSubmitData());
+  const submit = async () => handleFormSubmit(await getSubmitData());
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
-  const shouldEnableSave = () => {
+  const isValid = () => {
     if (!data.name) {
       return false;
     }
@@ -439,11 +468,11 @@ function useProductUpdateForm(
     return true;
   };
 
-  const isSaveEnabled = !shouldEnableSave();
+  const isSaveDisabled = disabled || !isValid();
 
-  const isSaveDisabled =
-    disabled || isSaveEnabled || (!hasChanged && !hasChannelChanged);
-  setIsSubmitDisabled(isSaveDisabled);
+  useEffect(() => {
+    setIsSubmitDisabled(isSaveDisabled);
+  }, [isSaveDisabled]);
 
   return {
     change: handleChange,
@@ -454,7 +483,6 @@ function useProductUpdateForm(
       changeChannelPrice: handleChannelPriceChange,
       changeChannelPreorder: handleChannelPreorderChange,
       changeChannels: handleChannelsChange,
-      changeDescription,
       changeMetadata,
       changeStock: handleStockChange,
       changePreorderEndDate: handlePreorderEndDateChange,
@@ -470,9 +498,10 @@ function useProductUpdateForm(
       selectCollection: handleCollectionSelect,
       selectTaxRate: handleTaxTypeSelect
     },
-    hasChanged,
     submit,
-    isSaveDisabled
+    isSaveDisabled,
+    richText,
+    attributeRichTextGetters
   };
 }
 
@@ -481,18 +510,22 @@ const ProductUpdateForm: React.FC<ProductUpdateFormProps> = ({
   product,
   onSubmit,
   disabled,
-  hasChannelChanged,
   ...rest
 }) => {
-  const props = useProductUpdateForm(
+  const { richText, ...props } = useProductUpdateForm(
     product,
     onSubmit,
     disabled,
-    hasChannelChanged,
     rest
   );
 
-  return <form onSubmit={props.submit}>{children(props)}</form>;
+  return (
+    <form onSubmit={props.submit}>
+      <RichTextContext.Provider value={richText}>
+        {children(props)}
+      </RichTextContext.Provider>
+    </form>
+  );
 };
 
 ProductUpdateForm.displayName = "ProductUpdateForm";

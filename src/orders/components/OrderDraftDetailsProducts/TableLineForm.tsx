@@ -37,7 +37,7 @@ const TableLineForm: React.FC<TableLineFormProps> = ({
 
   return (
     <Form initial={{ quantity }} onSubmit={data => onOrderLineChange(id, data)}>
-      {({ change, data, hasChanged, submit }) => {
+      {({ change, data, submit }) => {
         const handleQuantityChange = createNonNegativeValueChangeHandler(
           change
         );
@@ -45,7 +45,7 @@ const TableLineForm: React.FC<TableLineFormProps> = ({
         return (
           <DebounceForm
             change={handleQuantityChange}
-            submit={hasChanged ? submit : undefined}
+            submit={submit}
             time={200}
           >
             {debounce => (

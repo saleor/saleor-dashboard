@@ -2,6 +2,7 @@ import {
   createShippingChannelsFromRate,
   createSortedShippingChannels
 } from "@saleor/channels/utils";
+import { Button } from "@saleor/components/Button";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
@@ -25,7 +26,6 @@ import useLocalPaginator, {
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages, sectionNames } from "@saleor/intl";
-import { Button } from "@saleor/macaw-ui";
 import {
   getById,
   getByUnmatchingId
@@ -313,8 +313,6 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
     }
   };
 
-  const handleBack = () => navigate(shippingZoneUrl(id));
-
   return (
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.shipping)} />
@@ -326,6 +324,7 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
           title={intl.formatMessage({
+            id: "EM730i",
             defaultMessage: "Manage Channel Availability"
           })}
           selected={channelListElements.length}
@@ -378,12 +377,11 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
           unassignProductOpts?.status === "loading" ||
           assignProductOpts?.status === "loading"
         }
-        hasChannelChanged={shippingChannels?.length !== currentChannels?.length}
         havePostalCodesChanged={state.havePostalCodesChanged}
         saveButtonBarState={updateShippingRateOpts.status}
         onDelete={() => openModal("remove")}
+        backHref={shippingZoneUrl(id)}
         onSubmit={handleSubmit}
-        onBack={handleBack}
         rate={rate}
         errors={updateShippingRateOpts.data?.shippingPriceUpdate.errors || []}
         channelErrors={
@@ -405,6 +403,7 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
         toolbar={
           <Button onClick={() => openModal("unassign-product")}>
             <FormattedMessage
+              id="YdeHZX"
               defaultMessage="Unassign"
               description="unassign products from shipping method, button"
             />

@@ -5,6 +5,7 @@ import {
   TableHead,
   TableRow
 } from "@material-ui/core";
+import { Backlink } from "@saleor/components/Backlink";
 import { Container } from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
@@ -12,7 +13,8 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { CountryListQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
+import { countryListUrl } from "@saleor/taxes/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -30,18 +32,17 @@ const useStyles = makeStyles(
 export interface CountryTaxesPageProps {
   countryName: string;
   taxCategories: CountryListQuery["shop"]["countries"][0]["vat"]["reducedRates"];
-  onBack: () => void;
 }
 
 const CountryTaxesPage: React.FC<CountryTaxesPageProps> = props => {
-  const { countryName, taxCategories, onBack } = props;
+  const { countryName, taxCategories } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink href={countryListUrl}>
         {intl.formatMessage(sectionNames.taxes)}
       </Backlink>
       <PageHeader
@@ -49,6 +50,7 @@ const CountryTaxesPage: React.FC<CountryTaxesPageProps> = props => {
           countryName
             ? intl.formatMessage(
                 {
+                  id: "QHB48n",
                   defaultMessage: "Tax Rates in {countryName}",
                   description: "header"
                 },
@@ -66,10 +68,10 @@ const CountryTaxesPage: React.FC<CountryTaxesPageProps> = props => {
               <TableHead>
                 <TableRow>
                   <TableCell className={classes.wideColumn}>
-                    <FormattedMessage defaultMessage="Category" />
+                    <FormattedMessage id="ccXLVi" defaultMessage="Category" />
                   </TableCell>
                   <TableCell>
-                    <FormattedMessage defaultMessage="Tax Rate" />
+                    <FormattedMessage id="la9cZ4" defaultMessage="Tax Rate" />
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -94,7 +96,10 @@ const CountryTaxesPage: React.FC<CountryTaxesPageProps> = props => {
                   () => (
                     <TableRow>
                       <TableCell colSpan={2}>
-                        <FormattedMessage defaultMessage="No reduced tax categories found" />
+                        <FormattedMessage
+                          id="Ubath+"
+                          defaultMessage="No reduced tax categories found"
+                        />
                       </TableCell>
                     </TableRow>
                   )

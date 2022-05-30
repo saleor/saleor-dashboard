@@ -3,8 +3,10 @@ import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata";
 import Savebar from "@saleor/components/Savebar";
+import useNavigator from "@saleor/hooks/useNavigator";
 import React from "react";
 
+import { giftCardsListPath } from "../urls";
 import GiftCardHistory from "./GiftCardHistory/GiftCardHistory";
 import GiftCardUpdateDetailsCard from "./GiftCardUpdateDetailsCard";
 import GiftCardUpdateInfoCard from "./GiftCardUpdateInfoCard";
@@ -14,10 +16,10 @@ import useGiftCardUpdate from "./providers/GiftCardUpdateFormProvider/hooks/useG
 import useGiftCardUpdateForm from "./providers/GiftCardUpdateFormProvider/hooks/useGiftCardUpdateForm";
 
 const GiftCardUpdatePage: React.FC = () => {
-  const { navigateBack, openDeleteDialog } = useGiftCardUpdateDialogs();
+  const { openDeleteDialog } = useGiftCardUpdateDialogs();
+  const navigate = useNavigator();
 
   const {
-    hasChanged,
     submit,
     data,
     handlers: { changeMetadata }
@@ -43,8 +45,8 @@ const GiftCardUpdatePage: React.FC = () => {
       </Grid>
       <Savebar
         state={status}
-        disabled={loadingUpdate || !hasChanged}
-        onCancel={navigateBack}
+        onCancel={() => navigate(giftCardsListPath)}
+        disabled={loadingUpdate}
         onSubmit={submit}
         onDelete={openDeleteDialog}
       />

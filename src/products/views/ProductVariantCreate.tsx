@@ -33,7 +33,6 @@ import ProductVariantCreatePage from "../components/ProductVariantCreatePage";
 import { ProductVariantCreateData } from "../components/ProductVariantCreatePage/form";
 import {
   productListUrl,
-  productUrl,
   productVariantAddUrl,
   ProductVariantAddUrlQueryParams,
   productVariantEditUrl
@@ -104,7 +103,6 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
     reorderProductVariants({ variables })
   );
 
-  const handleBack = () => navigate(productUrl(productId));
   const handleCreate = async (formData: ProductVariantCreateData) => {
     const uploadFilesResult = await handleUploadMultipleFiles(
       formData.attributesWithNewFileValue,
@@ -123,12 +121,13 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
             attributes: formData.attributes.filter(
               attribute => attribute.value?.length && attribute.value[0] !== ""
             ),
+            prevAttributes: null,
             updatedFileAttributes
           }),
           product: productId,
           sku: formData.sku,
           stocks: formData.stocks.map(stock => ({
-            quantity: parseInt(stock.value, 0) || 0,
+            quantity: parseInt(stock.value, 10) || 0,
             warehouse: stock.id
           })),
           trackInventory: true,
@@ -219,20 +218,22 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
     <>
       <WindowTitle
         title={intl.formatMessage({
+          id: "MyM2oR",
           defaultMessage: "Create variant",
           description: "window title"
         })}
       />
       <ProductVariantCreatePage
+        productId={productId}
         disabled={disableForm}
         errors={variantCreateResult.data?.productVariantCreate.errors || []}
         header={intl.formatMessage({
+          id: "T6dXGG",
           defaultMessage: "Create Variant",
           description: "header"
         })}
         product={data?.product}
         attributeValues={attributeValues}
-        onBack={handleBack}
         onSubmit={handleSubmit}
         onVariantClick={handleVariantClick}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}

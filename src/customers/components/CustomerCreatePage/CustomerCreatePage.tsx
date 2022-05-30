@@ -1,9 +1,11 @@
+import { Backlink } from "@saleor/components/Backlink";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
+import { customerListUrl } from "@saleor/customers/urls";
 import {
   AccountErrorFragment,
   AddressInput,
@@ -11,8 +13,9 @@ import {
 } from "@saleor/graphql";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { extractMutationErrors } from "@saleor/misc";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
@@ -58,7 +61,6 @@ export interface CustomerCreatePageProps {
   disabled: boolean;
   errors: AccountErrorFragment[];
   saveButtonBar: ConfirmButtonTransitionState;
-  onBack: () => void;
   onSubmit: (data: CustomerCreatePageSubmitData) => SubmitPromise;
 }
 
@@ -67,10 +69,10 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
   disabled,
   errors: apiErrors,
   saveButtonBar,
-  onBack,
   onSubmit
 }: CustomerCreatePageProps) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   const [countryDisplayName, setCountryDisplayName] = React.useState("");
   const countryChoices = mapCountriesToChoices(countries);
@@ -150,11 +152,12 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
 
         return (
           <Container>
-            <Backlink onClick={onBack}>
+            <Backlink href={customerListUrl()}>
               <FormattedMessage {...sectionNames.customers} />
             </Backlink>
             <PageHeader
               title={intl.formatMessage({
+                id: "N76zUg",
                 defaultMessage: "Create Customer",
                 description: "page header"
               })}
@@ -190,7 +193,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
               disabled={isSaveDisabled}
               state={saveButtonBar}
               onSubmit={submit}
-              onCancel={onBack}
+              onCancel={() => navigate(customerListUrl())}
             />
           </Container>
         );

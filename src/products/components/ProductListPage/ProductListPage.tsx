@@ -6,20 +6,19 @@ import {
 } from "@saleor/apps/useExtensions";
 import { ButtonWithSelect } from "@saleor/components/ButtonWithSelect";
 import CardMenu from "@saleor/components/CardMenu";
-import ColumnPicker, {
-  ColumnPickerChoice
-} from "@saleor/components/ColumnPicker";
+import ColumnPicker from "@saleor/components/ColumnPicker";
 import Container from "@saleor/components/Container";
 import { getByName } from "@saleor/components/Filter/utils";
 import FilterBar from "@saleor/components/FilterBar";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
+import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import PageHeader from "@saleor/components/PageHeader";
 import { ProductListColumns } from "@saleor/config";
 import {
-  AvailableInGridAttributesQuery,
   GridAttributesQuery,
   ProductListQuery,
-  RefreshLimitsQuery
+  RefreshLimitsQuery,
+  SearchAvailableInGridAttributesQuery
 } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -36,7 +35,7 @@ import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ProductListUrlSortField } from "../../urls";
+import { productAddUrl, ProductListUrlSortField } from "../../urls";
 import ProductList from "../ProductList";
 import { columnsMessages } from "../ProductList/messages";
 import {
@@ -44,6 +43,7 @@ import {
   ProductFilterKeys,
   ProductListFilterOpts
 } from "./filters";
+import { getAttributeColumnValue } from "./utils";
 
 export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
@@ -54,15 +54,16 @@ export interface ProductListPageProps
     ChannelProps {
   activeAttributeSortId: string;
   availableInGridAttributes: RelayToFlat<
-    AvailableInGridAttributesQuery["availableInGrid"]
+    SearchAvailableInGridAttributesQuery["availableInGrid"]
   >;
-  channelsCount: number;
+  columnQuery: string;
   currencySymbol: string;
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   limits: RefreshLimitsQuery["shop"]["limits"];
   totalGridAttributes: number;
   products: RelayToFlat<ProductListQuery["products"]>;
   onExport: () => void;
+  onColumnQueryChange: (query: string) => void;
 }
 
 const useStyles = makeStyles(
@@ -86,7 +87,7 @@ const useStyles = makeStyles(
 
 export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const {
-    channelsCount,
+    columnQuery,
     currencySymbol,
     currentTab,
     defaultSettings,
@@ -100,8 +101,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     settings,
     tabs,
     totalGridAttributes,
-    onAdd,
     onAll,
+    onColumnQueryChange,
     onExport,
     onFetchMore,
     onFilterChange,
@@ -117,14 +118,11 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const intl = useIntl();
   const classes = useStyles(props);
 
-  const handleSave = (columns: ProductListColumns[]) =>
-    onUpdateListSettings("columns", columns);
-
-  const filterStructure = createFilterStructure(intl, filterOpts);
-
-  const filterDependency = filterStructure.find(getByName("channel"));
-
-  const columns: ColumnPickerChoice[] = [
+  const staticColumns = [
+    {
+      label: intl.formatMessage(columnsMessages.availability),
+      value: "availability" as ProductListColumns
+    },
     {
       label: intl.formatMessage(columnsMessages.price),
       value: "price" as ProductListColumns
@@ -136,11 +134,37 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     {
       label: intl.formatMessage(columnsMessages.updatedAt),
       value: "date" as ProductListColumns
-    },
-    ...availableInGridAttributes.map(attribute => ({
+    }
+  ];
+
+  const initialColumnsChoices = React.useMemo(() => {
+    const selectedStaticColumns = staticColumns.filter(column =>
+      (settings.columns || []).includes(column.value)
+    );
+    const selectedAttributeColumns = gridAttributes.map(attribute => ({
       label: attribute.name,
-      value: `attribute:${attribute.id}`
-    }))
+      value: getAttributeColumnValue(attribute.id)
+    }));
+
+    return [...selectedStaticColumns, ...selectedAttributeColumns];
+  }, [gridAttributes, settings.columns]);
+
+  const handleSave = (columns: ProductListColumns[]) =>
+    onUpdateListSettings("columns", columns);
+
+  const filterStructure = createFilterStructure(intl, filterOpts);
+
+  const filterDependency = filterStructure.find(getByName("channel"));
+
+  const availableColumns: MultiAutocompleteChoiceType[] = [
+    ...staticColumns,
+    ...availableInGridAttributes.map(
+      attribute =>
+        ({
+          label: attribute.name,
+          value: getAttributeColumnValue(attribute.id)
+        } as MultiAutocompleteChoiceType)
+    )
   ];
 
   const limitReached = isLimitReached(limits, "productVariants");
@@ -161,6 +185,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             menuItems={[
               {
                 label: intl.formatMessage({
+                  id: "7FL+WZ",
                   defaultMessage: "Export Products",
                   description: "export products to csv file, button"
                 }),
@@ -177,6 +202,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           hasLimits(limits, "productVariants") &&
           intl.formatMessage(
             {
+              id: "Kw0jHS",
               defaultMessage: "{count}/{max} SKUs used",
               description: "created products counter"
             },
@@ -189,15 +215,13 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
       >
         <ColumnPicker
           className={classes.columnPicker}
-          columns={columns}
+          availableColumns={availableColumns}
+          initialColumns={initialColumnsChoices}
           defaultColumns={defaultSettings.columns}
           hasMore={hasMore}
-          initialColumns={settings.columns}
-          total={
-            columns.length -
-            availableInGridAttributes.length +
-            totalGridAttributes
-          }
+          loading={loading}
+          query={columnQuery}
+          onQueryChange={onColumnQueryChange}
           onFetchMore={onFetchMore}
           onSave={handleSave}
         />
@@ -205,9 +229,10 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           options={extensionCreateButtonItems}
           data-test-id="add-product"
           disabled={limitReached}
-          onClick={onAdd}
+          href={productAddUrl()}
         >
           <FormattedMessage
+            id="JFmOfi"
             defaultMessage="Create Product"
             description="button"
           />
@@ -216,11 +241,15 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
       {limitReached && (
         <LimitReachedAlert
           title={intl.formatMessage({
+            id: "FwHWUm",
             defaultMessage: "SKU limit reached",
             description: "alert"
           })}
         >
-          <FormattedMessage defaultMessage="You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
+          <FormattedMessage
+            id="5Vwnu+"
+            defaultMessage="You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits."
+          />
         </LimitReachedAlert>
       )}
       <Card>
@@ -237,17 +266,18 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           onTabSave={onTabSave}
           tabs={tabs}
           allTabLabel={intl.formatMessage({
+            id: "aFLtLk",
             defaultMessage: "All Products",
             description: "tab name"
           })}
           filterStructure={filterStructure}
           searchPlaceholder={intl.formatMessage({
+            id: "kIvvax",
             defaultMessage: "Search Products..."
           })}
         />
         <ProductList
           {...listProps}
-          loading={loading}
           gridAttributes={gridAttributes}
           settings={settings}
           selectedChannelId={selectedChannelId}

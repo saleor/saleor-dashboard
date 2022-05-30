@@ -67,6 +67,7 @@ const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
   >> = [
     {
       label: intl.formatMessage({
+        id: "9Tl/bT",
         defaultMessage: "Spreadsheet for Excel, Numbers etc.",
         description: "export items as spreadsheet"
       }),
@@ -74,6 +75,7 @@ const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
     },
     {
       label: intl.formatMessage({
+        id: "li1BBk",
         defaultMessage: "Plain CSV file",
         description: "export items as csv file"
       }),
@@ -94,6 +96,7 @@ const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
     {
       label: intl.formatMessage(
         {
+          id: "SZt9kC",
           defaultMessage: "Current search ({number})",
           description: "export filtered items to csv file"
         },
@@ -114,6 +117,7 @@ const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
             error={!!formErrors.scope}
             hint={getExportErrorMessage(formErrors.scope, intl)}
             label={intl.formatMessage({
+              id: "g6yuk2",
               defaultMessage: "Export information for:",
               description: "export items to csv file, choice field label"
             })}
@@ -129,6 +133,7 @@ const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
         error={!!formErrors.fileType}
         hint={getExportErrorMessage(formErrors.fileType, intl)}
         label={intl.formatMessage({
+          id: "z1puMb",
           defaultMessage: "Export as:",
           description: "export items as csv or spreadsheet file"
         })}

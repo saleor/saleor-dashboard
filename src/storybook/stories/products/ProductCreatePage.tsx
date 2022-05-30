@@ -41,7 +41,6 @@ storiesOf("Views / Products / Create product", module)
       fetchMoreAttributeValues={fetchMoreProps}
       productTypes={productTypes}
       categories={[product.category]}
-      onBack={() => undefined}
       onChannelsChange={() => undefined}
       onSubmit={() => undefined}
       openChannelsModal={() => undefined}
@@ -78,7 +77,6 @@ storiesOf("Views / Products / Create product", module)
       fetchMoreAttributeValues={fetchMoreProps}
       productTypes={productTypes}
       categories={[product.category]}
-      onBack={() => undefined}
       onChannelsChange={() => undefined}
       onSubmit={() => undefined}
       openChannelsModal={() => undefined}
@@ -131,7 +129,6 @@ storiesOf("Views / Products / Create product", module)
       fetchMoreAttributeValues={fetchMoreProps}
       productTypes={productTypes}
       categories={[product.category]}
-      onBack={() => undefined}
       onChannelsChange={() => undefined}
       onSubmit={() => undefined}
       openChannelsModal={() => undefined}

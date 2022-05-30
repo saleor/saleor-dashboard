@@ -35,13 +35,14 @@ const CustomerStats: React.FC<CustomerStatsProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "e7Nyu7",
           defaultMessage: "Customer History",
           description: "section header"
         })}
       />
       <CardContent>
         <Typography className={classes.label} variant="caption">
-          <FormattedMessage defaultMessage="Last login" />
+          <FormattedMessage id="FNAZoh" defaultMessage="Last login" />
         </Typography>
         {customer ? (
           <Typography variant="h6" className={classes.value}>
@@ -59,7 +60,7 @@ const CustomerStats: React.FC<CustomerStatsProps> = props => {
         <Hr />
         <CardContent>
           <Typography className={classes.label} variant="caption">
-            <FormattedMessage defaultMessage="Last order" />
+            <FormattedMessage id="HMD+ib" defaultMessage="Last order" />
           </Typography>
           {customer && customer.lastPlacedOrder ? (
             <Typography variant="h6" className={classes.value}>

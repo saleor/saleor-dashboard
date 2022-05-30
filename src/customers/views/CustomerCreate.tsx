@@ -12,7 +12,7 @@ import { extractMutationErrors, maybe } from "../../misc";
 import CustomerCreatePage, {
   CustomerCreatePageSubmitData
 } from "../components/CustomerCreatePage";
-import { customerListUrl, customerUrl } from "../urls";
+import { customerUrl } from "../urls";
 
 export const CustomerCreate: React.FC = () => {
   const navigate = useNavigator();
@@ -29,6 +29,7 @@ export const CustomerCreate: React.FC = () => {
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "ftcHpD",
             defaultMessage: "Customer created"
           })
         });
@@ -57,6 +58,7 @@ export const CustomerCreate: React.FC = () => {
     <>
       <WindowTitle
         title={intl.formatMessage({
+          id: "nX2pCU",
           defaultMessage: "Create customer",
           description: "window title"
         })}
@@ -66,7 +68,6 @@ export const CustomerCreate: React.FC = () => {
         disabled={loading || createCustomerOpts.loading}
         errors={createCustomerOpts.data?.customerCreate.errors || []}
         saveButtonBar={createCustomerOpts.status}
-        onBack={() => navigate(customerListUrl())}
         onSubmit={handleSubmit}
       />
     </>

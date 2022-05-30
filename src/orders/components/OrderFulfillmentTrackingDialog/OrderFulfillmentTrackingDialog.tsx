@@ -57,6 +57,7 @@ const OrderFulfillmentTrackingDialog: React.FC<OrderFulfillmentTrackingDialogPro
           <>
             <DialogTitle>
               <FormattedMessage
+                id="/BJQIq"
                 defaultMessage="Add Tracking Code"
                 description="dialog header"
               />
@@ -69,6 +70,7 @@ const OrderFulfillmentTrackingDialog: React.FC<OrderFulfillmentTrackingDialogPro
                   intl
                 )}
                 label={intl.formatMessage({
+                  id: "yT/GAp",
                   defaultMessage: "Tracking number"
                 })}
                 name="trackingNumber"

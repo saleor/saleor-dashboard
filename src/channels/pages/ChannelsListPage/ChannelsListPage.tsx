@@ -5,15 +5,21 @@ import {
   TableHead,
   TableRow
 } from "@material-ui/core";
+import { channelAddUrl, channelUrl } from "@saleor/channels/urls";
+import { Backlink } from "@saleor/components/Backlink";
+import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellHeader from "@saleor/components/TableCellHeader";
+import TableRowLink from "@saleor/components/TableRowLink";
+import { configurationMenuUrl } from "@saleor/configuration";
 import { ChannelDetailsFragment, RefreshLimitsQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
@@ -24,9 +30,6 @@ import { useStyles } from "./styles";
 export interface ChannelsListPageProps {
   channelsList: ChannelDetailsFragment[] | undefined;
   limits: RefreshLimitsQuery["shop"]["limits"];
-  navigateToChannelCreate: () => void;
-  onBack: () => void;
-  onRowClick: (id: string) => () => void;
   onRemove: (id: string) => void;
 }
 
@@ -35,10 +38,7 @@ const numberOfColumns = 2;
 export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
   channelsList,
   limits,
-  navigateToChannelCreate,
-  onBack,
-  onRemove,
-  onRowClick
+  onRemove
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -47,7 +47,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink href={configurationMenuUrl}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
       <PageHeader
@@ -56,6 +56,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
           hasLimits(limits, "channels") &&
           intl.formatMessage(
             {
+              id: "rZMT44",
               defaultMessage: "{count}/{max} channels used",
               description: "created channels counter"
             },
@@ -68,11 +69,12 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
       >
         <Button
           disabled={limitReached}
-          onClick={navigateToChannelCreate}
+          href={channelAddUrl}
           variant="primary"
           data-test-id="add-channel"
         >
           <FormattedMessage
+            id="OGm8wO"
             defaultMessage="Create Channel"
             description="button"
           />
@@ -81,11 +83,15 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
       {limitReached && (
         <LimitReachedAlert
           title={intl.formatMessage({
+            id: "PTW56s",
             defaultMessage: "Channel limit reached",
             description: "alert"
           })}
         >
-          <FormattedMessage defaultMessage="You have reached your channel limit, you will be no longer able to add channels to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
+          <FormattedMessage
+            id="ZMy18J"
+            defaultMessage="You have reached your channel limit, you will be no longer able to add channels to your store. If you would like to up your limit, contact your administration staff about raising your limits."
+          />
         </LimitReachedAlert>
       )}
       <Card>
@@ -94,12 +100,14 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
             <TableRow>
               <TableCellHeader>
                 <FormattedMessage
+                  id="j/vV0n"
                   defaultMessage="Channel Name"
                   description="channel name"
                 />
               </TableCellHeader>
               <TableCell className={classes.colRight}>
                 <FormattedMessage
+                  id="VHuzgq"
                   defaultMessage="Actions"
                   description="table actions"
                 />
@@ -110,11 +118,11 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
             {renderCollection(
               channelsList,
               channel => (
-                <TableRow
+                <TableRowLink
                   hover={!!channel}
                   key={channel ? channel.id : "skeleton"}
                   className={classes.tableRow}
-                  onClick={!!channel ? onRowClick(channel.id) : undefined}
+                  href={channel && channelUrl(channel.id)}
                 >
                   <TableCell className={classes.colName}>
                     <span data-test-id="name">
@@ -123,25 +131,30 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
                   </TableCell>
                   <TableCell className={classes.colAction}>
                     {channelsList?.length > 1 && (
-                      <IconButton
-                        variant="secondary"
-                        color="primary"
-                        onClick={
-                          channel
-                            ? stopPropagation(() => onRemove(channel.id))
-                            : undefined
-                        }
-                      >
-                        <DeleteIcon />
-                      </IconButton>
+                      <TableButtonWrapper>
+                        <IconButton
+                          variant="secondary"
+                          color="primary"
+                          onClick={
+                            channel
+                              ? stopPropagation(() => onRemove(channel.id))
+                              : undefined
+                          }
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableButtonWrapper>
                     )}
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               ),
               () => (
                 <TableRow>
                   <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage defaultMessage="No channels found" />
+                    <FormattedMessage
+                      id="/glQgs"
+                      defaultMessage="No channels found"
+                    />
                   </TableCell>
                 </TableRow>
               )

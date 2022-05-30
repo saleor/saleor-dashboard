@@ -17,18 +17,22 @@ export interface ProductTypeListFilterOpts {
 
 const messages = defineMessages({
   configurable: {
+    id: "X90t9n",
     defaultMessage: "Configurable",
     description: "product type"
   },
   digital: {
+    id: "dS8Adx",
     defaultMessage: "Digital",
     description: "product"
   },
   shippable: {
+    id: "U5aVd8",
     defaultMessage: "Shippable",
     description: "product"
   },
   type: {
+    id: "Jsh6+U",
     defaultMessage: "Type",
     description: "product type is digital or physical"
   }

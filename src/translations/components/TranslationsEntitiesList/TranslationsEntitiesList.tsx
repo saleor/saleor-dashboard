@@ -8,6 +8,7 @@ import {
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
@@ -25,10 +26,9 @@ export interface TranslatableEntity {
   };
 }
 
-export interface TranslationsEntitiesListProps
-  extends Omit<ListProps, "onRowClick"> {
+export interface TranslationsEntitiesListProps extends ListProps {
   entities: TranslatableEntity[];
-  onRowClick: (code: string) => void;
+  getRowHref: (id: string) => string;
 }
 
 const useStyles = makeStyles(
@@ -51,7 +51,7 @@ const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props 
     entities,
     onNextPage,
     onPreviousPage,
-    onRowClick,
+    getRowHref,
     pageInfo
   } = props;
 
@@ -64,12 +64,16 @@ const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props 
         <TableRow>
           <TableCell className={classes.wideColumn}>
             <FormattedMessage
+              id="X6PF8z"
               defaultMessage="Name"
               description="entity (product, collection, shipping method) name"
             />
           </TableCell>
           <TableCell className={classes.textRight}>
-            <FormattedMessage defaultMessage="Completed Translations" />
+            <FormattedMessage
+              id="LWmYSU"
+              defaultMessage="Completed Translations"
+            />
           </TableCell>
         </TableRow>
       </TableHead>
@@ -92,12 +96,12 @@ const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props 
         {renderCollection(
           entities,
           entity => (
-            <TableRow
+            <TableRowLink
               className={classNames({
                 [classes.tableRow]: !!entity
               })}
               hover={!!entity}
-              onClick={entity ? () => onRowClick(entity.id) : undefined}
+              href={entity && getRowHref(entity.id)}
               key={entity ? entity.id : "skeleton"}
             >
               <TableCell>{entity?.name || <Skeleton />}</TableCell>
@@ -107,6 +111,7 @@ const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props 
                     () =>
                       intl.formatMessage(
                         {
+                          id: "ikRuLs",
                           defaultMessage: "{current} of {max}",
                           description: "translation progress"
                         },
@@ -115,12 +120,15 @@ const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props 
                     <Skeleton />
                   )}
               </TableCell>
-            </TableRow>
+            </TableRowLink>
           ),
           () => (
             <TableRow>
               <TableCell colSpan={2}>
-                <FormattedMessage defaultMessage="No translatable entities found" />
+                <FormattedMessage
+                  id="vcwrgW"
+                  defaultMessage="No translatable entities found"
+                />
               </TableCell>
             </TableRow>
           )

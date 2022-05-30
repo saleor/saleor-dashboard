@@ -5,13 +5,16 @@ import {
   TableHead,
   TableRow
 } from "@material-ui/core";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import { DateTime } from "@saleor/components/Date";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { CustomerDetailsQuery } from "@saleor/graphql";
-import { Button, makeStyles, Pill } from "@saleor/macaw-ui";
+import { makeStyles, Pill } from "@saleor/macaw-ui";
+import { orderUrl } from "@saleor/orders/urls";
 import { RelayToFlat } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -32,12 +35,11 @@ const useStyles = makeStyles(
 
 export interface CustomerOrdersProps {
   orders: RelayToFlat<CustomerDetailsQuery["user"]["orders"]>;
-  onViewAllOrdersClick: () => void;
-  onRowClick: (id: string) => void;
+  viewAllHref: string;
 }
 
 const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
-  const { orders, onRowClick, onViewAllOrdersClick } = props;
+  const { orders, viewAllHref } = props;
   const classes = useStyles(props);
 
   const intl = useIntl();
@@ -52,12 +54,14 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "1LiVhv",
           defaultMessage: "Recent Orders",
           description: "section header"
         })}
         toolbar={
-          <Button variant="tertiary" onClick={onViewAllOrdersClick}>
+          <Button variant="tertiary" href={viewAllHref}>
             <FormattedMessage
+              id="3+990c"
               defaultMessage="View all orders"
               description="button"
             />
@@ -69,24 +73,28 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
           <TableRow>
             <TableCell>
               <FormattedMessage
+                id="nTF6tG"
                 defaultMessage="No. of Order"
                 description="number of order"
               />
             </TableCell>
             <TableCell>
               <FormattedMessage
+                id="ri3kK9"
                 defaultMessage="Date"
                 description="order placement date"
               />
             </TableCell>
             <TableCell>
               <FormattedMessage
+                id="pURrk1"
                 defaultMessage="Status"
                 description="order status"
               />
             </TableCell>
             <TableCell className={classes.textRight}>
               <FormattedMessage
+                id="taX/V3"
                 defaultMessage="Total"
                 description="order total amount"
               />
@@ -97,10 +105,10 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
           {renderCollection(
             orderList,
             order => (
-              <TableRow
+              <TableRowLink
                 hover={!!order}
                 className={!!order ? classes.link : undefined}
-                onClick={order ? () => onRowClick(order.id) : undefined}
+                href={order && orderUrl(order.id)}
                 key={order ? order.id : "skeleton"}
               >
                 <TableCell>
@@ -136,12 +144,15 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
                     <Skeleton />
                   )}
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
             () => (
               <TableRow>
                 <TableCell colSpan={6}>
-                  <FormattedMessage defaultMessage="No orders found" />
+                  <FormattedMessage
+                    id="RlfqSV"
+                    defaultMessage="No orders found"
+                  />
                 </TableCell>
               </TableRow>
             )

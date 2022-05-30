@@ -94,8 +94,6 @@ export const RateCreate: React.FC<RateCreateProps> = ({ id, params }) => {
     state.inclusionType
   );
 
-  const handleBack = () => navigate(shippingZoneUrl(id));
-
   const onPostalCodeAssign = (rule: MinMax) => {
     if (
       state.postalCodeRules.filter(getPostalCodeRuleByMinMax(rule)).length > 0
@@ -139,6 +137,7 @@ export const RateCreate: React.FC<RateCreateProps> = ({ id, params }) => {
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
           title={intl.formatMessage({
+            id: "EM730i",
             defaultMessage: "Manage Channel Availability"
           })}
           confirmButtonState="default"
@@ -155,7 +154,7 @@ export const RateCreate: React.FC<RateCreateProps> = ({ id, params }) => {
         disabled={channelsLoading || status === "loading"}
         saveButtonBarState={status}
         onSubmit={createShippingRate}
-        onBack={handleBack}
+        backUrl={shippingZoneUrl(id)}
         errors={errors}
         channelErrors={channelErrors}
         postalCodes={state.postalCodeRules}

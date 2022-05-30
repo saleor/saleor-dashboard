@@ -17,7 +17,6 @@ const props: Omit<StaffDetailsPageProps, "classes"> = {
   errors: [],
   fetchMorePermissionGroups: undefined,
   initialSearch: "",
-  onBack: () => undefined,
   onChangePassword: () => undefined,
   onDelete: () => undefined,
   onImageDelete: () => undefined,

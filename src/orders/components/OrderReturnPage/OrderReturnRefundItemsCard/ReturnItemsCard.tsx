@@ -22,9 +22,9 @@ import { renderCollection } from "@saleor/misc";
 import React, { CSSProperties } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
+import OrderCardTitle from "../../OrderCardTitle";
 import { FormsetQuantityData, FormsetReplacementData } from "../form";
 import { getById } from "../utils";
-import CardTitle from "./CardTitle";
 import MaximalButton from "./MaximalButton";
 import ProductErrorCell from "./ProductErrorCell";
 
@@ -72,15 +72,18 @@ const useStyles = makeStyles(
 
 const messages = defineMessages({
   improperValue: {
+    id: "xoyCZ/",
     defaultMessage: "Improper value",
     description: "error message"
   },
 
   titleFulfilled: {
+    id: "NxRsHQ",
     defaultMessage: "Fulfillment - #{fulfilmentId}",
     description: "section header"
   },
   titleUnfulfilled: {
+    id: "BkFke9",
     defaultMessage: "Unfulfilled Items",
     description: "section header"
   }
@@ -120,7 +123,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
 
   return (
     <Card>
-      <CardTitle
+      <OrderCardTitle
         orderNumber={order?.number}
         lines={lines}
         fulfillmentOrder={fulfillment?.fulfillmentOrder}
@@ -134,6 +137,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
           <TableRow>
             <TableCell>
               <FormattedMessage
+                id="aAAxKp"
                 defaultMessage="Product"
                 description="table column header"
               />
@@ -141,18 +145,21 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
             <TableCell />
             <TableCell align="right">
               <FormattedMessage
+                id="Y299ST"
                 defaultMessage="Price"
                 description="table column header"
               />
             </TableCell>
             <TableCell align="right">
               <FormattedMessage
+                id="0qg33z"
                 defaultMessage="Return"
                 description="table column header"
               />
             </TableCell>
             <TableCell align="center">
               <FormattedMessage
+                id="ikM00B"
                 defaultMessage="Replace"
                 description="table column header"
               />

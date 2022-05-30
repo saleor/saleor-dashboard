@@ -1,3 +1,4 @@
+import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -11,9 +12,11 @@ import {
   PluginsDetailsFragment
 } from "@saleor/graphql";
 import { ChangeEvent, SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
+import { pluginListUrl } from "@saleor/plugins/urls";
 import { isSecretField } from "@saleor/plugins/utils";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -33,7 +36,6 @@ export interface PluginsDetailsPageProps {
   errors: PluginErrorFragment[];
   plugin?: PluginsDetailsFragment;
   saveButtonBarState: ConfirmButtonTransitionState;
-  onBack: () => void;
   onClear: (field: string) => void;
   onEdit: (field: string) => void;
   onSubmit: (data: PluginDetailsPageFormData) => SubmitPromise;
@@ -46,7 +48,6 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
   errors,
   plugin,
   saveButtonBarState,
-  onBack,
   onClear,
   onEdit,
   onSubmit,
@@ -54,6 +55,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
   setSelectedChannelId
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   const initialFormData: PluginDetailsPageFormData = {
     active: selectedConfig?.active,
@@ -96,12 +98,13 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
         };
         return (
           <Container>
-            <Backlink onClick={onBack}>
+            <Backlink href={pluginListUrl()}>
               {intl.formatMessage(sectionNames.plugins)}
             </Backlink>
             <PageHeader
               title={intl.formatMessage(
                 {
+                  id: "EtGDeK",
                   defaultMessage: "{pluginName} Details",
                   description: "header"
                 },
@@ -155,7 +158,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
             <Savebar
               disabled={isSaveDisabled}
               state={saveButtonBarState}
-              onCancel={onBack}
+              onCancel={() => navigate(pluginListUrl())}
               onSubmit={submit}
             />
           </Container>

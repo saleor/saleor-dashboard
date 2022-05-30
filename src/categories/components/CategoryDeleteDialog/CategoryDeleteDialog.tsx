@@ -6,8 +6,9 @@ import {
   DialogTitle
 } from "@material-ui/core";
 import BackButton from "@saleor/components/BackButton";
+import { Button } from "@saleor/components/Button";
 import { buttonMessages } from "@saleor/intl";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -42,6 +43,7 @@ const CategoryDeleteDialog: React.FC<CategoryDeleteDialogProps> = props => {
     <Dialog onClose={onClose} open={open}>
       <DialogTitle>
         <FormattedMessage
+          id="xo5UIb"
           defaultMessage="Delete category"
           description="dialog title"
         />
@@ -49,6 +51,7 @@ const CategoryDeleteDialog: React.FC<CategoryDeleteDialogProps> = props => {
       <DialogContent>
         <DialogContentText>
           <FormattedMessage
+            id="dJQxHt"
             defaultMessage="Are you sure you want to delete {categoryName}?"
             description="delete category"
             values={{

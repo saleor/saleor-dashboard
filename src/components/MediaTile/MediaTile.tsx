@@ -1,4 +1,5 @@
 import { CircularProgress } from "@material-ui/core";
+import { IconButton } from "@saleor/components/IconButton";
 import { DeleteIcon, EditIcon, makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
@@ -67,7 +68,7 @@ const useStyles = makeStyles(
   { name: "MediaTile" }
 );
 
-interface MediaTileProps {
+interface MediaTileBaseProps {
   media: {
     alt: string;
     url: string;
@@ -79,8 +80,20 @@ interface MediaTileProps {
   onEdit?: (event: React.ChangeEvent<any>) => void;
 }
 
+export type MediaTileProps = MediaTileBaseProps &
+  (
+    | {
+        onEdit?: React.MouseEventHandler<HTMLButtonElement>;
+        editHref?: never;
+      }
+    | {
+        onEdit?: never;
+        editHref?: string;
+      }
+  );
+
 const MediaTile: React.FC<MediaTileProps> = props => {
-  const { loading, onDelete, onEdit, media } = props;
+  const { loading, onDelete, onEdit, editHref, media } = props;
   const classes = useStyles(props);
   const parsedMediaOembedData = media?.oembedData
     ? JSON.parse(media.oembedData)
@@ -98,15 +111,26 @@ const MediaTile: React.FC<MediaTileProps> = props => {
           <CircularProgress size={32} />
         ) : (
           <div className={classes.mediaOverlayToolbar}>
-            {onEdit && (
-              <button className={classes.controlButton} onClick={onEdit}>
+            {(onEdit || editHref) && (
+              <IconButton
+                href={editHref}
+                hoverOutline={false}
+                variant="secondary"
+                className={classes.controlButton}
+                onClick={onEdit}
+              >
                 <EditIcon />
-              </button>
+              </IconButton>
             )}
             {onDelete && (
-              <button className={classes.controlButton} onClick={onDelete}>
+              <IconButton
+                variant="secondary"
+                hoverOutline={false}
+                className={classes.controlButton}
+                onClick={onDelete}
+              >
                 <DeleteIcon />
-              </button>
+              </IconButton>
             )}
           </div>
         )}

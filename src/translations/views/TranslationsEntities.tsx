@@ -7,11 +7,7 @@ import React from "react";
 import { PAGINATE_BY } from "../../config";
 import { maybe } from "../../misc";
 import TranslationsEntitiesListPage from "../components/TranslationsEntitiesListPage";
-import {
-  LanguageEntitiesUrlQueryParams,
-  languageListUrl,
-  TranslatableEntities
-} from "../urls";
+import { LanguageEntitiesUrlQueryParams, TranslatableEntities } from "../urls";
 import TranslationsAttributeList from "./EntityLists/TranslationsAttributeList";
 import TranslationsCategoryList from "./EntityLists/TranslationsCategoryList";
 import TranslationsCollectionList from "./EntityLists/TranslationsCollectionList";
@@ -119,7 +115,6 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
         ...filterCallbacks
       }}
       language={lang}
-      onBack={() => navigate(languageListUrl)}
     >
       {params.tab === "categories" ? (
         <TranslationsCategoryList params={params} variables={queryVariables} />

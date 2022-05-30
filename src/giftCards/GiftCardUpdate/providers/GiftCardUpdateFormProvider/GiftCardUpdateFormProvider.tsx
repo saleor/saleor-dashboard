@@ -131,7 +131,7 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
 
   const formProps = useForm(getInitialData());
 
-  const { data, change, setChanged, hasChanged, formId } = formProps;
+  const { data, change, formId } = formProps;
 
   const handleSubmit = createMetadataUpdateHandler(
     giftCard,
@@ -142,8 +142,7 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit: handleSubmit,
-    setChanged
+    onSubmit: handleSubmit
   });
 
   const {
@@ -169,7 +168,6 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
   const providerValues = {
     ...formProps,
     opts: updateGiftCardOpts,
-    hasChanged,
     formErrors,
     submit: formSubmit,
     handlers: {

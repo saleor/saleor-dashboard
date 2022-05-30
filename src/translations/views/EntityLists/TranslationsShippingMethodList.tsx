@@ -1,5 +1,4 @@
 import { useShippingMethodTranslationsQuery } from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
 import usePaginator from "@saleor/hooks/usePaginator";
 import TranslationsEntitiesList from "@saleor/translations/components/TranslationsEntitiesList";
 import {
@@ -16,7 +15,6 @@ const TranslationsShippingMethodList: React.FC<TranslationsEntityListProps> = ({
   params,
   variables
 }) => {
-  const navigate = useNavigator();
   const paginate = usePaginator();
 
   const { data, loading } = useShippingMethodTranslationsQuery({
@@ -47,13 +45,11 @@ const TranslationsShippingMethodList: React.FC<TranslationsEntityListProps> = ({
             name: node?.name
           }
       )}
-      onRowClick={id =>
-        navigate(
-          languageEntityUrl(
-            variables.language,
-            TranslatableEntities.shippingMethods,
-            id
-          )
+      getRowHref={id =>
+        languageEntityUrl(
+          variables.language,
+          TranslatableEntities.shippingMethods,
+          id
         )
       }
       onNextPage={loadNextPage}

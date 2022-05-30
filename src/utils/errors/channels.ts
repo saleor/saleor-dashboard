@@ -5,12 +5,15 @@ import { getCommonFormFieldErrorMessage } from "./common";
 
 const messages = defineMessages({
   channelAlreadyExist: {
+    id: "DK+8PB",
     defaultMessage: "This channel has already been created"
   },
   channelSameCurrency: {
+    id: "V2BBQu",
     defaultMessage: "Currency in both channels must be the same"
   },
   channelUnique: {
+    id: "QFCUEt",
     defaultMessage: "Slug must be unique"
   }
 });

@@ -88,7 +88,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should add user to permission group", () => {
+    xit("should add user to permission group", () => {
       const permissionName = `${startsWith}${faker.datatype.number()}`;
       createPermissionGroup({
         name: permissionName,

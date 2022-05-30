@@ -8,11 +8,12 @@ import {
   Popper,
   Typography
 } from "@material-ui/core";
-import { IconButton, makeStyles, MoreIcon } from "@saleor/macaw-ui";
+import { makeStyles, MoreIcon } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React, { useEffect, useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
+import { IconButton } from "../IconButton";
 import { cardMenuMessages as messages } from "./messages";
 
 const ITEM_HEIGHT = 48;

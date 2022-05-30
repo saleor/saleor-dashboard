@@ -1,4 +1,10 @@
 import { Typography } from "@material-ui/core";
+import {
+  extensionMountPoints,
+  mapToMenuItems,
+  useExtensions
+} from "@saleor/apps/useExtensions";
+import { Backlink } from "@saleor/components/Backlink";
 import CardMenu from "@saleor/components/CardMenu";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import { Container } from "@saleor/components/Container";
@@ -12,16 +18,15 @@ import Skeleton from "@saleor/components/Skeleton";
 import {
   OrderDetailsFragment,
   OrderDetailsQuery,
-  OrderStatus
+  OrderStatus,
+  WarehouseFragment
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import {
-  Backlink,
-  ConfirmButtonTransitionState,
-  makeStyles
-} from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import OrderChannelSectionCard from "@saleor/orders/components/OrderChannelSectionCard";
+import { orderListUrl } from "@saleor/orders/urls";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
@@ -65,6 +70,7 @@ export interface OrderDetailsPageProps {
   }>;
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
+  selectedWarehouse?: WarehouseFragment;
   onOrderLineAdd?: () => void;
   onOrderLineChange?: (
     id: string,
@@ -72,7 +78,6 @@ export interface OrderDetailsPageProps {
   ) => void;
   onOrderLineRemove?: (id: string) => void;
   onShippingMethodEdit?: () => void;
-  onBack();
   onBillingAddressEdit();
   onFulfillmentApprove(id: string);
   onFulfillmentCancel(id: string);
@@ -91,19 +96,23 @@ export interface OrderDetailsPageProps {
   onInvoiceClick(invoiceId: string);
   onInvoiceGenerate();
   onInvoiceSend(invoiceId: string);
+  onWarehouseChange?();
   onSubmit(data: MetadataFormData): SubmitPromise;
 }
 
 const messages = defineMessages({
   cancelOrder: {
+    id: "9ZtJhn",
     defaultMessage: "Cancel order",
     description: "cancel button"
   },
   confirmOrder: {
+    id: "maxT+q",
     defaultMessage: "Confirm order",
     description: "save button"
   },
   returnOrder: {
+    id: "+RjQjs",
     defaultMessage: "Return / Replace order",
     description: "return button"
   }
@@ -115,7 +124,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     order,
     shop,
     saveButtonBarState,
-    onBack,
+    selectedWarehouse,
     onBillingAddressEdit,
     onFulfillmentApprove,
     onFulfillmentCancel,
@@ -137,11 +146,13 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onOrderLineChange,
     onOrderLineRemove,
     onShippingMethodEdit,
+    onWarehouseChange,
     onSubmit
   } = props;
   const classes = useStyles(props);
-
+  const navigate = useNavigator();
   const intl = useIntl();
+
   const {
     isMetadataModified,
     isPrivateMetadataModified,
@@ -184,9 +195,9 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     ? { confirm: intl.formatMessage(messages.confirmOrder) }
     : undefined;
 
-  const allowSave = (hasChanged: boolean) => {
+  const allowSave = () => {
     if (!isOrderUnconfirmed) {
-      return disabled || !hasChanged;
+      return disabled;
     } else if (!order?.lines?.length) {
       return true;
     }
@@ -210,21 +221,32 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     }
   ]);
 
+  const { ORDER_DETAILS_MORE_ACTIONS } = useExtensions(
+    extensionMountPoints.ORDER_DETAILS
+  );
+
+  const extensionMenuItems = mapToMenuItems(ORDER_DETAILS_MORE_ACTIONS);
+
   return (
     <Form confirmLeave initial={initial} onSubmit={handleSubmit}>
-      {({ change, data, hasChanged, submit }) => {
+      {({ change, data, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
           <Container>
-            <Backlink onClick={onBack}>
+            <Backlink href={orderListUrl()}>
               {intl.formatMessage(sectionNames.orders)}
             </Backlink>
             <PageHeader
               className={classes.header}
               inline
               title={<Title order={order} />}
-              cardMenu={<CardMenu outlined menuItems={selectCardMenuItems} />}
+              cardMenu={
+                <CardMenu
+                  outlined
+                  menuItems={[...selectCardMenuItems, ...extensionMenuItems]}
+                />
+              }
             />
             <div className={classes.date}>
               {order && order.created ? (
@@ -243,6 +265,8 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                     notAllowedToFulfillUnpaid={notAllowedToFulfillUnpaid}
                     lines={unfulfilled}
                     onFulfill={onOrderFulfill}
+                    onWarehouseChange={onWarehouseChange}
+                    selectedWarehouse={selectedWarehouse}
                   />
                 ) : (
                   <>
@@ -324,10 +348,10 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
             </Grid>
             <Savebar
               labels={saveLabel}
-              onCancel={onBack}
+              onCancel={() => navigate(orderListUrl())}
               onSubmit={submit}
               state={saveButtonBarState}
-              disabled={allowSave(hasChanged)}
+              disabled={allowSave()}
             />
           </Container>
         );

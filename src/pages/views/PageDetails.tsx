@@ -19,6 +19,7 @@ import {
 import {
   AttributeErrorFragment,
   AttributeValueInput,
+  PageDetailsFragment,
   PageErrorFragment,
   PageInput,
   UploadErrorFragment,
@@ -46,6 +47,7 @@ import { getStringOrPlaceholder, maybe } from "../../misc";
 import PageDetailsPage from "../components/PageDetailsPage";
 import { PageData, PageSubmitData } from "../components/PageDetailsPage/form";
 import { pageListUrl, pageUrl, PageUrlQueryParams } from "../urls";
+import { getAttributeInputFromPage } from "../utils/data";
 
 export interface PageDetailsProps {
   id: string;
@@ -54,10 +56,12 @@ export interface PageDetailsProps {
 
 const createPageInput = (
   data: PageData,
+  page: PageDetailsFragment,
   updatedFileAttributes: AttributeValueInput[]
 ): PageInput => ({
   attributes: prepareAttributesInput({
     attributes: data.attributes,
+    prevAttributes: getAttributeInputFromPage(page),
     updatedFileAttributes
   }),
   content: getParsedDataForJsonStringField(data.content),
@@ -138,7 +142,11 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
     const updateResult = await pageUpdate({
       variables: {
         id,
-        input: createPageInput(data, updatedFileAttributes),
+        input: createPageInput(
+          data,
+          pageDetails?.data?.page,
+          updatedFileAttributes
+        ),
         firstValues: VALUES_PAGINATE_BY
       }
     });
@@ -215,7 +223,6 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
         saveButtonBarState={pageUpdateOpts.status}
         page={pageDetails.data?.page}
         attributeValues={attributeValues}
-        onBack={() => navigate(pageListUrl())}
         onRemove={() =>
           navigate(
             pageUrl(id, {
@@ -245,6 +252,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
         open={params.action === "remove"}
         confirmButtonState={pageRemoveOpts.status}
         title={intl.formatMessage({
+          id: "C1luwg",
           defaultMessage: "Delete Page",
           description: "dialog header"
         })}
@@ -254,6 +262,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
       >
         <DialogContentText>
           <FormattedMessage
+            id="4B32Ba"
             defaultMessage="Are you sure you want to delete {title}?"
             description="delete page"
             values={{

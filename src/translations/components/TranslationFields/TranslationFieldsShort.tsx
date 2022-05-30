@@ -38,6 +38,7 @@ const TranslationFieldsShort: React.FC<TranslationFieldsShortProps> = ({
             disabled={disabled}
             fullWidth
             label={intl.formatMessage({
+              id: "/vCXIP",
               defaultMessage: "Translation"
             })}
             name="translation"
@@ -55,7 +56,7 @@ const TranslationFieldsShort: React.FC<TranslationFieldsShortProps> = ({
     </Form>
   ) : initial === null ? (
     <Typography color="textSecondary">
-      <FormattedMessage defaultMessage="No translation yet" />
+      <FormattedMessage id="T/5OyA" defaultMessage="No translation yet" />
     </Typography>
   ) : (
     <Typography>{initial}</Typography>

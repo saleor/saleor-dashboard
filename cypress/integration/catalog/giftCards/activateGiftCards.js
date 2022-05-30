@@ -180,7 +180,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         });
     });
 
-    it("should be able to enable several gift cards on gift card list page and use it in checkout. TC: SALEOR_1012", () => {
+    xit("should be able to enable several gift cards on gift card list page and use it in checkout. TC: SALEOR_1012", () => {
       const firstGiftCardName = `${startsWith}${faker.datatype.number()}`;
       const secondGiftCardName = `${startsWith}${faker.datatype.number()}`;
       const amount = 10;

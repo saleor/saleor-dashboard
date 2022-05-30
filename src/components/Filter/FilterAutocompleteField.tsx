@@ -155,7 +155,11 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
           className={classes.noResults}
           color="textSecondary"
         >
-          <FormattedMessage defaultMessage="No results" description="search" />
+          <FormattedMessage
+            id="HnVtSS"
+            defaultMessage="No results"
+            description="search"
+          />
         </Typography>
       )}
       {filteredValuesUnchecked.map(option => (
@@ -187,6 +191,7 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
           onClick={filter.onFetchMore}
         >
           <FormattedMessage
+            id="PLCwT/"
             defaultMessage="Show more"
             description="search results"
           />

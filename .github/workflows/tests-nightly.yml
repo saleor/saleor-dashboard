@@ -2,8 +2,15 @@ name: Execute nightly tests
 
 on:
   workflow_dispatch:
-    branches: ["main"]
     inputs:
+      tests:
+        required: true 
+        description: 'Select tests to run'
+        default: 'All'
+        type: choice
+        options:
+        - 'All'
+        - 'Critical'
       environment:
         required: true 
         description: 'Environment to run tests against'
@@ -14,6 +21,13 @@ on:
         - https://master.staging.saleor.cloud/
         - https://latest.staging.saleor.cloud/
         - https://qa.staging.saleor.cloud/
+        - Other
+      otherEnvironment:
+        required: false
+        description: 'Type env if "Other" option is selected'
+        type: string
+        default: 'https://vXX.staging.saleor.cloud/' 
+
   schedule:
     - cron: '00 2 * * 1-5'
 
@@ -56,6 +70,17 @@ jobs:
           SALEOR_CLI_ENV: staging
         run: npx saleor backup restore MbdG5UXd
 
+      - name: Notify Slack
+        if: ${{ failure() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_SNAP_RESTORE }}
+          SLACK_USERNAME: RevertSnapshotBot
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_TITLE: "Revert to snapshot job failed"
+          SLACK_MESSAGE: "https://github.com/saleor/saleor-dashboard/actions/workflows/tests-nightly.yml"
+          MSG_MINIMAL: true
+
   run-tests-in-parallel:
     needs: revert-automation-env-to-snap
     if: always() #Wait for revert-automation-env-to-snap, bot run always, even if skipped
@@ -70,12 +95,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
+      - name: Check if other env
+        id: get-typed-env-uri
+        if: ${{ github.event.inputs.environment == 'Other' }}
+        run: |
+          echo "::set-output name=ENV_URI::${{github.event.inputs.otherEnvironment}}"
+
       - name: Get env
         id: get-env-uri
         env:
           DEFAULT_ENV_URI: 'https://automation-dashboard.staging.saleor.cloud/'
+          TYPED_ENV_URI: ''
         run: |
-          echo "::set-output name=ENV_URI::${{ github.event.inputs.environment || env.DEFAULT_ENV_URI }}"
+          echo "::set-output name=ENV_URI::${{ steps.get-typed-env-uri.outputs.ENV_URI || github.event.inputs.environment || env.DEFAULT_ENV_URI }}"
 
       - name: Setup Node
         uses: actions/setup-node@v1
@@ -83,6 +115,7 @@ jobs:
           node-version: 14
 
       - name: Cypress run
+        if: ${{ github.event.inputs.tests != 'Critical' }}
         uses: cypress-io/github-action@v2
         env:
           API_URI: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
@@ -98,6 +131,24 @@ jobs:
           parallel: true
           group: 'UI - Chrome'
           command: npm run cy:run:allEnv:parallel
+
+      - name: Cypress run
+        if: ${{ github.event.inputs.tests == 'Critical' }}
+        uses: cypress-io/github-action@v2
+        env:
+          API_URI: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
+          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
+          CYPRESS_baseUrl: ${{ steps.get-env-uri.outputs.ENV_URI }}dashboard/
+          CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
+          CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
+          CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
+          CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          parallel: true
+          group: 'UI - Chrome'
+          command: npm run cy:run:critical:parallel
 
 
 

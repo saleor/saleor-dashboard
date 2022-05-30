@@ -3,6 +3,9 @@
 All notable, unreleased changes to this project will be documented in this file. For the released changes, please visit the [Releases](https://github.com/saleor/saleor-dashboard/releases) page.
 
 ## [Unreleased]
+- Added links instead of imperative navigation with onClick - #1969 by @taniotanio7
+- Fixed clearing attribute values - #2047 by @witoszekdev
+- Fixed EditorJS integration in RichTextEditor input - #2052 by @witoszekdev
 
 ## 3.1
 ### PREVIEW FEATURES

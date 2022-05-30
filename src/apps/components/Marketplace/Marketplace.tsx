@@ -1,6 +1,6 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
-import { Button } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -16,6 +16,7 @@ const Marketplace: React.FC<MarketplaceProps> = ({ link }) => {
       <Card>
         <CardTitle
           title={intl.formatMessage({
+            id: "SwISVH",
             defaultMessage: "Saleor Marketplace",
             description: "section header"
           })}
@@ -25,12 +26,14 @@ const Marketplace: React.FC<MarketplaceProps> = ({ link }) => {
             <>
               <Typography variant="body2">
                 <FormattedMessage
+                  id="LATpSE"
                   defaultMessage="Discover great free and paid apps in our Saleor Marketplace."
                   description="marketplace content"
                 />
               </Typography>
               <Button onClick={link}>
                 <FormattedMessage
+                  id="wxFwUW"
                   defaultMessage="Visit Marketplace"
                   description="marketplace button"
                 />
@@ -39,6 +42,7 @@ const Marketplace: React.FC<MarketplaceProps> = ({ link }) => {
           ) : (
             <Typography variant="body2">
               <FormattedMessage
+                id="NskBjH"
                 defaultMessage="Marketplace is coming soon"
                 description="marketplace content"
               />

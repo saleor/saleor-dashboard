@@ -1,31 +1,33 @@
 import { ClickAwayListener, Grow, Popper } from "@material-ui/core";
+import { FormChange } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { makeStyles } from "@saleor/macaw-ui";
-import { toggle } from "@saleor/utils/lists";
+import { Choice, ColumnsIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { FetchMoreProps } from "@saleor/types";
+import { score } from "fuzzaldrin";
+import sortBy from "lodash/sortBy";
 import React from "react";
 
-import ColumnPickerButton from "./ColumnPickerButton";
+import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
 import ColumnPickerContent, {
   ColumnPickerContentProps
 } from "./ColumnPickerContent";
 
 export interface ColumnPickerProps
-  extends Omit<
-    ColumnPickerContentProps,
-    "selectedColumns" | "onCancel" | "onColumnToggle" | "onReset" | "onSave"
-  > {
+  extends FetchMoreProps,
+    Pick<ColumnPickerContentProps, "onQueryChange"> {
   className?: string;
+  availableColumns: MultiAutocompleteChoiceType[];
   defaultColumns: string[];
-  initialColumns: string[];
+  initialColumns: Choice[];
   initialOpen?: boolean;
+  query: string;
   onSave: (columns: string[]) => void;
 }
 
 const useStyles = makeStyles(
   theme => ({
     popper: {
-      marginTop: theme.spacing(1),
-      zIndex: 2
+      marginTop: theme.spacing(1)
     }
   }),
   {
@@ -36,21 +38,30 @@ const useStyles = makeStyles(
 const ColumnPicker: React.FC<ColumnPickerProps> = props => {
   const {
     className,
-    columns,
+    availableColumns,
     defaultColumns,
-    hasMore,
     initialColumns,
     initialOpen = false,
-    total,
-    onFetchMore,
-    onSave
+    onSave,
+    query,
+    ...rest
   } = props;
   const classes = useStyles(props);
   const anchor = React.useRef<HTMLDivElement>();
+  const selectedColumns = React.useRef(
+    initialColumns.map(({ value }) => value)
+  );
   const [isExpanded, setExpansionState] = React.useState(false);
-  const [selectedColumns, setSelectedColumns] = useStateFromProps(
+
+  // Component is uncontrolled but we need to reset it somehow, so we change
+  // initial prop after reset callback to force value refreshing
+  const [initialColumnsChoices, setInitialColumnsChoices] = useStateFromProps(
     initialColumns
   );
+
+  const onChange: FormChange<string[]> = event => {
+    selectedColumns.current = event.target.value;
+  };
 
   React.useEffect(() => {
     setTimeout(() => setExpansionState(initialOpen), 100);
@@ -58,32 +69,46 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
 
   const handleCancel = () => {
     setExpansionState(false);
-    setSelectedColumns(initialColumns);
+    selectedColumns.current = initialColumns.map(({ value }) => value);
   };
 
-  const handleColumnToggle = (column: string) =>
-    setSelectedColumns(toggle(column, selectedColumns, (a, b) => a === b));
-
-  const handleReset = () => setSelectedColumns(defaultColumns);
+  const handleReset = () => {
+    selectedColumns.current = defaultColumns;
+    const defaultColumnsChoices = defaultColumns.map(value => ({
+      label: availableColumns.find(column => column.value === value)?.label,
+      value
+    }));
+    setInitialColumnsChoices(defaultColumnsChoices);
+    onChange({ target: { name: "", value: defaultColumns } });
+  };
 
   const handleSave = () => {
     setExpansionState(false);
-    onSave(selectedColumns);
+    onSave(selectedColumns.current);
   };
+
+  const choices = sortBy(
+    availableColumns.map(column => ({
+      ...column,
+      score: -score(column.label, query)
+    })),
+    "score"
+  );
 
   return (
     <ClickAwayListener onClickAway={() => setExpansionState(false)}>
       <div ref={anchor} className={className}>
-        <ColumnPickerButton
-          active={isExpanded}
+        <IconButton
+          state={isExpanded ? "active" : "default"}
           onClick={() => setExpansionState(prevState => !prevState)}
-        />
+        >
+          <ColumnsIcon />
+        </IconButton>
         <Popper
           className={classes.popper}
           open={isExpanded}
           anchorEl={anchor.current}
           transition
-          disablePortal
           placement="bottom-end"
         >
           {({ TransitionProps, placement }) => (
@@ -95,15 +120,13 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
               }}
             >
               <ColumnPickerContent
-                columns={columns}
-                hasMore={hasMore}
-                selectedColumns={selectedColumns}
-                total={total}
+                choices={choices}
+                initialValues={initialColumnsChoices}
                 onCancel={handleCancel}
-                onColumnToggle={handleColumnToggle}
-                onFetchMore={onFetchMore}
+                onChange={onChange}
                 onReset={handleReset}
                 onSave={handleSave}
+                {...rest}
               />
             </Grow>
           )}

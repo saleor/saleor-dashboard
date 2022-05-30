@@ -52,7 +52,8 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
         .createProductWithShipping({
           name: randomName,
           productPrice,
-          shippingPrice
+          shippingPrice,
+          newChannel: true
         })
         .then(resp => {
           createdVariants = resp.variantsList;
@@ -156,7 +157,7 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
         ordersReadyToFulfillRegexp
       ).should("be.visible");
       cy.contains(
-        HOMEPAGE_SELECTORS.ordersReadyForCapture,
+        HOMEPAGE_SELECTORS.paymentsWaitingForCapture,
         ordersReadyForCaptureRegexp
       ).should("be.visible");
       cy.contains(HOMEPAGE_SELECTORS.sales, salesAmountRegexp).should(

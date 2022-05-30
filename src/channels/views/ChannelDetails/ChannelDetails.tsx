@@ -1,6 +1,7 @@
 import ChannelDeleteDialog from "@saleor/channels/components/ChannelDeleteDialog";
 import { FormData } from "@saleor/channels/components/ChannelForm/ChannelForm";
 import { getChannelsCurrencyChoices } from "@saleor/channels/utils";
+import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -23,7 +24,6 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
 import useShop from "@saleor/hooks/useShop";
 import { sectionNames } from "@saleor/intl";
-import { Backlink } from "@saleor/macaw-ui";
 import { extractMutationErrors } from "@saleor/misc";
 import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
 import getChannelsErrorMessage from "@saleor/utils/errors/channels";
@@ -52,8 +52,6 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
   const notify = useNotifier();
   const intl = useIntl();
   const shop = useShop();
-
-  const handleBack = () => navigate(channelsListUrl());
 
   const channelsListData = useChannelsQuery({ displayLoader: true });
 
@@ -128,6 +126,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
       notify({
         status: "success",
         text: intl.formatMessage({
+          id: "AkyGP2",
           defaultMessage: "Channel deleted"
         })
       });
@@ -181,12 +180,13 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
     <>
       <WindowTitle
         title={intl.formatMessage({
+          id: "D9Rg+F",
           defaultMessage: "Channel details",
           description: "window title"
         })}
       />
       <Container>
-        <Backlink onClick={handleBack}>
+        <Backlink href={channelsListUrl()}>
           {intl.formatMessage(sectionNames.channels)}
         </Backlink>
         <PageHeader title={data?.channel?.name} />
@@ -208,7 +208,6 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
             activateChannelOpts.loading || deactivateChannelOpts.loading
           }
           errors={updateChannelOpts?.data?.channelUpdate?.errors || []}
-          onBack={handleBack}
           onDelete={() => openModal("remove")}
           onSubmit={handleSubmit}
           updateChannelStatus={() =>

@@ -34,29 +34,39 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
 
   const { setIsDirty, setExitDialogSubmitRef } = useExitFormDialog();
 
-  const [content, change] = useRichText({
+  const {
+    defaultValue,
+    editorRef,
+    isReadyForMount,
+    handleChange,
+    getValue
+  } = useRichText({
     initial,
     triggerChange: () => setIsDirty(true)
   });
 
-  useEffect(() => setExitDialogSubmitRef(onSubmit), [content]);
+  useEffect(() => setExitDialogSubmitRef(onSubmit), [onSubmit]);
 
-  const submit = () => onSubmit(content.current);
+  const submit = async () => onSubmit(await getValue());
 
   return edit ? (
     <form onSubmit={submit}>
-      <RichTextEditor
-        data={content.current}
-        disabled={disabled}
-        error={undefined}
-        helperText={undefined}
-        label={intl.formatMessage({
-          defaultMessage: "Translation"
-        })}
-        name="translation"
-        data-test-id="translation-field"
-        onChange={change}
-      />
+      {isReadyForMount && (
+        <RichTextEditor
+          defaultValue={defaultValue}
+          editorRef={editorRef}
+          onChange={handleChange}
+          disabled={disabled}
+          error={undefined}
+          helperText={undefined}
+          label={intl.formatMessage({
+            id: "/vCXIP",
+            defaultMessage: "Translation"
+          })}
+          name="translation"
+          data-test-id="translation-field"
+        />
+      )}
       <TranslationFieldsSave
         saveButtonState={saveButtonState}
         onDiscard={onDiscard}
@@ -65,11 +75,13 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
     </form>
   ) : initial === null ? (
     <Typography color="textSecondary">
-      <FormattedMessage defaultMessage="No translation yet" />
+      <FormattedMessage id="T/5OyA" defaultMessage="No translation yet" />
     </Typography>
   ) : (
     <Typography>
-      <RichTextEditorContent key={resetKey} data={JSON.parse(initial)} />
+      {isReadyForMount && (
+        <RichTextEditorContent key={resetKey} value={defaultValue} />
+      )}
     </Typography>
   );
 };

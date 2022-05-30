@@ -29,14 +29,13 @@ function useOrderCustomerChangeForm(
   initial: Partial<OrderCustomerChangeData> = {},
   onSubmit: (data: OrderCustomerChangeData) => void
 ): UseOrderCustomerChangeFormResult {
-  const { handleChange, hasChanged, data, setChanged } = useForm({
+  const { handleChange, data } = useForm({
     ...initial,
     ...defaultInitialFormData
   });
 
   const handleFormSubmit = useHandleFormSubmit({
-    onSubmit,
-    setChanged
+    onSubmit
   });
 
   const handleSubmit = () => handleFormSubmit(data);
@@ -50,7 +49,6 @@ function useOrderCustomerChangeForm(
   return {
     change: handleChange,
     submit,
-    hasChanged,
     data
   };
 }

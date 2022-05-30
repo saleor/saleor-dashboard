@@ -48,11 +48,10 @@ export interface HomePageProps {
   sales: HomeQuery["salesToday"]["gross"];
   topProducts: RelayToFlat<HomeQuery["productTopToday"]> | null;
   userName: string;
-  onCreateNewChannelClick: () => void;
-  onOrdersToCaptureClick: () => void;
-  onOrdersToFulfillClick: () => void;
-  onProductClick: (productId: string, variantId: string) => void;
-  onProductsOutOfStockClick: () => void;
+  createNewChannelHref: string;
+  ordersToFulfillHref: string;
+  ordersToCaptureHref: string;
+  productsOutOfStockHref: string;
   noChannel: boolean;
 }
 
@@ -62,12 +61,11 @@ const HomePage: React.FC<HomePageProps> = props => {
     orders,
     sales,
     topProducts,
-    onProductClick,
     activities,
-    onCreateNewChannelClick,
-    onOrdersToCaptureClick,
-    onOrdersToFulfillClick,
-    onProductsOutOfStockClick,
+    createNewChannelHref,
+    ordersToFulfillHref,
+    ordersToCaptureHref,
+    productsOutOfStockHref,
     ordersToCapture = 0,
     ordersToFulfill = 0,
     productsOutOfStock = 0,
@@ -127,10 +125,10 @@ const HomePage: React.FC<HomePageProps> = props => {
             </div>
           </RequirePermissions>
           <HomeNotificationTable
-            onCreateNewChannelClick={onCreateNewChannelClick}
-            onOrdersToCaptureClick={onOrdersToCaptureClick}
-            onOrdersToFulfillClick={onOrdersToFulfillClick}
-            onProductsOutOfStockClick={onProductsOutOfStockClick}
+            createNewChannelHref={createNewChannelHref}
+            ordersToFulfillHref={ordersToFulfillHref}
+            ordersToCaptureHref={ordersToCaptureHref}
+            productsOutOfStockHref={productsOutOfStockHref}
             ordersToCapture={ordersToCapture}
             ordersToFulfill={ordersToFulfill}
             productsOutOfStock={productsOutOfStock}
@@ -146,7 +144,6 @@ const HomePage: React.FC<HomePageProps> = props => {
             >
               <HomeProductListCard
                 testId="top-products"
-                onRowClick={onProductClick}
                 topProducts={topProducts}
               />
               <CardSpacer />

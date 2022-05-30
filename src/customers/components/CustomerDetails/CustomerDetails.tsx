@@ -62,6 +62,7 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
                 component="div"
               >
                 <FormattedMessage
+                  id="MjUyhA"
                   defaultMessage="Active member since {date}"
                   description="section subheader"
                   values={{
@@ -81,6 +82,7 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
           className={classes.checkbox}
           disabled={disabled}
           label={intl.formatMessage({
+            id: "+NUzaQ",
             defaultMessage: "User account active",
             description: "check to mark this account as active"
           })}
@@ -95,6 +97,7 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
           helperText={getAccountErrorMessage(formErrors.note, intl)}
           name="note"
           label={intl.formatMessage({
+            id: "uUQ+Al",
             defaultMessage: "Note",
             description: "note about customer"
           })}

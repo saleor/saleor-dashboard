@@ -41,7 +41,6 @@ import OrderProductAddDialog from "../../../components/OrderProductAddDialog";
 import OrderShippingMethodEditDialog from "../../../components/OrderShippingMethodEditDialog";
 import {
   orderFulfillUrl,
-  orderListUrl,
   orderRefundUrl,
   orderReturnUrl,
   orderUrl,
@@ -148,13 +147,12 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
   const intl = useIntl();
   const [transactionReference, setTransactionReference] = React.useState("");
 
-  const handleBack = () => navigate(orderListUrl());
-
   return (
     <>
       <WindowTitle
         title={intl.formatMessage(
           {
+            id: "GbBCmr",
             defaultMessage: "Order #{orderNumber}",
             description: "window title"
           },
@@ -178,7 +176,6 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
                 })
               )
             }
-            onBack={handleBack}
             order={order}
             shop={shop}
             onOrderLineAdd={() => openModal("add-order-line")}

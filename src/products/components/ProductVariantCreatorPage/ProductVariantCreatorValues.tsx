@@ -35,6 +35,7 @@ import {
 
 const messages = defineMessages({
   multipleValueLabel: {
+    id: "j8PV7E",
     defaultMessage: "Values",
     description: "attribute values"
   }
@@ -145,11 +146,13 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
       {variantsLeft !== null && variantsNumber > variantsLeft && (
         <LimitReachedAlert
           title={intl.formatMessage({
+            id: "FwHWUm",
             defaultMessage: "SKU limit reached",
             description: "alert"
           })}
         >
           <FormattedMessage
+            id="Xr5zxu"
             defaultMessage="You choices will add {variantsNumber} SKUs to your catalog which will exceed your limit by {aboveLimitVariantsNumber}. If you would like to up your limit, contact your administration staff about raising your limits."
             values={{
               variantsNumber,

@@ -1,11 +1,16 @@
+import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
 import { LanguageCodeEnum, SaleTranslationFragment } from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
-import { Backlink } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
+import {
+  languageEntitiesUrl,
+  languageEntityUrl,
+  TranslatableEntities
+} from "@saleor/translations/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -21,28 +26,32 @@ export const fieldNames = {
 };
 
 const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
+  translationId,
   activeField,
   disabled,
   languageCode,
   languages,
   data,
   saveButtonState,
-  onBack,
   onDiscard,
   onEdit,
-  onLanguageChange,
   onSubmit
 }) => {
   const intl = useIntl();
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
+      <Backlink
+        href={languageEntitiesUrl(languageCode, {
+          tab: TranslatableEntities.sales
+        })}
+      >
         {intl.formatMessage(sectionNames.translations)}
       </Backlink>
       <PageHeader
         title={intl.formatMessage(
           {
+            id: "zjkAMs",
             defaultMessage: 'Translation Sale "{saleName}" - {languageCode}',
             description: "header"
           },
@@ -55,7 +64,9 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
         <LanguageSwitch
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
-          onLanguageChange={onLanguageChange}
+          getLanguageUrl={lang =>
+            languageEntityUrl(lang, TranslatableEntities.sales, translationId)
+          }
         />
       </PageHeader>
       <TranslationFields
@@ -66,6 +77,7 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
         fields={[
           {
             displayName: intl.formatMessage({
+              id: "s40PZt",
               defaultMessage: "Sale Name"
             }),
             name: fieldNames.name,

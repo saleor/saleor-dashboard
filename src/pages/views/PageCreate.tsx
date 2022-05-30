@@ -31,12 +31,7 @@ import { useIntl } from "react-intl";
 
 import PageDetailsPage from "../components/PageDetailsPage";
 import { PageSubmitData } from "../components/PageDetailsPage/form";
-import {
-  pageCreateUrl,
-  pageListUrl,
-  pageUrl,
-  PageUrlQueryParams
-} from "../urls";
+import { pageCreateUrl, pageUrl, PageUrlQueryParams } from "../urls";
 
 export interface PageCreateProps {
   id: string;
@@ -99,6 +94,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "JMbFNo",
             defaultMessage: "Successfully created new page"
           })
         });
@@ -123,6 +119,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
         input: {
           attributes: prepareAttributesInput({
             attributes: formData.attributes,
+            prevAttributes: null,
             updatedFileAttributes
           }),
           content: getParsedDataForJsonStringField(formData.content),
@@ -185,6 +182,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
     <>
       <WindowTitle
         title={intl.formatMessage({
+          id: "mX7zJJ",
           defaultMessage: "Create Page",
           description: "header"
         })}
@@ -196,7 +194,6 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
         page={null}
         attributeValues={attributeValues}
         pageTypes={mapEdgesToItems(searchPageTypesOpts?.data?.search) || []}
-        onBack={() => navigate(pageListUrl())}
         onRemove={() => undefined}
         onSubmit={handleSubmit}
         fetchPageTypes={searchPageTypes}

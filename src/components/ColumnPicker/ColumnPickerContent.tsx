@@ -1,194 +1,123 @@
 import {
   Card,
+  CardActions,
   CardContent,
-  CircularProgress,
+  CardHeader,
+  MenuItem,
   Typography
 } from "@material-ui/core";
-import useElementScroll from "@saleor/hooks/useElementScroll";
+import { Button } from "@saleor/components/Button";
+import { FormChange } from "@saleor/hooks/useForm";
 import { buttonMessages } from "@saleor/intl";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import {
+  Choice,
+  CloseIcon,
+  IconButton,
+  makeStyles,
+  MultipleValueAutocomplete
+} from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
-import { isSelected } from "@saleor/utils/lists";
-import classNames from "classnames";
 import React from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import ControlledCheckbox from "../ControlledCheckbox";
-import Hr from "../Hr";
+import messages from "./messages";
 
-export interface ColumnPickerChoice {
-  label: string;
-  value: string;
-}
-export interface ColumnPickerContentProps extends Partial<FetchMoreProps> {
-  columns: ColumnPickerChoice[];
-  selectedColumns: string[];
-  total?: number;
+export interface ColumnPickerContentProps extends FetchMoreProps {
+  choices: Choice[];
+  initialValues: Choice[];
   onCancel: () => void;
-  onColumnToggle: (column: string) => void;
+  onChange: FormChange<string[]>;
   onReset: () => void;
   onSave: () => void;
+  onQueryChange: (query: string) => void;
 }
 
 const useStyles = makeStyles(
   theme => ({
-    actionBar: {
-      display: "flex",
-      justifyContent: "space-between"
-    },
-    actionBarContainer: {
-      "&&": {
-        padding: theme.spacing(2)
-      },
-      boxShadow: `0px 0px 0px 0px ${theme.palette.background.paper}`,
-      transition: theme.transitions.duration.short + "ms"
-    },
-    cancelButton: {
-      marginRight: theme.spacing(2)
-    },
-    dialogPaper: {
-      overflow: "hidden"
+    actions: {
+      flexDirection: "row-reverse",
+      gap: theme.spacing(1),
+      paddingBottom: theme.spacing(2)
     },
     content: {
-      [theme.breakpoints.down("sm")]: {
-        gridTemplateColumns: "repeat(2, 1fr)"
-      },
-      display: "grid",
-      gridColumnGap: theme.spacing(3),
-      gridTemplateColumns: "repeat(3, 210px)",
-      padding: theme.spacing(2, 3)
+      paddingBottom: theme.spacing(2),
+      width: 450
     },
-    contentContainer: {
-      maxHeight: 256,
-      overflowX: "visible",
-      overflowY: "scroll",
-      padding: 0
-    },
-    dropShadow: {
-      boxShadow: `0px -5px 10px 0px ${theme.palette.divider}`
-    },
-    label: {
-      "& span": {
-        overflow: "hidden",
-        whiteSpace: "nowrap",
-        textOverflow: "ellipsis"
-      },
-      marginRight: 0
-    },
-    loadMoreLoaderContainer: {
-      alignItems: "center",
-      display: "flex",
-      gridColumnEnd: "span 3",
-      height: theme.spacing(3),
-      justifyContent: "center"
-    },
-    titleContainer: {
-      padding: theme.spacing(1.5, 3.5)
+    subHeader: {
+      fontWeight: 500,
+      letterSpacing: "0.1rem",
+      textTransform: "uppercase",
+      marginBottom: theme.spacing(1)
     }
   }),
   { name: "ColumnPickerContent" }
 );
 
-const scrollableTargetId = "columnPickerScrollableDiv";
-
 const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
   const {
-    columns,
-    hasMore,
-    selectedColumns,
-    total,
+    choices,
+    initialValues,
+    loading,
     onCancel,
-    onColumnToggle,
-    onFetchMore,
+    onChange,
     onReset,
-    onSave
+    onFetchMore,
+    onSave,
+    onQueryChange
   } = props;
-  const classes = useStyles(props);
-  const anchor = React.useRef<HTMLDivElement>();
-  const scrollPosition = useElementScroll(anchor);
-
-  const dropShadow =
-    anchor.current && scrollPosition
-      ? scrollPosition.y + anchor.current.clientHeight <
-        anchor.current.scrollHeight
-      : false;
+  const classes = useStyles();
+  const intl = useIntl();
 
   return (
     <Card elevation={8}>
-      <CardContent className={classes.titleContainer}>
-        <Typography color="textSecondary">
-          <FormattedMessage
-            defaultMessage="{numberOfSelected} columns selected out of {numberOfTotal}"
-            description="pick columns to display"
-            values={{
-              numberOfSelected: selectedColumns.length,
-              numberOfTotal: total || columns.length
-            }}
-          />
-        </Typography>
-      </CardContent>
-      <Hr />
-      <CardContent
-        className={classes.contentContainer}
-        ref={anchor}
-        id={scrollableTargetId}
-      >
-        <InfiniteScroll
-          dataLength={columns.length}
-          next={onFetchMore}
-          hasMore={hasMore}
-          scrollThreshold="100px"
-          loader={
-            <div className={classes.loadMoreLoaderContainer}>
-              <CircularProgress size={16} />
-            </div>
-          }
-          scrollableTarget={scrollableTargetId}
+      <CardHeader
+        action={
+          <IconButton variant="secondary" onClick={onCancel}>
+            <CloseIcon />
+          </IconButton>
+        }
+        title={intl.formatMessage(messages.title)}
+      />
+      <CardContent className={classes.content}>
+        <Typography
+          color="textSecondary"
+          variant="caption"
+          className={classes.subHeader}
         >
-          <div className={classes.content}>
-            {columns.map(column => (
-              <ControlledCheckbox
-                className={classes.label}
-                checked={isSelected(
-                  column.value,
-                  selectedColumns,
-                  (a, b) => a === b
-                )}
-                name={column.value}
-                label={column.label}
-                onChange={() => onColumnToggle(column.value)}
-                key={column.value}
-              />
-            ))}
-          </div>
-        </InfiniteScroll>
+          {intl.formatMessage(messages.columnSubheader)}
+        </Typography>
+        <MultipleValueAutocomplete
+          choices={choices}
+          enableReinitialize
+          fullWidth
+          label={intl.formatMessage(messages.columnLabel)}
+          loading={loading}
+          name="columns"
+          initialValue={initialValues}
+          onChange={onChange}
+          onInputChange={onQueryChange}
+          onScrollToBottom={onFetchMore}
+        >
+          {({ choices, getItemProps }) =>
+            choices.map((choice, choiceIndex) => (
+              <MenuItem
+                key={choice.value}
+                {...getItemProps({ item: choice, index: choiceIndex })}
+              >
+                {choice.label}
+              </MenuItem>
+            ))
+          }
+        </MultipleValueAutocomplete>
       </CardContent>
-      <Hr />
-      <CardContent
-        className={classNames(classes.actionBarContainer, {
-          [classes.dropShadow]: dropShadow
-        })}
-      >
-        <div className={classes.actionBar}>
-          <Button variant="secondary" color="text" onClick={onReset}>
-            <FormattedMessage defaultMessage="Reset" description="button" />
-          </Button>
-          <div>
-            <Button
-              className={classes.cancelButton}
-              color="text"
-              variant="secondary"
-              onClick={onCancel}
-            >
-              <FormattedMessage {...buttonMessages.cancel} />
-            </Button>
-            <Button variant="primary" onClick={onSave}>
-              <FormattedMessage {...buttonMessages.save} />
-            </Button>
-          </div>
-        </div>
-      </CardContent>
+      <CardActions className={classes.actions}>
+        <Button variant="primary" onClick={onSave}>
+          <FormattedMessage {...buttonMessages.save} />
+        </Button>
+        <Button color="text" variant="secondary" onClick={onReset}>
+          <FormattedMessage {...buttonMessages.reset} />
+        </Button>
+      </CardActions>
     </Card>
   );
 };

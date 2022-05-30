@@ -88,7 +88,7 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
             price,
             attribute: attributeValues[0]
           });
-          enterHomePageChangeChannelAndReturn(defaultChannel.name);
+          selectChannelInHeader(defaultChannel.name);
           variantsShouldBeVisible({ name, price });
           getProductVariants(createdProduct.id, defaultChannel.slug);
         })

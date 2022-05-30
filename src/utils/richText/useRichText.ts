@@ -1,44 +1,45 @@
 import { OutputData } from "@editorjs/editorjs";
-import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
-import isEqual from "lodash/isEqual";
-import { MutableRefObject, useEffect, useRef, useState } from "react";
+import { EditorCore } from "@saleor/components/RichTextEditor";
+import { useMemo, useRef, useState } from "react";
 
-const emptyContent: OutputData = {
-  blocks: []
-};
-
-function useRichText(opts: {
+interface UseRichTextOptions {
   initial: string | null;
   triggerChange: () => void;
-}): [MutableRefObject<OutputData>, RichTextEditorChange] {
-  const data = useRef<OutputData>();
-  const [, setLoaded] = useState(false);
+}
 
-  useEffect(() => {
-    if (opts.initial === null) {
-      data.current = emptyContent;
-      setLoaded(true);
-      return;
-    }
+export function useRichText({ initial, triggerChange }: UseRichTextOptions) {
+  const editorRef = useRef<EditorCore>(null);
+  const [isReadyForMount, setIsReadyForMount] = useState(false);
 
-    try {
-      data.current = JSON.parse(opts.initial);
-      setLoaded(true);
-    } catch {
-      data.current = undefined;
-    }
-  }, [opts.initial]);
-
-  const change: RichTextEditorChange = newData => {
-    if (isEqual(data.current.blocks, newData.blocks)) {
-      return;
-    }
-
-    opts.triggerChange();
-    data.current = newData;
+  const handleChange = () => {
+    triggerChange();
   };
 
-  return [data, change];
+  const getValue = async () => {
+    if (editorRef.current) {
+      return editorRef.current.save();
+    } else {
+      throw new Error("Editor instance is not available");
+    }
+  };
+
+  const defaultValue = useMemo<OutputData | undefined>(() => {
+    try {
+      const result = JSON.parse(initial);
+      setIsReadyForMount(true);
+      return result;
+    } catch (e) {
+      return undefined;
+    }
+  }, [initial]);
+
+  return {
+    editorRef,
+    handleChange,
+    getValue,
+    defaultValue,
+    isReadyForMount
+  };
 }
 
 export default useRichText;

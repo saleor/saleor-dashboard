@@ -67,6 +67,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
       notify({
         status: "success",
         text: intl.formatMessage({
+          id: "6udlH+",
           defaultMessage: "Order draft successfully created"
         })
       });
@@ -162,7 +163,6 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
-        onRowClick={id => () => navigate(orderUrl(id))}
         onSort={handleSort}
         onSearchChange={handleSearchChange}
         onFilterChange={changeFilters}

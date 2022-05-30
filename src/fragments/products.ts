@@ -6,8 +6,7 @@ export const stockFragment = gql`
     quantity
     quantityAllocated
     warehouse {
-      id
-      name
+      ...Warehouse
     }
   }
 `;
@@ -355,5 +354,16 @@ export const exportFileFragment = gql`
     id
     status
     url
+  }
+`;
+
+export const productListAttribute = gql`
+  fragment ProductListAttribute on SelectedAttribute {
+    attribute {
+      id
+    }
+    values {
+      ...AttributeValue
+    }
   }
 `;

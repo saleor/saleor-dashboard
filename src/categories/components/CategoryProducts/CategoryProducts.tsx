@@ -1,10 +1,10 @@
 import { Card } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import { InternalLink } from "@saleor/components/InternalLink";
 import { CategoryDetailsQuery } from "@saleor/graphql";
-import { Button } from "@saleor/macaw-ui";
-import { productListUrl } from "@saleor/products/urls";
+import { productAddUrl, productListUrl } from "@saleor/products/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -22,10 +22,8 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
   products,
   disabled,
   pageInfo,
-  onAdd,
   onNextPage,
   onPreviousPage,
-  onRowClick,
   categoryId,
   categoryName,
   isChecked,
@@ -42,6 +40,7 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
       <CardTitle
         title={intl.formatMessage(
           {
+            id: "+43JV5",
             defaultMessage: "Products in {categoryName}",
             description: "header"
           },
@@ -56,6 +55,7 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
             >
               <Button variant="tertiary" data-test-id="view-products">
                 <FormattedMessage
+                  id="z8jo8h"
                   defaultMessage="View products"
                   description="button"
                 />
@@ -64,10 +64,11 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
             <HorizontalSpacer />
             <Button
               variant="tertiary"
-              onClick={onAdd}
+              href={productAddUrl()}
               data-test-id="add-products"
             >
               <FormattedMessage
+                id="x/pIZ9"
                 defaultMessage="Add product"
                 description="button"
               />
@@ -81,7 +82,6 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
         pageInfo={pageInfo}
         onNextPage={onNextPage}
         onPreviousPage={onPreviousPage}
-        onRowClick={onRowClick}
         selected={selected}
         isChecked={isChecked}
         toggle={toggle}

@@ -1,7 +1,7 @@
 import {
-  Button,
   ButtonGroup,
   ButtonGroupProps,
+  ButtonProps,
   ClickAwayListener,
   Grow,
   MenuItem,
@@ -10,6 +10,7 @@ import {
   Popper
 } from "@material-ui/core";
 import { ArrowDropDown as ArrowDropDownIcon } from "@material-ui/icons";
+import { Button } from "@saleor/components/Button";
 import React from "react";
 
 import { useStyles } from "./styles";
@@ -21,14 +22,16 @@ interface Option {
 }
 
 export interface ButtonWithSelectProps
-  extends Omit<ButtonGroupProps, "onClick"> {
+  extends Omit<ButtonGroupProps, "onClick">,
+    Pick<ButtonProps, "onClick"> {
   options: Option[];
-  onClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void;
+  href?: string;
 }
 
 export const ButtonWithSelect: React.FC<ButtonWithSelectProps> = ({
   options,
   children,
+  href,
   onClick,
   ...props
 }) => {
@@ -61,20 +64,20 @@ export const ButtonWithSelect: React.FC<ButtonWithSelectProps> = ({
 
   return (
     <>
-      <ButtonGroup
-        variant="contained"
-        color="primary"
-        ref={anchorRef}
-        aria-label="button with select"
-        {...props}
-      >
-        <Button onClick={onClick} style={{ width: "100%" }}>
+      <ButtonGroup ref={anchorRef} aria-label="button with select" {...props}>
+        <Button
+          variant="primary"
+          color="primary"
+          onClick={onClick}
+          href={href}
+          style={{ width: "100%" }}
+        >
           {children}
         </Button>
         {options.length > 0 && (
           <Button
+            variant="primary"
             color="primary"
-            size="small"
             aria-controls={open ? "button-with-select-menu" : undefined}
             aria-expanded={open ? "true" : undefined}
             aria-label="select different option"

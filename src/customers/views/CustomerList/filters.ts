@@ -62,8 +62,8 @@ export function getFilterVariables(
       lte: params.joinedTo
     }),
     numberOfOrders: getGteLteVariables({
-      gte: parseInt(params.numberOfOrdersFrom, 0),
-      lte: parseInt(params.numberOfOrdersTo, 0)
+      gte: parseInt(params.numberOfOrdersFrom, 10),
+      lte: parseInt(params.numberOfOrdersTo, 10)
     }),
     search: params.query
   };

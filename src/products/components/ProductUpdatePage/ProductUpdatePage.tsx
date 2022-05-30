@@ -11,6 +11,7 @@ import {
 import { ChannelData } from "@saleor/channels/utils";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@saleor/components/Attributes";
+import { Backlink } from "@saleor/components/Backlink";
 import CardMenu from "@saleor/components/CardMenu";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
@@ -37,12 +38,14 @@ import {
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { FormsetData } from "@saleor/hooks/useFormset";
+import useNavigator from "@saleor/hooks/useNavigator";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import ProductExternalMediaDialog from "@saleor/products/components/ProductExternalMediaDialog";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
+import { productImageUrl, productListUrl } from "@saleor/products/urls";
 import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
 import {
   ChannelProps,
@@ -69,6 +72,7 @@ import ProductUpdateForm, {
 } from "./form";
 
 export interface ProductUpdatePageProps extends ListActions, ChannelProps {
+  productId: string;
   channelsWithVariantsData: ChannelsWithVariantsData;
   setChannelsData: (data: ChannelData[]) => void;
   onChannelsChange: (data: ChannelData[]) => void;
@@ -91,7 +95,6 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   limits: RefreshLimitsQuery["shop"]["limits"];
   variants: ProductDetailsVariantFragment[];
   media: ProductFragment["media"];
-  hasChannelChanged: boolean;
   product: ProductFragment;
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -112,21 +115,17 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   onAssignReferencesClick: (attribute: AttributeInput) => void;
   onCloseDialog: () => void;
   onVariantsAdd: () => void;
-  onVariantShow: (id: string) => () => void;
   onVariantReorder: ReorderAction;
   onVariantEndPreorderDialogOpen: () => void;
   onImageDelete: (id: string) => () => void;
   onSubmit: (data: ProductUpdatePageSubmitData) => SubmitPromise;
   openChannelsModal: () => void;
   onAttributeSelectBlur: () => void;
-  onBack?();
   onDelete();
-  onImageEdit?(id: string);
   onImageReorder?(event: { oldIndex: number; newIndex: number });
   onImageUpload(file: File);
   onMediaUrlUpload(mediaUrl: string);
   onSeoClick?();
-  onVariantAdd?();
   onSetDefaultVariant(variant: ProductDetailsVariantFragment);
   onWarehouseConfigure();
 }
@@ -142,6 +141,7 @@ export interface ProductUpdatePageSubmitData extends ProductUpdatePageFormData {
 }
 
 export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
+  productId,
   defaultWeightUnit,
   disabled,
   categories: categoryChoiceList,
@@ -155,7 +155,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   fetchMoreCategories,
   fetchMoreCollections,
   media,
-  hasChannelChanged,
   header,
   limits,
   placeholderImage,
@@ -167,23 +166,19 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   taxTypes,
   referencePages = [],
   referenceProducts = [],
-  onBack,
   onDelete,
   allChannelsCount,
   currentChannels,
   onImageDelete,
-  onImageEdit,
   onImageReorder,
   onImageUpload,
   onMediaUrlUpload,
   openChannelsModal,
   onSeoClick,
   onSubmit,
-  onVariantAdd,
   channelsData,
   onVariantsAdd,
   onSetDefaultVariant,
-  onVariantShow,
   onVariantReorder,
   onVariantEndPreorderDialogOpen,
   onWarehouseConfigure,
@@ -208,6 +203,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onAttributeSelectBlur
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
     product?.category?.name || ""
@@ -285,12 +281,19 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       fetchMoreReferenceProducts={fetchMoreReferenceProducts}
       assignReferencesAttributeId={assignReferencesAttributeId}
       disabled={disabled}
-      hasChannelChanged={hasChannelChanged}
     >
-      {({ change, data, formErrors, handlers, submit, isSaveDisabled }) => (
+      {({
+        change,
+        data,
+        formErrors,
+        handlers,
+        submit,
+        isSaveDisabled,
+        attributeRichTextGetters
+      }) => (
         <>
           <Container>
-            <Backlink onClick={onBack}>
+            <Backlink href={productListUrl()}>
               {intl.formatMessage(sectionNames.products)}
             </Backlink>
             <PageHeader title={header}>
@@ -298,13 +301,12 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 <CardMenu menuItems={extensionMenuItems} data-test-id="menu" />
               )}
             </PageHeader>
-            <Grid>
+            <Grid richText>
               <div>
                 <ProductDetailsForm
                   data={data}
                   disabled={disabled}
                   errors={errors}
-                  onDescriptionChange={handlers.changeDescription}
                   onChange={change}
                 />
                 <CardSpacer />
@@ -313,9 +315,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   placeholderImage={placeholderImage}
                   onImageDelete={onImageDelete}
                   onImageReorder={onImageReorder}
-                  onImageEdit={onImageEdit}
                   onImageUpload={onImageUpload}
                   openMediaUrlModal={() => setMediaUrlModalStatus(true)}
+                  getImageEditUrl={imageId =>
+                    productImageUrl(productId, imageId)
+                  }
                 />
                 <CardSpacer />
                 {data.attributes.length > 0 && (
@@ -334,6 +338,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     fetchAttributeValues={fetchAttributeValues}
                     fetchMoreAttributeValues={fetchMoreAttributeValues}
                     onAttributeSelectBlur={onAttributeSelectBlur}
+                    richTextGetters={attributeRichTextGetters}
                   />
                 )}
                 <CardSpacer />
@@ -350,12 +355,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 )}
                 {hasVariants ? (
                   <ProductVariants
+                    productId={productId}
                     disabled={disabled}
                     limits={limits}
                     variants={variants}
                     product={product}
-                    onRowClick={onVariantShow}
-                    onVariantAdd={onVariantAdd}
                     onVariantsAdd={onVariantsAdd}
                     onVariantReorder={onVariantReorder}
                     onSetDefaultVariant={onSetDefaultVariant}
@@ -415,6 +419,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   onClick={onSeoClick}
                   onChange={change}
                   helperText={intl.formatMessage({
+                    id: "LKoIB1",
                     defaultMessage:
                       "Add search engine title and description to make this product easier to find"
                   })}
@@ -446,11 +451,13 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     managePermissions={[PermissionEnum.MANAGE_PRODUCTS]}
                     messages={{
                       hiddenLabel: intl.formatMessage({
+                        id: "saKXY3",
                         defaultMessage: "Not published",
                         description: "product label"
                       }),
 
                       visibleLabel: intl.formatMessage({
+                        id: "qJedl0",
                         defaultMessage: "Published",
                         description: "product label"
                       })
@@ -467,15 +474,15 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   <ChannelsWithVariantsAvailabilityCard
                     messages={{
                       hiddenLabel: intl.formatMessage({
+                        id: "saKXY3",
                         defaultMessage: "Not published",
-                        description: "product label",
-                        id: "not published channel"
+                        description: "product label"
                       }),
 
                       visibleLabel: intl.formatMessage({
+                        id: "qJedl0",
                         defaultMessage: "Published",
-                        description: "product label",
-                        id: "published channel"
+                        description: "product label"
                       })
                     }}
                     errors={channelsErrors}
@@ -498,7 +505,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
               </div>
             </Grid>
             <Savebar
-              onCancel={onBack}
+              onCancel={() => navigate(productListUrl())}
               onDelete={onDelete}
               onSubmit={submit}
               state={saveButtonBarState}

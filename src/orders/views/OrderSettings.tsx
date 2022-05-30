@@ -2,12 +2,10 @@ import {
   useOrderSettingsQuery,
   useOrderSettingsUpdateMutation
 } from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { extractMutationErrors, getMutationState } from "@saleor/misc";
 import OrderSettingsPage from "@saleor/orders/components/OrderSettingsPage";
-import { orderListUrl } from "@saleor/orders/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -15,7 +13,6 @@ import { OrderSettingsFormData } from "../components/OrderSettingsPage/types";
 
 export const OrderSettings: React.FC = () => {
   const intl = useIntl();
-  const navigate = useNavigator();
   const notify = useNotifier();
 
   const { data, loading } = useOrderSettingsQuery({});
@@ -39,8 +36,6 @@ export const OrderSettings: React.FC = () => {
       });
     }
   });
-
-  const handleBack = () => navigate(orderListUrl());
 
   const handleSubmit = async ({
     automaticallyConfirmAllNewOrders,
@@ -69,7 +64,6 @@ export const OrderSettings: React.FC = () => {
       shop={data?.shop}
       disabled={loading || orderSettingsUpdateOpts.loading}
       onSubmit={handleSubmit}
-      onBack={handleBack}
       saveButtonBarState={getMutationState(
         orderSettingsUpdateOpts.called,
         orderSettingsUpdateOpts.loading,

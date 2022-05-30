@@ -2,10 +2,7 @@ import { gql } from "@apollo/client";
 
 export const initialProductFilterAttributesQuery = gql`
   query InitialProductFilterAttributes {
-    attributes(
-      first: 100
-      filter: { filterableInDashboard: true, type: PRODUCT_TYPE }
-    ) {
+    attributes(first: 100, filter: { type: PRODUCT_TYPE }) {
       edges {
         node {
           id
@@ -83,12 +80,7 @@ export const productListQuery = gql`
           ...ProductWithChannelListings
           updatedAt
           attributes @include(if: $hasSelectedAttributes) {
-            attribute {
-              id
-            }
-            values {
-              ...AttributeValue
-            }
+            ...ProductListAttribute
           }
         }
       }
@@ -249,31 +241,6 @@ export const productMediaQuery = gql`
         type
         oembedData
       }
-    }
-  }
-`;
-
-export const availableInGridAttributes = gql`
-  query AvailableInGridAttributes($first: Int!, $after: String) {
-    availableInGrid: attributes(
-      first: $first
-      after: $after
-      filter: {
-        availableInGrid: true
-        isVariantOnly: false
-        type: PRODUCT_TYPE
-      }
-    ) {
-      edges {
-        node {
-          id
-          name
-        }
-      }
-      pageInfo {
-        ...PageInfo
-      }
-      totalCount
     }
   }
 `;

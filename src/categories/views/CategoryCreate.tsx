@@ -35,6 +35,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
       notify({
         status: "success",
         text: intl.formatMessage({
+          id: "xl7Fag",
           defaultMessage: "Category created"
         })
       });
@@ -78,6 +79,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
     <>
       <WindowTitle
         title={intl.formatMessage({
+          id: "Irflxf",
           defaultMessage: "Create category",
           description: "window title"
         })}
@@ -86,9 +88,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
         saveButtonBarState={createCategoryResult.status}
         errors={createCategoryResult.data?.categoryCreate.errors || []}
         disabled={createCategoryResult.loading}
-        onBack={() =>
-          navigate(parentId ? categoryUrl(parentId) : categoryListUrl())
-        }
+        backUrl={parentId ? categoryUrl(parentId) : categoryListUrl()}
         onSubmit={handleSubmit}
       />
     </>

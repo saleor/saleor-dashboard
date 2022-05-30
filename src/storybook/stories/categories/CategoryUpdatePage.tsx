@@ -16,20 +16,17 @@ const category = categoryFixture(placeholderImage);
 
 const updateProps: Omit<CategoryUpdatePageProps, "classes"> = {
   category,
+  categoryId: "123",
   changeTab: undefined,
   currentTab: CategoryPageTab.categories,
   disabled: false,
   errors: [],
-  onAddCategory: undefined,
-  onAddProduct: undefined,
-  onBack: () => undefined,
-  onCategoryClick: () => undefined,
+  addProductHref: "",
   onDelete: () => undefined,
   onImageDelete: () => undefined,
   onImageUpload: () => undefined,
   onNextPage: undefined,
   onPreviousPage: undefined,
-  onProductClick: () => undefined,
   onSubmit: () => undefined,
   pageInfo: {
     hasNextPage: true,

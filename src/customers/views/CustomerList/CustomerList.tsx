@@ -31,11 +31,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import CustomerListPage from "../../components/CustomerListPage";
 import {
-  customerAddUrl,
   customerListUrl,
   CustomerListUrlDialog,
-  CustomerListUrlQueryParams,
-  customerUrl
+  CustomerListUrlQueryParams
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -167,11 +165,9 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
         settings={settings}
         disabled={loading}
         pageInfo={pageInfo}
-        onAdd={() => navigate(customerAddUrl)}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
-        onRowClick={id => () => navigate(customerUrl(id))}
         onSort={handleSort}
         toolbar={
           <IconButton
@@ -205,12 +201,14 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
         }
         variant="delete"
         title={intl.formatMessage({
+          id: "q8ep2I",
           defaultMessage: "Delete Customers",
           description: "dialog header"
         })}
       >
         <DialogContentText>
           <FormattedMessage
+            id="N2SbNc"
             defaultMessage="{counter,plural,one{Are you sure you want to delete this customer?} other{Are you sure you want to delete {displayQuantity} customers?}}"
             values={{
               counter: maybe(() => params.ids.length),

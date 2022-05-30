@@ -18,7 +18,6 @@ const props: PermissionGroupListPageProps = {
   ...pageListProps.default,
   ...sortPageProps,
   disabled: false,
-  onBack: () => undefined,
   onDelete: () => undefined,
   sort: {
     ...sortPageProps.sort,

@@ -1,8 +1,8 @@
 import { Card, CardContent, TextField } from "@material-ui/core";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import { DiscountErrorFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
-import { Button } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
 import React from "react";
@@ -46,6 +46,7 @@ const VoucherInfo = ({
           variant === "create" && (
             <Button onClick={onGenerateCode} data-test-id="generate-code">
               <FormattedMessage
+                id="mSLr9d"
                 defaultMessage="Generate Code"
                 description="voucher code, button"
               />
@@ -61,6 +62,7 @@ const VoucherInfo = ({
           helperText={getDiscountErrorMessage(formErrors.code, intl)}
           name={"code" as keyof VoucherDetailsPageFormData}
           label={intl.formatMessage({
+            id: "jvKNMP",
             defaultMessage: "Discount Code"
           })}
           value={data.code}

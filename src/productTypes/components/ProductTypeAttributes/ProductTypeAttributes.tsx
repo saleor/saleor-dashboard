@@ -1,4 +1,6 @@
 import { Card, TableCell, TableRow } from "@material-ui/core";
+import { attributeUrl } from "@saleor/attributes/urls";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -7,10 +9,11 @@ import {
   SortableTableBody,
   SortableTableRow
 } from "@saleor/components/SortableTable";
+import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@saleor/components/TableHead";
 import { AttributeFragment, ProductAttributeType } from "@saleor/graphql";
-import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ReorderAction } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -46,7 +49,6 @@ interface ProductTypeAttributesProps extends ListActions {
   type: string;
   testId?: string;
   onAttributeAssign: (type: ProductAttributeType) => void;
-  onAttributeClick: (id: string) => void;
   onAttributeReorder: ReorderAction;
   onAttributeUnassign: (id: string) => void;
 }
@@ -66,7 +68,6 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
     type,
     testId,
     onAttributeAssign,
-    onAttributeClick,
     onAttributeReorder,
     onAttributeUnassign
   } = props;
@@ -78,6 +79,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
     <Card data-test-id="product-attributes">
       <CardTitle
         title={intl.formatMessage({
+          id: "9scTQ0",
           defaultMessage: "Product Attributes",
           description: "section header"
         })}
@@ -89,6 +91,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
             onClick={() => onAttributeAssign(ProductAttributeType[type])}
           >
             <FormattedMessage
+              id="uxPpRx"
               defaultMessage="Assign attribute"
               description="button"
             />
@@ -114,10 +117,11 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
             toolbar={toolbar}
           >
             <TableCell className={classes.colName}>
-              <FormattedMessage defaultMessage="Attribute name" />
+              <FormattedMessage id="kTr2o8" defaultMessage="Attribute name" />
             </TableCell>
             <TableCell className={classes.colName}>
               <FormattedMessage
+                id="nf3XSt"
                 defaultMessage="Slug"
                 description="attribute internal name"
               />
@@ -136,11 +140,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
                   selected={isSelected}
                   className={!!attribute ? classes.link : undefined}
                   hover={!!attribute}
-                  onClick={
-                    !!attribute
-                      ? () => onAttributeClick(attribute.id)
-                      : undefined
-                  }
+                  href={attribute ? attributeUrl(attribute.id) : undefined}
                   key={maybe(() => attribute.id)}
                   index={attributeIndex || 0}
                   data-test-id={"id" + maybe(() => attribute.id)}
@@ -168,16 +168,16 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
                     )}
                   </TableCell>
                   <TableCell className={classes.colAction}>
-                    <IconButton
-                      data-test-id="delete-icon"
-                      disabled={disabled}
-                      variant="secondary"
-                      onClick={stopPropagation(() =>
-                        onAttributeUnassign(attribute.id)
-                      )}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
+                    <TableButtonWrapper>
+                      <IconButton
+                        data-test-id="delete-icon"
+                        disabled={disabled}
+                        variant="secondary"
+                        onClick={() => onAttributeUnassign(attribute.id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableButtonWrapper>
                   </TableCell>
                 </SortableTableRow>
               );
@@ -185,7 +185,10 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage defaultMessage="No attributes found" />
+                  <FormattedMessage
+                    id="ztQgD8"
+                    defaultMessage="No attributes found"
+                  />
                 </TableCell>
               </TableRow>
             )

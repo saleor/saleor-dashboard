@@ -46,6 +46,7 @@ export const useAppActions = (
             if (isExternalDomain) {
               success = window.confirm(
                 intl.formatMessage({
+                  id: "MSItJD",
                   defaultMessage:
                     "You are about to leave the Dashboard. Do you want to continue?"
                 })

@@ -1,6 +1,6 @@
 import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
-import { configurationMenuUrl } from "@saleor/configuration";
+import { Button } from "@saleor/components/Button";
 import {
   useMenuBulkDeleteMutation,
   useMenuCreateMutation,
@@ -15,8 +15,7 @@ import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import { commonMessages } from "@saleor/intl";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { buttonMessages, commonMessages } from "@saleor/intl";
 import { getStringOrPlaceholder, maybe } from "@saleor/misc";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ListViews } from "@saleor/types";
@@ -85,8 +84,8 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         notify({
           status: "success",
           text: intl.formatMessage({
-            defaultMessage: "Created menu",
-            id: "menuListCreatedMenu"
+            id: "ugnggZ",
+            defaultMessage: "Created menu"
           })
         });
         navigate(menuUrl(data.menuCreate.menu.id));
@@ -100,8 +99,8 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         notify({
           status: "success",
           text: intl.formatMessage({
-            defaultMessage: "Deleted menu",
-            id: "menuListDeletedMenu"
+            id: "OwG/0z",
+            defaultMessage: "Deleted menu"
           })
         });
         closeModal();
@@ -132,14 +131,6 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         disabled={loading}
         menus={mapEdgesToItems(data?.menus)}
         settings={settings}
-        onAdd={() =>
-          navigate(
-            menuListUrl({
-              action: "add"
-            })
-          )
-        }
-        onBack={() => navigate(configurationMenuUrl)}
         onDelete={id =>
           navigate(
             menuListUrl({
@@ -151,7 +142,6 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
-        onRowClick={id => () => navigate(menuUrl(id))}
         onSort={handleSort}
         pageInfo={pageInfo}
         isChecked={isSelected}
@@ -160,9 +150,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         toggle={toggle}
         toggleAll={toggleAll}
         toolbar={
-          <IconButton
-            variant="secondary"
-            color="primary"
+          <Button
             onClick={() =>
               navigate(
                 menuListUrl({
@@ -173,8 +161,8 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
               )
             }
           >
-            <DeleteIcon />
-          </IconButton>
+            <FormattedMessage {...buttonMessages.remove} />
+          </Button>
         }
       />
       <MenuCreateDialog
@@ -202,15 +190,15 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         }
         variant="delete"
         title={intl.formatMessage({
+          id: "QzseV7",
           defaultMessage: "Delete Menu",
-          description: "dialog header",
-          id: "menuListDeleteMenuHeader"
+          description: "dialog header"
         })}
       >
         <DialogContentText>
           <FormattedMessage
+            id="bj1U23"
             defaultMessage="Are you sure you want to delete {menuName}?"
-            id="menuListDeleteMenuContent"
             values={{
               menuName: getStringOrPlaceholder(
                 mapEdgesToItems(data?.menus)?.find(getById(params.id))?.name
@@ -234,15 +222,15 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         }
         variant="delete"
         title={intl.formatMessage({
+          id: "1LBYpE",
           defaultMessage: "Delete Menus",
-          description: "dialog header",
-          id: "menuListDeleteMenusHeader"
+          description: "dialog header"
         })}
       >
         <DialogContentText>
           <FormattedMessage
+            id="svK+kv"
             defaultMessage="{counter,plural,one{Are you sure you want to delete this menu?} other{Are you sure you want to delete {displayQuantity} menus?}}"
-            id="menuListDeleteMenusContent"
             values={{
               counter: maybe(() => params.ids.length.toString(), "..."),
               displayQuantity: (
