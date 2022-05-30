@@ -2767,10 +2767,6 @@
     "context": "filtering option",
     "string": "All Warehouses"
   },
-  "JufWFT": {
-    "context": "app installation error",
-    "string": "There was a problem during installation"
-  },
   "Jwuu4X": {
     "context": "select product informations to be exported",
     "string": "Information exported:"
@@ -4598,6 +4594,10 @@
   "XkX56I": {
     "context": "filters error messages value required",
     "string": "Choose a value"
+  },
+  "Xl0o2y": {
+    "context": "app installation error",
+    "string": "Problem occured during installation"
   },
   "XlPKAR": {
     "context": "WarehouseSettings private stock description",
