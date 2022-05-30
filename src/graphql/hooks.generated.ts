@@ -2365,6 +2365,28 @@ export const ShopTaxesFragmentDoc = gql`
   displayGrossPrices
 }
     `;
+export const TaxConfigurationPerCountryFragmentDoc = gql`
+    fragment TaxConfigurationPerCountry on TaxConfigurationPerCountry {
+  countryCode
+  chargeTaxes
+  displayGrossPrices
+}
+    `;
+export const TaxConfigurationFragmentDoc = gql`
+    fragment TaxConfiguration on TaxConfiguration {
+  id
+  channel {
+    id
+    name
+  }
+  displayGrossPrices
+  pricesEnteredWithTax
+  chargeTaxes
+  countries {
+    ...TaxConfigurationPerCountry
+  }
+}
+    ${TaxConfigurationPerCountryFragmentDoc}`;
 export const TimePeriodFragmentDoc = gql`
     fragment TimePeriod on TimePeriod {
   amount

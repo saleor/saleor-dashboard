@@ -41,3 +41,27 @@ export const taxTypeFragment = gql`
     taxCode
   }
 `;
+
+export const taxConfigurationPerCountry = gql`
+  fragment TaxConfigurationPerCountry on TaxConfigurationPerCountry {
+    countryCode
+    chargeTaxes
+    displayGrossPrices
+  }
+`;
+
+export const taxConfiguration = gql`
+  fragment TaxConfiguration on TaxConfiguration {
+    id
+    channel {
+      id
+      name
+    }
+    displayGrossPrices
+    pricesEnteredWithTax
+    chargeTaxes
+    countries {
+      ...TaxConfigurationPerCountry
+    }
+  }
+`;
