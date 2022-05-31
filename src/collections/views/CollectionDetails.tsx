@@ -31,6 +31,7 @@ import useLocalPaginator, {
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { PaginatorContext } from "@saleor/hooks/usePaginator";
 import { commonMessages, errorMessages } from "@saleor/intl";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import { arrayDiff } from "@saleor/utils/arrays";
@@ -255,13 +256,13 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
     updateCollectionOpts.data?.collectionUpdate.errors
   );
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
+  const { pageInfo, ...paginationValues } = paginate(
     data?.collection?.products?.pageInfo,
     paginationState
   );
 
   return (
-    <>
+    <PaginatorContext.Provider value={{ ...pageInfo, ...paginationValues }}>
       <WindowTitle title={data?.collection?.name} />
       {!!allChannels?.length && (
         <ChannelsAvailabilityDialog
@@ -302,9 +303,6 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
           })
         }
         onSubmit={handleSubmit}
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
-        pageInfo={pageInfo}
         onProductUnassign={(productId, event) => {
           event.stopPropagation();
           unassignProduct({
@@ -448,7 +446,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
           />
         </DialogContentText>
       </ActionDialog>
-    </>
+    </PaginatorContext.Provider>
   );
 };
 export default CollectionDetails;

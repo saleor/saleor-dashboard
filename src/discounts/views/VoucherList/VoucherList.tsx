@@ -16,7 +16,8 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
-  createPaginationState
+  createPaginationState,
+  PaginatorContext
 } from "@saleor/hooks/usePaginator";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
@@ -55,7 +56,6 @@ interface VoucherListProps {
 export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const paginate = usePaginator();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
@@ -145,11 +145,11 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
 
   const canOpenBulkActionDialog = maybe(() => params.ids.length > 0);
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    data?.vouchers?.pageInfo,
+  const paginationValues = usePaginator({
+    pageInfo: data?.vouchers?.pageInfo,
     paginationState,
-    params
-  );
+    queryString: params
+  });
 
   const [
     voucherBulkDelete,
@@ -178,7 +178,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
   const handleSort = createSortHandler(navigate, voucherListUrl, params);
 
   return (
-    <>
+    <PaginatorContext.Provider value={paginationValues}>
       <WindowTitle title={intl.formatMessage(sectionNames.vouchers)} />
       <VoucherListPage
         currentTab={currentTab}
@@ -194,9 +194,6 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
         settings={settings}
         vouchers={mapEdgesToItems(data?.vouchers)}
         disabled={loading}
-        pageInfo={pageInfo}
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
         onSort={handleSort}
         isChecked={isSelected}
@@ -258,7 +255,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
         onSubmit={handleTabDelete}
         tabName={maybe(() => tabs[currentTab - 1].name, "...")}
       />
-    </>
+    </PaginatorContext.Provider>
   );
 };
 export default VoucherList;

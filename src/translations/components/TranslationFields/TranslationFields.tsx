@@ -5,7 +5,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import Skeleton from "@saleor/components/Skeleton";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { buttonMessages } from "@saleor/intl";
 import {
@@ -257,20 +257,8 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
             ))}
           </Grid>
           {pagination && (
-            <TablePagination
+            <TablePaginationWithContext
               colSpan={numberOfColumns}
-              hasNextPage={
-                pagination.pageInfo && !disabled
-                  ? pagination.pageInfo.hasNextPage
-                  : false
-              }
-              onNextPage={pagination.onNextPage}
-              hasPreviousPage={
-                pagination.pageInfo && !disabled
-                  ? pagination.pageInfo.hasPreviousPage
-                  : false
-              }
-              onPreviousPage={pagination.onPreviousPage}
               settings={pagination.settings}
               onUpdateListSettings={pagination.onUpdateListSettings}
               component="div"

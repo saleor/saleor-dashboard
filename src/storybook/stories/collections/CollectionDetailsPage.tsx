@@ -2,6 +2,7 @@ import placeholderCollectionImage from "@assets/images/block1.jpg";
 import placeholderProductImage from "@assets/images/placeholder60x60.png";
 import { createCollectionChannelsData } from "@saleor/channels/utils";
 import { CollectionErrorCode } from "@saleor/graphql";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -40,6 +41,7 @@ const props: Omit<CollectionDetailsPageProps, "classes"> = {
 
 storiesOf("Views / Collections / Collection detailsCollection details", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("default", () => <CollectionDetailsPage {...props} />)
   .add("loading", () => (
     <CollectionDetailsPage {...props} collection={undefined} disabled={true} />

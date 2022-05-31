@@ -1,4 +1,5 @@
 import { PageListUrlSortField } from "@saleor/pages/urls";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -33,6 +34,7 @@ const props: PageListPageProps = {
 
 storiesOf("Views / Pages / Page list", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("default", () => <PageListPage {...props} />)
   .add("loading", () => (
     <PageListPage {...props} disabled={true} pages={undefined} />

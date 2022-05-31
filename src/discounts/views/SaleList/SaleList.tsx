@@ -13,7 +13,8 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
-  createPaginationState
+  createPaginationState,
+  PaginatorContext
 } from "@saleor/hooks/usePaginator";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
@@ -52,7 +53,6 @@ interface SaleListProps {
 export const SaleList: React.FC<SaleListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const paginate = usePaginator();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
@@ -141,11 +141,11 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
 
   const canOpenBulkActionDialog = maybe(() => params.ids.length > 0);
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    maybe(() => data.sales.pageInfo),
+  const paginationValues = usePaginator({
+    pageInfo: maybe(() => data.sales.pageInfo),
     paginationState,
-    params
-  );
+    queryString: params
+  });
 
   const [saleBulkDelete, saleBulkDeleteOpts] = useSaleBulkDeleteMutation({
     onCompleted: data => {
@@ -171,7 +171,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
     });
 
   return (
-    <>
+    <PaginatorContext.Provider value={paginationValues}>
       <WindowTitle title={intl.formatMessage(sectionNames.sales)} />
       <SaleListPage
         currentTab={currentTab}
@@ -187,9 +187,6 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         sales={mapEdgesToItems(data?.sales)}
         settings={settings}
         disabled={loading}
-        pageInfo={pageInfo}
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
         onSort={handleSort}
         onUpdateListSettings={updateListSettings}
         isChecked={isSelected}
@@ -251,7 +248,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         onSubmit={handleTabDelete}
         tabName={maybe(() => tabs[currentTab - 1].name, "...")}
       />
-    </>
+    </PaginatorContext.Provider>
   );
 };
 export default SaleList;

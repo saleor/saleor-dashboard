@@ -1,4 +1,5 @@
 import { CustomerListUrlSortField } from "@saleor/customers/urls";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -55,6 +56,7 @@ const CustomerListPage = props => (
 
 storiesOf("Views / Customers / Customer list", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("default", () => <CustomerListPage {...props} />)
   .add("loading", () => (
     <CustomerListPage {...props} disabled={true} customers={undefined} />

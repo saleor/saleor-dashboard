@@ -1,5 +1,6 @@
 import { shippingZone } from "@saleor/shipping/fixtures";
 import Decorator from "@saleor/storybook//Decorator";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -15,14 +16,8 @@ const products = mapEdgesToItems(
 const props: ShippingMethodProductsProps = {
   disabled: false,
   isChecked: () => undefined,
-  onNextPage: () => undefined,
-  onPreviousPage: () => undefined,
   onProductAssign: () => undefined,
   onProductUnassign: () => undefined,
-  pageInfo: {
-    hasNextPage: false,
-    hasPreviousPage: false
-  },
   products,
   selected: products.length,
   toggle: () => undefined,
@@ -32,4 +27,5 @@ const props: ShippingMethodProductsProps = {
 
 storiesOf("Shipping / ShippingMethodProducts", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("default", () => <ShippingMethodProducts {...props} />);

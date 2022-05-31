@@ -1,4 +1,5 @@
 import { CollectionListUrlSortField } from "@saleor/collections/urls";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -35,6 +36,7 @@ const props: CollectionListPageProps = {
 
 storiesOf("Views / Collections / Collection list", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("default", () => <CollectionListPage {...props} />)
   .add("loading", () => (
     <CollectionListPage {...props} collections={undefined} disabled={true} />

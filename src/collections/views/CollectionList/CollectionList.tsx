@@ -15,7 +15,8 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
-  createPaginationState
+  createPaginationState,
+  PaginatorContext
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
@@ -55,7 +56,6 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const navigate = useNavigator();
   const intl = useIntl();
   const notify = useNotifier();
-  const paginate = usePaginator();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
@@ -159,16 +159,16 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     handleTabChange(tabs.length + 1);
   };
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    maybe(() => data.collections.pageInfo),
+  const paginationValues = usePaginator({
+    pageInfo: maybe(() => data.collections.pageInfo),
     paginationState,
-    params
-  );
+    queryString: params
+  });
 
   const handleSort = createSortHandler(navigate, collectionListUrl, params);
 
   return (
-    <>
+    <PaginatorContext.Provider value={paginationValues}>
       <CollectionListPage
         currentTab={currentTab}
         initialSearch={params.query || ""}
@@ -181,11 +181,8 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         disabled={loading}
         collections={mapEdgesToItems(data?.collections)}
         settings={settings}
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
         onSort={handleSort}
         onUpdateListSettings={updateListSettings}
-        pageInfo={pageInfo}
         sort={getSortParams(params)}
         toolbar={
           <IconButton
@@ -251,7 +248,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         onSubmit={handleTabDelete}
         tabName={maybe(() => tabs[currentTab - 1].name, "...")}
       />
-    </>
+    </PaginatorContext.Provider>
   );
 };
 export default CollectionList;

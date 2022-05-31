@@ -4,6 +4,7 @@ import { products as productListFixture } from "@saleor/products/fixtures";
 import { ProductListUrlSortField } from "@saleor/products/urls";
 import { productListFilterOpts } from "@saleor/products/views/ProductList/fixtures";
 import { attributes } from "@saleor/productTypes/fixtures";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { ListViews } from "@saleor/types";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -57,6 +58,7 @@ const props: ProductListPageProps = {
 
 storiesOf("Views / Products / Product list", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("default", () => <ProductListPage {...props} />)
   .add("loading", () => (
     <ProductListPage

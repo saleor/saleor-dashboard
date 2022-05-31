@@ -1,5 +1,5 @@
 import { useCategoryTranslationsQuery } from "@saleor/graphql";
-import usePaginator from "@saleor/hooks/usePaginator";
+import usePaginator, { PaginatorContext } from "@saleor/hooks/usePaginator";
 import TranslationsEntitiesList from "@saleor/translations/components/TranslationsEntitiesList";
 import {
   languageEntityUrl,
@@ -15,49 +15,46 @@ const TranslationsCategoryList: React.FC<TranslationsEntityListProps> = ({
   params,
   variables
 }) => {
-  const paginate = usePaginator();
-
   const { data, loading } = useCategoryTranslationsQuery({
     displayLoader: true,
     variables
   });
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    data?.translations?.pageInfo,
-    variables,
-    params
-  );
+  const paginationValues = usePaginator({
+    pageInfo: data?.translations?.pageInfo,
+    paginationState: variables,
+    queryString: params
+  });
 
   return (
-    <TranslationsEntitiesList
-      disabled={loading}
-      entities={mapEdgesToItems(data?.translations)?.map(
-        node =>
-          node.__typename === "CategoryTranslatableContent" && {
-            completion: {
-              current: sumCompleted([
-                node.translation?.description,
-                node.translation?.name,
-                node.translation?.seoDescription,
-                node.translation?.seoTitle
-              ]),
-              max: 4
-            },
-            id: node?.category?.id,
-            name: node?.category?.name
-          }
-      )}
-      getRowHref={id =>
-        languageEntityUrl(
-          variables.language,
-          TranslatableEntities.categories,
-          id
-        )
-      }
-      onNextPage={loadNextPage}
-      onPreviousPage={loadPreviousPage}
-      pageInfo={pageInfo}
-    />
+    <PaginatorContext.Provider value={paginationValues}>
+      <TranslationsEntitiesList
+        disabled={loading}
+        entities={mapEdgesToItems(data?.translations)?.map(
+          node =>
+            node.__typename === "CategoryTranslatableContent" && {
+              completion: {
+                current: sumCompleted([
+                  node.translation?.description,
+                  node.translation?.name,
+                  node.translation?.seoDescription,
+                  node.translation?.seoTitle
+                ]),
+                max: 4
+              },
+              id: node?.category?.id,
+              name: node?.category?.name
+            }
+        )}
+        getRowHref={id =>
+          languageEntityUrl(
+            variables.language,
+            TranslatableEntities.categories,
+            id
+          )
+        }
+      />
+    </PaginatorContext.Provider>
   );
 };
 

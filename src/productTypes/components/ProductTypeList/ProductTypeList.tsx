@@ -10,7 +10,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { ProductTypeFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -61,9 +61,6 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
   const {
     disabled,
     productTypes,
-    pageInfo,
-    onNextPage,
-    onPreviousPage,
     onSort,
     isChecked,
     selected,
@@ -127,15 +124,7 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
       </TableHead>
       <TableFooter>
         <TableRow>
-          <TablePagination
-            colSpan={numberOfColumns}
-            hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-            onNextPage={onNextPage}
-            hasPreviousPage={
-              pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-            }
-            onPreviousPage={onPreviousPage}
-          />
+          <TablePaginationWithContext colSpan={numberOfColumns} />
         </TableRow>
       </TableFooter>
       <TableBody>

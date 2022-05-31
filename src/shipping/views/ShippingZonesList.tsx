@@ -13,7 +13,8 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
-  createPaginationState
+  createPaginationState,
+  PaginatorContext
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
@@ -46,7 +47,6 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const paginate = usePaginator();
   const shop = useShop();
   const { user } = useUser();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
@@ -126,14 +126,14 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
     }
   });
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    maybe(() => data.shippingZones.pageInfo),
+  const paginationValues = usePaginator({
+    pageInfo: maybe(() => data.shippingZones.pageInfo),
     paginationState,
-    params
-  );
+    queryString: params
+  });
 
   return (
-    <>
+    <PaginatorContext.Provider value={paginationValues}>
       <ShippingZonesListPage
         defaultWeightUnit={shop?.defaultWeightUnit}
         settings={settings}
@@ -143,10 +143,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
           updateDefaultWeightUnitOpts.loading
         }
         shippingZones={mapEdgesToItems(data?.shippingZones)}
-        pageInfo={pageInfo}
         onUpdateListSettings={updateListSettings}
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
         onRemove={id =>
           openModal("remove", {
             id
@@ -246,7 +243,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
           />
         </DialogContentText>
       </ActionDialog>
-    </>
+    </PaginatorContext.Provider>
   );
 };
 ShippingZonesList.displayName = "ShippingZonesList";

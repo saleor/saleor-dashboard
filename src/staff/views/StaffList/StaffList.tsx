@@ -11,7 +11,8 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
-  createPaginationState
+  createPaginationState,
+  PaginatorContext
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
@@ -55,7 +56,6 @@ interface StaffListProps {
 export const StaffList: React.FC<StaffListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const paginate = usePaginator();
   const { updateListSettings, settings } = useListSettings(
     ListViews.STAFF_MEMBERS_LIST
   );
@@ -94,11 +94,11 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
     }
   });
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    staffQueryData?.staffUsers.pageInfo,
+  const paginationValues = usePaginator({
+    pageInfo: staffQueryData?.staffUsers.pageInfo,
     paginationState,
-    params
-  );
+    queryString: params
+  });
 
   const handleSort = createSortHandler(navigate, staffListUrl, params);
 
@@ -167,7 +167,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
     });
 
   return (
-    <>
+    <PaginatorContext.Provider value={paginationValues}>
       <StaffListPage
         currentTab={currentTab}
         filterOpts={getFilterOpts(params)}
@@ -182,12 +182,9 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
         disabled={loading || addStaffMemberData.loading || limitOpts.loading}
         limits={limitOpts.data?.shop.limits}
         settings={settings}
-        pageInfo={pageInfo}
         sort={getSortParams(params)}
         staffMembers={mapEdgesToItems(staffQueryData?.staffUsers)}
         onAdd={() => openModal("add")}
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
         onSort={handleSort}
       />
@@ -222,7 +219,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
         onSubmit={handleTabDelete}
         tabName={getStringOrPlaceholder(tabs[currentTab - 1]?.name)}
       />
-    </>
+    </PaginatorContext.Provider>
   );
 };
 

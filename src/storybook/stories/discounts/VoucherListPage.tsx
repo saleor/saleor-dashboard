@@ -1,5 +1,6 @@
 import { VoucherListUrlSortField } from "@saleor/discounts/urls";
 import { DiscountStatusEnum, VoucherDiscountType } from "@saleor/graphql";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -68,6 +69,7 @@ const props: VoucherListPageProps = {
 
 storiesOf("Views / Discounts / Voucher list", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("default", () => <VoucherListPage {...props} />)
   .add("loading", () => <VoucherListPage {...props} vouchers={undefined} />)
   .add("no data", () => <VoucherListPage {...props} vouchers={[]} />)

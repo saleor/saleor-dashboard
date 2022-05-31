@@ -12,7 +12,8 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
-  createPaginationState
+  createPaginationState,
+  PaginatorContext
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
@@ -53,7 +54,6 @@ interface ProductTypeListProps {
 export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const paginate = usePaginator();
   const {
     isSelected,
     listElements: selectedProductTypes,
@@ -123,11 +123,11 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
     handleTabChange(tabs.length + 1);
   };
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    maybe(() => data.productTypes.pageInfo),
+  const paginationValues = usePaginator({
+    pageInfo: maybe(() => data.productTypes.pageInfo),
     paginationState,
-    params
-  );
+    queryString: params
+  });
 
   const handleSort = createSortHandler(navigate, productTypeListUrl, params);
 
@@ -169,7 +169,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
     });
 
   return (
-    <>
+    <PaginatorContext.Provider value={paginationValues}>
       <ProductTypeListPage
         currentTab={currentTab}
         filterOpts={getFilterOpts(params)}
@@ -183,9 +183,6 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
         tabs={tabs.map(tab => tab.name)}
         disabled={loading}
         productTypes={productTypesData}
-        pageInfo={pageInfo}
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
         onSort={handleSort}
         isChecked={isSelected}
         selected={selectedProductTypes.length}
@@ -229,7 +226,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
         onSubmit={handleTabDelete}
         tabName={maybe(() => tabs[currentTab - 1].name, "...")}
       />
-    </>
+    </PaginatorContext.Provider>
   );
 };
 ProductTypeList.displayName = "ProductTypeList";

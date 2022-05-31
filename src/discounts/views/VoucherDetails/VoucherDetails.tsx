@@ -40,6 +40,7 @@ import useLocalPaginator, {
 } from "@saleor/hooks/useLocalPaginator";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { PaginatorContext } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
@@ -263,13 +264,13 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
       }
     });
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
+  const { pageInfo, ...paginationValues } = paginate(
     tabPageInfo,
     paginationState
   );
 
   return (
-    <>
+    <PaginatorContext.Provider value={{ ...pageInfo, ...paginationValues }}>
       <WindowTitle title={intl.formatMessage(sectionNames.vouchers)} />
       {!!allChannels?.length && (
         <ChannelsAvailabilityDialog
@@ -303,9 +304,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
           ...(updateChannelsOpts.data?.voucherChannelListingUpdate.errors || [])
         ]}
         selectedChannelId={channel?.id}
-        pageInfo={pageInfo}
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
         onCategoryAssign={() => openModal("assign-category")}
         onCollectionAssign={() => openModal("assign-collection")}
         onCollectionUnassign={collectionId =>
@@ -605,7 +603,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
           />
         </DialogContentText>
       </ActionDialog>
-    </>
+    </PaginatorContext.Provider>
   );
 };
 export default VoucherDetails;
