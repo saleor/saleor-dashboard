@@ -9,6 +9,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
+import { TaxCountryConfigurationFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import {
   List,
@@ -28,8 +29,7 @@ import TaxInput from "../../components/TaxInput";
 import TaxCountriesMenu from "./TaxCountriesMenu";
 
 interface TaxCountriesPageProps {
-  data: any;
-  taxClasses: any;
+  countryTaxesData: TaxCountryConfigurationFragment[];
   selectedCountryId: string;
   handleTabChange: (tab: string) => void;
 }
@@ -44,20 +44,20 @@ const useStyles = makeStyles(
 );
 
 export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
-  const { data, taxClasses, selectedCountryId, handleTabChange } = props;
+  const { countryTaxesData, selectedCountryId, handleTabChange } = props;
 
   const intl = useIntl();
   const classes = useStyles();
 
   const [query, setQuery] = React.useState("");
 
-  const [vals, setVals] = React.useState<string[]>(
-    taxClasses.map(item => item?.rate?.toString() ?? "")
+  const currentCountry = countryTaxesData.find(
+    country => country.countryCode === selectedCountryId
   );
 
   // @TODO: handle special characters in query, add case-insensitiveness
-  const filteredTaxClasses = taxClasses.filter(taxClass =>
-    taxClass.name.includes(query)
+  const filteredRates = currentCountry.taxClassCountryRates.filter(rate =>
+    rate.taxClass.name.includes(query)
   );
 
   return (
@@ -71,7 +71,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
       <VerticalSpacer spacing={2} />
       <Grid variant="inverted">
         <TaxCountriesMenu
-          countries={data}
+          countries={countryTaxesData}
           selectedCountryId={selectedCountryId}
           onCountryDelete={() => null}
         />
@@ -107,13 +107,13 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
                 </ListItemCell>
               </ListItem>
             </ListHeader>
-            {filteredTaxClasses.map((taxClass, classIndex) => (
-              <ListItem key={taxClass.id} hover={false}>
-                <ListItemCell>{taxClass.name}</ListItemCell>
+            {filteredRates.map(rate => (
+              <ListItem key={rate.taxClass.id} hover={false}>
+                <ListItemCell>{rate.taxClass.name}</ListItemCell>
                 <ListItemCell>
                   <TaxInput
-                    placeholder={taxClasses[0].rate}
-                    value={vals[classIndex]}
+                    placeholder={filteredRates[0].rate}
+                    value={rate.rate.toString()}
                     change={() => null} // TODO: add change function from form
                   />
                 </ListItemCell>

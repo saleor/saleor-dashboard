@@ -1,6 +1,7 @@
 import useNavigator from "@saleor/hooks/useNavigator";
 import React from "react";
 
+import { taxCountryConfigurations } from "../fixtures";
 import TaxCountriesPage from "../pages/TaxCountriesPage";
 import { countriesListUrl, taxTabSectionUrl } from "../urls";
 
@@ -20,12 +21,6 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id }) => {
     { id: "9182739", name: "Andora" }
   ];
 
-  const exampleTaxClasses = [
-    { id: "129837", name: "Default tax class", rate: 22 },
-    { id: "129308", name: "Perfume", rate: 5 },
-    { id: "098239", name: "Shipping" }
-  ];
-
   React.useEffect(() => {
     if (id === "undefined" && exampleData) {
       navigate(countriesListUrl(exampleData?.[0].id));
@@ -34,8 +29,7 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id }) => {
 
   return (
     <TaxCountriesPage
-      data={exampleData}
-      taxClasses={exampleTaxClasses}
+      countryTaxesData={taxCountryConfigurations}
       selectedCountryId={id}
       handleTabChange={handleTabChange}
     />
