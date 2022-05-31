@@ -20,5 +20,15 @@ export const messages = defineMessages({
     id: "5t/4um",
     defaultMessage: "Couldn’t Install {name}",
     description: "message title"
+  },
+  appActivated: {
+    id: "D/+84n",
+    defaultMessage: "App activated",
+    description: "snackbar text"
+  },
+  appDeactivated: {
+    id: "USO8PB",
+    defaultMessage: "App deactivated",
+    description: "snackbar text"
   }
 });

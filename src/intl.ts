@@ -19,8 +19,8 @@ export const commonMessages = defineMessages({
     defaultMessage: "Channel"
   },
   customApps: {
-    id: "w4R/SO",
-    defaultMessage: "Local Apps"
+    id: "+iV0gu",
+    defaultMessage: "Internal Apps"
   },
   dashboard: {
     id: "hzSNj4",

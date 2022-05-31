@@ -54,7 +54,7 @@ export interface AppListViewSettings {
 
 export const defaultListSettings: AppListViewSettings = {
   [ListViews.APPS_LIST]: {
-    rowNumber: 10
+    rowNumber: 100
   },
   [ListViews.ATTRIBUTE_VALUE_LIST]: {
     rowNumber: 10

@@ -75,13 +75,12 @@ export const useStyles = makeStyles(
       padding: "0!important"
     },
     error: {
-      "& svg": {
-        bottom: theme.spacing(0.2),
-        marginLeft: theme.spacing(0.6),
-        position: "relative"
+      "& button": {
+        marginLeft: theme.spacing(0.6)
       },
       color: theme.palette.error.main,
-      margin: theme.spacing(0, 1, 0.7, 0)
+      marginRight: theme.spacing(1),
+      alignItems: "flex-end"
     },
     headerLinkContainer: {
       "& svg": {

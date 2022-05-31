@@ -1,13 +1,16 @@
 import { useApolloClient } from "@apollo/client";
+import AppActivateDialog from "@saleor/apps/components/AppActivateDialog";
+import AppDeactivateDialog from "@saleor/apps/components/AppDeactivateDialog";
+import { AppListContext, AppListContextValues } from "@saleor/apps/context";
 import {
-  AppDeleteFailedInstallationMutation,
-  AppDeleteMutation,
   AppsInstallationsQuery,
   AppsListQuery,
   AppSortField,
   AppTypeEnum,
   JobStatusEnum,
   OrderDirection,
+  useAppActivateMutation,
+  useAppDeactivateMutation,
   useAppDeleteFailedInstallationMutation,
   useAppDeleteMutation,
   useAppRetryInstallMutation,
@@ -23,7 +26,6 @@ import usePaginator, {
   PaginatorContext
 } from "@saleor/hooks/usePaginator";
 import { ListViews } from "@saleor/types";
-import getAppErrorMessage from "@saleor/utils/errors/app";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React, { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
@@ -131,17 +133,36 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   };
   const [retryInstallApp] = useAppRetryInstallMutation({
     onCompleted: data => {
-      const errors = data.appRetryInstall.errors;
-      if (!errors.length) {
+      if (!data?.appRetryInstall?.errors?.length) {
         const appInstallation = data.appRetryInstall.appInstallation;
         setActiveInstallations(installations => [
           ...installations,
           { id: appInstallation.id, name: appInstallation.appName }
         ]);
-      } else {
-        errors.forEach(error =>
-          notify({ status: "error", text: getAppErrorMessage(error, intl) })
-        );
+      }
+    }
+  });
+  const [activateApp, activateAppResult] = useAppActivateMutation({
+    onCompleted: data => {
+      if (!data?.appActivate?.errors?.length) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(messages.appActivated)
+        });
+        refetch();
+        closeModal();
+      }
+    }
+  });
+  const [deactivateApp, deactivateAppResult] = useAppDeactivateMutation({
+    onCompleted: data => {
+      if (!data?.appDeactivate?.errors?.length) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(messages.appDeactivated)
+        });
+        refetch();
+        closeModal();
       }
     }
   });
@@ -150,30 +171,18 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     AppListUrlQueryParams
   >(navigate, appsListUrl, params);
 
-  const onAppRemove = (data: AppDeleteMutation) => {
-    const errors = data.appDelete.errors;
-    if (errors.length === 0) {
-      if (data.appDelete.app.type === AppTypeEnum.LOCAL) {
-        customAppsRefetch();
-      } else {
-        refetch();
-      }
-      closeModal();
-      refetchExtensionList();
-      removeAppNotify();
-    } else {
-      errors.forEach(error =>
-        notify({
-          status: "error",
-          text: getAppErrorMessage(error, intl)
-        })
-      );
-    }
-  };
-
   const [deleteApp, deleteAppOpts] = useAppDeleteMutation({
     onCompleted: data => {
-      onAppRemove(data);
+      if (!data?.appDelete?.errors?.length) {
+        if (data.appDelete.app.type === AppTypeEnum.LOCAL) {
+          customAppsRefetch();
+        } else {
+          refetch();
+        }
+        closeModal();
+        refetchExtensionList();
+        removeAppNotify();
+      }
     }
   });
   const [
@@ -181,7 +190,11 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     deleteInProgressAppOpts
   ] = useAppDeleteFailedInstallationMutation({
     onCompleted: data => {
-      onAppInProgressRemove(data);
+      if (!data?.appDeleteFailedInstallation?.errors?.length) {
+        removeAppNotify();
+        appsInProgressRefetch();
+        closeModal();
+      }
     }
   });
 
@@ -256,77 +269,92 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     });
   };
 
-  const onAppInProgressRemove = (data: AppDeleteFailedInstallationMutation) => {
-    const errors = data.appDeleteFailedInstallation.errors;
-    if (errors.length === 0) {
-      removeAppNotify();
-      appsInProgressRefetch();
-      closeModal();
-    } else {
-      errors.forEach(error =>
-        notify({
-          status: "error",
-          text: getAppErrorMessage(error, intl)
-        })
-      );
-    }
-  };
+  const handleActivateAppConfirm = () =>
+    activateApp({ variables: { id: params.id } });
+
+  const handleDeactivateAppConfirm = () =>
+    deactivateApp({ variables: { id: params.id } });
+
   const onAppInstallRetry = (id: string) =>
     retryInstallApp({ variables: { id } });
 
   const installedApps = data?.apps?.edges;
   const customApps = customAppsData?.apps?.edges;
 
+  const context: AppListContextValues = React.useMemo(
+    () => ({
+      activateApp: id => openModal("app-activate", { id }),
+      deactivateApp: id => openModal("app-deactivate", { id })
+    }),
+    [activateApp, deactivateApp]
+  );
+
   return (
-    <PaginatorContext.Provider value={paginationValues}>
-      <AppDeleteDialog
-        confirmButtonState={deleteAppOpts.status}
-        name={getCurrentAppName(
-          params.id,
-          action === "remove-app" ? installedApps : customApps
-        )}
-        onClose={closeModal}
-        onConfirm={handleRemoveConfirm}
-        type={action === "remove-app" ? "EXTERNAL" : "CUSTOM"}
-        open={action === "remove-app" || action === "remove-custom-app"}
-      />
-      <AppInProgressDeleteDialog
-        confirmButtonState={deleteInProgressAppOpts.status}
-        name={getAppInProgressName(
-          params.id,
-          appsInProgressData?.appsInstallations
-        )}
-        onClose={closeModal}
-        onConfirm={handleRemoveInProgressConfirm}
-        open={action === "remove"}
-      />
-      <AppsListPage
-        installedAppsList={installedApps}
-        customAppsList={customApps}
-        appsInProgressList={appsInProgressData}
-        loadingAppsInProgress={loadingAppsInProgress}
-        disabled={loading || customAppsLoading}
-        settings={settings}
-        onUpdateListSettings={updateListSettings}
-        onAppInstallRetry={onAppInstallRetry}
-        getCustomAppHref={id => customAppUrl(id)}
-        onInstalledAppRemove={id =>
-          openModal("remove-app", {
-            id
-          })
-        }
-        onCustomAppRemove={id =>
-          openModal("remove-custom-app", {
-            id
-          })
-        }
-        onAppInProgressRemove={id =>
-          openModal("remove", {
-            id
-          })
-        }
-      />
-    </PaginatorContext.Provider>
+    <AppListContext.Provider value={context}>
+      <PaginatorContext.Provider value={paginationValues}>
+        <AppDeleteDialog
+          confirmButtonState={deleteAppOpts.status}
+          name={getCurrentAppName(
+            params.id,
+            action === "remove-app" ? installedApps : customApps
+          )}
+          onClose={closeModal}
+          onConfirm={handleRemoveConfirm}
+          type={action === "remove-app" ? "EXTERNAL" : "CUSTOM"}
+          open={action === "remove-app" || action === "remove-custom-app"}
+        />
+        <AppActivateDialog
+          confirmButtonState={activateAppResult.status}
+          name={getCurrentAppName(params.id, installedApps)}
+          onClose={closeModal}
+          onConfirm={handleActivateAppConfirm}
+          open={params.action === "app-activate"}
+        />
+        <AppDeactivateDialog
+          confirmButtonState={deactivateAppResult.status}
+          name={getCurrentAppName(params.id, installedApps)}
+          onClose={closeModal}
+          onConfirm={handleDeactivateAppConfirm}
+          open={params.action === "app-deactivate"}
+        />
+        <AppInProgressDeleteDialog
+          confirmButtonState={deleteInProgressAppOpts.status}
+          name={getAppInProgressName(
+            params.id,
+            appsInProgressData?.appsInstallations
+          )}
+          onClose={closeModal}
+          onConfirm={handleRemoveInProgressConfirm}
+          open={action === "remove"}
+        />
+        <AppsListPage
+          installedAppsList={installedApps}
+          customAppsList={customApps}
+          appsInProgressList={appsInProgressData}
+          loadingAppsInProgress={loadingAppsInProgress}
+          disabled={loading || customAppsLoading}
+          settings={settings}
+          onUpdateListSettings={updateListSettings}
+          onAppInstallRetry={onAppInstallRetry}
+          getCustomAppHref={id => customAppUrl(id)}
+          onInstalledAppRemove={id =>
+            openModal("remove-app", {
+              id
+            })
+          }
+          onCustomAppRemove={id =>
+            openModal("remove-custom-app", {
+              id
+            })
+          }
+          onAppInProgressRemove={id =>
+            openModal("remove", {
+              id
+            })
+          }
+        />
+      </PaginatorContext.Provider>
+    </AppListContext.Provider>
   );
 };
 
