@@ -106,7 +106,6 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   onSubmit,
   onTabClick,
   openChannelsModal,
-  pageInfo,
   sale,
   saveButtonBarState,
   onCategoryAssign,
@@ -114,8 +113,6 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   onChannelsChange,
   onCollectionAssign,
   onCollectionUnassign,
-  onNextPage,
-  onPreviousPage,
   onProductAssign,
   onProductUnassign,
   onVariantAssign,
@@ -277,9 +274,6 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                     disabled={disabled}
                     onCategoryAssign={onCategoryAssign}
                     onCategoryUnassign={onCategoryUnassign}
-                    onNextPage={onNextPage}
-                    onPreviousPage={onPreviousPage}
-                    pageInfo={pageInfo}
                     discount={sale}
                     isChecked={isChecked}
                     selected={selected}
@@ -292,9 +286,6 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                     disabled={disabled}
                     onCollectionAssign={onCollectionAssign}
                     onCollectionUnassign={onCollectionUnassign}
-                    onNextPage={onNextPage}
-                    onPreviousPage={onPreviousPage}
-                    pageInfo={pageInfo}
                     discount={sale}
                     isChecked={isChecked}
                     selected={selected}
@@ -305,11 +296,8 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                 ) : activeTab === SaleDetailsPageTab.products ? (
                   <DiscountProducts
                     disabled={disabled}
-                    onNextPage={onNextPage}
-                    onPreviousPage={onPreviousPage}
                     onProductAssign={onProductAssign}
                     onProductUnassign={onProductUnassign}
-                    pageInfo={pageInfo}
                     products={mapEdgesToItems(sale?.products)}
                     isChecked={isChecked}
                     selected={selected}
@@ -320,11 +308,8 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                 ) : (
                   <DiscountVariants
                     disabled={disabled}
-                    onNextPage={onNextPage}
-                    onPreviousPage={onPreviousPage}
                     onVariantAssign={onVariantAssign}
                     onVariantUnassign={onVariantUnassign}
-                    pageInfo={pageInfo}
                     variants={mapEdgesToItems(sale?.variants)}
                     isChecked={isChecked}
                     selected={selected}

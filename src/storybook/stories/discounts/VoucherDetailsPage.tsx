@@ -1,6 +1,7 @@
 import { channelsList } from "@saleor/channels/fixtures";
 import { createChannelsDataWithDiscountPrice } from "@saleor/channels/utils";
 import { DiscountErrorCode } from "@saleor/graphql";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -48,6 +49,7 @@ const props: VoucherDetailsPageProps = {
 
 storiesOf("Views / Discounts / Voucher details", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("default", () => <VoucherDetailsPage {...props} />)
   .add("loading", () => (
     <VoucherDetailsPage {...props} disabled={true} voucher={undefined} />

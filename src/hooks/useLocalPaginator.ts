@@ -117,6 +117,7 @@ function useLocalPaginator(
     return {
       loadNextPage,
       loadPreviousPage,
+      paginatorType: "click" as const,
       pageInfo: newPageInfo
     };
   }

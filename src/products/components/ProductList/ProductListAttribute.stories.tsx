@@ -1,5 +1,6 @@
 import { ProductListAttributeFragment } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -85,6 +86,7 @@ const attributes: ProductListAttributeFragment[] = [
 
 storiesOf("Views / Products / Product list / Attribute display", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("default", () => (
     <ProductListAttribute
       attribute="attribute:3"

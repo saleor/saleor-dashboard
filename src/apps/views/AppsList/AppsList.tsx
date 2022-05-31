@@ -19,7 +19,8 @@ import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
-  createPaginationState
+  createPaginationState,
+  PaginatorContext
 } from "@saleor/hooks/usePaginator";
 import { ListViews } from "@saleor/types";
 import getAppErrorMessage from "@saleor/utils/errors/app";
@@ -62,7 +63,6 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const { updateListSettings, settings } = useListSettings(ListViews.APPS_LIST);
-  const paginate = usePaginator();
   const paginationState = createPaginationState(settings?.rowNumber, params);
   const queryVariables = {
     sort: {
@@ -95,11 +95,11 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     }
   });
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    data?.apps?.pageInfo,
+  const paginationValues = usePaginator({
+    pageInfo: data?.apps?.pageInfo,
     paginationState,
-    params
-  );
+    queryString: params
+  });
 
   const {
     data: customAppsData,
@@ -278,7 +278,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const customApps = customAppsData?.apps?.edges;
 
   return (
-    <>
+    <PaginatorContext.Provider value={paginationValues}>
       <AppDeleteDialog
         confirmButtonState={deleteAppOpts.status}
         name={getCurrentAppName(
@@ -307,9 +307,6 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
         loadingAppsInProgress={loadingAppsInProgress}
         disabled={loading || customAppsLoading}
         settings={settings}
-        pageInfo={pageInfo}
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
         onAppInstallRetry={onAppInstallRetry}
         getCustomAppHref={id => customAppUrl(id)}
@@ -329,7 +326,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
           })
         }
       />
-    </>
+    </PaginatorContext.Provider>
   );
 };
 

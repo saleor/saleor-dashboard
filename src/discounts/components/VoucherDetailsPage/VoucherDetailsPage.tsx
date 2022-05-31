@@ -109,7 +109,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   channelListings = [],
   disabled,
   errors,
-  pageInfo,
   saveButtonBarState,
   voucher,
   onCategoryAssign,
@@ -119,8 +118,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   onCountryUnassign,
   onCollectionAssign,
   onCollectionUnassign,
-  onNextPage,
-  onPreviousPage,
   onProductAssign,
   onProductUnassign,
   onTabClick,
@@ -309,9 +306,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                         disabled={disabled}
                         onCategoryAssign={onCategoryAssign}
                         onCategoryUnassign={onCategoryUnassign}
-                        onNextPage={onNextPage}
-                        onPreviousPage={onPreviousPage}
-                        pageInfo={pageInfo}
                         discount={voucher}
                         isChecked={isChecked}
                         selected={selected}
@@ -324,9 +318,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                         disabled={disabled}
                         onCollectionAssign={onCollectionAssign}
                         onCollectionUnassign={onCollectionUnassign}
-                        onNextPage={onNextPage}
-                        onPreviousPage={onPreviousPage}
-                        pageInfo={pageInfo}
                         discount={voucher}
                         isChecked={isChecked}
                         selected={selected}
@@ -337,11 +328,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                     ) : (
                       <DiscountProducts
                         disabled={disabled}
-                        onNextPage={onNextPage}
-                        onPreviousPage={onPreviousPage}
                         onProductAssign={onProductAssign}
                         onProductUnassign={onProductUnassign}
-                        pageInfo={pageInfo}
                         products={mapEdgesToItems(voucher?.products)}
                         isChecked={isChecked}
                         selected={selected}

@@ -11,7 +11,7 @@ import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import { IconButton } from "@saleor/components/IconButton";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { AppsListQuery } from "@saleor/graphql";
 import { DeleteIcon, ResponsiveTable } from "@saleor/macaw-ui";
@@ -36,10 +36,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
   onRemove,
   settings,
   disabled,
-  onNextPage,
-  onPreviousPage,
   onUpdateListSettings,
-  pageInfo,
   ...props
 }) => {
   const intl = useIntl();
@@ -57,16 +54,10 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
       <ResponsiveTable>
         <TableFooter>
           <TableRow>
-            <TablePagination
+            <TablePaginationWithContext
               colSpan={numberOfColumns}
               settings={settings}
-              hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-              onNextPage={onNextPage}
               onUpdateListSettings={onUpdateListSettings}
-              hasPreviousPage={
-                pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-              }
-              onPreviousPage={onPreviousPage}
             />
           </TableRow>
         </TableFooter>

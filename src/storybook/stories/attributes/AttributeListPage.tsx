@@ -11,6 +11,7 @@ import {
   sortPageProps,
   tabPageProps
 } from "@saleor/fixtures";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -50,6 +51,7 @@ const props: AttributeListPageProps = {
 
 storiesOf("Views / Attributes / Attribute list", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("default", () => <AttributeListPage {...props} />)
   .add("loading", () => (
     <AttributeListPage {...props} attributes={undefined} disabled={true} />

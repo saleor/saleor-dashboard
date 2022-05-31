@@ -6,7 +6,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { OrderDraftListQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -63,9 +63,6 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
     disabled,
     settings,
     orders,
-    pageInfo,
-    onPreviousPage,
-    onNextPage,
     onUpdateListSettings,
     onSort,
     isChecked,
@@ -148,16 +145,10 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
       </TableHead>
       <TableFooter>
         <TableRow>
-          <TablePagination
+          <TablePaginationWithContext
             colSpan={numberOfColumns}
             settings={settings}
-            hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-            onNextPage={onNextPage}
             onUpdateListSettings={onUpdateListSettings}
-            hasPreviousPage={
-              pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-            }
-            onPreviousPage={onPreviousPage}
           />
         </TableRow>
       </TableFooter>

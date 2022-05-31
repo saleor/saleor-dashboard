@@ -9,7 +9,7 @@ import {
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { StaffListQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -82,11 +82,8 @@ const StaffList: React.FC<StaffListProps> = props => {
   const {
     settings,
     disabled,
-    onNextPage,
-    onPreviousPage,
     onUpdateListSettings,
     onSort,
-    pageInfo,
     sort,
     staffMembers
   } = props;
@@ -132,18 +129,11 @@ const StaffList: React.FC<StaffListProps> = props => {
       </TableHead>
       <TableFooter>
         <TableRow>
-          <TablePagination
+          <TablePaginationWithContext
             colSpan={numberOfColumns}
+            disabled={disabled}
             settings={settings}
-            hasNextPage={
-              pageInfo && !disabled ? pageInfo.hasNextPage : undefined
-            }
-            onNextPage={onNextPage}
             onUpdateListSettings={onUpdateListSettings}
-            hasPreviousPage={
-              pageInfo && !disabled ? pageInfo.hasPreviousPage : undefined
-            }
-            onPreviousPage={onPreviousPage}
           />
         </TableRow>
       </TableFooter>

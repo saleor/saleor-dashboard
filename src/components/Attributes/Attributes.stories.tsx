@@ -1,5 +1,6 @@
 import Attributes, { AttributesProps } from "@saleor/components/Attributes";
 import { fetchMoreProps } from "@saleor/fixtures";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -31,6 +32,7 @@ const props: AttributesProps = {
 
 storiesOf("Attributes / Attributes", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("default", () => <Attributes {...props} />)
   .add("selected", () => (
     <Attributes {...props} attributes={ATTRIBUTES_SELECTED} />

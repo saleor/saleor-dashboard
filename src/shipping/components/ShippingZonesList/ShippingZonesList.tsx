@@ -12,7 +12,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@saleor/components/TableHead";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { ShippingZoneFragment } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
@@ -54,11 +54,8 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
   const {
     disabled,
     settings,
-    onNextPage,
-    onPreviousPage,
     onRemove,
     onUpdateListSettings,
-    pageInfo,
     shippingZones,
     isChecked,
     selected,
@@ -118,16 +115,11 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
         </TableHead>
         <TableFooter>
           <TableRow>
-            <TablePagination
+            <TablePaginationWithContext
               colSpan={numberOfColumns}
               settings={settings}
-              hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-              onNextPage={onNextPage}
+              disabled={disabled}
               onUpdateListSettings={onUpdateListSettings}
-              hasPreviousPage={
-                pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-              }
-              onPreviousPage={onPreviousPage}
             />
           </TableRow>
         </TableFooter>

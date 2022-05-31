@@ -21,9 +21,6 @@ interface CategoryProductsProps extends PageListProps, ListActions {
 export const CategoryProducts: React.FC<CategoryProductsProps> = ({
   products,
   disabled,
-  pageInfo,
-  onNextPage,
-  onPreviousPage,
   categoryId,
   categoryName,
   isChecked,
@@ -79,9 +76,6 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
       <CategoryProductList
         products={products}
         disabled={disabled}
-        pageInfo={pageInfo}
-        onNextPage={onNextPage}
-        onPreviousPage={onPreviousPage}
         selected={selected}
         isChecked={isChecked}
         toggle={toggle}

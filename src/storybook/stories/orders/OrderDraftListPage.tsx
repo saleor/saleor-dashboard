@@ -1,4 +1,5 @@
 import { OrderDraftListUrlSortField } from "@saleor/orders/urls";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -49,6 +50,7 @@ const props: OrderDraftListPageProps = {
 
 storiesOf("Views / Orders / Draft order list", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("default", () => <OrderDraftListPage {...props} />)
   .add("loading", () => (
     <OrderDraftListPage {...props} disabled orders={undefined} />

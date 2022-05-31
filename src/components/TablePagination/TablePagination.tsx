@@ -5,6 +5,7 @@ import {
 } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
+import { Link, LinkProps } from "react-router-dom";
 
 import { ListSettings } from "../../types";
 
@@ -22,17 +23,28 @@ const messages = defineMessages({
 });
 
 export interface PaginationProps
-  extends Omit<MacawPaginationProps, "labels" | "rowNumber"> {
+  extends Omit<
+    MacawPaginationProps,
+    "labels" | "rowNumber" | "nextIconButtonProps" | "prevIconButtonProps"
+  > {
   component?: React.ElementType;
   colSpan?: number;
   settings?: ListSettings;
   onUpdateListSettings?: ListSettingsUpdate;
+  prevHref?: string;
+  nextHref?: string;
+  disabled?: boolean;
 }
 export const TablePagination: React.FC<PaginationProps> = ({
   component,
   colSpan,
   settings,
   onUpdateListSettings,
+  nextHref,
+  prevHref,
+  hasNextPage,
+  hasPreviousPage,
+  disabled,
   ...rest
 }) => {
   const intl = useIntl();
@@ -40,8 +52,10 @@ export const TablePagination: React.FC<PaginationProps> = ({
 
   return (
     <Wrapper colSpan={colSpan || 1000}>
-      <Pagination
+      <Pagination<LinkProps>
         {...rest}
+        hasNextPage={hasNextPage && !disabled}
+        hasPreviousPage={hasPreviousPage && !disabled}
         labels={{
           noOfRows: intl.formatMessage(messages.noOfRows)
         }}
@@ -50,6 +64,12 @@ export const TablePagination: React.FC<PaginationProps> = ({
           onUpdateListSettings
             ? value => onUpdateListSettings("rowNumber", value)
             : undefined
+        }
+        nextIconButtonProps={
+          nextHref ? { component: Link, to: nextHref } : undefined
+        }
+        prevIconButtonProps={
+          prevHref ? { component: Link, to: prevHref } : undefined
         }
       />
     </Wrapper>
