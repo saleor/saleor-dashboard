@@ -3,6 +3,7 @@ import { Card, CardContent, TextField } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import RichTextEditor from "@saleor/components/RichTextEditor";
+import { RichTextEditorLoading } from "@saleor/components/RichTextEditor/RichTextEditorLoading";
 import { ProductErrorFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
@@ -58,7 +59,7 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = ({
           />
         </div>
         <FormSpacer />
-        {isReadyForMount && (
+        {isReadyForMount ? (
           <RichTextEditor
             defaultValue={defaultValue}
             editorRef={editorRef}
@@ -66,6 +67,14 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = ({
             disabled={disabled}
             error={!!formErrors.description}
             helperText={getProductErrorMessage(formErrors.description, intl)}
+            label={intl.formatMessage({
+              id: "8HRy+U",
+              defaultMessage: "Category Description"
+            })}
+            name="description"
+          />
+        ) : (
+          <RichTextEditorLoading
             label={intl.formatMessage({
               id: "8HRy+U",
               defaultMessage: "Category Description"

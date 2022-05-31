@@ -3,6 +3,7 @@ import { Card, CardContent, TextField } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import RichTextEditor from "@saleor/components/RichTextEditor";
+import { RichTextEditorLoading } from "@saleor/components/RichTextEditor/RichTextEditorLoading";
 import { CollectionErrorFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
@@ -56,7 +57,7 @@ const CollectionDetails: React.FC<CollectionDetailsProps> = ({
           fullWidth
         />
         <FormSpacer />
-        {isReadyForMount && (
+        {isReadyForMount ? (
           <RichTextEditor
             defaultValue={defaultValue}
             editorRef={editorRef}
@@ -66,6 +67,11 @@ const CollectionDetails: React.FC<CollectionDetailsProps> = ({
             label={intl.formatMessage(commonMessages.description)}
             name="description"
             disabled={disabled}
+          />
+        ) : (
+          <RichTextEditorLoading
+            label={intl.formatMessage(commonMessages.description)}
+            name="description"
           />
         )}
       </CardContent>

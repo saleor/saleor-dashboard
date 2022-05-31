@@ -78,6 +78,7 @@ function useCategoryUpdateForm(
 
   const richText = useRichText({
     initial: category?.description,
+    loading: !category,
     triggerChange
   });
 
