@@ -34,9 +34,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
   onRemove,
   settings,
   disabled,
-  onNextPage,
-  onPreviousPage,
-  pageInfo,
+  onUpdateListSettings,
   ...props
 }) => {
   const intl = useIntl();

@@ -1,5 +1,6 @@
 import placeholderImage from "@assets/images/placeholder255x255.png";
 import { ProductErrorCode } from "@saleor/graphql";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -25,13 +26,7 @@ const updateProps: Omit<CategoryUpdatePageProps, "classes"> = {
   onDelete: () => undefined,
   onImageDelete: () => undefined,
   onImageUpload: () => undefined,
-  onNextPage: undefined,
-  onPreviousPage: undefined,
   onSubmit: () => undefined,
-  pageInfo: {
-    hasNextPage: true,
-    hasPreviousPage: true
-  },
   productListToolbar: null,
   products: mapEdgesToItems(category.products),
   saveButtonBarState: "default",
@@ -42,6 +37,7 @@ const updateProps: Omit<CategoryUpdatePageProps, "classes"> = {
 
 storiesOf("Views / Categories / Update category", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("default", () => <CategoryUpdatePage {...updateProps} />)
   .add("products", () => (
     <CategoryUpdatePage

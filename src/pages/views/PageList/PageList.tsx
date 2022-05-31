@@ -12,7 +12,8 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
-  createPaginationState
+  createPaginationState,
+  PaginatorContext
 } from "@saleor/hooks/usePaginator";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
@@ -39,7 +40,6 @@ interface PageListProps {
 export const PageList: React.FC<PageListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const paginate = usePaginator();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
@@ -65,11 +65,11 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
     variables: queryVariables
   });
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    maybe(() => data.pages.pageInfo),
+  const paginationValues = usePaginator({
+    pageInfo: maybe(() => data.pages.pageInfo),
     paginationState,
-    params
-  );
+    queryString: params
+  });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     PageListUrlDialog,
@@ -115,14 +115,11 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
   const handleSort = createSortHandler(navigate, pageListUrl, params);
 
   return (
-    <>
+    <PaginatorContext.Provider value={paginationValues}>
       <PageListPage
         disabled={loading}
         settings={settings}
         pages={mapEdgesToItems(data?.pages)}
-        pageInfo={pageInfo}
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
         onSort={handleSort}
         actionDialogOpts={{
@@ -263,7 +260,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
           }}
         />
       </ActionDialog>
-    </>
+    </PaginatorContext.Provider>
   );
 };
 

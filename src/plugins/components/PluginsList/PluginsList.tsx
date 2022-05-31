@@ -1,7 +1,7 @@
 import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import { PluginBaseFragment } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { EditIcon, makeStyles } from "@saleor/macaw-ui";
@@ -37,12 +37,9 @@ const PluginList: React.FC<PluginListProps> = props => {
     settings,
     plugins,
     disabled,
-    onNextPage,
-    pageInfo,
     sort,
     onSort,
-    onUpdateListSettings,
-    onPreviousPage
+    onUpdateListSettings
   } = props;
   const classes = useStyles(props);
   const navigate = useNavigator();
@@ -53,16 +50,11 @@ const PluginList: React.FC<PluginListProps> = props => {
       <PluginListTableHead sort={sort} onSort={onSort} />
       <TableFooter>
         <TableRow>
-          <TablePagination
+          <TablePaginationWithContext
             colSpan={totalColSpan}
-            settings={settings}
-            hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-            onNextPage={onNextPage}
             onUpdateListSettings={onUpdateListSettings}
-            hasPreviousPage={
-              pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-            }
-            onPreviousPage={onPreviousPage}
+            settings={settings}
+            disabled={disabled}
           />
         </TableRow>
       </TableFooter>

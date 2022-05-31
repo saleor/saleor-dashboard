@@ -13,7 +13,8 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
-  createPaginationState
+  createPaginationState,
+  PaginatorContext
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
@@ -50,7 +51,6 @@ interface PageTypeListProps {
 
 export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
   const navigate = useNavigator();
-  const paginate = usePaginator();
   const notify = useNotifier();
   const {
     isSelected,
@@ -119,11 +119,11 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
     handleTabChange(tabs.length + 1);
   };
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    data?.pageTypes?.pageInfo,
+  const paginationValues = usePaginator({
+    pageInfo: data?.pageTypes?.pageInfo,
     paginationState,
-    params
-  );
+    queryString: params
+  });
 
   const handleSort = createSortHandler(navigate, pageTypeListUrl, params);
 
@@ -165,7 +165,7 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
   const pageTypesData = mapEdgesToItems(data?.pageTypes);
 
   return (
-    <>
+    <PaginatorContext.Provider value={paginationValues}>
       <PageTypeListPage
         currentTab={currentTab}
         initialSearch={params.query || ""}
@@ -177,9 +177,6 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
         tabs={tabs.map(tab => tab.name)}
         disabled={loading}
         pageTypes={pageTypesData}
-        pageInfo={pageInfo}
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
         onSort={handleSort}
         isChecked={isSelected}
         selected={selectedPageTypes.length}
@@ -224,7 +221,7 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
         onSubmit={handleTabDelete}
         tabName={getStringOrPlaceholder(tabs[currentTab - 1]?.name)}
       />
-    </>
+    </PaginatorContext.Provider>
   );
 };
 PageTypeList.displayName = "PageTypeList";

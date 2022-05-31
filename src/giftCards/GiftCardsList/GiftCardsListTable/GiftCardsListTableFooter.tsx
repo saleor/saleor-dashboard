@@ -6,8 +6,6 @@ import React from "react";
 import { useGiftCardList } from "../providers/GiftCardListProvider";
 
 const GiftCardsListTableFooter: React.FC = () => {
-  const paginate = usePaginator();
-
   const {
     settings,
     updateListSettings,
@@ -17,23 +15,20 @@ const GiftCardsListTableFooter: React.FC = () => {
     numberOfColumns
   } = useGiftCardList();
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    apiPageInfo,
+  const paginationValues = usePaginator({
+    pageInfo: apiPageInfo,
     paginationState,
-    params
-  );
+    queryString: params
+  });
 
   return (
     <TableFooter>
       <TableRow>
         <TablePagination
+          {...paginationValues}
           settings={settings}
           colSpan={numberOfColumns}
-          hasNextPage={pageInfo ? pageInfo.hasNextPage : false}
-          onNextPage={loadNextPage}
           onUpdateListSettings={updateListSettings}
-          onPreviousPage={loadPreviousPage}
-          hasPreviousPage={pageInfo ? pageInfo.hasPreviousPage : false}
         />
       </TableRow>
     </TableFooter>

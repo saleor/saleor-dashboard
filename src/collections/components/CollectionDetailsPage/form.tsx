@@ -96,6 +96,7 @@ function useCollectionUpdateForm(
 
   const richText = useRichText({
     initial: collection?.description,
+    loading: !collection,
     triggerChange
   });
 

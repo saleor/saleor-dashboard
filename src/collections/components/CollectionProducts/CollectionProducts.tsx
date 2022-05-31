@@ -15,7 +15,7 @@ import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableB
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import TableHead from "@saleor/components/TableHead";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { CollectionDetailsQuery } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
@@ -67,10 +67,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
     collection,
     disabled,
     onAdd,
-    onNextPage,
-    onPreviousPage,
     onProductUnassign,
-    pageInfo,
     isChecked,
     selected,
     toggle,
@@ -154,13 +151,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
         </TableHead>
         <TableFooter>
           <TableRow>
-            <TablePagination
-              colSpan={numberOfColumns}
-              hasNextPage={pageInfo?.hasNextPage}
-              onNextPage={onNextPage}
-              hasPreviousPage={pageInfo?.hasPreviousPage}
-              onPreviousPage={onPreviousPage}
-            />
+            <TablePaginationWithContext colSpan={numberOfColumns} />
           </TableRow>
         </TableFooter>
         <TableBody>

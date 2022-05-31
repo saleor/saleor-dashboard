@@ -2,7 +2,6 @@ import { useApolloClient } from "@apollo/client";
 import AppActivateDialog from "@saleor/apps/components/AppActivateDialog";
 import AppDeactivateDialog from "@saleor/apps/components/AppDeactivateDialog";
 import { AppListContext, AppListContextValues } from "@saleor/apps/context";
-import { defaultListSettings } from "@saleor/config";
 import {
   AppsInstallationsQuery,
   AppsListQuery,
@@ -18,11 +17,13 @@ import {
   useAppsInstallationsQuery,
   useAppsListQuery
 } from "@saleor/graphql";
+import useListSettings from "@saleor/hooks/useListSettings";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
-  createPaginationState
+  createPaginationState,
+  PaginatorContext
 } from "@saleor/hooks/usePaginator";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -63,11 +64,8 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const notify = useNotifier();
   const intl = useIntl();
   const navigate = useNavigator();
-  const paginate = usePaginator();
-  const paginationState = createPaginationState(
-    defaultListSettings[ListViews.APPS_LIST].rowNumber,
-    params
-  );
+  const { updateListSettings, settings } = useListSettings(ListViews.APPS_LIST);
+  const paginationState = createPaginationState(settings?.rowNumber, params);
   const queryVariables = {
     sort: {
       direction: OrderDirection.DESC,
@@ -99,11 +97,11 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     }
   });
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    data?.apps?.pageInfo,
+  const paginationValues = usePaginator({
+    pageInfo: data?.apps?.pageInfo,
     paginationState,
-    params
-  );
+    queryString: params
+  });
 
   const {
     data: customAppsData,
@@ -293,68 +291,69 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
 
   return (
     <AppListContext.Provider value={context}>
-      <AppDeleteDialog
-        confirmButtonState={deleteAppOpts.status}
-        name={getCurrentAppName(
-          params.id,
-          action === "remove-app" ? installedApps : customApps
-        )}
-        onClose={closeModal}
-        onConfirm={handleRemoveConfirm}
-        type={action === "remove-app" ? "EXTERNAL" : "CUSTOM"}
-        open={action === "remove-app" || action === "remove-custom-app"}
-      />
-      <AppActivateDialog
-        confirmButtonState={activateAppResult.status}
-        name={getCurrentAppName(params.id, installedApps)}
-        onClose={closeModal}
-        onConfirm={handleActivateAppConfirm}
-        open={params.action === "app-activate"}
-      />
-      <AppDeactivateDialog
-        confirmButtonState={deactivateAppResult.status}
-        name={getCurrentAppName(params.id, installedApps)}
-        onClose={closeModal}
-        onConfirm={handleDeactivateAppConfirm}
-        open={params.action === "app-deactivate"}
-      />
-      <AppInProgressDeleteDialog
-        confirmButtonState={deleteInProgressAppOpts.status}
-        name={getAppInProgressName(
-          params.id,
-          appsInProgressData?.appsInstallations
-        )}
-        onClose={closeModal}
-        onConfirm={handleRemoveInProgressConfirm}
-        open={action === "remove"}
-      />
-      <AppsListPage
-        installedAppsList={installedApps}
-        customAppsList={customApps}
-        appsInProgressList={appsInProgressData}
-        loadingAppsInProgress={loadingAppsInProgress}
-        disabled={loading || customAppsLoading}
-        pageInfo={pageInfo}
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
-        onAppInstallRetry={onAppInstallRetry}
-        getCustomAppHref={id => customAppUrl(id)}
-        onInstalledAppRemove={id =>
-          openModal("remove-app", {
-            id
-          })
-        }
-        onCustomAppRemove={id =>
-          openModal("remove-custom-app", {
-            id
-          })
-        }
-        onAppInProgressRemove={id =>
-          openModal("remove", {
-            id
-          })
-        }
-      />
+      <PaginatorContext.Provider value={paginationValues}>
+        <AppDeleteDialog
+          confirmButtonState={deleteAppOpts.status}
+          name={getCurrentAppName(
+            params.id,
+            action === "remove-app" ? installedApps : customApps
+          )}
+          onClose={closeModal}
+          onConfirm={handleRemoveConfirm}
+          type={action === "remove-app" ? "EXTERNAL" : "CUSTOM"}
+          open={action === "remove-app" || action === "remove-custom-app"}
+        />
+        <AppActivateDialog
+          confirmButtonState={activateAppResult.status}
+          name={getCurrentAppName(params.id, installedApps)}
+          onClose={closeModal}
+          onConfirm={handleActivateAppConfirm}
+          open={params.action === "app-activate"}
+        />
+        <AppDeactivateDialog
+          confirmButtonState={deactivateAppResult.status}
+          name={getCurrentAppName(params.id, installedApps)}
+          onClose={closeModal}
+          onConfirm={handleDeactivateAppConfirm}
+          open={params.action === "app-deactivate"}
+        />
+        <AppInProgressDeleteDialog
+          confirmButtonState={deleteInProgressAppOpts.status}
+          name={getAppInProgressName(
+            params.id,
+            appsInProgressData?.appsInstallations
+          )}
+          onClose={closeModal}
+          onConfirm={handleRemoveInProgressConfirm}
+          open={action === "remove"}
+        />
+        <AppsListPage
+          installedAppsList={installedApps}
+          customAppsList={customApps}
+          appsInProgressList={appsInProgressData}
+          loadingAppsInProgress={loadingAppsInProgress}
+          disabled={loading || customAppsLoading}
+          settings={settings}
+          onUpdateListSettings={updateListSettings}
+          onAppInstallRetry={onAppInstallRetry}
+          getCustomAppHref={id => customAppUrl(id)}
+          onInstalledAppRemove={id =>
+            openModal("remove-app", {
+              id
+            })
+          }
+          onCustomAppRemove={id =>
+            openModal("remove-custom-app", {
+              id
+            })
+          }
+          onAppInProgressRemove={id =>
+            openModal("remove", {
+              id
+            })
+          }
+        />
+      </PaginatorContext.Provider>
     </AppListContext.Provider>
   );
 };

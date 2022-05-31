@@ -5,6 +5,7 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import RichTextEditor from "@saleor/components/RichTextEditor";
+import { RichTextEditorLoading } from "@saleor/components/RichTextEditor/RichTextEditorLoading";
 import { ProductErrorFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
@@ -60,7 +61,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
           onChange={onChange}
         />
         <FormSpacer />
-        {isReadyForMount && (
+        {isReadyForMount ? (
           <RichTextEditor
             editorRef={editorRef}
             defaultValue={defaultValue}
@@ -68,6 +69,11 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
             disabled={disabled}
             error={!!formErrors.description}
             helperText={getProductErrorMessage(formErrors.description, intl)}
+            label={intl.formatMessage(commonMessages.description)}
+            name="description"
+          />
+        ) : (
+          <RichTextEditorLoading
             label={intl.formatMessage(commonMessages.description)}
             name="description"
           />

@@ -10,7 +10,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellHeader from "@saleor/components/TableCellHeader";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { WarehouseWithShippingFragment } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
@@ -76,9 +76,6 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
     disabled,
     settings,
     sort,
-    pageInfo,
-    onNextPage,
-    onPreviousPage,
     onUpdateListSettings,
     onRemove,
     onSort
@@ -116,16 +113,11 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
       </TableHead>
       <TableFooter>
         <TableRow>
-          <TablePagination
+          <TablePaginationWithContext
             colSpan={numberOfColumns}
             settings={settings}
-            hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-            onNextPage={onNextPage}
+            disabled={disabled}
             onUpdateListSettings={onUpdateListSettings}
-            hasPreviousPage={
-              pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-            }
-            onPreviousPage={onPreviousPage}
           />
         </TableRow>
       </TableFooter>

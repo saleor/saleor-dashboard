@@ -25,6 +25,7 @@ import useLocalPaginator, {
 } from "@saleor/hooks/useLocalPaginator";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { PaginatorContext } from "@saleor/hooks/usePaginator";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import {
   getById,
@@ -107,7 +108,7 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
     []
   );
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
+  const { pageInfo, ...paginationValues } = paginate(
     rate?.excludedProducts.pageInfo,
     paginationState
   );
@@ -314,7 +315,7 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
   };
 
   return (
-    <>
+    <PaginatorContext.Provider value={{ ...pageInfo, ...paginationValues }}>
       <WindowTitle title={intl.formatMessage(sectionNames.shipping)} />
       {!!allChannels?.length && (
         <ChannelsAvailabilityDialog
@@ -397,9 +398,6 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
         selected={listElements.length}
         toggle={toggle}
         toggleAll={toggleAll}
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
-        pageInfo={pageInfo}
         toolbar={
           <Button onClick={() => openModal("unassign-product")}>
             <FormattedMessage
@@ -420,7 +418,7 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
         onSubmit={code => onPostalCodeAssign(code)}
         open={params.action === "add-range"}
       />
-    </>
+    </PaginatorContext.Provider>
   );
 };
 

@@ -20,12 +20,18 @@ import {
 } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
-import { ListProps, RelayToFlat, ReorderAction } from "@saleor/types";
+import {
+  ListProps,
+  PaginateListProps,
+  RelayToFlat,
+  ReorderAction
+} from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface AttributeValuesProps
-  extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">> {
+  extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
+    PaginateListProps {
   disabled: boolean;
   values: RelayToFlat<AttributeValueListFragment>;
   onValueAdd: () => void;

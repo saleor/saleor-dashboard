@@ -41,6 +41,11 @@ export const useMultipleRichText = <TKey extends string>({
 
   const getDefaultValue = useCallback(
     (id: TKey) => {
+      if (initial[id] === undefined) {
+        setShouldMountById(id, true);
+        return "";
+      }
+
       try {
         const result = JSON.parse(initial[id]);
         setShouldMountById(id, true);

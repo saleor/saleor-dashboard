@@ -14,7 +14,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import TooltipTableCellHeader from "@saleor/components/TooltipTableCellHeader";
 import { commonTooltipMessages } from "@saleor/components/TooltipTableCellHeader/messages";
@@ -73,11 +73,8 @@ const CollectionList: React.FC<CollectionListProps> = props => {
     disabled,
     settings,
     sort,
-    onNextPage,
-    onPreviousPage,
     onUpdateListSettings,
     onSort,
-    pageInfo,
     isChecked,
     selected,
     selectedChannelId,
@@ -150,16 +147,10 @@ const CollectionList: React.FC<CollectionListProps> = props => {
       </TableHead>
       <TableFooter>
         <TableRow>
-          <TablePagination
+          <TablePaginationWithContext
             colSpan={numberOfColumns}
             settings={settings}
-            hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-            onNextPage={onNextPage}
             onUpdateListSettings={onUpdateListSettings}
-            hasPreviousPage={
-              pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-            }
-            onPreviousPage={onPreviousPage}
           />
         </TableRow>
       </TableFooter>

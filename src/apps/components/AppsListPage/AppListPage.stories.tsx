@@ -7,6 +7,7 @@ import {
   tabPageProps
 } from "@saleor/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -31,9 +32,7 @@ const props: AppsListPageProps = {
   onAppInProgressRemove: () => undefined,
   onAppInstallRetry: () => undefined,
   onCustomAppRemove: () => undefined,
-  onInstalledAppRemove: () => undefined,
-  onNextPage: () => undefined,
-  onPreviousPage: () => undefined
+  onInstalledAppRemove: () => undefined
 };
 
 storiesOf("Views / Apps / Apps list", module)
@@ -45,6 +44,7 @@ storiesOf("Views / Apps / Apps list", module)
       {story()}
     </AppListContext.Provider>
   ))
+  .addDecorator(PaginatorContextDecorator)
   .add("default", () => <AppsListPage {...props} />)
   .add("loading", () => (
     <AppsListPage

@@ -8,7 +8,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { AttributeFragment } from "@saleor/graphql";
 import { translateBoolean } from "@saleor/intl";
@@ -71,9 +71,6 @@ const AttributeList: React.FC<AttributeListProps> = ({
   attributes,
   disabled,
   isChecked,
-  onNextPage,
-  onPreviousPage,
-  pageInfo,
   selected,
   sort,
   toggle,
@@ -172,15 +169,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
       </TableHead>
       <TableFooter>
         <TableRow>
-          <TablePagination
-            colSpan={numberOfColumns}
-            hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-            onNextPage={onNextPage}
-            hasPreviousPage={
-              pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-            }
-            onPreviousPage={onPreviousPage}
-          />
+          <TablePaginationWithContext colSpan={numberOfColumns} />
         </TableRow>
       </TableFooter>
       <TableBody>

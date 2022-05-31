@@ -1,5 +1,6 @@
 import { ProductTypeConfigurable, ProductTypeEnum } from "@saleor/graphql";
 import { ProductTypeListUrlSortField } from "@saleor/productTypes/urls";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -43,6 +44,7 @@ const props: ProductTypeListPageProps = {
 
 storiesOf("Views / Product types / Product types list", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("default", () => <ProductTypeListPage {...props} />)
   .add("loading", () => (
     <ProductTypeListPage {...props} disabled={true} productTypes={undefined} />

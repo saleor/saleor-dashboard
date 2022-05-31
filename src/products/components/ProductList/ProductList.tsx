@@ -19,7 +19,7 @@ import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import TooltipTableCellHeader from "@saleor/components/TooltipTableCellHeader";
 import { commonTooltipMessages } from "@saleor/components/TooltipTableCellHeader/messages";
@@ -137,15 +137,12 @@ export const ProductList: React.FC<ProductListProps> = props => {
     disabled,
     isChecked,
     gridAttributes,
-    pageInfo,
     products,
     selected,
     sort,
     toggle,
     toggleAll,
     toolbar,
-    onNextPage,
-    onPreviousPage,
     onUpdateListSettings,
     onSort,
     selectedChannelId,
@@ -323,16 +320,10 @@ export const ProductList: React.FC<ProductListProps> = props => {
         </TableHead>
         <TableFooter>
           <TableRow>
-            <TablePagination
+            <TablePaginationWithContext
               colSpan={numberOfColumns}
               settings={settings}
-              hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-              onNextPage={onNextPage}
               onUpdateListSettings={onUpdateListSettings}
-              hasPreviousPage={
-                pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-              }
-              onPreviousPage={onPreviousPage}
             />
           </TableRow>
         </TableFooter>
