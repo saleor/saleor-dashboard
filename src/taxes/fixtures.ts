@@ -1,4 +1,7 @@
-import { TaxConfigurationFragment } from "@saleor/graphql";
+import {
+  TaxConfigurationFragment,
+  TaxCountryConfigurationFragment
+} from "@saleor/graphql";
 
 export const taxConfigurations: TaxConfigurationFragment[] = [
   {
@@ -50,6 +53,61 @@ export const taxConfigurations: TaxConfigurationFragment[] = [
         countryCode: "DZ",
         chargeTaxes: false,
         displayGrossPrices: false
+      }
+    ]
+  }
+];
+
+export const taxCountryConfigurations: TaxCountryConfigurationFragment[] = [
+  {
+    __typename: "TaxCountryConfiguration",
+    countryCode: "EN",
+    taxClassCountryRates: [
+      {
+        __typename: "TaxClassCountryRate",
+        rate: 0.31,
+        taxClass: {
+          __typename: "TaxClass",
+          id: "taxCountryConfigurations.0.taxClassCountryRates.0.taxClass.id",
+          isDefault: true,
+          name: "Default tax class"
+        }
+      },
+      {
+        __typename: "TaxClassCountryRate",
+        rate: 0.05,
+        taxClass: {
+          __typename: "TaxClass",
+          id: "taxCountryConfigurations.0.taxClassCountryRates.0.taxClass.id",
+          isDefault: false,
+          name: "Perfume"
+        }
+      }
+    ]
+  },
+  {
+    __typename: "TaxCountryConfiguration",
+    countryCode: "PL",
+    taxClassCountryRates: [
+      {
+        __typename: "TaxClassCountryRate",
+        rate: 0.21,
+        taxClass: {
+          __typename: "TaxClass",
+          id: "taxCountryConfigurations.0.taxClassCountryRates.0.taxClass.id",
+          name: "Default tax class",
+          isDefault: true
+        }
+      },
+      {
+        __typename: "TaxClassCountryRate",
+        rate: 0.05,
+        taxClass: {
+          __typename: "TaxClass",
+          id: "taxCountryConfigurations.0.taxClassCountryRates.0.taxClass.id",
+          name: "Food",
+          isDefault: false
+        }
       }
     ]
   }
