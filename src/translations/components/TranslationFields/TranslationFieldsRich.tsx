@@ -3,6 +3,7 @@ import { Typography } from "@material-ui/core";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import RichTextEditor from "@saleor/components/RichTextEditor";
 import RichTextEditorContent from "@saleor/components/RichTextEditor/RichTextEditorContent";
+import { RichTextEditorLoading } from "@saleor/components/RichTextEditor/RichTextEditorLoading";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import useRichText from "@saleor/utils/richText/useRichText";
@@ -51,7 +52,7 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
 
   return edit ? (
     <form onSubmit={submit}>
-      {isReadyForMount && (
+      {isReadyForMount ? (
         <RichTextEditor
           defaultValue={defaultValue}
           editorRef={editorRef}
@@ -59,6 +60,15 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
           disabled={disabled}
           error={undefined}
           helperText={undefined}
+          label={intl.formatMessage({
+            id: "/vCXIP",
+            defaultMessage: "Translation"
+          })}
+          name="translation"
+          data-test-id="translation-field"
+        />
+      ) : (
+        <RichTextEditorLoading
           label={intl.formatMessage({
             id: "/vCXIP",
             defaultMessage: "Translation"

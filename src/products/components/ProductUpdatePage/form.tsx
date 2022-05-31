@@ -281,6 +281,7 @@ function useProductUpdateForm(
   const stocks = useFormset(getStockInputFromProduct(product));
   const richText = useRichText({
     initial: product?.description,
+    loading: !product,
     triggerChange
   });
 

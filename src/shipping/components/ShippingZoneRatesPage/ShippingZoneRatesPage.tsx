@@ -130,6 +130,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
 
   const richText = useRichText({
     initial: rate?.description,
+    loading: !rate,
     triggerChange
   });
 
