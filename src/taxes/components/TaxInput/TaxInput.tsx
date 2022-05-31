@@ -1,11 +1,12 @@
 import { InputAdornment, TextField } from "@material-ui/core";
+import { FormChange } from "@saleor/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
 interface TaxInputProps {
   placeholder: number;
   value: string;
-  setVal: (val: any) => void;
+  change: FormChange;
 }
 
 const useStyles = makeStyles(
@@ -31,25 +32,9 @@ const useStyles = makeStyles(
 export const TaxInput: React.FC<TaxInputProps> = ({
   placeholder,
   value,
-  setVal
+  change
 }) => {
   const classes = useStyles();
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    const parsedValue = parseFloat(value);
-    if (isNaN(parsedValue)) {
-      setVal(value);
-      return;
-    }
-    if (parsedValue < 0) {
-      setVal("0");
-    } else if (parsedValue > 100) {
-      setVal("100");
-    } else {
-      setVal(value);
-    }
-  };
 
   return (
     <TextField
@@ -62,7 +47,7 @@ export const TaxInput: React.FC<TaxInputProps> = ({
         className: classes.hideSpinboxes
       }}
       inputProps={{ className: classes.inputPadding, min: 0, max: 100 }}
-      onChange={handleChange}
+      onChange={change}
     />
   );
 };

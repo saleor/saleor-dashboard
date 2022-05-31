@@ -114,11 +114,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
                   <TaxInput
                     placeholder={taxClasses[0].rate}
                     value={vals[classIndex]}
-                    setVal={val => {
-                      const newVals = [...vals];
-                      newVals[classIndex] = val;
-                      setVals(newVals);
-                    }}
+                    change={() => null} // TODO: add change function from form
                   />
                 </ListItemCell>
               </ListItem>
