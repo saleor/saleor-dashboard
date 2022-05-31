@@ -2374,6 +2374,7 @@ export const TaxCountryConfigurationFragmentDoc = gql`
     taxClass {
       id
       name
+      isDefault
     }
   }
 }
