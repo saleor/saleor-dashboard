@@ -6454,6 +6454,8 @@ export type TaxConfigurationPerCountryFragment = { __typename: 'TaxConfiguration
 
 export type TaxConfigurationFragment = { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', countryCode: string, chargeTaxes: boolean, displayGrossPrices: boolean }> };
 
+export type TaxCountryConfigurationFragment = { __typename: 'TaxCountryConfiguration', countryCode: string, taxClassCountryRates: Array<{ __typename: 'TaxClassCountryRate', rate: number, taxClass: { __typename: 'TaxClass', id: string, name: string } }> };
+
 export type TimePeriodFragment = { __typename: 'TimePeriod', amount: number, type: TimePeriodTypeEnum };
 
 export type CategoryTranslationFragment = { __typename: 'CategoryTranslatableContent', translation: { __typename: 'CategoryTranslation', id: string, description: any | null, name: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null, category: { __typename: 'Category', id: string, name: string, description: any | null, seoDescription: string | null, seoTitle: string | null } | null };
