@@ -9,6 +9,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
+import Skeleton from "@saleor/components/Skeleton";
 import { TaxCountryConfigurationFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import {
@@ -56,7 +57,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
   );
 
   // @TODO: handle special characters in query, add case-insensitiveness
-  const filteredRates = currentCountry.taxClassCountryRates.filter(rate =>
+  const filteredRates = currentCountry?.taxClassCountryRates.filter(rate =>
     rate.taxClass.name.includes(query)
   );
 
@@ -107,18 +108,18 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
                 </ListItemCell>
               </ListItem>
             </ListHeader>
-            {filteredRates.map(rate => (
+            {filteredRates?.map(rate => (
               <ListItem key={rate.taxClass.id} hover={false}>
                 <ListItemCell>{rate.taxClass.name}</ListItemCell>
                 <ListItemCell>
                   <TaxInput
                     placeholder={filteredRates[0].rate}
-                    value={rate.rate.toString()}
+                    value={(rate.rate * 100).toString()}
                     change={() => null} // TODO: add change function from form
                   />
                 </ListItemCell>
               </ListItem>
-            ))}
+            )) ?? <Skeleton />}
           </List>
         </Card>
       </Grid>

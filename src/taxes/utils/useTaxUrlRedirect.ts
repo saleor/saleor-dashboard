@@ -9,9 +9,14 @@
 import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
 import React from "react";
 
-interface TaxEntity {
+interface TaxEntityWithId {
   id: string;
 }
+interface TaxEntityWithCode {
+  countryCode: string;
+}
+
+type TaxEntity = TaxEntityWithId | TaxEntityWithCode;
 
 interface UseTaxUrlRedirectOpts {
   id: string;
@@ -28,7 +33,13 @@ export function useTaxUrlRedirect({
 }: UseTaxUrlRedirectOpts): void {
   React.useEffect(() => {
     if (id === "undefined" && data) {
-      navigate(urlFunction(data[0].id));
+      const defaultTaxEntity = data[0];
+      if ("id" in defaultTaxEntity) {
+        navigate(urlFunction(defaultTaxEntity.id));
+      }
+      if ("countryCode" in defaultTaxEntity) {
+        navigate(urlFunction(defaultTaxEntity.countryCode));
+      }
     }
   }, [id, data]);
 }

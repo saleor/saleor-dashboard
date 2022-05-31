@@ -4,6 +4,7 @@ import React from "react";
 import { taxCountryConfigurations } from "../fixtures";
 import TaxCountriesPage from "../pages/TaxCountriesPage";
 import { countriesListUrl, taxTabSectionUrl } from "../urls";
+import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
 
 interface CountriesListProps {
   id: string;
@@ -16,16 +17,12 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id }) => {
     navigate(taxTabSectionUrl(tab));
   };
 
-  const exampleData = [
-    { id: "129837", name: "Brazil" },
-    { id: "9182739", name: "Andora" }
-  ];
-
-  React.useEffect(() => {
-    if (id === "undefined" && exampleData) {
-      navigate(countriesListUrl(exampleData?.[0].id));
-    }
-  }, [id, exampleData]);
+  useTaxUrlRedirect({
+    id,
+    data: taxCountryConfigurations,
+    navigate,
+    urlFunction: countriesListUrl
+  });
 
   return (
     <TaxCountriesPage
