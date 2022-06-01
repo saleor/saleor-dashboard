@@ -4,6 +4,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
+import Skeleton from "@saleor/components/Skeleton";
 import { CountryFragment, TaxConfigurationFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import {
@@ -40,7 +41,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
 
   const intl = useIntl();
 
-  const currentTaxConfiguration = taxConfigurations.find(
+  const currentTaxConfiguration = taxConfigurations?.find(
     taxConfigurations => taxConfigurations.id === selectedConfigurationId
   );
 
@@ -103,7 +104,12 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                   }
                   key={country.countryCode}
                 />
-              ))}
+              )) ?? (
+                <>
+                  <Skeleton />
+                  <VerticalSpacer />
+                </>
+              )}
             </List>
           </Card>
         </div>
