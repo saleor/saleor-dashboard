@@ -26,6 +26,10 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id }) => {
     urlFunction: countriesListUrl
   });
 
+  if (id === "undefined" && taxCountryConfigurations) {
+    return null;
+  }
+
   return (
     <TaxCountriesPage
       countryTaxesData={taxCountryConfigurations}
