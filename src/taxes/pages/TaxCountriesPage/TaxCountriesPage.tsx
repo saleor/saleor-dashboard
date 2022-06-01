@@ -25,6 +25,7 @@ import {
   PageTabs,
   SearchIcon
 } from "@saleor/macaw-ui";
+import { parseQuery } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/utils";
 import { taxesMessages } from "@saleor/taxes/messages";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -65,9 +66,8 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
     country => country.countryCode === selectedCountryId
   );
 
-  // @TODO: handle special characters in query, add case-insensitiveness
-  const filteredRates = currentCountry?.taxClassCountryRates.filter(rate =>
-    rate.taxClass.name.includes(query)
+  const filteredRates = currentCountry?.taxClassCountryRates.filter(
+    rate => rate.taxClass.name.search(new RegExp(parseQuery(query), "i")) >= 0
   );
 
   return (
