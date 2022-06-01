@@ -1,6 +1,6 @@
 import { Card } from "@material-ui/core";
-import { Skeleton } from "@material-ui/lab";
 import CardTitle from "@saleor/components/CardTitle";
+import Skeleton from "@saleor/components/Skeleton";
 import {
   CountryFragment,
   TaxCountryConfigurationFragment

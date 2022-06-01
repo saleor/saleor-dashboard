@@ -61,7 +61,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
 
   const [query, setQuery] = React.useState("");
 
-  const currentCountry = countryTaxesData.find(
+  const currentCountry = countryTaxesData?.find(
     country => country.countryCode === selectedCountryId
   );
 
