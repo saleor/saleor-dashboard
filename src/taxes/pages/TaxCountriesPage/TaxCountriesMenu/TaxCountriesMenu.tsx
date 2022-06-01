@@ -1,11 +1,11 @@
 import { Card } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
+import ListItemLink from "@saleor/components/ListItemLink";
 import Skeleton from "@saleor/components/Skeleton";
 import {
   CountryFragment,
   TaxCountryConfigurationFragment
 } from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
 import {
   Button,
   DeleteIcon,
@@ -59,7 +59,6 @@ export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
   selectedCountryId,
   onCountryDelete
 }) => {
-  const navigate = useNavigator();
   const classes = useStyles();
   const intl = useIntl();
 
@@ -83,12 +82,12 @@ export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
             </ListItem>
           </ListHeader>
           {countries?.map(country => (
-            <ListItem
+            <ListItemLink
               key={country.countryCode}
               className={clsx(classes.clickable, classes.tableRow, {
                 [classes.selected]: country.countryCode === selectedCountryId
               })}
-              onClick={() => navigate(countriesListUrl(country.countryCode))}
+              href={countriesListUrl(country.countryCode)}
             >
               <ListItemCell>
                 <div className={classes.spaceBetween}>
@@ -108,7 +107,7 @@ export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
                   </IconButton>
                 </div>
               </ListItemCell>
-            </ListItem>
+            </ListItemLink>
           )) ?? <Skeleton />}
         </List>
       </div>
