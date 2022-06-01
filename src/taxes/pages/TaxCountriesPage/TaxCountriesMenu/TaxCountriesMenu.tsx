@@ -1,6 +1,10 @@
 import { Card } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import CardTitle from "@saleor/components/CardTitle";
+import {
+  CountryFragment,
+  TaxCountryConfigurationFragment
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import {
   Button,
@@ -19,7 +23,8 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface TaxCountriesMenuProps {
-  countries: any;
+  countries: TaxCountryConfigurationFragment[];
+  countryNames: CountryFragment[];
   selectedCountryId: string;
   onCountryDelete: (countryId: string) => void;
 }
@@ -50,6 +55,7 @@ const useStyles = makeStyles(
 
 export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
   countries,
+  countryNames,
   selectedCountryId,
   onCountryDelete
 }) => {
@@ -78,20 +84,24 @@ export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
           </ListHeader>
           {countries?.map(country => (
             <ListItem
-              key={country.id}
+              key={country.countryCode}
               className={clsx(classes.clickable, classes.tableRow, {
-                [classes.selected]: country.id === selectedCountryId
+                [classes.selected]: country.countryCode === selectedCountryId
               })}
-              onClick={() => navigate(countriesListUrl(country.id))}
+              onClick={() => navigate(countriesListUrl(country.countryCode))}
             >
               <ListItemCell>
                 <div className={classes.spaceBetween}>
-                  {country.name}
+                  {
+                    countryNames?.find(
+                      name => name.code === country.countryCode
+                    )?.country
+                  }
                   <IconButton
                     variant="secondary"
                     onClick={event => {
                       event.stopPropagation();
-                      onCountryDelete(country.id);
+                      onCountryDelete(country.countryCode);
                     }}
                   >
                     <DeleteIcon />

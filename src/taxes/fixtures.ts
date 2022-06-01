@@ -61,7 +61,7 @@ export const taxConfigurations: TaxConfigurationFragment[] = [
 export const taxCountryConfigurations: TaxCountryConfigurationFragment[] = [
   {
     __typename: "TaxCountryConfiguration",
-    countryCode: "EN",
+    countryCode: "EE",
     taxClassCountryRates: [
       {
         __typename: "TaxClassCountryRate",

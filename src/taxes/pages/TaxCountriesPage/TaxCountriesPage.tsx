@@ -10,7 +10,10 @@ import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Skeleton from "@saleor/components/Skeleton";
-import { TaxCountryConfigurationFragment } from "@saleor/graphql";
+import {
+  CountryFragment,
+  TaxCountryConfigurationFragment
+} from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import {
   List,
@@ -31,6 +34,7 @@ import TaxCountriesMenu from "./TaxCountriesMenu";
 
 interface TaxCountriesPageProps {
   countryTaxesData: TaxCountryConfigurationFragment[];
+  countries: CountryFragment[];
   selectedCountryId: string;
   handleTabChange: (tab: string) => void;
 }
@@ -45,7 +49,12 @@ const useStyles = makeStyles(
 );
 
 export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
-  const { countryTaxesData, selectedCountryId, handleTabChange } = props;
+  const {
+    countryTaxesData,
+    countries,
+    selectedCountryId,
+    handleTabChange
+  } = props;
 
   const intl = useIntl();
   const classes = useStyles();
@@ -73,6 +82,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
       <Grid variant="inverted">
         <TaxCountriesMenu
           countries={countryTaxesData}
+          countryNames={countries}
           selectedCountryId={selectedCountryId}
           onCountryDelete={() => null}
         />
