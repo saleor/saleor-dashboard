@@ -12,7 +12,7 @@ export function createWarehouse({ name, shippingZone, address, slug = name }) {
       ${shippingZoneLine}
       ${getDefaultAddress(address, "address", false)}
     }){
-      warehouseErrors{
+      errors{
         field
         message
       }
@@ -48,7 +48,7 @@ export function getWarehouses(first, search) {
 export function deleteWarehouse(warehouseId) {
   const mutation = `mutation{
     deleteWarehouse(id:"${warehouseId}"){
-      warehouseErrors{
+      errors{
         field
         message
       }

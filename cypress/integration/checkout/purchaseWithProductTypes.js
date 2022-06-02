@@ -120,9 +120,9 @@ filterTests({ definedTags: ["all", "refactored"] }, () => {
         .then(() => {
           addPayment(checkout.id);
         })
-        .then(({ paymentErrors }) => {
+        .then(({ errors }) => {
           expect(
-            paymentErrors,
+            errors,
             "Should be not possible to add payment without shipping"
           ).to.have.lengthOf(1);
           updateShippingInCheckout(checkout.token, shippingMethod.name);

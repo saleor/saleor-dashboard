@@ -23,7 +23,7 @@ Cypress.Commands.add(
       token
       csrfToken
       refreshToken
-      errors: accountErrors {
+      errors: errors {
         code
         field
         message

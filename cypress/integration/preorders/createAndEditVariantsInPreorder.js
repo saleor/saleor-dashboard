@@ -1,6 +1,8 @@
 /// <reference types="cypress"/>
 /// <reference types="../../support"/>
 
+import faker from "faker";
+
 import { PRODUCT_DETAILS } from "../../elements/catalog/products/product-details";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
@@ -24,7 +26,7 @@ import {
 
 filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
   describe("Creating variants in preorder", () => {
-    const startsWith = "CreatePreOrder";
+    const name = `CreatePreOrder${faker.datatype.number()}`;
     const attributeValues = ["value1", "value2", "value3"];
     const threshold = 100;
     const futureDate = new Date().setDate(new Date().getDate() + 14);
@@ -38,19 +40,17 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
 
     before(() => {
       cy.clearSessionData().loginUserViaRequest();
-      createProductWithShipping({ name: startsWith, attributeValues }).then(
-        resp => {
-          checkoutData = {
-            address: resp.address,
-            channelSlug: resp.defaultChannel.slug,
-            email: "example@example.com",
-            shippingMethodName: resp.shippingMethod.name
-          };
-          defaultChannel = resp.defaultChannel;
-          product = resp.product;
-          variantsList = resp.variantsList;
-        }
-      );
+      createProductWithShipping({ name, attributeValues }).then(resp => {
+        checkoutData = {
+          address: resp.address,
+          channelSlug: resp.defaultChannel.slug,
+          email: "example@example.com",
+          shippingMethodName: resp.shippingMethod.name
+        };
+        defaultChannel = resp.defaultChannel;
+        product = resp.product;
+        variantsList = resp.variantsList;
+      });
     });
 
     beforeEach(() => {
