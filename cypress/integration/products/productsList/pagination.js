@@ -17,7 +17,7 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.visit(urlList.products);
     });
 
-    it("Should go to the next page", () => {
+    it("should go to the next page", () => {
       cy.softExpectSkeletonIsVisible()
         .get(PRODUCTS_LIST.emptyProductRow)
         .should("not.exist")
@@ -35,8 +35,15 @@ filterTests({ definedTags: ["all"] }, () => {
       getDisplayedColumnArray("name").then(productList => {
         expect(productList).to.not.equal(firstPageProducts);
       });
-      cy.get(PRODUCTS_LIST.previousPagePagination).then($button => {
-        expect($button).to.be.enabled;
+      cy.get(PRODUCTS_LIST.previousPagePagination)
+        .click()
+        .softExpectSkeletonIsVisible()
+        .get(PRODUCTS_LIST.emptyProductRow)
+        .should("not.exist");
+      getDisplayedColumnArray("name").then(productsList => {
+        expect(
+          JSON.stringify(productsList) === JSON.stringify(firstPageProducts)
+        ).to.be.true;
       });
     });
     it("should displayed correct number of results per page", () => {

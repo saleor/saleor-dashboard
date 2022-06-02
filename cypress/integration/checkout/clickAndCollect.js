@@ -91,7 +91,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("should create warehouse with all warehouses pickup and private stock", () => {
+    xit("should create warehouse with all warehouses pickup and private stock", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let warehouse;
 
@@ -124,7 +124,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         });
     });
 
-    it("should create warehouse with all warehouses pickup and public stock", () => {
+    xit("should create warehouse with all warehouses pickup and public stock", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let warehouse;
 
@@ -157,7 +157,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         });
     });
 
-    it("should create warehouse with local stock only pickup and public stock", () => {
+    xit("should create warehouse with local stock only pickup and public stock", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let warehouse;
       let variantsInLocalStock;
@@ -198,7 +198,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         });
     });
 
-    it("should not be possible to set local pickup when private stock", () => {
+    xit("should not be possible to set local pickup when private stock", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       createWarehouse({ name, address: usAddress });
       cy.get(WAREHOUSES_DETAILS.clickAndCollectLocalStockRadioButton).should(
