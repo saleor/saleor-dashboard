@@ -106,7 +106,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should create published collection. TC: SALEOR_0302", () => {
+    xit("should create published collection. TC: SALEOR_0302", () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
       let collection;
 
@@ -128,7 +128,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("create collection not available for channel. TC: SALEOR_0303", () => {
+    xit("create collection not available for channel. TC: SALEOR_0303", () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
       let collection;
       let channel;
@@ -157,7 +157,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("create published collection with products hidden in listings. TC: SALEOR_0304", () => {
+    xit("create published collection with products hidden in listings. TC: SALEOR_0304", () => {
       // Products "hidden in listings" are not displayed in Category listings or search results,
       // but are listed on Collections
       const collectionName = `${startsWith}${faker.datatype.number()}`;
@@ -206,7 +206,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should delete collection. TC: SALEOR_0305", () => {
+    xit("should delete collection. TC: SALEOR_0305", () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
 
       createCollectionRequest(collectionName).then(collectionResp => {
@@ -223,7 +223,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("delete several collections on collections list page. TC: SALEOR_0309", () => {
+    xit("delete several collections on collections list page. TC: SALEOR_0309", () => {
       const deleteSeveral = "delete-several-";
       const firstCollectionName = `${deleteSeveral}${startsWith}${faker.datatype.number()}`;
       const secondCollectionName = `${deleteSeveral}${startsWith}${faker.datatype.number()}`;
@@ -295,7 +295,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("remove product from collection. TC: SALEOR_0308", () => {
+    xit("remove product from collection. TC: SALEOR_0308", () => {
       const collectionName = `Remove-With-Assigned-Product-${startsWith}${faker.datatype.number()}`;
       const productName = `Product-To-Assign-${startsWith}${faker.datatype.number()}`;
       let collection;
