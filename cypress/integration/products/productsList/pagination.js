@@ -17,7 +17,7 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.visit(urlList.products);
     });
 
-    it("should go to the next page", () => {
+    it("should be able go to the next page on product list. TC: SALEOR_2605", () => {
       cy.softExpectSkeletonIsVisible()
         .get(PRODUCTS_LIST.emptyProductRow)
         .should("not.exist")
@@ -46,7 +46,7 @@ filterTests({ definedTags: ["all"] }, () => {
         ).to.be.true;
       });
     });
-    it("should displayed correct number of results per page", () => {
+    it("should see correct amount of products per page. TC: SALEOR_2606", () => {
       cy.softExpectSkeletonIsVisible();
       isNumberOfProductsSameAsInSelectResultsOnPage().then(
         isTheSame =>
