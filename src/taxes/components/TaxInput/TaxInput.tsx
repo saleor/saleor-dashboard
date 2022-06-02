@@ -1,33 +1,14 @@
 import { InputAdornment, TextField } from "@material-ui/core";
 import { FormChange } from "@saleor/hooks/useForm";
-import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
+
+import { useStyles } from "./styles";
 
 interface TaxInputProps {
   placeholder: number;
   value: string;
   change: FormChange;
 }
-
-const useStyles = makeStyles(
-  () => ({
-    hideSpinboxes: {
-      // chrome, safari
-      "& input::-webkit-outer-spin-button, input::-webkit-inner-spin-button": {
-        appearance: "none",
-        margin: 0
-      },
-      // firefox
-      "& input": {
-        "-moz-appearance": "textfield"
-      }
-    },
-    inputPadding: {
-      padding: "16px 0 16px 0"
-    }
-  }),
-  { name: "TaxInput" }
-);
 
 export const TaxInput: React.FC<TaxInputProps> = ({
   placeholder,
