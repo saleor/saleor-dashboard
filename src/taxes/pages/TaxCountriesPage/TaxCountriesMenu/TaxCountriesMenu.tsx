@@ -13,8 +13,7 @@ import {
   List,
   ListHeader,
   ListItem,
-  ListItemCell,
-  makeStyles
+  ListItemCell
 } from "@saleor/macaw-ui";
 import { taxesMessages } from "@saleor/taxes/messages";
 import { countriesListUrl } from "@saleor/taxes/urls";
@@ -22,36 +21,14 @@ import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { useStyles } from "./styles";
+
 interface TaxCountriesMenuProps {
   countries: TaxCountryConfigurationFragment[];
   countryNames: CountryFragment[];
   selectedCountryId: string;
   onCountryDelete: (countryId: string) => void;
 }
-
-const useStyles = makeStyles(
-  theme => ({
-    clickable: {
-      cursor: "pointer"
-    },
-    scrollWrapper: {
-      overflow: "scroll",
-      maxHeight: 600
-    },
-    selected: {
-      borderLeft: `4px solid ${theme.palette.saleor.active[1]}`
-    },
-    spaceBetween: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center"
-    },
-    tableRow: {
-      minHeight: "48px"
-    }
-  }),
-  { name: "TaxCountriesMenu" }
-);
 
 export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
   countries,
