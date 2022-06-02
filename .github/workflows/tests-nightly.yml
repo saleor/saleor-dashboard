@@ -129,6 +129,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           parallel: true
+          tag: ${{ steps.get-env-uri.outputs.ENV_URI }}, All tests, ${{github.event.action}}
           group: 'UI - Chrome'
           command: npm run cy:run:allEnv:parallel
 
@@ -147,6 +148,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           parallel: true
+          tag: ${{ steps.get-env-uri.outputs.ENV_URI }}, Critical, ${{github.event.action}}
           group: 'UI - Chrome'
           command: npm run cy:run:critical:parallel
 
