@@ -5,6 +5,7 @@ export const LEFT_MENU_SELECTORS = {
   home: "[data-test='menu-item-label'][data-test-id='home']",
   orders: "[data-test='menu-item-label'][data-test-id='orders']",
   discounts: "[data-test='menu-item-label'][data-test-id='discounts']",
+  appSection: "[data-test='menu-item-label'][data-test-id='apps_section']",
   app: "[data-test='menu-item-label'][data-test-id='apps']",
   translations: "[data-test='menu-item-label'][data-test-id='translations']",
   customers: "[data-test='menu-item-label'][data-test-id='customers']"

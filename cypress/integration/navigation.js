@@ -48,8 +48,8 @@ describe("As a staff user I want to navigate through shop using different permis
     const tags =
       key === "all" ? ["critical", "all", "refactored"] : ["all", "refactored"];
     filterTests({ definedTags: tags }, () => {
-      it(`should be able to navigate through shop as a staff member using ${key} permission. ${PERMISSIONS_OPTIONS[key].testCase}`, () => {
-        const permissionOption = PERMISSIONS_OPTIONS[key];
+      it(`should be able to navigate through shop as a staff member using ${key} permission. ${permissionsOptions[key].testCase}`, () => {
+        const permissionOption = permissionsOptions[key];
         const permissions = permissionOption.permissions;
         cy.clearSessionData();
         permissionsSteps.navigateToAllAvailablePageAndCheckIfDisplayed(
