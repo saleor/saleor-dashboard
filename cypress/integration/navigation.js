@@ -5,9 +5,7 @@ import {
   APP_MENU_SELECTORS,
   LEFT_MENU_SELECTORS
 } from "../elements/account/left-menu/left-menu-selectors";
-import { PERMISSIONS } from "../fixtures/permissions";
 import { PERMISSIONS_OPTIONS } from "../fixtures/permissionsUsers";
-import { urlList } from "../fixtures/urlList";
 import filterTests from "../support/filterTests";
 import * as permissionsSteps from "../support/pages/permissionsPage";
 
@@ -17,11 +15,13 @@ describe("As a staff user I want to navigate through shop using different permis
   before(() => {
     cy.loginUserViaRequest()
       .visit("/")
+      .waitForProgressBarToNotExist()
       .get("body")
-      .then(body => {
+      .then($body => {
         // This will be deleted when Marketplace is released
         // Consider this solution as temporary
-        if (body.find(LEFT_MENU_SELECTORS.appSection)) {
+
+        if ($body.find(LEFT_MENU_SELECTORS.appSection).length) {
           const appPermissions = {
             parent: {
               parentMenuSelector: LEFT_MENU_SELECTORS.appSection,
@@ -33,7 +33,7 @@ describe("As a staff user I want to navigate through shop using different permis
           permissionsOptions.app.permissions = [appPermissions];
         } else {
           const appPermissions = {
-            permissionSelectors: [menuSelectors.LEFT_MENU_SELECTORS.app]
+            permissionSelectors: [LEFT_MENU_SELECTORS.app]
           };
           permissionsOptions.all.permissions.push(appPermissions);
           permissionsOptions.app.permissions = [appPermissions];
