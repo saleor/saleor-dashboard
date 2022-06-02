@@ -21,23 +21,24 @@ describe("As a staff user I want to navigate through shop using different permis
         // This will be deleted when Marketplace is released
         // Consider this solution as temporary
 
+        let appPermissions;
+
         if ($body.find(LEFT_MENU_SELECTORS.appSection).length) {
-          const appPermissions = {
+          appPermissions = {
             parent: {
               parentMenuSelector: LEFT_MENU_SELECTORS.appSection,
               parentSelectors: [APP_MENU_SELECTORS]
             },
             permissionSelectors: [APP_MENU_SELECTORS.app]
           };
-          permissionsOptions.all.permissions.push(appPermissions);
-          permissionsOptions.app.permissions = [appPermissions];
         } else {
-          const appPermissions = {
+          appPermissions = {
             permissionSelectors: [LEFT_MENU_SELECTORS.app]
           };
-          permissionsOptions.all.permissions.push(appPermissions);
-          permissionsOptions.app.permissions = [appPermissions];
         }
+
+        permissionsOptions.all.permissions.push(appPermissions);
+        permissionsOptions.app.permissions = [appPermissions];
       });
   });
 
