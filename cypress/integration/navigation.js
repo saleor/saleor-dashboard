@@ -3,6 +3,7 @@
 
 import {
   APP_MENU_SELECTORS,
+  appCommonSelector,
   LEFT_MENU_SELECTORS
 } from "../elements/account/left-menu/left-menu-selectors";
 import { PERMISSIONS_OPTIONS } from "../fixtures/permissionsUsers";
@@ -15,7 +16,8 @@ describe("As a staff user I want to navigate through shop using different permis
   before(() => {
     cy.loginUserViaRequest()
       .visit("/")
-      .waitForProgressBarToNotExist()
+      .get(appCommonSelector)
+      .should("be.visible")
       .get("body")
       .then($body => {
         // This will be deleted when Marketplace is released

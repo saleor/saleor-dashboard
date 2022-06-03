@@ -27,3 +27,5 @@ export const CATALOG = {
 export const APP_MENU_SELECTORS = {
   app: "[data-test='submenu-item-label'][data-test-id='apps']"
 };
+
+export const appCommonSelector = "[data-test-id*='apps']";
