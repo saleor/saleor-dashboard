@@ -58,34 +58,35 @@ export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
               </ListItemCell>
             </ListItem>
           </ListHeader>
-          {countries?.map(country => (
-            <ListItemLink
-              key={country.countryCode}
-              className={clsx(classes.clickable, classes.tableRow, {
-                [classes.selected]: country.countryCode === selectedCountryId
-              })}
-              href={countriesListUrl(country.countryCode)}
-            >
-              <ListItemCell>
-                <div className={classes.spaceBetween}>
-                  {
-                    countryNames?.find(
-                      name => name.code === country.countryCode
-                    )?.country
-                  }
-                  <IconButton
-                    variant="secondary"
-                    onClick={event => {
-                      event.stopPropagation();
-                      onCountryDelete(country.countryCode);
-                    }}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </div>
-              </ListItemCell>
-            </ListItemLink>
-          )) ?? <Skeleton />}
+          {(countryNames &&
+            countries?.map(country => (
+              <ListItemLink
+                key={country.countryCode}
+                className={clsx(classes.clickable, classes.tableRow, {
+                  [classes.selected]: country.countryCode === selectedCountryId
+                })}
+                href={countriesListUrl(country.countryCode)}
+              >
+                <ListItemCell>
+                  <div className={classes.spaceBetween}>
+                    {
+                      countryNames.find(
+                        name => name.code === country.countryCode
+                      ).country
+                    }
+                    <IconButton
+                      variant="secondary"
+                      onClick={event => {
+                        event.stopPropagation();
+                        onCountryDelete(country.countryCode);
+                      }}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </div>
+                </ListItemCell>
+              </ListItemLink>
+            ))) ?? <Skeleton />}
         </List>
       </div>
     </Card>
