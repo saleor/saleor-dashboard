@@ -12,18 +12,18 @@ export const taxesMessages = defineMessages({
     description: "Taxes section title"
   },
   taxClassesSection: {
-    id: "VmVQpG",
-    defaultMessage: "Tax Classes",
+    id: "aJm/by",
+    defaultMessage: "Tax classes",
     description: "Taxes section title"
   },
   channelList: {
-    id: "Tw92Ye",
-    defaultMessage: "Channel Name",
+    id: "yLfbSh",
+    defaultMessage: "Channel name",
     description: "support label"
   },
   defaultSettings: {
-    id: "ITlA32",
-    defaultMessage: "Default Settings",
+    id: "pWClYm",
+    defaultMessage: "Default settings",
     description: "card title"
   },
   countryExceptions: {
@@ -32,18 +32,18 @@ export const taxesMessages = defineMessages({
     description: "card title"
   },
   taxCharging: {
-    id: "t4CZ71",
-    defaultMessage: "Tax Charging",
+    id: "di0qi8",
+    defaultMessage: "Tax charging",
     description: "card subtitle"
   },
   enteredPrices: {
-    id: "XP8xhN",
-    defaultMessage: "Entered Prices",
+    id: "puRlnN",
+    defaultMessage: "Entered prices",
     description: "card subtitle"
   },
   renderedPrices: {
-    id: "bK2kVw",
-    defaultMessage: "Rendered Prices",
+    id: "98Nw4g",
+    defaultMessage: "Rendered prices",
     description: "card subtitle"
   },
   chargeTaxes: {
@@ -62,8 +62,8 @@ export const taxesMessages = defineMessages({
     description: "label for radio button"
   },
   addCountryLabel: {
-    id: "Fd15ll",
-    defaultMessage: "Add Country",
+    id: "/5r4he",
+    defaultMessage: "Add country",
     description: "label for button"
   },
   countryNameHeader: {
@@ -82,28 +82,28 @@ export const taxesMessages = defineMessages({
     description: "table header column"
   },
   countryList: {
-    id: "DtJhMP",
-    defaultMessage: "Country List",
+    id: "CFT171",
+    defaultMessage: "Country list",
     description: "card header title"
   },
   taxClassRatesHeader: {
-    id: "QCKDe+",
-    defaultMessage: "Tax Class Rates",
+    id: "qHb6xK",
+    defaultMessage: "Tax class rates",
     description: "card header"
   },
   searchTaxClasses: {
-    id: "k5UOf3",
-    defaultMessage: "Search Tax Classes",
+    id: "Ww69SE",
+    defaultMessage: "Search tax classes",
     description: "search input placeholder"
   },
   taxNameHeader: {
-    id: "2W9nuT",
-    defaultMessage: "Tax Name",
+    id: "qbcNjQ",
+    defaultMessage: "Tax name",
     description: "table header column"
   },
   taxRateHeader: {
-    id: "1MyMcE",
-    defaultMessage: "Tax Rate",
+    id: "Nj9iSB",
+    defaultMessage: "Tax rate",
     description: "table header column"
   }
 });
