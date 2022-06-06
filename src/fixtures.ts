@@ -279,6 +279,7 @@ export const countries = [
   { code: "UA", name: "Ukraine" },
   { code: "AE", name: "United Arab Emirates" },
   { code: "GB", name: "United Kingdom" },
+  { code: "UG", name: "The Uyghur" },
   { code: "US", name: "United States" },
   { code: "UM", name: "United States Minor Outlying Islands" },
   { code: "UY", name: "Uruguay" },
