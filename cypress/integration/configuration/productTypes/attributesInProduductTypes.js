@@ -95,6 +95,8 @@ filterTests({ definedTags: ["all"] }, () => {
           cy.visitAndWaitForProgressBarToDisappear(
             productTypeDetailsUrl(productType.id)
           )
+            .get(PRODUCT_TYPE_DETAILS.nameInput)
+            .should("be.enabled")
             .get(BUTTON_SELECTORS.deleteIcon)
             .should("be.enabled")
             .click()
@@ -104,8 +106,8 @@ filterTests({ definedTags: ["all"] }, () => {
             .wait("@UnassignProductAttribute");
           getProductType(productType.id);
         })
-        .then(productType => {
-          expect(productType.assignedVariantAttributes).to.be.empty;
+        .then(productTypeResp => {
+          expect(productTypeResp.assignedVariantAttributes).to.be.empty;
         });
     });
 
@@ -122,17 +124,19 @@ filterTests({ definedTags: ["all"] }, () => {
           cy.visitAndWaitForProgressBarToDisappear(
             productTypeDetailsUrl(productType.id)
           )
-            .get(BUTTON_SELECTORS.deleteIcon)
-            .click()
+            .get(PRODUCT_TYPE_DETAILS.nameInput)
             .should("be.enabled")
+            .get(BUTTON_SELECTORS.deleteIcon)
+            .should("be.enabled")
+            .click()
             .addAliasToGraphRequest("UnassignProductAttribute")
             .get(BUTTON_SELECTORS.submit)
             .click()
             .wait("@UnassignProductAttribute");
           getProductType(productType.id);
         })
-        .then(productType => {
-          expect(productType.assignedVariantAttributes).to.be.empty;
+        .then(productTypeResp => {
+          expect(productTypeResp.assignedVariantAttributes).to.be.empty;
         });
     });
 

@@ -260,7 +260,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    xit("assign product to collection. TC: SALEOR_0307", () => {
+    xit("should assign product to collection. TC: SALEOR_0307", () => {
       const collectionName = `Assign-${startsWith}${faker.datatype.number()}`;
       const productName = `Product-To-Assign-${startsWith}${faker.datatype.number()}`;
 
