@@ -59,7 +59,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
         />
         <PageTab
           label={intl.formatMessage(taxesMessages.taxClassesSection)}
-          value="classes"
+          value="tax-classes"
         />
       </PageTabs>
       <VerticalSpacer spacing={2} />
