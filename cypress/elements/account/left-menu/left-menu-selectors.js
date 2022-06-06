@@ -22,3 +22,9 @@ export const CATALOG = {
   categories: "[data-test='submenu-item-label'][data-test-id='categories']",
   collections: "[data-test='submenu-item-label'][data-test-id='collections']"
 };
+
+export const APP_MENU_SELECTORS = {
+  app: "[data-test='submenu-item-label'][data-test-id='apps']"
+};
+
+export const appCommonSelector = "[data-test-id*='apps']";

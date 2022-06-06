@@ -1,12 +1,50 @@
 /// <reference types="cypress"/>
 /// <reference types="../support"/>
 
+import {
+  APP_MENU_SELECTORS,
+  appCommonSelector,
+  LEFT_MENU_SELECTORS
+} from "../elements/account/left-menu/left-menu-selectors";
 import { PERMISSIONS_OPTIONS } from "../fixtures/permissionsUsers";
 import filterTests from "../support/filterTests";
 import * as permissionsSteps from "../support/pages/permissionsPage";
 
 describe("As a staff user I want to navigate through shop using different permissions", () => {
-  Object.keys(PERMISSIONS_OPTIONS).forEach(key => {
+  const permissionsOptions = PERMISSIONS_OPTIONS;
+
+  before(() => {
+    cy.loginUserViaRequest()
+      .visit("/")
+      .get(appCommonSelector)
+      .should("be.visible")
+      .get("body")
+      .then($body => {
+        // This will be deleted when Marketplace is released
+        // Consider this solution as temporary
+
+        let appPermissions;
+
+        if ($body.find(LEFT_MENU_SELECTORS.appSection).length) {
+          appPermissions = {
+            parent: {
+              parentMenuSelector: LEFT_MENU_SELECTORS.appSection,
+              parentSelectors: [APP_MENU_SELECTORS]
+            },
+            permissionSelectors: [APP_MENU_SELECTORS.app]
+          };
+        } else {
+          appPermissions = {
+            permissionSelectors: [LEFT_MENU_SELECTORS.app]
+          };
+        }
+
+        permissionsOptions.all.permissions.push(appPermissions);
+        permissionsOptions.app.permissions = [appPermissions];
+      });
+  });
+
+  Object.keys(permissionsOptions).forEach(key => {
     const tags =
       key === "all" ? ["critical", "all", "refactored"] : ["all", "refactored"];
     filterTests({ definedTags: tags }, () => {
