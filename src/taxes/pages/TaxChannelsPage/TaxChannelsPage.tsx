@@ -25,8 +25,8 @@ import TaxCountryExceptionListItem from "./TaxCountryExceptionListItem";
 import TaxSettingsCard from "./TaxSettingsCard";
 
 interface TaxChannelsPageProps {
-  taxConfigurations: TaxConfigurationFragment[];
-  countries: CountryFragment[];
+  taxConfigurations: TaxConfigurationFragment[] | undefined;
+  countries: CountryFragment[] | undefined;
   selectedConfigurationId: string;
   handleTabChange: (tab: string) => void;
 }
@@ -66,7 +66,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
       <Grid variant="inverted">
         <TaxChannelsMenu
           configurations={taxConfigurations}
-          selectedConfigurationId={currentTaxConfiguration?.id}
+          selectedConfigurationId={selectedConfigurationId}
         />
         <div>
           <TaxSettingsCard />

@@ -24,8 +24,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useStyles } from "./styles";
 
 interface TaxCountriesMenuProps {
-  countries: TaxCountryConfigurationFragment[];
-  countryNames: CountryFragment[];
+  countries: TaxCountryConfigurationFragment[] | undefined;
+  countryNames: CountryFragment[] | undefined;
   selectedCountryId: string;
   onCountryDelete: (countryId: string) => void;
 }

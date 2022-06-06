@@ -34,8 +34,8 @@ import TaxInput from "../../components/TaxInput";
 import TaxCountriesMenu from "./TaxCountriesMenu";
 
 interface TaxCountriesPageProps {
-  countryTaxesData: TaxCountryConfigurationFragment[];
-  countries: CountryFragment[];
+  countryTaxesData: TaxCountryConfigurationFragment[] | undefined;
+  countries: CountryFragment[] | undefined;
   selectedCountryId: string;
   handleTabChange: (tab: string) => void;
 }

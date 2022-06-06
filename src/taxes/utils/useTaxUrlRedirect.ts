@@ -19,8 +19,8 @@ interface TaxEntityWithCode {
 type TaxEntity = TaxEntityWithId | TaxEntityWithCode;
 
 interface UseTaxUrlRedirectOpts {
-  id: string;
-  data: TaxEntity[];
+  id: string | undefined;
+  data: TaxEntity[] | undefined;
   navigate: UseNavigatorResult;
   urlFunction: (id: string) => string;
 }

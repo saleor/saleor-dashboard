@@ -5,8 +5,8 @@ import React from "react";
 import { useStyles } from "./styles";
 
 interface TaxInputProps {
-  placeholder: number;
-  value: string;
+  placeholder: number | undefined;
+  value: string | undefined;
   change: FormChange;
 }
 

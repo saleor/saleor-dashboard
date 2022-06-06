@@ -8,7 +8,7 @@ import { countriesListUrl, taxTabSectionUrl } from "../urls";
 import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
 
 interface CountriesListProps {
-  id: string;
+  id: string | undefined;
 }
 
 export const CountriesList: React.FC<CountriesListProps> = ({ id }) => {
@@ -34,7 +34,7 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id }) => {
     <TaxCountriesPage
       countryTaxesData={taxCountryConfigurations}
       countries={shop?.countries}
-      selectedCountryId={id}
+      selectedCountryId={id!}
       handleTabChange={handleTabChange}
     />
   );
