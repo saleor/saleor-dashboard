@@ -56,14 +56,17 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
     selectedCountryId,
     handleTabChange
   } = props;
-
   const intl = useIntl();
   const classes = useStyles();
 
   const [query, setQuery] = React.useState("");
 
-  const currentCountry = countryTaxesData?.find(
-    country => country.countryCode === selectedCountryId
+  const currentCountry = React.useMemo(
+    () =>
+      countryTaxesData?.find(
+        country => country.countryCode === selectedCountryId
+      ),
+    [selectedCountryId, countryTaxesData]
   );
 
   const filteredRates = currentCountry?.taxClassCountryRates.filter(
