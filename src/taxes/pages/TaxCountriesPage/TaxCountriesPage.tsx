@@ -69,8 +69,13 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
     [selectedCountryId, countryTaxesData]
   );
 
-  const filteredRates = currentCountry?.taxClassCountryRates.filter(
-    rate => rate.taxClass.name.search(new RegExp(parseQuery(query), "i")) >= 0
+  const filteredRates = React.useMemo(
+    () =>
+      currentCountry?.taxClassCountryRates.filter(
+        rate =>
+          rate.taxClass.name.search(new RegExp(parseQuery(query), "i")) >= 0
+      ),
+    [currentCountry, query]
   );
 
   return (
