@@ -2,6 +2,11 @@ import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   () => ({
+    /**
+     * Spinboxes are up & down arrows that are used to change the value of a number
+     * in html input elements with type=number. There is a different styling for
+     * hiding them, dependent on browser (as of mid-2022).
+     */
     hideSpinboxes: {
       // chrome, safari
       "& input::-webkit-outer-spin-button, input::-webkit-inner-spin-button": {
