@@ -446,7 +446,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   onCollectionChange={handlers.selectCollection}
                 />
                 <CardSpacer />
-                {isSimpleProduct ? (
+                {isSimpleProduct || product?.variants.length === 0 ? (
                   <ChannelsAvailabilityCard
                     managePermissions={[PermissionEnum.MANAGE_PRODUCTS]}
                     messages={{
@@ -463,7 +463,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       })
                     }}
                     errors={channelsErrors}
-                    selectedChannelsCount={data.channelListings.length}
                     allChannelsCount={allChannelsCount}
                     channels={data.channelListings}
                     disabled={disabled}

@@ -148,20 +148,20 @@ export const getChannelsVariables = (
     shouldUpdateChannel(initialChannelWithVariants, variants, allChannels)
   );
 
-  const channelsIdsToBeRemoved = getParsedChannelsData(
-    channelsWithVariants,
-    initialChannelWithVariants,
-    channelsData
-  )
-    .filter(shouldRemoveChannel(variants))
-    .map(({ channelId }) => channelId);
+  // const channelsIdsToBeRemoved = getParsedChannelsData(
+  //   channelsWithVariants,
+  //   initialChannelWithVariants,
+  //   channelsData
+  // )
+  //   .filter(shouldRemoveChannel(variants))
+  //   .map(({ channelId }) => channelId);
 
   return {
     variables: {
       id,
       input: {
-        updateChannels: channelsToBeUpdated,
-        removeChannels: channelsIdsToBeRemoved
+        updateChannels: channelsToBeUpdated
+        // removeChannels: channelsIdsToBeRemoved
       }
     }
   };
