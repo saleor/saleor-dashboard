@@ -16,7 +16,7 @@ export const errorMessages = defineMessages({
   serverError: {
     id: "ChGI4V",
     defaultMessage:
-      "Saleor is unavailable, please check your network connection and try again.",
+      "Store is unavailable, please check your network connection and try again.",
     description: "error message"
   }
 });
