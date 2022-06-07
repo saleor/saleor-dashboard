@@ -143,7 +143,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
           helperText={errors?.value}
           className={classes.colorInput}
           InputProps={{ startAdornment: "HEX" }}
-          inputProps={{ pattern: "[A-Za-z0-9]{6}", maxLength: 6 }}
+          inputProps={{ pattern: "[A-Za-z0-9]{6}", maxLength: 7 }}
           value={`#${hex}`}
           onChange={event => handleHEXChange(event.target.value)}
         />
