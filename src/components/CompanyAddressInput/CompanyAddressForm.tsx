@@ -176,7 +176,7 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
           helperText={getErrorMessage(formErrors.country, intl)}
           label={intl.formatMessage({
             id: "vONi+O",
-            defaultMessage: "Country"
+            defaultMessage: "Country / Region"
           })}
           name={"country" as keyof AddressTypeInput}
           onChange={onCountryChange}
@@ -189,7 +189,7 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
           helperText={getErrorMessage(formErrors.countryArea, intl)}
           label={intl.formatMessage({
             id: "AuwpCm",
-            defaultMessage: "Country area"
+            defaultMessage: "State / Province"
           })}
           name={"countryArea" as keyof AddressTypeInput}
           onChange={onChange}
