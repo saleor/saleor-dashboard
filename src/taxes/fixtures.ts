@@ -1,4 +1,5 @@
 import {
+  TaxClassFragment,
   TaxConfigurationFragment,
   TaxCountryConfigurationFragment
 } from "@saleor/graphql";
@@ -108,6 +109,45 @@ export const taxCountryConfigurations: TaxCountryConfigurationFragment[] = [
           name: "Food",
           isDefault: false
         }
+      }
+    ]
+  }
+];
+
+export const taxClasses: TaxClassFragment[] = [
+  {
+    __typename: "TaxClass",
+    id: "taxClassNode1",
+    name: "Default tax class",
+    isDefault: true,
+    countries: [
+      {
+        __typename: "TaxClassCountryRate",
+        countryCode: "AX",
+        rate: 0.2
+      },
+      {
+        __typename: "TaxClassCountryRate",
+        countryCode: "AF",
+        rate: 0.15
+      }
+    ]
+  },
+  {
+    __typename: "TaxClass",
+    id: "taxClassesNode2",
+    name: "Food",
+    isDefault: false,
+    countries: [
+      {
+        __typename: "TaxClassCountryRate",
+        countryCode: "AX",
+        rate: 0.05
+      },
+      {
+        __typename: "TaxClassCountryRate",
+        countryCode: "AF",
+        rate: 0.0
       }
     ]
   }
