@@ -4490,7 +4490,6 @@ export enum TimePeriodTypeEnum {
  *     CAPTURE - Represents the capture action.
  *     REFUND - Represents a refund action.
  *     VOID - Represents a void action.
- *
  */
 export enum TransactionActionEnum {
   CAPTURE = 'CAPTURE',
@@ -6455,6 +6454,8 @@ export type TaxConfigurationPerCountryFragment = { __typename: 'TaxConfiguration
 export type TaxConfigurationFragment = { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', countryCode: string, chargeTaxes: boolean, displayGrossPrices: boolean }> };
 
 export type TaxCountryConfigurationFragment = { __typename: 'TaxCountryConfiguration', countryCode: string, taxClassCountryRates: Array<{ __typename: 'TaxClassCountryRate', rate: number, taxClass: { __typename: 'TaxClass', id: string, name: string, isDefault: boolean } }> };
+
+export type TaxClassFragment = { __typename: 'TaxClass', id: string, name: string, isDefault: boolean, countries: Array<{ __typename: 'TaxClassCountryRate', countryCode: string, rate: number }> | null };
 
 export type TimePeriodFragment = { __typename: 'TimePeriod', amount: number, type: TimePeriodTypeEnum };
 
