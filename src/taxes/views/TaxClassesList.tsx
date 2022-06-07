@@ -3,6 +3,7 @@ import useShop from "@saleor/hooks/useShop";
 import React from "react";
 
 import { taxClasses } from "../fixtures";
+import TaxClassesPage from "../pages/TaxClassesPage";
 import { taxClassesListUrl, taxTabSectionUrl } from "../urls";
 import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
 
@@ -29,7 +30,14 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
     return null;
   }
 
-  return null;
+  return (
+    <TaxClassesPage
+      taxClasses={taxClasses}
+      countryNames={shop?.countries}
+      handleTabChange={handleTabChange}
+      selectedTaxClassId={id}
+    />
+  );
 };
 
 export default TaxClassesList;
