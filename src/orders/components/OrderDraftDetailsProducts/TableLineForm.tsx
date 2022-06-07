@@ -31,15 +31,13 @@ const TableLineForm: React.FC<TableLineFormProps> = ({
   const { id, quantity } = line;
 
   const handleSubmit = (id: string, data: OrderLineInput) => {
-    if (!data || data.quantity < 1) {
-      data.quantity = 1;
-    }
-    onOrderLineChange(id, { quantity: Math.floor(data.quantity) });
+    const quantity = data?.quantity >= 1 ? Math.floor(data.quantity) : 1;
+    onOrderLineChange(id, { quantity });
   };
 
   return (
     <Form initial={{ quantity }} onSubmit={data => handleSubmit(id, data)}>
-      {({ change, data, submit }) => {
+      {({ change, data, submit, set }) => {
         const handleQuantityChange = createNonNegativeValueChangeHandler(
           change,
         );
@@ -58,10 +56,13 @@ const TableLineForm: React.FC<TableLineFormProps> = ({
                 type="number"
                 value={data.quantity}
                 onChange={debounce}
-                onBlur={submit}
-                inputProps={{
-                  min: 1,
+                onBlur={async () => {
+                  if (data.quantity < 1) {
+                    await set({ quantity: 1 });
+                  }
+                  submit();
                 }}
+                inputProps={{ min: 1 }}
               />
             )}
           </DebounceForm>
