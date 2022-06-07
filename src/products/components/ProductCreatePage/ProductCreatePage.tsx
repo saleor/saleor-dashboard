@@ -348,7 +348,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                       })
                     }}
                     errors={channelsErrors}
-                    selectedChannelsCount={data.channelListings?.length || 0}
                     allChannelsCount={allChannelsCount}
                     channels={data.channelListings || []}
                     disabled={loading}

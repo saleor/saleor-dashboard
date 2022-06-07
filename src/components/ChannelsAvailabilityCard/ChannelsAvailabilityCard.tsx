@@ -59,7 +59,7 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityCardProps> = pro
 
   return (
     <ChannelsAvailabilityCardWrapper
-      selectedChannelsCount={channels.length ?? 0}
+      selectedChannelsCount={(channels ?? channelsList).length ?? 0}
       allChannelsCount={allChannelsCount}
       managePermissions={managePermissions}
       openModal={openModal}

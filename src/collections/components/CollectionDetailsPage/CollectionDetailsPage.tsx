@@ -141,7 +141,6 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                     })
                   }}
                   errors={channelsErrors}
-                  selectedChannelsCount={data.channelListings.length}
                   allChannelsCount={channelsCount}
                   channels={data.channelListings}
                   disabled={disabled}

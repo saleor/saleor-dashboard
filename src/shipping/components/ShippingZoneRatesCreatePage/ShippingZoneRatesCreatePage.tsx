@@ -204,7 +204,6 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
               <ChannelsAvailabilityCard
                 managePermissions={[PermissionEnum.MANAGE_SHIPPING]}
                 allChannelsCount={allChannelsCount}
-                selectedChannelsCount={shippingChannels?.length}
                 channelsList={data.channelListings}
                 openModal={openChannelsModal}
               />
