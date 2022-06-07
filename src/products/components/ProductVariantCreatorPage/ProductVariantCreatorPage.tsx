@@ -177,7 +177,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
       onTransition: (_, nextStep) => {
         if (nextStep === ProductVariantCreatorStep.summary) {
           dispatchFormDataAction({
-            type: ProductVariantCreateReducerActionType.reload
+            type: ProductVariantCreateReducerActionType.rebuild
           });
         }
       }
