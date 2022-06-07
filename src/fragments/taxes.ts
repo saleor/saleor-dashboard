@@ -79,3 +79,15 @@ export const taxCountryConfigurationFragment = gql`
     }
   }
 `;
+
+export const taxClassFragment = gql`
+  fragment TaxClass on TaxClass {
+    id
+    name
+    isDefault
+    countries {
+      countryCode
+      rate
+    }
+  }
+`;
