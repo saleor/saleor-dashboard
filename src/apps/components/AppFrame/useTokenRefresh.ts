@@ -35,9 +35,11 @@ const useTokenRefresh = (token: string, refetch?: () => void) => {
   };
 
   useEffect(() => {
-    createTimeout();
+    if (refetch) {
+      createTimeout();
+    }
 
-    return () => deleteTimeout();
+    return () => !!refetch && deleteTimeout();
   }, [token]);
 };
 

@@ -12,8 +12,8 @@ interface Props {
   src: string;
   appToken: string;
   appId: string;
-  refetch: () => void;
   className?: string;
+  refetch?: () => void;
   onLoad?(): void;
   onError?(): void;
 }
