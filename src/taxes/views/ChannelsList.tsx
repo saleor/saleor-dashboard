@@ -8,7 +8,7 @@ import { channelsListUrl, taxTabSectionUrl } from "../urls";
 import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
 
 interface ChannelsListProps {
-  id: string;
+  id: string | undefined;
 }
 
 export const ChannelsList: React.FC<ChannelsListProps> = ({ id }) => {
@@ -34,7 +34,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ id }) => {
     <TaxChannelsPage
       taxConfigurations={taxConfigurations} // TODO: change fixture to query data
       countries={shop?.countries}
-      selectedConfigurationId={id}
+      selectedConfigurationId={id!}
       handleTabChange={handleTabChange}
     />
   );

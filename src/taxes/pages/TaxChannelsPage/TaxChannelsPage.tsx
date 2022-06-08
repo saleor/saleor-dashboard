@@ -4,6 +4,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
+import Skeleton from "@saleor/components/Skeleton";
 import { CountryFragment, TaxConfigurationFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import {
@@ -24,8 +25,8 @@ import TaxCountryExceptionListItem from "./TaxCountryExceptionListItem";
 import TaxSettingsCard from "./TaxSettingsCard";
 
 interface TaxChannelsPageProps {
-  taxConfigurations: TaxConfigurationFragment[];
-  countries: CountryFragment[];
+  taxConfigurations: TaxConfigurationFragment[] | undefined;
+  countries: CountryFragment[] | undefined;
   selectedConfigurationId: string;
   handleTabChange: (tab: string) => void;
 }
@@ -40,7 +41,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
 
   const intl = useIntl();
 
-  const currentTaxConfiguration = taxConfigurations.find(
+  const currentTaxConfiguration = taxConfigurations?.find(
     taxConfigurations => taxConfigurations.id === selectedConfigurationId
   );
 
@@ -58,14 +59,14 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
         />
         <PageTab
           label={intl.formatMessage(taxesMessages.taxClassesSection)}
-          value="classes"
+          value="tax-classes"
         />
       </PageTabs>
       <VerticalSpacer spacing={2} />
       <Grid variant="inverted">
         <TaxChannelsMenu
           configurations={taxConfigurations}
-          selectedConfigurationId={currentTaxConfiguration?.id}
+          selectedConfigurationId={selectedConfigurationId}
         />
         <div>
           <TaxSettingsCard />
@@ -103,7 +104,12 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                   }
                   key={country.countryCode}
                 />
-              ))}
+              )) ?? (
+                <>
+                  <Skeleton />
+                  <VerticalSpacer />
+                </>
+              )}
             </List>
           </Card>
         </div>
