@@ -375,7 +375,7 @@ export const getAttributesCaption = (
   attributes: OrderFulfillLineFragment["variant"]["attributes"],
 ): string =>
   attributes
-    .map(attribute =>
+    ?.map(attribute =>
       attribute.values.map(attributeValue => attributeValue.name).join(", "),
     )
     .join(" / ");
