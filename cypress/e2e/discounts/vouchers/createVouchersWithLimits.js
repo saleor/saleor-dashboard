@@ -3,7 +3,6 @@
 
 import faker from "faker";
 
-import { createChannel } from "../../../support/api/requests/Channels";
 import { completeCheckout } from "../../../support/api/requests/Checkout";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import { deleteVouchersStartsWith } from "../../../support/api/utils/discounts/vouchersUtils";
@@ -25,7 +24,6 @@ filterTests({ definedTags: ["all"] }, () => {
     const shippingPrice = 100;
 
     let defaultChannel;
-    let createdChannel;
     let shippingMethod;
     let variants;
     let address;
