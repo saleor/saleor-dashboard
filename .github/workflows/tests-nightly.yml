@@ -116,7 +116,7 @@ jobs:
 
       - name: Cypress run
         if: ${{ github.event.inputs.tests != 'Critical' }}
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         env:
           API_URI: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
@@ -134,7 +134,7 @@ jobs:
 
       - name: Cypress run
         if: ${{ github.event.inputs.tests == 'Critical' }}
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         env:
           API_URI: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
