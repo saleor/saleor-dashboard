@@ -3,6 +3,7 @@
 
 import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
+import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { urlList } from "../../../fixtures/urlList";
 import filterTests from "../../../support/filterTests";
 import {
@@ -17,7 +18,7 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.visit(urlList.products);
     });
 
-    it("Should go to the next page", () => {
+    it("should be able go to the next page on product list. TC: SALEOR_2605", () => {
       cy.softExpectSkeletonIsVisible()
         .get(PRODUCTS_LIST.emptyProductRow)
         .should("not.exist")
@@ -30,16 +31,26 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.addAliasToGraphRequest("ProductList")
         .get(PRODUCTS_LIST.nextPageButton)
         .click()
-        .waitForProgressBarToNotExist()
+        .waitForSkeletonToDisappear()
+        .get(PRODUCTS_LIST.emptyProductRow)
+        .should("not.exist")
         .wait("@ProductList");
       getDisplayedColumnArray("name").then(productList => {
         expect(productList).to.not.equal(firstPageProducts);
       });
-      cy.get(PRODUCTS_LIST.previousPagePagination).then($button => {
-        expect($button).to.be.enabled;
+      cy.get(PRODUCTS_LIST.previousPagePagination)
+        .click()
+        .waitForSkeletonToDisappear()
+        .get(PRODUCTS_LIST.emptyProductRow)
+        .should("not.exist");
+      getDisplayedColumnArray("name").then(productsList => {
+        expect(
+          JSON.stringify(productsList) === JSON.stringify(firstPageProducts)
+        ).to.be.true;
       });
     });
-    it("should displayed correct number of results per page", () => {
+
+    it("should see correct amount of products per page. TC: SALEOR_2606", () => {
       cy.softExpectSkeletonIsVisible();
       isNumberOfProductsSameAsInSelectResultsOnPage().then(
         isTheSame =>

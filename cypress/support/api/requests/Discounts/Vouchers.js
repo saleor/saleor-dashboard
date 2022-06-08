@@ -21,7 +21,7 @@ export function getVouchers(first, startsWith) {
 export function deleteVouchers(voucherId) {
   const mutation = `mutation deleteVouchers{
     voucherDelete(id:"${voucherId}"){
-      discountErrors{
+      errors{
         field
         message
       }

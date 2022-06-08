@@ -1218,10 +1218,6 @@
     "context": "WarehouseSettings public stock label",
     "string": "Public Stock"
   },
-  "89PSdB": {
-    "context": "link",
-    "string": "Edit settings"
-  },
   "8B8E+3": {
     "context": "navigator placeholder",
     "string": "Order Number"
@@ -1928,6 +1924,10 @@
   "DzPVnj": {
     "context": "date time attribute type",
     "string": "Date Time"
+  },
+  "E+M17x": {
+    "context": "marketplace section name",
+    "string": "Marketplace"
   },
   "E22x4H": {
     "context": "no card defuned alert message",
@@ -5700,10 +5700,6 @@
   "hX5PAb": {
     "string": "No results found"
   },
-  "hdcGSJ": {
-    "context": "button",
-    "string": "Support/FAQ"
-  },
   "hkENym": {
     "string": "Customer"
   },
@@ -6203,10 +6199,6 @@
   },
   "llBnr+": {
     "string": "Warehouse Name"
-  },
-  "llC1q8": {
-    "context": "button",
-    "string": "App home page"
   },
   "lm9NSK": {
     "context": "password reset, button",

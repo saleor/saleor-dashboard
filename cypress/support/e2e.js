@@ -46,17 +46,25 @@ Cypress.Commands.add("addAliasToGraphRequest", operationName => {
 Cypress.Commands.add(
   "sendRequestWithQuery",
   (query, authorization = "auth", variables = "") =>
-    cy.request({
-      body: {
-        variables,
-        query
-      },
-      headers: {
-        Authorization: `JWT ${window.sessionStorage.getItem(authorization)}`
-      },
-      method: "POST",
-      url: urlList.apiUri
-    })
+    cy
+      .request({
+        body: {
+          variables,
+          query
+        },
+        headers: {
+          Authorization: `JWT ${window.sessionStorage.getItem(authorization)}`
+        },
+        method: "POST",
+        url: urlList.apiUri,
+        log: true
+      })
+      .then(response => {
+        const respInSting = JSON.stringify(response.body);
+        if (respInSting.includes(`"errors":[{`)) {
+          cy.log(query).log(JSON.stringify(response.body));
+        }
+      })
 );
 Cypress.on(
   "uncaught:exception",

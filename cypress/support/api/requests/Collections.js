@@ -4,7 +4,7 @@ export function createCollection(name, slug = name) {
       name:"${name}",
       slug:"${name}"
     }){
-      collectionErrors{
+      errors{
         field
         message
       }
@@ -46,7 +46,7 @@ export function deleteCollection(collectionId) {
       collection{
         id
       }
-      collectionErrors{
+      errors{
         field
         message
       }

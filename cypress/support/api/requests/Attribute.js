@@ -59,7 +59,7 @@ export function getAttributes(first, search) {
 export function deleteAttribute(attributeId) {
   const mutation = `mutation{
     attributeDelete(id:"${attributeId}"){
-      attributeErrors{
+      errors{
         field
         message
       }
