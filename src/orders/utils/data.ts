@@ -373,7 +373,7 @@ export const transformFuflillmentLinesToStockInputFormsetData = (
 
 export const getAttributesCaption = (
   attributes: OrderFulfillLineFragment["variant"]["attributes"] | undefined,
-): string =>
+): string | undefined =>
   attributes
     ?.map(attribute =>
       attribute.values.map(attributeValue => attributeValue.name).join(", "),
