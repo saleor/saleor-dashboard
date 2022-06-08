@@ -17,7 +17,10 @@ import { ChannelOpts, ChannelsAvailabilityError, Messages } from "./types";
 import { getChannelsAvailabilityMessages } from "./utils";
 
 export interface ChannelsAvailability
-  extends Omit<ChannelsAvailabilityWrapperProps, "children"> {
+  extends Omit<
+    ChannelsAvailabilityWrapperProps,
+    "children" | "selectedChannelsCount"
+  > {
   channels: ChannelData[];
   channelsList: ChannelList[];
   errors?: ChannelsAvailabilityError[];
@@ -36,7 +39,6 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityCardProps> = pro
   const {
     channelsList,
     errors = [],
-    selectedChannelsCount = 0,
     allChannelsCount = 0,
     channels,
     messages,
@@ -57,7 +59,7 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityCardProps> = pro
 
   return (
     <ChannelsAvailabilityCardWrapper
-      selectedChannelsCount={selectedChannelsCount}
+      selectedChannelsCount={(channels ?? channelsList).length ?? 0}
       allChannelsCount={allChannelsCount}
       managePermissions={managePermissions}
       openModal={openModal}

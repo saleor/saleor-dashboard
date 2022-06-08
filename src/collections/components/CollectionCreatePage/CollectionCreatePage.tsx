@@ -151,7 +151,6 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
                 }}
                 managePermissions={[PermissionEnum.MANAGE_PRODUCTS]}
                 errors={channelsErrors}
-                selectedChannelsCount={data.channelListings.length}
                 allChannelsCount={channelsCount}
                 channels={data.channelListings}
                 disabled={disabled}

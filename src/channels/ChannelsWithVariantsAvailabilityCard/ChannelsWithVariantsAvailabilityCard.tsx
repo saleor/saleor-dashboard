@@ -1,4 +1,3 @@
-import CannotDefineChannelsAvailabilityCard from "@saleor/channels/components/CannotDefineChannelsAvailabilityCard/CannotDefineChannelsAvailabilityCard";
 import { ChannelData } from "@saleor/channels/utils";
 import ChannelAvailabilityItemContent from "@saleor/components/ChannelsAvailabilityCard/Channel/ChannelAvailabilityItemContent";
 import ChannelsAvailabilityCardWrapper, {
@@ -65,10 +64,6 @@ const ChannelsWithVariantsAvailabilityCard: React.FC<ChannelsWithVariantsAvailab
   const selectedChannelsCount = getTotalSelectedChannelsCount(
     channelsWithVariantsData
   );
-
-  if (!variants?.length) {
-    return <CannotDefineChannelsAvailabilityCard />;
-  }
 
   return (
     <ChannelsAvailabilityCardWrapper

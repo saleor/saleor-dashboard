@@ -24,6 +24,7 @@ import reduceProductVariantCreateFormData, {
   ProductVariantCreateReducerActionType
 } from "./reducer";
 import { ProductVariantCreatorStep } from "./types";
+import { dedupeListings } from "./utils";
 
 const useStyles = makeStyles(
   theme => ({
@@ -176,7 +177,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
       onTransition: (_, nextStep) => {
         if (nextStep === ProductVariantCreatorStep.summary) {
           dispatchFormDataAction({
-            type: ProductVariantCreateReducerActionType.reload
+            type: ProductVariantCreateReducerActionType.rebuild
           });
         }
       }
@@ -237,7 +238,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
             className={classes.button}
             disabled={!canHitNext(step, wizardData, variantsLeft)}
             variant="primary"
-            onClick={() => onSubmit(wizardData.variants)}
+            onClick={() => onSubmit(dedupeListings(wizardData).variants)}
           >
             <FormattedMessage
               id="Q3j++G"

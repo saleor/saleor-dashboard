@@ -1,4 +1,8 @@
-import { AttributeValueFragment, StockInput } from "@saleor/graphql";
+import {
+  AttributeValueFragment,
+  ProductVariantBulkCreateInput,
+  StockInput
+} from "@saleor/graphql";
 import {
   add,
   remove,
@@ -32,6 +36,7 @@ export enum ProductVariantCreateReducerActionType {
   changeWarehouses,
   deleteVariant,
   reload,
+  rebuild,
   selectValue
 }
 export interface ProductVariantCreateReducerAction {
@@ -78,6 +83,44 @@ export interface ProductVariantCreateReducerAction {
     value: AttributeValue<Partial<AttributeValueFragment>>;
   };
   type: ProductVariantCreateReducerActionType;
+}
+
+function getVariantId(variant: ProductVariantBulkCreateInput): string {
+  return variant.attributes
+    .map(attribute => attribute.values.join(":"))
+    .join("-");
+}
+
+function merge(
+  prev: ProductVariantBulkCreateInput[],
+  update: ProductVariantBulkCreateInput[]
+): ProductVariantBulkCreateInput[] {
+  const prevIds = prev.map(getVariantId);
+  const updateIds = update.map(getVariantId);
+  return [
+    ...prev
+      .filter(variant => updateIds.includes(getVariantId(variant)))
+      .map(variant => {
+        const updatedVariant = update.find(
+          v => getVariantId(v) === getVariantId(variant)
+        );
+
+        return {
+          ...updatedVariant,
+          sku: variant.sku
+        };
+      }),
+    ...update.filter(variant => !prevIds.includes(getVariantId(variant)))
+  ];
+}
+
+function rebuild(
+  state: ProductVariantCreateFormData
+): ProductVariantCreateFormData {
+  return {
+    ...state,
+    variants: merge(state.variants, createVariants(state))
+  };
 }
 
 function selectValue(
@@ -519,6 +562,8 @@ function reduceProductVariantCreateFormData(
       return deleteVariant(prevState, action.deleteVariant.variantIndex);
     case ProductVariantCreateReducerActionType.reload:
       return action.reload?.data || createVariantMatrix(prevState);
+    case ProductVariantCreateReducerActionType.rebuild:
+      return rebuild(prevState);
     default:
       return prevState;
   }
