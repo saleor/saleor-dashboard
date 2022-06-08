@@ -230,6 +230,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                         getToFulfillOrderLines(order?.lines),
                         (line: OrderFulfillLineFragment, lineIndex) => (
                           <OrderFulfillLine
+                            key={line.id}
                             line={line}
                             lineIndex={lineIndex}
                             warehouseId={warehouse?.id}
