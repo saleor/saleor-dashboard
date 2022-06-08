@@ -65,3 +65,17 @@ export const taxConfiguration = gql`
     }
   }
 `;
+
+export const taxCountryConfigurationFragment = gql`
+  fragment TaxCountryConfiguration on TaxCountryConfiguration {
+    countryCode
+    taxClassCountryRates {
+      rate
+      taxClass {
+        id
+        name
+        isDefault
+      }
+    }
+  }
+`;

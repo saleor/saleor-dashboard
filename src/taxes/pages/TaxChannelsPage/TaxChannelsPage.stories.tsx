@@ -15,6 +15,8 @@ const props = {
 
 storiesOf("Views / Taxes / Channels view", module)
   .addDecorator(Decorator)
-  .add("loading", () => <TaxChannelsPage {...props} taxConfigurations={[]} />)
+  .add("loading", () => (
+    <TaxChannelsPage {...props} taxConfigurations={undefined} />
+  ))
   .add("default", () => <TaxChannelsPage {...props} />)
   .add("add country", () => <TaxChannelsPage {...props} />); // TODO: add country modal

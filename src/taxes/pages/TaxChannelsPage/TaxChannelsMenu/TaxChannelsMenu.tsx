@@ -12,7 +12,7 @@ import { FormattedMessage } from "react-intl";
 import { useStyles } from "./styles";
 
 interface TaxChannelsMenuProps {
-  configurations: TaxConfigurationFragment[];
+  configurations: TaxConfigurationFragment[] | undefined;
   selectedConfigurationId: string;
 }
 
