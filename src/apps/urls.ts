@@ -43,8 +43,6 @@ export const appsListPath = appsSection;
 export const customAppListPath = "/apps/custom/";
 
 export const appDetailsPath = (id: string) => urlJoin(appsSection, id);
-export const appSettingsPath = (id: string) =>
-  urlJoin(appsSection, id, "settings");
 export const appPath = (id: string) => urlJoin(appsSection, id, "app");
 export const appDeepPath = (id: string, subPath: string) =>
   urlJoin(appPath(id), subPath);
