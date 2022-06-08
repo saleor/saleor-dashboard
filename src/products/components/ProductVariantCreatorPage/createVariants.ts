@@ -152,14 +152,6 @@ function addAttributeToVariant(
     }
   ]);
 }
-function addVariantAttributeInput(
-  data: CreateVariantInput[],
-  attribute: Attribute
-): CreateVariantInput[] {
-  return data
-    .map(variant => addAttributeToVariant(attribute, variant))
-    .reduce((acc, variantInput) => [...acc, ...variantInput]);
-}
 
 export function createVariantFlatMatrixDimension(
   variants: CreateVariantInput[],
@@ -167,7 +159,9 @@ export function createVariantFlatMatrixDimension(
 ): CreateVariantInput[] {
   if (attributes.length > 0) {
     return createVariantFlatMatrixDimension(
-      addVariantAttributeInput(variants, attributes[0]),
+      variants.flatMap(variant =>
+        addAttributeToVariant(attributes[0], variant)
+      ),
       attributes.slice(1)
     );
   } else {

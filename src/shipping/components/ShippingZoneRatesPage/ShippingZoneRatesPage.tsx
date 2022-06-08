@@ -235,7 +235,6 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
               <ChannelsAvailabilityCard
                 managePermissions={[PermissionEnum.MANAGE_SHIPPING]}
                 allChannelsCount={allChannelsCount}
-                selectedChannelsCount={shippingChannels?.length}
                 channelsList={data.channelListings.map(channel => ({
                   id: channel.id,
                   name: channel.name

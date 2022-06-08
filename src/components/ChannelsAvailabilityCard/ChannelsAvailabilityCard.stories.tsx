@@ -38,8 +38,7 @@ const props: ChannelsAvailabilityCardProps = {
   })),
   errors: [],
   onChange: () => undefined,
-  openModal: () => undefined,
-  selectedChannelsCount: 3
+  openModal: () => undefined
 };
 
 storiesOf("Generics / Channels availability card", module)

@@ -5,6 +5,7 @@ import {
 } from "@saleor/graphql";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { RelayToFlat } from "@saleor/types";
+import uniqBy from "lodash/uniqBy";
 
 import { AttributeValue, ProductVariantCreateFormData } from "./form";
 
@@ -79,3 +80,15 @@ export const getBasicAttributeValue = (
       attributeValues.find(getBySlug(attributeValue))
   };
 };
+
+export function dedupeListings(
+  data: ProductVariantCreateFormData
+): ProductVariantCreateFormData {
+  return {
+    ...data,
+    variants: data.variants.map(variant => ({
+      ...variant,
+      channelListings: uniqBy(variant.channelListings, "channelId")
+    }))
+  };
+}

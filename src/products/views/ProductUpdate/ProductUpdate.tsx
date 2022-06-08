@@ -530,7 +530,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     <>
       <WindowTitle title={data?.product?.name} />
       {!!allChannels?.length &&
-        (isSimpleProduct ? (
+        (isSimpleProduct || product?.variants.length === 0 ? (
           <ChannelsAvailabilityDialog
             isSelected={isChannelSelected}
             channels={allChannels}
