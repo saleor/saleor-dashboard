@@ -9,8 +9,8 @@ import {
 import React from "react";
 
 interface TaxCountryExceptionListItemProps {
-  country: TaxConfigurationPerCountryFragment;
-  countryName: string;
+  country: TaxConfigurationPerCountryFragment | undefined;
+  countryName: string | undefined;
 }
 
 export const TaxCountryExceptionListItem: React.FC<TaxCountryExceptionListItemProps> = ({
