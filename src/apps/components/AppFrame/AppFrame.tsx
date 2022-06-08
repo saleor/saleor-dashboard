@@ -6,11 +6,13 @@ import urlJoin from "url-join";
 
 import { useStyles } from "./styles";
 import { useAppActions } from "./useAppActions";
+import useTokenRefresh from "./useTokenRefresh";
 
 interface Props {
   src: string;
   appToken: string;
   appId: string;
+  refetch: () => void;
   className?: string;
   onLoad?(): void;
   onError?(): void;
@@ -24,7 +26,8 @@ export const AppFrame: React.FC<Props> = ({
   appId,
   className,
   onLoad,
-  onError
+  onError,
+  refetch
 }) => {
   const shop = useShop();
   const frameRef = React.useRef<HTMLIFrameElement>();
@@ -32,6 +35,8 @@ export const AppFrame: React.FC<Props> = ({
   const classes = useStyles();
   const appOrigin = getOrigin(src);
   const { postToExtension } = useAppActions(frameRef, appOrigin);
+
+  useTokenRefresh(appToken, refetch);
 
   const handleLoad = () => {
     postToExtension({

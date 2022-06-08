@@ -13,7 +13,7 @@ interface AppSettingsProps {
 }
 
 export const AppSettings: React.FC<AppSettingsProps> = ({ id }) => {
-  const { data } = useAppQuery({
+  const { data, refetch } = useAppQuery({
     displayLoader: true,
     variables: { id }
   });
@@ -32,6 +32,7 @@ export const AppSettings: React.FC<AppSettingsProps> = ({ id }) => {
       data={data?.app}
       url={data?.app.configurationUrl}
       aboutHref={appDetailsUrl(id)}
+      refetch={refetch}
       onError={() =>
         notify({
           status: "error",

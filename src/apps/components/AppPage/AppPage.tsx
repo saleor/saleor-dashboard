@@ -21,13 +21,15 @@ export interface AppPageProps {
   url: string;
   onError: () => void;
   aboutHref: string;
+  refetch: () => void;
 }
 
 export const AppPage: React.FC<AppPageProps> = ({
   data,
   url,
   aboutHref,
-  onError
+  onError,
+  refetch
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -84,6 +86,7 @@ export const AppPage: React.FC<AppPageProps> = ({
             appToken={data.accessToken}
             onError={onError}
             appId={data.id}
+            refetch={refetch}
           />
         )}
       </div>
