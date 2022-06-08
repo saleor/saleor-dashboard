@@ -56,9 +56,9 @@ const TableLineForm: React.FC<TableLineFormProps> = ({
                 type="number"
                 value={data.quantity}
                 onChange={debounce}
-                onBlur={async () => {
+                onBlur={() => {
                   if (data.quantity < 1) {
-                    await set({ quantity: 1 });
+                    set({ quantity: 1 });
                   }
                   submit();
                 }}
