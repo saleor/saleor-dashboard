@@ -1,5 +1,6 @@
 import useShop from "@saleor/hooks/useShop";
 import { useTheme } from "@saleor/macaw-ui";
+import clsx from "clsx";
 import React from "react";
 import urlJoin from "url-join";
 
@@ -10,6 +11,7 @@ interface Props {
   src: string;
   appToken: string;
   appId: string;
+  className?: string;
   onLoad?(): void;
   onError?(): void;
 }
@@ -20,6 +22,7 @@ export const AppFrame: React.FC<Props> = ({
   src,
   appToken,
   appId,
+  className,
   onLoad,
   onError
 }) => {
@@ -55,7 +58,7 @@ export const AppFrame: React.FC<Props> = ({
       src={urlJoin(src, `?domain=${shop.domain.host}&id=${appId}`)}
       onError={onError}
       onLoad={handleLoad}
-      className={classes.iframe}
+      className={clsx(classes.iframe, className)}
       sandbox="allow-same-origin allow-forms allow-scripts"
     />
   );

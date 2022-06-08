@@ -16,9 +16,9 @@ import AppActivateDialog from "../../components/AppActivateDialog";
 import AppDeactivateDialog from "../../components/AppDeactivateDialog";
 import AppDetailsPage from "../../components/AppDetailsPage";
 import {
+  appDetailsUrl,
   AppDetailsUrlDialog,
   AppDetailsUrlQueryParams,
-  appSettingsUrl,
   appsListPath,
   appUrl
 } from "../../urls";
@@ -88,7 +88,7 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
   const [openModal, closeModal] = createDialogActionHandlers<
     AppDetailsUrlDialog,
     AppDetailsUrlQueryParams
-  >(navigate, params => appUrl(id, params), params);
+  >(navigate, params => appDetailsUrl(id, params), params);
 
   const handleActivateConfirm = () => {
     activateApp(mutationOpts);
@@ -121,7 +121,6 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
         data={data?.app}
         loading={loading}
         navigateToApp={() => navigate(appUrl(id))}
-        navigateToAppSettings={() => navigate(appSettingsUrl(id))}
         onAppActivateOpen={() => openModal("app-activate")}
         onAppDeactivateOpen={() => openModal("app-deactivate")}
       />
