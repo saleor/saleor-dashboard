@@ -32,7 +32,7 @@ export function useTaxUrlRedirect({
   urlFunction
 }: UseTaxUrlRedirectOpts): void {
   React.useEffect(() => {
-    if (id === "undefined" && data) {
+    if (id === "undefined" && data?.length) {
       const defaultTaxEntity = data[0];
       if ("id" in defaultTaxEntity) {
         navigate(urlFunction(defaultTaxEntity.id));
