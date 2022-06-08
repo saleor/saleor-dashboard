@@ -17,16 +17,19 @@ import {
   ListHeader,
   ListItem,
   ListItemCell,
+  makeStyles,
   PageTab,
   PageTabs,
   SearchIcon
 } from "@saleor/macaw-ui";
+import { parseQuery } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/utils";
 import { taxesMessages } from "@saleor/taxes/messages";
 import { getDefaultTaxRateInCountry } from "@saleor/taxes/utils/utils";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import TaxInput from "../../components/TaxInput";
+import TaxClassesMenu from "./TaxClassesMenu";
 
 interface TaxClassesPageProps {
   taxClasses: TaxClassFragment[] | undefined;
@@ -34,6 +37,18 @@ interface TaxClassesPageProps {
   selectedTaxClassId: string;
   handleTabChange: (tab: string) => void;
 }
+
+const useStyles = makeStyles(
+  () => ({
+    searchPadding: {
+      padding: "16px 0 16px 0"
+    },
+    namePadding: {
+      padding: "16px"
+    }
+  }),
+  { name: "TaxClassesPage" }
+);
 
 export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
   const {
@@ -43,12 +58,29 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
     handleTabChange
   } = props;
   const intl = useIntl();
+  const classes = useStyles();
 
   const [query, setQuery] = React.useState("");
 
   const currentTaxClass = React.useMemo(
     () => taxClasses?.find(taxClass => taxClass.id === selectedTaxClassId),
     [selectedTaxClassId, taxClasses]
+  );
+
+  const filteredRates = React.useMemo(
+    () =>
+      currentTaxClass?.countries
+        .map(country => ({
+          country,
+          name: countryNames?.find(
+            countryName => countryName.code === country.countryCode
+          )?.country
+        }))
+        .filter(
+          country =>
+            country.name?.search(new RegExp(parseQuery(query), "i")) >= 0
+        ),
+    [currentTaxClass, countryNames, query]
   );
 
   return (
@@ -70,13 +102,11 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
       </PageTabs>
       <VerticalSpacer spacing={2} />
       <Grid variant="inverted">
-        {/* <TaxClassesMenu
-            countries={countryTaxesData}
-            countryNames={countries}
-            selectedCountryId={selectedCountryId}
-            onCountryDelete={() => null}
-          /> */}
-        <Card>{/* Menu */}</Card>
+        <TaxClassesMenu
+          taxClasses={taxClasses}
+          selectedTaxClassId={selectedTaxClassId}
+          onTaxClassDelete={() => null}
+        />
         <div>
           <Card>
             <CardTitle
@@ -84,11 +114,13 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
             />
             <CardContent>
               <TextField
-                value={""}
+                value={currentTaxClass.name}
                 onChange={() => null}
                 variant="outlined"
                 placeholder={intl.formatMessage(taxesMessages.taxRateName)}
                 fullWidth
+                inputProps={{ className: classes.namePadding }}
+                disabled={currentTaxClass.isDefault}
               />
             </CardContent>
           </Card>
@@ -111,7 +143,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                     </InputAdornment>
                   )
                 }}
-                // inputProps={{ className: classes.inputPadding }}
+                inputProps={{ className: classes.searchPadding }}
               />
             </CardContent>
             <List gridTemplate={["5fr 2fr"]}>
@@ -126,23 +158,16 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                 </ListItem>
               </ListHeader>
               {(countryNames &&
-                currentTaxClass?.countries.map(country => (
-                  <ListItem key={country.countryCode} hover={false}>
-                    <ListItemCell>
-                      {
-                        countryNames.find(
-                          countryName =>
-                            countryName.code === country.countryCode
-                        ).country
-                      }
-                    </ListItemCell>
+                filteredRates?.map(rate => (
+                  <ListItem key={rate.country.countryCode} hover={false}>
+                    <ListItemCell>{rate.name}</ListItemCell>
                     <ListItemCell>
                       <TaxInput
                         placeholder={getDefaultTaxRateInCountry(
                           taxClasses,
-                          country
+                          rate.country
                         )}
-                        value={(country.rate * 100).toString()}
+                        value={(rate.country.rate * 100).toString()}
                         change={() => null} // TODO: add change function from form
                       />
                     </ListItemCell>

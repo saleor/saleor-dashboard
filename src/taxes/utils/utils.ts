@@ -1,4 +1,4 @@
-import { CountryFragment, TaxClassFragment } from "@saleor/graphql";
+import { TaxClassFragment } from "@saleor/graphql";
 
 export const getDefaultTaxRateInCountry = (
   taxClasses: TaxClassFragment[],
