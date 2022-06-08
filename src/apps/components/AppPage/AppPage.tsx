@@ -21,7 +21,7 @@ export interface AppPageProps {
   url: string;
   onError: () => void;
   aboutHref: string;
-  refetch: () => void;
+  refetch?: () => void;
 }
 
 export const AppPage: React.FC<AppPageProps> = ({
