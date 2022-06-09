@@ -127,6 +127,7 @@ jobs:
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMMIT_INFO_MESSAGE: All tests triggered via ${{ github.event.action }} on ${{ steps.get-env-uri.outputs.ENV_URI }}
         with:
           parallel: true
           group: 'UI - Chrome'
@@ -145,10 +146,11 @@ jobs:
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMMIT_INFO_MESSAGE: Critical tests triggered via ${{ github.event.action }} on ${{ steps.get-env-uri.outputs.ENV_URI }}
         with:
           parallel: true
           group: 'UI - Chrome'
-          command: npx cypress run --record --env tags=critical --spec cypress/e2e/navigation.js,cypress/e2e/products/createProduct.js,cypress/e2e/products/productsVariants.js  --parallel --tag ${{ steps.get-env-uri.outputs.ENV_URI }}, Critical
+          command: npx cypress run --record --env tags=critical --spec cypress/e2e/navigation.js,cypress/e2e/products/createProduct.js,cypress/e2e/products/productsVariants.js  --parallel --tag ${{ steps.get-env-uri.outputs.ENV_URI }}, Critical, ${{ github.event.action }}
 
 
 
