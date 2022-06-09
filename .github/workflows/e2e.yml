@@ -19,7 +19,8 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           running-workflow-name: e2e
-          wait-interval: 20
+          check-name: deploy
+          wait-interval: 10
 
       - name: Checkout
         uses: actions/checkout@v2
