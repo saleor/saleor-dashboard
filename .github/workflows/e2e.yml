@@ -16,7 +16,7 @@ jobs:
       - name: Wait for Deploy and Critical tests
         uses: lewagon/wait-on-check-action@v1.0.0
         with:
-          ref: ${{ github.ref }}
+          ref: ${{ github.event.pull_request.head.sha }}
           check-name: 'test-env-deploy'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 20
