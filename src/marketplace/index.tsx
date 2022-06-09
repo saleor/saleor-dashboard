@@ -29,6 +29,7 @@ const Component = () => {
           appToken=""
           appId=""
           className={classes.iframe}
+          allowPopups
         />
       </Container>
     </>

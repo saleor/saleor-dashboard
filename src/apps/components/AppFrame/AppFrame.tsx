@@ -12,9 +12,12 @@ interface Props {
   appToken: string;
   appId: string;
   className?: string;
+  allowPopups?: boolean;
   onLoad?(): void;
   onError?(): void;
 }
+
+const baseSandbox = "allow-same-origin allow-forms allow-scripts";
 
 const getOrigin = (url: string) => new URL(url).origin;
 
@@ -23,6 +26,7 @@ export const AppFrame: React.FC<Props> = ({
   appToken,
   appId,
   className,
+  allowPopups = false,
   onLoad,
   onError
 }) => {
@@ -52,6 +56,10 @@ export const AppFrame: React.FC<Props> = ({
     return null;
   }
 
+  const iframeSandbox = allowPopups
+    ? `${baseSandbox} allow-popups`
+    : baseSandbox;
+
   return (
     <iframe
       ref={frameRef}
@@ -59,7 +67,7 @@ export const AppFrame: React.FC<Props> = ({
       onError={onError}
       onLoad={handleLoad}
       className={clsx(classes.iframe, className)}
-      sandbox="allow-same-origin allow-forms allow-scripts"
+      sandbox={iframeSandbox}
     />
   );
 };
