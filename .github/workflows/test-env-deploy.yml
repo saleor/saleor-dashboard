@@ -161,6 +161,9 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm install
 
+      - uses: kceb/pull-request-url-action@v1
+        id: pr-url
+
       - name: Cypress run critical
         uses: cypress-io/github-action@v4
         env:
@@ -172,7 +175,7 @@ jobs:
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          COMMIT_INFO_MESSAGE: Critical tests triggered on PR - ${{ env.GITHUB_HEAD_REF_SLUG_URL }}
+          COMMIT_INFO_MESSAGE: Critical tests triggered on PR - ${{ steps.pr-url.outputs.url }}
         with:
           tag: Critical, ${{github.event.action}}
           command: npx cypress run --record --env tags=critical --spec cypress/e2e/navigation.js,cypress/e2e/products/createProduct.js,cypress/e2e/products/productsVariants.js --tag Critical, PR_Deploy
