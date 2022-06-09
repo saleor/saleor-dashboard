@@ -16,8 +16,9 @@ jobs:
       - name: Wait for Deploy and Critical tests
         uses: lewagon/wait-on-check-action@v1.0.0
         with:
-          ref: 'refs/pull/${{ github.event.number }}/merge'
+          ref: ${{ github.event.pull_request.head.sha }}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+          running-workflow-name: e2e
           wait-interval: 20
 
       - name: Checkout
