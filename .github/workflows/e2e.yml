@@ -10,20 +10,8 @@ jobs:
   install-cypress:
     if: ${{ contains(github.event.pull_request.labels.*.name, 'run e2e') }}
     runs-on: ubuntu-latest
-    outputs:
-      custom_api_uri: ${{ steps.api_uri.outputs.custom_api_uri }}
     steps:
-      - name: Get API_URI
-        id: api_uri
-        # Search for API_URI in PR description and use default if not defined
-        env:
-          pull_request_body: ${{ github.event.pull_request.body }}
-          prefix: API_URI=
-          pattern: (http|https)://[a-zA-Z0-9.-]+/graphql/?
-          fallback_uri: ${{ secrets.CYPRESS_API_URI }}
-        run: |
-          echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1 | { read custom_uri; if [ -z "$custom_uri" ]; then echo "$fallback_uri"; else echo "$custom_uri"; fi })"
-        
+    
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -46,25 +34,7 @@ jobs:
         with:
           # Disable running of tests within install job
           runTests: false
-          build: yarn build
-        env:
-          API_URI: ${{steps.api_uri.outputs.custom_api_uri}}
-          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
-          CYPRESS_baseUrl: ${{ secrets.CYPRESS_BASEURL }}
-          CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
-          CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
-          CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
-          CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
-          CYPRESS_MAILHOG: ${{ secrets.CYPRESS_MAILHOG }}
-          COMMIT_INFO_MESSAGE: All tests triggered via "Run e2e" label on PR - ${{ github.ref_name }}
-
-      - name: Save build folder
-        uses: actions/upload-artifact@v2
-        with:
-          name: build
-          if-no-files-found: error
-          path: build
-
+    
   run-tests-in-parallel-on-label:
     needs: install-cypress
     runs-on: ubuntu-latest
@@ -75,20 +45,25 @@ jobs:
         # run copies of the current job in parallel
         containers: [1, 2, 3, 4]
     steps:
-    
+
+      - name: Get API_URI
+        id: api_uri
+        # Search for API_URI in PR description and use default if not defined
+        env:
+          pull_request_body: ${{ github.event.pull_request.body }}
+          prefix: API_URI=
+          pattern: (http|https)://[a-zA-Z0-9.-]+/graphql/?
+          fallback_uri: ${{ secrets.CYPRESS_API_URI }}
+        run: |
+          echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1 | { read custom_uri; if [ -z "$custom_uri" ]; then echo "$fallback_uri"; else echo "$custom_uri"; fi })"
+        
       - name: Checkout
         uses: actions/checkout@v2
-        
-      - name: Download the build folders
-        uses: actions/download-artifact@v2
-        with:
-          name: build
-          path: build
 
       - name: Cypress run all tests
         uses: cypress-io/github-action@v4
         env:
-          API_URI: ${{needs.install-cypress.outputs.custom_api_uri}}
+          API_URI: ${{steps.api_uri.outputs.custom_api_uri}}
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
           CYPRESS_baseUrl: ${{ secrets.CYPRESS_BASEURL }}
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
