@@ -162,7 +162,6 @@ jobs:
         run: npm install
 
       - name: Cypress run critical
-        id: cypress-run-critical
         uses: cypress-io/github-action@v4
         env:
           API_URI: ${{ steps.api_uri.outputs.custom_api_uri }}
