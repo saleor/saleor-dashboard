@@ -46,6 +46,13 @@ jobs:
         containers: [1, 2, 3, 4]
     steps:
 
+      - uses: rlespinasse/github-slug-action@3.1.0
+
+      - name: Set domain
+        id: set-domain
+        run: |
+          echo "::set-output name=domain::${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks"  
+
       - name: Get API_URI
         id: api_uri
         # Search for API_URI in PR description and use default if not defined
@@ -56,11 +63,6 @@ jobs:
           fallback_uri: ${{ secrets.CYPRESS_API_URI }}
         run: |
           echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1 | { read custom_uri; if [ -z "$custom_uri" ]; then echo "$fallback_uri"; else echo "$custom_uri"; fi })"
-      
-      - name: Set domain
-        id: set-domain
-        run: |
-          echo "::set-output name=domain::${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks"  
 
       - name: Checkout
         uses: actions/checkout@v2
