@@ -79,6 +79,8 @@ jobs:
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
           CYPRESS_MAILHOG: ${{ secrets.CYPRESS_MAILHOG }}
           COMMIT_INFO_MESSAGE: All tests triggered via "Run e2e" label on PR - ${{ github.ref_name }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           parallel: true
           group: 'UI - Chrome'
