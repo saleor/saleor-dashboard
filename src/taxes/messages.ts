@@ -135,5 +135,10 @@ export const taxesMessages = defineMessages({
     id: "/ILyIf",
     defaultMessage: "Tax class label",
     description: "tax classes menu header"
+  },
+  noExceptionsForChannel: {
+    id: "u34css",
+    defaultMessage: "There are no exceptions for this channel",
+    description: "label for empty list in channels list"
   }
 });

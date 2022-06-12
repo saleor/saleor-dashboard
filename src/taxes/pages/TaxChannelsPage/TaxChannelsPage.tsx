@@ -1,4 +1,4 @@
-import { Card } from "@material-ui/core";
+import { Card, CardContent } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
@@ -74,32 +74,34 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                 </Button>
               }
             />
-            <List gridTemplate={["4fr 3fr 3fr 1fr"]}>
-              <ListHeader>
-                <ListItem>
-                  <ListItemCell>
-                    <FormattedMessage {...taxesMessages.countryNameHeader} />
-                  </ListItemCell>
-                  <ListItemCell>
-                    <FormattedMessage {...taxesMessages.chargeTaxesHeader} />
-                  </ListItemCell>
-                  <ListItemCell>
-                    <FormattedMessage {...taxesMessages.showGrossHeader} />
-                  </ListItemCell>
-                </ListItem>
-              </ListHeader>
-              {currentTaxConfiguration?.countries.map(country => (
-                <TaxCountryExceptionListItem
-                  country={country.country}
-                  key={country.country.code}
-                />
-              )) ?? (
-                <>
-                  <Skeleton />
-                  <VerticalSpacer />
-                </>
-              )}
-            </List>
+            {currentTaxConfiguration?.countries.length === 0 ? (
+              <CardContent>
+                <FormattedMessage {...taxesMessages.noExceptionsForChannel} />
+              </CardContent>
+            ) : (
+              <List gridTemplate={["4fr 3fr 3fr 1fr"]}>
+                <ListHeader>
+                  <ListItem>
+                    <ListItemCell>
+                      <FormattedMessage {...taxesMessages.countryNameHeader} />
+                    </ListItemCell>
+                    <ListItemCell>
+                      <FormattedMessage {...taxesMessages.chargeTaxesHeader} />
+                    </ListItemCell>
+                    <ListItemCell>
+                      <FormattedMessage {...taxesMessages.showGrossHeader} />
+                    </ListItemCell>
+                  </ListItem>
+                </ListHeader>
+                {currentTaxConfiguration?.countries.map(country => (
+                  <TaxCountryExceptionListItem
+                    country={country.country}
+                    key={country.country.code}
+                  />
+                )) ?? <Skeleton />}
+              </List>
+            )}
+            <VerticalSpacer />
           </Card>
         </div>
       </Grid>
