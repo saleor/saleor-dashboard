@@ -14848,6 +14848,40 @@ export function useTaxConfigurationListLazyQuery(baseOptions?: ApolloReactHooks.
 export type TaxConfigurationListQueryHookResult = ReturnType<typeof useTaxConfigurationListQuery>;
 export type TaxConfigurationListLazyQueryHookResult = ReturnType<typeof useTaxConfigurationListLazyQuery>;
 export type TaxConfigurationListQueryResult = Apollo.QueryResult<Types.TaxConfigurationListQuery, Types.TaxConfigurationListQueryVariables>;
+export const TaxCountriesListDocument = gql`
+    query taxCountriesList {
+  taxCountryConfigurations {
+    ...TaxCountryConfiguration
+  }
+}
+    ${TaxCountryConfigurationFragmentDoc}`;
+
+/**
+ * __useTaxCountriesListQuery__
+ *
+ * To run a query within a React component, call `useTaxCountriesListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTaxCountriesListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTaxCountriesListQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useTaxCountriesListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.TaxCountriesListQuery, Types.TaxCountriesListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.TaxCountriesListQuery, Types.TaxCountriesListQueryVariables>(TaxCountriesListDocument, options);
+      }
+export function useTaxCountriesListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.TaxCountriesListQuery, Types.TaxCountriesListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.TaxCountriesListQuery, Types.TaxCountriesListQueryVariables>(TaxCountriesListDocument, options);
+        }
+export type TaxCountriesListQueryHookResult = ReturnType<typeof useTaxCountriesListQuery>;
+export type TaxCountriesListLazyQueryHookResult = ReturnType<typeof useTaxCountriesListLazyQuery>;
+export type TaxCountriesListQueryResult = Apollo.QueryResult<Types.TaxCountriesListQuery, Types.TaxCountriesListQueryVariables>;
 export const UpdateProductTranslationsDocument = gql`
     mutation UpdateProductTranslations($id: ID!, $input: TranslationInput!, $language: LanguageCodeEnum!) {
   productTranslate(id: $id, input: $input, languageCode: $language) {

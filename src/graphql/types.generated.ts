@@ -8190,6 +8190,11 @@ export type TaxConfigurationListQueryVariables = Exact<{
 
 export type TaxConfigurationListQuery = { __typename: 'Query', taxConfigurations: { __typename: 'TaxConfigurationCountableConnection', edges: Array<{ __typename: 'TaxConfigurationCountableEdge', node: { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } }> } }> } | null };
 
+export type TaxCountriesListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TaxCountriesListQuery = { __typename: 'Query', taxCountryConfigurations: Array<{ __typename: 'TaxCountryConfiguration', country: { __typename: 'CountryDisplay', country: string, code: string }, taxClassCountryRates: Array<{ __typename: 'TaxClassCountryRate', rate: number, taxClass: { __typename: 'TaxClass', id: string, name: string, isDefault: boolean } }> }> | null };
+
 export type UpdateProductTranslationsMutationVariables = Exact<{
   id: Scalars['ID'];
   input: TranslationInput;

@@ -1,7 +1,7 @@
+import { useTaxCountriesListQuery } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import React from "react";
 
-import { taxCountryConfigurations } from "../fixtures";
 import TaxCountriesPage from "../pages/TaxCountriesPage";
 import { countriesListUrl, taxTabSectionUrl } from "../urls";
 import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
@@ -16,6 +16,9 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id }) => {
   const handleTabChange = (tab: string) => {
     navigate(taxTabSectionUrl(tab));
   };
+
+  const { data } = useTaxCountriesListQuery();
+  const taxCountryConfigurations = data?.taxCountryConfigurations;
 
   useTaxUrlRedirect({
     id,

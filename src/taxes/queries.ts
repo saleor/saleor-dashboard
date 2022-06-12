@@ -42,3 +42,11 @@ export const taxConfigurationList = gql`
     }
   }
 `;
+
+export const taxCountriesList = gql`
+  query TaxCountriesList {
+    taxCountryConfigurations {
+      ...TaxCountryConfiguration
+    }
+  }
+`;
