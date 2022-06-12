@@ -50,3 +50,29 @@ export const taxCountriesList = gql`
     }
   }
 `;
+
+export const taxClassesList = gql`
+  query TaxClassesList(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $filter: TaxClassFilterInput
+    $sortBy: TaxClassSortingInput
+  ) {
+    taxClasses(
+      before: $before
+      after: $after
+      first: $first
+      last: $last
+      filter: $filter
+      sortBy: $sortBy
+    ) {
+      edges {
+        node {
+          ...TaxClass
+        }
+      }
+    }
+  }
+`;
