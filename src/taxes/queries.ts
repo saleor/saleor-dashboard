@@ -18,3 +18,27 @@ export const taxTypeList = gql`
     }
   }
 `;
+
+export const taxConfigurationList = gql`
+  query taxConfigurationList(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $filter: TaxConfigurationFilterInput
+  ) {
+    taxConfigurations(
+      before: $before
+      after: $after
+      first: $first
+      last: $last
+      filter: $filter
+    ) {
+      edges {
+        node {
+          ...TaxConfiguration
+        }
+      }
+    }
+  }
+`;

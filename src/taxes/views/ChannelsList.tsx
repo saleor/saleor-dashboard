@@ -1,7 +1,8 @@
+import { useTaxConfigurationListQuery } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 
-import { taxConfigurations } from "../fixtures";
 import TaxChannelsPage from "../pages/TaxChannelsPage";
 import { channelsListUrl, taxTabSectionUrl } from "../urls";
 import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
@@ -17,6 +18,10 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ id }) => {
     navigate(taxTabSectionUrl(tab));
   };
 
+  const { data } = useTaxConfigurationListQuery({ variables: { first: 20 } });
+
+  const taxConfigurations = mapEdgesToItems(data?.taxConfigurations);
+
   useTaxUrlRedirect({
     id,
     data: taxConfigurations,
@@ -30,7 +35,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ id }) => {
 
   return (
     <TaxChannelsPage
-      taxConfigurations={taxConfigurations} // TODO: change fixture to query data
+      taxConfigurations={taxConfigurations}
       selectedConfigurationId={id!}
       handleTabChange={handleTabChange}
     />
