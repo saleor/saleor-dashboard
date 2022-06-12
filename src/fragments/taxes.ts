@@ -80,14 +80,20 @@ export const taxCountryConfigurationFragment = gql`
   }
 `;
 
+export const taxRateFragment = gql`
+  fragment TaxRate on TaxClassCountryRate {
+    countryCode
+    rate
+  }
+`;
+
 export const taxClassFragment = gql`
   fragment TaxClass on TaxClass {
     id
     name
     isDefault
     countries {
-      countryCode
-      rate
+      ...TaxRate
     }
   }
 `;

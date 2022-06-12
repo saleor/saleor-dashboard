@@ -2379,17 +2379,22 @@ export const TaxCountryConfigurationFragmentDoc = gql`
   }
 }
     `;
+export const TaxRateFragmentDoc = gql`
+    fragment TaxRate on TaxClassCountryRate {
+  countryCode
+  rate
+}
+    `;
 export const TaxClassFragmentDoc = gql`
     fragment TaxClass on TaxClass {
   id
   name
   isDefault
   countries {
-    countryCode
-    rate
+    ...TaxRate
   }
 }
-    `;
+    ${TaxRateFragmentDoc}`;
 export const TimePeriodFragmentDoc = gql`
     fragment TimePeriod on TimePeriod {
   amount

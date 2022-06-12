@@ -6455,6 +6455,8 @@ export type TaxConfigurationFragment = { __typename: 'TaxConfiguration', id: str
 
 export type TaxCountryConfigurationFragment = { __typename: 'TaxCountryConfiguration', countryCode: string, taxClassCountryRates: Array<{ __typename: 'TaxClassCountryRate', rate: number, taxClass: { __typename: 'TaxClass', id: string, name: string, isDefault: boolean } }> };
 
+export type TaxRateFragment = { __typename: 'TaxClassCountryRate', countryCode: string, rate: number };
+
 export type TaxClassFragment = { __typename: 'TaxClass', id: string, name: string, isDefault: boolean, countries: Array<{ __typename: 'TaxClassCountryRate', countryCode: string, rate: number }> | null };
 
 export type TimePeriodFragment = { __typename: 'TimePeriod', amount: number, type: TimePeriodTypeEnum };
