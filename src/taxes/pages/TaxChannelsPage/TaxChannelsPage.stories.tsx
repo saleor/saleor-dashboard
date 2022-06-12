@@ -1,4 +1,3 @@
-import { countries } from "@saleor/orders/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
 import { taxConfigurations } from "@saleor/taxes/fixtures";
 import { storiesOf } from "@storybook/react";
@@ -8,7 +7,6 @@ import TaxChannelsPage from "./TaxChannelsPage";
 
 const props = {
   taxConfigurations,
-  countries,
   selectedConfigurationId: taxConfigurations[0].id,
   handleTabChange: () => undefined
 };

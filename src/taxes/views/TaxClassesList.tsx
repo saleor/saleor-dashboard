@@ -1,5 +1,4 @@
 import useNavigator from "@saleor/hooks/useNavigator";
-import useShop from "@saleor/hooks/useShop";
 import React from "react";
 
 import { taxClasses } from "../fixtures";
@@ -13,7 +12,6 @@ interface TaxClassesListProps {
 
 export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
   const navigate = useNavigator();
-  const shop = useShop();
 
   const handleTabChange = (tab: string) => {
     navigate(taxTabSectionUrl(tab));
@@ -33,7 +31,6 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
   return (
     <TaxClassesPage
       taxClasses={taxClasses}
-      countryNames={shop?.countries}
       handleTabChange={handleTabChange}
       selectedTaxClassId={id}
     />

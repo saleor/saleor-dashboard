@@ -10,7 +10,7 @@ import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Skeleton from "@saleor/components/Skeleton";
-import { CountryFragment, TaxClassFragment } from "@saleor/graphql";
+import { TaxClassFragment, TaxRateFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import {
   List,
@@ -24,11 +24,7 @@ import {
 } from "@saleor/macaw-ui";
 import { parseQuery } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/utils";
 import { taxesMessages } from "@saleor/taxes/messages";
-import {
-  getDefaultTaxRateInCountry,
-  mapCountryNamesToCountryRates,
-  NamedTaxRate
-} from "@saleor/taxes/utils/utils";
+import { getDefaultTaxRateInCountry } from "@saleor/taxes/utils/utils";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -37,7 +33,6 @@ import TaxClassesMenu from "./TaxClassesMenu";
 
 interface TaxClassesPageProps {
   taxClasses: TaxClassFragment[] | undefined;
-  countryNames: CountryFragment[] | undefined;
   selectedTaxClassId: string;
   handleTabChange: (tab: string) => void;
 }
@@ -55,12 +50,7 @@ const useStyles = makeStyles(
 );
 
 export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
-  const {
-    taxClasses,
-    countryNames,
-    selectedTaxClassId,
-    handleTabChange
-  } = props;
+  const { taxClasses, selectedTaxClassId, handleTabChange } = props;
   const intl = useIntl();
   const classes = useStyles();
 
@@ -71,15 +61,14 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
     [selectedTaxClassId, taxClasses]
   );
 
-  const filteredRates: NamedTaxRate[] = React.useMemo(
+  const filteredRates: TaxRateFragment[] = React.useMemo(
     () =>
-      mapCountryNamesToCountryRates(
-        currentTaxClass?.countries,
-        countryNames
-      )?.filter(
-        country => country.name?.search(new RegExp(parseQuery(query), "i")) >= 0
+      currentTaxClass?.countries.filter(
+        country =>
+          country.country.country.search(new RegExp(parseQuery(query), "i")) >=
+          0
       ),
-    [currentTaxClass, countryNames, query]
+    [currentTaxClass, query]
   );
 
   return (
@@ -156,22 +145,21 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                   </ListItemCell>
                 </ListItem>
               </ListHeader>
-              {(countryNames &&
-                filteredRates?.map(rate => (
-                  <ListItem key={rate.country.countryCode} hover={false}>
-                    <ListItemCell>{rate.name}</ListItemCell>
-                    <ListItemCell>
-                      <TaxInput
-                        placeholder={getDefaultTaxRateInCountry(
-                          taxClasses,
-                          rate.country
-                        )}
-                        value={(rate.country.rate * 100).toString()}
-                        change={() => null} // TODO: add change function from form
-                      />
-                    </ListItemCell>
-                  </ListItem>
-                ))) ?? (
+              {filteredRates?.map(countryRate => (
+                <ListItem key={countryRate.country.code} hover={false}>
+                  <ListItemCell>{countryRate.country.country}</ListItemCell>
+                  <ListItemCell>
+                    <TaxInput
+                      placeholder={getDefaultTaxRateInCountry(
+                        taxClasses,
+                        countryRate.country
+                      )}
+                      value={(countryRate.rate * 100).toString()}
+                      change={() => null} // TODO: add change function from form
+                    />
+                  </ListItemCell>
+                </ListItem>
+              )) ?? (
                 <>
                   <Skeleton />
                   <VerticalSpacer />

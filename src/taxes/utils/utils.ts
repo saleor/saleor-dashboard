@@ -1,31 +1,14 @@
 import {
-  CountryFragment,
+  CountryWithCodeFragment,
   TaxClassFragment,
   TaxRateFragment
 } from "@saleor/graphql";
 
-export interface NamedTaxRate {
-  country: TaxRateFragment;
-  name: string;
-}
-
-export const mapCountryNamesToCountryRates = (
-  countries: TaxRateFragment[] | undefined,
-  countryNames: CountryFragment[] | undefined
-): NamedTaxRate[] | undefined =>
-  countries?.map(country => ({
-    country,
-    name: countryNames?.find(
-      countryName => countryName.code === country.countryCode
-    )?.country
-  }));
-
 export const getDefaultTaxRateInCountry = (
   taxClasses: TaxClassFragment[],
-  selectedCountry: TaxRateFragment
+  selectedCountry: CountryWithCodeFragment
 ): TaxRateFragment["rate"] =>
   taxClasses
     .find(taxClass => taxClass.isDefault)
-    .countries.find(
-      country => country.countryCode === selectedCountry.countryCode
-    ).rate;
+    .countries.find(country => country.country.code === selectedCountry.code)
+    .rate;
