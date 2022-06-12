@@ -24,7 +24,11 @@ import {
 } from "@saleor/macaw-ui";
 import { parseQuery } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/utils";
 import { taxesMessages } from "@saleor/taxes/messages";
-import { getDefaultTaxRateInCountry } from "@saleor/taxes/utils/utils";
+import {
+  getDefaultTaxRateInCountry,
+  mapCountryNamesToCountryRates,
+  NamedTaxRate
+} from "@saleor/taxes/utils/utils";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -67,19 +71,14 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
     [selectedTaxClassId, taxClasses]
   );
 
-  const filteredRates = React.useMemo(
+  const filteredRates: NamedTaxRate[] = React.useMemo(
     () =>
-      currentTaxClass?.countries
-        .map(country => ({
-          country,
-          name: countryNames?.find(
-            countryName => countryName.code === country.countryCode
-          )?.country
-        }))
-        .filter(
-          country =>
-            country.name?.search(new RegExp(parseQuery(query), "i")) >= 0
-        ),
+      mapCountryNamesToCountryRates(
+        currentTaxClass?.countries,
+        countryNames
+      ).filter(
+        country => country.name?.search(new RegExp(parseQuery(query), "i")) >= 0
+      ),
     [currentTaxClass, countryNames, query]
   );
 

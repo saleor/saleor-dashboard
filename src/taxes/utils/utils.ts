@@ -1,8 +1,28 @@
-import { TaxClassFragment } from "@saleor/graphql";
+import {
+  CountryFragment,
+  TaxClassFragment,
+  TaxRateFragment
+} from "@saleor/graphql";
+
+export interface NamedTaxRate {
+  country: TaxRateFragment;
+  name: string;
+}
+
+export const mapCountryNamesToCountryRates = (
+  countries: TaxRateFragment[],
+  countryNames: CountryFragment[]
+): NamedTaxRate[] =>
+  countries.map(country => ({
+    country,
+    name: countryNames?.find(
+      countryName => countryName.code === country.countryCode
+    )?.country
+  }));
 
 export const getDefaultTaxRateInCountry = (
   taxClasses: TaxClassFragment[],
-  selectedCountry: TaxClassFragment["countries"][0]
+  selectedCountry: TaxRateFragment
 ) =>
   taxClasses
     .find(taxClass => taxClass.isDefault)
