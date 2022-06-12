@@ -76,7 +76,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
       mapCountryNamesToCountryRates(
         currentTaxClass?.countries,
         countryNames
-      ).filter(
+      )?.filter(
         country => country.name?.search(new RegExp(parseQuery(query), "i")) >= 0
       ),
     [currentTaxClass, countryNames, query]
@@ -113,13 +113,13 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
             />
             <CardContent>
               <TextField
-                value={currentTaxClass.name}
+                value={currentTaxClass?.name}
                 onChange={() => null}
                 variant="outlined"
                 placeholder={intl.formatMessage(taxesMessages.taxRateName)}
                 fullWidth
                 inputProps={{ className: classes.namePadding }}
-                disabled={currentTaxClass.isDefault}
+                disabled={currentTaxClass?.isDefault ?? true}
               />
             </CardContent>
           </Card>
@@ -171,7 +171,12 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                       />
                     </ListItemCell>
                   </ListItem>
-                ))) ?? <Skeleton />}
+                ))) ?? (
+                <>
+                  <Skeleton />
+                  <VerticalSpacer />
+                </>
+              )}
             </List>
           </Card>
         </div>

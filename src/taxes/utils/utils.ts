@@ -10,10 +10,10 @@ export interface NamedTaxRate {
 }
 
 export const mapCountryNamesToCountryRates = (
-  countries: TaxRateFragment[],
-  countryNames: CountryFragment[]
-): NamedTaxRate[] =>
-  countries.map(country => ({
+  countries: TaxRateFragment[] | undefined,
+  countryNames: CountryFragment[] | undefined
+): NamedTaxRate[] | undefined =>
+  countries?.map(country => ({
     country,
     name: countryNames?.find(
       countryName => countryName.code === country.countryCode
@@ -23,7 +23,7 @@ export const mapCountryNamesToCountryRates = (
 export const getDefaultTaxRateInCountry = (
   taxClasses: TaxClassFragment[],
   selectedCountry: TaxRateFragment
-) =>
+): TaxRateFragment["rate"] =>
   taxClasses
     .find(taxClass => taxClass.isDefault)
     .countries.find(
