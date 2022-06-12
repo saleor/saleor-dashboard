@@ -8179,7 +8179,7 @@ export type TaxTypeListQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type TaxTypeListQuery = { __typename: 'Query', taxTypes: Array<{ __typename: 'TaxType', description: string | null, taxCode: string | null }> | null };
 
-export type TaxConfigurationListQueryVariables = Exact<{
+export type TaxConfigurationsListQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']>;
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
@@ -8188,7 +8188,7 @@ export type TaxConfigurationListQueryVariables = Exact<{
 }>;
 
 
-export type TaxConfigurationListQuery = { __typename: 'Query', taxConfigurations: { __typename: 'TaxConfigurationCountableConnection', edges: Array<{ __typename: 'TaxConfigurationCountableEdge', node: { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } }> } }> } | null };
+export type TaxConfigurationsListQuery = { __typename: 'Query', taxConfigurations: { __typename: 'TaxConfigurationCountableConnection', edges: Array<{ __typename: 'TaxConfigurationCountableEdge', node: { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } }> } }> } | null };
 
 export type TaxCountriesListQueryVariables = Exact<{ [key: string]: never; }>;
 

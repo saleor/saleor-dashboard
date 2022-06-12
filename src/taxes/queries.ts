@@ -19,8 +19,8 @@ export const taxTypeList = gql`
   }
 `;
 
-export const taxConfigurationList = gql`
-  query taxConfigurationList(
+export const taxConfigurationsList = gql`
+  query TaxConfigurationsList(
     $before: String
     $after: String
     $first: Int

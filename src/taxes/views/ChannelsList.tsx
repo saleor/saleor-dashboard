@@ -1,4 +1,4 @@
-import { useTaxConfigurationListQuery } from "@saleor/graphql";
+import { useTaxConfigurationsListQuery } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
@@ -18,7 +18,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ id }) => {
     navigate(taxTabSectionUrl(tab));
   };
 
-  const { data } = useTaxConfigurationListQuery({ variables: { first: 20 } });
+  const { data } = useTaxConfigurationsListQuery({ variables: { first: 20 } });
 
   const taxConfigurations = mapEdgesToItems(data?.taxConfigurations);
 

@@ -14799,8 +14799,8 @@ export function useTaxTypeListLazyQuery(baseOptions?: ApolloReactHooks.LazyQuery
 export type TaxTypeListQueryHookResult = ReturnType<typeof useTaxTypeListQuery>;
 export type TaxTypeListLazyQueryHookResult = ReturnType<typeof useTaxTypeListLazyQuery>;
 export type TaxTypeListQueryResult = Apollo.QueryResult<Types.TaxTypeListQuery, Types.TaxTypeListQueryVariables>;
-export const TaxConfigurationListDocument = gql`
-    query taxConfigurationList($before: String, $after: String, $first: Int, $last: Int, $filter: TaxConfigurationFilterInput) {
+export const TaxConfigurationsListDocument = gql`
+    query TaxConfigurationsList($before: String, $after: String, $first: Int, $last: Int, $filter: TaxConfigurationFilterInput) {
   taxConfigurations(
     before: $before
     after: $after
@@ -14818,16 +14818,16 @@ export const TaxConfigurationListDocument = gql`
     ${TaxConfigurationFragmentDoc}`;
 
 /**
- * __useTaxConfigurationListQuery__
+ * __useTaxConfigurationsListQuery__
  *
- * To run a query within a React component, call `useTaxConfigurationListQuery` and pass it any options that fit your needs.
- * When your component renders, `useTaxConfigurationListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useTaxConfigurationsListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTaxConfigurationsListQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useTaxConfigurationListQuery({
+ * const { data, loading, error } = useTaxConfigurationsListQuery({
  *   variables: {
  *      before: // value for 'before'
  *      after: // value for 'after'
@@ -14837,17 +14837,17 @@ export const TaxConfigurationListDocument = gql`
  *   },
  * });
  */
-export function useTaxConfigurationListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.TaxConfigurationListQuery, Types.TaxConfigurationListQueryVariables>) {
+export function useTaxConfigurationsListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.TaxConfigurationsListQuery, Types.TaxConfigurationsListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.TaxConfigurationListQuery, Types.TaxConfigurationListQueryVariables>(TaxConfigurationListDocument, options);
+        return ApolloReactHooks.useQuery<Types.TaxConfigurationsListQuery, Types.TaxConfigurationsListQueryVariables>(TaxConfigurationsListDocument, options);
       }
-export function useTaxConfigurationListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.TaxConfigurationListQuery, Types.TaxConfigurationListQueryVariables>) {
+export function useTaxConfigurationsListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.TaxConfigurationsListQuery, Types.TaxConfigurationsListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.TaxConfigurationListQuery, Types.TaxConfigurationListQueryVariables>(TaxConfigurationListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.TaxConfigurationsListQuery, Types.TaxConfigurationsListQueryVariables>(TaxConfigurationsListDocument, options);
         }
-export type TaxConfigurationListQueryHookResult = ReturnType<typeof useTaxConfigurationListQuery>;
-export type TaxConfigurationListLazyQueryHookResult = ReturnType<typeof useTaxConfigurationListLazyQuery>;
-export type TaxConfigurationListQueryResult = Apollo.QueryResult<Types.TaxConfigurationListQuery, Types.TaxConfigurationListQueryVariables>;
+export type TaxConfigurationsListQueryHookResult = ReturnType<typeof useTaxConfigurationsListQuery>;
+export type TaxConfigurationsListLazyQueryHookResult = ReturnType<typeof useTaxConfigurationsListLazyQuery>;
+export type TaxConfigurationsListQueryResult = Apollo.QueryResult<Types.TaxConfigurationsListQuery, Types.TaxConfigurationsListQueryVariables>;
 export const TaxCountriesListDocument = gql`
     query TaxCountriesList {
   taxCountryConfigurations {
