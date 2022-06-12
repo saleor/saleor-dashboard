@@ -49,11 +49,7 @@ export type Scalars = {
    */
   PositiveDecimal: any;
   UUID: any;
-  /**
-   * Variables of this type must be set to null in mutations. They will be replaced
-   * with a filename from a following multipart part containing a binary file. See:
-   * https://github.com/jaydenseric/graphql-multipart-request-spec.
-   */
+  /** Variables of this type must be set to null in mutations. They will be replaced with a filename from a following multipart part containing a binary file. See: https://github.com/jaydenseric/graphql-multipart-request-spec. */
   Upload: any;
   WeightScalar: any;
   /** _Any value scalar as defined by Federation spec. */
@@ -203,6 +199,7 @@ export enum AppExtensionMountEnum {
  *
  *     POPUP - app's extension will be mounted as a popup window
  *     APP_PAGE - redirect to app's page
+ *
  */
 export enum AppExtensionTargetEnum {
   POPUP = 'POPUP',
@@ -256,15 +253,9 @@ export type AppTokenInput = {
 
 /** Enum determining type of your App. */
 export enum AppTypeEnum {
-  /**
-   * Local Saleor App. The app is fully manageable from dashboard. You can change
-   * assigned permissions, add webhooks, or authentication token
-   */
+  /** Local Saleor App. The app is fully manageable from dashboard. You can change assigned permissions, add webhooks, or authentication token */
   LOCAL = 'LOCAL',
-  /**
-   * Third party external App. Installation is fully automated. Saleor uses a
-   * defined App manifest to gather all required information.
-   */
+  /** Third party external App. Installation is fully automated. Saleor uses a defined App manifest to gather all required information. */
   THIRDPARTY = 'THIRDPARTY'
 }
 
@@ -369,10 +360,7 @@ export type AttributeInput = {
   valuesRange?: InputMaybe<IntRangeInput>;
   /** The date/time range that the returned values should be in. */
   dateTime?: InputMaybe<DateTimeRangeInput>;
-  /**
-   * The date range that the returned values should be in. In case of date/time
-   * attributes, the UTC midnight of the given date is used.
-   */
+  /** The date range that the returned values should be in. In case of date/time attributes, the UTC midnight of the given date is used. */
   date?: InputMaybe<DateRangeInput>;
   /** The boolean value of the attribute. */
   boolean?: InputMaybe<Scalars['Boolean']>;
@@ -386,6 +374,7 @@ export enum AttributeInputTypeEnum {
   REFERENCE = 'REFERENCE',
   NUMERIC = 'NUMERIC',
   RICH_TEXT = 'RICH_TEXT',
+  PLAIN_TEXT = 'PLAIN_TEXT',
   SWATCH = 'SWATCH',
   BOOLEAN = 'BOOLEAN',
   DATE = 'DATE',
@@ -456,8 +445,14 @@ export type AttributeUpdateInput = {
 export type AttributeValueCreateInput = {
   /** Represent value of the attribute value (e.g. color values for swatch attributes). */
   value?: InputMaybe<Scalars['String']>;
-  /** Represents the text (JSON) of the attribute value. */
+  /**
+   * Represents the text of the attribute value, includes formatting.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
   richText?: InputMaybe<Scalars['JSONString']>;
+  /** Represents the text of the attribute value, plain text without formating. */
+  plainText?: InputMaybe<Scalars['String']>;
   /** URL of the file attribute. Every time, a new value is created. */
   fileUrl?: InputMaybe<Scalars['String']>;
   /** File content type. */
@@ -484,6 +479,8 @@ export type AttributeValueInput = {
   references?: InputMaybe<Array<Scalars['ID']>>;
   /** Text content in JSON format. */
   richText?: InputMaybe<Scalars['JSONString']>;
+  /** Plain text content. */
+  plainText?: InputMaybe<Scalars['String']>;
   /** Represents the boolean value of the attribute value. */
   boolean?: InputMaybe<Scalars['Boolean']>;
   /** Represents the date value of the attribute value. */
@@ -494,14 +491,27 @@ export type AttributeValueInput = {
 
 export type AttributeValueTranslationInput = {
   name?: InputMaybe<Scalars['String']>;
+  /**
+   * Translated text.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
   richText?: InputMaybe<Scalars['JSONString']>;
+  /** Translated text. */
+  plainText?: InputMaybe<Scalars['String']>;
 };
 
 export type AttributeValueUpdateInput = {
   /** Represent value of the attribute value (e.g. color values for swatch attributes). */
   value?: InputMaybe<Scalars['String']>;
-  /** Represents the text (JSON) of the attribute value. */
+  /**
+   * Represents the text of the attribute value, includes formatting.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
   richText?: InputMaybe<Scalars['JSONString']>;
+  /** Represents the text of the attribute value, plain text without formating. */
+  plainText?: InputMaybe<Scalars['String']>;
   /** URL of the file attribute. Every time, a new value is created. */
   fileUrl?: InputMaybe<Scalars['String']>;
   /** File content type. */
@@ -550,7 +560,11 @@ export type CategoryFilterInput = {
 };
 
 export type CategoryInput = {
-  /** Category description (JSON). */
+  /**
+   * Category description.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
   description?: InputMaybe<Scalars['JSONString']>;
   /** Category name. */
   name?: InputMaybe<Scalars['String']>;
@@ -596,9 +610,7 @@ export type ChannelCreateInput = {
   /** Currency of the channel. */
   currencyCode: Scalars['String'];
   /**
-   * Default country for the channel. Default country can be used in checkout to
-   * determine the stock quantities or calculate taxes when the country was not
-   * explicitly provided.
+   * Default country for the channel. Default country can be used in checkout to determine the stock quantities or calculate taxes when the country was not explicitly provided.
    *
    * Added in Saleor 3.1.
    */
@@ -633,9 +645,7 @@ export type ChannelUpdateInput = {
   /** Slug of the channel. */
   slug?: InputMaybe<Scalars['String']>;
   /**
-   * Default country for the channel. Default country can be used in checkout to
-   * determine the stock quantities or calculate taxes when the country was not
-   * explicitly provided.
+   * Default country for the channel. Default country can be used in checkout to determine the stock quantities or calculate taxes when the country was not explicitly provided.
    *
    * Added in Saleor 3.1.
    */
@@ -653,10 +663,7 @@ export type CheckoutCreateInput = {
   lines: Array<CheckoutLineInput>;
   /** The customer's email address. */
   email?: InputMaybe<Scalars['String']>;
-  /**
-   * The mailing address to where the checkout will be shipped. Note: the address
-   * will be ignored if the checkout doesn't contain shippable items.
-   */
+  /** The mailing address to where the checkout will be shipped. Note: the address will be ignored if the checkout doesn't contain shippable items. */
   shippingAddress?: InputMaybe<AddressInput>;
   /** Billing address of the customer. */
   billingAddress?: InputMaybe<AddressInput>;
@@ -709,9 +716,7 @@ export type CheckoutLineInput = {
   /** ID of the product variant. */
   variantId: Scalars['ID'];
   /**
-   * Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS`
-   * permission. When the line with the same variant will be provided multiple
-   * times, the last price will be used.
+   * Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used.
    *
    * Added in Saleor 3.1.
    *
@@ -726,9 +731,7 @@ export type CheckoutLineUpdateInput = {
   /** ID of the product variant. */
   variantId: Scalars['ID'];
   /**
-   * Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS`
-   * permission. When the line with the same variant will be provided multiple
-   * times, the last price will be used.
+   * Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used.
    *
    * Added in Saleor 3.1.
    *
@@ -767,7 +770,11 @@ export type CollectionCreateInput = {
   name?: InputMaybe<Scalars['String']>;
   /** Slug of the collection. */
   slug?: InputMaybe<Scalars['String']>;
-  /** Description of the collection (JSON). */
+  /**
+   * Description of the collection.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
   description?: InputMaybe<Scalars['JSONString']>;
   /** Background image file. */
   backgroundImage?: InputMaybe<Scalars['Upload']>;
@@ -816,7 +823,11 @@ export type CollectionInput = {
   name?: InputMaybe<Scalars['String']>;
   /** Slug of the collection. */
   slug?: InputMaybe<Scalars['String']>;
-  /** Description of the collection (JSON). */
+  /**
+   * Description of the collection.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
   description?: InputMaybe<Scalars['JSONString']>;
   /** Background image file. */
   backgroundImage?: InputMaybe<Scalars['Upload']>;
@@ -1148,17 +1159,14 @@ export enum CountryCode {
 }
 
 export type CountryFilterInput = {
-  /**
-   * Boolean for filtering countries by having shipping zone assigned.If 'true',
-   * return countries with shipping zone assigned.If 'false', return countries
-   * without any shipping zone assigned.If the argument is not provided (null),
-   * return all countries.
-   */
+  /** Boolean for filtering countries by having shipping zone assigned.If 'true', return countries with shipping zone assigned.If 'false', return countries without any shipping zone assigned.If the argument is not provided (null), return all countries. */
   attachedToShippingZones?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type CountryRateInput = {
+  /** Country in which this rate applies. */
   countryCode: CountryCode;
+  /** Tax rate value provided as percentage. Example: provide `23` to represent `23%` tax rate. */
   rate: Scalars['Float'];
 };
 
@@ -2647,11 +2655,7 @@ export type MenuItemMoveInput = {
   itemId: Scalars['ID'];
   /** ID of the parent menu. If empty, menu will be top level menu. */
   parentId?: InputMaybe<Scalars['ID']>;
-  /**
-   * The new relative sorting position of the item (from -inf to +inf). 1 moves the
-   * item one position forward, -1 moves the item one position backward, 0 leaves
-   * the item unchanged.
-   */
+  /** The new relative sorting position of the item (from -inf to +inf). 1 moves the item one position forward, -1 moves the item one position backward, 0 leaves the item unchanged. */
   sortOrder?: InputMaybe<Scalars['Int']>;
 };
 
@@ -2714,11 +2718,7 @@ export type MoneyInput = {
 export type MoveProductInput = {
   /** The ID of the product to move. */
   productId: Scalars['ID'];
-  /**
-   * The relative sorting position of the product (from -inf to +inf) starting from
-   * the first given product's actual position.1 moves the item one position
-   * forward, -1 moves the item one position backward, 0 leaves the item unchanged.
-   */
+  /** The relative sorting position of the product (from -inf to +inf) starting from the first given product's actual position.1 moves the item one position forward, -1 moves the item one position backward, 0 leaves the item unchanged. */
   sortOrder?: InputMaybe<Scalars['Int']>;
 };
 
@@ -2748,6 +2748,49 @@ export type OrderAddNoteInput = {
   /** Note message. */
   message: Scalars['String'];
 };
+
+/**
+ * Determine a current authorize status for order.
+ *
+ *     We treat the order as fully authorized when the sum of authorized and charged funds
+ *     cover the order.total.
+ *     We treat the order as partially authorized when the sum of authorized and charged
+ *     funds covers only part of the order.total
+ *     We treat the order as not authorized when the sum of authorized and charged funds is
+ *     0.
+ *
+ *     NONE - the funds are not authorized
+ *     PARTIAL - the funds that are authorized or charged don't cover fully the order's
+ *     total
+ *     FULL - the funds that are authorized or charged fully cover the order's total
+ *
+ */
+export enum OrderAuthorizeStatusEnum {
+  NONE = 'NONE',
+  PARTIAL = 'PARTIAL',
+  FULL = 'FULL'
+}
+
+/**
+ * Determine the current charge status for the order.
+ *
+ *     We treat the order as overcharged when the charged amount is bigger that order.total
+ *     We treat the order as fully charged when the charged amount is equal to order.total.
+ *     We treat the order as partially charged when the charged amount covers only part of
+ *     the order.total
+ *
+ *     NONE - the funds are not charged.
+ *     PARTIAL - the funds that are charged don't cover the order's total
+ *     FULL - the funds that are charged fully cover the order's total
+ *     OVERCHARGED - the charged funds are bigger than order's total
+ *
+ */
+export enum OrderChargeStatusEnum {
+  NONE = 'NONE',
+  PARTIAL = 'PARTIAL',
+  FULL = 'FULL',
+  OVERCHARGED = 'OVERCHARGED'
+}
 
 /** An enumeration. */
 export enum OrderCreateFromCheckoutErrorCode {
@@ -2904,6 +2947,8 @@ export type OrderFilterInput = {
   search?: InputMaybe<Scalars['String']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
   channels?: InputMaybe<Array<Scalars['ID']>>;
+  authorizeStatus?: InputMaybe<Array<OrderAuthorizeStatusEnum>>;
+  chargeStatus?: InputMaybe<Array<OrderChargeStatusEnum>>;
   updatedAt?: InputMaybe<DateTimeRangeInput>;
   isClickAndCollect?: InputMaybe<Scalars['Boolean']>;
   isPreorder?: InputMaybe<Scalars['Boolean']>;
@@ -3016,10 +3061,7 @@ export enum OrderSettingsErrorCode {
 }
 
 export type OrderSettingsUpdateInput = {
-  /**
-   * When disabled, all new orders from checkout will be marked as unconfirmed.
-   * When enabled orders from checkout will become unfulfilled immediately.
-   */
+  /** When disabled, all new orders from checkout will be marked as unconfirmed. When enabled orders from checkout will become unfulfilled immediately. */
   automaticallyConfirmAllNewOrders?: InputMaybe<Scalars['Boolean']>;
   /** When enabled, all non-shippable gift card orders will be fulfilled automatically. */
   automaticallyFulfillNonShippableGiftCard?: InputMaybe<Scalars['Boolean']>;
@@ -3098,7 +3140,11 @@ export type PageCreateInput = {
   slug?: InputMaybe<Scalars['String']>;
   /** Page title. */
   title?: InputMaybe<Scalars['String']>;
-  /** Page content in JSON format. */
+  /**
+   * Page content.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
   content?: InputMaybe<Scalars['JSONString']>;
   /** List of attributes. */
   attributes?: InputMaybe<Array<AttributeValueInput>>;
@@ -3145,7 +3191,11 @@ export type PageInput = {
   slug?: InputMaybe<Scalars['String']>;
   /** Page title. */
   title?: InputMaybe<Scalars['String']>;
-  /** Page content in JSON format. */
+  /**
+   * Page content.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
   content?: InputMaybe<Scalars['JSONString']>;
   /** List of attributes. */
   attributes?: InputMaybe<Array<AttributeValueInput>>;
@@ -3201,6 +3251,11 @@ export type PageTranslationInput = {
   seoTitle?: InputMaybe<Scalars['String']>;
   seoDescription?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
+  /**
+   * Translated page content.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
   content?: InputMaybe<Scalars['JSONString']>;
 };
 
@@ -3295,16 +3350,9 @@ export type PaymentInput = {
   gateway: Scalars['String'];
   /** Client-side generated payment token, representing customer's billing data in a secure manner. */
   token?: InputMaybe<Scalars['String']>;
-  /**
-   * Total amount of the transaction, including all taxes and discounts. If no
-   * amount is provided, the checkout total will be used.
-   */
+  /** Total amount of the transaction, including all taxes and discounts. If no amount is provided, the checkout total will be used. */
   amount?: InputMaybe<Scalars['PositiveDecimal']>;
-  /**
-   * URL of a storefront view where user should be redirected after requiring
-   * additional actions. Payment with additional actions will not be finished if
-   * this field is not provided.
-   */
+  /** URL of a storefront view where user should be redirected after requiring additional actions. Payment with additional actions will not be finished if this field is not provided. */
   returnUrl?: InputMaybe<Scalars['String']>;
   /**
    * Payment store type.
@@ -3326,22 +3374,24 @@ export enum PermissionEnum {
   MANAGE_STAFF = 'MANAGE_STAFF',
   IMPERSONATE_USER = 'IMPERSONATE_USER',
   MANAGE_APPS = 'MANAGE_APPS',
+  MANAGE_OBSERVABILITY = 'MANAGE_OBSERVABILITY',
   MANAGE_CHANNELS = 'MANAGE_CHANNELS',
+  MANAGE_CHECKOUTS = 'MANAGE_CHECKOUTS',
+  HANDLE_CHECKOUTS = 'HANDLE_CHECKOUTS',
   MANAGE_DISCOUNTS = 'MANAGE_DISCOUNTS',
-  MANAGE_PLUGINS = 'MANAGE_PLUGINS',
   MANAGE_GIFT_CARD = 'MANAGE_GIFT_CARD',
   MANAGE_MENUS = 'MANAGE_MENUS',
   MANAGE_ORDERS = 'MANAGE_ORDERS',
   MANAGE_PAGES = 'MANAGE_PAGES',
   MANAGE_PAGE_TYPES_AND_ATTRIBUTES = 'MANAGE_PAGE_TYPES_AND_ATTRIBUTES',
   HANDLE_PAYMENTS = 'HANDLE_PAYMENTS',
+  MANAGE_PLUGINS = 'MANAGE_PLUGINS',
   MANAGE_PRODUCTS = 'MANAGE_PRODUCTS',
   MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES = 'MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES',
   MANAGE_SHIPPING = 'MANAGE_SHIPPING',
   MANAGE_SETTINGS = 'MANAGE_SETTINGS',
   MANAGE_TRANSLATIONS = 'MANAGE_TRANSLATIONS',
-  MANAGE_CHECKOUTS = 'MANAGE_CHECKOUTS',
-  HANDLE_CHECKOUTS = 'HANDLE_CHECKOUTS'
+  MANAGE_TAXES = 'MANAGE_TAXES'
 }
 
 export type PermissionGroupCreateInput = {
@@ -3518,15 +3568,13 @@ export type ProductChannelListingAddInput = {
   /** Determine if product should be available for purchase. */
   isAvailableForPurchase?: InputMaybe<Scalars['Boolean']>;
   /**
-   * A start date from which a product will be available for purchase. When not set
-   * and isAvailable is set to True, the current day is assumed.
+   * A start date from which a product will be available for purchase. When not set and isAvailable is set to True, the current day is assumed.
    *
    * DEPRECATED: this field will be removed in Saleor 4.0. Use `availableForPurchaseAt` field instead.
    */
   availableForPurchaseDate?: InputMaybe<Scalars['Date']>;
   /**
-   * A start date time from which a product will be available for purchase. When
-   * not set and `isAvailable` is set to True, the current day is assumed.
+   * A start date time from which a product will be available for purchase. When not set and `isAvailable` is set to True, the current day is assumed.
    *
    * Added in Saleor 3.3.
    */
@@ -3553,7 +3601,11 @@ export type ProductCreateInput = {
   chargeTaxes?: InputMaybe<Scalars['Boolean']>;
   /** List of IDs of collections that the product belongs to. */
   collections?: InputMaybe<Array<Scalars['ID']>>;
-  /** Product description (JSON). */
+  /**
+   * Product description.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
   description?: InputMaybe<Scalars['JSONString']>;
   /** Product name. */
   name?: InputMaybe<Scalars['String']>;
@@ -3643,7 +3695,11 @@ export type ProductInput = {
   chargeTaxes?: InputMaybe<Scalars['Boolean']>;
   /** List of IDs of collections that the product belongs to. */
   collections?: InputMaybe<Array<Scalars['ID']>>;
-  /** Product description (JSON). */
+  /**
+   * Product description.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
   description?: InputMaybe<Scalars['JSONString']>;
   /** Product name. */
   name?: InputMaybe<Scalars['String']>;
@@ -3783,11 +3839,7 @@ export type ProductTypeInput = {
   slug?: InputMaybe<Scalars['String']>;
   /** The product type kind. */
   kind?: InputMaybe<ProductTypeKindEnum>;
-  /**
-   * Determines if product of this type has multiple variants. This option mainly
-   * simplifies product management in the dashboard. There is always at least one
-   * variant created under the hood.
-   */
+  /** Determines if product of this type has multiple variants. This option mainly simplifies product management in the dashboard. There is always at least one variant created under the hood. */
   hasVariants?: InputMaybe<Scalars['Boolean']>;
   /** List of attributes shared among all product variants. */
   productAttributes?: InputMaybe<Array<Scalars['ID']>>;
@@ -3830,10 +3882,7 @@ export type ProductVariantBulkCreateInput = {
   attributes: Array<BulkAttributeValueInput>;
   /** Stock keeping unit. */
   sku?: InputMaybe<Scalars['String']>;
-  /**
-   * Determines if the inventory of this variant should be tracked. If false, the
-   * quantity won't change when customers buy this item.
-   */
+  /** Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item. */
   trackInventory?: InputMaybe<Scalars['Boolean']>;
   /** Weight of the Product Variant. */
   weight?: InputMaybe<Scalars['WeightScalar']>;
@@ -3881,10 +3930,7 @@ export type ProductVariantCreateInput = {
   attributes: Array<AttributeValueInput>;
   /** Stock keeping unit. */
   sku?: InputMaybe<Scalars['String']>;
-  /**
-   * Determines if the inventory of this variant should be tracked. If false, the
-   * quantity won't change when customers buy this item.
-   */
+  /** Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item. */
   trackInventory?: InputMaybe<Scalars['Boolean']>;
   /** Weight of the Product Variant. */
   weight?: InputMaybe<Scalars['WeightScalar']>;
@@ -3923,10 +3969,7 @@ export type ProductVariantInput = {
   attributes?: InputMaybe<Array<AttributeValueInput>>;
   /** Stock keeping unit. */
   sku?: InputMaybe<Scalars['String']>;
-  /**
-   * Determines if the inventory of this variant should be tracked. If false, the
-   * quantity won't change when customers buy this item.
-   */
+  /** Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item. */
   trackInventory?: InputMaybe<Scalars['Boolean']>;
   /** Weight of the Product Variant. */
   weight?: InputMaybe<Scalars['WeightScalar']>;
@@ -3982,11 +4025,7 @@ export type PublishableChannelListingInput = {
 export type ReorderInput = {
   /** The ID of the item to move. */
   id: Scalars['ID'];
-  /**
-   * The new relative sorting position of the item (from -inf to +inf). 1 moves the
-   * item one position forward, -1 moves the item one position backward, 0 leaves
-   * the item unchanged.
-   */
+  /** The new relative sorting position of the item (from -inf to +inf). 1 moves the item one position forward, -1 moves the item one position backward, 0 leaves the item unchanged. */
   sortOrder?: InputMaybe<Scalars['Int']>;
 };
 
@@ -4159,7 +4198,11 @@ export type ShippingPriceInput = {
 
 export type ShippingPriceTranslationInput = {
   name?: InputMaybe<Scalars['String']>;
-  /** Translated shipping method description (JSON). */
+  /**
+   * Translated shipping method description.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
   description?: InputMaybe<Scalars['JSONString']>;
 };
 
@@ -4379,93 +4422,117 @@ export enum StorePaymentMethodEnum {
   NONE = 'NONE'
 }
 
+/** An enumeration. */
 export enum TaxClassCreateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
-  DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM'
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND'
 }
 
 export type TaxClassCreateInput = {
+  /** Name of the tax class. */
   name: Scalars['String'];
-  updateCountryRates?: InputMaybe<Array<CountryRateInput>>;
+  /** List of country-specific tax rates to create for this tax class. */
+  createCountryRates?: InputMaybe<Array<CountryRateInput>>;
 };
 
+/** An enumeration. */
 export enum TaxClassDeleteErrorCode {
-  CANNOT_REMOVE_DEFAULT_CLASS = 'CANNOT_REMOVE_DEFAULT_CLASS',
-  GRAPHQL_ERROR = 'GRAPHQL_ERROR'
+  CANNOT_DELETE_DEFAULT_CLASS = 'CANNOT_DELETE_DEFAULT_CLASS',
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND'
 }
 
 export type TaxClassFilterInput = {
+  metadata?: InputMaybe<Array<MetadataFilter>>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
   countries?: InputMaybe<Array<CountryCode>>;
 };
 
 export type TaxClassRateInput = {
+  /** ID of a tax class for which to update the tax rate */
   taxClassId: Scalars['ID'];
-  rate?: InputMaybe<Scalars['Float']>;
+  /** Tax rate value. */
+  rate: Scalars['Float'];
 };
 
-export enum TaxClassSortingField {
+export enum TaxClassSortField {
+  /** Sort tax classes by name. */
   NAME = 'NAME'
 }
 
 export type TaxClassSortingInput = {
+  /** Specifies the direction in which to sort products. */
   direction: OrderDirection;
-  field: TaxClassSortingField;
+  /** Sort tax classes by the selected field. */
+  field: TaxClassSortField;
 };
 
+/** An enumeration. */
 export enum TaxClassUpdateErrorCode {
-  GRAPHQL_ERROR = 'GRAPHQL_ERROR'
+  DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND'
 }
 
 export type TaxClassUpdateInput = {
+  /** Name of the tax class. */
   name?: InputMaybe<Scalars['String']>;
+  /** List of country-specific tax rates to create or update for this tax class. */
   updateCountryRates?: InputMaybe<Array<CountryRateInput>>;
+  /** List of country codes for which to remove the tax class rates. */
   removeCountryRates?: InputMaybe<Array<CountryCode>>;
 };
 
 export type TaxConfigurationFilterInput = {
+  metadata?: InputMaybe<Array<MetadataFilter>>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
 };
 
 export type TaxConfigurationPerCountryInput = {
+  /** Country in which this configuration applies. */
   countryCode: CountryCode;
+  /** Determines whether taxes are charged in this country. */
   chargeTaxes: Scalars['Boolean'];
+  /** Determines whether prices displayed in a storefront should include taxes for this country. */
   displayGrossPrices: Scalars['Boolean'];
 };
 
-export enum TaxConfigurationSortingField {
-  CHANNEL = 'CHANNEL'
-}
-
-export type TaxConfigurationSortingInput = {
-  direction: OrderDirection;
-  field: TaxConfigurationSortingField;
-};
-
+/** An enumeration. */
 export enum TaxConfigurationUpdateErrorCode {
+  DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
-  DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM'
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND'
 }
 
 export type TaxConfigurationUpdateInput = {
+  /** Determines whether taxes are charged in the given channel. */
   chargeTaxes?: InputMaybe<Scalars['Boolean']>;
+  /** Determines whether prices displayed in a storefront should include taxes. */
   displayGrossPrices?: InputMaybe<Scalars['Boolean']>;
+  /** Determines whether prices are entered with the tax included. */
   pricesEnteredWithTax?: InputMaybe<Scalars['Boolean']>;
+  /** List of tax country configurations to create or update (identified by a country code). */
   updateCountriesConfiguration?: InputMaybe<Array<TaxConfigurationPerCountryInput>>;
+  /** List of country codes for which to remove the tax configuration. */
   removeCountriesConfiguration?: InputMaybe<Array<CountryCode>>;
 };
 
-export enum TaxCountryConfigurationUpdateErrorCode {
-  GRAPHQL_ERROR = 'GRAPHQL_ERROR'
+/** An enumeration. */
+export enum TaxCountryConfigurationDeleteErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND'
 }
 
-export type TaxCountryConfigurationUpdateInput = {
-  countryCode: CountryCode;
-  updateTaxClassRates?: InputMaybe<Array<TaxClassRateInput>>;
-};
-
-export enum TaxCountryDeleteConfigurationErrorCode {
-  GRAPHQL_ERROR = 'GRAPHQL_ERROR'
+/** An enumeration. */
+export enum TaxCountryConfigurationUpdateErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND'
 }
 
 export type TimePeriodInputType = {
@@ -4487,12 +4554,13 @@ export enum TimePeriodTypeEnum {
  * Represents possible actions on payment transaction.
  *
  *     The following actions are possible:
- *     CAPTURE - Represents the capture action.
+ *     CHARGE - Represents the charge action.
  *     REFUND - Represents a refund action.
  *     VOID - Represents a void action.
+ *
  */
 export enum TransactionActionEnum {
-  CAPTURE = 'CAPTURE',
+  CHARGE = 'CHARGE',
   REFUND = 'REFUND',
   VOID = 'VOID'
 }
@@ -4517,8 +4585,8 @@ export type TransactionCreateInput = {
   availableActions?: InputMaybe<Array<TransactionActionEnum>>;
   /** Amount authorized by this transaction. */
   amountAuthorized?: InputMaybe<MoneyInput>;
-  /** Amount captured by this transaction. */
-  amountCaptured?: InputMaybe<MoneyInput>;
+  /** Amount charged by this transaction. */
+  amountCharged?: InputMaybe<MoneyInput>;
   /** Amount refunded by this transaction. */
   amountRefunded?: InputMaybe<MoneyInput>;
   /** Amount voided by this transaction. */
@@ -4587,8 +4655,8 @@ export type TransactionUpdateInput = {
   availableActions?: InputMaybe<Array<TransactionActionEnum>>;
   /** Amount authorized by this transaction. */
   amountAuthorized?: InputMaybe<MoneyInput>;
-  /** Amount captured by this transaction. */
-  amountCaptured?: InputMaybe<MoneyInput>;
+  /** Amount charged by this transaction. */
+  amountCharged?: InputMaybe<MoneyInput>;
   /** Amount refunded by this transaction. */
   amountRefunded?: InputMaybe<MoneyInput>;
   /** Amount voided by this transaction. */
@@ -4625,6 +4693,11 @@ export type TranslationInput = {
   seoTitle?: InputMaybe<Scalars['String']>;
   seoDescription?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  /**
+   * Translated description.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
   description?: InputMaybe<Scalars['JSONString']>;
 };
 
@@ -4942,6 +5015,20 @@ export enum WebhookErrorCode {
 export enum WebhookEventTypeAsyncEnum {
   /** All the events. */
   ANY_EVENTS = 'ANY_EVENTS',
+  /** A new address created. */
+  ADDRESS_CREATED = 'ADDRESS_CREATED',
+  /** An address updated. */
+  ADDRESS_UPDATED = 'ADDRESS_UPDATED',
+  /** An address deleted. */
+  ADDRESS_DELETED = 'ADDRESS_DELETED',
+  /** A new app installed. */
+  APP_INSTALLED = 'APP_INSTALLED',
+  /** An app updated. */
+  APP_UPDATED = 'APP_UPDATED',
+  /** An app deleted. */
+  APP_DELETED = 'APP_DELETED',
+  /** An app status is changed. */
+  APP_STATUS_CHANGED = 'APP_STATUS_CHANGED',
   /** A new category created. */
   CATEGORY_CREATED = 'CATEGORY_CREATED',
   /** A category is updated. */
@@ -4978,18 +5065,11 @@ export enum WebhookEventTypeAsyncEnum {
   MENU_ITEM_DELETED = 'MENU_ITEM_DELETED',
   /** A new order is placed. */
   ORDER_CREATED = 'ORDER_CREATED',
-  /**
-   * An order is confirmed (status change unconfirmed -> unfulfilled) by a staff
-   * user using the OrderConfirm mutation. It also triggers when the user completes
-   * the checkout and the shop setting `automatically_confirm_all_new_orders` is enabled.
-   */
+  /** An order is confirmed (status change unconfirmed -> unfulfilled) by a staff user using the OrderConfirm mutation. It also triggers when the user completes the checkout and the shop setting `automatically_confirm_all_new_orders` is enabled. */
   ORDER_CONFIRMED = 'ORDER_CONFIRMED',
   /** Payment is made and an order is fully paid. */
   ORDER_FULLY_PAID = 'ORDER_FULLY_PAID',
-  /**
-   * An order is updated; triggered for all changes related to an order; covers all
-   * other order webhooks, except for ORDER_CREATED.
-   */
+  /** An order is updated; triggered for all changes related to an order; covers all other order webhooks, except for ORDER_CREATED. */
   ORDER_UPDATED = 'ORDER_UPDATED',
   /** An order is cancelled. */
   ORDER_CANCELLED = 'ORDER_CANCELLED',
@@ -5047,6 +5127,12 @@ export enum WebhookEventTypeAsyncEnum {
   PAGE_UPDATED = 'PAGE_UPDATED',
   /** A page is deleted. */
   PAGE_DELETED = 'PAGE_DELETED',
+  /** A new page type is created. */
+  PAGE_TYPE_CREATED = 'PAGE_TYPE_CREATED',
+  /** A page type is updated. */
+  PAGE_TYPE_UPDATED = 'PAGE_TYPE_UPDATED',
+  /** A page type is deleted. */
+  PAGE_TYPE_DELETED = 'PAGE_TYPE_DELETED',
   /** A new shipping price is created. */
   SHIPPING_PRICE_CREATED = 'SHIPPING_PRICE_CREATED',
   /** A shipping price is updated. */
@@ -5059,147 +5145,184 @@ export enum WebhookEventTypeAsyncEnum {
   SHIPPING_ZONE_UPDATED = 'SHIPPING_ZONE_UPDATED',
   /** A shipping zone is deleted. */
   SHIPPING_ZONE_DELETED = 'SHIPPING_ZONE_DELETED',
+  /** A staff user is deleted */
+  STAFF_CREATED = 'STAFF_CREATED',
+  STAFF_UPDATED = 'STAFF_UPDATED',
+  STAFF_DELETED = 'STAFF_DELETED',
   TRANSACTION_ACTION_REQUEST = 'TRANSACTION_ACTION_REQUEST',
   TRANSLATION_CREATED = 'TRANSLATION_CREATED',
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
-  /** A new voucher created. */
-  VOUCHER_CREATED = 'VOUCHER_CREATED',
-  /** A voucher is updated. */
-  VOUCHER_UPDATED = 'VOUCHER_UPDATED',
-  /** A voucher is deleted. */
-  VOUCHER_DELETED = 'VOUCHER_DELETED'
-}
-
-/** Enum determining type of webhook. */
-export enum WebhookEventTypeEnum {
-  /** All the events. */
-  ANY_EVENTS = 'ANY_EVENTS',
-  /** A new category created. */
-  CATEGORY_CREATED = 'CATEGORY_CREATED',
-  /** A category is updated. */
-  CATEGORY_UPDATED = 'CATEGORY_UPDATED',
-  /** A category is deleted. */
-  CATEGORY_DELETED = 'CATEGORY_DELETED',
-  /** A new channel created. */
-  CHANNEL_CREATED = 'CHANNEL_CREATED',
-  /** A channel is updated. */
-  CHANNEL_UPDATED = 'CHANNEL_UPDATED',
-  /** A channel is deleted. */
-  CHANNEL_DELETED = 'CHANNEL_DELETED',
-  /** A channel status is changed. */
-  CHANNEL_STATUS_CHANGED = 'CHANNEL_STATUS_CHANGED',
-  /** A new gift card created. */
-  GIFT_CARD_CREATED = 'GIFT_CARD_CREATED',
-  /** A gift card is updated. */
-  GIFT_CARD_UPDATED = 'GIFT_CARD_UPDATED',
-  /** A gift card is deleted. */
-  GIFT_CARD_DELETED = 'GIFT_CARD_DELETED',
-  /** A gift card status is changed. */
-  GIFT_CARD_STATUS_CHANGED = 'GIFT_CARD_STATUS_CHANGED',
-  /** A new menu created. */
-  MENU_CREATED = 'MENU_CREATED',
-  /** A menu is updated. */
-  MENU_UPDATED = 'MENU_UPDATED',
-  /** A menu is deleted. */
-  MENU_DELETED = 'MENU_DELETED',
-  /** A new menu item created. */
-  MENU_ITEM_CREATED = 'MENU_ITEM_CREATED',
-  /** A menu item is updated. */
-  MENU_ITEM_UPDATED = 'MENU_ITEM_UPDATED',
-  /** A menu item is deleted. */
-  MENU_ITEM_DELETED = 'MENU_ITEM_DELETED',
-  /** A new order is placed. */
-  ORDER_CREATED = 'ORDER_CREATED',
-  /**
-   * An order is confirmed (status change unconfirmed -> unfulfilled) by a staff
-   * user using the OrderConfirm mutation. It also triggers when the user completes
-   * the checkout and the shop setting `automatically_confirm_all_new_orders` is enabled.
-   */
-  ORDER_CONFIRMED = 'ORDER_CONFIRMED',
-  /** Payment is made and an order is fully paid. */
-  ORDER_FULLY_PAID = 'ORDER_FULLY_PAID',
-  /**
-   * An order is updated; triggered for all changes related to an order; covers all
-   * other order webhooks, except for ORDER_CREATED.
-   */
-  ORDER_UPDATED = 'ORDER_UPDATED',
-  /** An order is cancelled. */
-  ORDER_CANCELLED = 'ORDER_CANCELLED',
-  /** An order is fulfilled. */
-  ORDER_FULFILLED = 'ORDER_FULFILLED',
-  DRAFT_ORDER_CREATED = 'DRAFT_ORDER_CREATED',
-  DRAFT_ORDER_UPDATED = 'DRAFT_ORDER_UPDATED',
-  DRAFT_ORDER_DELETED = 'DRAFT_ORDER_DELETED',
-  SALE_CREATED = 'SALE_CREATED',
-  SALE_UPDATED = 'SALE_UPDATED',
-  SALE_DELETED = 'SALE_DELETED',
-  /** An invoice for order requested. */
-  INVOICE_REQUESTED = 'INVOICE_REQUESTED',
-  /** An invoice is deleted. */
-  INVOICE_DELETED = 'INVOICE_DELETED',
-  /** Invoice has been sent. */
-  INVOICE_SENT = 'INVOICE_SENT',
-  /** A new customer account is created. */
-  CUSTOMER_CREATED = 'CUSTOMER_CREATED',
-  /** A customer account is updated. */
-  CUSTOMER_UPDATED = 'CUSTOMER_UPDATED',
-  /** A new collection is created. */
-  COLLECTION_CREATED = 'COLLECTION_CREATED',
-  /** A collection is updated. */
-  COLLECTION_UPDATED = 'COLLECTION_UPDATED',
-  /** A collection is deleted. */
-  COLLECTION_DELETED = 'COLLECTION_DELETED',
-  /** A new product is created. */
-  PRODUCT_CREATED = 'PRODUCT_CREATED',
-  /** A product is updated. */
-  PRODUCT_UPDATED = 'PRODUCT_UPDATED',
-  /** A product is deleted. */
-  PRODUCT_DELETED = 'PRODUCT_DELETED',
-  /** A new product variant is created. */
-  PRODUCT_VARIANT_CREATED = 'PRODUCT_VARIANT_CREATED',
-  /** A product variant is updated. */
-  PRODUCT_VARIANT_UPDATED = 'PRODUCT_VARIANT_UPDATED',
-  /** A product variant is deleted. */
-  PRODUCT_VARIANT_DELETED = 'PRODUCT_VARIANT_DELETED',
-  PRODUCT_VARIANT_OUT_OF_STOCK = 'PRODUCT_VARIANT_OUT_OF_STOCK',
-  PRODUCT_VARIANT_BACK_IN_STOCK = 'PRODUCT_VARIANT_BACK_IN_STOCK',
-  /** A new checkout is created. */
-  CHECKOUT_CREATED = 'CHECKOUT_CREATED',
-  /** A checkout is updated. It also triggers all updates related to the checkout. */
-  CHECKOUT_UPDATED = 'CHECKOUT_UPDATED',
-  /** A new fulfillment is created. */
-  FULFILLMENT_CREATED = 'FULFILLMENT_CREATED',
-  /** A fulfillment is cancelled. */
-  FULFILLMENT_CANCELED = 'FULFILLMENT_CANCELED',
-  /** User notification triggered. */
-  NOTIFY_USER = 'NOTIFY_USER',
-  /** A new page is created. */
-  PAGE_CREATED = 'PAGE_CREATED',
-  /** A page is updated. */
-  PAGE_UPDATED = 'PAGE_UPDATED',
-  /** A page is deleted. */
-  PAGE_DELETED = 'PAGE_DELETED',
-  /** A new shipping price is created. */
-  SHIPPING_PRICE_CREATED = 'SHIPPING_PRICE_CREATED',
-  /** A shipping price is updated. */
-  SHIPPING_PRICE_UPDATED = 'SHIPPING_PRICE_UPDATED',
-  /** A shipping price is deleted. */
-  SHIPPING_PRICE_DELETED = 'SHIPPING_PRICE_DELETED',
-  /** A new shipping zone is created. */
-  SHIPPING_ZONE_CREATED = 'SHIPPING_ZONE_CREATED',
-  /** A shipping zone is updated. */
-  SHIPPING_ZONE_UPDATED = 'SHIPPING_ZONE_UPDATED',
-  /** A shipping zone is deleted. */
-  SHIPPING_ZONE_DELETED = 'SHIPPING_ZONE_DELETED',
-  TRANSACTION_ACTION_REQUEST = 'TRANSACTION_ACTION_REQUEST',
-  TRANSLATION_CREATED = 'TRANSLATION_CREATED',
-  TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
+  /** A new warehouse created. */
+  WAREHOUSE_CREATED = 'WAREHOUSE_CREATED',
+  /** A warehouse is updated. */
+  WAREHOUSE_UPDATED = 'WAREHOUSE_UPDATED',
+  /** A warehouse is deleted. */
+  WAREHOUSE_DELETED = 'WAREHOUSE_DELETED',
   /** A new voucher created. */
   VOUCHER_CREATED = 'VOUCHER_CREATED',
   /** A voucher is updated. */
   VOUCHER_UPDATED = 'VOUCHER_UPDATED',
   /** A voucher is deleted. */
   VOUCHER_DELETED = 'VOUCHER_DELETED',
+  /** An observability event is created. */
+  OBSERVABILITY = 'OBSERVABILITY'
+}
+
+/** Enum determining type of webhook. */
+export enum WebhookEventTypeEnum {
+  /** All the events. */
+  ANY_EVENTS = 'ANY_EVENTS',
+  /** A new address created. */
+  ADDRESS_CREATED = 'ADDRESS_CREATED',
+  /** An address updated. */
+  ADDRESS_UPDATED = 'ADDRESS_UPDATED',
+  /** An address deleted. */
+  ADDRESS_DELETED = 'ADDRESS_DELETED',
+  /** A new app installed. */
+  APP_INSTALLED = 'APP_INSTALLED',
+  /** An app updated. */
+  APP_UPDATED = 'APP_UPDATED',
+  /** An app deleted. */
+  APP_DELETED = 'APP_DELETED',
+  /** An app status is changed. */
+  APP_STATUS_CHANGED = 'APP_STATUS_CHANGED',
+  /** A new category created. */
+  CATEGORY_CREATED = 'CATEGORY_CREATED',
+  /** A category is updated. */
+  CATEGORY_UPDATED = 'CATEGORY_UPDATED',
+  /** A category is deleted. */
+  CATEGORY_DELETED = 'CATEGORY_DELETED',
+  /** A new channel created. */
+  CHANNEL_CREATED = 'CHANNEL_CREATED',
+  /** A channel is updated. */
+  CHANNEL_UPDATED = 'CHANNEL_UPDATED',
+  /** A channel is deleted. */
+  CHANNEL_DELETED = 'CHANNEL_DELETED',
+  /** A channel status is changed. */
+  CHANNEL_STATUS_CHANGED = 'CHANNEL_STATUS_CHANGED',
+  /** A new gift card created. */
+  GIFT_CARD_CREATED = 'GIFT_CARD_CREATED',
+  /** A gift card is updated. */
+  GIFT_CARD_UPDATED = 'GIFT_CARD_UPDATED',
+  /** A gift card is deleted. */
+  GIFT_CARD_DELETED = 'GIFT_CARD_DELETED',
+  /** A gift card status is changed. */
+  GIFT_CARD_STATUS_CHANGED = 'GIFT_CARD_STATUS_CHANGED',
+  /** A new menu created. */
+  MENU_CREATED = 'MENU_CREATED',
+  /** A menu is updated. */
+  MENU_UPDATED = 'MENU_UPDATED',
+  /** A menu is deleted. */
+  MENU_DELETED = 'MENU_DELETED',
+  /** A new menu item created. */
+  MENU_ITEM_CREATED = 'MENU_ITEM_CREATED',
+  /** A menu item is updated. */
+  MENU_ITEM_UPDATED = 'MENU_ITEM_UPDATED',
+  /** A menu item is deleted. */
+  MENU_ITEM_DELETED = 'MENU_ITEM_DELETED',
+  /** A new order is placed. */
+  ORDER_CREATED = 'ORDER_CREATED',
+  /** An order is confirmed (status change unconfirmed -> unfulfilled) by a staff user using the OrderConfirm mutation. It also triggers when the user completes the checkout and the shop setting `automatically_confirm_all_new_orders` is enabled. */
+  ORDER_CONFIRMED = 'ORDER_CONFIRMED',
+  /** Payment is made and an order is fully paid. */
+  ORDER_FULLY_PAID = 'ORDER_FULLY_PAID',
+  /** An order is updated; triggered for all changes related to an order; covers all other order webhooks, except for ORDER_CREATED. */
+  ORDER_UPDATED = 'ORDER_UPDATED',
+  /** An order is cancelled. */
+  ORDER_CANCELLED = 'ORDER_CANCELLED',
+  /** An order is fulfilled. */
+  ORDER_FULFILLED = 'ORDER_FULFILLED',
+  DRAFT_ORDER_CREATED = 'DRAFT_ORDER_CREATED',
+  DRAFT_ORDER_UPDATED = 'DRAFT_ORDER_UPDATED',
+  DRAFT_ORDER_DELETED = 'DRAFT_ORDER_DELETED',
+  SALE_CREATED = 'SALE_CREATED',
+  SALE_UPDATED = 'SALE_UPDATED',
+  SALE_DELETED = 'SALE_DELETED',
+  /** An invoice for order requested. */
+  INVOICE_REQUESTED = 'INVOICE_REQUESTED',
+  /** An invoice is deleted. */
+  INVOICE_DELETED = 'INVOICE_DELETED',
+  /** Invoice has been sent. */
+  INVOICE_SENT = 'INVOICE_SENT',
+  /** A new customer account is created. */
+  CUSTOMER_CREATED = 'CUSTOMER_CREATED',
+  /** A customer account is updated. */
+  CUSTOMER_UPDATED = 'CUSTOMER_UPDATED',
+  /** A new collection is created. */
+  COLLECTION_CREATED = 'COLLECTION_CREATED',
+  /** A collection is updated. */
+  COLLECTION_UPDATED = 'COLLECTION_UPDATED',
+  /** A collection is deleted. */
+  COLLECTION_DELETED = 'COLLECTION_DELETED',
+  /** A new product is created. */
+  PRODUCT_CREATED = 'PRODUCT_CREATED',
+  /** A product is updated. */
+  PRODUCT_UPDATED = 'PRODUCT_UPDATED',
+  /** A product is deleted. */
+  PRODUCT_DELETED = 'PRODUCT_DELETED',
+  /** A new product variant is created. */
+  PRODUCT_VARIANT_CREATED = 'PRODUCT_VARIANT_CREATED',
+  /** A product variant is updated. */
+  PRODUCT_VARIANT_UPDATED = 'PRODUCT_VARIANT_UPDATED',
+  /** A product variant is deleted. */
+  PRODUCT_VARIANT_DELETED = 'PRODUCT_VARIANT_DELETED',
+  PRODUCT_VARIANT_OUT_OF_STOCK = 'PRODUCT_VARIANT_OUT_OF_STOCK',
+  PRODUCT_VARIANT_BACK_IN_STOCK = 'PRODUCT_VARIANT_BACK_IN_STOCK',
+  /** A new checkout is created. */
+  CHECKOUT_CREATED = 'CHECKOUT_CREATED',
+  /** A checkout is updated. It also triggers all updates related to the checkout. */
+  CHECKOUT_UPDATED = 'CHECKOUT_UPDATED',
+  /** A new fulfillment is created. */
+  FULFILLMENT_CREATED = 'FULFILLMENT_CREATED',
+  /** A fulfillment is cancelled. */
+  FULFILLMENT_CANCELED = 'FULFILLMENT_CANCELED',
+  /** User notification triggered. */
+  NOTIFY_USER = 'NOTIFY_USER',
+  /** A new page is created. */
+  PAGE_CREATED = 'PAGE_CREATED',
+  /** A page is updated. */
+  PAGE_UPDATED = 'PAGE_UPDATED',
+  /** A page is deleted. */
+  PAGE_DELETED = 'PAGE_DELETED',
+  /** A new page type is created. */
+  PAGE_TYPE_CREATED = 'PAGE_TYPE_CREATED',
+  /** A page type is updated. */
+  PAGE_TYPE_UPDATED = 'PAGE_TYPE_UPDATED',
+  /** A page type is deleted. */
+  PAGE_TYPE_DELETED = 'PAGE_TYPE_DELETED',
+  /** A new shipping price is created. */
+  SHIPPING_PRICE_CREATED = 'SHIPPING_PRICE_CREATED',
+  /** A shipping price is updated. */
+  SHIPPING_PRICE_UPDATED = 'SHIPPING_PRICE_UPDATED',
+  /** A shipping price is deleted. */
+  SHIPPING_PRICE_DELETED = 'SHIPPING_PRICE_DELETED',
+  /** A new shipping zone is created. */
+  SHIPPING_ZONE_CREATED = 'SHIPPING_ZONE_CREATED',
+  /** A shipping zone is updated. */
+  SHIPPING_ZONE_UPDATED = 'SHIPPING_ZONE_UPDATED',
+  /** A shipping zone is deleted. */
+  SHIPPING_ZONE_DELETED = 'SHIPPING_ZONE_DELETED',
+  /** A staff user is deleted */
+  STAFF_CREATED = 'STAFF_CREATED',
+  STAFF_UPDATED = 'STAFF_UPDATED',
+  STAFF_DELETED = 'STAFF_DELETED',
+  TRANSACTION_ACTION_REQUEST = 'TRANSACTION_ACTION_REQUEST',
+  TRANSLATION_CREATED = 'TRANSLATION_CREATED',
+  TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
+  /** A new warehouse created. */
+  WAREHOUSE_CREATED = 'WAREHOUSE_CREATED',
+  /** A warehouse is updated. */
+  WAREHOUSE_UPDATED = 'WAREHOUSE_UPDATED',
+  /** A warehouse is deleted. */
+  WAREHOUSE_DELETED = 'WAREHOUSE_DELETED',
+  /** A new voucher created. */
+  VOUCHER_CREATED = 'VOUCHER_CREATED',
+  /** A voucher is updated. */
+  VOUCHER_UPDATED = 'VOUCHER_UPDATED',
+  /** A voucher is deleted. */
+  VOUCHER_DELETED = 'VOUCHER_DELETED',
+  /** An observability event is created. */
+  OBSERVABILITY = 'OBSERVABILITY',
   PAYMENT_AUTHORIZE = 'PAYMENT_AUTHORIZE',
   PAYMENT_CAPTURE = 'PAYMENT_CAPTURE',
   PAYMENT_CONFIRM = 'PAYMENT_CONFIRM',
@@ -5228,6 +5351,13 @@ export enum WebhookEventTypeSyncEnum {
 
 /** An enumeration. */
 export enum WebhookSampleEventTypeEnum {
+  ADDRESS_CREATED = 'ADDRESS_CREATED',
+  ADDRESS_UPDATED = 'ADDRESS_UPDATED',
+  ADDRESS_DELETED = 'ADDRESS_DELETED',
+  APP_INSTALLED = 'APP_INSTALLED',
+  APP_UPDATED = 'APP_UPDATED',
+  APP_DELETED = 'APP_DELETED',
+  APP_STATUS_CHANGED = 'APP_STATUS_CHANGED',
   CATEGORY_CREATED = 'CATEGORY_CREATED',
   CATEGORY_UPDATED = 'CATEGORY_UPDATED',
   CATEGORY_DELETED = 'CATEGORY_DELETED',
@@ -5281,18 +5411,28 @@ export enum WebhookSampleEventTypeEnum {
   PAGE_CREATED = 'PAGE_CREATED',
   PAGE_UPDATED = 'PAGE_UPDATED',
   PAGE_DELETED = 'PAGE_DELETED',
+  PAGE_TYPE_CREATED = 'PAGE_TYPE_CREATED',
+  PAGE_TYPE_UPDATED = 'PAGE_TYPE_UPDATED',
+  PAGE_TYPE_DELETED = 'PAGE_TYPE_DELETED',
   SHIPPING_PRICE_CREATED = 'SHIPPING_PRICE_CREATED',
   SHIPPING_PRICE_UPDATED = 'SHIPPING_PRICE_UPDATED',
   SHIPPING_PRICE_DELETED = 'SHIPPING_PRICE_DELETED',
   SHIPPING_ZONE_CREATED = 'SHIPPING_ZONE_CREATED',
   SHIPPING_ZONE_UPDATED = 'SHIPPING_ZONE_UPDATED',
   SHIPPING_ZONE_DELETED = 'SHIPPING_ZONE_DELETED',
+  STAFF_CREATED = 'STAFF_CREATED',
+  STAFF_UPDATED = 'STAFF_UPDATED',
+  STAFF_DELETED = 'STAFF_DELETED',
   TRANSACTION_ACTION_REQUEST = 'TRANSACTION_ACTION_REQUEST',
   TRANSLATION_CREATED = 'TRANSLATION_CREATED',
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
+  WAREHOUSE_CREATED = 'WAREHOUSE_CREATED',
+  WAREHOUSE_UPDATED = 'WAREHOUSE_UPDATED',
+  WAREHOUSE_DELETED = 'WAREHOUSE_DELETED',
   VOUCHER_CREATED = 'VOUCHER_CREATED',
   VOUCHER_UPDATED = 'VOUCHER_UPDATED',
-  VOUCHER_DELETED = 'VOUCHER_DELETED'
+  VOUCHER_DELETED = 'VOUCHER_DELETED',
+  OBSERVABILITY = 'OBSERVABILITY'
 }
 
 export type WebhookUpdateInput = {
@@ -6307,6 +6447,10 @@ type Metadata_ShippingMethodType_Fragment = { __typename: 'ShippingMethodType', 
 
 type Metadata_ShippingZone_Fragment = { __typename: 'ShippingZone', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
+type Metadata_TaxClass_Fragment = { __typename: 'TaxClass', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
+
+type Metadata_TaxConfiguration_Fragment = { __typename: 'TaxConfiguration', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
+
 type Metadata_TransactionItem_Fragment = { __typename: 'TransactionItem', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
 type Metadata_User_Fragment = { __typename: 'User', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
@@ -6315,7 +6459,7 @@ type Metadata_Voucher_Fragment = { __typename: 'Voucher', metadata: Array<{ __ty
 
 type Metadata_Warehouse_Fragment = { __typename: 'Warehouse', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
-export type MetadataFragment = Metadata_App_Fragment | Metadata_Attribute_Fragment | Metadata_Category_Fragment | Metadata_Checkout_Fragment | Metadata_Collection_Fragment | Metadata_DigitalContent_Fragment | Metadata_Fulfillment_Fragment | Metadata_GiftCard_Fragment | Metadata_Invoice_Fragment | Metadata_Menu_Fragment | Metadata_MenuItem_Fragment | Metadata_Order_Fragment | Metadata_Page_Fragment | Metadata_PageType_Fragment | Metadata_Payment_Fragment | Metadata_Product_Fragment | Metadata_ProductType_Fragment | Metadata_ProductVariant_Fragment | Metadata_Sale_Fragment | Metadata_ShippingMethod_Fragment | Metadata_ShippingMethodType_Fragment | Metadata_ShippingZone_Fragment | Metadata_TransactionItem_Fragment | Metadata_User_Fragment | Metadata_Voucher_Fragment | Metadata_Warehouse_Fragment;
+export type MetadataFragment = Metadata_App_Fragment | Metadata_Attribute_Fragment | Metadata_Category_Fragment | Metadata_Checkout_Fragment | Metadata_Collection_Fragment | Metadata_DigitalContent_Fragment | Metadata_Fulfillment_Fragment | Metadata_GiftCard_Fragment | Metadata_Invoice_Fragment | Metadata_Menu_Fragment | Metadata_MenuItem_Fragment | Metadata_Order_Fragment | Metadata_Page_Fragment | Metadata_PageType_Fragment | Metadata_Payment_Fragment | Metadata_Product_Fragment | Metadata_ProductType_Fragment | Metadata_ProductVariant_Fragment | Metadata_Sale_Fragment | Metadata_ShippingMethod_Fragment | Metadata_ShippingMethodType_Fragment | Metadata_ShippingZone_Fragment | Metadata_TaxClass_Fragment | Metadata_TaxConfiguration_Fragment | Metadata_TransactionItem_Fragment | Metadata_User_Fragment | Metadata_Voucher_Fragment | Metadata_Warehouse_Fragment;
 
 export type MenuFragment = { __typename: 'Menu', id: string, name: string, items: Array<{ __typename: 'MenuItem', id: string }> | null };
 
@@ -6449,15 +6593,15 @@ export type ShopTaxesFragment = { __typename: 'Shop', chargeTaxesOnShipping: boo
 
 export type TaxTypeFragment = { __typename: 'TaxType', description: string | null, taxCode: string | null };
 
-export type TaxConfigurationPerCountryFragment = { __typename: 'TaxConfigurationPerCountry', countryCode: string, chargeTaxes: boolean, displayGrossPrices: boolean };
+export type TaxConfigurationPerCountryFragment = { __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } };
 
-export type TaxConfigurationFragment = { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', countryCode: string, chargeTaxes: boolean, displayGrossPrices: boolean }> };
+export type TaxConfigurationFragment = { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } }> };
 
-export type TaxCountryConfigurationFragment = { __typename: 'TaxCountryConfiguration', countryCode: string, taxClassCountryRates: Array<{ __typename: 'TaxClassCountryRate', rate: number, taxClass: { __typename: 'TaxClass', id: string, name: string, isDefault: boolean } }> };
+export type TaxCountryConfigurationFragment = { __typename: 'TaxCountryConfiguration', country: { __typename: 'CountryDisplay', country: string, code: string }, taxClassCountryRates: Array<{ __typename: 'TaxClassCountryRate', rate: number, taxClass: { __typename: 'TaxClass', id: string, name: string, isDefault: boolean } }> };
 
-export type TaxRateFragment = { __typename: 'TaxClassCountryRate', countryCode: string, rate: number };
+export type TaxRateFragment = { __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } };
 
-export type TaxClassFragment = { __typename: 'TaxClass', id: string, name: string, isDefault: boolean, countries: Array<{ __typename: 'TaxClassCountryRate', countryCode: string, rate: number }> | null };
+export type TaxClassFragment = { __typename: 'TaxClass', id: string, name: string, isDefault: boolean, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }> };
 
 export type TimePeriodFragment = { __typename: 'TimePeriod', amount: number, type: TimePeriodTypeEnum };
 
@@ -8300,7 +8444,7 @@ export type UpdateMetadataMutationVariables = Exact<{
 }>;
 
 
-export type UpdateMetadataMutation = { __typename: 'Mutation', updateMetadata: { __typename: 'UpdateMetadata', errors: Array<{ __typename: 'MetadataError', code: MetadataErrorCode, field: string | null, message: string | null }>, item: { __typename: 'App', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Attribute', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Category', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Checkout', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Collection', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'DigitalContent', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Fulfillment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'GiftCard', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Invoice', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Menu', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'MenuItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Order', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Page', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'PageType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Payment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Product', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductVariant', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Sale', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingMethod', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingMethodType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingZone', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TransactionItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'User', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Voucher', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Warehouse', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null, deleteMetadata: { __typename: 'DeleteMetadata', errors: Array<{ __typename: 'MetadataError', code: MetadataErrorCode, field: string | null, message: string | null }>, item: { __typename: 'App', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Attribute', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Category', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Checkout', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Collection', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'DigitalContent', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Fulfillment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'GiftCard', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Invoice', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Menu', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'MenuItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Order', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Page', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'PageType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Payment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Product', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductVariant', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Sale', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingMethod', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingMethodType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingZone', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TransactionItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'User', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Voucher', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Warehouse', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
+export type UpdateMetadataMutation = { __typename: 'Mutation', updateMetadata: { __typename: 'UpdateMetadata', errors: Array<{ __typename: 'MetadataError', code: MetadataErrorCode, field: string | null, message: string | null }>, item: { __typename: 'App', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Attribute', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Category', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Checkout', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Collection', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'DigitalContent', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Fulfillment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'GiftCard', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Invoice', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Menu', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'MenuItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Order', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Page', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'PageType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Payment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Product', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductVariant', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Sale', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingMethod', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingMethodType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingZone', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TaxClass', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TaxConfiguration', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TransactionItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'User', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Voucher', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Warehouse', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null, deleteMetadata: { __typename: 'DeleteMetadata', errors: Array<{ __typename: 'MetadataError', code: MetadataErrorCode, field: string | null, message: string | null }>, item: { __typename: 'App', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Attribute', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Category', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Checkout', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Collection', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'DigitalContent', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Fulfillment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'GiftCard', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Invoice', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Menu', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'MenuItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Order', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Page', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'PageType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Payment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Product', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductVariant', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Sale', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingMethod', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingMethodType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingZone', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TaxClass', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TaxConfiguration', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TransactionItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'User', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Voucher', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Warehouse', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type UpdatePrivateMetadataMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -8309,7 +8453,7 @@ export type UpdatePrivateMetadataMutationVariables = Exact<{
 }>;
 
 
-export type UpdatePrivateMetadataMutation = { __typename: 'Mutation', updatePrivateMetadata: { __typename: 'UpdatePrivateMetadata', errors: Array<{ __typename: 'MetadataError', code: MetadataErrorCode, field: string | null, message: string | null }>, item: { __typename: 'App', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Attribute', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Category', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Checkout', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Collection', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'DigitalContent', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Fulfillment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'GiftCard', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Invoice', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Menu', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'MenuItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Order', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Page', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'PageType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Payment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Product', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductVariant', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Sale', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingMethod', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingMethodType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingZone', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TransactionItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'User', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Voucher', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Warehouse', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null, deletePrivateMetadata: { __typename: 'DeletePrivateMetadata', errors: Array<{ __typename: 'MetadataError', code: MetadataErrorCode, field: string | null, message: string | null }>, item: { __typename: 'App', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Attribute', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Category', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Checkout', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Collection', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'DigitalContent', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Fulfillment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'GiftCard', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Invoice', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Menu', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'MenuItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Order', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Page', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'PageType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Payment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Product', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductVariant', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Sale', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingMethod', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingMethodType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingZone', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TransactionItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'User', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Voucher', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Warehouse', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
+export type UpdatePrivateMetadataMutation = { __typename: 'Mutation', updatePrivateMetadata: { __typename: 'UpdatePrivateMetadata', errors: Array<{ __typename: 'MetadataError', code: MetadataErrorCode, field: string | null, message: string | null }>, item: { __typename: 'App', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Attribute', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Category', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Checkout', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Collection', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'DigitalContent', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Fulfillment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'GiftCard', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Invoice', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Menu', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'MenuItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Order', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Page', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'PageType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Payment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Product', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductVariant', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Sale', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingMethod', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingMethodType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingZone', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TaxClass', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TaxConfiguration', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TransactionItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'User', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Voucher', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Warehouse', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null, deletePrivateMetadata: { __typename: 'DeletePrivateMetadata', errors: Array<{ __typename: 'MetadataError', code: MetadataErrorCode, field: string | null, message: string | null }>, item: { __typename: 'App', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Attribute', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Category', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Checkout', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Collection', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'DigitalContent', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Fulfillment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'GiftCard', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Invoice', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Menu', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'MenuItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Order', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Page', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'PageType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Payment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Product', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductVariant', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Sale', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingMethod', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingMethodType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingZone', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TaxClass', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TaxConfiguration', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TransactionItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'User', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Voucher', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Warehouse', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type WarehouseDeleteMutationVariables = Exact<{
   id: Scalars['ID'];
