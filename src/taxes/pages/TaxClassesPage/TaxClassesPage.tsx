@@ -17,12 +17,12 @@ import {
   ListHeader,
   ListItem,
   ListItemCell,
-  makeStyles,
   PageTab,
   PageTabs,
   SearchIcon
 } from "@saleor/macaw-ui";
 import { parseQuery } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/utils";
+import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { taxesMessages } from "@saleor/taxes/messages";
 import { getDefaultTaxRateInCountry } from "@saleor/taxes/utils/utils";
 import React from "react";
@@ -46,7 +46,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
   const [query, setQuery] = React.useState("");
 
   const currentTaxClass = React.useMemo(
-    () => taxClasses?.find(taxClass => taxClass.id === selectedTaxClassId),
+    () => taxClasses?.find(getById(selectedTaxClassId)),
     [selectedTaxClassId, taxClasses]
   );
 
