@@ -29,6 +29,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import TaxInput from "../../components/TaxInput";
+import { useStyles } from "./styles";
 import TaxClassesMenu from "./TaxClassesMenu";
 
 interface TaxClassesPageProps {
@@ -36,18 +37,6 @@ interface TaxClassesPageProps {
   selectedTaxClassId: string;
   handleTabChange: (tab: string) => void;
 }
-
-const useStyles = makeStyles(
-  () => ({
-    searchPadding: {
-      padding: "16px 0 16px 0"
-    },
-    namePadding: {
-      padding: "16px"
-    }
-  }),
-  { name: "TaxClassesPage" }
-);
 
 export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
   const { taxClasses, selectedTaxClassId, handleTabChange } = props;
