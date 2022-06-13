@@ -29,12 +29,8 @@ const useTokenRefresh = (token?: string, refetch?: () => void) => {
   const tokenLife = (decoded?.exp - decoded?.iat) * 1000; // in ms
   const refreshTime = tokenLife - TIME_BEFORE_REFRESH;
 
-  const timeoutFunc = () => {
-    refetch();
-  };
-
   const setUpTimeout = () => {
-    timeoutFunc();
+    refetch();
     createTimeout();
   };
 
@@ -45,6 +41,7 @@ const useTokenRefresh = (token?: string, refetch?: () => void) => {
   const deleteTimeout = () => {
     if (refreshTimeout?.current) {
       clearTimeout(refreshTimeout.current);
+      refreshTimeout.current = null;
     }
   };
 
