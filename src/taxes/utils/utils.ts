@@ -5,10 +5,10 @@ import {
 } from "@saleor/graphql";
 
 export const getDefaultTaxRateInCountry = (
-  taxClasses: TaxClassFragment[],
+  taxClasses: TaxClassFragment[] | undefined,
   selectedCountry: CountryWithCodeFragment
-): TaxRateFragment["rate"] =>
+): TaxRateFragment["rate"] | undefined =>
   taxClasses
-    .find(taxClass => taxClass.isDefault)
+    ?.find(taxClass => taxClass.isDefault)
     .countries.find(country => country.country.code === selectedCountry.code)
     .rate;
