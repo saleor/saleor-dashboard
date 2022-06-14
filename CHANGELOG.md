@@ -4,6 +4,8 @@ All notable, unreleased changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- Pass query params in `ORDER_DETAILS_MORE_ACTIONS` and `PRODUCT_DETAILS_MORE_ACTIONS` mounting points - #2100 by @witoszekdev
+
 ## 3.4
 
 - Added links instead of imperative navigation with onClick - #1969 by @taniotanio7
