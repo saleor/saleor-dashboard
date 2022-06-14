@@ -3,10 +3,15 @@
 All notable, unreleased changes to this project will be documented in this file. For the released changes, please visit the [Releases](https://github.com/saleor/saleor-dashboard/releases) page.
 
 ## [Unreleased]
+
+## 3.4
+
 - Added links instead of imperative navigation with onClick - #1969 by @taniotanio7
 - Fixed clearing attribute values - #2047 by @witoszekdev
 - Fixed EditorJS integration in RichTextEditor input - #2052 by @witoszekdev
 - Improvements to the app list page: added toggle and permision preview - #2035 by @witoszekdev
+### 3.4.1
+
 - Added links to table pagination buttons - #2063 by @witoszekdev
 - Using push instead of replace to history stack for pagination navigation - #2063 by @witoszekdev
 
