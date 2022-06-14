@@ -13,8 +13,8 @@
   },
   "homepage": "https://saleor.io/",
   "engines": {
-    "node": ">=16",
-    "npm": ">=7"
+    "node": ">=14 <15",
+    "npm": ">=6.11.0 <7"
   },
   "dependencies": {
     "@apollo/client": "^3.4.15",
