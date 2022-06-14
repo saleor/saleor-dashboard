@@ -19,8 +19,14 @@ export type AppListUrlQueryParams = ActiveTab &
   SingleAction &
   Pagination;
 
+export interface AppDetailsUrlMountQueryParams {
+  productId?: string;
+  orderId?: string;
+}
+
 export type AppDetailsUrlQueryParams = Dialog<AppDetailsUrlDialog> &
-  SingleAction;
+  SingleAction &
+  AppDetailsUrlMountQueryParams;
 
 export type AppInstallUrlQueryParams = Partial<{ [MANIFEST_ATTR]: string }>;
 

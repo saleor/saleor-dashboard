@@ -1,8 +1,8 @@
 import { Typography } from "@material-ui/core";
 import {
   extensionMountPoints,
-  mapToMenuItems,
   useExtensions,
+  mapToMenuItemsForOrderDetails,
 } from "@saleor/apps/useExtensions";
 import { Backlink } from "@saleor/components/Backlink";
 import CardMenu from "@saleor/components/CardMenu";
@@ -225,7 +225,10 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     extensionMountPoints.ORDER_DETAILS,
   );
 
-  const extensionMenuItems = mapToMenuItems(ORDER_DETAILS_MORE_ACTIONS);
+  const extensionMenuItems = mapToMenuItemsForOrderDetails(
+    ORDER_DETAILS_MORE_ACTIONS,
+    order?.id
+  );
 
   return (
     <Form confirmLeave initial={initial} onSubmit={handleSubmit}>

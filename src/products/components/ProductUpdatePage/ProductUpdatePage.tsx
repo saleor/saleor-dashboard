@@ -1,8 +1,8 @@
 import { OutputData } from "@editorjs/editorjs";
 import {
   extensionMountPoints,
-  mapToMenuItems,
   useExtensions,
+  mapToMenuItemsForProductDetails,
 } from "@saleor/apps/useExtensions";
 import {
   getAttributeValuesFromReferences,
@@ -252,7 +252,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     extensionMountPoints.PRODUCT_DETAILS,
   );
 
-  const extensionMenuItems = mapToMenuItems(PRODUCT_DETAILS_MORE_ACTIONS);
+  const extensionMenuItems = mapToMenuItemsForProductDetails(
+    PRODUCT_DETAILS_MORE_ACTIONS,
+    productId,
+  );
 
   return (
     <ProductUpdateForm
