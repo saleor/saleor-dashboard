@@ -17,78 +17,79 @@ import {
   createShipping,
   deleteShippingStartsWith
 } from "../../support/api/utils/shippingUtils";
-import filterTests from "../../support/filterTests";
 import { selectChannelInPicker } from "../../support/pages/channelsPage";
 import { finalizeDraftOrder } from "../../support/pages/draftOrderPage";
 
-filterTests({ definedTags: ["all"] }, () => {
-  xdescribe("Draft orders", () => {
-    const startsWith = "CyDraftOrders-";
-    const randomName = startsWith + faker.datatype.number();
+xdescribe("Draft orders", () => {
+  const startsWith = "CyDraftOrders-";
+  const randomName = startsWith + faker.datatype.number();
 
-    let defaultChannel;
-    let warehouse;
-    let address;
+  let defaultChannel;
+  let warehouse;
+  let address;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteCustomersStartsWith(startsWith);
-      deleteShippingStartsWith(startsWith);
-      productsUtils.deleteProductsStartsWith(startsWith);
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteCustomersStartsWith(startsWith);
+    deleteShippingStartsWith(startsWith);
+    productsUtils.deleteProductsStartsWith(startsWith);
 
-      updateOrdersSettings();
-      getDefaultChannel()
-        .then(channel => {
-          defaultChannel = channel;
-        })
-        .then(() => {
-          cy.fixture("addresses");
-        })
-        .then(addresses => {
-          address = addresses.plAddress;
-          createCustomer(
-            `${randomName}@example.com`,
-            randomName,
-            addresses.plAddress,
-            true
-          );
-          createShipping({
-            channelId: defaultChannel.id,
-            name: randomName,
-            address: addresses.plAddress
-          });
-        })
-        .then(({ warehouse: warehouseResp }) => {
-          warehouse = warehouseResp;
-          productsUtils.createTypeAttributeAndCategoryForProduct({
-            name: randomName
-          });
-        })
-        .then(
-          ({
-            productType: productTypeResp,
-            attribute: attributeResp,
-            category: categoryResp
-          }) => {
-            productsUtils.createProductInChannel({
-              name: randomName,
-              channelId: defaultChannel.id,
-              warehouseId: warehouse.id,
-              productTypeId: productTypeResp.id,
-              attributeId: attributeResp.id,
-              categoryId: categoryResp.id
-            });
-          }
+    updateOrdersSettings();
+    getDefaultChannel()
+      .then(channel => {
+        defaultChannel = channel;
+      })
+      .then(() => {
+        cy.fixture("addresses");
+      })
+      .then(addresses => {
+        address = addresses.plAddress;
+        createCustomer(
+          `${randomName}@example.com`,
+          randomName,
+          addresses.plAddress,
+          true
         );
-    });
+        createShipping({
+          channelId: defaultChannel.id,
+          name: randomName,
+          address: addresses.plAddress
+        });
+      })
+      .then(({ warehouse: warehouseResp }) => {
+        warehouse = warehouseResp;
+        productsUtils.createTypeAttributeAndCategoryForProduct({
+          name: randomName
+        });
+      })
+      .then(
+        ({
+          productType: productTypeResp,
+          attribute: attributeResp,
+          category: categoryResp
+        }) => {
+          productsUtils.createProductInChannel({
+            name: randomName,
+            channelId: defaultChannel.id,
+            warehouseId: warehouse.id,
+            productTypeId: productTypeResp.id,
+            attributeId: attributeResp.id,
+            categoryId: categoryResp.id
+          });
+        }
+      );
+  });
 
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest();
-    });
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+  });
 
-    it("should move draft order to orders", () => {
+  it(
+    "should move draft order to orders",
+    { tags: ["@orders", "@allEnv"] },
+    () => {
       cy.visit(urlList.orders);
-      cy.softExpectSkeletonIsVisible();
+      cy.expectSkeletonIsVisible();
       cy.get(ORDERS_SELECTORS.createOrder).click();
       selectChannelInPicker(defaultChannel.name);
       finalizeDraftOrder(randomName, address).then(draftOrderNumber => {
@@ -106,6 +107,6 @@ filterTests({ definedTags: ["all"] }, () => {
           expect($draftOrder).to.not.exist;
         });
       });
-    });
-  });
+    }
+  );
 });

@@ -8,35 +8,35 @@ import { CUSTOMERS_LIST } from "../../elements/customer/customers-list";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { customerDetailsUrl, urlList } from "../../fixtures/urlList";
-import { ONE_PERMISSION_USERS } from "../../fixtures/users";
 import {
   addressCreate,
   createCustomer,
   deleteCustomersStartsWith,
   getCustomer
 } from "../../support/api/requests/Customer";
-import filterTests from "../../support/filterTests";
 
-filterTests({ definedTags: ["all"] }, () => {
-  describe("Tests for customer", () => {
-    const startsWith = `Customers`;
-    let address;
-    let secondAddress;
+describe("Tests for customer", () => {
+  const startsWith = `Customers`;
+  let address;
+  let secondAddress;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteCustomersStartsWith(startsWith);
-      cy.fixture("addresses").then(({ usAddress, secondUsAddress }) => {
-        address = usAddress;
-        secondAddress = secondUsAddress;
-      });
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteCustomersStartsWith(startsWith);
+    cy.fixture("addresses").then(({ usAddress, secondUsAddress }) => {
+      address = usAddress;
+      secondAddress = secondUsAddress;
     });
+  });
 
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest();
-    });
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+  });
 
-    it("should create customer", () => {
+  it(
+    "should create customer. TC: SALEOR_1201",
+    { tags: ["@customer", "@allEnv", "@stable"] },
+    () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
       const email = `${randomName}@example.com`;
       const note = faker.lorem.paragraph();
@@ -65,19 +65,23 @@ filterTests({ definedTags: ["all"] }, () => {
           getCustomer(customer.id);
         })
         .then(customer => {
-          chai
-            .softExpect(customer.firstName, "Expect correct first name")
-            .to.eq(randomName);
-          chai
-            .softExpect(customer.lastName, "Expect correct last name")
-            .to.eq(randomName);
-          chai.softExpect(customer.email, "Expect correct email").to.eq(email);
-          chai.softExpect(customer.note, "Expect correct note").to.eq(note);
+          expect(customer.firstName, "Expect correct first name").to.eq(
+            randomName
+          );
+          expect(customer.lastName, "Expect correct last name").to.eq(
+            randomName
+          );
+          expect(customer.email, "Expect correct email").to.eq(email);
+          expect(customer.note, "Expect correct note").to.eq(note);
           cy.expectCorrectFullAddress(customer.addresses[0], address);
         });
-    });
+    }
+  );
 
-    it("should add address to customer", () => {
+  it(
+    "should add address to customer. TC: SALEOR_1204",
+    { tags: ["@customer", "@allEnv", "@stable"] },
+    () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
       const email = `${randomName}@example.com`;
 
@@ -95,9 +99,13 @@ filterTests({ definedTags: ["all"] }, () => {
           cy.expectCorrectFullAddress(addresses[0], secondAddress);
         });
       });
-    });
+    }
+  );
 
-    it("should remove address from customer", () => {
+  it(
+    "should remove address from customer. TC: SALEOR_1205",
+    { tags: ["@customer", "@allEnv", "@stable"] },
+    () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
       const email = `${randomName}@example.com`;
 
@@ -120,9 +128,13 @@ filterTests({ definedTags: ["all"] }, () => {
           expect(addresses).to.have.length(1);
         });
       });
-    });
+    }
+  );
 
-    it("should set address as default", () => {
+  it(
+    "should set address as default. TC: SALEOR_1206",
+    { tags: ["@customer", "@allEnv", "@stable"] },
+    () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
       const email = `${randomName}@example.com`;
       let user;
@@ -147,7 +159,7 @@ filterTests({ definedTags: ["all"] }, () => {
           getCustomer(user.id);
         })
         .then(({ addresses }) => {
-          chai.softExpect(addresses[0].isDefaultShippingAddress).to.eq(true);
+          expect(addresses[0].isDefaultShippingAddress).to.eq(true);
           cy.get(BUTTON_SELECTORS.showMoreButton)
             .should("be.enabled")
             .click()
@@ -160,9 +172,13 @@ filterTests({ definedTags: ["all"] }, () => {
         .then(({ addresses }) => {
           expect(addresses[0].isDefaultBillingAddress).to.be.true;
         });
-    });
+    }
+  );
 
-    it("should update address", () => {
+  it(
+    "should update address. TC: SALEOR_1208",
+    { tags: ["@customer", "@allEnv", "@stable"] },
+    () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
       const email = `${randomName}@example.com`;
 
@@ -188,9 +204,13 @@ filterTests({ definedTags: ["all"] }, () => {
           cy.expectCorrectFullAddress(addedAddress, secondAddress);
         });
       });
-    });
+    }
+  );
 
-    it("should delete customer", () => {
+  it(
+    "should delete customer. TC: SALEOR_1203",
+    { tags: ["@customer", "@allEnv", "@stable"] },
+    () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
       const email = `${randomName}@example.com`;
 
@@ -204,9 +224,13 @@ filterTests({ definedTags: ["all"] }, () => {
           .wait("@RemoveCustomer");
         getCustomer(user.id).should("be.null");
       });
-    });
+    }
+  );
 
-    it("should deactivate customer", () => {
+  it(
+    "should deactivate customer. TC: SALEOR_1209",
+    { tags: ["@customer", "@allEnv", "@stable"] },
+    () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
       const email = `${randomName}@example.com`;
 
@@ -222,9 +246,13 @@ filterTests({ definedTags: ["all"] }, () => {
           expect(isActive).to.be.false;
         });
       });
-    });
+    }
+  );
 
-    it("should update customer", () => {
+  it(
+    "should update customer. TC: SALEOR_1202",
+    { tags: ["@customer", "@allEnv", "@stable"] },
+    () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
       const updatedName = `${startsWith}UpdatedName`;
       const email = `${randomName}@example.com`;
@@ -244,18 +272,16 @@ filterTests({ definedTags: ["all"] }, () => {
           .click()
           .wait("@UpdateCustomer");
         getCustomer(user.id).then(user => {
-          chai
-            .softExpect(user.firstName, "Expect correct first name")
-            .to.eq(updatedName);
-          chai
-            .softExpect(user.lastName, "Expect correct last name")
-            .to.eq(updatedName);
-          chai
-            .softExpect(user.email, "Expect correct email")
-            .to.eq(`${updatedName}@example.com`);
-          chai.softExpect(user.note, "Expect correct note").to.eq(updatedName);
+          expect(user.firstName, "Expect correct first name").to.eq(
+            updatedName
+          );
+          expect(user.lastName, "Expect correct last name").to.eq(updatedName);
+          expect(user.email, "Expect correct email").to.eq(
+            `${updatedName}@example.com`
+          );
+          expect(user.note, "Expect correct note").to.eq(updatedName);
         });
       });
-    });
-  });
+    }
+  );
 });

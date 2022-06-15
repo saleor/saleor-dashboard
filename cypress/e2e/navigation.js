@@ -7,7 +7,6 @@ import {
   LEFT_MENU_SELECTORS
 } from "../elements/account/left-menu/left-menu-selectors";
 import { PERMISSIONS_OPTIONS } from "../fixtures/permissionsUsers";
-import filterTests from "../support/filterTests";
 import * as permissionsSteps from "../support/pages/permissionsPage";
 
 describe("As a staff user I want to navigate through shop using different permissions", () => {
@@ -46,9 +45,13 @@ describe("As a staff user I want to navigate through shop using different permis
 
   Object.keys(permissionsOptions).forEach(key => {
     const tags =
-      key === "all" ? ["critical", "all", "refactored"] : ["all", "refactored"];
-    filterTests({ definedTags: tags }, () => {
-      it(`should be able to navigate through shop as a staff member using ${key} permission. ${permissionsOptions[key].testCase}`, () => {
+      key === "all"
+        ? ["@critical", "@allEnv", "@navigation", "@stable"]
+        : ["@allEnv", "@navigation"];
+    it(
+      `should be able to navigate through shop as a staff member using ${key} permission. ${permissionsOptions[key].testCase}`,
+      { tags },
+      () => {
         const permissionOption = permissionsOptions[key];
         const permissions = permissionOption.permissions;
         cy.clearSessionData();
@@ -88,7 +91,7 @@ describe("As a staff user I want to navigate through shop using different permis
               }
             });
           });
-      });
-    });
+      }
+    );
   });
 });

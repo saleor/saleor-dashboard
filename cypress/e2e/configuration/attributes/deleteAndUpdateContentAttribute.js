@@ -10,30 +10,31 @@ import {
   getAttribute
 } from "../../../support/api/requests/Attribute";
 import { deleteAttributesStartsWith } from "../../../support/api/utils/attributes/attributeUtils";
-import filterTests from "../../../support/filterTests";
 import { fillUpAttributeNameAndCode } from "../../../support/pages/attributesPage";
 
-filterTests({ definedTags: ["all"] }, () => {
-  describe("As an admin I want to delete and update content attribute", () => {
-    const startsWith = "AttrContDel";
-    let attribute;
+describe("As an admin I want to delete and update content attribute", () => {
+  const startsWith = "AttrContDel";
+  let attribute;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteAttributesStartsWith(startsWith);
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteAttributesStartsWith(startsWith);
+  });
+
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    createAttribute({
+      name: `${startsWith}${faker.datatype.number()}`,
+      type: "PAGE_TYPE"
+    }).then(attributeResp => {
+      attribute = attributeResp;
     });
+  });
 
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      createAttribute({
-        name: `${startsWith}${faker.datatype.number()}`,
-        type: "PAGE_TYPE"
-      }).then(attributeResp => {
-        attribute = attributeResp;
-      });
-    });
-
-    it("should be able delete content attribute. TC:SALEOR_0529", () => {
+  it(
+    "should be able delete content attribute. TC:SALEOR_0529",
+    { tags: ["@attribute", "@allEnv", "@stable"] },
+    () => {
       cy.visit(attributeDetailsUrl(attribute.id))
         .get(BUTTON_SELECTORS.deleteButton)
         .click()
@@ -42,9 +43,13 @@ filterTests({ definedTags: ["all"] }, () => {
         .click()
         .waitForRequestAndCheckIfNoErrors("@AttributeDelete");
       getAttribute(attribute.id).should("be.null");
-    });
+    }
+  );
 
-    it("should be able update content attribute. TC:SALEOR_0530", () => {
+  it(
+    "should be able update content attribute. TC:SALEOR_0530",
+    { tags: ["@attribute", "@allEnv", "@stable"] },
+    () => {
       const attributeUpdatedName = `${startsWith}${faker.datatype.number()}`;
 
       cy.visit(attributeDetailsUrl(attribute.id));
@@ -57,6 +62,6 @@ filterTests({ definedTags: ["all"] }, () => {
         expect(attributeResp.name).to.eq(attributeUpdatedName);
         expect(attributeResp.slug).to.eq(attributeUpdatedName);
       });
-    });
-  });
+    }
+  );
 });

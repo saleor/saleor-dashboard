@@ -22,7 +22,6 @@ import {
   createShipping,
   deleteShippingStartsWith
 } from "../../support/api/utils/shippingUtils";
-import filterTests from "../../support/filterTests";
 import {
   createWarehouse,
   pickupOptions,
@@ -30,68 +29,70 @@ import {
   visitSetPublicStockAndEnablePickup
 } from "../../support/pages/warehousePage";
 
-filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
-  describe("Warehouses in checkout", () => {
-    const startsWith = `CyWarehouseCheckout`;
-    let defaultChannel;
-    let usAddress;
-    let secondUsAddress;
-    let plAddress;
-    let productData;
-    let checkoutData;
-    let variantsInOtherWarehouse;
+describe("Warehouses in checkout", () => {
+  const startsWith = `CyWarehouseCheckout`;
+  let defaultChannel;
+  let usAddress;
+  let secondUsAddress;
+  let plAddress;
+  let productData;
+  let checkoutData;
+  let variantsInOtherWarehouse;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteShippingStartsWith(startsWith);
-      deleteProductsStartsWith(startsWith);
-      cy.fixture("addresses")
-        .then(addresses => {
-          usAddress = addresses.usAddress;
-          secondUsAddress = addresses.secondUsAddress;
-          plAddress = addresses.plAddress;
-          getDefaultChannel();
-        })
-        .then(channelResp => {
-          defaultChannel = channelResp;
-          createTypeAttributeAndCategoryForProduct({ name: startsWith });
-        })
-        .then(({ attribute, productType, category }) => {
-          productData = {
-            attributeId: attribute.id,
-            categoryId: category.id,
-            channelId: defaultChannel.id,
-            productTypeId: productType.id,
-            quantityInWarehouse: 100
-          };
-          checkoutData = {
-            returnAvailableCollectionPoints: true,
-            channelSlug: defaultChannel.slug,
-            email: "example@example.com",
-            address: secondUsAddress
-          };
-          createShipping({
-            channelId: defaultChannel.id,
-            name: startsWith,
-            address: secondUsAddress
-          });
-        })
-        .then(({ warehouse: warehouseResp }) => {
-          productData.name = startsWith;
-          productData.warehouseId = warehouseResp.id;
-          updateWarehouse({ id: productData.warehouseId, isPrivate: false });
-          createProductInChannel(productData);
-        })
-        .then(({ variantsList }) => {
-          variantsInOtherWarehouse = variantsList;
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteShippingStartsWith(startsWith);
+    deleteProductsStartsWith(startsWith);
+    cy.fixture("addresses")
+      .then(addresses => {
+        usAddress = addresses.usAddress;
+        secondUsAddress = addresses.secondUsAddress;
+        plAddress = addresses.plAddress;
+        getDefaultChannel();
+      })
+      .then(channelResp => {
+        defaultChannel = channelResp;
+        createTypeAttributeAndCategoryForProduct({ name: startsWith });
+      })
+      .then(({ attribute, productType, category }) => {
+        productData = {
+          attributeId: attribute.id,
+          categoryId: category.id,
+          channelId: defaultChannel.id,
+          productTypeId: productType.id,
+          quantityInWarehouse: 100
+        };
+        checkoutData = {
+          returnAvailableCollectionPoints: true,
+          channelSlug: defaultChannel.slug,
+          email: "example@example.com",
+          address: secondUsAddress
+        };
+        createShipping({
+          channelId: defaultChannel.id,
+          name: startsWith,
+          address: secondUsAddress
         });
-    });
+      })
+      .then(({ warehouse: warehouseResp }) => {
+        productData.name = startsWith;
+        productData.warehouseId = warehouseResp.id;
+        updateWarehouse({ id: productData.warehouseId, isPrivate: false });
+        createProductInChannel(productData);
+      })
+      .then(({ variantsList }) => {
+        variantsInOtherWarehouse = variantsList;
+      });
+  });
 
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest();
-    });
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+  });
 
-    xit("should create warehouse with all warehouses pickup and private stock", () => {
+  xit(
+    "should create warehouse with all warehouses pickup and private stock",
+    { tags: ["@checkout", "@allEnv"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let warehouse;
 
@@ -122,9 +123,13 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
           expect(clickAndCollectOption.isPrivate).to.eq(true);
           expect(clickAndCollectOption.name).to.eq(warehouse.name);
         });
-    });
+    }
+  );
 
-    xit("should create warehouse with all warehouses pickup and public stock", () => {
+  xit(
+    "should create warehouse with all warehouses pickup and public stock",
+    { tags: ["@checkout", "@allEnv"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let warehouse;
 
@@ -155,9 +160,13 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
           expect(clickAndCollectOption.isPrivate).to.eq(false);
           expect(clickAndCollectOption.name).to.eq(warehouse.name);
         });
-    });
+    }
+  );
 
-    xit("should create warehouse with local stock only pickup and public stock", () => {
+  xit(
+    "should create warehouse with local stock only pickup and public stock",
+    { tags: ["@checkout", "@allEnv"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let warehouse;
       let variantsInLocalStock;
@@ -196,17 +205,25 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
           expect(clickAndCollectOption.isPrivate).to.eq(false);
           expect(clickAndCollectOption.name).to.eq(warehouse.name);
         });
-    });
+    }
+  );
 
-    xit("should not be possible to set local pickup when private stock", () => {
+  xit(
+    "should not be possible to set local pickup when private stock",
+    { tags: ["@checkout", "@allEnv"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       createWarehouse({ name, address: usAddress });
       cy.get(WAREHOUSES_DETAILS.clickAndCollectLocalStockRadioButton).should(
         "not.exist"
       );
-    });
+    }
+  );
 
-    it("should create order with warehouse address", () => {
+  it(
+    "should create order with warehouse address",
+    { tags: ["@checkout", "@allEnv"] },
+    () => {
       let checkout;
       checkoutData.variantsList = variantsInOtherWarehouse;
       createCheckout(checkoutData)
@@ -228,6 +245,6 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
           cy.expectCorrectBasicAddress(order.shippingAddress, secondUsAddress);
           cy.expectCorrectBasicAddress(order.billingAddress, usAddress);
         });
-    });
-  });
+    }
+  );
 });

@@ -14,39 +14,40 @@ import {
   createTypeAttributeAndCategoryForProduct,
   deleteProductsStartsWith
 } from "../support/api/utils/products/productsUtils";
-import filterTests from "../support/filterTests";
 
-filterTests({ definedTags: ["all"] }, () => {
-  describe("Test for metadata", () => {
-    const startsWith = "Metadata";
-    const name = `${startsWith}${faker.datatype.number()}`;
-    const metadata = { key: "metadataKey", value: "metadataValue" };
-    let channel;
-    let product;
+describe("Test for metadata", () => {
+  const startsWith = "Metadata";
+  const name = `${startsWith}${faker.datatype.number()}`;
+  const metadata = { key: "metadataKey", value: "metadataValue" };
+  let channel;
+  let product;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteProductsStartsWith(startsWith);
-      getDefaultChannel()
-        .then(channelResp => {
-          channel = channelResp;
-          createTypeAttributeAndCategoryForProduct({ name });
-        })
-        .then(({ attribute, category, productType }) => {
-          createProductInChannel({
-            attributeId: attribute.id,
-            categoryId: category.id,
-            channelId: channel.id,
-            name,
-            productTypeId: productType.id
-          });
-        })
-        .then(({ product: productResp }) => {
-          product = productResp;
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteProductsStartsWith(startsWith);
+    getDefaultChannel()
+      .then(channelResp => {
+        channel = channelResp;
+        createTypeAttributeAndCategoryForProduct({ name });
+      })
+      .then(({ attribute, category, productType }) => {
+        createProductInChannel({
+          attributeId: attribute.id,
+          categoryId: category.id,
+          channelId: channel.id,
+          name,
+          productTypeId: productType.id
         });
-    });
+      })
+      .then(({ product: productResp }) => {
+        product = productResp;
+      });
+  });
 
-    it("should create metadata for product", () => {
+  it(
+    "should create metadata for product",
+    { tags: ["@metadata", "@allEnv", "@stable"] },
+    () => {
       cy.clearSessionData().loginUserViaRequest();
       updateMetadata(product.id, metadata.key, metadata.value);
       updatePrivateMetadata(product.id, metadata.key, metadata.value)
@@ -83,8 +84,12 @@ filterTests({ definedTags: ["all"] }, () => {
           expect(productResp.metadata[0].key).to.eq(metadata.key);
           expect(productResp.metadata[0].value).to.eq(metadata.value);
         });
-    });
-    it("should create metadata for order", () => {
+    }
+  );
+  it(
+    "should create metadata for order",
+    { tags: ["@metadata", "@allEnv", "@stable"] },
+    () => {
       let order;
       cy.clearSessionData().loginUserViaRequest();
       createDraftOrder({ channelId: channel.id })
@@ -102,6 +107,6 @@ filterTests({ definedTags: ["all"] }, () => {
           expect(orderResp.privateMetadata[0].key).to.eq(metadata.key);
           expect(orderResp.privateMetadata[0].value).to.eq(metadata.value);
         });
-    });
-  });
+    }
+  );
 });

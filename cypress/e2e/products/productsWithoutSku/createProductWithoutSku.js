@@ -22,88 +22,86 @@ import { createWaitingForCaptureOrder } from "../../../support/api/utils/ordersU
 import * as productUtils from "../../../support/api/utils/products/productsUtils";
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
 import { getProductVariants } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
-import filterTests from "../../../support/filterTests";
 import {
   createFirstVariant,
   createVariant
 } from "../../../support/pages/catalog/products/VariantsPage";
 import { selectChannelInDetailsPages } from "../../../support/pages/channelsPage";
 
-filterTests({ definedTags: ["all", "critical"], version: "3.1.0" }, () => {
-  describe("Creating variants", () => {
-    const startsWith = "CyCreateVariants-";
-    const attributeValues = ["value1", "value2"];
+describe("Creating variants", () => {
+  const startsWith = "CyCreateVariants-";
+  const attributeValues = ["value1", "value2"];
 
-    let defaultChannel;
-    let warehouse;
-    let attribute;
-    let productType;
-    let simpleProductType;
-    let category;
-    let shippingMethod;
-    let address;
+  let defaultChannel;
+  let warehouse;
+  let attribute;
+  let productType;
+  let simpleProductType;
+  let category;
+  let shippingMethod;
+  let address;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      shippingUtils.deleteShippingStartsWith(startsWith);
-      productUtils.deleteProductsStartsWith(startsWith);
-      deleteChannelsStartsWith(startsWith);
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    shippingUtils.deleteShippingStartsWith(startsWith);
+    productUtils.deleteProductsStartsWith(startsWith);
+    deleteChannelsStartsWith(startsWith);
 
-      const name = `${startsWith}${faker.datatype.number()}`;
-      const simpleProductTypeName = `${startsWith}${faker.datatype.number()}`;
-      getDefaultChannel()
-        .then(channel => {
-          defaultChannel = channel;
-          cy.fixture("addresses");
-        })
-        .then(fixtureAddresses => {
-          address = fixtureAddresses.usAddress;
-          shippingUtils.createShipping({
-            channelId: defaultChannel.id,
-            name,
-            address
-          });
-        })
-        .then(
-          ({
-            warehouse: warehouseResp,
-            shippingMethod: shippingMethodResp
-          }) => {
-            warehouse = warehouseResp;
-            shippingMethod = shippingMethodResp;
-          }
-        );
-      productUtils
-        .createTypeAttributeAndCategoryForProduct({ name, attributeValues })
-        .then(
-          ({
-            attribute: attributeResp,
-            productType: productTypeResp,
-            category: categoryResp
-          }) => {
-            attribute = attributeResp;
-            productType = productTypeResp;
-            category = categoryResp;
-            createTypeProduct({
-              name: simpleProductTypeName,
-              attributeId: attribute.id,
-              hasVariants: false
-            });
-          }
-        )
-        .then(type => {
-          simpleProductType = type;
+    const name = `${startsWith}${faker.datatype.number()}`;
+    const simpleProductTypeName = `${startsWith}${faker.datatype.number()}`;
+    getDefaultChannel()
+      .then(channel => {
+        defaultChannel = channel;
+        cy.fixture("addresses");
+      })
+      .then(fixtureAddresses => {
+        address = fixtureAddresses.usAddress;
+        shippingUtils.createShipping({
+          channelId: defaultChannel.id,
+          name,
+          address
         });
-    });
-
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest(
-        "auth",
-        ONE_PERMISSION_USERS.product
+      })
+      .then(
+        ({ warehouse: warehouseResp, shippingMethod: shippingMethodResp }) => {
+          warehouse = warehouseResp;
+          shippingMethod = shippingMethodResp;
+        }
       );
-    });
+    productUtils
+      .createTypeAttributeAndCategoryForProduct({ name, attributeValues })
+      .then(
+        ({
+          attribute: attributeResp,
+          productType: productTypeResp,
+          category: categoryResp
+        }) => {
+          attribute = attributeResp;
+          productType = productTypeResp;
+          category = categoryResp;
+          createTypeProduct({
+            name: simpleProductTypeName,
+            attributeId: attribute.id,
+            hasVariants: false
+          });
+        }
+      )
+      .then(type => {
+        simpleProductType = type;
+      });
+  });
 
-    xit("should create variant without sku by variant creator", () => {
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest(
+      "auth",
+      ONE_PERMISSION_USERS.product
+    );
+  });
+
+  xit(
+    "should create variant without sku by variant creator",
+    { tags: ["@products", "@allEnv"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const price = 10;
       let createdProduct;
@@ -142,9 +140,13 @@ filterTests({ definedTags: ["all", "critical"], version: "3.1.0" }, () => {
         .then(({ order }) => {
           expect(order.id).to.be.ok;
         });
-    });
+    }
+  );
 
-    xit("should create variant without sku", () => {
+  xit(
+    "should create variant without sku",
+    { tags: ["@products", "@allEnv"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const variants = [{ price: 7 }, { name: attributeValues[1], price: 16 }];
       let createdProduct;
@@ -187,9 +189,13 @@ filterTests({ definedTags: ["all", "critical"], version: "3.1.0" }, () => {
         .then(({ order }) => {
           expect(order.id).to.be.ok;
         });
-    });
+    }
+  );
 
-    it("should create simple product without sku", () => {
+  it(
+    "should create simple product without sku",
+    { tags: ["@products", "@allEnv"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       cy.visit(urlList.products)
         .get(PRODUCTS_LIST.createProductBtn)
@@ -238,6 +244,6 @@ filterTests({ definedTags: ["all", "critical"], version: "3.1.0" }, () => {
             address
           });
         });
-    });
-  });
+    }
+  );
 });

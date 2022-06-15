@@ -2,23 +2,28 @@
 /// <reference types="../support"/>
 
 import { LOGIN_SELECTORS } from "../elements/account/login-selectors";
-import { HOMEPAGE_SELECTORS } from "../elements/homePage/homePage-selectors";
 import { urlList } from "../fixtures/urlList";
 import filterTests from "../support/filterTests";
 
-filterTests({ definedTags: ["all"] }, () => {
-  describe("User authorization", () => {
-    beforeEach(() => {
-      cy.clearSessionData();
-    });
+describe("User authorization", () => {
+  beforeEach(() => {
+    cy.clearSessionData();
+  });
 
-    it("should successfully log in an user", () => {
+  it(
+    "should successfully log in an user",
+    { tags: ["@login", "@allEnv", "@stable"] },
+    () => {
       cy.visit(urlList.homePage);
       cy.loginUser();
       cy.get(LOGIN_SELECTORS.welcomePage).should("be.visible");
-    });
+    }
+  );
 
-    it("should fail for wrong password", () => {
+  it(
+    "should fail for wrong password",
+    { tags: ["@login", "@allEnv", "@stable"] },
+    () => {
       cy.visit(urlList.homePage)
         .get(LOGIN_SELECTORS.emailAddressInput)
         .type("admin@example.com")
@@ -28,9 +33,13 @@ filterTests({ definedTags: ["all"] }, () => {
         .click()
         .get(LOGIN_SELECTORS.warningCredentialMessage)
         .should("be.visible");
-    });
+    }
+  );
 
-    it("should successfully log out an user", () => {
+  it(
+    "should successfully log out an user",
+    { tags: ["@login", "@allEnv", "@stable"] },
+    () => {
       cy.clearSessionData()
         .loginUserViaRequest()
         .visit(urlList.homePage)
@@ -40,6 +49,6 @@ filterTests({ definedTags: ["all"] }, () => {
         .click()
         .get(LOGIN_SELECTORS.emailAddressInput)
         .should("be.visible");
-    });
-  });
+    }
+  );
 });

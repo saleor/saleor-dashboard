@@ -11,23 +11,24 @@ import {
   getGiftCardWithId
 } from "../../../support/api/requests/GiftCard";
 import { deleteGiftCardsWithTagStartsWith } from "../../../support/api/utils/catalog/giftCardUtils";
-import filterTests from "../../../support/filterTests";
 import { formatDate } from "../../../support/formatData/formatDate";
 
-filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
-  describe("As an admin I want to update gift card", () => {
-    const startsWith = "GiftCards";
+describe("As an admin I want to update gift card", () => {
+  const startsWith = "GiftCards";
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteGiftCardsWithTagStartsWith(startsWith);
-    });
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteGiftCardsWithTagStartsWith(startsWith);
+  });
 
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest();
-    });
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+  });
 
-    it("should be able to delete gift card. TC: SALEOR_1004", () => {
+  it(
+    "should be able to delete gift card. TC: SALEOR_1004",
+    { tags: ["@giftCard", "@allEnv", "@stable"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createGiftCard({
@@ -46,9 +47,13 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
           .waitForRequestAndCheckIfNoErrors("@DeleteGiftCard");
         getGiftCardWithId(giftCard.id).should("be.null");
       });
-    });
+    }
+  );
 
-    it("should be able to update gift card. TC: SALEOR_1005", () => {
+  it(
+    "should be able to update gift card. TC: SALEOR_1005",
+    { tags: ["@giftCard", "@allEnv", "@stable"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const updatedName = `${startsWith}${faker.datatype.number()}`;
       const date = formatDate(new Date(new Date().getFullYear() + 2, 1, 1));
@@ -85,6 +90,6 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
           );
           expect(giftCard.expiryDate).to.eq(date);
         });
-    });
-  });
+    }
+  );
 });

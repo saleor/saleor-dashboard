@@ -9,48 +9,49 @@ import { getProductDetails } from "../../../support/api/requests/storeFront/Prod
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import { isProductVisible } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
-import filterTests from "../../../support/filterTests";
 import { updateProductPublish } from "../../../support/pages/catalog/products/productDetailsPage";
 
-filterTests({ definedTags: ["all"] }, () => {
-  describe("Published products", () => {
-    const startsWith = "CyPublishedProducts-";
-    const name = `${startsWith}${faker.datatype.number()}`;
-    let productType;
-    let attribute;
-    let category;
-    let defaultChannel;
+describe("Published products", () => {
+  const startsWith = "CyPublishedProducts-";
+  const name = `${startsWith}${faker.datatype.number()}`;
+  let productType;
+  let attribute;
+  let category;
+  let defaultChannel;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      productsUtils.deleteProductsStartsWith(startsWith);
-      productsUtils
-        .createTypeAttributeAndCategoryForProduct({ name })
-        .then(
-          ({
-            attribute: attributeResp,
-            productType: productTypeResp,
-            category: categoryResp
-          }) => {
-            productType = productTypeResp;
-            attribute = attributeResp;
-            category = categoryResp;
-            getDefaultChannel();
-          }
-        )
-        .then(channel => {
-          defaultChannel = channel;
-        });
-    });
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    productsUtils.deleteProductsStartsWith(startsWith);
+    productsUtils
+      .createTypeAttributeAndCategoryForProduct({ name })
+      .then(
+        ({
+          attribute: attributeResp,
+          productType: productTypeResp,
+          category: categoryResp
+        }) => {
+          productType = productTypeResp;
+          attribute = attributeResp;
+          category = categoryResp;
+          getDefaultChannel();
+        }
+      )
+      .then(channel => {
+        defaultChannel = channel;
+      });
+  });
 
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest(
-        "auth",
-        ONE_PERMISSION_USERS.product
-      );
-    });
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest(
+      "auth",
+      ONE_PERMISSION_USERS.product
+    );
+  });
 
-    it("should update product to published", () => {
+  it(
+    "should update product to published",
+    { tags: ["@products", "@allEnv"] },
+    () => {
       const productName = `${startsWith}${faker.datatype.number()}`;
 
       productsUtils
@@ -73,9 +74,13 @@ filterTests({ definedTags: ["all"] }, () => {
           const isVisible = isProductVisible(resp, productName);
           expect(isVisible).to.be.eq(true);
         });
-    });
+    }
+  );
 
-    it("should update product to not published", () => {
+  it(
+    "should update product to not published",
+    { tags: ["@products", "@allEnv"] },
+    () => {
       const productName = `${startsWith}${faker.datatype.number()}`;
       let product;
 
@@ -105,6 +110,6 @@ filterTests({ definedTags: ["all"] }, () => {
           const isVisible = isProductVisible(resp, productName);
           expect(isVisible).to.be.eq(true);
         });
-    });
-  });
+    }
+  );
 });

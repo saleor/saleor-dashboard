@@ -15,89 +15,90 @@ import {
   createShipping,
   deleteShippingStartsWith
 } from "../../support/api/utils/shippingUtils";
-import filterTests from "../../support/filterTests";
 import {
   enterSiteSettingAndSetStockReservation,
   userType
 } from "../../support/pages/siteSettings";
 
-filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
-  xdescribe("As an admin I want to manage stock reservation", () => {
-    const startsWith = "manageStocks";
-    const name = `${startsWith}${faker.datatype.number()}`;
-    const productQuantity = 10;
-    const customerType = {
-      authenticated: "auth",
-      anonymous: "token"
-    };
+xdescribe("As an admin I want to manage stock reservation", () => {
+  const startsWith = "manageStocks";
+  const name = `${startsWith}${faker.datatype.number()}`;
+  const productQuantity = 10;
+  const customerType = {
+    authenticated: "auth",
+    anonymous: "token"
+  };
 
-    let defaultChannel;
-    let address;
-    let warehouse;
-    let attribute;
-    let category;
-    let productType;
-    let dataForCheckout;
+  let defaultChannel;
+  let address;
+  let warehouse;
+  let attribute;
+  let category;
+  let productType;
+  let dataForCheckout;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteProductsStartsWith(startsWith);
-      deleteShippingStartsWith(startsWith);
-      cy.fixture("addresses")
-        .then(addresses => {
-          address = addresses.usAddress;
-          getDefaultChannel();
-        })
-        .then(channel => {
-          defaultChannel = channel;
-          createShipping({
-            channelId: defaultChannel.id,
-            name,
-            address
-          });
-        })
-        .then(({ warehouse: warehouseResp }) => {
-          warehouse = warehouseResp;
-          createTypeAttributeAndCategoryForProduct({ name });
-        })
-        .then(
-          ({
-            attribute: attributeResp,
-            category: categoryResp,
-            productType: productTypeResp
-          }) => {
-            attribute = attributeResp;
-            category = categoryResp;
-            productType = productTypeResp;
-          }
-        );
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteProductsStartsWith(startsWith);
+    deleteShippingStartsWith(startsWith);
+    cy.fixture("addresses")
+      .then(addresses => {
+        address = addresses.usAddress;
+        getDefaultChannel();
+      })
+      .then(channel => {
+        defaultChannel = channel;
+        createShipping({
+          channelId: defaultChannel.id,
+          name,
+          address
+        });
+      })
+      .then(({ warehouse: warehouseResp }) => {
+        warehouse = warehouseResp;
+        createTypeAttributeAndCategoryForProduct({ name });
+      })
+      .then(
+        ({
+          attribute: attributeResp,
+          category: categoryResp,
+          productType: productTypeResp
+        }) => {
+          attribute = attributeResp;
+          category = categoryResp;
+          productType = productTypeResp;
+        }
+      );
+  });
+
+  beforeEach(() => {
+    const productName = `${startsWith}${faker.datatype.number()}`;
+
+    cy.clearSessionData().loginUserViaRequest();
+
+    createProductInChannel({
+      attributeId: attribute.id,
+      categoryId: category.id,
+      channelId: defaultChannel.id,
+      name: productName,
+      productTypeId: productType.id,
+      warehouseId: warehouse.id,
+      quantityInWarehouse: productQuantity
+    }).then(({ variantsList }) => {
+      dataForCheckout = {
+        email: "example@example.pl",
+        address,
+        channelSlug: defaultChannel.slug,
+        variantsList,
+        productQuantity
+      };
     });
+  });
 
-    beforeEach(() => {
-      const productName = `${startsWith}${faker.datatype.number()}`;
-
-      cy.clearSessionData().loginUserViaRequest();
-
-      createProductInChannel({
-        attributeId: attribute.id,
-        categoryId: category.id,
-        channelId: defaultChannel.id,
-        name: productName,
-        productTypeId: productType.id,
-        warehouseId: warehouse.id,
-        quantityInWarehouse: productQuantity
-      }).then(({ variantsList }) => {
-        dataForCheckout = {
-          email: "example@example.pl",
-          address,
-          channelSlug: defaultChannel.slug,
-          variantsList,
-          productQuantity
-        };
-      });
-    });
-
-    it("should be able to set stock reservation for authenticated customer in checkout. TC: SALEOR_0415", () => {
+  it(
+    "should be able to set stock reservation for authenticated customer in checkout. TC: SALEOR_0415",
+    { tags: ["@orders", "@allEnv"] },
+    () => {
       dataForCheckout.auth = customerType.authenticated;
 
       updateStockReservation({})
@@ -117,9 +118,13 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
             "error should be on field quantity"
           ).to.be.eq("quantity");
         });
-    });
+    }
+  );
 
-    it("should be able to set stock reservation for anonymous customer in checkout. TC: SALEOR_0416", () => {
+  it(
+    "should be able to set stock reservation for anonymous customer in checkout. TC: SALEOR_0416",
+    { tags: ["@orders", "@allEnv"] },
+    () => {
       dataForCheckout.auth = customerType.anonymous;
 
       updateStockReservation({})
@@ -139,9 +144,13 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
             "error should be on field quantity"
           ).to.be.eq("quantity");
         });
-    });
+    }
+  );
 
-    it("should be able to leave empty stock reservation for authenticated customer in checkout. TC: SALEOR_0417", () => {
+  it(
+    "should be able to leave empty stock reservation for authenticated customer in checkout. TC: SALEOR_0417",
+    { tags: ["@orders", "@allEnv"] },
+    () => {
       dataForCheckout.auth = customerType.authenticated;
 
       updateStockReservation({ authenticatedUserStock: 10 })
@@ -157,9 +166,13 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
           expect(resp.errors, "there should be no errors in response").to.be
             .empty;
         });
-    });
+    }
+  );
 
-    it("should be able to leave empty stock reservation for anonymous customer in checkout. TC: SALEOR_0418", () => {
+  it(
+    "should be able to leave empty stock reservation for anonymous customer in checkout. TC: SALEOR_0418",
+    { tags: ["@orders", "@allEnv"] },
+    () => {
       dataForCheckout.auth = customerType.anonymous;
 
       updateStockReservation({ anonymousUserStock: 10 })
@@ -175,6 +188,6 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
           expect(resp.errors, "there should be no errors in response").to.be
             .empty;
         });
-    });
-  });
+    }
+  );
 });

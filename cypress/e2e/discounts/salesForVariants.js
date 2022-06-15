@@ -10,66 +10,67 @@ import {
   createShipping,
   deleteShippingStartsWith
 } from "../../support/api/utils/shippingUtils";
-import filterTests from "../../support/filterTests";
 import {
   createSaleWithNewVariant,
   discountOptions
 } from "../../support/pages/discounts/salesPage";
 
-filterTests({ definedTags: ["all"] }, () => {
-  xdescribe("Sales discounts for variant", () => {
-    const startsWith = "CySales-";
+xdescribe("Sales discounts for variant", () => {
+  const startsWith = "CySales-";
 
-    let productType;
-    let attribute;
-    let category;
-    let defaultChannel;
-    let warehouse;
+  let productType;
+  let attribute;
+  let category;
+  let defaultChannel;
+  let warehouse;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteSalesStartsWith(startsWith);
-      productsUtils.deleteProductsStartsWith(startsWith);
-      deleteShippingStartsWith(startsWith);
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteSalesStartsWith(startsWith);
+    productsUtils.deleteProductsStartsWith(startsWith);
+    deleteShippingStartsWith(startsWith);
 
-      const name = `${startsWith}${faker.datatype.number()}`;
-      productsUtils
-        .createTypeAttributeAndCategoryForProduct({ name })
-        .then(
-          ({
-            productType: productTypeResp,
-            attribute: attributeResp,
-            category: categoryResp
-          }) => {
-            productType = productTypeResp;
-            attribute = attributeResp;
-            category = categoryResp;
+    const name = `${startsWith}${faker.datatype.number()}`;
+    productsUtils
+      .createTypeAttributeAndCategoryForProduct({ name })
+      .then(
+        ({
+          productType: productTypeResp,
+          attribute: attributeResp,
+          category: categoryResp
+        }) => {
+          productType = productTypeResp;
+          attribute = attributeResp;
+          category = categoryResp;
 
-            channelsUtils.getDefaultChannel();
-          }
-        )
-        .then(channel => {
-          defaultChannel = channel;
-          cy.fixture("addresses");
-        })
-        .then(addresses => {
-          createShipping({
-            channelId: defaultChannel.id,
-            name,
-            address: addresses.plAddress,
-            price: 100
-          });
-        })
-        .then(({ warehouse: warehouseResp }) => {
-          warehouse = warehouseResp;
+          channelsUtils.getDefaultChannel();
+        }
+      )
+      .then(channel => {
+        defaultChannel = channel;
+        cy.fixture("addresses");
+      })
+      .then(addresses => {
+        createShipping({
+          channelId: defaultChannel.id,
+          name,
+          address: addresses.plAddress,
+          price: 100
         });
-    });
+      })
+      .then(({ warehouse: warehouseResp }) => {
+        warehouse = warehouseResp;
+      });
+  });
 
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest();
-    });
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+  });
 
-    it("should create percentage discount", () => {
+  it(
+    "should create percentage discount",
+    { tags: ["@sales", "@allEnv"] },
+    () => {
       const saleName = `${startsWith}${faker.datatype.number()}`;
       const discountValue = 50;
       const productPrice = 100;
@@ -89,9 +90,13 @@ filterTests({ definedTags: ["all"] }, () => {
         const expectedPrice = (productPrice * discountValue) / 100;
         expect(expectedPrice).to.be.eq(priceInResponse);
       });
-    });
+    }
+  );
 
-    it("should create fixed price discount", () => {
+  it(
+    "should create fixed price discount",
+    { tags: ["@sales", "@allEnv"] },
+    () => {
       const saleName = `${startsWith}${faker.datatype.number()}`;
       const discountValue = 50;
       const productPrice = 100;
@@ -111,6 +116,6 @@ filterTests({ definedTags: ["all"] }, () => {
         const expectedPrice = productPrice - discountValue;
         expect(expectedPrice).to.be.eq(priceInResponse);
       });
-    });
-  });
+    }
+  );
 });

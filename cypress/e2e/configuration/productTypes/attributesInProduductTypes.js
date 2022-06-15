@@ -15,28 +15,29 @@ import {
 } from "../../../support/api/requests/ProductType";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import { deleteProductsStartsWith } from "../../../support/api/utils/products/productsUtils";
-import filterTests from "../../../support/filterTests";
 
-filterTests({ definedTags: ["all"] }, () => {
-  describe("As an admin I want to manage attributes in product types", () => {
-    const startsWith = "productType";
-    let category;
-    let channel;
-    let attribute;
+describe("As an admin I want to manage attributes in product types", () => {
+  const startsWith = "productType";
+  let category;
+  let channel;
+  let attribute;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteProductsStartsWith(startsWith);
-      createAttribute({ name: startsWith }).then(resp => (attribute = resp));
-      createCategory({ name: startsWith }).then(resp => (category = resp));
-      getDefaultChannel().then(resp => (channel = resp));
-    });
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteProductsStartsWith(startsWith);
+    createAttribute({ name: startsWith }).then(resp => (attribute = resp));
+    createCategory({ name: startsWith }).then(resp => (category = resp));
+    getDefaultChannel().then(resp => (channel = resp));
+  });
 
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest();
-    });
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+  });
 
-    it("should be able to update product type with product attribute. TC: SALEOR_1503", () => {
+  it(
+    "should be able to update product type with product attribute. TC: SALEOR_1503",
+    { tags: ["@productType", "@allEnv", "@stable"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createTypeProduct({ name })
@@ -55,9 +56,13 @@ filterTests({ definedTags: ["all"] }, () => {
         .then(productType => {
           expect(productType.productAttributes[0].name).to.eq(startsWith);
         });
-    });
+    }
+  );
 
-    it("should be able to update product type with variant attribute. TC: SALEOR_1504", () => {
+  it(
+    "should be able to update product type with variant attribute. TC: SALEOR_1504",
+    { tags: ["@productType", "@allEnv", "@stable"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createTypeProduct({ name, hasVariants: false })
@@ -80,9 +85,13 @@ filterTests({ definedTags: ["all"] }, () => {
             startsWith
           );
         });
-    });
+    }
+  );
 
-    it("should be able to remove variant attribute from product type. TC: SALEOR_1506", () => {
+  it(
+    "should be able to remove variant attribute from product type. TC: SALEOR_1506",
+    { tags: ["@productType", "@allEnv"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let productType;
 
@@ -109,9 +118,13 @@ filterTests({ definedTags: ["all"] }, () => {
         .then(productTypeResp => {
           expect(productTypeResp.assignedVariantAttributes).to.be.empty;
         });
-    });
+    }
+  );
 
-    it("should be able to remove product attribute from product type. TC: SALEOR_1507", () => {
+  it(
+    "should be able to remove product attribute from product type. TC: SALEOR_1507",
+    { tags: ["@productType", "@allEnv"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let productType;
 
@@ -138,9 +151,13 @@ filterTests({ definedTags: ["all"] }, () => {
         .then(productTypeResp => {
           expect(productTypeResp.assignedVariantAttributes).to.be.empty;
         });
-    });
+    }
+  );
 
-    it("should be able to select attribute as variant selection. TC: SALEOR_1508", () => {
+  it(
+    "should be able to select attribute as variant selection. TC: SALEOR_1508",
+    { tags: ["@productType", "@allEnv", "@stable"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let productType;
 
@@ -169,6 +186,6 @@ filterTests({ definedTags: ["all"] }, () => {
             productType.assignedVariantAttributes[0].variantSelection
           ).to.eq(true);
         });
-    });
-  });
+    }
+  );
 });

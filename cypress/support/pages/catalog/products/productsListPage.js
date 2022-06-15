@@ -111,6 +111,6 @@ function submitFilters() {
 
 export function enterProductListPage() {
   cy.visit(urlList.products)
-    .softExpectSkeletonIsVisible()
+    .expectSkeletonIsVisible()
     .waitForProgressBarToNotExist();
 }

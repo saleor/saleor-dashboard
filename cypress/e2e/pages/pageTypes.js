@@ -13,17 +13,18 @@ import {
   createPageType,
   getPageType
 } from "../../support/api/requests/PageType";
-import filterTests from "../../support/filterTests";
 
-filterTests({ definedTags: ["all"] }, () => {
-  describe("Tests for page types", () => {
-    const startsWith = "PageTypes";
+describe("Tests for page types", () => {
+  const startsWith = "PageTypes";
 
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest();
-    });
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+  });
 
-    it("should create page type", () => {
+  it(
+    "should create page type",
+    { tags: ["@pages", "@allEnv", "@stable"] },
+    () => {
       const randomName = startsWith + faker.datatype.number();
 
       cy.visit(urlList.pageTypes)
@@ -43,26 +44,26 @@ filterTests({ definedTags: ["all"] }, () => {
         .then(pageType => {
           expect(pageType.name).to.eq(randomName);
         });
-    });
+    }
+  );
 
-    xit("should assign attribute", () => {
-      const randomName = startsWith + faker.datatype.number();
+  xit("should assign attribute", { tags: ["@pages", "@allEnv"] }, () => {
+    const randomName = startsWith + faker.datatype.number();
 
-      createAttribute({ name: randomName, type: "PAGE_TYPE" });
-      createPageType(randomName)
-        .then(({ pageType }) => {
-          cy.visit(pageTypeDetailsUrl(pageType.id))
-            .get(SHARED_ELEMENTS.progressBar)
-            .should("be.not.visible")
-            .get(PAGE_TYPE_DETAILS.assignAttributesButton)
-            .click()
-            .assignElements(randomName, false)
-            .confirmationMessageShouldDisappear();
-          getPageType(pageType.id);
-        })
-        .then(pageType => {
-          expect(pageType.attributes[0].name).to.eq(randomName);
-        });
-    });
+    createAttribute({ name: randomName, type: "PAGE_TYPE" });
+    createPageType(randomName)
+      .then(({ pageType }) => {
+        cy.visit(pageTypeDetailsUrl(pageType.id))
+          .get(SHARED_ELEMENTS.progressBar)
+          .should("be.not.visible")
+          .get(PAGE_TYPE_DETAILS.assignAttributesButton)
+          .click()
+          .assignElements(randomName, false)
+          .confirmationMessageShouldDisappear();
+        getPageType(pageType.id);
+      })
+      .then(pageType => {
+        expect(pageType.attributes[0].name).to.eq(randomName);
+      });
   });
 });

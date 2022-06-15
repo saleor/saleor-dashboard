@@ -8,15 +8,16 @@ import { demoProductsNames } from "../../fixtures/products";
 import { productDetailsUrl, urlList } from "../../fixtures/urlList";
 import { getFirstProducts } from "../../support/api/requests/Product";
 import { createNewProductWithNewDataAndDefaultChannel } from "../../support/api/utils/products/productsUtils";
-import filterTests from "../../support/filterTests";
 
-filterTests({ definedTags: ["all"] }, () => {
-  xdescribe("Tests for images", () => {
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest();
-    });
+xdescribe("Tests for images", () => {
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+  });
 
-    it("Images on product list should be displayed", () => {
+  it(
+    "Images on product list should be displayed",
+    { tags: ["@products", "@allEnv"] },
+    () => {
       cy.addAliasToGraphRequest("ProductList")
         .visit(urlList.products)
         .wait("@ProductList")
@@ -26,7 +27,7 @@ filterTests({ definedTags: ["all"] }, () => {
             element.data.hasOwnProperty("products")
           ).data;
           const products = data.products.edges;
-          cy.softExpectSkeletonIsVisible()
+          cy.expectSkeletonIsVisible()
             .get(SHARED_ELEMENTS.skeleton)
             .should("not.exist");
           cy.get(PRODUCTS_LIST.productImage)
@@ -48,49 +49,49 @@ filterTests({ definedTags: ["all"] }, () => {
                 .should("have.length", expectedProductsSvgAvatars);
             });
         });
-    });
+    }
+  );
 
-    it("Should display product image", () => {
-      getFirstProducts(1, demoProductsNames.carrotJuice)
-        .then(resp => {
-          const product = resp[0].node;
-          cy.visit(productDetailsUrl(product.id))
-            .get(PRODUCT_DETAILS.productImage)
-            .find("img")
-            .invoke("attr", "src");
-        })
-        .then(imageUrl => {
-          cy.request(imageUrl);
-        })
-        .then(imageResp => {
-          expect(imageResp.status).to.equal(200);
-        });
-    });
+  it("Should display product image", { tags: ["@products", "@allEnv"] }, () => {
+    getFirstProducts(1, demoProductsNames.carrotJuice)
+      .then(resp => {
+        const product = resp[0].node;
+        cy.visit(productDetailsUrl(product.id))
+          .get(PRODUCT_DETAILS.productImage)
+          .find("img")
+          .invoke("attr", "src");
+      })
+      .then(imageUrl => {
+        cy.request(imageUrl);
+      })
+      .then(imageResp => {
+        expect(imageResp.status).to.equal(200);
+      });
+  });
 
-    it("Should upload saved image", () => {
-      const name = "CyImages";
+  it("Should upload saved image", { tags: ["@products", "@allEnv"] }, () => {
+    const name = "CyImages";
 
-      cy.clearSessionData().loginUserViaRequest();
-      createNewProductWithNewDataAndDefaultChannel({ name })
-        .then(({ product }) => {
-          cy.visit(productDetailsUrl(product.id))
-            .waitForProgressBarToNotBeVisible()
-            .get(PRODUCT_DETAILS.uploadImageButton)
-            .click()
-            .get(PRODUCT_DETAILS.uploadSavedImagesButton)
-            .click()
-            .get(SHARED_ELEMENTS.fileInput)
-            .attachFile("images/saleorDemoProductSneakers.png")
-            .get(PRODUCT_DETAILS.productImage)
-            .find("img")
-            .invoke("attr", "src");
-        })
-        .then(imageUrl => {
-          cy.request(imageUrl);
-        })
-        .then(imageResp => {
-          expect(imageResp.status).to.equal(200);
-        });
-    });
+    cy.clearSessionData().loginUserViaRequest();
+    createNewProductWithNewDataAndDefaultChannel({ name })
+      .then(({ product }) => {
+        cy.visit(productDetailsUrl(product.id))
+          .waitForProgressBarToNotBeVisible()
+          .get(PRODUCT_DETAILS.uploadImageButton)
+          .click()
+          .get(PRODUCT_DETAILS.uploadSavedImagesButton)
+          .click()
+          .get(SHARED_ELEMENTS.fileInput)
+          .attachFile("images/saleorDemoProductSneakers.png")
+          .get(PRODUCT_DETAILS.productImage)
+          .find("img")
+          .invoke("attr", "src");
+      })
+      .then(imageUrl => {
+        cy.request(imageUrl);
+      })
+      .then(imageResp => {
+        expect(imageResp.status).to.equal(200);
+      });
   });
 });

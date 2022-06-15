@@ -14,7 +14,6 @@ import {
 } from "../../support/api/requests/Product";
 import { createWaitingForCaptureOrder } from "../../support/api/utils/ordersUtils";
 import { createProductWithShipping } from "../../support/api/utils/products/productsUtils";
-import filterTests from "../../support/filterTests";
 import { formatDate, formatTime } from "../../support/formatData/formatDate";
 import {
   enablePreorderWithThreshold,
@@ -24,40 +23,42 @@ import {
   setUpPreorderEndDate
 } from "../../support/pages/catalog/products/VariantsPage";
 
-filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
-  describe("Creating variants in preorder", () => {
-    const name = `CreatePreOrder${faker.datatype.number()}`;
-    const attributeValues = ["value1", "value2", "value3"];
-    const threshold = 100;
-    const futureDate = new Date().setDate(new Date().getDate() + 14);
-    const endDate = formatDate(futureDate);
-    const endTime = formatTime(futureDate);
+describe("Creating variants in preorder", () => {
+  const name = `CreatePreOrder${faker.datatype.number()}`;
+  const attributeValues = ["value1", "value2", "value3"];
+  const threshold = 100;
+  const futureDate = new Date().setDate(new Date().getDate() + 14);
+  const endDate = formatDate(futureDate);
+  const endTime = formatTime(futureDate);
 
-    let defaultChannel;
-    let product;
-    let variantsList;
-    let checkoutData;
+  let defaultChannel;
+  let product;
+  let variantsList;
+  let checkoutData;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      createProductWithShipping({ name, attributeValues }).then(resp => {
-        checkoutData = {
-          address: resp.address,
-          channelSlug: resp.defaultChannel.slug,
-          email: "example@example.com",
-          shippingMethodName: resp.shippingMethod.name
-        };
-        defaultChannel = resp.defaultChannel;
-        product = resp.product;
-        variantsList = resp.variantsList;
-      });
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    createProductWithShipping({ name, attributeValues }).then(resp => {
+      checkoutData = {
+        address: resp.address,
+        channelSlug: resp.defaultChannel.slug,
+        email: "example@example.com",
+        shippingMethodName: resp.shippingMethod.name
+      };
+      defaultChannel = resp.defaultChannel;
+      product = resp.product;
+      variantsList = resp.variantsList;
     });
+  });
 
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest();
-    });
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+  });
 
-    xit("should create variant in preorder", () => {
+  xit(
+    "should create variant in preorder",
+    { tags: ["@preorders", "@allEnv"] },
+    () => {
       let variant;
 
       cy.visit(productDetailsUrl(product.id))
@@ -99,9 +100,13 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
           expect(endDate).to.eq(formatDate(respEndDate));
           expect(endTime).to.eq(formatTime(respEndDate));
         });
-    });
+    }
+  );
 
-    it("should enable preorder on active variant", () => {
+  it(
+    "should enable preorder on active variant",
+    { tags: ["@preorders", "@allEnv"] },
+    () => {
       const variant = variantsList[0];
       checkoutData.variantsList = [variant];
 
@@ -118,9 +123,13 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
           expect(preorder.globalThreshold).to.eq(threshold);
           expect(preorder.globalSoldUnits).to.eq(1);
         });
-    });
+    }
+  );
 
-    it("should set end date on preorder variant", () => {
+  it(
+    "should set end date on preorder variant",
+    { tags: ["@preorders", "@allEnv"] },
+    () => {
       const variant = variantsList[0];
       checkoutData.variantsList = [variant];
 
@@ -133,6 +142,6 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         expect(endDate).to.eq(formatDate(respEndDate));
         expect(endTime).to.eq(formatTime(respEndDate));
       });
-    });
-  });
+    }
+  );
 });
