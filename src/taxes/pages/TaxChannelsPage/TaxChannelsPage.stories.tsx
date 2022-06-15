@@ -16,5 +16,5 @@ storiesOf("Views / Taxes / Channels view", module)
   .add("loading", () => (
     <TaxChannelsPage {...props} taxConfigurations={undefined} />
   ))
-  .add("default", () => <TaxChannelsPage {...props} />)
-  .add("add country", () => <TaxChannelsPage {...props} />); // TODO: add country modal
+  .add("default", () => <TaxChannelsPage {...props} />);
+// .add("add country", () => <TaxChannelsPage {...props} />); // TODO: add country modal
