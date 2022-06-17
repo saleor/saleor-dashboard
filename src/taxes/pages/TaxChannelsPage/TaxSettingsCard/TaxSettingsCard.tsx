@@ -1,7 +1,6 @@
 import {
   Card,
   CardContent,
-  Checkbox,
   Divider,
   FormControlLabel,
   Radio,
@@ -9,18 +8,27 @@ import {
   Typography
 } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
+import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Grid from "@saleor/components/Grid";
+import { TaxConfigurationUpdateInput } from "@saleor/graphql";
+import { FormChange } from "@saleor/hooks/useForm";
 import { taxesMessages } from "@saleor/taxes/messages";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
 
-export const TaxSettingsCard: React.FC = () => {
+export interface TaxSettingsCardProps {
+  values: TaxConfigurationUpdateInput;
+  onChange: FormChange;
+}
+
+export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = ({
+  values,
+  onChange
+}) => {
   const intl = useIntl();
   const classes = useStyles();
-
-  const [radioTest, setRadioTest] = React.useState("test1");
 
   return (
     <Card>
@@ -29,8 +37,10 @@ export const TaxSettingsCard: React.FC = () => {
         <Typography className={classes.supportHeader}>
           <FormattedMessage {...taxesMessages.taxCharging} />
         </Typography>
-        <FormControlLabel
-          control={<Checkbox />}
+        <ControlledCheckbox
+          checked={values.chargeTaxes}
+          name={"chargeTaxes" as keyof TaxConfigurationUpdateInput}
+          onChange={onChange}
           label={intl.formatMessage(taxesMessages.chargeTaxes)}
         />
       </CardContent>
@@ -38,31 +48,41 @@ export const TaxSettingsCard: React.FC = () => {
       <CardContent>
         <Grid variant="uniform">
           <RadioGroup
-            value={radioTest}
-            onChange={e => setRadioTest(e.target.value)}
+            value={values.pricesEnteredWithTax}
+            name={"pricesEnteredWithTax" as keyof TaxConfigurationUpdateInput}
+            onChange={e => {
+              onChange({
+                target: {
+                  name: e.target.name,
+                  value: e.target.value === "true"
+                }
+              });
+            }}
             className={classes.showCheckboxShadows}
           >
             <Typography className={classes.supportHeader}>
               <FormattedMessage {...taxesMessages.enteredPrices} />
             </Typography>
             <FormControlLabel
+              value={true}
               control={<Radio />}
               label={intl.formatMessage(taxesMessages.pricesWithTaxLabel)}
-              value="test1"
             />
             <FormControlLabel
+              value={false}
               control={<Radio />}
               label={intl.formatMessage(taxesMessages.pricesWithoutTaxLabel)}
-              value="test2"
             />
           </RadioGroup>
           <div className={classes.showCheckboxShadows}>
             <Typography className={classes.supportHeader}>
               <FormattedMessage {...taxesMessages.renderedPrices} />
             </Typography>
-            <FormControlLabel
-              control={<Checkbox />}
+            <ControlledCheckbox
               label={intl.formatMessage(taxesMessages.showGrossHeader)}
+              name={"displayGrossPrices" as keyof TaxConfigurationUpdateInput}
+              checked={values.displayGrossPrices}
+              onChange={onChange}
             />
           </div>
         </Grid>
