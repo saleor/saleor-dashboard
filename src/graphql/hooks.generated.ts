@@ -2282,12 +2282,6 @@ export const ShippingZoneDetailsFragmentDoc = gql`
 }
     ${ShippingZoneFragmentDoc}
 ${ShippingMethodTypeFragmentDoc}`;
-export const CountryWithCodeFragmentDoc = gql`
-    fragment CountryWithCode on CountryDisplay {
-  country
-  code
-}
-    `;
 export const LanguageFragmentDoc = gql`
     fragment Language on LanguageDisplay {
   code
@@ -2389,13 +2383,21 @@ export const ShopTaxesFragmentDoc = gql`
   displayGrossPrices
 }
     `;
+export const CountryWithCodeFragmentDoc = gql`
+    fragment CountryWithCode on CountryDisplay {
+  country
+  code
+}
+    `;
 export const TaxConfigurationPerCountryFragmentDoc = gql`
     fragment TaxConfigurationPerCountry on TaxConfigurationPerCountry {
-  countryCode
+  country {
+    ...CountryWithCode
+  }
   chargeTaxes
   displayGrossPrices
 }
-    `;
+    ${CountryWithCodeFragmentDoc}`;
 export const TaxConfigurationFragmentDoc = gql`
     fragment TaxConfiguration on TaxConfiguration {
   id
@@ -2413,7 +2415,9 @@ export const TaxConfigurationFragmentDoc = gql`
     ${TaxConfigurationPerCountryFragmentDoc}`;
 export const TaxCountryConfigurationFragmentDoc = gql`
     fragment TaxCountryConfiguration on TaxCountryConfiguration {
-  countryCode
+  country {
+    ...CountryWithCode
+  }
   taxClassCountryRates {
     rate
     taxClass {
@@ -2423,7 +2427,25 @@ export const TaxCountryConfigurationFragmentDoc = gql`
     }
   }
 }
-    `;
+    ${CountryWithCodeFragmentDoc}`;
+export const TaxRateFragmentDoc = gql`
+    fragment TaxRate on TaxClassCountryRate {
+  country {
+    ...CountryWithCode
+  }
+  rate
+}
+    ${CountryWithCodeFragmentDoc}`;
+export const TaxClassFragmentDoc = gql`
+    fragment TaxClass on TaxClass {
+  id
+  name
+  isDefault
+  countries {
+    ...TaxRate
+  }
+}
+    ${TaxRateFragmentDoc}`;
 export const TimePeriodFragmentDoc = gql`
     fragment TimePeriod on TimePeriod {
   amount

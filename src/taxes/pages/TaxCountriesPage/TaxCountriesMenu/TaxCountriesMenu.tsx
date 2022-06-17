@@ -2,10 +2,7 @@ import { Card } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import ListItemLink from "@saleor/components/ListItemLink";
 import Skeleton from "@saleor/components/Skeleton";
-import {
-  CountryFragment,
-  TaxCountryConfigurationFragment
-} from "@saleor/graphql";
+import { TaxCountryConfigurationFragment } from "@saleor/graphql";
 import {
   Button,
   DeleteIcon,
@@ -24,15 +21,13 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useStyles } from "./styles";
 
 interface TaxCountriesMenuProps {
-  countries: TaxCountryConfigurationFragment[] | undefined;
-  countryNames: CountryFragment[] | undefined;
+  configurations: TaxCountryConfigurationFragment[] | undefined;
   selectedCountryId: string;
   onCountryDelete: (countryId: string) => void;
 }
 
 export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
-  countries,
-  countryNames,
+  configurations,
   selectedCountryId,
   onCountryDelete
 }) => {
@@ -58,35 +53,30 @@ export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
               </ListItemCell>
             </ListItem>
           </ListHeader>
-          {(countryNames &&
-            countries?.map(country => (
-              <ListItemLink
-                key={country.countryCode}
-                className={clsx(classes.clickable, classes.tableRow, {
-                  [classes.selected]: country.countryCode === selectedCountryId
-                })}
-                href={countriesListUrl(country.countryCode)}
-              >
-                <ListItemCell>
-                  <div className={classes.spaceBetween}>
-                    {
-                      countryNames.find(
-                        name => name.code === country.countryCode
-                      ).country
-                    }
-                    <IconButton
-                      variant="secondary"
-                      onClick={event => {
-                        event.stopPropagation();
-                        onCountryDelete(country.countryCode);
-                      }}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </div>
-                </ListItemCell>
-              </ListItemLink>
-            ))) ?? <Skeleton />}
+          {configurations?.map(config => (
+            <ListItemLink
+              key={config.country.code}
+              className={clsx(classes.clickable, classes.tableRow, {
+                [classes.selected]: config.country.code === selectedCountryId
+              })}
+              href={countriesListUrl(config.country.code)}
+            >
+              <ListItemCell>
+                <div className={classes.spaceBetween}>
+                  {config.country.country}
+                  <IconButton
+                    variant="secondary"
+                    onClick={event => {
+                      event.stopPropagation();
+                      onCountryDelete(config.country.code);
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </div>
+              </ListItemCell>
+            </ListItemLink>
+          )) ?? <Skeleton />}
         </List>
       </div>
     </Card>
