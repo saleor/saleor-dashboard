@@ -1,5 +1,4 @@
 import useNavigator from "@saleor/hooks/useNavigator";
-import useShop from "@saleor/hooks/useShop";
 import React from "react";
 
 import { taxConfigurations } from "../fixtures";
@@ -13,7 +12,6 @@ interface ChannelsListProps {
 
 export const ChannelsList: React.FC<ChannelsListProps> = ({ id }) => {
   const navigate = useNavigator();
-  const shop = useShop();
 
   const handleTabChange = (tab: string) => {
     navigate(taxTabSectionUrl(tab));
@@ -33,7 +31,6 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ id }) => {
   return (
     <TaxChannelsPage
       taxConfigurations={taxConfigurations} // TODO: change fixture to query data
-      countries={shop?.countries}
       selectedConfigurationId={id!}
       handleTabChange={handleTabChange}
     />
