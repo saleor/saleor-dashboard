@@ -146,6 +146,10 @@
     "context": "product type shipping settings, section header",
     "string": "Shipping"
   },
+  "/5r4he": {
+    "context": "label for button",
+    "string": "Add country"
+  },
   "/68iG8": {
     "context": "product export to csv file, header",
     "string": "Information exported"
@@ -169,6 +173,10 @@
   "/C//FB": {
     "context": "header, allocated product quantity",
     "string": "Allocated"
+  },
+  "/ILyIf": {
+    "context": "tax classes menu header",
+    "string": "Tax class label"
   },
   "/KWNJW": {
     "context": "order discount was updated event title",
@@ -1090,6 +1098,10 @@
   "7+GBlj": {
     "string": "Error code {errorCode} {fieldError}"
   },
+  "720c51": {
+    "context": "tax classes name input placeholder",
+    "string": "Tax rate name"
+  },
   "73RU3R": {
     "context": "deactivate app",
     "string": "Are you sure you want to disable this app? Your data will be kept until you reactivate the app. You will be still billed for the app."
@@ -1287,6 +1299,10 @@
   },
   "97l2MO": {
     "string": "Customer Email"
+  },
+  "98Nw4g": {
+    "context": "card subtitle",
+    "string": "Rendered prices"
   },
   "98WMlR": {
     "context": "header",
@@ -1689,6 +1705,10 @@
   "C9pcQx": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this shipping zone?} other{Are you sure you want to delete {displayQuantity} shipping zones?}}"
+  },
+  "CFT171": {
+    "context": "card header title",
+    "string": "Country list"
   },
   "CG+awx": {
     "context": "dialog content",
@@ -2133,10 +2153,6 @@
     "context": "collection publication date",
     "string": "Unpublished"
   },
-  "Fd15ll": {
-    "context": "label for button",
-    "string": "Add Country"
-  },
   "FemBUF": {
     "context": "header",
     "string": "Translations to {language}"
@@ -2554,10 +2570,6 @@
   "IOshTA": {
     "context": "header",
     "string": "Translation MenuItem \"{menuItemName}\" - {languageCode}"
-  },
-  "ITlA32": {
-    "context": "card title",
-    "string": "Default Settings"
   },
   "IUeGzv": {
     "context": "plugin name",
@@ -3227,6 +3239,14 @@
     "context": "section header",
     "string": "All Subcategories"
   },
+  "Nj9iSB": {
+    "context": "table header column",
+    "string": "Tax rate"
+  },
+  "NlEVVT": {
+    "context": "label for button",
+    "string": "Create class"
+  },
   "NlSJMM": {
     "context": "channels section name",
     "string": "Channels"
@@ -3780,6 +3800,10 @@
     "context": "dialog header",
     "string": "Unassign Attribute from Page Type"
   },
+  "RqtZQ6": {
+    "context": "tax classes card header",
+    "string": "Tax class rates"
+  },
   "RrCui3": {
     "string": "Summary"
   },
@@ -4007,6 +4031,10 @@
     "context": "checkbox",
     "string": "Charge taxes on this product"
   },
+  "TfzIXS": {
+    "context": "tax classes card header",
+    "string": "General information"
+  },
   "TjGYna": {
     "context": "product inventory, checkbox",
     "string": "Track Inventory"
@@ -4034,10 +4062,6 @@
   "TtZg/K": {
     "context": "ExitFormPrompt title",
     "string": "Would you like to save changes?"
-  },
-  "Tw92Ye": {
-    "context": "support label",
-    "string": "Channel Name"
   },
   "U1eJIw": {
     "context": "order history message",
@@ -4310,10 +4334,6 @@
     "context": "permission list item description",
     "string": "This group is last source of that permission"
   },
-  "VmVQpG": {
-    "context": "Taxes section title",
-    "string": "Tax Classes"
-  },
   "VrFy8e": {
     "string": "No notes from customer"
   },
@@ -4463,6 +4483,10 @@
     "context": "title",
     "string": "There’s a problem with app."
   },
+  "Ww69SE": {
+    "context": "search input placeholder",
+    "string": "Search tax classes"
+  },
   "WwNtFn": {
     "context": "delete product variant",
     "string": "Are you sure you want to delete {name}?"
@@ -4571,10 +4595,6 @@
   "XNeJay": {
     "context": "section header",
     "string": "Eligible Collections"
-  },
-  "XP8xhN": {
-    "context": "card subtitle",
-    "string": "Entered Prices"
   },
   "XQBVEJ": {
     "context": "order return error description when cannot refund",
@@ -4941,6 +4961,10 @@
   "aI80kg": {
     "string": "Properties"
   },
+  "aJm/by": {
+    "context": "Taxes section title",
+    "string": "Tax classes"
+  },
   "aMwxYb": {
     "string": "Countries"
   },
@@ -5053,10 +5077,6 @@
   "bHdFph": {
     "context": "subsection header",
     "string": "Address"
-  },
-  "bK2kVw": {
-    "context": "card subtitle",
-    "string": "Rendered Prices"
   },
   "bL/Wrc": {
     "context": "plugin status",
@@ -5358,6 +5378,10 @@
   "dc5KWn": {
     "context": "products export type label",
     "string": "products"
+  },
+  "di0qi8": {
+    "context": "card subtitle",
+    "string": "Tax charging"
   },
   "diOQm7": {
     "context": "product status",
@@ -5928,6 +5952,10 @@
   },
   "jHJmjf": {
     "string": "No results"
+  },
+  "jMzyU8": {
+    "context": "tax classes card header",
+    "string": "Tax classes"
   },
   "jNSOSu": {
     "context": "cancelled fulfillment, section header",
@@ -6677,6 +6705,10 @@
   "pVFoOk": {
     "string": "Are you sure you want to delete {collectionName}?"
   },
+  "pWClYm": {
+    "context": "card title",
+    "string": "Default settings"
+  },
   "paa4m0": {
     "string": "Successfully created product type"
   },
@@ -6716,6 +6748,10 @@
     "context": "notes about customer, header",
     "string": "Notes"
   },
+  "puRlnN": {
+    "context": "card subtitle",
+    "string": "Entered prices"
+  },
   "puikeb": {
     "context": "button",
     "string": "Delete Address"
@@ -6754,6 +6790,10 @@
     "context": "export selected items to csv file",
     "string": "Selected products ({number})"
   },
+  "qHb6xK": {
+    "context": "card header",
+    "string": "Tax class rates"
+  },
   "qIgdO6": {
     "string": "Custom Filter"
   },
@@ -6784,6 +6824,10 @@
   "qZHHed": {
     "context": "stock exceeded dialog title",
     "string": "Not enough stock"
+  },
+  "qbcNjQ": {
+    "context": "table header column",
+    "string": "Tax name"
   },
   "qbmeUI": {
     "context": "dialog header",
@@ -7129,10 +7173,6 @@
   "t3aiWF": {
     "context": "section header",
     "string": "Excluded Products"
-  },
-  "t4CZ71": {
-    "context": "card subtitle",
-    "string": "Tax Charging"
   },
   "t7UwLY": {
     "context": "voucher status",
@@ -7800,6 +7840,10 @@
   "yKuba7": {
     "context": "attribute can be searched in dashboard",
     "string": "Searchable"
+  },
+  "yLfbSh": {
+    "context": "support label",
+    "string": "Channel name"
   },
   "yMi8I8": {
     "context": "dialog header",

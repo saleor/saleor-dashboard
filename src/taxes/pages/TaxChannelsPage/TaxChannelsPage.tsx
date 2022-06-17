@@ -5,7 +5,7 @@ import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Skeleton from "@saleor/components/Skeleton";
-import { CountryFragment, TaxConfigurationFragment } from "@saleor/graphql";
+import { TaxConfigurationFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import {
   Button,
@@ -26,18 +26,12 @@ import TaxSettingsCard from "./TaxSettingsCard";
 
 interface TaxChannelsPageProps {
   taxConfigurations: TaxConfigurationFragment[] | undefined;
-  countries: CountryFragment[] | undefined;
   selectedConfigurationId: string;
   handleTabChange: (tab: string) => void;
 }
 
 export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
-  const {
-    taxConfigurations,
-    countries,
-    selectedConfigurationId,
-    handleTabChange
-  } = props;
+  const { taxConfigurations, selectedConfigurationId, handleTabChange } = props;
 
   const intl = useIntl();
 
@@ -96,13 +90,8 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
               </ListHeader>
               {currentTaxConfiguration?.countries.map(country => (
                 <TaxCountryExceptionListItem
-                  country={country}
-                  countryName={
-                    countries?.find(
-                      shopCountry => shopCountry.code === country.countryCode
-                    )?.country
-                  }
-                  key={country.countryCode}
+                  country={country.country}
+                  key={country.country.code}
                 />
               )) ?? (
                 <>
