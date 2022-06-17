@@ -117,6 +117,7 @@ function cypressGrepPlugin(config) {
     }
     if (greppedSpecs.length) {
       config.specPattern = greppedSpecs;
+      console.log(config.specPattern);
     } else {
       // hmm, we filtered out all specs, probably something is wrong
       console.warn("grep and/or grepTags has eliminated all specs");

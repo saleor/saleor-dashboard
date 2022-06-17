@@ -129,7 +129,7 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COMMIT_INFO_MESSAGE: All tests triggered via ${{ github.event.action }} on ${{ steps.get-env-uri.outputs.ENV_URI }}
-          grepTags: ${{ github.event.inputs.tags }}
+          CYPRESS_grepTags: ${{ github.event.inputs.tags }}
         with:
           parallel: true
           group: 'UI - Chrome'

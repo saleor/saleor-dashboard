@@ -173,7 +173,7 @@ jobs:
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           COMMIT_INFO_MESSAGE: Critical tests triggered on PR - ${{ github.ref_name }}
-          grepTags: '@critical'
+          CYPRESS_grepTags: '@critical'
         with:
           record: true
           tag: Critical, ${{github.event.action}}
