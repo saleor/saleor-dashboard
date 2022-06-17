@@ -174,6 +174,10 @@
     "context": "dialog header",
     "string": "Add Tracking Code"
   },
+  "/ILyIf": {
+    "context": "tax classes menu header",
+    "string": "Tax class label"
+  },
   "/KWNJW": {
     "context": "order discount was updated event title",
     "string": "Order discount was updated by"
@@ -1087,6 +1091,10 @@
   },
   "7+GBlj": {
     "string": "Error code {errorCode} {fieldError}"
+  },
+  "720c51": {
+    "context": "tax classes name input placeholder",
+    "string": "Tax rate name"
   },
   "73RU3R": {
     "context": "deactivate app",
@@ -3213,6 +3221,10 @@
     "context": "table header column",
     "string": "Tax rate"
   },
+  "NlEVVT": {
+    "context": "label for button",
+    "string": "Create class"
+  },
   "NlSJMM": {
     "context": "channels section name",
     "string": "Channels"
@@ -3773,6 +3785,10 @@
     "context": "dialog header",
     "string": "Unassign Attribute from Page Type"
   },
+  "RqtZQ6": {
+    "context": "tax classes card header",
+    "string": "Tax class rates"
+  },
   "RrCui3": {
     "string": "Summary"
   },
@@ -3999,6 +4015,10 @@
   "TfY/Pi": {
     "context": "checkbox",
     "string": "Charge taxes on this product"
+  },
+  "TfzIXS": {
+    "context": "tax classes card header",
+    "string": "General information"
   },
   "TjGYna": {
     "context": "product inventory, checkbox",
@@ -5919,6 +5939,10 @@
   },
   "jHJmjf": {
     "string": "No results"
+  },
+  "jMzyU8": {
+    "context": "tax classes card header",
+    "string": "Tax classes"
   },
   "jNSOSu": {
     "context": "cancelled fulfillment, section header",
