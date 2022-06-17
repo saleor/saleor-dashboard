@@ -44,7 +44,9 @@ export const taxTypeFragment = gql`
 
 export const taxConfigurationPerCountry = gql`
   fragment TaxConfigurationPerCountry on TaxConfigurationPerCountry {
-    countryCode
+    country {
+      ...CountryWithCode
+    }
     chargeTaxes
     displayGrossPrices
   }
@@ -68,7 +70,9 @@ export const taxConfiguration = gql`
 
 export const taxCountryConfigurationFragment = gql`
   fragment TaxCountryConfiguration on TaxCountryConfiguration {
-    countryCode
+    country {
+      ...CountryWithCode
+    }
     taxClassCountryRates {
       rate
       taxClass {
@@ -76,6 +80,26 @@ export const taxCountryConfigurationFragment = gql`
         name
         isDefault
       }
+    }
+  }
+`;
+
+export const taxRateFragment = gql`
+  fragment TaxRate on TaxClassCountryRate {
+    country {
+      ...CountryWithCode
+    }
+    rate
+  }
+`;
+
+export const taxClassFragment = gql`
+  fragment TaxClass on TaxClass {
+    id
+    name
+    isDefault
+    countries {
+      ...TaxRate
     }
   }
 `;
