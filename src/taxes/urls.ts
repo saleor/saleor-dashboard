@@ -10,3 +10,8 @@ export const countriesListUrl = (id?: string) =>
   id
     ? urlJoin(taxTabSectionUrl("countries"), id)
     : taxTabSectionUrl("countries");
+
+export const taxClassesListUrl = (id?: string) =>
+  id
+    ? urlJoin(taxTabSectionUrl("tax-classes"), id)
+    : taxTabSectionUrl("tax-classes");

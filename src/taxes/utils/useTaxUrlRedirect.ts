@@ -6,6 +6,7 @@
  * Its use is similar in countries and tax classes views.
  */
 
+import { CountryWithCodeFragment } from "@saleor/graphql";
 import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
 import React from "react";
 
@@ -13,7 +14,7 @@ interface TaxEntityWithId {
   id: string;
 }
 interface TaxEntityWithCode {
-  countryCode: string;
+  country: CountryWithCodeFragment;
 }
 
 type TaxEntity = TaxEntityWithId | TaxEntityWithCode;
@@ -37,8 +38,8 @@ export function useTaxUrlRedirect({
       if ("id" in defaultTaxEntity) {
         navigate(urlFunction(defaultTaxEntity.id));
       }
-      if ("countryCode" in defaultTaxEntity) {
-        navigate(urlFunction(defaultTaxEntity.countryCode));
+      if ("country" in defaultTaxEntity) {
+        navigate(urlFunction(defaultTaxEntity.country.code));
       }
     }
   }, [id, data]);

@@ -9,15 +9,14 @@ import {
 import React from "react";
 
 interface TaxCountryExceptionListItemProps {
-  country: TaxConfigurationPerCountryFragment | undefined;
-  countryName: string | undefined;
+  country: TaxConfigurationPerCountryFragment["country"] | undefined;
 }
 
 export const TaxCountryExceptionListItem: React.FC<TaxCountryExceptionListItemProps> = ({
-  countryName
+  country
 }) => (
   <ListItem hover={false}>
-    <ListItemCell>{countryName}</ListItemCell>
+    <ListItemCell>{country.country}</ListItemCell>
     <ListItemCell>
       <Checkbox />
     </ListItemCell>

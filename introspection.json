@@ -3957,6 +3957,24 @@
         "interfaces": null,
         "enumValues": [
           {
+            "name": "CUSTOMER_OVERVIEW_CREATE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CUSTOMER_OVERVIEW_MORE_ACTIONS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CUSTOMER_DETAILS_MORE_ACTIONS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "PRODUCT_OVERVIEW_CREATE",
             "description": null,
             "isDeprecated": false,
@@ -10713,10 +10731,22 @@
             "args": [
               {
                 "name": "size",
-                "description": "Size of the image.",
+                "description": "Size of the image. If not provided, the original image will be returned.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "format",
+                "description": "The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.\n\nAdded in Saleor 3.6.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "type": {
+                  "kind": "ENUM",
+                  "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -13880,6 +13910,22 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "displayGrossPrices",
+            "description": "Determines whether checkout prices should include taxes when displayed in a storefront.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -13966,6 +14012,53 @@
         ],
         "inputFields": null,
         "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "CheckoutAddressValidationRules",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "checkRequiredFields",
+            "description": "Determines if an error should be raised when the provided address doesn't have all the required fields. The list of required fields is dynamic and depends on the country code (use the `addressValidationRules` query to fetch them). Note: country code is mandatory for all addresses regardless of the rules provided in this input.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": "true",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "checkFieldsFormat",
+            "description": "Determines if an error should be raised when the provided address doesn't match the expected format. Example: using letters for postal code when the numbers are expected.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": "true",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "enableFieldsNormalization",
+            "description": "Determines if Saleor should apply normalization on address fields. Example: converting city field to uppercase letters.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": "true",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -14412,6 +14505,18 @@
             "type": {
               "kind": "ENUM",
               "name": "LanguageCodeEnum",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "validationRules",
+            "description": "The checkout validation rules that can be changed.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "CheckoutValidationRules",
               "ofType": null
             },
             "defaultValue": null,
@@ -16434,6 +16539,41 @@
         "possibleTypes": null
       },
       {
+        "kind": "INPUT_OBJECT",
+        "name": "CheckoutValidationRules",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "shippingAddress",
+            "description": "The validation rules that can be applied to provided shipping address data.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "CheckoutAddressValidationRules",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "billingAddress",
+            "description": "The validation rules that can be applied to provided billing address data.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "CheckoutAddressValidationRules",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "ChoiceValue",
         "description": null,
@@ -16844,10 +16984,22 @@
             "args": [
               {
                 "name": "size",
-                "description": "Size of the image.",
+                "description": "Size of the image. If not provided, the original image will be returned.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "format",
+                "description": "The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.\n\nAdded in Saleor 3.6.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "type": {
+                  "kind": "ENUM",
+                  "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -20909,6 +21061,59 @@
         "possibleTypes": null
       },
       {
+        "kind": "INPUT_OBJECT",
+        "name": "CountryRateInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "countryCode",
+            "description": "Country in which this rate applies.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "CountryCode",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "rate",
+            "description": "Tax rate value provided as percentage. Example: provide `23` to represent `23%` tax rate.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "SCALAR",
+        "name": "Float",
+        "description": "The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "CreateToken",
         "description": "Create JWT token.",
@@ -21527,6 +21732,18 @@
         "enumValues": [
           {
             "name": "ACCOUNT_CREATED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ACCOUNT_ACTIVATED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ACCOUNT_DEACTIVATED",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -25324,16 +25541,6 @@
             "ofType": null
           }
         ],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "SCALAR",
-        "name": "Float",
-        "description": "The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).",
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -42513,6 +42720,236 @@
             "deprecationReason": null
           },
           {
+            "name": "taxClassCreate",
+            "description": "Create a tax class.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
+            "args": [
+              {
+                "name": "input",
+                "description": "Fields required to create a tax class.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "TaxClassCreateInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TaxClassCreate",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxClassDelete",
+            "description": "Delete a tax class. After deleting the tax class any products, product types or shipping methods using it are updated to use the default tax class.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
+            "args": [
+              {
+                "name": "id",
+                "description": "ID of a tax class to delete.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TaxClassDelete",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxClassUpdate",
+            "description": "Update a tax class.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
+            "args": [
+              {
+                "name": "id",
+                "description": "ID of the tax class.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "input",
+                "description": "Fields required to update a tax class.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "TaxClassUpdateInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TaxClassUpdate",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxConfigurationUpdate",
+            "description": "Update tax configuration for a channel.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
+            "args": [
+              {
+                "name": "id",
+                "description": "ID of the tax configuration.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "input",
+                "description": "Fields required to update the tax configuration.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "TaxConfigurationUpdateInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TaxConfigurationUpdate",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxCountryConfigurationUpdate",
+            "description": "Update tax class rates for a specific country.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
+            "args": [
+              {
+                "name": "countryCode",
+                "description": "Country in which to update the tax class rates.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "CountryCode",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "updateTaxClassRates",
+                "description": "List of tax rates per tax class to update.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "TaxClassRateInput",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TaxCountryConfigurationUpdate",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxCountryConfigurationDelete",
+            "description": "Remove all tax class rates for a specific country.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
+            "args": [
+              {
+                "name": "countryCode",
+                "description": "Country in which to update the tax class rates.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "CountryCode",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TaxCountryConfigurationDelete",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "staffNotificationRecipientCreate",
             "description": "Creates a new staff notification recipient. \n\nRequires one of the following permissions: MANAGE_SETTINGS.",
             "args": [
@@ -50084,6 +50521,18 @@
                 "defaultValue": null,
                 "isDeprecated": false,
                 "deprecationReason": null
+              },
+              {
+                "name": "validationRules",
+                "description": "The rules for changing validation for received billing address data.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "CheckoutAddressValidationRules",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
               }
             ],
             "type": {
@@ -50839,6 +51288,18 @@
                 "type": {
                   "kind": "SCALAR",
                   "name": "UUID",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "validationRules",
+                "description": "The rules for changing validation for received shipping address data.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "CheckoutAddressValidationRules",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -53374,7 +53835,7 @@
           },
           {
             "name": "staffCreate",
-            "description": "Creates a new staff user. \n\nRequires one of the following permissions: MANAGE_STAFF.",
+            "description": "Creates a new staff user. Apps are not allowed to perform this mutation. \n\nRequires one of the following permissions: MANAGE_STAFF.",
             "args": [
               {
                 "name": "input",
@@ -53403,7 +53864,7 @@
           },
           {
             "name": "staffUpdate",
-            "description": "Updates an existing staff user. \n\nRequires one of the following permissions: MANAGE_STAFF.",
+            "description": "Updates an existing staff user. Apps are not allowed to perform this mutation. \n\nRequires one of the following permissions: MANAGE_STAFF.",
             "args": [
               {
                 "name": "id",
@@ -53448,7 +53909,7 @@
           },
           {
             "name": "staffDelete",
-            "description": "Deletes a staff user. \n\nRequires one of the following permissions: MANAGE_STAFF.",
+            "description": "Deletes a staff user. Apps are not allowed to perform this mutation. \n\nRequires one of the following permissions: MANAGE_STAFF.",
             "args": [
               {
                 "name": "id",
@@ -53477,7 +53938,7 @@
           },
           {
             "name": "staffBulkDelete",
-            "description": "Deletes staff users. \n\nRequires one of the following permissions: MANAGE_STAFF.",
+            "description": "Deletes staff users. Apps are not allowed to perform this mutation. \n\nRequires one of the following permissions: MANAGE_STAFF.",
             "args": [
               {
                 "name": "ids",
@@ -53608,7 +54069,7 @@
           },
           {
             "name": "permissionGroupCreate",
-            "description": "Create new permission group. \n\nRequires one of the following permissions: MANAGE_STAFF.",
+            "description": "Create new permission group. Apps are not allowed to perform this mutation. \n\nRequires one of the following permissions: MANAGE_STAFF.",
             "args": [
               {
                 "name": "input",
@@ -53637,7 +54098,7 @@
           },
           {
             "name": "permissionGroupUpdate",
-            "description": "Update permission group. \n\nRequires one of the following permissions: MANAGE_STAFF.",
+            "description": "Update permission group. Apps are not allowed to perform this mutation. \n\nRequires one of the following permissions: MANAGE_STAFF.",
             "args": [
               {
                 "name": "id",
@@ -53682,7 +54143,7 @@
           },
           {
             "name": "permissionGroupDelete",
-            "description": "Delete permission group. \n\nRequires one of the following permissions: MANAGE_STAFF.",
+            "description": "Delete permission group. Apps are not allowed to perform this mutation. \n\nRequires one of the following permissions: MANAGE_STAFF.",
             "args": [
               {
                 "name": "id",
@@ -54154,6 +54615,16 @@
           },
           {
             "kind": "OBJECT",
+            "name": "TaxClass",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "TaxConfiguration",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
             "name": "Transaction",
             "ofType": null
           },
@@ -54504,6 +54975,16 @@
           {
             "kind": "OBJECT",
             "name": "ShippingZone",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "TaxClass",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "TaxConfiguration",
             "ofType": null
           },
           {
@@ -55326,22 +55807,6 @@
             "deprecationReason": null
           },
           {
-            "name": "displayGrossPrices",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "customerNote",
             "description": null,
             "args": [],
@@ -55656,6 +56121,22 @@
                     "ofType": null
                   }
                 }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "displayGrossPrices",
+            "description": "Determines whether checkout prices should include taxes when displayed in a storefront.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
               }
             },
             "isDeprecated": false,
@@ -59562,14 +60043,26 @@
           },
           {
             "name": "thumbnail",
-            "description": "The main thumbnail for the ordered product.",
+            "description": null,
             "args": [
               {
                 "name": "size",
-                "description": "Size of thumbnail.",
+                "description": "Size of the image. If not provided, the original image will be returned.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "format",
+                "description": "The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.\n\nAdded in Saleor 3.6.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "type": {
+                  "kind": "ENUM",
+                  "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -66959,13 +67452,19 @@
             "deprecationReason": null
           },
           {
-            "name": "MANAGE_DISCOUNTS",
+            "name": "MANAGE_CHECKOUTS",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "MANAGE_PLUGINS",
+            "name": "HANDLE_CHECKOUTS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "MANAGE_DISCOUNTS",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -67007,6 +67506,12 @@
             "deprecationReason": null
           },
           {
+            "name": "MANAGE_PLUGINS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "MANAGE_PRODUCTS",
             "description": null,
             "isDeprecated": false,
@@ -67037,13 +67542,7 @@
             "deprecationReason": null
           },
           {
-            "name": "MANAGE_CHECKOUTS",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HANDLE_CHECKOUTS",
+            "name": "MANAGE_TAXES",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -67054,7 +67553,7 @@
       {
         "kind": "OBJECT",
         "name": "PermissionGroupCreate",
-        "description": "Create new permission group. \n\nRequires one of the following permissions: MANAGE_STAFF.",
+        "description": "Create new permission group. Apps are not allowed to perform this mutation. \n\nRequires one of the following permissions: MANAGE_STAFF.",
         "fields": [
           {
             "name": "permissionGroupErrors",
@@ -67192,7 +67691,7 @@
       {
         "kind": "OBJECT",
         "name": "PermissionGroupDelete",
-        "description": "Delete permission group. \n\nRequires one of the following permissions: MANAGE_STAFF.",
+        "description": "Delete permission group. Apps are not allowed to perform this mutation. \n\nRequires one of the following permissions: MANAGE_STAFF.",
         "fields": [
           {
             "name": "permissionGroupErrors",
@@ -67516,7 +68015,7 @@
       {
         "kind": "OBJECT",
         "name": "PermissionGroupUpdate",
-        "description": "Update permission group. \n\nRequires one of the following permissions: MANAGE_STAFF.",
+        "description": "Update permission group. Apps are not allowed to perform this mutation. \n\nRequires one of the following permissions: MANAGE_STAFF.",
         "fields": [
           {
             "name": "permissionGroupErrors",
@@ -68981,14 +69480,26 @@
           },
           {
             "name": "thumbnail",
-            "description": "The main thumbnail for a product.",
+            "description": null,
             "args": [
               {
                 "name": "size",
-                "description": "Size of thumbnail.",
+                "description": "Size of the image. If not provided, the original image will be returned.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "format",
+                "description": "The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.\n\nAdded in Saleor 3.6.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "type": {
+                  "kind": "ENUM",
+                  "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -69301,6 +69812,22 @@
               "kind": "SCALAR",
               "name": "Boolean",
               "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxClass",
+            "description": "Tax class assigned to this product type. All products of this product type use this tax class, unless it's overridden in the `Product` type.\n\nRequires one of the following permissions: MANAGE_TAXES, MANAGE_PRODUCTS.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "TaxClass",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -70621,6 +71148,18 @@
             "deprecationReason": null
           },
           {
+            "name": "taxClass",
+            "description": "ID of a tax class to assign to this product. If not provided, product will use the tax class which is assigned to the product type.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "taxCode",
             "description": "Tax rate for enabled tax gateway.",
             "type": {
@@ -71573,14 +72112,26 @@
           },
           {
             "name": "url",
-            "description": "The URL of the image.",
+            "description": null,
             "args": [
               {
                 "name": "size",
-                "description": "Size of the image.",
+                "description": "Size of the image. If not provided, the original image will be returned.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "format",
+                "description": "The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.\n\nAdded in Saleor 3.6.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "type": {
+                  "kind": "ENUM",
+                  "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -71706,6 +72257,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxClass",
+            "description": "ID of a tax class to assign to this product. If not provided, product will use the tax class which is assigned to the product type.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
               "ofType": null
             },
             "defaultValue": null,
@@ -71848,14 +72411,26 @@
           },
           {
             "name": "url",
-            "description": "The URL of the media.",
+            "description": null,
             "args": [
               {
                 "name": "size",
-                "description": "Size of the image.",
+                "description": "Size of the image. If not provided, the original image will be returned.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "format",
+                "description": "The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.\n\nAdded in Saleor 3.6.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "type": {
+                  "kind": "ENUM",
+                  "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -72636,6 +73211,22 @@
               "kind": "OBJECT",
               "name": "TaxedMoneyRange",
               "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "displayGrossPrices",
+            "description": "Determines whether this product's price displayed in a storefront should include taxes.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -73489,6 +74080,22 @@
             "deprecationReason": null
           },
           {
+            "name": "taxClass",
+            "description": "Tax class assigned to this product type. All products of this product type use this tax class, unless it's overridden in the `Product` type.\n\nRequires one of the following permissions: MANAGE_TAXES, MANAGE_PRODUCTS, MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "TaxClass",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "variantAttributes",
             "description": "Variant attributes of that product type.",
             "args": [
@@ -74268,6 +74875,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxClass",
+            "description": "ID of a tax class to assign to this product type. All products of this product type would use this tax class, unless it's overridden in the `Product` type.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
               "ofType": null
             },
             "defaultValue": null,
@@ -78140,6 +78759,271 @@
               "kind": "UNION",
               "name": "TranslatableItem",
               "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxConfiguration",
+            "description": "Look up a tax configuration.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.\n\nRequires one of the following permissions: MANAGE_TAXES.",
+            "args": [
+              {
+                "name": "id",
+                "description": "ID of a tax configuration.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TaxConfiguration",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxConfigurations",
+            "description": "List of tax configurations.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.\n\nRequires one of the following permissions: MANAGE_TAXES.",
+            "args": [
+              {
+                "name": "filter",
+                "description": "Filtering options for tax configurations.",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "TaxConfigurationFilterInput",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "before",
+                "description": "Return the elements in the list that come before the specified cursor.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "after",
+                "description": "Return the elements in the list that come after the specified cursor.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "first",
+                "description": "Return the first n elements from the list.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "last",
+                "description": "Return the last n elements from the list.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TaxConfigurationCountableConnection",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxClass",
+            "description": "Look up a tax class.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.\n\nRequires one of the following permissions: MANAGE_TAXES.",
+            "args": [
+              {
+                "name": "id",
+                "description": "ID of a tax class.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TaxClass",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxClasses",
+            "description": "List of tax classes.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.\n\nRequires one of the following permissions: MANAGE_TAXES.",
+            "args": [
+              {
+                "name": "sortBy",
+                "description": "Sort tax classes.",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "TaxClassSortingInput",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "filter",
+                "description": "Filtering options for tax classes.",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "TaxClassFilterInput",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "before",
+                "description": "Return the elements in the list that come before the specified cursor.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "after",
+                "description": "Return the elements in the list that come after the specified cursor.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "first",
+                "description": "Return the first n elements from the list.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "last",
+                "description": "Return the last n elements from the list.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TaxClassCountableConnection",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxCountryConfiguration",
+            "description": "Tax class rates grouped by country.\n\nRequires one of the following permissions: MANAGE_TAXES.",
+            "args": [
+              {
+                "name": "countryCode",
+                "description": "Country for which to return tax class rates.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "CountryCode",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TaxCountryConfiguration",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxCountryConfigurations",
+            "description": "\n\nRequires one of the following permissions: MANAGE_TAXES.",
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "TaxCountryConfiguration",
+                  "ofType": null
+                }
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -86492,6 +87376,22 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "taxClass",
+            "description": "Tax class assigned to this shipping method.\n\nRequires one of the following permissions: MANAGE_TAXES, MANAGE_SHIPPING.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "TaxClass",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -87297,6 +88197,18 @@
             "type": {
               "kind": "ENUM",
               "name": "PostalCodeRuleInclusionTypeEnum",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxClass",
+            "description": "ID of a tax class to assign to this shipping method. If not provided, the default tax class will be used.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
               "ofType": null
             },
             "defaultValue": null,
@@ -89427,8 +90339,8 @@
                 "ofType": null
               }
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "This field will be removed in Saleor 4.0. Use `Channel.taxConfiguration` to determine whether to display gross or net prices."
           },
           {
             "name": "chargeTaxesOnShipping",
@@ -90014,7 +90926,7 @@
           },
           {
             "name": "displayGrossPrices",
-            "description": "Display prices with tax in store.",
+            "description": "Display prices with tax in store. \n\nDEPRECATED: this field will be removed in Saleor 4.0. Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.",
             "type": {
               "kind": "SCALAR",
               "name": "Boolean",
@@ -90493,7 +91405,7 @@
       {
         "kind": "OBJECT",
         "name": "StaffBulkDelete",
-        "description": "Deletes staff users. \n\nRequires one of the following permissions: MANAGE_STAFF.",
+        "description": "Deletes staff users. Apps are not allowed to perform this mutation. \n\nRequires one of the following permissions: MANAGE_STAFF.",
         "fields": [
           {
             "name": "count",
@@ -90568,7 +91480,7 @@
       {
         "kind": "OBJECT",
         "name": "StaffCreate",
-        "description": "Creates a new staff user. \n\nRequires one of the following permissions: MANAGE_STAFF.",
+        "description": "Creates a new staff user. Apps are not allowed to perform this mutation. \n\nRequires one of the following permissions: MANAGE_STAFF.",
         "fields": [
           {
             "name": "staffErrors",
@@ -90819,7 +91731,7 @@
       {
         "kind": "OBJECT",
         "name": "StaffDelete",
-        "description": "Deletes a staff user. \n\nRequires one of the following permissions: MANAGE_STAFF.",
+        "description": "Deletes a staff user. Apps are not allowed to perform this mutation. \n\nRequires one of the following permissions: MANAGE_STAFF.",
         "fields": [
           {
             "name": "staffErrors",
@@ -91442,7 +92354,7 @@
       {
         "kind": "OBJECT",
         "name": "StaffUpdate",
-        "description": "Updates an existing staff user. \n\nRequires one of the following permissions: MANAGE_STAFF.",
+        "description": "Updates an existing staff user. Apps are not allowed to perform this mutation. \n\nRequires one of the following permissions: MANAGE_STAFF.",
         "fields": [
           {
             "name": "staffErrors",
@@ -92225,6 +93137,2308 @@
       },
       {
         "kind": "OBJECT",
+        "name": "TaxClass",
+        "description": "Tax class is a named object used to define tax rates per country. Tax class can be assigned to product types, products and shipping methods to define their tax rates.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "id",
+            "description": "The ID of the object.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "privateMetadata",
+            "description": "List of private metadata items. Requires staff permissions to access.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "MetadataItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "privateMetafield",
+            "description": "A single key from private metadata. Requires staff permissions to access.\n\nTip: Use GraphQL aliases to fetch multiple keys.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "key",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "privateMetafields",
+            "description": "Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "keys",
+                "description": null,
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Metadata",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "metadata",
+            "description": "List of public metadata items. Can be accessed without permissions.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "MetadataItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "metafield",
+            "description": "A single key from public metadata.\n\nTip: Use GraphQL aliases to fetch multiple keys.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "key",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "metafields",
+            "description": "Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "keys",
+                "description": null,
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Metadata",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "name",
+            "description": "Name of the tax class.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isDefault",
+            "description": "Determines whether a tax class is a default one. Default tax class is created by the system and cannot be removed.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "countries",
+            "description": "Country-specific tax rates for this tax class.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TaxClassCountryRate",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Node",
+            "ofType": null
+          },
+          {
+            "kind": "INTERFACE",
+            "name": "ObjectWithMetadata",
+            "ofType": null
+          }
+        ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TaxClassCountableConnection",
+        "description": null,
+        "fields": [
+          {
+            "name": "pageInfo",
+            "description": "Pagination data for this connection.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PageInfo",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "edges",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TaxClassCountableEdge",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "totalCount",
+            "description": "A total count of items in the collection.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TaxClassCountableEdge",
+        "description": null,
+        "fields": [
+          {
+            "name": "node",
+            "description": "The item at the end of the edge.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "TaxClass",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "cursor",
+            "description": "A cursor for use in pagination.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TaxClassCountryRate",
+        "description": "Country-specific tax rate value for a tax class.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "country",
+            "description": "Country in which this tax rate applies.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "CountryDisplay",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "rate",
+            "description": "Tax rate value.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxClass",
+            "description": "Related tax class.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "TaxClass",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TaxClassCreate",
+        "description": "Create a tax class.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
+        "fields": [
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TaxClassCreateError",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxClass",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TaxClass",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TaxClassCreateError",
+        "description": null,
+        "fields": [
+          {
+            "name": "field",
+            "description": "Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "message",
+            "description": "The error message.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "code",
+            "description": "The error code.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "TaxClassCreateErrorCode",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "countryCodes",
+            "description": "List of country codes for which the configuration is invalid.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "TaxClassCreateErrorCode",
+        "description": "An enumeration.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "GRAPHQL_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INVALID",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NOT_FOUND",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "TaxClassCreateInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "name",
+            "description": "Name of the tax class.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "createCountryRates",
+            "description": "List of country-specific tax rates to create for this tax class.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "CountryRateInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TaxClassDelete",
+        "description": "Delete a tax class. After deleting the tax class any products, product types or shipping methods using it are updated to use the default tax class.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
+        "fields": [
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TaxClassDeleteError",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxClass",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TaxClass",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TaxClassDeleteError",
+        "description": null,
+        "fields": [
+          {
+            "name": "field",
+            "description": "Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "message",
+            "description": "The error message.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "code",
+            "description": "The error code.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "TaxClassDeleteErrorCode",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "TaxClassDeleteErrorCode",
+        "description": "An enumeration.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "CANNOT_DELETE_DEFAULT_CLASS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GRAPHQL_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INVALID",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NOT_FOUND",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "TaxClassFilterInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "metadata",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataFilter",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ids",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "countries",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "CountryCode",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "TaxClassRateInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "taxClassId",
+            "description": "ID of a tax class for which to update the tax rate",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "rate",
+            "description": "Tax rate value.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "TaxClassSortField",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "NAME",
+            "description": "Sort tax classes by name.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "TaxClassSortingInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "direction",
+            "description": "Specifies the direction in which to sort products.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "OrderDirection",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "field",
+            "description": "Sort tax classes by the selected field.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "TaxClassSortField",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TaxClassUpdate",
+        "description": "Update a tax class.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
+        "fields": [
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TaxClassUpdateError",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxClass",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TaxClass",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TaxClassUpdateError",
+        "description": null,
+        "fields": [
+          {
+            "name": "field",
+            "description": "Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "message",
+            "description": "The error message.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "code",
+            "description": "The error code.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "TaxClassUpdateErrorCode",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "countryCodes",
+            "description": "List of country codes for which the configuration is invalid.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "TaxClassUpdateErrorCode",
+        "description": "An enumeration.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "DUPLICATED_INPUT_ITEM",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GRAPHQL_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INVALID",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NOT_FOUND",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "TaxClassUpdateInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "name",
+            "description": "Name of the tax class.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updateCountryRates",
+            "description": "List of country-specific tax rates to create or update for this tax class.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "CountryRateInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "removeCountryRates",
+            "description": "List of country codes for which to remove the tax class rates.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "CountryCode",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TaxConfiguration",
+        "description": "Channel-specific tax configuration.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "id",
+            "description": "The ID of the object.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "privateMetadata",
+            "description": "List of private metadata items. Requires staff permissions to access.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "MetadataItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "privateMetafield",
+            "description": "A single key from private metadata. Requires staff permissions to access.\n\nTip: Use GraphQL aliases to fetch multiple keys.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "key",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "privateMetafields",
+            "description": "Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "keys",
+                "description": null,
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Metadata",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "metadata",
+            "description": "List of public metadata items. Can be accessed without permissions.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "MetadataItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "metafield",
+            "description": "A single key from public metadata.\n\nTip: Use GraphQL aliases to fetch multiple keys.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "key",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "metafields",
+            "description": "Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "keys",
+                "description": null,
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Metadata",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "channel",
+            "description": "A channel to which the tax configuration applies to.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Channel",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "chargeTaxes",
+            "description": "Determines whether taxes are charged in the given channel.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "displayGrossPrices",
+            "description": "Determines whether prices displayed in a storefront should include taxes.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "pricesEnteredWithTax",
+            "description": "Determines whether prices are entered with the tax included.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "countries",
+            "description": "List of country-specific exceptions in tax configuration.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TaxConfigurationPerCountry",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Node",
+            "ofType": null
+          },
+          {
+            "kind": "INTERFACE",
+            "name": "ObjectWithMetadata",
+            "ofType": null
+          }
+        ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TaxConfigurationCountableConnection",
+        "description": null,
+        "fields": [
+          {
+            "name": "pageInfo",
+            "description": "Pagination data for this connection.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PageInfo",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "edges",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TaxConfigurationCountableEdge",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "totalCount",
+            "description": "A total count of items in the collection.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TaxConfigurationCountableEdge",
+        "description": null,
+        "fields": [
+          {
+            "name": "node",
+            "description": "The item at the end of the edge.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "TaxConfiguration",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "cursor",
+            "description": "A cursor for use in pagination.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "TaxConfigurationFilterInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "metadata",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataFilter",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ids",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TaxConfigurationPerCountry",
+        "description": "Country-specific exceptions of a channel's tax configuration.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "country",
+            "description": "Country in which this configuration applies.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "CountryDisplay",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "chargeTaxes",
+            "description": "Determines whether taxes are charged in this country.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "displayGrossPrices",
+            "description": "Determines whether prices displayed in a storefront should include taxes for this country.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "TaxConfigurationPerCountryInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "countryCode",
+            "description": "Country in which this configuration applies.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "CountryCode",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "chargeTaxes",
+            "description": "Determines whether taxes are charged in this country.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "displayGrossPrices",
+            "description": "Determines whether prices displayed in a storefront should include taxes for this country.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TaxConfigurationUpdate",
+        "description": "Update tax configuration for a channel.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
+        "fields": [
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TaxConfigurationUpdateError",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxConfiguration",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TaxConfiguration",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TaxConfigurationUpdateError",
+        "description": null,
+        "fields": [
+          {
+            "name": "field",
+            "description": "Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "message",
+            "description": "The error message.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "code",
+            "description": "The error code.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "TaxConfigurationUpdateErrorCode",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "countryCodes",
+            "description": "List of country codes for which the configuration is invalid.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "TaxConfigurationUpdateErrorCode",
+        "description": "An enumeration.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "DUPLICATED_INPUT_ITEM",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GRAPHQL_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INVALID",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NOT_FOUND",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "TaxConfigurationUpdateInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "chargeTaxes",
+            "description": "Determines whether taxes are charged in the given channel.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "displayGrossPrices",
+            "description": "Determines whether prices displayed in a storefront should include taxes.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "pricesEnteredWithTax",
+            "description": "Determines whether prices are entered with the tax included.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updateCountriesConfiguration",
+            "description": "List of tax country configurations to create or update (identified by a country code).",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "TaxConfigurationPerCountryInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "removeCountriesConfiguration",
+            "description": "List of country codes for which to remove the tax configuration.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "CountryCode",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TaxCountryConfiguration",
+        "description": "Tax class rates grouped by country.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "country",
+            "description": "A country for which tax class rates are grouped.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "CountryDisplay",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxClassCountryRates",
+            "description": "List of tax class rates.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TaxClassCountryRate",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TaxCountryConfigurationDelete",
+        "description": "Remove all tax class rates for a specific country.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
+        "fields": [
+          {
+            "name": "taxCountryConfiguration",
+            "description": "Updated tax class rates grouped by a country.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TaxCountryConfiguration",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TaxCountryConfigurationDeleteError",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TaxCountryConfigurationDeleteError",
+        "description": null,
+        "fields": [
+          {
+            "name": "field",
+            "description": "Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "message",
+            "description": "The error message.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "code",
+            "description": "The error code.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "TaxCountryConfigurationDeleteErrorCode",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "TaxCountryConfigurationDeleteErrorCode",
+        "description": "An enumeration.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "GRAPHQL_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INVALID",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NOT_FOUND",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TaxCountryConfigurationUpdate",
+        "description": "Update tax class rates for a specific country.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
+        "fields": [
+          {
+            "name": "taxCountryConfiguration",
+            "description": "Updated tax class rates grouped by a country.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TaxCountryConfiguration",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TaxCountryConfigurationUpdateError",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TaxCountryConfigurationUpdateError",
+        "description": null,
+        "fields": [
+          {
+            "name": "field",
+            "description": "Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "message",
+            "description": "The error message.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "code",
+            "description": "The error code.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "TaxCountryConfigurationUpdateErrorCode",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxClassIds",
+            "description": "List of tax class IDs for which the update failed.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "TaxCountryConfigurationUpdateErrorCode",
+        "description": "An enumeration.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "GRAPHQL_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INVALID",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NOT_FOUND",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "TaxType",
         "description": "Representation of tax types fetched from tax gateway.",
         "fields": [
@@ -92366,6 +95580,23 @@
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "ThumbnailFormatEnum",
+        "description": "An enumeration.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "WEBP",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "possibleTypes": null
       },
       {
@@ -95628,10 +98859,22 @@
             "args": [
               {
                 "name": "size",
-                "description": "Size of the avatar.",
+                "description": "Size of the image. If not provided, the original image will be returned.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "format",
+                "description": "The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.\n\nAdded in Saleor 3.6.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "type": {
+                  "kind": "ENUM",
+                  "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -98652,6 +101895,26 @@
                 "ofType": {
                   "kind": "INPUT_OBJECT",
                   "name": "MetadataFilter",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ids",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
                   "ofType": null
                 }
               }
