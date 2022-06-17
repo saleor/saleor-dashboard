@@ -105,5 +105,35 @@ export const taxesMessages = defineMessages({
     id: "Nj9iSB",
     defaultMessage: "Tax rate",
     description: "table header column"
+  },
+  generalInformation: {
+    id: "TfzIXS",
+    defaultMessage: "General information",
+    description: "tax classes card header"
+  },
+  taxRateName: {
+    id: "720c51",
+    defaultMessage: "Tax rate name",
+    description: "tax classes name input placeholder"
+  },
+  taxClassRates: {
+    id: "RqtZQ6",
+    defaultMessage: "Tax class rates",
+    description: "tax classes card header"
+  },
+  taxClassList: {
+    id: "jMzyU8",
+    defaultMessage: "Tax classes",
+    description: "tax classes card header"
+  },
+  addTaxClassLabel: {
+    id: "NlEVVT",
+    defaultMessage: "Create class",
+    description: "label for button"
+  },
+  taxClassNameHeader: {
+    id: "/ILyIf",
+    defaultMessage: "Tax class label",
+    description: "tax classes menu header"
   }
 });
