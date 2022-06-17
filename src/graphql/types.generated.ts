@@ -4557,6 +4557,7 @@ export enum TimePeriodTypeEnum {
  *     CHARGE - Represents the charge action.
  *     REFUND - Represents a refund action.
  *     VOID - Represents a void action.
+ *
  */
 export enum TransactionActionEnum {
   CHARGE = 'CHARGE',
@@ -6601,10 +6602,6 @@ export type TaxCountryConfigurationFragment = { __typename: 'TaxCountryConfigura
 export type TaxRateFragment = { __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } };
 
 export type TaxClassFragment = { __typename: 'TaxClass', id: string, name: string, isDefault: boolean, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }> };
-
-export type TaxRateFragment = { __typename: 'TaxClassCountryRate', countryCode: string, rate: number };
-
-export type TaxClassFragment = { __typename: 'TaxClass', id: string, name: string, isDefault: boolean, countries: Array<{ __typename: 'TaxClassCountryRate', countryCode: string, rate: number }> | null };
 
 export type TimePeriodFragment = { __typename: 'TimePeriod', amount: number, type: TimePeriodTypeEnum };
 
