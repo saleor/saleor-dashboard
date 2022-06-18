@@ -1,5 +1,6 @@
 import { useTaxConfigurationsListQuery } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
+import useShop from "@saleor/hooks/useShop";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 
@@ -17,6 +18,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ id }) => {
   const handleTabChange = (tab: string) => {
     navigate(taxTabSectionUrl(tab));
   };
+  const shop = useShop();
 
   const { data } = useTaxConfigurationsListQuery({ variables: { first: 20 } });
 
@@ -38,6 +40,8 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ id }) => {
       taxConfigurations={taxConfigurations}
       selectedConfigurationId={id!}
       handleTabChange={handleTabChange}
+      allCountries={shop?.countries}
+      dialogOpen={false}
     />
   );
 };

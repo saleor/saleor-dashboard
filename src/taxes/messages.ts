@@ -140,5 +140,15 @@ export const taxesMessages = defineMessages({
     id: "u34css",
     defaultMessage: "There are no exceptions for this channel",
     description: "label for empty list in channels list"
+  },
+  chooseCountries: {
+    id: "s6p+rD",
+    defaultMessage: "Choose countries you want to assign",
+    description: "add country dialog header"
+  },
+  country: {
+    id: "UBuKZ9",
+    defaultMessage: "Country",
+    description: "searchbar placeholder"
   }
 });

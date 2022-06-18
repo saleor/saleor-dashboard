@@ -8,6 +8,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import {
+  CountryFragment,
   TaxConfigurationFragment,
   TaxConfigurationUpdateInput
 } from "@saleor/graphql";
@@ -21,6 +22,7 @@ import {
   PageTab,
   PageTabs
 } from "@saleor/macaw-ui";
+import TaxCountryDialog from "@saleor/taxes/components/TaxCountryDialog";
 import { taxesMessages } from "@saleor/taxes/messages";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -33,10 +35,18 @@ interface TaxChannelsPageProps {
   taxConfigurations: TaxConfigurationFragment[] | undefined;
   selectedConfigurationId: string;
   handleTabChange: (tab: string) => void;
+  allCountries: CountryFragment[] | undefined;
+  dialogOpen: boolean;
 }
 
 export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
-  const { taxConfigurations, selectedConfigurationId, handleTabChange } = props;
+  const {
+    taxConfigurations,
+    selectedConfigurationId,
+    handleTabChange,
+    allCountries,
+    dialogOpen
+  } = props;
 
   const intl = useIntl();
 
@@ -135,6 +145,14 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
             onSubmit={submit}
             onCancel={() => null}
           />
+          {allCountries && (
+            <TaxCountryDialog
+              open={true}
+              countries={allCountries}
+              // eslint-disable-next-line no-console
+              onConfirm={countries => console.log(countries)}
+            />
+          )}
         </Container>
       )}
     </Form>
