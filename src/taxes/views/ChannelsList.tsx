@@ -1,24 +1,37 @@
 import { useTaxConfigurationsListQuery } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useShop from "@saleor/hooks/useShop";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 
 import TaxChannelsPage from "../pages/TaxChannelsPage";
-import { channelsListUrl, taxTabSectionUrl } from "../urls";
+import {
+  channelsListUrl,
+  TaxesUrlDialog,
+  TaxesUrlQueryParams,
+  TaxTab,
+  taxTabPath
+} from "../urls";
 import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
 
 interface ChannelsListProps {
   id: string | undefined;
+  params: TaxesUrlQueryParams | undefined;
 }
 
-export const ChannelsList: React.FC<ChannelsListProps> = ({ id }) => {
+export const ChannelsList: React.FC<ChannelsListProps> = ({ id, params }) => {
   const navigate = useNavigator();
 
-  const handleTabChange = (tab: string) => {
-    navigate(taxTabSectionUrl(tab));
+  const handleTabChange = (tab: TaxTab) => {
+    navigate(taxTabPath(tab));
   };
   const shop = useShop();
+
+  const [openDialog, closeDialog] = createDialogActionHandlers<
+    TaxesUrlDialog,
+    TaxesUrlQueryParams
+  >(navigate, params => channelsListUrl(id, params), params);
 
   const { data } = useTaxConfigurationsListQuery({ variables: { first: 20 } });
 
@@ -41,7 +54,9 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ id }) => {
       selectedConfigurationId={id!}
       handleTabChange={handleTabChange}
       allCountries={shop?.countries}
-      dialogOpen={false}
+      isDialogOpen={params?.action === "add-country"}
+      openDialog={openDialog}
+      closeDialog={closeDialog}
     />
   );
 };

@@ -22,6 +22,7 @@ interface TaxCountryDialogProps {
   open: boolean;
   countries: CountryFragment[];
   onConfirm: (countries: CountryFragment[]) => void;
+  onClose: () => void;
 }
 
 export interface CountryFragmentWithState extends CountryFragment {
@@ -31,7 +32,8 @@ export interface CountryFragmentWithState extends CountryFragment {
 export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
   open,
   countries,
-  onConfirm
+  onConfirm,
+  onClose
 }) => {
   const classes = useStyles();
   const intl = useIntl();
@@ -54,8 +56,8 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
   >(countriesWithState, country => country.country);
 
   return (
-    <Dialog open={open} fullWidth>
-      <DialogHeader onClose={() => null}>
+    <Dialog open={open} fullWidth onClose={onClose}>
+      <DialogHeader onClose={onClose}>
         <FormattedMessage {...taxesMessages.chooseCountries} />
       </DialogHeader>
       <DialogContent className={classes.wrapper}>

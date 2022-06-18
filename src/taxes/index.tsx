@@ -1,17 +1,33 @@
 import { sectionNames } from "@saleor/intl";
+import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
-import { channelsListUrl, countriesListUrl, taxClassesListUrl } from "./urls";
+import {
+  channelsListPath,
+  countriesListUrl,
+  taxClassesListUrl,
+  TaxesUrlQueryParams
+} from "./urls";
 import ChannelsListComponent from "./views/ChannelsList";
 import CountriesListComponent from "./views/CountriesList";
 import TaxClassesListComponent from "./views/TaxClassesList";
 
 const ChannelsList: React.FC<RouteComponentProps<{ id: string }>> = ({
-  match
-}) => <ChannelsListComponent id={decodeURIComponent(match.params.id)} />;
+  match,
+  location
+}) => {
+  const qs: TaxesUrlQueryParams = parseQs(location.search.substring(1));
+
+  return (
+    <ChannelsListComponent
+      id={decodeURIComponent(match.params.id)}
+      params={qs}
+    />
+  );
+};
 
 const CountriesList: React.FC<RouteComponentProps<{ id: string }>> = ({
   match
@@ -28,8 +44,8 @@ const Component = () => {
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.taxes)} />
       <Switch>
-        <Route path={channelsListUrl(":id")} component={ChannelsList} />
-        <Route path={channelsListUrl()} component={ChannelsList} />
+        <Route path={channelsListPath(":id")} component={ChannelsList} />
+        <Route path={channelsListPath()} component={ChannelsList} />
         <Route path={countriesListUrl(":id")} component={CountriesList} />
         <Route path={countriesListUrl()} component={CountriesList} />
         <Route path={taxClassesListUrl(":id")} component={TaxClassesList} />

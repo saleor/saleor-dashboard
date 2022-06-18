@@ -36,7 +36,9 @@ interface TaxChannelsPageProps {
   selectedConfigurationId: string;
   handleTabChange: (tab: string) => void;
   allCountries: CountryFragment[] | undefined;
-  dialogOpen: boolean;
+  isDialogOpen: boolean;
+  openDialog: (action?: string) => void;
+  closeDialog: () => void;
 }
 
 export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
@@ -45,7 +47,9 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
     selectedConfigurationId,
     handleTabChange,
     allCountries,
-    dialogOpen
+    isDialogOpen,
+    openDialog,
+    closeDialog
   } = props;
 
   const intl = useIntl();
@@ -95,7 +99,10 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                 <CardTitle
                   title={intl.formatMessage(taxesMessages.countryExceptions)}
                   toolbar={
-                    <Button variant="secondary">
+                    <Button
+                      variant="secondary"
+                      onClick={() => openDialog("add-country")}
+                    >
                       <FormattedMessage {...taxesMessages.addCountryLabel} />
                     </Button>
                   }
@@ -147,10 +154,11 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
           />
           {allCountries && (
             <TaxCountryDialog
-              open={true}
+              open={isDialogOpen}
               countries={allCountries}
               // eslint-disable-next-line no-console
               onConfirm={countries => console.log(countries)}
+              onClose={closeDialog}
             />
           )}
         </Container>

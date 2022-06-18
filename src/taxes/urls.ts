@@ -1,17 +1,23 @@
+import { Dialog } from "@saleor/types";
+import { stringifyQs } from "@saleor/utils/urls";
 import urlJoin from "url-join";
 
-export const taxSection = "/taxes/";
-export const taxTabSectionUrl = (tab: string) => urlJoin(taxSection, tab);
+export type TaxTab = "channels" | "countries" | "tax-classes";
 
-export const channelsListUrl = (id?: string) =>
-  id ? urlJoin(taxTabSectionUrl("channels"), id) : taxTabSectionUrl("channels");
+export const taxSection = "/taxes/";
+export const taxTabPath = (tab: TaxTab) => urlJoin(taxSection, tab);
+
+export type TaxesUrlDialog = "add-country";
+export type TaxesUrlQueryParams = Dialog<TaxesUrlDialog>;
+
+export const channelsListPath = (id?: string) =>
+  id ? urlJoin(taxTabPath("channels"), id) : taxTabPath("channels");
+
+export const channelsListUrl = (id?: string, params?: TaxesUrlQueryParams) =>
+  channelsListPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
 export const countriesListUrl = (id?: string) =>
-  id
-    ? urlJoin(taxTabSectionUrl("countries"), id)
-    : taxTabSectionUrl("countries");
+  id ? urlJoin(taxTabPath("countries"), id) : taxTabPath("countries");
 
 export const taxClassesListUrl = (id?: string) =>
-  id
-    ? urlJoin(taxTabSectionUrl("tax-classes"), id)
-    : taxTabSectionUrl("tax-classes");
+  id ? urlJoin(taxTabPath("tax-classes"), id) : taxTabPath("tax-classes");
