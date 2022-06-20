@@ -1,3 +1,5 @@
+import { countries } from "@saleor/fixtures";
+import { CountryFragment } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
 import { taxConfigurations } from "@saleor/taxes/fixtures";
 import { storiesOf } from "@storybook/react";
@@ -5,10 +7,22 @@ import React from "react";
 
 import TaxChannelsPage from "./TaxChannelsPage";
 
+const castedCountries = countries.map(
+  ({ code, name }): CountryFragment => ({
+    code,
+    country: name,
+    __typename: "CountryDisplay"
+  })
+);
+
 const props = {
   taxConfigurations,
   selectedConfigurationId: taxConfigurations[0].id,
-  handleTabChange: () => undefined
+  handleTabChange: () => undefined,
+  allCountries: castedCountries,
+  isDialogOpen: false,
+  openDialog: () => undefined,
+  closeDialog: () => undefined
 };
 
 storiesOf("Views / Taxes / Channels view", module)
@@ -16,5 +30,5 @@ storiesOf("Views / Taxes / Channels view", module)
   .add("loading", () => (
     <TaxChannelsPage {...props} taxConfigurations={undefined} />
   ))
-  .add("default", () => <TaxChannelsPage {...props} />);
-// .add("add country", () => <TaxChannelsPage {...props} />); // TODO: add country modal
+  .add("default", () => <TaxChannelsPage {...props} />)
+  .add("add country", () => <TaxChannelsPage {...props} isDialogOpen={true} />);
