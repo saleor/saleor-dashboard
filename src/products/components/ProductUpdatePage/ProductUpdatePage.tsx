@@ -289,7 +289,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
         handlers,
         submit,
         isSaveDisabled,
-        attributeRichTextGetters
+        attributeRichTextGetters,
       }) => {
         const availabilityCommonProps = {
           managePermissions: [PermissionEnum.MANAGE_PRODUCTS],
@@ -297,20 +297,20 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
             hiddenLabel: intl.formatMessage({
               id: "saKXY3",
               defaultMessage: "Not published",
-              description: "product label"
+              description: "product label",
             }),
 
             visibleLabel: intl.formatMessage({
               id: "qJedl0",
               defaultMessage: "Published",
-              description: "product label"
-            })
+              description: "product label",
+            }),
           },
           errors: channelsErrors,
           allChannelsCount,
           disabled,
           onChange: handlers.changeChannels,
-          openModal: openChannelsModal
+          openModal: openChannelsModal,
         };
 
         return (
@@ -447,7 +447,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     helperText={intl.formatMessage({
                       id: "LKoIB1",
                       defaultMessage:
-                        "Add search engine title and description to make this product easier to find"
+                        "Add search engine title and description to make this product easier to find",
                     })}
                   />
                   <CardSpacer />
@@ -488,14 +488,14 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                         hiddenLabel: intl.formatMessage({
                           id: "saKXY3",
                           defaultMessage: "Not published",
-                          description: "product label"
+                          description: "product label",
                         }),
 
                         visibleLabel: intl.formatMessage({
                           id: "qJedl0",
                           defaultMessage: "Published",
-                          description: "product label"
-                        })
+                          description: "product label",
+                        }),
                       }}
                       errors={channelsErrors}
                       channels={data.channelsData}
@@ -529,7 +529,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     assignReferencesAttributeId,
                     data.attributes,
                     referencePages,
-                    referenceProducts
+                    referenceProducts,
                   )}
                   hasMore={handlers.fetchMoreReferences?.hasMore}
                   open={canOpenAssignReferencesAttributeDialog}
@@ -541,7 +541,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     handleAssignReferenceAttribute(
                       attributeValues,
                       data,
-                      handlers
+                      handlers,
                     )
                   }
                 />

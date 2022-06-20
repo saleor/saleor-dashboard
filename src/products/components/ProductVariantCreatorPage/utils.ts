@@ -82,13 +82,13 @@ export const getBasicAttributeValue = (
 };
 
 export function dedupeListings(
-  data: ProductVariantCreateFormData
+  data: ProductVariantCreateFormData,
 ): ProductVariantCreateFormData {
   return {
     ...data,
     variants: data.variants.map(variant => ({
       ...variant,
-      channelListings: uniqBy(variant.channelListings, "channelId")
-    }))
+      channelListings: uniqBy(variant.channelListings, "channelId"),
+    })),
   };
 }

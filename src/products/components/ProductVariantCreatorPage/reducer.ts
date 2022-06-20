@@ -1,7 +1,7 @@
 import {
   AttributeValueFragment,
   ProductVariantBulkCreateInput,
-  StockInput
+  StockInput,
 } from "@saleor/graphql";
 import {
   add,
@@ -37,7 +37,7 @@ export enum ProductVariantCreateReducerActionType {
   deleteVariant,
   reload,
   rebuild,
-  selectValue
+  selectValue,
 }
 export interface ProductVariantCreateReducerAction {
   applyPriceOrStockToAll?: {
@@ -93,7 +93,7 @@ function getVariantId(variant: ProductVariantBulkCreateInput): string {
 
 function merge(
   prev: ProductVariantBulkCreateInput[],
-  update: ProductVariantBulkCreateInput[]
+  update: ProductVariantBulkCreateInput[],
 ): ProductVariantBulkCreateInput[] {
   const prevIds = prev.map(getVariantId);
   const updateIds = update.map(getVariantId);
@@ -102,24 +102,24 @@ function merge(
       .filter(variant => updateIds.includes(getVariantId(variant)))
       .map(variant => {
         const updatedVariant = update.find(
-          v => getVariantId(v) === getVariantId(variant)
+          v => getVariantId(v) === getVariantId(variant),
         );
 
         return {
           ...updatedVariant,
-          sku: variant.sku
+          sku: variant.sku,
         };
       }),
-    ...update.filter(variant => !prevIds.includes(getVariantId(variant)))
+    ...update.filter(variant => !prevIds.includes(getVariantId(variant))),
   ];
 }
 
 function rebuild(
-  state: ProductVariantCreateFormData
+  state: ProductVariantCreateFormData,
 ): ProductVariantCreateFormData {
   return {
     ...state,
-    variants: merge(state.variants, createVariants(state))
+    variants: merge(state.variants, createVariants(state)),
   };
 }
 

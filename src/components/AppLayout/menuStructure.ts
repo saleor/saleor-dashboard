@@ -71,15 +71,15 @@ function useMenuStructure(
           {
             label: intl.formatMessage(sectionNames.apps),
             id: "apps",
-            url: appsListPath
+            url: appsListPath,
           },
           {
             ariaLabel: "marketplace",
             label: intl.formatMessage(sectionNames.marketplace),
             id: "marketplace",
-            url: marketplaceUrl
-          }
-        ]
+            url: marketplaceUrl,
+          },
+        ],
       };
     }
 
@@ -89,7 +89,7 @@ function useMenuStructure(
       label: intl.formatMessage(sectionNames.apps),
       permissions: [PermissionEnum.MANAGE_APPS],
       id: "apps",
-      url: appsListPath
+      url: appsListPath,
     };
   };
 

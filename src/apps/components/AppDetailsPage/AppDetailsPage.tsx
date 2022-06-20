@@ -152,7 +152,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
             title={intl.formatMessage({
               id: "a55zOn",
               defaultMessage: "Data privacy",
-              description: "section header"
+              description: "section header",
             })}
           />
           <CardContent>

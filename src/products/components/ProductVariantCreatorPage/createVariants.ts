@@ -160,9 +160,9 @@ export function createVariantFlatMatrixDimension(
   if (attributes.length > 0) {
     return createVariantFlatMatrixDimension(
       variants.flatMap(variant =>
-        addAttributeToVariant(attributes[0], variant)
+        addAttributeToVariant(attributes[0], variant),
       ),
-      attributes.slice(1)
+      attributes.slice(1),
     );
   } else {
     return variants;
