@@ -16,10 +16,11 @@ import { taxesMessages } from "@saleor/taxes/messages";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { TaxConfigurationFormData } from "../TaxChannelsPage";
 import { useStyles } from "./styles";
 
 export interface TaxSettingsCardProps {
-  values: TaxConfigurationUpdateInput;
+  values: TaxConfigurationFormData;
   onChange: FormChange;
 }
 

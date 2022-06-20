@@ -8,9 +8,10 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import {
+  CountryCode,
   CountryFragment,
   TaxConfigurationFragment,
-  TaxConfigurationUpdateInput
+  TaxConfigurationPerCountryFragment
 } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import {
@@ -22,6 +23,7 @@ import {
   PageTab,
   PageTabs
 } from "@saleor/macaw-ui";
+import { WithOptional } from "@saleor/misc";
 import TaxCountryDialog from "@saleor/taxes/components/TaxCountryDialog";
 import { taxesMessages } from "@saleor/taxes/messages";
 import React from "react";
@@ -41,6 +43,16 @@ interface TaxChannelsPageProps {
   closeDialog: () => void;
 }
 
+export interface TaxConfigurationFormData {
+  chargeTaxes: boolean;
+  displayGrossPrices: boolean;
+  pricesEnteredWithTax: boolean;
+  updateCountriesConfiguration: Array<
+    WithOptional<TaxConfigurationPerCountryFragment, "__typename">
+  >;
+  removeCountriesConfiguration: CountryCode[];
+}
+
 export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
   const {
     taxConfigurations,
@@ -58,7 +70,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
     taxConfigurations => taxConfigurations.id === selectedConfigurationId
   );
 
-  const initialForm: TaxConfigurationUpdateInput = {
+  const initialForm: TaxConfigurationFormData = {
     chargeTaxes: currentTaxConfiguration?.chargeTaxes ?? false,
     displayGrossPrices: currentTaxConfiguration?.displayGrossPrices ?? false,
     pricesEnteredWithTax:
@@ -69,100 +81,135 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
 
   return (
     <Form initial={initialForm} onSubmit={() => null}>
-      {({ data, change, submit }) => (
-        <Container>
-          <PageHeader title={intl.formatMessage(sectionNames.taxes)} />
-          <PageTabs value="channels" onChange={handleTabChange}>
-            <PageTab
-              label={intl.formatMessage(taxesMessages.channelsSection)}
-              value="channels"
-            />
-            <PageTab
-              label={intl.formatMessage(taxesMessages.countriesSection)}
-              value="countries"
-            />
-            <PageTab
-              label={intl.formatMessage(taxesMessages.taxClassesSection)}
-              value="tax-classes"
-            />
-          </PageTabs>
-          <VerticalSpacer spacing={2} />
-          <Grid variant="inverted">
-            <TaxChannelsMenu
-              configurations={taxConfigurations}
-              selectedConfigurationId={selectedConfigurationId}
-            />
-            <div>
-              <TaxSettingsCard values={data} onChange={change} />
-              <VerticalSpacer spacing={3} />
-              <Card>
-                <CardTitle
-                  title={intl.formatMessage(taxesMessages.countryExceptions)}
-                  toolbar={
-                    <Button
-                      variant="secondary"
-                      onClick={() => openDialog("add-country")}
-                    >
-                      <FormattedMessage {...taxesMessages.addCountryLabel} />
-                    </Button>
-                  }
-                />
-                {currentTaxConfiguration?.countries.length === 0 ? (
-                  <CardContent>
-                    <FormattedMessage
-                      {...taxesMessages.noExceptionsForChannel}
-                    />
-                  </CardContent>
-                ) : (
-                  <List gridTemplate={["4fr 3fr 3fr 1fr"]}>
-                    <ListHeader>
-                      <ListItem>
-                        <ListItemCell>
-                          <FormattedMessage
-                            {...taxesMessages.countryNameHeader}
-                          />
-                        </ListItemCell>
-                        <ListItemCell>
-                          <FormattedMessage
-                            {...taxesMessages.chargeTaxesHeader}
-                          />
-                        </ListItemCell>
-                        <ListItemCell>
-                          <FormattedMessage
-                            {...taxesMessages.showGrossHeader}
-                          />
-                        </ListItemCell>
-                      </ListItem>
-                    </ListHeader>
-                    {currentTaxConfiguration?.countries.map(country => (
-                      <TaxCountryExceptionListItem
-                        country={country.country}
-                        key={country.country.code}
+      {({ data, change, submit, set }) => {
+        const countryExceptions = currentTaxConfiguration
+          ? [
+              ...currentTaxConfiguration.countries,
+              ...data.updateCountriesConfiguration
+            ]
+          : undefined;
+        return (
+          <Container>
+            <PageHeader title={intl.formatMessage(sectionNames.taxes)} />
+            <PageTabs value="channels" onChange={handleTabChange}>
+              <PageTab
+                label={intl.formatMessage(taxesMessages.channelsSection)}
+                value="channels"
+              />
+              <PageTab
+                label={intl.formatMessage(taxesMessages.countriesSection)}
+                value="countries"
+              />
+              <PageTab
+                label={intl.formatMessage(taxesMessages.taxClassesSection)}
+                value="tax-classes"
+              />
+            </PageTabs>
+            <VerticalSpacer spacing={2} />
+            <Grid variant="inverted">
+              <TaxChannelsMenu
+                configurations={taxConfigurations}
+                selectedConfigurationId={selectedConfigurationId}
+              />
+              <div>
+                <TaxSettingsCard values={data} onChange={change} />
+                <VerticalSpacer spacing={3} />
+                <Card>
+                  <CardTitle
+                    title={intl.formatMessage(taxesMessages.countryExceptions)}
+                    toolbar={
+                      <Button
+                        variant="secondary"
+                        onClick={() => openDialog("add-country")}
+                      >
+                        <FormattedMessage {...taxesMessages.addCountryLabel} />
+                      </Button>
+                    }
+                  />
+                  {countryExceptions?.length === 0 ? (
+                    <CardContent>
+                      <FormattedMessage
+                        {...taxesMessages.noExceptionsForChannel}
                       />
-                    )) ?? <Skeleton />}
-                  </List>
-                )}
-                <VerticalSpacer />
-              </Card>
-            </div>
-          </Grid>
-          <Savebar
-            state={"default"}
-            disabled={false}
-            onSubmit={submit}
-            onCancel={() => null}
-          />
-          {allCountries && (
-            <TaxCountryDialog
-              open={isDialogOpen}
-              countries={allCountries}
-              // eslint-disable-next-line no-console
-              onConfirm={countries => console.log(countries)}
-              onClose={closeDialog}
+                    </CardContent>
+                  ) : (
+                    <List gridTemplate={["4fr 3fr 3fr 1fr"]}>
+                      <ListHeader>
+                        <ListItem>
+                          <ListItemCell>
+                            <FormattedMessage
+                              {...taxesMessages.countryNameHeader}
+                            />
+                          </ListItemCell>
+                          <ListItemCell>
+                            <FormattedMessage
+                              {...taxesMessages.chargeTaxesHeader}
+                            />
+                          </ListItemCell>
+                          <ListItemCell>
+                            <FormattedMessage
+                              {...taxesMessages.showGrossHeader}
+                            />
+                          </ListItemCell>
+                        </ListItem>
+                      </ListHeader>
+                      {countryExceptions?.map(country => (
+                        <TaxCountryExceptionListItem
+                          country={country.country}
+                          key={country.country.code}
+                          onDelete={() => {
+                            const currentRemovals =
+                              data.removeCountriesConfiguration;
+                            set({
+                              removeCountriesConfiguration: [
+                                ...currentRemovals,
+                                country.country.code as CountryCode
+                              ]
+                            });
+                          }}
+                        />
+                      )) ?? <Skeleton />}
+                    </List>
+                  )}
+                  <VerticalSpacer />
+                </Card>
+              </div>
+            </Grid>
+            <Savebar
+              state={"default"}
+              disabled={false}
+              onSubmit={submit}
+              onCancel={() => null}
             />
-          )}
-        </Container>
-      )}
+            {allCountries && (
+              <TaxCountryDialog
+                open={isDialogOpen}
+                countries={allCountries.filter(
+                  ({ code }) =>
+                    !countryExceptions?.some(
+                      ({ country }) => country.code === code
+                    )
+                )}
+                onConfirm={countries => {
+                  const input = countries.map(country => ({
+                    country,
+                    chargeTaxes: data.chargeTaxes,
+                    displayGrossPrices: data.displayGrossPrices
+                  }));
+                  const currentExceptions = data.updateCountriesConfiguration;
+                  set({
+                    updateCountriesConfiguration: [
+                      ...currentExceptions,
+                      ...input
+                    ]
+                  });
+                }}
+                onClose={closeDialog}
+              />
+            )}
+          </Container>
+        );
+      }}
     </Form>
   );
 };

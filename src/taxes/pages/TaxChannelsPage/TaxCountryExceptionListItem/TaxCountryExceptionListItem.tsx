@@ -10,10 +10,12 @@ import React from "react";
 
 interface TaxCountryExceptionListItemProps {
   country: TaxConfigurationPerCountryFragment["country"] | undefined;
+  onDelete: () => void;
 }
 
 export const TaxCountryExceptionListItem: React.FC<TaxCountryExceptionListItemProps> = ({
-  country
+  country,
+  onDelete
 }) => (
   <ListItem hover={false}>
     <ListItemCell>{country.country}</ListItemCell>
@@ -24,7 +26,7 @@ export const TaxCountryExceptionListItem: React.FC<TaxCountryExceptionListItemPr
       <Checkbox />
     </ListItemCell>
     <ListItemCell>
-      <IconButton variant="secondary">
+      <IconButton onClick={onDelete} variant="secondary">
         <DeleteIcon />
       </IconButton>
     </ListItemCell>

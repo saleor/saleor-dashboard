@@ -38,8 +38,15 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
   const classes = useStyles();
   const intl = useIntl();
 
-  const [countriesWithState, setCountriesWithState] = React.useState(
-    countries.map(country => ({ checked: false, ...country }))
+  const [countriesWithState, setCountriesWithState] = React.useState<
+    CountryFragmentWithState[]
+  >([]);
+  React.useEffect(
+    () =>
+      setCountriesWithState(
+        countries.map(country => ({ checked: false, ...country }))
+      ),
+    [countries]
   );
   const handleChange = React.useCallback(
     (e: ChangeEvent) => {
@@ -48,16 +55,22 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
         e.target.value;
       setCountriesWithState(countriesUpdate);
     },
-    [setCountriesWithState]
+    [countries, setCountriesWithState]
   );
+
+  const handleClose = () => {
+    onClose();
+    setCountriesWithState([]);
+    setQuery("");
+  };
 
   const { query, setQuery, searchResult: filteredCountries } = useLocalSearch<
     CountryFragmentWithState
   >(countriesWithState, country => country.country);
 
   return (
-    <Dialog open={open} fullWidth onClose={onClose}>
-      <DialogHeader onClose={onClose}>
+    <Dialog open={open} fullWidth onClose={handleClose}>
+      <DialogHeader onClose={handleClose}>
         <FormattedMessage {...taxesMessages.chooseCountries} />
       </DialogHeader>
       <DialogContent className={classes.wrapper}>
@@ -91,9 +104,10 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
       <DialogActions>
         <Button
           variant="primary"
-          onClick={() =>
-            onConfirm(countriesWithState.filter(country => country.checked))
-          }
+          onClick={() => {
+            onConfirm(countriesWithState.filter(country => country.checked));
+            handleClose();
+          }}
         >
           <FormattedMessage {...buttonMessages.select} />
         </Button>
