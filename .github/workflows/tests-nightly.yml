@@ -31,6 +31,9 @@ on:
   schedule:
     - cron: '00 2 * * 1-5'
 
+  repository_dispatch:
+    types: [automation-tests-event]
+
 jobs:
 
   revert-automation-env-to-snap:
@@ -116,7 +119,7 @@ jobs:
           node-version: 14
 
       - name: Cypress run
-        if: ${{ github.event.inputs.tests != 'Critical' }}
+        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name=! 'repository_dispatch'}}
         uses: cypress-io/github-action@v4
         env:
           API_URI: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
@@ -134,8 +137,8 @@ jobs:
           group: 'UI - Chrome'
           command: npx cypress run --record --env tags=all --parallel --tag ${{ steps.get-env-uri.outputs.ENV_URI }}, All_Tests
 
-      - name: Cypress run
-        if: ${{ github.event.inputs.tests == 'Critical' }}
+      - name: Cypress run - Critical
+        if: ${{ github.event.inputs.tests == 'Critical' && github.event_name=! 'repository_dispatch'}}
         uses: cypress-io/github-action@v4
         env:
           API_URI: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
@@ -152,6 +155,25 @@ jobs:
           parallel: true
           group: 'UI - Chrome'
           command: npx cypress run --record --env tags=critical --spec cypress/e2e/navigation.js,cypress/e2e/products/createProduct.js,cypress/e2e/products/productsVariants.js  --parallel --tag ${{ steps.get-env-uri.outputs.ENV_URI }}, Critical
+
+      - name: Cypress run - automatically
+        if: ${{ github.event_name == 'repository_dispatch'}}
+        uses: cypress-io/github-action@v4
+        env:
+          API_URI: ${{ github.event.client_payload.environment }}graphql/
+          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
+          CYPRESS_baseUrl: ${{ github.event.client_payload.environment }}dashboard/
+          CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
+          CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
+          CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
+          CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMMIT_INFO_MESSAGE: Critical triggered via release - ${{github.event.client_payload.project}} ${{github.event.client_payload.version}}, ${{github.event.client_payload.pullRequestUrl}}
+        with:
+          parallel: true
+          group: 'UI - Chrome'
+          command: npx cypress run --record --env tags=critical --spec cypress/e2e/navigation.js,cypress/e2e/products/createProduct.js,cypress/e2e/products/productsVariants.js  --parallel --tag ${{github.event.client_payload.environment}}, Critical
 
 
 
