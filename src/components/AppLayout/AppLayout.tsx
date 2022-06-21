@@ -12,6 +12,7 @@ import {
   useTheme,
 } from "@saleor/macaw-ui";
 import { isDarkTheme } from "@saleor/misc";
+import classNames from "classnames";
 import React from "react";
 import { useIntl } from "react-intl";
 import useRouter from "use-react-router";
@@ -99,6 +100,8 @@ const useStyles = makeStyles(
 
     view: {
       marginLeft: 0,
+    },
+    viewMargins: {
       paddingBottom: theme.spacing(),
       [theme.breakpoints.up("sm")]: {
         paddingBottom: theme.spacing(3),
@@ -117,10 +120,14 @@ const useStyles = makeStyles(
 
 interface AppLayoutProps {
   children: React.ReactNode;
+  fullSize?: boolean;
 }
 
-const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
-  const classes = useStyles({});
+const AppLayout: React.FC<AppLayoutProps> = ({
+  children,
+  fullSize = false,
+}) => {
+  const classes = useStyles({ fullSize });
   const { themeType, setTheme } = useTheme();
   const { anchor: appActionAnchor } = useActionBar();
   const appHeaderAnchor = useBacklink();
@@ -222,7 +229,11 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                 </div>
               </Container>
             </div>
-            <main className={classes.view}>
+            <main
+              className={classNames(classes.view, {
+                [classes.viewMargins]: !fullSize,
+              })}
+            >
               {appState.error
                 ? appState.error.type === "unhandled" && (
                     <ErrorPage

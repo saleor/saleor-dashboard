@@ -46,6 +46,7 @@ import GiftCardSection from "./giftCards";
 import { giftCardsSectionUrlName } from "./giftCards/urls";
 import { apolloClient, saleorClient } from "./graphql/client";
 import HomePage from "./home";
+import { useLocationState } from "./hooks/useLocationState";
 import { commonMessages } from "./intl";
 import MarketplaceSection from "./marketplace";
 import { marketplaceUrl } from "./marketplace/urls";
@@ -121,12 +122,14 @@ const Routes: React.FC = () => {
 
   const homePageLoading = (authenticated && !channelLoaded) || authenticating;
 
+  const { isAppPath } = useLocationState();
+
   return (
     <>
       <WindowTitle title={intl.formatMessage(commonMessages.dashboard)} />
       {DEMO_MODE && <DemoBanner />}
       {homePageLoaded ? (
-        <AppLayout>
+        <AppLayout fullSize={isAppPath}>
           <ErrorBoundary
             onError={e => {
               const errorId = errorTracker.captureException(e);
