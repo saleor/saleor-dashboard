@@ -6,8 +6,8 @@ export const useStyles = makeStyles(
       display: "flex",
       flexDirection: "column",
       alignItems: "flex-end",
-      justifyContent: "flex-end"
-    }
+      justifyContent: "flex-end",
+    },
   }),
-  { name: "OrderPriceLabel" }
+  { name: "OrderPriceLabel" },
 );

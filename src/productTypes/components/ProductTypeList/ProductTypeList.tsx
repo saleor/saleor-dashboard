@@ -3,7 +3,7 @@ import {
   TableCell,
   TableFooter,
   TableRow,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -16,7 +16,7 @@ import { ProductTypeFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import {
   ProductTypeListUrlSortField,
-  productTypeUrl
+  productTypeUrl,
 } from "@saleor/productTypes/urls";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
@@ -30,22 +30,22 @@ const useStyles = makeStyles(
     [theme.breakpoints.up("lg")]: {
       colName: {},
       colTax: {
-        width: 300
+        width: 300,
       },
       colType: {
-        width: 300
-      }
+        width: 300,
+      },
     },
     colName: {
-      paddingLeft: 0
+      paddingLeft: 0,
     },
     colTax: {},
     colType: {},
     link: {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   }),
-  { name: "ProductTypeList" }
+  { name: "ProductTypeList" },
 );
 
 interface ProductTypeListProps
@@ -67,7 +67,7 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
     sort,
     toggle,
     toggleAll,
-    toolbar
+    toolbar,
   } = props;
   const classes = useStyles(props);
 
@@ -158,12 +158,12 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
                           ? intl.formatMessage({
                               id: "X90t9n",
                               defaultMessage: "Configurable",
-                              description: "product type"
+                              description: "product type",
                             })
                           : intl.formatMessage({
                               id: "yNb+dT",
                               defaultMessage: "Simple product",
-                              description: "product type"
+                              description: "product type",
                             })}
                       </Typography>
                     </>
@@ -213,7 +213,7 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
                 />
               </TableCell>
             </TableRow>
-          )
+          ),
         )}
       </TableBody>
     </ResponsiveTable>

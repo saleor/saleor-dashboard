@@ -30,7 +30,7 @@ export const getDropdownColor = (channels: CollectionChannels[]) => {
 };
 
 export const getChannelAvailabilityColor = (
-  channelData: CollectionChannels
+  channelData: CollectionChannels,
 ): PillColor => {
   if (isActive(channelData)) {
     return "success";
@@ -42,7 +42,7 @@ export const getChannelAvailabilityColor = (
 };
 
 export const getChannelAvailabilityLabel = (
-  channelData: CollectionChannels
+  channelData: CollectionChannels,
 ): MessageDescriptor => {
   if (isActive(channelData)) {
     return channelStatusMessages.published;
@@ -57,5 +57,5 @@ export const mapChannelsToPills = (channelData: CollectionChannels[]): Pill[] =>
   channelData.map(channel => ({
     channel: channel.channel,
     color: getChannelAvailabilityColor(channel),
-    label: getChannelAvailabilityLabel(channel)
+    label: getChannelAvailabilityLabel(channel),
   }));

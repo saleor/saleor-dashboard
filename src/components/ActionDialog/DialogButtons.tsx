@@ -28,7 +28,7 @@ const DialogButtons: React.FC<DialogButtonsProps> = props => {
     onConfirm,
     onClose,
     children,
-    showBackButton = true
+    showBackButton = true,
   } = props;
 
   const intl = useIntl();
@@ -57,7 +57,7 @@ const DialogButtons: React.FC<DialogButtonsProps> = props => {
 
 DialogButtons.defaultProps = {
   confirmButtonState: "default",
-  variant: "default"
+  variant: "default",
 };
 
 export default DialogButtons;

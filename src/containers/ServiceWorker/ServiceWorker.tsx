@@ -18,10 +18,10 @@ const ServiceWorker: React.FC = () => {
         text: formatMessage(messages.newVersionContent),
         actionBtn: {
           label: formatMessage(messages.refresh),
-          action: update
+          action: update,
         },
         autohide: null,
-        status: "warning"
+        status: "warning",
       });
     }
   }, [updateAvailable]);

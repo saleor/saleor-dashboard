@@ -4,20 +4,20 @@ import {
   FieldType,
   FilterElement,
   InvalidFilters,
-  ValidationErrorCode
+  ValidationErrorCode,
 } from "./types";
 
 export const getByName = (nameToCompare: string) => (obj: { name: string }) =>
   obj.name === nameToCompare;
 
 export const isAutocompleteFilterFieldValid = function<T extends string>({
-  value
+  value,
 }: FilterElement<T>) {
   return !!compact(value).length;
 };
 
 export const isNumberFilterFieldValid = function<T extends string>({
-  value
+  value,
 }: FilterElement<T>) {
   const [min, max] = value;
 
@@ -29,7 +29,7 @@ export const isNumberFilterFieldValid = function<T extends string>({
 };
 
 export const isFilterFieldValid = function<T extends string>(
-  filter: FilterElement<T>
+  filter: FilterElement<T>,
 ) {
   const { type } = filter;
 
@@ -48,7 +48,7 @@ export const isFilterFieldValid = function<T extends string>(
 };
 
 export const isFilterValid = function<T extends string>(
-  filter: FilterElement<T>
+  filter: FilterElement<T>,
 ) {
   const { required, active } = filter;
 
@@ -61,7 +61,7 @@ export const isFilterValid = function<T extends string>(
 
 export const extractInvalidFilters = function<T extends string>(
   filtersData: Array<FilterElement<T>>,
-  filtersDataStructure: Array<FilterElement<T>>
+  filtersDataStructure: Array<FilterElement<T>>,
 ): InvalidFilters<T> {
   return filtersDataStructure.reduce(
     (invalidFilters, { name, multipleFields, dependencies }) => {
@@ -112,9 +112,9 @@ export const extractInvalidFilters = function<T extends string>(
 
       return {
         ...invalidFilters,
-        [name]: errors
+        [name]: errors,
       };
     },
-    {} as InvalidFilters<T>
+    {} as InvalidFilters<T>,
   );
 };

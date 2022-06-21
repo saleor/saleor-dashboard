@@ -12,24 +12,24 @@ interface ProductKindChoice {
 export const getAvailableProductKinds = (): ProductKindChoice[] =>
   Object.keys(ProductTypeKindEnum).map(kind => ({
     label: kind,
-    value: kind as ProductTypeKindEnum
+    value: kind as ProductTypeKindEnum,
   }));
 
 export const getProductKindOpts = (
   availableProducts: ProductKindChoice[],
-  intl: IntlShape
+  intl: IntlShape,
 ): ProductKindChoice[] =>
   availableProducts.map(kind => {
     switch (kind.value) {
       case ProductTypeKindEnum.GIFT_CARD:
         return {
           ...kind,
-          label: intl.formatMessage(messages.giftCardLabel)
+          label: intl.formatMessage(messages.giftCardLabel),
         };
       case ProductTypeKindEnum.NORMAL:
         return {
           ...kind,
-          label: intl.formatMessage(messages.normalLabel)
+          label: intl.formatMessage(messages.normalLabel),
         };
     }
   });

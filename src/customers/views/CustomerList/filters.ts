@@ -1,7 +1,7 @@
 import { FilterElement } from "@saleor/components/Filter";
 import {
   CustomerFilterKeys,
-  CustomerListFilterOpts
+  CustomerListFilterOpts,
 } from "@saleor/customers/components/CustomerListPage";
 import { CustomerFilterInput } from "@saleor/graphql";
 import { maybe } from "@saleor/misc";
@@ -10,67 +10,67 @@ import {
   createFilterTabUtils,
   createFilterUtils,
   getGteLteVariables,
-  getMinMaxQueryParam
+  getMinMaxQueryParam,
 } from "../../../utils/filters";
 import {
   CustomerListUrlFilters,
   CustomerListUrlFiltersEnum,
-  CustomerListUrlQueryParams
+  CustomerListUrlQueryParams,
 } from "../../urls";
 
 export const CUSTOMER_FILTERS_KEY = "customerFilters";
 
 export function getFilterOpts(
-  params: CustomerListUrlFilters
+  params: CustomerListUrlFilters,
 ): CustomerListFilterOpts {
   return {
     joined: {
       active: maybe(
         () =>
           [params.joinedFrom, params.joinedTo].some(
-            field => field !== undefined
+            field => field !== undefined,
           ),
-        false
+        false,
       ),
       value: {
         max: maybe(() => params.joinedTo, ""),
-        min: maybe(() => params.joinedFrom, "")
-      }
+        min: maybe(() => params.joinedFrom, ""),
+      },
     },
     numberOfOrders: {
       active: maybe(
         () =>
           [params.numberOfOrdersFrom, params.numberOfOrdersTo].some(
-            field => field !== undefined
+            field => field !== undefined,
           ),
-        false
+        false,
       ),
       value: {
         max: maybe(() => params.numberOfOrdersTo, ""),
-        min: maybe(() => params.numberOfOrdersFrom, "")
-      }
-    }
+        min: maybe(() => params.numberOfOrdersFrom, ""),
+      },
+    },
   };
 }
 
 export function getFilterVariables(
-  params: CustomerListUrlFilters
+  params: CustomerListUrlFilters,
 ): CustomerFilterInput {
   return {
     dateJoined: getGteLteVariables({
       gte: params.joinedFrom,
-      lte: params.joinedTo
+      lte: params.joinedTo,
     }),
     numberOfOrders: getGteLteVariables({
       gte: parseInt(params.numberOfOrdersFrom, 10),
-      lte: parseInt(params.numberOfOrdersTo, 10)
+      lte: parseInt(params.numberOfOrdersTo, 10),
     }),
-    search: params.query
+    search: params.query,
   };
 }
 
 export function getFilterQueryParam(
-  filter: FilterElement<CustomerFilterKeys>
+  filter: FilterElement<CustomerFilterKeys>,
 ): CustomerListUrlFilters {
   const { name } = filter;
 
@@ -79,14 +79,14 @@ export function getFilterQueryParam(
       return getMinMaxQueryParam(
         filter,
         CustomerListUrlFiltersEnum.joinedFrom,
-        CustomerListUrlFiltersEnum.joinedTo
+        CustomerListUrlFiltersEnum.joinedTo,
       );
 
     case CustomerFilterKeys.numberOfOrders:
       return getMinMaxQueryParam(
         filter,
         CustomerListUrlFiltersEnum.numberOfOrdersFrom,
-        CustomerListUrlFiltersEnum.numberOfOrdersTo
+        CustomerListUrlFiltersEnum.numberOfOrdersTo,
       );
   }
 }
@@ -94,13 +94,13 @@ export function getFilterQueryParam(
 export const {
   deleteFilterTab,
   getFilterTabs,
-  saveFilterTab
+  saveFilterTab,
 } = createFilterTabUtils<CustomerListUrlFilters>(CUSTOMER_FILTERS_KEY);
 
 export const {
   areFiltersApplied,
   getActiveFilters,
-  getFiltersCurrentTab
+  getFiltersCurrentTab,
 } = createFilterUtils<CustomerListUrlQueryParams, CustomerListUrlFilters>(
-  CustomerListUrlFiltersEnum
+  CustomerListUrlFiltersEnum,
 );

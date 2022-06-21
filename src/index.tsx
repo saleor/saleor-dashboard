@@ -26,7 +26,7 @@ import { channelsSection } from "./channels/urls";
 import CollectionSection from "./collections";
 import AppLayout from "./components/AppLayout";
 import useAppChannel, {
-  AppChannelProvider
+  AppChannelProvider,
 } from "./components/AppLayout/AppChannelContext";
 import { DateProvider } from "./components/Date";
 import ExitFormDialogProvider from "./components/Form/ExitFormDialogProvider";
@@ -134,9 +134,9 @@ const Routes: React.FC = () => {
               dispatchAppState({
                 payload: {
                   error: "unhandled",
-                  errorId
+                  errorId,
                 },
-                type: "displayError"
+                type: "displayError",
               });
             }}
           >
@@ -175,7 +175,7 @@ const Routes: React.FC = () => {
               <SectionRoute
                 permissions={[
                   PermissionEnum.MANAGE_PAGES,
-                  PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES
+                  PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
                 ]}
                 path="/page-types"
                 component={PageTypesSection}
@@ -198,7 +198,7 @@ const Routes: React.FC = () => {
               />
               <SectionRoute
                 permissions={[
-                  PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES
+                  PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
                 ]}
                 path="/product-types"
                 component={ProductTypesSection}
@@ -241,7 +241,7 @@ const Routes: React.FC = () => {
               <SectionRoute
                 permissions={[
                   PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
-                  PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES
+                  PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
                 ]}
                 path={attributeSection}
                 component={AttributeSection}

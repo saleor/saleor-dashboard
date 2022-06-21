@@ -3,7 +3,7 @@ import {
   TableBody,
   TableCell,
   TableFooter,
-  TableRow
+  TableRow,
 } from "@material-ui/core";
 import { collectionUrl } from "@saleor/collections/urls";
 import { Button } from "@saleor/components/Button";
@@ -44,7 +44,7 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
     selected,
     toggle,
     toggleAll,
-    toolbar
+    toolbar,
   } = props;
   const classes = useStyles(props);
 
@@ -116,13 +116,13 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
                   <TableCell className={classes.colName}>
                     {maybe<React.ReactNode>(
                       () => collection.name,
-                      <Skeleton />
+                      <Skeleton />,
                     )}
                   </TableCell>
                   <TableCell className={classes.colProducts}>
                     {maybe<React.ReactNode>(
                       () => collection.products.totalCount,
-                      <Skeleton />
+                      <Skeleton />,
                     )}
                   </TableCell>
                   <TableCell className={classes.colActions}>
@@ -148,7 +148,7 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
                   <FormattedMessage {...messages.discountCollectionsNotFound} />
                 </TableCell>
               </TableRow>
-            )
+            ),
           )}
         </TableBody>
       </ResponsiveTable>

@@ -3,7 +3,7 @@ import {
   CardContent,
   TableCell,
   TextField,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { TextFieldProps } from "@material-ui/core/TextField";
 import useForm from "@saleor/hooks/useForm";
@@ -14,10 +14,10 @@ import React from "react";
 const useStyles = makeStyles(
   theme => ({
     card: {
-      border: `1px solid ${theme.palette.divider}`
+      border: `1px solid ${theme.palette.divider}`,
     },
     container: {
-      position: "relative"
+      position: "relative",
     },
     overlay: {
       cursor: "pointer",
@@ -26,7 +26,7 @@ const useStyles = makeStyles(
       position: "fixed",
       top: 0,
       width: "100vw",
-      zIndex: 1
+      zIndex: 1,
     },
     root: {
       left: 0,
@@ -34,14 +34,14 @@ const useStyles = makeStyles(
       position: "absolute",
       top: 0,
       width: `calc(100% + ${theme.spacing(4)}px)`,
-      zIndex: 2
+      zIndex: 2,
     },
     text: {
       cursor: "pointer",
-      fontSize: "0.8125rem"
-    }
+      fontSize: "0.8125rem",
+    },
   }),
-  { name: "EditableTableCell" }
+  { name: "EditableTableCell" },
 );
 
 interface EditableTableCellProps {
@@ -59,7 +59,7 @@ export const EditableTableCell: React.FC<EditableTableCellProps> = props => {
     defaultValue,
     focused,
     InputProps,
-    value
+    value,
     // onConfirm
   } = props;
   const classes = useStyles(props);
@@ -71,7 +71,7 @@ export const EditableTableCell: React.FC<EditableTableCellProps> = props => {
 
   const [opened, setOpenStatus] = React.useState(focused);
   const { change, data } = useForm(
-    { value } /* commenting out temporarily handleConfirm */
+    { value } /* commenting out temporarily handleConfirm */,
   );
   const enable = () => setOpenStatus(true);
   const disable = () => setOpenStatus(false);

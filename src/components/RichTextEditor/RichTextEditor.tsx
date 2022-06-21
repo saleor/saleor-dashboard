@@ -95,7 +95,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             className={classNames(classes.editor, classes.root, {
               [classes.rootActive]: isFocused,
               [classes.rootDisabled]: disabled,
-              [classes.rootError]: error
+              [classes.rootError]: error,
             })}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}

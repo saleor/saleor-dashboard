@@ -19,7 +19,7 @@ function getOrdersModeActions(
   query: string,
   intl: IntlShape,
   navigate: UseNavigatorResult,
-  order: CheckIfOrderExistsQuery["order"]
+  order: CheckIfOrderExistsQuery["order"],
 ): QuickSearchAction[] {
   const gqlId = getGqlOrderId(query);
 
@@ -28,14 +28,14 @@ function getOrdersModeActions(
       {
         extraInfo: transformOrderStatus(order.status, intl).localized,
         label: intl.formatMessage(messages.goToOrder, {
-          orderNumber: query
+          orderNumber: query,
         }),
         onClick: () => {
           navigate(orderUrl(gqlId));
           return false;
         },
-        type: "action"
-      }
+        type: "action",
+      },
     ];
   }
 

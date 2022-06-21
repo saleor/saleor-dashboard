@@ -1,7 +1,7 @@
 import { FulfillmentStatus, OrderRefundDataQuery } from "@saleor/graphql";
 
 export const orderToRefund = (
-  placeholder: string
+  placeholder: string,
 ): OrderRefundDataQuery["order"] => ({
   __typename: "Order",
   id: "ifgdfuhdfdf",
@@ -11,21 +11,21 @@ export const orderToRefund = (
     gross: {
       __typename: "Money",
       amount: 744.38,
-      currency: "USD"
-    }
+      currency: "USD",
+    },
   },
   totalCaptured: {
     __typename: "Money",
     amount: 644.38,
-    currency: "USD"
+    currency: "USD",
   },
   shippingPrice: {
     __typename: "TaxedMoney",
     gross: {
       __typename: "Money",
       amount: 20,
-      currency: "USD"
-    }
+      currency: "USD",
+    },
   },
   lines: [
     {
@@ -36,16 +36,16 @@ export const orderToRefund = (
       quantityToFulfill: 16,
       thumbnail: {
         __typename: "Image",
-        url: placeholder
+        url: placeholder,
       },
       unitPrice: {
         __typename: "TaxedMoney",
         gross: {
           __typename: "Money",
           amount: 26.02,
-          currency: "USD"
-        }
-      }
+          currency: "USD",
+        },
+      },
     },
     {
       __typename: "OrderLine",
@@ -55,17 +55,17 @@ export const orderToRefund = (
       quantityToFulfill: 8,
       thumbnail: {
         __typename: "Image",
-        url: placeholder
+        url: placeholder,
       },
       unitPrice: {
         __typename: "TaxedMoney",
         gross: {
           __typename: "Money",
           amount: 10,
-          currency: "USD"
-        }
-      }
-    }
+          currency: "USD",
+        },
+      },
+    },
   ],
   fulfillments: [
     {
@@ -85,17 +85,17 @@ export const orderToRefund = (
             quantity: 1,
             thumbnail: {
               __typename: "Image",
-              url: placeholder
+              url: placeholder,
             },
             unitPrice: {
               __typename: "TaxedMoney",
               gross: {
                 __typename: "Money",
                 amount: 26.02,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         {
           __typename: "FulfillmentLine",
@@ -108,19 +108,19 @@ export const orderToRefund = (
             quantity: 1,
             thumbnail: {
               __typename: "Image",
-              url: placeholder
+              url: placeholder,
             },
             unitPrice: {
               __typename: "TaxedMoney",
               gross: {
                 __typename: "Money",
                 amount: 10,
-                currency: "USD"
-              }
-            }
-          }
-        }
-      ]
+                currency: "USD",
+              },
+            },
+          },
+        },
+      ],
     },
     {
       __typename: "Fulfillment",
@@ -139,17 +139,17 @@ export const orderToRefund = (
             quantity: 2,
             thumbnail: {
               __typename: "Image",
-              url: placeholder
+              url: placeholder,
             },
             unitPrice: {
               __typename: "TaxedMoney",
               gross: {
                 __typename: "Money",
                 amount: 26.02,
-                currency: "USD"
-              }
-            }
-          }
+                currency: "USD",
+              },
+            },
+          },
         },
         {
           __typename: "FulfillmentLine",
@@ -162,19 +162,19 @@ export const orderToRefund = (
             quantity: 4,
             thumbnail: {
               __typename: "Image",
-              url: placeholder
+              url: placeholder,
             },
             unitPrice: {
               __typename: "TaxedMoney",
               gross: {
                 __typename: "Money",
                 amount: 10,
-                currency: "USD"
-              }
-            }
-          }
-        }
-      ]
-    }
-  ]
+                currency: "USD",
+              },
+            },
+          },
+        },
+      ],
+    },
+  ],
 });

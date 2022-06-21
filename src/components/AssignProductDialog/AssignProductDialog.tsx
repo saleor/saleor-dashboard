@@ -7,7 +7,7 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  TextField
+  TextField,
 } from "@material-ui/core";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -44,11 +44,11 @@ function handleProductAssign(
   productID: string,
   isSelected: boolean,
   selectedProducts: string[],
-  setSelectedProducts: (data: string[]) => void
+  setSelectedProducts: (data: string[]) => void,
 ) {
   if (isSelected) {
     setSelectedProducts(
-      selectedProducts.filter(selectedProduct => selectedProduct !== productID)
+      selectedProducts.filter(selectedProduct => selectedProduct !== productID),
     );
   } else {
     setSelectedProducts([...selectedProducts, productID]);
@@ -67,7 +67,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
     onClose,
     onFetch,
     onFetchMore,
-    onSubmit
+    onSubmit,
   } = props;
   const classes = useStyles(props);
   const scrollableDialogClasses = useScrollableDialogStyle({});
@@ -99,7 +99,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
           fullWidth
           InputProps={{
             autoComplete: "off",
-            endAdornment: loading && <CircularProgress size={16} />
+            endAdornment: loading && <CircularProgress size={16} />,
           }}
         />
       </DialogContent>
@@ -124,7 +124,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
               {products &&
                 products.map(product => {
                   const isSelected = selectedProducts.some(
-                    selectedProduct => selectedProduct === product.id
+                    selectedProduct => selectedProduct === product.id,
                   );
 
                   return (
@@ -150,7 +150,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
                               product.id,
                               isSelected,
                               selectedProducts,
-                              setSelectedProducts
+                              setSelectedProducts,
                             )
                           }
                         />

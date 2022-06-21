@@ -4,12 +4,12 @@ const useStyles = makeStyles(
   () => ({
     iframe: {
       height: "100vh",
-      position: "sticky"
-    }
+      position: "sticky",
+    },
   }),
   {
-    name: "marketplaceStyles"
-  }
+    name: "marketplaceStyles",
+  },
 );
 
 export { useStyles };

@@ -4,11 +4,11 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import DraftOrderChannelSectionCard, {
-  DraftOrderChannelSectionCardProps
+  DraftOrderChannelSectionCardProps,
 } from ".";
 
 const props: DraftOrderChannelSectionCardProps = {
-  channelName: "Default Channel"
+  channelName: "Default Channel",
 };
 
 storiesOf("Orders / Draft order channel section", module)

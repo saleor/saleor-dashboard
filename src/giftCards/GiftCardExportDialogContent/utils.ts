@@ -8,7 +8,7 @@ interface ExportGiftCardsInputProps {
 
 export const getExportGiftCardsInput = ({
   data,
-  ids
+  ids,
 }: ExportGiftCardsInputProps) => {
   const { scope, fileType } = data;
 
@@ -16,12 +16,12 @@ export const getExportGiftCardsInput = ({
     return {
       fileType,
       scope,
-      ids
+      ids,
     };
   }
 
   return {
     fileType,
-    scope
+    scope,
   };
 };

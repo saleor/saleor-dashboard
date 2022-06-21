@@ -9,7 +9,7 @@ import ChannelsListPage, { ChannelsListPageProps } from "./ChannelsListPage";
 const props: ChannelsListPageProps = {
   channelsList,
   limits,
-  onRemove: () => undefined
+  onRemove: () => undefined,
 };
 
 storiesOf("Views / Channels / Channels list", module)

@@ -11,13 +11,13 @@ import { giftCardCreateMessages as messages } from "./messages";
 const addToCurrentDate = (
   currentDate: number,
   expiryPeriodAmount: number,
-  unit: moment.unitOfTime.DurationConstructor
+  unit: moment.unitOfTime.DurationConstructor,
 ) => moment(currentDate).add(expiryPeriodAmount, unit);
 
 export const getExpiryPeriodTerminationDate = (
   currentDate: number,
   expiryPeriodType: TimePeriodTypeEnum,
-  expiryPeriodAmount: number = 0
+  expiryPeriodAmount: number = 0,
 ): moment.Moment | null => {
   switch (expiryPeriodType) {
     case TimePeriodTypeEnum.DAY:
@@ -35,23 +35,23 @@ export const getExpiryPeriodTerminationDate = (
 
 export const getGiftCardExpiryError = (intl: IntlShape): IMessage => ({
   title: intl.formatMessage(
-    giftCardUpdateFormMessages.giftCardInvalidExpiryDateHeader
+    giftCardUpdateFormMessages.giftCardInvalidExpiryDateHeader,
   ),
   text: intl.formatMessage(
-    giftCardUpdateFormMessages.giftCardInvalidExpiryDateContent
+    giftCardUpdateFormMessages.giftCardInvalidExpiryDateContent,
   ),
-  status: "error"
+  status: "error",
 });
 
 export const getGiftCardCreateOnCompletedMessage = (
   errors: GiftCardCreateMutation["giftCardCreate"]["errors"],
   intl: IntlShape,
-  successMessage?: IMessage
+  successMessage?: IMessage,
 ): IMessage => {
   const hasExpiryError = errors.some(error => error.field === "expiryDate");
   const successGiftCardMessage = successMessage || {
     status: "success",
-    text: intl.formatMessage(messages.createdSuccessAlertTitle)
+    text: intl.formatMessage(messages.createdSuccessAlertTitle),
   };
 
   if (hasExpiryError) {
@@ -61,7 +61,7 @@ export const getGiftCardCreateOnCompletedMessage = (
   return !!errors?.length
     ? {
         status: "error",
-        text: intl.formatMessage(commonErrorMessages.unknownError)
+        text: intl.formatMessage(commonErrorMessages.unknownError),
       }
     : successGiftCardMessage;
 };
@@ -72,9 +72,9 @@ export const getGiftCardExpiryInputData = (
     expiryType,
     expiryDate,
     expiryPeriodAmount,
-    expiryPeriodType
+    expiryPeriodType,
   }: GiftCardCreateCommonFormData,
-  currentDate: number
+  currentDate: number,
 ): string => {
   if (!expirySelected) {
     return;
@@ -84,7 +84,7 @@ export const getGiftCardExpiryInputData = (
     return getExpiryPeriodTerminationDate(
       currentDate,
       expiryPeriodType,
-      expiryPeriodAmount
+      expiryPeriodAmount,
     )?.format("YYYY-MM-DD");
   }
 

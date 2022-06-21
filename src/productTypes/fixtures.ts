@@ -6,7 +6,7 @@ import {
   ProductTypeListQuery,
   ProductTypeQuery,
   SearchProductTypesQuery,
-  WeightUnitsEnum
+  WeightUnitsEnum,
 } from "@saleor/graphql";
 import { RelayToFlat } from "@saleor/types";
 
@@ -28,7 +28,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
           hasNextPage: false,
           hasPreviousPage: false,
           startCursor: "WyIwIiwgIjQ5Il0=",
-          __typename: "PageInfo" as "PageInfo"
+          __typename: "PageInfo" as "PageInfo",
         },
         edges: [
           {
@@ -47,8 +47,8 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
+              dateTime: null,
+            },
           },
           {
             __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -66,12 +66,12 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
-          }
-        ]
-      }
-    }
+              dateTime: null,
+            },
+          },
+        ],
+      },
+    },
   },
   {
     node: {
@@ -90,7 +90,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
           hasNextPage: false,
           hasPreviousPage: false,
           startCursor: "WyIwIiwgIjQ5Il0=",
-          __typename: "PageInfo" as "PageInfo"
+          __typename: "PageInfo" as "PageInfo",
         },
         edges: [
           {
@@ -109,8 +109,8 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
+              dateTime: null,
+            },
           },
           {
             __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -128,8 +128,8 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
+              dateTime: null,
+            },
           },
           {
             __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -147,8 +147,8 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
+              dateTime: null,
+            },
           },
           {
             __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -166,12 +166,12 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
-          }
-        ]
-      }
-    }
+              dateTime: null,
+            },
+          },
+        ],
+      },
+    },
   },
   {
     node: {
@@ -190,7 +190,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
           hasNextPage: false,
           hasPreviousPage: false,
           startCursor: "WyIwIiwgIjQ5Il0=",
-          __typename: "PageInfo" as "PageInfo"
+          __typename: "PageInfo" as "PageInfo",
         },
         edges: [
           {
@@ -209,12 +209,12 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
-          }
-        ]
-      }
-    }
+              dateTime: null,
+            },
+          },
+        ],
+      },
+    },
   },
   {
     node: {
@@ -233,7 +233,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
           hasNextPage: false,
           hasPreviousPage: false,
           startCursor: "WyIwIiwgIjQ5Il0=",
-          __typename: "PageInfo" as "PageInfo"
+          __typename: "PageInfo" as "PageInfo",
         },
         edges: [
           {
@@ -252,8 +252,8 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
+              dateTime: null,
+            },
           },
           {
             __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -271,8 +271,8 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
+              dateTime: null,
+            },
           },
           {
             __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -290,12 +290,12 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
-          }
-        ]
-      }
-    }
+              dateTime: null,
+            },
+          },
+        ],
+      },
+    },
   },
   {
     node: {
@@ -314,7 +314,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
           hasNextPage: false,
           hasPreviousPage: false,
           startCursor: "WyIwIiwgIjQ5Il0=",
-          __typename: "PageInfo" as "PageInfo"
+          __typename: "PageInfo" as "PageInfo",
         },
         edges: [
           {
@@ -333,8 +333,8 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
+              dateTime: null,
+            },
           },
           {
             __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -352,12 +352,12 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
-          }
-        ]
-      }
-    }
+              dateTime: null,
+            },
+          },
+        ],
+      },
+    },
   },
   {
     node: {
@@ -376,7 +376,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
           hasNextPage: false,
           hasPreviousPage: false,
           startCursor: "WyIwIiwgIjQ5Il0=",
-          __typename: "PageInfo" as "PageInfo"
+          __typename: "PageInfo" as "PageInfo",
         },
         edges: [
           {
@@ -395,8 +395,8 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
+              dateTime: null,
+            },
           },
           {
             __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -414,8 +414,8 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
+              dateTime: null,
+            },
           },
           {
             __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -433,12 +433,12 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
-          }
-        ]
-      }
-    }
+              dateTime: null,
+            },
+          },
+        ],
+      },
+    },
   },
   {
     node: {
@@ -457,7 +457,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
           hasNextPage: false,
           hasPreviousPage: false,
           startCursor: "WyIwIiwgIjQ5Il0=",
-          __typename: "PageInfo" as "PageInfo"
+          __typename: "PageInfo" as "PageInfo",
         },
         edges: [
           {
@@ -476,8 +476,8 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
+              dateTime: null,
+            },
           },
           {
             __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -495,12 +495,12 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
-          }
-        ]
-      }
-    }
+              dateTime: null,
+            },
+          },
+        ],
+      },
+    },
   },
   {
     node: {
@@ -519,7 +519,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
           hasNextPage: false,
           hasPreviousPage: false,
           startCursor: "WyIwIiwgIjQ5Il0=",
-          __typename: "PageInfo" as "PageInfo"
+          __typename: "PageInfo" as "PageInfo",
         },
         edges: [
           {
@@ -538,8 +538,8 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
+              dateTime: null,
+            },
           },
           {
             __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -557,8 +557,8 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
+              dateTime: null,
+            },
           },
           {
             __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -576,8 +576,8 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
+              dateTime: null,
+            },
           },
           {
             __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -595,8 +595,8 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
+              dateTime: null,
+            },
           },
           {
             __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -614,8 +614,8 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
+              dateTime: null,
+            },
           },
           {
             __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -633,12 +633,12 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
-          }
-        ]
-      }
-    }
+              dateTime: null,
+            },
+          },
+        ],
+      },
+    },
   },
   {
     node: {
@@ -657,7 +657,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
           hasNextPage: false,
           hasPreviousPage: false,
           startCursor: "WyIwIiwgIjQ5Il0=",
-          __typename: "PageInfo" as "PageInfo"
+          __typename: "PageInfo" as "PageInfo",
         },
         edges: [
           {
@@ -676,8 +676,8 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
+              dateTime: null,
+            },
           },
           {
             __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -695,12 +695,12 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
-          }
-        ]
-      }
-    }
+              dateTime: null,
+            },
+          },
+        ],
+      },
+    },
   },
   {
     node: {
@@ -719,7 +719,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
           hasNextPage: false,
           hasPreviousPage: false,
           startCursor: "WyIwIiwgIjQ5Il0=",
-          __typename: "PageInfo" as "PageInfo"
+          __typename: "PageInfo" as "PageInfo",
         },
         edges: [
           {
@@ -738,8 +738,8 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
+              dateTime: null,
+            },
           },
           {
             __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -757,12 +757,12 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
-          }
-        ]
-      }
-    }
+              dateTime: null,
+            },
+          },
+        ],
+      },
+    },
   },
   {
     node: {
@@ -781,7 +781,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
           hasNextPage: false,
           hasPreviousPage: false,
           startCursor: "WyIwIiwgIjQ5Il0=",
-          __typename: "PageInfo" as "PageInfo"
+          __typename: "PageInfo" as "PageInfo",
         },
         edges: [
           {
@@ -800,8 +800,8 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
+              dateTime: null,
+            },
           },
           {
             __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -819,12 +819,12 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
-          }
-        ]
-      }
-    }
+              dateTime: null,
+            },
+          },
+        ],
+      },
+    },
   },
   {
     node: {
@@ -843,7 +843,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
           hasNextPage: false,
           hasPreviousPage: false,
           startCursor: "WyIwIiwgIjQ5Il0=",
-          __typename: "PageInfo" as "PageInfo"
+          __typename: "PageInfo" as "PageInfo",
         },
         edges: [
           {
@@ -862,8 +862,8 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
+              dateTime: null,
+            },
           },
           {
             __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -881,8 +881,8 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
+              dateTime: null,
+            },
           },
           {
             __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -900,8 +900,8 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
+              dateTime: null,
+            },
           },
           {
             __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -919,8 +919,8 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
+              dateTime: null,
+            },
           },
           {
             __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -938,8 +938,8 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
+              dateTime: null,
+            },
           },
           {
             __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -957,13 +957,13 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
               richText: null,
               boolean: null,
               date: null,
-              dateTime: null
-            }
-          }
-        ]
-      }
-    }
-  }
+              dateTime: null,
+            },
+          },
+        ],
+      },
+    },
+  },
 ].map(edge => edge.node);
 
 export const productTypeSearch: ProductTypeQuery["productType"] = {
@@ -975,8 +975,8 @@ export const productTypeSearch: ProductTypeQuery["productType"] = {
   taxType: {
     __typename: "TaxType" as "TaxType",
     description: "PB100000",
-    taxCode: "Books / Manuals"
-  }
+    taxCode: "Books / Manuals",
+  },
 };
 
 export const productTypes: Array<RelayToFlat<
@@ -994,9 +994,9 @@ export const productTypes: Array<RelayToFlat<
     taxType: {
       __typename: "TaxType" as "TaxType",
       description: "PB100000",
-      taxCode: "Books / Manuals"
+      taxCode: "Books / Manuals",
     },
-    variantAttributes: [attributes[1], attributes[2]]
+    variantAttributes: [attributes[1], attributes[2]],
   },
   {
     __typename: "ProductType" as "ProductType",
@@ -1009,9 +1009,9 @@ export const productTypes: Array<RelayToFlat<
     taxType: {
       __typename: "TaxType" as "TaxType",
       description: "PH403682",
-      taxCode: "Holters"
+      taxCode: "Holters",
     },
-    variantAttributes: [attributes[0], attributes[3]]
+    variantAttributes: [attributes[0], attributes[3]],
   },
   {
     __typename: "ProductType" as "ProductType",
@@ -1024,9 +1024,9 @@ export const productTypes: Array<RelayToFlat<
     taxType: {
       __typename: "TaxType" as "TaxType",
       description: "PC077426",
-      taxCode: "Cabling"
+      taxCode: "Cabling",
     },
-    variantAttributes: [attributes[2], attributes[5]]
+    variantAttributes: [attributes[2], attributes[5]],
   },
   {
     __typename: "ProductType" as "ProductType",
@@ -1039,9 +1039,9 @@ export const productTypes: Array<RelayToFlat<
     taxType: {
       __typename: "TaxType" as "TaxType",
       description: "PB100000",
-      taxCode: "Books / Manuals"
+      taxCode: "Books / Manuals",
     },
-    variantAttributes: [attributes[1], attributes[4]]
+    variantAttributes: [attributes[1], attributes[4]],
   },
   {
     __typename: "ProductType" as "ProductType",
@@ -1054,13 +1054,13 @@ export const productTypes: Array<RelayToFlat<
     taxType: {
       __typename: "TaxType" as "TaxType",
       description: "PH403970",
-      taxCode: "Wheelchair"
+      taxCode: "Wheelchair",
     },
-    variantAttributes: [attributes[1], attributes[6]]
-  }
+    variantAttributes: [attributes[1], attributes[6]],
+  },
 ].map(productType => ({
   __typename: "ProductType" as "ProductType",
-  ...productType
+  ...productType,
 }));
 
 export const productType: ProductTypeDetailsQuery["productType"] = {
@@ -1072,8 +1072,8 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
     {
       __typename: "MetadataItem",
       key: "integration.id",
-      value: "100023123"
-    }
+      value: "100023123",
+    },
   ],
   name: "E-books",
   kind: ProductTypeKindEnum.NORMAL,
@@ -1089,7 +1089,7 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
       type: AttributeTypeEnum.PRODUCT_TYPE,
       inputType: AttributeInputTypeEnum.DROPDOWN,
       visibleInStorefront: true,
-      unit: null
+      unit: null,
     },
     {
       __typename: "Attribute" as "Attribute",
@@ -1101,7 +1101,7 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
       type: AttributeTypeEnum.PRODUCT_TYPE,
       inputType: AttributeInputTypeEnum.DROPDOWN,
       visibleInStorefront: true,
-      unit: null
+      unit: null,
     },
     {
       __typename: "Attribute" as "Attribute",
@@ -1113,13 +1113,13 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
       type: AttributeTypeEnum.PRODUCT_TYPE,
       inputType: AttributeInputTypeEnum.DROPDOWN,
       visibleInStorefront: true,
-      unit: null
-    }
+      unit: null,
+    },
   ],
   taxType: {
     __typename: "TaxType" as "TaxType",
     description: "PH405458",
-    taxCode: "Shields"
+    taxCode: "Shields",
   },
   variantAttributes: [
     {
@@ -1128,7 +1128,7 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
       filterableInStorefront: false,
       type: AttributeTypeEnum.PRODUCT_TYPE,
       visibleInStorefront: true,
-      unit: null
+      unit: null,
     },
     {
       ...attributes[6],
@@ -1136,8 +1136,8 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
       filterableInStorefront: false,
       type: AttributeTypeEnum.PRODUCT_TYPE,
       visibleInStorefront: true,
-      unit: null
-    }
+      unit: null,
+    },
   ],
   assignedVariantAttributes: [
     {
@@ -1152,14 +1152,14 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
         type: AttributeTypeEnum.PRODUCT_TYPE,
         inputType: AttributeInputTypeEnum.DROPDOWN,
         visibleInStorefront: true,
-        unit: null
+        unit: null,
       },
-      variantSelection: true
-    }
+      variantSelection: true,
+    },
   ],
   weight: {
     __typename: "Weight",
     unit: WeightUnitsEnum.KG,
-    value: 7.82
-  }
+    value: 7.82,
+  },
 };

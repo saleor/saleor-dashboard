@@ -6,37 +6,37 @@ import React from "react";
 const useStyles = makeStyles(
   theme => ({
     action: {
-      flex: "0 0 auto"
+      flex: "0 0 auto",
     },
     block: {
       [theme.breakpoints.down("xs")]: {
         "&&": {
-          display: "block"
-        }
-      }
+          display: "block",
+        },
+      },
     },
     underline: {
-      marginBottom: theme.spacing(4)
+      marginBottom: theme.spacing(4),
     },
     grid: {
-      padding: theme.spacing(2)
+      padding: theme.spacing(2),
     },
     menuButton: {
       flex: "0 0 auto",
       marginLeft: theme.spacing(-2),
       marginRight: theme.spacing(3),
-      marginTop: theme.spacing(-2)
+      marginTop: theme.spacing(-2),
     },
     root: {
       alignItems: "center",
       display: "flex",
       marginBottom: theme.spacing(3),
-      wordBreak: "break-all"
+      wordBreak: "break-all",
     },
     subtitle: {
       alignItems: "center",
       display: "flex",
-      marginBottom: theme.spacing(2)
+      marginBottom: theme.spacing(2),
     },
     titleRow: {
       flex: 1,
@@ -45,12 +45,12 @@ const useStyles = makeStyles(
       alignItems: "center",
       justifyContent: "space-between",
       minWidth: 0,
-      textOverflow: "ellipsis"
-    }
+      textOverflow: "ellipsis",
+    },
   }),
   {
-    name: "ExtendedPageHeader"
-  }
+    name: "ExtendedPageHeader",
+  },
 );
 
 interface ExtendedPageHeaderProps {
@@ -71,7 +71,7 @@ const ExtendedPageHeader: React.FC<ExtendedPageHeaderProps> = props => {
     inline,
     underline,
     title,
-    testId
+    testId,
   } = props;
 
   const classes = useStyles(props);
@@ -82,7 +82,7 @@ const ExtendedPageHeader: React.FC<ExtendedPageHeaderProps> = props => {
         data-test-id={testId}
         className={classNames(classes.root, className, {
           [classes.block]: !inline,
-          [classes.underline]: underline
+          [classes.underline]: underline,
         })}
       >
         <div className={classes.titleRow}>{title}</div>

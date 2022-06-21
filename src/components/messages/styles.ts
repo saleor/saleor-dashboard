@@ -12,14 +12,14 @@ export const useStyles = makeStyles(
       width: "auto",
       maxHeight: "100vh",
       overflowY: "auto",
-      zIndex: 10000
+      zIndex: 10000,
     },
     notification: {
       // Parent container has disabled pointer events so we need to turn them on
       // for action and timer pausing to work
       pointerEvents: "all",
-      margin: theme.spacing(2)
-    }
+      margin: theme.spacing(2),
+    },
   }),
-  { name: "MessageManager" }
+  { name: "MessageManager" },
 );

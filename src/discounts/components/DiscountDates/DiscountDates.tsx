@@ -26,7 +26,7 @@ const DiscountDates = ({
   data,
   disabled,
   errors,
-  onChange
+  onChange,
 }: DiscountDatesProps) => {
   const intl = useIntl();
 
@@ -38,7 +38,7 @@ const DiscountDates = ({
         title={intl.formatMessage({
           id: "zKOGkU",
           defaultMessage: "Active Dates",
-          description: "time during discount is active, header"
+          description: "time during discount is active, header",
         })}
       />
       <CardContent>
@@ -53,7 +53,7 @@ const DiscountDates = ({
             value={data.startDate}
             type="date"
             InputLabelProps={{
-              shrink: true
+              shrink: true,
             }}
             fullWidth
           />
@@ -67,7 +67,7 @@ const DiscountDates = ({
             value={data.startTime}
             type="time"
             InputLabelProps={{
-              shrink: true
+              shrink: true,
             }}
             fullWidth
           />
@@ -77,7 +77,7 @@ const DiscountDates = ({
           label={intl.formatMessage({
             id: "AVF5T5",
             defaultMessage: "Set end date",
-            description: "voucher end date, switch button"
+            description: "voucher end date, switch button",
           })}
           name={"hasEndDate" as keyof FormData}
           onChange={onChange}
@@ -94,7 +94,7 @@ const DiscountDates = ({
               value={data.endDate}
               type="date"
               InputLabelProps={{
-                shrink: true
+                shrink: true,
               }}
               fullWidth
             />
@@ -108,7 +108,7 @@ const DiscountDates = ({
               value={data.endTime}
               type="time"
               InputLabelProps={{
-                shrink: true
+                shrink: true,
               }}
               fullWidth
             />

@@ -7,23 +7,23 @@ export const messages = defineMessages({
   header: {
     id: "snUby7",
     defaultMessage: "Unnamed Webhook Details",
-    description: "header"
+    description: "header",
   },
   headerNamed: {
     id: "OPtrMg",
     defaultMessage: "{webhookName} Details",
-    description: "header"
+    description: "header",
   },
   headerCreate: {
     id: "Ryh3iR",
     defaultMessage: "Create Webhook",
-    description: "header"
-  }
+    description: "header",
+  },
 });
 
 export const getHeaderTitle = (
   intl: IntlShape,
-  webhook?: WebhookDetailsQuery["webhook"]
+  webhook?: WebhookDetailsQuery["webhook"],
 ) => {
   if (!webhook) {
     return intl.formatMessage(messages.headerCreate);
@@ -32,6 +32,6 @@ export const getHeaderTitle = (
     return intl.formatMessage(messages.header);
   }
   return intl.formatMessage(messages.headerNamed, {
-    webhookName: getStringOrPlaceholder(webhook?.name)
+    webhookName: getStringOrPlaceholder(webhook?.name),
   });
 };

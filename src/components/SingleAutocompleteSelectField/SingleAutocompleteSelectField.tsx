@@ -2,7 +2,7 @@ import {
   InputBase,
   Popper,
   PopperPlacementType,
-  TextField
+  TextField,
 } from "@material-ui/core";
 import { InputProps } from "@material-ui/core/Input";
 import { ExtendedFormHelperTextProps } from "@saleor/channels/components/ChannelForm/types";
@@ -16,33 +16,33 @@ import React from "react";
 import Debounce, { DebounceProps } from "../Debounce";
 import SingleAutocompleteSelectFieldContent, {
   SingleAutocompleteActionType,
-  SingleAutocompleteChoiceType
+  SingleAutocompleteChoiceType,
 } from "./SingleAutocompleteSelectFieldContent";
 
 const useStyles = makeStyles(
   theme => ({
     container: {
       flexGrow: 1,
-      position: "relative"
+      position: "relative",
     },
     nakedInput: {
-      padding: theme.spacing(2, 0)
+      padding: theme.spacing(2, 0),
     },
     adornment: {
       color: theme.palette.saleor.main[3],
       cursor: "pointer",
       userSelect: "none",
       "& svg": {
-        transition: theme.transitions.duration.shorter + "ms"
-      }
+        transition: theme.transitions.duration.shorter + "ms",
+      },
     },
     adornmentRotate: {
       "& svg": {
-        transform: "rotate(180deg)"
-      }
-    }
+        transform: "rotate(180deg)",
+      },
+    },
   }),
-  { name: "SingleAutocompleteSelectField" }
+  { name: "SingleAutocompleteSelectField" },
 );
 
 export interface SingleAutocompleteSelectFieldProps
@@ -110,8 +110,8 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
     onChange({
       target: {
         name,
-        value: item
-      }
+        value: item,
+      },
     } as any);
   };
 
@@ -142,7 +142,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
             closeMenu,
             highlightedIndex,
             reset,
-            getToggleButtonProps
+            getToggleButtonProps,
           }) => {
             const isCustomValueSelected =
               choices && selectedItem
@@ -150,13 +150,13 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                 : false;
 
             const choiceFromInputValue = choices.find(
-              ({ value: choiceId }) => choiceId === inputValue
+              ({ value: choiceId }) => choiceId === inputValue,
             );
 
             const isValueInValues = !!choiceFromInputValue;
 
             const isValueInLabels = !!choices.find(
-              choice => choice.label === inputValue
+              choice => choice.label === inputValue,
             );
 
             const ensureProperValues = (alwaysCheck: boolean = false) => {
@@ -195,7 +195,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                 <div
                   {...getToggleButtonProps()}
                   className={classNames(classes.adornment, {
-                    [classes.adornmentRotate]: isOpen
+                    [classes.adornmentRotate]: isOpen,
                   })}
                 >
                   <ChevronIcon />
@@ -208,7 +208,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                   fetchChoices(inputValue);
                 }
                 input.current.select();
-              }
+              },
             };
 
             const nakedInputProps = nakedInput
@@ -217,7 +217,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                   ...commonInputProps,
                   autoFocus: true,
                   className: classes.nakedInput,
-                  onBlur: handleBlur
+                  onBlur: handleBlur,
                 }
               : {};
 
@@ -239,8 +239,8 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                           return;
                         }
                         toggleMenu();
-                      }
-                    })
+                      },
+                    }),
                   }}
                   error={error}
                   disabled={disabled}
@@ -266,7 +266,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                           onClick: () => {
                             add.onClick();
                             closeMenu();
-                          }
+                          },
                         }
                       }
                       choices={choices}
@@ -313,7 +313,7 @@ const SingleAutocompleteSelectField: React.FC<SingleAutocompleteSelectFieldProps
     <SingleAutocompleteSelectFieldComponent
       fetchChoices={q => setQuery(q || "")}
       choices={filter(choices, query, {
-        key: "label"
+        key: "label",
       })}
       {...rest}
     />

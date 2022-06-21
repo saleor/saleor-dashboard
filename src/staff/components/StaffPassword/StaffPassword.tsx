@@ -17,7 +17,7 @@ const StaffPassword: React.FC<StaffPasswordProps> = ({ onChangePassword }) => {
         title={intl.formatMessage({
           id: "ZhDQel",
           defaultMessage: "Password",
-          description: "header"
+          description: "header",
         })}
         toolbar={
           <Button onClick={onChangePassword}>

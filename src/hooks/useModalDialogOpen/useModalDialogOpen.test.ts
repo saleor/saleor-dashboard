@@ -7,7 +7,7 @@ const onOpen = jest.fn();
 
 const cbs = {
   onClose,
-  onOpen
+  onOpen,
 };
 
 test("Does not render errors after close", () => {
@@ -16,15 +16,15 @@ test("Does not render errors after close", () => {
     {
       initialProps: {
         cbs,
-        open: false
-      }
-    }
+        open: false,
+      },
+    },
   );
 
   // Open modal
   rerender({
     cbs,
-    open: true
+    open: true,
   });
   expect(onOpen).toBeCalledTimes(1);
   expect(onClose).toBeCalledTimes(0);
@@ -32,7 +32,7 @@ test("Does not render errors after close", () => {
   // Rerender modal
   rerender({
     cbs,
-    open: true
+    open: true,
   });
   expect(onOpen).toBeCalledTimes(1);
   expect(onClose).toBeCalledTimes(0);
@@ -40,7 +40,7 @@ test("Does not render errors after close", () => {
   // Close modal
   rerender({
     cbs,
-    open: false
+    open: false,
   });
   expect(onOpen).toBeCalledTimes(1);
   expect(onClose).toBeCalledTimes(1);
@@ -48,7 +48,7 @@ test("Does not render errors after close", () => {
   // Open modal
   rerender({
     cbs,
-    open: true
+    open: true,
   });
   expect(onOpen).toBeCalledTimes(2);
   expect(onClose).toBeCalledTimes(1);

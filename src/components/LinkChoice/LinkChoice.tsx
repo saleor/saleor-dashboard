@@ -14,38 +14,38 @@ const useStyles = makeStyles(
     arrow: {
       position: "relative",
       top: 6,
-      transition: theme.transitions.duration.short + "ms"
+      transition: theme.transitions.duration.short + "ms",
     },
     highlighted: {
-      background: theme.palette.background.default
+      background: theme.palette.background.default,
     },
     menuItem: {
       "&:not(:last-of-type)": {
-        marginBottom: theme.spacing()
+        marginBottom: theme.spacing(),
       },
-      borderRadius: 4
+      borderRadius: 4,
     },
     paper: {
-      padding: theme.spacing()
+      padding: theme.spacing(),
     },
     popper: {
       marginTop: theme.spacing(1),
-      zIndex: 2
+      zIndex: 2,
     },
     root: {
       "&:focus": {
-        textDecoration: "underline"
+        textDecoration: "underline",
       },
       outline: 0,
-      position: "relative"
+      position: "relative",
     },
     rotate: {
-      transform: "rotate(180deg)"
-    }
+      transform: "rotate(180deg)",
+    },
   }),
   {
-    name: "LinkChoice"
-  }
+    name: "LinkChoice",
+  },
 );
 
 export interface LinkChoiceProps {
@@ -61,7 +61,7 @@ const LinkChoice: React.FC<LinkChoiceProps> = ({
   choices,
   name,
   value,
-  onChange
+  onChange,
 }) => {
   const classes = useStyles({});
   const [open, setOpen] = React.useState(false);
@@ -74,8 +74,8 @@ const LinkChoice: React.FC<LinkChoiceProps> = ({
     onChange({
       target: {
         name,
-        value
-      }
+        value,
+      },
     });
   };
 
@@ -83,14 +83,14 @@ const LinkChoice: React.FC<LinkChoiceProps> = ({
     switch (event.keyCode) {
       case codes.down:
         setHighlightedIndex(
-          highlightedIndex => (highlightedIndex + 1) % choices.length
+          highlightedIndex => (highlightedIndex + 1) % choices.length,
         );
         break;
       case codes.up:
         setHighlightedIndex(highlightedIndex =>
           highlightedIndex === 0
             ? choices.length - 1
-            : (highlightedIndex - 1) % choices.length
+            : (highlightedIndex - 1) % choices.length,
         );
         break;
       case codes.enter:
@@ -114,7 +114,7 @@ const LinkChoice: React.FC<LinkChoiceProps> = ({
         {current.label}
         <ArrowDropdown
           className={classNames(classes.arrow, {
-            [classes.rotate]: open
+            [classes.rotate]: open,
           })}
           color="primary"
         />
@@ -136,7 +136,7 @@ const LinkChoice: React.FC<LinkChoiceProps> = ({
             {choices.map((choice, choiceIndex) => (
               <MenuItem
                 className={classNames(classes.menuItem, {
-                  [classes.highlighted]: highlightedIndex === choiceIndex
+                  [classes.highlighted]: highlightedIndex === choiceIndex,
                 })}
                 selected={choice.value === value}
                 key={choice.value}

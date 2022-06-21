@@ -5,7 +5,7 @@ import {
   pageListProps,
   searchPageProps,
   sortPageProps,
-  tabPageProps
+  tabPageProps,
 } from "@saleor/fixtures";
 import { StaffMemberStatus } from "@saleor/graphql";
 import { staffMembers } from "@saleor/staff/fixtures";
@@ -26,16 +26,16 @@ const props: StaffListPageProps = {
   filterOpts: {
     status: {
       active: false,
-      value: StaffMemberStatus.ACTIVE
-    }
+      value: StaffMemberStatus.ACTIVE,
+    },
   },
   limits,
   onAdd: undefined,
   sort: {
     ...sortPageProps.sort,
-    sort: StaffListUrlSortField.name
+    sort: StaffListUrlSortField.name,
   },
-  staffMembers
+  staffMembers,
 };
 
 storiesOf("Views / Staff / Staff members", module)

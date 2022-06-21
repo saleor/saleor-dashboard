@@ -1,6 +1,6 @@
 import { attributes } from "@saleor/attributes/fixtures";
 import AssignAttributeDialog, {
-  AssignAttributeDialogProps
+  AssignAttributeDialogProps,
 } from "@saleor/components/AssignAttributeDialog";
 import { fetchMoreProps } from "@saleor/fixtures";
 import { formError } from "@saleor/storybook/misc";
@@ -20,7 +20,7 @@ const props: AssignAttributeDialogProps = {
   onSubmit: () => undefined,
   onToggle: () => undefined,
   open: true,
-  selected: [attributes[0].id, attributes[3].id]
+  selected: [attributes[0].id, attributes[3].id],
 };
 
 storiesOf("Generics / Assign attributes dialog", module)

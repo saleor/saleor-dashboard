@@ -17,22 +17,22 @@ export const getManualOrderDiscount = (order: OrderDetailsQuery["order"]) =>
 
 export const getOrderDiscount = (
   order: OrderDetailsQuery["order"],
-  discountType: OrderDiscountType
+  discountType: OrderDiscountType,
 ): OrderDetailsQuery["order"]["discounts"][0] =>
   order.discounts.find(({ type }) => type === discountType);
 
 export const getOrderLineDiscount = (
   order: OrderDetailsQuery["order"],
-  orderLineId: string
+  orderLineId: string,
 ): OrderLineDiscountData => {
   const {
     unitDiscount: moneyValue,
     unitDiscountReason: reason,
     unitDiscountValue: value,
     undiscountedUnitPrice: undiscountedPrice,
-    unitDiscountType: calculationMode
+    unitDiscountType: calculationMode,
   } = order.lines.find(
-    ({ id }: OrderDetailsQuery["order"]["lines"][0]) => id === orderLineId
+    ({ id }: OrderDetailsQuery["order"]["lines"][0]) => id === orderLineId,
   );
 
   if (!value) {
@@ -44,12 +44,12 @@ export const getOrderLineDiscount = (
     moneyValue,
     reason,
     undiscountedPrice,
-    value
+    value,
   };
 };
 
 export const getParsedDiscountData = ({
   value,
   calculationMode,
-  reason
+  reason,
 }: OrderDiscountCommonInput) => ({ reason, value, valueType: calculationMode });

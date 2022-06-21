@@ -13,7 +13,7 @@ const props: OrderFulfillPageProps = {
   onSubmit: () => undefined,
   order: orderToFulfill,
   saveButtonBar: "default",
-  warehouse: warehouseList[0]
+  warehouse: warehouseList[0],
 };
 
 storiesOf("Views / Orders / Fulfill order", module)
@@ -38,8 +38,8 @@ storiesOf("Views / Orders / Fulfill order", module)
           orderLines: [orderToFulfill.lines[0].id],
           warehouse: warehouseList[0].id,
           addressType: null,
-          message: "Insufficient stock"
-        }
+          message: "Insufficient stock",
+        },
       ]}
     />
   ))

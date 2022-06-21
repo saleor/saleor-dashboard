@@ -3,7 +3,7 @@ import React from "react";
 
 export enum LabelSizes {
   sm = 12,
-  md = 14
+  md = 14,
 }
 
 interface LabelProps {

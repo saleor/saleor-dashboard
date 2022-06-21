@@ -4,10 +4,10 @@ const useStyles = makeStyles(
   {
     title: {
       alignItems: "center",
-      display: "inline-flex"
-    }
+      display: "inline-flex",
+    },
   },
-  { name: "GiftCardUpdatePageHeader" }
+  { name: "GiftCardUpdatePageHeader" },
 );
 
 export default useStyles;

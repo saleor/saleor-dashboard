@@ -3,7 +3,7 @@ import moment from "moment";
 import { ExtendedGiftCard, GiftCardBase } from "./types";
 
 export function isGiftCardExpired<T extends GiftCardBase>(
-  giftCard: T
+  giftCard: T,
 ): boolean {
   if (!giftCard?.expiryDate) {
     return false;
@@ -13,7 +13,7 @@ export function isGiftCardExpired<T extends GiftCardBase>(
 }
 
 export function getExtendedGiftCard<T extends GiftCardBase>(
-  giftCard?: T
+  giftCard?: T,
 ): ExtendedGiftCard<T> {
   if (!giftCard) {
     return undefined;
@@ -21,6 +21,6 @@ export function getExtendedGiftCard<T extends GiftCardBase>(
 
   return {
     ...giftCard,
-    isExpired: isGiftCardExpired(giftCard)
+    isExpired: isGiftCardExpired(giftCard),
   };
 }

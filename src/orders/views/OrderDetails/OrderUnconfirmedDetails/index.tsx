@@ -7,7 +7,7 @@ import {
   OrderUpdateMutation,
   OrderUpdateMutationVariables,
   useCustomerAddressesQuery,
-  useWarehouseListQuery
+  useWarehouseListQuery,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
@@ -26,7 +26,7 @@ import { customerUrl } from "../../../../customers/urls";
 import {
   extractMutationErrors,
   getMutationState,
-  getStringOrPlaceholder
+  getStringOrPlaceholder,
 } from "../../../../misc";
 import { productUrl } from "../../../../products/urls";
 import OrderAddressFields from "../../../components/OrderAddressFields/OrderAddressFields";
@@ -44,7 +44,7 @@ import {
   orderRefundUrl,
   orderReturnUrl,
   orderUrl,
-  OrderUrlQueryParams
+  OrderUrlQueryParams,
 } from "../../../urls";
 import { isAnyAddressEditModalOpen } from "../OrderDraftDetails";
 
@@ -103,7 +103,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
   updateMetadataOpts,
   updatePrivateMetadataOpts,
   openModal,
-  closeModal
+  closeModal,
 }) => {
   const order = data.order;
   const shop = data.shop;
@@ -112,36 +112,36 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
   const {
     loadMore,
     search: variantSearch,
-    result: variantSearchOpts
+    result: variantSearchOpts,
   } = useOrderVariantSearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
-      channel: order.channel.slug
-    }
+      channel: order.channel.slug,
+    },
   });
   const warehouses = useWarehouseListQuery({
     displayLoader: true,
     variables: {
-      first: 30
-    }
+      first: 30,
+    },
   });
 
   const {
     data: customerAddresses,
-    loading: customerAddressesLoading
+    loading: customerAddressesLoading,
   } = useCustomerAddressesQuery({
     variables: {
-      id: order?.user?.id
+      id: order?.user?.id,
     },
-    skip: !order?.user?.id || !isAnyAddressEditModalOpen(params.action)
+    skip: !order?.user?.id || !isAnyAddressEditModalOpen(params.action),
   });
 
   const handleCustomerChangeAddresses = async (
-    data: Partial<OrderCustomerAddressesEditDialogOutput>
+    data: Partial<OrderCustomerAddressesEditDialogOutput>,
   ): Promise<any> =>
     orderUpdate.mutate({
       id,
-      input: data
+      input: data,
     });
 
   const intl = useIntl();
@@ -154,11 +154,11 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
           {
             id: "GbBCmr",
             defaultMessage: "Order #{orderNumber}",
-            description: "window title"
+            description: "window title",
           },
           {
-            orderNumber: getStringOrPlaceholder(order.number)
-          }
+            orderNumber: getStringOrPlaceholder(order.number),
+          },
         )}
       />
       <OrderDiscountProvider order={order}>
@@ -172,8 +172,8 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
               extractMutationErrors(
                 orderAddNote.mutate({
                   input: variables,
-                  order: id
-                })
+                  order: id,
+                }),
               )
             }
             order={order}
@@ -182,7 +182,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
             onOrderLineChange={(id, data) =>
               orderLineUpdate.mutate({
                 id,
-                input: data
+                input: data,
               })
             }
             onOrderLineRemove={id => orderLineDelete.mutate({ id })}
@@ -196,8 +196,8 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
                 ...(updatePrivateMetadataOpts.data?.deletePrivateMetadata
                   .errors || []),
                 ...(updatePrivateMetadataOpts.data?.updatePrivateMetadata
-                  .errors || [])
-              ]
+                  .errors || []),
+              ],
             )}
             shippingMethods={data?.order?.shippingMethods || []}
             onOrderCancel={() => openModal("cancel")}
@@ -206,24 +206,24 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
               navigate(
                 orderUrl(id, {
                   action: "approve-fulfillment",
-                  id: fulfillmentId
-                })
+                  id: fulfillmentId,
+                }),
               )
             }
             onFulfillmentCancel={fulfillmentId =>
               navigate(
                 orderUrl(id, {
                   action: "cancel-fulfillment",
-                  id: fulfillmentId
-                })
+                  id: fulfillmentId,
+                }),
               )
             }
             onFulfillmentTrackingNumberUpdate={fulfillmentId =>
               navigate(
                 orderUrl(id, {
                   action: "edit-fulfillment",
-                  id: fulfillmentId
-                })
+                  id: fulfillmentId,
+                }),
               )
             }
             onPaymentCapture={() => openModal("capture")}
@@ -237,12 +237,12 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
             onInvoiceClick={id =>
               window.open(
                 order.invoices.find(invoice => invoice.id === id)?.url,
-                "_blank"
+                "_blank",
               )
             }
             onInvoiceGenerate={() =>
               orderInvoiceRequest.mutate({
-                orderId: id
+                orderId: id,
               })
             }
             onInvoiceSend={id => openModal("invoice-send", { id })}
@@ -255,7 +255,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
         open={
           params.action === "cancel" &&
           order?.fulfillments.some(
-            fulfillment => fulfillment.status === FulfillmentStatus.FULFILLED
+            fulfillment => fulfillment.status === FulfillmentStatus.FULFILLED,
           )
         }
       />
@@ -267,7 +267,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
         onClose={closeModal}
         onSubmit={() =>
           orderCancel.mutate({
-            id
+            id,
           })
         }
       />
@@ -285,9 +285,9 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
             orderShippingMethodUpdate.mutate({
               id,
               input: {
-                shippingMethod: variables.shippingMethod
-              }
-            })
+                shippingMethod: variables.shippingMethod,
+              },
+            }),
           )
         }
       />
@@ -307,8 +307,8 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
             id,
             input: variants.map(variant => ({
               quantity: 1,
-              variantId: variant.id
-            }))
+              variantId: variant.id,
+            })),
           })
         }
       />
@@ -319,7 +319,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
         onConfirm={() =>
           orderPaymentMarkAsPaid.mutate({
             id,
-            transactionReference
+            transactionReference,
           })
         }
         open={params.action === "mark-paid"}
@@ -344,7 +344,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
         onSubmit={variables =>
           orderPaymentCapture.mutate({
             ...variables,
-            id
+            id,
           })
         }
       />
@@ -358,7 +358,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
         onConfirm={({ notifyCustomer }) =>
           orderFulfillmentApprove.mutate({
             id: params.id,
-            notifyCustomer
+            notifyCustomer,
           })
         }
         onClose={closeModal}
@@ -373,7 +373,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
         onConfirm={variables =>
           orderFulfillmentCancel.mutate({
             id: params.id,
-            input: variables
+            input: variables,
           })
         }
         onClose={closeModal}
@@ -387,7 +387,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
         open={params.action === "edit-fulfillment"}
         trackingNumber={
           data?.order?.fulfillments.find(
-            fulfillment => fulfillment.id === params.id
+            fulfillment => fulfillment.id === params.id,
           )?.trackingNumber
         }
         onConfirm={variables =>
@@ -395,8 +395,8 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
             id: params.id,
             input: {
               ...variables,
-              notifyCustomer: true
-            }
+              notifyCustomer: true,
+            },
           })
         }
         onClose={closeModal}

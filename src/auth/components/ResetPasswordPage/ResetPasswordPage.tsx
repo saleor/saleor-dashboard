@@ -20,7 +20,7 @@ export interface ResetPasswordPageProps {
   disabled: boolean;
   error: string;
   onSubmit: (
-    data: ResetPasswordPageFormData
+    data: ResetPasswordPageFormData,
   ) => SubmitPromise<
     RequestPasswordResetMutation["requestPasswordReset"]["errors"]
   >;
@@ -60,7 +60,7 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
             onChange={handleChange}
             value={data.email}
             inputProps={{
-              "data-test-id": "email"
+              "data-test-id": "email",
             }}
           />
           <FormSpacer />

@@ -5,7 +5,7 @@ export const webhook: WebhookDetailsQuery["webhook"] = {
   app: {
     __typename: "App",
     id: "Jzx1ss23sEt==",
-    name: "Test App 2"
+    name: "Test App 2",
   },
   syncEvents: [],
   asyncEvents: [],
@@ -13,5 +13,5 @@ export const webhook: WebhookDetailsQuery["webhook"] = {
   isActive: true,
   name: "Webhook Test 2",
   secretKey: "zxczx_asdas",
-  targetUrl: "http://www.getsaleor.com"
+  targetUrl: "http://www.getsaleor.com",
 };

@@ -2,7 +2,7 @@ import {
   MenuItemCreateInput,
   MenuItemFragment,
   MenuItemInput,
-  MenuItemMoveInput
+  MenuItemMoveInput,
 } from "@saleor/graphql";
 
 import { MenuDetailsSubmitData } from "../../components/MenuDetailsPage";
@@ -10,10 +10,10 @@ import { MenuItemDialogFormData } from "../../components/MenuItemDialog";
 import { unknownTypeError } from "../../components/MenuItems";
 
 export function getMenuItemInputData(
-  data: MenuItemDialogFormData
+  data: MenuItemDialogFormData,
 ): MenuItemInput {
   const variables: MenuItemInput = {
-    name: data.name
+    name: data.name,
   };
   switch (data.type) {
     case "category":
@@ -41,11 +41,11 @@ export function getMenuItemInputData(
 
 export function getMenuItemCreateInputData(
   menu: string,
-  data: MenuItemDialogFormData
+  data: MenuItemDialogFormData,
 ): MenuItemCreateInput {
   const variables: MenuItemCreateInput = {
     menu,
-    name: data.name
+    name: data.name,
   };
   switch (data.type) {
     case "category":
@@ -94,7 +94,7 @@ export function getMoves(data: MenuDetailsSubmitData): MenuItemMoveInput[] {
     .map(move => ({
       itemId: move.id,
       parentId: move.parentId,
-      sortOrder: move.sortOrder
+      sortOrder: move.sortOrder,
     }));
 }
 

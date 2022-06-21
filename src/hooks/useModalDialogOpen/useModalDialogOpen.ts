@@ -5,7 +5,7 @@ function useModalDialogOpen(
   cbs: {
     onClose?: () => void;
     onOpen?: () => void;
-  }
+  },
 ): void {
   const [prevOpen, setPrevOpen] = useState(open);
 

@@ -8,13 +8,13 @@ import { StaffDetailsFormData } from "./components/StaffDetailsPage";
  */
 export const groupsDiff = (
   user: StaffMemberDetailsFragment,
-  formData: StaffDetailsFormData
+  formData: StaffDetailsFormData,
 ) => {
   const newGroups = formData.permissionGroups;
   const oldGroups = user.permissionGroups.map(u => u.id);
 
   return {
     addGroups: difference(newGroups, oldGroups),
-    removeGroups: difference(oldGroups, newGroups)
+    removeGroups: difference(oldGroups, newGroups),
   };
 };

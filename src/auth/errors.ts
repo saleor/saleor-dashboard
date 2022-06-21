@@ -4,7 +4,7 @@ import { GraphQLError } from "graphql";
 export enum JWTError {
   invalid = "InvalidTokenError",
   invalidSignature = "InvalidSignatureError",
-  expired = "ExpiredSignatureError"
+  expired = "ExpiredSignatureError",
 }
 
 export function isJwtError(error: GraphQLError): boolean {

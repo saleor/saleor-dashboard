@@ -5,8 +5,8 @@ export const useStyles = makeStyles(
     iframe: {
       width: "100%",
       height: "100%",
-      border: "none"
-    }
+      border: "none",
+    },
   }),
-  { name: "AppFrame" }
+  { name: "AppFrame" },
 );

@@ -5,7 +5,7 @@ export const isSupported = !!(
 );
 
 export async function login<T>(
-  loginFn: (id: string, password: string) => Promise<T>
+  loginFn: (id: string, password: string) => Promise<T>,
 ): Promise<T | null> {
   let result: T;
 
@@ -23,7 +23,7 @@ export async function login<T>(
 
 export function saveCredentials(
   user: LoginData["user"],
-  password: string
+  password: string,
 ): Promise<CredentialType | null> {
   let result: Promise<CredentialType | null>;
 
@@ -31,7 +31,7 @@ export function saveCredentials(
     const cred = new PasswordCredential({
       id: user.email,
       name: user.firstName ? `${user.firstName} ${user.lastName}` : undefined,
-      password
+      password,
     });
     try {
       result = navigator.credentials.store(cred);

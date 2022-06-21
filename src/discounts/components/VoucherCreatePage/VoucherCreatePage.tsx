@@ -10,14 +10,14 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import {
   createChannelsChangeHandler,
-  createDiscountTypeChangeHandler
+  createDiscountTypeChangeHandler,
 } from "@saleor/discounts/handlers";
 import { voucherListUrl } from "@saleor/discounts/urls";
 import { VOUCHER_CREATE_FORM_ID } from "@saleor/discounts/views/VoucherCreate/types";
 import {
   DiscountErrorFragment,
   PermissionEnum,
-  VoucherTypeEnum
+  VoucherTypeEnum,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -60,13 +60,13 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   saveButtonBarState,
   onChannelsChange,
   onSubmit,
-  openChannelsModal
+  openChannelsModal,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
 
   const {
-    makeChangeHandler: makeMetadataChangeHandler
+    makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
 
   const initialForm: FormData = {
@@ -89,7 +89,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     used: 0,
     value: 0,
     metadata: [],
-    privateMetadata: []
+    privateMetadata: [],
   };
 
   const checkIfSaveIsDisabled = (data: FormData) =>
@@ -98,7 +98,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
         channel =>
           validatePrice(channel.discountValue) ||
           (data.requirementsPicker === RequirementsPicker.ORDER &&
-            validatePrice(channel.minSpent))
+            validatePrice(channel.minSpent)),
       )) ||
     disabled;
 
@@ -112,12 +112,12 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     >
       {({ change, data, submit, triggerChange, set, isSaveDisabled }) => {
         const handleDiscountTypeChange = createDiscountTypeChangeHandler(
-          change
+          change,
         );
         const handleChannelChange = createChannelsChangeHandler(
           data.channelListings,
           onChannelsChange,
-          triggerChange
+          triggerChange,
         );
         const changeMetadata = makeMetadataChangeHandler(change);
 
@@ -130,7 +130,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
               title={intl.formatMessage({
                 id: "PsclSa",
                 defaultMessage: "Create Voucher",
-                description: "page header"
+                description: "page header",
               })}
             />
             <Grid>
@@ -194,7 +194,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                   allChannelsCount={allChannelsCount}
                   channelsList={data.channelListings.map(channel => ({
                     id: channel.id,
-                    name: channel.name
+                    name: channel.name,
                   }))}
                   disabled={disabled}
                   openModal={openChannelsModal}

@@ -2,7 +2,7 @@ import { FieldType } from "@saleor/components/Filter";
 import { PluginConfigurationType } from "@saleor/graphql";
 import {
   createFilterStructure,
-  PluginFilterKeys
+  PluginFilterKeys,
 } from "@saleor/plugins/components/PluginsListPage";
 import { PluginListUrlFilters } from "@saleor/plugins/urls";
 import { getFilterQueryParams } from "@saleor/utils/filters";
@@ -23,7 +23,7 @@ describe("Filtering query params", () => {
 
   it("should not be empty object if params given", () => {
     const params: PluginListUrlFilters = {
-      type: PluginConfigurationType.GLOBAL
+      type: PluginConfigurationType.GLOBAL,
     };
     const filterVariables = getFilterVariables(params);
 
@@ -37,7 +37,7 @@ describe("Filtering URL params", () => {
   const filters = createFilterStructure(intl, {
     isActive: {
       active: false,
-      value: true
+      value: true,
     },
     channels: {
       active: false,
@@ -48,22 +48,22 @@ describe("Filtering URL params", () => {
       loading: false,
       onFetchMore: () => undefined,
       onSearchChange: () => undefined,
-      value: []
+      value: [],
     },
     status: {
       active: false,
-      value: false
+      value: false,
     },
     type: {
       active: false,
-      value: PluginConfigurationType.GLOBAL
-    }
+      value: PluginConfigurationType.GLOBAL,
+    },
   });
 
   it("should be empty if no active filters", () => {
     const filterQueryParams = getFilterQueryParams(
       filters,
-      getFilterQueryParam
+      getFilterQueryParam,
     );
 
     expect(getExistingKeys(filterQueryParams)).toHaveLength(0);
@@ -78,7 +78,7 @@ describe("Filtering URL params", () => {
           label: "Active",
           multiple: false,
           active: true,
-          value: ["true"]
+          value: ["true"],
         },
         {
           name: PluginFilterKeys.type,
@@ -86,10 +86,10 @@ describe("Filtering URL params", () => {
           label: "Configuration type",
           multiple: false,
           active: true,
-          value: [PluginConfigurationType.GLOBAL]
-        }
+          value: [PluginConfigurationType.GLOBAL],
+        },
       ],
-      getFilterQueryParam
+      getFilterQueryParam,
     );
 
     expect(filterQueryParams).toMatchSnapshot();

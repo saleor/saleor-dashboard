@@ -19,7 +19,7 @@ const PageTypeBulkDeleteDialog: React.FC<PageTypeBulkDeleteDialogProps> = ({
   quantity,
   hasPages,
   onClose,
-  onConfirm
+  onConfirm,
 }) => {
   const intl = useIntl();
 
@@ -32,7 +32,7 @@ const PageTypeBulkDeleteDialog: React.FC<PageTypeBulkDeleteDialogProps> = ({
       title={intl.formatMessage({
         id: "CcEwXH",
         defaultMessage: "Delete Page Types",
-        description: "dialog header"
+        description: "dialog header",
       })}
       variant="delete"
     >
@@ -44,7 +44,7 @@ const PageTypeBulkDeleteDialog: React.FC<PageTypeBulkDeleteDialogProps> = ({
             description="delete page types with its pages"
             values={{
               counter: quantity,
-              displayQuantity: <strong>{quantity}</strong>
+              displayQuantity: <strong>{quantity}</strong>,
             }}
           />
         ) : (
@@ -54,7 +54,7 @@ const PageTypeBulkDeleteDialog: React.FC<PageTypeBulkDeleteDialogProps> = ({
             description="delete page types"
             values={{
               counter: quantity,
-              displayQuantity: <strong>{quantity}</strong>
+              displayQuantity: <strong>{quantity}</strong>,
             }}
           />
         )}

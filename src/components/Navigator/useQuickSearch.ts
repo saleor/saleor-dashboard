@@ -21,11 +21,11 @@ type UseQuickSearch = [
   string,
   QuickSearchMode,
   FormChange,
-  QuickSearchAction[]
+  QuickSearchAction[],
 ];
 function useQuickSearch(
   open: boolean,
-  input: RefObject<HTMLInputElement>
+  input: RefObject<HTMLInputElement>,
 ): UseQuickSearch {
   const [query, setQuery] = useState("");
   const [mode, setMode] = useState<QuickSearchMode>("default");
@@ -35,9 +35,9 @@ function useQuickSearch(
   const { result: customers, search: searchCustomers } = useCustomerSearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
-      first: 5
+      first: 5,
     },
-    skip: !query
+    skip: !query,
   });
   const [{ data: catalog }, searchCatalog] = useSearchCatalog(5);
   const [createOrder] = useOrderDraftCreateMutation({
@@ -45,14 +45,14 @@ function useQuickSearch(
       if (result.draftOrderCreate.errors.length === 0) {
         navigate(orderUrl(result.draftOrderCreate.order.id));
       }
-    }
+    },
   });
 
   useModalDialogOpen(open, {
     onClose: () => {
       setMode("default");
       setQuery("");
-    }
+    },
   });
 
   const handleBack = (event: KeyboardEvent) => {
@@ -110,14 +110,14 @@ function useQuickSearch(
       {
         catalog,
         customers: mapEdgesToItems(customers?.data?.search) || [],
-        order: maybe(() => orderData.order)
+        order: maybe(() => orderData.order),
       },
       {
         createOrder,
         navigate,
-        setMode
-      }
-    )
+        setMode,
+      },
+    ),
   ];
 }
 

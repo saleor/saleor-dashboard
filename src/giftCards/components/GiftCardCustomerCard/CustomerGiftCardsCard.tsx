@@ -33,10 +33,10 @@ const CustomerGiftCardsCard: React.FC = () => {
     variables: {
       first: 5,
       filter: {
-        usedBy: [id]
-      }
+        usedBy: [id],
+      },
     },
-    skip: !id
+    skip: !id,
   });
 
   const closeCreateDialog = () => setOpenCreateDialog(false);
@@ -44,11 +44,11 @@ const CustomerGiftCardsCard: React.FC = () => {
   const giftCards = mapEdgesToItems(data?.giftCards);
 
   const classes = useCardActionsStyles({
-    buttonPosition: giftCards?.length > 0 ? "right" : "left"
+    buttonPosition: giftCards?.length > 0 ? "right" : "left",
   });
 
   const viewAllGiftCardsUrl = giftCardListUrl({
-    usedBy: [id]
+    usedBy: [id],
   });
 
   const handleCreateNewCardButton = () => {
@@ -111,7 +111,7 @@ const CustomerGiftCardsCard: React.FC = () => {
           refetchQueries={[CUSTOMER_GIFT_CARD_LIST_QUERY]}
           initialCustomer={{
             email: customer?.email,
-            name: getFullName(customer)
+            name: getFullName(customer),
           }}
         />
       </Dialog>

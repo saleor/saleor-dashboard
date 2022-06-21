@@ -46,37 +46,37 @@ const getEventMessage = (event: GiftCardEventFragment, intl: IntlShape) => {
     case GiftCardEventsEnum.ACTIVATED:
       return user
         ? intl.formatMessage(timelineMessages.activated, {
-            activatedBy: <Link href={userUrl}>{user}</Link>
+            activatedBy: <Link href={userUrl}>{user}</Link>,
           })
         : intl.formatMessage(timelineMessages.activatedAnonymous);
     case GiftCardEventsEnum.BALANCE_RESET:
       return user
         ? intl.formatMessage(timelineMessages.balanceReset, {
-            resetBy: <Link href={userUrl}>{user}</Link>
+            resetBy: <Link href={userUrl}>{user}</Link>,
           })
         : intl.formatMessage(timelineMessages.balanceResetAnonymous);
     case GiftCardEventsEnum.BOUGHT:
       return intl.formatMessage(timelineMessages.bought, {
         orderNumber: (
           <Link href={orderUrl(event.orderId)}>#{event.orderNumber}</Link>
-        )
+        ),
       });
     case GiftCardEventsEnum.DEACTIVATED:
       return user
         ? intl.formatMessage(timelineMessages.deactivated, {
-            deactivatedBy: <Link href={userUrl}>{user}</Link>
+            deactivatedBy: <Link href={userUrl}>{user}</Link>,
           })
         : intl.formatMessage(timelineMessages.deactivatedAnonymous);
     case GiftCardEventsEnum.EXPIRY_DATE_UPDATED:
       return user
         ? intl.formatMessage(timelineMessages.expiryDateUpdate, {
-            expiryUpdatedBy: <Link href={userUrl}>{user}</Link>
+            expiryUpdatedBy: <Link href={userUrl}>{user}</Link>,
           })
         : intl.formatMessage(timelineMessages.expiryDateUpdateAnonymous);
     case GiftCardEventsEnum.ISSUED:
       return user
         ? intl.formatMessage(timelineMessages.issued, {
-            issuedBy: <Link href={userUrl}>{user}</Link>
+            issuedBy: <Link href={userUrl}>{user}</Link>,
           })
         : intl.formatMessage(timelineMessages.issuedAnonymous);
     case GiftCardEventsEnum.RESENT:
@@ -102,12 +102,12 @@ const getEventMessage = (event: GiftCardEventFragment, intl: IntlShape) => {
                       : appPath(event.app.id)
                   }
                 >{`${content} ${user}`}</Link>
-              )
+              ),
           })
         : intl.formatMessage(timelineMessages.usedInOrderAnonymous, {
             orderLink: (
               <Link href={orderUrl(event.orderId)}>#{event.orderNumber}</Link>
-            )
+            ),
           });
   }
 };
@@ -119,7 +119,7 @@ export interface GiftCardTimelineEventProps {
 
 const GiftCardTimelineEvent: React.FC<GiftCardTimelineEventProps> = ({
   date,
-  event
+  event,
 }) => {
   const intl = useIntl();
   return <TimelineEvent date={date} title={getEventMessage(event, intl)} />;

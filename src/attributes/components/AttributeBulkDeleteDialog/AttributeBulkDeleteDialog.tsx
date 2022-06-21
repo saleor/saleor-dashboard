@@ -17,7 +17,7 @@ const AttributeBulkDeleteDialog: React.FC<AttributeBulkDeleteDialogProps> = ({
   quantity,
   onClose,
   onConfirm,
-  open
+  open,
 }) => {
   const intl = useIntl();
 
@@ -30,7 +30,7 @@ const AttributeBulkDeleteDialog: React.FC<AttributeBulkDeleteDialogProps> = ({
       title={intl.formatMessage({
         id: "rKf4LU",
         defaultMessage: "Delete attributes",
-        description: "dialog title"
+        description: "dialog title",
       })}
       variant="delete"
     >
@@ -41,7 +41,7 @@ const AttributeBulkDeleteDialog: React.FC<AttributeBulkDeleteDialogProps> = ({
           description="dialog content"
           values={{
             counter: quantity,
-            displayQuantity: <strong>{quantity}</strong>
+            displayQuantity: <strong>{quantity}</strong>,
           }}
         />
       </DialogContentText>

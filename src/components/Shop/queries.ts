@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 import {
   RefreshLimitsQuery,
   RefreshLimitsQueryVariables,
-  useRefreshLimitsQuery
+  useRefreshLimitsQuery,
 } from "@saleor/graphql";
 import { QueryHookOptions } from "@saleor/hooks/graphql";
 
@@ -52,7 +52,7 @@ const limitVariables: Record<keyof RefreshLimitsQueryVariables, boolean> = {
   orders: false,
   productVariants: false,
   staffUsers: false,
-  warehouses: false
+  warehouses: false,
 };
 
 export const limitInfo = gql`
@@ -72,12 +72,12 @@ export const useShopLimitsQuery = (
   opts: QueryHookOptions<
     RefreshLimitsQuery,
     Partial<RefreshLimitsQueryVariables>
-  >
+  >,
 ) =>
   useRefreshLimitsQuery({
     ...opts,
     variables: {
       ...limitVariables,
-      ...opts.variables
-    }
+      ...opts.variables,
+    },
   });

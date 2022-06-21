@@ -4,11 +4,11 @@ export const useStyles = makeStyles(
   theme => ({
     option: {
       marginBottom: theme.spacing(2),
-      width: 400
+      width: 400,
     },
     dialogContent: {
-      padding: 0
-    }
+      padding: 0,
+    },
   }),
-  { name: "ProductVariantCreateDialog" }
+  { name: "ProductVariantCreateDialog" },
 );

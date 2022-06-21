@@ -3,7 +3,7 @@ import {
   TableCell,
   TableFooter,
   TableHead,
-  TableRow
+  TableRow,
 } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -20,7 +20,7 @@ import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getArrowDirection } from "@saleor/utils/sort";
 import {
   WarehouseListUrlSortField,
-  warehouseUrl
+  warehouseUrl,
 } from "@saleor/warehouses/urls";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -29,36 +29,36 @@ const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
       colActions: {
-        width: 160
+        width: 160,
       },
       colName: {
-        width: 400
+        width: 400,
       },
       colZones: {
-        width: "auto"
-      }
+        width: "auto",
+      },
     },
     actions: {
       alignItems: "center",
       display: "flex",
       justifyContent: "flex-end",
       position: "relative",
-      right: theme.spacing(-1.5)
+      right: theme.spacing(-1.5),
     },
     colActions: {
-      textAlign: "right"
+      textAlign: "right",
     },
     colName: {
-      paddingLeft: 0
+      paddingLeft: 0,
     },
     colZones: {
-      paddingLeft: 0
+      paddingLeft: 0,
     },
     tableRow: {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   }),
-  { name: "WarehouseList" }
+  { name: "WarehouseList" },
 );
 
 interface WarehouseListProps
@@ -78,7 +78,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
     sort,
     onUpdateListSettings,
     onRemove,
-    onSort
+    onSort,
   } = props;
 
   const classes = useStyles(props);
@@ -178,7 +178,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
                 />
               </TableCell>
             </TableRow>
-          )
+          ),
         )}
       </TableBody>
     </ResponsiveTable>

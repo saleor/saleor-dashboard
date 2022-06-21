@@ -4,7 +4,7 @@ import {
   ShippingMethodTypeEnum,
   ShippingZoneFragment,
   ShippingZoneQuery,
-  WeightUnitsEnum
+  WeightUnitsEnum,
 } from "@saleor/graphql";
 import { RelayToFlat } from "@saleor/types";
 
@@ -15,264 +15,264 @@ export const shippingZones: ShippingZoneFragment[] = [
       {
         __typename: "CountryDisplay",
         code: "AX",
-        country: "Wyspy Alandzkie"
+        country: "Wyspy Alandzkie",
       },
       {
         __typename: "CountryDisplay",
         code: "AL",
-        country: "Albania"
+        country: "Albania",
       },
       {
         __typename: "CountryDisplay",
         code: "AD",
-        country: "Andora"
+        country: "Andora",
       },
       {
         __typename: "CountryDisplay",
         code: "AT",
-        country: "Austria"
+        country: "Austria",
       },
       {
         __typename: "CountryDisplay",
         code: "BY",
-        country: "Białoruś"
+        country: "Białoruś",
       },
       {
         __typename: "CountryDisplay",
         code: "BE",
-        country: "Belgia"
+        country: "Belgia",
       },
       {
         __typename: "CountryDisplay",
         code: "BA",
-        country: "Bośnia i Hercegowina"
+        country: "Bośnia i Hercegowina",
       },
       {
         __typename: "CountryDisplay",
         code: "BG",
-        country: "Bułgaria"
+        country: "Bułgaria",
       },
       {
         __typename: "CountryDisplay",
         code: "HR",
-        country: "Chorwacja"
+        country: "Chorwacja",
       },
       {
         __typename: "CountryDisplay",
         code: "CZ",
-        country: "Czechy"
+        country: "Czechy",
       },
       {
         __typename: "CountryDisplay",
         code: "DK",
-        country: "Dania"
+        country: "Dania",
       },
       {
         __typename: "CountryDisplay",
         code: "EE",
-        country: "Estonia"
+        country: "Estonia",
       },
       {
         __typename: "CountryDisplay",
         code: "FO",
-        country: "Wyspy Owcze"
+        country: "Wyspy Owcze",
       },
       {
         __typename: "CountryDisplay",
         code: "FI",
-        country: "Finlandia"
+        country: "Finlandia",
       },
       {
         __typename: "CountryDisplay",
         code: "FR",
-        country: "Francja"
+        country: "Francja",
       },
       {
         __typename: "CountryDisplay",
         code: "DE",
-        country: "Niemcy"
+        country: "Niemcy",
       },
       {
         __typename: "CountryDisplay",
         code: "GI",
-        country: "Gibraltar"
+        country: "Gibraltar",
       },
       {
         __typename: "CountryDisplay",
         code: "GR",
-        country: "Grecja"
+        country: "Grecja",
       },
       {
         __typename: "CountryDisplay",
         code: "GG",
-        country: "Guernsey"
+        country: "Guernsey",
       },
       {
         __typename: "CountryDisplay",
         code: "VA",
-        country: "Watykan"
+        country: "Watykan",
       },
       {
         __typename: "CountryDisplay",
         code: "HU",
-        country: "Węgry"
+        country: "Węgry",
       },
       {
         __typename: "CountryDisplay",
         code: "IS",
-        country: "Islandia"
+        country: "Islandia",
       },
       {
         __typename: "CountryDisplay",
         code: "IE",
-        country: "Irlandia"
+        country: "Irlandia",
       },
       {
         __typename: "CountryDisplay",
         code: "IM",
-        country: "Wyspa Man"
+        country: "Wyspa Man",
       },
       {
         __typename: "CountryDisplay",
         code: "IT",
-        country: "Włochy"
+        country: "Włochy",
       },
       {
         __typename: "CountryDisplay",
         code: "JE",
-        country: "Jersey"
+        country: "Jersey",
       },
       {
         __typename: "CountryDisplay",
         code: "LV",
-        country: "Łotwa"
+        country: "Łotwa",
       },
       {
         __typename: "CountryDisplay",
         code: "LI",
-        country: "Liechtenstein"
+        country: "Liechtenstein",
       },
       {
         __typename: "CountryDisplay",
         code: "LT",
-        country: "Litwa"
+        country: "Litwa",
       },
       {
         __typename: "CountryDisplay",
         code: "LU",
-        country: "Luksemburg"
+        country: "Luksemburg",
       },
       {
         __typename: "CountryDisplay",
         code: "MK",
-        country: "Macedonia"
+        country: "Macedonia",
       },
       {
         __typename: "CountryDisplay",
         code: "MT",
-        country: "Malta"
+        country: "Malta",
       },
       {
         __typename: "CountryDisplay",
         code: "MD",
-        country: "Mołdawia"
+        country: "Mołdawia",
       },
       {
         __typename: "CountryDisplay",
         code: "MC",
-        country: "Monako"
+        country: "Monako",
       },
       {
         __typename: "CountryDisplay",
         code: "ME",
-        country: "Czarnogóra"
+        country: "Czarnogóra",
       },
       {
         __typename: "CountryDisplay",
         code: "NL",
-        country: "Holandia"
+        country: "Holandia",
       },
       {
         __typename: "CountryDisplay",
         code: "NO",
-        country: "Norwegia"
+        country: "Norwegia",
       },
       {
         __typename: "CountryDisplay",
         code: "PL",
-        country: "Polska"
+        country: "Polska",
       },
       {
         __typename: "CountryDisplay",
         code: "PT",
-        country: "Portugalia"
+        country: "Portugalia",
       },
       {
         __typename: "CountryDisplay",
         code: "RO",
-        country: "Rumunia"
+        country: "Rumunia",
       },
       {
         __typename: "CountryDisplay",
         code: "RU",
-        country: "Rosja"
+        country: "Rosja",
       },
       {
         __typename: "CountryDisplay",
         code: "SM",
-        country: "San Marino"
+        country: "San Marino",
       },
       {
         __typename: "CountryDisplay",
         code: "RS",
-        country: "Serbia"
+        country: "Serbia",
       },
       {
         __typename: "CountryDisplay",
         code: "SK",
-        country: "Słowacja"
+        country: "Słowacja",
       },
       {
         __typename: "CountryDisplay",
         code: "SI",
-        country: "Słowenia"
+        country: "Słowenia",
       },
       {
         __typename: "CountryDisplay",
         code: "ES",
-        country: "Hiszpania"
+        country: "Hiszpania",
       },
       {
         __typename: "CountryDisplay",
         code: "SJ",
-        country: "Svalbard i Jan Mayen"
+        country: "Svalbard i Jan Mayen",
       },
       {
         __typename: "CountryDisplay",
         code: "SE",
-        country: "Szwecja"
+        country: "Szwecja",
       },
       {
         __typename: "CountryDisplay",
         code: "CH",
-        country: "Szwajcaria"
+        country: "Szwajcaria",
       },
       {
         __typename: "CountryDisplay",
         code: "UA",
-        country: "Ukraina"
+        country: "Ukraina",
       },
       {
         __typename: "CountryDisplay",
         code: "GB",
-        country: "Wielka Brytania"
-      }
+        country: "Wielka Brytania",
+      },
     ],
     description: "Shipping zone description",
     id: "U2hpcHBpbmdab25lOjE=",
     metadata: [],
     name: "Europe",
-    privateMetadata: []
+    privateMetadata: [],
   },
   {
     __typename: "ShippingZone",
@@ -280,154 +280,154 @@ export const shippingZones: ShippingZoneFragment[] = [
       {
         __typename: "CountryDisplay",
         code: "AS",
-        country: "Samoa Amerykańskie"
+        country: "Samoa Amerykańskie",
       },
       {
         __typename: "CountryDisplay",
         code: "AU",
-        country: "Australia"
+        country: "Australia",
       },
       {
         __typename: "CountryDisplay",
         code: "CX",
-        country: "Wyspa Bożego Narodzenia"
+        country: "Wyspa Bożego Narodzenia",
       },
       {
         __typename: "CountryDisplay",
         code: "CC",
-        country: "Wyspy Kokosowe"
+        country: "Wyspy Kokosowe",
       },
       {
         __typename: "CountryDisplay",
         code: "CK",
-        country: "Wyspy Cooka"
+        country: "Wyspy Cooka",
       },
       {
         __typename: "CountryDisplay",
         code: "FJ",
-        country: "Fidżi"
+        country: "Fidżi",
       },
       {
         __typename: "CountryDisplay",
         code: "PF",
-        country: "Polinezja Francuska"
+        country: "Polinezja Francuska",
       },
       {
         __typename: "CountryDisplay",
         code: "GU",
-        country: "Guam"
+        country: "Guam",
       },
       {
         __typename: "CountryDisplay",
         code: "HM",
-        country: "Wyspy Heard i McDonalda"
+        country: "Wyspy Heard i McDonalda",
       },
       {
         __typename: "CountryDisplay",
         code: "KI",
-        country: "Kiribati"
+        country: "Kiribati",
       },
       {
         __typename: "CountryDisplay",
         code: "MH",
-        country: "Wyspy Marshalla"
+        country: "Wyspy Marshalla",
       },
       {
         __typename: "CountryDisplay",
         code: "FM",
-        country: "Mikronezja"
+        country: "Mikronezja",
       },
       {
         __typename: "CountryDisplay",
         code: "NR",
-        country: "Nauru"
+        country: "Nauru",
       },
       {
         __typename: "CountryDisplay",
         code: "NC",
-        country: "Nowa Kaledonia"
+        country: "Nowa Kaledonia",
       },
       {
         __typename: "CountryDisplay",
         code: "NZ",
-        country: "Nowa Zelandia"
+        country: "Nowa Zelandia",
       },
       {
         __typename: "CountryDisplay",
         code: "NU",
-        country: "Niue"
+        country: "Niue",
       },
       {
         __typename: "CountryDisplay",
         code: "NF",
-        country: "Norfolk"
+        country: "Norfolk",
       },
       {
         __typename: "CountryDisplay",
         code: "MP",
-        country: "Mariany Północne"
+        country: "Mariany Północne",
       },
       {
         __typename: "CountryDisplay",
         code: "PW",
-        country: "Palau"
+        country: "Palau",
       },
       {
         __typename: "CountryDisplay",
         code: "PG",
-        country: "Papua-Nowa Gwinea"
+        country: "Papua-Nowa Gwinea",
       },
       {
         __typename: "CountryDisplay",
         code: "PN",
-        country: "Pitcairn"
+        country: "Pitcairn",
       },
       {
         __typename: "CountryDisplay",
         code: "WS",
-        country: "Samoa"
+        country: "Samoa",
       },
       {
         __typename: "CountryDisplay",
         code: "SB",
-        country: "Wyspy Salomona"
+        country: "Wyspy Salomona",
       },
       {
         __typename: "CountryDisplay",
         code: "TK",
-        country: "Tokelau"
+        country: "Tokelau",
       },
       {
         __typename: "CountryDisplay",
         code: "TO",
-        country: "Tonga"
+        country: "Tonga",
       },
       {
         __typename: "CountryDisplay",
         code: "TV",
-        country: "Tuvalu"
+        country: "Tuvalu",
       },
       {
         __typename: "CountryDisplay",
         code: "UM",
-        country: "Dalekie Wyspy Mniejsze Stanów Zjednoczonych"
+        country: "Dalekie Wyspy Mniejsze Stanów Zjednoczonych",
       },
       {
         __typename: "CountryDisplay",
         code: "VU",
-        country: "Vanuatu"
+        country: "Vanuatu",
       },
       {
         __typename: "CountryDisplay",
         code: "WF",
-        country: "Wallis i Futuna"
-      }
+        country: "Wallis i Futuna",
+      },
     ],
     description: "Shipping zone description",
     id: "U2hpcHBpbmdab25lOjI=",
     metadata: [],
     name: "Oceania",
-    privateMetadata: []
+    privateMetadata: [],
   },
   {
     __typename: "ShippingZone",
@@ -435,264 +435,264 @@ export const shippingZones: ShippingZoneFragment[] = [
       {
         __typename: "CountryDisplay",
         code: "AF",
-        country: "Afganistan"
+        country: "Afganistan",
       },
       {
         __typename: "CountryDisplay",
         code: "AM",
-        country: "Armenia"
+        country: "Armenia",
       },
       {
         __typename: "CountryDisplay",
         code: "AZ",
-        country: "Azerbejdżan"
+        country: "Azerbejdżan",
       },
       {
         __typename: "CountryDisplay",
         code: "BH",
-        country: "Bahrajn"
+        country: "Bahrajn",
       },
       {
         __typename: "CountryDisplay",
         code: "BD",
-        country: "Bangladesz"
+        country: "Bangladesz",
       },
       {
         __typename: "CountryDisplay",
         code: "BT",
-        country: "Bhutan"
+        country: "Bhutan",
       },
       {
         __typename: "CountryDisplay",
         code: "BN",
-        country: "Brunei"
+        country: "Brunei",
       },
       {
         __typename: "CountryDisplay",
         code: "KH",
-        country: "Kambodża"
+        country: "Kambodża",
       },
       {
         __typename: "CountryDisplay",
         code: "CN",
-        country: "Chiny"
+        country: "Chiny",
       },
       {
         __typename: "CountryDisplay",
         code: "CY",
-        country: "Cypr"
+        country: "Cypr",
       },
       {
         __typename: "CountryDisplay",
         code: "GE",
-        country: "Gruzja"
+        country: "Gruzja",
       },
       {
         __typename: "CountryDisplay",
         code: "HK",
-        country: "Hongkong"
+        country: "Hongkong",
       },
       {
         __typename: "CountryDisplay",
         code: "IN",
-        country: "Indie"
+        country: "Indie",
       },
       {
         __typename: "CountryDisplay",
         code: "ID",
-        country: "Indonezja"
+        country: "Indonezja",
       },
       {
         __typename: "CountryDisplay",
         code: "IR",
-        country: "Iran"
+        country: "Iran",
       },
       {
         __typename: "CountryDisplay",
         code: "IQ",
-        country: "Irak"
+        country: "Irak",
       },
       {
         __typename: "CountryDisplay",
         code: "IL",
-        country: "Izrael"
+        country: "Izrael",
       },
       {
         __typename: "CountryDisplay",
         code: "JP",
-        country: "Japonia"
+        country: "Japonia",
       },
       {
         __typename: "CountryDisplay",
         code: "JO",
-        country: "Jordania"
+        country: "Jordania",
       },
       {
         __typename: "CountryDisplay",
         code: "KZ",
-        country: "Kazachstan"
+        country: "Kazachstan",
       },
       {
         __typename: "CountryDisplay",
         code: "KP",
-        country: "Korea Północna"
+        country: "Korea Północna",
       },
       {
         __typename: "CountryDisplay",
         code: "KR",
-        country: "Korea Południowa"
+        country: "Korea Południowa",
       },
       {
         __typename: "CountryDisplay",
         code: "KW",
-        country: "Kuwejt"
+        country: "Kuwejt",
       },
       {
         __typename: "CountryDisplay",
         code: "KG",
-        country: "Kirgistan"
+        country: "Kirgistan",
       },
       {
         __typename: "CountryDisplay",
         code: "LA",
-        country: "Laos"
+        country: "Laos",
       },
       {
         __typename: "CountryDisplay",
         code: "LB",
-        country: "Liban"
+        country: "Liban",
       },
       {
         __typename: "CountryDisplay",
         code: "MO",
-        country: "Makau"
+        country: "Makau",
       },
       {
         __typename: "CountryDisplay",
         code: "MY",
-        country: "Malezja"
+        country: "Malezja",
       },
       {
         __typename: "CountryDisplay",
         code: "MV",
-        country: "Malediwy"
+        country: "Malediwy",
       },
       {
         __typename: "CountryDisplay",
         code: "MN",
-        country: "Mongolia"
+        country: "Mongolia",
       },
       {
         __typename: "CountryDisplay",
         code: "MM",
-        country: "Mjanma"
+        country: "Mjanma",
       },
       {
         __typename: "CountryDisplay",
         code: "NP",
-        country: "Nepal"
+        country: "Nepal",
       },
       {
         __typename: "CountryDisplay",
         code: "OM",
-        country: "Oman"
+        country: "Oman",
       },
       {
         __typename: "CountryDisplay",
         code: "PK",
-        country: "Pakistan"
+        country: "Pakistan",
       },
       {
         __typename: "CountryDisplay",
         code: "PS",
-        country: "Palestyna"
+        country: "Palestyna",
       },
       {
         __typename: "CountryDisplay",
         code: "PH",
-        country: "Filipiny"
+        country: "Filipiny",
       },
       {
         __typename: "CountryDisplay",
         code: "QA",
-        country: "Katar"
+        country: "Katar",
       },
       {
         __typename: "CountryDisplay",
         code: "SA",
-        country: "Arabia Saudyjska"
+        country: "Arabia Saudyjska",
       },
       {
         __typename: "CountryDisplay",
         code: "SG",
-        country: "Singapur"
+        country: "Singapur",
       },
       {
         __typename: "CountryDisplay",
         code: "LK",
-        country: "Sri Lanka"
+        country: "Sri Lanka",
       },
       {
         __typename: "CountryDisplay",
         code: "SY",
-        country: "Syria"
+        country: "Syria",
       },
       {
         __typename: "CountryDisplay",
         code: "TW",
-        country: "Tajwan"
+        country: "Tajwan",
       },
       {
         __typename: "CountryDisplay",
         code: "TJ",
-        country: "Tadżykistan"
+        country: "Tadżykistan",
       },
       {
         __typename: "CountryDisplay",
         code: "TH",
-        country: "Tajlandia"
+        country: "Tajlandia",
       },
       {
         __typename: "CountryDisplay",
         code: "TL",
-        country: "Timor Wschodni"
+        country: "Timor Wschodni",
       },
       {
         __typename: "CountryDisplay",
         code: "TR",
-        country: "Turcja"
+        country: "Turcja",
       },
       {
         __typename: "CountryDisplay",
         code: "TM",
-        country: "Turkmenistan"
+        country: "Turkmenistan",
       },
       {
         __typename: "CountryDisplay",
         code: "AE",
-        country: "Zjednoczone Emiraty Arabskie"
+        country: "Zjednoczone Emiraty Arabskie",
       },
       {
         __typename: "CountryDisplay",
         code: "UZ",
-        country: "Uzbekistan"
+        country: "Uzbekistan",
       },
       {
         __typename: "CountryDisplay",
         code: "VN",
-        country: "Wietnam"
+        country: "Wietnam",
       },
       {
         __typename: "CountryDisplay",
         code: "YE",
-        country: "Jemen"
-      }
+        country: "Jemen",
+      },
     ],
     description: "Shipping zone description",
     id: "U2hpcHBpbmdab25lOjM=",
     metadata: [],
     name: "Asia",
-    privateMetadata: []
+    privateMetadata: [],
   },
   {
     __typename: "ShippingZone",
@@ -700,294 +700,294 @@ export const shippingZones: ShippingZoneFragment[] = [
       {
         __typename: "CountryDisplay",
         code: "AI",
-        country: "Anguilla"
+        country: "Anguilla",
       },
       {
         __typename: "CountryDisplay",
         code: "AG",
-        country: "Antigua i Barbuda"
+        country: "Antigua i Barbuda",
       },
       {
         __typename: "CountryDisplay",
         code: "AR",
-        country: "Argentyna"
+        country: "Argentyna",
       },
       {
         __typename: "CountryDisplay",
         code: "AW",
-        country: "Aruba"
+        country: "Aruba",
       },
       {
         __typename: "CountryDisplay",
         code: "BS",
-        country: "Bahamy"
+        country: "Bahamy",
       },
       {
         __typename: "CountryDisplay",
         code: "BB",
-        country: "Barbados"
+        country: "Barbados",
       },
       {
         __typename: "CountryDisplay",
         code: "BZ",
-        country: "Belize"
+        country: "Belize",
       },
       {
         __typename: "CountryDisplay",
         code: "BM",
-        country: "Bermudy"
+        country: "Bermudy",
       },
       {
         __typename: "CountryDisplay",
         code: "BO",
-        country: "Boliwia"
+        country: "Boliwia",
       },
       {
         __typename: "CountryDisplay",
         code: "BQ",
-        country: "Bonaire, Sint Eustatius i Saba"
+        country: "Bonaire, Sint Eustatius i Saba",
       },
       {
         __typename: "CountryDisplay",
         code: "BV",
-        country: "Wyspa Bouveta"
+        country: "Wyspa Bouveta",
       },
       {
         __typename: "CountryDisplay",
         code: "BR",
-        country: "Brazylia"
+        country: "Brazylia",
       },
       {
         __typename: "CountryDisplay",
         code: "CA",
-        country: "Kanada"
+        country: "Kanada",
       },
       {
         __typename: "CountryDisplay",
         code: "KY",
-        country: "Kajmany"
+        country: "Kajmany",
       },
       {
         __typename: "CountryDisplay",
         code: "CL",
-        country: "Chile"
+        country: "Chile",
       },
       {
         __typename: "CountryDisplay",
         code: "CO",
-        country: "Kolumbia"
+        country: "Kolumbia",
       },
       {
         __typename: "CountryDisplay",
         code: "CR",
-        country: "Kostaryka"
+        country: "Kostaryka",
       },
       {
         __typename: "CountryDisplay",
         code: "CU",
-        country: "Kuba"
+        country: "Kuba",
       },
       {
         __typename: "CountryDisplay",
         code: "CW",
-        country: "Curaçao"
+        country: "Curaçao",
       },
       {
         __typename: "CountryDisplay",
         code: "DM",
-        country: "Dominika"
+        country: "Dominika",
       },
       {
         __typename: "CountryDisplay",
         code: "DO",
-        country: "Dominikana"
+        country: "Dominikana",
       },
       {
         __typename: "CountryDisplay",
         code: "EC",
-        country: "Ekwador"
+        country: "Ekwador",
       },
       {
         __typename: "CountryDisplay",
         code: "SV",
-        country: "Salwador"
+        country: "Salwador",
       },
       {
         __typename: "CountryDisplay",
         code: "FK",
-        country: "Falklandy"
+        country: "Falklandy",
       },
       {
         __typename: "CountryDisplay",
         code: "GF",
-        country: "Gujana Francuska"
+        country: "Gujana Francuska",
       },
       {
         __typename: "CountryDisplay",
         code: "GL",
-        country: "Grenlandia"
+        country: "Grenlandia",
       },
       {
         __typename: "CountryDisplay",
         code: "GD",
-        country: "Grenada"
+        country: "Grenada",
       },
       {
         __typename: "CountryDisplay",
         code: "GP",
-        country: "Gwadelupa"
+        country: "Gwadelupa",
       },
       {
         __typename: "CountryDisplay",
         code: "GT",
-        country: "Gwatemala"
+        country: "Gwatemala",
       },
       {
         __typename: "CountryDisplay",
         code: "GY",
-        country: "Gujana"
+        country: "Gujana",
       },
       {
         __typename: "CountryDisplay",
         code: "HT",
-        country: "Haiti"
+        country: "Haiti",
       },
       {
         __typename: "CountryDisplay",
         code: "HN",
-        country: "Honduras"
+        country: "Honduras",
       },
       {
         __typename: "CountryDisplay",
         code: "JM",
-        country: "Jamajka"
+        country: "Jamajka",
       },
       {
         __typename: "CountryDisplay",
         code: "MQ",
-        country: "Martynika"
+        country: "Martynika",
       },
       {
         __typename: "CountryDisplay",
         code: "MX",
-        country: "Meksyk"
+        country: "Meksyk",
       },
       {
         __typename: "CountryDisplay",
         code: "MS",
-        country: "Montserrat"
+        country: "Montserrat",
       },
       {
         __typename: "CountryDisplay",
         code: "NI",
-        country: "Nikaragua"
+        country: "Nikaragua",
       },
       {
         __typename: "CountryDisplay",
         code: "PA",
-        country: "Panama"
+        country: "Panama",
       },
       {
         __typename: "CountryDisplay",
         code: "PY",
-        country: "Paragwaj"
+        country: "Paragwaj",
       },
       {
         __typename: "CountryDisplay",
         code: "PE",
-        country: "Peru"
+        country: "Peru",
       },
       {
         __typename: "CountryDisplay",
         code: "PR",
-        country: "Portoryko"
+        country: "Portoryko",
       },
       {
         __typename: "CountryDisplay",
         code: "BL",
-        country: "Saint-Barthélemy"
+        country: "Saint-Barthélemy",
       },
       {
         __typename: "CountryDisplay",
         code: "KN",
-        country: "Saint Kitts i Nevis"
+        country: "Saint Kitts i Nevis",
       },
       {
         __typename: "CountryDisplay",
         code: "LC",
-        country: "Saint Lucia"
+        country: "Saint Lucia",
       },
       {
         __typename: "CountryDisplay",
         code: "MF",
-        country: "Saint-Martin"
+        country: "Saint-Martin",
       },
       {
         __typename: "CountryDisplay",
         code: "PM",
-        country: "Saint-Pierre i Miquelon"
+        country: "Saint-Pierre i Miquelon",
       },
       {
         __typename: "CountryDisplay",
         code: "VC",
-        country: "Saint Vincent i Grenadyny"
+        country: "Saint Vincent i Grenadyny",
       },
       {
         __typename: "CountryDisplay",
         code: "SX",
-        country: "Sint Maarten"
+        country: "Sint Maarten",
       },
       {
         __typename: "CountryDisplay",
         code: "GS",
-        country: "Georgia Południowa i Sandwich Południowy"
+        country: "Georgia Południowa i Sandwich Południowy",
       },
       {
         __typename: "CountryDisplay",
         code: "SR",
-        country: "Surinam"
+        country: "Surinam",
       },
       {
         __typename: "CountryDisplay",
         code: "TT",
-        country: "Trynidad i Tobago"
+        country: "Trynidad i Tobago",
       },
       {
         __typename: "CountryDisplay",
         code: "TC",
-        country: "Turks i Caicos"
+        country: "Turks i Caicos",
       },
       {
         __typename: "CountryDisplay",
         code: "US",
-        country: "Stany Zjednoczone Ameryki"
+        country: "Stany Zjednoczone Ameryki",
       },
       {
         __typename: "CountryDisplay",
         code: "UY",
-        country: "Urugwaj"
+        country: "Urugwaj",
       },
       {
         __typename: "CountryDisplay",
         code: "VE",
-        country: "Wenezuela"
+        country: "Wenezuela",
       },
       {
         __typename: "CountryDisplay",
         code: "VG",
-        country: "Brytyjskie Wyspy Dziewicze"
+        country: "Brytyjskie Wyspy Dziewicze",
       },
       {
         __typename: "CountryDisplay",
         code: "VI",
-        country: "Wyspy Dziewicze Stanów Zjednoczonych"
-      }
+        country: "Wyspy Dziewicze Stanów Zjednoczonych",
+      },
     ],
     description: "Shipping zone description",
     id: "U2hpcHBpbmdab25lOjQ=",
     metadata: [],
     name: "Americas",
-    privateMetadata: []
+    privateMetadata: [],
   },
   {
     __typename: "ShippingZone",
@@ -995,311 +995,311 @@ export const shippingZones: ShippingZoneFragment[] = [
       {
         __typename: "CountryDisplay",
         code: "DZ",
-        country: "Algeria"
+        country: "Algeria",
       },
       {
         __typename: "CountryDisplay",
         code: "AO",
-        country: "Angola"
+        country: "Angola",
       },
       {
         __typename: "CountryDisplay",
         code: "BJ",
-        country: "Benin"
+        country: "Benin",
       },
       {
         __typename: "CountryDisplay",
         code: "BW",
-        country: "Botswana"
+        country: "Botswana",
       },
       {
         __typename: "CountryDisplay",
         code: "IO",
-        country: "Brytyjskie Terytorium Oceanu Indyjskiego"
+        country: "Brytyjskie Terytorium Oceanu Indyjskiego",
       },
       {
         __typename: "CountryDisplay",
         code: "BF",
-        country: "Burkina Faso"
+        country: "Burkina Faso",
       },
       {
         __typename: "CountryDisplay",
         code: "BI",
-        country: "Burundi"
+        country: "Burundi",
       },
       {
         __typename: "CountryDisplay",
         code: "CV",
-        country: "Republika Zielonego Przylądka"
+        country: "Republika Zielonego Przylądka",
       },
       {
         __typename: "CountryDisplay",
         code: "CM",
-        country: "Kamerun"
+        country: "Kamerun",
       },
       {
         __typename: "CountryDisplay",
         code: "CF",
-        country: "Republika Środkowoafrykańska"
+        country: "Republika Środkowoafrykańska",
       },
       {
         __typename: "CountryDisplay",
         code: "TD",
-        country: "Czad"
+        country: "Czad",
       },
       {
         __typename: "CountryDisplay",
         code: "KM",
-        country: "Komory"
+        country: "Komory",
       },
       {
         __typename: "CountryDisplay",
         code: "CG",
-        country: "Kongo"
+        country: "Kongo",
       },
       {
         __typename: "CountryDisplay",
         code: "CD",
-        country: "Kongo"
+        country: "Kongo",
       },
       {
         __typename: "CountryDisplay",
         code: "CI",
-        country: "Wybrzeże Kości Słoniowej"
+        country: "Wybrzeże Kości Słoniowej",
       },
       {
         __typename: "CountryDisplay",
         code: "DJ",
-        country: "Dżibuti"
+        country: "Dżibuti",
       },
       {
         __typename: "CountryDisplay",
         code: "EG",
-        country: "Egipt"
+        country: "Egipt",
       },
       {
         __typename: "CountryDisplay",
         code: "GQ",
-        country: "Gwinea Równikowa"
+        country: "Gwinea Równikowa",
       },
       {
         __typename: "CountryDisplay",
         code: "ER",
-        country: "Erytrea"
+        country: "Erytrea",
       },
       {
         __typename: "CountryDisplay",
         code: "SZ",
-        country: "Suazi"
+        country: "Suazi",
       },
       {
         __typename: "CountryDisplay",
         code: "ET",
-        country: "Etiopia"
+        country: "Etiopia",
       },
       {
         __typename: "CountryDisplay",
         code: "TF",
-        country: "Francuskie Terytoria Południowe i Antarktyczne"
+        country: "Francuskie Terytoria Południowe i Antarktyczne",
       },
       {
         __typename: "CountryDisplay",
         code: "GA",
-        country: "Gabon"
+        country: "Gabon",
       },
       {
         __typename: "CountryDisplay",
         code: "GM",
-        country: "Gambia"
+        country: "Gambia",
       },
       {
         __typename: "CountryDisplay",
         code: "GH",
-        country: "Ghana"
+        country: "Ghana",
       },
       {
         __typename: "CountryDisplay",
         code: "GN",
-        country: "Gwinea"
+        country: "Gwinea",
       },
       {
         __typename: "CountryDisplay",
         code: "GW",
-        country: "Gwinea Bissau"
+        country: "Gwinea Bissau",
       },
       {
         __typename: "CountryDisplay",
         code: "KE",
-        country: "Kenia"
+        country: "Kenia",
       },
       {
         __typename: "CountryDisplay",
         code: "LS",
-        country: "Lesotho"
+        country: "Lesotho",
       },
       {
         __typename: "CountryDisplay",
         code: "LR",
-        country: "Liberia"
+        country: "Liberia",
       },
       {
         __typename: "CountryDisplay",
         code: "LY",
-        country: "Libia"
+        country: "Libia",
       },
       {
         __typename: "CountryDisplay",
         code: "MG",
-        country: "Madagaskar"
+        country: "Madagaskar",
       },
       {
         __typename: "CountryDisplay",
         code: "MW",
-        country: "Malawi"
+        country: "Malawi",
       },
       {
         __typename: "CountryDisplay",
         code: "ML",
-        country: "Mali"
+        country: "Mali",
       },
       {
         __typename: "CountryDisplay",
         code: "MR",
-        country: "Mauretania"
+        country: "Mauretania",
       },
       {
         __typename: "CountryDisplay",
         code: "MU",
-        country: "Mauritius"
+        country: "Mauritius",
       },
       {
         __typename: "CountryDisplay",
         code: "YT",
-        country: "Majotta"
+        country: "Majotta",
       },
       {
         __typename: "CountryDisplay",
         code: "MA",
-        country: "Maroko"
+        country: "Maroko",
       },
       {
         __typename: "CountryDisplay",
         code: "MZ",
-        country: "Mozambik"
+        country: "Mozambik",
       },
       {
         __typename: "CountryDisplay",
         code: "NA",
-        country: "Namibia"
+        country: "Namibia",
       },
       {
         __typename: "CountryDisplay",
         code: "NE",
-        country: "Niger"
+        country: "Niger",
       },
       {
         __typename: "CountryDisplay",
         code: "NG",
-        country: "Nigeria"
+        country: "Nigeria",
       },
       {
         __typename: "CountryDisplay",
         code: "RE",
-        country: "Reunion"
+        country: "Reunion",
       },
       {
         __typename: "CountryDisplay",
         code: "RW",
-        country: "Rwanda"
+        country: "Rwanda",
       },
       {
         __typename: "CountryDisplay",
         code: "SH",
         country:
-          "Wyspa Świętej Heleny, Wyspa Wniebowstąpienia i Tristan da Cunha"
+          "Wyspa Świętej Heleny, Wyspa Wniebowstąpienia i Tristan da Cunha",
       },
       {
         __typename: "CountryDisplay",
         code: "ST",
-        country: "Wyspy Świętego Tomasza i Książęca"
+        country: "Wyspy Świętego Tomasza i Książęca",
       },
       {
         __typename: "CountryDisplay",
         code: "SN",
-        country: "Senegal"
+        country: "Senegal",
       },
       {
         __typename: "CountryDisplay",
         code: "SC",
-        country: "Seszele"
+        country: "Seszele",
       },
       {
         __typename: "CountryDisplay",
         code: "SL",
-        country: "Sierra Leone"
+        country: "Sierra Leone",
       },
       {
         __typename: "CountryDisplay",
         code: "SO",
-        country: "Somalia"
+        country: "Somalia",
       },
       {
         __typename: "CountryDisplay",
         code: "ZA",
-        country: "Republika Południowej Afryki"
+        country: "Republika Południowej Afryki",
       },
       {
         __typename: "CountryDisplay",
         code: "SS",
-        country: "Sudan Południowy"
+        country: "Sudan Południowy",
       },
       {
         __typename: "CountryDisplay",
         code: "SD",
-        country: "Sudan"
+        country: "Sudan",
       },
       {
         __typename: "CountryDisplay",
         code: "TZ",
-        country: "Tanzania"
+        country: "Tanzania",
       },
       {
         __typename: "CountryDisplay",
         code: "TG",
-        country: "Togo"
+        country: "Togo",
       },
       {
         __typename: "CountryDisplay",
         code: "TN",
-        country: "Tunezja"
+        country: "Tunezja",
       },
       {
         __typename: "CountryDisplay",
         code: "UG",
-        country: "Uganda"
+        country: "Uganda",
       },
       {
         __typename: "CountryDisplay",
         code: "EH",
-        country: "Sahara Zachodnia"
+        country: "Sahara Zachodnia",
       },
       {
         __typename: "CountryDisplay",
         code: "ZM",
-        country: "Zambia"
+        country: "Zambia",
       },
       {
         __typename: "CountryDisplay",
         code: "ZW",
-        country: "Zimbabwe"
-      }
+        country: "Zimbabwe",
+      },
     ],
     description: "Shipping zone description",
     id: "U2hpcHBpbmdab25lOjU=",
     metadata: [],
     name: "Africa",
-    privateMetadata: []
-  }
+    privateMetadata: [],
+  },
 ];
 
 export const shippingZone: ShippingZoneQuery["shippingZone"] = {
@@ -1308,264 +1308,264 @@ export const shippingZone: ShippingZoneQuery["shippingZone"] = {
   channels: [
     { __typename: "Channel", id: "channel1", name: "GBP", currencyCode: "GBP" },
 
-    { __typename: "Channel", id: "channel2", name: "PLN", currencyCode: "PLN" }
+    { __typename: "Channel", id: "channel2", name: "PLN", currencyCode: "PLN" },
   ],
   countries: [
     {
       __typename: "CountryDisplay",
       code: "AX",
-      country: "Wyspy Alandzkie"
+      country: "Wyspy Alandzkie",
     },
     {
       __typename: "CountryDisplay",
       code: "AL",
-      country: "Albania"
+      country: "Albania",
     },
     {
       __typename: "CountryDisplay",
       code: "AD",
-      country: "Andora"
+      country: "Andora",
     },
     {
       __typename: "CountryDisplay",
       code: "AT",
-      country: "Austria"
+      country: "Austria",
     },
     {
       __typename: "CountryDisplay",
       code: "BY",
-      country: "Białoruś"
+      country: "Białoruś",
     },
     {
       __typename: "CountryDisplay",
       code: "BE",
-      country: "Belgia"
+      country: "Belgia",
     },
     {
       __typename: "CountryDisplay",
       code: "BA",
-      country: "Bośnia i Hercegowina"
+      country: "Bośnia i Hercegowina",
     },
     {
       __typename: "CountryDisplay",
       code: "BG",
-      country: "Bułgaria"
+      country: "Bułgaria",
     },
     {
       __typename: "CountryDisplay",
       code: "HR",
-      country: "Chorwacja"
+      country: "Chorwacja",
     },
     {
       __typename: "CountryDisplay",
       code: "CZ",
-      country: "Czechy"
+      country: "Czechy",
     },
     {
       __typename: "CountryDisplay",
       code: "DK",
-      country: "Dania"
+      country: "Dania",
     },
     {
       __typename: "CountryDisplay",
       code: "EE",
-      country: "Estonia"
+      country: "Estonia",
     },
     {
       __typename: "CountryDisplay",
       code: "FO",
-      country: "Wyspy Owcze"
+      country: "Wyspy Owcze",
     },
     {
       __typename: "CountryDisplay",
       code: "FI",
-      country: "Finlandia"
+      country: "Finlandia",
     },
     {
       __typename: "CountryDisplay",
       code: "FR",
-      country: "Francja"
+      country: "Francja",
     },
     {
       __typename: "CountryDisplay",
       code: "DE",
-      country: "Niemcy"
+      country: "Niemcy",
     },
     {
       __typename: "CountryDisplay",
       code: "GI",
-      country: "Gibraltar"
+      country: "Gibraltar",
     },
     {
       __typename: "CountryDisplay",
       code: "GR",
-      country: "Grecja"
+      country: "Grecja",
     },
     {
       __typename: "CountryDisplay",
       code: "GG",
-      country: "Guernsey"
+      country: "Guernsey",
     },
     {
       __typename: "CountryDisplay",
       code: "VA",
-      country: "Watykan"
+      country: "Watykan",
     },
     {
       __typename: "CountryDisplay",
       code: "HU",
-      country: "Węgry"
+      country: "Węgry",
     },
     {
       __typename: "CountryDisplay",
       code: "IS",
-      country: "Islandia"
+      country: "Islandia",
     },
     {
       __typename: "CountryDisplay",
       code: "IE",
-      country: "Irlandia"
+      country: "Irlandia",
     },
     {
       __typename: "CountryDisplay",
       code: "IM",
-      country: "Wyspa Man"
+      country: "Wyspa Man",
     },
     {
       __typename: "CountryDisplay",
       code: "IT",
-      country: "Włochy"
+      country: "Włochy",
     },
     {
       __typename: "CountryDisplay",
       code: "JE",
-      country: "Jersey"
+      country: "Jersey",
     },
     {
       __typename: "CountryDisplay",
       code: "LV",
-      country: "Łotwa"
+      country: "Łotwa",
     },
     {
       __typename: "CountryDisplay",
       code: "LI",
-      country: "Liechtenstein"
+      country: "Liechtenstein",
     },
     {
       __typename: "CountryDisplay",
       code: "LT",
-      country: "Litwa"
+      country: "Litwa",
     },
     {
       __typename: "CountryDisplay",
       code: "LU",
-      country: "Luksemburg"
+      country: "Luksemburg",
     },
     {
       __typename: "CountryDisplay",
       code: "MK",
-      country: "Macedonia"
+      country: "Macedonia",
     },
     {
       __typename: "CountryDisplay",
       code: "MT",
-      country: "Malta"
+      country: "Malta",
     },
     {
       __typename: "CountryDisplay",
       code: "MD",
-      country: "Mołdawia"
+      country: "Mołdawia",
     },
     {
       __typename: "CountryDisplay",
       code: "MC",
-      country: "Monako"
+      country: "Monako",
     },
     {
       __typename: "CountryDisplay",
       code: "ME",
-      country: "Czarnogóra"
+      country: "Czarnogóra",
     },
     {
       __typename: "CountryDisplay",
       code: "NL",
-      country: "Holandia"
+      country: "Holandia",
     },
     {
       __typename: "CountryDisplay",
       code: "NO",
-      country: "Norwegia"
+      country: "Norwegia",
     },
     {
       __typename: "CountryDisplay",
       code: "PL",
-      country: "Polska"
+      country: "Polska",
     },
     {
       __typename: "CountryDisplay",
       code: "PT",
-      country: "Portugalia"
+      country: "Portugalia",
     },
     {
       __typename: "CountryDisplay",
       code: "RO",
-      country: "Rumunia"
+      country: "Rumunia",
     },
     {
       __typename: "CountryDisplay",
       code: "RU",
-      country: "Rosja"
+      country: "Rosja",
     },
     {
       __typename: "CountryDisplay",
       code: "SM",
-      country: "San Marino"
+      country: "San Marino",
     },
     {
       __typename: "CountryDisplay",
       code: "RS",
-      country: "Serbia"
+      country: "Serbia",
     },
     {
       __typename: "CountryDisplay",
       code: "SK",
-      country: "Słowacja"
+      country: "Słowacja",
     },
     {
       __typename: "CountryDisplay",
       code: "SI",
-      country: "Słowenia"
+      country: "Słowenia",
     },
     {
       __typename: "CountryDisplay",
       code: "ES",
-      country: "Hiszpania"
+      country: "Hiszpania",
     },
     {
       __typename: "CountryDisplay",
       code: "SJ",
-      country: "Svalbard i Jan Mayen"
+      country: "Svalbard i Jan Mayen",
     },
     {
       __typename: "CountryDisplay",
       code: "SE",
-      country: "Szwecja"
+      country: "Szwecja",
     },
     {
       __typename: "CountryDisplay",
       code: "CH",
-      country: "Szwajcaria"
+      country: "Szwajcaria",
     },
     {
       __typename: "CountryDisplay",
       code: "UA",
-      country: "Ukraina"
+      country: "Ukraina",
     },
     {
       __typename: "CountryDisplay",
       code: "GB",
-      country: "Wielka Brytania"
-    }
+      country: "Wielka Brytania",
+    },
   ],
   description: "Shipping zone description",
   id: "U2hpcHBpbmdab25lOjE=",
@@ -1582,25 +1582,25 @@ export const shippingZone: ShippingZoneQuery["shippingZone"] = {
             __typename: "Channel",
             currencyCode: "USD",
             id: "Q2hhbm5lbDo5",
-            name: "Channel USD"
+            name: "Channel USD",
           },
           id: "U2hpcHBpbmdNZXRob2RDaGFubmVsTGlzdGluZzo0",
           maximumOrderPrice: {
             __typename: "Money",
             amount: 2,
-            currency: "USD"
+            currency: "USD",
           },
           minimumOrderPrice: {
             __typename: "Money",
             amount: 1,
-            currency: "USD"
+            currency: "USD",
           },
           price: {
             __typename: "Money",
             amount: 86.21,
-            currency: "USD"
-          }
-        }
+            currency: "USD",
+          },
+        },
       ],
       excludedProducts: {
         __typename: "ProductCountableConnection",
@@ -1613,32 +1613,32 @@ export const shippingZone: ShippingZoneQuery["shippingZone"] = {
               name: "Apple Juice",
               thumbnail: {
                 __typename: "Image",
-                url: ""
-              }
-            }
-          }
+                url: "",
+              },
+            },
+          },
         ],
         pageInfo: {
           __typename: "PageInfo",
           endCursor: "",
           hasNextPage: false,
           hasPreviousPage: false,
-          startCursor: ""
-        }
+          startCursor: "",
+        },
       },
       id: "U2hpcHBpbmdNZXRob2Q6NA==",
       maximumDeliveryDays: 10,
       maximumOrderWeight: {
         __typename: "Weight",
         unit: WeightUnitsEnum.KG,
-        value: 80
+        value: 80,
       },
       metadata: [],
       minimumDeliveryDays: 0,
       minimumOrderWeight: {
         __typename: "Weight",
         unit: WeightUnitsEnum.KG,
-        value: 0
+        value: 0,
       },
       name: "DB Schenker",
       description: `{"time": 1618487908762, "blocks": [{"data": {"text": "General shipping method"}, "type": "paragraph"}], "version": "2.20.0"}`,
@@ -1648,25 +1648,25 @@ export const shippingZone: ShippingZoneQuery["shippingZone"] = {
           end: "51-220",
           id: "1",
           inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
-          start: "51-210"
+          start: "51-210",
         },
         {
           __typename: "ShippingMethodPostalCodeRule",
           end: "51-240",
           id: "2",
           inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
-          start: "51-235"
+          start: "51-235",
         },
         {
           __typename: "ShippingMethodPostalCodeRule",
           end: null,
           id: "2",
           inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
-          start: "51-274"
-        }
+          start: "51-274",
+        },
       ],
       privateMetadata: [],
-      type: ShippingMethodTypeEnum.WEIGHT
+      type: ShippingMethodTypeEnum.WEIGHT,
     },
     {
       __typename: "ShippingMethodType",
@@ -1682,18 +1682,18 @@ export const shippingZone: ShippingZoneQuery["shippingZone"] = {
               name: "Apple Juice",
               thumbnail: {
                 __typename: "Image",
-                url: ""
-              }
-            }
-          }
+                url: "",
+              },
+            },
+          },
         ],
         pageInfo: {
           __typename: "PageInfo",
           endCursor: "",
           hasNextPage: false,
           hasPreviousPage: false,
-          startCursor: ""
-        }
+          startCursor: "",
+        },
       },
       id: "U2hpcHBpbmdNZXRob2Q6Mw==",
       maximumDeliveryDays: 10,
@@ -1703,7 +1703,7 @@ export const shippingZone: ShippingZoneQuery["shippingZone"] = {
       minimumOrderWeight: {
         __typename: "Weight",
         unit: WeightUnitsEnum.KG,
-        value: 0
+        value: 0,
       },
       name: "Registred priority",
       description: `{"time": 1618487908762, "blocks": [{"data": {"text": "Priority shipping method"}, "type": "paragraph"}], "version": "2.20.0"}`,
@@ -1713,25 +1713,25 @@ export const shippingZone: ShippingZoneQuery["shippingZone"] = {
           end: "51-220",
           id: "1",
           inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
-          start: "51-210"
+          start: "51-210",
         },
         {
           __typename: "ShippingMethodPostalCodeRule",
           end: "51-240",
           id: "2",
           inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
-          start: "51-235"
+          start: "51-235",
         },
         {
           __typename: "ShippingMethodPostalCodeRule",
           end: null,
           id: "2",
           inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
-          start: "51-274"
-        }
+          start: "51-274",
+        },
       ],
       privateMetadata: [],
-      type: ShippingMethodTypeEnum.WEIGHT
+      type: ShippingMethodTypeEnum.WEIGHT,
     },
     {
       __typename: "ShippingMethodType",
@@ -1747,18 +1747,18 @@ export const shippingZone: ShippingZoneQuery["shippingZone"] = {
               name: "Apple Juice",
               thumbnail: {
                 __typename: "Image",
-                url: ""
-              }
-            }
-          }
+                url: "",
+              },
+            },
+          },
         ],
         pageInfo: {
           __typename: "PageInfo",
           endCursor: "",
           hasNextPage: false,
           hasPreviousPage: false,
-          startCursor: ""
-        }
+          startCursor: "",
+        },
       },
       id: "U2hpcHBpbmdNZXRob2Q6Mg==",
       maximumDeliveryDays: 10,
@@ -1768,7 +1768,7 @@ export const shippingZone: ShippingZoneQuery["shippingZone"] = {
       minimumOrderWeight: {
         __typename: "Weight",
         unit: WeightUnitsEnum.KG,
-        value: 0
+        value: 0,
       },
       name: "UPS",
       description: `{"time": 1618487908762, "blocks": [{"data": {"text": "Different shipping method"}, "type": "paragraph"}], "version": "2.20.0"}`,
@@ -1778,25 +1778,25 @@ export const shippingZone: ShippingZoneQuery["shippingZone"] = {
           end: "51-220",
           id: "1",
           inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
-          start: "51-210"
+          start: "51-210",
         },
         {
           __typename: "ShippingMethodPostalCodeRule",
           end: "51-240",
           id: "2",
           inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
-          start: "51-235"
+          start: "51-235",
         },
         {
           __typename: "ShippingMethodPostalCodeRule",
           end: null,
           id: "2",
           inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
-          start: "51-274"
-        }
+          start: "51-274",
+        },
       ],
       privateMetadata: [],
-      type: ShippingMethodTypeEnum.PRICE
+      type: ShippingMethodTypeEnum.PRICE,
     },
     {
       __typename: "ShippingMethodType",
@@ -1809,8 +1809,8 @@ export const shippingZone: ShippingZoneQuery["shippingZone"] = {
           endCursor: "",
           hasNextPage: false,
           hasPreviousPage: false,
-          startCursor: ""
-        }
+          startCursor: "",
+        },
       },
       id: "U2hpcHBpbmdNZXRob2Q6MQ==",
       maximumDeliveryDays: 10,
@@ -1820,7 +1820,7 @@ export const shippingZone: ShippingZoneQuery["shippingZone"] = {
       minimumOrderWeight: {
         __typename: "Weight",
         unit: WeightUnitsEnum.KG,
-        value: 0
+        value: 0,
       },
       name: "DHL",
       description: `{"time": 1618487908762, "blocks": [{"data": {"text": "Different shipping method"}, "type": "paragraph"}], "version": "2.20.0"}`,
@@ -1830,39 +1830,39 @@ export const shippingZone: ShippingZoneQuery["shippingZone"] = {
           end: "51-220",
           id: "1",
           inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
-          start: "51-210"
+          start: "51-210",
         },
         {
           __typename: "ShippingMethodPostalCodeRule",
           end: "51-240",
           id: "2",
           inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
-          start: "51-235"
+          start: "51-235",
         },
         {
           __typename: "ShippingMethodPostalCodeRule",
           end: null,
           id: "2",
           inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
-          start: "51-274"
-        }
+          start: "51-274",
+        },
       ],
       privateMetadata: [],
-      type: ShippingMethodTypeEnum.PRICE
-    }
+      type: ShippingMethodTypeEnum.PRICE,
+    },
   ],
   warehouses: [
     {
       __typename: "Warehouse",
       id: "V2FyZWhvdXNlOmEzMThmMGZlLTcwMmYtNDNjYy1hYmFjLWZmZmMzN2Y3ZTliYw==",
-      name: "C our wares"
+      name: "C our wares",
     },
     {
       __typename: "Warehouse",
       id: "V2FyZWhvdXNlOjJmN2UyOTlmLWEwMzMtNDhjZS1iYmM5LTFkZDM4NjU2ZjMwYw==",
-      name: "Be stocked"
-    }
-  ]
+      name: "Be stocked",
+    },
+  ],
 };
 
 export const products: RelayToFlat<SearchProductsQuery["search"]> = [
@@ -1872,7 +1872,7 @@ export const products: RelayToFlat<SearchProductsQuery["search"]> = [
     name: "Apple Juice",
     thumbnail: {
       __typename: "Image",
-      url: ""
+      url: "",
     },
     variants: [
       {
@@ -1888,13 +1888,13 @@ export const products: RelayToFlat<SearchProductsQuery["search"]> = [
               id: "Q2hhbm5lbDox",
               isActive: true,
               name: "Channel-USD",
-              currencyCode: "USD"
+              currencyCode: "USD",
             },
             price: {
               __typename: "Money",
               amount: 5,
-              currency: "USD"
-            }
+              currency: "USD",
+            },
           },
           {
             __typename: "ProductVariantChannelListing",
@@ -1903,16 +1903,16 @@ export const products: RelayToFlat<SearchProductsQuery["search"]> = [
               id: "Q2hhbm5lbDoy",
               isActive: true,
               name: "Channel-PLN",
-              currencyCode: "PLN"
+              currencyCode: "PLN",
             },
             price: {
               __typename: "Money",
               amount: 20,
-              currency: "PLN"
-            }
-          }
-        ]
-      }
-    ]
-  }
+              currency: "PLN",
+            },
+          },
+        ],
+      },
+    ],
+  },
 ];

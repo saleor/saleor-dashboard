@@ -3,7 +3,7 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle
+  DialogTitle,
 } from "@material-ui/core";
 import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
@@ -29,7 +29,7 @@ const OrderInvoiceEmailSendDialog: React.FC<OrderInvoiceEmailSendDialogProps> = 
   open,
   invoice,
   onClose,
-  onSend
+  onSend,
 }) => {
   const intl = useIntl();
 
@@ -39,7 +39,7 @@ const OrderInvoiceEmailSendDialog: React.FC<OrderInvoiceEmailSendDialogProps> = 
         {intl.formatMessage({
           id: "5JT4v2",
           defaultMessage: "Send Invoice",
-          description: "dialog header"
+          description: "dialog header",
         })}
       </DialogTitle>
       <DialogContent>
@@ -48,7 +48,7 @@ const OrderInvoiceEmailSendDialog: React.FC<OrderInvoiceEmailSendDialogProps> = 
             id="MPfyne"
             defaultMessage="Are you sure you want to send this invoice: {invoiceNumber} to the customer?"
             values={{
-              invoiceNumber: <strong>{invoice?.number}</strong>
+              invoiceNumber: <strong>{invoice?.number}</strong>,
             }}
           />
         </DialogContentText>

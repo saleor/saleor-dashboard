@@ -5,7 +5,7 @@ import { useContext } from "react";
 import {
   GiftCardUpdateFormContext,
   GiftCardUpdateFormData,
-  GiftCardUpdateFormErrors
+  GiftCardUpdateFormErrors,
 } from "../GiftCardUpdateFormProvider";
 
 type UseGiftCardUpdateFormProps = UseFormResult<GiftCardUpdateFormData> &

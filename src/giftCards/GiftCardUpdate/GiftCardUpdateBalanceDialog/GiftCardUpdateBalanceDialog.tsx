@@ -23,7 +23,7 @@ export interface GiftCardBalanceUpdateFormData {
 
 const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({
   open,
-  onClose
+  onClose,
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -32,17 +32,17 @@ const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({
   const {
     giftCard: {
       id,
-      currentBalance: { amount, currency }
-    }
+      currentBalance: { amount, currency },
+    },
   } = useGiftCardDetails();
 
   const initialFormData: GiftCardBalanceUpdateFormData = {
-    balanceAmount: amount
+    balanceAmount: amount,
   };
 
   const [
     updateGiftCardBalance,
-    updateGiftCardBalanceOpts
+    updateGiftCardBalanceOpts,
   ] = useGiftCardUpdateMutation({
     onCompleted: data => {
       const errors = data?.giftCardUpdate?.errors;
@@ -50,11 +50,11 @@ const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({
       const notifierData: IMessage = !!errors?.length
         ? {
             status: "error",
-            text: intl.formatMessage(commonErrorMessages.unknownError)
+            text: intl.formatMessage(commonErrorMessages.unknownError),
           }
         : {
             status: "success",
-            text: intl.formatMessage(messages.updatedSuccessAlertTitle)
+            text: intl.formatMessage(messages.updatedSuccessAlertTitle),
           };
 
       notify(notifierData);
@@ -62,19 +62,19 @@ const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({
       if (!errors.length) {
         onClose();
       }
-    }
+    },
   });
 
   const handleSubmit = async ({
-    balanceAmount
+    balanceAmount,
   }: GiftCardBalanceUpdateFormData) => {
     const result = await updateGiftCardBalance({
       variables: {
         id,
         input: {
-          balanceAmount
-        }
-      }
+          balanceAmount,
+        },
+      },
     });
 
     return result?.data?.giftCardUpdate?.errors;
@@ -82,7 +82,7 @@ const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({
 
   const { data, change, submit, reset } = useForm(
     initialFormData,
-    handleSubmit
+    handleSubmit,
   );
 
   const { loading, status, data: submitData } = updateGiftCardBalanceOpts;
@@ -91,7 +91,7 @@ const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({
     open,
     reset,
     keys: ["initialBalanceAmount"],
-    apiErrors: submitData?.giftCardUpdate?.errors
+    apiErrors: submitData?.giftCardUpdate?.errors,
   });
 
   return (
@@ -112,14 +112,14 @@ const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({
         error={!!formErrors?.initialBalanceAmount}
         helperText={getGiftCardErrorMessage(
           formErrors?.initialBalanceAmount,
-          intl
+          intl,
         )}
         name="balanceAmount"
         value={data.balanceAmount}
         onChange={change}
         className={classes.inputContainer}
         label={intl.formatMessage(
-          tableMessages.giftCardsTableColumnBalanceTitle
+          tableMessages.giftCardsTableColumnBalanceTitle,
         )}
         type="float"
         InputProps={{
@@ -127,7 +127,7 @@ const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({
             <div className={classes.currencyCodeContainer}>
               <Typography variant="caption">{currency}</Typography>
             </div>
-          )
+          ),
         }}
       />
     </ActionDialog>

@@ -5,30 +5,30 @@ export const useStyles = makeStyles(
     colName: {
       fontSize: 14,
       paddingLeft: 0,
-      width: "auto"
+      width: "auto",
     },
     colType: {
       fontSize: 14,
       textAlign: "right",
-      width: 250
+      width: 250,
     },
     content: {
-      padding: theme.spacing(3, 0, 3, 0)
+      padding: theme.spacing(3, 0, 3, 0),
     },
     info: {
-      fontSize: 14
+      fontSize: 14,
     },
     price: {
-      verticalAlign: "top"
+      verticalAlign: "top",
     },
     subheader: {
-      padding: theme.spacing(0, 3, 0, 3)
+      padding: theme.spacing(0, 3, 0, 3),
     },
     table: {
-      tableLayout: "fixed"
-    }
+      tableLayout: "fixed",
+    },
   }),
   {
-    name: "OrderValue"
-  }
+    name: "OrderValue",
+  },
 );

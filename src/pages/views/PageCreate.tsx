@@ -1,20 +1,20 @@
 import { getAttributesAfterFileAttributesUpdate } from "@saleor/attributes/utils/data";
 import {
   handleUploadMultipleFiles,
-  prepareAttributesInput
+  prepareAttributesInput,
 } from "@saleor/attributes/utils/handlers";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import {
   DEFAULT_INITIAL_SEARCH_DATA,
-  VALUES_PAGINATE_BY
+  VALUES_PAGINATE_BY,
 } from "@saleor/config";
 import {
   useFileUploadMutation,
   usePageCreateMutation,
   usePageTypeQuery,
   useUpdateMetadataMutation,
-  useUpdatePrivateMetadataMutation
+  useUpdatePrivateMetadataMutation,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -50,37 +50,37 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
   const {
     loadMore: loadMorePageTypes,
     search: searchPageTypes,
-    result: searchPageTypesOpts
+    result: searchPageTypesOpts,
   } = usePageTypeSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
   const {
     loadMore: loadMorePages,
     search: searchPages,
-    result: searchPagesOpts
+    result: searchPagesOpts,
   } = usePageSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
   const {
     loadMore: loadMoreProducts,
     search: searchProducts,
-    result: searchProductsOpts
+    result: searchProductsOpts,
   } = useProductSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
     result: searchAttributeValuesOpts,
-    reset: searchAttributeReset
+    reset: searchAttributeReset,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
 
   const { data: selectedPageType } = usePageTypeQuery({
     variables: {
       id: selectedPageTypeId,
-      firstValues: VALUES_PAGINATE_BY
+      firstValues: VALUES_PAGINATE_BY,
     },
-    skip: !selectedPageTypeId
+    skip: !selectedPageTypeId,
   });
 
   const attributeValues =
@@ -95,23 +95,23 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
           status: "success",
           text: intl.formatMessage({
             id: "JMbFNo",
-            defaultMessage: "Successfully created new page"
-          })
+            defaultMessage: "Successfully created new page",
+          }),
         });
         navigate(pageUrl(data.pageCreate.page.id));
       }
-    }
+    },
   });
 
   const handleCreate = async (formData: PageSubmitData) => {
     const uploadFilesResult = await handleUploadMultipleFiles(
       formData.attributesWithNewFileValue,
-      variables => uploadFile({ variables })
+      variables => uploadFile({ variables }),
     );
 
     const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
       formData.attributesWithNewFileValue,
-      uploadFilesResult
+      uploadFilesResult,
     );
 
     const result = await pageCreate({
@@ -120,7 +120,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
           attributes: prepareAttributesInput({
             attributes: formData.attributes,
             prevAttributes: null,
-            updatedFileAttributes
+            updatedFileAttributes,
           }),
           content: getParsedDataForJsonStringField(formData.content),
           isPublished: formData.isPublished,
@@ -128,54 +128,54 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
           publicationDate: formData.publicationDate,
           seo: {
             description: formData.seoDescription,
-            title: formData.seoTitle
+            title: formData.seoTitle,
           },
           slug: formData.slug === "" ? null : formData.slug,
-          title: formData.title
-        }
-      }
+          title: formData.title,
+        },
+      },
     });
 
     return {
       id: result.data.pageCreate.page?.id || null,
-      errors: getMutationErrors(result)
+      errors: getMutationErrors(result),
     };
   };
 
   const handleSubmit = createMetadataCreateHandler(
     handleCreate,
     updateMetadata,
-    updatePrivateMetadata
+    updatePrivateMetadata,
   );
 
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
       pageCreateUrl({
         action: "assign-attribute-value",
-        id: attribute.id
-      })
+        id: attribute.id,
+      }),
     );
 
   const fetchMorePageTypes = {
     hasMore: searchPageTypesOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchPageTypesOpts.loading,
-    onFetchMore: loadMorePageTypes
+    onFetchMore: loadMorePageTypes,
   };
   const fetchMoreReferencePages = {
     hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchPagesOpts.loading,
-    onFetchMore: loadMorePages
+    onFetchMore: loadMorePages,
   };
   const fetchMoreReferenceProducts = {
     hasMore: searchProductsOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchProductsOpts.loading,
-    onFetchMore: loadMoreProducts
+    onFetchMore: loadMoreProducts,
   };
   const fetchMoreAttributeValues = {
     hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo
       ?.hasNextPage,
     loading: !!searchAttributeValuesOpts.loading,
-    onFetchMore: loadMoreAttributeValues
+    onFetchMore: loadMoreAttributeValues,
   };
 
   return (
@@ -184,7 +184,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
         title={intl.formatMessage({
           id: "mX7zJJ",
           defaultMessage: "Create Page",
-          description: "header"
+          description: "header",
         })}
       />
       <PageDetailsPage

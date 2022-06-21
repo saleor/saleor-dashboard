@@ -1,12 +1,12 @@
 import { ChannelData } from "@saleor/channels/utils";
 import ChannelAvailabilityItemContent from "@saleor/components/ChannelsAvailabilityCard/Channel/ChannelAvailabilityItemContent";
 import ChannelsAvailabilityCardWrapper, {
-  ChannelsAvailabilityWrapperProps
+  ChannelsAvailabilityWrapperProps,
 } from "@saleor/components/ChannelsAvailabilityCard/ChannelsAvailabilityCardWrapper";
 import {
   ChannelOpts,
   ChannelsAvailabilityError,
-  Messages
+  Messages,
 } from "@saleor/components/ChannelsAvailabilityCard/types";
 import { getChannelsAvailabilityMessages } from "@saleor/components/ChannelsAvailabilityCard/utils";
 import { PermissionEnum, ProductDetailsVariantFragment } from "@saleor/graphql";
@@ -15,7 +15,7 @@ import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
 import {
   areAnyChannelVariantsSelected,
-  getTotalSelectedChannelsCount
+  getTotalSelectedChannelsCount,
 } from "@saleor/products/views/ProductUpdate/utils";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -47,7 +47,7 @@ const ChannelsWithVariantsAvailabilityCard: React.FC<ChannelsWithVariantsAvailab
   variants,
   errors = [],
   messages,
-  onChange
+  onChange,
 }) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
@@ -56,13 +56,13 @@ const ChannelsWithVariantsAvailabilityCard: React.FC<ChannelsWithVariantsAvailab
     messages,
     channels,
     intl,
-    localizeDate
+    localizeDate,
   });
 
   const allChannelsCount = channels.length;
 
   const selectedChannelsCount = getTotalSelectedChannelsCount(
-    channelsWithVariantsData
+    channelsWithVariantsData,
   );
 
   return (
@@ -74,7 +74,7 @@ const ChannelsWithVariantsAvailabilityCard: React.FC<ChannelsWithVariantsAvailab
     >
       {channels
         .filter(({ id }) =>
-          areAnyChannelVariantsSelected(channelsWithVariantsData[id])
+          areAnyChannelVariantsSelected(channelsWithVariantsData[id]),
         )
         .map(({ id }) => (
           <ChannelWithVariantsAvailabilityItemWrapper

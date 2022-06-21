@@ -1,7 +1,7 @@
 import {
   PermissionFragment,
   PermissionGroupDetailsFragment,
-  UserFragment
+  UserFragment,
 } from "@saleor/graphql";
 import difference from "lodash/difference";
 
@@ -12,7 +12,7 @@ import { PermissionGroupDetailsPageFormData } from "./components/PermissionGroup
  */
 export const isGroupFullAccess = (
   permissionGroup: PermissionGroupDetailsFragment,
-  shopPermissions: Array<Omit<PermissionFragment, "__typename">>
+  shopPermissions: Array<Omit<PermissionFragment, "__typename">>,
 ) => {
   const assignedCodes = extractPermissionCodes(permissionGroup);
 
@@ -32,7 +32,7 @@ export const isGroupFullAccess = (
  * Return list of codes which are assigned to the permission group.
  */
 export const extractPermissionCodes = (
-  permissionGroup: PermissionGroupDetailsFragment
+  permissionGroup: PermissionGroupDetailsFragment,
 ) =>
   permissionGroup?.permissions
     ? permissionGroup.permissions.map(perm => perm.code)
@@ -43,14 +43,14 @@ export const extractPermissionCodes = (
  */
 export const permissionsDiff = (
   permissionGroup: PermissionGroupDetailsFragment,
-  formData: PermissionGroupDetailsPageFormData
+  formData: PermissionGroupDetailsPageFormData,
 ) => {
   const newPermissions = formData.permissions;
   const oldPermissions = extractPermissionCodes(permissionGroup);
 
   return {
     addPermissions: difference(newPermissions, oldPermissions),
-    removePermissions: difference(oldPermissions, newPermissions)
+    removePermissions: difference(oldPermissions, newPermissions),
   };
 };
 
@@ -59,14 +59,14 @@ export const permissionsDiff = (
  */
 export const usersDiff = (
   permissionGroup: PermissionGroupDetailsFragment,
-  formData: PermissionGroupDetailsPageFormData
+  formData: PermissionGroupDetailsPageFormData,
 ) => {
   const newUsers = formData.users.map(u => u.id);
   const oldUsers = permissionGroup?.users.map(u => u.id);
 
   return {
     addUsers: difference(newUsers, oldUsers),
-    removeUsers: difference(oldUsers, newUsers)
+    removeUsers: difference(oldUsers, newUsers),
   };
 };
 
@@ -75,7 +75,7 @@ export const usersDiff = (
  */
 export const arePermissionsExceeded = (
   permissionGroup: PermissionGroupDetailsFragment,
-  user: UserFragment
+  user: UserFragment,
 ) => {
   const groupPermissions = extractPermissionCodes(permissionGroup);
   const userPermissions = user.userPermissions.map(p => p.code);

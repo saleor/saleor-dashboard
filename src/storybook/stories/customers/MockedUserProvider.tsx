@@ -22,8 +22,8 @@ export const MockedUserProvider: React.FC<{
         isStaff: true,
         userPermissions: customPermissions ?? adminUserPermissions,
         avatar: null,
-        __typename: "User"
-      }
+        __typename: "User",
+      },
     }}
   >
     {children}

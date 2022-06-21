@@ -11,12 +11,12 @@ const props: Omit<LoginCardProps, "classes"> = {
     {
       __typename: "ExternalAuthentication",
       id: "auth.plugin.example",
-      name: "Example auth plugin"
-    }
+      name: "Example auth plugin",
+    },
   ],
   loading: false,
   onExternalAuthentication: () => undefined,
-  onSubmit: () => undefined
+  onSubmit: () => undefined,
 };
 
 storiesOf("Views / Authentication / Log in", module)

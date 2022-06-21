@@ -13,7 +13,7 @@ export const DebounceForm: React.FC<DebounceFormProps> = ({
   change,
   children,
   submit,
-  time
+  time,
 }) => (
   <Debounce debounceFn={submit} time={time}>
     {debounceFn =>

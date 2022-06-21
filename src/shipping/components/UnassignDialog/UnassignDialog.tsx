@@ -17,7 +17,7 @@ export const UnassignDialog: React.FC<UnassignDialogProps> = ({
   confirmButtonState,
   idsLength,
   onConfirm,
-  open
+  open,
 }) => {
   const intl = useIntl();
   return (
@@ -26,7 +26,7 @@ export const UnassignDialog: React.FC<UnassignDialogProps> = ({
       title={intl.formatMessage({
         id: "Gfbp36",
         defaultMessage: "Unassign Products From Shipping",
-        description: "dialog header"
+        description: "dialog header",
       })}
       confirmButtonState={confirmButtonState}
       onClose={closeModal}
@@ -34,7 +34,7 @@ export const UnassignDialog: React.FC<UnassignDialogProps> = ({
       confirmButtonLabel={intl.formatMessage({
         id: "p/Fd7s",
         defaultMessage: "Unassign and save",
-        description: "unassign products from shipping rate and save, button"
+        description: "unassign products from shipping rate and save, button",
       })}
     >
       <DialogContentText>
@@ -44,7 +44,7 @@ export const UnassignDialog: React.FC<UnassignDialogProps> = ({
           description="dialog content"
           values={{
             counter: idsLength,
-            displayQuantity: <strong>{idsLength}</strong>
+            displayQuantity: <strong>{idsLength}</strong>,
           }}
         />
       </DialogContentText>

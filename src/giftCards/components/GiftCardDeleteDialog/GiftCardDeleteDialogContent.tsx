@@ -1,10 +1,10 @@
 import {
   CircularProgress,
   DialogContentText,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import ActionDialog, {
-  ActionDialogProps
+  ActionDialogProps,
 } from "@saleor/components/ActionDialog";
 import DeleteWarningDialogConsentContent from "@saleor/components/TypeDeleteWarningDialog/DeleteWarningDialogConsentContent";
 import { GiftCardsListConsumerProps } from "@saleor/giftCards/GiftCardsList/providers/GiftCardListProvider";
@@ -55,7 +55,7 @@ function GiftCardDeleteDialogContent<
   listElements,
   giftCards,
   giftCard,
-  loading
+  loading,
 }: GiftCardDeleteDialogContentProps<TGiftCard>) {
   const intl = useIntl();
   const classes = useStyles({});
@@ -109,17 +109,17 @@ function GiftCardDeleteDialogContent<
           isConsentChecked={isConsentChecked}
           onConsentChange={setConsentChecked}
           description={intl.formatMessage(messages.withBalanceDescription, {
-            selectedItemsCount
+            selectedItemsCount,
           })}
           consentLabel={intl.formatMessage(messages.consentLabel, {
-            selectedItemsCount
+            selectedItemsCount,
           })}
         />
       ) : (
         <DialogContentText>
           <Typography>
             {intl.formatMessage(messages.defaultDescription, {
-              selectedItemsCount
+              selectedItemsCount,
             })}
           </Typography>
         </DialogContentText>

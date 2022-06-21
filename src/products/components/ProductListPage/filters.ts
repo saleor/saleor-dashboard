@@ -6,7 +6,7 @@ import {
   AutocompleteFilterOpts,
   FilterOpts,
   KeyValue,
-  MinMax
+  MinMax,
 } from "@saleor/types";
 import {
   createAutocompleteField,
@@ -15,7 +15,7 @@ import {
   createDateTimeField,
   createKeyValueField,
   createOptionsField,
-  createPriceField
+  createPriceField,
 } from "@saleor/utils/filters/fields";
 import { defineMessages, IntlShape } from "react-intl";
 
@@ -28,7 +28,7 @@ export enum ProductFilterKeys {
   productType = "productType",
   stock = "stock",
   channel = "channel",
-  productKind = "productKind"
+  productKind = "productKind",
 }
 
 export type AttributeFilterOpts = FilterOpts<string[]> & {
@@ -55,71 +55,71 @@ const messages = defineMessages({
   available: {
     id: "diOQm7",
     defaultMessage: "Available",
-    description: "product status"
+    description: "product status",
   },
   channel: {
     id: "pbGIUg",
     defaultMessage: "Channel",
-    description: "sales channel"
+    description: "sales channel",
   },
   kind: {
     id: "pBTTtU",
     defaultMessage: "Product Kind",
-    description: "product kind"
+    description: "product kind",
   },
   hidden: {
     id: "Bx367s",
     defaultMessage: "Hidden",
-    description: "product is hidden"
+    description: "product is hidden",
   },
   metadata: {
     defaultMessage: "Metadata",
-    id: "8Q504V"
+    id: "8Q504V",
   },
   outOfStock: {
     id: "Sna+WK",
     defaultMessage: "Out Of Stock",
-    description: "product status"
+    description: "product status",
   },
   price: {
     id: "b1zuN9",
-    defaultMessage: "Price"
+    defaultMessage: "Price",
   },
   quantity: {
     id: "3Z8972",
     defaultMessage: "Stock quantity",
-    description: "product"
+    description: "product",
   },
   visibility: {
     id: "g+GAf4",
     defaultMessage: "Visibility",
-    description: "product visibility"
+    description: "product visibility",
   },
   visible: {
     id: "6Y1nQd",
     defaultMessage: "Visible",
-    description: "product is visible"
-  }
+    description: "product is visible",
+  },
 });
 
 const filterByType = (type: AttributeInputTypeEnum) => (
-  attribute: AttributeFilterOpts
+  attribute: AttributeFilterOpts,
 ) => attribute.inputType === type;
 
 export function createFilterStructure(
   intl: IntlShape,
-  opts: ProductListFilterOpts
+  opts: ProductListFilterOpts,
 ): IFilter<string> {
   const attributes = opts.attributes;
 
   const booleanAttributes = attributes.filter(
-    filterByType(AttributeInputTypeEnum.BOOLEAN)
+    filterByType(AttributeInputTypeEnum.BOOLEAN),
   );
   const dateAttributes = attributes.filter(
-    filterByType(AttributeInputTypeEnum.DATE)
+    filterByType(AttributeInputTypeEnum.DATE),
   );
   const dateTimeAttributes = attributes.filter(
-    filterByType(AttributeInputTypeEnum.DATE_TIME)
+    filterByType(AttributeInputTypeEnum.DATE_TIME),
   );
 
   const defaultAttributes = opts.attributes.filter(
@@ -127,8 +127,8 @@ export function createFilterStructure(
       ![
         AttributeInputTypeEnum.BOOLEAN,
         AttributeInputTypeEnum.DATE,
-        AttributeInputTypeEnum.DATE_TIME
-      ].includes(inputType)
+        AttributeInputTypeEnum.DATE_TIME,
+      ].includes(inputType),
   );
 
   return [
@@ -138,17 +138,17 @@ export function createFilterStructure(
         intl.formatMessage(messages.channel),
         [opts.channel.value],
         false,
-        opts.channel.choices
+        opts.channel.choices,
       ),
-      active: opts.channel.active
+      active: opts.channel.active,
     },
     {
       ...createKeyValueField(
         ProductFilterKeys.metadata,
         intl.formatMessage(messages.metadata),
-        opts.metadata.value
+        opts.metadata.value,
       ),
-      active: opts.metadata.active
+      active: opts.metadata.active,
     },
     {
       ...createOptionsField(
@@ -156,9 +156,9 @@ export function createFilterStructure(
         intl.formatMessage(messages.kind),
         [opts.productKind.value],
         false,
-        opts.productKind.choices
+        opts.productKind.choices,
       ),
-      active: opts.productKind.active
+      active: opts.productKind.active,
     },
     {
       ...createOptionsField(
@@ -169,24 +169,24 @@ export function createFilterStructure(
         [
           {
             label: intl.formatMessage(messages.available),
-            value: StockAvailability.IN_STOCK
+            value: StockAvailability.IN_STOCK,
           },
           {
             label: intl.formatMessage(messages.outOfStock),
-            value: StockAvailability.OUT_OF_STOCK
-          }
-        ]
+            value: StockAvailability.OUT_OF_STOCK,
+          },
+        ],
       ),
       active: opts.stockStatus.active,
-      dependencies: [ProductFilterKeys.channel]
+      dependencies: [ProductFilterKeys.channel],
     },
     {
       ...createPriceField(
         ProductFilterKeys.price,
         intl.formatMessage(messages.price),
-        opts.price.value
+        opts.price.value,
       ),
-      active: opts.price.active
+      active: opts.price.active,
     },
     {
       ...createAutocompleteField(
@@ -201,10 +201,10 @@ export function createFilterStructure(
           initialSearch: "",
           loading: opts.categories.loading,
           onFetchMore: opts.categories.onFetchMore,
-          onSearchChange: opts.categories.onSearchChange
-        }
+          onSearchChange: opts.categories.onSearchChange,
+        },
       ),
-      active: opts.categories.active
+      active: opts.categories.active,
     },
     {
       ...createAutocompleteField(
@@ -219,10 +219,10 @@ export function createFilterStructure(
           initialSearch: "",
           loading: opts.collections.loading,
           onFetchMore: opts.collections.onFetchMore,
-          onSearchChange: opts.collections.onSearchChange
-        }
+          onSearchChange: opts.collections.onSearchChange,
+        },
       ),
-      active: opts.collections.active
+      active: opts.collections.active,
     },
     {
       ...createAutocompleteField(
@@ -237,10 +237,10 @@ export function createFilterStructure(
           initialSearch: "",
           loading: opts.productType.loading,
           onFetchMore: opts.productType.onFetchMore,
-          onSearchChange: opts.productType.onSearchChange
-        }
+          onSearchChange: opts.productType.onSearchChange,
+        },
       ),
-      active: opts.productType.active
+      active: opts.productType.active,
     },
     ...booleanAttributes.map(attr => ({
       ...createBooleanField(
@@ -251,27 +251,27 @@ export function createFilterStructure(
           : (attr.value as unknown) === "true",
         {
           positive: intl.formatMessage(commonMessages.yes),
-          negative: intl.formatMessage(commonMessages.no)
-        }
+          negative: intl.formatMessage(commonMessages.no),
+        },
       ),
       active: attr.active,
-      group: ProductFilterKeys.attributes
+      group: ProductFilterKeys.attributes,
     })),
     ...dateAttributes.map(attr => ({
       ...createDateField(attr.slug, attr.name, {
         min: attr.value[0],
-        max: attr.value[1] ?? attr.value[0]
+        max: attr.value[1] ?? attr.value[0],
       }),
       active: attr.active,
-      group: ProductFilterKeys.attributes
+      group: ProductFilterKeys.attributes,
     })),
     ...dateTimeAttributes.map(attr => ({
       ...createDateTimeField(attr.slug, attr.name, {
         min: attr.value[0],
-        max: attr.value[1] ?? attr.value[0]
+        max: attr.value[1] ?? attr.value[0],
       }),
       active: attr.active,
-      group: ProductFilterKeys.attributes
+      group: ProductFilterKeys.attributes,
     })),
     ...defaultAttributes.map(attr => ({
       ...createAutocompleteField(
@@ -286,12 +286,12 @@ export function createFilterStructure(
           initialSearch: "",
           loading: opts.attributeChoices.loading,
           onFetchMore: opts.attributeChoices.onFetchMore,
-          onSearchChange: opts.attributeChoices.onSearchChange
+          onSearchChange: opts.attributeChoices.onSearchChange,
         },
-        attr.id
+        attr.id,
       ),
       active: attr.active,
-      group: ProductFilterKeys.attributes
-    }))
+      group: ProductFilterKeys.attributes,
+    })),
   ];
 }

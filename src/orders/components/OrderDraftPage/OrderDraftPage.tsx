@@ -27,14 +27,14 @@ import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 const useStyles = makeStyles(
   theme => ({
     date: {
-      marginBottom: theme.spacing(3)
+      marginBottom: theme.spacing(3),
     },
     header: {
       display: "flex",
-      marginBottom: 0
-    }
+      marginBottom: 0,
+    },
   }),
-  { name: "OrderDraftPage" }
+  { name: "OrderDraftPage" },
 );
 
 export interface OrderDraftPageProps extends FetchMoreProps {
@@ -52,7 +52,7 @@ export interface OrderDraftPageProps extends FetchMoreProps {
   onOrderLineAdd: () => void;
   onOrderLineChange: (
     id: string,
-    data: OrderDraftDetailsProductsFormData
+    data: OrderDraftDetailsProductsFormData,
   ) => void;
   onOrderLineRemove: (id: string) => void;
   onProductClick: (id: string) => void;
@@ -81,7 +81,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
     onProfileView,
     order,
     users,
-    usersLoading
+    usersLoading,
   } = props;
   const classes = useStyles(props);
   const navigate = useNavigator();
@@ -104,10 +104,10 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
               label: intl.formatMessage({
                 id: "PAqicb",
                 defaultMessage: "Cancel order",
-                description: "button"
+                description: "button",
               }),
-              onSelect: onDraftRemove
-            }
+              onSelect: onDraftRemove,
+            },
           ]}
         />
       </PageHeader>
@@ -163,8 +163,8 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
           confirm: intl.formatMessage({
             id: "4Z14xW",
             defaultMessage: "Finalize",
-            description: "button"
-          })
+            description: "button",
+          }),
         }}
       />
     </Container>

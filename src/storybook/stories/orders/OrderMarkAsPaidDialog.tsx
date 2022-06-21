@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import OrderMarkAsPaidDialog, {
-  OrderMarkAsPaidDialogProps
+  OrderMarkAsPaidDialogProps,
 } from "../../../orders/components/OrderMarkAsPaidDialog";
 import Decorator from "../../Decorator";
 
@@ -14,7 +14,7 @@ const props: OrderMarkAsPaidDialogProps = {
   onClose: () => undefined,
   onConfirm: () => undefined,
   open: true,
-  transactionReference: ""
+  transactionReference: "",
 };
 
 storiesOf("Orders / OrderMarkAsPaidDialog", module)
@@ -29,8 +29,8 @@ storiesOf("Orders / OrderMarkAsPaidDialog", module)
           code: OrderErrorCode.GRAPHQL_ERROR,
           field: null,
           addressType: null,
-          message: "Graphql error"
-        }
+          message: "Graphql error",
+        },
       ]}
     />
   ));

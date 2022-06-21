@@ -4,7 +4,7 @@ import {
   TableCell,
   TableFooter,
   TableRow,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
@@ -25,22 +25,22 @@ const useStyles = makeStyles(
   theme => ({
     colAction: {
       "&:last-child": {
-        paddingRight: theme.spacing(3)
+        paddingRight: theme.spacing(3),
       },
       textAlign: "right",
-      width: 100
+      width: 100,
     },
     colName: {
-      width: "auto"
+      width: "auto",
     },
     colProductName: {
-      paddingLeft: 0
+      paddingLeft: 0,
     },
     table: {
-      tableLayout: "fixed"
-    }
+      tableLayout: "fixed",
+    },
   }),
-  { name: "ShippingMethodProducts" }
+  { name: "ShippingMethodProducts" },
 );
 
 export interface ShippingMethodProductsProps
@@ -65,7 +65,7 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
     selected,
     toggle,
     toggleAll,
-    toolbar
+    toolbar,
   } = props;
 
   const classes = useStyles(props);
@@ -77,7 +77,7 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
         title={intl.formatMessage({
           id: "t3aiWF",
           defaultMessage: "Excluded Products",
-          description: "section header"
+          description: "section header",
         })}
         toolbar={
           <Button variant="tertiary" onClick={onProductAssign}>

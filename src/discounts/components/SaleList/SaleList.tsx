@@ -34,37 +34,37 @@ const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
       colEnd: {
-        width: 250
+        width: 250,
       },
       colName: {},
       colStart: {
-        width: 250
+        width: 250,
       },
       colValue: {
-        width: 200
-      }
+        width: 200,
+      },
     },
     colEnd: {
-      textAlign: "right"
+      textAlign: "right",
     },
     colName: {
-      paddingLeft: 0
+      paddingLeft: 0,
     },
     colStart: {
-      textAlign: "right"
+      textAlign: "right",
     },
     colValue: {
-      textAlign: "right"
+      textAlign: "right",
     },
     tableRow: {
-      cursor: "pointer"
+      cursor: "pointer",
     },
     textOverflow: {
       textOverflow: "ellipsis",
-      overflow: "hidden"
-    }
+      overflow: "hidden",
+    },
   }),
-  { name: "SaleList" }
+  { name: "SaleList" },
 );
 
 const SaleList: React.FC<SaleListProps> = props => {
@@ -81,7 +81,7 @@ const SaleList: React.FC<SaleListProps> = props => {
     toggle,
     toggleAll,
     toolbar,
-    filterDependency
+    filterDependency,
   } = props;
 
   const classes = useStyles(props);
@@ -158,7 +158,7 @@ const SaleList: React.FC<SaleListProps> = props => {
             !canBeSorted(SaleListUrlSortField.value, !!selectedChannelId)
           }
           tooltip={intl.formatMessage(commonTooltipMessages.noFilterSelected, {
-            filterName: filterDependency.label
+            filterName: filterDependency.label,
           })}
           className={classes.colValue}
         >
@@ -184,7 +184,7 @@ const SaleList: React.FC<SaleListProps> = props => {
           sale => {
             const isSelected = sale ? isChecked(sale.id) : false;
             const channel = sale?.channelListings?.find(
-              lisiting => lisiting.channel.id === selectedChannelId
+              lisiting => lisiting.channel.id === selectedChannelId,
             );
             return (
               <TableRowLink
@@ -229,7 +229,7 @@ const SaleList: React.FC<SaleListProps> = props => {
                       <Money
                         money={{
                           amount: channel.discountValue,
-                          currency: channel.currency
+                          currency: channel.currency,
                         }}
                       />
                     ) : channel?.discountValue ? (
@@ -252,7 +252,7 @@ const SaleList: React.FC<SaleListProps> = props => {
                 <FormattedMessage id="51HE+Q" defaultMessage="No sales found" />
               </TableCell>
             </TableRow>
-          )
+          ),
         )}
       </TableBody>
     </ResponsiveTable>

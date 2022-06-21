@@ -12,10 +12,10 @@ const useStyles = makeStyles(
   theme => ({
     container: {
       backgroundColor: fade(theme.palette.primary.main, 0.1),
-      padding: theme.spacing(3, 3, 0, 3)
+      padding: theme.spacing(3, 3, 0, 3),
     },
     listItemTitle: {
-      color: theme.palette.primary.contrastText
+      color: theme.palette.primary.contrastText,
     },
     dot: {
       backgroundColor: theme.palette.primary.contrastText,
@@ -24,14 +24,14 @@ const useStyles = makeStyles(
       height: 8,
       minHeight: 8,
       width: 8,
-      minWidth: 8
+      minWidth: 8,
     },
     itemContainer: {
       display: "flex",
-      alignItems: "center"
-    }
+      alignItems: "center",
+    },
   }),
-  { name: "FilterErrorsList" }
+  { name: "FilterErrorsList" },
 );
 
 interface FilterErrorsListProps<T extends string = string> {
@@ -43,7 +43,7 @@ interface FilterErrorsListProps<T extends string = string> {
 const FilterErrorsList: React.FC<FilterErrorsListProps> = ({
   filter: { dependencies },
   errors = [],
-  errorMessages
+  errorMessages,
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
@@ -52,7 +52,7 @@ const FilterErrorsList: React.FC<FilterErrorsListProps> = ({
     try {
       return intl.formatMessage(
         errorMessages?.[code] || validationMessages[code],
-        { dependencies: dependencies?.join() }
+        { dependencies: dependencies?.join() },
       );
     } catch (e) {
       errorTracker.captureException(e);

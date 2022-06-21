@@ -6,7 +6,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import HomePageComponent, {
-  HomePageProps
+  HomePageProps,
 } from "../../../home/components/HomePage";
 import { shop as shopFixture } from "../../../home/fixtures";
 import Decorator from "../../Decorator";
@@ -27,7 +27,7 @@ const homePageProps: Omit<HomePageProps, "classes"> = {
   productsOutOfStock: shop.productsOutOfStock.totalCount,
   sales: shop.salesToday.gross,
   topProducts: mapEdgesToItems(shop.productTopToday),
-  userName: "admin@example.com"
+  userName: "admin@example.com",
 };
 
 const HomePage = props => {
@@ -66,7 +66,7 @@ storiesOf("Views / HomePage", module)
     <HomePage
       {...homePageProps}
       customPermissions={adminUserPermissions.filter(
-        perm => perm.code === PermissionEnum.MANAGE_PRODUCTS
+        perm => perm.code === PermissionEnum.MANAGE_PRODUCTS,
       )}
     />
   ))
@@ -74,7 +74,7 @@ storiesOf("Views / HomePage", module)
     <HomePage
       {...homePageProps}
       customPermissions={adminUserPermissions.filter(
-        perm => perm.code === PermissionEnum.MANAGE_ORDERS
+        perm => perm.code === PermissionEnum.MANAGE_ORDERS,
       )}
     />
   ));

@@ -19,7 +19,7 @@ import {
   orderRefundPath,
   orderReturnPath,
   orderSettingsPath,
-  OrderUrlQueryParams
+  OrderUrlQueryParams,
 } from "./urls";
 import OrderDetailsComponent from "./views/OrderDetails";
 import OrderDraftListComponent from "./views/OrderDraftList";
@@ -35,7 +35,7 @@ const OrderList: React.FC<RouteComponentProps<any>> = ({ location }) => {
     qs,
     OrderListUrlSortField,
     OrderListUrlSortField.number,
-    false
+    false,
   );
   return <OrderListComponent params={params} />;
 };
@@ -45,7 +45,7 @@ const OrderDraftList: React.FC<RouteComponentProps<any>> = ({ location }) => {
     qs,
     OrderDraftListUrlSortField,
     OrderDraftListUrlSortField.number,
-    false
+    false,
   );
 
   return <OrderDraftListComponent params={params} />;
@@ -53,7 +53,7 @@ const OrderDraftList: React.FC<RouteComponentProps<any>> = ({ location }) => {
 
 const OrderDetails: React.FC<RouteComponentProps<any>> = ({
   location,
-  match
+  match,
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: OrderUrlQueryParams = qs;
@@ -64,7 +64,7 @@ const OrderDetails: React.FC<RouteComponentProps<any>> = ({
 
 const OrderFulfill: React.FC<RouteComponentProps<any>> = ({
   location,
-  match
+  match,
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: OrderFulfillUrlQueryParams = qs;

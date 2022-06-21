@@ -3,7 +3,7 @@ import {
   List,
   ListItem,
   ListItemText,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import { DateTime } from "@saleor/components/Date";
@@ -21,14 +21,14 @@ const useStyles = makeStyles(
   {
     loadingProducts: {
       paddingBottom: "10px",
-      paddingTop: "10px"
+      paddingTop: "10px",
     },
     noProducts: {
       paddingBottom: "16px",
-      paddingTop: "16px"
-    }
+      paddingTop: "16px",
+    },
   },
-  { name: "HomeActivityCard" }
+  { name: "HomeActivityCard" },
 );
 
 interface HomeActivityCardProps {
@@ -48,7 +48,7 @@ const HomeActivityCard: React.FC<HomeActivityCardProps> = props => {
         title={intl.formatMessage({
           id: "BXkF8Z",
           defaultMessage: "Activity",
-          description: "header"
+          description: "header",
         })}
       />
       <List dense={true}>
@@ -87,7 +87,7 @@ const HomeActivityCard: React.FC<HomeActivityCardProps> = props => {
                 }
               />
             </ListItem>
-          )
+          ),
         )}
       </List>
     </Card>

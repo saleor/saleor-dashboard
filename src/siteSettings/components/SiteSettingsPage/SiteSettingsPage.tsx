@@ -51,7 +51,7 @@ export interface SiteSettingsPageProps {
 }
 
 export function areAddressInputFieldsModified(
-  data: SiteSettingsPageAddressFormData
+  data: SiteSettingsPageAddressFormData,
 ): boolean {
   return ([
     "city",
@@ -60,7 +60,7 @@ export function areAddressInputFieldsModified(
     "phone",
     "postalCode",
     "streetAddress1",
-    "streetAddress2"
+    "streetAddress2",
   ] as Array<keyof SiteSettingsPageAddressFormData>)
     .map(key => data[key])
     .some(field => field !== "");
@@ -70,12 +70,12 @@ const useStyles = makeStyles(
   theme => ({
     hr: {
       gridColumnEnd: "span 2",
-      margin: theme.spacing(1, 0)
-    }
+      margin: theme.spacing(1, 0),
+    },
   }),
   {
-    name: "SiteSettingsPage"
-  }
+    name: "SiteSettingsPage",
+  },
 );
 
 const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
@@ -86,12 +86,12 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
   const navigate = useNavigator();
 
   const [displayCountry, setDisplayCountry] = useStateFromProps(
-    shop?.companyAddress?.country.code || ""
+    shop?.companyAddress?.country.code || "",
   );
 
   const {
     errors: validationErrors,
-    submit: handleSubmitWithAddress
+    submit: handleSubmitWithAddress,
   } = useAddressValidation(onSubmit);
 
   const initialFormAddress: SiteSettingsPageAddressFormData = {
@@ -102,7 +102,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
     phone: shop?.companyAddress?.phone || "",
     postalCode: shop?.companyAddress?.postalCode || "",
     streetAddress1: shop?.companyAddress?.streetAddress1 || "",
-    streetAddress2: shop?.companyAddress?.streetAddress2 || ""
+    streetAddress2: shop?.companyAddress?.streetAddress2 || "",
   };
   const initialForm: SiteSettingsPageFormData = {
     ...initialFormAddress,
@@ -110,7 +110,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
     reserveStockDurationAnonymousUser: shop?.reserveStockDurationAnonymousUser,
     reserveStockDurationAuthenticatedUser:
       shop?.reserveStockDurationAuthenticatedUser,
-    limitQuantityPerCheckout: shop?.limitQuantityPerCheckout
+    limitQuantityPerCheckout: shop?.limitQuantityPerCheckout,
   };
 
   return (
@@ -130,7 +130,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
         const handleCountryChange = createSingleAutocompleteSelectHandler(
           change,
           setDisplayCountry,
-          countryChoices
+          countryChoices,
         );
 
         return (
@@ -146,7 +146,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
               <PageSectionHeader
                 title={intl.formatMessage(messages.sectionCheckoutTitle)}
                 description={intl.formatMessage(
-                  messages.sectionCheckoutDescription
+                  messages.sectionCheckoutDescription,
                 )}
               />
               <SiteCheckoutSettingsCard
@@ -159,7 +159,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
               <PageSectionHeader
                 title={intl.formatMessage(messages.sectionCompanyTitle)}
                 description={intl.formatMessage(
-                  messages.sectionCompanyDescription
+                  messages.sectionCompanyDescription,
                 )}
               />
               <CompanyAddressInput
@@ -171,7 +171,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                 header={intl.formatMessage({
                   id: "+jCDvp",
                   defaultMessage: "Store Information",
-                  description: "section header"
+                  description: "section header",
                 })}
                 onChange={change}
                 onCountryChange={handleCountryChange}

@@ -2,7 +2,7 @@ import { LimitInfoFragment, RefreshLimitsQuery } from "@saleor/graphql";
 
 export function hasLimits(
   limits: RefreshLimitsQuery["shop"]["limits"],
-  key: keyof LimitInfoFragment
+  key: keyof LimitInfoFragment,
 ): boolean {
   if (limits === undefined) {
     return false;
@@ -13,7 +13,7 @@ export function hasLimits(
 
 export function isLimitReached(
   limits: RefreshLimitsQuery["shop"]["limits"],
-  key: keyof LimitInfoFragment
+  key: keyof LimitInfoFragment,
 ): boolean {
   if (!hasLimits(limits, key)) {
     return false;

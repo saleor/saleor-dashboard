@@ -2,7 +2,7 @@ import { buttonMessages, commonMessages } from "@saleor/intl";
 import {
   Savebar as MacawSavebar,
   SavebarLabels,
-  SavebarProps as MacawSavebarProps
+  SavebarProps as MacawSavebarProps,
 } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -18,11 +18,11 @@ export const Savebar: React.FC<SavebarProps> = ({ labels = {}, ...rest }) => {
     cancel: intl.formatMessage(buttonMessages.back),
     confirm: intl.formatMessage(buttonMessages.save),
     delete: intl.formatMessage(buttonMessages.delete),
-    error: intl.formatMessage(commonMessages.error)
+    error: intl.formatMessage(commonMessages.error),
   };
   const componentLabels: SavebarLabels = {
     ...defaultLabels,
-    ...labels
+    ...labels,
   };
 
   return <MacawSavebar labels={componentLabels} {...rest} />;

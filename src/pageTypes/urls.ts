@@ -9,7 +9,7 @@ import {
   Pagination,
   SingleAction,
   Sort,
-  TabActionDialog
+  TabActionDialog,
 } from "../types";
 
 const pageTypeSection = "/page-types/";
@@ -17,12 +17,12 @@ const pageTypeSection = "/page-types/";
 export const pageTypeListPath = pageTypeSection;
 export enum PageTypeListUrlFiltersEnum {
   type = "type",
-  query = "query"
+  query = "query",
 }
 export type PageTypeListUrlFilters = Filters<PageTypeListUrlFiltersEnum>;
 export type PageTypeListUrlDialog = "remove" | TabActionDialog;
 export enum PageTypeListUrlSortField {
-  name = "name"
+  name = "name",
 }
 export type PageTypeListUrlSort = Sort<PageTypeListUrlSortField>;
 export type PageTypeListUrlQueryParams = ActiveTab &

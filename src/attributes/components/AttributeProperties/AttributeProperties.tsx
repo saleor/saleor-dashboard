@@ -17,55 +17,55 @@ const messages = defineMessages({
   availableInGrid: {
     id: "jswILH",
     defaultMessage: "Add to Column Options",
-    description: "add attribute as column in product list table"
+    description: "add attribute as column in product list table",
   },
   availableInGridCaption: {
     id: "AzMSmb",
     defaultMessage:
       "If enabled this attribute can be used as a column in product table.",
-    description: "caption"
+    description: "caption",
   },
   dashboardPropertiesTitle: {
     id: "lCxfDe",
     defaultMessage: "Dashboard Properties",
-    description: "attribute properties regarding dashboard"
+    description: "attribute properties regarding dashboard",
   },
   filterableInDashboard: {
     id: "RH+aOF",
     defaultMessage: "Use in Filtering",
-    description: "use attribute in filtering"
+    description: "use attribute in filtering",
   },
   filterableInDashboardCaption: {
     id: "Q9wTrz",
     defaultMessage:
       "If enabled, you’ll be able to use this attribute to filter products in product list.",
-    description: "caption"
+    description: "caption",
   },
   filterableInStorefront: {
     defaultMessage: "Use as filter",
     id: "e1vU/4",
-    description: "attribute is filterable in storefront"
+    description: "attribute is filterable in storefront",
   },
   storefrontPropertiesTitle: {
     id: "AgY5Mv",
     defaultMessage: "Storefront Properties",
-    description: "attribute properties regarding storefront"
+    description: "attribute properties regarding storefront",
   },
   storefrontSearchPosition: {
     id: "cJ5ASN",
     defaultMessage: "Position in faceted navigation",
-    description: "attribute position in storefront filters"
+    description: "attribute position in storefront filters",
   },
   visibleInStorefront: {
     id: "x8V/xS",
     defaultMessage: "Public",
-    description: "attribute visibility in storefront"
+    description: "attribute visibility in storefront",
   },
   visibleInStorefrontCaption: {
     id: "h2Hta6",
     defaultMessage: "If enabled, attribute will be accessible to customers.",
-    description: "caption"
-  }
+    description: "caption",
+  },
 });
 
 export interface AttributePropertiesProps {
@@ -79,7 +79,7 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
   data,
   errors,
   disabled,
-  onChange
+  onChange,
 }) => {
   const intl = useIntl();
 
@@ -87,7 +87,7 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
 
   const storefrontFacetedNavigationProperties =
     ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION.includes(
-      data.inputType
+      data.inputType,
     ) && data.type === AttributeTypeEnum.PRODUCT_TYPE;
 
   return (
@@ -112,7 +112,7 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
                   fullWidth
                   helperText={getAttributeErrorMessage(
                     formErrors.storefrontSearchPosition,
-                    intl
+                    intl,
                   )}
                   name={
                     "storefrontSearchPosition" as keyof AttributePageFormData

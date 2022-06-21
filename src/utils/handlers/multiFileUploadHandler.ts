@@ -13,8 +13,8 @@ function createMultiFileUploadHandler<T>(
     onBeforeUpload,
     onCompleted,
     onError,
-    onStart
-  }: CreateMultiFileUploadHandlerCallbacks
+    onStart,
+  }: CreateMultiFileUploadHandlerCallbacks,
 ) {
   async function uploadImage(files: File[], fileIndex: number): Promise<void> {
     if (files.length > fileIndex) {
@@ -30,7 +30,7 @@ function createMultiFileUploadHandler<T>(
         }
       } catch (exception) {
         console.error(
-          `Could not upload file #${fileIndex + 1}. Reason: ${exception}`
+          `Could not upload file #${fileIndex + 1}. Reason: ${exception}`,
         );
         if (onError) {
           onError(fileIndex, files);

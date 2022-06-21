@@ -1,5 +1,5 @@
 import AttributeUnassignDialog, {
-  AttributeUnassignDialogProps
+  AttributeUnassignDialogProps,
 } from "@saleor/components/AttributeUnassignDialog";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -13,7 +13,7 @@ const props: AttributeUnassignDialogProps = {
   onClose: () => undefined,
   onConfirm: () => undefined,
   open: true,
-  title: "Unassign Attribute from Shoes"
+  title: "Unassign Attribute from Shoes",
 };
 
 storiesOf("Generics / Unassign attribute", module)

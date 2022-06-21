@@ -4,7 +4,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import AssignContainerDialog, {
-  AssignContainerDialogProps
+  AssignContainerDialogProps,
 } from "../AssignContainerDialog";
 import { messages } from "./messages";
 
@@ -26,9 +26,9 @@ const AssignCategoryDialog: React.FC<AssignCategoryDialogProps> = ({
         title: intl.formatMessage(messages.assignCategoryDialogHeader),
         label: intl.formatMessage(messages.assignCategoryDialogLabel),
         placeholder: intl.formatMessage(
-          messages.assignCategoryDialogPlaceholder
+          messages.assignCategoryDialogPlaceholder,
         ),
-        confirmBtn: intl.formatMessage(messages.confirmButton)
+        confirmBtn: intl.formatMessage(messages.confirmButton),
       }}
       {...rest}
     />

@@ -14,7 +14,7 @@ interface StaffPreferencesProps {
 
 const StaffPreferences: React.FC<StaffPreferencesProps> = ({
   locale,
-  onLocaleChange
+  onLocaleChange,
 }) => {
   const intl = useIntl();
 
@@ -24,24 +24,24 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({
         title={intl.formatMessage({
           id: "CLeDae",
           defaultMessage: "Preferences",
-          description: "section header"
+          description: "section header",
         })}
       />
       <CardContent>
         <SingleAutocompleteSelectField
           choices={Object.values(Locale).map(locale => ({
             label: capitalize(localeNames[locale]),
-            value: locale
+            value: locale,
           }))}
           displayValue={localeNames[locale]}
           helperText={intl.formatMessage({
             id: "JJgJwi",
             defaultMessage:
-              "Selecting this will change the language of your dashboard"
+              "Selecting this will change the language of your dashboard",
           })}
           label={intl.formatMessage({
             id: "mr9jbO",
-            defaultMessage: "Preferred Language"
+            defaultMessage: "Preferred Language",
           })}
           name="locale"
           value={locale}

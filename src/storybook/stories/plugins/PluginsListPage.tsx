@@ -7,10 +7,10 @@ import React from "react";
 import {
   filterPageProps,
   pageListProps,
-  sortPageProps
+  sortPageProps,
 } from "../../../fixtures";
 import PluginsListPage, {
-  PluginsListPageProps
+  PluginsListPageProps,
 } from "../../../plugins/components/PluginsListPage";
 import { pluginList } from "../../../plugins/fixtures";
 import Decorator from "../../Decorator";
@@ -22,7 +22,7 @@ const props: PluginsListPageProps = {
   filterOpts: {
     isActive: {
       active: false,
-      value: true
+      value: true,
     },
     channels: {
       active: false,
@@ -33,22 +33,22 @@ const props: PluginsListPageProps = {
       loading: false,
       onFetchMore: () => undefined,
       onSearchChange: () => undefined,
-      value: []
+      value: [],
     },
     status: {
       active: false,
-      value: false
+      value: false,
     },
     type: {
       active: false,
-      value: PluginConfigurationType.GLOBAL
-    }
+      value: PluginConfigurationType.GLOBAL,
+    },
   },
   plugins: pluginList,
   sort: {
     ...sortPageProps.sort,
-    sort: PluginListUrlSortField.name
-  }
+    sort: PluginListUrlSortField.name,
+  },
 };
 
 storiesOf("Views / Plugins / Plugin list", module)

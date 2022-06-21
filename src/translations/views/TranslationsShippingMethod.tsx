@@ -1,7 +1,7 @@
 import {
   LanguageCodeEnum,
   useShippingMethodTranslationDetailsQuery,
-  useUpdateShippingMethodTranslationsMutation
+  useUpdateShippingMethodTranslationsMutation,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -28,7 +28,7 @@ export interface TranslationsShippingMethodProps {
 const TranslationsShippingMethod: React.FC<TranslationsShippingMethodProps> = ({
   id,
   languageCode,
-  params
+  params,
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
@@ -36,32 +36,32 @@ const TranslationsShippingMethod: React.FC<TranslationsShippingMethodProps> = ({
   const intl = useIntl();
 
   const shippingMethodTranslations = useShippingMethodTranslationDetailsQuery({
-    variables: { id, language: languageCode }
+    variables: { id, language: languageCode },
   });
 
   const [
     updateTranslations,
-    updateTranslationsOpts
+    updateTranslationsOpts,
   ] = useUpdateShippingMethodTranslationsMutation({
     onCompleted: data => {
       if (data.shippingPriceTranslate.errors.length === 0) {
         shippingMethodTranslations.refetch();
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
+          text: intl.formatMessage(commonMessages.savedChanges),
         });
         navigate("?", { replace: true });
       }
-    }
+    },
   });
 
   const onEdit = (field: string) =>
     navigate(
       "?" +
         stringifyQs({
-          activeField: field
+          activeField: field,
         }),
-      { replace: true }
+      { replace: true },
     );
 
   const onDiscard = () => {
@@ -70,16 +70,16 @@ const TranslationsShippingMethod: React.FC<TranslationsShippingMethodProps> = ({
 
   const handleSubmit = (
     { name: fieldName }: TranslationField<TranslationInputFieldName>,
-    data: string
+    data: string,
   ) =>
     extractMutationErrors(
       updateTranslations({
         variables: {
           id,
           input: getParsedTranslationInputData({ fieldName, data }),
-          language: languageCode
-        }
-      })
+          language: languageCode,
+        },
+      }),
     );
 
   const translation = shippingMethodTranslations?.data?.translation;

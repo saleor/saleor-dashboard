@@ -8,8 +8,8 @@ import Decorator from "../../Decorator";
 const props: WeightProps = {
   weight: {
     unit: "kg",
-    value: 8.4
-  }
+    value: 8.4,
+  },
 };
 
 storiesOf("Generics / Weight", module)

@@ -4,10 +4,10 @@ import React from "react";
 const useStyles = makeStyles(
   theme => ({
     root: {
-      marginBottom: theme.spacing(3)
-    }
+      marginBottom: theme.spacing(3),
+    },
   }),
-  { name: "LimitReachedAlert" }
+  { name: "LimitReachedAlert" },
 );
 
 export type LimitReachedAlertProps = Omit<AlertProps, "variant" | "close">;

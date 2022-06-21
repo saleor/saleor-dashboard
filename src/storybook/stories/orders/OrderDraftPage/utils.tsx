@@ -2,23 +2,23 @@
 import { OrderDetailsQuery } from "@saleor/graphql";
 import {
   OrderDiscountContext,
-  OrderDiscountContextConsumerProps
+  OrderDiscountContextConsumerProps,
 } from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import {
   OrderLineDiscountContext,
-  OrderLineDiscountContextConsumerProps
+  OrderLineDiscountContextConsumerProps,
 } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import React from "react";
 
 export const getDiscountsProvidersWrapper = (
-  order: OrderDetailsQuery["order"]
+  order: OrderDetailsQuery["order"],
 ) => {
   const mockedCommonDiscountProviderValues = {
     openDialog: () => {},
     closeDialog: () => {},
     isDialogOpen: false,
     undiscountedPrice: order.total.gross,
-    discountedPrice: order.total.gross
+    discountedPrice: order.total.gross,
   };
 
   const MockOrderDiscountProvider = ({ children }) => {
@@ -28,7 +28,7 @@ export const getDiscountsProvidersWrapper = (
       orderDiscountRemoveStatus: "default",
       orderDiscount: null,
       addOrderDiscount: () => {},
-      removeOrderDiscount: () => {}
+      removeOrderDiscount: () => {},
     };
 
     return (
@@ -45,7 +45,7 @@ export const getDiscountsProvidersWrapper = (
       removeOrderLineDiscount: () => {},
       orderLineDiscount: null,
       orderLineDiscountUpdateStatus: "default",
-      orderLineDiscountRemoveStatus: "default"
+      orderLineDiscountRemoveStatus: "default",
     });
 
     return (

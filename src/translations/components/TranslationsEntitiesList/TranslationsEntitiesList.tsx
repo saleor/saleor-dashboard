@@ -3,7 +3,7 @@ import {
   TableCell,
   TableFooter,
   TableHead,
-  TableRow
+  TableRow,
 } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
@@ -34,16 +34,16 @@ export interface TranslationsEntitiesListProps extends ListProps {
 const useStyles = makeStyles(
   {
     tableRow: {
-      cursor: "pointer"
+      cursor: "pointer",
     },
     textRight: {
-      textAlign: "right"
+      textAlign: "right",
     },
     wideColumn: {
-      width: "80%"
-    }
+      width: "80%",
+    },
   },
-  { name: "TranslationsEntitiesList" }
+  { name: "TranslationsEntitiesList" },
 );
 const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props => {
   const { disabled, entities, getRowHref } = props;
@@ -81,7 +81,7 @@ const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props 
           entity => (
             <TableRowLink
               className={classNames({
-                [classes.tableRow]: !!entity
+                [classes.tableRow]: !!entity,
               })}
               hover={!!entity}
               href={entity && getRowHref(entity.id)}
@@ -96,11 +96,11 @@ const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props 
                         {
                           id: "ikRuLs",
                           defaultMessage: "{current} of {max}",
-                          description: "translation progress"
+                          description: "translation progress",
                         },
-                        entity.completion
+                        entity.completion,
                       ),
-                    <Skeleton />
+                    <Skeleton />,
                   )}
               </TableCell>
             </TableRowLink>
@@ -114,7 +114,7 @@ const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props 
                 />
               </TableCell>
             </TableRow>
-          )
+          ),
         )}
       </TableBody>
     </ResponsiveTable>

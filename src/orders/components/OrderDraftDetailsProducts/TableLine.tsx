@@ -17,37 +17,37 @@ const useStyles = makeStyles(
   theme => ({
     colAction: {
       "&:last-child": {
-        paddingRight: 0
+        paddingRight: 0,
       },
-      width: `calc(76px + ${theme.spacing(0.5)})`
+      width: `calc(76px + ${theme.spacing(0.5)})`,
     },
     colName: {
-      width: "auto"
+      width: "auto",
     },
     colNameLabel: {
-      marginLeft: AVATAR_MARGIN
+      marginLeft: AVATAR_MARGIN,
     },
     colPrice: {
-      textAlign: "right"
+      textAlign: "right",
     },
     colQuantity: {
-      textAlign: "right"
+      textAlign: "right",
     },
     colTotal: {
-      textAlign: "right"
+      textAlign: "right",
     },
     strike: {
       textDecoration: "line-through",
-      color: theme.palette.grey[400]
+      color: theme.palette.grey[400],
     },
     errorInfo: {
-      color: theme.palette.error.main
+      color: theme.palette.error.main,
     },
     table: {
-      tableLayout: "fixed"
-    }
+      tableLayout: "fixed",
+    },
   }),
-  { name: "OrderDraftDetailsProducts" }
+  { name: "OrderDraftDetailsProducts" },
 );
 
 interface TableLineProps extends OrderLineDiscountContextConsumerProps {
@@ -69,7 +69,7 @@ const TableLine: React.FC<TableLineProps> = ({
   isDialogOpen,
   undiscountedPrice,
   discountedPrice,
-  orderLineDiscountUpdateStatus
+  orderLineDiscountUpdateStatus,
 }) => {
   const classes = useStyles({});
   const popperAnchorRef = useRef<HTMLTableRowElement | null>(null);
@@ -124,7 +124,7 @@ const TableLine: React.FC<TableLineProps> = ({
         <Money
           money={{
             amount: discountedPrice.amount * quantity,
-            currency: discountedPrice.currency
+            currency: discountedPrice.currency,
           }}
         />
       </TableCell>

@@ -17,7 +17,7 @@ import {
   hasActions,
   hasCatalog,
   hasCustomers,
-  hasViews
+  hasViews,
 } from "./modes/utils";
 import NavigatorInput from "./NavigatorInput";
 import NavigatorSection from "./NavigatorSection";
@@ -29,7 +29,7 @@ const navigatorNotificationStorageKey = "notifiedAboutNavigator";
 
 function getItemOffset(
   actions: QuickSearchAction[],
-  cbs: Array<typeof getViews>
+  cbs: Array<typeof getViews>,
 ): number {
   return cbs.reduce((acc, cb) => cb(actions).length + acc, 0);
 }
@@ -40,24 +40,24 @@ const useStyles = makeStyles(
       alignItems: "center",
       display: "flex",
       justifyContent: "center",
-      padding: theme.spacing(3)
+      padding: theme.spacing(3),
     },
     paper: {
-      overflow: "hidden"
+      overflow: "hidden",
     },
     root: {
       [theme.breakpoints.down("sm")]: {
-        height: "auto"
+        height: "auto",
       },
       height: 500,
       maxWidth: 900,
       outline: 0,
-      width: "100%"
-    }
+      width: "100%",
+    },
   }),
   {
-    name: "Navigator"
-  }
+    name: "Navigator",
+  },
 );
 
 export interface NavigatorProps {
@@ -72,7 +72,7 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
   const notify = useNotifier();
   const [notifiedAboutNavigator, setNotifiedAboutNavigator] = useLocalStorage(
     navigatorNotificationStorageKey,
-    false
+    false,
   );
   const classes = useStyles({});
   const theme = useTheme();
@@ -91,20 +91,20 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
             id: "EM+30g",
             defaultMessage:
               "Our new feature to help you with your daily tasks. Run Navigator using {keyboardShortcut} shortcut.",
-            description: "navigator notification"
+            description: "navigator notification",
           },
           {
             keyboardShortcut:
               navigator.platform.toLowerCase().indexOf("mac") >= 0
                 ? "⌘+K"
-                : "Ctrl+K"
-          }
+                : "Ctrl+K",
+          },
         ),
         title: intl.formatMessage({
           id: "Gxm7Qx",
           defaultMessage: "Navigator is here to help",
-          description: "navigator notification title"
-        })
+          description: "navigator notification title",
+        }),
       });
       setNotifiedAboutNavigator(true);
     }
@@ -141,8 +141,8 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
                 change({
                   target: {
                     name: "query",
-                    value
-                  }
+                    value,
+                  },
                 })
               }
               defaultHighlightedIndex={0}
@@ -153,7 +153,7 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
                     mode={mode}
                     value={query}
                     {...getInputProps({
-                      value: query
+                      value: query,
                     })}
                     ref={input}
                   />
@@ -163,7 +163,7 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
                       label={intl.formatMessage({
                         id: "YYkkhx",
                         defaultMessage: "Navigate to",
-                        description: "navigator section header"
+                        description: "navigator section header",
                       })}
                       getItemProps={getItemProps}
                       highlightedIndex={highlightedIndex}
@@ -176,7 +176,7 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
                       label={intl.formatMessage({
                         id: "me585h",
                         defaultMessage: "Quick Actions",
-                        description: "navigator section header"
+                        description: "navigator section header",
                       })}
                       getItemProps={getItemProps}
                       highlightedIndex={highlightedIndex}
@@ -189,7 +189,7 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
                       label={intl.formatMessage({
                         id: "4gT3eD",
                         defaultMessage: "Search in Customers",
-                        description: "navigator section header"
+                        description: "navigator section header",
                       })}
                       getItemProps={getItemProps}
                       highlightedIndex={highlightedIndex}
@@ -202,7 +202,7 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
                       label={intl.formatMessage({
                         id: "7Oorx5",
                         defaultMessage: "Search in Catalog",
-                        description: "navigator section header"
+                        description: "navigator section header",
                       })}
                       getItemProps={getItemProps}
                       highlightedIndex={highlightedIndex}

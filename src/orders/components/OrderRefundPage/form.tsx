@@ -2,11 +2,11 @@ import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { OrderRefundDataQuery } from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
-  SubmitPromise
+  SubmitPromise,
 } from "@saleor/hooks/useForm";
 import useFormset, {
   FormsetChange,
-  FormsetData
+  FormsetData,
 } from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import React, { useEffect } from "react";
@@ -15,12 +15,12 @@ import { refundFulfilledStatuses } from "./OrderRefundPage";
 
 export enum OrderRefundType {
   MISCELLANEOUS = "miscellaneous",
-  PRODUCTS = "products"
+  PRODUCTS = "products",
 }
 export enum OrderRefundAmountCalculationMode {
   AUTOMATIC = "automatic",
   MANUAL = "manual",
-  NONE = "none"
+  NONE = "none",
 }
 
 export interface OrderRefundData {
@@ -61,13 +61,13 @@ interface OrderRefundFormProps {
 }
 
 function getOrderRefundPageFormData(
-  defaultType: OrderRefundType
+  defaultType: OrderRefundType,
 ): OrderRefundData {
   return {
     amount: undefined,
     amountCalculationMode: OrderRefundAmountCalculationMode.AUTOMATIC,
     refundShipmentCosts: false,
-    type: defaultType
+    type: defaultType,
   };
 }
 
@@ -75,20 +75,20 @@ function useOrderRefundForm(
   order: OrderRefundDataQuery["order"],
   defaultType: OrderRefundType,
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise,
-  disabled: boolean
+  disabled: boolean,
 ): UseOrderRefundFormResult {
   const {
     handleChange,
     triggerChange,
     data: formData,
     formId,
-    setIsSubmitDisabled
+    setIsSubmitDisabled,
   } = useForm(getOrderRefundPageFormData(defaultType), undefined, {
-    confirmLeave: true
+    confirmLeave: true,
   });
 
   const { setExitDialogSubmitRef } = useExitFormDialog({
-    formId
+    formId,
   });
 
   const refundedProductQuantities = useFormset<null, string>(
@@ -98,8 +98,8 @@ function useOrderRefundForm(
         data: null,
         id: line.id,
         label: null,
-        value: "0"
-      }))
+        value: "0",
+      })),
   );
   const refundedFulfilledProductQuantities = useFormset<null, string>(
     order?.fulfillments
@@ -111,23 +111,23 @@ function useOrderRefundForm(
               data: null,
               id: fulfillmentLine.id,
               label: null,
-              value: "0"
-            }))
+              value: "0",
+            })),
           ),
-        []
-      )
+        [],
+      ),
   );
 
   const handleRefundedProductQuantityChange: FormsetChange<string> = (
     id,
-    value
+    value,
   ) => {
     triggerChange();
     refundedProductQuantities.change(id, value);
   };
   const handleRefundedFulFilledProductQuantityChange = (
     id: string,
-    value: string
+    value: string,
   ) => {
     triggerChange();
     refundedFulfilledProductQuantities.change(id, value);
@@ -143,17 +143,17 @@ function useOrderRefundForm(
         data: null,
         id: line.id,
         label: null,
-        value: line.quantityToFulfill.toString()
+        value: line.quantityToFulfill.toString(),
       };
     });
     refundedProductQuantities.set(newQuantities);
     triggerChange();
   };
   const handleMaximalRefundedFulfilledProductQuantitiesSet = (
-    fulfillmentId: string
+    fulfillmentId: string,
   ) => {
     const fulfillment = order.fulfillments.find(
-      fulfillment => fulfillment.id === fulfillmentId
+      fulfillment => fulfillment.id === fulfillmentId,
     );
     const newQuantities: FormsetData<
       null,
@@ -166,7 +166,7 @@ function useOrderRefundForm(
           data: null,
           id: line.id,
           label: null,
-          value: line.quantity.toString()
+          value: line.quantity.toString(),
         };
       }
       return selectedLine;
@@ -178,12 +178,12 @@ function useOrderRefundForm(
   const data: OrderRefundFormData = {
     ...formData,
     refundedFulfilledProductQuantities: refundedFulfilledProductQuantities.data,
-    refundedProductQuantities: refundedProductQuantities.data
+    refundedProductQuantities: refundedProductQuantities.data,
   };
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit
+    onSubmit,
   });
 
   const submit = () => handleFormSubmit(data);
@@ -201,10 +201,10 @@ function useOrderRefundForm(
       changeRefundedFulfilledProductQuantity: handleRefundedFulFilledProductQuantityChange,
       changeRefundedProductQuantity: handleRefundedProductQuantityChange,
       setMaximalRefundedFulfilledProductQuantities: handleMaximalRefundedFulfilledProductQuantitiesSet,
-      setMaximalRefundedProductQuantities: handleMaximalRefundedProductQuantitiesSet
+      setMaximalRefundedProductQuantities: handleMaximalRefundedProductQuantitiesSet,
     },
     submit,
-    isSaveDisabled
+    isSaveDisabled,
   };
 }
 
@@ -213,7 +213,7 @@ const OrderRefundForm: React.FC<OrderRefundFormProps> = ({
   order,
   defaultType,
   onSubmit,
-  disabled
+  disabled,
 }) => {
   const props = useOrderRefundForm(order, defaultType, onSubmit, disabled);
 

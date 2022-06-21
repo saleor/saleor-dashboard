@@ -12,7 +12,7 @@ import {
   CategoryListUrlQueryParams,
   CategoryListUrlSortField,
   categoryPath,
-  CategoryUrlQueryParams
+  CategoryUrlQueryParams,
 } from "./urls";
 import { CategoryCreateView } from "./views/CategoryCreate";
 import CategoryDetailsView from "./views/CategoryDetails";
@@ -49,7 +49,7 @@ const CategoryCreate: React.FC<RouteComponentProps<
 const CategoryList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: CategoryListUrlQueryParams = {
-    ...asSortParams(qs, CategoryListUrlSortField)
+    ...asSortParams(qs, CategoryListUrlSortField),
   };
 
   return <CategoryListComponent params={params} />;

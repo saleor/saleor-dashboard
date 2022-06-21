@@ -5,7 +5,7 @@ import {
   Radio,
   RadioGroup,
   TextField,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
@@ -15,7 +15,7 @@ import Hr from "@saleor/components/Hr";
 import SingleSelectField from "@saleor/components/SingleSelectField";
 import {
   ProductVariantAttributesFragment,
-  WarehouseFragment
+  WarehouseFragment,
 } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { isSelected } from "@saleor/utils/lists";
@@ -24,15 +24,15 @@ import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import {
   ProductVariantCreateFormData,
-  VariantCreatorPricesAndSkuMode
+  VariantCreatorPricesAndSkuMode,
 } from "./form";
 import { getStockAttributeValues } from "./utils";
 
 const messages = defineMessages({
   stock: {
     id: "vuKrlW",
-    defaultMessage: "Stock"
-  }
+    defaultMessage: "Stock",
+  },
 });
 
 const useStyles = makeStyles(
@@ -42,52 +42,52 @@ const useStyles = makeStyles(
       display: "grid",
       gridTemplateColumns: ({ data }: ProductVariantCreatorStockProps) =>
         `150px repeat(${data.warehouses.length}, 288px)`,
-      rowGap: theme.spacing(2)
+      rowGap: theme.spacing(2),
     },
     attributeStockScroll: {
       overflowX: "scroll",
-      width: "100%"
+      width: "100%",
     },
     hr: {
       marginBottom: theme.spacing(),
-      marginTop: theme.spacing(0.5)
+      marginTop: theme.spacing(0.5),
     },
     hrAttribute: {
-      marginTop: theme.spacing(2)
+      marginTop: theme.spacing(2),
     },
     label: {
-      alignSelf: "center"
+      alignSelf: "center",
     },
     shortInput: {
-      width: "33%"
+      width: "33%",
     },
     stockContainer: {
       columnGap: theme.spacing(3),
       display: "grid",
       gridTemplateColumns: "repeat(3, 288px)",
       marginTop: theme.spacing(2),
-      rowGap: theme.spacing(2)
+      rowGap: theme.spacing(2),
     },
     stockHeader: {
-      marginBottom: theme.spacing()
+      marginBottom: theme.spacing(),
     },
     warehouseContainer: {
       columnGap: theme.spacing(3),
       display: "grid",
       gridTemplateColumns: "repeat(4, 1fr)",
-      rowGap: theme.spacing(2)
+      rowGap: theme.spacing(2),
     },
     warehouseHeader: {
-      marginBottom: theme.spacing()
+      marginBottom: theme.spacing(),
     },
     warehouseName: {
-      marginBottom: theme.spacing()
+      marginBottom: theme.spacing(),
     },
     warehouseSubheader: {
-      marginBottom: theme.spacing(2)
-    }
+      marginBottom: theme.spacing(2),
+    },
   }),
-  { name: "ProductVariantCreatorStock" }
+  { name: "ProductVariantCreatorStock" },
 );
 
 export interface ProductVariantCreatorStockProps {
@@ -100,7 +100,7 @@ export interface ProductVariantCreatorStockProps {
   onAttributeValueChange: (
     id: string,
     quantity: number,
-    warehouseIndex: number
+    warehouseIndex: number,
   ) => void;
   onWarehouseToggle: (id: string) => void;
 }
@@ -114,14 +114,14 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
     onApplyToAllStockChange,
     onAttributeSelect,
     onAttributeValueChange,
-    onWarehouseToggle
+    onWarehouseToggle,
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
 
   const attributeChoices = attributes.map(attribute => ({
     label: attribute.name,
-    value: attribute.id
+    value: attribute.id,
   }));
   const stockAttributeValues = getStockAttributeValues(data, attributes);
 
@@ -131,7 +131,7 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
         title={intl.formatMessage({
           id: "GQcp83",
           defaultMessage: "Stock and Warehousing",
-          description: "variant stock, header"
+          description: "variant stock, header",
         })}
       />
       <CardContent>
@@ -161,8 +161,8 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
                     values={{
                       numberOfProducts: data.attributes.reduce(
                         (acc, attr) => acc + attr.values.length,
-                        0
-                      )
+                        0,
+                      ),
                     }}
                   />
                 </Typography>
@@ -172,7 +172,7 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
                       checked={isSelected(
                         warehouse.id,
                         data.warehouses,
-                        (a, b) => a === b
+                        (a, b) => a === b,
                       )}
                       name={`warehouse:${warehouse.id}`}
                       label={warehouse.name}
@@ -199,7 +199,7 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
                 control={<Radio color="primary" />}
                 label={intl.formatMessage({
                   id: "STp3Hl",
-                  defaultMessage: "Apply single stock to all SKUs"
+                  defaultMessage: "Apply single stock to all SKUs",
                 })}
                 onChange={() => onApplyToAllChange("all")}
               />
@@ -210,7 +210,7 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
                       <Typography className={classes.warehouseName}>
                         {
                           warehouses.find(
-                            warehouse => warehouse.id === warehouseId
+                            warehouse => warehouse.id === warehouseId,
                           ).name
                         }
                       </Typography>
@@ -219,14 +219,14 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
                         fullWidth
                         inputProps={{
                           min: 0,
-                          type: "number"
+                          type: "number",
                         }}
                         label={intl.formatMessage(messages.stock)}
                         value={data.stock.value[warehouseIndex]}
                         onChange={event =>
                           onApplyToAllStockChange(
                             parseInt(event.target.value, 10),
-                            warehouseIndex
+                            warehouseIndex,
                           )
                         }
                       />
@@ -240,7 +240,7 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
                 control={<Radio color="primary" />}
                 label={intl.formatMessage({
                   id: "L5rthO",
-                  defaultMessage: "Apply unique stock by attribute to each SKU"
+                  defaultMessage: "Apply unique stock by attribute to each SKU",
                 })}
                 onChange={() => onApplyToAllChange("attribute")}
               />
@@ -253,7 +253,7 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
                     label={intl.formatMessage({
                       id: "TDXskW",
                       defaultMessage: "Select Attribute",
-                      description: "variant attribute"
+                      description: "variant attribute",
                     })}
                     value={data.stock.attribute}
                     onChange={event => onAttributeSelect(event.target.value)}
@@ -273,7 +273,7 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
                               >
                                 {
                                   warehouses.find(
-                                    warehouse => warehouse.id === warehouseId
+                                    warehouse => warehouse.id === warehouseId,
                                   ).name
                                 }
                               </Typography>
@@ -287,25 +287,25 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
                                     fullWidth
                                     inputProps={{
                                       min: 0,
-                                      type: "number"
+                                      type: "number",
                                     }}
                                     label={intl.formatMessage(messages.stock)}
                                     value={
                                       data.stock.values.find(
                                         value =>
-                                          value.slug === attributeValue.slug
+                                          value.slug === attributeValue.slug,
                                       ).value[warehouseIndex]
                                     }
                                     onChange={event =>
                                       onAttributeValueChange(
                                         attributeValue.slug,
                                         parseInt(event.target.value, 10),
-                                        warehouseIndex
+                                        warehouseIndex,
                                       )
                                     }
                                     key={warehouseId}
                                   />
-                                )
+                                ),
                               )}
                             </React.Fragment>
                           ))}
@@ -327,7 +327,7 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
                 control={<Radio color="primary" />}
                 label={intl.formatMessage({
                   id: "BIqhVQ",
-                  defaultMessage: "Skip stock for now"
+                  defaultMessage: "Skip stock for now",
                 })}
                 onChange={() => onApplyToAllChange("skip")}
               />

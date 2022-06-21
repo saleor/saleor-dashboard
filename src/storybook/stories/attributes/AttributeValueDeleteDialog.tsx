@@ -2,7 +2,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import AttributeValueDeleteDialog, {
-  AttributeValueDeleteDialogProps
+  AttributeValueDeleteDialogProps,
 } from "../../../attributes/components/AttributeValueDeleteDialog";
 import Decorator from "../../Decorator";
 
@@ -12,7 +12,7 @@ const props: AttributeValueDeleteDialogProps = {
   name: "XS",
   onClose: () => undefined,
   onConfirm: () => undefined,
-  open: true
+  open: true,
 };
 
 storiesOf("Attributes / Attribute value delete", module)

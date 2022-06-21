@@ -10,7 +10,7 @@ const useStyles = makeStyles(
   theme => ({
     keyTile: {
       "&:first-child": {
-        marginLeft: theme.spacing()
+        marginLeft: theme.spacing(),
       },
       alignItems: "center",
       background: theme.palette.background.default,
@@ -20,10 +20,10 @@ const useStyles = makeStyles(
       justifyContent: "center",
       marginLeft: theme.spacing(0.5),
       padding: theme.spacing(),
-      width: 32
+      width: 32,
     },
     keyTileLabel: {
-      verticalAlign: "middle"
+      verticalAlign: "middle",
     },
     paper: {
       "&:after": {
@@ -31,33 +31,33 @@ const useStyles = makeStyles(
         content: "''",
         left: 18,
         position: "absolute",
-        top: -7
+        top: -7,
       },
       "&:before": {
         ...triangle(theme.palette.divider, 8),
         content: "''",
         left: `calc(1px + ${theme.spacing(2)})`,
         position: "absolute",
-        top: theme.spacing(-1)
+        top: theme.spacing(-1),
       },
       border: `1px solid ${theme.palette.divider}`,
       borderRadius: 6,
       marginTop: theme.spacing(2),
       padding: theme.spacing(2),
-      position: "relative"
+      position: "relative",
     },
 
     root: {
       "&:hover path": {
-        color: theme.palette.primary.main
+        color: theme.palette.primary.main,
       },
       marginRight: theme.spacing(2),
-      width: 40
-    }
+      width: 40,
+    },
   }),
   {
-    name: "NavigatorButton"
-  }
+    name: "NavigatorButton",
+  },
 );
 
 export interface NavigatorButtonProps extends IconButtonProps {
@@ -109,7 +109,7 @@ const NavigatorButton: React.FC<NavigatorButtonProps> = ({
             {...TransitionProps}
             style={{
               transformOrigin:
-                placement === "bottom" ? "right top" : "right bottom"
+                placement === "bottom" ? "right top" : "right bottom",
             }}
           >
             <Paper className={classes.paper} elevation={8}>

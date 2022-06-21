@@ -29,7 +29,7 @@ const initialForm: PermissionGroupCreateFormData = {
   hasFullAccess: false,
   isActive: false,
   name: "",
-  permissions: []
+  permissions: [],
 };
 
 export interface PermissionGroupCreatePageProps {
@@ -45,7 +45,7 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
   permissions,
   onSubmit,
   saveButtonBarState,
-  errors
+  errors,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -53,7 +53,7 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
   const formErrors = getFormErrors(["addPermissions"], errors || []);
   const permissionsError = getPermissionGroupErrorMessage(
     formErrors.addPermissions,
-    intl
+    intl,
   );
 
   return (
@@ -88,13 +88,13 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
                 fullAccessLabel={intl.formatMessage({
                   id: "mAabef",
                   defaultMessage: "Group has full access to the store",
-                  description: "checkbox label"
+                  description: "checkbox label",
                 })}
                 description={intl.formatMessage({
                   id: "CYZse9",
                   defaultMessage:
                     "Expand or restrict group's permissions to access certain part of saleor system.",
-                  description: "card description"
+                  description: "card description",
                 })}
               />
             </div>

@@ -5,7 +5,7 @@ import React from "react";
 
 import CardTitle from "../CardTitle";
 import CompanyAddressForm, {
-  CompanyAddressFormProps
+  CompanyAddressFormProps,
 } from "./CompanyAddressForm";
 
 interface CompanyAddressInputProps extends CompanyAddressFormProps {
@@ -16,10 +16,10 @@ interface CompanyAddressInputProps extends CompanyAddressFormProps {
 const useStyles = makeStyles(
   {
     root: {
-      overflow: "visible"
-    }
+      overflow: "visible",
+    },
   },
-  { name: "CompanyAddressInput" }
+  { name: "CompanyAddressInput" },
 );
 
 const CompanyAddressInput: React.FC<CompanyAddressInputProps> = props => {

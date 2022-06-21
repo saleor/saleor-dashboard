@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import DeleteShippingRateDialog, {
-  DeleteShippingRateDialogProps
+  DeleteShippingRateDialogProps,
 } from "./DeleteShippingRateDialog";
 
 const props: DeleteShippingRateDialogProps = {
@@ -11,7 +11,7 @@ const props: DeleteShippingRateDialogProps = {
   handleConfirm: () => undefined,
   name: "Shipping",
   onClose: () => undefined,
-  open: true
+  open: true,
 };
 
 storiesOf("Shipping / DeleteShippingRateDialog", module)

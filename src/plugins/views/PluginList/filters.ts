@@ -4,7 +4,7 @@ import { ChannelsWithLoadMoreProps } from "@saleor/hooks/useChannelsSearch";
 import { maybe, parseBoolean } from "@saleor/misc";
 import {
   PluginFilterKeys,
-  PluginListFilterOpts
+  PluginListFilterOpts,
 } from "@saleor/plugins/components/PluginsListPage";
 import { mapNodeToChoice } from "@saleor/utils/maps";
 
@@ -14,12 +14,12 @@ import {
   dedupeFilter,
   getMultipleValueQueryParam,
   getSingleEnumValueQueryParam,
-  getSingleValueQueryParam
+  getSingleValueQueryParam,
 } from "../../../utils/filters";
 import {
   PluginListUrlFilters,
   PluginListUrlFiltersEnum,
-  PluginListUrlQueryParams
+  PluginListUrlQueryParams,
 } from "../../urls";
 
 export const PLUGIN_FILTERS_KEY = "pluginFilters";
@@ -31,8 +31,8 @@ export function getFilterOpts(
     hasMore,
     onFetchMore,
     onSearchChange,
-    loading
-  }: ChannelsWithLoadMoreProps
+    loading,
+  }: ChannelsWithLoadMoreProps,
 ): PluginListFilterOpts {
   return {
     isActive: {
@@ -40,7 +40,7 @@ export function getFilterOpts(
       value:
         params.active === undefined
           ? undefined
-          : parseBoolean(params.active, true)
+          : parseBoolean(params.active, true),
     },
     channels: {
       active: !!params.channels,
@@ -51,18 +51,18 @@ export function getFilterOpts(
       loading,
       onFetchMore,
       onSearchChange,
-      value: dedupeFilter(params.channels || [])
+      value: dedupeFilter(params.channels || []),
     },
     type: {
       active: !!params.type,
-      value: getParsedConfigType(params.type)
+      value: getParsedConfigType(params.type),
     },
     status: {
       active: !!params.channels?.length && params.active !== undefined,
       value:
         !!dedupeFilter(params.channels || [])?.length &&
-        params.active !== undefined
-    }
+        params.active !== undefined,
+    },
   };
 }
 
@@ -70,11 +70,11 @@ const getParsedConfigType = (configTypeString?: string) =>
   PluginConfigurationType[configTypeString] || undefined;
 
 export function getFilterVariables(
-  params: PluginListUrlFilters
+  params: PluginListUrlFilters,
 ): PluginFilterInput {
   const baseParams = {
     type: getParsedConfigType(params.type),
-    search: params.query
+    search: params.query,
   };
 
   if (!!params.active && !!params.channels?.length) {
@@ -82,8 +82,8 @@ export function getFilterVariables(
       ...baseParams,
       statusInChannels: {
         active: parseBoolean(params.active, true),
-        channels: params.channels
-      }
+        channels: params.channels,
+      },
     };
   }
 
@@ -91,7 +91,7 @@ export function getFilterVariables(
 }
 
 export function getFilterQueryParam(
-  filter: FilterElement<PluginFilterKeys>
+  filter: FilterElement<PluginFilterKeys>,
 ): PluginListUrlFilters {
   const { name } = filter;
 
@@ -99,7 +99,7 @@ export function getFilterQueryParam(
     case PluginFilterKeys.channels:
       return getMultipleValueQueryParam(
         filter,
-        PluginListUrlFiltersEnum.channels
+        PluginListUrlFiltersEnum.channels,
       );
 
     case PluginFilterKeys.active:
@@ -109,7 +109,7 @@ export function getFilterQueryParam(
       return getSingleEnumValueQueryParam(
         filter as FilterElementRegular<PluginFilterKeys.type>,
         PluginListUrlFiltersEnum.type,
-        PluginConfigurationType
+        PluginConfigurationType,
       );
   }
 }
@@ -117,13 +117,13 @@ export function getFilterQueryParam(
 export const {
   deleteFilterTab,
   getFilterTabs,
-  saveFilterTab
+  saveFilterTab,
 } = createFilterTabUtils<PluginListUrlFilters>(PLUGIN_FILTERS_KEY);
 
 export const {
   areFiltersApplied,
   getActiveFilters,
-  getFiltersCurrentTab
+  getFiltersCurrentTab,
 } = createFilterUtils<PluginListUrlQueryParams, PluginListUrlFilters>(
-  PluginListUrlFiltersEnum
+  PluginListUrlFiltersEnum,
 );

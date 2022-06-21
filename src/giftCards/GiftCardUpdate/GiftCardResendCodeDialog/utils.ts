@@ -9,7 +9,7 @@ export function useDialogFormReset<
   reset,
   apiErrors,
   keys,
-  open
+  open,
 }: {
   reset: () => void;
   apiErrors: TError[];

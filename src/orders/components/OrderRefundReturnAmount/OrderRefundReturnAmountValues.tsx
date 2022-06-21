@@ -11,20 +11,20 @@ const useStyles = makeStyles(
     container: {
       ...theme.typography.body1,
       lineHeight: 1.9,
-      width: "100%"
+      width: "100%",
     },
     highlightedRow: {
-      fontWeight: 600
+      fontWeight: 600,
     },
     row: {
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-between",
       marginBottom: theme.spacing(2),
-      textAlign: "right"
-    }
+      textAlign: "right",
+    },
   }),
-  { name: "OrderRefundAmountValues" }
+  { name: "OrderRefundAmountValues" },
 );
 
 export interface OrderRefundAmountValuesProps {
@@ -42,43 +42,43 @@ const messages = defineMessages({
   authorizedAmount: {
     id: "L/O4LQ",
     defaultMessage: "Authorized Amount",
-    description: "order refund amount"
+    description: "order refund amount",
   },
   maxRefund: {
     id: "I7HyJZ",
     defaultMessage: "Max Refund",
-    description: "order refund amount"
+    description: "order refund amount",
   },
   previouslyRefunded: {
     id: "Q55cTG",
     defaultMessage: "Previously refunded",
-    description: "order refund amount"
+    description: "order refund amount",
   },
   proposedRefundAmount: {
     id: "wDUBLR",
     defaultMessage: "Proposed refund amount",
-    description: "order refund amount"
+    description: "order refund amount",
   },
   refundTotalAmount: {
     id: "C6bb6x",
     defaultMessage: "Refund total amount",
-    description: "order refund amount"
+    description: "order refund amount",
   },
   replacedProductsValue: {
     id: "i56GGQ",
     defaultMessage: "Replaced Products Value",
-    description: "order refund amount"
+    description: "order refund amount",
   },
   selectedProductsValue: {
     id: "kak5vT",
     defaultMessage: "Selected Products Value",
-    description: "order refund amount"
+    description: "order refund amount",
   },
   shipmentCost: {
     id: "WGp+Fw",
     defaultMessage: "Shipment Cost",
-    description: "order refund amount"
-  }
+    description: "order refund amount",
+  },
 });
 
 const OrderRefundAmountValues: React.FC<OrderRefundAmountValuesProps> = props => {
@@ -92,12 +92,12 @@ const OrderRefundAmountValues: React.FC<OrderRefundAmountValuesProps> = props =>
     "previouslyRefunded",
     "replacedProductsValue",
     "maxRefund",
-    "refundTotalAmount"
+    "refundTotalAmount",
   ];
 
   const highlightedItems: Array<keyof OrderRefundAmountValuesProps> = [
     "maxRefund",
-    "refundTotalAmount"
+    "refundTotalAmount",
   ];
 
   const items = reduce(
@@ -111,10 +111,10 @@ const OrderRefundAmountValues: React.FC<OrderRefundAmountValuesProps> = props =>
 
       return [
         ...result,
-        { data: value, highlighted: highlightedItems.includes(key), key }
+        { data: value, highlighted: highlightedItems.includes(key), key },
       ];
     },
-    []
+    [],
   );
 
   return (
@@ -122,7 +122,7 @@ const OrderRefundAmountValues: React.FC<OrderRefundAmountValuesProps> = props =>
       {items.map(({ key, data, highlighted }) => (
         <div
           className={classNames(classes.row, {
-            [classes.highlightedRow]: highlighted
+            [classes.highlightedRow]: highlighted,
           })}
           key={key}
         >

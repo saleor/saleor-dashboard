@@ -3,46 +3,46 @@ import { StaffMemberStatus, StaffUserInput } from "@saleor/graphql";
 import { findValueInEnum, maybe } from "@saleor/misc";
 import {
   StaffFilterKeys,
-  StaffListFilterOpts
+  StaffListFilterOpts,
 } from "@saleor/staff/components/StaffListPage";
 
 import {
   createFilterTabUtils,
   createFilterUtils,
-  getSingleEnumValueQueryParam
+  getSingleEnumValueQueryParam,
 } from "../../../utils/filters";
 import {
   StaffListUrlFilters,
   StaffListUrlFiltersEnum,
-  StaffListUrlQueryParams
+  StaffListUrlQueryParams,
 } from "../../urls";
 
 export const STAFF_FILTERS_KEY = "staffFilters";
 
 export function getFilterOpts(
-  params: StaffListUrlFilters
+  params: StaffListUrlFilters,
 ): StaffListFilterOpts {
   return {
     status: {
       active: maybe(() => params.status !== undefined, false),
-      value: maybe(() => findValueInEnum(params.status, StaffMemberStatus))
-    }
+      value: maybe(() => findValueInEnum(params.status, StaffMemberStatus)),
+    },
   };
 }
 
 export function getFilterVariables(
-  params: StaffListUrlFilters
+  params: StaffListUrlFilters,
 ): StaffUserInput {
   return {
     search: params.query,
     status: params.status
       ? findValueInEnum(params.status, StaffMemberStatus)
-      : null
+      : null,
   };
 }
 
 export function getFilterQueryParam(
-  filter: FilterElement<StaffFilterKeys>
+  filter: FilterElement<StaffFilterKeys>,
 ): StaffListUrlFilters {
   const { name } = filter;
 
@@ -51,7 +51,7 @@ export function getFilterQueryParam(
       return getSingleEnumValueQueryParam(
         filter as FilterElementRegular<StaffFilterKeys.status>,
         StaffListUrlFiltersEnum.status,
-        StaffMemberStatus
+        StaffMemberStatus,
       );
   }
 }
@@ -59,13 +59,13 @@ export function getFilterQueryParam(
 export const {
   deleteFilterTab,
   getFilterTabs,
-  saveFilterTab
+  saveFilterTab,
 } = createFilterTabUtils<StaffListUrlFilters>(STAFF_FILTERS_KEY);
 
 export const {
   areFiltersApplied,
   getActiveFilters,
-  getFiltersCurrentTab
+  getFiltersCurrentTab,
 } = createFilterUtils<StaffListUrlQueryParams, StaffListUrlFilters>(
-  StaffListUrlFiltersEnum
+  StaffListUrlFiltersEnum,
 );

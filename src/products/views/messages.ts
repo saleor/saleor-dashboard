@@ -4,6 +4,6 @@ export const variantCreateMessages = defineMessages({
   variantCreatedSuccess: {
     id: "IeoGgH",
     defaultMessage: "Variant created",
-    description: "variant created success message"
-  }
+    description: "variant created success message",
+  },
 });

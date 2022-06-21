@@ -18,16 +18,16 @@ const useStyles = makeStyles(
   theme => ({
     actions: {
       flexDirection: "row-reverse",
-      padding: theme.spacing(2, 3)
+      padding: theme.spacing(2, 3),
     },
     table: {
       "& td, & th": {
         "&:not(:first-child):not(:last-child)": {
           paddingLeft: theme.spacing(1),
-          paddingRight: theme.spacing(1)
-        }
+          paddingRight: theme.spacing(1),
+        },
       },
-      tableLayout: "fixed"
+      tableLayout: "fixed",
     },
     toolbar: {
       display: "flex",
@@ -41,31 +41,31 @@ const useStyles = makeStyles(
       paddingLeft: theme.spacing(1.5),
       "&:hover": {
         backgroundColor: theme.palette.saleor.active[5],
-        color: theme.palette.saleor.active[1]
+        color: theme.palette.saleor.active[1],
       },
       "& > div": {
         minWidth: 0,
         whiteSpace: "nowrap",
         overflow: "hidden",
-        textOverflow: "ellipsis"
-      }
+        textOverflow: "ellipsis",
+      },
     },
     cardTitle: {
       justifyContent: "space-between",
       "& > div": {
         "&:first-child": {
           flex: 0,
-          whiteSpace: "nowrap"
+          whiteSpace: "nowrap",
         },
         "&:last-child": {
           flex: "0 1 auto",
           minWidth: 0,
-          marginLeft: theme.spacing(1)
-        }
-      }
-    }
+          marginLeft: theme.spacing(1),
+        },
+      },
+    },
   }),
-  { name: "OrderUnfulfilledItems" }
+  { name: "OrderUnfulfilledItems" },
 );
 
 interface OrderUnfulfilledProductsCardProps {
@@ -84,7 +84,7 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
     lines,
     onFulfill,
     selectedWarehouse,
-    onWarehouseChange
+    onWarehouseChange,
   } = props;
   const classes = useStyles({});
 

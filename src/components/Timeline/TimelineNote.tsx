@@ -23,7 +23,7 @@ const palette = [
   colors.purple,
   colors.red,
   colors.teal,
-  colors.yellow
+  colors.yellow,
 ].map(color => color[500]);
 
 const useStyles = makeStyles(
@@ -31,33 +31,33 @@ const useStyles = makeStyles(
     avatar: {
       left: -45,
       position: "absolute",
-      top: 0
+      top: 0,
     },
     card: {
       marginBottom: theme.spacing(3),
       marginLeft: theme.spacing(3),
-      position: "relative"
+      position: "relative",
     },
     cardContent: {
       "&:last-child": {
-        padding: 16
-      }
+        padding: 16,
+      },
     },
     root: {
-      position: "relative"
+      position: "relative",
     },
     title: {
       "& p": {
-        fontSize: "14px"
+        fontSize: "14px",
       },
       alignItems: "center",
       display: "flex",
       justifyContent: "space-between",
       marginBottom: theme.spacing(),
-      paddingLeft: theme.spacing(3)
-    }
+      paddingLeft: theme.spacing(3),
+    },
   }),
-  { name: "TimelineNote" }
+  { name: "TimelineNote" },
 );
 
 interface TimelineNoteProps {

@@ -20,7 +20,7 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
   data,
   disabled,
   errors,
-  onChange
+  onChange,
 }) => {
   const intl = useIntl();
 
@@ -28,9 +28,9 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
     [
       "reserveStockDurationAuthenticatedUser",
       "reserveStockDurationAnonymousUser",
-      "limitQuantityPerCheckout"
+      "limitQuantityPerCheckout",
     ],
-    errors
+    errors,
   );
 
   return (
@@ -48,7 +48,7 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
           fullWidth
           name="reserveStockDurationAuthenticatedUser"
           label={intl.formatMessage(
-            messages.stockReservationForAuthenticatedUser
+            messages.stockReservationForAuthenticatedUser,
           )}
           helperText={intl.formatMessage(messages.stockWillNotBeReserved)}
           value={
@@ -59,8 +59,8 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
           onChange={onChange}
           InputProps={{
             inputProps: {
-              autoComplete: "none"
-            }
+              autoComplete: "none",
+            },
           }}
         />
         <FormSpacer />
@@ -80,8 +80,8 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
           onChange={onChange}
           InputProps={{
             inputProps: {
-              autoComplete: "none"
-            }
+              autoComplete: "none",
+            },
           }}
         />
       </CardContent>
@@ -104,8 +104,8 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
           InputProps={{
             inputProps: {
               autoComplete: "none",
-              min: 0
-            }
+              min: 0,
+            },
           }}
         />
       </CardContent>

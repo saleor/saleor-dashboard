@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import OrderDraftCancelDialog, {
-  OrderDraftCancelDialogProps
+  OrderDraftCancelDialogProps,
 } from "../../../orders/components/OrderDraftCancelDialog";
 import Decorator from "../../Decorator";
 
@@ -13,7 +13,7 @@ const props: OrderDraftCancelDialogProps = {
   onClose: () => undefined,
   onConfirm: () => undefined,
   open: true,
-  orderNumber: "4"
+  orderNumber: "4",
 };
 
 storiesOf("Orders / OrderDraftCancelDialog", module)
@@ -28,8 +28,8 @@ storiesOf("Orders / OrderDraftCancelDialog", module)
           code: OrderErrorCode.GRAPHQL_ERROR,
           field: null,
           addressType: null,
-          message: "Graphql Error"
-        }
+          message: "Graphql Error",
+        },
       ]}
     />
   ));

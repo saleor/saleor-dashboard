@@ -4,7 +4,7 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { useAppListContext } from "@saleor/apps/context";
 import { appUrl } from "@saleor/apps/urls";
@@ -55,7 +55,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
         title={intl.formatMessage({
           id: "BvmnJq",
           defaultMessage: "Third Party Apps",
-          description: "section header"
+          description: "section header",
         })}
       />
       <ResponsiveTable>
@@ -116,7 +116,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                   </Typography>
                 </TableCell>
               </TableRow>
-            )
+            ),
           )}
         </TableBody>
       </ResponsiveTable>

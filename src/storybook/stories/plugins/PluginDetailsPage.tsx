@@ -4,7 +4,7 @@ import React from "react";
 
 import PluginsDetailsPage, {
   PluginDetailsPageFormData,
-  PluginsDetailsPageProps
+  PluginsDetailsPageProps,
 } from "../../../plugins/components/PluginsDetailsPage";
 import { plugin } from "../../../plugins/fixtures";
 import Decorator from "../../Decorator";
@@ -17,7 +17,7 @@ const props: PluginsDetailsPageProps = {
   onSubmit: () => undefined,
   plugin,
   saveButtonBarState: "default",
-  setSelectedChannelId: () => undefined
+  setSelectedChannelId: () => undefined,
 };
 
 storiesOf("Views / Plugins / Plugin details", module)
@@ -36,14 +36,14 @@ storiesOf("Views / Plugins / Plugin details", module)
           __typename: "PluginError" as "PluginError",
           code: PluginErrorCode.INVALID,
           field,
-          message: "Plugin invalid"
+          message: "Plugin invalid",
         })),
         {
           __typename: "PluginError" as "PluginError",
           code: PluginErrorCode.PLUGIN_MISCONFIGURED,
           field: null,
-          message: "Plugin missconfigured"
-        }
+          message: "Plugin missconfigured",
+        },
       ]}
     />
   ))
@@ -51,7 +51,7 @@ storiesOf("Views / Plugins / Plugin details", module)
     <PluginsDetailsPage
       {...props}
       plugin={{
-        ...plugin
+        ...plugin,
       }}
     />
   ));

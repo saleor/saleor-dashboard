@@ -9,7 +9,7 @@ const props: UnassignDialogProps = {
   confirmButtonState: "default",
   idsLength: 2,
   onConfirm: () => undefined,
-  open: true
+  open: true,
 };
 
 storiesOf("Shipping / UnassignDialog", module)

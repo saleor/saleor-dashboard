@@ -23,14 +23,14 @@ const getLoginFormData = () => {
   if (DEMO_MODE) {
     return {
       email: "admin@example.com",
-      password: "admin"
+      password: "admin",
     };
   }
   return { email: "", password: "" };
 };
 
 function useLoginForm(
-  onSubmit: (data: LoginFormData) => SubmitPromise
+  onSubmit: (data: LoginFormData) => SubmitPromise,
 ): UseLoginFormResult {
   const form = useForm(getLoginFormData());
 
@@ -43,7 +43,7 @@ function useLoginForm(
   return {
     change,
     data,
-    submit
+    submit,
   };
 }
 

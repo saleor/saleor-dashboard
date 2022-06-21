@@ -14,10 +14,10 @@ const useStyles = makeStyles(
       display: "block",
       height: 1,
       margin: 0,
-      width: "100%"
-    }
+      width: "100%",
+    },
   }),
-  { name: "Hr" }
+  { name: "Hr" },
 );
 
 export const Hr: React.FC<HrProps> = props => {

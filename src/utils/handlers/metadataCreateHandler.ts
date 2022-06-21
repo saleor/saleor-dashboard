@@ -1,7 +1,7 @@
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import {
   UpdateMetadataMutationFn,
-  UpdatePrivateMetadataMutationFn
+  UpdatePrivateMetadataMutationFn,
 } from "@saleor/graphql";
 
 import { filterMetadataArray } from "./filterMetadataArray";
@@ -14,7 +14,7 @@ export interface CreateMetadataHandlerFunctionResult<TError> {
 function createMetadataCreateHandler<T extends MetadataFormData, TError>(
   create: (data: T) => Promise<CreateMetadataHandlerFunctionResult<TError>>,
   setMetadata: UpdateMetadataMutationFn,
-  setPrivateMetadata: UpdatePrivateMetadataMutationFn
+  setPrivateMetadata: UpdatePrivateMetadataMutationFn,
 ) {
   return async (data: T) => {
     const { id, errors } = await create(data);
@@ -28,12 +28,12 @@ function createMetadataCreateHandler<T extends MetadataFormData, TError>(
         variables: {
           id,
           input: filterMetadataArray(data.metadata),
-          keysToDelete: []
-        }
+          keysToDelete: [],
+        },
       });
       const updateMetaErrors = [
         ...(updateMetaResult.data.deleteMetadata.errors || []),
-        ...(updateMetaResult.data.updateMetadata.errors || [])
+        ...(updateMetaResult.data.updateMetadata.errors || []),
       ];
 
       if (updateMetaErrors.length > 0) {
@@ -46,13 +46,13 @@ function createMetadataCreateHandler<T extends MetadataFormData, TError>(
         variables: {
           id,
           input: filterMetadataArray(data.privateMetadata),
-          keysToDelete: []
-        }
+          keysToDelete: [],
+        },
       });
 
       const updatePrivateMetaErrors = [
         ...(updatePrivateMetaResult.data.deletePrivateMetadata.errors || []),
-        ...(updatePrivateMetaResult.data.updatePrivateMetadata.errors || [])
+        ...(updatePrivateMetaResult.data.updatePrivateMetadata.errors || []),
       ];
 
       if (updatePrivateMetaErrors.length > 0) {

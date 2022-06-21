@@ -1,7 +1,7 @@
 import {
   LanguageCodeEnum,
   useSaleTranslationDetailsQuery,
-  useUpdateSaleTranslationsMutation
+  useUpdateSaleTranslationsMutation,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -28,7 +28,7 @@ export interface TranslationsSalesProps {
 const TranslationsSales: React.FC<TranslationsSalesProps> = ({
   id,
   languageCode,
-  params
+  params,
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
@@ -36,32 +36,32 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({
   const intl = useIntl();
 
   const saleTranslations = useSaleTranslationDetailsQuery({
-    variables: { id, language: languageCode }
+    variables: { id, language: languageCode },
   });
 
   const [
     updateTranslations,
-    updateTranslationsOpts
+    updateTranslationsOpts,
   ] = useUpdateSaleTranslationsMutation({
     onCompleted: data => {
       if (data.saleTranslate.errors.length === 0) {
         saleTranslations.refetch();
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
+          text: intl.formatMessage(commonMessages.savedChanges),
         });
         navigate("?", { replace: true });
       }
-    }
+    },
   });
 
   const onEdit = (field: string) =>
     navigate(
       "?" +
         stringifyQs({
-          activeField: field
+          activeField: field,
         }),
-      { replace: true }
+      { replace: true },
     );
 
   const onDiscard = () => {
@@ -70,7 +70,7 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({
 
   const handleSubmit = (
     { name: fieldName }: TranslationField<TranslationInputFieldName>,
-    data: string
+    data: string,
   ) =>
     extractMutationErrors(
       updateTranslations({
@@ -78,11 +78,11 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({
           id,
           input: getParsedTranslationInputData({
             data,
-            fieldName
+            fieldName,
           }),
-          language: languageCode
-        }
-      })
+          language: languageCode,
+        },
+      }),
     );
 
   const translation = saleTranslations?.data?.translation;

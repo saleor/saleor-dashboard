@@ -2,7 +2,7 @@ import ConfirmButton from "@saleor/components/ConfirmButton";
 import { IMessage } from "@saleor/components/messages";
 import {
   useGiftCardBulkActivateMutation,
-  useGiftCardBulkDeactivateMutation
+  useGiftCardBulkDeactivateMutation,
 } from "@saleor/graphql";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getByIds } from "@saleor/orders/components/OrderReturnPage/utils";
@@ -37,7 +37,7 @@ const BulkEnableDisableSection: React.FC = () => {
 
   const [
     activateGiftCards,
-    activateGiftCardsOpts
+    activateGiftCardsOpts,
   ] = useGiftCardBulkActivateMutation({
     onCompleted: data => {
       const { errors, count } = data?.giftCardBulkActivate;
@@ -45,13 +45,15 @@ const BulkEnableDisableSection: React.FC = () => {
       const notifierData: IMessage = !!errors?.length
         ? {
             status: "error",
-            text: intl.formatMessage(messages.errorActivateAlertText, { count })
+            text: intl.formatMessage(messages.errorActivateAlertText, {
+              count,
+            }),
           }
         : {
             status: "success",
             text: intl.formatMessage(messages.successActivateAlertText, {
-              count
-            })
+              count,
+            }),
           };
 
       notify(notifierData);
@@ -60,12 +62,12 @@ const BulkEnableDisableSection: React.FC = () => {
         reset();
       }
     },
-    refetchQueries: [GIFT_CARD_LIST_QUERY]
+    refetchQueries: [GIFT_CARD_LIST_QUERY],
   });
 
   const [
     deactivateGiftCards,
-    deactivateGiftCardsOpts
+    deactivateGiftCardsOpts,
   ] = useGiftCardBulkDeactivateMutation({
     onCompleted: data => {
       const { errors, count } = data?.giftCardBulkDeactivate;
@@ -74,14 +76,14 @@ const BulkEnableDisableSection: React.FC = () => {
         ? {
             status: "error",
             text: intl.formatMessage(messages.errorDeactivateAlertText, {
-              count
-            })
+              count,
+            }),
           }
         : {
             status: "success",
             text: intl.formatMessage(messages.successDeactivateAlertText, {
-              count
-            })
+              count,
+            }),
           };
 
       notify(notifierData);
@@ -90,7 +92,7 @@ const BulkEnableDisableSection: React.FC = () => {
         reset();
       }
     },
-    refetchQueries: [GIFT_CARD_LIST_QUERY]
+    refetchQueries: [GIFT_CARD_LIST_QUERY],
   });
 
   const handleActivateGiftCards = () =>

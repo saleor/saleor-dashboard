@@ -24,7 +24,7 @@ const VoucherInfo = ({
   disabled,
   errors,
   variant,
-  onChange
+  onChange,
 }: VoucherInfoProps) => {
   const intl = useIntl();
 
@@ -34,8 +34,8 @@ const VoucherInfo = ({
     onChange({
       target: {
         name: "code",
-        value: generateCode(10)
-      }
+        value: generateCode(10),
+      },
     });
 
   return (
@@ -63,7 +63,7 @@ const VoucherInfo = ({
           name={"code" as keyof VoucherDetailsPageFormData}
           label={intl.formatMessage({
             id: "jvKNMP",
-            defaultMessage: "Discount Code"
+            defaultMessage: "Discount Code",
           })}
           value={data.code}
           onChange={onChange}

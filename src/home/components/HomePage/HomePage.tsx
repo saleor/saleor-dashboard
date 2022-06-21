@@ -24,19 +24,19 @@ const useStyles = makeStyles(
       gridColumnGap: theme.spacing(3),
       gridTemplateColumns: "1fr 1fr",
       [theme.breakpoints.down("sm")]: {
-        gridColumnGap: theme.spacing(1)
+        gridColumnGap: theme.spacing(1),
       },
       [theme.breakpoints.down("xs")]: {
-        gridTemplateColumns: "1fr"
-      }
+        gridTemplateColumns: "1fr",
+      },
     },
     icon: {
       "& path": {
-        fill: theme.palette.primary.main
-      }
-    }
+        fill: theme.palette.primary.main,
+      },
+    },
   }),
-  { name: "HomePage" }
+  { name: "HomePage" },
 );
 
 export interface HomePageProps {
@@ -69,7 +69,7 @@ const HomePage: React.FC<HomePageProps> = props => {
     ordersToCapture = 0,
     ordersToFulfill = 0,
     productsOutOfStock = 0,
-    noChannel
+    noChannel,
   } = props;
 
   const classes = useStyles(props);
@@ -139,7 +139,7 @@ const HomePage: React.FC<HomePageProps> = props => {
             <RequirePermissions
               requiredPermissions={[
                 PermissionEnum.MANAGE_ORDERS,
-                PermissionEnum.MANAGE_PRODUCTS
+                PermissionEnum.MANAGE_PRODUCTS,
               ]}
             >
               <HomeProductListCard

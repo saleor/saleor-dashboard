@@ -7,10 +7,10 @@ const useStyles = makeStyles(
   theme => ({
     button: {
       marginBottom: theme.spacing(1),
-      marginTop: theme.spacing(3)
-    }
+      marginTop: theme.spacing(3),
+    },
   }),
-  { name: "MaximalButton" }
+  { name: "MaximalButton" },
 );
 
 interface MaximalButtonProps {

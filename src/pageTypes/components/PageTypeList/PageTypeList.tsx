@@ -19,13 +19,13 @@ import { ListActions, ListProps, SortPage } from "../../../types";
 const useStyles = makeStyles(
   {
     colName: {
-      paddingLeft: 0
+      paddingLeft: 0,
     },
     link: {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   },
-  { name: "PageTypeList" }
+  { name: "PageTypeList" },
 );
 
 interface PageTypeListProps
@@ -45,7 +45,7 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
     sort,
     toggle,
     toggleAll,
-    toolbar
+    toolbar,
   } = props;
   const classes = useStyles(props);
   const numberOfColumns = pageTypes?.length === 0 ? 1 : 2;
@@ -126,7 +126,7 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
                 />
               </TableCell>
             </TableRow>
-          )
+          ),
         )}
       </TableBody>
     </ResponsiveTable>

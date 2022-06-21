@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 
 import {
   pluginAvailabilityStatusMessages as messages,
-  pluginStatusMessages
+  pluginStatusMessages,
 } from "./messages";
 import { getActiveChannelConfigsCount } from "./utils";
 
@@ -15,14 +15,14 @@ interface PluginAvailabilityStatusProps {
 }
 
 const PluginAvailabilityStatus: React.FC<PluginAvailabilityStatusProps> = ({
-  plugin: { globalConfiguration, channelConfigurations }
+  plugin: { globalConfiguration, channelConfigurations },
 }) => {
   const intl = useIntl();
 
   const isGlobalPlugin = isPluginGlobal(globalConfiguration);
 
   const activeChannelsCount = getActiveChannelConfigsCount(
-    channelConfigurations
+    channelConfigurations,
   );
 
   const isStatusActive = isGlobalPlugin
@@ -32,7 +32,7 @@ const PluginAvailabilityStatus: React.FC<PluginAvailabilityStatusProps> = ({
   const globalPluginLabel = intl.formatMessage(
     isStatusActive
       ? pluginStatusMessages.active
-      : pluginStatusMessages.deactivated
+      : pluginStatusMessages.deactivated,
   );
 
   return (
@@ -41,7 +41,7 @@ const PluginAvailabilityStatus: React.FC<PluginAvailabilityStatusProps> = ({
         isGlobalPlugin
           ? globalPluginLabel
           : intl.formatMessage(messages.channelTitle, {
-              activeChannelsCount
+              activeChannelsCount,
             })
       }
       color={isStatusActive ? "success" : "error"}

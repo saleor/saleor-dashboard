@@ -1,7 +1,7 @@
 import {
   CheckIfOrderExistsQuery,
   SearchCatalogQuery,
-  SearchCustomersQuery
+  SearchCustomersQuery,
 } from "@saleor/graphql";
 import { RelayToFlat } from "@saleor/types";
 

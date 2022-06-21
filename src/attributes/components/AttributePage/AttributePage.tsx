@@ -17,7 +17,7 @@ import {
   AttributeErrorFragment,
   AttributeInputTypeEnum,
   AttributeTypeEnum,
-  MeasurementUnitsEnum
+  MeasurementUnitsEnum,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -91,7 +91,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
   pageInfo,
   onNextPage,
   onPreviousPage,
-  children
+  children,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -99,7 +99,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
   const {
     isMetadataModified,
     isPrivateMetadataModified,
-    makeChangeHandler: makeMetadataChangeHandler
+    makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
 
   const initialForm: AttributePageFormData =
@@ -118,7 +118,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
           type: AttributeTypeEnum.PRODUCT_TYPE,
           valueRequired: true,
           visibleInStorefront: true,
-          unit: undefined
+          unit: undefined,
         }
       : {
           availableInGrid: attribute?.availableInGrid ?? true,
@@ -129,7 +129,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
           metadata: attribute?.metadata?.map(mapMetadataItemToInput),
           name: attribute?.name ?? "",
           privateMetadata: attribute?.privateMetadata?.map(
-            mapMetadataItemToInput
+            mapMetadataItemToInput,
           ),
           slug: attribute?.slug ?? "",
           storefrontSearchPosition:
@@ -137,7 +137,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
           type: attribute?.type || AttributeTypeEnum.PRODUCT_TYPE,
           valueRequired: !!attribute?.valueRequired ?? true,
           visibleInStorefront: attribute?.visibleInStorefront ?? true,
-          unit: attribute?.unit || null
+          unit: attribute?.unit || null,
         };
 
   const handleSubmit = (data: AttributePageFormData) => {
@@ -154,7 +154,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
       metadata,
       privateMetadata,
       slug: data.slug || slugify(data.name).toLowerCase(),
-      type
+      type,
     });
   };
 
@@ -173,7 +173,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
         submit,
         errors,
         setError,
-        clearErrors
+        clearErrors,
       }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
@@ -189,7 +189,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
                     ? intl.formatMessage({
                         id: "8cUEPV",
                         defaultMessage: "Create New Attribute",
-                        description: "page title"
+                        description: "page title",
                       })
                     : maybe(() => attribute.name)
                 }
@@ -208,7 +208,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
                     clearErrors={clearErrors}
                   />
                   {ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(
-                    data.inputType
+                    data.inputType,
                   ) && (
                     <>
                       <CardSpacer />

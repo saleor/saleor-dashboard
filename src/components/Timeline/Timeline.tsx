@@ -11,54 +11,54 @@ const useStyles = makeStyles(
     avatar: {
       "& span": {
         height: "100%",
-        width: "100%"
+        width: "100%",
       },
       alignSelf: "flex-start",
-      marginRight: theme.spacing(3.5)
+      marginRight: theme.spacing(3.5),
     },
     button: {
-      zIndex: 2
+      zIndex: 2,
     },
     cardActionsExpanded: {
-      maxHeight: theme.spacing(6)
+      maxHeight: theme.spacing(6),
     },
     input: {
       "& > div": {
-        padding: "0 14px"
+        padding: "0 14px",
       },
       "& textarea": {
         "&::placeholder": {
-          opacity: [[1], "!important"] as any
+          opacity: [[1], "!important"] as any,
         },
-        zIndex: 2
+        zIndex: 2,
       },
-      background: theme.palette.background.paper
+      background: theme.palette.background.paper,
     },
     noteRoot: {
       left: theme.spacing(-8.5),
       marginBottom: theme.spacing(3),
       position: "relative",
-      width: `calc(100% + ${theme.spacing(8.5)})`
+      width: `calc(100% + ${theme.spacing(8.5)})`,
     },
     noteTitle: {
       "&:last-child": {
         paddingBottom: 0,
-        paddingRight: 0
+        paddingRight: 0,
       },
       alignItems: "center",
       background: theme.palette.background.default,
       display: "flex",
-      paddingLeft: theme.spacing(3)
+      paddingLeft: theme.spacing(3),
     },
     root: {
       borderColor: theme.palette.divider,
       borderStyle: "solid",
       borderWidth: "0 0 0 2px",
       marginLeft: 20,
-      paddingLeft: theme.spacing(3)
-    }
+      paddingLeft: theme.spacing(3),
+    },
   }),
-  { name: "Timeline" }
+  { name: "Timeline" },
 );
 
 interface TimelineProps {
@@ -106,7 +106,7 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = props => {
           className={classes.input}
           placeholder={intl.formatMessage({
             id: "3evXPj",
-            defaultMessage: "Leave your note here..."
+            defaultMessage: "Leave your note here...",
           })}
           onChange={onChange}
           value={message}
@@ -126,7 +126,7 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = props => {
                   description="add order note, button"
                 />
               </Button>
-            )
+            ),
           }}
           variant="outlined"
         />

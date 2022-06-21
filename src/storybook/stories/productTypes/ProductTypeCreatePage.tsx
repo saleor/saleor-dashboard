@@ -5,7 +5,7 @@ import React from "react";
 
 import ProductTypeCreatePage, {
   ProductTypeCreatePageProps,
-  ProductTypeForm
+  ProductTypeForm,
 } from "../../../productTypes/components/ProductTypeCreatePage";
 import Decorator from "../../Decorator";
 
@@ -18,7 +18,7 @@ const props: Omit<ProductTypeCreatePageProps, "classes"> = {
   saveButtonBarState: "default",
   taxTypes: [],
   kind: ProductTypeKindEnum.NORMAL,
-  onChangeKind: () => undefined
+  onChangeKind: () => undefined,
 };
 
 storiesOf("Views / Product types / Create product type", module)

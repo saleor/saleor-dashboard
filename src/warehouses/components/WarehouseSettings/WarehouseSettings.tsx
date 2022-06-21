@@ -8,7 +8,7 @@ import { RadioGroupField } from "@saleor/components/RadioGroupField";
 import Skeleton from "@saleor/components/Skeleton";
 import {
   WarehouseClickAndCollectOptionEnum,
-  WarehouseWithShippingFragment
+  WarehouseWithShippingFragment,
 } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
@@ -32,16 +32,16 @@ const useStyles = makeStyles(
   theme => ({
     link: {
       "&:not(:last-of-type)": {
-        marginBottom: theme.spacing()
-      }
+        marginBottom: theme.spacing(),
+      },
     },
     preview: {
-      marginLeft: theme.spacing(1)
-    }
+      marginLeft: theme.spacing(1),
+    },
   }),
   {
-    name: "WarehouseInfoProps"
-  }
+    name: "WarehouseInfoProps",
+  },
 );
 
 const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
@@ -49,7 +49,7 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
   disabled,
   data,
   onChange,
-  setData
+  setData,
 }) => {
   React.useEffect(() => {
     if (
@@ -57,7 +57,7 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
       data.clickAndCollectOption === WarehouseClickAndCollectOptionEnum.LOCAL
     ) {
       setData({
-        clickAndCollectOption: WarehouseClickAndCollectOptionEnum.DISABLED
+        clickAndCollectOption: WarehouseClickAndCollectOptionEnum.DISABLED,
       });
     }
   }, [data.isPrivate]);
@@ -81,7 +81,7 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
           <FormSpacer />
         </>
       ),
-      value: "true"
+      value: "true",
     },
     {
       label: (
@@ -94,8 +94,8 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
           </Typography>
         </>
       ),
-      value: "false"
-    }
+      value: "false",
+    },
   ];
 
   const clickAndCollectChoicesPublic = [
@@ -111,7 +111,7 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
           <FormSpacer />
         </>
       ),
-      value: WarehouseClickAndCollectOptionEnum.DISABLED
+      value: WarehouseClickAndCollectOptionEnum.DISABLED,
     },
     {
       label: (
@@ -123,7 +123,7 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
           <FormSpacer />
         </>
       ),
-      value: WarehouseClickAndCollectOptionEnum.LOCAL
+      value: WarehouseClickAndCollectOptionEnum.LOCAL,
     },
     {
       label: (
@@ -136,12 +136,12 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
           </Typography>
         </>
       ),
-      value: WarehouseClickAndCollectOptionEnum.ALL
-    }
+      value: WarehouseClickAndCollectOptionEnum.ALL,
+    },
   ];
 
   const clickAndCollectChoices = clickAndCollectChoicesPublic.filter(
-    choice => choice.value !== WarehouseClickAndCollectOptionEnum.LOCAL
+    choice => choice.value !== WarehouseClickAndCollectOptionEnum.LOCAL,
   );
 
   return (
@@ -168,7 +168,7 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
                 {...messages.warehouseSettingsNoShippingZonesAssigned}
               />
             </Typography>
-          )
+          ),
         )}
       </CardContent>
       <Divider />

@@ -1,7 +1,7 @@
 import {
   LanguageCodeEnum,
   useUpdateVoucherTranslationsMutation,
-  useVoucherTranslationDetailsQuery
+  useVoucherTranslationDetailsQuery,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -28,7 +28,7 @@ export interface TranslationsVouchersProps {
 const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
   id,
   languageCode,
-  params
+  params,
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
@@ -36,32 +36,32 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
   const intl = useIntl();
 
   const voucherTranslations = useVoucherTranslationDetailsQuery({
-    variables: { id, language: languageCode }
+    variables: { id, language: languageCode },
   });
 
   const [
     updateTranslations,
-    updateTranslationsOpts
+    updateTranslationsOpts,
   ] = useUpdateVoucherTranslationsMutation({
     onCompleted: data => {
       if (data.voucherTranslate.errors.length === 0) {
         voucherTranslations.refetch();
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
+          text: intl.formatMessage(commonMessages.savedChanges),
         });
         navigate("?", { replace: true });
       }
-    }
+    },
   });
 
   const onEdit = (field: string) =>
     navigate(
       "?" +
         stringifyQs({
-          activeField: field
+          activeField: field,
         }),
-      { replace: true }
+      { replace: true },
     );
 
   const onDiscard = () => {
@@ -70,7 +70,7 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
 
   const handleSubmit = (
     { name: fieldName }: TranslationField<TranslationInputFieldName>,
-    data: string
+    data: string,
   ) =>
     extractMutationErrors(
       updateTranslations({
@@ -78,11 +78,11 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
           id,
           input: getParsedTranslationInputData({
             data,
-            fieldName
+            fieldName,
           }),
-          language: languageCode
-        }
-      })
+          language: languageCode,
+        },
+      }),
     );
 
   const translation = voucherTranslations?.data?.translation;

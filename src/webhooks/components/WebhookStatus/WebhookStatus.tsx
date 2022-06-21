@@ -17,7 +17,7 @@ interface WebhookStatusProps {
 const WebhookStatus: React.FC<WebhookStatusProps> = ({
   data,
   disabled,
-  onChange
+  onChange,
 }) => {
   const intl = useIntl();
   return (

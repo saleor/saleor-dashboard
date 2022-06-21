@@ -10,7 +10,7 @@ export interface SingleAutocompleteSelectedChangeHandlerProps {
 function createSingleAutocompleteSelectHandler(
   change: FormChange,
   setSelected: (value: string) => void,
-  choices: SingleAutocompleteChoiceType[]
+  choices: SingleAutocompleteChoiceType[],
 ): FormChange {
   return (event: React.ChangeEvent<any>) => {
     change(event);

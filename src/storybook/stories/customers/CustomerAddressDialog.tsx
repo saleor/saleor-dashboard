@@ -2,7 +2,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import CustomerAddressDialog, {
-  CustomerAddressDialogProps
+  CustomerAddressDialogProps,
 } from "../../../customers/components/CustomerAddressDialog";
 import { customer } from "../../../customers/fixtures";
 import { countries } from "../../../fixtures";
@@ -14,13 +14,13 @@ const props: CustomerAddressDialogProps = {
   countries: countries.map(c => ({
     __typename: "CountryDisplay",
     code: c.code,
-    country: c.name
+    country: c.name,
   })),
   errors: [],
   onClose: () => undefined,
   onConfirm: () => undefined,
   open: true,
-  variant: "create"
+  variant: "create",
 };
 
 storiesOf("Customers / Address editing dialog", module)

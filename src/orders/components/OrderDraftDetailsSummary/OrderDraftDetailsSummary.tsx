@@ -18,31 +18,31 @@ const useStyles = makeStyles(
     root: {
       ...theme.typography.body1,
       lineHeight: 1.9,
-      width: "100%"
+      width: "100%",
     },
     textRight: {
-      textAlign: "right"
+      textAlign: "right",
     },
     subtitle: {
       color: theme.palette.grey[500],
-      paddingRight: theme.spacing(1)
+      paddingRight: theme.spacing(1),
     },
     relativeRow: {
-      position: "relative"
+      position: "relative",
     },
     percentDiscountLabelContainer: {
       display: "flex",
       flexDirection: "row",
       alignItems: "baseline",
-      justifyContent: "flex-end"
+      justifyContent: "flex-end",
     },
     shippingMethodContainer: {
       display: "flex",
       flexDirection: "row",
-      alignItems: "baseline"
-    }
+      alignItems: "baseline",
+    },
   }),
-  { name: "OrderDraftDetailsSummary" }
+  { name: "OrderDraftDetailsSummary" },
 );
 
 const PRICE_PLACEHOLDER = "---";
@@ -66,7 +66,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
     isDialogOpen,
     orderDiscountAddStatus,
     orderDiscountRemoveStatus,
-    undiscountedPrice
+    undiscountedPrice,
   } = props;
 
   const intl = useIntl();
@@ -86,7 +86,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
     shippingMethods,
     shippingPrice,
     shippingAddress,
-    isShippingRequired
+    isShippingRequired,
   } = order;
 
   const hasChosenShippingMethod =
@@ -106,7 +106,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
     const {
       value: discountValue,
       calculationMode,
-      amount: discountAmount
+      amount: discountAmount,
     } = orderDiscountData;
     const currency = total.gross.currency;
 
@@ -145,7 +145,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
     }
 
     const addShippingAddressInfo = intl.formatMessage(
-      messages.addShippingAddressInfo
+      messages.addShippingAddressInfo,
     );
 
     return (

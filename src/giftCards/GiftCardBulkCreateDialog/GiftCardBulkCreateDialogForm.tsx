@@ -2,7 +2,7 @@ import {
   DialogContent,
   Divider,
   TextField,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import DialogButtons from "@saleor/components/ActionDialog/DialogButtons";
@@ -11,7 +11,7 @@ import GiftCardTagInput from "@saleor/giftCards/components/GiftCardTagInput";
 import {
   GiftCardSettingsExpiryTypeEnum,
   TimePeriodTypeEnum,
-  useGiftCardSettingsQuery
+  useGiftCardSettingsQuery,
 } from "@saleor/graphql";
 import useForm from "@saleor/hooks/useForm";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -27,7 +27,7 @@ import { getGiftCardErrorMessage } from "../GiftCardUpdate/messages";
 import {
   GiftCardBulkCreateFormCommonProps,
   GiftCardBulkCreateFormData,
-  GiftCardBulkCreateFormErrors
+  GiftCardBulkCreateFormErrors,
 } from "./types";
 
 export const initialData: GiftCardBulkCreateFormData = {
@@ -40,7 +40,7 @@ export const initialData: GiftCardBulkCreateFormData = {
   expiryPeriodType: TimePeriodTypeEnum.MONTH,
   expiryPeriodAmount: 12,
   requiresActivation: true,
-  cardsAmount: 100
+  cardsAmount: 100,
 };
 
 interface GiftCardBulkCreateDialogFormProps {
@@ -54,14 +54,14 @@ const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> 
   onSubmit,
   opts,
   onClose,
-  formErrors = {}
+  formErrors = {},
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
 
   const {
     data: settingsData,
-    loading: loadingSettings
+    loading: loadingSettings,
   } = useGiftCardSettingsQuery();
 
   const getInitialExpirySettingsData = (): Partial<GiftCardBulkCreateFormData> => {
@@ -78,7 +78,7 @@ const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> 
     return {
       expiryType,
       expiryPeriodType: expiryPeriod?.type,
-      expiryPeriodAmount: expiryPeriod?.amount
+      expiryPeriodAmount: expiryPeriod?.amount,
     };
   };
 
@@ -86,9 +86,9 @@ const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> 
     {
       ...initialData,
       ...getInitialExpirySettingsData(),
-      balanceCurrency: ""
+      balanceCurrency: "",
     },
-    onSubmit
+    onSubmit,
   );
 
   const { tags, requiresActivation, cardsAmount } = data;
@@ -97,7 +97,7 @@ const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> 
     data,
     errors: formErrors,
     toggleValue,
-    change
+    change,
   };
 
   return (

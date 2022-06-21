@@ -13,25 +13,25 @@ export interface CollectionListFilterOpts {
 
 export enum CollectionFilterKeys {
   status = "status",
-  channel = "channel"
+  channel = "channel",
 }
 
 const messages = defineMessages({
   hidden: {
     id: "9eC0MZ",
     defaultMessage: "Hidden",
-    description: "collection"
+    description: "collection",
   },
   published: {
     id: "lL3YJO",
     defaultMessage: "Published",
-    description: "collection"
-  }
+    description: "collection",
+  },
 });
 
 export function createFilterStructure(
   intl: IntlShape,
-  opts: CollectionListFilterOpts
+  opts: CollectionListFilterOpts,
 ): IFilter<CollectionFilterKeys> {
   return [
     {
@@ -43,16 +43,16 @@ export function createFilterStructure(
         [
           {
             label: intl.formatMessage(messages.published),
-            value: CollectionPublished.PUBLISHED
+            value: CollectionPublished.PUBLISHED,
           },
           {
             label: intl.formatMessage(messages.hidden),
-            value: CollectionPublished.HIDDEN
-          }
-        ]
+            value: CollectionPublished.HIDDEN,
+          },
+        ],
       ),
       active: opts.status.active,
-      dependencies: [CollectionFilterKeys.channel]
+      dependencies: [CollectionFilterKeys.channel],
     },
     {
       ...createOptionsField(
@@ -60,9 +60,9 @@ export function createFilterStructure(
         intl.formatMessage(commonMessages.channel),
         [opts.channel?.value],
         false,
-        opts.channel?.choices
+        opts.channel?.choices,
       ),
-      active: opts.channel?.active
-    }
+      active: opts.channel?.active,
+    },
   ];
 }

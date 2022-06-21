@@ -17,7 +17,7 @@ describe("Matches locale to browser settings", () => {
     const locales = [
       "does-not-exist-1",
       "does-not-exist-2",
-      "does-not-exist-3"
+      "does-not-exist-3",
     ];
 
     expect(getMatchingLocale(locales)).toBe(undefined);

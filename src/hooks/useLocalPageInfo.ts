@@ -40,12 +40,12 @@ function useLocalPageInfo<T>(values: T[], paginateBy: number) {
       hasNextPage,
       hasPreviousPage,
       endCursor,
-      startCursor
+      startCursor,
     },
     pageValues,
     loadNextPage,
     loadPreviousPage,
-    loadPage: setPage
+    loadPage: setPage,
   };
 }
 export default useLocalPageInfo;

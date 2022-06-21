@@ -10,23 +10,23 @@ const messages = defineMessages({
   allMedia: {
     id: "XUU9sU",
     defaultMessage: "All Media",
-    description: "section header"
-  }
+    description: "section header",
+  },
 });
 
 const useStyles = makeStyles(
   theme => ({
     card: {
-      marginBottom: theme.spacing(2)
+      marginBottom: theme.spacing(2),
     },
     highlightedImageContainer: {
-      borderColor: theme.palette.primary.main
+      borderColor: theme.palette.primary.main,
     },
     image: {
       height: "100%",
       objectFit: "contain",
       userSelect: "none",
-      width: "100%"
+      width: "100%",
     },
     imageContainer: {
       border: "2px solid #eaeaea",
@@ -35,17 +35,17 @@ const useStyles = makeStyles(
       height: 48,
       overflow: "hidden",
       padding: theme.spacing(0.5),
-      position: "relative"
+      position: "relative",
     },
     root: {
       display: "grid",
       gridColumnGap: theme.spacing(2),
       gridRowGap: theme.spacing(1),
-      gridTemplateColumns: "repeat(4, 1fr)"
+      gridTemplateColumns: "repeat(4, 1fr)",
     },
-    toolbar: { marginTop: theme.spacing(-0.5) }
+    toolbar: { marginTop: theme.spacing(-0.5) },
   }),
-  { name: "ProductMediaNavigation" }
+  { name: "ProductMediaNavigation" },
 );
 
 interface ProductMediaNavigationProps {
@@ -84,7 +84,7 @@ const ProductMediaNavigation: React.FC<ProductMediaNavigationProps> = props => {
                   className={classNames({
                     [classes.imageContainer]: true,
                     [classes.highlightedImageContainer]:
-                      mediaObj.id === highlighted
+                      mediaObj.id === highlighted,
                   })}
                   onClick={onRowClick(mediaObj.id)}
                   key={mediaObj.id}
