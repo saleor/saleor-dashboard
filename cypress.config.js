@@ -10,8 +10,6 @@ module.exports = defineConfig({
   viewportWidth: 1400,
   viewportHeight: 660,
   e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
     env: {
       grepFilterSpecs: true
     },
@@ -20,7 +18,7 @@ module.exports = defineConfig({
       config = require("./cypress/plugins/index.js")(on, config);
       return config;
     },
-    baseUrl: "https://automation-dashboard.staging.saleor.cloud/dashboard/",
+    baseUrl: "localhost",
     specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx}"
   }
 });
