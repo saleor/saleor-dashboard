@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-20.04
     env:
       API_URI: /graphql/
-      MARKETPLACE_URL: "https://marketplace-gray.vercel.app/"
       APP_MOUNT_URI: /dashboard/
       STATIC_URL: /dashboard/static/
       SENTRY_ORG: saleor
@@ -18,6 +17,7 @@ jobs:
       SENTRY_URL_PREFIX: "~/dashboard/static"
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      MARKETPLACE_URL: "https://marketplace-gray.vercel.app/"
       ENVIRONMENT: saleor-master-staging
       IS_CLOUD_INSTANCE: true
     steps:
