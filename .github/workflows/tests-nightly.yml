@@ -49,7 +49,7 @@ jobs:
 
       - name: Install saleor cli
         id: install-saleor-cli
-        run: npm i -g saleor-cli
+        run: npm i -g saleor-cli@next
 
       - name: Cache node modules
         uses: actions/cache@v2
