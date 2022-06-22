@@ -49,7 +49,7 @@ export const extensionMountPoints = {
 
 const filterAndMapToTarget = (
   extensions: RelayToFlat<ExtensionListQuery["appExtensions"]>,
-  openApp: (appData: AppData) => void
+  openApp: (appData: AppData) => void,
 ): ExtensionWithParams[] =>
   extensions.map(
     ({ id, accessToken, permissions, url, label, mount, target, app }) => ({
@@ -67,15 +67,15 @@ const filterAndMapToTarget = (
           src: url,
           label,
           target,
-          params
-        })
-    })
+          params,
+        }),
+    }),
   );
 
 const mapToMenuItem = ({ label, id, open }: Extension) => ({
   label,
   testId: `extension-${id}`,
-  onSelect: open
+  onSelect: open,
 });
 
 export const mapToMenuItems = (extensions: ExtensionWithParams[]) =>
@@ -83,21 +83,21 @@ export const mapToMenuItems = (extensions: ExtensionWithParams[]) =>
 
 export const mapToMenuItemsForProductDetails = (
   extensions: ExtensionWithParams[],
-  productId: string
+  productId: string,
 ) =>
   extensions.map(extension =>
-    mapToMenuItem({ ...extension, open: () => extension.open({ productId }) })
+    mapToMenuItem({ ...extension, open: () => extension.open({ productId }) }),
   );
 
 export const mapToMenuItemsForOrderDetails = (
   extensions: ExtensionWithParams[],
-  orderId?: string
+  orderId?: string,
 ) =>
   extensions.map(extension =>
     mapToMenuItem({
       ...extension,
-      open: () => extension.open({ orderId })
-    })
+      open: () => extension.open({ orderId }),
+    }),
   );
 
 export const useExtensions = <T extends AppExtensionMountEnum>(

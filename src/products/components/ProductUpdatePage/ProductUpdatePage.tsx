@@ -1,8 +1,8 @@
 import { OutputData } from "@editorjs/editorjs";
 import {
   extensionMountPoints,
-  useExtensions,
   mapToMenuItemsForProductDetails,
+  useExtensions,
 } from "@saleor/apps/useExtensions";
 import {
   getAttributeValuesFromReferences,

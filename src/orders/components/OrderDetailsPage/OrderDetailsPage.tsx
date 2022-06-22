@@ -1,8 +1,8 @@
 import { Typography } from "@material-ui/core";
 import {
   extensionMountPoints,
-  useExtensions,
   mapToMenuItemsForOrderDetails,
+  useExtensions,
 } from "@saleor/apps/useExtensions";
 import { Backlink } from "@saleor/components/Backlink";
 import CardMenu from "@saleor/components/CardMenu";
@@ -227,7 +227,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
 
   const extensionMenuItems = mapToMenuItemsForOrderDetails(
     ORDER_DETAILS_MORE_ACTIONS,
-    order?.id
+    order?.id,
   );
 
   return (

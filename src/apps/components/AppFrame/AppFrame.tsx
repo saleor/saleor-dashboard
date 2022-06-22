@@ -58,7 +58,7 @@ export const AppFrame: React.FC<Props> = ({
       src={urlJoin(
         src,
         window.location.search,
-        `?domain=${shop.domain.host}&id=${appId}`
+        `?domain=${shop.domain.host}&id=${appId}`,
       )}
       onError={onError}
       onLoad={handleLoad}

@@ -57,7 +57,7 @@ export const useExternalApp = () => {
       setAppData(appData);
     } else {
       navigate(appDeepUrl(appData.id, appData.src, appData.params), {
-        resetScroll: true
+        resetScroll: true,
       });
     }
   };
