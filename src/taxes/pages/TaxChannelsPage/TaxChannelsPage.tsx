@@ -11,7 +11,8 @@ import {
   CountryCode,
   CountryFragment,
   TaxConfigurationFragment,
-  TaxConfigurationPerCountryFragment
+  TaxConfigurationPerCountryFragment,
+  TaxConfigurationUpdateInput
 } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import {
@@ -23,7 +24,6 @@ import {
   PageTab,
   PageTabs
 } from "@saleor/macaw-ui";
-import { WithOptional } from "@saleor/misc";
 import TaxCountryDialog from "@saleor/taxes/components/TaxCountryDialog";
 import { taxesMessages } from "@saleor/taxes/messages";
 import React from "react";
@@ -41,15 +41,14 @@ interface TaxChannelsPageProps {
   isDialogOpen: boolean;
   openDialog: (action?: string) => void;
   closeDialog: () => void;
+  onSubmit: (input: TaxConfigurationUpdateInput) => void;
 }
 
 export interface TaxConfigurationFormData {
   chargeTaxes: boolean;
   displayGrossPrices: boolean;
   pricesEnteredWithTax: boolean;
-  updateCountriesConfiguration: Array<
-    WithOptional<TaxConfigurationPerCountryFragment, "__typename">
-  >;
+  updateCountriesConfiguration: TaxConfigurationPerCountryFragment[];
   removeCountriesConfiguration: CountryCode[];
 }
 
@@ -61,7 +60,8 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
     allCountries,
     isDialogOpen,
     openDialog,
-    closeDialog
+    closeDialog,
+    onSubmit
   } = props;
 
   const intl = useIntl();
@@ -75,19 +75,44 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
     displayGrossPrices: currentTaxConfiguration?.displayGrossPrices ?? false,
     pricesEnteredWithTax:
       currentTaxConfiguration?.pricesEnteredWithTax ?? false,
-    updateCountriesConfiguration: [],
+    updateCountriesConfiguration: currentTaxConfiguration?.countries ?? [],
     removeCountriesConfiguration: []
   };
 
+  const handleSubmit = (data: TaxConfigurationFormData) => {
+    const { updateCountriesConfiguration, removeCountriesConfiguration } = data;
+    const parsedUpdate: TaxConfigurationUpdateInput["updateCountriesConfiguration"] = updateCountriesConfiguration.map(
+      config => ({
+        countryCode: config.country.code as CountryCode,
+        chargeTaxes: config.chargeTaxes,
+        displayGrossPrices: config.displayGrossPrices
+      })
+    );
+    onSubmit({
+      chargeTaxes: data.chargeTaxes,
+      displayGrossPrices: data.displayGrossPrices,
+      pricesEnteredWithTax: data.pricesEnteredWithTax,
+      updateCountriesConfiguration: parsedUpdate,
+      removeCountriesConfiguration
+    });
+  };
+
   return (
-    <Form initial={initialForm} onSubmit={() => null}>
+    <Form initial={initialForm} onSubmit={handleSubmit}>
       {({ data, change, submit, set }) => {
-        const countryExceptions = currentTaxConfiguration
-          ? [
-              ...currentTaxConfiguration.countries,
-              ...data.updateCountriesConfiguration
-            ]
-          : undefined;
+        const countryExceptions = data.updateCountriesConfiguration;
+
+        const handleExceptionChange = (event, index) => {
+          const { name, value } = event.target;
+          const currentExceptions = [...data.updateCountriesConfiguration];
+          const exceptionToChange = {
+            ...data.updateCountriesConfiguration[index],
+            [name]: value
+          };
+          currentExceptions[index] = exceptionToChange;
+          set({ updateCountriesConfiguration: currentExceptions });
+        };
+
         return (
           <Container>
             <PageHeader title={intl.formatMessage(sectionNames.taxes)} />
@@ -153,20 +178,31 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                           </ListItemCell>
                         </ListItem>
                       </ListHeader>
-                      {countryExceptions?.map(country => (
+                      {countryExceptions?.map((country, countryIndex) => (
                         <TaxCountryExceptionListItem
-                          country={country.country}
+                          country={country}
                           key={country.country.code}
                           onDelete={() => {
                             const currentRemovals =
                               data.removeCountriesConfiguration;
+                            const currentExceptions = [
+                              ...data.updateCountriesConfiguration
+                            ];
                             set({
                               removeCountriesConfiguration: [
                                 ...currentRemovals,
                                 country.country.code as CountryCode
-                              ]
+                              ],
+                              updateCountriesConfiguration: currentExceptions.filter(
+                                exception =>
+                                  exception.country.code !==
+                                  country.country.code
+                              )
                             });
                           }}
+                          onChange={event =>
+                            handleExceptionChange(event, countryIndex)
+                          }
                         />
                       )) ?? <Skeleton />}
                     </List>
@@ -195,7 +231,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                     country,
                     chargeTaxes: data.chargeTaxes,
                     displayGrossPrices: data.displayGrossPrices
-                  }));
+                  })) as TaxConfigurationPerCountryFragment[];
                   const currentExceptions = data.updateCountriesConfiguration;
                   set({
                     updateCountriesConfiguration: [

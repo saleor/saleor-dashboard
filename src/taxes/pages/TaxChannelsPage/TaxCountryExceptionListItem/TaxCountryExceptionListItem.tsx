@@ -1,5 +1,9 @@
-import { Checkbox } from "@material-ui/core";
-import { TaxConfigurationPerCountryFragment } from "@saleor/graphql";
+import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
+import {
+  TaxConfigurationPerCountryFragment,
+  TaxConfigurationUpdateInput
+} from "@saleor/graphql";
+import { FormChange } from "@saleor/hooks/useForm";
 import {
   DeleteIcon,
   IconButton,
@@ -9,21 +13,31 @@ import {
 import React from "react";
 
 interface TaxCountryExceptionListItemProps {
-  country: TaxConfigurationPerCountryFragment["country"] | undefined;
+  country: TaxConfigurationPerCountryFragment | undefined;
   onDelete: () => void;
+  onChange: FormChange;
 }
 
 export const TaxCountryExceptionListItem: React.FC<TaxCountryExceptionListItemProps> = ({
   country,
-  onDelete
+  onDelete,
+  onChange
 }) => (
   <ListItem hover={false}>
-    <ListItemCell>{country.country}</ListItemCell>
+    <ListItemCell>{country.country.country}</ListItemCell>
     <ListItemCell>
-      <Checkbox />
+      <ControlledCheckbox
+        checked={country.chargeTaxes}
+        name={"chargeTaxes" as keyof TaxConfigurationUpdateInput}
+        onChange={onChange}
+      />
     </ListItemCell>
     <ListItemCell>
-      <Checkbox />
+      <ControlledCheckbox
+        checked={country.displayGrossPrices}
+        name={"displayGrossPrices" as keyof TaxConfigurationUpdateInput}
+        onChange={onChange}
+      />
     </ListItemCell>
     <ListItemCell>
       <IconButton onClick={onDelete} variant="secondary">

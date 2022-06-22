@@ -1,4 +1,7 @@
-import { useTaxConfigurationsListQuery } from "@saleor/graphql";
+import {
+  useTaxConfigurationsListQuery,
+  useTaxConfigurationUpdateMutation
+} from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useShop from "@saleor/hooks/useShop";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -26,6 +29,9 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ id, params }) => {
   const handleTabChange = (tab: TaxTab) => {
     navigate(taxTabPath(tab));
   };
+
+  const [taxConfigurationUpdateMutation] = useTaxConfigurationUpdateMutation();
+
   const shop = useShop();
 
   const [openDialog, closeDialog] = createDialogActionHandlers<
@@ -57,6 +63,14 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ id, params }) => {
       isDialogOpen={params?.action === "add-country"}
       openDialog={openDialog}
       closeDialog={closeDialog}
+      onSubmit={input =>
+        taxConfigurationUpdateMutation({
+          variables: {
+            id,
+            input
+          }
+        })
+      }
     />
   );
 };
