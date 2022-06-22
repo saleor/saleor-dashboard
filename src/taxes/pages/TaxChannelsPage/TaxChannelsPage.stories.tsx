@@ -22,7 +22,8 @@ const props = {
   allCountries: castedCountries,
   isDialogOpen: false,
   openDialog: () => undefined,
-  closeDialog: () => undefined
+  closeDialog: () => undefined,
+  onSubmit: () => undefined
 };
 
 storiesOf("Views / Taxes / Channels view", module)
