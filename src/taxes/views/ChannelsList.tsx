@@ -11,7 +11,6 @@ import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { taxesMessages } from "../messages";
 import TaxChannelsPage from "../pages/TaxChannelsPage";
 import {
   channelsListUrl,
