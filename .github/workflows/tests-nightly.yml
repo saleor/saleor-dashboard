@@ -49,7 +49,7 @@ jobs:
 
       - name: Install saleor cli
         id: install-saleor-cli
-        run: npm i -g saleor-cli
+        run: npm i -g saleor-cli@next
 
       - name: Cache node modules
         uses: actions/cache@v2
@@ -68,11 +68,11 @@ jobs:
         env:
           ACCESS_TOKEN: ${{ secrets.CLOUD_ACCESS_TOKEN }}
         run: echo '{"token":"Token ${{ secrets.CLOUD_ACCESS_TOKEN }}","telemetry":"false","organization_slug":"qa","organization_name":"QA","environment_id":"lHECN87U"}' > ~/.config/saleor.json
-      
+
       - name: revert snapshot
         env:
           SALEOR_CLI_ENV: staging
-        run: npx saleor backup restore MbdG5UXd --skip_webhooks_update
+        run: npx saleor backup restore MbdG5UXd --skip-webhooks-update
 
       - name: Notify Slack
         if: ${{ failure() }}
