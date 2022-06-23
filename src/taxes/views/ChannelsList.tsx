@@ -30,7 +30,10 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ id, params }) => {
     navigate(taxTabPath(tab));
   };
 
-  const [taxConfigurationUpdateMutation] = useTaxConfigurationUpdateMutation();
+  const [
+    taxConfigurationUpdateMutation,
+    { status: mutationStatus, loading: mutationInProgress }
+  ] = useTaxConfigurationUpdateMutation();
 
   const shop = useShop();
 
@@ -71,6 +74,8 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ id, params }) => {
           }
         })
       }
+      savebarState={mutationStatus}
+      disabled={mutationInProgress}
     />
   );
 };

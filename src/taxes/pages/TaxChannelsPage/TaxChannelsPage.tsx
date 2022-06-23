@@ -17,6 +17,7 @@ import {
 import { sectionNames } from "@saleor/intl";
 import {
   Button,
+  ConfirmButtonTransitionState,
   List,
   ListHeader,
   ListItem,
@@ -42,6 +43,8 @@ interface TaxChannelsPageProps {
   openDialog: (action?: string) => void;
   closeDialog: () => void;
   onSubmit: (input: TaxConfigurationUpdateInput) => void;
+  savebarState: ConfirmButtonTransitionState;
+  disabled: boolean;
 }
 
 export interface TaxConfigurationFormData {
@@ -61,7 +64,9 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
     isDialogOpen,
     openDialog,
     closeDialog,
-    onSubmit
+    onSubmit,
+    savebarState,
+    disabled
   } = props;
 
   const intl = useIntl();
@@ -212,8 +217,8 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
               </div>
             </Grid>
             <Savebar
-              state={"default"}
-              disabled={false}
+              state={savebarState}
+              disabled={disabled}
               onSubmit={submit}
               onCancel={() => null}
             />

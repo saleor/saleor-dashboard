@@ -23,7 +23,9 @@ const props = {
   isDialogOpen: false,
   openDialog: () => undefined,
   closeDialog: () => undefined,
-  onSubmit: () => undefined
+  onSubmit: () => undefined,
+  savebarState: "default" as const,
+  disabled: false
 };
 
 storiesOf("Views / Taxes / Channels view", module)
