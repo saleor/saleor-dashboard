@@ -3,11 +3,15 @@ import {
   useTaxConfigurationUpdateMutation
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
+import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
+import { commonMessages } from "@saleor/intl";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
+import { useIntl } from "react-intl";
 
+import { taxesMessages } from "../messages";
 import TaxChannelsPage from "../pages/TaxChannelsPage";
 import {
   channelsListUrl,
@@ -25,6 +29,8 @@ interface ChannelsListProps {
 
 export const ChannelsList: React.FC<ChannelsListProps> = ({ id, params }) => {
   const navigate = useNavigator();
+  const notify = useNotifier();
+  const intl = useIntl();
 
   const handleTabChange = (tab: TaxTab) => {
     navigate(taxTabPath(tab));
@@ -33,7 +39,22 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ id, params }) => {
   const [
     taxConfigurationUpdateMutation,
     { status: mutationStatus, loading: mutationInProgress }
-  ] = useTaxConfigurationUpdateMutation();
+  ] = useTaxConfigurationUpdateMutation({
+    onCompleted: data => {
+      const errors = data?.taxConfigurationUpdate?.errors;
+      if (errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
+      } else {
+        notify({
+          status: "error",
+          text: intl.formatMessage(commonMessages.defaultErrorTitle)
+        });
+      }
+    }
+  });
 
   const shop = useShop();
 
