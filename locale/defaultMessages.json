@@ -4078,6 +4078,10 @@
     "context": "no gift card products and types alert message",
     "string": "{createGiftCardProductType} and {giftCardProduct} to start selling gift cards in your store."
   },
+  "UBuKZ9": {
+    "context": "searchbar placeholder",
+    "string": "Country"
+  },
   "UCHtG6": {
     "context": "button",
     "string": "About"
@@ -7038,6 +7042,10 @@
     "context": "option label",
     "string": "Change address"
   },
+  "s6p+rD": {
+    "context": "add country dialog header",
+    "string": "Choose countries you want to assign"
+  },
   "s8FlDW": {
     "context": "hide error log label in notification",
     "string": "Hide log"
@@ -7272,6 +7280,10 @@
   },
   "u24Ppd": {
     "string": "This attribute cannot be assigned to this product type"
+  },
+  "u34css": {
+    "context": "label for empty list in channels list",
+    "string": "There are no exceptions for this channel"
   },
   "u3sYPH": {
     "context": "independent of any particular day, eg. 11:35",
