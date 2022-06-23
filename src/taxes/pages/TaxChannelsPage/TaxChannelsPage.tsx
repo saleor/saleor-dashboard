@@ -7,6 +7,7 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
+import { configurationMenuUrl } from "@saleor/configuration";
 import {
   CountryCode,
   CountryFragment,
@@ -14,6 +15,7 @@ import {
   TaxConfigurationPerCountryFragment,
   TaxConfigurationUpdateInput
 } from "@saleor/graphql";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import {
   Button,
@@ -70,6 +72,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
   } = props;
 
   const intl = useIntl();
+  const navigate = useNavigator();
 
   const currentTaxConfiguration = taxConfigurations?.find(
     taxConfigurations => taxConfigurations.id === selectedConfigurationId
@@ -103,7 +106,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
   };
 
   return (
-    <Form initial={initialForm} onSubmit={handleSubmit}>
+    <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
       {({ data, change, submit, set }) => {
         const countryExceptions = data.updateCountriesConfiguration;
 
@@ -220,7 +223,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
               state={savebarState}
               disabled={disabled}
               onSubmit={submit}
-              onCancel={() => null}
+              onCancel={() => navigate(configurationMenuUrl)}
             />
             {allCountries && (
               <TaxCountryDialog
