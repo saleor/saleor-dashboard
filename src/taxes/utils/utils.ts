@@ -12,3 +12,8 @@ export const getDefaultTaxRateInCountry = (
     ?.find(taxClass => taxClass.isDefault)
     .countries.find(country => country.country.code === selectedCountry.code)
     .rate;
+
+export const encodeURIComponentOptional = (
+  uriComponent: string | number | boolean | undefined
+): string | undefined =>
+  uriComponent ? encodeURIComponent(uriComponent) : undefined;

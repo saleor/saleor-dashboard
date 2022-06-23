@@ -2,6 +2,8 @@ import { Dialog } from "@saleor/types";
 import { stringifyQs } from "@saleor/utils/urls";
 import urlJoin from "url-join";
 
+import { encodeURIComponentOptional } from "./utils/utils";
+
 export type TaxTab = "channels" | "countries" | "tax-classes";
 
 export const taxSection = "/taxes/";
@@ -14,7 +16,7 @@ export const channelsListPath = (id?: string) =>
   id ? urlJoin(taxTabPath("channels"), id) : taxTabPath("channels");
 
 export const channelsListUrl = (id?: string, params?: TaxesUrlQueryParams) =>
-  channelsListPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+  channelsListPath(encodeURIComponentOptional(id)) + "?" + stringifyQs(params);
 
 export const countriesListUrl = (id?: string) =>
   id ? urlJoin(taxTabPath("countries"), id) : taxTabPath("countries");
