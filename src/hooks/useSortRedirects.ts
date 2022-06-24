@@ -12,7 +12,11 @@ export interface UseSortRedirectsOpts<SortField extends string> {
   urlFunc: (params: SortByRankUrlQueryParams<SortField>) => string;
   resetToDefault?: boolean;
 }
-
+/**
+ * useSortRedirects is a hook that should be used in lists views
+ * where using search changes the sort field to "rank". Removing
+ * query changes sort field back to default one provided in params.
+ */
 export function useSortRedirects<SortField extends string>({
   params,
   defaultSortField,
