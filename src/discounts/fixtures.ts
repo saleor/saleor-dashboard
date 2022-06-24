@@ -6,7 +6,7 @@ import {
   SaleType,
   VoucherDetailsFragment,
   VoucherFragment,
-  VoucherTypeEnum
+  VoucherTypeEnum,
 } from "@saleor/graphql";
 
 export const saleList: SaleFragment[] = [
@@ -21,18 +21,18 @@ export const saleList: SaleFragment[] = [
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         currency: "USD",
         discountValue: 1,
-        id: "1"
-      }
+        id: "1",
+      },
     ],
     endDate: null,
     id: "U2FsZTo0",
     name: "Happy front day!",
     startDate: "2019-01-03",
-    type: "PERCENTAGE" as SaleType
+    type: "PERCENTAGE" as SaleType,
   },
   {
     __typename: "Sale" as "Sale",
@@ -45,18 +45,18 @@ export const saleList: SaleFragment[] = [
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         currency: "USD",
         discountValue: 1,
-        id: "2"
-      }
+        id: "2",
+      },
     ],
     endDate: null,
     id: "U2FsZTo1",
     name: "Happy minute day!",
     startDate: "2019-01-03",
-    type: "FIXED" as SaleType
+    type: "FIXED" as SaleType,
   },
   {
     __typename: "Sale" as "Sale",
@@ -69,18 +69,18 @@ export const saleList: SaleFragment[] = [
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         currency: "USD",
         discountValue: 1,
-        id: "3"
-      }
+        id: "3",
+      },
     ],
     endDate: null,
     id: "U2FsZTox",
     name: "Happy class day!",
     startDate: "2019-01-03",
-    type: "PERCENTAGE" as SaleType
+    type: "PERCENTAGE" as SaleType,
   },
   {
     __typename: "Sale" as "Sale",
@@ -93,18 +93,18 @@ export const saleList: SaleFragment[] = [
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         currency: "USD",
         discountValue: 1,
-        id: "4"
-      }
+        id: "4",
+      },
     ],
     endDate: null,
     id: "U2FsZToy",
     name: "Happy human day!",
     startDate: "2019-01-03",
-    type: "PERCENTAGE" as SaleType
+    type: "PERCENTAGE" as SaleType,
   },
   {
     __typename: "Sale" as "Sale",
@@ -117,19 +117,19 @@ export const saleList: SaleFragment[] = [
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         currency: "USD",
         discountValue: 1,
-        id: "5"
-      }
+        id: "5",
+      },
     ],
     endDate: null,
     id: "U2FsZToz",
     name: "Happy year day!",
     startDate: "2019-01-03",
-    type: "PERCENTAGE" as SaleType
-  }
+    type: "PERCENTAGE" as SaleType,
+  },
 ];
 
 export const voucherList: VoucherFragment[] = [
@@ -144,7 +144,7 @@ export const voucherList: VoucherFragment[] = [
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         currency: "USD",
         discountValue: 1,
@@ -152,17 +152,17 @@ export const voucherList: VoucherFragment[] = [
         minSpent: {
           __typename: "Money",
           amount: 1,
-          currency: "USD"
-        }
-      }
+          currency: "USD",
+        },
+      },
     ],
     code: "FREE2019",
     countries: [
       {
         __typename: "CountryDisplay",
         code: "DE",
-        country: "Germany"
-      }
+        country: "Germany",
+      },
     ],
     type: "ENTIRE_ORDER" as VoucherTypeEnum,
     discountValueType: "PERCENTAGE" as DiscountValueTypeEnum,
@@ -170,7 +170,7 @@ export const voucherList: VoucherFragment[] = [
     id: "Vm91Y2hlcjox",
     minCheckoutItemsQuantity: null,
     startDate: "2019-01-03",
-    usageLimit: null
+    usageLimit: null,
   },
   {
     __typename: "Voucher" as "Voucher",
@@ -183,7 +183,7 @@ export const voucherList: VoucherFragment[] = [
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
-          name: "Channel1"
+          name: "Channel1",
         },
         currency: "USD",
         discountValue: 1,
@@ -191,9 +191,9 @@ export const voucherList: VoucherFragment[] = [
         minSpent: {
           __typename: "Money",
           amount: 1,
-          currency: "USD"
-        }
-      }
+          currency: "USD",
+        },
+      },
     ],
     code: "FREE2020",
     countries: [],
@@ -203,8 +203,8 @@ export const voucherList: VoucherFragment[] = [
     id: "Vm91Y2hlcjoy",
     minCheckoutItemsQuantity: 0,
     startDate: "2019-01-03",
-    usageLimit: 150
-  }
+    usageLimit: 150,
+  },
 ];
 
 export const sale: SaleDetailsFragment = {
@@ -222,19 +222,19 @@ export const sale: SaleDetailsFragment = {
           name: "Apparel",
           products: {
             __typename: "ProductCountableConnection",
-            totalCount: 18
-          }
-        }
-      }
+            totalCount: 18,
+          },
+        },
+      },
     ],
     pageInfo: {
       __typename: "PageInfo",
       endCursor: null,
       hasNextPage: false,
       hasPreviousPage: false,
-      startCursor: null
+      startCursor: null,
     },
-    totalCount: 2
+    totalCount: 2,
   },
   channelListings: [
     {
@@ -243,12 +243,12 @@ export const sale: SaleDetailsFragment = {
         __typename: "Channel",
         currencyCode: "USD",
         id: "123",
-        name: "Channel1"
+        name: "Channel1",
       },
       currency: "USD",
       discountValue: 1,
-      id: "1"
-    }
+      id: "1",
+    },
   ],
   collections: {
     __typename: "CollectionCountableConnection",
@@ -261,19 +261,19 @@ export const sale: SaleDetailsFragment = {
           name: "Winter Collection",
           products: {
             __typename: "ProductCountableConnection",
-            totalCount: 110
-          }
-        }
-      }
+            totalCount: 110,
+          },
+        },
+      },
     ],
     pageInfo: {
       __typename: "PageInfo",
       endCursor: null,
       hasNextPage: false,
       hasPreviousPage: false,
-      startCursor: null
+      startCursor: null,
     },
-    totalCount: 4
+    totalCount: 4,
   },
   endDate: null,
   id: "U2FsZTo1",
@@ -293,26 +293,26 @@ export const sale: SaleDetailsFragment = {
                 __typename: "Channel",
                 currencyCode: "USD",
                 id: "123",
-                name: "Channel1"
+                name: "Channel1",
               },
               isAvailableForPurchase: false,
               isPublished: true,
               publicationDate: "2020-07-14",
-              visibleInListings: true
-            }
+              visibleInListings: true,
+            },
           ],
           id: "UHJvZHVjdDo3MQ==",
           name: "Orange Juice",
           productType: {
             __typename: "ProductType",
             id: "UHJvZHVjdFR5cGU6OQ==",
-            name: "Juice"
+            name: "Juice",
           },
           thumbnail: {
             __typename: "Image",
-            url: placeholderImage
-          }
-        }
+            url: placeholderImage,
+          },
+        },
       },
       {
         __typename: "ProductCountableEdge",
@@ -326,26 +326,26 @@ export const sale: SaleDetailsFragment = {
                 __typename: "Channel",
                 currencyCode: "USD",
                 id: "123",
-                name: "Channel1"
+                name: "Channel1",
               },
               isAvailableForPurchase: false,
               isPublished: true,
               publicationDate: "2020-07-14",
-              visibleInListings: true
-            }
+              visibleInListings: true,
+            },
           ],
           id: "UHJvZHVjdDo3Mw==",
           name: "Carrot Juice",
           productType: {
             __typename: "ProductType",
             id: "UHJvZHVjdFR5cGU6OQ==",
-            name: "Juice"
+            name: "Juice",
           },
           thumbnail: {
             __typename: "Image",
-            url: placeholderImage
-          }
-        }
+            url: placeholderImage,
+          },
+        },
       },
       {
         __typename: "ProductCountableEdge",
@@ -359,26 +359,26 @@ export const sale: SaleDetailsFragment = {
                 __typename: "Channel",
                 currencyCode: "USD",
                 id: "123",
-                name: "Channel1"
+                name: "Channel1",
               },
               isAvailableForPurchase: false,
               isPublished: true,
               publicationDate: "2020-07-14",
-              visibleInListings: true
-            }
+              visibleInListings: true,
+            },
           ],
           id: "UHJvZHVjdDo3OQ==",
           name: "Bean Juice",
           productType: {
             __typename: "ProductType",
             id: "UHJvZHVjdFR5cGU6OQ==",
-            name: "Juice"
+            name: "Juice",
           },
           thumbnail: {
             __typename: "Image",
-            url: placeholderImage
-          }
-        }
+            url: placeholderImage,
+          },
+        },
       },
       {
         __typename: "ProductCountableEdge",
@@ -392,36 +392,36 @@ export const sale: SaleDetailsFragment = {
                 __typename: "Channel",
                 currencyCode: "USD",
                 id: "123",
-                name: "Channel1"
+                name: "Channel1",
               },
               isAvailableForPurchase: false,
               isPublished: true,
               publicationDate: "2020-07-14",
-              visibleInListings: true
-            }
+              visibleInListings: true,
+            },
           ],
           id: "UHJvZHVjdDoxMTU=",
           name: "Black Hoodie",
           productType: {
             __typename: "ProductType",
             id: "UHJvZHVjdFR5cGU6MTQ=",
-            name: "Top (clothing)"
+            name: "Top (clothing)",
           },
           thumbnail: {
             __typename: "Image",
-            url: placeholderImage
-          }
-        }
-      }
+            url: placeholderImage,
+          },
+        },
+      },
     ],
     pageInfo: {
       __typename: "PageInfo",
       endCursor: "YXJyYXljb25uZWN0aW9uOjM=",
       hasNextPage: false,
       hasPreviousPage: false,
-      startCursor: "YXJyYXljb25uZWN0aW9uOjA="
+      startCursor: "YXJyYXljb25uZWN0aW9uOjA=",
     },
-    totalCount: 4
+    totalCount: 4,
   },
   variants: {
     edges: [
@@ -434,12 +434,12 @@ export const sale: SaleDetailsFragment = {
             name: "White Hoodie",
             thumbnail: {
               url: placeholderImage,
-              __typename: "Image"
+              __typename: "Image",
             },
             productType: {
               id: "UHJvZHVjdFR5cGU6MTQ=",
               name: "Top (clothing)",
-              __typename: "ProductType"
+              __typename: "ProductType",
             },
             channelListings: [
               {
@@ -452,16 +452,16 @@ export const sale: SaleDetailsFragment = {
                   id: "Q2hhbm5lbDox",
                   name: "Channel-USD",
                   currencyCode: "USD",
-                  __typename: "Channel"
+                  __typename: "Channel",
                 },
-                __typename: "ProductChannelListing"
-              }
+                __typename: "ProductChannelListing",
+              },
             ],
-            __typename: "Product"
+            __typename: "Product",
           },
-          __typename: "ProductVariant"
+          __typename: "ProductVariant",
         },
-        __typename: "ProductVariantCountableEdge"
+        __typename: "ProductVariantCountableEdge",
       },
       {
         node: {
@@ -472,12 +472,12 @@ export const sale: SaleDetailsFragment = {
             name: "T-shirt",
             thumbnail: {
               url: placeholderImage,
-              __typename: "Image"
+              __typename: "Image",
             },
             productType: {
               id: "UHJvZHVjdFR5cGU6MTQ=",
               name: "Top (clothing)",
-              __typename: "ProductType"
+              __typename: "ProductType",
             },
             channelListings: [
               {
@@ -490,16 +490,16 @@ export const sale: SaleDetailsFragment = {
                   id: "Q2hhbm5lbDox",
                   name: "Channel-USD",
                   currencyCode: "USD",
-                  __typename: "Channel"
+                  __typename: "Channel",
                 },
-                __typename: "ProductChannelListing"
-              }
+                __typename: "ProductChannelListing",
+              },
             ],
-            __typename: "Product"
+            __typename: "Product",
           },
-          __typename: "ProductVariant"
+          __typename: "ProductVariant",
         },
-        __typename: "ProductVariantCountableEdge"
+        __typename: "ProductVariantCountableEdge",
       },
       {
         node: {
@@ -510,12 +510,12 @@ export const sale: SaleDetailsFragment = {
             name: "Code Division T-shirt",
             thumbnail: {
               url: placeholderImage,
-              __typename: "Image"
+              __typename: "Image",
             },
             productType: {
               id: "UHJvZHVjdFR5cGU6MTQ=",
               name: "Top (clothing)",
-              __typename: "ProductType"
+              __typename: "ProductType",
             },
             channelListings: [
               {
@@ -528,9 +528,9 @@ export const sale: SaleDetailsFragment = {
                   id: "Q2hhbm5lbDox",
                   name: "Channel-USD",
                   currencyCode: "USD",
-                  __typename: "Channel"
+                  __typename: "Channel",
                 },
-                __typename: "ProductChannelListing"
+                __typename: "ProductChannelListing",
               },
               {
                 isPublished: true,
@@ -542,30 +542,30 @@ export const sale: SaleDetailsFragment = {
                   id: "Q2hhbm5lbDoy",
                   name: "Channel-PLN",
                   currencyCode: "PLN",
-                  __typename: "Channel"
+                  __typename: "Channel",
                 },
-                __typename: "ProductChannelListing"
-              }
+                __typename: "ProductChannelListing",
+              },
             ],
-            __typename: "Product"
+            __typename: "Product",
           },
-          __typename: "ProductVariant"
+          __typename: "ProductVariant",
         },
-        __typename: "ProductVariantCountableEdge"
-      }
+        __typename: "ProductVariantCountableEdge",
+      },
     ],
     pageInfo: {
       endCursor: "W251bGwsICIxMTgyMjM1OTEiXQ==",
       hasNextPage: false,
       hasPreviousPage: false,
       startCursor: "W251bGwsICIxMDQwNDk0NiJd",
-      __typename: "PageInfo"
+      __typename: "PageInfo",
     },
     totalCount: 3,
-    __typename: "ProductVariantCountableConnection"
+    __typename: "ProductVariantCountableConnection",
   },
   startDate: "2019-01-03",
-  type: "PERCENTAGE" as SaleType
+  type: "PERCENTAGE" as SaleType,
 };
 
 export const voucherDetails: VoucherDetailsFragment = {
@@ -583,9 +583,9 @@ export const voucherDetails: VoucherDetailsFragment = {
       endCursor: "YXJyYXljb25uZWN0aW9uOjM=",
       hasNextPage: false,
       hasPreviousPage: false,
-      startCursor: "YXJyYXljb25uZWN0aW9uOjA="
+      startCursor: "YXJyYXljb25uZWN0aW9uOjA=",
     },
-    totalCount: 0
+    totalCount: 0,
   },
   channelListings: [
     {
@@ -594,7 +594,7 @@ export const voucherDetails: VoucherDetailsFragment = {
         __typename: "Channel",
         currencyCode: "USD",
         id: "123",
-        name: "Channel1"
+        name: "Channel1",
       },
       currency: "USD",
       discountValue: 1,
@@ -602,9 +602,9 @@ export const voucherDetails: VoucherDetailsFragment = {
       minSpent: {
         __typename: "Money",
         amount: 1,
-        currency: "USD"
-      }
-    }
+        currency: "USD",
+      },
+    },
   ],
   code: "DISCOUNT",
   collections: {
@@ -615,16 +615,16 @@ export const voucherDetails: VoucherDetailsFragment = {
       endCursor: "YXJyYXljb25uZWN0aW9uOjM=",
       hasNextPage: false,
       hasPreviousPage: false,
-      startCursor: "YXJyYXljb25uZWN0aW9uOjA="
+      startCursor: "YXJyYXljb25uZWN0aW9uOjA=",
     },
-    totalCount: 0
+    totalCount: 0,
   },
   countries: [
     {
       __typename: "CountryDisplay",
       code: "DE",
-      country: "Germany"
-    }
+      country: "Germany",
+    },
   ],
   discountValueType: DiscountValueTypeEnum.FIXED,
   endDate: null,
@@ -638,12 +638,12 @@ export const voucherDetails: VoucherDetailsFragment = {
       endCursor: "YXJyYXljb25uZWN0aW9uOjM=",
       hasNextPage: false,
       hasPreviousPage: false,
-      startCursor: "YXJyYXljb25uZWN0aW9uOjA="
+      startCursor: "YXJyYXljb25uZWN0aW9uOjA=",
     },
-    totalCount: 0
+    totalCount: 0,
   },
   startDate: "2018-11-27",
   type: VoucherTypeEnum.ENTIRE_ORDER,
   usageLimit: null,
-  used: 0
+  used: 0,
 };

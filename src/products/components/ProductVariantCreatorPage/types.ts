@@ -1,5 +1,5 @@
 export enum ProductVariantCreatorStep {
   values,
   prices,
-  summary
+  summary,
 }

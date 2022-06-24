@@ -21,7 +21,7 @@ describe("Filtering query params", () => {
     const params: OrderDraftListUrlFilters = {
       createdFrom: date.from,
       createdTo: date.to,
-      customer: "admin@example.com"
+      customer: "admin@example.com",
     };
     const filterVariables = getFilterVariables(params);
 
@@ -37,19 +37,19 @@ describe("Filtering URL params", () => {
       active: false,
       value: {
         max: date.to,
-        min: date.from
-      }
+        min: date.from,
+      },
     },
     customer: {
       active: false,
-      value: "admin@example.com"
-    }
+      value: "admin@example.com",
+    },
   });
 
   it("should be empty if no active filters", () => {
     const filterQueryParams = getFilterQueryParams(
       filters,
-      getFilterQueryParam
+      getFilterQueryParam,
     );
 
     expect(getExistingKeys(filterQueryParams)).toHaveLength(0);
@@ -58,7 +58,7 @@ describe("Filtering URL params", () => {
   it("should not be empty if active filters are present", () => {
     const filterQueryParams = getFilterQueryParams(
       setFilterOptsStatus(filters, true),
-      getFilterQueryParam
+      getFilterQueryParam,
     );
 
     expect(filterQueryParams).toMatchSnapshot();

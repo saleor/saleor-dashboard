@@ -1,6 +1,6 @@
 import {
   getAttributeValuesFromReferences,
-  mergeAttributeValues
+  mergeAttributeValues,
 } from "@saleor/attributes/utils/data";
 import CannotDefineChannelsAvailabilityCard from "@saleor/channels/components/CannotDefineChannelsAvailabilityCard/CannotDefineChannelsAvailabilityCard";
 import { ChannelData } from "@saleor/channels/utils";
@@ -28,7 +28,7 @@ import {
   SearchProductsQuery,
   SearchProductTypesQuery,
   SearchWarehousesQuery,
-  TaxTypeFragment
+  TaxTypeFragment,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -49,7 +49,7 @@ import ProductTaxes from "../ProductTaxes";
 import ProductCreateForm, {
   ProductCreateData,
   ProductCreateFormData,
-  ProductCreateHandlers
+  ProductCreateHandlers,
 } from "./form";
 
 interface ProductCreatePageProps {
@@ -135,14 +135,14 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   fetchMoreAttributeValues,
   onCloseDialog,
   onSelectProductType,
-  onAttributeSelectBlur
+  onAttributeSelectBlur,
 }: ProductCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
 
   // Display values
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
-    initial?.category || ""
+    initial?.category || "",
   );
 
   const [selectedCollections, setSelectedCollections] = useStateFromProps<
@@ -150,7 +150,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   >([]);
 
   const [selectedTaxType, setSelectedTaxType] = useStateFromProps(
-    initial?.taxCode || null
+    initial?.taxCode || null,
   );
 
   const categories = getChoices(categoryChoiceList);
@@ -159,7 +159,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   const taxTypeChoices =
     taxTypes?.map(taxType => ({
       label: taxType.description,
-      value: taxType.taxCode
+      value: taxType.taxCode,
     })) || [];
 
   const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
@@ -167,15 +167,15 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   const handleAssignReferenceAttribute = (
     attributeValues: string[],
     data: ProductCreateData,
-    handlers: ProductCreateHandlers
+    handlers: ProductCreateHandlers,
   ) => {
     handlers.selectAttributeReference(
       assignReferencesAttributeId,
       mergeAttributeValues(
         assignReferencesAttributeId,
         attributeValues,
-        data.attributes
-      )
+        data.attributes,
+      ),
     );
     onCloseDialog();
   };
@@ -206,7 +206,15 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       assignReferencesAttributeId={assignReferencesAttributeId}
       loading={loading}
     >
-      {({ change, data, formErrors, handlers, submit, isSaveDisabled }) => {
+      {({
+        change,
+        data,
+        formErrors,
+        handlers,
+        submit,
+        isSaveDisabled,
+        attributeRichTextGetters,
+      }) => {
         // Comparing explicitly to false because `hasVariants` can be undefined
         const isSimpleProduct = data.productType?.hasVariants === false;
 
@@ -223,7 +231,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   disabled={loading}
                   errors={errors}
                   onChange={change}
-                  onDescriptionChange={handlers.changeDescription}
                 />
                 <CardSpacer />
                 {data.attributes.length > 0 && (
@@ -242,6 +249,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                     fetchAttributeValues={fetchAttributeValues}
                     fetchMoreAttributeValues={fetchMoreAttributeValues}
                     onAttributeSelectBlur={onAttributeSelectBlur}
+                    richTextGetters={attributeRichTextGetters}
                   />
                 )}
                 <CardSpacer />
@@ -285,7 +293,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   helperText={intl.formatMessage({
                     id: "LKoIB1",
                     defaultMessage:
-                      "Add search engine title and description to make this product easier to find"
+                      "Add search engine title and description to make this product easier to find",
                   })}
                   title={data.seoTitle}
                   slug={data.slug}
@@ -330,17 +338,16 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                       hiddenLabel: intl.formatMessage({
                         id: "saKXY3",
                         defaultMessage: "Not published",
-                        description: "product label"
+                        description: "product label",
                       }),
 
                       visibleLabel: intl.formatMessage({
                         id: "qJedl0",
                         defaultMessage: "Published",
-                        description: "product label"
-                      })
+                        description: "product label",
+                      }),
                     }}
                     errors={channelsErrors}
-                    selectedChannelsCount={data.channelListings?.length || 0}
                     allChannelsCount={allChannelsCount}
                     channels={data.channelListings || []}
                     disabled={loading}
@@ -373,7 +380,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   assignReferencesAttributeId,
                   data.attributes,
                   referencePages,
-                  referenceProducts
+                  referenceProducts,
                 )}
                 hasMore={handlers.fetchMoreReferences?.hasMore}
                 open={canOpenAssignReferencesAttributeDialog}
@@ -385,7 +392,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   handleAssignReferenceAttribute(
                     attributeValues,
                     data,
-                    handlers
+                    handlers,
                   )
                 }
               />

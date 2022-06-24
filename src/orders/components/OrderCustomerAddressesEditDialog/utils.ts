@@ -5,7 +5,7 @@ import {
   AddressInput,
   AddressTypeEnum,
   Node,
-  OrderErrorFragment
+  OrderErrorFragment,
 } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
 import { flatten } from "@saleor/misc";
@@ -13,7 +13,7 @@ import { flatten } from "@saleor/misc";
 import { getById } from "../OrderReturnPage/utils";
 import {
   OrderCustomerAddressesEditData,
-  OrderCustomerAddressesEditHandlers
+  OrderCustomerAddressesEditHandlers,
 } from "./form";
 import { OrderCustomerAddressEditProps } from "./OrderCustomerAddressEdit";
 import { OrderCustomerSearchAddressState } from "./types";
@@ -35,10 +35,10 @@ export const parseQuery = (query: string) =>
 
 export function validateDefaultAddress<T extends AddressFragment>(
   defaultAddress: Node,
-  customerAddresses: T[]
+  customerAddresses: T[],
 ): Node {
   const fallbackAddress = {
-    id: customerAddresses[0]?.id
+    id: customerAddresses[0]?.id,
   } as AddressFragment;
   if (!defaultAddress) {
     return fallbackAddress;
@@ -51,7 +51,7 @@ export function validateDefaultAddress<T extends AddressFragment>(
 
 const filterAddressErrors = (
   dialogErrors: Array<OrderErrorFragment | AccountErrorFragment>,
-  addressType: AddressTypeEnum
+  addressType: AddressTypeEnum,
 ) => dialogErrors.filter(error => error.addressType === addressType);
 
 interface ShippingAddresses {
@@ -73,7 +73,7 @@ export const getAddressEditProps = (
   setAddressSearchState: React.Dispatch<
     React.SetStateAction<OrderCustomerSearchAddressState>
   >,
-  addressEditCommonProps: AddressEditCommonProps
+  addressEditCommonProps: AddressEditCommonProps,
 ): OrderCustomerAddressEditProps => {
   if (variant === "shipping") {
     return {
@@ -83,7 +83,7 @@ export const getAddressEditProps = (
       onEdit: () =>
         setAddressSearchState({
           open: true,
-          type: AddressTypeEnum.SHIPPING
+          type: AddressTypeEnum.SHIPPING,
         }),
       onChangeAddressInputOption: change,
       addressInputOption: data.shippingAddressInputOption,
@@ -92,7 +92,7 @@ export const getAddressEditProps = (
       formAddressCountryDisplayName: data.shippingCountryDisplayName,
       onChangeFormAddress: event =>
         handlers.changeFormAddress(event, "shippingAddress"),
-      onChangeFormAddressCountry: handlers.selectShippingCountry
+      onChangeFormAddressCountry: handlers.selectShippingCountry,
     };
   }
   return {
@@ -102,7 +102,7 @@ export const getAddressEditProps = (
     onEdit: () =>
       setAddressSearchState({
         open: true,
-        type: AddressTypeEnum.BILLING
+        type: AddressTypeEnum.BILLING,
       }),
     onChangeAddressInputOption: change,
     addressInputOption: data.billingAddressInputOption,
@@ -111,6 +111,6 @@ export const getAddressEditProps = (
     formAddressCountryDisplayName: data.billingCountryDisplayName,
     onChangeFormAddress: event =>
       handlers.changeFormAddress(event, "billingAddress"),
-    onChangeFormAddressCountry: handlers.selectBillingCountry
+    onChangeFormAddressCountry: handlers.selectBillingCountry,
   };
 };

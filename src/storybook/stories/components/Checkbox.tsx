@@ -8,7 +8,7 @@ import Decorator from "../../Decorator";
 
 const props: CheckboxProps = {
   checked: false,
-  name: "data"
+  name: "data",
 };
 
 storiesOf("Generics / Checkbox", module)
@@ -29,8 +29,8 @@ storiesOf("Generics / Checkbox", module)
             change({
               target: {
                 name: "data",
-                value: !data.data
-              }
+                value: !data.data,
+              },
             } as any)
           }
         />

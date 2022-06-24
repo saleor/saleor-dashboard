@@ -20,10 +20,10 @@ interface TaxConfigurationProps {
 const useStyles = makeStyles(
   {
     content: {
-      paddingBottom: 0
-    }
+      paddingBottom: 0,
+    },
   },
-  { name: "TaxConfiguration" }
+  { name: "TaxConfiguration" },
 );
 
 export const TaxConfiguration: React.FC<TaxConfigurationProps> = props => {
@@ -40,7 +40,7 @@ export const TaxConfiguration: React.FC<TaxConfigurationProps> = props => {
           name={"includeTax" as keyof FormData}
           label={intl.formatMessage({
             id: "4EuJKs",
-            defaultMessage: "All products prices are entered with tax included"
+            defaultMessage: "All products prices are entered with tax included",
           })}
           checked={data.includeTax}
           onChange={onChange}
@@ -51,7 +51,7 @@ export const TaxConfiguration: React.FC<TaxConfigurationProps> = props => {
           name={"showGross" as keyof FormData}
           label={intl.formatMessage({
             id: "98isC5",
-            defaultMessage: "Show gross prices to customers in the storefront"
+            defaultMessage: "Show gross prices to customers in the storefront",
           })}
           checked={data.showGross}
           onChange={onChange}
@@ -62,7 +62,7 @@ export const TaxConfiguration: React.FC<TaxConfigurationProps> = props => {
           name={"chargeTaxesOnShipping" as keyof FormData}
           label={intl.formatMessage({
             id: "FNKhkx",
-            defaultMessage: "Charge taxes on shipping rates"
+            defaultMessage: "Charge taxes on shipping rates",
           })}
           checked={data.chargeTaxesOnShipping}
           onChange={onChange}

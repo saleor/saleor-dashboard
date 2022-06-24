@@ -55,8 +55,8 @@ const ProductVariantCheckoutSettings: React.FC<ProductVariantCheckoutSettingsPro
           InputProps={{
             inputProps: {
               autoComplete: "none",
-              min: 1
-            }
+              min: 1,
+            },
           }}
         />
       </CardContent>

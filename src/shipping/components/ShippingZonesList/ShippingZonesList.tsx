@@ -3,7 +3,7 @@ import {
   TableBody,
   TableCell,
   TableFooter,
-  TableRow
+  TableRow,
 } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
@@ -12,7 +12,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@saleor/components/TableHead";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { ShippingZoneFragment } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
@@ -31,21 +31,21 @@ const useStyles = makeStyles(
   theme => ({
     colAction: {
       "&:last-child": {
-        paddingRight: theme.spacing(1)
+        paddingRight: theme.spacing(1),
       },
-      width: 92
+      width: 92,
     },
     colCountries: {
-      width: 180
+      width: 180,
     },
     colName: {
-      paddingLeft: 0
+      paddingLeft: 0,
     },
     row: {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   }),
-  { name: "ShippingZonesList" }
+  { name: "ShippingZonesList" },
 );
 
 const numberOfColumns = 4;
@@ -54,17 +54,14 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
   const {
     disabled,
     settings,
-    onNextPage,
-    onPreviousPage,
     onRemove,
     onUpdateListSettings,
-    pageInfo,
     shippingZones,
     isChecked,
     selected,
     toggle,
     toggleAll,
-    toolbar
+    toolbar,
   } = props;
 
   const classes = useStyles(props);
@@ -77,7 +74,7 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
         title={intl.formatMessage({
           id: "h5r9+x",
           defaultMessage: "Shipping By Zone",
-          description: "sort shipping methods by zone, section header"
+          description: "sort shipping methods by zone, section header",
         })}
         toolbar={
           <Button href={shippingZoneAddUrl} data-test-id="add-shipping-zone">
@@ -118,16 +115,11 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
         </TableHead>
         <TableFooter>
           <TableRow>
-            <TablePagination
+            <TablePaginationWithContext
               colSpan={numberOfColumns}
               settings={settings}
-              hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-              onNextPage={onNextPage}
+              disabled={disabled}
               onUpdateListSettings={onUpdateListSettings}
-              hasPreviousPage={
-                pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-              }
-              onPreviousPage={onPreviousPage}
             />
           </TableRow>
         </TableFooter>
@@ -162,13 +154,13 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
                   >
                     {maybe<React.ReactNode>(
                       () => shippingZone.name,
-                      <Skeleton />
+                      <Skeleton />,
                     )}
                   </TableCell>
                   <TableCell className={classes.colCountries}>
                     {maybe<React.ReactNode>(
                       () => shippingZone.countries.length,
-                      <Skeleton />
+                      <Skeleton />,
                     )}
                   </TableCell>
                   <TableCell className={classes.colAction}>
@@ -198,7 +190,7 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
                   />
                 </TableCell>
               </TableRow>
-            )
+            ),
           )}
         </TableBody>
       </ResponsiveTable>

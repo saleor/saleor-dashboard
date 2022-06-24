@@ -1,6 +1,6 @@
 import {
   ExtendedGiftCard,
-  GiftCardBase
+  GiftCardBase,
 } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
 import { Pill } from "@saleor/macaw-ui";
 import React from "react";
@@ -25,7 +25,7 @@ function GiftCardStatusChip<
       <Pill
         color="info"
         label={intl.formatMessage(
-          giftCardStatusChipMessages.expiredStatusLabel
+          giftCardStatusChipMessages.expiredStatusLabel,
         )}
       />
     );
@@ -36,7 +36,7 @@ function GiftCardStatusChip<
       <Pill
         color="error"
         label={intl.formatMessage(
-          giftCardStatusChipMessages.disabledStatusLabel
+          giftCardStatusChipMessages.disabledStatusLabel,
         )}
       />
     );

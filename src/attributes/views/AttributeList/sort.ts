@@ -3,7 +3,7 @@ import { AttributeSortField } from "@saleor/graphql";
 import { createGetSortQueryVariables } from "@saleor/utils/sort";
 
 export function getSortQueryField(
-  sort: AttributeListUrlSortField
+  sort: AttributeListUrlSortField,
 ): AttributeSortField {
   switch (sort) {
     case AttributeListUrlSortField.name:
@@ -22,5 +22,5 @@ export function getSortQueryField(
 }
 
 export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField
+  getSortQueryField,
 );

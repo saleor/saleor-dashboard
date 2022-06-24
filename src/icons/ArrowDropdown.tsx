@@ -5,7 +5,7 @@ const ArrowDropdown = createSvgIcon(
   <g style={{ fillRule: "evenodd" }}>
     <path d="M7 10l5 5 5-5z" />
   </g>,
-  "ArrowDropdown"
+  "ArrowDropdown",
 );
 
 export default ArrowDropdown;

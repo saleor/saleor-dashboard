@@ -21,16 +21,13 @@ interface CategoryProductsProps extends PageListProps, ListActions {
 export const CategoryProducts: React.FC<CategoryProductsProps> = ({
   products,
   disabled,
-  pageInfo,
-  onNextPage,
-  onPreviousPage,
   categoryId,
   categoryName,
   isChecked,
   selected,
   toggle,
   toggleAll,
-  toolbar
+  toolbar,
 }) => {
   const intl = useIntl();
   const classes = useStyles();
@@ -42,15 +39,15 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
           {
             id: "+43JV5",
             defaultMessage: "Products in {categoryName}",
-            description: "header"
+            description: "header",
           },
-          { categoryName }
+          { categoryName },
         )}
         toolbar={
           <div className={classes.toolbar}>
             <InternalLink
               to={productListUrl({
-                categories: [categoryId]
+                categories: [categoryId],
               })}
             >
               <Button variant="tertiary" data-test-id="view-products">
@@ -79,9 +76,6 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
       <CategoryProductList
         products={products}
         disabled={disabled}
-        pageInfo={pageInfo}
-        onNextPage={onNextPage}
-        onPreviousPage={onPreviousPage}
         selected={selected}
         isChecked={isChecked}
         toggle={toggle}

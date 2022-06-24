@@ -1,7 +1,7 @@
 import { getGiftCardErrorMessage } from "@saleor/giftCards/GiftCardUpdate/messages";
 import {
   DeleteGiftCardMutation,
-  useDeleteGiftCardMutation
+  useDeleteGiftCardMutation,
 } from "@saleor/graphql";
 import { MutationResultWithOpts } from "@saleor/hooks/makeMutation";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -18,7 +18,7 @@ const useGiftCardSingleDelete = ({
   id,
   onClose,
   refetchQueries,
-  onSuccess
+  onSuccess,
 }: {
   id: string;
   onClose: () => void;
@@ -36,8 +36,8 @@ const useGiftCardSingleDelete = ({
         notify({
           status: "success",
           text: intl.formatMessage(messages.deleteSuccessAlertText, {
-            selectedItemsCount: 1
-          })
+            selectedItemsCount: 1,
+          }),
         });
 
         onClose();
@@ -52,18 +52,18 @@ const useGiftCardSingleDelete = ({
       errors.map(error =>
         notify({
           status: "error",
-          text: getGiftCardErrorMessage(error, intl)
-        })
+          text: getGiftCardErrorMessage(error, intl),
+        }),
       );
     },
-    refetchQueries
+    refetchQueries,
   });
 
   const onDeleteGiftCard = () => deleteGiftCard({ variables: { id } });
 
   return {
     onDeleteGiftCard,
-    deleteGiftCardOpts
+    deleteGiftCardOpts,
   };
 };
 

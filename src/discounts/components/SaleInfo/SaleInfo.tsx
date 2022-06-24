@@ -20,7 +20,7 @@ const SaleInfo: React.FC<SaleInfoProps> = ({
   data,
   disabled,
   errors,
-  onChange
+  onChange,
 }) => {
   const intl = useIntl();
 
@@ -41,7 +41,7 @@ const SaleInfo: React.FC<SaleInfoProps> = ({
           label={intl.formatMessage({
             id: "F56hOz",
             defaultMessage: "Name",
-            description: "sale name"
+            description: "sale name",
           })}
           value={data.name}
           fullWidth

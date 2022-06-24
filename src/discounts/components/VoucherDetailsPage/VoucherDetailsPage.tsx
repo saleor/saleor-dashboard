@@ -13,7 +13,7 @@ import Savebar from "@saleor/components/Savebar";
 import { Tab, TabContainer } from "@saleor/components/Tab";
 import {
   createChannelsChangeHandler,
-  createDiscountTypeChangeHandler
+  createDiscountTypeChangeHandler,
 } from "@saleor/discounts/handlers";
 import { DiscountTypeEnum, RequirementsPicker } from "@saleor/discounts/types";
 import { voucherListUrl } from "@saleor/discounts/urls";
@@ -22,7 +22,7 @@ import {
   DiscountValueTypeEnum,
   PermissionEnum,
   VoucherDetailsFragment,
-  VoucherTypeEnum
+  VoucherTypeEnum,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
@@ -49,7 +49,7 @@ import VoucherValue from "../VoucherValue";
 export enum VoucherDetailsPageTab {
   categories = "categories",
   collections = "collections",
-  products = "products"
+  products = "products",
 }
 
 export interface VoucherDetailsPageFormData extends MetadataFormData {
@@ -109,7 +109,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   channelListings = [],
   disabled,
   errors,
-  pageInfo,
   saveButtonBarState,
   voucher,
   onCategoryAssign,
@@ -119,8 +118,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   onCountryUnassign,
   onCollectionAssign,
   onCollectionUnassign,
-  onNextPage,
-  onPreviousPage,
   onProductAssign,
   onProductUnassign,
   onTabClick,
@@ -134,16 +131,16 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   isChecked,
   categoryListToolbar,
   collectionListToolbar,
-  productListToolbar
+  productListToolbar,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
 
   const {
-    makeChangeHandler: makeMetadataChangeHandler
+    makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
   const channel = voucher?.channelListings?.find(
-    listing => listing.channel.id === selectedChannelId
+    listing => listing.channel.id === selectedChannelId,
   );
   let requirementsPickerInitValue;
   if (voucher?.minCheckoutItemsQuantity > 0) {
@@ -181,19 +178,19 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     usageLimit: voucher?.usageLimit ?? 1,
     used: voucher?.used ?? 0,
     metadata: voucher?.metadata.map(mapMetadataItemToInput),
-    privateMetadata: voucher?.privateMetadata.map(mapMetadataItemToInput)
+    privateMetadata: voucher?.privateMetadata.map(mapMetadataItemToInput),
   };
 
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, submit, triggerChange, set }) => {
         const handleDiscountTypeChange = createDiscountTypeChangeHandler(
-          change
+          change,
         );
         const handleChannelChange = createChannelsChangeHandler(
           data.channelListings,
           onChannelsChange,
-          triggerChange
+          triggerChange,
         );
         const formDisabled =
           (data.discountType.toString() !== "SHIPPING" &&
@@ -201,7 +198,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
               channel =>
                 validatePrice(channel.discountValue) ||
                 (data.requirementsPicker === RequirementsPicker.ORDER &&
-                  validatePrice(channel.minSpent))
+                  validatePrice(channel.minSpent)),
             )) ||
           data.usageLimit <= 0;
         const changeMetadata = makeMetadataChangeHandler(change);
@@ -254,14 +251,14 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                           {
                             id: "ppLwx3",
                             defaultMessage: "Categories ({quantity})",
-                            description: "number of categories"
+                            description: "number of categories",
                           },
                           {
                             quantity: maybe(
                               () => voucher.categories.totalCount.toString(),
-                              "…"
-                            )
-                          }
+                              "…",
+                            ),
+                          },
                         )}
                       </CategoriesTab>
                       <CollectionsTab
@@ -274,14 +271,14 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                           {
                             id: "QdGzUf",
                             defaultMessage: "Collections ({quantity})",
-                            description: "number of collections"
+                            description: "number of collections",
                           },
                           {
                             quantity: maybe(
                               () => voucher.collections.totalCount.toString(),
-                              "…"
-                            )
-                          }
+                              "…",
+                            ),
+                          },
                         )}
                       </CollectionsTab>
                       <ProductsTab
@@ -292,14 +289,14 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                           {
                             id: "bNw8PM",
                             defaultMessage: "Products ({quantity})",
-                            description: "number of products"
+                            description: "number of products",
                           },
                           {
                             quantity: maybe(
                               () => voucher.products.totalCount.toString(),
-                              "…"
-                            )
-                          }
+                              "…",
+                            ),
+                          },
                         )}
                       </ProductsTab>
                     </TabContainer>
@@ -309,9 +306,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                         disabled={disabled}
                         onCategoryAssign={onCategoryAssign}
                         onCategoryUnassign={onCategoryUnassign}
-                        onNextPage={onNextPage}
-                        onPreviousPage={onPreviousPage}
-                        pageInfo={pageInfo}
                         discount={voucher}
                         isChecked={isChecked}
                         selected={selected}
@@ -324,9 +318,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                         disabled={disabled}
                         onCollectionAssign={onCollectionAssign}
                         onCollectionUnassign={onCollectionUnassign}
-                        onNextPage={onNextPage}
-                        onPreviousPage={onPreviousPage}
-                        pageInfo={pageInfo}
                         discount={voucher}
                         isChecked={isChecked}
                         selected={selected}
@@ -337,11 +328,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                     ) : (
                       <DiscountProducts
                         disabled={disabled}
-                        onNextPage={onNextPage}
-                        onPreviousPage={onPreviousPage}
                         onProductAssign={onProductAssign}
                         onProductUnassign={onProductUnassign}
-                        pageInfo={pageInfo}
                         products={mapEdgesToItems(voucher?.products)}
                         isChecked={isChecked}
                         selected={selected}
@@ -359,14 +347,14 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                     disabled={disabled}
                     emptyText={intl.formatMessage({
                       id: "jd/LWa",
-                      defaultMessage: "Voucher applies to all countries"
+                      defaultMessage: "Voucher applies to all countries",
                     })}
                     title={
                       <>
                         {intl.formatMessage({
                           id: "ibnmEd",
                           defaultMessage: "Countries",
-                          description: "voucher country range"
+                          description: "voucher country range",
                         })}
                         <Typography variant="caption">
                           <FormattedMessage
@@ -414,11 +402,10 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 <CardSpacer />
                 <ChannelsAvailabilityCard
                   managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
-                  selectedChannelsCount={data.channelListings.length}
                   allChannelsCount={allChannelsCount}
                   channelsList={data.channelListings.map(channel => ({
                     id: channel.id,
-                    name: channel.name
+                    name: channel.name,
                   }))}
                   disabled={disabled}
                   openModal={openChannelsModal}

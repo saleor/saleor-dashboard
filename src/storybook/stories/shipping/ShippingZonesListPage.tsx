@@ -1,14 +1,15 @@
 import { WeightUnitsEnum } from "@saleor/graphql";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import {
   adminUserPermissions,
   listActionsProps,
-  pageListProps
+  pageListProps,
 } from "../../../fixtures";
 import ShippingZonesListPage, {
-  ShippingZonesListPageProps
+  ShippingZonesListPageProps,
 } from "../../../shipping/components/ShippingZonesListPage";
 import { shippingZones } from "../../../shipping/fixtures";
 import Decorator from "../../Decorator";
@@ -20,11 +21,12 @@ const props: ShippingZonesListPageProps = {
   onRemove: () => undefined,
   onSubmit: () => undefined,
   shippingZones,
-  userPermissions: adminUserPermissions
+  userPermissions: adminUserPermissions,
 };
 
 storiesOf("Views / Shipping / Shipping zones list", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("default", () => <ShippingZonesListPage {...props} />)
   .add("loading", () => (
     <ShippingZonesListPage

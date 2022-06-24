@@ -2,19 +2,20 @@ import ChannelPickerDialog from "@saleor/channels/components/ChannelPickerDialog
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData
+  SaveFilterTabDialogFormData,
 } from "@saleor/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@saleor/components/Shop/queries";
 import {
   useOrderDraftCreateMutation,
-  useOrderListQuery
+  useOrderListQuery,
 } from "@saleor/graphql";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
-  createPaginationState
+  createPaginationState,
+  PaginatorContext,
 } from "@saleor/hooks/usePaginator";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
@@ -32,7 +33,7 @@ import {
   OrderListUrlDialog,
   OrderListUrlQueryParams,
   orderSettingsPath,
-  orderUrl
+  orderUrl,
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -42,7 +43,7 @@ import {
   getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab
+  saveFilterTab,
 } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
@@ -53,9 +54,8 @@ interface OrderListProps {
 export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const paginate = usePaginator();
   const { updateListSettings, settings } = useListSettings(
-    ListViews.ORDER_LIST
+    ListViews.ORDER_LIST,
   );
 
   usePaginationReset(orderListUrl, params, settings.rowNumber);
@@ -68,18 +68,18 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         status: "success",
         text: intl.formatMessage({
           id: "6udlH+",
-          defaultMessage: "Order draft successfully created"
-        })
+          defaultMessage: "Order draft successfully created",
+        }),
       });
       navigate(orderUrl(data.draftOrderCreate.order.id));
-    }
+    },
   });
 
   const { channel, availableChannels } = useAppChannel(false);
   const limitOpts = useShopLimitsQuery({
     variables: {
-      orders: true
-    }
+      orders: true,
+    },
   });
 
   const noChannel = !channel && typeof channel !== "undefined";
@@ -94,12 +94,12 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   const [
     changeFilters,
     resetFilters,
-    handleSearchChange
+    handleSearchChange,
   ] = createFilterHandlers({
     createUrl: orderListUrl,
     getFilterQueryParam,
     navigate,
-    params
+    params,
   });
 
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -111,8 +111,8 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     navigate(
       orderListUrl({
         activeTab: tab.toString(),
-        ...getFilterTabs()[tab - 1].data
-      })
+        ...getFilterTabs()[tab - 1].data,
+      }),
     );
 
   const handleFilterTabDelete = () => {
@@ -131,25 +131,25 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
-      sort: getSortQueryVariables(params)
+      sort: getSortQueryVariables(params),
     }),
-    [params, settings.rowNumber]
+    [params, settings.rowNumber],
   );
   const { data, loading } = useOrderListQuery({
     displayLoader: true,
-    variables: queryVariables
+    variables: queryVariables,
   });
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    data?.orders?.pageInfo,
+  const paginationValues = usePaginator({
+    pageInfo: data?.orders?.pageInfo,
     paginationState,
-    params
-  );
+    queryString: params,
+  });
 
   const handleSort = createSortHandler(navigate, orderListUrl, params);
 
   return (
-    <>
+    <PaginatorContext.Provider value={paginationValues}>
       <OrderListPage
         settings={settings}
         currentTab={currentTab}
@@ -157,11 +157,8 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         filterOpts={getFilterOpts(params, channelOpts)}
         limits={limitOpts.data?.shop.limits}
         orders={mapEdgesToItems(data?.orders)}
-        pageInfo={pageInfo}
         sort={getSortParams(params)}
         onAdd={() => openModal("create-order")}
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
         onSort={handleSort}
         onSearchChange={handleSearchChange}
@@ -197,13 +194,13 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
           onConfirm={channelId =>
             createOrder({
               variables: {
-                input: { channelId }
-              }
+                input: { channelId },
+              },
             })
           }
         />
       )}
-    </>
+    </PaginatorContext.Provider>
   );
 };
 

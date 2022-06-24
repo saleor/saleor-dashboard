@@ -7,12 +7,12 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import ProductCreatePage, {
-  ProductCreateFormData
+  ProductCreateFormData,
 } from "../../../products/components/ProductCreatePage";
 import { product as productFixture } from "../../../products/fixtures";
 import {
   productTypes,
-  productTypeSearch
+  productTypeSearch,
 } from "../../../productTypes/fixtures";
 import Decorator from "../../Decorator";
 import { taxTypes } from "../taxes/fixtures";
@@ -105,7 +105,7 @@ storiesOf("Views / Products / Create product", module)
         "name",
         "productType",
         "category",
-        "sku"
+        "sku",
       ] as Array<keyof ProductCreateFormData | "attributes">).map(field => ({
         __typename: "ProductError",
         attributes:
@@ -114,7 +114,7 @@ storiesOf("Views / Products / Create product", module)
             : null,
         code: ProductErrorCode.INVALID,
         field,
-        message: "Attributes invalid"
+        message: "Attributes invalid",
       }))}
       header="Add product"
       collections={product.collections}

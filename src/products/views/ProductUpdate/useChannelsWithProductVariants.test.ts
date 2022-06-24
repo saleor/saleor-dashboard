@@ -7,13 +7,13 @@ const channels: ChannelData[] = [
   {
     id: "channel1",
     name: "Channel 1",
-    variantsIds: ["variant1", "variant2"]
+    variantsIds: ["variant1", "variant2"],
   },
   {
     id: "channel2",
     name: "Channel 2",
-    variantsIds: []
-  }
+    variantsIds: [],
+  },
 ];
 
 const variants = ["variant1", "variant2", "variant3", "variant4", "variant5"];
@@ -26,23 +26,23 @@ describe("useChannelsWithProductVariants", () => {
     const { result } = setupHook();
 
     expect(
-      result.current.channelsWithVariantsData.channel1.selectedVariantsIds
+      result.current.channelsWithVariantsData.channel1.selectedVariantsIds,
     ).toHaveLength(2);
     expect(
-      result.current.channelsWithVariantsData.channel1.variantsIdsToAdd
+      result.current.channelsWithVariantsData.channel1.variantsIdsToAdd,
     ).toHaveLength(0);
     expect(
-      result.current.channelsWithVariantsData.channel1.variantsIdsToRemove
+      result.current.channelsWithVariantsData.channel1.variantsIdsToRemove,
     ).toHaveLength(0);
 
     expect(
-      result.current.channelsWithVariantsData.channel2.selectedVariantsIds
+      result.current.channelsWithVariantsData.channel2.selectedVariantsIds,
     ).toHaveLength(0);
     expect(
-      result.current.channelsWithVariantsData.channel2.variantsIdsToAdd
+      result.current.channelsWithVariantsData.channel2.variantsIdsToAdd,
     ).toHaveLength(0);
     expect(
-      result.current.channelsWithVariantsData.channel2.variantsIdsToRemove
+      result.current.channelsWithVariantsData.channel2.variantsIdsToRemove,
     ).toHaveLength(0);
   });
 
@@ -52,23 +52,23 @@ describe("useChannelsWithProductVariants", () => {
     act(() => result.current.addVariantToChannel("channel1", "variant3"));
 
     expect(
-      result.current.channelsWithVariantsData.channel1.selectedVariantsIds
+      result.current.channelsWithVariantsData.channel1.selectedVariantsIds,
     ).toHaveLength(3);
     expect(
-      result.current.channelsWithVariantsData.channel1.variantsIdsToAdd
+      result.current.channelsWithVariantsData.channel1.variantsIdsToAdd,
     ).toHaveLength(1);
     expect(
-      result.current.channelsWithVariantsData.channel1.variantsIdsToRemove
+      result.current.channelsWithVariantsData.channel1.variantsIdsToRemove,
     ).toHaveLength(0);
 
     expect(
-      result.current.channelsWithVariantsData.channel2.selectedVariantsIds
+      result.current.channelsWithVariantsData.channel2.selectedVariantsIds,
     ).toHaveLength(0);
     expect(
-      result.current.channelsWithVariantsData.channel2.variantsIdsToAdd
+      result.current.channelsWithVariantsData.channel2.variantsIdsToAdd,
     ).toHaveLength(0);
     expect(
-      result.current.channelsWithVariantsData.channel2.variantsIdsToRemove
+      result.current.channelsWithVariantsData.channel2.variantsIdsToRemove,
     ).toHaveLength(0);
   });
 
@@ -78,23 +78,23 @@ describe("useChannelsWithProductVariants", () => {
     act(() => result.current.removeVariantFromChannel("channel1", "variant2"));
 
     expect(
-      result.current.channelsWithVariantsData.channel1.selectedVariantsIds
+      result.current.channelsWithVariantsData.channel1.selectedVariantsIds,
     ).toHaveLength(1);
     expect(
-      result.current.channelsWithVariantsData.channel1.variantsIdsToAdd
+      result.current.channelsWithVariantsData.channel1.variantsIdsToAdd,
     ).toHaveLength(0);
     expect(
-      result.current.channelsWithVariantsData.channel1.variantsIdsToRemove
+      result.current.channelsWithVariantsData.channel1.variantsIdsToRemove,
     ).toHaveLength(1);
 
     expect(
-      result.current.channelsWithVariantsData.channel2.selectedVariantsIds
+      result.current.channelsWithVariantsData.channel2.selectedVariantsIds,
     ).toHaveLength(0);
     expect(
-      result.current.channelsWithVariantsData.channel2.variantsIdsToAdd
+      result.current.channelsWithVariantsData.channel2.variantsIdsToAdd,
     ).toHaveLength(0);
     expect(
-      result.current.channelsWithVariantsData.channel2.variantsIdsToRemove
+      result.current.channelsWithVariantsData.channel2.variantsIdsToRemove,
     ).toHaveLength(0);
   });
 
@@ -105,26 +105,26 @@ describe("useChannelsWithProductVariants", () => {
     act(() => result.current.toggleAllChannelVariants("channel1"));
 
     expect(
-      result.current.channelsWithVariantsData.channel1.selectedVariantsIds
+      result.current.channelsWithVariantsData.channel1.selectedVariantsIds,
     ).toHaveLength(0);
     expect(
-      result.current.channelsWithVariantsData.channel1.variantsIdsToAdd
+      result.current.channelsWithVariantsData.channel1.variantsIdsToAdd,
     ).toHaveLength(0);
     expect(
-      result.current.channelsWithVariantsData.channel1.variantsIdsToRemove
+      result.current.channelsWithVariantsData.channel1.variantsIdsToRemove,
     ).toHaveLength(2);
 
     // Select all
     act(() => result.current.toggleAllChannelVariants("channel1"));
 
     expect(
-      result.current.channelsWithVariantsData.channel1.selectedVariantsIds
+      result.current.channelsWithVariantsData.channel1.selectedVariantsIds,
     ).toHaveLength(5);
     expect(
-      result.current.channelsWithVariantsData.channel1.variantsIdsToAdd
+      result.current.channelsWithVariantsData.channel1.variantsIdsToAdd,
     ).toHaveLength(3);
     expect(
-      result.current.channelsWithVariantsData.channel1.variantsIdsToRemove
+      result.current.channelsWithVariantsData.channel1.variantsIdsToRemove,
     ).toHaveLength(0);
   });
 
@@ -135,44 +135,44 @@ describe("useChannelsWithProductVariants", () => {
     act(result.current.toggleAllChannels);
 
     expect(
-      result.current.channelsWithVariantsData.channel1.selectedVariantsIds
+      result.current.channelsWithVariantsData.channel1.selectedVariantsIds,
     ).toHaveLength(5);
     expect(
-      result.current.channelsWithVariantsData.channel1.variantsIdsToAdd
+      result.current.channelsWithVariantsData.channel1.variantsIdsToAdd,
     ).toHaveLength(3);
     expect(
-      result.current.channelsWithVariantsData.channel1.variantsIdsToRemove
+      result.current.channelsWithVariantsData.channel1.variantsIdsToRemove,
     ).toHaveLength(0);
     expect(
-      result.current.channelsWithVariantsData.channel2.selectedVariantsIds
+      result.current.channelsWithVariantsData.channel2.selectedVariantsIds,
     ).toHaveLength(5);
     expect(
-      result.current.channelsWithVariantsData.channel2.variantsIdsToAdd
+      result.current.channelsWithVariantsData.channel2.variantsIdsToAdd,
     ).toHaveLength(5);
     expect(
-      result.current.channelsWithVariantsData.channel2.variantsIdsToRemove
+      result.current.channelsWithVariantsData.channel2.variantsIdsToRemove,
     ).toHaveLength(0);
 
     // Deselect all
     act(result.current.toggleAllChannels);
 
     expect(
-      result.current.channelsWithVariantsData.channel1.selectedVariantsIds
+      result.current.channelsWithVariantsData.channel1.selectedVariantsIds,
     ).toHaveLength(0);
     expect(
-      result.current.channelsWithVariantsData.channel1.variantsIdsToAdd
+      result.current.channelsWithVariantsData.channel1.variantsIdsToAdd,
     ).toHaveLength(0);
     expect(
-      result.current.channelsWithVariantsData.channel1.variantsIdsToRemove
+      result.current.channelsWithVariantsData.channel1.variantsIdsToRemove,
     ).toHaveLength(2);
     expect(
-      result.current.channelsWithVariantsData.channel2.selectedVariantsIds
+      result.current.channelsWithVariantsData.channel2.selectedVariantsIds,
     ).toHaveLength(0);
     expect(
-      result.current.channelsWithVariantsData.channel2.variantsIdsToAdd
+      result.current.channelsWithVariantsData.channel2.variantsIdsToAdd,
     ).toHaveLength(0);
     expect(
-      result.current.channelsWithVariantsData.channel2.variantsIdsToRemove
+      result.current.channelsWithVariantsData.channel2.variantsIdsToRemove,
     ).toHaveLength(0);
   });
 });

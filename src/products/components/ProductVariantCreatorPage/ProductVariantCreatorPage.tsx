@@ -5,7 +5,7 @@ import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
 import {
   ProductVariantBulkCreateInput,
-  RefreshLimitsQuery
+  RefreshLimitsQuery,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useWizard from "@saleor/hooks/useWizard";
@@ -16,43 +16,44 @@ import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
 import { createInitialForm, ProductVariantCreateFormData } from "./form";
 import ProductVariantCreatorContent, {
-  ProductVariantCreatorContentProps
+  ProductVariantCreatorContentProps,
 } from "./ProductVariantCreatorContent";
 import ProductVariantCreateTabs from "./ProductVariantCreatorTabs";
 import { getVariantsNumber } from "./ProductVariantCreatorValues";
 import reduceProductVariantCreateFormData, {
-  ProductVariantCreateReducerActionType
+  ProductVariantCreateReducerActionType,
 } from "./reducer";
 import { ProductVariantCreatorStep } from "./types";
+import { dedupeListings } from "./utils";
 
 const useStyles = makeStyles(
   theme => ({
     button: {
-      marginLeft: theme.spacing(2)
+      marginLeft: theme.spacing(2),
     },
     content: {
-      overflowX: "visible"
+      overflowX: "visible",
     },
     description: {
-      marginTop: theme.spacing()
+      marginTop: theme.spacing(),
     },
     hr: {
-      margin: theme.spacing(3, 0)
-    }
+      margin: theme.spacing(3, 0),
+    },
   }),
-  { name: "ProductVariantCreatePage" }
+  { name: "ProductVariantCreatePage" },
 );
 
 function canHitNext(
   step: ProductVariantCreatorStep,
   data: ProductVariantCreateFormData,
-  variantsLeft: number | null
+  variantsLeft: number | null,
 ): boolean {
   switch (step) {
     case ProductVariantCreatorStep.values:
       return (
         data.attributes.every(
-          attribute => !attribute.valueRequired || attribute.values.length > 0
+          attribute => !attribute.valueRequired || attribute.values.length > 0,
         ) &&
         (variantsLeft === null || getVariantsNumber(data) <= variantsLeft)
       );
@@ -67,7 +68,7 @@ function canHitNext(
           data.price.values.some(
             attribute =>
               attribute.value.length < data.price.channels.length ||
-              attribute.value.some(channel => validatePrice(channel.price))
+              attribute.value.some(channel => validatePrice(channel.price)),
           )
         ) {
           return false;
@@ -81,7 +82,7 @@ function canHitNext(
       return true;
     case ProductVariantCreatorStep.summary:
       return !data.variants.some(variant =>
-        variant.channelListings.some(channel => validatePrice(channel.price))
+        variant.channelListings.some(channel => validatePrice(channel.price)),
       );
 
     default:
@@ -104,45 +105,45 @@ function getTitle(step: ProductVariantCreatorStep, intl: IntlShape): string {
       return intl.formatMessage({
         id: "NXpFlL",
         defaultMessage: "Choose Values",
-        description: "product attribute values, page title"
+        description: "product attribute values, page title",
       });
     case ProductVariantCreatorStep.prices:
       return intl.formatMessage({
         id: "7WEC+G",
         defaultMessage: "Price and SKUs",
-        description: "page title"
+        description: "page title",
       });
     case ProductVariantCreatorStep.summary:
       return intl.formatMessage({
         id: "g1WQlC",
         defaultMessage: "Summary",
-        description: "page title"
+        description: "page title",
       });
   }
 }
 
 function getDescription(
   step: ProductVariantCreatorStep,
-  intl: IntlShape
+  intl: IntlShape,
 ): string {
   switch (step) {
     case ProductVariantCreatorStep.values:
       return intl.formatMessage({
         id: "ClFzoD",
         defaultMessage:
-          "Selected values will be used to create variants for the configurable product."
+          "Selected values will be used to create variants for the configurable product.",
       });
     case ProductVariantCreatorStep.prices:
       return intl.formatMessage({
         id: "iigydN",
         defaultMessage:
-          "Based on your selections we will create 8 products. Use this step to customize price and stocks for your new products."
+          "Based on your selections we will create 8 products. Use this step to customize price and stocks for your new products.",
       });
     case ProductVariantCreatorStep.summary:
       return intl.formatMessage({
         id: "rHXF43",
         defaultMessage:
-          "Here is the summary of variants that will be created. You can change prices, stocks an SKU for each one created."
+          "Here is the summary of variants that will be created. You can change prices, stocks an SKU for each one created.",
       });
   }
 }
@@ -161,7 +162,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
   const intl = useIntl();
   const [wizardData, dispatchFormDataAction] = React.useReducer(
     reduceProductVariantCreateFormData,
-    createInitialForm(attributes, channelListings, warehouses)
+    createInitialForm(attributes, channelListings, warehouses),
   );
   const [step, { next: nextStep, prev: prevStep, set: setStep }] = useWizard<
     ProductVariantCreatorStep
@@ -170,24 +171,24 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
     [
       ProductVariantCreatorStep.values,
       ProductVariantCreatorStep.prices,
-      ProductVariantCreatorStep.summary
+      ProductVariantCreatorStep.summary,
     ],
     {
       onTransition: (_, nextStep) => {
         if (nextStep === ProductVariantCreatorStep.summary) {
           dispatchFormDataAction({
-            type: ProductVariantCreateReducerActionType.reload
+            type: ProductVariantCreateReducerActionType.rebuild,
           });
         }
-      }
-    }
+      },
+    },
   );
   const reloadForm = () =>
     dispatchFormDataAction({
       reload: {
-        data: createInitialForm(attributes, channelListings, warehouses)
+        data: createInitialForm(attributes, channelListings, warehouses),
       },
-      type: ProductVariantCreateReducerActionType.reload
+      type: ProductVariantCreateReducerActionType.reload,
     });
 
   React.useEffect(reloadForm, [attributes.length, warehouses.length]);
@@ -237,7 +238,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
             className={classes.button}
             disabled={!canHitNext(step, wizardData, variantsLeft)}
             variant="primary"
-            onClick={() => onSubmit(wizardData.variants)}
+            onClick={() => onSubmit(dedupeListings(wizardData).variants)}
           >
             <FormattedMessage
               id="Q3j++G"

@@ -15,7 +15,7 @@ const MembersErrorDialog: React.FC<MembersErrorDialogProps> = ({
   confirmButtonState,
   onClose,
   onConfirm,
-  open
+  open,
 }) => {
   const intl = useIntl();
 
@@ -28,7 +28,7 @@ const MembersErrorDialog: React.FC<MembersErrorDialogProps> = ({
       title={intl.formatMessage({
         id: "lT5MYM",
         defaultMessage: "Unassign users",
-        description: "dialog title"
+        description: "dialog title",
       })}
       variant="info"
     >

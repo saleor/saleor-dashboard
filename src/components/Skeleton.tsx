@@ -6,16 +6,16 @@ const useStyles = makeStyles(
   theme => ({
     "@keyframes skeleton-animation": {
       "0%": {
-        opacity: 0.6
+        opacity: 0.6,
       },
       "100%": {
-        opacity: 1
-      }
+        opacity: 1,
+      },
     },
     primary: {
       "&$skeleton": {
-        background: theme.palette.primary.main
-      }
+        background: theme.palette.primary.main,
+      },
     },
     skeleton: {
       animation: "skeleton-animation .75s linear infinite forwards alternate",
@@ -23,10 +23,10 @@ const useStyles = makeStyles(
       borderRadius: 4,
       display: "block",
       height: "0.8em",
-      margin: "0.2em 0"
-    }
+      margin: "0.2em 0",
+    },
   }),
-  { name: "Skeleton" }
+  { name: "Skeleton" },
 );
 
 interface SkeletonProps {
@@ -44,7 +44,7 @@ const Skeleton: React.FC<SkeletonProps> = props => {
     <span
       data-test-id="skeleton"
       className={classNames(classes.skeleton, className, {
-        [classes.primary]: primary
+        [classes.primary]: primary,
       })}
       style={style}
     >

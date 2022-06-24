@@ -8,7 +8,7 @@ import { messages } from "./messages";
 import {
   CollectionChannels,
   getDropdownColor,
-  mapChannelsToPills
+  mapChannelsToPills,
 } from "./utils";
 
 export interface ChannelsAvailabilityDropdownProps {
@@ -16,14 +16,14 @@ export interface ChannelsAvailabilityDropdownProps {
 }
 
 export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdownProps> = ({
-  channels
+  channels,
 }) => {
   const intl = useIntl();
   const [isPopupOpen, setPopupOpen] = React.useState(false);
   const anchor = React.useRef<HTMLDivElement>(null);
 
   const dropdownColor = React.useMemo(() => getDropdownColor(channels), [
-    channels
+    channels,
   ]);
 
   if (!channels?.length) {
@@ -45,7 +45,7 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
       <div aria-controls="availability-menu" aria-haspopup="true" role="button">
         <Pill
           label={intl.formatMessage(messages.dropdownLabel, {
-            channelCount: channels.length
+            channelCount: channels.length,
           })}
           color={dropdownColor}
           outlined

@@ -11,7 +11,7 @@ interface VariantDetailsChannelsAvailabilityCardContainerProps {
 }
 
 const VariantDetailsChannelsAvailabilityCardContainer: React.FC<VariantDetailsChannelsAvailabilityCardContainerProps> = ({
-  children
+  children,
 }) => (
   <>
     <Card>

@@ -3,12 +3,12 @@ import useStateFromProps from "../useStateFromProps";
 
 function useModalDialogErrors<TError>(
   errors: TError[],
-  open: boolean
+  open: boolean,
 ): TError[] {
   const [state, setState] = useStateFromProps(errors);
 
   useModalDialogOpen(open, {
-    onClose: () => setState([])
+    onClose: () => setState([]),
   });
 
   return state;

@@ -2,7 +2,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import OrderBulkCancelDialog, {
-  OrderBulkCancelDialogProps
+  OrderBulkCancelDialogProps,
 } from "../../../orders/components/OrderBulkCancelDialog";
 import Decorator from "../../Decorator";
 
@@ -11,7 +11,7 @@ const props: OrderBulkCancelDialogProps = {
   numberOfOrders: "10",
   onClose: () => undefined,
   onConfirm: () => undefined,
-  open: true
+  open: true,
 };
 
 storiesOf("Orders / OrderBulkCancelDialog", module)

@@ -45,23 +45,23 @@ storiesOf("Views / Products / Create product variant", module)
           attributes: [product.productType.variantAttributes[0].id],
           code: ProductErrorCode.REQUIRED,
           field: "attributes",
-          message: "Attributes required"
+          message: "Attributes required",
         },
         {
           attributes: null,
           code: ProductErrorCode.UNIQUE,
           field: "attributes",
-          message: "Attributes has unique"
+          message: "Attributes has unique",
         },
         {
           attributes: null,
           code: ProductErrorCode.ALREADY_EXISTS,
           field: "sku",
-          message: "Sku already exists"
-        }
+          message: "Sku already exists",
+        },
       ].map(error => ({
         __typename: "ProductError",
-        ...error
+        ...error,
       }))}
       header="Add variant"
       product={product}
@@ -112,7 +112,7 @@ storiesOf("Views / Products / Create product variant", module)
       header="Add variant"
       product={{
         ...product,
-        variants: []
+        variants: [],
       }}
       onSubmit={() => undefined}
       onVariantClick={undefined}

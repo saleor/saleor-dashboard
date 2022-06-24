@@ -4,15 +4,15 @@ export const useStyles = makeStyles(
   {
     avatar: {
       "&:first-child": {
-        paddingLeft: 0
-      }
+        paddingLeft: 0,
+      },
     },
     checkboxCell: {
-      paddingLeft: 0
+      paddingLeft: 0,
     },
     wideCell: {
-      width: "100%"
-    }
+      width: "100%",
+    },
   },
-  { name: "AssignContainerDialog" }
+  { name: "AssignContainerDialog" },
 );

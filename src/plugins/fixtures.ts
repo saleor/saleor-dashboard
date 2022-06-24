@@ -1,7 +1,7 @@
 import {
   ConfigurationTypeFieldEnum,
   PluginBaseFragment,
-  PluginsDetailsFragment
+  PluginsDetailsFragment,
 } from "@saleor/graphql";
 
 export const pluginList: PluginBaseFragment[] = [
@@ -16,14 +16,14 @@ export const pluginList: PluginBaseFragment[] = [
           __typename: "Channel",
           id: "channel-1",
           name: "channel 1",
-          slug: "channel-1"
-        }
-      }
+          slug: "channel-1",
+        },
+      },
     ],
     description:
       "Lorem ipsum dolor sit amet enim. Etiam ullamcorper. Suspendisse a pellentesque dui, non felis. Maecenas malesuada elit lectus felis, malesuada ultricies. Curabitur et ligula. Ut molestie a, ultricies porta urna. Vestibulum commodo volutpat a, convallis ac, laoreet enim. Phasellus fermentum in, dolor. Pellentesque facilisis. Nulla imperdiet sit amet magna.",
     id: "Jzx123sEt==",
-    name: "Avalara"
+    name: "Avalara",
   },
   {
     __typename: "Plugin",
@@ -36,15 +36,15 @@ export const pluginList: PluginBaseFragment[] = [
           __typename: "Channel",
           id: "channel-1",
           name: "channel 1",
-          slug: "channel-1"
-        }
-      }
+          slug: "channel-1",
+        },
+      },
     ],
     description:
       "Lorem ipsum dolor sit amet enim. Etiam ullamcorper. Suspendisse a pellentesque dui, non felis. Maecenas malesuada elit lectus felis, malesuada ultricies. Curabitur et ligula. Ut molestie a, ultricies porta urna. Vestibulum commodo volutpat a, convallis ac, laoreet enim. Phasellus fermentum in, dolor. Pellentesque facilisis. Nulla imperdiet sit amet magna.",
     id: "Jzx123sEt==",
-    name: "VatLayer"
-  }
+    name: "VatLayer",
+  },
 ];
 export const plugin: PluginsDetailsFragment = {
   __typename: "Plugin",
@@ -57,7 +57,7 @@ export const plugin: PluginsDetailsFragment = {
         __typename: "Channel",
         id: "channel-1",
         name: "channel 1",
-        slug: "channel-1"
+        slug: "channel-1",
       },
       configuration: [
         {
@@ -66,7 +66,7 @@ export const plugin: PluginsDetailsFragment = {
           label: "Username or account",
           name: "Username or account",
           type: ConfigurationTypeFieldEnum.STRING,
-          value: "avatax_user"
+          value: "avatax_user",
         },
         {
           __typename: "ConfigurationItem",
@@ -74,7 +74,7 @@ export const plugin: PluginsDetailsFragment = {
           label: "Password or license",
           name: "Password or license",
           type: ConfigurationTypeFieldEnum.STRING,
-          value: "TEM8S2-2ET83-CGKP1-DPSI2-EPZO1"
+          value: "TEM8S2-2ET83-CGKP1-DPSI2-EPZO1",
         },
         {
           __typename: "ConfigurationItem",
@@ -82,7 +82,7 @@ export const plugin: PluginsDetailsFragment = {
           label: "API key",
           name: "apiKey",
           type: ConfigurationTypeFieldEnum.SECRET,
-          value: "9ab9"
+          value: "9ab9",
         },
         {
           __typename: "ConfigurationItem",
@@ -90,7 +90,7 @@ export const plugin: PluginsDetailsFragment = {
           label: "Password",
           name: "password",
           type: ConfigurationTypeFieldEnum.PASSWORD,
-          value: ""
+          value: "",
         },
         {
           __typename: "ConfigurationItem",
@@ -98,7 +98,7 @@ export const plugin: PluginsDetailsFragment = {
           label: "Empty Password",
           name: "password-not-set",
           type: ConfigurationTypeFieldEnum.PASSWORD,
-          value: null
+          value: null,
         },
         {
           __typename: "ConfigurationItem",
@@ -106,7 +106,7 @@ export const plugin: PluginsDetailsFragment = {
           label: "Use sandbox",
           name: "Use sandbox",
           type: ConfigurationTypeFieldEnum.BOOLEAN,
-          value: "true"
+          value: "true",
         },
         {
           __typename: "ConfigurationItem",
@@ -115,13 +115,13 @@ export const plugin: PluginsDetailsFragment = {
           name: "multiline-field",
           type: ConfigurationTypeFieldEnum.MULTILINE,
           value:
-            "Lorem ipsum\ndolor sit\namet enim.\nEtiam ullamcorper.\nSuspendisse a\npellentesque dui,\nnon felis."
-        }
-      ]
-    }
+            "Lorem ipsum\ndolor sit\namet enim.\nEtiam ullamcorper.\nSuspendisse a\npellentesque dui,\nnon felis.",
+        },
+      ],
+    },
   ],
   description:
     "Lorem ipsum dolor sit amet enim. Etiam ullamcorper. Suspendisse a pellentesque dui, non felis. Maecenas malesuada elit lectus felis, malesuada ultricies. Curabitur et ligula. Ut molestie a, ultricies porta urna. Vestibulum commodo volutpat a, convallis ac, laoreet enim. Phasellus fermentum in, dolor. Pellentesque facilisis. Nulla imperdiet sit amet magna.",
   id: "UGx1Z2luQ29uZmlndXJhdGlvbjoy",
-  name: "Username or account"
+  name: "Username or account",
 };

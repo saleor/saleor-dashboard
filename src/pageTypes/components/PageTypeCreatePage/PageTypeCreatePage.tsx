@@ -32,19 +32,19 @@ export interface PageTypeCreatePageProps {
 const formInitialData: PageTypeForm = {
   metadata: [],
   name: "",
-  privateMetadata: []
+  privateMetadata: [],
 };
 
 const useStyles = makeStyles(
   theme => ({
     hr: {
       gridColumnEnd: "span 2",
-      margin: theme.spacing(1, 0)
-    }
+      margin: theme.spacing(1, 0),
+    },
   }),
   {
-    name: "PageTypeCreatePage"
-  }
+    name: "PageTypeCreatePage",
+  },
 );
 
 const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
@@ -54,7 +54,7 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
   const navigate = useNavigator();
 
   const {
-    makeChangeHandler: makeMetadataChangeHandler
+    makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
 
   return (
@@ -76,7 +76,7 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
               title={intl.formatMessage({
                 id: "caqRmN",
                 defaultMessage: "Create Page Type",
-                description: "header"
+                description: "header",
               })}
             />
             <Grid variant="inverted">

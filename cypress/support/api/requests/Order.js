@@ -3,7 +3,7 @@ import { getDefaultAddress, getValueWithDefault } from "./utils/Utils";
 export function markOrderAsPaid(orderId) {
   const mutation = `mutation{
     orderMarkAsPaid(id:"${orderId}"){
-      orderErrors{
+      errors{
         message
       }
     }
@@ -31,7 +31,7 @@ export function addProductToOrder(orderId, variantId, quantity = 1) {
       quantity:${quantity}
       variantId: "${variantId}"
     }){
-      orderErrors{
+      errors{
         message
       }
     }

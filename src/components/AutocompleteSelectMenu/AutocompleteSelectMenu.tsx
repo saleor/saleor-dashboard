@@ -2,7 +2,7 @@ import {
   CircularProgress,
   MenuItem,
   Paper,
-  TextField
+  TextField,
 } from "@material-ui/core";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import { buttonMessages } from "@saleor/intl";
@@ -14,7 +14,7 @@ import { FormattedMessage } from "react-intl";
 import {
   getMenuItemByPath,
   IMenu,
-  validateMenuOptions
+  validateMenuOptions,
 } from "../../utils/menu";
 import Debounce, { DebounceProps } from "../Debounce";
 
@@ -34,7 +34,7 @@ export interface AutocompleteSelectMenuProps {
 }
 
 const validationError: Error = new Error(
-  "Values supplied to AutocompleteSelectMenu should be unique"
+  "Values supplied to AutocompleteSelectMenu should be unique",
 );
 
 const DebounceAutocomplete: React.ComponentType<DebounceProps<
@@ -45,11 +45,11 @@ const useStyles = makeStyles(
   theme => ({
     container: {
       flexGrow: 1,
-      position: "relative"
+      position: "relative",
     },
     menuBack: {
       marginLeft: theme.spacing(-0.5),
-      marginRight: theme.spacing(1)
+      marginRight: theme.spacing(1),
     },
     paper: {
       left: 0,
@@ -57,11 +57,11 @@ const useStyles = makeStyles(
       padding: theme.spacing(),
       position: "absolute",
       right: 0,
-      zIndex: 2
+      zIndex: 2,
     },
-    root: {}
+    root: {},
   }),
-  { name: "AutocompleteSelectMenu" }
+  { name: "AutocompleteSelectMenu" },
 );
 const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
   const {
@@ -76,7 +76,7 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
     testIds,
     placeholder,
     onChange,
-    onInputChange
+    onInputChange,
   } = props;
   const classes = useStyles(props);
 
@@ -90,8 +90,8 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
     onChange({
       target: {
         name,
-        value
-      }
+        value,
+      },
     } as any);
 
   // Validate if option values are duplicated
@@ -137,7 +137,7 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
                     openMenu();
                     setIsFocused(true);
                   },
-                  placeholder
+                  placeholder,
                 }}
                 disabled={disabled}
                 error={error}
@@ -154,7 +154,7 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
                         <MenuItem
                           component="div"
                           {...getItemProps({
-                            item: "Back"
+                            item: "Back",
                           })}
                           onClick={() =>
                             setMenuPath(menuPath.slice(0, menuPath.length - 2))

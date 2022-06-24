@@ -5,7 +5,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -35,7 +35,7 @@ const SaleValue: React.FC<SaleValueProps> = ({
   data,
   disabled,
   errors,
-  onChange
+  onChange,
 }) => {
   const { type } = data;
   const intl = useIntl();
@@ -48,7 +48,7 @@ const SaleValue: React.FC<SaleValueProps> = ({
         title={intl.formatMessage({
           id: "wHdMAX",
           defaultMessage: "Value",
-          description: "sale value, header"
+          description: "sale value, header",
         })}
       />
       <CardContent className={classes.card}>
@@ -90,7 +90,7 @@ const SaleValue: React.FC<SaleValueProps> = ({
             data.channelListings,
             (listing, index) => {
               const error = formErrors.value?.channels?.find(
-                id => id === listing.id
+                id => id === listing.id,
               );
               return (
                 <TableRow
@@ -129,7 +129,7 @@ const SaleValue: React.FC<SaleValueProps> = ({
                   />
                 </TableCell>
               </TableRow>
-            )
+            ),
           )}
         </TableBody>
       </ResponsiveTable>

@@ -5,13 +5,13 @@ import { giftCardListUrl } from "@saleor/giftCards/urls";
 import {
   GiftCardListQuery,
   GiftCardListQueryVariables,
-  useGiftCardListQuery
+  useGiftCardListQuery,
 } from "@saleor/graphql";
 import useBulkActions, {
-  UseBulkActionsProps
+  UseBulkActionsProps,
 } from "@saleor/hooks/useBulkActions";
 import useListSettings, {
-  UseListSettings
+  UseListSettings,
 } from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -19,7 +19,7 @@ import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import {
   createPaginationState,
   PageInfo,
-  PaginationState
+  PaginationState,
 } from "@saleor/hooks/usePaginator";
 import { ListViews, SortPage } from "@saleor/types";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
@@ -31,7 +31,7 @@ import { getFilterVariables } from "../../GiftCardListSearchAndFilters/filters";
 import {
   GiftCardListColummns,
   GiftCardListUrlQueryParams,
-  GiftCardUrlSortField
+  GiftCardUrlSortField,
 } from "../../types";
 import { getSortQueryVariables } from "./sort";
 
@@ -59,20 +59,20 @@ export interface GiftCardsListConsumerProps
 }
 
 export const GiftCardsListContext = createContext<GiftCardsListConsumerProps>(
-  null
+  null,
 );
 
 export const useGiftCardList = () => useContext(GiftCardsListContext);
 
 export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
   children,
-  params
+  params,
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
 
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    []
+    [],
   );
 
   const { updateListSettings, settings } = useListSettings<
@@ -89,9 +89,9 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
-      sort: getSortQueryVariables(params)
+      sort: getSortQueryVariables(params),
     }),
-    [params, paginationState]
+    [params, paginationState],
   );
 
   const handleGiftCardListError = (error: ApolloError) => {
@@ -100,7 +100,7 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
     if (!!message) {
       notify({
         status: "error",
-        text: message
+        text: message,
       });
     }
   };
@@ -108,7 +108,7 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
   const { data, loading } = useGiftCardListQuery({
     displayLoader: true,
     variables: queryVariables,
-    handleError: handleGiftCardListError
+    handleError: handleGiftCardListError,
   });
 
   const giftCards = mapEdgesToItems(data?.giftCards)?.map(getExtendedGiftCard);
@@ -130,7 +130,7 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
     params,
     settings,
     updateListSettings,
-    numberOfColumns
+    numberOfColumns,
   };
 
   return (

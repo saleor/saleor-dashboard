@@ -10,7 +10,7 @@ import {
   VoucherDetailsFragment,
   VoucherTypeEnum,
   VoucherUpdateMutation,
-  VoucherUpdateMutationVariables
+  VoucherUpdateMutationVariables,
 } from "@saleor/graphql";
 import { joinDateTime } from "@saleor/misc";
 
@@ -18,11 +18,11 @@ export function createUpdateHandler(
   voucher: VoucherDetailsFragment,
   voucherChannelsChoices: ChannelVoucherData[],
   updateVoucher: (
-    variables: VoucherUpdateMutationVariables
+    variables: VoucherUpdateMutationVariables,
   ) => Promise<FetchResult<VoucherUpdateMutation>>,
   updateChannels: (options: {
     variables: VoucherChannelListingUpdateMutationVariables;
-  }) => Promise<FetchResult<VoucherChannelListingUpdateMutation>>
+  }) => Promise<FetchResult<VoucherChannelListingUpdateMutation>>,
 ) {
   return async (formData: VoucherDetailsPageFormData) => {
     const { id } = voucher;
@@ -52,13 +52,13 @@ export function createUpdateHandler(
             formData.discountType === DiscountTypeEnum.SHIPPING
               ? VoucherTypeEnum.SHIPPING
               : formData.type,
-          usageLimit: formData.hasUsageLimit ? formData.usageLimit : null
-        }
+          usageLimit: formData.hasUsageLimit ? formData.usageLimit : null,
+        },
       }).then(({ data }) => data?.voucherUpdate.errors ?? []),
 
       updateChannels({
-        variables: getChannelsVariables(id, formData, voucherChannelsChoices)
-      }).then(({ data }) => data?.voucherChannelListingUpdate.errors ?? [])
+        variables: getChannelsVariables(id, formData, voucherChannelsChoices),
+      }).then(({ data }) => data?.voucherChannelListingUpdate.errors ?? []),
     ]);
 
     return errors.flat();

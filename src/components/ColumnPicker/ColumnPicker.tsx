@@ -9,7 +9,7 @@ import React from "react";
 
 import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
 import ColumnPickerContent, {
-  ColumnPickerContentProps
+  ColumnPickerContentProps,
 } from "./ColumnPickerContent";
 
 export interface ColumnPickerProps
@@ -27,12 +27,12 @@ export interface ColumnPickerProps
 const useStyles = makeStyles(
   theme => ({
     popper: {
-      marginTop: theme.spacing(1)
-    }
+      marginTop: theme.spacing(1),
+    },
   }),
   {
-    name: "ColumnPicker"
-  }
+    name: "ColumnPicker",
+  },
 );
 
 const ColumnPicker: React.FC<ColumnPickerProps> = props => {
@@ -49,14 +49,14 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
   const classes = useStyles(props);
   const anchor = React.useRef<HTMLDivElement>();
   const selectedColumns = React.useRef(
-    initialColumns.map(({ value }) => value)
+    initialColumns.map(({ value }) => value),
   );
   const [isExpanded, setExpansionState] = React.useState(false);
 
   // Component is uncontrolled but we need to reset it somehow, so we change
   // initial prop after reset callback to force value refreshing
   const [initialColumnsChoices, setInitialColumnsChoices] = useStateFromProps(
-    initialColumns
+    initialColumns,
   );
 
   const onChange: FormChange<string[]> = event => {
@@ -76,7 +76,7 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
     selectedColumns.current = defaultColumns;
     const defaultColumnsChoices = defaultColumns.map(value => ({
       label: availableColumns.find(column => column.value === value)?.label,
-      value
+      value,
     }));
     setInitialColumnsChoices(defaultColumnsChoices);
     onChange({ target: { name: "", value: defaultColumns } });
@@ -90,9 +90,9 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
   const choices = sortBy(
     availableColumns.map(column => ({
       ...column,
-      score: -score(column.label, query)
+      score: -score(column.label, query),
     })),
-    "score"
+    "score",
   );
 
   return (
@@ -116,7 +116,7 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
               {...TransitionProps}
               style={{
                 transformOrigin:
-                  placement === "bottom" ? "right bottom" : "right top"
+                  placement === "bottom" ? "right bottom" : "right top",
               }}
             >
               <ColumnPickerContent

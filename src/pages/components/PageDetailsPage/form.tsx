@@ -1,5 +1,11 @@
 import { OutputData } from "@editorjs/editorjs";
-import { getAttributesDisplayData } from "@saleor/attributes/utils/data";
+import {
+  getAttributesDisplayData,
+  getRichTextAttributesFromMap,
+  getRichTextDataFromAttributes,
+  mergeAttributes,
+  RichTextProps,
+} from "@saleor/attributes/utils/data";
 import {
   createAttributeChangeHandler,
   createAttributeFileChangeHandler,
@@ -7,31 +13,30 @@ import {
   createAttributeReferenceChangeHandler,
   createAttributeValueReorderHandler,
   createFetchMoreReferencesHandler,
-  createFetchReferencesHandler
+  createFetchReferencesHandler,
 } from "@saleor/attributes/utils/handlers";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
-import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import {
   PageDetailsFragment,
   SearchPagesQuery,
   SearchPageTypesQuery,
-  SearchProductsQuery
+  SearchProductsQuery,
 } from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
-  SubmitPromise
+  SubmitPromise,
 } from "@saleor/hooks/useForm";
 import useFormset, {
   FormsetChange,
-  FormsetData
+  FormsetData,
 } from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import {
   getAttributeInputFromPage,
-  getAttributeInputFromPageType
+  getAttributeInputFromPageType,
 } from "@saleor/pages/utils/data";
 import { createPageTypeSelectHandler } from "@saleor/pages/utils/handlers";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
@@ -39,6 +44,8 @@ import getPublicationData from "@saleor/utils/data/getPublicationData";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
+import { RichTextContext } from "@saleor/utils/richText/context";
+import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
 import useRichText from "@saleor/utils/richText/useRichText";
 import React, { useEffect } from "react";
 
@@ -64,7 +71,6 @@ export interface PageSubmitData extends PageFormData {
 
 export interface PageUpdateHandlers {
   changeMetadata: FormChange;
-  changeContent: RichTextEditorChange;
   selectPageType: FormChange;
   selectAttribute: FormsetChange<string>;
   selectAttributeMulti: FormsetChange<string>;
@@ -75,10 +81,16 @@ export interface PageUpdateHandlers {
   fetchMoreReferences: FetchMoreProps;
 }
 
-export interface UsePageUpdateFormResult
-  extends CommonUseFormResultWithHandlers<PageData, PageUpdateHandlers> {
+export interface UsePageUpdateFormOutput
+  extends CommonUseFormResultWithHandlers<PageData, PageUpdateHandlers>,
+    RichTextProps {
   valid: boolean;
 }
+
+export type UsePageUpdateFormRenderProps = Omit<
+  UsePageUpdateFormOutput,
+  "richText"
+>;
 
 export interface UsePageFormOpts {
   pageTypes?: RelayToFlat<SearchPageTypesQuery["search"]>;
@@ -94,7 +106,7 @@ export interface UsePageFormOpts {
 }
 
 export interface PageFormProps extends UsePageFormOpts {
-  children: (props: UsePageUpdateFormResult) => React.ReactNode;
+  children: (props: UsePageUpdateFormRenderProps) => React.ReactNode;
   page: PageDetailsFragment;
   onSubmit: (data: PageData) => SubmitPromise;
   disabled: boolean;
@@ -109,110 +121,126 @@ const getInitialFormData = (page?: PageDetailsFragment): PageFormData => ({
   seoDescription: page?.seoDescription || "",
   seoTitle: page?.seoTitle || "",
   slug: page?.slug || "",
-  title: page?.title || ""
+  title: page?.title || "",
 });
 
 function usePageForm(
   page: PageDetailsFragment,
   onSubmit: (data: PageData) => SubmitPromise,
   disabled: boolean,
-  opts: UsePageFormOpts
-): UsePageUpdateFormResult {
+  opts: UsePageFormOpts,
+): UsePageUpdateFormOutput {
   const pageExists = page !== null;
+
+  const { handleChange, triggerChange, data: formData, formId } = useForm(
+    getInitialFormData(page),
+    undefined,
+    {
+      confirmLeave: true,
+    },
+  );
 
   const attributes = useFormset(
     pageExists
       ? getAttributeInputFromPage(page)
       : opts.selectedPageType
       ? getAttributeInputFromPageType(opts.selectedPageType)
-      : []
+      : [],
   );
+
+  const {
+    getters: attributeRichTextGetters,
+    getValues: getAttributeRichTextValues,
+  } = useMultipleRichText({
+    initial: getRichTextDataFromAttributes(attributes.data),
+    triggerChange,
+  });
   const attributesWithNewFileValue = useFormset<null, File>([]);
 
-  const { handleChange, triggerChange, data: formData, formId } = useForm(
-    getInitialFormData(page),
-    undefined,
-    {
-      confirmLeave: true
-    }
-  );
-
   const { setExitDialogSubmitRef, setIsSubmitDisabled } = useExitFormDialog({
-    formId
+    formId,
   });
 
-  const [content, changeContent] = useRichText({
+  const richText = useRichText({
     initial: pageExists ? page?.content : null,
-    triggerChange
+    loading: pageExists ? !page : false,
+    triggerChange,
   });
 
   const {
     isMetadataModified,
     isPrivateMetadataModified,
-    makeChangeHandler: makeMetadataChangeHandler
+    makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
 
   const changeMetadata = makeMetadataChangeHandler(handleChange);
   const handlePageTypeSelect = createPageTypeSelectHandler(
     opts.onSelectPageType,
-    triggerChange
+    triggerChange,
   );
   const handleAttributeChange = createAttributeChangeHandler(
     attributes.change,
-    triggerChange
+    triggerChange,
   );
   const handleAttributeMultiChange = createAttributeMultiChangeHandler(
     attributes.change,
     attributes.data,
-    triggerChange
+    triggerChange,
   );
   const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(
     attributes.change,
-    triggerChange
+    triggerChange,
   );
   const handleFetchReferences = createFetchReferencesHandler(
     attributes.data,
     opts.assignReferencesAttributeId,
     opts.fetchReferencePages,
-    opts.fetchReferenceProducts
+    opts.fetchReferenceProducts,
   );
   const handleFetchMoreReferences = createFetchMoreReferencesHandler(
     attributes.data,
     opts.assignReferencesAttributeId,
     opts.fetchMoreReferencePages,
-    opts.fetchMoreReferenceProducts
+    opts.fetchMoreReferenceProducts,
   );
   const handleAttributeFileChange = createAttributeFileChangeHandler(
     attributes.change,
     attributesWithNewFileValue.data,
     attributesWithNewFileValue.add,
     attributesWithNewFileValue.change,
-    triggerChange
+    triggerChange,
   );
   const handleAttributeValueReorder = createAttributeValueReorderHandler(
     attributes.change,
     attributes.data,
-    triggerChange
+    triggerChange,
   );
 
-  // Need to make it function to always have content.current up to date
-  const getData = (): PageData => ({
+  const data: PageData = {
     ...formData,
     attributes: getAttributesDisplayData(
       attributes.data,
       attributesWithNewFileValue.data,
       opts.referencePages,
-      opts.referenceProducts
+      opts.referenceProducts,
     ),
-    content: content.current,
-    pageType: pageExists ? page?.pageType : opts.selectedPageType
-  });
+    content: null,
+    pageType: pageExists ? page?.pageType : opts.selectedPageType,
+  };
 
-  const getSubmitData = (): PageSubmitData => ({
-    ...getData(),
+  const getSubmitData = async (): Promise<PageSubmitData> => ({
+    ...data,
     ...getMetadata(formData, isMetadataModified, isPrivateMetadataModified),
     ...getPublicationData(formData),
-    attributesWithNewFileValue: attributesWithNewFileValue.data
+    content: await richText.getValue(),
+    attributes: mergeAttributes(
+      attributes.data,
+      getRichTextAttributesFromMap(
+        attributes.data,
+        await getAttributeRichTextValues(),
+      ),
+    ),
+    attributesWithNewFileValue: attributesWithNewFileValue.data,
   });
 
   const handleSubmit = async (data: PageData) => {
@@ -227,10 +255,10 @@ function usePageForm(
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit: handleSubmit
+    onSubmit: handleSubmit,
   });
 
-  const submit = () => handleFormSubmit(getSubmitData());
+  const submit = async () => handleFormSubmit(await getSubmitData());
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
@@ -241,10 +269,9 @@ function usePageForm(
 
   return {
     change: handleChange,
-    data: getData(),
+    data,
     valid,
     handlers: {
-      changeContent,
       changeMetadata,
       fetchMoreReferences: handleFetchMoreReferences,
       fetchReferences: handleFetchReferences,
@@ -253,10 +280,12 @@ function usePageForm(
       selectAttributeFile: handleAttributeFileChange,
       selectAttributeMulti: handleAttributeMultiChange,
       selectAttributeReference: handleAttributeReferenceChange,
-      selectPageType: handlePageTypeSelect
+      selectPageType: handlePageTypeSelect,
     },
     submit,
-    isSaveDisabled
+    isSaveDisabled,
+    richText,
+    attributeRichTextGetters,
   };
 }
 
@@ -267,9 +296,15 @@ const PageForm: React.FC<PageFormProps> = ({
   disabled,
   ...rest
 }) => {
-  const props = usePageForm(page, onSubmit, disabled, rest);
+  const { richText, ...props } = usePageForm(page, onSubmit, disabled, rest);
 
-  return <form onSubmit={props.submit}>{children(props)}</form>;
+  return (
+    <form onSubmit={props.submit}>
+      <RichTextContext.Provider value={richText}>
+        {children(props)}
+      </RichTextContext.Provider>
+    </form>
+  );
 };
 
 PageForm.displayName = "PageForm";

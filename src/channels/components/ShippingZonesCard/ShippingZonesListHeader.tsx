@@ -12,7 +12,7 @@ const useStyles = makeStyles(
       width: "100%",
       display: "flex",
       flexDirection: "row",
-      alignItems: "center"
+      alignItems: "center",
     },
     // empty expanded needed for mui to use root styles
     expanded: {},
@@ -25,26 +25,26 @@ const useStyles = makeStyles(
       minHeight: 0,
 
       "&$expanded": {
-        minHeight: 0
-      }
+        minHeight: 0,
+      },
     },
     content: {
       margin: 0,
 
       "&$expanded": {
-        margin: 0
-      }
-    }
+        margin: 0,
+      },
+    },
   }),
-  { name: "ShippingZonesListHeader" }
+  { name: "ShippingZonesListHeader" },
 );
 
 const messages = defineMessages({
   title: {
     id: "gtKcPf",
     defaultMessage: "{zonesCount} / {totalCount} shipping zones",
-    description: "title"
-  }
+    description: "title",
+  },
 });
 
 interface ShippingZonesListHeaderProps {
@@ -54,7 +54,7 @@ interface ShippingZonesListHeaderProps {
 
 const ShippingZonesListHeader: React.FC<ShippingZonesListHeaderProps> = ({
   shippingZones,
-  totalCount
+  totalCount,
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
@@ -65,7 +65,7 @@ const ShippingZonesListHeader: React.FC<ShippingZonesListHeaderProps> = ({
         <Typography variant="subtitle2" color="textSecondary">
           {intl.formatMessage(messages.title, {
             zonesCount: shippingZones.length,
-            totalCount
+            totalCount,
           })}
         </Typography>
       </AccordionSummary>

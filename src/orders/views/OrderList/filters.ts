@@ -2,19 +2,19 @@ import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocomplet
 import {
   OrderFilterInput,
   OrderStatusFilter,
-  PaymentChargeStatusEnum
+  PaymentChargeStatusEnum,
 } from "@saleor/graphql";
 import { findInEnum, findValueInEnum, parseBoolean } from "@saleor/misc";
 import {
   OrderFilterGiftCard,
   OrderFilterKeys,
-  OrderListFilterOpts
+  OrderListFilterOpts,
 } from "@saleor/orders/components/OrderListPage/filters";
 
 import {
   FilterElement,
   FilterElementKeyValue,
-  FilterElementRegular
+  FilterElementRegular,
 } from "../../../components/Filter";
 import {
   createFilterTabUtils,
@@ -25,101 +25,101 @@ import {
   getMinMaxQueryParam,
   getMultipleEnumValueQueryParam,
   getMultipleValueQueryParam,
-  getSingleValueQueryParam
+  getSingleValueQueryParam,
 } from "../../../utils/filters";
 import {
   OrderListFitersWithKeyValueValues,
   OrderListUrlFilters,
   OrderListUrlFiltersEnum,
   OrderListUrlFiltersWithMultipleValues,
-  OrderListUrlQueryParams
+  OrderListUrlQueryParams,
 } from "../../urls";
 
 export const ORDER_FILTERS_KEY = "orderFilters";
 
 export function getFilterOpts(
   params: OrderListUrlFilters,
-  channels: MultiAutocompleteChoiceType[]
+  channels: MultiAutocompleteChoiceType[],
 ): OrderListFilterOpts {
   return {
     clickAndCollect: {
       active: params.clickAndCollect !== undefined,
-      value: parseBoolean(params.clickAndCollect, true)
+      value: parseBoolean(params.clickAndCollect, true),
     },
     preorder: {
       active: params.preorder !== undefined,
-      value: parseBoolean(params.preorder, true)
+      value: parseBoolean(params.preorder, true),
     },
     channel: channels
       ? {
           active: params?.channel !== undefined,
-          value: channels
+          value: channels,
         }
       : null,
     created: {
       active: [params?.createdFrom, params?.createdTo].some(
-        field => field !== undefined
+        field => field !== undefined,
       ),
       value: {
         max: params?.createdTo || "",
-        min: params?.createdFrom || ""
-      }
+        min: params?.createdFrom || "",
+      },
     },
     giftCard: {
       active: params?.giftCard !== undefined,
       value: params.giftCard?.length
         ? params.giftCard?.map(status =>
-            findValueInEnum(status, OrderFilterGiftCard)
+            findValueInEnum(status, OrderFilterGiftCard),
           )
-        : ([] as OrderFilterGiftCard[])
+        : ([] as OrderFilterGiftCard[]),
     },
     customer: {
       active: !!params?.customer,
-      value: params?.customer
+      value: params?.customer,
     },
     status: {
       active: params?.status !== undefined,
       value: dedupeFilter(
         params.status?.map(status =>
-          findValueInEnum(status, OrderStatusFilter)
-        ) || []
-      )
+          findValueInEnum(status, OrderStatusFilter),
+        ) || [],
+      ),
     },
     paymentStatus: {
       active: params?.paymentStatus !== undefined,
       value: dedupeFilter(
         params.paymentStatus?.map(paymentStatus =>
-          findValueInEnum(paymentStatus, PaymentChargeStatusEnum)
-        ) || []
-      )
+          findValueInEnum(paymentStatus, PaymentChargeStatusEnum),
+        ) || [],
+      ),
     },
     metadata: {
       active: !!params?.metadata?.length,
       value: [
         ...(params?.metadata
           ? params.metadata.filter(pair => pair?.key !== undefined)
-          : [])
-      ]
-    }
+          : []),
+      ],
+    },
   };
 }
 
 export function getFilterVariables(
-  params: OrderListUrlFilters
+  params: OrderListUrlFilters,
 ): OrderFilterInput {
   return {
     channels: (params.channel as unknown) as string[],
     created: getGteLteVariables({
       gte: params.createdFrom,
-      lte: params.createdTo
+      lte: params.createdTo,
     }),
     customer: params.customer,
     search: params.query,
     status: params?.status?.map(status =>
-      findInEnum(status, OrderStatusFilter)
+      findInEnum(status, OrderStatusFilter),
     ),
     paymentStatus: params?.paymentStatus?.map(paymentStatus =>
-      findInEnum(paymentStatus, PaymentChargeStatusEnum)
+      findInEnum(paymentStatus, PaymentChargeStatusEnum),
     ),
     isClickAndCollect:
       params.clickAndCollect !== undefined
@@ -135,12 +135,12 @@ export function getFilterVariables(
     giftCardUsed:
       params?.giftCard?.some(param => param === OrderFilterGiftCard.paid) ||
       undefined,
-    metadata: params?.metadata
+    metadata: params?.metadata,
   };
 }
 
 export function getFilterQueryParam(
-  filter: FilterElement<OrderFilterKeys>
+  filter: FilterElement<OrderFilterKeys>,
 ): OrderListUrlFilters {
   const { name } = filter;
 
@@ -148,7 +148,7 @@ export function getFilterQueryParam(
     case OrderFilterKeys.clickAndCollect:
       return getSingleValueQueryParam(
         filter,
-        OrderListUrlFiltersEnum.clickAndCollect
+        OrderListUrlFiltersEnum.clickAndCollect,
       );
     case OrderFilterKeys.preorder:
       return getSingleValueQueryParam(filter, OrderListUrlFiltersEnum.preorder);
@@ -157,27 +157,27 @@ export function getFilterQueryParam(
       return getMinMaxQueryParam(
         filter,
         OrderListUrlFiltersEnum.createdFrom,
-        OrderListUrlFiltersEnum.createdTo
+        OrderListUrlFiltersEnum.createdTo,
       );
 
     case OrderFilterKeys.status:
       return getMultipleEnumValueQueryParam(
         filter as FilterElementRegular<OrderFilterKeys.status>,
         OrderListUrlFiltersWithMultipleValues.status,
-        OrderStatusFilter
+        OrderStatusFilter,
       );
 
     case OrderFilterKeys.paymentStatus:
       return getMultipleEnumValueQueryParam(
         filter as FilterElementRegular<OrderFilterKeys.paymentStatus>,
         OrderListUrlFiltersWithMultipleValues.paymentStatus,
-        PaymentChargeStatusEnum
+        PaymentChargeStatusEnum,
       );
 
     case OrderFilterKeys.channel:
       return getMultipleValueQueryParam(
         filter,
-        OrderListUrlFiltersWithMultipleValues.channel
+        OrderListUrlFiltersWithMultipleValues.channel,
       );
 
     case OrderFilterKeys.customer:
@@ -187,13 +187,13 @@ export function getFilterQueryParam(
       return getMultipleEnumValueQueryParam(
         filter as FilterElementRegular<OrderFilterKeys.giftCard>,
         OrderListUrlFiltersWithMultipleValues.giftCard,
-        OrderFilterGiftCard
+        OrderFilterGiftCard,
       );
 
     case OrderFilterKeys.metadata:
       return getKeyValueQueryParam(
         filter as FilterElementKeyValue<OrderFilterKeys.metadata>,
-        OrderListFitersWithKeyValueValues.metadata
+        OrderListFitersWithKeyValueValues.metadata,
       );
   }
 }
@@ -201,14 +201,14 @@ export function getFilterQueryParam(
 export const {
   deleteFilterTab,
   getFilterTabs,
-  saveFilterTab
+  saveFilterTab,
 } = createFilterTabUtils<OrderListUrlFilters>(ORDER_FILTERS_KEY);
 
 export const {
   areFiltersApplied,
   getActiveFilters,
-  getFiltersCurrentTab
+  getFiltersCurrentTab,
 } = createFilterUtils<OrderListUrlQueryParams, OrderListUrlFilters>({
   ...OrderListUrlFiltersEnum,
-  ...OrderListUrlFiltersWithMultipleValues
+  ...OrderListUrlFiltersWithMultipleValues,
 });

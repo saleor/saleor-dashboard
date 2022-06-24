@@ -3,7 +3,7 @@ import {
   TableBody,
   TableCell,
   TableFooter,
-  TableRow
+  TableRow,
 } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
@@ -15,7 +15,7 @@ import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableB
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import TableHead from "@saleor/components/TableHead";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { CollectionDetailsQuery } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
@@ -31,29 +31,29 @@ const useStyles = makeStyles(
   theme => ({
     colActions: {
       width: `calc(76px + ${theme.spacing(1)})`,
-      marginRight: theme.spacing(-2)
+      marginRight: theme.spacing(-2),
     },
     colName: {
       paddingLeft: 0,
-      width: "auto"
+      width: "auto",
     },
     colNameLabel: {
-      marginLeft: AVATAR_MARGIN
+      marginLeft: AVATAR_MARGIN,
     },
     colPublished: {
-      width: 200
+      width: 200,
     },
     colType: {
-      width: 200
+      width: 200,
     },
     table: {
-      tableLayout: "fixed"
+      tableLayout: "fixed",
     },
     tableRow: {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   }),
-  { name: "CollectionProducts" }
+  { name: "CollectionProducts" },
 );
 
 export interface CollectionProductsProps extends PageListProps, ListActions {
@@ -67,15 +67,12 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
     collection,
     disabled,
     onAdd,
-    onNextPage,
-    onPreviousPage,
     onProductUnassign,
-    pageInfo,
     isChecked,
     selected,
     toggle,
     toggleAll,
-    toolbar
+    toolbar,
   } = props;
 
   const classes = useStyles(props);
@@ -93,11 +90,11 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
               {
                 id: "/dnWE8",
                 defaultMessage: "Products in {name}",
-                description: "products in collection"
+                description: "products in collection",
               },
               {
-                name: maybe(() => collection.name, "...")
-              }
+                name: maybe(() => collection.name, "..."),
+              },
             )
           ) : (
             <Skeleton />
@@ -154,13 +151,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
         </TableHead>
         <TableFooter>
           <TableRow>
-            <TablePagination
-              colSpan={numberOfColumns}
-              hasNextPage={pageInfo?.hasNextPage}
-              onNextPage={onNextPage}
-              hasPreviousPage={pageInfo?.hasPreviousPage}
-              onPreviousPage={onPreviousPage}
-            />
+            <TablePaginationWithContext colSpan={numberOfColumns} />
           </TableRow>
         </TableFooter>
         <TableBody>
@@ -194,7 +185,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
                   <TableCell className={classes.colType}>
                     {maybe<React.ReactNode>(
                       () => product.productType.name,
-                      <Skeleton />
+                      <Skeleton />,
                     )}
                   </TableCell>
                   <TableCell className={classes.colType}>
@@ -232,7 +223,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
                   />
                 </TableCell>
               </TableRow>
-            )
+            ),
           )}
         </TableBody>
       </ResponsiveTable>

@@ -4,7 +4,7 @@ import { filter } from "fuzzaldrin";
 import React from "react";
 
 export const useChannelsSearch = function<T extends { name: string }>(
-  channels: T[]
+  channels: T[],
 ) {
   const [query, onQueryChange] = React.useState("");
   const filteredChannels =

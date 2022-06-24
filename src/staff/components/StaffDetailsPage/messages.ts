@@ -4,6 +4,6 @@ export const staffDetailsPageMessages = defineMessages({
   userStatusActive: {
     id: "XMrYaA",
     defaultMessage: "User is active",
-    description: "checkbox label"
-  }
+    description: "checkbox label",
+  },
 });

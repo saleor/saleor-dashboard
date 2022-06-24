@@ -14,7 +14,7 @@ import {
   ListProps,
   RelayToFlat,
   SortPage,
-  TabPageProps
+  TabPageProps,
 } from "@saleor/types";
 import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
@@ -24,7 +24,7 @@ import StaffList from "../StaffList/StaffList";
 import {
   createFilterStructure,
   StaffFilterKeys,
-  StaffListFilterOpts
+  StaffListFilterOpts,
 } from "./filters";
 
 export interface StaffListPageProps
@@ -70,12 +70,12 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
             {
               id: "9xlPgt",
               defaultMessage: "{count}/{max} members",
-              description: "used staff users counter"
+              description: "used staff users counter",
             },
             {
               count: limits.currentUsage.staffUsers,
-              max: limits.allowedUsage.staffUsers
-            }
+              max: limits.allowedUsage.staffUsers,
+            },
           )
         }
       >
@@ -97,7 +97,7 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
           title={intl.formatMessage({
             id: "pA8Mlv",
             defaultMessage: "Staff Member limit reached",
-            description: "alert"
+            description: "alert",
           })}
         >
           <FormattedMessage
@@ -111,14 +111,14 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
           allTabLabel={intl.formatMessage({
             id: "YJ4TXc",
             defaultMessage: "All Staff Members",
-            description: "tab name"
+            description: "tab name",
           })}
           currentTab={currentTab}
           filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
             id: "aDbrOK",
-            defaultMessage: "Search Staff Member"
+            defaultMessage: "Search Staff Member",
           })}
           tabs={tabs}
           onAll={onAll}

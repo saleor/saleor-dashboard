@@ -76,7 +76,7 @@
     "camelcase": "off",
     "capitalized-comments": "off",
     "chai-friendly/no-unused-expressions": "error",
-    "comma-dangle": "off",
+    "comma-dangle": ["error", "always-multiline"],
     "complexity": "off",
     "constructor-super": "error",
     "curly": "error",

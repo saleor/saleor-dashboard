@@ -5,10 +5,10 @@ export const hasPermission = (permission: PermissionEnum, user: UserFragment) =>
 
 export const hasAnyPermissions = (
   permissions: PermissionEnum[],
-  user: UserFragment
+  user: UserFragment,
 ) => permissions?.some(permission => hasPermission(permission, user)) || false;
 
 export const hasAllPermissions = (
   permissions: PermissionEnum[],
-  user: UserFragment
+  user: UserFragment,
 ) => permissions?.every(permission => hasPermission(permission, user)) || false;

@@ -1,104 +1,52 @@
-import EditorJS, {
-  LogLevels,
-  OutputData,
-  ToolConstructable,
-  ToolSettings
-} from "@editorjs/editorjs";
-import Embed from "@editorjs/embed";
-import Header from "@editorjs/header";
-import List from "@editorjs/list";
-import Paragraph from "@editorjs/paragraph";
-import Quote from "@editorjs/quote";
-import strikethroughIcon from "@saleor/icons/StrikethroughIcon";
+import { LogLevels } from "@editorjs/editorjs";
+import { useId } from "@reach/auto-id";
 import classNames from "classnames";
-import createGenericInlineTool from "editorjs-inline-tool";
 import React from "react";
+import { createReactEditorJS } from "react-editor-js";
 
+import { tools } from "./consts";
+import { useHasRendered } from "./hooks";
+import { EditorJsProps } from "./RichTextEditor";
 import useStyles from "./styles";
-import { clean } from "./utils";
 
-export interface RichTextEditorContentProps {
+export interface RichTextEditorContentProps
+  extends Omit<EditorJsProps, "defaultValue"> {
+  id?: string;
   className?: string;
-  data: OutputData;
-  onReady?: () => void;
 }
 
-const inlineToolbar = ["link", "bold", "italic", "strikethrough"];
-
-export const tools: Record<string, ToolConstructable | ToolSettings> = {
-  embed: Embed,
-  header: {
-    class: Header,
-    config: {
-      defaultLevel: 1,
-      levels: [1, 2, 3]
-    },
-    inlineToolbar
-  },
-  list: {
-    class: List,
-    inlineToolbar
-  },
-  quote: {
-    class: Quote,
-    inlineToolbar
-  },
-  paragraph: {
-    class: Paragraph,
-    inlineToolbar
-  },
-  strikethrough: createGenericInlineTool({
-    sanitize: {
-      s: {}
-    },
-    shortcut: "CMD+S",
-    tagName: "s",
-    toolboxIcon: strikethroughIcon
-  })
-};
+const ReactEditorJS = createReactEditorJS();
 
 const RichTextEditorContent: React.FC<RichTextEditorContentProps> = ({
+  id: defaultId,
   className,
-  data,
-  onReady
+  value,
+  ...props
 }) => {
   const classes = useStyles({});
+  const id = useId(defaultId);
 
-  const editor = React.useRef<EditorJS>();
-  const editorContainer = React.useRef<HTMLDivElement>();
-  React.useEffect(
-    () => {
-      if (data !== undefined && !editor.current) {
-        const editorjs = new EditorJS({
-          data,
-          holder: editorContainer.current,
-          logLevel: "ERROR" as LogLevels,
-          onReady: () => {
-            editor.current = editorjs;
+  // We need to render FormControl first to get id from @reach/auto-id
+  const hasRendered = useHasRendered();
 
-            if (onReady) {
-              onReady();
-            }
-          },
-          readOnly: true,
-          tools
-        });
-      }
-
-      return () => {
-        clean(editor.current);
-        editor.current = null;
-      };
-    },
-    // Rerender editor only if changed from undefined to defined state
-    [data === undefined]
-  );
+  if (!hasRendered) {
+    return <div />;
+  }
 
   return (
-    <div
-      className={classNames(classes.editor, classes.rootStatic, className)}
-      ref={editorContainer}
-    />
+    <ReactEditorJS
+      holder={id}
+      logLevel={"ERROR" as LogLevels.ERROR}
+      tools={tools}
+      {...props}
+      defaultValue={value}
+      readOnly={true}
+    >
+      <div
+        id={id}
+        className={classNames(classes.editor, classes.rootStatic, className)}
+      />
+    </ReactEditorJS>
   );
 };
 

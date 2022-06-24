@@ -4,7 +4,7 @@ import { createGetSortQueryVariables } from "@saleor/utils/sort";
 import { GiftCardUrlSortField } from "../../types";
 
 export const getSortQueryField = (
-  sort: GiftCardUrlSortField
+  sort: GiftCardUrlSortField,
 ): GiftCardSortField => {
   switch (sort) {
     case GiftCardUrlSortField.balance:
@@ -19,5 +19,5 @@ export const getSortQueryField = (
 };
 
 export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField
+  getSortQueryField,
 );

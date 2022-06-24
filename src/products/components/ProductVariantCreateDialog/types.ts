@@ -1,4 +1,4 @@
 export enum ProductVariantCreateOptionEnum {
   MULTIPLE = "multiple",
-  SINGLE = "single"
+  SINGLE = "single",
 }

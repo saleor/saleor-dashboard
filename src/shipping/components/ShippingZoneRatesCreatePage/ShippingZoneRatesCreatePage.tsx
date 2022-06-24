@@ -13,7 +13,7 @@ import {
   ShippingChannelsErrorFragment,
   ShippingErrorFragment,
   ShippingMethodTypeEnum,
-  ShippingMethodTypeFragment
+  ShippingMethodTypeFragment,
 } from "@saleor/graphql";
 import useForm, { SubmitPromise } from "@saleor/hooks/useForm";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
@@ -25,6 +25,7 @@ import OrderWeight from "@saleor/shipping/components/OrderWeight";
 import PricingCard from "@saleor/shipping/components/PricingCard";
 import ShippingRateInfo from "@saleor/shipping/components/ShippingRateInfo";
 import { createChannelsChangeHandler } from "@saleor/shipping/handlers";
+import { RichTextContext } from "@saleor/utils/richText/context";
 import useRichText from "@saleor/utils/richText/useRichText";
 import React, { FormEventHandler } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -44,7 +45,7 @@ export interface ShippingZoneRatesCreatePageProps extends WithFormId {
   onDelete?: () => void;
   onSubmit: (data: ShippingZoneRateCommonFormData) => SubmitPromise;
   onPostalCodeInclusionChange: (
-    inclusion: PostalCodeRuleInclusionTypeEnum
+    inclusion: PostalCodeRuleInclusionTypeEnum,
   ) => void;
   onPostalCodeAssign: () => void;
   onPostalCodeUnassign: (code: any) => void;
@@ -70,7 +71,7 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
   saveButtonBarState,
   variant,
   postalCodes,
-  formId
+  formId,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -85,135 +86,139 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
     name: "",
     description: null,
     orderValueRestricted: true,
-    type: null
+    type: null,
   };
 
   const {
     change,
     data: formData,
     setIsSubmitDisabled,
-    triggerChange
+    triggerChange,
   } = useForm(initialForm, undefined, { confirmLeave: true, formId });
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit
+    onSubmit,
   });
 
-  const [description, changeDescription] = useRichText({
+  const richText = useRichText({
     initial: null,
-    triggerChange
+    triggerChange,
   });
 
-  // Prevents closing ref in submit functions
-  const getData = () => ({
+  const data: ShippingZoneRateCommonFormData = {
     ...formData,
-    description: description.current
-  });
-  const data = getData();
-
-  const handleFormElementSubmit: FormEventHandler = event => {
-    event.preventDefault();
-    handleFormSubmit(getData());
+    description: null,
   };
-  const handleSubmit = () => handleFormSubmit(getData());
+
+  const getData = async (): Promise<ShippingZoneRateCommonFormData> => ({
+    ...formData,
+    description: await richText.getValue(),
+  });
+
+  const handleFormElementSubmit: FormEventHandler = async event => {
+    event.preventDefault();
+    handleFormSubmit(await getData());
+  };
+
+  const handleSubmit = async () => handleFormSubmit(await getData());
 
   const handleChannelsChange = createChannelsChangeHandler(
     shippingChannels,
     onChannelsChange,
-    triggerChange
+    triggerChange,
   );
   const isValid = !data.channelListings?.some(channel =>
-    validatePrice(channel.price)
+    validatePrice(channel.price),
   );
   const isSaveDisabled = disabled || !isValid;
   setIsSubmitDisabled(isSaveDisabled);
 
   return (
-    <form onSubmit={handleFormElementSubmit}>
-      <Container>
-        <Backlink href={backUrl}>
-          <FormattedMessage id="PRlD0A" defaultMessage="Shipping" />
-        </Backlink>
-        <PageHeader
-          title={
-            isPriceVariant
-              ? intl.formatMessage({
-                  id: "RXPGi/",
-                  defaultMessage: "Price Rate Create",
-                  description: "page title"
-                })
-              : intl.formatMessage({
-                  id: "NDm2Fe",
-                  defaultMessage: "Weight Rate Create",
-                  description: "page title"
-                })
-          }
-        />
-        <Grid>
-          <div>
-            <ShippingRateInfo
-              data={data}
-              disabled={disabled}
-              errors={errors}
-              onChange={change}
-              onDescriptionChange={changeDescription}
-            />
-            <CardSpacer />
-            {isPriceVariant ? (
-              <OrderValue
-                channels={data.channelListings}
-                errors={channelErrors}
-                orderValueRestricted={data.orderValueRestricted}
+    <RichTextContext.Provider value={richText}>
+      <form onSubmit={handleFormElementSubmit}>
+        <Container>
+          <Backlink href={backUrl}>
+            <FormattedMessage id="PRlD0A" defaultMessage="Shipping" />
+          </Backlink>
+          <PageHeader
+            title={
+              isPriceVariant
+                ? intl.formatMessage({
+                    id: "RXPGi/",
+                    defaultMessage: "Price Rate Create",
+                    description: "page title",
+                  })
+                : intl.formatMessage({
+                    id: "NDm2Fe",
+                    defaultMessage: "Weight Rate Create",
+                    description: "page title",
+                  })
+            }
+          />
+          <Grid>
+            <div>
+              <ShippingRateInfo
+                data={data}
                 disabled={disabled}
-                onChange={change}
-                onChannelsChange={handleChannelsChange}
-              />
-            ) : (
-              <OrderWeight
-                orderValueRestricted={data.orderValueRestricted}
-                disabled={disabled}
-                minValue={data.minValue}
-                maxValue={data.maxValue}
-                onChange={change}
                 errors={errors}
+                onChange={change}
               />
-            )}
-            <CardSpacer />
-            <PricingCard
-              channels={data.channelListings}
-              onChange={handleChannelsChange}
-              disabled={disabled}
-              errors={channelErrors}
-            />
-            <CardSpacer />
-            <ShippingZonePostalCodes
-              disabled={disabled}
-              onPostalCodeDelete={onPostalCodeUnassign}
-              onPostalCodeInclusionChange={onPostalCodeInclusionChange}
-              onPostalCodeRangeAdd={onPostalCodeAssign}
-              postalCodes={postalCodes}
-            />
-          </div>
-          <div>
-            <ChannelsAvailabilityCard
-              managePermissions={[PermissionEnum.MANAGE_SHIPPING]}
-              allChannelsCount={allChannelsCount}
-              selectedChannelsCount={shippingChannels?.length}
-              channelsList={data.channelListings}
-              openModal={openChannelsModal}
-            />
-          </div>
-        </Grid>
-        <Savebar
-          disabled={isSaveDisabled}
-          onCancel={() => navigate(backUrl)}
-          onDelete={onDelete}
-          onSubmit={handleSubmit}
-          state={saveButtonBarState}
-        />
-      </Container>
-    </form>
+              <CardSpacer />
+              {isPriceVariant ? (
+                <OrderValue
+                  channels={data.channelListings}
+                  errors={channelErrors}
+                  orderValueRestricted={data.orderValueRestricted}
+                  disabled={disabled}
+                  onChange={change}
+                  onChannelsChange={handleChannelsChange}
+                />
+              ) : (
+                <OrderWeight
+                  orderValueRestricted={data.orderValueRestricted}
+                  disabled={disabled}
+                  minValue={data.minValue}
+                  maxValue={data.maxValue}
+                  onChange={change}
+                  errors={errors}
+                />
+              )}
+              <CardSpacer />
+              <PricingCard
+                channels={data.channelListings}
+                onChange={handleChannelsChange}
+                disabled={disabled}
+                errors={channelErrors}
+              />
+              <CardSpacer />
+              <ShippingZonePostalCodes
+                disabled={disabled}
+                onPostalCodeDelete={onPostalCodeUnassign}
+                onPostalCodeInclusionChange={onPostalCodeInclusionChange}
+                onPostalCodeRangeAdd={onPostalCodeAssign}
+                postalCodes={postalCodes}
+              />
+            </div>
+            <div>
+              <ChannelsAvailabilityCard
+                managePermissions={[PermissionEnum.MANAGE_SHIPPING]}
+                allChannelsCount={allChannelsCount}
+                channelsList={data.channelListings}
+                openModal={openChannelsModal}
+              />
+            </div>
+          </Grid>
+          <Savebar
+            disabled={isSaveDisabled}
+            onCancel={() => navigate(backUrl)}
+            onDelete={onDelete}
+            onSubmit={handleSubmit}
+            state={saveButtonBarState}
+          />
+        </Container>
+      </form>
+    </RichTextContext.Provider>
   );
 };
 

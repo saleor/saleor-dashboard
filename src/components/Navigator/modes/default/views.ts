@@ -31,97 +31,97 @@ interface View {
 function searchInViews(
   search: string,
   intl: IntlShape,
-  navigate: UseNavigatorResult
+  navigate: UseNavigatorResult,
 ): QuickSearchActionInput[] {
   const views: View[] = [
     {
       label: intl.formatMessage(sectionNames.apps),
-      url: appsListUrl()
+      url: appsListUrl(),
     },
     {
       label: intl.formatMessage(sectionNames.attributes),
-      url: attributeListUrl()
+      url: attributeListUrl(),
     },
     {
       label: intl.formatMessage(sectionNames.categories),
-      url: categoryListUrl()
+      url: categoryListUrl(),
     },
     {
       label: intl.formatMessage(sectionNames.collections),
-      url: collectionListUrl()
+      url: collectionListUrl(),
     },
     {
       label: intl.formatMessage(sectionNames.customers),
-      url: customerListUrl()
+      url: customerListUrl(),
     },
     {
       label: intl.formatMessage(sectionNames.draftOrders),
-      url: orderDraftListUrl()
+      url: orderDraftListUrl(),
     },
     {
       label: intl.formatMessage(sectionNames.home),
-      url: "/"
+      url: "/",
     },
     {
       label: intl.formatMessage(sectionNames.navigation),
-      url: menuListUrl()
+      url: menuListUrl(),
     },
     {
       label: intl.formatMessage(sectionNames.orders),
-      url: orderListUrl()
+      url: orderListUrl(),
     },
     {
       label: intl.formatMessage(sectionNames.pages),
-      url: pageListUrl()
+      url: pageListUrl(),
     },
     {
       label: intl.formatMessage(sectionNames.permissionGroups),
-      url: permissionGroupListUrl()
+      url: permissionGroupListUrl(),
     },
     {
       label: intl.formatMessage(sectionNames.plugins),
-      url: pluginListUrl()
+      url: pluginListUrl(),
     },
     {
       label: intl.formatMessage(sectionNames.productTypes),
-      url: productTypeListUrl()
+      url: productTypeListUrl(),
     },
     {
       label: intl.formatMessage(sectionNames.products),
-      url: productListUrl()
+      url: productListUrl(),
     },
     {
       label: intl.formatMessage(sectionNames.sales),
-      url: saleListUrl()
+      url: saleListUrl(),
     },
     {
       label: intl.formatMessage(sectionNames.shipping),
-      url: shippingZonesListUrl()
+      url: shippingZonesListUrl(),
     },
     {
       label: intl.formatMessage(sectionNames.siteSettings),
-      url: siteSettingsUrl()
+      url: siteSettingsUrl(),
     },
     {
       label: intl.formatMessage(sectionNames.staff),
-      url: staffListUrl()
+      url: staffListUrl(),
     },
     {
       label: intl.formatMessage(sectionNames.taxes),
-      url: countryListUrl
+      url: countryListUrl,
     },
     {
       label: intl.formatMessage(sectionNames.translations),
-      url: languageListUrl
+      url: languageListUrl,
     },
     {
       label: intl.formatMessage(sectionNames.vouchers),
-      url: voucherListUrl()
+      url: voucherListUrl(),
     },
     {
       label: intl.formatMessage(sectionNames.warehouses),
-      url: warehouseListUrl()
-    }
+      url: warehouseListUrl(),
+    },
   ];
 
   return views.map(view => ({
@@ -132,7 +132,7 @@ function searchInViews(
     },
     score: score(view.label, search),
     text: view.label,
-    type: "view"
+    type: "view",
   }));
 }
 

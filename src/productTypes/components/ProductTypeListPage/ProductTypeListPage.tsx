@@ -9,7 +9,7 @@ import { ProductTypeFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import {
   productTypeAddUrl,
-  ProductTypeListUrlSortField
+  ProductTypeListUrlSortField,
 } from "@saleor/productTypes/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -19,13 +19,13 @@ import {
   ListActions,
   PageListProps,
   SortPage,
-  TabPageProps
+  TabPageProps,
 } from "../../../types";
 import ProductTypeList from "../ProductTypeList";
 import {
   createFilterStructure,
   ProductTypeFilterKeys,
-  ProductTypeListFilterOpts
+  ProductTypeListFilterOpts,
 } from "./filters";
 
 export interface ProductTypeListPageProps
@@ -77,14 +77,14 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
           allTabLabel={intl.formatMessage({
             id: "1KSqnn",
             defaultMessage: "All Product Types",
-            description: "tab name"
+            description: "tab name",
           })}
           currentTab={currentTab}
           filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
             id: "rpFdD1",
-            defaultMessage: "Search Product Type"
+            defaultMessage: "Search Product Type",
           })}
           tabs={tabs}
           onAll={onAll}

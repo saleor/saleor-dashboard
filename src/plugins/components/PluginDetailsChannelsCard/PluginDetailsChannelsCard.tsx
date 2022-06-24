@@ -5,7 +5,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import PluginDetailsChannelsCardContent, {
-  PluginDetailsChannelsCardProps
+  PluginDetailsChannelsCardProps,
 } from "./PluginDetailsChannelsCardContent";
 
 const PluginDetailsChannelsCard: React.FC<PluginDetailsChannelsCardProps> = props => {

@@ -6,7 +6,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { OrderDraftListQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -14,7 +14,7 @@ import {
   maybe,
   renderCollection,
   transformOrderStatus,
-  transformPaymentStatus
+  transformPaymentStatus,
 } from "@saleor/misc";
 import { OrderDraftListUrlSortField, orderUrl } from "@saleor/orders/urls";
 import { ListActions, ListProps, RelayToFlat, SortPage } from "@saleor/types";
@@ -26,29 +26,29 @@ const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
       colCustomer: {
-        width: 300
+        width: 300,
       },
       colDate: {
-        width: 300
+        width: 300,
       },
       colNumber: {
-        width: 160
+        width: 160,
       },
-      colTotal: {}
+      colTotal: {},
     },
     colCustomer: {},
     colDate: {},
     colNumber: {
-      paddingLeft: 0
+      paddingLeft: 0,
     },
     colTotal: {
-      textAlign: "right"
+      textAlign: "right",
     },
     link: {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   }),
-  { name: "OrderDraftList" }
+  { name: "OrderDraftList" },
 );
 
 interface OrderDraftListProps
@@ -63,9 +63,6 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
     disabled,
     settings,
     orders,
-    pageInfo,
-    onPreviousPage,
-    onNextPage,
     onUpdateListSettings,
     onSort,
     isChecked,
@@ -73,7 +70,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
     sort,
     toggle,
     toggleAll,
-    toolbar
+    toolbar,
   } = props;
 
   const classes = useStyles(props);
@@ -84,7 +81,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
     ? orders.map(order => ({
         ...order,
         paymentStatus: transformPaymentStatus(order.paymentStatus, intl),
-        status: transformOrderStatus(order.status, intl)
+        status: transformOrderStatus(order.status, intl),
       }))
     : undefined;
 
@@ -148,16 +145,10 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
       </TableHead>
       <TableFooter>
         <TableRow>
-          <TablePagination
+          <TablePaginationWithContext
             colSpan={numberOfColumns}
             settings={settings}
-            hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-            onNextPage={onNextPage}
             onUpdateListSettings={onUpdateListSettings}
-            hasPreviousPage={
-              pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-            }
-            onPreviousPage={onPreviousPage}
           />
         </TableRow>
       </TableFooter>
@@ -230,7 +221,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
                 />
               </TableCell>
             </TableRow>
-          )
+          ),
         )}
       </TableBody>
     </ResponsiveTable>

@@ -5,7 +5,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import ChannelsAvailabilityDialog, {
-  ChannelsAvailabilityDialogProps
+  ChannelsAvailabilityDialogProps,
 } from "./ChannelsAvailabilityDialog";
 
 const props: ChannelsAvailabilityDialogProps = {
@@ -18,7 +18,7 @@ const props: ChannelsAvailabilityDialogProps = {
   onConfirm: () => undefined,
   open: true,
   title: "Channels",
-  toggleAll: () => undefined
+  toggleAll: () => undefined,
 };
 
 storiesOf("Generics / ChannelsAvailabilityDialog", module)

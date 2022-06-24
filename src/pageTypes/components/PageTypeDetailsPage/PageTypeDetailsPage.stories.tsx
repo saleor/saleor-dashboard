@@ -18,7 +18,7 @@ const props: Omit<PageTypeDetailsPageProps, "classes"> = {
   onSubmit: () => undefined,
   pageTitle: pageType.name,
   pageType,
-  saveButtonBarState: "default"
+  saveButtonBarState: "default",
 };
 
 storiesOf("Views / Page types / Page type details", module)
@@ -37,7 +37,7 @@ storiesOf("Views / Page types / Page type details", module)
       {...props}
       pageType={{
         ...pageType,
-        attributes: []
+        attributes: [],
       }}
     />
   ))
@@ -48,11 +48,11 @@ storiesOf("Views / Page types / Page type details", module)
         {
           code: PageErrorCode.REQUIRED,
           field: "name",
-          message: "Field is required"
-        }
+          message: "Field is required",
+        },
       ].map(err => ({
         __typename: "PageError",
-        ...err
+        ...err,
       }))}
     />
   ));

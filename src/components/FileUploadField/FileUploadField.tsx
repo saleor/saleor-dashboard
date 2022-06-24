@@ -32,26 +32,26 @@ export interface FileUploadFieldProps {
 const useStyles = makeStyles(
   theme => ({
     errorText: {
-      color: theme.palette.error.light
+      color: theme.palette.error.light,
     },
     fileField: {
-      display: "none"
+      display: "none",
     },
     fileUrl: {
       color: theme.palette.primary.main,
-      textDecoration: "none"
+      textDecoration: "none",
     },
     uploadFileContent: {
       alignItems: "center",
       color: theme.palette.primary.main,
       display: "flex",
-      fontSize: theme.typography.body1.fontSize
+      fontSize: theme.typography.body1.fontSize,
     },
     uploadFileName: {
-      minWidth: "6rem"
-    }
+      minWidth: "6rem",
+    },
   }),
-  { name: "FileUploadField" }
+  { name: "FileUploadField" },
 );
 
 const FileUploadField: React.FC<FileUploadFieldProps> = props => {
@@ -64,7 +64,7 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
     helperText,
     onFileUpload,
     onFileDelete,
-    inputProps
+    inputProps,
   } = props;
   const classes = useStyles({});
   const intl = useIntl();

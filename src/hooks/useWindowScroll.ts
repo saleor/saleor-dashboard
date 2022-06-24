@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 function getPosition() {
   return {
     x: window.pageXOffset,
-    y: window.pageYOffset
+    y: window.pageYOffset,
   };
 }
 

@@ -7,7 +7,7 @@ const CardDecorator = storyFn => (
       margin: "auto",
       overflow: "visible",
       position: "relative",
-      width: 400
+      width: 400,
     }}
   >
     <CardContent>{storyFn()}</CardContent>

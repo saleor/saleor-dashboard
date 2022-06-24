@@ -21,16 +21,16 @@ const useExpanderStyles = makeStyles(
       paddingBottom: theme.spacing(2),
 
       "&:before": {
-        content: "none"
+        content: "none",
       },
 
       "&$expanded": {
         margin: 0,
-        border: "none"
-      }
-    }
+        border: "none",
+      },
+    },
   }),
-  { name: "ChannelWithVariantAvailabilityItemWrapperExpander" }
+  { name: "ChannelWithVariantAvailabilityItemWrapperExpander" },
 );
 
 const useSummaryStyles = makeStyles(
@@ -45,41 +45,41 @@ const useSummaryStyles = makeStyles(
       paddingTop: theme.spacing(2),
 
       "&$expanded": {
-        minHeight: 0
-      }
+        minHeight: 0,
+      },
     },
     content: {
       margin: 0,
 
       "&$expanded": {
-        margin: 0
-      }
-    }
+        margin: 0,
+      },
+    },
   }),
-  { name: "ChannelWithVariantAvailabilityItemWrapperSummary" }
+  { name: "ChannelWithVariantAvailabilityItemWrapperSummary" },
 );
 
 const useStyles = makeStyles(
   () => ({
     container: {
       display: "flex",
-      flexDirection: "column"
-    }
+      flexDirection: "column",
+    },
   }),
-  { name: "ChannelWithVariantAvailabilityItemWrapper" }
+  { name: "ChannelWithVariantAvailabilityItemWrapper" },
 );
 
 const messages = defineMessages({
   variantCountLabel: {
     id: "1w06LC",
     defaultMessage: "{variantsCount} variants",
-    description: "variants count label"
+    description: "variants count label",
   },
   allVariantsLabel: {
     id: "37U5su",
     defaultMessage: "All variants",
-    description: "all variants label"
-  }
+    description: "all variants label",
+  },
 });
 
 interface ChannelAvailabilityItemWrapperProps {
@@ -96,7 +96,7 @@ const ChannelWithVariantsAvailabilityItemWrapper: React.FC<ChannelAvailabilityIt
   channelId,
   variants,
   messages: commonChannelMessages,
-  children
+  children,
 }) => {
   const expanderClasses = useExpanderStyles({});
   const summaryClasses = useSummaryStyles({});
@@ -110,7 +110,7 @@ const ChannelWithVariantsAvailabilityItemWrapper: React.FC<ChannelAvailabilityIt
 
   const variantsLabel = areAllChannelVariantsSelected(
     variants?.map(variant => variant.id),
-    selectedVariantsIds
+    selectedVariantsIds,
   )
     ? messages.allVariantsLabel
     : messages.variantCountLabel;

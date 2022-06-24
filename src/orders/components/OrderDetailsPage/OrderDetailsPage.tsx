@@ -2,7 +2,7 @@ import { Typography } from "@material-ui/core";
 import {
   extensionMountPoints,
   mapToMenuItems,
-  useExtensions
+  useExtensions,
 } from "@saleor/apps/useExtensions";
 import { Backlink } from "@saleor/components/Backlink";
 import CardMenu from "@saleor/components/CardMenu";
@@ -19,7 +19,7 @@ import {
   OrderDetailsFragment,
   OrderDetailsQuery,
   OrderStatus,
-  WarehouseFragment
+  WarehouseFragment,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -48,17 +48,17 @@ import { filteredConditionalItems, hasAnyItemsReplaceable } from "./utils";
 const useStyles = makeStyles(
   theme => ({
     date: {
-      marginBottom: theme.spacing(3)
+      marginBottom: theme.spacing(3),
     },
     header: {
       display: "flex",
       justifyContent: "space-between",
-      marginBottom: 0
-    }
+      marginBottom: 0,
+    },
   }),
   {
-    name: "OrderDetailsPage"
-  }
+    name: "OrderDetailsPage",
+  },
 );
 
 export interface OrderDetailsPageProps {
@@ -74,7 +74,7 @@ export interface OrderDetailsPageProps {
   onOrderLineAdd?: () => void;
   onOrderLineChange?: (
     id: string,
-    data: OrderDraftDetailsProductsFormData
+    data: OrderDraftDetailsProductsFormData,
   ) => void;
   onOrderLineRemove?: (id: string) => void;
   onShippingMethodEdit?: () => void;
@@ -104,18 +104,18 @@ const messages = defineMessages({
   cancelOrder: {
     id: "9ZtJhn",
     defaultMessage: "Cancel order",
-    description: "cancel button"
+    description: "cancel button",
   },
   confirmOrder: {
     id: "maxT+q",
     defaultMessage: "Confirm order",
-    description: "save button"
+    description: "save button",
   },
   returnOrder: {
     id: "+RjQjs",
     defaultMessage: "Return / Replace order",
-    description: "return button"
-  }
+    description: "return button",
+  },
 });
 
 const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
@@ -147,7 +147,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onOrderLineRemove,
     onShippingMethodEdit,
     onWarehouseChange,
-    onSubmit
+    onSubmit,
   } = props;
   const classes = useStyles(props);
   const navigate = useNavigator();
@@ -157,7 +157,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     isMetadataModified,
     isPrivateMetadataModified,
     makeChangeHandler: makeMetadataChangeHandler,
-    resetMetadataChanged
+    resetMetadataChanged,
   } = useMetadataChangeTrigger();
 
   const isOrderUnconfirmed = order?.status === OrderStatus.UNCONFIRMED;
@@ -169,7 +169,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     !shop?.fulfillmentAllowUnpaid &&
     !order?.isPaid;
   const unfulfilled = (order?.lines || []).filter(
-    line => line.quantityToFulfill > 0
+    line => line.quantityToFulfill > 0,
   );
 
   const handleSubmit = async (data: MetadataFormData) => {
@@ -180,7 +180,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
 
     const result = await onSubmit({
       metadata,
-      privateMetadata
+      privateMetadata,
     });
     resetMetadataChanged();
     return getMutationErrors(result);
@@ -188,7 +188,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
 
   const initial: MetadataFormData = {
     metadata: order?.metadata.map(mapMetadataItemToInput),
-    privateMetadata: order?.privateMetadata.map(mapMetadataItemToInput)
+    privateMetadata: order?.privateMetadata.map(mapMetadataItemToInput),
   };
 
   const saveLabel = isOrderUnconfirmed
@@ -208,21 +208,21 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     {
       item: {
         label: intl.formatMessage(messages.cancelOrder),
-        onSelect: onOrderCancel
+        onSelect: onOrderCancel,
       },
-      shouldExist: canCancel
+      shouldExist: canCancel,
     },
     {
       item: {
         label: intl.formatMessage(messages.returnOrder),
-        onSelect: onOrderReturn
+        onSelect: onOrderReturn,
       },
-      shouldExist: hasAnyItemsReplaceable(order)
-    }
+      shouldExist: hasAnyItemsReplaceable(order),
+    },
   ]);
 
   const { ORDER_DETAILS_MORE_ACTIONS } = useExtensions(
-    extensionMountPoints.ORDER_DETAILS
+    extensionMountPoints.ORDER_DETAILS,
   );
 
   const extensionMenuItems = mapToMenuItems(ORDER_DETAILS_MORE_ACTIONS);

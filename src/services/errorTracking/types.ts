@@ -11,5 +11,5 @@ export interface TrackerMethods {
 }
 
 export enum TrackerPermission {
-  USER_DATA
+  USER_DATA,
 }

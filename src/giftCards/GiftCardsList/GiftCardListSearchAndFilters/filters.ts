@@ -2,7 +2,7 @@ import { FilterElement, IFilter } from "@saleor/components/Filter";
 import {
   GiftCardFilterInput,
   SearchCustomersQuery,
-  SearchProductsQuery
+  SearchProductsQuery,
 } from "@saleor/graphql";
 import { RelayToFlat } from "@saleor/types";
 import {
@@ -11,17 +11,17 @@ import {
   dedupeFilter,
   getMinMaxQueryParam,
   getMultipleValueQueryParam,
-  getSingleValueQueryParam
+  getSingleValueQueryParam,
 } from "@saleor/utils/filters";
 import {
   createAutocompleteField,
   createNumberField,
-  createOptionsField
+  createOptionsField,
 } from "@saleor/utils/filters/fields";
 import {
   mapNodeToChoice,
   mapPersonNodeToChoice,
-  mapSingleValueNodeToChoice
+  mapSingleValueNodeToChoice,
 } from "@saleor/utils/maps";
 import { defineMessages, IntlShape } from "react-intl";
 
@@ -32,7 +32,7 @@ import {
   GiftCardListUrlFilters,
   GiftCardListUrlFiltersEnum,
   GiftCardStatusFilterEnum,
-  SearchWithFetchMoreProps
+  SearchWithFetchMoreProps,
 } from "./types";
 
 export const GIFT_CARD_FILTERS_KEY = "giftCardFilters";
@@ -58,14 +58,14 @@ export const getFilterOpts = ({
   customers,
   customerSearchProps,
   tags,
-  tagSearchProps
+  tagSearchProps,
 }: GiftCardFilterOptsProps): GiftCardListFilterOpts => ({
   currency: {
     active: !!params?.currency,
     value: params?.currency,
     choices: mapSingleValueNodeToChoice(currencies),
     displayValues: mapSingleValueNodeToChoice(currencies),
-    loading: loadingCurrencies
+    loading: loadingCurrencies,
   },
   product: {
     active: !!params?.product,
@@ -76,7 +76,7 @@ export const getFilterOpts = ({
     hasMore: productSearchProps.hasMore,
     loading: productSearchProps.loading,
     onFetchMore: productSearchProps.onFetchMore,
-    onSearchChange: productSearchProps.onSearchChange
+    onSearchChange: productSearchProps.onSearchChange,
   },
   usedBy: {
     active: !!params?.usedBy,
@@ -87,7 +87,7 @@ export const getFilterOpts = ({
     hasMore: customerSearchProps.hasMore,
     loading: customerSearchProps.loading,
     onFetchMore: customerSearchProps.onFetchMore,
-    onSearchChange: customerSearchProps.onSearchChange
+    onSearchChange: customerSearchProps.onSearchChange,
   },
   tag: {
     active: !!params?.tag,
@@ -98,36 +98,36 @@ export const getFilterOpts = ({
     hasMore: tagSearchProps.hasMore,
     loading: tagSearchProps.loading,
     onFetchMore: tagSearchProps.onFetchMore,
-    onSearchChange: tagSearchProps.onSearchChange
+    onSearchChange: tagSearchProps.onSearchChange,
   },
   initialBalanceAmount: {
     active:
       [params.initialBalanceAmountFrom, params.initialBalanceAmountTo].some(
-        field => field !== undefined
+        field => field !== undefined,
       ) || false,
     value: {
       max: params.initialBalanceAmountTo || "",
-      min: params.initialBalanceAmountFrom || ""
-    }
+      min: params.initialBalanceAmountFrom || "",
+    },
   },
   currentBalanceAmount: {
     active:
       [params.currentBalanceAmountFrom, params.currentBalanceAmountTo].some(
-        field => field !== undefined
+        field => field !== undefined,
       ) || false,
     value: {
       max: params.currentBalanceAmountTo || "",
-      min: params.currentBalanceAmountFrom || ""
-    }
+      min: params.currentBalanceAmountFrom || "",
+    },
   },
   status: {
     active: !!params?.status,
-    value: params?.status
-  }
+    value: params?.status,
+  },
 });
 
 export function getFilterQueryParam(
-  filter: FilterElement<GiftCardListFilterKeys>
+  filter: FilterElement<GiftCardListFilterKeys>,
 ): GiftCardListUrlFilters {
   const { name } = filter;
 
@@ -138,7 +138,7 @@ export function getFilterQueryParam(
     currency,
     usedBy,
     product,
-    status
+    status,
   } = GiftCardListFilterKeys;
 
   switch (name) {
@@ -155,14 +155,14 @@ export function getFilterQueryParam(
       return getMinMaxQueryParam(
         filter,
         GiftCardListUrlFiltersEnum.initialBalanceAmountFrom,
-        GiftCardListUrlFiltersEnum.initialBalanceAmountTo
+        GiftCardListUrlFiltersEnum.initialBalanceAmountTo,
       );
 
     case currentBalanceAmount:
       return getMinMaxQueryParam(
         filter,
         GiftCardListUrlFiltersEnum.currentBalanceAmountFrom,
-        GiftCardListUrlFiltersEnum.currentBalanceAmountTo
+        GiftCardListUrlFiltersEnum.currentBalanceAmountTo,
       );
   }
 }
@@ -171,84 +171,84 @@ export const messages = defineMessages({
   balanceAmountLabel: {
     id: "bVbEZ/",
     defaultMessage: "Amount",
-    description: "amount filter label"
+    description: "amount filter label",
   },
   tagLabel: {
     id: "mE+fru",
     defaultMessage: "Tags",
-    description: "tag filter label"
+    description: "tag filter label",
   },
   currencyLabel: {
     id: "osPBn1",
     defaultMessage: "Currency",
-    description: "currency filter label"
+    description: "currency filter label",
   },
   productLabel: {
     id: "Sjd7wm",
     defaultMessage: "Product",
-    description: "product filter label"
+    description: "product filter label",
   },
   usedByLabel: {
     id: "WMGoqz",
     defaultMessage: "Used by",
-    description: "used by filter label"
+    description: "used by filter label",
   },
   statusLabel: {
     id: "D4CsYK",
     defaultMessage: "Status",
-    description: "status filter label"
+    description: "status filter label",
   },
   enabledOptionLabel: {
     id: "vC8vyb",
     defaultMessage: "Enabled",
-    description: "enabled status option label"
+    description: "enabled status option label",
   },
   disabledOptionLabel: {
     id: "+WTmpr",
     defaultMessage: "Disabled",
-    description: "disabled status option label"
+    description: "disabled status option label",
   },
   initialBalanceLabel: {
     id: "VceXrc",
     defaultMessage: "Initial balance",
-    description: "initial balance filter label"
+    description: "initial balance filter label",
   },
   currentBalanceLabel: {
     id: "e/61NZ",
     defaultMessage: "Current balance",
-    description: "current balance filter label"
-  }
+    description: "current balance filter label",
+  },
 });
 
 export function createFilterStructure(
   intl: IntlShape,
-  opts: GiftCardListFilterOpts
+  opts: GiftCardListFilterOpts,
 ): IFilter<GiftCardListFilterKeys> {
   return [
     {
       ...createNumberField(
         GiftCardListFilterKeys.initialBalanceAmount,
         intl.formatMessage(messages.initialBalanceLabel),
-        opts.initialBalanceAmount.value
+        opts.initialBalanceAmount.value,
       ),
       multiple:
         opts?.initialBalanceAmount?.value?.min !==
         opts?.initialBalanceAmount?.value?.max,
       active: opts.initialBalanceAmount.active,
-      dependencies: [GiftCardListFilterKeys.currency]
+      dependencies: [GiftCardListFilterKeys.currency],
     },
 
     {
       ...createNumberField(
         GiftCardListFilterKeys.currentBalanceAmount,
         intl.formatMessage(messages.currentBalanceLabel),
-        opts.currentBalanceAmount.value
+        opts.currentBalanceAmount.value,
       ),
       multiple:
         opts?.currentBalanceAmount?.value?.min !==
         opts?.currentBalanceAmount?.value?.max,
       active: opts.currentBalanceAmount.active,
-      dependencies: [GiftCardListFilterKeys.currency]
+      dependencies: [GiftCardListFilterKeys.currency],
     },
     {
       ...createOptionsField(
@@ -256,9 +256,9 @@ export function createFilterStructure(
         intl.formatMessage(messages.currencyLabel),
         [opts.currency.value],
         false,
-        opts.currency.choices
+        opts.currency.choices,
       ),
-      active: opts.currency.active
+      active: opts.currency.active,
     },
     {
       ...createAutocompleteField(
@@ -273,10 +273,10 @@ export function createFilterStructure(
           initialSearch: "",
           loading: opts.tag.loading,
           onFetchMore: opts.tag.onFetchMore,
-          onSearchChange: opts.tag.onSearchChange
-        }
+          onSearchChange: opts.tag.onSearchChange,
+        },
       ),
-      active: opts.tag.active
+      active: opts.tag.active,
     },
     {
       ...createAutocompleteField(
@@ -291,10 +291,10 @@ export function createFilterStructure(
           initialSearch: "",
           loading: opts.product.loading,
           onFetchMore: opts.product.onFetchMore,
-          onSearchChange: opts.product.onSearchChange
-        }
+          onSearchChange: opts.product.onSearchChange,
+        },
       ),
-      active: opts.product.active
+      active: opts.product.active,
     },
     {
       ...createAutocompleteField(
@@ -309,10 +309,10 @@ export function createFilterStructure(
           initialSearch: "",
           loading: opts.usedBy.loading,
           onFetchMore: opts.usedBy.onFetchMore,
-          onSearchChange: opts.usedBy.onSearchChange
-        }
+          onSearchChange: opts.usedBy.onSearchChange,
+        },
       ),
-      active: opts.usedBy.active
+      active: opts.usedBy.active,
     },
     {
       ...createOptionsField(
@@ -323,31 +323,31 @@ export function createFilterStructure(
         [
           {
             label: intl.formatMessage(messages.enabledOptionLabel),
-            value: GiftCardStatusFilterEnum.enabled
+            value: GiftCardStatusFilterEnum.enabled,
           },
           {
             label: intl.formatMessage(messages.disabledOptionLabel),
-            value: GiftCardStatusFilterEnum.disabled
-          }
-        ]
+            value: GiftCardStatusFilterEnum.disabled,
+          },
+        ],
       ),
-      active: opts.status.active
-    }
+      active: opts.status.active,
+    },
   ];
 }
 
 export const {
   deleteFilterTab,
   getFilterTabs,
-  saveFilterTab
+  saveFilterTab,
 } = createFilterTabUtils<GiftCardListUrlFilters>(GIFT_CARD_FILTERS_KEY);
 
 export const {
   areFiltersApplied,
   getActiveFilters,
-  getFiltersCurrentTab
+  getFiltersCurrentTab,
 } = createFilterUtils<GiftCardListUrlQueryParams, GiftCardListUrlFilters>(
-  GiftCardListUrlFiltersEnum
+  GiftCardListUrlFiltersEnum,
 );
 
 export function getFilterVariables({
@@ -360,7 +360,7 @@ export function getFilterVariables({
   currentBalanceAmountFrom,
   initialBalanceAmountTo,
   initialBalanceAmountFrom,
-  query
+  query,
 }: GiftCardListUrlQueryParams): GiftCardFilterInput {
   const balanceData = currency
     ? {
@@ -368,16 +368,16 @@ export function getFilterVariables({
           currentBalanceAmountFrom && currentBalanceAmountTo
             ? {
                 gte: parseFloat(currentBalanceAmountFrom),
-                lte: parseFloat(currentBalanceAmountTo)
+                lte: parseFloat(currentBalanceAmountTo),
               }
             : undefined,
         initialBalance:
           initialBalanceAmountFrom && initialBalanceAmountTo
             ? {
                 gte: parseFloat(initialBalanceAmountFrom),
-                lte: parseFloat(initialBalanceAmountTo)
+                lte: parseFloat(initialBalanceAmountTo),
               }
-            : undefined
+            : undefined,
       }
     : {};
 
@@ -388,6 +388,6 @@ export function getFilterVariables({
     usedBy,
     products: product,
     currency,
-    ...balanceData
+    ...balanceData,
   };
 }

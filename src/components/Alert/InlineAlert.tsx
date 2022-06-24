@@ -6,10 +6,10 @@ const useStyles = makeStyles(
   theme => ({
     container: {
       backgroundColor: theme.palette.error.main,
-      padding: theme.spacing(1.5, 2)
-    }
+      padding: theme.spacing(1.5, 2),
+    },
   }),
-  { name: "InlineAlert" }
+  { name: "InlineAlert" },
 );
 
 interface AlertCardProps {

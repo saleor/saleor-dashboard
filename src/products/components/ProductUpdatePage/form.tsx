@@ -1,5 +1,11 @@
 import { OutputData } from "@editorjs/editorjs";
-import { getAttributesDisplayData } from "@saleor/attributes/utils/data";
+import {
+  getAttributesDisplayData,
+  getRichTextAttributesFromMap,
+  getRichTextDataFromAttributes,
+  mergeAttributes,
+  RichTextProps,
+} from "@saleor/attributes/utils/data";
 import {
   createAttributeChangeHandler,
   createAttributeFileChangeHandler,
@@ -7,52 +13,51 @@ import {
   createAttributeReferenceChangeHandler,
   createAttributeValueReorderHandler,
   createFetchMoreReferencesHandler,
-  createFetchReferencesHandler
+  createFetchReferencesHandler,
 } from "@saleor/attributes/utils/handlers";
 import {
   ChannelData,
   ChannelPreorderArgs,
-  ChannelPriceArgs
+  ChannelPriceArgs,
 } from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import {
   ProductFragment,
   SearchPagesQuery,
   SearchProductsQuery,
-  SearchWarehousesQuery
+  SearchWarehousesQuery,
 } from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
   FormErrors,
-  SubmitPromise
+  SubmitPromise,
 } from "@saleor/hooks/useForm";
 import useFormset, {
   FormsetAtomicData,
   FormsetChange,
-  FormsetData
+  FormsetData,
 } from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import { errorMessages } from "@saleor/intl";
 import {
   getAttributeInputFromProduct,
   getProductUpdatePageFormData,
-  getStockInputFromProduct
+  getStockInputFromProduct,
 } from "@saleor/products/utils/data";
 import {
   createChannelsChangeHandler,
   createChannelsPreorderChangeHandler,
   createChannelsPriceChangeHandler,
-  createPreorderEndDateChangeHandler
+  createPreorderEndDateChangeHandler,
 } from "@saleor/products/utils/handlers";
 import {
   validateCostPrice,
-  validatePrice
+  validatePrice,
 } from "@saleor/products/utils/validation";
 import { PRODUCT_UPDATE_FORM_ID } from "@saleor/products/views/ProductUpdate/consts";
 import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
@@ -62,6 +67,8 @@ import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAu
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
+import { RichTextContext } from "@saleor/utils/richText/context";
+import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
 import useRichText from "@saleor/utils/richText/useRichText";
 import React, { useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -140,25 +147,31 @@ export interface ProductUpdateHandlers
       "changeChannels",
       (
         id: string,
-        data: Omit<ChannelData, "name" | "price" | "currency" | "id">
+        data: Omit<ChannelData, "name" | "price" | "currency" | "id">,
       ) => void
     >,
     Record<"selectAttributeReference", FormsetChange<string[]>>,
     Record<"selectAttributeFile", FormsetChange<File>>,
     Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
     Record<"addStock" | "deleteStock", (id: string) => void> {
-  changeDescription: RichTextEditorChange;
   changePreorderEndDate: FormChange;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
 }
-export interface UseProductUpdateFormResult
+
+export interface UseProductUpdateFormOutput
   extends CommonUseFormResultWithHandlers<
-    ProductUpdateData,
-    ProductUpdateHandlers
-  > {
+      ProductUpdateData,
+      ProductUpdateHandlers
+    >,
+    RichTextProps {
   formErrors: FormErrors<ProductUpdateSubmitData>;
 }
+
+export type UseProductUpdateFormRenderProps = Omit<
+  UseProductUpdateFormOutput,
+  "richText"
+>;
 
 export interface UseProductUpdateFormOpts
   extends Record<
@@ -189,7 +202,7 @@ export interface UseProductUpdateFormOpts
 }
 
 export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
-  children: (props: UseProductUpdateFormResult) => React.ReactNode;
+  children: (props: UseProductUpdateFormRenderProps) => React.ReactNode;
   product: ProductFragment;
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise;
   disabled: boolean;
@@ -197,7 +210,7 @@ export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
 
 const getStocksData = (
   product: ProductFragment,
-  stocks: FormsetData<ProductStockFormsetData, string>
+  stocks: FormsetData<ProductStockFormsetData, string>,
 ) => {
   if (product?.productType?.hasVariants) {
     return { addStocks: [], removeStocks: [], updateStocks: [] };
@@ -210,12 +223,12 @@ const getStocksData = (
 
   return {
     addStocks: stocks.filter(stock =>
-      stockDiff.added.some(addedStock => addedStock === stock.id)
+      stockDiff.added.some(addedStock => addedStock === stock.id),
     ),
     removeStocks: stockDiff.removed,
     updateStocks: stocks.filter(
-      stock => !stockDiff.added.some(addedStock => addedStock === stock.id)
-    )
+      stock => !stockDiff.added.some(addedStock => addedStock === stock.id),
+    ),
   };
 };
 
@@ -223,8 +236,8 @@ function useProductUpdateForm(
   product: ProductFragment,
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise,
   disabled: boolean,
-  opts: UseProductUpdateFormOpts
-): UseProductUpdateFormResult {
+  opts: UseProductUpdateFormOpts,
+): UseProductUpdateFormOutput {
   const intl = useIntl();
   const initial = useMemo(
     () =>
@@ -233,19 +246,19 @@ function useProductUpdateForm(
         product?.variants,
         opts.currentChannels,
         opts.channelsData,
-        opts.channelsWithVariants
+        opts.channelsWithVariants,
       ),
     [
       product,
       opts.currentChannels,
       opts.channelsData,
-      opts.channelsWithVariants
-    ]
+      opts.channelsWithVariants,
+    ],
   );
 
   const form = useForm(initial, undefined, {
     confirmLeave: true,
-    formId: PRODUCT_UPDATE_FORM_ID
+    formId: PRODUCT_UPDATE_FORM_ID,
   });
 
   const {
@@ -253,74 +266,82 @@ function useProductUpdateForm(
     triggerChange,
     toggleValue,
     data: formData,
-    setIsSubmitDisabled
+    setIsSubmitDisabled,
   } = form;
 
   const attributes = useFormset(getAttributeInputFromProduct(product));
+  const {
+    getters: attributeRichTextGetters,
+    getValues: getAttributeRichTextValues,
+  } = useMultipleRichText({
+    initial: getRichTextDataFromAttributes(attributes.data),
+    triggerChange,
+  });
   const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset(getStockInputFromProduct(product));
-  const [description, changeDescription] = useRichText({
+  const richText = useRichText({
     initial: product?.description,
-    triggerChange
+    loading: !product,
+    triggerChange,
   });
 
   const { setExitDialogSubmitRef } = useExitFormDialog({
-    formId: PRODUCT_UPDATE_FORM_ID
+    formId: PRODUCT_UPDATE_FORM_ID,
   });
 
   const {
     isMetadataModified,
     isPrivateMetadataModified,
-    makeChangeHandler: makeMetadataChangeHandler
+    makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
 
   const handleCollectionSelect = createMultiAutocompleteSelectHandler(
     event => toggleValue(event),
     opts.setSelectedCollections,
     opts.selectedCollections,
-    opts.collections
+    opts.collections,
   );
   const handleCategorySelect = createSingleAutocompleteSelectHandler(
     handleChange,
     opts.setSelectedCategory,
-    opts.categories
+    opts.categories,
   );
   const handleAttributeChange = createAttributeChangeHandler(
     attributes.change,
-    triggerChange
+    triggerChange,
   );
   const handleAttributeMultiChange = createAttributeMultiChangeHandler(
     attributes.change,
     attributes.data,
-    triggerChange
+    triggerChange,
   );
   const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(
     attributes.change,
-    triggerChange
+    triggerChange,
   );
   const handleFetchReferences = createFetchReferencesHandler(
     attributes.data,
     opts.assignReferencesAttributeId,
     opts.fetchReferencePages,
-    opts.fetchReferenceProducts
+    opts.fetchReferenceProducts,
   );
   const handleFetchMoreReferences = createFetchMoreReferencesHandler(
     attributes.data,
     opts.assignReferencesAttributeId,
     opts.fetchMoreReferencePages,
-    opts.fetchMoreReferenceProducts
+    opts.fetchMoreReferenceProducts,
   );
   const handleAttributeFileChange = createAttributeFileChangeHandler(
     attributes.change,
     attributesWithNewFileValue.data,
     attributesWithNewFileValue.add,
     attributesWithNewFileValue.change,
-    triggerChange
+    triggerChange,
   );
   const handleAttributeValueReorder = createAttributeValueReorderHandler(
     attributes.change,
     attributes.data,
-    triggerChange
+    triggerChange,
   );
   const handleStockChange: FormsetChange<string> = (id, value) => {
     triggerChange();
@@ -330,11 +351,11 @@ function useProductUpdateForm(
     triggerChange();
     stocks.add({
       data: {
-        quantityAllocated: 0
+        quantityAllocated: 0,
       },
       id,
       label: opts.warehouses.find(warehouse => warehouse.id === id).name,
-      value: "0"
+      value: "0",
     });
   };
   const handleStockDelete = (id: string) => {
@@ -344,32 +365,32 @@ function useProductUpdateForm(
   const handleTaxTypeSelect = createSingleAutocompleteSelectHandler(
     handleChange,
     opts.setSelectedTaxType,
-    opts.taxTypes
+    opts.taxTypes,
   );
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 
   const handleChannelsChange = createChannelsChangeHandler(
     opts.isSimpleProduct ? opts.currentChannels : opts.channelsData,
     opts.isSimpleProduct ? opts.setChannels : opts.setChannelsData,
-    triggerChange
+    triggerChange,
   );
 
   const handleChannelPreorderChange = createChannelsPreorderChangeHandler(
     opts.isSimpleProduct ? opts.currentChannels : opts.channelsData,
     opts.isSimpleProduct ? opts.setChannels : opts.setChannelsData,
-    triggerChange
+    triggerChange,
   );
 
   const handleChannelPriceChange = createChannelsPriceChangeHandler(
     opts.isSimpleProduct ? opts.currentChannels : opts.channelsData,
     opts.isSimpleProduct ? opts.setChannels : opts.setChannelsData,
-    triggerChange
+    triggerChange,
   );
 
   const handlePreorderEndDateChange = createPreorderEndDateChangeHandler(
     form,
     triggerChange,
-    intl.formatMessage(errorMessages.preorderEndDateInFutureErrorText)
+    intl.formatMessage(errorMessages.preorderEndDateInFutureErrorText),
   );
 
   const data: ProductUpdateData = {
@@ -380,20 +401,25 @@ function useProductUpdateForm(
       attributes.data,
       attributesWithNewFileValue.data,
       opts.referencePages,
-      opts.referenceProducts
+      opts.referenceProducts,
     ),
-    description: description.current,
-    stocks: stocks.data
+    description: null,
+    stocks: stocks.data,
   };
 
-  // Need to make it function to always have description.current up to date
-  const getSubmitData = (): ProductUpdateSubmitData => ({
+  const getSubmitData = async (): Promise<ProductUpdateSubmitData> => ({
     ...data,
     ...getStocksData(product, stocks.data),
     ...getMetadata(data, isMetadataModified, isPrivateMetadataModified),
-    attributes: attributes.data,
+    attributes: mergeAttributes(
+      attributes.data,
+      getRichTextAttributesFromMap(
+        attributes.data,
+        await getAttributeRichTextValues(),
+      ),
+    ),
     attributesWithNewFileValue: attributesWithNewFileValue.data,
-    description: description.current
+    description: await richText.getValue(),
   });
 
   const handleSubmit = async (data: ProductUpdateSubmitData) => {
@@ -408,10 +434,10 @@ function useProductUpdateForm(
 
   const handleFormSubmit = useHandleFormSubmit({
     formId: form.formId,
-    onSubmit: handleSubmit
+    onSubmit: handleSubmit,
   });
 
-  const submit = async () => handleFormSubmit(getSubmitData());
+  const submit = async () => handleFormSubmit(await getSubmitData());
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
@@ -434,7 +460,7 @@ function useProductUpdateForm(
 
     const hasInvalidChannelListingPrices = data.channelListings.some(
       channel =>
-        validatePrice(channel.price) || validateCostPrice(channel.costPrice)
+        validatePrice(channel.price) || validateCostPrice(channel.costPrice),
     );
 
     if (hasInvalidChannelListingPrices) {
@@ -458,7 +484,6 @@ function useProductUpdateForm(
       changeChannelPrice: handleChannelPriceChange,
       changeChannelPreorder: handleChannelPreorderChange,
       changeChannels: handleChannelsChange,
-      changeDescription,
       changeMetadata,
       changeStock: handleStockChange,
       changePreorderEndDate: handlePreorderEndDateChange,
@@ -472,10 +497,12 @@ function useProductUpdateForm(
       selectAttributeReference: handleAttributeReferenceChange,
       selectCategory: handleCategorySelect,
       selectCollection: handleCollectionSelect,
-      selectTaxRate: handleTaxTypeSelect
+      selectTaxRate: handleTaxTypeSelect,
     },
     submit,
-    isSaveDisabled
+    isSaveDisabled,
+    richText,
+    attributeRichTextGetters,
   };
 }
 
@@ -486,9 +513,20 @@ const ProductUpdateForm: React.FC<ProductUpdateFormProps> = ({
   disabled,
   ...rest
 }) => {
-  const props = useProductUpdateForm(product, onSubmit, disabled, rest);
+  const { richText, ...props } = useProductUpdateForm(
+    product,
+    onSubmit,
+    disabled,
+    rest,
+  );
 
-  return <form onSubmit={props.submit}>{children(props)}</form>;
+  return (
+    <form onSubmit={props.submit}>
+      <RichTextContext.Provider value={richText}>
+        {children(props)}
+      </RichTextContext.Provider>
+    </form>
+  );
 };
 
 ProductUpdateForm.displayName = "ProductUpdateForm";

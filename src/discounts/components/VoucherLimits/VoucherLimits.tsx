@@ -29,7 +29,7 @@ const VoucherLimits = ({
   initialUsageLimit,
   onChange,
   setData,
-  isNewVoucher
+  isNewVoucher,
 }: VoucherLimitsProps) => {
   const intl = useIntl();
   const classes = useStyles();
@@ -66,7 +66,7 @@ const VoucherLimits = ({
               type="number"
               fullWidth
               inputProps={{
-                min: 1
+                min: 1,
               }}
             />
           ) : (
@@ -77,7 +77,7 @@ const VoucherLimits = ({
                 error={!!formErrors.usageLimit || data.usageLimit <= 0}
                 helperText={getDiscountErrorMessage(
                   formErrors.usageLimit,
-                  intl
+                  intl,
                 )}
                 label={intl.formatMessage(messages.usageLimit)}
                 name={"usageLimit" as keyof VoucherDetailsPageFormData}
@@ -85,7 +85,7 @@ const VoucherLimits = ({
                 onChange={onChange}
                 type="number"
                 inputProps={{
-                  min: 1
+                  min: 1,
                 }}
               />
               <div className={classes.usesLeftLabelWrapper}>

@@ -18,7 +18,7 @@ interface GiftCardCreateDialogCodeContentProps {
 
 const GiftCardCreateDialogCodeContent: React.FC<GiftCardCreateDialogCodeContentProps> = ({
   cardCode,
-  onClose
+  onClose,
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
@@ -29,7 +29,7 @@ const GiftCardCreateDialogCodeContent: React.FC<GiftCardCreateDialogCodeContentP
     copy(cardCode);
     notify({
       status: "success",
-      text: intl.formatMessage(messages.copiedToClipboardTitle)
+      text: intl.formatMessage(messages.copiedToClipboardTitle),
     });
   };
 

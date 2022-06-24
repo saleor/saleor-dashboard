@@ -27,7 +27,7 @@ export const AppPage: React.FC<AppPageProps> = ({
   data,
   url,
   aboutHref,
-  onError
+  onError,
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -44,7 +44,7 @@ export const AppPage: React.FC<AppPageProps> = ({
             <Typography
               className={classNames(
                 classes.breadcrumb,
-                classes.breadcrumbDisabled
+                classes.breadcrumbDisabled,
               )}
               variant="h5"
             >
@@ -67,32 +67,6 @@ export const AppPage: React.FC<AppPageProps> = ({
             <FormattedMessage
               id="UCHtG6"
               defaultMessage="About"
-              description="button"
-            />
-          </Button>
-          <Button
-            component="a"
-            href={data?.homepageUrl}
-            variant="primary"
-            data-tc="open-app"
-            target="_blank"
-          >
-            <FormattedMessage
-              id="llC1q8"
-              defaultMessage="App home page"
-              description="button"
-            />
-          </Button>
-          <Button
-            component="a"
-            href={data?.supportUrl}
-            variant="primary"
-            data-tc="open-support"
-            target="_blank"
-          >
-            <FormattedMessage
-              id="hdcGSJ"
-              defaultMessage="Support/FAQ"
               description="button"
             />
           </Button>

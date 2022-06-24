@@ -6,10 +6,10 @@ import React from "react";
 const useStyles = makeStyles(
   {
     link: {
-      textDecoration: "none"
-    }
+      textDecoration: "none",
+    },
   },
-  { name: "ExternalLink" }
+  { name: "ExternalLink" },
 );
 
 interface ExternalLinkProps extends React.HTMLProps<HTMLAnchorElement> {

@@ -1,5 +1,5 @@
 import ColumnPicker, {
-  ColumnPickerProps
+  ColumnPickerProps,
 } from "@saleor/components/ColumnPicker";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import CardDecorator from "@saleor/storybook/CardDecorator";
@@ -20,8 +20,8 @@ const availableColumns: MultiAutocompleteChoiceType[] = [
     .fill(0)
     .map((_, index) => ({
       label: "Attribute " + (index + 1),
-      value: "attribute_" + index
-    }))
+      value: "attribute_" + index,
+    })),
 ];
 
 const props: ColumnPickerProps = {
@@ -34,7 +34,7 @@ const props: ColumnPickerProps = {
   loading: false,
   onSave: () => undefined,
   query: "",
-  onQueryChange: () => undefined
+  onQueryChange: () => undefined,
 };
 
 storiesOf("Generics / Column picker", module)

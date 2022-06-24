@@ -1,13 +1,14 @@
 import { channelsList } from "@saleor/channels/fixtures";
 import { createChannelsDataWithDiscountPrice } from "@saleor/channels/utils";
 import { DiscountErrorCode } from "@saleor/graphql";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import VoucherDetailsPage, {
   VoucherDetailsPageFormData,
   VoucherDetailsPageProps,
-  VoucherDetailsPageTab
+  VoucherDetailsPageTab,
 } from "../../../discounts/components/VoucherDetailsPage";
 import { voucherDetails } from "../../../discounts/fixtures";
 import { listActionsProps, pageListProps } from "../../../fixtures";
@@ -15,7 +16,7 @@ import Decorator from "../../Decorator";
 
 const channels = createChannelsDataWithDiscountPrice(
   voucherDetails,
-  channelsList
+  channelsList,
 );
 
 const props: VoucherDetailsPageProps = {
@@ -43,11 +44,12 @@ const props: VoucherDetailsPageProps = {
   productListToolbar: null,
   saveButtonBarState: "default",
   selectedChannelId: "123",
-  voucher: voucherDetails
+  voucher: voucherDetails,
 };
 
 storiesOf("Views / Discounts / Voucher details", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("default", () => <VoucherDetailsPage {...props} />)
   .add("loading", () => (
     <VoucherDetailsPage {...props} disabled={true} voucher={undefined} />
@@ -65,13 +67,13 @@ storiesOf("Views / Discounts / Voucher details", module)
         "startDate",
         "type",
         "usageLimit",
-        "discountValue"
+        "discountValue",
       ] as Array<keyof VoucherDetailsPageFormData>).map(field => ({
         __typename: "DiscountError",
         channels: [],
         code: DiscountErrorCode.INVALID,
         field,
-        message: "Discount invalid"
+        message: "Discount invalid",
       }))}
     />
   ));

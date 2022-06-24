@@ -1,44 +1,59 @@
 import { OutputData } from "@editorjs/editorjs";
-import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
-import isEqual from "lodash/isEqual";
-import { MutableRefObject, useEffect, useRef, useState } from "react";
+import { EditorCore } from "@saleor/components/RichTextEditor";
+import { useMemo, useRef, useState } from "react";
 
-const emptyContent: OutputData = {
-  blocks: []
-};
-
-function useRichText(opts: {
+interface UseRichTextOptions {
   initial: string | null;
+  loading?: boolean;
   triggerChange: () => void;
-}): [MutableRefObject<OutputData>, RichTextEditorChange] {
-  const data = useRef<OutputData>();
-  const [, setLoaded] = useState(false);
+}
 
-  useEffect(() => {
-    if (opts.initial === null) {
-      data.current = emptyContent;
-      setLoaded(true);
+export function useRichText({
+  initial,
+  loading,
+  triggerChange,
+}: UseRichTextOptions) {
+  const editorRef = useRef<EditorCore>(null);
+  const [isReadyForMount, setIsReadyForMount] = useState(false);
+
+  const handleChange = () => {
+    triggerChange();
+  };
+
+  const getValue = async () => {
+    if (editorRef.current) {
+      return editorRef.current.save();
+    } else {
+      throw new Error("Editor instance is not available");
+    }
+  };
+
+  const defaultValue = useMemo<OutputData | undefined>(() => {
+    if (loading) {
       return;
+    }
+
+    if (initial === undefined) {
+      setIsReadyForMount(true);
+      return "";
     }
 
     try {
-      data.current = JSON.parse(opts.initial);
-      setLoaded(true);
-    } catch {
-      data.current = undefined;
+      const result = JSON.parse(initial);
+      setIsReadyForMount(true);
+      return result;
+    } catch (e) {
+      return undefined;
     }
-  }, [opts.initial]);
+  }, [initial]);
 
-  const change: RichTextEditorChange = newData => {
-    if (isEqual(data.current.blocks, newData.blocks)) {
-      return;
-    }
-
-    opts.triggerChange();
-    data.current = newData;
+  return {
+    editorRef,
+    handleChange,
+    getValue,
+    defaultValue,
+    isReadyForMount,
   };
-
-  return [data, change];
 }
 
 export default useRichText;

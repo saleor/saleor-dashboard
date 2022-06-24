@@ -68,7 +68,7 @@ export function addChannelToShippingZone(shippingZoneId, channelId) {
     shippingZoneUpdate(id:"${shippingZoneId}", input:{
       addChannels:["${channelId}"]
     }){
-      shippingErrors{
+      errors{
         field
         message
       }
@@ -106,7 +106,7 @@ export function addChannelToShippingMethod(
 export function deleteShippingZone(shippingZoneId) {
   const mutation = `mutation{
           shippingZoneDelete(id:"${shippingZoneId}"){
-            shippingErrors{
+            errors{
               message
             }
           }

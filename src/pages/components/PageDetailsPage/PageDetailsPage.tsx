@@ -1,6 +1,6 @@
 import {
   getAttributeValuesFromReferences,
-  mergeAttributeValues
+  mergeAttributeValues,
 } from "@saleor/attributes/utils/data";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@saleor/components/Attributes";
@@ -19,7 +19,7 @@ import {
   SearchAttributeValuesQuery,
   SearchPagesQuery,
   SearchPageTypesQuery,
-  SearchProductsQuery
+  SearchProductsQuery,
 } from "@saleor/graphql";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -90,7 +90,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   fetchMoreAttributeValues,
   onCloseDialog,
   onSelectPageType,
-  onAttributeSelectBlur
+  onAttributeSelectBlur,
 }) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
@@ -107,15 +107,15 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   const handleAssignReferenceAttribute = (
     attributeValues: string[],
     data: PageData,
-    handlers: PageUpdateHandlers
+    handlers: PageUpdateHandlers,
   ) => {
     handlers.selectAttributeReference(
       assignReferencesAttributeId,
       mergeAttributeValues(
         assignReferencesAttributeId,
         attributeValues,
-        data.attributes
-      )
+        data.attributes,
+      ),
     );
     onCloseDialog();
   };
@@ -139,7 +139,14 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
       onSubmit={onSubmit}
       disabled={loading}
     >
-      {({ change, data, handlers, submit, isSaveDisabled }) => (
+      {({
+        change,
+        data,
+        handlers,
+        submit,
+        isSaveDisabled,
+        attributeRichTextGetters,
+      }) => (
         <Container>
           <Backlink href={pageListUrl()}>
             {intl.formatMessage(sectionNames.pages)}
@@ -150,7 +157,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 ? intl.formatMessage({
                     id: "gr53VQ",
                     defaultMessage: "Create Page",
-                    description: "page header"
+                    description: "page header",
                   })
                 : page?.title
             }
@@ -162,7 +169,6 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 disabled={loading}
                 errors={errors}
                 onChange={change}
-                onContentChange={handlers.changeContent}
               />
               <CardSpacer />
               <SeoForm
@@ -179,7 +185,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 helperText={intl.formatMessage({
                   id: "jZbT0O",
                   defaultMessage:
-                    "Add search engine title and description to make this page easier to find"
+                    "Add search engine title and description to make this page easier to find",
                 })}
               />
               <CardSpacer />
@@ -199,6 +205,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                   fetchAttributeValues={fetchAttributeValues}
                   fetchMoreAttributeValues={fetchMoreAttributeValues}
                   onAttributeSelectBlur={onAttributeSelectBlur}
+                  richTextGetters={attributeRichTextGetters}
                 />
               )}
               <CardSpacer />
@@ -214,23 +221,23 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                   hiddenLabel: intl.formatMessage({
                     id: "/TK7QD",
                     defaultMessage: "Hidden",
-                    description: "page label"
+                    description: "page label",
                   }),
                   hiddenSecondLabel: intl.formatMessage(
                     {
                       id: "GZgjK7",
                       defaultMessage: "will be visible from {date}",
-                      description: "page"
+                      description: "page",
                     },
                     {
-                      date: localizeDate(data.publicationDate, "L")
-                    }
+                      date: localizeDate(data.publicationDate, "L"),
+                    },
                   ),
                   visibleLabel: intl.formatMessage({
                     id: "X26jCC",
                     defaultMessage: "Visible",
-                    description: "page label"
-                  })
+                    description: "page label",
+                  }),
                 }}
                 onChange={change}
               />
@@ -262,7 +269,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 assignReferencesAttributeId,
                 data.attributes,
                 referencePages,
-                referenceProducts
+                referenceProducts,
               )}
               hasMore={handlers.fetchMoreReferences?.hasMore}
               open={canOpenAssignReferencesAttributeDialog}

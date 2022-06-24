@@ -14,7 +14,7 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({
   onClick,
   label,
   testId,
-  disabled = false
+  disabled = false,
 }) => {
   const intl = useIntl();
 

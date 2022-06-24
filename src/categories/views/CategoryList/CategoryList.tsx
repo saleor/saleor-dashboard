@@ -2,19 +2,20 @@ import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData
+  SaveFilterTabDialogFormData,
 } from "@saleor/components/SaveFilterTabDialog";
 import {
   CategoryBulkDeleteMutation,
   useCategoryBulkDeleteMutation,
-  useRootCategoriesQuery
+  useRootCategoriesQuery,
 } from "@saleor/graphql";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
-  createPaginationState
+  createPaginationState,
+  PaginatorContext,
 } from "@saleor/hooks/usePaginator";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
@@ -31,7 +32,7 @@ import {
   categoryListUrl,
   CategoryListUrlDialog,
   CategoryListUrlFilters,
-  CategoryListUrlQueryParams
+  CategoryListUrlQueryParams,
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -39,7 +40,7 @@ import {
   getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab
+  saveFilterTab,
 } from "./filter";
 import { getSortQueryVariables } from "./sort";
 
@@ -49,13 +50,12 @@ interface CategoryListProps {
 
 export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   const navigate = useNavigator();
-  const paginate = usePaginator();
 
   const { isSelected, listElements, toggle, toggleAll, reset } = useBulkActions(
-    params.ids
+    params.ids,
   );
   const { updateListSettings, settings } = useListSettings(
-    ListViews.CATEGORY_LIST
+    ListViews.CATEGORY_LIST,
   );
 
   usePaginationReset(categoryListUrl, params, settings.rowNumber);
@@ -67,13 +67,13 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
-      sort: getSortQueryVariables(params)
+      sort: getSortQueryVariables(params),
     }),
-    [params, settings.rowNumber]
+    [params, settings.rowNumber],
   );
   const { data, loading, refetch } = useRootCategoriesQuery({
     displayLoader: true,
-    variables: queryVariables
+    variables: queryVariables,
   });
 
   const tabs = getFilterTabs();
@@ -86,8 +86,8 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
       categoryListUrl({
         ...getActiveFilters(params),
         ...filter,
-        activeTab: undefined
-      })
+        activeTab: undefined,
+      }),
     );
   };
 
@@ -101,8 +101,8 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     navigate(
       categoryListUrl({
         activeTab: tab.toString(),
-        ...getFilterTabs()[tab - 1].data
-      })
+        ...getFilterTabs()[tab - 1].data,
+      }),
     );
   };
 
@@ -117,11 +117,11 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     handleTabChange(tabs.length + 1);
   };
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    maybe(() => data.categories.pageInfo),
+  const paginationValues = usePaginator({
+    pageInfo: maybe(() => data.categories.pageInfo),
     paginationState,
-    params
-  );
+    queryString: params,
+  });
 
   const handleCategoryBulkDelete = (data: CategoryBulkDeleteMutation) => {
     if (data.categoryBulkDelete.errors.length === 0) {
@@ -133,15 +133,15 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
 
   const [
     categoryBulkDelete,
-    categoryBulkDeleteOpts
+    categoryBulkDeleteOpts,
   ] = useCategoryBulkDeleteMutation({
-    onCompleted: handleCategoryBulkDelete
+    onCompleted: handleCategoryBulkDelete,
   });
 
   const handleSort = createSortHandler(navigate, categoryListUrl, params);
 
   return (
-    <>
+    <PaginatorContext.Provider value={paginationValues}>
       <CategoryListPage
         categories={mapEdgesToItems(data?.categories)}
         currentTab={currentTab}
@@ -156,10 +156,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         sort={getSortParams(params)}
         onSort={handleSort}
         disabled={loading}
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
-        pageInfo={pageInfo}
         isChecked={isSelected}
         selected={listElements.length}
         toggle={toggle}
@@ -171,7 +168,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
             data-test-id="delete-icon"
             onClick={() =>
               openModal("delete", {
-                ids: listElements
+                ids: listElements,
               })
             }
           >
@@ -186,22 +183,22 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
             categoryListUrl({
               ...params,
               action: undefined,
-              ids: undefined
-            })
+              ids: undefined,
+            }),
           )
         }
         onConfirm={() =>
           categoryBulkDelete({
             variables: {
-              ids: params.ids
-            }
+              ids: params.ids,
+            },
           })
         }
         open={params.action === "delete"}
         title={intl.formatMessage({
           id: "sG0w22",
           defaultMessage: "Delete categories",
-          description: "dialog title"
+          description: "dialog title",
         })}
         variant="delete"
       >
@@ -211,7 +208,9 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
             defaultMessage="{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
             values={{
               counter: maybe(() => params.ids.length),
-              displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>
+              displayQuantity: (
+                <strong>{maybe(() => params.ids.length)}</strong>
+              ),
             }}
           />
         </DialogContentText>
@@ -235,7 +234,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         onSubmit={handleTabDelete}
         tabName={maybe(() => tabs[currentTab - 1].name, "...")}
       />
-    </>
+    </PaginatorContext.Provider>
   );
 };
 export default CategoryList;

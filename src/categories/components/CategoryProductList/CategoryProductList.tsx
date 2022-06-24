@@ -5,7 +5,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import TableHead from "@saleor/components/TableHead";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { CategoryDetailsQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -19,36 +19,36 @@ const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
       colName: {
-        width: "auto"
-      }
+        width: "auto",
+      },
     },
     colFill: {
       padding: 0,
-      width: "100%"
+      width: "100%",
     },
     colName: {},
     colNameHeader: {
-      marginLeft: AVATAR_MARGIN
+      marginLeft: AVATAR_MARGIN,
     },
     link: {
-      cursor: "pointer"
+      cursor: "pointer",
     },
     table: {
-      tableLayout: "fixed"
+      tableLayout: "fixed",
     },
     tableContainer: {
-      overflowX: "scroll"
+      overflowX: "scroll",
     },
     textLeft: {
-      textAlign: "left"
+      textAlign: "left",
     },
     textRight: {
-      textAlign: "right"
-    }
+      textAlign: "right",
+    },
   }),
   {
-    name: "CategoryProductList"
-  }
+    name: "CategoryProductList",
+  },
 );
 
 interface CategoryProductListProps extends ListProps, ListActions {
@@ -59,14 +59,11 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
   const {
     disabled,
     isChecked,
-    pageInfo,
     products,
     selected,
     toggle,
     toggleAll,
     toolbar,
-    onNextPage,
-    onPreviousPage
   } = props;
 
   const classes = useStyles(props);
@@ -100,15 +97,7 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
         </TableHead>
         <TableFooter>
           <TableRow>
-            <TablePagination
-              colSpan={numberOfColumns}
-              hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-              onNextPage={onNextPage}
-              hasPreviousPage={
-                pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-              }
-              onPreviousPage={onPreviousPage}
-            />
+            <TablePaginationWithContext colSpan={numberOfColumns} />
           </TableRow>
         </TableFooter>
         <TableBody>
@@ -152,7 +141,7 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
                   />
                 </TableCell>
               </TableRow>
-            )
+            ),
           )}
         </TableBody>
       </ResponsiveTable>

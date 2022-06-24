@@ -7,13 +7,13 @@ const channels: ChannelData[] = [
   {
     id: "channel1",
     name: "Channel 1",
-    variantsIds: ["variant1", "variant2"]
+    variantsIds: ["variant1", "variant2"],
   },
   {
     id: "channel2",
     name: "Channel 2",
-    variantsIds: []
-  }
+    variantsIds: [],
+  },
 ];
 
 describe("useChannels", () => {
@@ -25,10 +25,10 @@ describe("useChannels", () => {
         "",
         {
           closeModal: jest.fn,
-          openModal: jest.fn
+          openModal: jest.fn,
         },
-        { formId: Symbol() }
-      )
+        { formId: Symbol() },
+      ),
     );
 
     // When
@@ -52,10 +52,10 @@ describe("useChannels", () => {
         "",
         {
           closeModal: jest.fn,
-          openModal: jest.fn
+          openModal: jest.fn,
         },
-        { formId: Symbol() }
-      )
+        { formId: Symbol() },
+      ),
     );
 
     // When
@@ -83,10 +83,10 @@ describe("useChannels", () => {
         "",
         {
           closeModal: jest.fn,
-          openModal: jest.fn
+          openModal: jest.fn,
         },
-        { formId: Symbol() }
-      )
+        { formId: Symbol() },
+      ),
     );
 
     // When

@@ -9,13 +9,13 @@ const shippingZones = [
   {
     __typename: "ShippingZone",
     id: "2",
-    name: "Fancy shipping zone"
+    name: "Fancy shipping zone",
   },
   {
     __typename: "ShippingZone",
     id: "3",
-    name: "Nice shipping zone"
-  }
+    name: "Nice shipping zone",
+  },
 ];
 
 const baseProps = {
@@ -26,10 +26,10 @@ const baseProps = {
     loading: false,
     hasMore: false,
     onFetchMore: () => undefined,
-    totalCount: 0
+    totalCount: 0,
   },
   shippingZones: [],
-  shippingZonesChoices: shippingZones as ChannelShippingZones
+  shippingZonesChoices: shippingZones as ChannelShippingZones,
 };
 
 storiesOf("Shipping zones card", module)

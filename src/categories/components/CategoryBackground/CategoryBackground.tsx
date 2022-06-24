@@ -16,13 +16,13 @@ import { CategoryUpdateData } from "../CategoryUpdatePage/form";
 const useStyles = makeStyles(
   theme => ({
     fileField: {
-      display: "none"
+      display: "none",
     },
     image: {
       height: "100%",
       objectFit: "contain",
       userSelect: "none",
-      width: "100%"
+      width: "100%",
     },
     imageContainer: {
       background: "#ffffff",
@@ -33,10 +33,10 @@ const useStyles = makeStyles(
       overflow: "hidden",
       padding: theme.spacing(2),
       position: "relative",
-      width: 148
-    }
+      width: 148,
+    },
   }),
-  { name: "CategoryBackground" }
+  { name: "CategoryBackground" },
 );
 
 export interface CategoryBackgroundProps {
@@ -62,7 +62,7 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
         title={intl.formatMessage({
           id: "DP6b8U",
           defaultMessage: "Background Image (optional)",
-          description: "section header"
+          description: "section header",
         })}
         toolbar={
           <>
@@ -106,7 +106,7 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
               helperText={intl.formatMessage({
                 id: "0iMYc+",
                 defaultMessage: "(Optional)",
-                description: "field is optional"
+                description: "field is optional",
               })}
               value={data.backgroundImageAlt}
               onChange={onChange}

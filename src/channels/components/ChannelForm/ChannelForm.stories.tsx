@@ -14,14 +14,14 @@ const props: ChannelFormProps = {
     shippingZonesIdsToRemove: [],
     name: "Test",
     slug: "test",
-    defaultCountry: CountryCode.PL
+    defaultCountry: CountryCode.PL,
   },
   disabled: false,
   errors: [],
   selectedCountryDisplayName: "Poland",
   countries: countries.map(({ name, code }) => ({ label: name, value: code })),
   onChange: () => undefined,
-  onDefaultCountryChange: () => undefined
+  onDefaultCountryChange: () => undefined,
 };
 
 storiesOf("Views / Channels / Channel form", module)

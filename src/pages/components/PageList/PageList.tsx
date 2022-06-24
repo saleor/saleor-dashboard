@@ -3,14 +3,14 @@ import {
   TableBody,
   TableCell,
   TableFooter,
-  TableRow
+  TableRow,
 } from "@material-ui/core";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { PageFragment } from "@saleor/graphql";
 import { makeStyles, Pill } from "@saleor/macaw-ui";
@@ -32,23 +32,23 @@ const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
       colSlug: {
-        width: 250
+        width: 250,
       },
       colTitle: {},
       colVisibility: {
-        width: 200
-      }
+        width: 200,
+      },
     },
     colSlug: {},
     colTitle: {
-      paddingLeft: 0
+      paddingLeft: 0,
     },
     colVisibility: {},
     link: {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   }),
-  { name: "PageList" }
+  { name: "PageList" },
 );
 
 const numberOfColumns = 4;
@@ -58,17 +58,14 @@ const PageList: React.FC<PageListProps> = props => {
     settings,
     pages,
     disabled,
-    onNextPage,
-    pageInfo,
     onSort,
     onUpdateListSettings,
-    onPreviousPage,
     isChecked,
     selected,
     sort,
     toggle,
     toggleAll,
-    toolbar
+    toolbar,
   } = props;
   const classes = useStyles(props);
 
@@ -136,16 +133,11 @@ const PageList: React.FC<PageListProps> = props => {
         </TableHead>
         <TableFooter>
           <TableRow>
-            <TablePagination
+            <TablePaginationWithContext
               colSpan={numberOfColumns}
               settings={settings}
-              hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-              onNextPage={onNextPage}
+              disabled={disabled}
               onUpdateListSettings={onUpdateListSettings}
-              hasPreviousPage={
-                pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-              }
-              onPreviousPage={onPreviousPage}
             />
           </TableRow>
         </TableFooter>
@@ -186,18 +178,18 @@ const PageList: React.FC<PageListProps> = props => {
                               ? intl.formatMessage({
                                   id: "G1KzEx",
                                   defaultMessage: "Published",
-                                  description: "page status"
+                                  description: "page status",
                                 })
                               : intl.formatMessage({
                                   id: "UN3qWD",
                                   defaultMessage: "Not Published",
-                                  description: "page status"
+                                  description: "page status",
                                 })
                           }
                           color={page.isPublished ? "success" : "error"}
                         />
                       ),
-                      <Skeleton />
+                      <Skeleton />,
                     )}
                   </TableCell>
                 </TableRowLink>
@@ -212,7 +204,7 @@ const PageList: React.FC<PageListProps> = props => {
                   />
                 </TableCell>
               </TableRow>
-            )
+            ),
           )}
         </TableBody>
       </ResponsiveTable>

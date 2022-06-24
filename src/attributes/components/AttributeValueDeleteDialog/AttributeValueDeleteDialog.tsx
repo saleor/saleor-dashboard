@@ -21,7 +21,7 @@ const AttributeValueDeleteDialog: React.FC<AttributeValueDeleteDialogProps> = ({
   useName,
   onClose,
   onConfirm,
-  open
+  open,
 }) => {
   const intl = useIntl();
 
@@ -35,7 +35,7 @@ const AttributeValueDeleteDialog: React.FC<AttributeValueDeleteDialogProps> = ({
       title={intl.formatMessage({
         id: "WWV8aZ",
         defaultMessage: "Delete attribute value",
-        description: "dialog title"
+        description: "dialog title",
       })}
     >
       <DialogContentText>
@@ -45,7 +45,7 @@ const AttributeValueDeleteDialog: React.FC<AttributeValueDeleteDialogProps> = ({
             defaultMessage='Are you sure you want to delete "{name}" value? If you delete it you won’t be able to assign it to any of the products with "{attributeName}" attribute.'
             values={{
               attributeName,
-              name
+              name,
             }}
           />
         ) : (
@@ -54,7 +54,7 @@ const AttributeValueDeleteDialog: React.FC<AttributeValueDeleteDialogProps> = ({
             defaultMessage='Are you sure you want to delete "{name}" value?'
             description="delete attribute value"
             values={{
-              name
+              name,
             }}
           />
         )}

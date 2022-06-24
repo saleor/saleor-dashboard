@@ -9,7 +9,7 @@ import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
 import {
   languageEntitiesUrl,
   languageEntityUrl,
-  TranslatableEntities
+  TranslatableEntities,
 } from "@saleor/translations/urls";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -22,7 +22,7 @@ export interface TranslationsVouchersPageProps
 }
 
 export const fieldNames = {
-  name: "name"
+  name: "name",
 };
 
 const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
@@ -35,7 +35,7 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
   saveButtonState,
   onDiscard,
   onEdit,
-  onSubmit
+  onSubmit,
 }) => {
   const intl = useIntl();
 
@@ -43,7 +43,7 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
     <Container>
       <Backlink
         href={languageEntitiesUrl(languageCode, {
-          tab: TranslatableEntities.vouchers
+          tab: TranslatableEntities.vouchers,
         })}
       >
         {intl.formatMessage(sectionNames.translations)}
@@ -54,12 +54,12 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
             id: "1tXSSK",
             defaultMessage:
               'Translation Voucher "{voucherName}" - {languageCode}',
-            description: "header"
+            description: "header",
           },
           {
             languageCode,
-            voucherName: getStringOrPlaceholder(data?.voucher?.name)
-          }
+            voucherName: getStringOrPlaceholder(data?.voucher?.name),
+          },
         )}
       >
         <LanguageSwitch
@@ -69,7 +69,7 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
             languageEntityUrl(
               lang,
               TranslatableEntities.vouchers,
-              translationId
+              translationId,
             )
           }
         />
@@ -83,13 +83,13 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
           {
             displayName: intl.formatMessage({
               id: "sfErC+",
-              defaultMessage: "Voucher Name"
+              defaultMessage: "Voucher Name",
             }),
             name: fieldNames.name,
             translation: data?.translation?.name || null,
             type: "short" as "short",
-            value: data?.voucher?.name
-          }
+            value: data?.voucher?.name,
+          },
         ]}
         saveButtonState={saveButtonState}
         richTextResetKey={languageCode}

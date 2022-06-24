@@ -7,20 +7,20 @@ const messages = defineMessages({
   slugUnique: {
     id: "nKjLjT",
     defaultMessage: "Slug must be unique for each warehouse",
-    description: "error message"
-  }
+    description: "error message",
+  },
 });
 
 function getWarehouseErrorMessage(
   err: Omit<WarehouseErrorFragment, "__typename"> | undefined,
-  intl: IntlShape
+  intl: IntlShape,
 ): string {
   return getCommonFormFieldErrorMessage(err, intl);
 }
 
 export function getWarehouseSlugErrorMessage(
   err: Omit<WarehouseErrorFragment, "__typename"> | undefined,
-  intl: IntlShape
+  intl: IntlShape,
 ): string {
   if (err) {
     switch (err.code) {

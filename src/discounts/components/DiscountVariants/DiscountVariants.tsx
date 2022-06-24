@@ -3,7 +3,7 @@ import {
   TableBody,
   TableCell,
   TableFooter,
-  TableRow
+  TableRow,
 } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
@@ -13,7 +13,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import TableHead from "@saleor/components/TableHead";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { SaleDetailsFragment } from "@saleor/graphql";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
@@ -38,16 +38,13 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
   const {
     variants,
     disabled,
-    pageInfo,
-    onPreviousPage,
     onVariantAssign,
     onVariantUnassign,
-    onNextPage,
     isChecked,
     selected,
     toggle,
     toggleAll,
-    toolbar
+    toolbar,
   } = props;
   const classes = useStyles(props);
 
@@ -100,15 +97,7 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
         </TableHead>
         <TableFooter>
           <TableRow>
-            <TablePagination
-              colSpan={numberOfColumns}
-              hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-              onNextPage={onNextPage}
-              hasPreviousPage={
-                pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-              }
-              onPreviousPage={onPreviousPage}
-            />
+            <TablePaginationWithContext colSpan={numberOfColumns} />
           </TableRow>
         </TableFooter>
         <TableBody>
@@ -142,7 +131,7 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
                   >
                     {maybe<React.ReactNode>(
                       () => variant.product.name,
-                      <Skeleton />
+                      <Skeleton />,
                     )}
                   </TableCellAvatar>
                   <TableCell className={classes.colType}>
@@ -151,7 +140,7 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
                   <TableCell className={classes.colType}>
                     {maybe<React.ReactNode>(
                       () => variant.product.productType.name,
-                      <Skeleton />
+                      <Skeleton />,
                     )}
                   </TableCell>
                   <TableCell className={classes.colActions}>
@@ -177,7 +166,7 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
                   <FormattedMessage {...messages.discountVariantsNotFound} />
                 </TableCell>
               </TableRow>
-            )
+            ),
           )}
         </TableBody>
       </ResponsiveTable>

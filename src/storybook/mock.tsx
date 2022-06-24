@@ -7,7 +7,7 @@ interface ChoiceProviderProps {
     props: FetchMoreProps & {
       choices: SingleAutocompleteChoiceType[];
       fetchChoices: (value: string) => void;
-    }
+    },
   ) => React.ReactElement;
   choices: SingleAutocompleteChoiceType[];
 }
@@ -20,13 +20,13 @@ export interface UseMockChoiceProviderOpts extends FetchMoreProps {
 }
 export type UseMockChoiceProvider = [
   SingleAutocompleteChoiceType[],
-  UseMockChoiceProviderOpts
+  UseMockChoiceProviderOpts,
 ];
 export function useMockChoiceProvider(
-  choices: SingleAutocompleteChoiceType[]
+  choices: SingleAutocompleteChoiceType[],
 ): UseMockChoiceProvider {
   const [filteredChoices, setFilteredChoices] = React.useState(
-    choices.slice(0, step)
+    choices.slice(0, step),
   );
   const [loading, setLoading] = React.useState(false);
   const [first, setFirst] = React.useState(step);
@@ -38,7 +38,7 @@ export function useMockChoiceProvider(
         clearTimeout(timeout.current);
       }
     },
-    []
+    [],
   );
 
   const handleChange = (value: string) => {
@@ -52,7 +52,7 @@ export function useMockChoiceProvider(
     const filteredChoices = choices.filter(
       suggestion =>
         !value ||
-        suggestion.label.toLowerCase().indexOf(value.toLowerCase()) !== -1
+        suggestion.label.toLowerCase().indexOf(value.toLowerCase()) !== -1,
     );
 
     setLoading(true);
@@ -80,19 +80,19 @@ export function useMockChoiceProvider(
       fetchChoices: handleChange,
       hasMore: choices.length > filteredChoices.length,
       loading,
-      onFetchMore: handleFetchMore
-    }
+      onFetchMore: handleFetchMore,
+    },
   ];
 }
 
 export const ChoiceProvider: React.FC<ChoiceProviderProps> = ({
   children,
-  choices
+  choices,
 }) => {
   const [filteredChoices, opts] = useMockChoiceProvider(choices);
 
   return children({
     choices: filteredChoices,
-    ...opts
+    ...opts,
   });
 };

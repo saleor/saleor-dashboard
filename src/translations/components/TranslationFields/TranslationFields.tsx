@@ -5,14 +5,14 @@ import CardTitle from "@saleor/components/CardTitle";
 import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import Skeleton from "@saleor/components/Skeleton";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { buttonMessages } from "@saleor/intl";
 import {
   Button,
   ConfirmButtonTransitionState,
   IconButton,
-  makeStyles
+  makeStyles,
 } from "@saleor/macaw-ui";
 import { TranslationField } from "@saleor/translations/types";
 import { ListProps } from "@saleor/types";
@@ -42,53 +42,53 @@ export interface TranslationFieldsProps {
   onDiscard: () => void;
   onSubmit: (
     field: TranslationField,
-    data: string | OutputData
+    data: string | OutputData,
   ) => SubmitPromise;
 }
 
 const useStyles = makeStyles(
   theme => ({
     cardCaption: {
-      fontSize: 14
+      fontSize: 14,
     },
     cardContent: {
       "&:last-child": {
-        paddingBottom: theme.spacing(1)
-      }
+        paddingBottom: theme.spacing(1),
+      },
     },
     columnHeader: {
-      marginBottom: theme.spacing(0.5)
+      marginBottom: theme.spacing(0.5),
     },
     content: {
       "& a": {
-        color: theme.palette.textHighlighted.active
+        color: theme.palette.textHighlighted.active,
       },
       "& blockquote": {
         borderLeft: `2px solid ${theme.palette.divider}`,
         margin: 0,
-        padding: theme.spacing(1, 2)
+        padding: theme.spacing(1, 2),
       },
       "& h2": {
         fontSize: 22,
-        marginBottom: theme.spacing(1)
+        marginBottom: theme.spacing(1),
       },
       "& h3": {
         fontSize: 19,
-        marginBottom: theme.spacing(1)
+        marginBottom: theme.spacing(1),
       },
       "& p": {
         "&:last-child": {
-          marginBottom: 0
+          marginBottom: 0,
         },
         marginBottom: theme.spacing(),
-        marginTop: 0
+        marginTop: 0,
       },
-      paddingBottom: theme.spacing(2)
+      paddingBottom: theme.spacing(2),
     },
     editButtonContainer: {
       alignItems: "center",
       display: "flex",
-      justifyContent: "flex-end"
+      justifyContent: "flex-end",
     },
     fieldName: {
       color: theme.typography.caption.color,
@@ -96,20 +96,20 @@ const useStyles = makeStyles(
       fontWeight: 500,
       marginBottom: theme.spacing(),
       marginTop: theme.spacing(2),
-      textTransform: "uppercase"
+      textTransform: "uppercase",
     },
     grid: {
-      gridRowGap: 0
+      gridRowGap: 0,
     },
     hr: {
-      gridColumnEnd: "span 2"
+      gridColumnEnd: "span 2",
     },
 
     rotate: {
-      transform: "rotate(180deg)"
-    }
+      transform: "rotate(180deg)",
+    },
   }),
-  { name: "TranslationFields" }
+  { name: "TranslationFields" },
 );
 
 const numberOfColumns = 2;
@@ -126,7 +126,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
     richTextResetKey,
     onEdit,
     onDiscard,
-    onSubmit
+    onSubmit,
   } = props;
   const classes = useStyles(props);
 
@@ -143,7 +143,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
           >
             <ArrowIcon
               className={classNames({
-                [classes.rotate]: expanded
+                [classes.rotate]: expanded,
               })}
             />
           </IconButton>
@@ -257,20 +257,8 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
             ))}
           </Grid>
           {pagination && (
-            <TablePagination
+            <TablePaginationWithContext
               colSpan={numberOfColumns}
-              hasNextPage={
-                pagination.pageInfo && !disabled
-                  ? pagination.pageInfo.hasNextPage
-                  : false
-              }
-              onNextPage={pagination.onNextPage}
-              hasPreviousPage={
-                pagination.pageInfo && !disabled
-                  ? pagination.pageInfo.hasPreviousPage
-                  : false
-              }
-              onPreviousPage={pagination.onPreviousPage}
               settings={pagination.settings}
               onUpdateListSettings={pagination.onUpdateListSettings}
               component="div"
@@ -287,8 +275,8 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                 numberOfFields: fields.length,
                 numberOfTranslatedFields: fields.reduce(
                   (acc, field) => acc + +(field.translation !== null),
-                  0
-                )
+                  0,
+                ),
               }}
             />
           </Typography>

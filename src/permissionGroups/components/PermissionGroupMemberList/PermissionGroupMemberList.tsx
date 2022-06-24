@@ -4,7 +4,7 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
@@ -19,7 +19,7 @@ import {
   getUserInitials,
   getUserName,
   renderCollection,
-  stopPropagation
+  stopPropagation,
 } from "@saleor/misc";
 import { sortMembers } from "@saleor/permissionGroups/sort";
 import { MembersListUrlSortField } from "@saleor/permissionGroups/urls";
@@ -33,14 +33,14 @@ const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
       colActions: {
-        width: 120
+        width: 120,
       },
       colEmail: {
-        width: 300
+        width: 300,
       },
       colName: {
-        width: "auto"
-      }
+        width: "auto",
+      },
     },
     avatar: {
       alignItems: "center",
@@ -51,35 +51,35 @@ const useStyles = makeStyles(
       justifyContent: "center",
       marginRight: theme.spacing(1),
       overflow: "hidden",
-      width: 47
+      width: 47,
     },
     avatarDefault: {
       "& div": {
         color: theme.palette.primary.contrastText,
-        lineHeight: "47px"
+        lineHeight: "47px",
       },
       background: theme.palette.primary.main,
       height: 47,
       textAlign: "center",
-      width: 47
+      width: 47,
     },
     avatarImage: {
       pointerEvents: "none",
-      width: "100%"
+      width: "100%",
     },
     colActions: {
       paddingRight: theme.spacing(),
-      textAlign: "right"
+      textAlign: "right",
     },
     helperText: {
-      textAlign: "center"
+      textAlign: "center",
     },
     statusText: {
-      color: "#9E9D9D"
+      color: "#9E9D9D",
     },
-    tableRow: {}
+    tableRow: {},
   }),
-  { name: "PermissionGroup" }
+  { name: "PermissionGroup" },
 );
 const numberOfColumns = 4;
 
@@ -104,7 +104,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
     isChecked,
     selected,
     toggleAll,
-    sort
+    sort,
   } = props;
 
   const classes = useStyles(props);
@@ -118,7 +118,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
         title={intl.formatMessage({
           id: "lGlDEH",
           defaultMessage: "Group members",
-          description: "header"
+          description: "header",
         })}
         toolbar={
           <Button
@@ -203,7 +203,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
                 return (
                   <TableRow
                     className={classNames({
-                      [classes.tableRow]: !!user
+                      [classes.tableRow]: !!user,
                     })}
                     hover={!!user}
                     selected={isSelected}
@@ -243,13 +243,13 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
                           intl.formatMessage({
                             id: "9Zlogd",
                             defaultMessage: "Active",
-                            description: "staff member status"
+                            description: "staff member status",
                           })
                         ) : (
                           intl.formatMessage({
                             id: "7WzUxn",
                             defaultMessage: "Inactive",
-                            description: "staff member status"
+                            description: "staff member status",
                           })
                         )}
                       </Typography>
@@ -266,7 +266,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
                             disabled={disabled}
                             color="primary"
                             onClick={stopPropagation(() =>
-                              onUnassign([user.id])
+                              onUnassign([user.id]),
                             )}
                           >
                             <DeleteIcon />
@@ -288,7 +288,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
                     />
                   </TableCell>
                 </TableRow>
-              )
+              ),
             )}
           </TableBody>
         </ResponsiveTable>

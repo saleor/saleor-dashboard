@@ -10,7 +10,7 @@ const Orders = createSvgIcon(
       fill="#06847B"
     />
   </>,
-  "Orders"
+  "Orders",
 );
 
 export default Orders;

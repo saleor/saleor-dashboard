@@ -3,14 +3,14 @@ import {
   CardContent,
   TextField,
   Tooltip,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import InfoIcon from "@material-ui/icons/Info";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledSwitch from "@saleor/components/ControlledSwitch";
 import {
   ConfigurationItemFragment,
-  ConfigurationTypeFieldEnum
+  ConfigurationTypeFieldEnum,
 } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { UserError } from "@saleor/types";
@@ -31,26 +31,26 @@ interface PluginSettingsProps {
 const useStyles = makeStyles(
   theme => ({
     authItem: {
-      display: "flex"
+      display: "flex",
     },
     button: {
-      marginRight: theme.spacing()
+      marginRight: theme.spacing(),
     },
     item: {
       "&:not(:last-child)": {
-        marginBottom: theme.spacing(3)
+        marginBottom: theme.spacing(3),
       },
       alignItems: "center",
-      display: "flex"
+      display: "flex",
     },
     itemLabel: {
-      fontWeight: 500
+      fontWeight: 500,
     },
     spacer: {
-      flex: 1
-    }
+      flex: 1,
+    },
   }),
-  { name: "PluginSettings" }
+  { name: "PluginSettings" },
 );
 
 const PluginSettings: React.FC<PluginSettingsProps> = ({
@@ -58,7 +58,7 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({
   disabled,
   errors,
   onChange,
-  fields
+  fields,
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
@@ -69,13 +69,13 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({
         title={intl.formatMessage({
           id: "Egyh2T",
           defaultMessage: "Plugin Settings",
-          description: "section header"
+          description: "section header",
         })}
       />
       <CardContent>
         {data.configuration.map(field => {
           const fieldData = fields.find(
-            configField => configField.name === field.name
+            configField => configField.name === field.name,
           );
 
           return (
@@ -118,7 +118,7 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({
                   InputProps={{
                     rowsMax: 6,
                     readOnly:
-                      fieldData.type === ConfigurationTypeFieldEnum.OUTPUT
+                      fieldData.type === ConfigurationTypeFieldEnum.OUTPUT,
                   }}
                   onFocus={event => {
                     if (fieldData.type === ConfigurationTypeFieldEnum.OUTPUT) {

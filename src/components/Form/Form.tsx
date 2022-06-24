@@ -31,7 +31,7 @@ function Form<TData, Terrors>({
     confirmLeave,
     formId,
     checkIfSaveIsDisabled,
-    disabled
+    disabled,
   });
 
   function handleSubmit(event?: React.FormEvent<any>, cb?: () => void) {

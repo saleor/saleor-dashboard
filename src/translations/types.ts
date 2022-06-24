@@ -8,7 +8,7 @@ export enum TranslationInputFieldName {
   name = "name",
   seoDescription = "seoDescription",
   seoTitle = "seoTitle",
-  richText = "richText"
+  richText = "richText",
 }
 
 export enum PageTranslationInputFieldName {
@@ -16,7 +16,7 @@ export enum PageTranslationInputFieldName {
   title = "title",
   seoDescription = "seoDescription",
   seoTitle = "seoTitle",
-  richText = "richText"
+  richText = "richText",
 }
 
 export interface TranslationField<T extends string = string> {
@@ -39,6 +39,6 @@ export interface TranslationsEntitiesPageProps {
   onDiscard: () => void;
   onSubmit: (
     field: TranslationField,
-    data: string | OutputData
+    data: string | OutputData,
   ) => SubmitPromise<any[]>;
 }

@@ -14,7 +14,7 @@ import {
   ShippingErrorFragment,
   ShippingMethodTypeEnum,
   ShippingZoneDetailsFragment,
-  ShippingZoneQuery
+  ShippingZoneQuery,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -39,18 +39,18 @@ const messages = defineMessages({
   countries: {
     id: "55LMJv",
     defaultMessage: "Countries",
-    description: "country list header"
+    description: "country list header",
   },
   noCountriesAssigned: {
     id: "y7mfbl",
     defaultMessage:
-      "Currently, there are no countries assigned to this shipping zone"
+      "Currently, there are no countries assigned to this shipping zone",
   },
   shipping: {
     id: "G0+gAp",
     defaultMessage: "Shipping",
-    description: "shipping section header"
-  }
+    description: "shipping section header",
+  },
 });
 
 export interface ShippingZoneDetailsPageProps
@@ -76,11 +76,11 @@ export interface ShippingZoneDetailsPageProps
 }
 
 function warehouseToChoice(
-  warehouse: Record<"id" | "name", string>
+  warehouse: Record<"id" | "name", string>,
 ): SingleAutocompleteChoiceType {
   return {
     label: warehouse.name,
-    value: warehouse.id
+    value: warehouse.id,
   };
 }
 
@@ -105,7 +105,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   selectedChannelId,
   shippingZone,
   warehouses,
-  allChannels
+  allChannels,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -125,7 +125,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   >(mapNodeToChoice(shippingZone?.channels));
 
   const {
-    makeChangeHandler: makeMetadataChangeHandler
+    makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
 
   return (
@@ -140,14 +140,14 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
           toggleValue,
           setWarehouseDisplayValues,
           warehouseDisplayValues,
-          warehouseChoices
+          warehouseChoices,
         );
 
         const handleChannelChange = createMultiAutocompleteSelectHandler(
           toggleValue,
           setChannelDisplayValues,
           channelsDisplayValues,
-          channelChoices
+          channelChoices,
         );
 
         const changeMetadata = makeMetadataChangeHandler(change);
@@ -172,7 +172,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                   disabled={disabled}
                   emptyText={getStringOrPlaceholder(
                     shippingZone &&
-                      intl.formatMessage(messages.noCountriesAssigned)
+                      intl.formatMessage(messages.noCountriesAssigned),
                   )}
                   onCountryAssign={onCountryAdd}
                   onCountryUnassign={onCountryRemove}
@@ -185,7 +185,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                   getRateEditHref={getPriceRateEditHref}
                   onRateRemove={onRateRemove}
                   rates={shippingZone?.shippingMethods?.filter(
-                    method => method.type === ShippingMethodTypeEnum.PRICE
+                    method => method.type === ShippingMethodTypeEnum.PRICE,
                   )}
                   variant="price"
                   selectedChannelId={selectedChannelId}
@@ -198,7 +198,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                   getRateEditHref={getWeightRateEditHref}
                   onRateRemove={onRateRemove}
                   rates={shippingZone?.shippingMethods?.filter(
-                    method => method.type === ShippingMethodTypeEnum.WEIGHT
+                    method => method.type === ShippingMethodTypeEnum.WEIGHT,
                   )}
                   variant="weight"
                   selectedChannelId={selectedChannelId}

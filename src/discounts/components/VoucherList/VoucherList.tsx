@@ -7,7 +7,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import TooltipTableCellHeader from "@saleor/components/TooltipTableCellHeader";
 import { commonTooltipMessages } from "@saleor/components/TooltipTableCellHeader/messages";
@@ -34,52 +34,52 @@ const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
       colEnd: {
-        width: 180
+        width: 180,
       },
       colMinSpent: {
-        width: 150
+        width: 150,
       },
       colName: {},
       colStart: {
-        width: 180
+        width: 180,
       },
       colUses: {
-        width: 150
+        width: 150,
       },
       colValue: {
-        width: 150
-      }
+        width: 150,
+      },
     },
     colEnd: {
-      textAlign: "right"
+      textAlign: "right",
     },
     colMinSpent: {
-      textAlign: "right"
+      textAlign: "right",
     },
     colName: {
-      paddingLeft: 0
+      paddingLeft: 0,
     },
     colStart: {
-      textAlign: "right"
+      textAlign: "right",
     },
     colUses: {
-      textAlign: "right"
+      textAlign: "right",
     },
     colValue: {
-      textAlign: "right"
+      textAlign: "right",
     },
     tableRow: {
-      cursor: "pointer"
+      cursor: "pointer",
     },
     textRight: {
-      textAlign: "right"
+      textAlign: "right",
     },
     textOverflow: {
       textOverflow: "ellipsis",
-      overflow: "hidden"
-    }
+      overflow: "hidden",
+    },
   }),
-  { name: "VoucherList" }
+  { name: "VoucherList" },
 );
 
 const numberOfColumns = 7;
@@ -88,11 +88,8 @@ const VoucherList: React.FC<VoucherListProps> = props => {
   const {
     settings,
     disabled,
-    onNextPage,
-    onPreviousPage,
     onUpdateListSettings,
     onSort,
-    pageInfo,
     vouchers,
     isChecked,
     selected,
@@ -101,7 +98,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
     toggle,
     toggleAll,
     toolbar,
-    filterDependency
+    filterDependency,
   } = props;
 
   const classes = useStyles(props);
@@ -146,7 +143,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
           }
           className={classes.colMinSpent}
           tooltip={intl.formatMessage(commonTooltipMessages.noFilterSelected, {
-            filterName: filterDependency.label
+            filterName: filterDependency.label,
           })}
         >
           <FormattedMessage
@@ -200,7 +197,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
           }
           className={classes.colValue}
           tooltip={intl.formatMessage(commonTooltipMessages.noFilterSelected, {
-            filterName: filterDependency.label
+            filterName: filterDependency.label,
           })}
         >
           <FormattedMessage
@@ -228,16 +225,10 @@ const VoucherList: React.FC<VoucherListProps> = props => {
       </TableHead>
       <TableFooter>
         <TableRow>
-          <TablePagination
+          <TablePaginationWithContext
             colSpan={numberOfColumns}
             settings={settings}
-            hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-            onNextPage={onNextPage}
             onUpdateListSettings={onUpdateListSettings}
-            hasPreviousPage={
-              pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-            }
-            onPreviousPage={onPreviousPage}
           />
         </TableRow>
       </TableFooter>
@@ -247,7 +238,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
           voucher => {
             const isSelected = voucher ? isChecked(voucher.id) : false;
             const channel = voucher?.channelListings?.find(
-              listing => listing.channel.id === selectedChannelId
+              listing => listing.channel.id === selectedChannelId,
             );
             const hasChannelsLoaded = voucher?.channelListings?.length;
 
@@ -308,7 +299,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
                           money={
                             channel?.discountValue && {
                               amount: channel?.discountValue,
-                              currency: channel?.currency
+                              currency: channel?.currency,
                             }
                           }
                         />
@@ -326,7 +317,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
                   {maybe<React.ReactNode>(
                     () =>
                       voucher.usageLimit === null ? "-" : voucher.usageLimit,
-                    <Skeleton />
+                    <Skeleton />,
                   )}
                 </TableCell>
               </TableRowLink>
@@ -341,7 +332,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
                 />
               </TableCell>
             </TableRow>
-          )
+          ),
         )}
       </TableBody>
     </ResponsiveTable>

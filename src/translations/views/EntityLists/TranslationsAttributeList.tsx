@@ -1,9 +1,9 @@
 import { useAttributeTranslationsQuery } from "@saleor/graphql";
-import usePaginator from "@saleor/hooks/usePaginator";
+import usePaginator, { PaginatorContext } from "@saleor/hooks/usePaginator";
 import TranslationsEntitiesList from "@saleor/translations/components/TranslationsEntitiesList";
 import {
   languageEntityUrl,
-  TranslatableEntities
+  TranslatableEntities,
 } from "@saleor/translations/urls";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
@@ -12,43 +12,40 @@ import { TranslationsEntityListProps } from "./types";
 
 const TranslationsAttributeList: React.FC<TranslationsEntityListProps> = ({
   params,
-  variables
+  variables,
 }) => {
-  const paginate = usePaginator();
-
   const { data, loading } = useAttributeTranslationsQuery({
     displayLoader: true,
-    variables
+    variables,
   });
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    data?.translations?.pageInfo,
-    variables,
-    params
-  );
+  const paginationValues = usePaginator({
+    pageInfo: data?.translations?.pageInfo,
+    paginationState: variables,
+    queryString: params,
+  });
 
   return (
-    <TranslationsEntitiesList
-      disabled={loading}
-      entities={mapEdgesToItems(data?.translations)?.map(
-        node =>
-          node.__typename === "AttributeTranslatableContent" && {
-            completion: null,
-            id: node?.attribute.id,
-            name: node?.attribute.name
-          }
-      )}
-      getRowHref={id =>
-        languageEntityUrl(
-          variables.language,
-          TranslatableEntities.attributes,
-          id
-        )
-      }
-      onNextPage={loadNextPage}
-      onPreviousPage={loadPreviousPage}
-      pageInfo={pageInfo}
-    />
+    <PaginatorContext.Provider value={paginationValues}>
+      <TranslationsEntitiesList
+        disabled={loading}
+        entities={mapEdgesToItems(data?.translations)?.map(
+          node =>
+            node.__typename === "AttributeTranslatableContent" && {
+              completion: null,
+              id: node?.attribute.id,
+              name: node?.attribute.name,
+            },
+        )}
+        getRowHref={id =>
+          languageEntityUrl(
+            variables.language,
+            TranslatableEntities.attributes,
+            id,
+          )
+        }
+      />
+    </PaginatorContext.Provider>
   );
 };
 

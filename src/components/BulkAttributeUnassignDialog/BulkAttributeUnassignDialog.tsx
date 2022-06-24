@@ -23,7 +23,7 @@ const BulkAttributeUnassignDialog: React.FC<BulkAttributeUnassignDialogProps> = 
   open,
   itemTypeName,
   onClose,
-  onConfirm
+  onConfirm,
 }) => {
   const intl = useIntl();
 
@@ -42,7 +42,7 @@ const BulkAttributeUnassignDialog: React.FC<BulkAttributeUnassignDialogProps> = 
           values={{
             attributeQuantity: <strong>{attributeQuantity}</strong>,
             counter: attributeQuantity,
-            itemTypeName: <strong>{itemTypeName}</strong>
+            itemTypeName: <strong>{itemTypeName}</strong>,
           }}
         />
       </DialogContentText>

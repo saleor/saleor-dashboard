@@ -1,6 +1,6 @@
 import { userPermissionGroups } from "@saleor/permissionGroups/fixtures";
 import StaffDetailsPage, {
-  StaffDetailsPageProps
+  StaffDetailsPageProps,
 } from "@saleor/staff/components/StaffDetailsPage";
 import { staffMember } from "@saleor/staff/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
@@ -24,7 +24,7 @@ const props: Omit<StaffDetailsPageProps, "classes"> = {
   onSearchChange: () => undefined,
   onSubmit: () => undefined,
   saveButtonBarState: "default",
-  staffMember: { ...staffMember, permissionGroups: userPermissionGroups }
+  staffMember: { ...staffMember, permissionGroups: userPermissionGroups },
 };
 
 storiesOf("Views / Staff / Staff member details", module)

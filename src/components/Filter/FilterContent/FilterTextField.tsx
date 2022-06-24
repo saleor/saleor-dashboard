@@ -14,7 +14,7 @@ export type FilterTextFieldProps = FilterFieldBaseProps<
 const FilterTextField: React.FC<FilterTextFieldProps> = ({
   currencySymbol,
   filter,
-  onFilterPropertyChange
+  onFilterPropertyChange,
 }) => {
   const classes = useStyles();
 
@@ -25,7 +25,7 @@ const FilterTextField: React.FC<FilterTextFieldProps> = ({
       name={filter.name}
       InputProps={{
         classes: {
-          input: classes.fieldInput
+          input: classes.fieldInput,
         },
         endAdornment: filter.type === FieldType.price && currencySymbol,
         type:
@@ -33,7 +33,7 @@ const FilterTextField: React.FC<FilterTextFieldProps> = ({
             ? "date"
             : [FieldType.number, FieldType.price].includes(filter.type)
             ? "number"
-            : "text"
+            : "text",
       }}
       value={filter.value[0]}
       onChange={event =>
@@ -41,10 +41,10 @@ const FilterTextField: React.FC<FilterTextFieldProps> = ({
           payload: {
             name: filter.name,
             update: {
-              value: [event.target.value, filter.value[1]]
-            }
+              value: [event.target.value, filter.value[1]],
+            },
           },
-          type: "set-property"
+          type: "set-property",
         })
       }
     />

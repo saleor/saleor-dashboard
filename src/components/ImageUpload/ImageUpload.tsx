@@ -22,10 +22,10 @@ const useStyles = makeStyles(
   theme => ({
     backdrop: {
       background: fade(theme.palette.primary.main, 0.1),
-      color: theme.palette.primary.main
+      color: theme.palette.primary.main,
     },
     fileField: {
-      display: "none"
+      display: "none",
     },
     imageContainer: {
       background: "#ffffff",
@@ -37,25 +37,25 @@ const useStyles = makeStyles(
       padding: theme.spacing(2),
       position: "relative",
       transition: theme.transitions.duration.standard + "s",
-      width: 148
+      width: 148,
     },
     photosIcon: {
       height: 32,
       margin: "0 auto",
-      width: 32
+      width: 32,
     },
     photosIconContainer: {
       padding: theme.spacing(5, 0),
-      textAlign: "center"
+      textAlign: "center",
     },
     uploadText: {
       color: theme.typography.body1.color,
       fontSize: 12,
       fontWeight: 600,
-      textTransform: "uppercase"
-    }
+      textTransform: "uppercase",
+    },
   }),
-  { name: "ImageUpload" }
+  { name: "ImageUpload" },
 );
 
 export const ImageUpload: React.FC<ImageUploadProps> = props => {
@@ -67,7 +67,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = props => {
     iconContainerClassName,
     isActiveClassName,
     hideUploadIcon,
-    onImageUpload
+    onImageUpload,
   } = props;
 
   const classes = useStyles(props);
@@ -80,13 +80,13 @@ export const ImageUpload: React.FC<ImageUploadProps> = props => {
             {...getRootProps()}
             className={classNames(className, classes.photosIconContainer, {
               [classes.backdrop]: isDragActive,
-              [isActiveClassName]: isDragActive
+              [isActiveClassName]: isDragActive,
             })}
           >
             {!hideUploadIcon && (
               <div
                 className={classNames(iconContainerClassName, {
-                  [iconContainerActiveClassName]: isDragActive
+                  [iconContainerActiveClassName]: isDragActive,
                 })}
               >
                 <input

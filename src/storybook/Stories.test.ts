@@ -13,7 +13,7 @@ configure({ adapter: new Adapter() });
 
 jest.mock("@material-ui/styles/createGenerateClassName");
 (createGenerateClassName as any).mockImplementation(() => (rule, stylesheet) =>
-  [stylesheet.options.meta, rule.key, "id"].join("-")
+  [stylesheet.options.meta, rule.key, "id"].join("-"),
 );
 
 initStoryshots({
@@ -21,5 +21,5 @@ initStoryshots({
   test({ story }) {
     const result = render(story.render() as any);
     expect(toJSON(result)).toMatchSnapshot();
-  }
+  },
 });

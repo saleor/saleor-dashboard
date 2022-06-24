@@ -27,7 +27,7 @@ jobs:
 
       - name: Cypress run full spec
         if: ${{ steps.api_uri.outputs.custom_api_uri == 'https://qa.staging.saleor.cloud/graphql/' }}
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         env:
           API_URI: ${{ steps.api_uri.outputs.custom_api_uri }}
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
@@ -50,7 +50,7 @@ jobs:
 
       - name: Cypress run allEnvs spec
         if: ${{ steps.api_uri.outputs.custom_api_uri != 'https://qa.staging.saleor.cloud/graphql/' }}
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         env:
           API_URI: ${{ steps.api_uri.outputs.custom_api_uri }}
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}

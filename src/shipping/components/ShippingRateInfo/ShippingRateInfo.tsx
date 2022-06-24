@@ -2,14 +2,14 @@ import { OutputData } from "@editorjs/editorjs";
 import { Card, CardContent, TextField } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
-import RichTextEditor, {
-  RichTextEditorChange
-} from "@saleor/components/RichTextEditor";
+import RichTextEditor from "@saleor/components/RichTextEditor";
+import { RichTextEditorLoading } from "@saleor/components/RichTextEditor/RichTextEditorLoading";
 import { ShippingErrorFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getShippingErrorMessage from "@saleor/utils/errors/shipping";
+import { useRichTextContext } from "@saleor/utils/richText/context";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -17,23 +17,23 @@ const messages = defineMessages({
   maxDays: {
     id: "v17Lly",
     defaultMessage: "Max Delivery Time",
-    description: "label"
+    description: "label",
   },
   minDays: {
     id: "GD/bom",
     defaultMessage: "Min Delivery Time",
-    description: "label"
+    description: "label",
   },
   name: {
     id: "FkDObY",
     defaultMessage: "Shipping rate name",
-    description: "label"
+    description: "label",
   },
   description: {
     id: "TLYeo5",
     defaultMessage: "Shipping Rate Description",
-    description: "label"
-  }
+    description: "label",
+  },
 });
 
 const useStyles = makeStyles(
@@ -44,14 +44,14 @@ const useStyles = makeStyles(
       gridRowGap: theme.spacing(1),
       gridTemplateColumns: "1fr 1fr 1fr",
       [theme.breakpoints.down("md")]: {
-        gridTemplateColumns: "1fr 1fr"
+        gridTemplateColumns: "1fr 1fr",
       },
       [theme.breakpoints.down("xs")]: {
-        gridTemplateColumns: "1fr"
-      }
-    }
+        gridTemplateColumns: "1fr",
+      },
+    },
   }),
-  { name: "ShippingRateInfo" }
+  { name: "ShippingRateInfo" },
 );
 
 export interface ShippingRateInfoProps {
@@ -64,18 +64,24 @@ export interface ShippingRateInfoProps {
   disabled: boolean;
   errors: ShippingErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
-  onDescriptionChange: RichTextEditorChange;
 }
 
 const ShippingRateInfo: React.FC<ShippingRateInfoProps> = props => {
-  const { data, disabled, errors, onChange, onDescriptionChange } = props;
+  const { data, disabled, errors, onChange } = props;
 
   const intl = useIntl();
   const classes = useStyles(props);
 
+  const {
+    defaultValue,
+    editorRef,
+    isReadyForMount,
+    handleChange,
+  } = useRichTextContext();
+
   const formErrors = getFormErrors(
     ["name", "description", "minDays", "maxDays"],
-    errors
+    errors,
   );
 
   return (
@@ -95,15 +101,23 @@ const ShippingRateInfo: React.FC<ShippingRateInfoProps> = props => {
           onChange={onChange}
         />
         <CardSpacer />
-        <RichTextEditor
-          data={data.description}
-          disabled={disabled}
-          error={!!formErrors.description}
-          helperText={getShippingErrorMessage(formErrors.description, intl)}
-          label={intl.formatMessage(messages.description)}
-          name="description"
-          onChange={onDescriptionChange}
-        />
+        {isReadyForMount ? (
+          <RichTextEditor
+            defaultValue={defaultValue}
+            editorRef={editorRef}
+            onChange={handleChange}
+            disabled={disabled}
+            error={!!formErrors.description}
+            helperText={getShippingErrorMessage(formErrors.description, intl)}
+            label={intl.formatMessage(messages.description)}
+            name="description"
+          />
+        ) : (
+          <RichTextEditorLoading
+            label={intl.formatMessage(messages.description)}
+            name="description"
+          />
+        )}
         <CardSpacer />
         <div className={classes.deliveryTimeFields}>
           <TextField
@@ -115,7 +129,7 @@ const ShippingRateInfo: React.FC<ShippingRateInfoProps> = props => {
             type="number"
             inputProps={{
               min: 0,
-              type: "number"
+              type: "number",
             }}
             InputProps={{ inputProps: { min: 0 } }}
             name="minDays"
@@ -131,7 +145,7 @@ const ShippingRateInfo: React.FC<ShippingRateInfoProps> = props => {
             type="number"
             inputProps={{
               min: 0,
-              type: "number"
+              type: "number",
             }}
             InputProps={{ inputProps: { min: 0 } }}
             name="maxDays"

@@ -8,7 +8,7 @@ export const AVATAR_MARGIN = 40;
 const useStyles = makeStyles(
   theme => ({
     alignRight: {
-      justifyContent: "flex-end"
+      justifyContent: "flex-end",
     },
     avatar: {
       background: "none",
@@ -16,26 +16,26 @@ const useStyles = makeStyles(
       borderRadius: 2,
       color: "#bdbdbd",
       display: "inline-flex",
-      padding: theme.spacing(0.5)
+      padding: theme.spacing(0.5),
     },
     children: {
       alignSelf: "center",
       marginLeft: theme.spacing(2),
-      width: "100%"
+      width: "100%",
     },
     content: {
       alignItems: "center",
-      display: "flex"
+      display: "flex",
     },
     root: {
       "&:not(first-child)": {
-        paddingLeft: 0
+        paddingLeft: 0,
       },
       paddingRight: theme.spacing(3),
-      width: "1%"
-    }
+      width: "1%",
+    },
   }),
-  { name: "Avatar" }
+  { name: "Avatar" },
 );
 
 export interface AvatarProps {
@@ -51,14 +51,14 @@ const Avatar: React.FC<AvatarProps> = ({
   alignRight,
   thumbnail,
   avatarProps,
-  badge
+  badge,
 }) => {
   const classes = useStyles({});
 
   return (
     <div
       className={classNames(classes.content, {
-        [classes.alignRight]: alignRight
+        [classes.alignRight]: alignRight,
       })}
     >
       {badge}

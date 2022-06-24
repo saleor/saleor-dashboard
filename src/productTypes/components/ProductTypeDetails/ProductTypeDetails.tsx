@@ -3,7 +3,7 @@ import {
   CardContent,
   Divider,
   TextField,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import PreviewPill from "@saleor/components/PreviewPill";
@@ -21,17 +21,17 @@ import { messages } from "./messages";
 const useStyles = makeStyles(
   theme => ({
     root: {
-      overflow: "visible"
+      overflow: "visible",
     },
     option: {
       marginTop: theme.spacing(-0.25),
-      marginBottom: theme.spacing()
+      marginBottom: theme.spacing(),
     },
     preview: {
-      marginLeft: theme.spacing(1)
-    }
+      marginLeft: theme.spacing(1),
+    },
   }),
-  { name: "ProductTypeDetails" }
+  { name: "ProductTypeDetails" },
 );
 
 interface ProductTypeDetailsProps {
@@ -48,13 +48,13 @@ interface ProductTypeDetailsProps {
 const kindOptions = [
   {
     title: messages.optionNormalTitle,
-    type: ProductTypeKindEnum.NORMAL
+    type: ProductTypeKindEnum.NORMAL,
   },
   {
     title: messages.optionGiftCardTitle,
     subtitle: messages.optionGiftCardDescription,
-    type: ProductTypeKindEnum.GIFT_CARD
-  }
+    type: ProductTypeKindEnum.GIFT_CARD,
+  },
 ];
 
 const ProductTypeDetails: React.FC<ProductTypeDetailsProps> = props => {
@@ -103,7 +103,7 @@ const ProductTypeDetails: React.FC<ProductTypeDetailsProps> = props => {
                 )}
               </div>
             ),
-            value: option.type
+            value: option.type,
           }))}
           name="kind"
           onChange={onKindChange}

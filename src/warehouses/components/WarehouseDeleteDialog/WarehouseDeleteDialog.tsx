@@ -17,7 +17,7 @@ const WarehouseDeleteDialog: React.FC<WarehouseDeleteDialogProps> = ({
   confirmButtonState,
   onClose,
   onConfirm,
-  open
+  open,
 }) => {
   const intl = useIntl();
 
@@ -31,7 +31,7 @@ const WarehouseDeleteDialog: React.FC<WarehouseDeleteDialogProps> = ({
       title={intl.formatMessage({
         id: "ny4zrH",
         defaultMessage: "Delete Warehouse",
-        description: "dialog title"
+        description: "dialog title",
       })}
     >
       <DialogContentText>
@@ -40,7 +40,7 @@ const WarehouseDeleteDialog: React.FC<WarehouseDeleteDialogProps> = ({
           defaultMessage="Are you sure you want to delete {warehouseName}?"
           description="dialog content"
           values={{
-            warehouseName: <strong>{name}</strong>
+            warehouseName: <strong>{name}</strong>,
           }}
         />
       </DialogContentText>

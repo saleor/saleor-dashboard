@@ -35,7 +35,7 @@ const CountryListPage: React.FC<CountryListPageProps> = ({
   saveButtonBarState,
   shop,
   onSubmit,
-  onTaxFetch
+  onTaxFetch,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -43,7 +43,7 @@ const CountryListPage: React.FC<CountryListPageProps> = ({
   const initialForm: TaxesConfigurationFormData = {
     chargeTaxesOnShipping: maybe(() => shop.chargeTaxesOnShipping, false),
     includeTax: maybe(() => shop.includeTaxesInPrices, false),
-    showGross: maybe(() => shop.displayGrossPrices, false)
+    showGross: maybe(() => shop.displayGrossPrices, false),
   };
   return (
     <Form
@@ -62,7 +62,7 @@ const CountryListPage: React.FC<CountryListPageProps> = ({
               title={intl.formatMessage({
                 id: "lnQAos",
                 defaultMessage: "Taxes",
-                description: "header"
+                description: "header",
               })}
             />
             <Grid variant="inverted">

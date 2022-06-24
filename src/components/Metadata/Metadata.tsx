@@ -34,21 +34,21 @@ const Metadata: React.FC<MetadataProps> = ({ data, onChange }) => {
                   value:
                     field === EventDataField.value
                       ? value
-                      : dataToUpdate[fieldIndex].value
+                      : dataToUpdate[fieldIndex].value,
                 },
                 dataToUpdate,
-                fieldIndex
+                fieldIndex,
               )
             : action === EventDataAction.add
             ? [
                 ...dataToUpdate,
                 {
                   key: "",
-                  value: ""
-                }
+                  value: "",
+                },
               ]
-            : removeAtIndex(dataToUpdate, fieldIndex)
-      }
+            : removeAtIndex(dataToUpdate, fieldIndex),
+      },
     });
   };
 

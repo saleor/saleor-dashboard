@@ -7,37 +7,43 @@ export interface GridProps {
   children: React.ReactNodeArray | React.ReactNode;
   className?: string;
   variant?: GridVariant;
+  richText?: boolean;
 }
 
 const useStyles = makeStyles(
   theme => ({
     default: {
-      gridTemplateColumns: "9fr 4fr"
+      gridTemplateColumns: "9fr 4fr",
     },
     inverted: {
-      gridTemplateColumns: "4fr 9fr"
+      gridTemplateColumns: "4fr 9fr",
     },
     root: {
       "& > div": {
-        overflow: "hidden"
+        overflow: "hidden",
       },
       display: "grid",
       gridColumnGap: theme.spacing(3),
       gridRowGap: theme.spacing(3),
       [theme.breakpoints.down("sm")]: {
         gridRowGap: theme.spacing(1),
-        gridTemplateColumns: "1fr"
-      }
+        gridTemplateColumns: "1fr",
+      },
     },
     uniform: {
-      gridTemplateColumns: "1fr 1fr"
-    }
+      gridTemplateColumns: "1fr 1fr",
+    },
+    richText: {
+      "&& > div": {
+        overflow: "visible",
+      },
+    },
   }),
-  { name: "Grid" }
+  { name: "Grid" },
 );
 
 export const Grid: React.FC<GridProps> = props => {
-  const { className, children, variant } = props;
+  const { className, children, variant, richText } = props;
 
   const classes = useStyles(props);
 
@@ -46,7 +52,8 @@ export const Grid: React.FC<GridProps> = props => {
       className={classNames(className, classes.root, {
         [classes.default]: variant === "default",
         [classes.inverted]: variant === "inverted",
-        [classes.uniform]: variant === "uniform"
+        [classes.uniform]: variant === "uniform",
+        [classes.richText]: richText,
       })}
     >
       {children}
@@ -55,6 +62,6 @@ export const Grid: React.FC<GridProps> = props => {
 };
 Grid.displayName = "Grid";
 Grid.defaultProps = {
-  variant: "default"
+  variant: "default",
 };
 export default Grid;

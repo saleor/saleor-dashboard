@@ -4,7 +4,7 @@ import {
   DialogContent,
   FormControlLabel,
   InputAdornment,
-  TextField
+  TextField,
 } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import { ConfirmButton } from "@saleor/components/ConfirmButton";
@@ -15,7 +15,7 @@ import { buttonMessages } from "@saleor/intl";
 import {
   Button,
   ConfirmButtonTransitionState,
-  SearchIcon
+  SearchIcon,
 } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -49,20 +49,20 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
     customerAddresses,
     onChangeCustomerShippingAddress,
     onChangeCustomerBillingAddress,
-    exitSearch
+    exitSearch,
   } = props;
 
   const intl = useIntl();
   const classes = useStyles(props);
 
   const initialAddress = customerAddresses.find(
-    getById(selectedCustomerAddressId)
+    getById(selectedCustomerAddressId),
   );
 
   const [query, setQuery] = React.useState("");
   const [
     temporarySelectedAddress,
-    setTemporarySelectedAddress
+    setTemporarySelectedAddress,
   ] = React.useState(initialAddress);
 
   const handleSelect = () => {
@@ -102,7 +102,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
               <InputAdornment position="start">
                 <SearchIcon />
               </InputAdornment>
-            )
+            ),
           }}
           inputProps={{ className: classes.searchInput }}
         />
@@ -131,8 +131,8 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
                   formChange({
                     target: {
                       name: "cloneAddress",
-                      value: !cloneAddress
-                    }
+                      value: !cloneAddress,
+                    },
                   })
                 }
               />
@@ -140,7 +140,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
             label={intl.formatMessage(
               type === AddressTypeEnum.SHIPPING
                 ? messages.billingSameAsShipping
-                : messages.shippingSameAsBilling
+                : messages.shippingSameAsBilling,
             )}
           />
         )}

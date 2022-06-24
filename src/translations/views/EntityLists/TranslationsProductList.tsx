@@ -1,9 +1,9 @@
 import { useProductTranslationsQuery } from "@saleor/graphql";
-import usePaginator from "@saleor/hooks/usePaginator";
+import usePaginator, { PaginatorContext } from "@saleor/hooks/usePaginator";
 import TranslationsEntitiesList from "@saleor/translations/components/TranslationsEntitiesList";
 import {
   languageEntityUrl,
-  TranslatableEntities
+  TranslatableEntities,
 } from "@saleor/translations/urls";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
@@ -13,50 +13,51 @@ import { sumCompleted } from "./utils";
 
 const TranslationsProductList: React.FC<TranslationsEntityListProps> = ({
   params,
-  variables
+  variables,
 }) => {
-  const paginate = usePaginator();
-
   const { data, loading } = useProductTranslationsQuery({
     displayLoader: true,
-    variables
+    variables,
   });
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    data?.translations?.pageInfo,
-    variables,
-    params
-  );
+  const paginationValues = usePaginator({
+    pageInfo: data?.translations?.pageInfo,
+    paginationState: variables,
+    queryString: params,
+  });
 
   return (
-    <TranslationsEntitiesList
-      disabled={loading}
-      entities={mapEdgesToItems(data?.translations)?.map(
-        node =>
-          node.__typename === "ProductTranslatableContent" && {
-            completion: {
-              current: sumCompleted([
-                node.translation?.description,
-                node.translation?.name,
-                node.translation?.seoDescription,
-                node.translation?.seoTitle,
-                ...(node.attributeValues?.map(
-                  ({ translation }) => translation?.richText
-                ) || [])
-              ]),
-              max: 4 + (node.attributeValues?.length || 0)
+    <PaginatorContext.Provider value={paginationValues}>
+      <TranslationsEntitiesList
+        disabled={loading}
+        entities={mapEdgesToItems(data?.translations)?.map(
+          node =>
+            node.__typename === "ProductTranslatableContent" && {
+              completion: {
+                current: sumCompleted([
+                  node.translation?.description,
+                  node.translation?.name,
+                  node.translation?.seoDescription,
+                  node.translation?.seoTitle,
+                  ...(node.attributeValues?.map(
+                    ({ translation }) => translation?.richText,
+                  ) || []),
+                ]),
+                max: 4 + (node.attributeValues?.length || 0),
+              },
+              id: node?.product?.id,
+              name: node?.product?.name,
             },
-            id: node?.product?.id,
-            name: node?.product?.name
-          }
-      )}
-      getRowHref={id =>
-        languageEntityUrl(variables.language, TranslatableEntities.products, id)
-      }
-      onNextPage={loadNextPage}
-      onPreviousPage={loadPreviousPage}
-      pageInfo={pageInfo}
-    />
+        )}
+        getRowHref={id =>
+          languageEntityUrl(
+            variables.language,
+            TranslatableEntities.products,
+            id,
+          )
+        }
+      />
+    </PaginatorContext.Provider>
   );
 };
 

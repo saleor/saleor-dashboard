@@ -4,7 +4,7 @@ import {
   fourthStep,
   secondStep,
   thirdStep,
-  warehouses
+  warehouses,
 } from "./fixtures";
 import { ChannelPrice } from "./form";
 import reducer, { ProductVariantCreateReducerActionType } from "./reducer";
@@ -12,7 +12,7 @@ import reducer, { ProductVariantCreateReducerActionType } from "./reducer";
 function execActions<TState, TAction>(
   initialState: TState,
   reducer: (state: TState, action: TAction) => TState,
-  actions: TAction[]
+  actions: TAction[],
 ): TState {
   return actions.reduce((acc, action) => reducer(acc, action), initialState);
 }
@@ -23,46 +23,46 @@ describe("Reducer is able to", () => {
       {
         selectValue: {
           attributeId: attributes[0].id,
-          value: attributes[0].values[0]
+          value: attributes[0].values[0],
         },
-        type: ProductVariantCreateReducerActionType.selectValue
+        type: ProductVariantCreateReducerActionType.selectValue,
       },
       {
         selectValue: {
           attributeId: attributes[0].id,
-          value: attributes[0].values[6]
+          value: attributes[0].values[6],
         },
 
-        type: ProductVariantCreateReducerActionType.selectValue
+        type: ProductVariantCreateReducerActionType.selectValue,
       },
       {
         selectValue: {
           attributeId: attributes[1].id,
-          value: attributes[1].values[1]
+          value: attributes[1].values[1],
         },
-        type: ProductVariantCreateReducerActionType.selectValue
+        type: ProductVariantCreateReducerActionType.selectValue,
       },
       {
         selectValue: {
           attributeId: attributes[1].id,
-          value: attributes[1].values[3]
+          value: attributes[1].values[3],
         },
-        type: ProductVariantCreateReducerActionType.selectValue
+        type: ProductVariantCreateReducerActionType.selectValue,
       },
       {
         selectValue: {
           attributeId: attributes[3].id,
-          value: attributes[3].values[0]
+          value: attributes[3].values[0],
         },
-        type: ProductVariantCreateReducerActionType.selectValue
+        type: ProductVariantCreateReducerActionType.selectValue,
       },
       {
         selectValue: {
           attributeId: attributes[3].id,
-          value: attributes[3].values[4]
+          value: attributes[3].values[4],
         },
-        type: ProductVariantCreateReducerActionType.selectValue
-      }
+        type: ProductVariantCreateReducerActionType.selectValue,
+      },
     ]);
 
     expect(state.attributes[0].values).toHaveLength(2);
@@ -76,20 +76,20 @@ describe("Reducer is able to", () => {
     const state = execActions(thirdStep, reducer, [
       {
         applyPriceOrStockToAll: {
-          mode: "all"
+          mode: "all",
         },
-        type: ProductVariantCreateReducerActionType.applyPriceToAll
+        type: ProductVariantCreateReducerActionType.applyPriceToAll,
       },
       {
         changeApplyPriceToAllValue: {
           channelId: channels[0].id,
-          price
+          price,
         },
-        type: ProductVariantCreateReducerActionType.changeApplyPriceToAllValue
+        type: ProductVariantCreateReducerActionType.changeApplyPriceToAllValue,
       },
       {
-        type: ProductVariantCreateReducerActionType.reload
-      }
+        type: ProductVariantCreateReducerActionType.reload,
+      },
     ]);
     expect(state.price.mode).toBe("all");
     expect(state.price.channels[0].price).toBe(price);
@@ -100,16 +100,16 @@ describe("Reducer is able to", () => {
     const state = execActions(thirdStep, reducer, [
       {
         changeWarehouses: {
-          warehouseId: warehouses[0].id
+          warehouseId: warehouses[0].id,
         },
-        type: ProductVariantCreateReducerActionType.changeWarehouses
+        type: ProductVariantCreateReducerActionType.changeWarehouses,
       },
       {
         changeWarehouses: {
-          warehouseId: warehouses[2].id
+          warehouseId: warehouses[2].id,
         },
-        type: ProductVariantCreateReducerActionType.changeWarehouses
-      }
+        type: ProductVariantCreateReducerActionType.changeWarehouses,
+      },
     ]);
 
     expect(state.warehouses).toHaveLength(2);
@@ -122,20 +122,20 @@ describe("Reducer is able to", () => {
     const state = execActions(thirdStep, reducer, [
       {
         applyPriceOrStockToAll: {
-          mode: "all"
+          mode: "all",
         },
-        type: ProductVariantCreateReducerActionType.applyStockToAll
+        type: ProductVariantCreateReducerActionType.applyStockToAll,
       },
       {
         changeApplyStockToAllValue: {
           quantity,
-          warehouseIndex
+          warehouseIndex,
         },
-        type: ProductVariantCreateReducerActionType.changeApplyStockToAllValue
+        type: ProductVariantCreateReducerActionType.changeApplyStockToAllValue,
       },
       {
-        type: ProductVariantCreateReducerActionType.reload
-      }
+        type: ProductVariantCreateReducerActionType.reload,
+      },
     ]);
 
     expect(state.stock.mode).toBe("all");
@@ -149,42 +149,42 @@ describe("Reducer is able to", () => {
     const state = execActions(thirdStep, reducer, [
       {
         applyPriceOrStockToAll: {
-          mode: "attribute"
+          mode: "attribute",
         },
-        type: ProductVariantCreateReducerActionType.applyPriceToAll
+        type: ProductVariantCreateReducerActionType.applyPriceToAll,
       },
       {
         changeApplyPriceOrStockToAttributeId: {
-          attributeId: attribute.id
+          attributeId: attribute.id,
         },
         type:
-          ProductVariantCreateReducerActionType.changeApplyPriceToAttributeId
+          ProductVariantCreateReducerActionType.changeApplyPriceToAttributeId,
       },
       {
         changeAttributeValuePrice: {
           channelId: channels[0].id,
           price: value.toString(),
-          valueId: attribute.values[0].slug
+          valueId: attribute.values[0].slug,
         },
-        type: ProductVariantCreateReducerActionType.changeAttributeValuePrice
+        type: ProductVariantCreateReducerActionType.changeAttributeValuePrice,
       },
       {
         changeAttributeValuePrice: {
           channelId: channels[1].id,
           price: (value + 6).toString(),
-          valueId: attribute.values[1].slug
+          valueId: attribute.values[1].slug,
         },
-        type: ProductVariantCreateReducerActionType.changeAttributeValuePrice
+        type: ProductVariantCreateReducerActionType.changeAttributeValuePrice,
       },
       {
-        type: ProductVariantCreateReducerActionType.reload
-      }
+        type: ProductVariantCreateReducerActionType.reload,
+      },
     ]);
 
     expect(state.price.mode).toBe("attribute");
     expect(state.price.values).toHaveLength(
       state.attributes.find(attribute => state.price.attribute === attribute.id)
-        .values.length
+        .values.length,
     );
     expect(state).toMatchSnapshot();
   });
@@ -195,42 +195,42 @@ describe("Reducer is able to", () => {
     const state = execActions(thirdStep, reducer, [
       {
         applyPriceOrStockToAll: {
-          mode: "attribute"
+          mode: "attribute",
         },
-        type: ProductVariantCreateReducerActionType.applyStockToAll
+        type: ProductVariantCreateReducerActionType.applyStockToAll,
       },
       {
         changeApplyPriceOrStockToAttributeId: {
-          attributeId: attribute.id
+          attributeId: attribute.id,
         },
         type:
-          ProductVariantCreateReducerActionType.changeApplyStockToAttributeId
+          ProductVariantCreateReducerActionType.changeApplyStockToAttributeId,
       },
       {
         changeAttributeValueStock: {
           quantity,
           valueId: attribute.values[0].slug,
-          warehouseIndex: 0
+          warehouseIndex: 0,
         },
-        type: ProductVariantCreateReducerActionType.changeAttributeValueStock
+        type: ProductVariantCreateReducerActionType.changeAttributeValueStock,
       },
       {
         changeAttributeValueStock: {
           quantity: quantity + 6,
           valueId: attribute.values[1].slug,
-          warehouseIndex: 0
+          warehouseIndex: 0,
         },
-        type: ProductVariantCreateReducerActionType.changeAttributeValueStock
+        type: ProductVariantCreateReducerActionType.changeAttributeValueStock,
       },
       {
-        type: ProductVariantCreateReducerActionType.reload
-      }
+        type: ProductVariantCreateReducerActionType.reload,
+      },
     ]);
 
     expect(state.stock.mode).toBe("attribute");
     expect(state.stock.values).toHaveLength(
       state.attributes.find(attribute => state.stock.attribute === attribute.id)
-        .values.length
+        .values.length,
     );
     expect(state).toMatchSnapshot();
   });
@@ -243,17 +243,17 @@ describe("Reducer is able to", () => {
       {
         changeVariantPriceData: {
           value,
-          variantIndex
+          variantIndex,
         },
-        type: ProductVariantCreateReducerActionType.changeVariantPriceData
-      }
+        type: ProductVariantCreateReducerActionType.changeVariantPriceData,
+      },
     ]);
 
     expect(state.variants[variantIndex].channelListings[0].price).toBe(
-      value.price
+      value.price,
     );
     expect(state.variants[variantIndex - 1].channelListings).toBe(
-      fourthStep.variants[variantIndex - 1].channelListings
+      fourthStep.variants[variantIndex - 1].channelListings,
     );
     expect(state).toMatchSnapshot();
   });
@@ -267,17 +267,17 @@ describe("Reducer is able to", () => {
         changeVariantStockData: {
           stock: {
             quantity,
-            warehouse: warehouses[0].id
+            warehouse: warehouses[0].id,
           },
-          variantIndex
+          variantIndex,
         },
-        type: ProductVariantCreateReducerActionType.changeVariantStockData
-      }
+        type: ProductVariantCreateReducerActionType.changeVariantStockData,
+      },
     ]);
 
     expect(state.variants[variantIndex].stocks[0].quantity).toBe(quantity);
     expect(state.variants[variantIndex - 1].stocks[0].quantity).toBe(
-      fourthStep.variants[variantIndex - 1].stocks[0].quantity
+      fourthStep.variants[variantIndex - 1].stocks[0].quantity,
     );
     expect(state).toMatchSnapshot();
   });
@@ -288,10 +288,10 @@ describe("Reducer is able to", () => {
     const state = execActions(fourthStep, reducer, [
       {
         deleteVariant: {
-          variantIndex
+          variantIndex,
         },
-        type: ProductVariantCreateReducerActionType.deleteVariant
-      }
+        type: ProductVariantCreateReducerActionType.deleteVariant,
+      },
     ]);
 
     expect(state.variants.length).toBe(fourthStep.variants.length - 1);

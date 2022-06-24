@@ -7,10 +7,10 @@ export interface GenericMetadataInput extends MetadataInput {
 }
 
 const removeTypename = ({ __typename, ...input }: GenericMetadataInput) => ({
-  ...input
+  ...input,
 });
 
 export const areMetadataArraysEqual = (
   before: GenericMetadataInput[],
-  after: MetadataInput[]
+  after: MetadataInput[],
 ) => isEqual(sortBy(before.map(removeTypename)), sortBy(after));

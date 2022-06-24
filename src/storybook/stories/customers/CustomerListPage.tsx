@@ -1,9 +1,10 @@
 import { CustomerListUrlSortField } from "@saleor/customers/urls";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import CustomerListPageComponent, {
-  CustomerListPageProps
+  CustomerListPageProps,
 } from "../../../customers/components/CustomerListPage";
 import { customerList } from "../../../customers/fixtures";
 import {
@@ -12,7 +13,7 @@ import {
   pageListProps,
   searchPageProps,
   sortPageProps,
-  tabPageProps
+  tabPageProps,
 } from "../../../fixtures";
 import Decorator from "../../Decorator";
 import { MockedUserProvider } from "./MockedUserProvider";
@@ -30,21 +31,21 @@ const props: CustomerListPageProps = {
       active: false,
       value: {
         max: undefined,
-        min: undefined
-      }
+        min: undefined,
+      },
     },
     numberOfOrders: {
       active: false,
       value: {
         max: undefined,
-        min: undefined
-      }
-    }
+        min: undefined,
+      },
+    },
   },
   sort: {
     ...sortPageProps.sort,
-    sort: CustomerListUrlSortField.name
-  }
+    sort: CustomerListUrlSortField.name,
+  },
 };
 
 const CustomerListPage = props => (
@@ -55,6 +56,7 @@ const CustomerListPage = props => (
 
 storiesOf("Views / Customers / Customer list", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("default", () => <CustomerListPage {...props} />)
   .add("loading", () => (
     <CustomerListPage {...props} disabled={true} customers={undefined} />

@@ -8,7 +8,7 @@ import {
   Filters,
   Pagination,
   Sort,
-  TabActionDialog
+  TabActionDialog,
 } from "../types";
 
 const staffSection = "/staff/";
@@ -16,13 +16,13 @@ const staffSection = "/staff/";
 export const staffListPath = staffSection;
 export enum StaffListUrlFiltersEnum {
   status = "status",
-  query = "query"
+  query = "query",
 }
 export type StaffListUrlFilters = Filters<StaffListUrlFiltersEnum>;
 export type StaffListUrlDialog = "add" | "remove" | TabActionDialog;
 export enum StaffListUrlSortField {
   name = "name",
-  email = "email"
+  email = "email",
 }
 export type StaffListUrlSort = Sort<StaffListUrlSortField>;
 export type StaffListUrlQueryParams = ActiveTab &
@@ -45,5 +45,5 @@ export type StaffMemberDetailsUrlQueryParams = Dialog<
 
 export const staffMemberDetailsUrl = (
   id: string,
-  params?: StaffMemberDetailsUrlQueryParams
+  params?: StaffMemberDetailsUrlQueryParams,
 ) => staffMemberDetailsPath(encodeURIComponent(id)) + "?" + stringifyQs(params);

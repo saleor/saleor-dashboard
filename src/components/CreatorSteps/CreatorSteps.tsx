@@ -12,30 +12,30 @@ const useStyles = makeStyles(
   theme => ({
     label: {
       fontSize: 14,
-      textAlign: "center"
+      textAlign: "center",
     },
     root: {
       borderBottom: `1px solid ${theme.palette.divider}`,
       display: "flex",
       justifyContent: "space-between",
-      marginBottom: theme.spacing(3)
+      marginBottom: theme.spacing(3),
     },
     tab: {
       flex: 1,
       paddingBottom: theme.spacing(),
-      userSelect: "none"
+      userSelect: "none",
     },
     tabActive: {
-      fontWeight: 600
+      fontWeight: 600,
     },
     tabVisited: {
       borderBottom: `3px solid ${theme.palette.primary.main}`,
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   }),
   {
-    name: "CreatorSteps"
-  }
+    name: "CreatorSteps",
+  },
 );
 
 export interface CreatorStepsProps<T> {
@@ -48,7 +48,7 @@ function makeCreatorSteps<T extends string | number>() {
   const CreatorSteps: React.FC<CreatorStepsProps<T>> = ({
     currentStep,
     steps,
-    onStepClick
+    onStepClick,
   }) => {
     const classes = useStyles({});
 
@@ -62,7 +62,7 @@ function makeCreatorSteps<T extends string | number>() {
             <div
               className={classNames(classes.tab, {
                 [classes.tabActive]: step.value === currentStep,
-                [classes.tabVisited]: visitedStep
+                [classes.tabVisited]: visitedStep,
               })}
               onClick={visitedStep ? () => onStepClick(step.value) : undefined}
               key={step.value}

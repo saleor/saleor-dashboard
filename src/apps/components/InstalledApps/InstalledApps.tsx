@@ -1,19 +1,18 @@
 import {
   Card,
+  Switch,
   TableBody,
   TableCell,
-  TableFooter,
   TableRow,
-  Typography
+  Typography,
 } from "@material-ui/core";
-import { appDetailsUrl, appUrl } from "@saleor/apps/urls";
-import { Button } from "@saleor/components/Button";
+import { useAppListContext } from "@saleor/apps/context";
+import { appUrl } from "@saleor/apps/urls";
 import CardTitle from "@saleor/components/CardTitle";
 import { IconButton } from "@saleor/components/IconButton";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
-import TablePagination from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
-import { AppsListQuery } from "@saleor/graphql";
+import { AppListItemFragment, AppsListQuery } from "@saleor/graphql";
 import { DeleteIcon, ResponsiveTable } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { ListProps } from "@saleor/types";
@@ -22,54 +21,44 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "../../styles";
+import { AppPermissions } from "../AppPermissions/AppPermissions";
 import AppsSkeleton from "../AppsSkeleton";
-import DeactivatedText from "../DeactivatedText";
 
 export interface InstalledAppsProps extends ListProps {
   appsList: AppsListQuery["apps"]["edges"];
   onRemove: (id: string) => void;
 }
-const numberOfColumns = 2;
 
 const InstalledApps: React.FC<InstalledAppsProps> = ({
   appsList,
   onRemove,
   settings,
   disabled,
-  onNextPage,
-  onPreviousPage,
   onUpdateListSettings,
-  pageInfo,
   ...props
 }) => {
   const intl = useIntl();
   const classes = useStyles(props);
+  const { activateApp, deactivateApp } = useAppListContext();
+
+  const getHandleToggle = (app: AppListItemFragment) => () => {
+    if (app.isActive) {
+      deactivateApp(app.id);
+    } else {
+      activateApp(app.id);
+    }
+  };
 
   return (
     <Card className={classes.apps}>
       <CardTitle
         title={intl.formatMessage({
-          id: "ZeD2TK",
-          defaultMessage: "Third-party Apps",
-          description: "section header"
+          id: "BvmnJq",
+          defaultMessage: "Third Party Apps",
+          description: "section header",
         })}
       />
       <ResponsiveTable>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              colSpan={numberOfColumns}
-              settings={settings}
-              hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-              onNextPage={onNextPage}
-              onUpdateListSettings={onUpdateListSettings}
-              hasPreviousPage={
-                pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-              }
-              onPreviousPage={onPreviousPage}
-            />
-          </TableRow>
-        </TableFooter>
         <TableBody>
           {renderCollection(
             appsList,
@@ -84,11 +73,6 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                     <span data-tc="name" className={classes.appName}>
                       {app.node.name}
                     </span>
-                    {!app.node.isActive && (
-                      <div className={classes.statusWrapper}>
-                        <DeactivatedText />
-                      </div>
-                    )}
                   </TableCell>
                   <TableCell className={classes.colAction}>
                     {app.node.appUrl && (
@@ -100,14 +84,12 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                       </Typography>
                     )}
                     <TableButtonWrapper>
-                      <Button href={appDetailsUrl(app.node.id)}>
-                        <FormattedMessage
-                          id="TBaMo2"
-                          defaultMessage="About"
-                          description="about app"
-                        />
-                      </Button>
+                      <Switch
+                        checked={app.node.isActive}
+                        onChange={getHandleToggle(app.node)}
+                      />
                     </TableButtonWrapper>
+                    <AppPermissions permissions={app.node.permissions} />
                     <TableButtonWrapper>
                       <IconButton
                         variant="secondary"
@@ -134,7 +116,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                   </Typography>
                 </TableCell>
               </TableRow>
-            )
+            ),
           )}
         </TableBody>
       </ResponsiveTable>

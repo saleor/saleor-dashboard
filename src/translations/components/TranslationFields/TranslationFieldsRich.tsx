@@ -3,6 +3,7 @@ import { Typography } from "@material-ui/core";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import RichTextEditor from "@saleor/components/RichTextEditor";
 import RichTextEditorContent from "@saleor/components/RichTextEditor/RichTextEditorContent";
+import { RichTextEditorLoading } from "@saleor/components/RichTextEditor/RichTextEditorLoading";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import useRichText from "@saleor/utils/richText/useRichText";
@@ -28,36 +29,54 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
   saveButtonState,
   resetKey,
   onDiscard,
-  onSubmit
+  onSubmit,
 }) => {
   const intl = useIntl();
 
   const { setIsDirty, setExitDialogSubmitRef } = useExitFormDialog();
 
-  const [content, change] = useRichText({
+  const {
+    defaultValue,
+    editorRef,
+    isReadyForMount,
+    handleChange,
+    getValue,
+  } = useRichText({
     initial,
-    triggerChange: () => setIsDirty(true)
+    triggerChange: () => setIsDirty(true),
   });
 
-  useEffect(() => setExitDialogSubmitRef(onSubmit), [content]);
+  useEffect(() => setExitDialogSubmitRef(onSubmit), [onSubmit]);
 
-  const submit = () => onSubmit(content.current);
+  const submit = async () => onSubmit(await getValue());
 
   return edit ? (
     <form onSubmit={submit}>
-      <RichTextEditor
-        data={content.current}
-        disabled={disabled}
-        error={undefined}
-        helperText={undefined}
-        label={intl.formatMessage({
-          id: "/vCXIP",
-          defaultMessage: "Translation"
-        })}
-        name="translation"
-        data-test-id="translation-field"
-        onChange={change}
-      />
+      {isReadyForMount ? (
+        <RichTextEditor
+          defaultValue={defaultValue}
+          editorRef={editorRef}
+          onChange={handleChange}
+          disabled={disabled}
+          error={undefined}
+          helperText={undefined}
+          label={intl.formatMessage({
+            id: "/vCXIP",
+            defaultMessage: "Translation",
+          })}
+          name="translation"
+          data-test-id="translation-field"
+        />
+      ) : (
+        <RichTextEditorLoading
+          label={intl.formatMessage({
+            id: "/vCXIP",
+            defaultMessage: "Translation",
+          })}
+          name="translation"
+          data-test-id="translation-field"
+        />
+      )}
       <TranslationFieldsSave
         saveButtonState={saveButtonState}
         onDiscard={onDiscard}
@@ -70,7 +89,9 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
     </Typography>
   ) : (
     <Typography>
-      <RichTextEditorContent key={resetKey} data={JSON.parse(initial)} />
+      {isReadyForMount && (
+        <RichTextEditorContent key={resetKey} value={defaultValue} />
+      )}
     </Typography>
   );
 };

@@ -1,9 +1,9 @@
 import { useSaleTranslationsQuery } from "@saleor/graphql";
-import usePaginator from "@saleor/hooks/usePaginator";
+import usePaginator, { PaginatorContext } from "@saleor/hooks/usePaginator";
 import TranslationsEntitiesList from "@saleor/translations/components/TranslationsEntitiesList";
 import {
   languageEntityUrl,
-  TranslatableEntities
+  TranslatableEntities,
 } from "@saleor/translations/urls";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
@@ -13,42 +13,39 @@ import { sumCompleted } from "./utils";
 
 const TranslationsSaleList: React.FC<TranslationsEntityListProps> = ({
   params,
-  variables
+  variables,
 }) => {
-  const paginate = usePaginator();
-
   const { data, loading } = useSaleTranslationsQuery({
     displayLoader: true,
-    variables
+    variables,
   });
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    data?.translations?.pageInfo,
-    variables,
-    params
-  );
+  const paginationValues = usePaginator({
+    pageInfo: data?.translations?.pageInfo,
+    paginationState: variables,
+    queryString: params,
+  });
 
   return (
-    <TranslationsEntitiesList
-      disabled={loading}
-      entities={mapEdgesToItems(data?.translations)?.map(
-        node =>
-          node.__typename === "SaleTranslatableContent" && {
-            completion: {
-              current: sumCompleted([node.translation?.name]),
-              max: 1
+    <PaginatorContext.Provider value={paginationValues}>
+      <TranslationsEntitiesList
+        disabled={loading}
+        entities={mapEdgesToItems(data?.translations)?.map(
+          node =>
+            node.__typename === "SaleTranslatableContent" && {
+              completion: {
+                current: sumCompleted([node.translation?.name]),
+                max: 1,
+              },
+              id: node.sale?.id,
+              name: node.sale?.name,
             },
-            id: node.sale?.id,
-            name: node.sale?.name
-          }
-      )}
-      getRowHref={id =>
-        languageEntityUrl(variables.language, TranslatableEntities.sales, id)
-      }
-      onNextPage={loadNextPage}
-      onPreviousPage={loadPreviousPage}
-      pageInfo={pageInfo}
-    />
+        )}
+        getRowHref={id =>
+          languageEntityUrl(variables.language, TranslatableEntities.sales, id)
+        }
+      />
+    </PaginatorContext.Provider>
   );
 };
 

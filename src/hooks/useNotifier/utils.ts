@@ -5,14 +5,14 @@ import { IntlShape } from "react-intl";
 
 export const getDefaultNotifierSuccessErrorData = (
   errors: any[],
-  intl: IntlShape
+  intl: IntlShape,
 ): IMessage =>
   !errors.length
     ? {
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges)
+        text: intl.formatMessage(commonMessages.savedChanges),
       }
     : {
         status: "error",
-        text: intl.formatMessage(commonErrorMessages.unknownError)
+        text: intl.formatMessage(commonErrorMessages.unknownError),
       };

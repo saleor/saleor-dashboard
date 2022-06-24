@@ -4,33 +4,33 @@ import { makeStyles } from "@saleor/macaw-ui";
 const useStyles = makeStyles(
   theme => ({
     andLabel: {
-      margin: theme.spacing(0, 2)
+      margin: theme.spacing(0, 2),
     },
     arrow: {
-      marginRight: theme.spacing(2)
+      marginRight: theme.spacing(2),
     },
     filterSettings: {
       background: fade(theme.palette.primary.main, 0.1),
-      padding: theme.spacing(2, 3)
+      padding: theme.spacing(2, 3),
     },
     inputRange: {
       alignItems: "center",
-      display: "flex"
+      display: "flex",
     },
 
     option: {
       left: theme.spacing(-0.5),
-      position: "relative"
+      position: "relative",
     },
     optionRadio: {
-      left: theme.spacing(-0.25)
+      left: theme.spacing(-0.25),
     },
 
     fieldInput: {
-      padding: "12px 0 9px 12px"
-    }
+      padding: "12px 0 9px 12px",
+    },
   }),
-  { name: "Filter" }
+  { name: "Filter" },
 );
 
 export default useStyles;

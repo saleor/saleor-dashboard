@@ -8,8 +8,8 @@ import Decorator from "../../Decorator";
 const props: MoneyProps = {
   money: {
     amount: 14,
-    currency: "EUR"
-  }
+    currency: "EUR",
+  },
 };
 
 storiesOf("Generics / Money formatting", module)

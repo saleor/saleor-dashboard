@@ -1,14 +1,15 @@
 import { PageListUrlSortField } from "@saleor/pages/urls";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import {
   listActionsProps,
   pageListProps,
-  sortPageProps
+  sortPageProps,
 } from "../../../fixtures";
 import PageListPage, {
-  PageListPageProps
+  PageListPageProps,
 } from "../../../pages/components/PageListPage";
 import { pageList } from "../../../pages/fixtures";
 import Decorator from "../../Decorator";
@@ -20,19 +21,20 @@ const props: PageListPageProps = {
   pages: pageList,
   sort: {
     ...sortPageProps.sort,
-    sort: PageListUrlSortField.title
+    sort: PageListUrlSortField.title,
   },
   actionDialogOpts: {
     open: () => undefined,
-    close: () => undefined
+    close: () => undefined,
   },
   params: {
-    ids: []
-  }
+    ids: [],
+  },
 };
 
 storiesOf("Views / Pages / Page list", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("default", () => <PageListPage {...props} />)
   .add("loading", () => (
     <PageListPage {...props} disabled={true} pages={undefined} />

@@ -32,7 +32,7 @@ const AttributeSwatchField: React.FC<AttributeSwatchFieldProps<
   const [processing, setProcessing] = useState(false);
   const [uploadFile] = useFileUploadMutation({});
   const [type, setType] = useState<SwatchType>(
-    data.fileUrl ? "image" : "picker"
+    data.fileUrl ? "image" : "picker",
   );
 
   const handleColorChange = (hex: string) =>
@@ -42,20 +42,20 @@ const AttributeSwatchField: React.FC<AttributeSwatchFieldProps<
     setProcessing(true);
 
     const {
-      data: { fileUpload }
+      data: { fileUpload },
     } = await uploadFile({ variables: { file } });
 
     if (fileUpload.errors?.length) {
       notify({
         status: "error",
         title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
-        text: intl.formatMessage(errorMessages.imageUploadErrorText)
+        text: intl.formatMessage(errorMessages.imageUploadErrorText),
       });
     } else {
       set({
         fileUrl: fileUpload.uploadedFile.url,
         contentType: fileUpload.uploadedFile.contentType,
-        value: undefined
+        value: undefined,
       });
     }
 
@@ -66,7 +66,7 @@ const AttributeSwatchField: React.FC<AttributeSwatchFieldProps<
     set({
       fileUrl: undefined,
       contentType: undefined,
-      value: undefined
+      value: undefined,
     });
 
   return (
@@ -76,12 +76,12 @@ const AttributeSwatchField: React.FC<AttributeSwatchFieldProps<
         choices={[
           {
             label: formatMessage(swatchFieldMessages.picker),
-            value: "picker"
+            value: "picker",
           },
           {
             label: formatMessage(swatchFieldMessages.image),
-            value: "image"
-          }
+            value: "image",
+          },
         ]}
         variant="inline"
         label={<FormattedMessage {...inputTypeMessages.swatch} />}
@@ -99,7 +99,7 @@ const AttributeSwatchField: React.FC<AttributeSwatchFieldProps<
             onFileUpload={handleFileUpload}
             onFileDelete={handleFileDelete}
             inputProps={{
-              accept: "image/*"
+              accept: "image/*",
             }}
           />
 

@@ -2,7 +2,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle
+  DialogTitle,
 } from "@material-ui/core";
 import AddressEdit from "@saleor/components/AddressEdit";
 import BackButton from "@saleor/components/BackButton";
@@ -12,7 +12,7 @@ import {
   AccountErrorFragment,
   AddressFragment,
   AddressInput,
-  CountryWithCodeFragment
+  CountryWithCodeFragment,
 } from "@saleor/graphql";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
@@ -40,10 +40,10 @@ export interface CustomerAddressDialogProps {
 const useStyles = makeStyles(
   {
     overflow: {
-      overflowY: "visible"
-    }
+      overflowY: "visible",
+    },
   },
-  { name: "CustomerAddressDialog" }
+  { name: "CustomerAddressDialog" },
 );
 
 const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
@@ -54,19 +54,19 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
   open,
   variant,
   onClose,
-  onConfirm
+  onConfirm,
 }) => {
   const classes = useStyles();
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps(
-    address?.country.country || ""
+    address?.country.country || "",
   );
   const {
     errors: validationErrors,
-    submit: handleSubmit
+    submit: handleSubmit,
   } = useAddressValidation(onConfirm);
   const dialogErrors = useModalDialogErrors(
     [...errors, ...validationErrors],
-    open
+    open,
   );
 
   const initialForm: AddressTypeInput = {
@@ -80,7 +80,7 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
     phone: address?.phone || "",
     postalCode: address?.postalCode || "",
     streetAddress1: address?.streetAddress1 || "",
-    streetAddress2: address?.streetAddress2 || ""
+    streetAddress2: address?.streetAddress2 || "",
   };
 
   const countryChoices = mapCountriesToChoices(countries || []);
@@ -98,7 +98,7 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
           const handleCountrySelect = createSingleAutocompleteSelectHandler(
             change,
             setCountryDisplayName,
-            countryChoices
+            countryChoices,
           );
 
           return (

@@ -20,7 +20,7 @@ const CustomerCreateNote: React.FC<CustomerCreateNoteProps> = ({
   data,
   disabled,
   errors,
-  onChange
+  onChange,
 }) => {
   const intl = useIntl();
 
@@ -32,7 +32,7 @@ const CustomerCreateNote: React.FC<CustomerCreateNoteProps> = ({
         title={intl.formatMessage({
           id: "qNcoRY",
           defaultMessage: "Notes",
-          description: "notes about customer header"
+          description: "notes about customer header",
         })}
       />
       <CardContent>
@@ -53,7 +53,7 @@ const CustomerCreateNote: React.FC<CustomerCreateNoteProps> = ({
           label={intl.formatMessage({
             id: "uUQ+Al",
             defaultMessage: "Note",
-            description: "note about customer"
+            description: "note about customer",
           })}
           value={data.note}
           onChange={onChange}

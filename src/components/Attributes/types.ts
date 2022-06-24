@@ -1,17 +1,18 @@
 import {
   AttributeValueFragment,
   PageErrorWithAttributesFragment,
-  ProductErrorWithAttributesFragment
+  ProductErrorWithAttributesFragment,
 } from "@saleor/graphql";
 import { FormsetChange } from "@saleor/hooks/useFormset";
 import { FetchMoreProps, ReorderEvent } from "@saleor/types";
+import { RichTextGetters } from "@saleor/utils/richText/useMultipleRichText";
 
 import { AttributeInput } from "./Attributes";
 
 export enum VariantAttributeScope {
   ALL = "ALL",
   VARIANT_SELECTION = "VARIANT_SELECTION",
-  NOT_VARIANT_SELECTION = "NOT_VARIANT_SELECTION"
+  NOT_VARIANT_SELECTION = "NOT_VARIANT_SELECTION",
 }
 
 export interface AttributeRowHandlers {
@@ -31,6 +32,6 @@ export interface AttributeRowProps extends AttributeRowHandlers {
   disabled: boolean;
   error: ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment;
   loading: boolean;
-  entityId: string;
   onAttributeSelectBlur?: () => void;
+  richTextGetters: RichTextGetters<string>;
 }

@@ -3,7 +3,7 @@ import {
   TableBody,
   TableCell,
   TableFooter,
-  TableRow
+  TableRow,
 } from "@material-ui/core";
 import Checkbox from "@saleor/components/Checkbox";
 import IconButtonTableCell from "@saleor/components/IconButtonTableCell";
@@ -12,7 +12,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { MenuFragment } from "@saleor/graphql";
 import { DeleteIcon, makeStyles } from "@saleor/macaw-ui";
@@ -35,24 +35,24 @@ const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
       colItems: {
-        width: 200
+        width: 200,
       },
-      colTitle: {}
+      colTitle: {},
     },
     colAction: {
-      width: 84
+      width: 84,
     },
     colItems: {
-      textAlign: "right"
+      textAlign: "right",
     },
     colTitle: {
-      paddingLeft: 0
+      paddingLeft: 0,
     },
     row: {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   }),
-  { name: "MenuList" }
+  { name: "MenuList" },
 );
 
 const numberOfColumns = 4;
@@ -64,16 +64,13 @@ const MenuList: React.FC<MenuListProps> = props => {
     isChecked,
     menus,
     onDelete,
-    onNextPage,
-    onPreviousPage,
     onUpdateListSettings,
     onSort,
-    pageInfo,
     selected,
     sort,
     toggle,
     toggleAll,
-    toolbar
+    toolbar,
   } = props;
 
   const classes = useStyles(props);
@@ -121,16 +118,10 @@ const MenuList: React.FC<MenuListProps> = props => {
         </TableHead>
         <TableFooter>
           <TableRow>
-            <TablePagination
+            <TablePaginationWithContext
               colSpan={numberOfColumns}
               settings={settings}
-              hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-              onNextPage={onNextPage}
               onUpdateListSettings={onUpdateListSettings}
-              hasPreviousPage={
-                pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-              }
-              onPreviousPage={onPreviousPage}
             />
           </TableRow>
         </TableFooter>
@@ -162,7 +153,7 @@ const MenuList: React.FC<MenuListProps> = props => {
                   <TableCell className={classes.colItems}>
                     {maybe<React.ReactNode>(
                       () => menu.items.length,
-                      <Skeleton />
+                      <Skeleton />,
                     )}
                   </TableCell>
                   <TableButtonWrapper>
@@ -186,7 +177,7 @@ const MenuList: React.FC<MenuListProps> = props => {
                   />
                 </TableCell>
               </TableRow>
-            )
+            ),
           )}
         </TableBody>
       </ResponsiveTable>

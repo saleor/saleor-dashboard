@@ -1,14 +1,14 @@
 import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
 import {
   AttributeListUrlSortField,
-  attributeUrl
+  attributeUrl,
 } from "@saleor/attributes/urls";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { AttributeFragment } from "@saleor/graphql";
 import { translateBoolean } from "@saleor/intl";
@@ -30,39 +30,39 @@ const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
       colFaceted: {
-        width: 180
+        width: 180,
       },
       colName: {
-        width: "auto"
+        width: "auto",
       },
       colSearchable: {
-        width: 180
+        width: 180,
       },
       colSlug: {
-        width: 200
+        width: 200,
       },
       colVisible: {
-        width: 180
-      }
+        width: 180,
+      },
     },
     colFaceted: {
-      textAlign: "center"
+      textAlign: "center",
     },
     colName: {},
     colSearchable: {
-      textAlign: "center"
+      textAlign: "center",
     },
     colSlug: {
-      paddingLeft: 0
+      paddingLeft: 0,
     },
     colVisible: {
-      textAlign: "center"
+      textAlign: "center",
     },
     link: {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   }),
-  { name: "AttributeList" }
+  { name: "AttributeList" },
 );
 
 const numberOfColumns = 6;
@@ -71,15 +71,12 @@ const AttributeList: React.FC<AttributeListProps> = ({
   attributes,
   disabled,
   isChecked,
-  onNextPage,
-  onPreviousPage,
-  pageInfo,
   selected,
   sort,
   toggle,
   toggleAll,
   toolbar,
-  onSort
+  onSort,
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
@@ -172,15 +169,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
       </TableHead>
       <TableFooter>
         <TableRow>
-          <TablePagination
-            colSpan={numberOfColumns}
-            hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-            onNextPage={onNextPage}
-            hasPreviousPage={
-              pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-            }
-            onPreviousPage={onPreviousPage}
-          />
+          <TablePaginationWithContext colSpan={numberOfColumns} />
         </TableRow>
       </TableFooter>
       <TableBody>
@@ -227,7 +216,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
                   className={classes.colSearchable}
                   data-test-id="searchable"
                   data-test-searchable={maybe(
-                    () => attribute.filterableInDashboard
+                    () => attribute.filterableInDashboard,
                   )}
                 >
                   {attribute ? (
@@ -240,7 +229,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
                   className={classes.colFaceted}
                   data-test-id="use-in-faceted-search"
                   data-test-use-in-faceted-search={maybe(
-                    () => attribute.filterableInStorefront
+                    () => attribute.filterableInStorefront,
                   )}
                 >
                   {attribute ? (
@@ -261,7 +250,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
                 />
               </TableCell>
             </TableRow>
-          )
+          ),
         )}
       </TableBody>
     </ResponsiveTable>

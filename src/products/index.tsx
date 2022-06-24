@@ -21,7 +21,7 @@ import {
   ProductVariantAddUrlQueryParams,
   productVariantCreatorPath,
   productVariantEditPath,
-  ProductVariantEditUrlQueryParams
+  ProductVariantEditUrlQueryParams,
 } from "./urls";
 import ProductCreateComponent from "./views/ProductCreate";
 import ProductImageComponent from "./views/ProductImage";
@@ -40,9 +40,9 @@ const ProductList: React.FC<RouteComponentProps<any>> = ({ location }) => {
       collections: getArrayQueryParam(qs.collections),
       ids: getArrayQueryParam(qs.ids),
       productTypes: getArrayQueryParam(qs.productTypes),
-      productKind: qs.productKind
+      productKind: qs.productKind,
     },
-    ProductListUrlSortField
+    ProductListUrlSortField,
   );
 
   return <ProductListComponent params={params} />;
@@ -57,7 +57,7 @@ const ProductUpdate: React.FC<RouteComponentProps<any>> = ({ match }) => {
       id={decodeURIComponent(match.params.id)}
       params={{
         ...params,
-        ids: getArrayQueryParam(qs.ids)
+        ids: getArrayQueryParam(qs.ids),
       }}
     />
   );
@@ -85,7 +85,7 @@ const ProductVariant: React.FC<RouteComponentProps<any>> = ({ match }) => {
 
 const ProductImage: React.FC<RouteComponentProps<any>> = ({
   location,
-  match
+  match,
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: ProductImageUrlQueryParams = qs;
@@ -100,7 +100,7 @@ const ProductImage: React.FC<RouteComponentProps<any>> = ({
 };
 
 const ProductVariantCreate: React.FC<RouteComponentProps<any>> = ({
-  match
+  match,
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: ProductVariantAddUrlQueryParams = qs;

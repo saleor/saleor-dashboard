@@ -1,4 +1,10 @@
-import { getAttributesDisplayData } from "@saleor/attributes/utils/data";
+import {
+  getAttributesDisplayData,
+  getRichTextAttributesFromMap,
+  getRichTextDataFromAttributes,
+  mergeAttributes,
+  RichTextProps,
+} from "@saleor/attributes/utils/data";
 import {
   createAttributeChangeHandler,
   createAttributeFileChangeHandler,
@@ -6,11 +12,11 @@ import {
   createAttributeReferenceChangeHandler,
   createAttributeValueReorderHandler,
   createFetchMoreReferencesHandler,
-  createFetchReferencesHandler
+  createFetchReferencesHandler,
 } from "@saleor/attributes/utils/handlers";
 import {
   ChannelPriceAndPreorderData,
-  IChannelPriceAndPreorderArgs
+  IChannelPriceAndPreorderArgs,
 } from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
@@ -19,37 +25,38 @@ import {
   ProductVariantFragment,
   SearchPagesQuery,
   SearchProductsQuery,
-  SearchWarehousesQuery
+  SearchWarehousesQuery,
 } from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
   FormErrors,
-  SubmitPromise
+  SubmitPromise,
 } from "@saleor/hooks/useForm";
 import useFormset, {
   FormsetChange,
-  FormsetData
+  FormsetData,
 } from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import { errorMessages } from "@saleor/intl";
 import {
   getAttributeInputFromVariant,
-  getStockInputFromVariant
+  getStockInputFromVariant,
 } from "@saleor/products/utils/data";
 import {
   createPreorderEndDateChangeHandler,
-  getChannelsInput
+  getChannelsInput,
 } from "@saleor/products/utils/handlers";
 import {
   validateCostPrice,
-  validatePrice
+  validatePrice,
 } from "@saleor/products/utils/validation";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import { arrayDiff } from "@saleor/utils/arrays";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
+import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
@@ -119,9 +126,10 @@ export interface ProductVariantUpdateHandlers
 
 export interface UseProductVariantUpdateFormResult
   extends CommonUseFormResultWithHandlers<
-    ProductVariantUpdateData,
-    ProductVariantUpdateHandlers
-  > {
+      ProductVariantUpdateData,
+      ProductVariantUpdateHandlers
+    >,
+    Omit<RichTextProps, "richText"> {
   formErrors: FormErrors<ProductVariantUpdateData>;
   disabled: boolean;
 }
@@ -138,7 +146,7 @@ function useProductVariantUpdateForm(
   variant: ProductVariantFragment,
   onSubmit: (data: ProductVariantUpdateSubmitData) => SubmitPromise,
   loading: boolean,
-  opts: UseProductVariantUpdateFormOpts
+  opts: UseProductVariantUpdateFormOpts,
 ): UseProductVariantUpdateFormResult {
   const intl = useIntl();
   const attributeInput = getAttributeInputFromVariant(variant);
@@ -146,13 +154,13 @@ function useProductVariantUpdateForm(
 
   const currentChannelsWithPreorderInfo = opts.currentChannels?.map(channel => {
     const variantChannel = variant?.channelListings?.find(
-      channelListing => channelListing.channel.id === channel.id
+      channelListing => channelListing.channel.id === channel.id,
     );
 
     return {
       ...channel,
       preorderThreshold: variantChannel?.preorderThreshold?.quantity,
-      soldUnits: variantChannel?.preorderThreshold?.soldUnits
+      soldUnits: variantChannel?.preorderThreshold?.soldUnits,
     };
   });
 
@@ -169,11 +177,11 @@ function useProductVariantUpdateForm(
     hasPreorderEndDate: !!variant?.preorder?.endDate,
     preorderEndDateTime: variant?.preorder?.endDate,
     weight: variant?.weight?.value.toString() || "",
-    quantityLimitPerCustomer: variant?.quantityLimitPerCustomer || null
+    quantityLimitPerCustomer: variant?.quantityLimitPerCustomer || null,
   };
 
   const form = useForm(initial, undefined, {
-    confirmLeave: true
+    confirmLeave: true,
   });
 
   const {
@@ -181,60 +189,67 @@ function useProductVariantUpdateForm(
     triggerChange,
     data: formData,
     formId,
-    setIsSubmitDisabled
+    setIsSubmitDisabled,
   } = form;
 
   const { setExitDialogSubmitRef } = useExitFormDialog({
-    formId
+    formId,
   });
 
   const attributes = useFormset(attributeInput);
+  const {
+    getters: attributeRichTextGetters,
+    getValues: getAttributeRichTextValues,
+  } = useMultipleRichText({
+    initial: getRichTextDataFromAttributes(attributes.data),
+    triggerChange,
+  });
   const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset(stockInput);
   const channels = useFormset(channelsInput);
   const {
     isMetadataModified,
     isPrivateMetadataModified,
-    makeChangeHandler: makeMetadataChangeHandler
+    makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
 
   const changeMetadata = makeMetadataChangeHandler(handleChange);
   const handleAttributeChange = createAttributeChangeHandler(
     attributes.change,
-    triggerChange
+    triggerChange,
   );
   const handleAttributeMultiChange = createAttributeMultiChangeHandler(
     attributes.change,
     attributes.data,
-    triggerChange
+    triggerChange,
   );
   const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(
     attributes.change,
-    triggerChange
+    triggerChange,
   );
   const handleFetchReferences = createFetchReferencesHandler(
     attributes.data,
     opts.assignReferencesAttributeId,
     opts.fetchReferencePages,
-    opts.fetchReferenceProducts
+    opts.fetchReferenceProducts,
   );
   const handleFetchMoreReferences = createFetchMoreReferencesHandler(
     attributes.data,
     opts.assignReferencesAttributeId,
     opts.fetchMoreReferencePages,
-    opts.fetchMoreReferenceProducts
+    opts.fetchMoreReferenceProducts,
   );
   const handleAttributeFileChange = createAttributeFileChangeHandler(
     attributes.change,
     attributesWithNewFileValue.data,
     attributesWithNewFileValue.add,
     attributesWithNewFileValue.change,
-    triggerChange
+    triggerChange,
   );
   const handleAttributeValueReorder = createAttributeValueReorderHandler(
     attributes.change,
     attributes.data,
-    triggerChange
+    triggerChange,
   );
 
   const handleStockAdd = (id: string) => {
@@ -243,11 +258,11 @@ function useProductVariantUpdateForm(
       data: {
         quantityAllocated:
           variant?.stocks?.find(stock => stock.warehouse.id === id)
-            ?.quantityAllocated || 0
+            ?.quantityAllocated || 0,
       },
       id,
       label: opts.warehouses.find(warehouse => warehouse.id === id).name,
-      value: "0"
+      value: "0",
     });
   };
   const handleStockChange = (id: string, value: string) => {
@@ -266,7 +281,7 @@ function useProductVariantUpdateForm(
   const handlePreorderEndDateChange = createPreorderEndDateChangeHandler(
     form,
     triggerChange,
-    intl.formatMessage(errorMessages.preorderEndDateInFutureErrorText)
+    intl.formatMessage(errorMessages.preorderEndDateInFutureErrorText),
   );
 
   const dataStocks = stocks.data.map(stock => stock.id);
@@ -274,10 +289,10 @@ function useProductVariantUpdateForm(
   const stockDiff = arrayDiff(variantStocks, dataStocks);
 
   const addStocks = stocks.data.filter(stock =>
-    stockDiff.added.some(addedStock => addedStock === stock.id)
+    stockDiff.added.some(addedStock => addedStock === stock.id),
   );
   const updateStocks = stocks.data.filter(
-    stock => !stockDiff.added.some(addedStock => addedStock === stock.id)
+    stock => !stockDiff.added.some(addedStock => addedStock === stock.id),
   );
 
   const data: ProductVariantUpdateData = {
@@ -286,32 +301,38 @@ function useProductVariantUpdateForm(
       attributes.data,
       attributesWithNewFileValue.data,
       opts.referencePages,
-      opts.referenceProducts
+      opts.referenceProducts,
     ),
     channelListings: channels.data,
-    stocks: stocks.data
+    stocks: stocks.data,
   };
 
   const disabled =
     channels?.data.some(
       channelData =>
         validatePrice(channelData.value.price) ||
-        validateCostPrice(channelData.value.costPrice)
+        validateCostPrice(channelData.value.costPrice),
     ) ||
     (data.isPreorder &&
       data.hasPreorderEndDate &&
       !!form.errors.preorderEndDateTime);
 
-  const submitData: ProductVariantUpdateSubmitData = {
+  const getSubmitData = async (): Promise<ProductVariantUpdateSubmitData> => ({
     ...formData,
     ...getMetadata(formData, isMetadataModified, isPrivateMetadataModified),
     addStocks,
-    attributes: attributes.data,
+    attributes: mergeAttributes(
+      attributes.data,
+      getRichTextAttributesFromMap(
+        attributes.data,
+        await getAttributeRichTextValues(),
+      ),
+    ),
     attributesWithNewFileValue: attributesWithNewFileValue.data,
     channelListings: channels.data,
     removeStocks: stockDiff.removed,
-    updateStocks
-  };
+    updateStocks,
+  });
 
   const handleSubmit = async (data: ProductVariantUpdateSubmitData) => {
     const errors = await onSubmit(data);
@@ -325,10 +346,10 @@ function useProductVariantUpdateForm(
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit: handleSubmit
+    onSubmit: handleSubmit,
   });
 
-  const submit = () => handleFormSubmit(submitData);
+  const submit = async () => handleFormSubmit(await getSubmitData());
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
@@ -353,10 +374,11 @@ function useProductVariantUpdateForm(
       selectAttribute: handleAttributeChange,
       selectAttributeFile: handleAttributeFileChange,
       selectAttributeMultiple: handleAttributeMultiChange,
-      selectAttributeReference: handleAttributeReferenceChange
+      selectAttributeReference: handleAttributeReferenceChange,
     },
     submit,
-    isSaveDisabled
+    isSaveDisabled,
+    attributeRichTextGetters,
   };
 }
 

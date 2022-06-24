@@ -8,31 +8,31 @@ const useStyles = makeStyles(
   theme => ({
     cardContent: {
       "&:last-child": {
-        padding: theme.spacing(2, 3)
+        padding: theme.spacing(2, 3),
       },
       display: "grid",
       gridColumnGap: theme.spacing(3),
-      gridTemplateColumns: "1fr 64px"
+      gridTemplateColumns: "1fr 64px",
     },
     cardSpacing: {
       [theme.breakpoints.down("sm")]: {
-        marginBottom: theme.spacing(1)
+        marginBottom: theme.spacing(1),
       },
-      marginBottom: theme.spacing(3)
+      marginBottom: theme.spacing(3),
     },
     cardSubtitle: {
       fontSize: 12,
       height: "20px",
-      lineHeight: 0.9
+      lineHeight: 0.9,
     },
     cardTitle: {
       fontSize: 20,
-      fontWeight: 500 as 500
+      fontWeight: 500 as 500,
     },
     icon: {
       color: theme.palette.primary.contrastText,
       fontSize: 54,
-      margin: ".5rem .3rem"
+      margin: ".5rem .3rem",
     },
     iconBackground: {
       backgroundColor: theme.palette.background.default,
@@ -41,13 +41,13 @@ const useStyles = makeStyles(
       fontSize: "54px",
       height: "100%",
       padding: "10px 5px 0px 5px",
-      width: "100%"
+      width: "100%",
     },
     value: {
-      textAlign: "right"
-    }
+      textAlign: "right",
+    },
   }),
-  { name: "HomeAnalyticsCard" }
+  { name: "HomeAnalyticsCard" },
 );
 
 interface HomeAnalyticsCardProps {

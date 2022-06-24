@@ -146,3 +146,10 @@ Cypress.Commands.add("softExpectSkeletonIsVisible", () => {
     }
   });
 });
+
+Cypress.Commands.add("waitForSkeletonToDisappear", () => {
+  cy.get(SHARED_ELEMENTS.skeleton)
+    .should("be.visible")
+    .get(SHARED_ELEMENTS.skeleton)
+    .should("not.exist");
+});

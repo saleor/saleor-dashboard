@@ -1,10 +1,11 @@
 import { VoucherListUrlSortField } from "@saleor/discounts/urls";
 import { DiscountStatusEnum, VoucherDiscountType } from "@saleor/graphql";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import VoucherListPage, {
-  VoucherListPageProps
+  VoucherListPageProps,
 } from "../../../discounts/components/VoucherListPage";
 import { voucherList } from "../../../discounts/fixtures";
 import {
@@ -13,7 +14,7 @@ import {
   pageListProps,
   searchPageProps,
   sortPageProps,
-  tabPageProps
+  tabPageProps,
 } from "../../../fixtures";
 import Decorator from "../../Decorator";
 
@@ -31,43 +32,44 @@ const props: VoucherListPageProps = {
       choices: [
         {
           value: "default-channel",
-          label: "Default channel"
-        }
-      ]
+          label: "Default channel",
+        },
+      ],
     },
     saleType: {
       active: false,
-      value: [VoucherDiscountType.FIXED, VoucherDiscountType.PERCENTAGE]
+      value: [VoucherDiscountType.FIXED, VoucherDiscountType.PERCENTAGE],
     },
     started: {
       active: false,
       value: {
         max: undefined,
-        min: undefined
-      }
+        min: undefined,
+      },
     },
     status: {
       active: false,
-      value: [DiscountStatusEnum.ACTIVE]
+      value: [DiscountStatusEnum.ACTIVE],
     },
     timesUsed: {
       active: false,
       value: {
         max: undefined,
-        min: undefined
-      }
-    }
+        min: undefined,
+      },
+    },
   },
   selectedChannelId: "123",
   sort: {
     ...sortPageProps.sort,
-    sort: VoucherListUrlSortField.code
+    sort: VoucherListUrlSortField.code,
   },
-  vouchers: voucherList
+  vouchers: voucherList,
 };
 
 storiesOf("Views / Discounts / Voucher list", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("default", () => <VoucherListPage {...props} />)
   .add("loading", () => <VoucherListPage {...props} vouchers={undefined} />)
   .add("no data", () => <VoucherListPage {...props} vouchers={[]} />)
@@ -77,7 +79,7 @@ storiesOf("Views / Discounts / Voucher list", module)
       selectedChannelId=""
       vouchers={voucherList.map(voucher => ({
         ...voucher,
-        channelListings: []
+        channelListings: [],
       }))}
     />
   ));

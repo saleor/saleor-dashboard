@@ -10,14 +10,14 @@ import GiftCardSettings from "./GiftCardSettings";
 import GiftCardListComponent from "./GiftCardsList";
 import {
   GiftCardListUrlQueryParams,
-  GiftCardUrlSortField
+  GiftCardUrlSortField,
 } from "./GiftCardsList/types";
 import GiftCardUpdateComponent from "./GiftCardUpdate";
 import { GiftCardUpdatePageUrlQueryParams } from "./GiftCardUpdate/types";
 import { giftCardPath, giftCardSettingsUrl, giftCardsListPath } from "./urls";
 
 const GiftCardUpdatePage: React.FC<RouteComponentProps<{ id: string }>> = ({
-  match
+  match,
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: GiftCardUpdatePageUrlQueryParams = qs;
@@ -35,7 +35,7 @@ const GiftCardList: React.FC<RouteComponentProps<any>> = () => {
   const params: GiftCardListUrlQueryParams = asSortParams(
     qs,
     GiftCardUrlSortField,
-    GiftCardUrlSortField.usedBy
+    GiftCardUrlSortField.usedBy,
   );
 
   return <GiftCardListComponent params={params} />;

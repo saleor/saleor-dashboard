@@ -9,7 +9,7 @@ const props: Omit<PageTypeCreatePageProps, "classes"> = {
   disabled: false,
   errors: [],
   onSubmit: () => undefined,
-  saveButtonBarState: "default"
+  saveButtonBarState: "default",
 };
 
 storiesOf("Views / Page types / Create page type", module)
@@ -23,11 +23,11 @@ storiesOf("Views / Page types / Create page type", module)
         {
           code: PageErrorCode.REQUIRED,
           field: "name",
-          message: "Field is required"
-        }
+          message: "Field is required",
+        },
       ].map(err => ({
         __typename: "PageError",
-        ...err
+        ...err,
       }))}
     />
   ));

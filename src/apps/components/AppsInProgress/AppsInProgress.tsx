@@ -4,16 +4,20 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  Tooltip,
-  Typography
+  Typography,
 } from "@material-ui/core";
-import ErrorIcon from "@material-ui/icons/Error";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import { IconButton } from "@saleor/components/IconButton";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import { AppsInstallationsQuery, JobStatusEnum } from "@saleor/graphql";
-import { DeleteIcon, ResponsiveTable } from "@saleor/macaw-ui";
+import {
+  DeleteIcon,
+  Indicator,
+  ResponsiveTable,
+  Tooltip,
+  TooltipMountWrapper,
+} from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import classNames from "classnames";
 import React from "react";
@@ -44,7 +48,7 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
         title={intl.formatMessage({
           id: "nIrjSR",
           defaultMessage: "Ongoing Installations",
-          description: "section header"
+          description: "section header",
         })}
       />
       <ResponsiveTable>
@@ -58,7 +62,7 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
                 <TableCell
                   className={classNames(
                     classes.colAction,
-                    classes.colInstallAction
+                    classes.colInstallAction,
                   )}
                 >
                   <Typography variant="body2" className={classes.text}>
@@ -77,22 +81,19 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
                 <TableCell
                   className={classNames(
                     classes.colAction,
-                    classes.colInstallAction
+                    classes.colInstallAction,
                   )}
                 >
                   <Typography variant="body2" className={classes.error}>
                     <FormattedMessage
-                      id="JufWFT"
-                      defaultMessage="There was a problem during installation"
+                      id="Xl0o2y"
+                      defaultMessage="Problem occured during installation"
                       description="app installation error"
                     />
-                    <Tooltip
-                      title={<Typography variant="body2">{message}</Typography>}
-                      classes={{
-                        tooltip: classes.customTooltip
-                      }}
-                    >
-                      <ErrorIcon />
+                    <Tooltip title={message} variant="error">
+                      <TooltipMountWrapper>
+                        <Indicator icon="error" />
+                      </TooltipMountWrapper>
                     </Tooltip>
                   </Typography>
                   <TableButtonWrapper>

@@ -15,10 +15,10 @@ const useStyles = makeStyles(
   theme => ({
     label: {
       fontWeight: 600,
-      marginBottom: theme.spacing(1)
-    }
+      marginBottom: theme.spacing(1),
+    },
   }),
-  { name: "CustomerAddresses" }
+  { name: "CustomerAddresses" },
 );
 
 export interface CustomerAddressesProps {
@@ -39,7 +39,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
         title={intl.formatMessage({
           id: "BfJGij",
           defaultMessage: "Address Information",
-          description: "header"
+          description: "header",
         })}
         toolbar={
           <Button
@@ -71,7 +71,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
           )}
           {maybe(
             () =>
-              customer.defaultBillingAddress && customer.defaultShippingAddress
+              customer.defaultBillingAddress && customer.defaultShippingAddress,
           ) && <Hr />}
           {maybe(() => customer.defaultShippingAddress) && (
             <CardContent>

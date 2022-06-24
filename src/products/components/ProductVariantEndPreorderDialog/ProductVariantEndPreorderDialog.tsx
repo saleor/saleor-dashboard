@@ -19,21 +19,21 @@ const ProductVariantEndPreorderDialog: React.FC<ProductVariantEndPreorderDialogP
   open,
   onClose,
   onConfirm,
-  variantGlobalSoldUnits
+  variantGlobalSoldUnits,
 }) => {
   const intl = useIntl();
 
   return (
     <ActionDialog
       confirmButtonLabel={intl.formatMessage(
-        productVariantEndPreorderDialogMessages.dialogConfirmButtonLabel
+        productVariantEndPreorderDialogMessages.dialogConfirmButtonLabel,
       )}
       confirmButtonState={confirmButtonState}
       open={open}
       onClose={onClose}
       onConfirm={onConfirm}
       title={intl.formatMessage(
-        productVariantEndPreorderDialogMessages.dialogTitle
+        productVariantEndPreorderDialogMessages.dialogTitle,
       )}
       variant="default"
     >
@@ -41,8 +41,8 @@ const ProductVariantEndPreorderDialog: React.FC<ProductVariantEndPreorderDialogP
         {intl.formatMessage(
           productVariantEndPreorderDialogMessages.dialogMessage,
           {
-            variantGlobalSoldUnits
-          }
+            variantGlobalSoldUnits,
+          },
         )}
       </DialogContentText>
     </ActionDialog>

@@ -4,16 +4,16 @@ export const useGiftCardCreateExpirySelectStyles = makeStyles(
   theme => ({
     radioGroupContainer: {
       display: "flex",
-      flexDirection: "row"
+      flexDirection: "row",
     },
     dateField: {
-      width: 400
+      width: 400,
     },
     periodField: {
       alignItems: "center",
       display: "flex",
-      gap: theme.spacing(2)
-    }
+      gap: theme.spacing(2),
+    },
   }),
-  { name: "GiftCardExpirySelect" }
+  { name: "GiftCardExpirySelect" },
 );

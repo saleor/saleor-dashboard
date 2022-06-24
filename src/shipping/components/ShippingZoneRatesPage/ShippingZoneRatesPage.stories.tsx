@@ -1,11 +1,12 @@
 import { ShippingMethodTypeEnum } from "@saleor/graphql";
 import { shippingZone } from "@saleor/shipping/fixtures";
 import Decorator from "@saleor/storybook//Decorator";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import ShippingZoneRatesPage, {
-  ShippingZoneRatesPageProps
+  ShippingZoneRatesPageProps,
 } from "./ShippingZoneRatesPage";
 
 const channels = [
@@ -15,7 +16,7 @@ const channels = [
     maxValue: "10",
     minValue: "0",
     name: "channel",
-    price: "5"
+    price: "5",
   },
   {
     currency: "USD",
@@ -23,8 +24,8 @@ const channels = [
     maxValue: "20",
     minValue: "1",
     name: "test",
-    price: "6"
-  }
+    price: "6",
+  },
 ];
 
 const defaultChannels = [
@@ -34,8 +35,8 @@ const defaultChannels = [
     maxValue: "",
     minValue: "",
     name: "channel",
-    price: ""
-  }
+    price: "",
+  },
 ];
 
 const props: ShippingZoneRatesPageProps = {
@@ -47,11 +48,9 @@ const props: ShippingZoneRatesPageProps = {
   isChecked: () => undefined,
   onChannelsChange: () => undefined,
   onDelete: () => undefined,
-  onNextPage: () => undefined,
   onPostalCodeAssign: () => undefined,
   onPostalCodeInclusionChange: () => undefined,
   onPostalCodeUnassign: () => undefined,
-  onPreviousPage: () => undefined,
   onProductAssign: () => undefined,
   onProductUnassign: () => undefined,
   onSubmit: () => undefined,
@@ -65,11 +64,12 @@ const props: ShippingZoneRatesPageProps = {
   toggleAll: () => undefined,
   toolbar: () => undefined,
   variant: ShippingMethodTypeEnum.PRICE,
-  formId: Symbol()
+  formId: Symbol(),
 };
 
 storiesOf("Views / Shipping / Shipping rate", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("create price rate", () => <ShippingZoneRatesPage {...props} />)
   .add("create weight rate", () => (
     <ShippingZoneRatesPage {...props} variant={ShippingMethodTypeEnum.WEIGHT} />

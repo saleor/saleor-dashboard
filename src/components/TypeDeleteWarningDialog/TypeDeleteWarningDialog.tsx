@@ -9,7 +9,7 @@ import { useTypeDeleteWarningDialogStyles as useStyles } from "./styles";
 import ProductTypeDeleteWarningDialogContent from "./TypeDeleteWarningDialogContent";
 import {
   CommonTypeDeleteWarningMessages,
-  TypeDeleteWarningMessages
+  TypeDeleteWarningMessages,
 } from "./types";
 
 export interface TypeBaseData {
@@ -54,7 +54,7 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
   viewAssignedItemsUrl,
   typesToDelete,
   typesData,
-  showViewAssignedItemsButton = true
+  showViewAssignedItemsButton = true,
 }: TypeDeleteWarningDialogProps<T>) {
   const intl = useIntl();
   const classes = useStyles({});
@@ -70,7 +70,7 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
         : multipleWithoutItemsMessages;
 
       return {
-        ...multipleMessages
+        ...multipleMessages,
       };
     }
 
@@ -79,7 +79,7 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
       : singleWithoutItemsMessages;
 
     return {
-      ...singleMessages
+      ...singleMessages,
     };
   };
 
@@ -96,7 +96,7 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
         <Card className={classes.content}>
           <ModalTitle
             title={intl.formatMessage(baseMessages.title, {
-              selectedTypesCount: typesToDelete.length
+              selectedTypesCount: typesToDelete.length,
             })}
             withBorder
             onClose={onClose}

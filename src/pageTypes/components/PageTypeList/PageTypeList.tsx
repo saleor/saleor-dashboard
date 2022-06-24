@@ -4,7 +4,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { PageTypeFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -19,13 +19,13 @@ import { ListActions, ListProps, SortPage } from "../../../types";
 const useStyles = makeStyles(
   {
     colName: {
-      paddingLeft: 0
+      paddingLeft: 0,
     },
     link: {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   },
-  { name: "PageTypeList" }
+  { name: "PageTypeList" },
 );
 
 interface PageTypeListProps
@@ -39,16 +39,13 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
   const {
     disabled,
     pageTypes,
-    pageInfo,
-    onNextPage,
-    onPreviousPage,
     onSort,
     isChecked,
     selected,
     sort,
     toggle,
     toggleAll,
-    toolbar
+    toolbar,
   } = props;
   const classes = useStyles(props);
   const numberOfColumns = pageTypes?.length === 0 ? 1 : 2;
@@ -82,14 +79,9 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
       </TableHead>
       <TableFooter>
         <TableRow>
-          <TablePagination
+          <TablePaginationWithContext
             colSpan={numberOfColumns}
-            hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-            onNextPage={onNextPage}
-            hasPreviousPage={
-              pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-            }
-            onPreviousPage={onPreviousPage}
+            disabled={disabled}
           />
         </TableRow>
       </TableFooter>
@@ -134,7 +126,7 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
                 />
               </TableCell>
             </TableRow>
-          )
+          ),
         )}
       </TableBody>
     </ResponsiveTable>

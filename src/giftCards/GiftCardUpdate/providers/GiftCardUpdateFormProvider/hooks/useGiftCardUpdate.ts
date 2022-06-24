@@ -2,7 +2,7 @@ import { useContext } from "react";
 
 import {
   GiftCardUpdateFormConsumerData,
-  GiftCardUpdateFormContext
+  GiftCardUpdateFormContext,
 } from "../GiftCardUpdateFormProvider";
 
 const useGiftCardUpdate = (): Pick<GiftCardUpdateFormConsumerData, "opts"> => {

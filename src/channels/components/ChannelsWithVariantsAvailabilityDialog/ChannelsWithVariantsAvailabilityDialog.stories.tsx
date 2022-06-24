@@ -4,7 +4,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import ChannelsWithVariantsAvailabilityDialog, {
-  ChannelsAvailabilityDialogProps
+  ChannelsAvailabilityDialogProps,
 } from "./ChannelsWithVariantsAvailabilityDialog";
 
 const props: ChannelsAvailabilityDialogProps = {
@@ -12,18 +12,18 @@ const props: ChannelsAvailabilityDialogProps = {
     {
       id: "1",
       name: "Channel 1",
-      variantsIds: []
+      variantsIds: [],
     },
     {
       id: "2",
       name: "Channel 2",
-      variantsIds: []
+      variantsIds: [],
     },
     {
       id: "3",
       name: "Channel 3",
-      variantsIds: []
-    }
+      variantsIds: [],
+    },
   ],
   variants: [
     {
@@ -32,9 +32,9 @@ const props: ChannelsAvailabilityDialogProps = {
       media: [
         {
           url:
-            "https://test-envs-stack-testenvsmediabucket050c0d50-qdkqrzgoumxv.s3.amazonaws.com/feature-assing-variants-to-channel-listings/products/saleordemoproduct_fd_juice_06.png"
-        }
-      ]
+            "https://test-envs-stack-testenvsmediabucket050c0d50-qdkqrzgoumxv.s3.amazonaws.com/feature-assing-variants-to-channel-listings/products/saleordemoproduct_fd_juice_06.png",
+        },
+      ],
     },
     {
       id: "variantB",
@@ -42,19 +42,19 @@ const props: ChannelsAvailabilityDialogProps = {
       media: [
         {
           url:
-            "https://test-envs-stack-testenvsmediabucket050c0d50-qdkqrzgoumxv.s3.amazonaws.com/feature-assing-variants-to-channel-listings/products/saleordemoproduct_fd_juice_05.png"
-        }
-      ]
+            "https://test-envs-stack-testenvsmediabucket050c0d50-qdkqrzgoumxv.s3.amazonaws.com/feature-assing-variants-to-channel-listings/products/saleordemoproduct_fd_juice_05.png",
+        },
+      ],
     },
     {
       id: "variantC",
       name: "Variant C",
-      media: []
-    }
+      media: [],
+    },
   ] as ProductDetailsVariantFragment[],
   onClose: () => undefined,
   onConfirm: () => undefined,
-  open: true
+  open: true,
 };
 
 storiesOf("Channels / Channels with Variants Availability Dialog", module)

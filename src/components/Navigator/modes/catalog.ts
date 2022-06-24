@@ -17,7 +17,7 @@ export function searchInCatalog(
   search: string,
   intl: IntlShape,
   navigate: UseNavigatorResult,
-  catalog: SearchCatalogQuery
+  catalog: SearchCatalogQuery,
 ): QuickSearchAction[] {
   const categories: QuickSearchActionInput[] = (
     mapEdgesToItems(catalog?.categories) || []
@@ -31,7 +31,7 @@ export function searchInCatalog(
       },
       score: score(category.name, search),
       text: category.name,
-      type: "catalog"
+      type: "catalog",
     }))
     .sort(sortScores);
 
@@ -47,7 +47,7 @@ export function searchInCatalog(
       },
       score: score(collection.name, search),
       text: collection.name,
-      type: "catalog"
+      type: "catalog",
     }))
     .sort(sortScores);
 
@@ -64,21 +64,21 @@ export function searchInCatalog(
       },
       score: score(product.name, search),
       text: product.name,
-      type: "catalog"
+      type: "catalog",
     }))
     .sort(sortScores);
 
   const baseActions = [
     ...categories.slice(0, 1),
     ...collections.slice(0, 1),
-    ...products.slice(0, 1)
+    ...products.slice(0, 1),
   ];
 
   return [
     ...baseActions,
     ...[...categories.slice(1), ...collections.slice(1), ...products.slice(1)]
       .sort(sortScores)
-      .slice(0, maxActions - baseActions.length)
+      .slice(0, maxActions - baseActions.length),
   ].sort(sortScores);
 }
 
@@ -86,7 +86,7 @@ function getCatalogModeActions(
   query: string,
   intl: IntlShape,
   navigate: UseNavigatorResult,
-  catalog: SearchCatalogQuery
+  catalog: SearchCatalogQuery,
 ): QuickSearchAction[] {
   return searchInCatalog(query, intl, navigate, catalog);
 }

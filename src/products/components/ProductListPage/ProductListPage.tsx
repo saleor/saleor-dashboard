@@ -2,7 +2,7 @@ import { Card } from "@material-ui/core";
 import {
   extensionMountPoints,
   mapToMenuItems,
-  useExtensions
+  useExtensions,
 } from "@saleor/apps/useExtensions";
 import { ButtonWithSelect } from "@saleor/components/ButtonWithSelect";
 import CardMenu from "@saleor/components/CardMenu";
@@ -18,7 +18,7 @@ import {
   GridAttributesQuery,
   ProductListQuery,
   RefreshLimitsQuery,
-  SearchAvailableInGridAttributesQuery
+  SearchAvailableInGridAttributesQuery,
 } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -29,7 +29,7 @@ import {
   ListActions,
   PageListProps,
   RelayToFlat,
-  SortPage
+  SortPage,
 } from "@saleor/types";
 import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
@@ -41,7 +41,7 @@ import { columnsMessages } from "../ProductList/messages";
 import {
   createFilterStructure,
   ProductFilterKeys,
-  ProductListFilterOpts
+  ProductListFilterOpts,
 } from "./filters";
 import { getAttributeColumnValue } from "./utils";
 
@@ -72,17 +72,17 @@ const useStyles = makeStyles(
       marginRight: theme.spacing(3),
       [theme.breakpoints.down("xs")]: {
         "& > button": {
-          width: "100%"
-        }
-      }
+          width: "100%",
+        },
+      },
     },
     settings: {
       [theme.breakpoints.up("sm")]: {
-        marginRight: theme.spacing(2)
-      }
-    }
+        marginRight: theme.spacing(2),
+      },
+    },
   }),
-  { name: "ProductListPage" }
+  { name: "ProductListPage" },
 );
 
 export const ProductListPage: React.FC<ProductListPageProps> = props => {
@@ -121,29 +121,29 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const staticColumns = [
     {
       label: intl.formatMessage(columnsMessages.availability),
-      value: "availability" as ProductListColumns
+      value: "availability" as ProductListColumns,
     },
     {
       label: intl.formatMessage(columnsMessages.price),
-      value: "price" as ProductListColumns
+      value: "price" as ProductListColumns,
     },
     {
       label: intl.formatMessage(columnsMessages.type),
-      value: "productType" as ProductListColumns
+      value: "productType" as ProductListColumns,
     },
     {
       label: intl.formatMessage(columnsMessages.updatedAt),
-      value: "date" as ProductListColumns
-    }
+      value: "date" as ProductListColumns,
+    },
   ];
 
   const initialColumnsChoices = React.useMemo(() => {
     const selectedStaticColumns = staticColumns.filter(column =>
-      (settings.columns || []).includes(column.value)
+      (settings.columns || []).includes(column.value),
     );
     const selectedAttributeColumns = gridAttributes.map(attribute => ({
       label: attribute.name,
-      value: getAttributeColumnValue(attribute.id)
+      value: getAttributeColumnValue(attribute.id),
     }));
 
     return [...selectedStaticColumns, ...selectedAttributeColumns];
@@ -162,15 +162,15 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
       attribute =>
         ({
           label: attribute.name,
-          value: getAttributeColumnValue(attribute.id)
-        } as MultiAutocompleteChoiceType)
-    )
+          value: getAttributeColumnValue(attribute.id),
+        } as MultiAutocompleteChoiceType),
+    ),
   ];
 
   const limitReached = isLimitReached(limits, "productVariants");
   const {
     PRODUCT_OVERVIEW_CREATE,
-    PRODUCT_OVERVIEW_MORE_ACTIONS
+    PRODUCT_OVERVIEW_MORE_ACTIONS,
   } = useExtensions(extensionMountPoints.PRODUCT_LIST);
 
   const extensionMenuItems = mapToMenuItems(PRODUCT_OVERVIEW_MORE_ACTIONS);
@@ -187,12 +187,12 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
                 label: intl.formatMessage({
                   id: "7FL+WZ",
                   defaultMessage: "Export Products",
-                  description: "export products to csv file, button"
+                  description: "export products to csv file, button",
                 }),
                 onSelect: onExport,
-                testId: "export"
+                testId: "export",
               },
-              ...extensionMenuItems
+              ...extensionMenuItems,
             ]}
             data-test-id="menu"
           />
@@ -204,12 +204,12 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             {
               id: "Kw0jHS",
               defaultMessage: "{count}/{max} SKUs used",
-              description: "created products counter"
+              description: "created products counter",
             },
             {
               count: limits.currentUsage.productVariants,
-              max: limits.allowedUsage.productVariants
-            }
+              max: limits.allowedUsage.productVariants,
+            },
           )
         }
       >
@@ -243,7 +243,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           title={intl.formatMessage({
             id: "FwHWUm",
             defaultMessage: "SKU limit reached",
-            description: "alert"
+            description: "alert",
           })}
         >
           <FormattedMessage
@@ -268,12 +268,12 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           allTabLabel={intl.formatMessage({
             id: "aFLtLk",
             defaultMessage: "All Products",
-            description: "tab name"
+            description: "tab name",
           })}
           filterStructure={filterStructure}
           searchPlaceholder={intl.formatMessage({
             id: "kIvvax",
-            defaultMessage: "Search Products..."
+            defaultMessage: "Search Products...",
           })}
         />
         <ProductList

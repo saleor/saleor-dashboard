@@ -12,10 +12,10 @@ export interface ExportSettingsFormData {
 
 export const exportSettingsInitialFormData = {
   fileType: FileTypesEnum.CSV,
-  scope: ExportScope.ALL
+  scope: ExportScope.ALL,
 };
 
 export const exportSettingsInitialFormDataWithIds = {
   fileType: FileTypesEnum.CSV,
-  scope: ExportScope.IDS
+  scope: ExportScope.IDS,
 };

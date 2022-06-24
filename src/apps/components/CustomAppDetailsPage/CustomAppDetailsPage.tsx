@@ -11,7 +11,7 @@ import {
   AppErrorFragment,
   AppUpdateMutation,
   PermissionEnum,
-  ShopInfoQuery
+  ShopInfoQuery,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -48,7 +48,7 @@ export interface CustomAppDetailsPageProps {
   onTokenClose: () => void;
   onTokenCreate: () => void;
   onSubmit: (
-    data: CustomAppDetailsPageFormData
+    data: CustomAppDetailsPageFormData,
   ) => SubmitPromise<AppErrorFragment[]>;
   webhookCreateHref: string;
   onWebhookRemove: (id: string) => void;
@@ -73,7 +73,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
     webhookCreateHref,
     onWebhookRemove,
     onAppActivateOpen,
-    onAppDeactivateOpen
+    onAppDeactivateOpen,
   } = props;
   const intl = useIntl();
   const classes = useStyles({});
@@ -89,11 +89,11 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
       permissions?.filter(
         perm =>
           app?.permissions?.filter(userPerm => userPerm.code === perm.code)
-            .length === 0
+            .length === 0,
       ).length === 0 || false,
     isActive: !!app?.isActive,
     name: app?.name || "",
-    permissions: app?.permissions?.map(perm => perm.code) || []
+    permissions: app?.permissions?.map(perm => perm.code) || [],
   };
 
   return (
@@ -174,13 +174,13 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
                 fullAccessLabel={intl.formatMessage({
                   id: "D4nzdD",
                   defaultMessage: "Grant this app full access to the store",
-                  description: "checkbox label"
+                  description: "checkbox label",
                 })}
                 description={intl.formatMessage({
                   id: "flP8Hj",
                   defaultMessage:
                     "Expand or restrict app permissions to access certain part of Saleor system.",
-                  description: "card description"
+                  description: "card description",
                 })}
               />
             </div>

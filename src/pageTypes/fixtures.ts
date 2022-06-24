@@ -2,7 +2,7 @@ import {
   AttributeInputTypeEnum,
   AttributeTypeEnum,
   PageTypeDetailsFragment,
-  PageTypeFragment
+  PageTypeFragment,
 } from "@saleor/graphql";
 
 export const pageTypes: PageTypeFragment[] = [
@@ -10,20 +10,20 @@ export const pageTypes: PageTypeFragment[] = [
     id: "UGFnZVR5cGU6MQ==",
     name: "Blog",
     hasPages: true,
-    __typename: "PageType"
+    __typename: "PageType",
   },
   {
     id: "UGFnZVR5cGU6Mw==",
     name: "Landing Page",
     hasPages: true,
-    __typename: "PageType"
+    __typename: "PageType",
   },
   {
     id: "UGFnZVR5cGU6Mg==",
     name: "Marketing Page",
     hasPages: false,
-    __typename: "PageType"
-  }
+    __typename: "PageType",
+  },
 ];
 
 export const pageType: PageTypeDetailsFragment = {
@@ -33,8 +33,8 @@ export const pageType: PageTypeDetailsFragment = {
     {
       __typename: "MetadataItem",
       key: "integration.id",
-      value: "100023123"
-    }
+      value: "100023123",
+    },
   ],
   name: "Blog",
   hasPages: true,
@@ -49,7 +49,7 @@ export const pageType: PageTypeDetailsFragment = {
       filterableInStorefront: true,
       type: AttributeTypeEnum.PAGE_TYPE,
       inputType: AttributeInputTypeEnum.DROPDOWN,
-      unit: null
+      unit: null,
     },
     {
       __typename: "Attribute" as "Attribute",
@@ -61,7 +61,7 @@ export const pageType: PageTypeDetailsFragment = {
       filterableInStorefront: true,
       type: AttributeTypeEnum.PAGE_TYPE,
       inputType: AttributeInputTypeEnum.DROPDOWN,
-      unit: null
+      unit: null,
     },
     {
       __typename: "Attribute" as "Attribute",
@@ -73,8 +73,8 @@ export const pageType: PageTypeDetailsFragment = {
       filterableInStorefront: true,
       type: AttributeTypeEnum.PAGE_TYPE,
       inputType: AttributeInputTypeEnum.DROPDOWN,
-      unit: null
-    }
+      unit: null,
+    },
   ],
-  privateMetadata: []
+  privateMetadata: [],
 };

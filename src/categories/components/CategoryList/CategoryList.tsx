@@ -5,7 +5,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { CategoryFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -19,29 +19,29 @@ const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
       colName: {
-        width: "auto"
+        width: "auto",
       },
       colProducts: {
-        width: 160
+        width: 160,
       },
       colSubcategories: {
-        width: 160
-      }
+        width: 160,
+      },
     },
     colName: {
-      paddingLeft: 0
+      paddingLeft: 0,
     },
     colProducts: {
-      textAlign: "center"
+      textAlign: "center",
     },
     colSubcategories: {
-      textAlign: "center"
+      textAlign: "center",
     },
     tableRow: {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   }),
-  { name: "CategoryList" }
+  { name: "CategoryList" },
 );
 
 interface CategoryListProps
@@ -58,17 +58,14 @@ const CategoryList: React.FC<CategoryListProps> = props => {
     disabled,
     settings,
     sort,
-    pageInfo,
     isChecked,
     isRoot,
     selected,
     toggle,
     toggleAll,
     toolbar,
-    onNextPage,
-    onPreviousPage,
     onUpdateListSettings,
-    onSort
+    onSort,
   } = props;
 
   const classes = useStyles(props);
@@ -136,16 +133,10 @@ const CategoryList: React.FC<CategoryListProps> = props => {
       </TableHead>
       <TableFooter>
         <TableRow>
-          <TablePagination
+          <TablePaginationWithContext
             colSpan={numberOfColumns}
             settings={settings}
-            hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-            onNextPage={onNextPage}
             onUpdateListSettings={onUpdateListSettings}
-            hasPreviousPage={
-              pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-            }
-            onPreviousPage={onPreviousPage}
           />
         </TableRow>
       </TableFooter>
@@ -212,7 +203,7 @@ const CategoryList: React.FC<CategoryListProps> = props => {
                 )}
               </TableCell>
             </TableRow>
-          )
+          ),
         )}
       </TableBody>
     </ResponsiveTable>

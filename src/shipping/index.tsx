@@ -14,7 +14,7 @@ import {
   shippingZonePath,
   shippingZonesListPath,
   ShippingZonesListUrlQueryParams,
-  ShippingZoneUrlQueryParams
+  ShippingZoneUrlQueryParams,
 } from "./urls";
 import RateCreateComponent from "./views/RateCreate";
 import RateUpdateComponent from "./views/RateUpdate";
@@ -45,7 +45,7 @@ const ShippingZoneDetails: React.FC<RouteComponentProps<
 };
 
 const RateCreate: React.FC<RouteComponentProps<{ id: string }>> = ({
-  match
+  match,
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: ShippingRateCreateUrlQueryParams = qs;

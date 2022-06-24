@@ -1,7 +1,7 @@
 import { stringifyQs } from "@saleor/utils/urls";
+import { createContext, useContext, useMemo } from "react";
 
 import { Pagination } from "../types";
-import useNavigator from "./useNavigator";
 
 export interface PageInfo {
   endCursor: string;
@@ -19,67 +19,123 @@ export interface PaginationState {
 
 export function createPaginationState(
   paginateBy: number,
-  queryString: Pagination
+  queryString: Pagination,
 ): PaginationState {
   return queryString && (queryString.before || queryString.after)
     ? queryString.after
       ? {
           after: queryString.after,
-          first: paginateBy
+          first: paginateBy,
         }
       : {
           before: queryString.before,
-          last: paginateBy
+          last: paginateBy,
         }
     : {
-        first: paginateBy
+        first: paginateBy,
       };
 }
 
-function usePaginator() {
-  const navigate = useNavigator();
-
-  function paginate(
-    pageInfo: PageInfo,
-    paginationState: PaginationState,
-    queryString: Pagination
-  ) {
-    const loadNextPage = () =>
-      navigate(
-        "?" +
-          stringifyQs({
-            ...queryString,
-            after: pageInfo.endCursor,
-            before: undefined
-          }),
-        { replace: true, resetScroll: true }
-      );
-
-    const loadPreviousPage = () =>
-      navigate(
-        "?" +
-          stringifyQs({
-            ...queryString,
-            after: undefined,
-            before: pageInfo.startCursor
-          }),
-        { replace: true, resetScroll: true }
-      );
-
-    const newPageInfo = pageInfo
-      ? {
-          ...pageInfo,
-          hasNextPage: !!paginationState.before || pageInfo.hasNextPage,
-          hasPreviousPage: !!paginationState.after || pageInfo.hasPreviousPage
-        }
-      : undefined;
-
-    return {
-      loadNextPage,
-      loadPreviousPage,
-      pageInfo: newPageInfo
-    };
-  }
-  return paginate;
+interface UsePaginatorArgs {
+  pageInfo: PageInfo;
+  paginationState: PaginationState;
+  queryString: Pagination;
 }
+
+function usePaginator({
+  queryString,
+  paginationState,
+  pageInfo,
+}: UsePaginatorArgs) {
+  const newPageInfo = useMemo<PageInfo>(
+    () =>
+      pageInfo
+        ? {
+            ...pageInfo,
+            hasNextPage: !!paginationState.before || pageInfo.hasNextPage,
+            hasPreviousPage:
+              !!paginationState.after || pageInfo.hasPreviousPage,
+          }
+        : undefined,
+    [paginationState, pageInfo],
+  );
+
+  const nextPageHref = useMemo(() => {
+    if (!newPageInfo?.hasNextPage || !pageInfo?.endCursor) {
+      return undefined;
+    }
+
+    return (
+      "?" +
+      stringifyQs({
+        ...queryString,
+        after: pageInfo.endCursor,
+        before: undefined,
+      })
+    );
+  }, [pageInfo?.endCursor, newPageInfo?.hasNextPage, queryString]);
+
+  const prevPageHref = useMemo(() => {
+    if (!newPageInfo?.hasPreviousPage || !pageInfo?.startCursor) {
+      return undefined;
+    }
+    return (
+      "?" +
+      stringifyQs({
+        ...queryString,
+        after: undefined,
+        before: pageInfo.startCursor,
+      })
+    );
+  }, [pageInfo?.startCursor, newPageInfo?.hasPreviousPage, queryString]);
+
+  return {
+    nextPageHref,
+    prevPageHref,
+    paginatorType: "link" as const,
+    ...newPageInfo,
+  };
+}
+
 export default usePaginator;
+
+export interface PaginatorContextValuesCommon {
+  hasNextPage?: boolean;
+  hasPreviousPage?: boolean;
+  endCursor?: string;
+  startCursor?: string;
+}
+
+export type PaginatorContextValues = PaginatorContextValuesCommon &
+  (
+    | {
+        paginatorType: "link";
+        nextPageHref?: string;
+        prevPageHref?: string;
+        loadNextPage?: never;
+        loadPreviousPage?: never;
+      }
+    | {
+        paginatorType: "click";
+        nextPageHref?: never;
+        prevPageHref?: never;
+        loadNextPage: () => void;
+        loadPreviousPage: () => void;
+      }
+  );
+
+export const PaginatorContext = createContext<PaginatorContextValues | null>(
+  null,
+);
+
+export const usePaginatorContext = () => {
+  const context = useContext(PaginatorContext);
+
+  if (context === null) {
+    throw new Error(
+      "usePaginatorContext must be used within a PaginatorContext.Provider",
+    );
+  }
+
+  return context;
+};

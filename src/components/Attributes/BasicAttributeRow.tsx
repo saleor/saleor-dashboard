@@ -8,14 +8,14 @@ const useStyles = makeStyles(
   theme => ({
     attributeSection: {
       "&:last-of-type": {
-        paddingBottom: 0
+        paddingBottom: 0,
       },
       padding: theme.spacing(2, 0),
-      wordBreak: "break-word"
+      wordBreak: "break-word",
     },
     attributeSectionLabel: {
       alignItems: "center",
-      display: "flex"
+      display: "flex",
     },
     flex: {
       columnGap: theme.spacing(2) + "px",
@@ -23,16 +23,16 @@ const useStyles = makeStyles(
       flexDirection: "row",
       [theme.breakpoints.down("md")]: {
         flexDirection: "column",
-        rowGap: theme.spacing(2) + "px"
-      }
+        rowGap: theme.spacing(2) + "px",
+      },
     },
     value: {
       "&&": {
-        overflow: "visible"
-      }
-    }
+        overflow: "visible",
+      },
+    },
   }),
-  { name: "BasicAttributeRow" }
+  { name: "BasicAttributeRow" },
 );
 
 interface BasicAttributeRowProps {
@@ -43,7 +43,7 @@ interface BasicAttributeRowProps {
 const BasicAttributeRow: React.FC<BasicAttributeRowProps> = ({
   label,
   children,
-  flexValueContainer
+  flexValueContainer,
 }) => {
   const classes = useStyles();
 
@@ -58,7 +58,7 @@ const BasicAttributeRow: React.FC<BasicAttributeRowProps> = ({
       <div
         data-test-id="attribute-value"
         className={classNames(classes.value, {
-          [classes.flex]: flexValueContainer
+          [classes.flex]: flexValueContainer,
         })}
       >
         {children}

@@ -2,12 +2,12 @@ import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData
+  SaveFilterTabDialogFormData,
 } from "@saleor/components/SaveFilterTabDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import {
   useBulkRemoveCustomersMutation,
-  useListCustomersQuery
+  useListCustomersQuery,
 } from "@saleor/graphql";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
@@ -15,7 +15,8 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
-  createPaginationState
+  createPaginationState,
+  PaginatorContext,
 } from "@saleor/hooks/usePaginator";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
@@ -33,7 +34,7 @@ import CustomerListPage from "../../components/CustomerListPage";
 import {
   customerListUrl,
   CustomerListUrlDialog,
-  CustomerListUrlQueryParams
+  CustomerListUrlQueryParams,
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -43,7 +44,7 @@ import {
   getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab
+  saveFilterTab,
 } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
@@ -54,12 +55,11 @@ interface CustomerListProps {
 export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const paginate = usePaginator();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    params.ids
+    params.ids,
   );
   const { updateListSettings, settings } = useListSettings(
-    ListViews.CUSTOMER_LIST
+    ListViews.CUSTOMER_LIST,
   );
 
   usePaginationReset(customerListUrl, params, settings.rowNumber);
@@ -71,13 +71,13 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
-      sort: getSortQueryVariables(params)
+      sort: getSortQueryVariables(params),
     }),
-    [params, settings.rowNumber]
+    [params, settings.rowNumber],
   );
   const { data, loading, refetch } = useListCustomersQuery({
     displayLoader: true,
-    variables: queryVariables
+    variables: queryVariables,
   });
 
   const tabs = getFilterTabs();
@@ -87,13 +87,13 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
   const [
     changeFilters,
     resetFilters,
-    handleSearchChange
+    handleSearchChange,
   ] = createFilterHandlers({
     cleanupFn: reset,
     createUrl: customerListUrl,
     getFilterQueryParam,
     navigate,
-    params
+    params,
   });
 
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -106,8 +106,8 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
     navigate(
       customerListUrl({
         activeTab: tab.toString(),
-        ...getFilterTabs()[tab - 1].data
-      })
+        ...getFilterTabs()[tab - 1].data,
+      }),
     );
   };
 
@@ -122,33 +122,33 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
     handleTabChange(tabs.length + 1);
   };
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    maybe(() => data.customers.pageInfo),
+  const paginationValues = usePaginator({
+    pageInfo: maybe(() => data.customers.pageInfo),
     paginationState,
-    params
-  );
+    queryString: params,
+  });
 
   const [
     bulkRemoveCustomers,
-    bulkRemoveCustomersOpts
+    bulkRemoveCustomersOpts,
   ] = useBulkRemoveCustomersMutation({
     onCompleted: data => {
       if (data.customerBulkDelete.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
+          text: intl.formatMessage(commonMessages.savedChanges),
         });
         reset();
         refetch();
         closeModal();
       }
-    }
+    },
   });
 
   const handleSort = createSortHandler(navigate, customerListUrl, params);
 
   return (
-    <>
+    <PaginatorContext.Provider value={paginationValues}>
       <WindowTitle title={intl.formatMessage(sectionNames.customers)} />
       <CustomerListPage
         currentTab={currentTab}
@@ -164,9 +164,6 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
         customers={mapEdgesToItems(data?.customers)}
         settings={settings}
         disabled={loading}
-        pageInfo={pageInfo}
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
         onSort={handleSort}
         toolbar={
@@ -175,7 +172,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
             color="primary"
             onClick={() =>
               openModal("remove", {
-                ids: listElements
+                ids: listElements,
               })
             }
           >
@@ -195,15 +192,15 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
         onConfirm={() =>
           bulkRemoveCustomers({
             variables: {
-              ids: params.ids
-            }
+              ids: params.ids,
+            },
           })
         }
         variant="delete"
         title={intl.formatMessage({
           id: "q8ep2I",
           defaultMessage: "Delete Customers",
-          description: "dialog header"
+          description: "dialog header",
         })}
       >
         <DialogContentText>
@@ -212,7 +209,9 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
             defaultMessage="{counter,plural,one{Are you sure you want to delete this customer?} other{Are you sure you want to delete {displayQuantity} customers?}}"
             values={{
               counter: maybe(() => params.ids.length),
-              displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>
+              displayQuantity: (
+                <strong>{maybe(() => params.ids.length)}</strong>
+              ),
             }}
           />
         </DialogContentText>
@@ -230,7 +229,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
         onSubmit={handleTabDelete}
         tabName={maybe(() => tabs[currentTab - 1].name, "...")}
       />
-    </>
+    </PaginatorContext.Provider>
   );
 };
 export default CustomerList;

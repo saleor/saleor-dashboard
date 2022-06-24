@@ -6,7 +6,7 @@ import React from "react";
 import * as messages from "../../pageTypes/hooks/usePageTypeDelete/messages";
 import TypeDeleteWarningDialog, {
   TypeBaseData,
-  TypeDeleteWarningDialogProps
+  TypeDeleteWarningDialogProps,
 } from "./TypeDeleteWarningDialog";
 
 const props: TypeDeleteWarningDialogProps<TypeBaseData> = {
@@ -19,7 +19,7 @@ const props: TypeDeleteWarningDialogProps<TypeBaseData> = {
   assignedItemsCount: 4,
   typesToDelete: ["id-1"],
   viewAssignedItemsUrl: "some-url",
-  deleteButtonState: "default"
+  deleteButtonState: "default",
 };
 
 storiesOf("TypeDeleteWarningDialog.stories", module)

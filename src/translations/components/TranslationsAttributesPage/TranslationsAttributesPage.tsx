@@ -6,7 +6,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import { ListSettingsUpdate } from "@saleor/components/TablePagination";
 import {
   AttributeTranslationDetailsFragment,
-  LanguageCodeEnum
+  LanguageCodeEnum,
 } from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
@@ -14,7 +14,7 @@ import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
 import {
   languageEntitiesUrl,
   languageEntityUrl,
-  TranslatableEntities
+  TranslatableEntities,
 } from "@saleor/translations/urls";
 import { ListSettings } from "@saleor/types";
 import React from "react";
@@ -29,18 +29,12 @@ export interface TranslationsAttributesPageProps
   data: AttributeTranslationDetailsFragment;
   settings?: ListSettings;
   onUpdateListSettings?: ListSettingsUpdate;
-  pageInfo: {
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
-  };
-  onNextPage: () => void;
-  onPreviousPage: () => void;
 }
 
 export const fieldNames = {
   attribute: "attribute",
   value: "attributeValue",
-  richTextValue: "attributeRichTextValue"
+  richTextValue: "attributeRichTextValue",
 };
 
 const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
@@ -56,9 +50,6 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
   onSubmit,
   settings,
   onUpdateListSettings,
-  pageInfo,
-  onNextPage,
-  onPreviousPage
 }) => {
   const intl = useIntl();
 
@@ -68,7 +59,7 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
     <Container>
       <Backlink
         href={languageEntitiesUrl(languageCode, {
-          tab: TranslatableEntities.attributes
+          tab: TranslatableEntities.attributes,
         })}
       >
         {intl.formatMessage(sectionNames.translations)}
@@ -79,12 +70,12 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
             id: "SPBLzT",
             defaultMessage:
               'Translation Attribute "{attribute}" - {languageCode}',
-            description: "header"
+            description: "header",
           },
           {
             attribute: getStringOrPlaceholder(data?.attribute?.name),
-            languageCode
-          }
+            languageCode,
+          },
         )}
       >
         <LanguageSwitch
@@ -94,7 +85,7 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
             languageEntityUrl(
               lang,
               TranslatableEntities.attributes,
-              translationId
+              translationId,
             )
           }
         />
@@ -108,13 +99,13 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
           {
             displayName: intl.formatMessage({
               id: "DRMMDs",
-              defaultMessage: "Attribute Name"
+              defaultMessage: "Attribute Name",
             }),
             name: fieldNames.attribute + ":" + data?.attribute.id,
             translation: data?.translation?.name || null,
             type: "short" as "short",
-            value: data?.attribute?.name
-          }
+            value: data?.attribute?.name,
+          },
         ]}
         saveButtonState={saveButtonState}
         richTextResetKey={languageCode}
@@ -135,9 +126,6 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
           pagination={{
             settings,
             onUpdateListSettings,
-            pageInfo,
-            onNextPage,
-            onPreviousPage
           }}
           onEdit={onEdit}
           onDiscard={onDiscard}

@@ -12,7 +12,7 @@ import {
   CountryWithCodeFragment,
   WarehouseClickAndCollectOptionEnum,
   WarehouseDetailsFragment,
-  WarehouseErrorFragment
+  WarehouseErrorFragment,
 } from "@saleor/graphql";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -52,25 +52,25 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
   saveButtonBarState,
   warehouse,
   onDelete,
-  onSubmit
+  onSubmit,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
 
   const [displayCountry, setDisplayCountry] = useStateFromProps(
-    warehouse?.address?.country.country || ""
+    warehouse?.address?.country.country || "",
   );
 
   const {
     errors: validationErrors,
-    submit: handleSubmit
+    submit: handleSubmit,
   } = useAddressValidation(onSubmit);
 
   const initialForm: WarehouseDetailsPageFormData = {
     city: maybe(() => warehouse.address.city, ""),
     companyName: maybe(() => warehouse.address.companyName, ""),
     country: maybe(() =>
-      findValueInEnum(warehouse.address.country.code, CountryCode)
+      findValueInEnum(warehouse.address.country.code, CountryCode),
     ),
     isPrivate: !!warehouse?.isPrivate,
     clickAndCollectOption:
@@ -81,7 +81,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
     phone: maybe(() => warehouse.address.phone, ""),
     postalCode: maybe(() => warehouse.address.postalCode, ""),
     streetAddress1: maybe(() => warehouse.address.streetAddress1, ""),
-    streetAddress2: maybe(() => warehouse.address.streetAddress2, "")
+    streetAddress2: maybe(() => warehouse.address.streetAddress2, ""),
   };
 
   return (
@@ -96,7 +96,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
         const handleCountryChange = createSingleAutocompleteSelectHandler(
           change,
           setDisplayCountry,
-          countryChoices
+          countryChoices,
         );
 
         return (
@@ -123,7 +123,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
                   header={intl.formatMessage({
                     id: "43Nlay",
                     defaultMessage: "Address Information",
-                    description: "warehouse"
+                    description: "warehouse",
                   })}
                   onChange={change}
                   onCountryChange={handleCountryChange}

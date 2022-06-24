@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import AppInProgressDeleteDialog, {
-  AppInProgressDeleteDialogProps
+  AppInProgressDeleteDialogProps,
 } from "./AppInProgressDeleteDialog";
 
 const props: AppInProgressDeleteDialogProps = {
@@ -11,7 +11,7 @@ const props: AppInProgressDeleteDialogProps = {
   name: "App",
   onClose: () => undefined,
   onConfirm: () => undefined,
-  open: true
+  open: true,
 };
 
 storiesOf("Views / Apps / Delete app failed installation", module)

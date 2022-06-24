@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import OrderShippingMethodEditDialog, {
-  OrderShippingMethodEditDialogProps
+  OrderShippingMethodEditDialogProps,
 } from "../../../orders/components/OrderShippingMethodEditDialog";
 import { order as orderFixture } from "../../../orders/fixtures";
 import Decorator from "../../Decorator";
@@ -16,7 +16,7 @@ const props: OrderShippingMethodEditDialogProps = {
   onSubmit: () => undefined,
   open: true,
   shippingMethod: null,
-  shippingMethods: order.shippingMethods
+  shippingMethods: order.shippingMethods,
 };
 
 storiesOf("Orders / OrderShippingMethodEditDialog", module)
@@ -31,15 +31,15 @@ storiesOf("Orders / OrderShippingMethodEditDialog", module)
           code: OrderErrorCode.SHIPPING_METHOD_NOT_APPLICABLE,
           field: "shippingMethod",
           addressType: null,
-          message: "Shipping method not applicable"
+          message: "Shipping method not applicable",
         },
         {
           __typename: "OrderError",
           code: OrderErrorCode.GRAPHQL_ERROR,
           field: null,
           addressType: null,
-          message: "Graphql error"
-        }
+          message: "Graphql error",
+        },
       ]}
     />
   ));

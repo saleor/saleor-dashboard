@@ -10,9 +10,8 @@ import {
   getMultiChoices,
   getMultiDisplayValue,
   getReferenceDisplayValue,
-  getRichTextData,
   getSingleChoices,
-  getSingleDisplayValue
+  getSingleDisplayValue,
 } from "@saleor/components/Attributes/utils";
 import Checkbox from "@saleor/components/Checkbox";
 import { DateTimeField } from "@saleor/components/DateTimeField";
@@ -43,8 +42,8 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
   onChange,
   fetchAttributeValues,
   fetchMoreAttributeValues,
-  entityId,
-  onAttributeSelectBlur
+  onAttributeSelectBlur,
+  richTextGetters,
 }) => {
   const intl = useIntl();
   const classes = useStyles();
@@ -63,7 +62,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             onValueDelete={value =>
               onReferencesRemove(
                 attribute.id,
-                attribute.value?.filter(id => id !== value)
+                attribute.value?.filter(id => id !== value),
               )
             }
             onValueReorder={event => onReferencesReorder(attribute.id, event)}
@@ -86,7 +85,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             error={!!error}
             helperText={getErrorMessage(error, intl)}
             inputProps={{
-              name: `attribute:${attribute.label}`
+              name: `attribute:${attribute.label}`,
             }}
           />
         </BasicAttributeRow>
@@ -126,18 +125,27 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
         />
       );
     case AttributeInputTypeEnum.RICH_TEXT:
+      const {
+        getShouldMount,
+        getDefaultValue,
+        getMountEditor,
+        getHandleChange,
+      } = richTextGetters;
+      const defaultValue = getDefaultValue(attribute.id);
       return (
         <BasicAttributeRow label={attribute.label}>
-          <RichTextEditor
-            key={entityId} // temporary workaround, TODO: refactor rich text editor
-            name={`attribute:${attribute.label}`}
-            disabled={disabled}
-            error={!!error}
-            label={intl.formatMessage(attributeRowMessages.valueLabel)}
-            helperText={getErrorMessage(error, intl)}
-            onChange={data => onChange(attribute.id, JSON.stringify(data))}
-            data={getRichTextData(attribute)}
-          />
+          {getShouldMount(attribute.id) && (
+            <RichTextEditor
+              defaultValue={defaultValue}
+              editorRef={getMountEditor(attribute.id)}
+              onChange={getHandleChange(attribute.id)}
+              name={`attribute:${attribute.label}`}
+              disabled={disabled}
+              error={!!error}
+              label={intl.formatMessage(attributeRowMessages.valueLabel)}
+              helperText={getErrorMessage(error, intl)}
+            />
+          )}
         </BasicAttributeRow>
       );
     case AttributeInputTypeEnum.NUMERIC:
@@ -159,10 +167,10 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
                   <InputAdornment position="end">
                     {getMeasurementUnitMessage(
                       attribute.data.unit,
-                      intl.formatMessage
+                      intl.formatMessage,
                     )}
                   </InputAdornment>
-                )
+                ),
               }
             }
           />

@@ -7,7 +7,7 @@ import { configurationMenuUrl } from "@saleor/configuration";
 import {
   PermissionEnum,
   ShippingZoneFragment,
-  WeightUnitsEnum
+  WeightUnitsEnum,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
@@ -45,7 +45,7 @@ const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
         title={intl.formatMessage({
           id: "uULcph",
           defaultMessage: "Shipping",
-          description: "header"
+          description: "header",
         })}
       />
       <Grid>

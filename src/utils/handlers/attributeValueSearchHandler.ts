@@ -1,6 +1,6 @@
 import {
   SearchAttributeValuesQuery,
-  SearchAttributeValuesQueryVariables
+  SearchAttributeValuesQueryVariables,
 } from "@saleor/graphql";
 import { UseSearchResult } from "@saleor/hooks/makeSearch";
 import useAttributeValueSearch from "@saleor/searches/useAttributeValueSearch";
@@ -24,19 +24,19 @@ export interface UseAttributeValueSearchHandler
 }
 
 function useAttributeValueSearchHandler(
-  variables: SearchAttributeValuesQueryVariables
+  variables: SearchAttributeValuesQueryVariables,
 ): UseAttributeValueSearchHandler {
   const [state, setState] = useState<AttributeValueSearchHandlerState>({
     id: null,
-    query: variables.query
+    query: variables.query,
   });
 
   const { loadMore, search, result } = useAttributeValueSearch({
     variables: {
       ...variables,
-      ...state
+      ...state,
     },
-    skip: !state.id
+    skip: !state.id,
   });
 
   const handleSearch = (query: string, id: string | null) => {
@@ -46,7 +46,7 @@ function useAttributeValueSearchHandler(
     if (id !== state.id || query !== state.query) {
       setState({
         query,
-        id
+        id,
       });
     }
   };
@@ -68,8 +68,8 @@ function useAttributeValueSearchHandler(
       ? result
       : {
           ...result,
-          data: undefined
-        }
+          data: undefined,
+        },
   };
 }
 

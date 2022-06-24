@@ -4,30 +4,30 @@ export const useStyles = makeStyles(
   theme => ({
     caption: {
       fontSize: 14,
-      padding: theme.spacing(0, 3, 2, 3)
+      padding: theme.spacing(0, 3, 2, 3),
     },
     colName: {
       fontSize: 14,
       paddingLeft: 0,
-      width: "auto"
+      width: "auto",
     },
     colType: {
       fontSize: 14,
       textAlign: "right",
-      width: 250
+      width: 250,
     },
     pricingContent: {
       "&:last-child": {
-        paddingBottom: 0
+        paddingBottom: 0,
       },
       paddingLeft: 0,
-      paddingRight: 0
+      paddingRight: 0,
     },
     table: {
-      tableLayout: "fixed"
-    }
+      tableLayout: "fixed",
+    },
   }),
   {
-    name: "PricingCard"
-  }
+    name: "PricingCard",
+  },
 );

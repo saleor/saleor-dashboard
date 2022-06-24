@@ -3,7 +3,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow
+  TableRow,
 } from "@material-ui/core";
 import { Backlink } from "@saleor/components/Backlink";
 import { Container } from "@saleor/components/Container";
@@ -23,10 +23,10 @@ import { maybe, renderCollection } from "../../../misc";
 const useStyles = makeStyles(
   {
     wideColumn: {
-      width: "80%"
-    }
+      width: "80%",
+    },
   },
-  { name: "CountryTaxesPage" }
+  { name: "CountryTaxesPage" },
 );
 
 export interface CountryTaxesPageProps {
@@ -52,11 +52,11 @@ const CountryTaxesPage: React.FC<CountryTaxesPageProps> = props => {
                 {
                   id: "QHB48n",
                   defaultMessage: "Tax Rates in {countryName}",
-                  description: "header"
+                  description: "header",
                 },
                 {
-                  countryName
-                }
+                  countryName,
+                },
               )
             : undefined
         }
@@ -88,7 +88,7 @@ const CountryTaxesPage: React.FC<CountryTaxesPageProps> = props => {
                       <TableCell>
                         {maybe<React.ReactNode>(
                           () => taxCategory.rate,
-                          <Skeleton />
+                          <Skeleton />,
                         )}
                       </TableCell>
                     </TableRow>
@@ -102,7 +102,7 @@ const CountryTaxesPage: React.FC<CountryTaxesPageProps> = props => {
                         />
                       </TableCell>
                     </TableRow>
-                  )
+                  ),
                 )}
               </TableBody>
             </ResponsiveTable>

@@ -17,11 +17,11 @@ const GiftCardUpdateExpirySelect: React.FC = () => {
   const {
     change,
     data: { expiryDate },
-    formErrors
+    formErrors,
   } = useGiftCardUpdateForm();
 
   const [cardExpiresSelected, setCardExpiresSelected] = useStateFromProps(
-    !!expiryDate
+    !!expiryDate,
   );
 
   useEffect(() => {
@@ -29,8 +29,8 @@ const GiftCardUpdateExpirySelect: React.FC = () => {
       change({
         target: {
           name: "expiryDate",
-          value: null
-        }
+          value: null,
+        },
       });
     }
   }, [cardExpiresSelected]);
@@ -57,7 +57,7 @@ const GiftCardUpdateExpirySelect: React.FC = () => {
           label={intl.formatMessage(messages.expiryDateLabel)}
           value={expiryDate}
           InputLabelProps={{
-            shrink: true
+            shrink: true,
           }}
           type="date"
         />

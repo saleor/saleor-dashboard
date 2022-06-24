@@ -9,9 +9,9 @@ import { OrderRefundFormData, OrderRefundType } from "../OrderRefundPage/form";
 
 const useStyles = makeStyles(
   {
-    cartContent: { paddingBottom: 0 }
+    cartContent: { paddingBottom: 0 },
   },
-  { name: "OrderRefund" }
+  { name: "OrderRefund" },
 );
 
 interface OrderRefundProps {
@@ -24,13 +24,13 @@ const messages = defineMessages({
   refundMiscellaneous: {
     id: "LKpQYh",
     defaultMessage: "Miscellaneous Refund",
-    description: "refund type"
+    description: "refund type",
   },
   refundProducts: {
     id: "CLB1k9",
     defaultMessage: "Refund Products",
-    description: "refund type"
-  }
+    description: "refund type",
+  },
 });
 
 const OrderRefund: React.FC<OrderRefundProps> = props => {
@@ -44,7 +44,7 @@ const OrderRefund: React.FC<OrderRefundProps> = props => {
         title={intl.formatMessage({
           id: "bqAJCT",
           defaultMessage: "Refund Order",
-          description: "section header"
+          description: "section header",
         })}
       />
       <CardContent className={classes.cartContent}>
@@ -52,12 +52,12 @@ const OrderRefund: React.FC<OrderRefundProps> = props => {
           choices={[
             {
               label: intl.formatMessage(messages.refundProducts),
-              value: OrderRefundType.PRODUCTS
+              value: OrderRefundType.PRODUCTS,
             },
             {
               label: intl.formatMessage(messages.refundMiscellaneous),
-              value: OrderRefundType.MISCELLANEOUS
-            }
+              value: OrderRefundType.MISCELLANEOUS,
+            },
           ]}
           disabled={disabled}
           name={"type" as keyof FormData}

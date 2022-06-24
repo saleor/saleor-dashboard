@@ -4,10 +4,10 @@ export const useGiftCardDetailsBalanceStyles = makeStyles(
   theme => ({
     labelsContainer: {
       display: "flex",
-      alignItems: "baseline"
+      alignItems: "baseline",
     },
     wideContainer: {
-      justifyContent: "space-between"
+      justifyContent: "space-between",
     },
     balanceBar: {
       width: "100%",
@@ -16,13 +16,13 @@ export const useGiftCardDetailsBalanceStyles = makeStyles(
       height: 36,
       padding: "0 4px",
       backgroundColor: theme.palette.background.default,
-      borderRadius: 18
+      borderRadius: 18,
     },
     balanceBarProgress: {
       height: 28,
       borderRadius: 14,
-      backgroundColor: theme.palette.primary.light
-    }
+      backgroundColor: theme.palette.primary.light,
+    },
   }),
-  { name: "GiftCardUpdateDetailsBalanceSection" }
+  { name: "GiftCardUpdateDetailsBalanceSection" },
 );

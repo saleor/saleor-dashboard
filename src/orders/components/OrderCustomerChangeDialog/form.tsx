@@ -4,7 +4,7 @@ import React from "react";
 
 export enum CustomerChangeActionEnum {
   KEEP_ADDRESS = "keepAddress",
-  CHANGE_ADDRESS = "changeAddress"
+  CHANGE_ADDRESS = "changeAddress",
 }
 
 export interface OrderCustomerChangeData {
@@ -22,20 +22,20 @@ export interface OrderCustomerChangeFormProps {
 }
 
 const defaultInitialFormData: OrderCustomerChangeData = {
-  changeActionOption: CustomerChangeActionEnum.KEEP_ADDRESS
+  changeActionOption: CustomerChangeActionEnum.KEEP_ADDRESS,
 };
 
 function useOrderCustomerChangeForm(
   initial: Partial<OrderCustomerChangeData> = {},
-  onSubmit: (data: OrderCustomerChangeData) => void
+  onSubmit: (data: OrderCustomerChangeData) => void,
 ): UseOrderCustomerChangeFormResult {
   const { handleChange, data } = useForm({
     ...initial,
-    ...defaultInitialFormData
+    ...defaultInitialFormData,
   });
 
   const handleFormSubmit = useHandleFormSubmit({
-    onSubmit
+    onSubmit,
   });
 
   const handleSubmit = () => handleFormSubmit(data);
@@ -49,14 +49,14 @@ function useOrderCustomerChangeForm(
   return {
     change: handleChange,
     submit,
-    data
+    data,
   };
 }
 
 const OrderCustomerChangeForm: React.FC<OrderCustomerChangeFormProps> = ({
   children,
   initial,
-  onSubmit
+  onSubmit,
 }) => {
   const props = useOrderCustomerChangeForm(initial, onSubmit);
 

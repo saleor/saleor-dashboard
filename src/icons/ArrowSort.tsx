@@ -11,7 +11,7 @@ const ArrowSort = createSvgIcon(
       fill="currentColor"
     />
   </>,
-  "ArrowSort"
+  "ArrowSort",
 );
 
 export default ArrowSort;

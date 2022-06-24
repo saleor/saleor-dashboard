@@ -18,36 +18,36 @@ const useStyles = makeStyles(
     item: {
       "&&&&": {
         color: theme.palette.text.secondary,
-        fontWeight: 400
+        fontWeight: 400,
       },
       display: "flex",
-      margin: theme.spacing(1, 0)
+      margin: theme.spacing(1, 0),
     },
     itemLabel: {
-      display: "inline-block"
+      display: "inline-block",
     },
     label: {
       paddingLeft: theme.spacing(2),
-      textTransform: "uppercase"
+      textTransform: "uppercase",
     },
     root: {
       "&:last-child": {
-        marginBottom: 0
+        marginBottom: 0,
       },
-      margin: theme.spacing(2, 0)
+      margin: theme.spacing(2, 0),
     },
     spacer: {
-      flex: 1
+      flex: 1,
     },
     symbol: {
       display: "inline-block",
       fontWeight: 600,
-      width: theme.spacing(4)
-    }
+      width: theme.spacing(4),
+    },
   }),
   {
-    name: "NavigatorSection"
-  }
+    name: "NavigatorSection",
+  },
 );
 
 const NavigatorSection: React.FC<NavigatorSectionProps> = props => {
@@ -68,7 +68,7 @@ const NavigatorSection: React.FC<NavigatorSectionProps> = props => {
         const index = offset + itemIndex;
         const itemProps = getItemProps({
           index,
-          item
+          item,
         });
 
         return (

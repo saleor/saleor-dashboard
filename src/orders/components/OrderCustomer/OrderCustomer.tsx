@@ -13,7 +13,7 @@ import {
   OrderDetailsFragment,
   PermissionEnum,
   SearchCustomersQuery,
-  WarehouseClickAndCollectOptionEnum
+  WarehouseClickAndCollectOptionEnum,
 } from "@saleor/graphql";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
@@ -32,23 +32,23 @@ const useStyles = makeStyles(
     sectionHeader: {
       alignItems: "center",
       display: "flex",
-      marginBottom: theme.spacing(3)
+      marginBottom: theme.spacing(3),
     },
     sectionHeaderTitle: {
       flex: 1,
       fontWeight: 600 as 600,
       lineHeight: 1,
-      textTransform: "uppercase"
+      textTransform: "uppercase",
     },
     sectionHeaderToolbar: {
-      marginRight: theme.spacing(-2)
+      marginRight: theme.spacing(-2),
     },
     userEmail: {
       fontWeight: 600 as 600,
-      marginBottom: theme.spacing(1)
-    }
+      marginBottom: theme.spacing(1),
+    },
   }),
-  { name: "OrderCustomer" }
+  { name: "OrderCustomer" },
 );
 
 export interface CustomerEditData {
@@ -84,7 +84,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
     onBillingAddressEdit,
     onFetchMore: onFetchMoreUsers,
     onProfileView,
-    onShippingAddressEdit
+    onShippingAddressEdit,
   } = props;
   const classes = useStyles(props);
 
@@ -94,7 +94,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
   const userEmail = maybe(() => order.userEmail);
 
   const [userDisplayName, setUserDisplayName] = useStateFromProps(
-    maybe(() => user.email, "")
+    maybe(() => user.email, ""),
   );
   const [isInEditMode, setEditModeStatus] = React.useState(false);
   const toggleEditMode = () => setEditModeStatus(!isInEditMode);
@@ -127,7 +127,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
         title={intl.formatMessage({
           id: "Y7M1YQ",
           defaultMessage: "Customer",
-          description: "section header"
+          description: "section header",
         })}
         toolbar={
           !!canEditCustomer && (
@@ -159,18 +159,18 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
                 onCustomerEdit({
                   prevUser: user?.id,
                   prevUserEmail: userEmail,
-                  [value.includes("@") ? "userEmail" : "user"]: value
+                  [value.includes("@") ? "userEmail" : "user"]: value,
                 });
                 toggleEditMode();
               };
               const userChoices = maybe(() => users, []).map(user => ({
                 label: user.email,
-                value: user.id
+                value: user.id,
               }));
               const handleUserChange = createSingleAutocompleteSelectHandler(
                 handleChange,
                 setUserDisplayName,
-                userChoices
+                userChoices,
               );
               return (
                 <SingleAutocompleteSelectField
@@ -183,7 +183,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
                   loading={loading}
                   placeholder={intl.formatMessage({
                     id: "hkSkNx",
-                    defaultMessage: "Search Customers"
+                    defaultMessage: "Search Customers",
                   })}
                   onChange={handleUserChange}
                   onFetchMore={onFetchMoreUsers}

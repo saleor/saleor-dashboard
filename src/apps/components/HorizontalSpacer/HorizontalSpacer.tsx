@@ -8,10 +8,10 @@ export interface HorizontalSpacerProps {
 const useStyles = makeStyles(
   theme => ({
     container: ({ spacing }: HorizontalSpacerProps) => ({
-      width: theme.spacing(spacing)
-    })
+      width: theme.spacing(spacing),
+    }),
   }),
-  { name: "HorizontalSpacer" }
+  { name: "HorizontalSpacer" },
 );
 
 const HorizontalSpacer: React.FC<HorizontalSpacerProps> = ({ spacing = 1 }) => {

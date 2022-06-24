@@ -6,23 +6,23 @@ import React from "react";
 
 import { ShippingZoneUpdateFormData } from "../../components/ShippingZoneDetailsPage/types";
 import ShippingZoneSettingsCard, {
-  ShippingZoneSettingsCardProps
+  ShippingZoneSettingsCardProps,
 } from "./ShippingZoneSettingsCard";
 
 const props: ShippingZoneSettingsCardProps = {
   formData: {
     channels: ["channel1"],
-    warehouses: ["warehouse1", "warehouse2"]
+    warehouses: ["warehouse1", "warehouse2"],
   } as ShippingZoneUpdateFormData,
   warehousesDisplayValues: [
     {
       value: "warehouse1",
-      label: "Asia Warehouse"
+      label: "Asia Warehouse",
     },
     {
       value: "warehouse2",
-      label: "Europe Warehouse"
-    }
+      label: "Europe Warehouse",
+    },
   ],
   hasMoreWarehouses: false,
   loading: false,
@@ -33,25 +33,25 @@ const props: ShippingZoneSettingsCardProps = {
   warehousesChoices: [
     {
       value: "warehouse1",
-      label: "C our wares"
+      label: "C our wares",
     },
     {
       value: "warehouse2",
-      label: "Be stocked"
-    }
+      label: "Be stocked",
+    },
   ],
   allChannels: [
     { __typename: "Channel", id: "channel1", name: "GBP" },
     { __typename: "Channel", id: "channel2", name: "PLN" },
-    { __typename: "Channel", id: "channel3", name: "USD" }
+    { __typename: "Channel", id: "channel3", name: "USD" },
   ] as ChannelDetailsFragment[],
   channelsDisplayValues: [
     {
       value: "channel1",
-      label: "GBP"
-    }
+      label: "GBP",
+    },
   ],
-  onChannelChange: () => undefined
+  onChannelChange: () => undefined,
 };
 
 storiesOf("Shipping zones details / Settings Card", module)

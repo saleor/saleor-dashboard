@@ -3,7 +3,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow
+  TableRow,
 } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
@@ -36,7 +36,7 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
         title={intl.formatMessage({
           id: "0Mg8o5",
           defaultMessage: "Tokens",
-          description: "header"
+          description: "header",
         })}
         toolbar={
           <Button
@@ -105,7 +105,7 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
                   />
                 </TableCell>
               </TableRow>
-            )
+            ),
           )}
         </TableBody>
       </ResponsiveTable>

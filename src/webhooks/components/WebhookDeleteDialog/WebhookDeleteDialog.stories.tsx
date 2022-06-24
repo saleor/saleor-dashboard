@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import WebhookDeleteDialog, {
-  WebhookDeleteDialogProps
+  WebhookDeleteDialogProps,
 } from "./WebhookDeleteDialog";
 
 const props: WebhookDeleteDialogProps = {
@@ -11,7 +11,7 @@ const props: WebhookDeleteDialogProps = {
   name: "Magento Importer",
   onClose: () => undefined,
   onConfirm: () => undefined,
-  open: true
+  open: true,
 };
 
 storiesOf("Views / Apps / Webhooks / Delete webhook", module)

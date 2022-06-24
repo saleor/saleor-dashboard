@@ -50,7 +50,7 @@ export function deleteChannel(channelId, targetChannelId) {
       channel{
         name
       }
-      channelErrors{
+      errors{
         message
       }
     }

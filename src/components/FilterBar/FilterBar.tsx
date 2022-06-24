@@ -23,17 +23,17 @@ const useStyles = makeStyles(
       borderBottom: `1px solid ${theme.palette.divider}`,
       display: "flex",
       flexWrap: "wrap",
-      padding: theme.spacing(1, 4)
+      padding: theme.spacing(1, 4),
     },
     tabActionButton: {
       marginLeft: theme.spacing(2),
       paddingLeft: theme.spacing(4),
-      paddingRight: theme.spacing(4)
-    }
+      paddingRight: theme.spacing(4),
+    },
   }),
   {
-    name: "FilterBar"
-  }
+    name: "FilterBar",
+  },
 );
 
 const FilterBar: React.FC<FilterBarProps> = props => {
@@ -52,7 +52,7 @@ const FilterBar: React.FC<FilterBarProps> = props => {
     onTabChange,
     onTabDelete,
     onTabSave,
-    errorMessages
+    errorMessages,
   } = props;
 
   const classes = useStyles(props);
@@ -81,7 +81,7 @@ const FilterBar: React.FC<FilterBarProps> = props => {
             onClick={() => undefined}
             label={intl.formatMessage({
               id: "qIgdO6",
-              defaultMessage: "Custom Filter"
+              defaultMessage: "Custom Filter",
             })}
           />
         )}

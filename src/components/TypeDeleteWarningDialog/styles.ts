@@ -6,18 +6,18 @@ export const useTypeDeleteWarningDialogStyles = makeStyles(
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      height: "100%"
+      height: "100%",
     },
     content: {
-      width: 600
+      width: 600,
     },
     consentLabel: {
-      color: theme.palette.primary.main
+      color: theme.palette.primary.main,
     },
     buttonsSection: {
       display: "flex",
-      justifyContent: "flex-end"
-    }
+      justifyContent: "flex-end",
+    },
   }),
-  { name: "ProductTypeDeleteWarningDialog" }
+  { name: "ProductTypeDeleteWarningDialog" },
 );

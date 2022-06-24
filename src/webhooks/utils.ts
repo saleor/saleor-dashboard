@@ -2,7 +2,7 @@ import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocomplet
 import {
   WebhookEventTypeAsyncEnum,
   WebhookEventTypeSyncEnum,
-  WebhookFragment
+  WebhookFragment,
 } from "@saleor/graphql";
 
 export function isUnnamed(webhook: WebhookFragment): boolean {
@@ -10,35 +10,35 @@ export function isUnnamed(webhook: WebhookFragment): boolean {
 }
 
 export function mapSyncEventsToChoices(
-  events: WebhookEventTypeSyncEnum[]
+  events: WebhookEventTypeSyncEnum[],
 ): MultiAutocompleteChoiceType[] {
   return events.map(event => ({
     label: event,
-    value: event
+    value: event,
   }));
 }
 
 export function mapAsyncEventsToChoices(
   events: WebhookEventTypeAsyncEnum[],
-  selectedEvents: WebhookEventTypeAsyncEnum[]
+  selectedEvents: WebhookEventTypeAsyncEnum[],
 ): MultiAutocompleteChoiceType[] {
   const isAnyAsyncEventSelected = selectedEvents.includes(
-    WebhookEventTypeAsyncEnum.ANY_EVENTS
+    WebhookEventTypeAsyncEnum.ANY_EVENTS,
   );
 
   return events.map(event => ({
     label: event,
     value: event,
     disabled:
-      event !== WebhookEventTypeAsyncEnum.ANY_EVENTS && isAnyAsyncEventSelected
+      event !== WebhookEventTypeAsyncEnum.ANY_EVENTS && isAnyAsyncEventSelected,
   }));
 }
 
 export const filterSelectedAsyncEvents = (
-  asyncEvents: WebhookEventTypeAsyncEnum[]
+  asyncEvents: WebhookEventTypeAsyncEnum[],
 ) => {
   const anyEvent = asyncEvents.find(
-    event => event === WebhookEventTypeAsyncEnum.ANY_EVENTS
+    event => event === WebhookEventTypeAsyncEnum.ANY_EVENTS,
   );
   if (anyEvent) {
     return [anyEvent];

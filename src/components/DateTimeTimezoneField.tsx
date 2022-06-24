@@ -19,13 +19,13 @@ type DateTimeFieldProps = Omit<TextFieldProps, "label" | "error"> & {
 const useStyles = makeStyles(
   theme => ({
     dateInput: {
-      marginRight: theme.spacing(2)
+      marginRight: theme.spacing(2),
     },
     errorNoticeBar: {
-      marginTop: theme.spacing(2)
-    }
+      marginTop: theme.spacing(2),
+    },
   }),
-  { name: "DateTimeTimezoneField" }
+  { name: "DateTimeTimezoneField" },
 );
 
 export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
@@ -34,12 +34,12 @@ export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
   onChange,
   error,
   fullWidth,
-  value: initialValue
+  value: initialValue,
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
   const [value, setValue] = useState<DateTime>(
-    initialValue ? splitDateTime(initialValue) : { date: "", time: "" }
+    initialValue ? splitDateTime(initialValue) : { date: "", time: "" },
   );
 
   useEffect(() => {

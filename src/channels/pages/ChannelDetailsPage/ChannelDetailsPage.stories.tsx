@@ -6,13 +6,13 @@ import React from "react";
 
 import { channel, channelCreateErrors } from "../../fixtures";
 import ChannelDetailsPage, {
-  ChannelDetailsPageProps
+  ChannelDetailsPageProps,
 } from "./ChannelDetailsPage";
 
 const props: ChannelDetailsPageProps<ChannelErrorFragment[]> = {
   currencyCodes: [
     { label: "USD", value: "USD" },
-    { label: "PLN", value: "PLN" }
+    { label: "PLN", value: "PLN" },
   ],
   disabled: false,
   disabledStatus: false,
@@ -25,26 +25,26 @@ const props: ChannelDetailsPageProps<ChannelErrorFragment[]> = {
   countries: countries.map(({ name, code }) => ({
     code,
     country: name,
-    __typename: "CountryDisplay"
+    __typename: "CountryDisplay",
   })),
   channelShippingZones: [
     {
       __typename: "ShippingZone",
       id: "zone-1",
-      name: "Europe"
+      name: "Europe",
     },
     {
       __typename: "ShippingZone",
       id: "zone-2",
-      name: "USA"
-    }
+      name: "USA",
+    },
   ],
   fetchMoreShippingZones: {
     loading: false,
     hasMore: false,
     onFetchMore: () => undefined,
-    totalCount: 0
-  }
+    totalCount: 0,
+  },
 };
 
 storiesOf("Views / Channels / Channel details", module)

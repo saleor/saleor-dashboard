@@ -1,5 +1,5 @@
 import AssignMembersDialog, {
-  AssignMembersDialogProps
+  AssignMembersDialogProps,
 } from "@saleor/permissionGroups/components/AssignMembersDialog";
 import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
@@ -18,12 +18,12 @@ const props: AssignMembersDialogProps = {
   onSearchChange: () => undefined,
   onSubmit: () => undefined,
   open: true,
-  staffMembers: users
+  staffMembers: users,
 };
 
 storiesOf(
   "Views / Permission Groups / Permission Group User Assignment",
-  module
+  module,
 )
   .addDecorator(Decorator)
   .add("submitting loading", () => (

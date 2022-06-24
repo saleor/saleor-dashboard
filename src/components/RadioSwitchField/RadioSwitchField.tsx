@@ -2,7 +2,7 @@ import {
   FormControl,
   FormControlLabel,
   Radio,
-  RadioGroup
+  RadioGroup,
 } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
@@ -12,24 +12,24 @@ const useStyles = makeStyles(
   theme => ({
     formControl: {
       padding: 0,
-      width: "100%"
+      width: "100%",
     },
     formLabel: {
       marginLeft: "-5px",
-      paddingBottom: "10px"
+      paddingBottom: "10px",
     },
     radioLabel: {
       "& > span": {
         paddingTop: theme.spacing(),
-        paddingBottom: theme.spacing()
-      }
+        paddingBottom: theme.spacing(),
+      },
     },
     secondLabel: {
       display: "block",
-      fontSize: "12px"
-    }
+      fontSize: "12px",
+    },
   }),
-  { name: "RadioSwitchField" }
+  { name: "RadioSwitchField" },
 );
 
 interface RadioSwitchFieldProps {
@@ -54,7 +54,7 @@ export const RadioSwitchField: React.FC<RadioSwitchFieldProps> = props => {
     onChange,
     name,
     secondOptionLabel,
-    value
+    value,
   } = props;
   const classes = useStyles(props);
 
@@ -64,8 +64,8 @@ export const RadioSwitchField: React.FC<RadioSwitchFieldProps> = props => {
     onChange({
       target: {
         name: event.target.name,
-        value: event.target.value === "true" ? true : false
-      }
+        value: event.target.value === "true" ? true : false,
+      },
     } as any);
   };
 
@@ -85,7 +85,7 @@ export const RadioSwitchField: React.FC<RadioSwitchFieldProps> = props => {
           value="true"
           className={classNames(
             classes.radioLabel,
-            overrideClasses?.radioLabel
+            overrideClasses?.radioLabel,
           )}
           control={<Radio color="primary" />}
           label={firstOptionLabel}
@@ -95,7 +95,7 @@ export const RadioSwitchField: React.FC<RadioSwitchFieldProps> = props => {
           value="false"
           className={classNames(
             classes.radioLabel,
-            overrideClasses?.radioLabel
+            overrideClasses?.radioLabel,
           )}
           control={<Radio color="primary" />}
           label={secondOptionLabel}

@@ -1,5 +1,6 @@
 import { ProductTypeConfigurable, ProductTypeEnum } from "@saleor/graphql";
 import { ProductTypeListUrlSortField } from "@saleor/productTypes/urls";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -9,10 +10,10 @@ import {
   pageListProps,
   searchPageProps,
   sortPageProps,
-  tabPageProps
+  tabPageProps,
 } from "../../../fixtures";
 import ProductTypeListPage, {
-  ProductTypeListPageProps
+  ProductTypeListPageProps,
 } from "../../../productTypes/components/ProductTypeListPage";
 import { productTypes } from "../../../productTypes/fixtures";
 import Decorator from "../../Decorator";
@@ -26,23 +27,24 @@ const props: ProductTypeListPageProps = {
   filterOpts: {
     configurable: {
       active: false,
-      value: ProductTypeConfigurable.CONFIGURABLE
+      value: ProductTypeConfigurable.CONFIGURABLE,
     },
     type: {
       active: false,
-      value: ProductTypeEnum.SHIPPABLE
-    }
+      value: ProductTypeEnum.SHIPPABLE,
+    },
   },
   sort: {
     ...sortPageProps.sort,
-    sort: ProductTypeListUrlSortField.name
+    sort: ProductTypeListUrlSortField.name,
   },
   ...tabPageProps,
-  productTypes
+  productTypes,
 };
 
 storiesOf("Views / Product types / Product types list", module)
   .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
   .add("default", () => <ProductTypeListPage {...props} />)
   .add("loading", () => (
     <ProductTypeListPage {...props} disabled={true} productTypes={undefined} />

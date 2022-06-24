@@ -2,7 +2,7 @@ import { Card } from "@material-ui/core";
 import {
   categoryAddUrl,
   categoryListUrl,
-  categoryUrl
+  categoryUrl,
 } from "@saleor/categories/urls";
 import { Backlink } from "@saleor/components/Backlink";
 import { Button } from "@saleor/components/Button";
@@ -32,7 +32,7 @@ import CategoryUpdateForm, { CategoryUpdateData } from "./form";
 
 export enum CategoryPageTab {
   categories = "categories",
-  products = "products"
+  products = "products",
 }
 
 export interface CategoryUpdatePageProps
@@ -45,17 +45,11 @@ export interface CategoryUpdatePageProps
   category: CategoryDetailsQuery["category"];
   products: RelayToFlat<CategoryDetailsQuery["category"]["products"]>;
   subcategories: RelayToFlat<CategoryDetailsQuery["category"]["children"]>;
-  pageInfo: {
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
-  };
   saveButtonBarState: ConfirmButtonTransitionState;
   addProductHref: string;
   onImageDelete: () => void;
   onSubmit: (data: CategoryUpdateData) => SubmitPromise;
   onImageUpload(file: File);
-  onNextPage();
-  onPreviousPage();
   onDelete();
 }
 
@@ -69,13 +63,10 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   category,
   disabled,
   errors,
-  pageInfo,
   products,
   saveButtonBarState,
   subcategories,
   onDelete,
-  onNextPage,
-  onPreviousPage,
   onSubmit,
   onImageDelete,
   onImageUpload,
@@ -84,7 +75,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   selected,
   subcategoryListToolbar,
   toggle,
-  toggleAll
+  toggleAll,
 }: CategoryUpdatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -110,7 +101,6 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
             disabled={disabled}
             errors={errors}
             onChange={change}
-            onDescriptionChange={handlers.changeDescription}
           />
           <CardSpacer />
           <CategoryBackground
@@ -125,7 +115,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
             helperText={intl.formatMessage({
               id: "wQdR8M",
               defaultMessage:
-                "Add search engine title and description to make this category easier to find"
+                "Add search engine title and description to make this category easier to find",
             })}
             errors={errors}
             title={data.seoTitle}
@@ -171,7 +161,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                 title={intl.formatMessage({
                   id: "NivJal",
                   defaultMessage: "All Subcategories",
-                  description: "section header"
+                  description: "section header",
                 })}
                 toolbar={
                   <Button
@@ -192,14 +182,11 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                 disabled={disabled}
                 isChecked={isChecked}
                 isRoot={false}
-                pageInfo={pageInfo}
                 selected={selected}
                 sort={undefined}
                 toggle={toggle}
                 toggleAll={toggleAll}
                 toolbar={subcategoryListToolbar}
-                onNextPage={onNextPage}
-                onPreviousPage={onPreviousPage}
                 onSort={() => undefined}
               />
             </Card>
@@ -210,9 +197,6 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               categoryName={category?.name}
               products={products}
               disabled={disabled}
-              pageInfo={pageInfo}
-              onNextPage={onNextPage}
-              onPreviousPage={onPreviousPage}
               toggle={toggle}
               toggleAll={toggleAll}
               selected={selected}

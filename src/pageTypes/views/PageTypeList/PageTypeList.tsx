@@ -1,11 +1,11 @@
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData
+  SaveFilterTabDialogFormData,
 } from "@saleor/components/SaveFilterTabDialog";
 import TypeDeleteWarningDialog from "@saleor/components/TypeDeleteWarningDialog";
 import {
   usePageTypeBulkDeleteMutation,
-  usePageTypeListQuery
+  usePageTypeListQuery,
 } from "@saleor/graphql";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
@@ -13,7 +13,8 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
-  createPaginationState
+  createPaginationState,
+  PaginatorContext,
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
@@ -32,7 +33,7 @@ import {
   pageTypeListUrl,
   PageTypeListUrlDialog,
   PageTypeListUrlFilters,
-  PageTypeListUrlQueryParams
+  PageTypeListUrlQueryParams,
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -40,7 +41,7 @@ import {
   getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab
+  saveFilterTab,
 } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
@@ -50,14 +51,13 @@ interface PageTypeListProps {
 
 export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
   const navigate = useNavigator();
-  const paginate = usePaginator();
   const notify = useNotifier();
   const {
     isSelected,
     listElements: selectedPageTypes,
     reset,
     toggle,
-    toggleAll
+    toggleAll,
   } = useBulkActions(params.ids);
   const intl = useIntl();
   const { settings } = useListSettings(ListViews.PAGES_LIST);
@@ -69,13 +69,13 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
-      sort: getSortQueryVariables(params)
+      sort: getSortQueryVariables(params),
     }),
-    [params, settings.rowNumber]
+    [params, settings.rowNumber],
   );
   const { data, loading, refetch } = usePageTypeListQuery({
     displayLoader: true,
-    variables: queryVariables
+    variables: queryVariables,
   });
 
   const tabs = getFilterTabs();
@@ -88,8 +88,8 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
       pageTypeListUrl({
         ...getActiveFilters(params),
         ...filter,
-        activeTab: undefined
-      })
+        activeTab: undefined,
+      }),
     );
   };
 
@@ -103,8 +103,8 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
     navigate(
       pageTypeListUrl({
         activeTab: tab.toString(),
-        ...getFilterTabs()[tab - 1].data
-      })
+        ...getFilterTabs()[tab - 1].data,
+      }),
     );
   };
 
@@ -119,23 +119,23 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
     handleTabChange(tabs.length + 1);
   };
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    data?.pageTypes?.pageInfo,
+  const paginationValues = usePaginator({
+    pageInfo: data?.pageTypes?.pageInfo,
     paginationState,
-    params
-  );
+    queryString: params,
+  });
 
   const handleSort = createSortHandler(navigate, pageTypeListUrl, params);
 
   const [
     pageTypeBulkDelete,
-    pageTypeBulkDeleteOpts
+    pageTypeBulkDeleteOpts,
   ] = usePageTypeBulkDeleteMutation({
     onCompleted: data => {
       if (data.pageTypeBulkDelete.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
+          text: intl.formatMessage(commonMessages.savedChanges),
         });
         reset();
         refetch();
@@ -143,29 +143,29 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
           pageTypeListUrl({
             ...params,
             action: undefined,
-            ids: undefined
-          })
+            ids: undefined,
+          }),
         );
       }
-    }
+    },
   });
 
   const hanldePageTypeBulkDelete = () =>
     pageTypeBulkDelete({
       variables: {
-        ids: params.ids
-      }
+        ids: params.ids,
+      },
     });
 
   const pageTypeDeleteData = usePageTypeDelete({
     selectedTypes: selectedPageTypes,
-    params
+    params,
   });
 
   const pageTypesData = mapEdgesToItems(data?.pageTypes);
 
   return (
-    <>
+    <PaginatorContext.Provider value={paginationValues}>
       <PageTypeListPage
         currentTab={currentTab}
         initialSearch={params.query || ""}
@@ -177,9 +177,6 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
         tabs={tabs.map(tab => tab.name)}
         disabled={loading}
         pageTypes={pageTypesData}
-        pageInfo={pageInfo}
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
         onSort={handleSort}
         isChecked={isSelected}
         selected={selectedPageTypes.length}
@@ -192,7 +189,7 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
             color="primary"
             onClick={() =>
               openModal("remove", {
-                ids: selectedPageTypes
+                ids: selectedPageTypes,
               })
             }
           >
@@ -224,7 +221,7 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
         onSubmit={handleTabDelete}
         tabName={getStringOrPlaceholder(tabs[currentTab - 1]?.name)}
       />
-    </>
+    </PaginatorContext.Provider>
   );
 };
 PageTypeList.displayName = "PageTypeList";

@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@material-ui/core";
 import AutocompleteSelectMenu, {
-  AutocompleteSelectMenuProps
+  AutocompleteSelectMenuProps,
 } from "@saleor/components/AutocompleteSelectMenu";
 import Form from "@saleor/components/Form";
 import { storiesOf } from "@storybook/react";
@@ -14,7 +14,7 @@ const menu: IMenu = [
     children: [],
     data: null,
     label: "Item 1",
-    value: "item1"
+    value: "item1",
   },
   {
     children: [
@@ -22,29 +22,29 @@ const menu: IMenu = [
         children: [],
         data: null,
         label: "Item 1.1",
-        value: "item1.1"
+        value: "item1.1",
       },
       {
         children: [],
         data: null,
         label: "Item 1.2",
-        value: "item1.2"
-      }
+        value: "item1.2",
+      },
     ],
     data: null,
-    label: "Menu 1"
+    label: "Menu 1",
   },
   {
     children: [],
     data: null,
     label: "Item 3",
-    value: "item3"
+    value: "item3",
   },
   {
     children: [],
     data: null,
     label: "Item 4",
-    value: "item4"
+    value: "item4",
   },
   {
     children: [
@@ -52,18 +52,18 @@ const menu: IMenu = [
         children: [],
         data: null,
         label: "Item 5.1",
-        value: "item5.1"
+        value: "item5.1",
       },
       {
         children: [],
         data: null,
         label: "Item 5.2",
-        value: "item5.2"
-      }
+        value: "item5.2",
+      },
     ],
     data: null,
-    label: "Menu 5"
-  }
+    label: "Menu 5",
+  },
 ];
 
 const props: AutocompleteSelectMenuProps = {
@@ -76,7 +76,7 @@ const props: AutocompleteSelectMenuProps = {
   name: "menu",
   onChange: () => undefined,
   options: menu,
-  placeholder: "Start typing to search ..."
+  placeholder: "Start typing to search ...",
 };
 
 storiesOf("Generics / Autocomplete Menu", module)
@@ -85,7 +85,7 @@ storiesOf("Generics / Autocomplete Menu", module)
       style={{
         margin: "auto",
         overflow: "visible",
-        width: 400
+        width: 400,
       }}
     >
       <CardContent>{storyFn()}</CardContent>

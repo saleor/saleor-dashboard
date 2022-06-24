@@ -6,7 +6,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  TextField
+  TextField,
 } from "@material-ui/core";
 import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
@@ -14,7 +14,7 @@ import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import {
   OrderDetailsFragment,
   OrderErrorFragment,
-  OrderLineFragment
+  OrderLineFragment,
 } from "@saleor/graphql";
 import { FormsetChange } from "@saleor/hooks/useFormset";
 import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
@@ -32,61 +32,61 @@ const useStyles = makeStyles(
   theme => {
     const inputPadding: CSSProperties = {
       paddingBottom: theme.spacing(2),
-      paddingTop: theme.spacing(2)
+      paddingTop: theme.spacing(2),
     };
 
     return {
       cartContent: {
         paddingBottom: 0,
-        paddingTop: 0
+        paddingTop: 0,
       },
 
       notice: {
         marginBottom: theme.spacing(1),
-        marginTop: theme.spacing(2)
+        marginTop: theme.spacing(2),
       },
 
       quantityField: {
-        minWidth: "80px"
+        minWidth: "80px",
       },
       quantityInnerInput: {
-        ...inputPadding
+        ...inputPadding,
       },
       quantityInnerInputNoRemaining: {
-        paddingRight: 0
+        paddingRight: 0,
       },
       remainingQuantity: {
         ...inputPadding,
         color: theme.palette.text.secondary,
-        whiteSpace: "nowrap"
+        whiteSpace: "nowrap",
       },
       setMaximalQuantityButton: {
         marginBottom: theme.spacing(1),
         marginTop: theme.spacing(2),
-        padding: 0
-      }
+        padding: 0,
+      },
     };
   },
-  { name: "ItemsCard" }
+  { name: "ItemsCard" },
 );
 
 const messages = defineMessages({
   improperValue: {
     id: "xoyCZ/",
     defaultMessage: "Improper value",
-    description: "error message"
+    description: "error message",
   },
 
   titleFulfilled: {
     id: "NxRsHQ",
     defaultMessage: "Fulfillment - #{fulfilmentId}",
-    description: "section header"
+    description: "section header",
   },
   titleUnfulfilled: {
     id: "BkFke9",
     defaultMessage: "Unfulfilled Items",
-    description: "section header"
-  }
+    description: "section header",
+  },
 });
 
 interface OrderReturnRefundLinesCardProps {
@@ -110,13 +110,13 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
   itemsSelections,
   itemsQuantities,
   fulfilmentId,
-  order
+  order,
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
 
   const handleChangeQuantity = (id: string) => (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => onChangeQuantity(id, parseInt(event.target.value, 10));
 
   const fulfillment = order?.fulfillments.find(getById(fulfilmentId));
@@ -177,7 +177,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                 thumbnail,
                 unitPrice,
                 productName,
-                variant
+                variant,
               } = line;
               const isValueError = false;
               const isRefunded = itemsQuantities.find(getById(id)).data
@@ -189,7 +189,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
               const isSelected = itemsSelections.find(getById(id))?.value;
               const currentQuantity = itemsQuantities.find(getById(id))?.value;
               const anyLineWithoutVariant = lines.some(
-                ({ variant }) => !variant
+                ({ variant }) => !variant,
               );
               const productNameCellWidth = anyLineWithoutVariant
                 ? "30%"
@@ -208,7 +208,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                     <Money
                       money={{
                         amount: unitPrice.gross.amount,
-                        currency: unitPrice.gross.currency
+                        currency: unitPrice.gross.currency,
                       }}
                     />
                   </TableCell>
@@ -223,7 +223,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                           "data-test-id": id,
                           max: lineQuantity.toString(),
                           min: 0,
-                          style: { textAlign: "right" }
+                          style: { textAlign: "right" },
                         }}
                         fullWidth
                         value={currentQuantity}
@@ -233,7 +233,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                             <div className={classes.remainingQuantity}>
                               / {lineQuantity}
                             </div>
-                          )
+                          ),
                         }}
                         error={isValueError}
                         helperText={
@@ -260,7 +260,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                   <Skeleton />
                 </TableCell>
               </TableRow>
-            )
+            ),
           )}
         </TableBody>
       </ResponsiveTable>

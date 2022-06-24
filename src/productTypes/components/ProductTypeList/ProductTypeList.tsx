@@ -3,20 +3,20 @@ import {
   TableCell,
   TableFooter,
   TableRow,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
-import TablePagination from "@saleor/components/TablePagination";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { ProductTypeFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import {
   ProductTypeListUrlSortField,
-  productTypeUrl
+  productTypeUrl,
 } from "@saleor/productTypes/urls";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
@@ -30,22 +30,22 @@ const useStyles = makeStyles(
     [theme.breakpoints.up("lg")]: {
       colName: {},
       colTax: {
-        width: 300
+        width: 300,
       },
       colType: {
-        width: 300
-      }
+        width: 300,
+      },
     },
     colName: {
-      paddingLeft: 0
+      paddingLeft: 0,
     },
     colTax: {},
     colType: {},
     link: {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   }),
-  { name: "ProductTypeList" }
+  { name: "ProductTypeList" },
 );
 
 interface ProductTypeListProps
@@ -61,16 +61,13 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
   const {
     disabled,
     productTypes,
-    pageInfo,
-    onNextPage,
-    onPreviousPage,
     onSort,
     isChecked,
     selected,
     sort,
     toggle,
     toggleAll,
-    toolbar
+    toolbar,
   } = props;
   const classes = useStyles(props);
 
@@ -127,15 +124,7 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
       </TableHead>
       <TableFooter>
         <TableRow>
-          <TablePagination
-            colSpan={numberOfColumns}
-            hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-            onNextPage={onNextPage}
-            hasPreviousPage={
-              pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-            }
-            onPreviousPage={onPreviousPage}
-          />
+          <TablePaginationWithContext colSpan={numberOfColumns} />
         </TableRow>
       </TableFooter>
       <TableBody>
@@ -169,12 +158,12 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
                           ? intl.formatMessage({
                               id: "X90t9n",
                               defaultMessage: "Configurable",
-                              description: "product type"
+                              description: "product type",
                             })
                           : intl.formatMessage({
                               id: "yNb+dT",
                               defaultMessage: "Simple product",
-                              description: "product type"
+                              description: "product type",
                             })}
                       </Typography>
                     </>
@@ -224,7 +213,7 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
                 />
               </TableCell>
             </TableRow>
-          )
+          ),
         )}
       </TableBody>
     </ResponsiveTable>

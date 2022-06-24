@@ -11,7 +11,7 @@ export const UserDecorator = (user: UserFragment) => storyFn => (
       logout: undefined,
       user,
       authenticated: false,
-      authenticating: false
+      authenticating: false,
     }}
   >
     {storyFn()}

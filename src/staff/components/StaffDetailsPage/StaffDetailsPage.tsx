@@ -12,7 +12,7 @@ import Savebar from "@saleor/components/Savebar";
 import {
   SearchPermissionGroupsQuery,
   StaffErrorFragment,
-  StaffMemberDetailsFragment
+  StaffMemberDetailsFragment,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useLocale from "@saleor/hooks/useLocale";
@@ -77,7 +77,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
   onSearchChange,
   onSubmit,
   saveButtonBarState,
-  staffMember
+  staffMember,
 }: StaffDetailsPageProps) => {
   const intl = useIntl();
   const classes = useStyles();
@@ -87,13 +87,13 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
 
   const [
     permissionGroupsDisplayValues,
-    setPermissionGroupsDisplayValues
+    setPermissionGroupsDisplayValues,
   ] = useStateFromProps<MultiAutocompleteChoiceType[]>(
     (staffMember?.permissionGroups || []).map(group => ({
       disabled: !group.userCanManage,
       label: group.name,
-      value: group.id
-    })) || []
+      value: group.id,
+    })) || [],
   );
 
   const initialForm: StaffDetailsFormData = {
@@ -101,7 +101,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
     firstName: staffMember?.firstName || "",
     isActive: !!staffMember?.isActive,
     lastName: staffMember?.lastName || "",
-    permissionGroups: staffMember?.permissionGroups.map(pg => pg.id) || []
+    permissionGroups: staffMember?.permissionGroups.map(pg => pg.id) || [],
   };
 
   return (
@@ -118,8 +118,8 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
           permissionGroupsDisplayValues,
           availablePermissionGroups?.map(group => ({
             label: group.name,
-            value: group.id
-          })) || []
+            value: group.id,
+          })) || [],
         );
 
         return (
@@ -168,7 +168,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                         title={intl.formatMessage({
                           id: "Fbr4Vp",
                           defaultMessage: "Permissions",
-                          description: "dialog header"
+                          description: "dialog header",
                         })}
                       />
                       <CardContent>
@@ -176,7 +176,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                           {intl.formatMessage({
                             id: "P+kVxW",
                             defaultMessage: "User is assigned to:",
-                            description: "card description"
+                            description: "card description",
                           })}
                         </Typography>
 
