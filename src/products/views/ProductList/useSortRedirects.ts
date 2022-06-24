@@ -1,29 +1,34 @@
 import useNavigator from "@saleor/hooks/useNavigator";
-import {
-  productListUrl,
-  ProductListUrlQueryParams,
-  ProductListUrlSortField,
-} from "@saleor/products/urls";
+import { Sort } from "@saleor/types";
 import { useEffect } from "react";
 
-import { canBeSorted, DEFAULT_SORT_KEY } from "./sort";
+export type SortByRankUrlQueryParams<T extends string> = Sort<T> & {
+  query?: string;
+};
 
-export function useSortRedirects(
-  params: ProductListUrlQueryParams,
-  isChannelSelected: boolean,
-) {
+export interface UseSortRedirectsOpts<SortField extends string> {
+  params: SortByRankUrlQueryParams<SortField>;
+  defaultSortField: SortField;
+  urlFunc: (params: SortByRankUrlQueryParams<SortField>) => string;
+  resetToDefault?: boolean;
+}
+
+export function useSortRedirects<SortField extends string>({
+  params,
+  defaultSortField,
+  urlFunc,
+  resetToDefault,
+}: UseSortRedirectsOpts<SortField>) {
   const navigate = useNavigator();
 
   const hasQuery = !!params.query?.trim();
 
   useEffect(() => {
-    const sortWithQuery = ProductListUrlSortField.rank;
+    const sortWithQuery = "rank" as SortField;
     const sortWithoutQuery =
-      params.sort === ProductListUrlSortField.rank
-        ? DEFAULT_SORT_KEY
-        : params.sort;
+      params.sort === "rank" ? defaultSortField : params.sort;
     navigate(
-      productListUrl({
+      urlFunc({
         ...params,
         asc: hasQuery ? false : params.asc,
         sort: hasQuery ? sortWithQuery : sortWithoutQuery,
@@ -32,11 +37,11 @@ export function useSortRedirects(
   }, [params.query]);
 
   useEffect(() => {
-    if (!canBeSorted(params.sort, isChannelSelected)) {
+    if (resetToDefault) {
       navigate(
-        productListUrl({
+        urlFunc({
           ...params,
-          sort: DEFAULT_SORT_KEY,
+          sort: defaultSortField,
         }),
       );
     }
