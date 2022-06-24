@@ -1475,7 +1475,7 @@
     "string": "Delete Daft Order"
   },
   "AQ+9Ez": {
-    "string": "We’ve encountered an unexpected error"
+    "string": "بىز كۈتۈلمىگەن بىرخاتالىققا يولۇقتۇق"
   },
   "AQFMYU": {
     "context": "staff section name",
@@ -1671,7 +1671,7 @@
   },
   "By5ZBp": {
     "context": "header",
-    "string": "Hello there, {userName}"
+    "string": "ياخشىمۇسىز, {userName}"
   },
   "C0JLNW": {
     "string": "Provided email address does not exist in our database."
@@ -1797,7 +1797,7 @@
     "string": "{channel} Price"
   },
   "CxfKLC": {
-    "string": "Pages"
+    "string": "سەھىپىلەر"
   },
   "D/+84n": {
     "context": "snackbar text",
@@ -2251,7 +2251,7 @@
     "string": "Fulfillment was cancelled"
   },
   "GOdq5V": {
-    "string": "Catalog"
+    "string": "مۇندەرىجە"
   },
   "GQcp83": {
     "context": "variant stock, header",
@@ -2388,7 +2388,7 @@
   },
   "H6NsC1": {
     "context": "pages section name",
-    "string": "Pages"
+    "string": "سەھىپىلەر"
   },
   "HLqWXA": {
     "context": "voucher value requirement",
@@ -2552,7 +2552,7 @@
   },
   "Iafyt5": {
     "context": "page attribute entity type",
-    "string": "Pages"
+    "string": "سەھىپىلەر"
   },
   "IbVKSH": {
     "context": "button",
@@ -3066,7 +3066,7 @@
   },
   "McN+wq": {
     "context": "customers section name",
-    "string": "Customers"
+    "string": "خېرىدارلار"
   },
   "Mee46w": {
     "context": "collection publication date",
@@ -3273,7 +3273,7 @@
   },
   "OA+fw+": {
     "context": "conjunction, choice between going to dashboard or refreshing page",
-    "string": "or"
+    "string": "ياكى"
   },
   "OBQ+th": {
     "context": "WarehouseSettings disabled warehouse label",
@@ -3990,7 +3990,7 @@
   },
   "Ta9j04": {
     "context": "orders section name",
-    "string": "Orders"
+    "string": "زاكاز"
   },
   "TalJlD": {
     "context": "tax rate for a product type",
@@ -4483,7 +4483,7 @@
   },
   "X8+Lpa": {
     "context": "button",
-    "string": "Account Settings"
+    "string": "ھېسابات تەڭشىكى"
   },
   "X8qjg3": {
     "context": "inactive",
@@ -4889,7 +4889,7 @@
   },
   "aCX8rl": {
     "context": "subheader",
-    "string": "Here is some information we gathered about your store"
+    "string": "بۇ يەردە بىز دۇكىنىڭىز ھەققىدە توپلىغان بەزى ئۇچۇرلار"
   },
   "aDbrOK": {
     "string": "Search Staff Member"
@@ -6349,7 +6349,7 @@
     "string": "days after issue"
   },
   "n+Gwbu": {
-    "string": "Discounts"
+    "string": "ئېتىبار"
   },
   "n02c9W": {
     "context": "product variant price",
@@ -6599,7 +6599,7 @@
     "string": "Unassign and save"
   },
   "p0SUJj": {
-    "string": "Don’t worry we will fix it soon. Try to refresh the page or go back to dashboard."
+    "string": "ئەنسىرىمەڭ ، بىز ئۇنى تېزلا تۈزىتىمىز. بەتنى يېڭىلاپ بېقىڭ ياكى باشقۇرۇش تاختىسىغا قايتىڭ."
   },
   "p3eRUm": {
     "context": "indicator that feature is in preview mode",
@@ -7674,7 +7674,7 @@
   },
   "xfGZsi": {
     "context": "configuration section name",
-    "string": "Configuration"
+    "string": "سەپلىمە"
   },
   "xjpTLF": {
     "context": "informations about product stock, header",
@@ -7811,7 +7811,7 @@
   },
   "ypW4Mi": {
     "context": "button refreshing page",
-    "string": "Refresh page"
+    "string": "بەتنى يېڭىلاش"
   },
   "yuiyES": {
     "string": "General Settings"
