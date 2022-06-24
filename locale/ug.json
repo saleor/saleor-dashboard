@@ -1840,7 +1840,7 @@
   },
   "D9ie4n": {
     "context": "shipping section name",
-    "string": "Shipping Methods"
+    "string": "مال ئەۋەتىش ئۇسۇللىرى"
   },
   "DASYUF": {
     "context": "section title",
@@ -2322,7 +2322,7 @@
   },
   "Gjo89T": {
     "context": "header",
-    "string": "Warehouses"
+    "string": "ئامبار"
   },
   "Gkip05": {
     "context": "button",
@@ -2749,7 +2749,7 @@
     "string": "Bought by"
   },
   "JqiqNj": {
-    "string": "Something went wrong"
+    "string": "چاتاق چىقتى"
   },
   "JsPIOX": {
     "context": "voucher code",
@@ -3789,7 +3789,7 @@
     "string": "Set the same for billing address"
   },
   "RzsKm8": {
-    "string": "Shipping methods"
+    "string": "مال ئەۋەتىش ئۇسۇللىرى"
   },
   "S/yAtJ": {
     "context": "total price",
@@ -4433,7 +4433,7 @@
   },
   "WhvuCb": {
     "context": "plugins section name",
-    "string": "Plugins"
+    "string": "قىستۇرمىلار"
   },
   "WkxE8/": {
     "context": "percentage or fixed, header",
@@ -4703,7 +4703,7 @@
   },
   "YQ3EXR": {
     "context": "product types section name",
-    "string": "Product Types"
+    "string": "مەھسۇلات تۈرلىرى"
   },
   "YVIajc": {
     "context": "product field",
