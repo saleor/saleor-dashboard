@@ -18,6 +18,7 @@ import usePaginator, {
   PaginatorContext,
 } from "@saleor/hooks/usePaginator";
 import { getStringOrPlaceholder } from "@saleor/misc";
+import { useSortRedirects } from "@saleor/products/views/ProductList/useSortRedirects";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
@@ -45,7 +46,7 @@ import {
   getFilterVariables,
   saveFilterTab,
 } from "./filters";
-import { getSortQueryVariables } from "./sort";
+import { DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 
 interface OrderListProps {
   params: OrderListUrlQueryParams;
@@ -147,6 +148,12 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   });
 
   const handleSort = createSortHandler(navigate, orderListUrl, params);
+
+  useSortRedirects({
+    params,
+    defaultSortField: DEFAULT_SORT_KEY,
+    urlFunc: orderListUrl,
+  });
 
   return (
     <PaginatorContext.Provider value={paginationValues}>
