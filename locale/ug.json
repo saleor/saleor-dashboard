@@ -80,7 +80,7 @@
   },
   "+do3gl": {
     "context": "input helper text",
-    "string": "This number defines quantity of items in checkout line that can be bought. You can override this setting per variant. Leaving this setting empty mean that there is no limits."
+    "string": "بۇ سان سېتىۋالغىلى بولىدىغان تەكشۈرۈش لىنىيىسىدىكى تۈرلەرنىڭ سانىغا ئېنىقلىما بېرىدۇ. ھەر بىر ئۆزگەرگۈچى مىقدارنى بۇ تەڭشەكنى قاپلىۋېتەلەيسىز. بۇ تەڭشەكنى بوش قويۇۋەتسىڭىز ھېچقانداق چەك يوق."
   },
   "+hib+V": {
     "context": "error message",
@@ -867,7 +867,7 @@
     "string": "Availability"
   },
   "5BajZK": {
-    "string": "View and update your site settings"
+    "string": "تور بېتىڭىزنىڭ تەڭشەكلىرىنى كۆرۈڭ ۋە يېڭىلاڭ"
   },
   "5GSYCR": {
     "context": "page status",
@@ -1291,7 +1291,7 @@
     "string": "Checkout limits"
   },
   "8vJCJ4": {
-    "string": "Define and manage your sales channels"
+    "string": "سېتىش يوللىرىڭىزنى ئېنىقلاڭ ۋە باشقۇرۇڭ"
   },
   "8vQGO0": {
     "context": "tooltip content when line's variant has been deleted",
@@ -1960,7 +1960,7 @@
     "string": "Are you sure you want to approve this fullfillment?"
   },
   "EIULpW": {
-    "string": "Manage how your store charges tax"
+    "string": "دۇكىنىڭىزنىڭ باجنى قانداق ئالىدىغانلىقىنى باشقۇرۇڭ"
   },
   "EKoPNg": {
     "context": "shipping method price",
@@ -2457,7 +2457,7 @@
     "string": "Default Label"
   },
   "HjXnIf": {
-    "string": "Content Management"
+    "string": "مەزمۇن باشقۇرۇش"
   },
   "HlCkMT": {
     "string": "Order line added"
@@ -2664,7 +2664,7 @@
     "string": "Successfully created new page"
   },
   "JPH/uP": {
-    "string": "Define types of content pages used in your store"
+    "string": "دۇكىنىڭىزدا ئىشلىتىلىدىغان مەزمۇن بەتلىرىنى ئېنىقلاڭ"
   },
   "JQH+Iy": {
     "context": "resent code success message",
@@ -2802,7 +2802,7 @@
   },
   "K8xNLe": {
     "context": "products section name",
-    "string": "Products"
+    "string": "مەھسۇلاتلار"
   },
   "KCjd1o": {
     "context": "dialog title",
@@ -3116,7 +3116,7 @@
   },
   "N3Zot1": {
     "context": "button",
-    "string": "Change your password"
+    "string": "پارولىڭىزنى ئۆزگەرتىڭ"
   },
   "N43t3/": {
     "context": "error message",
@@ -3343,7 +3343,7 @@
   },
   "OrR3Qy": {
     "context": "no products",
-    "string": "No products found"
+    "string": "ھېچقانداق مەھسۇلات تېپىلمىدى"
   },
   "Orgqv4": {
     "context": "numeric attribute unit",
@@ -3510,7 +3510,7 @@
     "string": "Product Type"
   },
   "Q1Uzbb": {
-    "string": "No products found"
+    "string": "ھېچقانداق مەھسۇلات تېپىلمىدى"
   },
   "Q2UXlW": {
     "context": "modal button url upload",
@@ -3573,7 +3573,7 @@
   },
   "QGjJcT": {
     "context": "number of products",
-    "string": "Products"
+    "string": "مەھسۇلاتلار"
   },
   "QH74y5": {
     "context": "table header name col label",
@@ -3715,7 +3715,7 @@
     "string": "Create Token"
   },
   "RQUkVW": {
-    "string": "Manage your employees and their permissions"
+    "string": "خىزمەتچىلىرىڭىزنى ۋە ئۇلارنىڭ ئىجازەتلىرىنى باشقۇرۇڭ"
   },
   "RUzdUH": {
     "string": "No shipping rates found"
@@ -4074,7 +4074,7 @@
     "string": "Note"
   },
   "UN+yTt": {
-    "string": "Staff Settings"
+    "string": "خىزمەتچىلەر تەڭشىكى"
   },
   "UN3qWD": {
     "context": "page status",
@@ -4183,7 +4183,7 @@
   },
   "V+fkAO": {
     "context": "number of products in category",
-    "string": "Products"
+    "string": "مەھسۇلاتلار"
   },
   "V+gwx7": {
     "context": "order payment",
@@ -5586,7 +5586,7 @@
     "string": "Variant {name} has been set as default."
   },
   "gTr0qE": {
-    "string": "Shipping Settings"
+    "string": "مال ئەۋەتىش تەڭشەكلىرى"
   },
   "gVD1os": {
     "context": "empty list message",
@@ -5846,7 +5846,7 @@
     "string": "Keep address"
   },
   "ivJ1qt": {
-    "string": "Manage your permission groups and their permissions"
+    "string": "ئىجازەت گۇرۇپپىلىرىڭىزنى ۋە ئۇلارنىڭ ئىجازەتلىرىنى باشقۇرۇڭ"
   },
   "ixjvkM": {
     "string": "We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
@@ -5857,7 +5857,7 @@
   },
   "j0ugM4": {
     "context": "Manage and Update your warehouse information",
-    "string": "Exchange Rates"
+    "string": "پېرېۋوت نىسبىتى"
   },
   "j2fPVo": {
     "string": "Order successfully updated"
@@ -5890,7 +5890,7 @@
     "string": "Gift card was issued"
   },
   "jFrdB5": {
-    "string": "Product Settings"
+    "string": "مەھسۇلات تەڭشىكى"
   },
   "jGGnSZ": {
     "context": "page header",
@@ -6238,7 +6238,7 @@
     "string": "Please set up a new password for your account. Repeat your new password to make sure you will be able to remember it."
   },
   "m19JfL": {
-    "string": "View and update your plugins and their settings."
+    "string": "قىستۇرمىلىرىڭىزنى ۋە تەڭشەكلىرىنى كۆرۈڭ ۋە يېڭىلاڭ."
   },
   "m6IBe5": {
     "context": "invoice number prefix",
@@ -6356,7 +6356,7 @@
     "string": "Price"
   },
   "n0RwMK": {
-    "string": "Define types of products you sell"
+    "string": "سىز ساتقان مەھسۇلاتلارنىڭ تۈرىگە ئېنىقلىما بېرىڭ"
   },
   "n0w2ZT": {
     "context": "label for currently selected warehouse",
@@ -6641,7 +6641,7 @@
   },
   "pRYGUR": {
     "context": "section description",
-    "string": "This address will be used to generate invoices and calculate shipping rates. Email address you provide here will be used as a contact address for your customers."
+    "string": "بۇ ئادرېس تالون ھاسىل قىلىش ۋە يۈك توشۇش نىسبىتىنى ھېسابلاشقا ئىشلىتىلىدۇ. بۇ يەردە تەمىنلىگەن ئېلېكترونلۇق خەت ئادرېسىڭىز خېرىدارلىرىڭىزنىڭ ئالاقىلىشىش ئادرېسى سۈپىتىدە ئىشلىتىلىدۇ."
   },
   "pTpx0p": {
     "context": "order history message",
@@ -6923,7 +6923,7 @@
   },
   "rr8fyf": {
     "context": "header",
-    "string": "Top Products"
+    "string": "ئەڭ ياخشى مەھسۇلاتلار"
   },
   "rrbzZt": {
     "string": "No subcategories found"
@@ -7376,7 +7376,7 @@
     "string": "Undo"
   },
   "vONi+O": {
-    "string": "Country"
+    "string": "دۆلەت"
   },
   "vP7g2+": {
     "context": "error message",
@@ -7441,7 +7441,7 @@
   },
   "viFkCw": {
     "context": "site settings section name",
-    "string": "Site Settings"
+    "string": "بېكەت تەڭشەكلىرى"
   },
   "vjsfyn": {
     "string": "Max Value"
@@ -7929,7 +7929,7 @@
     "string": "No attributes found"
   },
   "zxs6G3": {
-    "string": "Manage how you ship out orders"
+    "string": "زاكازنى قانداق ئەۋەتىشىڭىزنى باشقۇرۇڭ"
   },
   "zyXcBP": {
     "string": "Sorting by this column requires active filter: {filterName}"
