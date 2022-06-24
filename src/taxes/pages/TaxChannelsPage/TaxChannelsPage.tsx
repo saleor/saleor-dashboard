@@ -228,12 +228,14 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
             {allCountries && (
               <TaxCountryDialog
                 open={isDialogOpen}
-                countries={allCountries.filter(
-                  ({ code }) =>
-                    !countryExceptions?.some(
-                      ({ country }) => country.code === code
-                    )
-                )}
+                countries={allCountries
+                  .filter(
+                    ({ code }) =>
+                      !countryExceptions?.some(
+                        ({ country }) => country.code === code
+                      )
+                  )
+                  .map(country => ({ checked: false, ...country }))}
                 onConfirm={countries => {
                   const input = countries.map(country => ({
                     country,
