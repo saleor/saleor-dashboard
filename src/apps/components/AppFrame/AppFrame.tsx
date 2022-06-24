@@ -55,7 +55,11 @@ export const AppFrame: React.FC<Props> = ({
   return (
     <iframe
       ref={frameRef}
-      src={urlJoin(src, `?domain=${shop.domain.host}&id=${appId}`)}
+      src={urlJoin(
+        src,
+        window.location.search,
+        `?domain=${shop.domain.host}&id=${appId}`,
+      )}
       onError={onError}
       onLoad={handleLoad}
       className={clsx(classes.iframe, className)}

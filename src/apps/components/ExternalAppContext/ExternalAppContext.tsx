@@ -1,4 +1,4 @@
-import { appDeepUrl } from "@saleor/apps/urls";
+import { appDeepUrl, AppDetailsUrlMountQueryParams } from "@saleor/apps/urls";
 import { AppExtensionTargetEnum } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import React from "react";
@@ -12,6 +12,7 @@ export interface AppData {
   src: string;
   label: string;
   target: AppExtensionTargetEnum;
+  params?: AppDetailsUrlMountQueryParams;
 }
 
 const ExternalAppContext = React.createContext<{
@@ -55,7 +56,9 @@ export const useExternalApp = () => {
       setOpen(true);
       setAppData(appData);
     } else {
-      navigate(appDeepUrl(appData.id, appData.src), { resetScroll: true });
+      navigate(appDeepUrl(appData.id, appData.src, appData.params), {
+        resetScroll: true,
+      });
     }
   };
 
