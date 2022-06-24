@@ -17,8 +17,8 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@saleor/hooks/usePaginator";
+import { useSortRedirects } from "@saleor/hooks/useSortRedirects";
 import { getStringOrPlaceholder } from "@saleor/misc";
-import { useSortRedirects } from "@saleor/products/views/ProductList/useSortRedirects";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";

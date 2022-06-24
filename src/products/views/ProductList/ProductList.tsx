@@ -65,6 +65,7 @@ import { getSortUrlVariables } from "@saleor/utils/sort";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { useSortRedirects } from "../../../hooks/useSortRedirects";
 import ProductListPage from "../../components/ProductListPage";
 import {
   deleteFilterTab,
@@ -77,7 +78,6 @@ import {
   saveFilterTab,
 } from "./filters";
 import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
-import { useSortRedirects } from "./useSortRedirects";
 import { getAvailableProductKinds, getProductKindOpts } from "./utils";
 
 interface ProductListProps {
