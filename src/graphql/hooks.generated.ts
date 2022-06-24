@@ -945,7 +945,6 @@ export const ShippingPriceTranslateErrorFragmentFragmentDoc = gql`
 export const TaxConfigurationUpdateErrorFragmentFragmentDoc = gql`
     fragment TaxConfigurationUpdateErrorFragment on TaxConfigurationUpdateError {
   field
-  message
   code
 }
     `;
