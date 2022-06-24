@@ -152,7 +152,7 @@ export type AllocationFieldPolicy = {
 	quantity?: FieldPolicy<any> | FieldReadFunction<any>,
 	warehouse?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AppKeySpecifier = ('id' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'metadata' | 'metafield' | 'metafields' | 'permissions' | 'created' | 'isActive' | 'name' | 'type' | 'tokens' | 'webhooks' | 'aboutApp' | 'dataPrivacy' | 'dataPrivacyUrl' | 'homepageUrl' | 'supportUrl' | 'configurationUrl' | 'appUrl' | 'version' | 'accessToken' | 'extensions' | AppKeySpecifier)[];
+export type AppKeySpecifier = ('id' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'metadata' | 'metafield' | 'metafields' | 'permissions' | 'created' | 'isActive' | 'name' | 'type' | 'tokens' | 'webhooks' | 'aboutApp' | 'dataPrivacy' | 'dataPrivacyUrl' | 'homepageUrl' | 'supportUrl' | 'configurationUrl' | 'appUrl' | 'manifestUrl' | 'version' | 'accessToken' | 'extensions' | AppKeySpecifier)[];
 export type AppFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -175,6 +175,7 @@ export type AppFieldPolicy = {
 	supportUrl?: FieldPolicy<any> | FieldReadFunction<any>,
 	configurationUrl?: FieldPolicy<any> | FieldReadFunction<any>,
 	appUrl?: FieldPolicy<any> | FieldReadFunction<any>,
+	manifestUrl?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>,
 	accessToken?: FieldPolicy<any> | FieldReadFunction<any>,
 	extensions?: FieldPolicy<any> | FieldReadFunction<any>
@@ -410,10 +411,26 @@ export type AttributeCreateFieldPolicy = {
 	attributeErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type AttributeCreatedKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'attribute' | AttributeCreatedKeySpecifier)[];
+export type AttributeCreatedFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	attribute?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type AttributeDeleteKeySpecifier = ('attributeErrors' | 'errors' | 'attribute' | AttributeDeleteKeySpecifier)[];
 export type AttributeDeleteFieldPolicy = {
 	attributeErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
+	attribute?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AttributeDeletedKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'attribute' | AttributeDeletedKeySpecifier)[];
+export type AttributeDeletedFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	attribute?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type AttributeErrorKeySpecifier = ('field' | 'message' | 'code' | AttributeErrorKeySpecifier)[];
@@ -452,6 +469,14 @@ export type AttributeUpdateFieldPolicy = {
 	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
 	attributeErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AttributeUpdatedKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'attribute' | AttributeUpdatedKeySpecifier)[];
+export type AttributeUpdatedFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	attribute?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type AttributeValueKeySpecifier = ('id' | 'name' | 'slug' | 'value' | 'translation' | 'inputType' | 'reference' | 'file' | 'richText' | 'plainText' | 'boolean' | 'date' | 'dateTime' | AttributeValueKeySpecifier)[];
 export type AttributeValueFieldPolicy = {
@@ -4322,10 +4347,26 @@ export type StaffCreateFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	user?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type StaffCreatedKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'user' | StaffCreatedKeySpecifier)[];
+export type StaffCreatedFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	user?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type StaffDeleteKeySpecifier = ('staffErrors' | 'errors' | 'user' | StaffDeleteKeySpecifier)[];
 export type StaffDeleteFieldPolicy = {
 	staffErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
+	user?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type StaffDeletedKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'user' | StaffDeletedKeySpecifier)[];
+export type StaffDeletedFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	user?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type StaffErrorKeySpecifier = ('field' | 'message' | 'code' | 'addressType' | 'permissions' | 'groups' | 'users' | StaffErrorKeySpecifier)[];
@@ -4367,6 +4408,14 @@ export type StaffUpdateKeySpecifier = ('staffErrors' | 'errors' | 'user' | Staff
 export type StaffUpdateFieldPolicy = {
 	staffErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
+	user?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type StaffUpdatedKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'user' | StaffUpdatedKeySpecifier)[];
+export type StaffUpdatedFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	user?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type StockKeySpecifier = ('id' | 'warehouse' | 'productVariant' | 'quantity' | 'quantityAllocated' | 'quantityReserved' | StockKeySpecifier)[];
@@ -5162,9 +5211,17 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | AttributeCreateKeySpecifier | (() => undefined | AttributeCreateKeySpecifier),
 		fields?: AttributeCreateFieldPolicy,
 	},
+	AttributeCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AttributeCreatedKeySpecifier | (() => undefined | AttributeCreatedKeySpecifier),
+		fields?: AttributeCreatedFieldPolicy,
+	},
 	AttributeDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | AttributeDeleteKeySpecifier | (() => undefined | AttributeDeleteKeySpecifier),
 		fields?: AttributeDeleteFieldPolicy,
+	},
+	AttributeDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AttributeDeletedKeySpecifier | (() => undefined | AttributeDeletedKeySpecifier),
+		fields?: AttributeDeletedFieldPolicy,
 	},
 	AttributeError?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | AttributeErrorKeySpecifier | (() => undefined | AttributeErrorKeySpecifier),
@@ -5189,6 +5246,10 @@ export type StrictTypedTypePolicies = {
 	AttributeUpdate?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | AttributeUpdateKeySpecifier | (() => undefined | AttributeUpdateKeySpecifier),
 		fields?: AttributeUpdateFieldPolicy,
+	},
+	AttributeUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AttributeUpdatedKeySpecifier | (() => undefined | AttributeUpdatedKeySpecifier),
+		fields?: AttributeUpdatedFieldPolicy,
 	},
 	AttributeValue?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | AttributeValueKeySpecifier | (() => undefined | AttributeValueKeySpecifier),
@@ -7006,9 +7067,17 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | StaffCreateKeySpecifier | (() => undefined | StaffCreateKeySpecifier),
 		fields?: StaffCreateFieldPolicy,
 	},
+	StaffCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | StaffCreatedKeySpecifier | (() => undefined | StaffCreatedKeySpecifier),
+		fields?: StaffCreatedFieldPolicy,
+	},
 	StaffDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | StaffDeleteKeySpecifier | (() => undefined | StaffDeleteKeySpecifier),
 		fields?: StaffDeleteFieldPolicy,
+	},
+	StaffDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | StaffDeletedKeySpecifier | (() => undefined | StaffDeletedKeySpecifier),
+		fields?: StaffDeletedFieldPolicy,
 	},
 	StaffError?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | StaffErrorKeySpecifier | (() => undefined | StaffErrorKeySpecifier),
@@ -7033,6 +7102,10 @@ export type StrictTypedTypePolicies = {
 	StaffUpdate?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | StaffUpdateKeySpecifier | (() => undefined | StaffUpdateKeySpecifier),
 		fields?: StaffUpdateFieldPolicy,
+	},
+	StaffUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | StaffUpdatedKeySpecifier | (() => undefined | StaffUpdatedKeySpecifier),
+		fields?: StaffUpdatedFieldPolicy,
 	},
 	Stock?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | StockKeySpecifier | (() => undefined | StockKeySpecifier),
