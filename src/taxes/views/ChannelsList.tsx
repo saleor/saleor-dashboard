@@ -46,11 +46,6 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ id, params }) => {
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
-      } else {
-        notify({
-          status: "error",
-          text: intl.formatMessage(commonMessages.defaultErrorTitle)
-        });
       }
     }
   });
