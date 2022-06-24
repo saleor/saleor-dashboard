@@ -176,7 +176,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     channel => channel.slug === params.channel,
   );
 
-  useSortRedirects({
+  useSortRedirects<ProductListUrlSortField>({
     params,
     defaultSortField: DEFAULT_SORT_KEY,
     urlFunc: productListUrl,

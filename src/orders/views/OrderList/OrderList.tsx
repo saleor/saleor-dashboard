@@ -33,6 +33,7 @@ import {
   orderListUrl,
   OrderListUrlDialog,
   OrderListUrlQueryParams,
+  OrderListUrlSortField,
   orderSettingsPath,
   orderUrl,
 } from "../../urls";
@@ -149,7 +150,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
 
   const handleSort = createSortHandler(navigate, orderListUrl, params);
 
-  useSortRedirects({
+  useSortRedirects<OrderListUrlSortField>({
     params,
     defaultSortField: DEFAULT_SORT_KEY,
     urlFunc: orderListUrl,
