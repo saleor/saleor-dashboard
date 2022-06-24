@@ -2650,7 +2650,7 @@
     "string": "Delete attribute"
   },
   "JJgJwi": {
-    "string": "Selecting this will change the language of your dashboard"
+    "string": "بۇنى تاللىسىڭىز باشقۇرۇش تاختىڭىزنىڭ تىلىنى ئۆزگەرتىدۇ"
   },
   "JKbpH9": {
     "context": "expiry date checkbox label",
@@ -3533,7 +3533,7 @@
     "string": "{counter,plural,one{Are you sure you want to delete this order draft?} other{Are you sure you want to delete {displayQuantity} order drafts?}}"
   },
   "Q6wcZ5": {
-    "string": "First Name"
+    "string": "ئىسىم"
   },
   "Q7uuDr": {
     "context": "attribute slug input field helper text",
@@ -4273,7 +4273,7 @@
   },
   "VTITVe": {
     "context": "section header",
-    "string": "Staff Member Information"
+    "string": "خىزمەتچى خادىملارنىڭ ئۇچۇرى"
   },
   "VZsE96": {
     "string": "Collection Name"
@@ -5351,7 +5351,7 @@
     "string": "Not set"
   },
   "e822us": {
-    "string": "Please note, while all currency and date adjustments are complete, language translations are at varying degrees of completion."
+    "string": "شۇنىڭغا دىققەت قىلىڭكى ، بارلىق پۇل ۋە چېسلانى تەڭشەش تاماملانغان بىلەن ، تىل تەرجىمىلىرى ئوخشىمىغان دەرىجىدە تاماملىنىدۇ."
   },
   "e92Uxp": {
     "context": "order history message",
@@ -6325,7 +6325,7 @@
     "string": "This name should be unique"
   },
   "mm0CXe": {
-    "string": "You should change your password every month to avoid security issues."
+    "string": "بىخەتەرلىك مەسىلىسىدىن ساقلىنىش ئۈچۈن ھەر ئايدا پارولىڭىزنى ئۆزگەرتىشىڭىزنى تەۋسىىيە قىلىمىز."
   },
   "mmcHeH": {
     "string": "Discount Value"
