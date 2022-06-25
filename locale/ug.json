@@ -4352,7 +4352,7 @@
   },
   "WCg2GZ": {
     "context": "change warehouse dialog search placeholder",
-    "string": "Search warehouses"
+    "string": "ئامبارلارنى ئىزدەش"
   },
   "WDy0tF": {
     "context": "section header",
@@ -4360,7 +4360,7 @@
   },
   "WE8IFE": {
     "context": "product name",
-    "string": "Product"
+    "string": "مەھسۇلات"
   },
   "WFG7Zk": {
     "context": "unassign attribute from page type, button",
@@ -4368,7 +4368,7 @@
   },
   "WGp+Fw": {
     "context": "order refund amount",
-    "string": "Shipment Cost"
+    "string": "مال ئەۋەتىش تەننەرخى"
   },
   "WHkx+F": {
     "string": "Price cannot be lower than 0"
