@@ -1671,7 +1671,7 @@
   },
   "By5ZBp": {
     "context": "header",
-    "string": "ياخشىمۇسىز, {userName}"
+    "string": "{userName} ياخشىمۇسىز ،"
   },
   "C0JLNW": {
     "string": "Provided email address does not exist in our database."
