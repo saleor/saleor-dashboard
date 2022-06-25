@@ -1393,7 +1393,7 @@
   },
   "9mGA/Q": {
     "context": "button linking to dashboard",
-    "string": "باش تاختا"
+    "string": "باشقۇرۇش تاختىسى"
   },
   "9piUVz": {
     "context": "order history message",
@@ -5742,7 +5742,7 @@
     "string": "Activate"
   },
   "hzSNj4": {
-    "string": "Dashboard"
+    "string": "باشقۇرۇش تاختىسى"
   },
   "i+JSEZ": {
     "string": "{counter,plural,one{Are you sure you want to cancel this order?} other{Are you sure you want to cancel {displayQuantity} orders?}}"
