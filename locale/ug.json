@@ -1671,7 +1671,7 @@
   },
   "By5ZBp": {
     "context": "header",
-    "string": "{userName} ياخشىمۇسىز ،"
+    "string": "{userName} ياخشىمۇسىز"
   },
   "C0JLNW": {
     "string": "Provided email address does not exist in our database."
@@ -2395,10 +2395,10 @@
     "string": "Usage Limit"
   },
   "HMD+ib": {
-    "string": "Last order"
+    "string": "ئاخىرقى زاكاز"
   },
   "HP6m+q": {
-    "string": "Attributes and Product Types"
+    "string": "خاسلىقى ۋە مەھسۇلات تۈرلىرى"
   },
   "HQR2y0": {
     "context": "attribute value is required",
