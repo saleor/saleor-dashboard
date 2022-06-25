@@ -2337,7 +2337,7 @@
     "string": "Description"
   },
   "Gr1SAu": {
-    "string": "Customer Name"
+    "string": "خېرىدار ئىسمى"
   },
   "GsBRWL": {
     "string": "تىللار"
@@ -3301,7 +3301,7 @@
   },
   "OTpV1t": {
     "context": "webhook name",
-    "string": "Name"
+    "string": "ئىسمى"
   },
   "OVOU1z": {
     "context": "section header",
@@ -3347,10 +3347,10 @@
   },
   "Orgqv4": {
     "context": "numeric attribute unit",
-    "string": "Unit"
+    "string": "بىرلىك"
   },
   "OwG/0z": {
-    "string": "Deleted menu"
+    "string": "ئۆچۈرۈلگەن تىزىملىك"
   },
   "OzHN0Z": {
     "context": "order history message",
@@ -3377,7 +3377,7 @@
     "string": "Attribute Code"
   },
   "P7PLVj": {
-    "string": "Date"
+    "string": "چېسلا"
   },
   "PAqicb": {
     "context": "button",
@@ -3389,14 +3389,14 @@
   },
   "PCoO4D": {
     "context": "error message",
-    "string": "Page not found."
+    "string": "سەھىپە تېپىلمىدى"
   },
   "PFXGaR": {
-    "string": "Shipping Zones"
+    "string": "مال يەتكۈزۈش رايونى"
   },
   "PHUcrU": {
     "context": "date when order was placed",
-    "string": "Date"
+    "string": "چېسلا"
   },
   "PJDcQs": {
     "context": "set balance button label",
@@ -3414,7 +3414,7 @@
     "string": "Cancel Order"
   },
   "PRlD0A": {
-    "string": "Shipping"
+    "string": "مال ئەۋەتىش"
   },
   "PTW56s": {
     "context": "alert",
@@ -3422,14 +3422,14 @@
   },
   "PV0SQd": {
     "context": "WarehousesSection select field label",
-    "string": "Warehouse"
+    "string": "ئامبار"
   },
   "PX2zWy": {
     "context": "customer is not set in draft order",
     "string": "Not set"
   },
   "PXatmC": {
-    "string": "Customer Removed"
+    "string": "خېرىدار ئۆچۈرۈلدى"
   },
   "PXx4Jk": {
     "context": "window title",
@@ -6099,7 +6099,7 @@
   },
   "l2oVCF": {
     "context": "attributes section name",
-    "string": "Attributes"
+    "string": "خاسلىقى"
   },
   "l5V0QT": {
     "context": "boolean attribute type",
