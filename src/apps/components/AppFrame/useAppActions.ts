@@ -1,7 +1,9 @@
 import { Actions, DispatchResponseEvent, Events } from "@saleor/app-bridge";
+import { appPath } from "@saleor/apps/urls";
 import useNavigator from "@saleor/hooks/useNavigator";
 import React from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { useExternalApp } from "../ExternalAppContext";
 
@@ -19,8 +21,10 @@ const sendResponseStatus = (
 export const useAppActions = (
   frameEl: React.MutableRefObject<HTMLIFrameElement>,
   appOrigin: string,
+  appId: string,
 ) => {
   const navigate = useNavigator();
+  const location = useLocation();
   const { closeApp } = useExternalApp();
   const intl = useIntl();
 
@@ -32,10 +36,17 @@ export const useAppActions = (
         const { to, newContext, actionId } = action.payload;
 
         let success = true;
+        const appCompletePath = appPath(encodeURIComponent(appId));
+        const isAppDeepUrlChange =
+          to.startsWith(appCompletePath) &&
+          location.pathname.startsWith(appCompletePath);
 
         try {
           if (newContext) {
             window.open(to);
+          } else if (isAppDeepUrlChange) {
+            // Change only url without reloading if we are in the same app
+            window.history.pushState(null, "", to);
           } else if (to.startsWith("/")) {
             navigate(to);
             closeApp();
