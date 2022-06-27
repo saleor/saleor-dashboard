@@ -178,6 +178,10 @@ export const commonMessages = defineMessages({
     defaultMessage: "Can’t fulfill until payment is captured",
     description: "disabled option description",
   },
+  deprecated: {
+    id: "z9c6/C",
+    defaultMessage: "Deprecated",
+  },
 });
 
 export const errorMessages = defineMessages({
