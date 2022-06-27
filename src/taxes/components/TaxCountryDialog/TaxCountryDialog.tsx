@@ -87,7 +87,7 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
         <div className={classes.scrollable}>
           {filteredCountries.map(country => (
             <TaxCountryDialogLine
-              key={"modal" + country.code}
+              key={country.code}
               country={country}
               checked={country.checked}
               handleChange={handleChange}
