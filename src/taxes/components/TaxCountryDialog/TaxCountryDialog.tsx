@@ -9,6 +9,7 @@ import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import { CountryFragment } from "@saleor/graphql";
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import { useLocalSearch } from "@saleor/hooks/useLocalSearch";
+import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import { buttonMessages } from "@saleor/intl";
 import { Button, DialogHeader, SearchIcon } from "@saleor/macaw-ui";
 import { taxesMessages } from "@saleor/taxes/messages";
@@ -52,19 +53,20 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
     [countries, setCountriesWithState]
   );
 
-  const handleClose = () => {
-    onClose();
-    setCountriesWithState([]);
-    setQuery("");
-  };
+  useModalDialogOpen(open, {
+    onClose: () => {
+      setCountriesWithState([]);
+      setQuery("");
+    }
+  });
 
   const { query, setQuery, searchResult: filteredCountries } = useLocalSearch<
     CountryFragmentWithState
   >(countriesWithState, country => country.country);
 
   return (
-    <Dialog open={open} fullWidth onClose={handleClose}>
-      <DialogHeader onClose={handleClose}>
+    <Dialog open={open} fullWidth onClose={onClose}>
+      <DialogHeader onClose={onClose}>
         <FormattedMessage {...taxesMessages.chooseCountries} />
       </DialogHeader>
       <DialogContent className={classes.wrapper}>
@@ -100,7 +102,6 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
           variant="primary"
           onClick={() => {
             onConfirm(countriesWithState.filter(country => country.checked));
-            handleClose();
           }}
         >
           <FormattedMessage {...buttonMessages.select} />
