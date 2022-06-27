@@ -92,26 +92,16 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
           InputProps={{
             endAdornment: (
               <div
-                onClick={e => {
-                  // e.preventDefault();
-                  e.stopPropagation();
-                }}
                 ref={anchor}
                 onMouseOver={() => setPopupOpen(true)}
                 onMouseLeave={() => setPopupOpen(false)}
               >
-                <div
-                  aria-controls="availability-menu"
-                  aria-haspopup="true"
-                  role="button"
-                >
-                  <Pill
-                    label={intl.formatMessage(commonMessages.deprecated)}
-                    color={"error"}
-                    outlined
-                    size="small"
-                  />
-                </div>
+                <Pill
+                  label={intl.formatMessage(commonMessages.deprecated)}
+                  color={"error"}
+                  outlined
+                  size="small"
+                />
                 <Popper
                   anchorEl={anchor.current}
                   open={isPopupOpen}
