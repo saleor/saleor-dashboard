@@ -1,9 +1,9 @@
 import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
-  () => ({
+  theme => ({
     inputPadding: {
-      padding: "16px 0 16px 0"
+      padding: theme.spacing(2, 0)
     },
     wrapper: {
       overflowX: "visible",
