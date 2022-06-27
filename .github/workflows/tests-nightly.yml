@@ -87,7 +87,7 @@ jobs:
 
   run-tests-in-parallel:
     needs: revert-automation-env-to-snap
-    if: always() #Wait for revert-automation-env-to-snap, bot run always, even if skipped
+    if: ${{ always() && github.event_name != 'repository_dispatch'  }} #Wait for revert-automation-env-to-snap, bot run always, even if skipped
     runs-on: ubuntu-latest
     container: cypress/browsers:node14.16.0-chrome89-ff86
     strategy:
@@ -157,7 +157,7 @@ jobs:
           command: npx cypress run --record --env tags=critical --spec cypress/e2e/navigation.js,cypress/e2e/products/createProduct.js,cypress/e2e/products/productsVariants.js  --parallel --tag ${{ steps.get-env-uri.outputs.ENV_URI }}, Critical
 
   run-tests-on-release:
-    if: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.project != 'PROD' && github.event.client_payload.project != 'ENTERPRISE'}}
+    if: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.environment != 'PROD' && github.event.client_payload.environment != 'ENTERPRISE'}}
     runs-on: ubuntu-latest
     container: cypress/browsers:node14.16.0-chrome89-ff86
     strategy:
@@ -173,32 +173,15 @@ jobs:
         id: version
         env:
           version: ${{github.event.client_payload.version}}
-          pattern: \\.
         run: |
-          echo "::set-output name=version::$(echo $version | sed s/$pattern// | head -n 1 )"
-
-      - name: Get formatted version - demo
-        if: ${{ github.event.client_payload.project == 'DEMO' }}
-        id: version-demo
-        env:
-          version: ${{github.event.client_payload.version}}
-          pattern: demo-
-        run: |
-          echo "::set-output name=version::$(echo $version | sed s/$pattern// | head -n 1 )"
-
-      - name: Get domain
-        id: domain
-        env:
-          correct-version: ${{ steps.version-demo.outputs.version-demo || steps.version.outputs.version }}
-        run: |
-          echo "::set-output name=version::$(echo https://v${{ steps.version-demo.outputs.version-demo }}.staging.saleor.cloud/ | head -n 1 )"
+          echo "::set-output name=formatted_version::$(echo $version | grep -Eo "\d\.\d" | sed s/\\.// | head -n 1 )"
 
       - name: Cypress run - automatically
         uses: cypress-io/github-action@v4
         env:
-          API_URI: ${{ steps.domain.outputs.domain }}graphql/
+          API_URI: ${{ steps.version.outputs.formatted_version }}graphql/
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
-          CYPRESS_baseUrl: ${{ steps.domain.outputs.domain }}dashboard/
+          CYPRESS_baseUrl: ${{ steps.version.outputs.formatted_version }}dashboard/
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
