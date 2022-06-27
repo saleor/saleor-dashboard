@@ -13,7 +13,7 @@ import { useIntl } from "react-intl";
 
 import TaxChannelsPage from "../pages/TaxChannelsPage";
 import {
-  channelsListUrl,
+  taxConfigurationListUrl,
   TaxesUrlDialog,
   TaxesUrlQueryParams,
   TaxTab,
@@ -55,7 +55,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ id, params }) => {
   const [openDialog, closeDialog] = createDialogActionHandlers<
     TaxesUrlDialog,
     TaxesUrlQueryParams
-  >(navigate, params => channelsListUrl(id, params), params);
+  >(navigate, params => taxConfigurationListUrl(id, params), params);
 
   const { data } = useTaxConfigurationsListQuery({ variables: { first: 20 } });
 
@@ -64,7 +64,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ id, params }) => {
   useTaxUrlRedirect({
     id,
     data: taxConfigurations,
-    urlFunction: channelsListUrl,
+    urlFunction: taxConfigurationListUrl,
     navigate
   });
 

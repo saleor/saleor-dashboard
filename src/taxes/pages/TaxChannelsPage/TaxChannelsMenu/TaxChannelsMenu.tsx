@@ -4,7 +4,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import { TaxConfigurationFragment } from "@saleor/graphql";
 import { List, ListHeader, ListItem, ListItemCell } from "@saleor/macaw-ui";
 import { taxesMessages } from "@saleor/taxes/messages";
-import { channelsListUrl } from "@saleor/taxes/urls";
+import { taxConfigurationListUrl } from "@saleor/taxes/urls";
 import clsx from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -38,7 +38,7 @@ export const TaxChannelsMenu: React.FC<TaxChannelsMenuProps> = ({
               className={clsx(classes.clickable, {
                 [classes.selected]: configuration.id === selectedConfigurationId
               })}
-              href={channelsListUrl(configuration.id)}
+              href={taxConfigurationListUrl(configuration.id)}
             >
               <ListItemCell>{configuration.channel.name}</ListItemCell>
             </ListItemLink>

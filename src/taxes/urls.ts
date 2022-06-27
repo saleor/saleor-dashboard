@@ -12,11 +12,16 @@ export const taxTabPath = (tab: TaxTab) => urlJoin(taxSection, tab);
 export type TaxesUrlDialog = "add-country";
 export type TaxesUrlQueryParams = Dialog<TaxesUrlDialog>;
 
-export const channelsListPath = (id?: string) =>
+export const taxConfigurationListPath = (id?: string) =>
   id ? urlJoin(taxTabPath("channels"), id) : taxTabPath("channels");
 
-export const channelsListUrl = (id?: string, params?: TaxesUrlQueryParams) =>
-  channelsListPath(encodeURIComponentOptional(id)) + "?" + stringifyQs(params);
+export const taxConfigurationListUrl = (
+  id?: string,
+  params?: TaxesUrlQueryParams
+) =>
+  taxConfigurationListPath(encodeURIComponentOptional(id)) +
+  "?" +
+  stringifyQs(params);
 
 export const countriesListUrl = (id?: string) =>
   id ? urlJoin(taxTabPath("countries"), id) : taxTabPath("countries");

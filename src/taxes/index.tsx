@@ -6,9 +6,9 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
-  channelsListPath,
   countriesListUrl,
   taxClassesListUrl,
+  taxConfigurationListPath,
   TaxesUrlQueryParams
 } from "./urls";
 import ChannelsListComponent from "./views/ChannelsList";
@@ -44,8 +44,11 @@ const Component = () => {
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.taxes)} />
       <Switch>
-        <Route path={channelsListPath(":id")} component={ChannelsList} />
-        <Route path={channelsListPath()} component={ChannelsList} />
+        <Route
+          path={taxConfigurationListPath(":id")}
+          component={ChannelsList}
+        />
+        <Route path={taxConfigurationListPath()} component={ChannelsList} />
         <Route path={countriesListUrl(":id")} component={CountriesList} />
         <Route path={countriesListUrl()} component={CountriesList} />
         <Route path={taxClassesListUrl(":id")} component={TaxClassesList} />
