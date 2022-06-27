@@ -9,7 +9,6 @@ import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import { CountryFragment } from "@saleor/graphql";
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import { useLocalSearch } from "@saleor/hooks/useLocalSearch";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
 import { Button, DialogHeader, SearchIcon } from "@saleor/macaw-ui";
 import { taxesMessages } from "@saleor/taxes/messages";
@@ -19,14 +18,15 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useStyles } from "./styles";
 import { TaxCountryDialogLine } from "./TaxCountryDialogLine";
 
-export interface CountryFragmentWithState extends CountryFragment {
-  checked: boolean;
-}
 interface TaxCountryDialogProps {
   open: boolean;
-  countries: CountryFragmentWithState[];
+  countries: CountryFragment[];
   onConfirm: (countries: CountryFragment[]) => void;
   onClose: () => void;
+}
+
+export interface CountryFragmentWithState extends CountryFragment {
+  checked: boolean;
 }
 
 export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
@@ -38,10 +38,16 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
   const classes = useStyles();
   const intl = useIntl();
 
-  const [countriesWithState, setCountriesWithState] = useStateFromProps<
+  const [countriesWithState, setCountriesWithState] = React.useState<
     CountryFragmentWithState[]
-  >(countries);
-
+  >([]);
+  React.useEffect(
+    () =>
+      setCountriesWithState(
+        countries.map(country => ({ checked: false, ...country }))
+      ),
+    [countries]
+  );
   const handleChange = React.useCallback(
     (e: ChangeEvent) => {
       const countriesUpdate = [...countriesWithState];
