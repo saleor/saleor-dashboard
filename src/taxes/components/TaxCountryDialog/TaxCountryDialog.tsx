@@ -18,15 +18,14 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useStyles } from "./styles";
 import { TaxCountryDialogLine } from "./TaxCountryDialogLine";
 
-interface TaxCountryDialogProps {
-  open: boolean;
-  countries: CountryFragment[];
-  onConfirm: (countries: CountryFragment[]) => void;
-  onClose: () => void;
-}
-
 export interface CountryFragmentWithState extends CountryFragment {
   checked: boolean;
+}
+interface TaxCountryDialogProps {
+  open: boolean;
+  countries: CountryFragmentWithState[];
+  onConfirm: (countries: CountryFragment[]) => void;
+  onClose: () => void;
 }
 
 export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
@@ -41,13 +40,8 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
   const [countriesWithState, setCountriesWithState] = React.useState<
     CountryFragmentWithState[]
   >([]);
-  React.useEffect(
-    () =>
-      setCountriesWithState(
-        countries.map(country => ({ checked: false, ...country }))
-      ),
-    [countries]
-  );
+  React.useEffect(() => setCountriesWithState(countries), [countries, open]);
+
   const handleChange = React.useCallback(
     (e: ChangeEvent) => {
       const countriesUpdate = [...countriesWithState];
