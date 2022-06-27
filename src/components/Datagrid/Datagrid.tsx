@@ -1,17 +1,16 @@
 import DataEditor, {
   EditableGridCell,
   GridCell,
-  GridColumn,
   Item
 } from "@glideapps/glide-data-grid";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { useTheme } from "@saleor/macaw-ui";
-import { addAtIndex, removeAtIndex } from "@saleor/utils/lists";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 
+import ColumnPicker from "../ColumnPicker";
 import { AvailableColumn } from "./types";
 import useCells from "./useCells";
+import useColumns from "./useColumns";
 
 export interface DatagridProps {
   availableColumns: readonly AvailableColumn[];
@@ -44,46 +43,22 @@ export const Datagrid: React.FC<DatagridProps> = ({
     [theme]
   );
 
-  const [displayedColumns, setDisplayedColumns] = React.useState(
-    availableColumns
-  );
-  const [columnState, setColumnState] = useStateFromProps<AvailableColumn[]>([
-    ...availableColumns
-  ]);
-  const columns = React.useMemo(
-    () =>
-      displayedColumns.map(({ id }) => columnState.find(ac => ac.id === id)),
-    [displayedColumns, columnState]
-  );
-
-  const onColumnMoved = React.useCallback(
-    (startIndex: number, endIndex: number): void => {
-      setDisplayedColumns(old =>
-        addAtIndex(old[startIndex], removeAtIndex(old, startIndex), endIndex)
-      );
-    },
-    []
-  );
-
-  const onColumnResize = React.useCallback(
-    (column: GridColumn, newSize: number) => {
-      setColumnState(prevColsMap => {
-        const index = prevColsMap.findIndex(ci => ci.title === column.title);
-        const newArray = [...prevColsMap];
-        newArray.splice(index, 1, {
-          ...prevColsMap[index],
-          width: newSize
-        });
-        return newArray;
-      });
-    },
-    []
-  );
+  const {
+    availableColumnsChoices,
+    columns,
+    columnChoices,
+    defaultColumns,
+    displayedColumns,
+    onColumnMoved,
+    onColumnResize,
+    onColumnsChange,
+    picker
+  } = useColumns(availableColumns);
 
   const getCellContentEnh = React.useCallback(
     ([column, row]: Item): GridCell =>
       getCellContent([
-        availableColumns.findIndex(ac => ac.id === displayedColumns[column].id),
+        availableColumns.findIndex(ac => ac.id === displayedColumns[column]),
         row
       ]),
     [getCellContent, availableColumns, displayedColumns]
@@ -93,9 +68,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
     ([column, row]: Item, newValue: EditableGridCell): void =>
       onCellEdited(
         [
-          availableColumns.findIndex(
-            ac => ac.id === displayedColumns[column].id
-          ),
+          availableColumns.findIndex(ac => ac.id === displayedColumns[column]),
           row
         ],
         newValue
@@ -193,22 +166,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   //         <tr className={classes.actionRow}>
   //           <th>
   //             {selected.length === 0 ? (
-  //               <ColumnPicker
-  //                 IconButtonProps={{
-  //                   variant: "secondary"
-  //                 }}
-  //                 availableColumns={hookOpts.availableColumns}
-  //                 initialColumns={columns}
-  //                 defaultColumns={hookOpts.availableColumns.map(
-  //                   ({ value }) => value
-  //                 )}
-  //                 onSave={onColumnChange}
-  //                 hasMore={false}
-  //                 loading={false}
-  //                 onFetchMore={() => undefined}
-  //                 onQueryChange={setQuery}
-  //                 query={query}
-  //               />
+  //
   //             ) : (
   //               <div
   //                 style={{
@@ -241,6 +199,20 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   return (
     <ThemeProvider theme={datagridTheme}>
+      <ColumnPicker
+        IconButtonProps={{
+          variant: "secondary"
+        }}
+        availableColumns={availableColumnsChoices}
+        initialColumns={columnChoices}
+        defaultColumns={defaultColumns}
+        onSave={onColumnsChange}
+        hasMore={false}
+        loading={false}
+        onFetchMore={() => undefined}
+        onQueryChange={picker.setQuery}
+        query={picker.query}
+      />
       <DataEditor
         {...props}
         getCellContent={getCellContentEnh}
