@@ -8,7 +8,7 @@ import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { giftCardDetailsUrl } from "../../../fixtures/urlList";
 import {
   createGiftCard,
-  getGiftCardWithId
+  getGiftCardWithId,
 } from "../../../support/api/requests/GiftCard";
 import { deleteGiftCardsWithTagStartsWith } from "../../../support/api/utils/catalog/giftCardUtils";
 import { formatDate } from "../../../support/formatData/formatDate";
@@ -34,7 +34,7 @@ describe("As an admin I want to update gift card", () => {
       createGiftCard({
         tag: name,
         amount: 10,
-        currency: "USD"
+        currency: "USD",
       }).then(giftCard => {
         cy.visit(giftCardDetailsUrl(giftCard.id))
           .get(BUTTON_SELECTORS.deleteButton)
@@ -47,7 +47,7 @@ describe("As an admin I want to update gift card", () => {
           .waitForRequestAndCheckIfNoErrors("@DeleteGiftCard");
         getGiftCardWithId(giftCard.id).should("be.null");
       });
-    }
+    },
   );
 
   it(
@@ -61,7 +61,7 @@ describe("As an admin I want to update gift card", () => {
       createGiftCard({
         tag: name,
         amount: 10,
-        currency: "USD"
+        currency: "USD",
       })
         .then(giftCard => {
           cy.visit(giftCardDetailsUrl(giftCard.id))
@@ -86,10 +86,10 @@ describe("As an admin I want to update gift card", () => {
         })
         .then(giftCard => {
           expect(giftCard.tags[0].name.toLowerCase()).to.eq(
-            updatedName.toLowerCase()
+            updatedName.toLowerCase(),
           );
           expect(giftCard.expiryDate).to.eq(date);
         });
-    }
+    },
   );
 });

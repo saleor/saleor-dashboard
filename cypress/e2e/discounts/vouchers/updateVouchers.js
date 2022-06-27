@@ -8,7 +8,7 @@ import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { voucherDetailsUrl } from "../../../fixtures/urlList";
 import {
   createVoucherInChannel,
-  deleteVouchersStartsWith
+  deleteVouchersStartsWith,
 } from "../../../support/api/utils/discounts/vouchersUtils";
 import { createCheckoutWithVoucher } from "../../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
@@ -36,7 +36,7 @@ describe("As an admin I want to update vouchers", () => {
           defaultChannel: channel,
           shippingMethod: shippingMethodResp,
           address: addressResp,
-          product: productResp
+          product: productResp,
         }) => {
           defaultChannel = channel;
           product = productResp;
@@ -46,9 +46,9 @@ describe("As an admin I want to update vouchers", () => {
             variantsList: variantsResp,
             address: addressResp,
             shippingMethodName: shippingMethodResp.name,
-            auth: "token"
+            auth: "token",
           };
-        }
+        },
       );
   });
 
@@ -66,7 +66,7 @@ describe("As an admin I want to update vouchers", () => {
         name,
         productId: product.id,
         channelId: defaultChannel.id,
-        value: voucherValue
+        value: voucherValue,
       })
         .then(voucherResp => {
           voucher = voucherResp;
@@ -85,7 +85,7 @@ describe("As an admin I want to update vouchers", () => {
           const errorField = addPromoCodeResp.errors[0].field;
           expect(errorField).to.be.eq("promoCode");
         });
-    }
+    },
   );
 
   it(
@@ -107,7 +107,7 @@ describe("As an admin I want to update vouchers", () => {
         name,
         productId: product.id,
         channelId: defaultChannel.id,
-        value: voucherValue
+        value: voucherValue,
       })
         .then(voucherResp => {
           voucher = voucherResp;
@@ -128,7 +128,7 @@ describe("As an admin I want to update vouchers", () => {
           const amount = addPromoCodeResp.checkout.totalPrice.gross.amount;
           expect(amount).to.be.eq(expectedOrderAmount);
         });
-    }
+    },
   );
 
   it(
@@ -149,7 +149,7 @@ describe("As an admin I want to update vouchers", () => {
         name,
         productId: product.id,
         channelId: defaultChannel.id,
-        value: voucherValue
+        value: voucherValue,
       })
         .then(voucherResp => {
           voucher = voucherResp;
@@ -168,7 +168,7 @@ describe("As an admin I want to update vouchers", () => {
         .then(({ addPromoCodeResp }) => {
           expect(addPromoCodeResp.errors).to.be.empty;
         });
-    }
+    },
   );
 
   it(
@@ -189,7 +189,7 @@ describe("As an admin I want to update vouchers", () => {
         name,
         productId: product.id,
         channelId: defaultChannel.id,
-        value: voucherValue
+        value: voucherValue,
       })
         .then(voucherResp => {
           voucher = voucherResp;
@@ -198,7 +198,7 @@ describe("As an admin I want to update vouchers", () => {
             voucherId: voucher.id,
             endDate: todayDate,
             endTime: formatTime(today),
-            hasEndDate: true
+            hasEndDate: true,
           });
           dataForCheckout.voucherCode = voucher.code;
           createCheckoutWithVoucher(dataForCheckout);
@@ -209,7 +209,7 @@ describe("As an admin I want to update vouchers", () => {
           setVoucherDate({
             voucherId: voucher.id,
             endDate: tomorrowDate,
-            endTime: formatTime(tomorrow)
+            endTime: formatTime(tomorrow),
           });
           dataForCheckout.voucherCode = voucher.code;
           createCheckoutWithVoucher(dataForCheckout);
@@ -217,7 +217,7 @@ describe("As an admin I want to update vouchers", () => {
         .then(({ addPromoCodeResp }) => {
           expect(addPromoCodeResp.errors).to.be.empty;
         });
-    }
+    },
   );
 
   it(
@@ -236,7 +236,7 @@ describe("As an admin I want to update vouchers", () => {
         channelId: defaultChannel.id,
         value: voucherValue,
         type: "SHIPPING",
-        country: "US"
+        country: "US",
       })
         .then(voucherResp => {
           voucher = voucherResp;
@@ -268,6 +268,6 @@ describe("As an admin I want to update vouchers", () => {
           const errorField = addPromoCodeResp.errors[0].field;
           expect(errorField).to.be.eq("promoCode");
         });
-    }
+    },
   );
 });

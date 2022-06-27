@@ -9,26 +9,26 @@ import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import {
   productDetailsUrl,
-  productVariantDetailUrl
+  productVariantDetailUrl,
 } from "../../../fixtures/urlList";
 import {
   createVariant,
-  getVariant
+  getVariant,
 } from "../../../support/api/requests/Product";
 import {
   createTypeProduct,
-  productAttributeAssignmentUpdate
+  productAttributeAssignmentUpdate,
 } from "../../../support/api/requests/ProductType";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import { createWaitingForCaptureOrder } from "../../../support/api/utils/ordersUtils";
 import {
   createProductInChannelWithoutVariants,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith
+  deleteProductsStartsWith,
 } from "../../../support/api/utils/products/productsUtils";
 import {
   createShipping,
-  deleteShippingStartsWith
+  deleteShippingStartsWith,
 } from "../../../support/api/utils/shippingUtils";
 
 describe("Updating products without sku", () => {
@@ -63,7 +63,7 @@ describe("Updating products without sku", () => {
         createShipping({
           channelId: defaultChannel.id,
           name,
-          address
+          address,
         });
       })
       .then(
@@ -71,40 +71,40 @@ describe("Updating products without sku", () => {
           warehouse = warehouseResp;
           shippingMethod = shippingMethodResp;
           createTypeAttributeAndCategoryForProduct({ name, attributeValues });
-        }
+        },
       )
       .then(
         ({
           attribute: attributeResp,
           productType: productTypeResp,
-          category: categoryResp
+          category: categoryResp,
         }) => {
           attribute = attributeResp;
           productTypeWithVariants = productTypeResp;
           category = categoryResp;
           productAttributeAssignmentUpdate({
             productTypeId: productTypeWithVariants.id,
-            attributeId: attribute.id
+            attributeId: attribute.id,
           });
           createTypeProduct({
             name: productTypeWithoutVariantsName,
             attributeId: attribute.id,
-            hasVariants: false
+            hasVariants: false,
           });
-        }
+        },
       )
       .then(productTypeResp => {
         productTypeWithoutVariants = productTypeResp;
         productAttributeAssignmentUpdate({
           productTypeId: productTypeWithoutVariants.id,
-          attributeId: attribute.id
+          attributeId: attribute.id,
         });
         createProductInChannelWithoutVariants({
           name,
           channelId: defaultChannel.id,
           attributeId: attribute.id,
           productTypeId: productTypeWithVariants.id,
-          categoryId: category.id
+          categoryId: category.id,
         });
       })
       .then(productResp => (product = productResp));
@@ -126,7 +126,7 @@ describe("Updating products without sku", () => {
         attributeId: attribute.id,
         categoryId: category.id,
         channelId: defaultChannel.id,
-        productTypeId: productTypeWithoutVariants.id
+        productTypeId: productTypeWithoutVariants.id,
       })
         .then(productResp => {
           simpleProduct = productResp;
@@ -134,12 +134,12 @@ describe("Updating products without sku", () => {
             productId: simpleProduct.id,
             channelId: defaultChannel.id,
             warehouseId: warehouse.id,
-            quantityInWarehouse: 10
+            quantityInWarehouse: 10,
           });
         })
         .then(variantsList => {
           cy.visitAndWaitForProgressBarToDisappear(
-            productDetailsUrl(simpleProduct.id)
+            productDetailsUrl(simpleProduct.id),
           )
             .get(SHARED_ELEMENTS.skeleton)
             .should("not.exist")
@@ -154,7 +154,7 @@ describe("Updating products without sku", () => {
         .then(variantResp => {
           expect(variantResp.sku).to.eq(sku);
         });
-    }
+    },
   );
 
   it(
@@ -169,12 +169,12 @@ describe("Updating products without sku", () => {
         productId: product.id,
         quantityInWarehouse: 10,
         warehouseId: warehouse.id,
-        attributeName: attributeValues[0]
+        attributeName: attributeValues[0],
       })
         .then(variantResp => {
           variant = variantResp[0];
           cy.visitAndWaitForProgressBarToDisappear(
-            productVariantDetailUrl(product.id, variant.id)
+            productVariantDetailUrl(product.id, variant.id),
           )
             .get(SHARED_ELEMENTS.skeleton)
             .should("not.exist")
@@ -189,7 +189,7 @@ describe("Updating products without sku", () => {
         .then(variantResp => {
           expect(variantResp.sku).to.equal(sku);
         });
-    }
+    },
   );
 
   it(
@@ -204,12 +204,12 @@ describe("Updating products without sku", () => {
         quantityInWarehouse: 10,
         warehouseId: warehouse.id,
         sku: name,
-        attributeName: attributeValues[1]
+        attributeName: attributeValues[1],
       })
         .then(variantResp => {
           variant = variantResp[0];
           cy.visitAndWaitForProgressBarToDisappear(
-            productVariantDetailUrl(product.id, variant.id)
+            productVariantDetailUrl(product.id, variant.id),
           )
             .get(SHARED_ELEMENTS.skeleton)
             .should("not.exist")
@@ -225,7 +225,7 @@ describe("Updating products without sku", () => {
           expect(variantResp.sku).to.be.null;
           checkIfCheckoutForVariantCanBeCompleted(variantResp);
         });
-    }
+    },
   );
 
   it(
@@ -239,7 +239,7 @@ describe("Updating products without sku", () => {
         attributeId: attribute.id,
         categoryId: category.id,
         channelId: defaultChannel.id,
-        productTypeId: productTypeWithoutVariants.id
+        productTypeId: productTypeWithoutVariants.id,
       })
         .then(productResp => {
           simpleProduct = productResp;
@@ -248,12 +248,12 @@ describe("Updating products without sku", () => {
             channelId: defaultChannel.id,
             sku: simpleProductName,
             quantityInWarehouse: 10,
-            warehouseId: warehouse.id
+            warehouseId: warehouse.id,
           });
         })
         .then(variantsList => {
           cy.visitAndWaitForProgressBarToDisappear(
-            productDetailsUrl(simpleProduct.id)
+            productDetailsUrl(simpleProduct.id),
           )
             .get(SHARED_ELEMENTS.skeleton)
             .should("not.exist")
@@ -269,7 +269,7 @@ describe("Updating products without sku", () => {
           expect(variantResp.sku).to.be.null;
           checkIfCheckoutForVariantCanBeCompleted(variantResp);
         });
-    }
+    },
   );
 
   function checkIfCheckoutForVariantCanBeCompleted(variant) {
@@ -278,7 +278,7 @@ describe("Updating products without sku", () => {
       channelSlug: defaultChannel.slug,
       email,
       shippingMethodName: shippingMethod.name,
-      variantsList: [variant]
+      variantsList: [variant],
     }).then(({ order }) => {
       expect(order.id).to.be.ok;
     });

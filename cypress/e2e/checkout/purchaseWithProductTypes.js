@@ -7,7 +7,7 @@ import {
   checkoutShippingAddressUpdate,
   checkoutVariantsUpdate,
   completeCheckout,
-  createCheckout
+  createCheckout,
 } from "../../support/api/requests/Checkout";
 import { getOrder } from "../../support/api/requests/Order";
 import {
@@ -15,7 +15,7 @@ import {
   createAndCompleteCheckoutWithoutShipping,
   createWaitingForCaptureOrder,
   getShippingMethodIdFromCheckout,
-  updateShippingInCheckout
+  updateShippingInCheckout,
 } from "../../support/api/utils/ordersUtils";
 import { createDigitalAndPhysicalProductWithNewDataAndDefaultChannel } from "../../support/api/utils/products/productsUtils";
 
@@ -36,7 +36,7 @@ describe("As an unlogged customer I want to order physical and digital products"
     cy.clearSessionData().loginUserViaRequest();
     createDigitalAndPhysicalProductWithNewDataAndDefaultChannel({
       physicalProductName: physicalName,
-      digitalProductName: digitalName
+      digitalProductName: digitalName,
     }).then(resp => {
       defaultChannel = resp.defaultChannel;
       address = resp.address;
@@ -55,7 +55,7 @@ describe("As an unlogged customer I want to order physical and digital products"
         email,
         billingAddress: address,
         variantsList: digitalVariants,
-        auth: "token"
+        auth: "token",
       })
         .then(({ order }) => {
           getOrder(order.id);
@@ -63,11 +63,11 @@ describe("As an unlogged customer I want to order physical and digital products"
         .then(order => {
           expect(
             order.isShippingRequired,
-            "Check if is shipping required in order"
+            "Check if is shipping required in order",
           ).to.eq(false);
           expect(order.status, testsMessage).to.be.eq("UNFULFILLED");
         });
-    }
+    },
   );
 
   it(
@@ -79,7 +79,7 @@ describe("As an unlogged customer I want to order physical and digital products"
         email,
         variantsList: physicalVariants,
         shippingMethodName: shippingMethod.name,
-        address
+        address,
       })
         .then(({ order }) => {
           getOrder(order.id);
@@ -87,11 +87,11 @@ describe("As an unlogged customer I want to order physical and digital products"
         .then(order => {
           expect(
             order.isShippingRequired,
-            "Check if is shipping required in order"
+            "Check if is shipping required in order",
           ).to.eq(true);
           expect(order.status, testsMessage).to.be.eq("UNFULFILLED");
         });
-    }
+    },
   );
 
   it(
@@ -105,7 +105,7 @@ describe("As an unlogged customer I want to order physical and digital products"
         email,
         variantsList: digitalVariants,
         billingAddress: address,
-        auth: "token"
+        auth: "token",
       })
         .then(({ checkout: checkoutResp }) => {
           checkout = checkoutResp;
@@ -117,11 +117,11 @@ describe("As an unlogged customer I want to order physical and digital products"
         .then(() => {
           const shippingMethodId = getShippingMethodIdFromCheckout(
             checkout,
-            shippingMethod.name
+            shippingMethod.name,
           );
           expect(
             shippingMethodId,
-            "Should be not possible to add shipping method without shipping address"
+            "Should be not possible to add shipping method without shipping address",
           ).to.not.be.ok;
           checkoutShippingAddressUpdate(checkout.id, address);
         })
@@ -131,7 +131,7 @@ describe("As an unlogged customer I want to order physical and digital products"
         .then(({ errors }) => {
           expect(
             errors,
-            "Should be not possible to add payment without shipping"
+            "Should be not possible to add payment without shipping",
           ).to.have.lengthOf(1);
           updateShippingInCheckout(checkout.token, shippingMethod.name);
         })
@@ -147,10 +147,10 @@ describe("As an unlogged customer I want to order physical and digital products"
         .then(order => {
           expect(
             order.isShippingRequired,
-            "Check if is shipping required in order"
+            "Check if is shipping required in order",
           ).to.eq(true);
           expect(order.status, testsMessage).to.be.eq("UNFULFILLED");
         });
-    }
+    },
   );
 });

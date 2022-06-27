@@ -9,14 +9,14 @@ import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
 import { createChannel } from "../../../support/api/requests/Channels";
 import {
   addChannelToShippingMethod,
-  addChannelToShippingZone
+  addChannelToShippingZone,
 } from "../../../support/api/requests/ShippingMethod";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
 import { selectChannelInHeader } from "../../../support/pages/channelsPage";
 import {
   enterAndSelectShippings,
-  enterShippingZone
+  enterShippingZone,
 } from "../../../support/pages/shippingZones";
 
 describe("As a staff user I want have different shipping method prices for each channel", () => {
@@ -46,7 +46,7 @@ describe("As a staff user I want have different shipping method prices for each 
 
       createChannel({
         name: shippingName,
-        currencyCode: createdChannelCurrency
+        currencyCode: createdChannelCurrency,
       }).then(channel => {
         createdChannel = channel;
       });
@@ -57,7 +57,7 @@ describe("As a staff user I want have different shipping method prices for each 
           ({
             shippingMethod: shippingMethodResp,
             shippingZone: shippingZoneResp,
-            defaultChannel: defaultChannelResp
+            defaultChannel: defaultChannelResp,
           }) => {
             shippingZone = shippingZoneResp;
             shippingMethod = shippingMethodResp;
@@ -68,16 +68,16 @@ describe("As a staff user I want have different shipping method prices for each 
                 addChannelToShippingMethod(
                   shippingMethod.id,
                   createdChannel.id,
-                  createdChannelPrice
+                  createdChannelPrice,
                 );
-              }
+              },
             );
-          }
+          },
         )
         .then(() => {
           cy.clearSessionData().loginUserViaRequest(
             "auth",
-            ONE_PERMISSION_USERS.shipping
+            ONE_PERMISSION_USERS.shipping,
           );
           enterAndSelectShippings(shippingZone.id, enterShippingZone);
           selectChannelInHeader(defaultChannel.name);
@@ -85,7 +85,7 @@ describe("As a staff user I want have different shipping method prices for each 
             .get(SHARED_ELEMENTS.skeleton)
             .should("not.exist")
             .getTextFromElement(
-              SHIPPING_ZONE_DETAILS.shippingRatePriceTableCell
+              SHIPPING_ZONE_DETAILS.shippingRatePriceTableCell,
             )
             .then(text => {
               const value = defaultChannelPrice
@@ -102,7 +102,7 @@ describe("As a staff user I want have different shipping method prices for each 
             })
             .then(() => {
               cy.getTextFromElement(
-                SHIPPING_ZONE_DETAILS.shippingRatePriceTableCell
+                SHIPPING_ZONE_DETAILS.shippingRatePriceTableCell,
               );
             })
             .then(text => {
@@ -115,6 +115,6 @@ describe("As a staff user I want have different shipping method prices for each 
               expect(text).to.includes(createdChannelCurrency);
             });
         });
-    }
+    },
   );
 });

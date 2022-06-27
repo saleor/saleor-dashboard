@@ -11,7 +11,7 @@ import { deleteCollectionsStartsWith } from "../../support/api/utils/catalog/col
 import { createWaitingForCaptureOrder } from "../../support/api/utils/ordersUtils";
 import {
   createProductWithShipping,
-  deleteProductsStartsWith
+  deleteProductsStartsWith,
 } from "../../support/api/utils/products/productsUtils";
 import { saveVariant } from "../../support/pages/catalog/products/VariantsPage";
 
@@ -19,7 +19,7 @@ describe("Stocks and threshold in preorder variants", () => {
   const startsWith = "StocksThreshold";
   const attributeValues = ["value1", "value2"];
   const preorder = {
-    globalThreshold: 15
+    globalThreshold: 15,
   };
 
   let defaultChannel;
@@ -35,14 +35,14 @@ describe("Stocks and threshold in preorder variants", () => {
     createProductWithShipping({
       name: startsWith,
       attributeValues,
-      preorder
+      preorder,
     }).then(resp => {
       checkoutData = {
         address: resp.address,
         channelSlug: resp.defaultChannel.slug,
         email: "example@example.com",
         shippingMethodName: resp.shippingMethod.name,
-        variantsList: resp.variantsList
+        variantsList: resp.variantsList,
       };
       warehouse = resp.warehouse;
       defaultChannel = resp.defaultChannel;
@@ -69,7 +69,7 @@ describe("Stocks and threshold in preorder variants", () => {
       createCheckout(checkoutData).then(({ errors }) => {
         expect(errors[0].field).to.eq("quantity");
       });
-    }
+    },
   );
 
   it(
@@ -84,7 +84,7 @@ describe("Stocks and threshold in preorder variants", () => {
       createCheckout(checkoutData).then(({ errors }) => {
         expect(errors[0].field).to.eq("quantity");
       });
-    }
+    },
   );
 
   it(
@@ -102,18 +102,18 @@ describe("Stocks and threshold in preorder variants", () => {
             .get(BUTTON_SELECTORS.submit)
             .click()
             .waitForRequestAndCheckIfNoErrors(
-              "@ProductVariantPreorderDeactivate"
+              "@ProductVariantPreorderDeactivate",
             );
           getVariant(variantsList[0].id, defaultChannel.slug);
         })
         .then(variantResp => {
           expect(
             variantResp.stocks[0].quantityAllocated,
-            "product is allocated with correct quantity"
+            "product is allocated with correct quantity",
           ).to.eq(1);
           expect(
             variantResp.stocks[0].warehouse.id,
-            "product is allocated to correct warehouse"
+            "product is allocated to correct warehouse",
           ).to.eq(warehouse.id);
         })
         .then(() => {
@@ -121,12 +121,12 @@ describe("Stocks and threshold in preorder variants", () => {
             orderId: order.id,
             warehouse: warehouse.id,
             quantity: 1,
-            linesId: order.lines
+            linesId: order.lines,
           });
         })
         .then(({ errors }) => {
           expect(errors, "no errors when fulfilling order").to.be.empty;
         });
-    }
+    },
   );
 });

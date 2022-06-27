@@ -11,7 +11,7 @@ module.exports = defineConfig({
   viewportHeight: 660,
   e2e: {
     env: {
-      grepFilterSpecs: true
+      grepFilterSpecs: true,
     },
     setupNodeEvents(on, config) {
       config = require("./cypress/support/cypress-grep/plugin")(config);
@@ -19,6 +19,6 @@ module.exports = defineConfig({
       return config;
     },
     baseUrl: "http://localhost:9000/",
-    specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx}"
-  }
+    specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx}",
+  },
 });

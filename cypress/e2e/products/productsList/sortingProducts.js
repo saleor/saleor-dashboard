@@ -30,7 +30,7 @@ describe("Sorting products", () => {
           .waitForProgressBarToNotExist()
           .waitForRequestAndCheckIfNoErrors("@ProductList");
         expectProductsSortedBy(sortBy, false);
-      }
+      },
     );
   });
 });

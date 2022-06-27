@@ -8,11 +8,11 @@ import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith
+  deleteProductsStartsWith,
 } from "../../support/api/utils/products/productsUtils";
 import {
   createShipping,
-  deleteShippingStartsWith
+  deleteShippingStartsWith,
 } from "../../support/api/utils/shippingUtils";
 
 describe("Warehouses in checkout", () => {
@@ -41,7 +41,7 @@ describe("Warehouses in checkout", () => {
           createShipping({
             channelId: defaultChannel.id,
             name,
-            address: usAddress
+            address: usAddress,
           });
         })
         .then(({ warehouse: warehouseResp }) => {
@@ -56,7 +56,7 @@ describe("Warehouses in checkout", () => {
             channelId: defaultChannel.id,
             productTypeId: productType.id,
             warehouseId: warehouse.id,
-            quantityInWarehouse: 100
+            quantityInWarehouse: 100,
           });
         })
         .then(({ variantsList }) => {
@@ -64,12 +64,12 @@ describe("Warehouses in checkout", () => {
             channelSlug: defaultChannel.slug,
             email: "example@example.com",
             variantsList,
-            address: plAddress
+            address: plAddress,
           });
         })
         .then(({ errors }) => {
           expect(errors[0]).to.have.property("field", "quantity");
         });
-    }
+    },
   );
 });

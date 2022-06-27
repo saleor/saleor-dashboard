@@ -10,7 +10,7 @@ import { productDetailsUrl, variantDetailsUrl } from "../../fixtures/urlList";
 import {
   activatePreorderOnVariant,
   deactivatePreorderOnVariant,
-  getVariant
+  getVariant,
 } from "../../support/api/requests/Product";
 import { createWaitingForCaptureOrder } from "../../support/api/utils/ordersUtils";
 import { createProductWithShipping } from "../../support/api/utils/products/productsUtils";
@@ -20,7 +20,7 @@ import {
   fillUpVariantAttributeAndSku,
   saveVariant,
   selectChannelForVariantAndFillUpPrices,
-  setUpPreorderEndDate
+  setUpPreorderEndDate,
 } from "../../support/pages/catalog/products/VariantsPage";
 
 describe("Creating variants in preorder", () => {
@@ -43,7 +43,7 @@ describe("Creating variants in preorder", () => {
         address: resp.address,
         channelSlug: resp.defaultChannel.slug,
         email: "example@example.com",
-        shippingMethodName: resp.shippingMethod.name
+        shippingMethodName: resp.shippingMethod.name,
       };
       defaultChannel = resp.defaultChannel;
       product = resp.product;
@@ -66,7 +66,7 @@ describe("Creating variants in preorder", () => {
         .click();
       fillUpVariantAttributeAndSku({
         attributeName: attributeValues[1],
-        sku: attributeValues[1]
+        sku: attributeValues[1],
       });
       enablePreorderWithThreshold(threshold);
       setUpPreorderEndDate(endDate, endTime);
@@ -81,7 +81,7 @@ describe("Creating variants in preorder", () => {
           selectChannelForVariantAndFillUpPrices({
             channelName: defaultChannel.name,
             attributeName: attributeValues[1],
-            price: 10
+            price: 10,
           });
         })
         .then(() => {
@@ -100,7 +100,7 @@ describe("Creating variants in preorder", () => {
           expect(endDate).to.eq(formatDate(respEndDate));
           expect(endTime).to.eq(formatTime(respEndDate));
         });
-    }
+    },
   );
 
   it(
@@ -123,7 +123,7 @@ describe("Creating variants in preorder", () => {
           expect(preorder.globalThreshold).to.eq(threshold);
           expect(preorder.globalSoldUnits).to.eq(1);
         });
-    }
+    },
   );
 
   it(
@@ -142,6 +142,6 @@ describe("Creating variants in preorder", () => {
         expect(endDate).to.eq(formatDate(respEndDate));
         expect(endTime).to.eq(formatTime(respEndDate));
       });
-    }
+    },
   );
 });

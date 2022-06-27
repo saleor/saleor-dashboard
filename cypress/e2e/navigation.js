@@ -4,7 +4,7 @@
 import {
   APP_MENU_SELECTORS,
   appCommonSelector,
-  LEFT_MENU_SELECTORS
+  LEFT_MENU_SELECTORS,
 } from "../elements/account/left-menu/left-menu-selectors";
 import { PERMISSIONS_OPTIONS } from "../fixtures/permissionsUsers";
 import * as permissionsSteps from "../support/pages/permissionsPage";
@@ -28,13 +28,13 @@ describe("As a staff user I want to navigate through shop using different permis
           appPermissions = {
             parent: {
               parentMenuSelector: LEFT_MENU_SELECTORS.appSection,
-              parentSelectors: [APP_MENU_SELECTORS]
+              parentSelectors: [APP_MENU_SELECTORS],
             },
-            permissionSelectors: [APP_MENU_SELECTORS.app]
+            permissionSelectors: [APP_MENU_SELECTORS.app],
           };
         } else {
           appPermissions = {
-            permissionSelectors: [LEFT_MENU_SELECTORS.app]
+            permissionSelectors: [LEFT_MENU_SELECTORS.app],
           };
         }
 
@@ -53,14 +53,14 @@ describe("As a staff user I want to navigate through shop using different permis
           const permissions = permissionOption.permissions;
           cy.clearSessionData();
           permissionsSteps.navigateToAllAvailablePageAndCheckIfDisplayed(
-            permissionOption
+            permissionOption,
           );
           permissionsSteps
             .getDisplayedSelectors()
             .then(selectors => {
               permissionsSteps.expectAllSelectorsPermitted(
                 permissions,
-                selectors
+                selectors,
               );
             })
             .then(() => {
@@ -73,19 +73,19 @@ describe("As a staff user I want to navigate through shop using different permis
                     .click()
                     .then(() => {
                       permissionsSteps.getDisplayedSelectors(
-                        permission.parent.parentSelectors
+                        permission.parent.parentSelectors,
                       );
                     })
                     .then(parentSelectors => {
                       permissionsSteps.expectAllSelectorsPermitted(
                         permissions,
-                        parentSelectors
+                        parentSelectors,
                       );
                     });
                 }
               });
             });
-        }
+        },
       );
     }
   });
@@ -97,8 +97,8 @@ describe("As a staff user I want to navigate through shop using different permis
       const permissionOption = permissionsOptions.all;
       cy.clearSessionData();
       permissionsSteps.navigateToAllAvailablePageAndCheckIfDisplayed(
-        permissionOption
+        permissionOption,
       );
-    }
+    },
   );
 });

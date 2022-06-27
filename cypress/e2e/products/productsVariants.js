@@ -8,14 +8,14 @@ import { ONE_PERMISSION_USERS } from "../../fixtures/users";
 import { createChannel } from "../../support/api/requests/Channels";
 import {
   createProduct,
-  updateChannelInProduct
+  updateChannelInProduct,
 } from "../../support/api/requests/Product";
 import * as productUtils from "../../support/api/utils/products/productsUtils";
 import { getProductVariants } from "../../support/api/utils/storeFront/storeFrontProductUtils";
 import {
   createFirstVariant,
   createVariant,
-  variantsShouldBeVisible
+  variantsShouldBeVisible,
 } from "../../support/pages/catalog/products/VariantsPage";
 import { selectChannelInHeader } from "../../support/pages/channelsPage";
 
@@ -52,7 +52,7 @@ describe("As an admin I should be able to create variant", () => {
   beforeEach(() => {
     cy.clearSessionData().loginUserViaRequest(
       "auth",
-      ONE_PERMISSION_USERS.product
+      ONE_PERMISSION_USERS.product,
     );
   });
 
@@ -68,23 +68,23 @@ describe("As an admin I should be able to create variant", () => {
         attributeId: attribute.id,
         name,
         productTypeId: productType.id,
-        categoryId: category.id
+        categoryId: category.id,
       })
         .then(resp => {
           createdProduct = resp;
           updateChannelInProduct({
             productId: createdProduct.id,
-            channelId: defaultChannel.id
+            channelId: defaultChannel.id,
           });
           updateChannelInProduct({
             productId: createdProduct.id,
-            channelId: newChannel.id
+            channelId: newChannel.id,
           });
           cy.visit(`${urlList.products}${createdProduct.id}`);
           createFirstVariant({
             sku: name,
             price,
-            attribute: attributeValues[0]
+            attribute: attributeValues[0],
           });
           selectChannelInHeader(defaultChannel.name);
           variantsShouldBeVisible({ name, price });
@@ -106,7 +106,7 @@ describe("As an admin I should be able to create variant", () => {
           expect(variant).to.have.property("name", attributeValues[0]);
           expect(variant).to.have.property("price", price);
         });
-    }
+    },
   );
 
   it(
@@ -126,7 +126,7 @@ describe("As an admin I should be able to create variant", () => {
           warehouseId: warehouse.id,
           productTypeId: productType.id,
           categoryId: category.id,
-          price: variants[0].price
+          price: variants[0].price,
         })
         .then(({ product: productResp }) => {
           createdProduct = productResp;
@@ -135,14 +135,14 @@ describe("As an admin I should be able to create variant", () => {
             sku: secondVariantSku,
             attributeName: variants[1].name,
             price: variants[1].price,
-            channelName: defaultChannel.name
+            channelName: defaultChannel.name,
           });
         })
         .then(() => {
           selectChannelInHeader(defaultChannel.name);
           variantsShouldBeVisible({
             name: variants[1].name,
-            price: variants[1].price
+            price: variants[1].price,
           });
           getProductVariants(createdProduct.id, defaultChannel.slug);
         })
@@ -151,6 +151,6 @@ describe("As an admin I should be able to create variant", () => {
           expect(secondVariant).to.have.property("name", variants[1].name);
           expect(secondVariant).to.have.property("price", variants[1].price);
         });
-    }
+    },
   );
 });

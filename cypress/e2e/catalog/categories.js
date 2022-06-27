@@ -5,7 +5,7 @@ import faker from "faker";
 
 import {
   CATEGORIES_LIST,
-  categoryRow
+  categoryRow,
 } from "../../elements/catalog/categories/categories-list";
 import { CATEGORY_DETAILS } from "../../elements/catalog/categories/category-details";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
@@ -13,7 +13,7 @@ import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { categoryDetailsUrl, urlList } from "../../fixtures/urlList";
 import {
   createCategory as createCategoryRequest,
-  getCategory
+  getCategory,
 } from "../../support/api/requests/Category";
 import { deleteCategoriesStartsWith } from "../../support/api/utils/catalog/categoryUtils";
 import * as channelsUtils from "../../support/api/utils/channelsUtils";
@@ -21,7 +21,7 @@ import * as productsUtils from "../../support/api/utils/products/productsUtils";
 import { deleteShippingStartsWith } from "../../support/api/utils/shippingUtils";
 import {
   createCategory,
-  updateCategory
+  updateCategory,
 } from "../../support/pages/catalog/categoriesPage";
 
 describe("As an admin I want to manage categories", () => {
@@ -52,7 +52,7 @@ describe("As an admin I want to manage categories", () => {
         ({
           category: categoryResp,
           attribute: attributeResp,
-          productType: productTypeResp
+          productType: productTypeResp,
         }) => {
           category = categoryResp;
           attribute = attributeResp;
@@ -62,9 +62,9 @@ describe("As an admin I want to manage categories", () => {
             channelId: defaultChannel.id,
             productTypeId: productType.id,
             attributeId: attribute.id,
-            categoryId: category.id
+            categoryId: category.id,
           });
-        }
+        },
       )
       .then(({ product: productResp }) => (product = productResp));
   });
@@ -92,7 +92,7 @@ describe("As an admin I want to manage categories", () => {
           const descriptionResp = JSON.parse(newCategory.description);
           expect(descriptionResp.blocks[0].data.text).to.eq(categoryName);
         });
-    }
+    },
   );
 
   it(
@@ -111,7 +111,7 @@ describe("As an admin I want to manage categories", () => {
       getCategory(category.id).then(categoryResp => {
         expect(categoryResp.children.edges[0].node.name).to.eq(categoryName);
       });
-    }
+    },
   );
 
   it(
@@ -125,7 +125,7 @@ describe("As an admin I want to manage categories", () => {
         .click()
         .url()
         .should("include", urlList.addProduct);
-    }
+    },
   );
 
   it(
@@ -150,7 +150,7 @@ describe("As an admin I want to manage categories", () => {
       getCategory(category.id).then(categoryResp => {
         expect(categoryResp.products.edges.length).to.be.eq(0);
       });
-    }
+    },
   );
 
   it(
@@ -162,7 +162,7 @@ describe("As an admin I want to manage categories", () => {
         .type(category.name);
       cy.contains(SHARED_ELEMENTS.tableRow, category.name).click();
       cy.contains(SHARED_ELEMENTS.header, category.name).should("be.visible");
-    }
+    },
   );
 
   it(
@@ -172,7 +172,7 @@ describe("As an admin I want to manage categories", () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
 
       createCategoryRequest({
-        name: categoryName
+        name: categoryName,
       }).then(categoryResp => {
         cy.visit(categoryDetailsUrl(categoryResp.id))
           .get(BUTTON_SELECTORS.deleteButton)
@@ -183,7 +183,7 @@ describe("As an admin I want to manage categories", () => {
           .waitForRequestAndCheckIfNoErrors("@CategoryDelete");
         getCategory(categoryResp.id).should("be.null");
       });
-    }
+    },
   );
 
   it(
@@ -194,11 +194,11 @@ describe("As an admin I want to manage categories", () => {
       const updatedName = `${startsWith}updatedCategory`;
 
       createCategoryRequest({
-        name: categoryName
+        name: categoryName,
       })
         .then(categoryResp => {
           cy.visitAndWaitForProgressBarToDisappear(
-            categoryDetailsUrl(categoryResp.id)
+            categoryDetailsUrl(categoryResp.id),
           );
           updateCategory({ name: updatedName, description: updatedName });
           getCategory(categoryResp.id);
@@ -209,7 +209,7 @@ describe("As an admin I want to manage categories", () => {
           const descriptionText = descriptionJson.blocks[0].data.text;
           expect(descriptionText).to.eq(updatedName);
         });
-    }
+    },
   );
 
   it(
@@ -222,13 +222,13 @@ describe("As an admin I want to manage categories", () => {
       let secondCategory;
 
       createCategoryRequest({
-        name: firstCategoryName
+        name: firstCategoryName,
       }).then(categoryResp => {
         firstCategory = categoryResp;
       });
 
       createCategoryRequest({
-        name: secondCategoryName
+        name: secondCategoryName,
       }).then(categoryResp => {
         secondCategory = categoryResp;
         cy.visit(urlList.categories)
@@ -248,7 +248,7 @@ describe("As an admin I want to manage categories", () => {
         getCategory(firstCategory.id).should("be.null");
         getCategory(secondCategory.id).should("be.null");
       });
-    }
+    },
   );
 
   it(
@@ -261,13 +261,13 @@ describe("As an admin I want to manage categories", () => {
       let mainCategory;
 
       createCategoryRequest({
-        name: mainCategoryName
+        name: mainCategoryName,
       })
         .then(categoryResp => {
           mainCategory = categoryResp;
           createCategoryRequest({
             name: subCategoryName,
-            parent: mainCategory.id
+            parent: mainCategory.id,
           });
         })
         .then(categoryResp => {
@@ -288,6 +288,6 @@ describe("As an admin I want to manage categories", () => {
         .then(categoryResp => {
           expect(categoryResp.children.edges).to.be.empty;
         });
-    }
+    },
   );
 });

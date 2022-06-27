@@ -16,7 +16,7 @@ import { expectCorrectProductInformation } from "../../support/api/utils/product
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith
+  deleteProductsStartsWith,
 } from "../../support/api/utils/products/productsUtils";
 import { metadataForms } from "../../support/pages/catalog/metadataComponent";
 import { fillUpCommonFieldsForAllProductTypes } from "../../support/pages/catalog/products/productDetailsPage";
@@ -53,7 +53,7 @@ describe("Update products", () => {
           channelId: defaultChannel.id,
           name,
           collectionId: collection.id,
-          description
+          description,
         });
       })
       .then(({ product: productResp }) => {
@@ -76,29 +76,29 @@ describe("Update products", () => {
           generalInfo: {
             name: updatedName,
             description: faker.lorem.sentence(),
-            rating: 3
+            rating: 3,
           },
           seo: {
             slug: updatedName,
             title: "newTitle",
-            description: "New description."
+            description: "New description.",
           },
           metadata: {
             private: {
               metadataForm: metadataForms.private,
               name: "newPrivate",
-              value: "value1"
+              value: "value1",
             },
             public: {
               metadataForm: metadataForms.public,
               name: "newPublic",
-              value: "value2"
-            }
+              value: "value2",
+            },
           },
           productOrganization: {
             category: updatedCategory.name,
-            collection: updatedCollection.name
-          }
+            collection: updatedCollection.name,
+          },
         };
         cy.clearSessionData()
           .loginUserViaRequest("auth", ONE_PERMISSION_USERS.product)
@@ -120,7 +120,7 @@ describe("Update products", () => {
         cy.loginUserViaRequest("token")
           .then(() => {
             getProductDetails(product.id, defaultChannel.slug, "auth").its(
-              "body.data.product"
+              "body.data.product",
             );
           })
           .then(resp => {
@@ -148,8 +148,8 @@ describe("Update products", () => {
         })
         .then(
           productResp =>
-            expect(productResp.product, "Check if product exist").to.be.null
+            expect(productResp.product, "Check if product exist").to.be.null,
         );
-    }
+    },
   );
 });

@@ -5,13 +5,13 @@ import faker from "faker";
 
 import {
   createMenu as createMenuViaApi,
-  getMenu
+  getMenu,
 } from "../../support/api/requests/Menu";
 import { deleteMenusStartsWith } from "../../support/api/utils/navigationUtils";
 import {
   createMenu,
   createNewMenuItem,
-  MENU_ITEM_TYPES
+  MENU_ITEM_TYPES,
 } from "../../support/pages/navigationPage";
 
 describe("Tests for menu navigation", () => {
@@ -25,7 +25,7 @@ describe("Tests for menu navigation", () => {
     cy.clearSessionData().loginUserViaRequest();
     deleteMenusStartsWith(startsWith);
     createMenuViaApi(randomName).then(
-      ({ menu: menuResp }) => (menu = menuResp)
+      ({ menu: menuResp }) => (menu = menuResp),
     );
   });
 
@@ -46,7 +46,7 @@ describe("Tests for menu navigation", () => {
         .then(menuResp => {
           expect(menuResp.name).to.eq(name);
         });
-    }
+    },
   );
 
   ["category", "collection", "page"].forEach(itemType => {
@@ -61,7 +61,7 @@ describe("Tests for menu navigation", () => {
         createNewMenuItem({
           menuId: menu.id,
           name: itemName,
-          menuItemType: MENU_ITEM_TYPES[itemType]
+          menuItemType: MENU_ITEM_TYPES[itemType],
         })
           .then(selectedItemResp => {
             selectedItem = selectedItemResp;
@@ -73,7 +73,7 @@ describe("Tests for menu navigation", () => {
             const name = itemType !== "page" ? "name" : "title";
             expect(itemOfType[name]).to.eq(selectedItem);
           });
-      }
+      },
     );
   });
 });

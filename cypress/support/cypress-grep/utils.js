@@ -16,12 +16,12 @@ function parseTitleGrep(s) {
   if (s.startsWith("-")) {
     return {
       title: s.substring(1),
-      invert: true
+      invert: true,
     };
   }
   return {
     title: s,
-    invert: false
+    invert: false,
   };
 }
 
@@ -55,7 +55,7 @@ function parseTagsGrep(s) {
       if (part.startsWith("--")) {
         explicitNotTags.push({
           tag: part.slice(2),
-          invert: true
+          invert: true,
         });
         return;
       }
@@ -63,12 +63,12 @@ function parseTagsGrep(s) {
         if (tag.startsWith("-")) {
           return {
             tag: tag.slice(1),
-            invert: true
+            invert: true,
           };
         } else {
           return {
             tag,
-            invert: false
+            invert: false,
           };
         }
       });
@@ -162,7 +162,7 @@ function shouldTestRun(parsedGrep, testName, tags = [], grepUntagged = false) {
 function parseGrep(titlePart, tags) {
   return {
     title: parseFullTitleGrep(titlePart),
-    tags: parseTagsGrep(tags)
+    tags: parseTagsGrep(tags),
   };
 }
 
@@ -178,8 +178,8 @@ function resolveConfig(config) {
     resolvedConfig: {
       specPattern,
       excludeSpecPattern,
-      integrationFolder
-    }
+      integrationFolder,
+    },
   };
 }
 
@@ -191,5 +191,5 @@ module.exports = {
   resolveConfig,
   shouldTestRun,
   shouldTestRunTags,
-  shouldTestRunTitle
+  shouldTestRunTitle,
 };

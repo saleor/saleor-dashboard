@@ -12,7 +12,7 @@ import { createChannel } from "../../support/api/requests/Channels";
 import * as channelsUtils from "../../support/api/utils/channelsUtils";
 import {
   selectChannelInHeader,
-  selectChannelInPicker
+  selectChannelInPicker,
 } from "../../support/pages/channelsPage";
 
 xdescribe("Channels in draft orders", () => {
@@ -49,7 +49,7 @@ xdescribe("Channels in draft orders", () => {
       cy.getTextFromElement(HEADER_SELECTORS.channelSelect).then(
         channelInHeader => {
           channelName = channelInHeader;
-        }
+        },
       );
       cy.visit(urlList.orders)
         .get(ORDERS_SELECTORS.createOrder)
@@ -57,15 +57,15 @@ xdescribe("Channels in draft orders", () => {
       cy.getTextFromElement(CHANNEL_FORM_SELECTORS.channelSelect).then(
         selectedChannelName => {
           expect(channelName).to.contains(selectedChannelName);
-        }
+        },
       );
       cy.get(CHANNEL_FORM_SELECTORS.confirmButton).click();
       cy.getTextFromElement(DRAFT_ORDER_SELECTORS.salesChannel).then(
         channelNameInDraftOrder => {
           expect(channelName).to.contains(channelNameInDraftOrder);
-        }
+        },
       );
-    }
+    },
   );
 
   it(
@@ -79,15 +79,15 @@ xdescribe("Channels in draft orders", () => {
       cy.getTextFromElement(CHANNEL_FORM_SELECTORS.channelSelect).then(
         channelInSelect => {
           expect(channelInSelect).to.be.eq(otherChannel.name);
-        }
+        },
       );
       cy.get(CHANNEL_FORM_SELECTORS.confirmButton).click();
       cy.getTextFromElement(DRAFT_ORDER_SELECTORS.salesChannel).then(
         channelInDraftOrder => {
           expect(channelInDraftOrder).to.be.eq(otherChannel.name);
-        }
+        },
       );
-    }
+    },
   );
 
   it(
@@ -101,14 +101,14 @@ xdescribe("Channels in draft orders", () => {
       cy.getTextFromElement(CHANNEL_FORM_SELECTORS.channelSelect).then(
         channelInSelect => {
           expect(channelInSelect).to.be.eq(defaultChannel.name);
-        }
+        },
       );
       selectChannelInPicker(otherChannel.name);
       cy.getTextFromElement(DRAFT_ORDER_SELECTORS.salesChannel).then(
         channelInDraftOrder => {
           expect(channelInDraftOrder).to.be.eq(otherChannel.name);
-        }
+        },
       );
-    }
+    },
   );
 });

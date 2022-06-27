@@ -9,7 +9,7 @@ import { collectionDetailsUrl, urlList } from "../../fixtures/urlList";
 import { createChannel } from "../../support/api/requests/Channels";
 import {
   addProductToCollection,
-  createCollection as createCollectionRequest
+  createCollection as createCollectionRequest,
 } from "../../support/api/requests/Collections";
 import { updateChannelInProduct } from "../../support/api/requests/Product";
 import { getCollection } from "../../support/api/requests/storeFront/Collections";
@@ -21,7 +21,7 @@ import * as productsUtils from "../../support/api/utils/products/productsUtils";
 import { deleteShippingStartsWith } from "../../support/api/utils/shippingUtils";
 import {
   isCollectionVisible,
-  isProductInCollectionVisible
+  isProductInCollectionVisible,
 } from "../../support/api/utils/storeFront/collectionsUtils";
 import { isProductVisibleInSearchResult } from "../../support/api/utils/storeFront/storeFrontProductUtils";
 import filterTests from "../../support/filterTests";
@@ -29,7 +29,7 @@ import {
   assignProductsToCollection,
   createCollection,
   removeProductsFromCollection,
-  updateCollection
+  updateCollection,
 } from "../../support/pages/catalog/collectionsPage";
 
 filterTests({ definedTags: ["all"] }, () => {
@@ -61,7 +61,7 @@ filterTests({ definedTags: ["all"] }, () => {
           ({
             attribute: attributeResp,
             productType: productTypeResp,
-            category: categoryResp
+            category: categoryResp,
           }) => {
             attribute = attributeResp;
             productType = productTypeResp;
@@ -71,9 +71,9 @@ filterTests({ definedTags: ["all"] }, () => {
               channelId: defaultChannel.id,
               productTypeId: productType.id,
               attributeId: attribute.id,
-              categoryId: category.id
+              categoryId: category.id,
             });
-          }
+          },
         )
         .then(({ product: productResp }) => (product = productResp));
     });
@@ -100,14 +100,14 @@ filterTests({ definedTags: ["all"] }, () => {
           .then(() => {
             getCollection({
               collectionId: collection.id,
-              channelSlug: defaultChannel.slug
+              channelSlug: defaultChannel.slug,
             });
           })
           .then(({ collection: resp }) => {
             const isVisible = isCollectionVisible(resp, collection.id);
             expect(isVisible).to.equal(false);
           });
-      }
+      },
     );
 
     it(
@@ -126,14 +126,14 @@ filterTests({ definedTags: ["all"] }, () => {
             assignProductsToCollection(name);
             getCollection({
               collectionId: collection.id,
-              channelSlug: defaultChannel.slug
+              channelSlug: defaultChannel.slug,
             });
           })
           .then(({ collection: resp }) => {
             const isVisible = isCollectionVisible(resp, collection.id);
             expect(isVisible).to.equal(true);
           });
-      }
+      },
     );
 
     it(
@@ -159,14 +159,14 @@ filterTests({ definedTags: ["all"] }, () => {
             assignProductsToCollection(name);
             getCollection({
               collectionId: collection.id,
-              channelSlug: defaultChannel.slug
+              channelSlug: defaultChannel.slug,
             });
           })
           .then(({ collection: resp }) => {
             const isVisible = isCollectionVisible(resp, collection.id);
             expect(isVisible).to.equal(false);
           });
-      }
+      },
     );
 
     it(
@@ -186,7 +186,7 @@ filterTests({ definedTags: ["all"] }, () => {
             productTypeId: productType.id,
             attributeId: attribute.id,
             categoryId: category.id,
-            visibleInListings: false
+            visibleInListings: false,
           })
           .then(({ product: productResp }) => (createdProduct = productResp));
         cy.visit(urlList.collections);
@@ -199,13 +199,13 @@ filterTests({ definedTags: ["all"] }, () => {
           .then(() => {
             getCollection({
               collectionId: collection.id,
-              channelSlug: defaultChannel.slug
+              channelSlug: defaultChannel.slug,
             });
           })
           .then(({ collection: resp }) => {
             const isVisible = isProductInCollectionVisible(
               resp,
-              createdProduct.id
+              createdProduct.id,
             );
             expect(isVisible).to.equal(true);
           })
@@ -215,11 +215,11 @@ filterTests({ definedTags: ["all"] }, () => {
           .then(resp => {
             const isVisible = isProductVisibleInSearchResult(
               resp,
-              createdProduct.name
+              createdProduct.name,
             );
             expect(isVisible).to.equal(false);
           });
-      }
+      },
     );
 
     it(
@@ -240,7 +240,7 @@ filterTests({ definedTags: ["all"] }, () => {
             .its("collection")
             .should("be.null");
         });
-      }
+      },
     );
 
     it(
@@ -281,7 +281,7 @@ filterTests({ definedTags: ["all"] }, () => {
             .its("collection")
             .should("be.null");
         });
-      }
+      },
     );
 
     xit(
@@ -304,7 +304,7 @@ filterTests({ definedTags: ["all"] }, () => {
               productTypeId: productType.id,
               attributeId: attribute.id,
               categoryId: category.id,
-              visibleInListings: false
+              visibleInListings: false,
             })
             .then(({ product: productResp }) => {
               productToAssign = productResp;
@@ -320,7 +320,7 @@ filterTests({ definedTags: ["all"] }, () => {
                 });
             });
         });
-      }
+      },
     );
 
     it(
@@ -342,14 +342,14 @@ filterTests({ definedTags: ["all"] }, () => {
               productTypeId: productType.id,
               attributeId: attribute.id,
               categoryId: category.id,
-              visibleInListings: false
+              visibleInListings: false,
             })
             .then(({ product: productResp }) => {
               productToAssign = productResp;
 
               addProductToCollection({
                 collectionId: collection.id,
-                productId: productToAssign.id
+                productId: productToAssign.id,
               });
 
               cy.visit(collectionDetailsUrl(collection.id));
@@ -369,7 +369,7 @@ filterTests({ definedTags: ["all"] }, () => {
                 .should("be.empty");
             });
         });
-      }
+      },
     );
 
     it(
@@ -382,7 +382,7 @@ filterTests({ definedTags: ["all"] }, () => {
         createCollectionRequest(collectionName)
           .then(collectionResp => {
             cy.visitAndWaitForProgressBarToDisappear(
-              collectionDetailsUrl(collectionResp.id)
+              collectionDetailsUrl(collectionResp.id),
             );
             updateCollection({ name: updatedName, description: updatedName });
             getCollection({ collectionId: collectionResp.id, auth: "auth" });
@@ -393,7 +393,7 @@ filterTests({ definedTags: ["all"] }, () => {
             const descriptionText = descriptionJson.blocks[0].data.text;
             expect(descriptionText).to.eq(updatedName);
           });
-      }
+      },
     );
   });
 });

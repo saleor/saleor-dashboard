@@ -6,22 +6,22 @@ import faker from "faker";
 import {
   addShippingMethod,
   completeCheckout,
-  createCheckout
+  createCheckout,
 } from "../../../support/api/requests/Checkout";
 import { getOrder } from "../../../support/api/requests/Order";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import {
   addAdyenPayment,
-  getShippingMethodIdFromCheckout
+  getShippingMethodIdFromCheckout,
 } from "../../../support/api/utils/ordersUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith
+  deleteProductsStartsWith,
 } from "../../../support/api/utils/products/productsUtils";
 import {
   createShipping,
-  deleteShippingStartsWith
+  deleteShippingStartsWith,
 } from "../../../support/api/utils/shippingUtils";
 
 describe("Adyen payments", () => {
@@ -48,7 +48,7 @@ describe("Adyen payments", () => {
         clientData: paymentCards.clientData,
         encryptedExpiryMonth: paymentCards.encryptedExpiryMonth,
         encryptedExpiryYear: paymentCards.encryptedExpiryYear,
-        encryptedSecurityCode: paymentCards.encryptedSecurityCodes.matches
+        encryptedSecurityCode: paymentCards.encryptedSecurityCodes.matches,
       };
     });
     cy.fixture("addresses")
@@ -62,18 +62,18 @@ describe("Adyen payments", () => {
           channelId: channelResp.id,
           name,
           address,
-          price: 10
+          price: 10,
         });
       })
       .then(
         ({
           warehouse: warehouseResp,
           shippingZone: shippingZoneResp,
-          shippingMethod: shippingMethodResp
+          shippingMethod: shippingMethodResp,
         }) => {
           warehouse = warehouseResp;
           shippingMethod = shippingMethodResp;
-        }
+        },
       );
     createTypeAttributeAndCategoryForProduct({ name })
       .then(({ productType, attribute, category }) => {
@@ -83,7 +83,7 @@ describe("Adyen payments", () => {
           warehouseId: warehouse.id,
           productTypeId: productType.id,
           attributeId: attribute.id,
-          categoryId: category.id
+          categoryId: category.id,
         });
       })
       .then(({ variantsList: variants }) => (variantsList = variants));
@@ -97,12 +97,12 @@ describe("Adyen payments", () => {
       variantsList,
       address,
       billingAddress: address,
-      auth: "token"
+      auth: "token",
     })
       .then(({ checkout: checkoutResp }) => {
         const shippingMethodId = getShippingMethodIdFromCheckout(
           checkoutResp,
-          shippingMethod.name
+          shippingMethod.name,
         );
         checkout = checkoutResp;
         addShippingMethod(checkout.id, shippingMethodId);
@@ -127,7 +127,7 @@ describe("Adyen payments", () => {
         .then(order => {
           expect(order.paymentStatus).to.eq("FULLY_CHARGED");
         });
-    }
+    },
   );
 
   it(
@@ -145,7 +145,7 @@ describe("Adyen payments", () => {
         .then(order => {
           expect(order.paymentStatus).to.eq("FULLY_CHARGED");
         });
-    }
+    },
   );
 
   it(
@@ -164,7 +164,7 @@ describe("Adyen payments", () => {
         .then(order => {
           expect(order.paymentStatus).to.eq("FULLY_CHARGED");
         });
-    }
+    },
   );
 
   it(
@@ -180,7 +180,7 @@ describe("Adyen payments", () => {
       completeCheckout(checkout.id, simpleCard).then(({ errors }) => {
         expect(errors).to.have.length(1);
       });
-    }
+    },
   );
 
   it(
@@ -194,7 +194,7 @@ describe("Adyen payments", () => {
       completeCheckout(checkout.id, errorCard).then(({ errors }) => {
         expect(errors).to.have.length(1);
       });
-    }
+    },
   );
 
   it(
@@ -208,6 +208,6 @@ describe("Adyen payments", () => {
       completeCheckout(checkout.id, closeAccount).then(({ errors }) => {
         expect(errors).to.have.length(1);
       });
-    }
+    },
   );
 });

@@ -8,7 +8,7 @@ import { SHIPPING_RATE_DETAILS } from "../../../../elements/shipping/shipping-ra
 import { shippingRateUrl, urlList } from "../../../../fixtures/urlList";
 import {
   createShippingRate as createShippingRateViaApi,
-  createShippingZone
+  createShippingZone,
 } from "../../../../support/api/requests/ShippingMethod";
 import { updateShopWeightUnit } from "../../../../support/api/requests/ShopSettings";
 import { getDefaultChannel } from "../../../../support/api/utils/channelsUtils";
@@ -64,7 +64,7 @@ xdescribe("As a staff user I want to change shop default weight unit", () => {
         shippingZone: shippingZone.id,
         type: "WEIGHT",
         maxWeight: maxWeightInKg,
-        minWeight: minWeightInKg
+        minWeight: minWeightInKg,
       })
         .then(({ shippingMethod: shippingMethodResp }) => {
           shippingMethod = shippingMethodResp;
@@ -80,10 +80,10 @@ xdescribe("As a staff user I want to change shop default weight unit", () => {
         })
         .then(responseArray => {
           const shippingMethods = responseArray.find(
-            element => element.data.shippingZone
+            element => element.data.shippingZone,
           ).data.shippingZone.shippingMethods;
           const rate = shippingMethods.find(
-            element => element.id === shippingMethod.id
+            element => element.id === shippingMethod.id,
           );
           cy.waitForProgressBarToNotBeVisible();
           expect(rate.minimumOrderWeight.unit).to.eq("G");
@@ -99,6 +99,6 @@ xdescribe("As a staff user I want to change shop default weight unit", () => {
         .then(actualMaxWeight => {
           expect(parseInt(actualMaxWeight, 10)).to.eq(maxWeightInG);
         });
-    }
+    },
   );
 });

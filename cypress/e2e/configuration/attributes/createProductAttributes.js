@@ -9,13 +9,13 @@ import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { attributeDetailsUrl, urlList } from "../../../fixtures/urlList";
 import {
   createAttribute,
-  getAttribute
+  getAttribute,
 } from "../../../support/api/requests/Attribute";
 import { deleteAttributesStartsWith } from "../../../support/api/utils/attributes/attributeUtils";
 import { expectCorrectDataInAttribute } from "../../../support/api/utils/attributes/checkAttributeData";
 import {
   createAttributeWithInputType,
-  fillUpAttributeNameAndCode
+  fillUpAttributeNameAndCode,
 } from "../../../support/pages/attributesPage";
 
 describe("As an admin I want to create product attribute", () => {
@@ -27,26 +27,26 @@ describe("As an admin I want to create product attribute", () => {
     { type: "RICH_TEXT", testCase: "SALEOR_0504" },
     { type: "BOOLEAN", testCase: "SALEOR_0505" },
     { type: "DATE", testCase: "SALEOR_0523" },
-    { type: "DATE_TIME", testCase: "SALEOR_0524" }
+    { type: "DATE_TIME", testCase: "SALEOR_0524" },
   ];
   const attributeReferenceType = [
     { type: "PRODUCT", testCase: "SALEOR_0506" },
-    { type: "PAGE", testCase: "SALEOR_0507" }
+    { type: "PAGE", testCase: "SALEOR_0507" },
   ];
   const attributeNumericType = [
     {
       unitSystem: "IMPERIAL",
       unitsOf: "DISTANCE",
       unit: "FT",
-      testCase: "SALEOR_0508"
+      testCase: "SALEOR_0508",
     },
     {
       unitSystem: "METRIC",
       unitsOf: "VOLUME",
       unit: "CUBIC_CENTIMETER",
-      testCase: "SALEOR_0509"
+      testCase: "SALEOR_0509",
     },
-    { unitSystem: "without selecting unit", testCase: "SALEOR_0510" }
+    { unitSystem: "without selecting unit", testCase: "SALEOR_0510" },
   ];
 
   before(() => {
@@ -71,7 +71,7 @@ describe("As an admin I want to create product attribute", () => {
 
         createAttributeWithInputType({
           name: attributeName,
-          attributeType: attributeType.type
+          attributeType: attributeType.type,
         })
           .then(({ attribute }) => {
             getAttribute(attribute.id);
@@ -79,10 +79,10 @@ describe("As an admin I want to create product attribute", () => {
           .then(attribute => {
             expectCorrectDataInAttribute(attribute, {
               attributeName,
-              attributeType: attributeType.type
+              attributeType: attributeType.type,
             });
           });
-      }
+      },
     );
   });
 
@@ -97,7 +97,7 @@ describe("As an admin I want to create product attribute", () => {
         createAttributeWithInputType({
           name: attributeName,
           attributeType,
-          entityType: entityType.type
+          entityType: entityType.type,
         })
           .then(({ attribute }) => {
             getAttribute(attribute.id);
@@ -106,10 +106,10 @@ describe("As an admin I want to create product attribute", () => {
             expectCorrectDataInAttribute(attribute, {
               attributeName,
               attributeType,
-              entityType: entityType.type
+              entityType: entityType.type,
             });
           });
-      }
+      },
     );
   });
 
@@ -124,7 +124,7 @@ describe("As an admin I want to create product attribute", () => {
         createAttributeWithInputType({
           name: attributeName,
           attributeType,
-          numericSystemType
+          numericSystemType,
         })
           .then(({ attribute }) => {
             getAttribute(attribute.id);
@@ -133,10 +133,10 @@ describe("As an admin I want to create product attribute", () => {
             expectCorrectDataInAttribute(attribute, {
               attributeName,
               attributeType,
-              unit: numericSystemType.unit
+              unit: numericSystemType.unit,
             });
           });
-      }
+      },
     );
   });
 
@@ -150,7 +150,7 @@ describe("As an admin I want to create product attribute", () => {
       createAttributeWithInputType({
         name: attributeName,
         attributeType,
-        valueRequired: false
+        valueRequired: false,
       })
         .then(({ attribute }) => {
           getAttribute(attribute.id);
@@ -159,10 +159,10 @@ describe("As an admin I want to create product attribute", () => {
           expectCorrectDataInAttribute(attribute, {
             attributeName,
             attributeType,
-            valueRequired: false
+            valueRequired: false,
           });
         });
-    }
+    },
   );
 
   it(
@@ -173,7 +173,7 @@ describe("As an admin I want to create product attribute", () => {
       const attributeName = `${startsWith}${faker.datatype.number()}`;
       createAttributeWithInputType({
         name: attributeName,
-        attributeType
+        attributeType,
       })
         .then(({ attribute }) => {
           getAttribute(attribute.id);
@@ -182,10 +182,10 @@ describe("As an admin I want to create product attribute", () => {
           expectCorrectDataInAttribute(attribute, {
             attributeName,
             attributeType,
-            valueRequired: true
+            valueRequired: true,
           });
         });
-    }
+    },
   );
 
   it(
@@ -198,7 +198,7 @@ describe("As an admin I want to create product attribute", () => {
       createAttributeWithInputType({
         name: attributeName,
         attributeType,
-        swatchImage
+        swatchImage,
       })
         .then(({ attribute }) => {
           getAttribute(attribute.id);
@@ -207,13 +207,13 @@ describe("As an admin I want to create product attribute", () => {
           expectCorrectDataInAttribute(attribute, {
             attributeName,
             attributeType,
-            valueRequired: true
+            valueRequired: true,
           });
           cy.get(ATTRIBUTES_DETAILS.swatchValueImage)
             .invoke("attr", "style")
             .should("include", "saleorDemoProductSneakers");
         });
-    }
+    },
   );
 
   it(
@@ -223,7 +223,7 @@ describe("As an admin I want to create product attribute", () => {
       const attributeName = `${startsWith}${faker.datatype.number()}`;
 
       createAttribute({
-        name: attributeName
+        name: attributeName,
       }).then(attribute => {
         cy.visit(attributeDetailsUrl(attribute.id))
           .get(BUTTON_SELECTORS.deleteButton)
@@ -234,7 +234,7 @@ describe("As an admin I want to create product attribute", () => {
           .waitForRequestAndCheckIfNoErrors("@AttributeDelete");
         getAttribute(attribute.id).should("be.null");
       });
-    }
+    },
   );
 
   it(
@@ -245,7 +245,7 @@ describe("As an admin I want to create product attribute", () => {
       const attributeUpdatedName = `${startsWith}${faker.datatype.number()}`;
 
       createAttribute({
-        name: attributeName
+        name: attributeName,
       })
         .then(attribute => {
           cy.visit(attributeDetailsUrl(attribute.id));
@@ -260,6 +260,6 @@ describe("As an admin I want to create product attribute", () => {
           expect(attribute.name).to.eq(attributeUpdatedName);
           expect(attribute.slug).to.eq(attributeUpdatedName);
         });
-    }
+    },
   );
 });

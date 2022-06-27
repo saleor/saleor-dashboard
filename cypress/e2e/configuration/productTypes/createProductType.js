@@ -38,7 +38,7 @@ describe("As an admin I want to create product types", () => {
           expect(productType.isShippingRequired).to.be.false;
           expect(productType.kind).to.be.eq("NORMAL");
         });
-    }
+    },
   );
 
   it(
@@ -58,7 +58,7 @@ describe("As an admin I want to create product types", () => {
           expect(productType.weight.value).to.eq(shippingWeight);
           expect(productType.kind).to.be.eq("NORMAL");
         });
-    }
+    },
   );
 
   it(
@@ -76,6 +76,6 @@ describe("As an admin I want to create product types", () => {
           expect(productType.isShippingRequired).to.be.false;
           expect(productType.kind).to.be.eq("GIFT_CARD");
         });
-    }
+    },
   );
 });

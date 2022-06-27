@@ -12,7 +12,7 @@ import {
   addressCreate,
   createCustomer,
   deleteCustomersStartsWith,
-  getCustomer
+  getCustomer,
 } from "../../support/api/requests/Customer";
 
 describe("Tests for customer", () => {
@@ -66,16 +66,16 @@ describe("Tests for customer", () => {
         })
         .then(customer => {
           expect(customer.firstName, "Expect correct first name").to.eq(
-            randomName
+            randomName,
           );
           expect(customer.lastName, "Expect correct last name").to.eq(
-            randomName
+            randomName,
           );
           expect(customer.email, "Expect correct email").to.eq(email);
           expect(customer.note, "Expect correct note").to.eq(note);
           cy.expectCorrectFullAddress(customer.addresses[0], address);
         });
-    }
+    },
   );
 
   it(
@@ -99,7 +99,7 @@ describe("Tests for customer", () => {
           cy.expectCorrectFullAddress(addresses[0], secondAddress);
         });
       });
-    }
+    },
   );
 
   it(
@@ -128,7 +128,7 @@ describe("Tests for customer", () => {
           expect(addresses).to.have.length(1);
         });
       });
-    }
+    },
   );
 
   it(
@@ -172,7 +172,7 @@ describe("Tests for customer", () => {
         .then(({ addresses }) => {
           expect(addresses[0].isDefaultBillingAddress).to.be.true;
         });
-    }
+    },
   );
 
   it(
@@ -199,12 +199,12 @@ describe("Tests for customer", () => {
           expect(addresses).to.have.length(2);
           const addedAddress = addresses.find(
             element =>
-              element.city.toUpperCase() === secondAddress.city.toUpperCase()
+              element.city.toUpperCase() === secondAddress.city.toUpperCase(),
           );
           cy.expectCorrectFullAddress(addedAddress, secondAddress);
         });
       });
-    }
+    },
   );
 
   it(
@@ -224,7 +224,7 @@ describe("Tests for customer", () => {
           .wait("@RemoveCustomer");
         getCustomer(user.id).should("be.null");
       });
-    }
+    },
   );
 
   it(
@@ -246,7 +246,7 @@ describe("Tests for customer", () => {
           expect(isActive).to.be.false;
         });
       });
-    }
+    },
   );
 
   it(
@@ -273,15 +273,15 @@ describe("Tests for customer", () => {
           .wait("@UpdateCustomer");
         getCustomer(user.id).then(user => {
           expect(user.firstName, "Expect correct first name").to.eq(
-            updatedName
+            updatedName,
           );
           expect(user.lastName, "Expect correct last name").to.eq(updatedName);
           expect(user.email, "Expect correct email").to.eq(
-            `${updatedName}@example.com`
+            `${updatedName}@example.com`,
           );
           expect(user.note, "Expect correct note").to.eq(updatedName);
         });
       });
-    }
+    },
   );
 });

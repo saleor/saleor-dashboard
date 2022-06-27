@@ -5,24 +5,24 @@ import { GIFT_CARD_LIST } from "../../../elements/catalog/giftCard/giftCardList"
 import { completeCheckout } from "../../../support/api/requests/Checkout";
 import {
   createGiftCard,
-  giftCardDeactivate
+  giftCardDeactivate,
 } from "../../../support/api/requests/GiftCard";
 import {
   createCheckoutWithDisabledGiftCard,
   deleteGiftCardsWithTagStartsWith,
   isGiftCardDataAsExpected,
-  purchaseProductWithActiveGiftCard
+  purchaseProductWithActiveGiftCard,
 } from "../../../support/api/utils/catalog/giftCardUtils";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import {
   addPayment,
-  purchaseProductWithPromoCode
+  purchaseProductWithPromoCode,
 } from "../../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
 import {
   changeGiftCardActiveStatus,
-  enterAndSelectGiftCards
+  enterAndSelectGiftCards,
 } from "../../../support/pages/catalog/giftCardPage";
 
 describe("As a admin I want to use enabled gift card in checkout", () => {
@@ -32,7 +32,7 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
   const email = "example@example.com";
   const giftCardData = {
     amount: 150,
-    currency: "USD"
+    currency: "USD",
   };
 
   let defaultChannel;
@@ -61,7 +61,7 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
           auth: "token",
           channelSlug: defaultChannel.slug,
           shippingMethodName: resp.shippingMethod.name,
-          variantsList: resp.variantsList
+          variantsList: resp.variantsList,
         };
       });
   });
@@ -97,13 +97,13 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
             giftCardId: giftCard.id,
             expectedAmount: expectedGiftCardBalance,
             userEmail: email,
-            initialBalance: giftCardData.amount
+            initialBalance: giftCardData.amount,
           });
         })
         .then(dataAsExpected => {
           expect(dataAsExpected).to.be.true;
         });
-    }
+    },
   );
 
   it(
@@ -127,13 +127,13 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
         .then(() => {
           isGiftCardDataAsExpected({
             giftCardId: giftCard.id,
-            expectedAmount: giftCardData.amount
+            expectedAmount: giftCardData.amount,
           });
         })
         .then(dataAsExpected => {
           expect(dataAsExpected).to.be.true;
         });
-    }
+    },
   );
 
   it(
@@ -149,14 +149,14 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
       createGiftCard({
         tag: firstGiftCardName,
         amount,
-        currency: "USD"
+        currency: "USD",
       })
         .then(giftCard => {
           firstGiftCard = giftCard;
           createGiftCard({
             tag: secondGiftCardName,
             amount,
-            currency: "USD"
+            currency: "USD",
           });
         })
         .then(giftCard => {
@@ -180,14 +180,14 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
         .then(() => {
           isGiftCardDataAsExpected({
             giftCardId: firstGiftCard.id,
-            expectedAmount: amount
+            expectedAmount: amount,
           }).then(dataAsExpected => expect(dataAsExpected).to.be.true);
           isGiftCardDataAsExpected({
             giftCardId: secondGiftCard.id,
-            expectedAmount: amount
+            expectedAmount: amount,
           }).then(dataAsExpected => expect(dataAsExpected).to.be.true);
         });
-    }
+    },
   );
 
   xit(
@@ -205,7 +205,7 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
         tag: firstGiftCardName,
         amount,
         currency: "USD",
-        isActive: false
+        isActive: false,
       })
         .then(giftCard => {
           firstGiftCard = giftCard;
@@ -213,7 +213,7 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
             tag: secondGiftCardName,
             amount,
             currency: "USD",
-            isActive: false
+            isActive: false,
           });
         })
         .then(giftCard => {
@@ -230,7 +230,7 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
             expectedAmount: 0,
             initialAmount: amount,
             dataForCheckout,
-            expectedOrderPrice
+            expectedOrderPrice,
           }).then(isDataAsExpected => expect(isDataAsExpected).to.be.true);
           dataForCheckout.voucherCode = secondGiftCard.code;
           purchaseProductWithActiveGiftCard({
@@ -238,9 +238,9 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
             expectedAmount: 0,
             initialAmount: amount,
             dataForCheckout,
-            expectedOrderPrice
+            expectedOrderPrice,
           }).then(isDataAsExpected => expect(isDataAsExpected).to.be.true);
         });
-    }
+    },
   );
 });

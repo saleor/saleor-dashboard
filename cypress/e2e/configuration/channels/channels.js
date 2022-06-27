@@ -14,7 +14,7 @@ import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
 import { createChannel } from "../../../support/api/requests/Channels";
 import {
   createShippingZone,
-  getShippingZone
+  getShippingZone,
 } from "../../../support/api/requests/ShippingMethod";
 import { deleteChannelsStartsWith } from "../../../support/api/utils/channelsUtils";
 import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
@@ -38,7 +38,7 @@ describe("Channels", () => {
   beforeEach(() => {
     cy.clearSessionData().loginUserViaRequest(
       "auth",
-      ONE_PERMISSION_USERS.channel
+      ONE_PERMISSION_USERS.channel,
     );
   });
 
@@ -83,7 +83,7 @@ describe("Channels", () => {
         .click()
         .get(SELECT_CHANNELS_TO_ASSIGN.listOfChannels)
         .contains(randomChannel);
-    }
+    },
   );
 
   it(
@@ -101,16 +101,16 @@ describe("Channels", () => {
       createChannelByView({
         name: randomChannel,
         currency,
-        shippingZone: shippingZone.name
+        shippingZone: shippingZone.name,
       });
       cy.waitForRequestAndCheckIfNoErrors("@Channel");
       getShippingZone(shippingZone.id).then(shippingZoneResp => {
         const assignedChannel = shippingZoneResp.channels.find(
-          channel => channel.name === randomChannel
+          channel => channel.name === randomChannel,
         );
         expect(assignedChannel).to.be.ok;
       });
-    }
+    },
   );
 
   it(
@@ -122,15 +122,15 @@ describe("Channels", () => {
         isActive: false,
         name: randomChannel,
         slug: randomChannel,
-        currencyCode: currency
+        currencyCode: currency,
       });
       cy.visit(urlList.channels);
       cy.expectSkeletonIsVisible();
       createChannelByView({ name: randomChannel, currency });
       cy.get(ADD_CHANNEL_FORM_SELECTORS.slugValidationMessage).should(
-        "be.visible"
+        "be.visible",
       );
-    }
+    },
   );
 
   it(
@@ -142,12 +142,12 @@ describe("Channels", () => {
       cy.expectSkeletonIsVisible();
       createChannelByView({
         name: randomChannel,
-        currency: "notExistingCurrency"
+        currency: "notExistingCurrency",
       });
       cy.get(ADD_CHANNEL_FORM_SELECTORS.currencyValidationMessage).should(
-        "be.visible"
+        "be.visible",
       );
-    }
+    },
   );
 
   it(
@@ -159,7 +159,7 @@ describe("Channels", () => {
         isActive: false,
         name: randomChannelToDelete,
         slug: randomChannelToDelete,
-        currencyCode: currency
+        currencyCode: currency,
       });
       cy.addAliasToGraphRequest("Channels");
       cy.visit(urlList.channels);
@@ -176,6 +176,6 @@ describe("Channels", () => {
       cy.get(CHANNELS_SELECTORS.channelName)
         .contains(randomChannelToDelete)
         .should("not.exist");
-    }
+    },
   );
 });

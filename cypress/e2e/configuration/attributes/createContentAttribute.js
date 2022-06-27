@@ -20,26 +20,26 @@ describe("As an admin I want to create content attribute", () => {
     { type: "RICH_TEXT", testCase: "SALEOR_0515" },
     { type: "BOOLEAN", testCase: "SALEOR_0516" },
     { type: "DATE", testCase: "SALEOR_0527" },
-    { type: "DATE_TIME", testCase: "SALEOR_0528" }
+    { type: "DATE_TIME", testCase: "SALEOR_0528" },
   ];
   const attributeReferenceType = [
     { type: "PRODUCT", testCase: "SALEOR_0517" },
-    { type: "PAGE", testCase: "SALEOR_0518" }
+    { type: "PAGE", testCase: "SALEOR_0518" },
   ];
   const attributeNumericType = [
     {
       unitSystem: "IMPERIAL",
       unitsOf: "DISTANCE",
       unit: "FT",
-      testCase: "SALEOR_0519"
+      testCase: "SALEOR_0519",
     },
     {
       unitSystem: "METRIC",
       unitsOf: "VOLUME",
       unit: "CUBIC_CENTIMETER",
-      testCase: "SALEOR_0520"
+      testCase: "SALEOR_0520",
     },
-    { unitSystem: "without selecting unit", testCase: "SALEOR_0521" }
+    { unitSystem: "without selecting unit", testCase: "SALEOR_0521" },
   ];
 
   before(() => {
@@ -65,7 +65,7 @@ describe("As an admin I want to create content attribute", () => {
         const attributeName = `${startsWith}${faker.datatype.number()}`;
         createAttributeWithInputType({
           name: attributeName,
-          attributeType: attributeType.type
+          attributeType: attributeType.type,
         })
           .then(({ attribute }) => {
             getAttribute(attribute.id);
@@ -73,10 +73,10 @@ describe("As an admin I want to create content attribute", () => {
           .then(attribute => {
             expectCorrectDataInAttribute(attribute, {
               attributeName,
-              attributeType: attributeType.type
+              attributeType: attributeType.type,
             });
           });
-      }
+      },
     );
   });
 
@@ -90,7 +90,7 @@ describe("As an admin I want to create content attribute", () => {
         createAttributeWithInputType({
           name: attributeName,
           attributeType,
-          entityType: entityType.type
+          entityType: entityType.type,
         })
           .then(({ attribute }) => {
             getAttribute(attribute.id);
@@ -99,10 +99,10 @@ describe("As an admin I want to create content attribute", () => {
             expectCorrectDataInAttribute(attribute, {
               attributeName,
               attributeType,
-              entityType: entityType.type
+              entityType: entityType.type,
             });
           });
-      }
+      },
     );
   });
 
@@ -116,7 +116,7 @@ describe("As an admin I want to create content attribute", () => {
         createAttributeWithInputType({
           name: attributeName,
           attributeType,
-          numericSystemType
+          numericSystemType,
         })
           .then(({ attribute }) => {
             getAttribute(attribute.id);
@@ -125,10 +125,10 @@ describe("As an admin I want to create content attribute", () => {
             expectCorrectDataInAttribute(attribute, {
               attributeName,
               attributeType,
-              unit: numericSystemType.unit
+              unit: numericSystemType.unit,
             });
           });
-      }
+      },
     );
   });
 
@@ -141,7 +141,7 @@ describe("As an admin I want to create content attribute", () => {
       createAttributeWithInputType({
         name: attributeName,
         attributeType,
-        valueRequired: false
+        valueRequired: false,
       })
         .then(({ attribute }) => {
           getAttribute(attribute.id);
@@ -150,9 +150,9 @@ describe("As an admin I want to create content attribute", () => {
           expectCorrectDataInAttribute(attribute, {
             attributeName,
             attributeType,
-            valueRequired: false
+            valueRequired: false,
           });
         });
-    }
+    },
   );
 });

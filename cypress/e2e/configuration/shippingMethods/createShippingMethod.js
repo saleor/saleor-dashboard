@@ -16,7 +16,7 @@ import { isShippingAvailableInCheckout } from "../../../support/api/utils/storeF
 import {
   createShippingRate,
   createShippingZone,
-  rateOptions
+  rateOptions,
 } from "../../../support/pages/shippingMethodPage";
 
 describe("As a staff user I want to create shipping zone and rate", () => {
@@ -53,14 +53,14 @@ describe("As a staff user I want to create shipping zone and rate", () => {
       .then(warehouseResp => {
         warehouse = warehouseResp;
         productsUtils.createTypeAttributeAndCategoryForProduct({
-          name: startsWith
+          name: startsWith,
         });
       })
       .then(
         ({
           productType: productTypeResp,
           category: categoryResp,
-          attribute: attributeResp
+          attribute: attributeResp,
         }) => {
           attribute = attributeResp;
           category = categoryResp;
@@ -74,9 +74,9 @@ describe("As a staff user I want to create shipping zone and rate", () => {
             categoryId: categoryResp.id,
             warehouseId: warehouse.id,
             quantityInWarehouse: 10,
-            price
+            price,
           });
-        }
+        },
       )
       .then(({ variantsList: variantsListResp, product }) => {
         variantsList = variantsListResp;
@@ -89,7 +89,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
           quantityInWarehouse: 10,
           channelId: defaultChannel.id,
           price: secondVariantPrice,
-          weight: 10
+          weight: 10,
         });
       })
       .then(variantsListResp => {
@@ -108,28 +108,28 @@ describe("As a staff user I want to create shipping zone and rate", () => {
       const shippingName = `${startsWith}${faker.datatype.number()}`;
       cy.clearSessionData().loginUserViaRequest(
         "auth",
-        ONE_PERMISSION_USERS.shipping
+        ONE_PERMISSION_USERS.shipping,
       );
       cy.visit(urlList.shippingMethods).expectSkeletonIsVisible();
       createShippingZone(
         shippingName,
         warehouse.name,
         address.countryFullName,
-        defaultChannel.name
+        defaultChannel.name,
       );
       createShippingRate({
         rateName: shippingName,
         price,
         priceLimits: { min: price, max: 100 },
         rateOption: rateOptions.PRICE_OPTION,
-        deliveryTime
+        deliveryTime,
       });
       createWaitingForCaptureOrder({
         channelSlug: defaultChannel.slug,
         email: "test@example.com",
         variantsList,
         address,
-        shippingMethodName: shippingName
+        shippingMethodName: shippingName,
       })
         .then(({ order }) => {
           expect(order.id).to.be.ok;
@@ -138,17 +138,17 @@ describe("As a staff user I want to create shipping zone and rate", () => {
             email: "test@example.com",
             variantsList: secondVariantsList,
             address,
-            auth: "token"
+            auth: "token",
           });
         })
         .then(({ checkout }) => {
           const isShippingAvailable = isShippingAvailableInCheckout(
             checkout,
-            shippingName
+            shippingName,
           );
           expect(isShippingAvailable).to.be.false;
         });
-    }
+    },
   );
 
   it(
@@ -158,28 +158,28 @@ describe("As a staff user I want to create shipping zone and rate", () => {
       const shippingName = `${startsWith}${faker.datatype.number()}`;
       cy.clearSessionData().loginUserViaRequest(
         "auth",
-        ONE_PERMISSION_USERS.shipping
+        ONE_PERMISSION_USERS.shipping,
       );
       cy.visit(urlList.shippingMethods).expectSkeletonIsVisible();
       createShippingZone(
         shippingName,
         warehouse.name,
         address.countryFullName,
-        defaultChannel.name
+        defaultChannel.name,
       );
       createShippingRate({
         rateName: shippingName,
         price,
         rateOption: rateOptions.WEIGHT_OPTION,
         deliveryTime,
-        weightLimits: { min: 5, max: 10 }
+        weightLimits: { min: 5, max: 10 },
       });
       createWaitingForCaptureOrder({
         channelSlug: defaultChannel.slug,
         email: "test@example.com",
         variantsList: secondVariantsList,
         address,
-        shippingMethodName: shippingName
+        shippingMethodName: shippingName,
       })
         .then(({ order }) => {
           expect(order.id).to.be.ok;
@@ -188,16 +188,16 @@ describe("As a staff user I want to create shipping zone and rate", () => {
             email: "test@example.com",
             variantsList,
             address,
-            auth: "token"
+            auth: "token",
           });
         })
         .then(({ checkout }) => {
           const isShippingAvailable = isShippingAvailableInCheckout(
             checkout,
-            shippingName
+            shippingName,
           );
           expect(isShippingAvailable).to.be.false;
         });
-    }
+    },
   );
 });

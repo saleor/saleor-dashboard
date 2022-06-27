@@ -5,7 +5,7 @@ import faker from "faker";
 
 import {
   addProductsToCheckout,
-  createCheckout
+  createCheckout,
 } from "../../support/api/requests/Checkout";
 import { getVariants } from "../../support/api/requests/Product";
 import { createWaitingForCaptureOrder } from "../../support/api/utils/ordersUtils";
@@ -29,18 +29,18 @@ describe("Manage products stocks in checkout", () => {
       {
         name: "variantsWithLowStock",
         trackInventory: true,
-        quantityInWarehouse: 1
+        quantityInWarehouse: 1,
       },
       {
         name: "variantsWithoutTrackInventory",
         trackInventory: false,
-        quantityInWarehouse: 0
+        quantityInWarehouse: 0,
       },
       {
         name: "lastVariantInStock",
         trackInventory: true,
-        quantityInWarehouse: 1
-      }
+        quantityInWarehouse: 1,
+      },
     ];
 
     createNewProductWithSeveralVariants(name, variantsData).then(resp => {
@@ -48,13 +48,13 @@ describe("Manage products stocks in checkout", () => {
       address = resp.address;
       shippingMethod = resp.shippingMethod;
       variantsWithLowStock = resp.createdVariants.find(
-        variant => variant.name === "variantsWithLowStock"
+        variant => variant.name === "variantsWithLowStock",
       );
       variantsWithoutTrackInventory = resp.createdVariants.find(
-        variant => variant.name === "variantsWithoutTrackInventory"
+        variant => variant.name === "variantsWithoutTrackInventory",
       );
       lastVariantInStock = resp.createdVariants.find(
-        variant => variant.name === "lastVariantInStock"
+        variant => variant.name === "lastVariantInStock",
       );
     });
   });
@@ -69,7 +69,7 @@ describe("Manage products stocks in checkout", () => {
         billingAddress: address,
         email: "email@example.com",
         variantsList: [variantsWithLowStock],
-        auth: "token"
+        auth: "token",
       })
         .then(({ checkout: checkout }) => {
           addProductsToCheckout(checkout.id, [variantsWithLowStock], 2);
@@ -77,10 +77,10 @@ describe("Manage products stocks in checkout", () => {
         .then(({ errors }) => {
           expect(
             errors[0],
-            "should return error on field quantity"
+            "should return error on field quantity",
           ).to.have.property("field", "quantity");
         });
-    }
+    },
   );
 
   it(
@@ -92,11 +92,11 @@ describe("Manage products stocks in checkout", () => {
         channelSlug: defaultChannel.slug,
         email: "example@example.com",
         shippingMethodName: shippingMethod.name,
-        variantsList: [variantsWithoutTrackInventory]
+        variantsList: [variantsWithoutTrackInventory],
       }).then(({ order }) => {
         expect(order, "order should be created").to.be.ok;
       });
-    }
+    },
   );
 
   it(
@@ -108,7 +108,7 @@ describe("Manage products stocks in checkout", () => {
         channelSlug: defaultChannel.slug,
         email: "example@example.com",
         shippingMethodName: shippingMethod.name,
-        variantsList: [lastVariantInStock]
+        variantsList: [lastVariantInStock],
       })
         .then(({ order }) => {
           expect(order, "order should be created").to.be.ok;
@@ -119,6 +119,6 @@ describe("Manage products stocks in checkout", () => {
           expect(variant.node.stocks[0].quantityAllocated).to.eq(1);
           expect(variant.node.stocks[0].quantity).to.eq(1);
         });
-    }
+    },
   );
 });

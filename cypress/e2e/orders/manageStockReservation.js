@@ -9,15 +9,15 @@ import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith
+  deleteProductsStartsWith,
 } from "../../support/api/utils/products/productsUtils";
 import {
   createShipping,
-  deleteShippingStartsWith
+  deleteShippingStartsWith,
 } from "../../support/api/utils/shippingUtils";
 import {
   enterSiteSettingAndSetStockReservation,
-  userType
+  userType,
 } from "../../support/pages/siteSettings";
 
 xdescribe("As an admin I want to manage stock reservation", () => {
@@ -26,7 +26,7 @@ xdescribe("As an admin I want to manage stock reservation", () => {
   const productQuantity = 10;
   const customerType = {
     authenticated: "auth",
-    anonymous: "token"
+    anonymous: "token",
   };
 
   let defaultChannel;
@@ -51,7 +51,7 @@ xdescribe("As an admin I want to manage stock reservation", () => {
         createShipping({
           channelId: defaultChannel.id,
           name,
-          address
+          address,
         });
       })
       .then(({ warehouse: warehouseResp }) => {
@@ -62,12 +62,12 @@ xdescribe("As an admin I want to manage stock reservation", () => {
         ({
           attribute: attributeResp,
           category: categoryResp,
-          productType: productTypeResp
+          productType: productTypeResp,
         }) => {
           attribute = attributeResp;
           category = categoryResp;
           productType = productTypeResp;
-        }
+        },
       );
   });
 
@@ -83,14 +83,14 @@ xdescribe("As an admin I want to manage stock reservation", () => {
       name: productName,
       productTypeId: productType.id,
       warehouseId: warehouse.id,
-      quantityInWarehouse: productQuantity
+      quantityInWarehouse: productQuantity,
     }).then(({ variantsList }) => {
       dataForCheckout = {
         email: "example@example.pl",
         address,
         channelSlug: defaultChannel.slug,
         variantsList,
-        productQuantity
+        productQuantity,
       };
     });
   });
@@ -115,10 +115,10 @@ xdescribe("As an admin I want to manage stock reservation", () => {
             .empty;
           expect(
             resp.errors[0].field,
-            "error should be on field quantity"
+            "error should be on field quantity",
           ).to.be.eq("quantity");
         });
-    }
+    },
   );
 
   it(
@@ -141,10 +141,10 @@ xdescribe("As an admin I want to manage stock reservation", () => {
             .empty;
           expect(
             resp.errors[0].field,
-            "error should be on field quantity"
+            "error should be on field quantity",
           ).to.be.eq("quantity");
         });
-    }
+    },
   );
 
   it(
@@ -166,7 +166,7 @@ xdescribe("As an admin I want to manage stock reservation", () => {
           expect(resp.errors, "there should be no errors in response").to.be
             .empty;
         });
-    }
+    },
   );
 
   it(
@@ -188,6 +188,6 @@ xdescribe("As an admin I want to manage stock reservation", () => {
           expect(resp.errors, "there should be no errors in response").to.be
             .empty;
         });
-    }
+    },
   );
 });

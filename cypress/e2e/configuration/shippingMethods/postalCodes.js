@@ -12,13 +12,13 @@ import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith
+  deleteProductsStartsWith,
 } from "../../../support/api/utils/products/productsUtils";
 import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
 import { isShippingAvailableInCheckout } from "../../../support/api/utils/storeFront/checkoutUtils";
 import {
   createRateWithPostalCode,
-  postalCodesOptions
+  postalCodesOptions,
 } from "../../../support/pages/shippingMethodPage";
 
 describe("As a user I want to create shipping method with postal codes", () => {
@@ -47,19 +47,19 @@ describe("As a user I want to create shipping method with postal codes", () => {
       .then(
         ({
           usAddress: usAddressResp,
-          secondUsAddress: secondUsAddressResp
+          secondUsAddress: secondUsAddressResp,
         }) => {
           usAddress = usAddressResp;
           secondUsAddress = secondUsAddressResp;
           createShippingZone(name, "US", defaultChannel.id);
-        }
+        },
       )
       .then(shippingZoneResp => {
         shippingZone = shippingZoneResp;
         createWarehouse({
           name,
           shippingZone: shippingZone.id,
-          address: usAddress
+          address: usAddress,
         });
       })
       .then(warehouseResp => {
@@ -73,7 +73,7 @@ describe("As a user I want to create shipping method with postal codes", () => {
           warehouseId: warehouse.id,
           attributeId: attribute.id,
           categoryId: category.id,
-          productTypeId: productType.id
+          productTypeId: productType.id,
         });
       })
       .then(({ variantsList: variantsListResp }) => {
@@ -98,15 +98,15 @@ describe("As a user I want to create shipping method with postal codes", () => {
         price,
         postalCodeOption: postalCodesOptions.INCLUDE_OPTION,
         maxPostalCode: usAddress.postalCode,
-        minPostalCode: usAddress.postalCode
+        minPostalCode: usAddress.postalCode,
       });
       isShippingAvailableForAddress(usAddress, rateName).then(
-        isAvailable => expect(isAvailable).to.be.true
+        isAvailable => expect(isAvailable).to.be.true,
       );
       isShippingAvailableForAddress(secondUsAddress, rateName).then(
-        isAvailable => expect(isAvailable).to.be.false
+        isAvailable => expect(isAvailable).to.be.false,
       );
-    }
+    },
   );
 
   it(
@@ -120,15 +120,15 @@ describe("As a user I want to create shipping method with postal codes", () => {
         price,
         postalCodeOption: postalCodesOptions.EXCLUDE_OPTION,
         maxPostalCode: usAddress.postalCode,
-        minPostalCode: usAddress.postalCode
+        minPostalCode: usAddress.postalCode,
       });
       isShippingAvailableForAddress(usAddress, rateName).then(
-        isAvailable => expect(isAvailable).to.be.false
+        isAvailable => expect(isAvailable).to.be.false,
       );
       isShippingAvailableForAddress(secondUsAddress, rateName).then(
-        isAvailable => expect(isAvailable).to.be.true
+        isAvailable => expect(isAvailable).to.be.true,
       );
-    }
+    },
   );
 
   function isShippingAvailableForAddress(address, rateName) {
@@ -136,9 +136,9 @@ describe("As a user I want to create shipping method with postal codes", () => {
       address,
       channelSlug: defaultChannel.slug,
       email: "example@example.com",
-      variantsList
+      variantsList,
     }).then(({ checkout }) =>
-      isShippingAvailableInCheckout(checkout, rateName)
+      isShippingAvailableInCheckout(checkout, rateName),
     );
   }
 });

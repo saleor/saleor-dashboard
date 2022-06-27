@@ -8,11 +8,11 @@ import { deleteSalesStartsWith } from "../../support/api/utils/discounts/salesUt
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
 import {
   createShipping,
-  deleteShippingStartsWith
+  deleteShippingStartsWith,
 } from "../../support/api/utils/shippingUtils";
 import {
   createSaleWithNewVariant,
-  discountOptions
+  discountOptions,
 } from "../../support/pages/discounts/salesPage";
 
 xdescribe("Sales discounts for variant", () => {
@@ -37,14 +37,14 @@ xdescribe("Sales discounts for variant", () => {
         ({
           productType: productTypeResp,
           attribute: attributeResp,
-          category: categoryResp
+          category: categoryResp,
         }) => {
           productType = productTypeResp;
           attribute = attributeResp;
           category = categoryResp;
 
           channelsUtils.getDefaultChannel();
-        }
+        },
       )
       .then(channel => {
         defaultChannel = channel;
@@ -55,7 +55,7 @@ xdescribe("Sales discounts for variant", () => {
           channelId: defaultChannel.id,
           name,
           address: addresses.plAddress,
-          price: 100
+          price: 100,
         });
       })
       .then(({ warehouse: warehouseResp }) => {
@@ -84,13 +84,13 @@ xdescribe("Sales discounts for variant", () => {
         categoryId: category.id,
         price: productPrice,
         discountOption: discountOptions.PERCENTAGE,
-        discountValue
+        discountValue,
       }).then(({ pricing }) => {
         const priceInResponse = pricing.price.gross.amount;
         const expectedPrice = (productPrice * discountValue) / 100;
         expect(expectedPrice).to.be.eq(priceInResponse);
       });
-    }
+    },
   );
 
   it(
@@ -110,12 +110,12 @@ xdescribe("Sales discounts for variant", () => {
         categoryId: category.id,
         price: productPrice,
         discountOption: discountOptions.FIXED,
-        discountValue
+        discountValue,
       }).then(({ pricing }) => {
         const priceInResponse = pricing.price.gross.amount;
         const expectedPrice = productPrice - discountValue;
         expect(expectedPrice).to.be.eq(priceInResponse);
       });
-    }
+    },
   );
 });

@@ -12,19 +12,19 @@ import { urlList, userDetailsUrl } from "../fixtures/urlList";
 import { updatePlugin } from "../support/api/requests/Plugins";
 import {
   deleteStaffMembersStartsWith,
-  updateStaffMember
+  updateStaffMember,
 } from "../support/api/requests/StaffMembers";
 import {
   getMailActivationLinkForUser,
   getMailActivationLinkForUserAndSubject,
-  inviteStaffMemberWithFirstPermission
+  inviteStaffMemberWithFirstPermission,
 } from "../support/api/utils/users";
 import { expectWelcomeMessageIncludes } from "../support/pages/homePage";
 import { getDisplayedSelectors } from "../support/pages/permissionsPage";
 import {
   fillUpSetPassword,
   fillUpUserDetails,
-  updateUserActiveFlag
+  updateUserActiveFlag,
 } from "../support/pages/userPage";
 
 describe("Staff members", () => {
@@ -82,11 +82,11 @@ describe("Staff members", () => {
         .then(tokenCreate => {
           expect(
             tokenCreate.errors[0].code,
-            "logging in should return error"
+            "logging in should return error",
           ).to.be.eq("INACTIVE");
           expect(tokenCreate.token).to.be.not.ok;
         });
-    }
+    },
   );
 
   it("should activate user", { tags: ["@staffMembers", "@stagedOnly"] }, () => {
@@ -117,10 +117,10 @@ describe("Staff members", () => {
       getDisplayedSelectors().then(displayedSelectors => {
         expect(Object.values(displayedSelectors)).to.have.length(1);
         expect(Object.values(displayedSelectors)[0]).to.eq(
-          LEFT_MENU_SELECTORS.home
+          LEFT_MENU_SELECTORS.home,
         );
       });
-    }
+    },
   );
 
   it(
@@ -131,7 +131,7 @@ describe("Staff members", () => {
       updatePlugin(
         "mirumee.notifications.admin_email",
         "staff_password_reset_subject",
-        "Reset"
+        "Reset",
       )
         .then(() => {
           cy.clearSessionData()
@@ -156,6 +156,6 @@ describe("Staff members", () => {
             .should("be.visible")
             .loginUserViaRequest({ email, password: newPassword });
         });
-    }
+    },
   );
 });

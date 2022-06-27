@@ -12,7 +12,7 @@ import {
   openAndFillUpCreateGiftCardDialog,
   saveGiftCard,
   setExpiryDate,
-  setExpiryPeriod
+  setExpiryPeriod,
 } from "../../../support/pages/catalog/giftCardPage";
 
 describe("As an admin I want to create gift card", () => {
@@ -40,7 +40,7 @@ describe("As an admin I want to create gift card", () => {
         note: name,
         tag: name,
         amount,
-        currency
+        currency,
       });
       saveGiftCard()
         .then(giftCardResp => {
@@ -52,7 +52,7 @@ describe("As an admin I want to create gift card", () => {
           expect(giftCardsResp[0].node.initialBalance.amount).to.eq(amount);
           expect(giftCardsResp[0].node.initialBalance.currency).to.eq(currency);
         });
-    }
+    },
   );
 
   it(
@@ -67,7 +67,7 @@ describe("As an admin I want to create gift card", () => {
         note: name,
         tag: name,
         amount,
-        currency
+        currency,
       });
       setExpiryPeriod(2, expiryPeriods.MONTH);
       saveGiftCard()
@@ -81,7 +81,7 @@ describe("As an admin I want to create gift card", () => {
           expect(giftCardsResp[0].node.initialBalance.currency).to.eq(currency);
           expect(giftCardsResp[0].node.expiryDate).to.eq(expectedExpiryDate);
         });
-    }
+    },
   );
 
   it(
@@ -96,7 +96,7 @@ describe("As an admin I want to create gift card", () => {
         note: name,
         tag: name,
         amount,
-        currency
+        currency,
       });
       setExpiryDate(date);
       saveGiftCard()
@@ -110,6 +110,6 @@ describe("As an admin I want to create gift card", () => {
           expect(giftCardsResp[0].node.initialBalance.currency).to.eq(currency);
           expect(giftCardsResp[0].node.expiryDate).to.eq(date);
         });
-    }
+    },
   );
 });

@@ -7,7 +7,7 @@ import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { attributeDetailsUrl } from "../../../fixtures/urlList";
 import {
   createAttribute,
-  getAttribute
+  getAttribute,
 } from "../../../support/api/requests/Attribute";
 import { deleteAttributesStartsWith } from "../../../support/api/utils/attributes/attributeUtils";
 import { fillUpAttributeNameAndCode } from "../../../support/pages/attributesPage";
@@ -25,7 +25,7 @@ describe("As an admin I want to delete and update content attribute", () => {
     cy.clearSessionData().loginUserViaRequest();
     createAttribute({
       name: `${startsWith}${faker.datatype.number()}`,
-      type: "PAGE_TYPE"
+      type: "PAGE_TYPE",
     }).then(attributeResp => {
       attribute = attributeResp;
     });
@@ -43,7 +43,7 @@ describe("As an admin I want to delete and update content attribute", () => {
         .click()
         .waitForRequestAndCheckIfNoErrors("@AttributeDelete");
       getAttribute(attribute.id).should("be.null");
-    }
+    },
   );
 
   it(
@@ -62,6 +62,6 @@ describe("As an admin I want to delete and update content attribute", () => {
         expect(attributeResp.name).to.eq(attributeUpdatedName);
         expect(attributeResp.slug).to.eq(attributeUpdatedName);
       });
-    }
+    },
   );
 });

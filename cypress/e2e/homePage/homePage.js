@@ -12,9 +12,9 @@ describe("Displaying welcome message on home page", () => {
     () => {
       cy.loginUserViaRequest().visit(urlList.homePage);
       expectWelcomeMessageIncludes(
-        `${TEST_ADMIN_USER.name} ${TEST_ADMIN_USER.lastName}`
+        `${TEST_ADMIN_USER.name} ${TEST_ADMIN_USER.lastName}`,
       );
-    }
+    },
   );
 
   it(
@@ -23,7 +23,7 @@ describe("Displaying welcome message on home page", () => {
     () => {
       cy.loginUserViaRequest("auth", USER_WITHOUT_NAME).visit(urlList.homePage);
       expectWelcomeMessageIncludes(`${USER_WITHOUT_NAME.email}`);
-    }
+    },
   );
 
   it(
@@ -35,8 +35,8 @@ describe("Displaying welcome message on home page", () => {
         .waitForProgressBarToNotExist()
         .reload(true);
       expectWelcomeMessageIncludes(
-        `${TEST_ADMIN_USER.name} ${TEST_ADMIN_USER.lastName}`
+        `${TEST_ADMIN_USER.name} ${TEST_ADMIN_USER.lastName}`,
       );
-    }
+    },
   );
 });

@@ -9,7 +9,7 @@ import { getVariant } from "../../../support/api/requests/Product";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import {
   createProductInChannelWithoutVariants,
-  deleteProductsStartsWith
+  deleteProductsStartsWith,
 } from "../../../support/api/utils/products/productsUtils";
 import { createProductTypeWithNewVariantSelectionAttribute } from "../../../support/api/utils/productTypeUtils";
 import { fillUpVariantDetails } from "../../../support/pages/catalog/products/VariantsPage";
@@ -22,7 +22,7 @@ describe("As an admin I want to use attributes in variant selection", () => {
     { key: "MULTISELECT", TC: "SALEOR_0535" },
     { key: "BOOLEAN", TC: "SALEOR_0536" },
     { key: "NUMERIC", TC: "SALEOR_0537" },
-    { key: "SWATCH", TC: "SALEOR_0538" }
+    { key: "SWATCH", TC: "SALEOR_0538" },
   ];
   let channel;
   let category;
@@ -33,7 +33,7 @@ describe("As an admin I want to use attributes in variant selection", () => {
     deleteProductsStartsWith(startsWith);
     getDefaultChannel().then(defaultChannel => (channel = defaultChannel));
     createCategory({ name: startsWith }).then(
-      categoryResp => (category = categoryResp)
+      categoryResp => (category = categoryResp),
     );
   });
 
@@ -56,7 +56,7 @@ describe("As an admin I want to use attributes in variant selection", () => {
         createProductTypeWithNewVariantSelectionAttribute({
           name,
           inputType,
-          attributeValues
+          attributeValues,
         })
           .then(({ productType: productTypeResp }) => {
             productType = productTypeResp;
@@ -65,20 +65,20 @@ describe("As an admin I want to use attributes in variant selection", () => {
               categoryId: category.id,
               productTypeId: productType.id,
               name,
-              channelId: channel.id
+              channelId: channel.id,
             });
           })
           .then(productResp => {
             product = productResp;
 
             cy.visit(addVariantUrl(product.id)).addAliasToGraphRequest(
-              "VariantCreate"
+              "VariantCreate",
             );
 
             fillUpVariantDetails({
               sku: name,
               attributeName: attributeValues[0],
-              attributeType: inputType
+              attributeType: inputType,
             });
 
             cy.wait("@VariantCreate");
@@ -92,7 +92,7 @@ describe("As an admin I want to use attributes in variant selection", () => {
             expect(attributes[0].attribute.inputType).to.eq(inputType);
             cy.confirmationMessageShouldAppear();
           });
-      }
+      },
     );
   });
 });

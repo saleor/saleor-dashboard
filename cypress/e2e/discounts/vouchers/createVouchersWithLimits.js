@@ -8,12 +8,12 @@ import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import { deleteVouchersStartsWith } from "../../../support/api/utils/discounts/vouchersUtils";
 import {
   addPayment,
-  createCheckoutWithVoucher
+  createCheckoutWithVoucher,
 } from "../../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import {
   discountOptions,
-  loginAndCreateCheckoutForVoucherWithDiscount
+  loginAndCreateCheckoutForVoucherWithDiscount,
 } from "../../../support/pages/discounts/vouchersPage";
 
 describe("As an admin I want to create voucher", () => {
@@ -39,7 +39,7 @@ describe("As an admin I want to create voucher", () => {
           variantsList: variantsResp,
           defaultChannel: channel,
           shippingMethod: shippingMethodResp,
-          address: addressResp
+          address: addressResp,
         }) => {
           variants = variantsResp;
           defaultChannel = channel;
@@ -50,9 +50,9 @@ describe("As an admin I want to create voucher", () => {
             variantsList: variants,
             address,
             shippingMethodName: shippingMethod.name,
-            auth: "token"
+            auth: "token",
           };
-        }
+        },
       );
   });
 
@@ -71,7 +71,7 @@ describe("As an admin I want to create voucher", () => {
         voucherCode,
         channelName: defaultChannel.name,
         dataForCheckout,
-        usageLimit
+        usageLimit,
       })
         .then(({ checkout, addPromoCodeResp }) => {
           expect(addPromoCodeResp.errors).to.be.empty;
@@ -88,10 +88,10 @@ describe("As an admin I want to create voucher", () => {
         .then(({ addPromoCodeResp }) => {
           const errorField = addPromoCodeResp.errors[0].field;
           expect(errorField, "error in promo code should occur").to.be.eq(
-            "promoCode"
+            "promoCode",
           );
         });
-    }
+    },
   );
 
   it(
@@ -109,7 +109,7 @@ describe("As an admin I want to create voucher", () => {
         voucherCode,
         channelName: defaultChannel.name,
         dataForCheckout,
-        applyOnePerCustomer: true
+        applyOnePerCustomer: true,
       })
         .then(({ checkout, addPromoCodeResp }) => {
           expect(addPromoCodeResp.errors).to.be.empty;
@@ -127,7 +127,7 @@ describe("As an admin I want to create voucher", () => {
         .then(({ addPromoCodeResp }) => {
           const errorField = addPromoCodeResp.errors[0].field;
           expect(errorField, "error in promo code should occur").to.be.eq(
-            "promoCode"
+            "promoCode",
           );
 
           // Create new checkout as other not logged in customer - voucher should be available for other customer
@@ -140,7 +140,7 @@ describe("As an admin I want to create voucher", () => {
           const errorField = addPromoCodeResp.errors;
           expect(errorField, "No errors when adding promo code").to.be.empty;
         });
-    }
+    },
   );
 
   xit(
@@ -158,7 +158,7 @@ describe("As an admin I want to create voucher", () => {
         voucherCode,
         channelName: defaultChannel.name,
         dataForCheckout,
-        onlyStaff: true
+        onlyStaff: true,
       })
         .then(({ checkout, addPromoCodeResp }) => {
           expect(addPromoCodeResp.errors).to.be.empty;
@@ -176,10 +176,10 @@ describe("As an admin I want to create voucher", () => {
         .then(({ addPromoCodeResp }) => {
           const errorField = addPromoCodeResp.errors[0].field;
           expect(errorField, "error in promo code should occur").to.be.eq(
-            "promoCode"
+            "promoCode",
           );
         });
-    }
+    },
   );
 
   xit(
@@ -197,14 +197,14 @@ describe("As an admin I want to create voucher", () => {
         voucherCode,
         channelName: defaultChannel.name,
         dataForCheckout,
-        minOrderValue
+        minOrderValue,
       })
         .then(({ addPromoCodeResp }) => {
           const errorField = addPromoCodeResp.errors[0].field;
           dataForCheckout.voucherCode = voucherCode;
 
           expect(errorField, "error in promo code should occur").to.be.eq(
-            "promoCode"
+            "promoCode",
           );
           dataForCheckout.productQuantity = 2;
           createCheckoutWithVoucher(dataForCheckout);
@@ -213,7 +213,7 @@ describe("As an admin I want to create voucher", () => {
           const errorField = addPromoCodeResp.errors;
           expect(errorField, "No errors when adding promo code").to.be.empty;
         });
-    }
+    },
   );
 
   xit("should create voucher with min product quantity. TC: SALEOR_1911", () => {
@@ -228,14 +228,14 @@ describe("As an admin I want to create voucher", () => {
       voucherCode,
       channelName: defaultChannel.name,
       dataForCheckout,
-      minAmountOfItems
+      minAmountOfItems,
     })
       .then(({ addPromoCodeResp }) => {
         const errorField = addPromoCodeResp.errors[0].field;
         dataForCheckout.voucherCode = voucherCode;
 
         expect(errorField, "error in promo code should occur").to.be.eq(
-          "promoCode"
+          "promoCode",
         );
         dataForCheckout.productQuantity = 2;
         createCheckoutWithVoucher(dataForCheckout);

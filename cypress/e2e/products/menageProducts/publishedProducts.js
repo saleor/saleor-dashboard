@@ -28,13 +28,13 @@ describe("Published products", () => {
         ({
           attribute: attributeResp,
           productType: productTypeResp,
-          category: categoryResp
+          category: categoryResp,
         }) => {
           productType = productTypeResp;
           attribute = attributeResp;
           category = categoryResp;
           getDefaultChannel();
-        }
+        },
       )
       .then(channel => {
         defaultChannel = channel;
@@ -44,7 +44,7 @@ describe("Published products", () => {
   beforeEach(() => {
     cy.clearSessionData().loginUserViaRequest(
       "auth",
-      ONE_PERMISSION_USERS.product
+      ONE_PERMISSION_USERS.product,
     );
   });
 
@@ -62,7 +62,7 @@ describe("Published products", () => {
           attributeId: attribute.id,
           categoryId: category.id,
           isPublished: false,
-          isAvailableForPurchase: false
+          isAvailableForPurchase: false,
         })
         .then(({ product: productResp }) => {
           const product = productResp;
@@ -74,7 +74,7 @@ describe("Published products", () => {
           const isVisible = isProductVisible(resp, productName);
           expect(isVisible).to.be.eq(true);
         });
-    }
+    },
   );
 
   it(
@@ -90,7 +90,7 @@ describe("Published products", () => {
           channelId: defaultChannel.id,
           productTypeId: productType.id,
           attributeId: attribute.id,
-          categoryId: category.id
+          categoryId: category.id,
         })
         .then(({ product: productResp }) => {
           product = productResp;
@@ -110,6 +110,6 @@ describe("Published products", () => {
           const isVisible = isProductVisible(resp, productName);
           expect(isVisible).to.be.eq(true);
         });
-    }
+    },
   );
 });

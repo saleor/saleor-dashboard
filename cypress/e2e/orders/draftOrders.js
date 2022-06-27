@@ -8,14 +8,14 @@ import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
 import { urlList } from "../../fixtures/urlList";
 import {
   createCustomer,
-  deleteCustomersStartsWith
+  deleteCustomersStartsWith,
 } from "../../support/api/requests/Customer";
 import { updateOrdersSettings } from "../../support/api/requests/Order";
 import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
 import {
   createShipping,
-  deleteShippingStartsWith
+  deleteShippingStartsWith,
 } from "../../support/api/utils/shippingUtils";
 import { selectChannelInPicker } from "../../support/pages/channelsPage";
 import { finalizeDraftOrder } from "../../support/pages/draftOrderPage";
@@ -48,25 +48,25 @@ xdescribe("Draft orders", () => {
           `${randomName}@example.com`,
           randomName,
           addresses.plAddress,
-          true
+          true,
         );
         createShipping({
           channelId: defaultChannel.id,
           name: randomName,
-          address: addresses.plAddress
+          address: addresses.plAddress,
         });
       })
       .then(({ warehouse: warehouseResp }) => {
         warehouse = warehouseResp;
         productsUtils.createTypeAttributeAndCategoryForProduct({
-          name: randomName
+          name: randomName,
         });
       })
       .then(
         ({
           productType: productTypeResp,
           attribute: attributeResp,
-          category: categoryResp
+          category: categoryResp,
         }) => {
           productsUtils.createProductInChannel({
             name: randomName,
@@ -74,9 +74,9 @@ xdescribe("Draft orders", () => {
             warehouseId: warehouse.id,
             productTypeId: productTypeResp.id,
             attributeId: attributeResp.id,
-            categoryId: categoryResp.id
+            categoryId: categoryResp.id,
           });
-        }
+        },
       );
   });
 
@@ -97,16 +97,16 @@ xdescribe("Draft orders", () => {
         cy.contains(ORDERS_SELECTORS.orderRow, draftOrderNumber).should(
           $order => {
             expect($order).to.be.visible;
-          }
+          },
         );
         cy.visit(urlList.draftOrders);
         cy.contains(
           DRAFT_ORDERS_LIST_SELECTORS.draftOrderRow,
-          draftOrderNumber
+          draftOrderNumber,
         ).should($draftOrder => {
           expect($draftOrder).to.not.exist;
         });
       });
-    }
+    },
   );
 });

@@ -6,7 +6,7 @@ import faker from "faker";
 import {
   createCategory,
   getCategory,
-  updateCategoryTranslation
+  updateCategoryTranslation,
 } from "../support/api/requests/Category";
 import { deleteCategoriesStartsWith } from "../support/api/utils/catalog/categoryUtils";
 import { updateTranslationToCategory } from "../support/pages/translationsPage";
@@ -22,7 +22,7 @@ xdescribe("As an admin I want to manage translations", () => {
     cy.clearSessionData().loginUserViaRequest();
     deleteCategoriesStartsWith(startsWith);
     createCategory({ name: startsWith }).then(
-      categoryResp => (category = categoryResp)
+      categoryResp => (category = categoryResp),
     );
   });
 
@@ -44,19 +44,19 @@ xdescribe("As an admin I want to manage translations", () => {
         translatedName,
         translatedDescription,
         translatedSeoTitle,
-        translatedSeoDescription
+        translatedSeoDescription,
       });
       getCategory(category.id, "PL").then(({ translation }) => {
         expect(translation.name).to.eq(`TranslatedName${randomNumber}`);
         expect(translation.description).to.includes(
-          `TranslatedDescription${randomNumber}`
+          `TranslatedDescription${randomNumber}`,
         );
         expect(translation.seoTitle).to.eq(`TranslatedSeoTitle${randomNumber}`);
         expect(translation.seoDescription).to.eq(
-          `TranslatedSeoDescription${randomNumber}`
+          `TranslatedSeoDescription${randomNumber}`,
         );
       });
-    }
+    },
   );
 
   it(
@@ -76,7 +76,7 @@ xdescribe("As an admin I want to manage translations", () => {
         seoTitle: "test",
         seoDescription: "test",
         name: "test",
-        description: "test"
+        description: "test",
       })
         .then(() => {
           updateTranslationToCategory({
@@ -84,7 +84,7 @@ xdescribe("As an admin I want to manage translations", () => {
             translatedName: nameUpdate,
             translatedDescription: descriptionUpdate,
             translatedSeoTitle: seoTitleUpdate,
-            translatedSeoDescription: seoDescriptionUpdate
+            translatedSeoDescription: seoDescriptionUpdate,
           });
           getCategory(category.id, "PL");
         })
@@ -94,6 +94,6 @@ xdescribe("As an admin I want to manage translations", () => {
           expect(translation.seoTitle).to.eq(seoTitleUpdate);
           expect(translation.seoDescription).to.includes(seoDescriptionUpdate);
         });
-    }
+    },
   );
 });

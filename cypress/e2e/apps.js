@@ -57,7 +57,7 @@ describe("Tests for apps", () => {
           const token = app.tokens.find(element => element.name === "Default");
           expect(token).to.be.ok;
         });
-    }
+    },
   );
 
   it(
@@ -81,7 +81,7 @@ describe("Tests for apps", () => {
         expect(webhooks[0].name).to.eq(randomName);
         expect(webhooks[0].targetUrl).to.eq(targetUrl);
       });
-    }
+    },
   );
 
   it(
@@ -109,10 +109,10 @@ describe("Tests for apps", () => {
         .then(app => {
           const token = app.tokens.find(element => element.name === randomName);
           const tokenLastFourDigits = expectedToken.slice(
-            expectedToken.length - 4
+            expectedToken.length - 4,
           );
           expect(token.authToken).to.eq(tokenLastFourDigits);
         });
-    }
+    },
   );
 });

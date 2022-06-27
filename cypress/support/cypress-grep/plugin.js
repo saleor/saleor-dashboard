@@ -58,7 +58,7 @@ function cypressGrepPlugin(config) {
     const specFiles = globby.sync(specPattern, {
       cwd: integrationFolder,
       ignore: excludeSpecPattern,
-      absolute: true
+      absolute: true,
     });
     debug("found %d spec files", specFiles.length);
     debug("%o", specFiles);
@@ -66,7 +66,7 @@ function cypressGrepPlugin(config) {
     if (grep) {
       console.log(
         'cypress-grep: filtering specs using "%s" in the title',
-        grep
+        grep,
       );
       const parsedGrep = parseGrep(grep);
       debug("parsed grep %o", parsedGrep);

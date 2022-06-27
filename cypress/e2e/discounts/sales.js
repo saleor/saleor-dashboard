@@ -14,16 +14,16 @@ import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import {
   createSaleInChannel,
   createSaleInChannelWithProduct,
-  deleteSalesStartsWith
+  deleteSalesStartsWith,
 } from "../../support/api/utils/discounts/salesUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith
+  deleteProductsStartsWith,
 } from "../../support/api/utils/products/productsUtils";
 import {
   createShipping,
-  deleteShippingStartsWith
+  deleteShippingStartsWith,
 } from "../../support/api/utils/shippingUtils";
 
 describe("Create sale with assigned products", () => {
@@ -48,7 +48,7 @@ describe("Create sale with assigned products", () => {
           name: startsWith,
           type: "FIXED",
           value: saleValue,
-          channelId: channel.id
+          channelId: channel.id,
         });
       })
       .then(saleResp => (sale = saleResp));
@@ -58,7 +58,7 @@ describe("Create sale with assigned products", () => {
         createShipping({
           channelId: channel.id,
           address,
-          name: startsWith
+          name: startsWith,
         });
       })
       .then(({ warehouse: warehouseResp }) => {
@@ -66,7 +66,7 @@ describe("Create sale with assigned products", () => {
       });
     createTypeAttributeAndCategoryForProduct({
       name: startsWith,
-      attributeValues: ["value1", "value2"]
+      attributeValues: ["value1", "value2"],
     }).then(({ attribute, category, productType }) => {
       productData = {
         attributeId: attribute.id,
@@ -74,7 +74,7 @@ describe("Create sale with assigned products", () => {
         productTypeId: productType.id,
         channelId: channel.id,
         warehouseId: warehouse.id,
-        price: 30
+        price: 30,
       };
     });
   });
@@ -114,26 +114,26 @@ describe("Create sale with assigned products", () => {
             channelSlug: channel.slug,
             email: "example@example.com",
             address,
-            variantsList: variantOnSale.concat(variantNotOnSale)
+            variantsList: variantOnSale.concat(variantNotOnSale),
           });
         })
         .then(({ checkout }) => {
           const variantRespNotOnSale = checkout.lines.find(
-            element => element.variant.id === variantNotOnSale[0].id
+            element => element.variant.id === variantNotOnSale[0].id,
           ).variant;
           const variantRespOnSale = checkout.lines.find(
-            element => element.variant.id === variantOnSale[0].id
+            element => element.variant.id === variantOnSale[0].id,
           ).variant;
           expect(variantRespNotOnSale.pricing.onSale).to.be.false;
           expect(variantRespOnSale.pricing.onSale).to.be.true;
           expect(variantRespNotOnSale.pricing.price.gross.amount).to.eq(
-            productData.price
+            productData.price,
           );
           expect(variantRespOnSale.pricing.price.gross.amount).to.eq(
-            productData.price - saleValue
+            productData.price - saleValue,
           );
         });
-    }
+    },
   );
 
   it("should delete sale", { tags: ["@sales", "@allEnv", "@stable"] }, () => {
@@ -150,7 +150,7 @@ describe("Create sale with assigned products", () => {
           type: "FIXED",
           value: saleValue,
           channelId: channel.id,
-          variants
+          variants,
         });
       })
       .then(saleResp => {
@@ -160,7 +160,7 @@ describe("Create sale with assigned products", () => {
       .then(variantResp => {
         expect(variantResp.pricing.onSale).to.be.true;
         expect(variantResp.pricing.price.gross.amount).to.eq(
-          productData.price - saleValue
+          productData.price - saleValue,
         );
         cy.visit(saleDetailsUrl(saleToDelete.id))
           .addAliasToGraphRequest("SaleDelete")
@@ -192,7 +192,7 @@ describe("Create sale with assigned products", () => {
           variants = variantsList;
           updateSale({
             saleId: sale.id,
-            variants
+            variants,
           });
         })
         .then(() => {
@@ -201,7 +201,7 @@ describe("Create sale with assigned products", () => {
         .then(variantResp => {
           expect(variantResp.pricing.onSale).to.be.true;
           expect(variantResp.pricing.price.gross.amount).to.eq(
-            productData.price - saleValue
+            productData.price - saleValue,
           );
           cy.visit(saleDetailsUrl(sale.id))
             .get(SALES_SELECTORS.variantsTab)
@@ -216,9 +216,9 @@ describe("Create sale with assigned products", () => {
         .then(variantResp => {
           expect(variantResp.pricing.onSale).to.be.false;
           expect(variantResp.pricing.price.gross.amount).to.eq(
-            productData.price
+            productData.price,
           );
         });
-    }
+    },
   );
 });

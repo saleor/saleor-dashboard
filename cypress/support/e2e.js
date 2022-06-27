@@ -54,26 +54,26 @@ Cypress.Commands.add(
       .request({
         body: {
           variables,
-          query
+          query,
         },
         headers: {
-          Authorization: `JWT ${window.sessionStorage.getItem(authorization)}`
+          Authorization: `JWT ${window.sessionStorage.getItem(authorization)}`,
         },
         method: "POST",
         url: urlList.apiUri,
-        log: true
+        log: true,
       })
       .then(response => {
         const respInSting = JSON.stringify(response.body);
         if (respInSting.includes(`"errors":[{`)) {
           cy.log(query).log(JSON.stringify(response.body));
         }
-      })
+      }),
 );
 Cypress.on(
   "uncaught:exception",
   (err, runnable) =>
     // returning false here prevents Cypress from
     // failing the test
-    false
+    false,
 );

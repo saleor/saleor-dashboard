@@ -11,12 +11,12 @@ import { urlList } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
 import {
   createProduct,
-  updateChannelInProduct
+  updateChannelInProduct,
 } from "../../../support/api/requests/Product";
 import { createTypeProduct } from "../../../support/api/requests/ProductType";
 import {
   deleteChannelsStartsWith,
-  getDefaultChannel
+  getDefaultChannel,
 } from "../../../support/api/utils/channelsUtils";
 import { createWaitingForCaptureOrder } from "../../../support/api/utils/ordersUtils";
 import * as productUtils from "../../../support/api/utils/products/productsUtils";
@@ -24,7 +24,7 @@ import * as shippingUtils from "../../../support/api/utils/shippingUtils";
 import { getProductVariants } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
 import {
   createFirstVariant,
-  createVariant
+  createVariant,
 } from "../../../support/pages/catalog/products/VariantsPage";
 import { selectChannelInDetailsPages } from "../../../support/pages/channelsPage";
 
@@ -59,14 +59,14 @@ describe("Creating variants", () => {
         shippingUtils.createShipping({
           channelId: defaultChannel.id,
           name,
-          address
+          address,
         });
       })
       .then(
         ({ warehouse: warehouseResp, shippingMethod: shippingMethodResp }) => {
           warehouse = warehouseResp;
           shippingMethod = shippingMethodResp;
-        }
+        },
       );
     productUtils
       .createTypeAttributeAndCategoryForProduct({ name, attributeValues })
@@ -74,7 +74,7 @@ describe("Creating variants", () => {
         ({
           attribute: attributeResp,
           productType: productTypeResp,
-          category: categoryResp
+          category: categoryResp,
         }) => {
           attribute = attributeResp;
           productType = productTypeResp;
@@ -82,9 +82,9 @@ describe("Creating variants", () => {
           createTypeProduct({
             name: simpleProductTypeName,
             attributeId: attribute.id,
-            hasVariants: false
+            hasVariants: false,
           });
-        }
+        },
       )
       .then(type => {
         simpleProductType = type;
@@ -94,7 +94,7 @@ describe("Creating variants", () => {
   beforeEach(() => {
     cy.clearSessionData().loginUserViaRequest(
       "auth",
-      ONE_PERMISSION_USERS.product
+      ONE_PERMISSION_USERS.product,
     );
   });
 
@@ -110,19 +110,19 @@ describe("Creating variants", () => {
         attributeId: attribute.id,
         name,
         productTypeId: productType.id,
-        categoryId: category.id
+        categoryId: category.id,
       })
         .then(resp => {
           createdProduct = resp;
           updateChannelInProduct({
             productId: createdProduct.id,
-            channelId: defaultChannel.id
+            channelId: defaultChannel.id,
           });
           cy.visit(`${urlList.products}${createdProduct.id}`);
           cy.waitForProgressBarToNotBeVisible();
           createFirstVariant({
             price,
-            attribute: attributeValues[0]
+            attribute: attributeValues[0],
           });
           getProductVariants(createdProduct.id, defaultChannel.slug);
         })
@@ -134,13 +134,13 @@ describe("Creating variants", () => {
             email: "example@example.com",
             variantsList: [variant],
             shippingMethodName: shippingMethod.name,
-            address
+            address,
           });
         })
         .then(({ order }) => {
           expect(order.id).to.be.ok;
         });
-    }
+    },
   );
 
   xit(
@@ -159,7 +159,7 @@ describe("Creating variants", () => {
           warehouseId: warehouse.id,
           productTypeId: productType.id,
           categoryId: category.id,
-          price: variants[0].price
+          price: variants[0].price,
         })
         .then(({ product: productResp }) => {
           createdProduct = productResp;
@@ -168,7 +168,7 @@ describe("Creating variants", () => {
             warehouseName: warehouse.name,
             attributeName: variants[1].name,
             price: variants[1].price,
-            channelName: defaultChannel.name
+            channelName: defaultChannel.name,
           });
         })
         .then(() => {
@@ -183,13 +183,13 @@ describe("Creating variants", () => {
             email: "example@example.com",
             variantsList: [secondVariant],
             shippingMethodName: shippingMethod.name,
-            address
+            address,
           });
         })
         .then(({ order }) => {
           expect(order.id).to.be.ok;
         });
-    }
+    },
   );
 
   it(
@@ -204,7 +204,7 @@ describe("Creating variants", () => {
         .type(name)
         .fillAutocompleteSelect(
           PRODUCT_DETAILS.productTypeInput,
-          simpleProductType.name
+          simpleProductType.name,
         )
         .fillAutocompleteSelect(PRODUCT_DETAILS.categoryInput);
       selectChannelInDetailsPages(defaultChannel.name);
@@ -220,11 +220,11 @@ describe("Creating variants", () => {
         .get(AVAILABLE_CHANNELS_FORM.assignedChannels)
         .click()
         .get(
-          `${AVAILABLE_CHANNELS_FORM.availableForPurchaseRadioButtons}${AVAILABLE_CHANNELS_FORM.radioButtonsValueTrue}`
+          `${AVAILABLE_CHANNELS_FORM.availableForPurchaseRadioButtons}${AVAILABLE_CHANNELS_FORM.radioButtonsValueTrue}`,
         )
         .click()
         .get(
-          `${AVAILABLE_CHANNELS_FORM.publishedRadioButtons}${AVAILABLE_CHANNELS_FORM.radioButtonsValueTrue}`
+          `${AVAILABLE_CHANNELS_FORM.publishedRadioButtons}${AVAILABLE_CHANNELS_FORM.radioButtonsValueTrue}`,
         )
         .click()
         .addAliasToGraphRequest("VariantCreate")
@@ -234,16 +234,16 @@ describe("Creating variants", () => {
         .wait("@VariantCreate")
         .then(({ response }) => {
           const variants = [
-            response.body.data.productVariantCreate.productVariant
+            response.body.data.productVariantCreate.productVariant,
           ];
           createWaitingForCaptureOrder({
             channelSlug: defaultChannel.slug,
             email: "example@example.com",
             variantsList: variants,
             shippingMethodName: shippingMethod.name,
-            address
+            address,
           });
         });
-    }
+    },
   );
 });

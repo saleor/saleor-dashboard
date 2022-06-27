@@ -11,16 +11,16 @@ import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith
+  deleteProductsStartsWith,
 } from "../../../support/api/utils/products/productsUtils";
 import {
   createShipping,
-  deleteShippingStartsWith
+  deleteShippingStartsWith,
 } from "../../../support/api/utils/shippingUtils";
 import {
   selectChannel,
   selectFilterOption,
-  selectProductsOutOfStock
+  selectProductsOutOfStock,
 } from "../../../support/pages/catalog/products/productsListPage";
 
 describe("Filtering products", () => {
@@ -43,15 +43,15 @@ describe("Filtering products", () => {
       ({
         attribute: attributeResp,
         productType: productTypeResp,
-        category: categoryResp
+        category: categoryResp,
       }) => {
         attribute = attributeResp;
         productType = productTypeResp;
         category = categoryResp;
-      }
+      },
     );
     createCollection(name).then(
-      collectionResp => (collection = collectionResp)
+      collectionResp => (collection = collectionResp),
     );
     getDefaultChannel()
       .then(channelResp => {
@@ -62,7 +62,7 @@ describe("Filtering products", () => {
         createShipping({
           channelId: channel.id,
           name,
-          address: addresses.plAddress
+          address: addresses.plAddress,
         });
       })
       .then(({ warehouse: warehouseResp }) => {
@@ -75,7 +75,7 @@ describe("Filtering products", () => {
           price,
           attributeId: attribute.id,
           categoryId: category.id,
-          productTypeId: productType.id
+          productTypeId: productType.id,
         });
       })
       .then(({ product: product }) => {
@@ -101,7 +101,7 @@ describe("Filtering products", () => {
         cy.getTextFromElement(PRODUCTS_LIST.productsNames).then(product => {
           expect(product).to.includes(name);
         });
-      }
+      },
     );
   });
 
@@ -119,7 +119,7 @@ describe("Filtering products", () => {
         productTypeId: productType.id,
         attributeId: attribute.id,
         categoryId: category.id,
-        price
+        price,
       });
       cy.waitForProgressBarToNotExist();
       selectChannel(channel.slug);
@@ -131,6 +131,6 @@ describe("Filtering products", () => {
         .then(product => {
           expect(product).to.includes(productOutOfStock);
         });
-    }
+    },
   );
 });

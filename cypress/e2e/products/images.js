@@ -24,7 +24,7 @@ xdescribe("Tests for images", () => {
         .its("response.body")
         .then(resp => {
           const data = resp.find(element =>
-            element.data.hasOwnProperty("products")
+            element.data.hasOwnProperty("products"),
           ).data;
           const products = data.products.edges;
           cy.expectSkeletonIsVisible()
@@ -49,7 +49,7 @@ xdescribe("Tests for images", () => {
                 .should("have.length", expectedProductsSvgAvatars);
             });
         });
-    }
+    },
   );
 
   it("Should display product image", { tags: ["@products", "@allEnv"] }, () => {

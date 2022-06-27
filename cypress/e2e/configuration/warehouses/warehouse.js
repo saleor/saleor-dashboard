@@ -10,12 +10,12 @@ import { WAREHOUSES_LIST } from "../../../elements/warehouses/warehouses-list";
 import {
   shippingZoneDetailsUrl,
   urlList,
-  warehouseDetailsUrl
+  warehouseDetailsUrl,
 } from "../../../fixtures/urlList";
 import { createShippingZone } from "../../../support/api/requests/ShippingMethod";
 import {
   createWarehouse as createWarehouseViaApi,
-  getWarehouse
+  getWarehouse,
 } from "../../../support/api/requests/Warehouse";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
@@ -75,7 +75,7 @@ describe("Warehouse settings", () => {
           defaultChannel = channelResp;
           createWarehouseViaApi({
             name,
-            address: usAddress
+            address: usAddress,
           });
         })
         .then(warehouseResp => {
@@ -87,7 +87,7 @@ describe("Warehouse settings", () => {
           cy.visit(shippingZoneDetailsUrl(shippingZone.id))
             .fillAutocompleteSelect(
               SHIPPING_ZONE_DETAILS.warehouseSelector,
-              warehouse.name
+              warehouse.name,
             )
             .addAliasToGraphRequest("UpdateShippingZone")
             .get(BUTTON_SELECTORS.confirm)
@@ -97,17 +97,17 @@ describe("Warehouse settings", () => {
         })
         .then(warehouseResp => {
           expect(warehouseResp.shippingZones.edges[0].node.id).to.be.eq(
-            shippingZone.id
+            shippingZone.id,
           );
         });
-    }
+    },
   );
 
   it("should delete warehouse", { tags: ["@warehouse", "@allEnv"] }, () => {
     const name = `${startsWith}${faker.datatype.number()}`;
     createWarehouseViaApi({
       name,
-      address: usAddress
+      address: usAddress,
     }).then(warehouse => {
       cy.visit(warehouseDetailsUrl(warehouse.id))
         .get(BUTTON_SELECTORS.deleteButton)
@@ -139,7 +139,7 @@ describe("Warehouse settings", () => {
           createWarehouseViaApi({
             name,
             shippingZone: shippingZone.id,
-            address: usAddress
+            address: usAddress,
           });
         })
         .then(warehouseResp => {
@@ -156,7 +156,7 @@ describe("Warehouse settings", () => {
         .then(warehouseResp => {
           expect(warehouseResp.shippingZones.edges).to.be.empty;
         });
-    }
+    },
   );
 
   it("should update warehouse", { tags: ["@warehouse", "@allEnv"] }, () => {
@@ -166,7 +166,7 @@ describe("Warehouse settings", () => {
 
     createWarehouseViaApi({
       name,
-      address: usAddress
+      address: usAddress,
     })
       .then(warehouseResp => {
         warehouse = warehouseResp;

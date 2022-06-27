@@ -158,7 +158,9 @@ jobs:
         env:
           version: ${{github.event.client_payload.version}}
         run: |
-          echo "::set-output name=formatted_version::$(echo $version | grep -Eo "\d\.\d" | sed s/\\.// | head -n 1 )"
+              echo "::set-output name=formatted_version::$(echo $version | grep -Eo "\d\.\d" | sed s/\\.// | head -n 1 | { read formatted; echo "$formatted"; })"
+              echo "$formatted_version"
+              
       - name: Cypress run - automatically
         uses: cypress-io/github-action@v4
         env:

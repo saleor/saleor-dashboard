@@ -9,13 +9,13 @@ import { createAttribute } from "../../../support/api/requests/Attribute";
 import { createCategory } from "../../../support/api/requests/Category";
 import {
   createTypeProduct,
-  getProductType
+  getProductType,
 } from "../../../support/api/requests/ProductType";
 import { getProductDetails } from "../../../support/api/requests/storeFront/ProductDetails";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
-  deleteProductsStartsWith
+  deleteProductsStartsWith,
 } from "../../../support/api/utils/products/productsUtils";
 
 describe("As an admin I want to manage product types", () => {
@@ -44,7 +44,7 @@ describe("As an admin I want to manage product types", () => {
 
       createTypeProduct({ name, hasVariants: false }).then(productType => {
         cy.visitAndWaitForProgressBarToDisappear(
-          productTypeDetailsUrl(productType.id)
+          productTypeDetailsUrl(productType.id),
         )
           .get(BUTTON_SELECTORS.deleteButton)
           .click()
@@ -54,7 +54,7 @@ describe("As an admin I want to manage product types", () => {
           .waitForRequestAndCheckIfNoErrors("@ProductTypeDelete");
         getProductType(productType.id).should("be.null");
       });
-    }
+    },
   );
 
   it(
@@ -71,12 +71,12 @@ describe("As an admin I want to manage product types", () => {
             name,
             channelId: channel.id,
             categoryId: category.id,
-            productTypeId: productType.id
+            productTypeId: productType.id,
           });
         })
         .then(({ product }) => {
           cy.visitAndWaitForProgressBarToDisappear(
-            productTypeDetailsUrl(productType.id)
+            productTypeDetailsUrl(productType.id),
           )
             .get(BUTTON_SELECTORS.deleteButton)
             .click()
@@ -93,6 +93,6 @@ describe("As an admin I want to manage product types", () => {
             .its("body.data.product")
             .should("be.null");
         });
-    }
+    },
   );
 });

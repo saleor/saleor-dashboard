@@ -8,7 +8,7 @@ import { SITE_SETTINGS_DETAILS } from "../../elements/siteSettings/site-settings
 import { urlList } from "../../fixtures/urlList";
 import {
   getShopInfo,
-  updateShopAddress
+  updateShopAddress,
 } from "../../support/api/requests/ShopSettings";
 
 xdescribe("Tests for site settings", () => {
@@ -56,7 +56,7 @@ xdescribe("Tests for site settings", () => {
       getShopInfo().then(shopInfo => {
         expect(shopInfo.description).to.eq(description);
       });
-    }
+    },
   );
 
   it(
@@ -71,6 +71,6 @@ xdescribe("Tests for site settings", () => {
         expect(companyAddress.companyName).to.eq(address.companyName);
         cy.expectCorrectBasicAddress(companyAddress, address);
       });
-    }
+    },
   );
 });

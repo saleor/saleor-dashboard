@@ -7,7 +7,7 @@ import { WAREHOUSES_DETAILS } from "../../elements/warehouses/warehouse-details"
 import {
   completeCheckout,
   createCheckout,
-  deliveryMethodUpdate
+  deliveryMethodUpdate,
 } from "../../support/api/requests/Checkout";
 import { getOrder } from "../../support/api/requests/Order";
 import { updateWarehouse } from "../../support/api/requests/Warehouse";
@@ -16,17 +16,17 @@ import { addPayment } from "../../support/api/utils/ordersUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith
+  deleteProductsStartsWith,
 } from "../../support/api/utils/products/productsUtils";
 import {
   createShipping,
-  deleteShippingStartsWith
+  deleteShippingStartsWith,
 } from "../../support/api/utils/shippingUtils";
 import {
   createWarehouse,
   pickupOptions,
   visitAndEnablePickup,
-  visitSetPublicStockAndEnablePickup
+  visitSetPublicStockAndEnablePickup,
 } from "../../support/pages/warehousePage";
 
 describe("Warehouses in checkout", () => {
@@ -60,18 +60,18 @@ describe("Warehouses in checkout", () => {
           categoryId: category.id,
           channelId: defaultChannel.id,
           productTypeId: productType.id,
-          quantityInWarehouse: 100
+          quantityInWarehouse: 100,
         };
         checkoutData = {
           returnAvailableCollectionPoints: true,
           channelSlug: defaultChannel.slug,
           email: "example@example.com",
-          address: secondUsAddress
+          address: secondUsAddress,
         };
         createShipping({
           channelId: defaultChannel.id,
           name: startsWith,
-          address: secondUsAddress
+          address: secondUsAddress,
         });
       })
       .then(({ warehouse: warehouseResp }) => {
@@ -99,7 +99,7 @@ describe("Warehouses in checkout", () => {
       createShipping({
         channelId: defaultChannel.id,
         name,
-        address: secondUsAddress
+        address: secondUsAddress,
       })
         .then(({ warehouse: warehouseResp }) => {
           warehouse = warehouseResp;
@@ -110,20 +110,20 @@ describe("Warehouses in checkout", () => {
         })
         .then(({ variantsList }) => {
           checkoutData.variantsList = variantsList.concat(
-            variantsInOtherWarehouse
+            variantsInOtherWarehouse,
           );
           createCheckout(checkoutData);
         })
         .then(({ checkout }) => {
           const clickAndCollectOption = checkout.availableCollectionPoints.find(
-            element => element.id === warehouse.id
+            element => element.id === warehouse.id,
           );
           expect(clickAndCollectOption.clickAndCollectOption).to.eq("ALL");
           expect(clickAndCollectOption.id).to.eq(warehouse.id);
           expect(clickAndCollectOption.isPrivate).to.eq(true);
           expect(clickAndCollectOption.name).to.eq(warehouse.name);
         });
-    }
+    },
   );
 
   xit(
@@ -136,7 +136,7 @@ describe("Warehouses in checkout", () => {
       createShipping({
         channelId: defaultChannel.id,
         name,
-        address: secondUsAddress
+        address: secondUsAddress,
       })
         .then(({ warehouse: warehouseResp }) => {
           warehouse = warehouseResp;
@@ -147,20 +147,20 @@ describe("Warehouses in checkout", () => {
         })
         .then(({ variantsList }) => {
           checkoutData.variantsList = variantsList.concat(
-            variantsInOtherWarehouse
+            variantsInOtherWarehouse,
           );
           createCheckout(checkoutData);
         })
         .then(({ checkout }) => {
           const clickAndCollectOption = checkout.availableCollectionPoints.find(
-            element => element.id === warehouse.id
+            element => element.id === warehouse.id,
           );
           expect(clickAndCollectOption.clickAndCollectOption).to.eq("ALL");
           expect(clickAndCollectOption.id).to.eq(warehouse.id);
           expect(clickAndCollectOption.isPrivate).to.eq(false);
           expect(clickAndCollectOption.name).to.eq(warehouse.name);
         });
-    }
+    },
   );
 
   xit(
@@ -174,7 +174,7 @@ describe("Warehouses in checkout", () => {
       createShipping({
         channelId: defaultChannel.id,
         name,
-        address: secondUsAddress
+        address: secondUsAddress,
       })
         .then(({ warehouse: warehouseResp }) => {
           warehouse = warehouseResp;
@@ -186,14 +186,14 @@ describe("Warehouses in checkout", () => {
         .then(({ variantsList }) => {
           variantsInLocalStock = variantsList;
           checkoutData.variantsList = variantsInLocalStock.concat(
-            variantsInOtherWarehouse
+            variantsInOtherWarehouse,
           );
           createCheckout(checkoutData);
         })
         .then(({ checkout }) => {
           expect(checkout.availableCollectionPoints).to.have.length(
             1,
-            "there should be no available collection point for local stock"
+            "there should be no available collection point for local stock",
           );
           checkoutData.variantsList = variantsInLocalStock;
           createCheckout(checkoutData);
@@ -205,7 +205,7 @@ describe("Warehouses in checkout", () => {
           expect(clickAndCollectOption.isPrivate).to.eq(false);
           expect(clickAndCollectOption.name).to.eq(warehouse.name);
         });
-    }
+    },
   );
 
   xit(
@@ -215,9 +215,9 @@ describe("Warehouses in checkout", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       createWarehouse({ name, address: usAddress });
       cy.get(WAREHOUSES_DETAILS.clickAndCollectLocalStockRadioButton).should(
-        "not.exist"
+        "not.exist",
       );
-    }
+    },
   );
 
   it(
@@ -245,6 +245,6 @@ describe("Warehouses in checkout", () => {
           cy.expectCorrectBasicAddress(order.shippingAddress, secondUsAddress);
           cy.expectCorrectBasicAddress(order.billingAddress, usAddress);
         });
-    }
+    },
   );
 });

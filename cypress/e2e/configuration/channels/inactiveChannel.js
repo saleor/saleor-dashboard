@@ -9,18 +9,18 @@ import { ORDERS_SELECTORS } from "../../../elements/orders/orders-selectors";
 import { urlList } from "../../../fixtures/urlList";
 import {
   activateChannel,
-  createChannel
+  createChannel,
 } from "../../../support/api/requests/Channels";
 import { createCheckout } from "../../../support/api/requests/Checkout";
 import { getProductDetails } from "../../../support/api/requests/storeFront/ProductDetails";
 import {
   deleteChannelsStartsWith,
-  getDefaultChannel
+  getDefaultChannel,
 } from "../../../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith
+  deleteProductsStartsWith,
 } from "../../../support/api/utils/products/productsUtils";
 import { isProductVisible } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
 
@@ -45,7 +45,7 @@ describe("Tests on inactive channel", () => {
       isActive: false,
       name: randomName,
       slug: randomName,
-      currencyCode: currency
+      currencyCode: currency,
     }).then(channel => {
       newChannel = channel;
     });
@@ -76,7 +76,7 @@ describe("Tests on inactive channel", () => {
         })
         .get(DRAFT_ORDER_SELECTORS.addProducts)
         .should("not.exist");
-    }
+    },
   );
 
   it(
@@ -91,7 +91,7 @@ describe("Tests on inactive channel", () => {
             channelId: defaultChannel.id,
             productTypeId: productType.id,
             attributeId: attribute.id,
-            categoryId: category.id
+            categoryId: category.id,
           });
         })
         .then(({ variantsList }) => {
@@ -99,16 +99,16 @@ describe("Tests on inactive channel", () => {
             channelSlug: newChannel.slug,
             email: "example@example.com",
             variantsList,
-            address
+            address,
           });
         })
         .then(({ errors }) => {
           expect(
             errors[0],
-            "checkout shouldn't be created with error in field channel"
+            "checkout shouldn't be created with error in field channel",
           ).to.have.property("field", "channel");
         });
-    }
+    },
   );
 
   it(
@@ -123,7 +123,7 @@ describe("Tests on inactive channel", () => {
         isActive: false,
         name: randomChannel,
         slug: randomChannel,
-        currencyCode: currency
+        currencyCode: currency,
       })
         .then(channelResp => {
           channel = channelResp;
@@ -135,7 +135,7 @@ describe("Tests on inactive channel", () => {
             channelId: channel.id,
             productTypeId: productType.id,
             attributeId: attribute.id,
-            categoryId: category.id
+            categoryId: category.id,
           });
         })
         .then(({ product: productResp }) => {
@@ -146,7 +146,7 @@ describe("Tests on inactive channel", () => {
           const isVisible = isProductVisible(resp, randomChannel);
           expect(
             isVisible,
-            "product with inactive channel shouldn't be visible"
+            "product with inactive channel shouldn't be visible",
           ).to.be.eq(false);
           activateChannel(channel.id);
         })
@@ -157,9 +157,9 @@ describe("Tests on inactive channel", () => {
           const isVisible = isProductVisible(resp, randomChannel);
           expect(
             isVisible,
-            "product with active channel should be visible"
+            "product with active channel should be visible",
           ).to.be.eq(true);
         });
-    }
+    },
   );
 });

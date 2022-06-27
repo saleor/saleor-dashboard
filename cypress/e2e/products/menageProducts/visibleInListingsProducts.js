@@ -27,13 +27,13 @@ describe("Products displayed in listings", () => {
         ({
           attribute: attributeResp,
           productType: productTypeResp,
-          category: categoryResp
+          category: categoryResp,
         }) => {
           productType = productTypeResp;
           attribute = attributeResp;
           category = categoryResp;
           getDefaultChannel();
-        }
+        },
       )
       .then(channel => {
         defaultChannel = channel;
@@ -43,7 +43,7 @@ describe("Products displayed in listings", () => {
   beforeEach(() => {
     cy.clearSessionData().loginUserViaRequest(
       "auth",
-      ONE_PERMISSION_USERS.product
+      ONE_PERMISSION_USERS.product,
     );
   });
 
@@ -61,7 +61,7 @@ describe("Products displayed in listings", () => {
           attributeId: attribute.id,
           categoryId: category.id,
           visibleInListings: false,
-          isAvailableForPurchase: false
+          isAvailableForPurchase: false,
         })
         .then(({ product: productResp }) => {
           const product = productResp;
@@ -72,11 +72,11 @@ describe("Products displayed in listings", () => {
         .then(resp => {
           const isProductVisible = isProductVisibleInSearchResult(
             resp,
-            productName
+            productName,
           );
           expect(isProductVisible).to.be.eq(true);
         });
-    }
+    },
   );
 
   it(
@@ -92,7 +92,7 @@ describe("Products displayed in listings", () => {
           productTypeId: productType.id,
           attributeId: attribute.id,
           categoryId: category.id,
-          visibleInListings: true
+          visibleInListings: true,
         })
         .then(({ product: productResp }) => {
           const product = productResp;
@@ -102,7 +102,7 @@ describe("Products displayed in listings", () => {
           searchInShop(productName).then(resp => {
             const isProductVisible = isProductVisibleInSearchResult(
               resp,
-              productName
+              productName,
             );
             expect(isProductVisible).to.be.eq(false);
           });
@@ -114,10 +114,10 @@ describe("Products displayed in listings", () => {
         .then(resp => {
           const isProductVisible = isProductVisibleInSearchResult(
             resp,
-            productName
+            productName,
           );
           expect(isProductVisible).to.be.eq(true);
         });
-    }
+    },
   );
 });

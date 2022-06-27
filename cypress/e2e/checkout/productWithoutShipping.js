@@ -7,17 +7,17 @@ import { createChannel } from "../../support/api/requests/Channels";
 import {
   addProductsToCheckout,
   addShippingMethod,
-  createCheckout
+  createCheckout,
 } from "../../support/api/requests/Checkout";
 import { deleteChannelsStartsWith } from "../../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith
+  deleteProductsStartsWith,
 } from "../../support/api/utils/products/productsUtils";
 import {
   createShipping,
-  deleteShippingStartsWith
+  deleteShippingStartsWith,
 } from "../../support/api/utils/shippingUtils";
 
 describe("Products without shipment option", () => {
@@ -40,7 +40,7 @@ describe("Products without shipment option", () => {
     deleteChannelsStartsWith(startsWith);
 
     createChannel({
-      name
+      name,
     })
       .then(channelResp => {
         channel = channelResp;
@@ -52,7 +52,7 @@ describe("Products without shipment option", () => {
           channelId: channel.id,
           name,
           address,
-          minProductPrice: 100
+          minProductPrice: 100,
         });
       })
       .then(
@@ -60,13 +60,13 @@ describe("Products without shipment option", () => {
           warehouse = warehouseResp;
           shippingMethod = shippingMethodResp;
           createTypeAttributeAndCategoryForProduct({ name });
-        }
+        },
       )
       .then(
         ({
           attribute: attributeResp,
           productType: productTypeResp,
-          category: categoryResp
+          category: categoryResp,
         }) => {
           createProductInChannel({
             attributeId: attributeResp.id,
@@ -74,7 +74,7 @@ describe("Products without shipment option", () => {
             channelId: channel.id,
             name,
             productTypeId: productTypeResp.id,
-            warehouseId: warehouse.id
+            warehouseId: warehouse.id,
           }).then(({ variantsList }) => (productWithShipping = variantsList));
           createProductInChannel({
             attributeId: attributeResp.id,
@@ -82,11 +82,11 @@ describe("Products without shipment option", () => {
             channelId: channel.id,
             name: nameProdWithoutShipping,
             productTypeId: productTypeResp.id,
-            warehouseId: warehouse.id
+            warehouseId: warehouse.id,
           }).then(
-            ({ variantsList }) => (productWithoutShipping = variantsList)
+            ({ variantsList }) => (productWithoutShipping = variantsList),
           );
-        }
+        },
       );
   });
 
@@ -99,27 +99,27 @@ describe("Products without shipment option", () => {
         email: "example@example.com",
         variantsList: productWithoutShipping,
         address,
-        auth: "token"
+        auth: "token",
       })
         .then(({ checkout }) => {
           expect(
             checkout.shippingMethods,
-            "expect no available shipping"
+            "expect no available shipping",
           ).to.have.length(0);
           addProductsToCheckout(checkout.id, productWithShipping, 1);
         })
         .then(({ checkout }) => {
           expect(
             checkout.shippingMethods,
-            "expect no available shipping"
+            "expect no available shipping",
           ).to.have.length(0);
           addShippingMethod(checkout.id, shippingMethod.id);
         })
         .then(({ errors }) => {
           expect(errors[0].field, "expect error in shipping method").to.be.eq(
-            "shippingMethodId"
+            "shippingMethodId",
           );
         });
-    }
+    },
   );
 });

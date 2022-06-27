@@ -12,12 +12,12 @@ import { createAttribute } from "../../support/api/requests/Attribute";
 import { createTypeProduct } from "../../support/api/requests/ProductType";
 import {
   expectCorrectProductInformation,
-  expectCorrectProductVariantInformation
+  expectCorrectProductVariantInformation,
 } from "../../support/api/utils/products/checkProductInfo";
 import { metadataForms } from "../../support/pages/catalog/metadataComponent";
 import {
   fillUpPriceList,
-  priceInputLists
+  priceInputLists,
 } from "../../support/pages/catalog/products/priceListComponent";
 import { fillUpCommonFieldsForAllProductTypes } from "../../support/pages/catalog/products/productDetailsPage";
 import { selectChannelInDetailsPages } from "../../support/pages/channelsPage";
@@ -28,23 +28,23 @@ describe("As an admin I should be able to create product", () => {
   const generalInfo = {
     name: `${startsWith}${faker.datatype.number()}`,
     description: faker.lorem.sentence(),
-    rating: 2
+    rating: 2,
   };
   const seo = {
     title: "testTitle",
-    description: generalInfo.description
+    description: generalInfo.description,
   };
   const metadata = {
     public: {
       metadataForm: metadataForms.public,
       name: "metadataName",
-      value: "metadataValue"
+      value: "metadataValue",
     },
     private: {
       metadataForm: metadataForms.private,
       name: "privateMetadataName",
-      value: "privateMetadataValue"
-    }
+      value: "privateMetadataValue",
+    },
   };
   let attribute;
 
@@ -69,10 +69,10 @@ describe("As an admin I should be able to create product", () => {
         seo,
         metadata,
         productOrganization: { productType: randomName },
-        attribute
+        attribute,
       };
       createTpeAndFillUpProductFields(randomName, true, productData).then(
-        productOrgResp => (productData.productOrganization = productOrgResp)
+        productOrgResp => (productData.productOrganization = productOrgResp),
       );
       cy.addAliasToGraphRequest("ProductDetails")
         .get(BUTTON_SELECTORS.confirm)
@@ -91,7 +91,7 @@ describe("As an admin I should be able to create product", () => {
           }
           expectCorrectProductInformation(productResp, productData);
         });
-    }
+    },
   );
 
   it(
@@ -106,10 +106,10 @@ describe("As an admin I should be able to create product", () => {
         seo,
         metadata,
         productOrganization: { productType: randomName },
-        attribute
+        attribute,
       };
       createTpeAndFillUpProductFields(randomName, false, productData).then(
-        productOrgResp => (productData.productOrganization = productOrgResp)
+        productOrgResp => (productData.productOrganization = productOrgResp),
       );
       selectChannelInDetailsPages();
       fillUpPriceList(prices.sellingPrice);
@@ -135,21 +135,21 @@ describe("As an admin I should be able to create product", () => {
           expectCorrectProductVariantInformation(
             productResp.variants,
             randomName,
-            prices
+            prices,
           );
         });
-    }
+    },
   );
 
   function createTpeAndFillUpProductFields(
     randomName,
     hasVariants,
-    productData
+    productData,
   ) {
     createTypeProduct({
       name: randomName,
       attributeId: attribute.id,
-      hasVariants
+      hasVariants,
     });
     cy.clearSessionData()
       .loginUserViaRequest("auth", ONE_PERMISSION_USERS.product)

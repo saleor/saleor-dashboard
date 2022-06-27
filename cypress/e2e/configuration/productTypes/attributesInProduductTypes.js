@@ -11,7 +11,7 @@ import { createCategory } from "../../../support/api/requests/Category";
 import {
   assignAttribute,
   createTypeProduct,
-  getProductType
+  getProductType,
 } from "../../../support/api/requests/ProductType";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import { deleteProductsStartsWith } from "../../../support/api/utils/products/productsUtils";
@@ -43,7 +43,7 @@ describe("As an admin I want to manage attributes in product types", () => {
       createTypeProduct({ name })
         .then(productType => {
           cy.visitAndWaitForProgressBarToDisappear(
-            productTypeDetailsUrl(productType.id)
+            productTypeDetailsUrl(productType.id),
           )
             .get(PRODUCT_TYPE_DETAILS.assignProductAttributeButton)
             .click()
@@ -56,7 +56,7 @@ describe("As an admin I want to manage attributes in product types", () => {
         .then(productType => {
           expect(productType.productAttributes[0].name).to.eq(startsWith);
         });
-    }
+    },
   );
 
   it(
@@ -68,7 +68,7 @@ describe("As an admin I want to manage attributes in product types", () => {
       createTypeProduct({ name, hasVariants: false })
         .then(productType => {
           cy.visitAndWaitForProgressBarToDisappear(
-            productTypeDetailsUrl(productType.id)
+            productTypeDetailsUrl(productType.id),
           )
             .get(PRODUCT_TYPE_DETAILS.hasVariantsButton)
             .click({ force: true })
@@ -82,10 +82,10 @@ describe("As an admin I want to manage attributes in product types", () => {
         })
         .then(productType => {
           expect(productType.assignedVariantAttributes[0].attribute.name).to.eq(
-            startsWith
+            startsWith,
           );
         });
-    }
+    },
   );
 
   it(
@@ -102,7 +102,7 @@ describe("As an admin I want to manage attributes in product types", () => {
         })
         .then(() => {
           cy.visitAndWaitForProgressBarToDisappear(
-            productTypeDetailsUrl(productType.id)
+            productTypeDetailsUrl(productType.id),
           )
             .get(PRODUCT_TYPE_DETAILS.nameInput)
             .should("be.enabled")
@@ -118,7 +118,7 @@ describe("As an admin I want to manage attributes in product types", () => {
         .then(productTypeResp => {
           expect(productTypeResp.assignedVariantAttributes).to.be.empty;
         });
-    }
+    },
   );
 
   it(
@@ -135,7 +135,7 @@ describe("As an admin I want to manage attributes in product types", () => {
         })
         .then(() => {
           cy.visitAndWaitForProgressBarToDisappear(
-            productTypeDetailsUrl(productType.id)
+            productTypeDetailsUrl(productType.id),
           )
             .get(PRODUCT_TYPE_DETAILS.nameInput)
             .should("be.enabled")
@@ -151,7 +151,7 @@ describe("As an admin I want to manage attributes in product types", () => {
         .then(productTypeResp => {
           expect(productTypeResp.assignedVariantAttributes).to.be.empty;
         });
-    }
+    },
   );
 
   it(
@@ -168,7 +168,7 @@ describe("As an admin I want to manage attributes in product types", () => {
         })
         .then(() => {
           cy.visitAndWaitForProgressBarToDisappear(
-            productTypeDetailsUrl(productType.id)
+            productTypeDetailsUrl(productType.id),
           )
             .get(PRODUCT_TYPE_DETAILS.variantSelectionCheckbox)
             .click()
@@ -180,12 +180,12 @@ describe("As an admin I want to manage attributes in product types", () => {
         })
         .then(productType => {
           expect(productType.assignedVariantAttributes[0].attribute.name).to.eq(
-            startsWith
+            startsWith,
           );
           expect(
-            productType.assignedVariantAttributes[0].variantSelection
+            productType.assignedVariantAttributes[0].variantSelection,
           ).to.eq(true);
         });
-    }
+    },
   );
 });

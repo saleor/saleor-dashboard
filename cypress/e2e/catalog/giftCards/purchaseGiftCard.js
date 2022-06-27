@@ -7,7 +7,7 @@ import { createWaitingForCaptureOrder } from "../../../support/api/utils/ordersU
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import {
   createShipping,
-  deleteShippingStartsWith
+  deleteShippingStartsWith,
 } from "../../../support/api/utils/shippingUtils";
 
 describe("As a customer I should be able to purchase gift card as a product", () => {
@@ -25,7 +25,7 @@ describe("As a customer I should be able to purchase gift card as a product", ()
   let address;
   const giftCardData = {
     amount: 150,
-    currency: "USD"
+    currency: "USD",
   };
 
   before(() => {
@@ -43,14 +43,14 @@ describe("As a customer I should be able to purchase gift card as a product", ()
         ({
           productType: productTypeResp,
           attribute: attributeResp,
-          category: categoryResp
+          category: categoryResp,
         }) => {
           productType = productTypeResp;
           attribute = attributeResp;
           category = categoryResp;
 
           channelsUtils.getDefaultChannel();
-        }
+        },
       )
       .then(channel => {
         defaultChannel = channel;
@@ -62,7 +62,7 @@ describe("As a customer I should be able to purchase gift card as a product", ()
           channelId: defaultChannel.id,
           name,
           address,
-          price: shippingPrice
+          price: shippingPrice,
         });
       })
       .then(({ shippingMethod: shippingMethodResp, warehouse: warehouse }) => {
@@ -74,7 +74,7 @@ describe("As a customer I should be able to purchase gift card as a product", ()
           productTypeId: productType.id,
           attributeId: attribute.id,
           categoryId: category.id,
-          price: productPrice
+          price: productPrice,
         });
       })
       .then(({ variantsList: variantsResp }) => {
@@ -97,10 +97,10 @@ describe("As a customer I should be able to purchase gift card as a product", ()
         channelSlug: defaultChannel.slug,
         email,
         shippingMethodName: shippingMethod.name,
-        variantsList: variants
+        variantsList: variants,
       }).then(({ order }) => {
         expect(order.id).to.be.ok;
       });
-    }
+    },
   );
 });

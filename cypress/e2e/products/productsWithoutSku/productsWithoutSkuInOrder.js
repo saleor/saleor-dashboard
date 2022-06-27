@@ -26,14 +26,14 @@ describe("As an admin I should be able to create order with variant without SKU"
             variantsList,
             defaultChannel,
             shippingMethod,
-            address: addressResp
+            address: addressResp,
           }) => {
             variants = variantsList;
             channel = defaultChannel;
             shippingMethodId = shippingMethod.id;
             address = addressResp;
             createCustomer(`${name}@example.com`, name, address, true);
-          }
+          },
         )
         .then(customerResp => {
           const customer = customerResp.user;
@@ -42,12 +42,12 @@ describe("As an admin I should be able to create order with variant without SKU"
             channelId: channel.id,
             customerId: customer.id,
             shippingMethodId,
-            variantsList: variants
+            variantsList: variants,
           });
         })
         .then(({ errors }) => {
           expect(errors, "check if no errors").to.be.empty;
         });
-    }
+    },
   );
 });

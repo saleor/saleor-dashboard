@@ -4,13 +4,13 @@
 import {
   addShippingMethod,
   completeCheckout,
-  createCheckout
+  createCheckout,
 } from "../../../support/api/requests/Checkout";
 import { getOrder } from "../../../support/api/requests/Order";
 import { confirmThreeDSecure } from "../../../support/api/requests/stripe";
 import {
   addStripePaymentAndGetConfirmationData,
-  getShippingMethodIdFromCheckout
+  getShippingMethodIdFromCheckout,
 } from "../../../support/api/utils/ordersUtils";
 import { createProductWithShipping } from "../../../support/api/utils/products/productsUtils";
 import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
@@ -36,7 +36,7 @@ describe("Stripe payments", () => {
         publicKey: paymentCards.publicApiKey,
         cvc: 123,
         expMonth: 10,
-        expYear: 50
+        expYear: 50,
       };
     });
     createProductWithShipping({ name: startsWith }).then(values => {
@@ -55,13 +55,13 @@ describe("Stripe payments", () => {
       variantsList,
       address,
       billingAddress: address,
-      auth: "token"
+      auth: "token",
     })
       .then(({ checkout: checkoutResp }) => {
         checkout = checkoutResp;
         const shippingMethodId = getShippingMethodIdFromCheckout(
           checkoutResp,
-          shippingMethod.name
+          shippingMethod.name,
         );
         addShippingMethod(checkout.id, shippingMethodId);
       })
@@ -79,7 +79,7 @@ describe("Stripe payments", () => {
       addStripePaymentAndGetConfirmationData({
         card: simpleCard,
         checkoutId: checkout.id,
-        amount: checkout.totalPrice.gross.amount
+        amount: checkout.totalPrice.gross.amount,
       })
         .then(() => {
           completeCheckout(checkout.id);
@@ -90,7 +90,7 @@ describe("Stripe payments", () => {
         .then(order => {
           expect(order.paymentStatus).to.eq("FULLY_CHARGED");
         });
-    }
+    },
   );
 
   it(
@@ -102,11 +102,11 @@ describe("Stripe payments", () => {
       addStripePaymentAndGetConfirmationData({
         card: simpleCard,
         checkoutId: checkout.id,
-        amount: checkout.totalPrice.gross.amount
+        amount: checkout.totalPrice.gross.amount,
       }).then(resp => {
         expect(resp.body.error.code).to.equal("card_declined");
       });
-    }
+    },
   );
 
   it(
@@ -118,7 +118,7 @@ describe("Stripe payments", () => {
       addStripePaymentAndGetConfirmationData({
         card: threeDSecureCard,
         checkoutId: checkout.id,
-        amount: checkout.totalPrice.gross.amount
+        amount: checkout.totalPrice.gross.amount,
       })
         .then(resp => {
           confirmThreeDSecure(resp.body.next_action.redirect_to_url.url);
@@ -132,7 +132,7 @@ describe("Stripe payments", () => {
         .then(order => {
           expect(order.paymentStatus).to.eq("FULLY_CHARGED");
         });
-    }
+    },
   );
 
   it(
@@ -144,7 +144,7 @@ describe("Stripe payments", () => {
       addStripePaymentAndGetConfirmationData({
         card: threeDSecureCard,
         checkoutId: checkout.id,
-        amount: checkout.totalPrice.gross.amount
+        amount: checkout.totalPrice.gross.amount,
       })
         .then(resp => {
           confirmThreeDSecure(resp.body.next_action.redirect_to_url.url, false);
@@ -155,6 +155,6 @@ describe("Stripe payments", () => {
         .then(({ order }) => {
           expect(order).to.not.be.ok;
         });
-    }
+    },
   );
 });

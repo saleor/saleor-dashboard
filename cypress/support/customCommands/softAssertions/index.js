@@ -2,7 +2,7 @@ import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 
 Cypress.Commands.add("assertVisibility", selector => {
   cy.get(selector).then(
-    element => expect(element, "element should be visible").to.be.visible
+    element => expect(element, "element should be visible").to.be.visible,
   );
 });
 
@@ -10,26 +10,26 @@ Cypress.Commands.add(
   "expectCorrectBasicAddress",
   (responseAddress, expectedAddress) => {
     expect(responseAddress.city.toUpperCase()).to.eq(
-      expectedAddress.city.toUpperCase()
+      expectedAddress.city.toUpperCase(),
     );
     expect(responseAddress).to.have.property(
       "countryArea",
-      expectedAddress.countryArea
+      expectedAddress.countryArea,
     );
     expect(responseAddress).to.have.property("phone", expectedAddress.phone);
     expect(responseAddress).to.have.property(
       "postalCode",
-      expectedAddress.postalCode
+      expectedAddress.postalCode,
     );
     expect(responseAddress).to.have.property(
       "streetAddress1",
-      expectedAddress.streetAddress1
+      expectedAddress.streetAddress1,
     );
     expect(responseAddress).to.have.property(
       "streetAddress2",
-      expectedAddress.streetAddress2
+      expectedAddress.streetAddress2,
     );
-  }
+  },
 );
 
 Cypress.Commands.add(
@@ -37,14 +37,14 @@ Cypress.Commands.add(
   (responseAddress, expectedAddress) => {
     expect(responseAddress).to.have.property(
       "firstName",
-      expectedAddress.firstName
+      expectedAddress.firstName,
     );
     expect(responseAddress).to.have.property(
       "firstName",
-      expectedAddress.lastName
+      expectedAddress.lastName,
     );
     cy.expectCorrectBasicAddress(responseAddress, expectedAddress);
-  }
+  },
 );
 
 Cypress.Commands.add("expectSkeletonIsVisible", () => {
@@ -55,7 +55,7 @@ Cypress.Commands.add("expectSkeletonIsVisible", () => {
       cy.assertVisibility(SHARED_ELEMENTS.skeleton);
     } else {
       expect(
-        $body.find(SHARED_ELEMENTS.skeleton, "skeleton should exist").length
+        $body.find(SHARED_ELEMENTS.skeleton, "skeleton should exist").length,
       ).to.be.eq(1);
     }
   });

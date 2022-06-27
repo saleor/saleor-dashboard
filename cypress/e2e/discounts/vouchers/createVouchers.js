@@ -10,14 +10,14 @@ import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import { deleteVouchersStartsWith } from "../../../support/api/utils/discounts/vouchersUtils";
 import {
   addPayment,
-  createCheckoutWithVoucher
+  createCheckoutWithVoucher,
 } from "../../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import filterTests from "../../../support/filterTests";
 import {
   createVoucher,
   discountOptions,
-  loginAndCreateCheckoutForVoucherWithDiscount
+  loginAndCreateCheckoutForVoucherWithDiscount,
 } from "../../../support/pages/discounts/vouchersPage";
 
 describe("As an admin I want to create voucher", () => {
@@ -44,14 +44,14 @@ describe("As an admin I want to create voucher", () => {
           variantsList: variantsResp,
           defaultChannel: channel,
           shippingMethod: shippingMethodResp,
-          address: addressResp
+          address: addressResp,
         }) => {
           variants = variantsResp;
           defaultChannel = channel;
           shippingMethod = shippingMethodResp;
           address = addressResp;
           createChannel({ name });
-        }
+        },
       )
       .then(channel => {
         createdChannel = channel;
@@ -60,7 +60,7 @@ describe("As an admin I want to create voucher", () => {
           variantsList: variants,
           address,
           shippingMethodName: shippingMethod.name,
-          auth: "token"
+          auth: "token",
         };
       });
   });
@@ -79,11 +79,11 @@ describe("As an admin I want to create voucher", () => {
         voucherValue,
         voucherCode,
         channelName: defaultChannel.name,
-        dataForCheckout
+        dataForCheckout,
       })
         .then(({ addPromoCodeResp, checkout: checkoutResp }) => {
           expect(addPromoCodeResp.checkout.totalPrice.gross.amount).to.be.eq(
-            expectedAmount
+            expectedAmount,
           );
           dataForCheckout.voucherCode = voucherCode;
           checkout = checkoutResp;
@@ -95,7 +95,7 @@ describe("As an admin I want to create voucher", () => {
         .then(({ order }) => {
           expect(order.id).to.be.ok;
         });
-    }
+    },
   );
 
   it(
@@ -113,11 +113,11 @@ describe("As an admin I want to create voucher", () => {
         voucherValue,
         voucherCode,
         channelName: defaultChannel.name,
-        dataForCheckout
+        dataForCheckout,
       })
         .then(({ addPromoCodeResp, checkout: checkoutResp }) => {
           expect(addPromoCodeResp.checkout.totalPrice.gross.amount).to.be.eq(
-            expectedAmount
+            expectedAmount,
           );
           dataForCheckout.voucherCode = voucherCode;
           checkout = checkoutResp;
@@ -129,7 +129,7 @@ describe("As an admin I want to create voucher", () => {
         .then(({ order }) => {
           expect(order.id).to.be.ok;
         });
-    }
+    },
   );
 
   it(
@@ -144,11 +144,11 @@ describe("As an admin I want to create voucher", () => {
         discount: discountOptions.SHIPPING,
         voucherCode,
         channelName: defaultChannel.name,
-        dataForCheckout
+        dataForCheckout,
       })
         .then(({ addPromoCodeResp, checkout: checkoutResp }) => {
           expect(addPromoCodeResp.checkout.totalPrice.gross.amount).to.be.eq(
-            expectedAmount
+            expectedAmount,
           );
           dataForCheckout.voucherCode = voucherCode;
           checkout = checkoutResp;
@@ -160,7 +160,7 @@ describe("As an admin I want to create voucher", () => {
         .then(({ order }) => {
           expect(order.id).to.be.ok;
         });
-    }
+    },
   );
 
   it(
@@ -178,15 +178,15 @@ describe("As an admin I want to create voucher", () => {
         voucherCode: randomName,
         voucherValue,
         discountOption: discountOptions.PERCENTAGE,
-        channelName: createdChannel.name
+        channelName: createdChannel.name,
       });
       dataForCheckout.voucherCode = randomName;
       createCheckoutWithVoucher(dataForCheckout).then(
         ({ addPromoCodeResp }) => {
           const errorField = addPromoCodeResp.errors[0].field;
           expect(errorField).to.be.eq("promoCode");
-        }
+        },
       );
-    }
+    },
   );
 });

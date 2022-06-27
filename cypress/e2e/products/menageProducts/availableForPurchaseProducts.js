@@ -35,7 +35,7 @@ describe("Products available in listings", () => {
         shippingUtils.createShipping({
           channelId: defaultChannel.id,
           name,
-          address: addressesFixture.plAddress
+          address: addressesFixture.plAddress,
         });
       })
       .then(({ warehouse: warehouseResp }) => {
@@ -48,19 +48,19 @@ describe("Products available in listings", () => {
         ({
           attribute: attributeResp,
           productType: productTypeResp,
-          category: categoryResp
+          category: categoryResp,
         }) => {
           productType = productTypeResp;
           attribute = attributeResp;
           category = categoryResp;
-        }
+        },
       );
   });
 
   beforeEach(() => {
     cy.clearSessionData().loginUserViaRequest(
       "auth",
-      ONE_PERMISSION_USERS.product
+      ONE_PERMISSION_USERS.product,
     );
   });
 
@@ -79,7 +79,7 @@ describe("Products available in listings", () => {
           productTypeId: productType.id,
           attributeId: attribute.id,
           categoryId: category.id,
-          isAvailableForPurchase: false
+          isAvailableForPurchase: false,
         })
         .then(({ product: productResp }) => {
           product = productResp;
@@ -92,7 +92,7 @@ describe("Products available in listings", () => {
         .then(resp => {
           expect(isProductAvailableForPurchase(resp)).to.be.eq(true);
         });
-    }
+    },
   );
 
   it(
@@ -109,7 +109,7 @@ describe("Products available in listings", () => {
           warehouseId: warehouse.id,
           productTypeId: productType.id,
           attributeId: attribute.id,
-          categoryId: category.id
+          categoryId: category.id,
         })
         .then(({ product: productResp }) => {
           product = productResp;
@@ -122,6 +122,6 @@ describe("Products available in listings", () => {
         .then(resp => {
           expect(isProductAvailableForPurchase(resp)).to.be.eq(false);
         });
-    }
+    },
   );
 });

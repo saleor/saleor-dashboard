@@ -9,7 +9,7 @@ import { createCustomer } from "../../support/api/requests/Customer";
 import * as homePageUtils from "../../support/api/utils/homePageUtils";
 import {
   createReadyToFulfillOrder,
-  createWaitingForCaptureOrder
+  createWaitingForCaptureOrder,
 } from "../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
 import filterTests from "../../support/filterTests";
@@ -19,7 +19,7 @@ import {
   getOrdersReadyToFulfillRegex,
   getProductsOutOfStockRegex,
   getSalesAmountRegex,
-  getTodaysOrdersRegex
+  getTodaysOrdersRegex,
 } from "../../support/pages/homePage";
 
 describe("As an admin I want to see correct information on dashboard home page", () => {
@@ -52,7 +52,7 @@ describe("As an admin I want to see correct information on dashboard home page",
         name: randomName,
         productPrice,
         shippingPrice,
-        newChannel: true
+        newChannel: true,
       })
       .then(resp => {
         createdVariants = resp.variantsList;
@@ -65,7 +65,7 @@ describe("As an admin I want to see correct information on dashboard home page",
         productType = resp.productType;
 
         createCustomer(randomEmail, randomName, address).then(
-          customerResp => (customer = customerResp)
+          customerResp => (customer = customerResp),
         );
 
         homePageUtils
@@ -73,7 +73,7 @@ describe("As an admin I want to see correct information on dashboard home page",
           .then(ordersReadyToFulfillBefore => {
             ordersReadyToFulfillRegexp = getOrdersReadyToFulfillRegex(
               ordersReadyToFulfillBefore,
-              1
+              1,
             );
           });
 
@@ -82,7 +82,7 @@ describe("As an admin I want to see correct information on dashboard home page",
           .then(ordersReadyForCaptureBefore => {
             ordersReadyForCaptureRegexp = getOrdersReadyForCaptureRegex(
               ordersReadyForCaptureBefore,
-              1
+              1,
             );
           });
 
@@ -91,14 +91,14 @@ describe("As an admin I want to see correct information on dashboard home page",
           .then(productsOutOfStockBefore => {
             productsOutOfStockRegexp = getProductsOutOfStockRegex(
               productsOutOfStockBefore,
-              1
+              1,
             );
           });
 
         homePageUtils.getSalesAmount(defaultChannel.slug).then(salesAmount => {
           salesAmountRegexp = getSalesAmountRegex(
             salesAmount,
-            productPrice * 2 + shippingPrice
+            productPrice * 2 + shippingPrice,
           );
         });
 
@@ -114,7 +114,7 @@ describe("As an admin I want to see correct information on dashboard home page",
           shippingMethodId: shippingMethod.id,
           channelId: defaultChannel.id,
           variantsList: createdVariants,
-          address
+          address,
         });
 
         createWaitingForCaptureOrder({
@@ -122,7 +122,7 @@ describe("As an admin I want to see correct information on dashboard home page",
           email: randomEmail,
           variantsList: createdVariants,
           shippingMethodName: shippingMethod.name,
-          address
+          address,
         });
 
         const productOutOfStockRandomName =
@@ -136,7 +136,7 @@ describe("As an admin I want to see correct information on dashboard home page",
           productTypeId: productType.id,
           attributeId: attribute.id,
           categoryId: category.id,
-          price: productPrice
+          price: productPrice,
         });
       });
   });
@@ -154,19 +154,19 @@ describe("As an admin I want to see correct information on dashboard home page",
       cy.contains(HOMEPAGE_SELECTORS.orders, ordersRegexp).should("be.visible");
       cy.contains(
         HOMEPAGE_SELECTORS.ordersReadyToFulfill,
-        ordersReadyToFulfillRegexp
+        ordersReadyToFulfillRegexp,
       ).should("be.visible");
       cy.contains(
         HOMEPAGE_SELECTORS.paymentsWaitingForCapture,
-        ordersReadyForCaptureRegexp
+        ordersReadyForCaptureRegexp,
       ).should("be.visible");
       cy.contains(HOMEPAGE_SELECTORS.sales, salesAmountRegexp).should(
-        "be.visible"
+        "be.visible",
       );
       cy.contains(
         HOMEPAGE_SELECTORS.productsOutOfStock,
-        productsOutOfStockRegexp
+        productsOutOfStockRegexp,
       ).should("be.visible");
-    }
+    },
   );
 });

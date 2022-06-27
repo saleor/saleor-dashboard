@@ -17,7 +17,7 @@ describe("User authorization", () => {
       cy.visit(urlList.homePage);
       cy.loginUser();
       cy.get(LOGIN_SELECTORS.welcomePage).should("be.visible");
-    }
+    },
   );
 
   it(
@@ -33,7 +33,7 @@ describe("User authorization", () => {
         .click()
         .get(LOGIN_SELECTORS.warningCredentialMessage)
         .should("be.visible");
-    }
+    },
   );
 
   it(
@@ -49,6 +49,6 @@ describe("User authorization", () => {
         .click()
         .get(LOGIN_SELECTORS.emailAddressInput)
         .should("be.visible");
-    }
+    },
   );
 });

@@ -11,15 +11,15 @@ import { createChannel } from "../../../support/api/requests/Channels";
 import {
   customerRegistration,
   deleteCustomersStartsWith,
-  requestPasswordReset
+  requestPasswordReset,
 } from "../../../support/api/requests/Customer";
 import {
   deleteChannelsStartsWith,
-  getDefaultChannel
+  getDefaultChannel,
 } from "../../../support/api/utils/channelsUtils";
 import {
   getMailActivationLinkForUserAndSubject,
-  getMailsForUser
+  getMailsForUser,
 } from "../../../support/api/utils/users";
 
 describe("Plugins", () => {
@@ -54,7 +54,7 @@ describe("Plugins", () => {
       .confirmationMessageShouldDisappear();
     customerRegistration({
       email: customerEmail,
-      channel: defaultChannel.slug
+      channel: defaultChannel.slug,
     })
       .then(() => {
         getMailsForUser(customerEmail);
@@ -82,12 +82,12 @@ describe("Plugins", () => {
         .then(() => {
           getMailActivationLinkForUserAndSubject(
             Cypress.env("USER_NAME"),
-            randomName
+            randomName,
           );
         })
         .then(link => {
           expect(link).to.be.ok;
         });
-    }
+    },
   );
 });

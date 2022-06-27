@@ -91,7 +91,7 @@ function cypressGrep() {
       parsedGrep,
       nameToGrep,
       tagsToGrep,
-      grepUntagged
+      grepUntagged,
     );
 
     if (tagsToGrep && tagsToGrep.length) {
@@ -99,7 +99,7 @@ function cypressGrep() {
         'should test "%s" with tags %s run? %s',
         name,
         tagsToGrep.join(","),
-        shouldRun
+        shouldRun,
       );
     } else {
       debug('should test "%s" run? %s', nameToGrep, shouldRun);

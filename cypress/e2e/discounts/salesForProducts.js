@@ -11,14 +11,14 @@ import { deleteSalesStartsWith } from "../../support/api/utils/discounts/salesUt
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
 import {
   createShipping,
-  deleteShippingStartsWith
+  deleteShippingStartsWith,
 } from "../../support/api/utils/shippingUtils";
 import { getProductPrice } from "../../support/api/utils/storeFront/storeFrontProductUtils";
 import {
   assignProducts,
   createSale,
   createSaleWithNewProduct,
-  discountOptions
+  discountOptions,
 } from "../../support/pages/discounts/salesPage";
 
 xdescribe("Sales discounts for products", () => {
@@ -44,14 +44,14 @@ xdescribe("Sales discounts for products", () => {
         ({
           productType: productTypeResp,
           attribute: attributeResp,
-          category: categoryResp
+          category: categoryResp,
         }) => {
           productType = productTypeResp;
           attribute = attributeResp;
           category = categoryResp;
 
           channelsUtils.getDefaultChannel();
-        }
+        },
       )
       .then(channel => {
         defaultChannel = channel;
@@ -62,7 +62,7 @@ xdescribe("Sales discounts for products", () => {
           channelId: defaultChannel.id,
           name,
           address: addresses.plAddress,
-          price: 100
+          price: 100,
         });
       })
       .then(({ warehouse: warehouseResp }) => {
@@ -91,12 +91,12 @@ xdescribe("Sales discounts for products", () => {
         categoryId: category.id,
         price: productPrice,
         discountOption: discountOptions.PERCENTAGE,
-        discountValue
+        discountValue,
       }).then(price => {
         const expectedPrice = (productPrice * discountValue) / 100;
         expect(expectedPrice).to.be.eq(price);
       });
-    }
+    },
   );
 
   it(
@@ -116,12 +116,12 @@ xdescribe("Sales discounts for products", () => {
         categoryId: category.id,
         price: productPrice,
         discountOption: discountOptions.FIXED,
-        discountValue
+        discountValue,
       }).then(price => {
         const expectedPrice = productPrice - discountValue;
         expect(expectedPrice).to.be.eq(price);
       });
-    }
+    },
   );
 
   it(
@@ -135,7 +135,7 @@ xdescribe("Sales discounts for products", () => {
       const productPrice = 100;
 
       createChannel({ name: saleName }).then(
-        channelResp => (channel = channelResp)
+        channelResp => (channel = channelResp),
       );
       productsUtils
         .createProductInChannel({
@@ -145,13 +145,13 @@ xdescribe("Sales discounts for products", () => {
           productTypeId: productType.id,
           attributeId: attribute.id,
           categoryId: category.id,
-          price: productPrice
+          price: productPrice,
         })
         .then(({ product: productResp }) => {
           product = productResp;
           updateChannelInProduct({
             productId: product.id,
-            channelId: channel.id
+            channelId: channel.id,
           });
         })
         .then(() => {
@@ -165,12 +165,12 @@ xdescribe("Sales discounts for products", () => {
           createSale({
             saleName,
             channelName: channel.name,
-            discountValue
+            discountValue,
           });
           assignProducts(product.name);
           getProductPrice(product.id, defaultChannel.slug);
         })
         .then(price => expect(price).to.equal(productPrice));
-    }
+    },
   );
 });

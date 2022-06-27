@@ -7,7 +7,7 @@ import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { shippingZoneDetailsUrl } from "../../../fixtures/urlList";
 import {
   createShippingZone,
-  getShippingZone
+  getShippingZone,
 } from "../../../support/api/requests/ShippingMethod";
 import { createWarehouse } from "../../../support/api/requests/Warehouse";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
@@ -58,7 +58,7 @@ describe("As a user I should be able to update and delete shipping zone", () => 
         channelName: defaultChannel.name,
         country: "Poland",
         shippingName: updatedName,
-        warehouseName: name
+        warehouseName: name,
       });
       getShippingZone(shippingZone.id).then(shippingZone => {
         expect(shippingZone.channels).to.have.length(0);
@@ -67,7 +67,7 @@ describe("As a user I should be able to update and delete shipping zone", () => 
         expect(shippingZone.warehouses[0].name).to.eq(name);
         expect(shippingZone.countries.find(el => el.code === "PL")).to.be.ok;
       });
-    }
+    },
   );
 
   it(
@@ -75,10 +75,10 @@ describe("As a user I should be able to update and delete shipping zone", () => 
     { tags: ["@shipping", "@allEnv"] },
     () => {
       cy.visit(
-        shippingZoneDetailsUrl(shippingZone.id)
+        shippingZoneDetailsUrl(shippingZone.id),
       ).deleteElementWithReqAlias("DeleteShippingZone");
       getShippingZone(shippingZone.id).should("be.null");
-    }
+    },
   );
 
   it(
@@ -99,8 +99,8 @@ describe("As a user I should be able to update and delete shipping zone", () => 
             .wait("@BulkDeleteShippingZone");
           getShippingZone(shippingZone.id).should("be.null");
           getShippingZone(secondShippingZone.id).should("be.null");
-        }
+        },
       );
-    }
+    },
   );
 });

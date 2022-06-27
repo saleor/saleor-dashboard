@@ -8,13 +8,13 @@ import {
   addChannelToShippingMethod,
   createShippingRate,
   createShippingZone,
-  getShippingZone
+  getShippingZone,
 } from "../../../support/api/requests/ShippingMethod";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
 import {
   fillUpShippingRate,
-  saveRateAfterUpdate
+  saveRateAfterUpdate,
 } from "../../../support/pages/shippingMethodPage";
 
 describe("As a user I should be able to update and delete shipping method", () => {
@@ -46,7 +46,7 @@ describe("As a user I should be able to update and delete shipping method", () =
     cy.clearSessionData().loginUserViaRequest();
     createShippingRate({
       name: rateName,
-      shippingZone: shippingZone.id
+      shippingZone: shippingZone.id,
     }).then(({ shippingMethod: shippingResp }) => {
       shippingMethod = shippingResp;
       addChannelToShippingMethod(shippingMethod.id, defaultChannel.id, 1);
@@ -64,22 +64,22 @@ describe("As a user I should be able to update and delete shipping method", () =
       fillUpShippingRate({
         rateName: updatedRateName,
         price,
-        deliveryTime
+        deliveryTime,
       });
       saveRateAfterUpdate();
       getShippingZone(shippingZone.id).then(({ shippingMethods }) => {
         expect(shippingMethods).to.have.length(1);
         expect(shippingMethods[0].minimumDeliveryDays).to.be.eq(
-          deliveryTime.min
+          deliveryTime.min,
         );
         expect(shippingMethods[0].maximumDeliveryDays).to.be.eq(
-          deliveryTime.max
+          deliveryTime.max,
         );
         expect(shippingMethods[0].channelListings[0].price.amount).to.be.eq(
-          price
+          price,
         );
       });
-    }
+    },
   );
 
   it(
@@ -87,14 +87,14 @@ describe("As a user I should be able to update and delete shipping method", () =
     { tags: ["@shipping", "@allEnv", "@stable"] },
     () => {
       cy.visit(
-        shippingRateUrl(shippingZone.id, shippingMethod.id)
+        shippingRateUrl(shippingZone.id, shippingMethod.id),
       ).deleteElementWithReqAlias("DeleteShippingRate");
       getShippingZone(shippingZone.id).then(({ shippingMethods }) => {
         const deletedShipping = shippingMethods.find(
-          element => element.id === shippingMethod.id
+          element => element.id === shippingMethod.id,
         );
         expect(deletedShipping).to.be.not.ok;
       });
-    }
+    },
   );
 });

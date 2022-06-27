@@ -11,7 +11,7 @@ import { pageTypeDetailsUrl, urlList } from "../../fixtures/urlList";
 import { createAttribute } from "../../support/api/requests/Attribute";
 import {
   createPageType,
-  getPageType
+  getPageType,
 } from "../../support/api/requests/PageType";
 
 describe("Tests for page types", () => {
@@ -44,7 +44,7 @@ describe("Tests for page types", () => {
         .then(pageType => {
           expect(pageType.name).to.eq(randomName);
         });
-    }
+    },
   );
 
   xit("should assign attribute", { tags: ["@pages", "@allEnv"] }, () => {

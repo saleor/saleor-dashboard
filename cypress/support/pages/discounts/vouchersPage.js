@@ -8,7 +8,7 @@ import { selectChannelInDetailsPages } from "../channelsPage";
 export const discountOptions = {
   PERCENTAGE: VOUCHERS_SELECTORS.percentageDiscountRadioButton,
   FIXED: VOUCHERS_SELECTORS.fixedDiscountRadioButton,
-  SHIPPING: VOUCHERS_SELECTORS.shippingDiscountRadioButton
+  SHIPPING: VOUCHERS_SELECTORS.shippingDiscountRadioButton,
 };
 
 export function createVoucher({
@@ -20,7 +20,7 @@ export function createVoucher({
   applyOnePerCustomer,
   onlyStaff,
   minOrderValue,
-  minAmountOfItems
+  minAmountOfItems,
 }) {
   cy.get(VOUCHERS_SELECTORS.createVoucherButton).click();
   selectChannelInDetailsPages(channelName);
@@ -64,7 +64,7 @@ export function setVoucherDate({
   startDate,
   endDate,
   endTime,
-  hasEndDate = false
+  hasEndDate = false,
 }) {
   cy.visit(voucherDetailsUrl(voucherId)).waitForProgressBarToNotBeVisible();
   if (startDate) {
@@ -95,7 +95,7 @@ export function loginAndCreateCheckoutForVoucherWithDiscount({
   applyOnePerCustomer,
   onlyStaff,
   minOrderValue,
-  minAmountOfItems
+  minAmountOfItems,
 }) {
   cy.clearSessionData()
     .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount)
@@ -110,7 +110,7 @@ export function loginAndCreateCheckoutForVoucherWithDiscount({
     applyOnePerCustomer,
     onlyStaff,
     minOrderValue,
-    minAmountOfItems
+    minAmountOfItems,
   });
   dataForCheckout.voucherCode = voucherCode;
   return createCheckoutWithVoucher(dataForCheckout);

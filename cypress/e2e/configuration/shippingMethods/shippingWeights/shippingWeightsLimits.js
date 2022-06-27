@@ -12,13 +12,13 @@ import { getDefaultChannel } from "../../../../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith
+  deleteProductsStartsWith,
 } from "../../../../support/api/utils/products/productsUtils";
 import { deleteShippingStartsWith } from "../../../../support/api/utils/shippingUtils";
 import { isShippingAvailableInCheckout } from "../../../../support/api/utils/storeFront/checkoutUtils";
 import {
   createShippingRate,
-  rateOptions
+  rateOptions,
 } from "../../../../support/pages/shippingMethodPage";
 
 describe("As a staff user I want to manage shipping weights", () => {
@@ -52,7 +52,7 @@ describe("As a staff user I want to manage shipping weights", () => {
         createWarehouse({
           name,
           shippingZone: shippingZone.id,
-          address: usAddress
+          address: usAddress,
         });
       })
       .then(warehouseResp => {
@@ -67,7 +67,7 @@ describe("As a staff user I want to manage shipping weights", () => {
           attributeId: attribute.id,
           categoryId: category.id,
           productTypeId: productType.id,
-          weight: 10
+          weight: 10,
         });
       })
       .then(({ variantsList: variantsListResp }) => {
@@ -93,21 +93,21 @@ describe("As a staff user I want to manage shipping weights", () => {
         rateOption: rateOptions.WEIGHT_OPTION,
         weightLimits: {
           max: 11,
-          min: 10
-        }
+          min: 10,
+        },
       })
         .then(() => {
           createCheckout({
             address: usAddress,
             channelSlug: defaultChannel.slug,
             email: "example@example.com",
-            variantsList
+            variantsList,
           });
         })
         .then(({ checkout }) => {
           expect(isShippingAvailableInCheckout(checkout, rateName)).to.be.true;
         });
-    }
+    },
   );
 
   it(
@@ -122,20 +122,20 @@ describe("As a staff user I want to manage shipping weights", () => {
         rateOption: rateOptions.WEIGHT_OPTION,
         weightLimits: {
           max: 101,
-          min: 100
-        }
+          min: 100,
+        },
       })
         .then(() => {
           createCheckout({
             address: usAddress,
             channelSlug: defaultChannel.slug,
             email: "example@example.com",
-            variantsList
+            variantsList,
           });
         })
         .then(({ checkout }) => {
           expect(isShippingAvailableInCheckout(checkout, rateName)).to.be.false;
         });
-    }
+    },
   );
 });

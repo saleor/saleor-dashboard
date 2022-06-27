@@ -10,12 +10,12 @@ import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import {
   permissionGroupDetails,
   staffMemberDetailsUrl,
-  urlList
+  urlList,
 } from "../../fixtures/urlList";
 import { TEST_ADMIN_USER } from "../../fixtures/users.js";
 import {
   createPermissionGroup,
-  getPermissionGroup
+  getPermissionGroup,
 } from "../../support/api/requests/PermissionGroup.js";
 import { getStaffMembersStartsWith } from "../../support/api/requests/StaffMembers";
 import { deletePermissionGroupsStartsWith } from "../../support/api/utils/permissionGroupUtils.js";
@@ -47,7 +47,7 @@ describe("Permissions groups", () => {
         .get(PERMISSION_GROUP_DETAILS.productsPermissionCheckbox)
         .click()
         .get(
-          PERMISSION_GROUP_DETAILS.productsTypesAndAttributesPermissionCheckbox
+          PERMISSION_GROUP_DETAILS.productsTypesAndAttributesPermissionCheckbox,
         )
         .click()
         .get(BUTTON_SELECTORS.confirm)
@@ -59,9 +59,9 @@ describe("Permissions groups", () => {
         .waitForProgressBarToNotExist();
       cy.contains(
         PERMISSION_GROUP_LIST.permissionGroupRow,
-        permissionName
+        permissionName,
       ).should("be.visible");
-    }
+    },
   );
 
   it(
@@ -77,7 +77,7 @@ describe("Permissions groups", () => {
           createPermissionGroup({
             name: permissionName,
             userIdsArray: `["${staffMember.id}"]`,
-            permissionsArray: "[MANAGE_PRODUCTS]"
+            permissionsArray: "[MANAGE_PRODUCTS]",
           });
           cy.visit(urlList.permissionsGroups);
           cy.contains(PERMISSION_GROUP_LIST.permissionGroupRow, permissionName)
@@ -92,7 +92,7 @@ describe("Permissions groups", () => {
           cy.get(SHARED_ELEMENTS.header).should("be.visible");
           cy.contains(permissionName).should("not.exist");
         });
-    }
+    },
   );
 
   xit(
@@ -102,7 +102,7 @@ describe("Permissions groups", () => {
       const permissionName = `${startsWith}${faker.datatype.number()}`;
       createPermissionGroup({
         name: permissionName,
-        permissionsArray: "[MANAGE_PRODUCTS]"
+        permissionsArray: "[MANAGE_PRODUCTS]",
       })
         .then(({ group }) => {
           cy.visit(permissionGroupDetails(group.id))
@@ -112,7 +112,7 @@ describe("Permissions groups", () => {
             .type(TEST_ADMIN_USER.email);
           cy.contains(
             PERMISSION_GROUP_DETAILS.userRow,
-            `${TEST_ADMIN_USER.name} ${TEST_ADMIN_USER.lastName}`
+            `${TEST_ADMIN_USER.name} ${TEST_ADMIN_USER.lastName}`,
           )
             .should("have.length", 1)
             .find(BUTTON_SELECTORS.checkbox)
@@ -129,7 +129,7 @@ describe("Permissions groups", () => {
           expect(resp.users).to.have.length(1);
           expect(resp.users[0].email).to.be.eq(TEST_ADMIN_USER.email);
         });
-    }
+    },
   );
 
   it(
@@ -145,7 +145,7 @@ describe("Permissions groups", () => {
           createPermissionGroup({
             name: permissionName,
             userIdsArray: `["${staffMember.id}"]`,
-            permissionsArray: "[MANAGE_PRODUCTS]"
+            permissionsArray: "[MANAGE_PRODUCTS]",
           });
         })
         .then(({ group }) => {
@@ -162,6 +162,6 @@ describe("Permissions groups", () => {
           cy.get(SHARED_ELEMENTS.header).should("be.visible");
           cy.contains(permissionName).should("not.exist");
         });
-    }
+    },
   );
 });

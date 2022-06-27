@@ -11,22 +11,22 @@ import { urlList } from "../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../fixtures/users";
 import {
   createCustomer,
-  deleteCustomersStartsWith
+  deleteCustomersStartsWith,
 } from "../../support/api/requests/Customer";
 import {
   getOrder,
-  updateOrdersSettings
+  updateOrdersSettings,
 } from "../../support/api/requests/Order";
 import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import {
   createFulfilledOrder,
   createOrder,
-  createReadyToFulfillOrder
+  createReadyToFulfillOrder,
 } from "../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
 import {
   createShipping,
-  deleteShippingStartsWith
+  deleteShippingStartsWith,
 } from "../../support/api/utils/shippingUtils";
 import { selectChannelInPicker } from "../../support/pages/channelsPage";
 import { finalizeDraftOrder } from "../../support/pages/draftOrderPage";
@@ -65,7 +65,7 @@ describe("Orders", () => {
         createShipping({
           channelId: defaultChannel.id,
           name: randomName,
-          address
+          address,
         });
       })
       .then(
@@ -73,15 +73,15 @@ describe("Orders", () => {
           shippingMethod = shippingMethodResp;
           warehouse = warehouseResp;
           productsUtils.createTypeAttributeAndCategoryForProduct({
-            name: randomName
+            name: randomName,
           });
-        }
+        },
       )
       .then(
         ({
           productType: productTypeResp,
           attribute: attributeResp,
-          category: categoryResp
+          category: categoryResp,
         }) => {
           productsUtils.createProductInChannel({
             name: randomName,
@@ -89,9 +89,9 @@ describe("Orders", () => {
             warehouseId: warehouse.id,
             productTypeId: productTypeResp.id,
             attributeId: attributeResp.id,
-            categoryId: categoryResp.id
+            categoryId: categoryResp.id,
           });
-        }
+        },
       )
       .then(({ variantsList: variantsResp }) => {
         variantsList = variantsResp;
@@ -101,7 +101,7 @@ describe("Orders", () => {
   beforeEach(() => {
     cy.clearSessionData().loginUserViaRequest(
       "auth",
-      ONE_PERMISSION_USERS.order
+      ONE_PERMISSION_USERS.order,
     );
   });
 
@@ -117,10 +117,10 @@ describe("Orders", () => {
         cy.visit(urlList.orders);
         cy.contains(ORDERS_SELECTORS.orderRow, draftOrderNumber).click();
         cy.contains(ORDERS_SELECTORS.salesChannel, defaultChannel.name).should(
-          "be.visible"
+          "be.visible",
         );
       });
-    }
+    },
   );
 
   it(
@@ -132,7 +132,7 @@ describe("Orders", () => {
         channelId: defaultChannel.id,
         shippingMethodId: shippingMethod.id,
         variantsList,
-        address
+        address,
       }).then(order => {
         cy.visit(urlList.orders);
         cy.contains(ORDERS_SELECTORS.orderRow, order.number).click();
@@ -140,7 +140,7 @@ describe("Orders", () => {
           .find("[button]")
           .should("not.exist");
       });
-    }
+    },
   );
 
   it("should cancel fulfillment", { tags: ["@orders", "@allEnv"] }, () => {
@@ -151,7 +151,7 @@ describe("Orders", () => {
       shippingMethodId: shippingMethod.id,
       variantsList,
       address,
-      warehouse: warehouse.id
+      warehouse: warehouse.id,
     })
       .then(({ order: orderResp }) => {
         order = orderResp;
@@ -164,7 +164,7 @@ describe("Orders", () => {
           .click()
           .fillAutocompleteSelect(
             ORDERS_SELECTORS.cancelFulfillmentSelectField,
-            warehouse.name
+            warehouse.name,
           )
           .addAliasToGraphRequest("OrderFulfillmentCancel")
           .get(BUTTON_SELECTORS.submit)
@@ -187,7 +187,7 @@ describe("Orders", () => {
         channelId: defaultChannel.id,
         shippingMethodId: shippingMethod.id,
         variantsList,
-        address
+        address,
       })
         .then(({ order: orderResp }) => {
           order = orderResp;
@@ -202,13 +202,13 @@ describe("Orders", () => {
           cy.get(BUTTON_SELECTORS.submit)
             .click()
             .waitForRequestAndCheckIfNoErrors(
-              "@OrderFulfillmentRefundProducts"
+              "@OrderFulfillmentRefundProducts",
             );
           getOrder(order.id);
         })
         .then(orderResp => {
           expect(orderResp.paymentStatus).to.be.eq("FULLY_REFUNDED");
         });
-    }
+    },
   );
 });
