@@ -1,17 +1,25 @@
-import { Card, CardContent, TextField, Typography } from "@material-ui/core";
+import {
+  Card,
+  CardContent,
+  Popper,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
+import Link from "@saleor/components/Link";
 import { WebhookErrorFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { Pill } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getWebhookErrorMessage from "@saleor/utils/errors/webhooks";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { WebhookFormData } from "../WebhooksDetailsPage/WebhooksDetailsPage";
 import { messages } from "./messages";
+import { useStyles } from "./styles";
 
 interface WebhookInfoProps {
   data: WebhookFormData;
@@ -27,8 +35,12 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
   onChange,
 }) => {
   const intl = useIntl();
+  const classes = useStyles();
 
   const formErrors = getFormErrors(["name", "targetUrl", "secretKey"], errors);
+
+  const [isPopupOpen, setPopupOpen] = React.useState(false);
+  const anchor = React.useRef<HTMLDivElement>(null);
 
   return (
     <Card>
@@ -79,11 +91,46 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
           onChange={onChange}
           InputProps={{
             endAdornment: (
-              <Pill
-                color="error"
-                label={intl.formatMessage(commonMessages.deprecated)}
-                size={"small"}
-              />
+              <div
+                onClick={e => {
+                  // e.preventDefault();
+                  e.stopPropagation();
+                }}
+                ref={anchor}
+                onMouseOver={() => setPopupOpen(true)}
+                onMouseLeave={() => setPopupOpen(false)}
+              >
+                <div
+                  aria-controls="availability-menu"
+                  aria-haspopup="true"
+                  role="button"
+                >
+                  <Pill
+                    label={intl.formatMessage(commonMessages.deprecated)}
+                    color={"error"}
+                    outlined
+                    size="small"
+                  />
+                </div>
+                <Popper
+                  anchorEl={anchor.current}
+                  open={isPopupOpen}
+                  placement={"top"}
+                >
+                  <Card elevation={8} className={classes.toolbar}>
+                    <Typography>
+                      <FormattedMessage {...messages.useSignature} />
+                    </Typography>
+                    <Link
+                      href={
+                        "https://docs.saleor.io/docs/3.x/developer/extending/apps/synchronous-webhooks#payload-signature"
+                      }
+                    >
+                      <FormattedMessage {...messages.learnMore} />
+                    </Link>
+                  </Card>
+                </Popper>
+              </div>
             ),
           }}
         />
