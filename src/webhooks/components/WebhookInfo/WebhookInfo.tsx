@@ -4,6 +4,7 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import { WebhookErrorFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
+import { Pill } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getWebhookErrorMessage from "@saleor/utils/errors/webhooks";
 import React from "react";
@@ -76,6 +77,15 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
           name="secretKey"
           value={data.secretKey}
           onChange={onChange}
+          InputProps={{
+            endAdornment: (
+              <Pill
+                color="error"
+                label={intl.formatMessage(commonMessages.deprecated)}
+                size={"small"}
+              />
+            ),
+          }}
         />
       </CardContent>
     </Card>
