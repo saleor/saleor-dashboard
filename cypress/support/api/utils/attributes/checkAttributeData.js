@@ -1,5 +1,3 @@
-const { softExpect } = chai;
-
 export function expectCorrectDataInAttribute(
   attribute,
   {
@@ -7,13 +5,13 @@ export function expectCorrectDataInAttribute(
     attributeType,
     entityType = null,
     unit = null,
-    valueRequired = true
-  }
+    valueRequired = true,
+  },
 ) {
-  softExpect(attribute.name).to.eq(attributeName);
-  softExpect(attribute.slug).to.eq(attributeName);
-  softExpect(attribute.inputType).to.eq(attributeType);
-  softExpect(attribute.entityType).to.eq(entityType);
-  softExpect(attribute.unit).to.eq(unit);
-  softExpect(attribute.valueRequired).to.eq(valueRequired);
+  expect(attribute.name).to.eq(attributeName);
+  expect(attribute.slug).to.eq(attributeName);
+  expect(attribute.inputType).to.eq(attributeType);
+  expect(attribute.entityType).to.eq(entityType);
+  expect(attribute.unit).to.eq(unit);
+  expect(attribute.valueRequired).to.eq(valueRequired);
 }

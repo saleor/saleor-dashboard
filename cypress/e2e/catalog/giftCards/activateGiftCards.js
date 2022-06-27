@@ -5,74 +5,75 @@ import { GIFT_CARD_LIST } from "../../../elements/catalog/giftCard/giftCardList"
 import { completeCheckout } from "../../../support/api/requests/Checkout";
 import {
   createGiftCard,
-  giftCardDeactivate
+  giftCardDeactivate,
 } from "../../../support/api/requests/GiftCard";
 import {
   createCheckoutWithDisabledGiftCard,
   deleteGiftCardsWithTagStartsWith,
   isGiftCardDataAsExpected,
-  purchaseProductWithActiveGiftCard
+  purchaseProductWithActiveGiftCard,
 } from "../../../support/api/utils/catalog/giftCardUtils";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import {
   addPayment,
-  purchaseProductWithPromoCode
+  purchaseProductWithPromoCode,
 } from "../../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
-import filterTests from "../../../support/filterTests";
 import {
   changeGiftCardActiveStatus,
-  enterAndSelectGiftCards
+  enterAndSelectGiftCards,
 } from "../../../support/pages/catalog/giftCardPage";
 
-filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
-  describe("As a admin I want to use enabled gift card in checkout", () => {
-    const startsWith = "GiftCardsCheckout";
-    const productPrice = 50;
-    const shippingPrice = 50;
-    const email = "example@example.com";
-    const giftCardData = {
-      amount: 150,
-      currency: "USD"
-    };
+describe("As a admin I want to use enabled gift card in checkout", () => {
+  const startsWith = "GiftCardsCheckout";
+  const productPrice = 50;
+  const shippingPrice = 50;
+  const email = "example@example.com";
+  const giftCardData = {
+    amount: 150,
+    currency: "USD",
+  };
 
-    let defaultChannel;
-    let address;
-    let dataForCheckout;
+  let defaultChannel;
+  let address;
+  let dataForCheckout;
 
-    before(() => {
-      const name = `${startsWith}${faker.datatype.number()}`;
+  before(() => {
+    const name = `${startsWith}${faker.datatype.number()}`;
 
-      cy.clearSessionData().loginUserViaRequest();
+    cy.clearSessionData().loginUserViaRequest();
 
-      channelsUtils.deleteChannelsStartsWith(startsWith);
-      productsUtils.deleteProductsStartsWith(startsWith);
-      deleteShippingStartsWith(startsWith);
-      deleteGiftCardsWithTagStartsWith(startsWith);
+    channelsUtils.deleteChannelsStartsWith(startsWith);
+    productsUtils.deleteProductsStartsWith(startsWith);
+    deleteShippingStartsWith(startsWith);
+    deleteGiftCardsWithTagStartsWith(startsWith);
 
-      productsUtils
-        .createProductWithShipping({ name, shippingPrice, productPrice })
-        .then(resp => {
-          defaultChannel = resp.defaultChannel;
-          address = resp.address;
+    productsUtils
+      .createProductWithShipping({ name, shippingPrice, productPrice })
+      .then(resp => {
+        defaultChannel = resp.defaultChannel;
+        address = resp.address;
 
-          dataForCheckout = {
-            address,
-            email,
-            auth: "token",
-            channelSlug: defaultChannel.slug,
-            shippingMethodName: resp.shippingMethod.name,
-            variantsList: resp.variantsList
-          };
-        });
-    });
+        dataForCheckout = {
+          address,
+          email,
+          auth: "token",
+          channelSlug: defaultChannel.slug,
+          shippingMethodName: resp.shippingMethod.name,
+          variantsList: resp.variantsList,
+        };
+      });
+  });
 
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest();
-    });
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+  });
 
-    it("should be able to enable gift card and use it in checkout. TC: SALEOR_1006", () => {
+  it(
+    "should be able to enable gift card and use it in checkout. TC: SALEOR_1006",
+    { tags: ["@giftCard", "@allEnv"] },
+    () => {
       const expectedGiftCardBalance =
         giftCardData.amount - productPrice - shippingPrice;
 
@@ -96,15 +97,19 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
             giftCardId: giftCard.id,
             expectedAmount: expectedGiftCardBalance,
             userEmail: email,
-            initialBalance: giftCardData.amount
+            initialBalance: giftCardData.amount,
           });
         })
         .then(dataAsExpected => {
           expect(dataAsExpected).to.be.true;
         });
-    });
+    },
+  );
 
-    it("should not be able to disable gift card and use it in checkout. TC: SALEOR_1007", () => {
+  it(
+    "should not be able to disable gift card and use it in checkout. TC: SALEOR_1007",
+    { tags: ["@giftCard", "@allEnv", "@stable"] },
+    () => {
       giftCardData.tag = `${startsWith}${faker.datatype.number()}`;
       let giftCard;
 
@@ -122,15 +127,19 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         .then(() => {
           isGiftCardDataAsExpected({
             giftCardId: giftCard.id,
-            expectedAmount: giftCardData.amount
+            expectedAmount: giftCardData.amount,
           });
         })
         .then(dataAsExpected => {
           expect(dataAsExpected).to.be.true;
         });
-    });
+    },
+  );
 
-    it("should not be able to disable several gift cards on gift card list page and use it in checkout. TC: SALEOR_1013", () => {
+  it(
+    "should not be able to disable several gift cards on gift card list page and use it in checkout. TC: SALEOR_1013",
+    { tags: ["@giftCard", "@allEnv", "@stable"] },
+    () => {
       const firstGiftCardName = `${startsWith}${faker.datatype.number()}`;
       const secondGiftCardName = `${startsWith}${faker.datatype.number()}`;
       const amount = 10;
@@ -140,14 +149,14 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
       createGiftCard({
         tag: firstGiftCardName,
         amount,
-        currency: "USD"
+        currency: "USD",
       })
         .then(giftCard => {
           firstGiftCard = giftCard;
           createGiftCard({
             tag: secondGiftCardName,
             amount,
-            currency: "USD"
+            currency: "USD",
           });
         })
         .then(giftCard => {
@@ -171,16 +180,20 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         .then(() => {
           isGiftCardDataAsExpected({
             giftCardId: firstGiftCard.id,
-            expectedAmount: amount
+            expectedAmount: amount,
           }).then(dataAsExpected => expect(dataAsExpected).to.be.true);
           isGiftCardDataAsExpected({
             giftCardId: secondGiftCard.id,
-            expectedAmount: amount
+            expectedAmount: amount,
           }).then(dataAsExpected => expect(dataAsExpected).to.be.true);
         });
-    });
+    },
+  );
 
-    xit("should be able to enable several gift cards on gift card list page and use it in checkout. TC: SALEOR_1012", () => {
+  xit(
+    "should be able to enable several gift cards on gift card list page and use it in checkout. TC: SALEOR_1012",
+    { tags: ["@giftCard", "@allEnv"] },
+    () => {
       const firstGiftCardName = `${startsWith}${faker.datatype.number()}`;
       const secondGiftCardName = `${startsWith}${faker.datatype.number()}`;
       const amount = 10;
@@ -192,7 +205,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         tag: firstGiftCardName,
         amount,
         currency: "USD",
-        isActive: false
+        isActive: false,
       })
         .then(giftCard => {
           firstGiftCard = giftCard;
@@ -200,7 +213,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
             tag: secondGiftCardName,
             amount,
             currency: "USD",
-            isActive: false
+            isActive: false,
           });
         })
         .then(giftCard => {
@@ -217,7 +230,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
             expectedAmount: 0,
             initialAmount: amount,
             dataForCheckout,
-            expectedOrderPrice
+            expectedOrderPrice,
           }).then(isDataAsExpected => expect(isDataAsExpected).to.be.true);
           dataForCheckout.voucherCode = secondGiftCard.code;
           purchaseProductWithActiveGiftCard({
@@ -225,9 +238,9 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
             expectedAmount: 0,
             initialAmount: amount,
             dataForCheckout,
-            expectedOrderPrice
+            expectedOrderPrice,
           }).then(isDataAsExpected => expect(isDataAsExpected).to.be.true);
         });
-    });
-  });
+    },
+  );
 });

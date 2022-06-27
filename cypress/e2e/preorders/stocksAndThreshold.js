@@ -11,53 +11,54 @@ import { deleteCollectionsStartsWith } from "../../support/api/utils/catalog/col
 import { createWaitingForCaptureOrder } from "../../support/api/utils/ordersUtils";
 import {
   createProductWithShipping,
-  deleteProductsStartsWith
+  deleteProductsStartsWith,
 } from "../../support/api/utils/products/productsUtils";
-import filterTests from "../../support/filterTests";
 import { saveVariant } from "../../support/pages/catalog/products/VariantsPage";
 
-filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
-  describe("Stocks and threshold in preorder variants", () => {
-    const startsWith = "StocksThreshold";
-    const attributeValues = ["value1", "value2"];
-    const preorder = {
-      globalThreshold: 15
-    };
+describe("Stocks and threshold in preorder variants", () => {
+  const startsWith = "StocksThreshold";
+  const attributeValues = ["value1", "value2"];
+  const preorder = {
+    globalThreshold: 15,
+  };
 
-    let defaultChannel;
-    let product;
-    let variantsList;
-    let warehouse;
-    let checkoutData;
+  let defaultChannel;
+  let product;
+  let variantsList;
+  let warehouse;
+  let checkoutData;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteProductsStartsWith(startsWith);
-      deleteCollectionsStartsWith(startsWith);
-      createProductWithShipping({
-        name: startsWith,
-        attributeValues,
-        preorder
-      }).then(resp => {
-        checkoutData = {
-          address: resp.address,
-          channelSlug: resp.defaultChannel.slug,
-          email: "example@example.com",
-          shippingMethodName: resp.shippingMethod.name,
-          variantsList: resp.variantsList
-        };
-        warehouse = resp.warehouse;
-        defaultChannel = resp.defaultChannel;
-        product = resp.product;
-        variantsList = resp.variantsList;
-      });
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteProductsStartsWith(startsWith);
+    deleteCollectionsStartsWith(startsWith);
+    createProductWithShipping({
+      name: startsWith,
+      attributeValues,
+      preorder,
+    }).then(resp => {
+      checkoutData = {
+        address: resp.address,
+        channelSlug: resp.defaultChannel.slug,
+        email: "example@example.com",
+        shippingMethodName: resp.shippingMethod.name,
+        variantsList: resp.variantsList,
+      };
+      warehouse = resp.warehouse;
+      defaultChannel = resp.defaultChannel;
+      product = resp.product;
+      variantsList = resp.variantsList;
     });
+  });
 
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest();
-    });
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+  });
 
-    xit("should not be able to order more products then channel threshold", () => {
+  xit(
+    "should not be able to order more products then channel threshold",
+    { tags: ["@preorders", "@allEnv"] },
+    () => {
       cy.visit(variantDetailsUrl(product.id, variantsList[0].id))
         .get(VARIANTS_SELECTORS.channelThresholdInput)
         .type(5)
@@ -68,9 +69,13 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
       createCheckout(checkoutData).then(({ errors }) => {
         expect(errors[0].field).to.eq("quantity");
       });
-    });
+    },
+  );
 
-    it("should not be able to order more products then threshold even if channel is not exceeded", () => {
+  it(
+    "should not be able to order more products then threshold even if channel is not exceeded",
+    { tags: ["@preorders", "@allEnv"] },
+    () => {
       cy.visit(variantDetailsUrl(product.id, variantsList[0].id))
         .get(VARIANTS_SELECTORS.channelThresholdInput)
         .type(40);
@@ -79,9 +84,13 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
       createCheckout(checkoutData).then(({ errors }) => {
         expect(errors[0].field).to.eq("quantity");
       });
-    });
+    },
+  );
 
-    it("should allocate variants bought in preorder to correct warehouses", () => {
+  it(
+    "should allocate variants bought in preorder to correct warehouses",
+    { tags: ["@preorders", "@allEnv"] },
+    () => {
       let order;
       createWaitingForCaptureOrder(checkoutData)
         .then(({ order: orderResp }) => {
@@ -93,18 +102,18 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
             .get(BUTTON_SELECTORS.submit)
             .click()
             .waitForRequestAndCheckIfNoErrors(
-              "@ProductVariantPreorderDeactivate"
+              "@ProductVariantPreorderDeactivate",
             );
           getVariant(variantsList[0].id, defaultChannel.slug);
         })
         .then(variantResp => {
           expect(
             variantResp.stocks[0].quantityAllocated,
-            "product is allocated with correct quantity"
+            "product is allocated with correct quantity",
           ).to.eq(1);
           expect(
             variantResp.stocks[0].warehouse.id,
-            "product is allocated to correct warehouse"
+            "product is allocated to correct warehouse",
           ).to.eq(warehouse.id);
         })
         .then(() => {
@@ -112,12 +121,12 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
             orderId: order.id,
             warehouse: warehouse.id,
             quantity: 1,
-            linesId: order.lines
+            linesId: order.lines,
           });
         })
         .then(({ errors }) => {
           expect(errors, "no errors when fulfilling order").to.be.empty;
         });
-    });
-  });
+    },
+  );
 });

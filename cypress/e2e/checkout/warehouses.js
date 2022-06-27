@@ -8,23 +8,24 @@ import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith
+  deleteProductsStartsWith,
 } from "../../support/api/utils/products/productsUtils";
 import {
   createShipping,
-  deleteShippingStartsWith
+  deleteShippingStartsWith,
 } from "../../support/api/utils/shippingUtils";
-import filterTests from "../../support/filterTests";
 
-filterTests({ definedTags: ["all"] }, () => {
-  describe("Warehouses in checkout", () => {
-    const startsWith = `CyWarehouseCheckout`;
-    let defaultChannel;
-    let usAddress;
-    let plAddress;
-    let warehouse;
+describe("Warehouses in checkout", () => {
+  const startsWith = `CyWarehouseCheckout`;
+  let defaultChannel;
+  let usAddress;
+  let plAddress;
+  let warehouse;
 
-    it("should not be possible to buy product for country not listed in warehouse", () => {
+  it(
+    "should not be possible to buy product for country not listed in warehouse",
+    { tags: ["@checkout", "@allEnv", "@stable"] },
+    () => {
       cy.clearSessionData().loginUserViaRequest();
       deleteShippingStartsWith(startsWith);
       deleteProductsStartsWith(startsWith);
@@ -40,7 +41,7 @@ filterTests({ definedTags: ["all"] }, () => {
           createShipping({
             channelId: defaultChannel.id,
             name,
-            address: usAddress
+            address: usAddress,
           });
         })
         .then(({ warehouse: warehouseResp }) => {
@@ -55,7 +56,7 @@ filterTests({ definedTags: ["all"] }, () => {
             channelId: defaultChannel.id,
             productTypeId: productType.id,
             warehouseId: warehouse.id,
-            quantityInWarehouse: 100
+            quantityInWarehouse: 100,
           });
         })
         .then(({ variantsList }) => {
@@ -63,12 +64,12 @@ filterTests({ definedTags: ["all"] }, () => {
             channelSlug: defaultChannel.slug,
             email: "example@example.com",
             variantsList,
-            address: plAddress
+            address: plAddress,
           });
         })
         .then(({ errors }) => {
           expect(errors[0]).to.have.property("field", "quantity");
         });
-    });
-  });
+    },
+  );
 });

@@ -9,7 +9,7 @@ import { customerDetailsUrl } from "../fixtures/urlList";
 import {
   confirmAccount,
   customerRegistration,
-  deleteCustomersStartsWith
+  deleteCustomersStartsWith,
 } from "../support/api/requests/Customer";
 import { getDefaultChannel } from "../support/api/utils/channelsUtils";
 import { getMailActivationLinkForUser } from "../support/api/utils/users";
@@ -29,43 +29,47 @@ describe("Tests for customer registration", () => {
     });
   });
 
-  filterTests({ definedTags: ["stagedOnly"] }, () => {
-    it("should register customer", () => {
-      const email = `${startsWith}${faker.datatype.number()}@example.com`;
-      customerRegistration({ email, channel: defaultChannel.slug });
-      getMailActivationLinkForUser(email)
-        .then(urlLink => {
-          const tokenRegex = /token=(.*)/;
-          const token = urlLink.match(tokenRegex)[1];
-          cy.clearSessionData();
-          confirmAccount(email, token);
-        })
-        .then(() => {
-          cy.loginUserViaRequest("token", {
-            email,
-            password: Cypress.env("USER_PASSWORD")
-          }).its("body.data.tokenCreate");
-        })
-        .then(({ errors, token }) => {
-          expect(errors.length).to.eq(0);
-          expect(token).to.be.ok;
-        });
-    });
+  it("should register customer", { tags: ["@customer", "@stagedOnly"] }, () => {
+    const email = `${startsWith}${faker.datatype.number()}@example.com`;
+    customerRegistration({ email, channel: defaultChannel.slug });
+    getMailActivationLinkForUser(email)
+      .then(urlLink => {
+        const tokenRegex = /token=(.*)/;
+        const token = urlLink.match(tokenRegex)[1];
+        cy.clearSessionData();
+        confirmAccount(email, token);
+      })
+      .then(() => {
+        cy.loginUserViaRequest("token", {
+          email,
+          password: Cypress.env("USER_PASSWORD"),
+        }).its("body.data.tokenCreate");
+      })
+      .then(({ errors, token }) => {
+        expect(errors.length).to.eq(0);
+        expect(token).to.be.ok;
+      });
   });
 
-  filterTests(["all"], () => {
-    it("shouldn't register customer with duplicated email", () => {
+  it(
+    "shouldn't register customer with duplicated email",
+    { tags: ["@customer", "@allEnv", "@stable"] },
+    () => {
       const duplicatedEmail = Cypress.env("USER_NAME");
       customerRegistration({
         duplicatedEmail,
-        channel: defaultChannel.slug
+        channel: defaultChannel.slug,
       }).then(({ user, errors }) => {
         expect(errors[0].field).to.eq("email");
         expect(user).to.not.be.ok;
       });
-    });
+    },
+  );
 
-    it("should activate customer from dashboard", () => {
+  it(
+    "should activate customer from dashboard",
+    { tags: ["@customer", "@allEnv", "@stable"] },
+    () => {
       customerRegistration({ email, channel: defaultChannel.slug })
         .then(({ user }) => {
           cy.clearSessionData()
@@ -79,7 +83,7 @@ describe("Tests for customer registration", () => {
             .clearSessionData()
             .loginUserViaRequest("token", {
               email,
-              password: Cypress.env("USER_PASSWORD")
+              password: Cypress.env("USER_PASSWORD"),
             })
             .its("body.data.tokenCreate");
         })
@@ -87,6 +91,6 @@ describe("Tests for customer registration", () => {
           expect(errors.length).to.eq(0);
           expect(token).to.be.ok;
         });
-    });
-  });
+    },
+  );
 });

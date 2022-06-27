@@ -5,25 +5,22 @@ declare namespace Cypress {
       element: {},
       deleteFunction: function,
       startsWith: string,
-      name: string
+      name: string,
     ): Chainable<any>;
     deleteElementsStartsWith(
       deleteFunction: function,
       getFunction: function,
       startsWith: string,
-      name? = string
+      name? = string,
     ): Chainable<any>;
-    softExpectSkeletonIsVisible(): Chainable<any>;
     expectCorrectFullAddress(
       responseAddress: string,
-      expectedAddress: string
+      expectedAddress: string,
     ): Chainable<any>;
     expectCorrectBasicAddress(
       responseAddress: string,
-      expectedAddress: string
+      expectedAddress: string,
     ): Chainable<any>;
-    softAssertVisibility(selector: string): Chainable<any>;
-    softAssertMatch(selector: string, regexp: string): Chainable<any>;
     getTextFromElement(element: {}): Chainable<any>;
     clearAndType(subject: {}, text: string): Chainable<any>;
     loginUser(): Chainable<any>;
@@ -41,7 +38,7 @@ declare namespace Cypress {
     fillBaseSelect(selectSelector: string, value: string): Chainable<any>;
     fillAutocompleteSelect(
       selectSelector: string,
-      option?: string
+      option?: string,
     ): Chainable<any>;
     addAliasToGraphRequest(alias: string): Chainable<any>;
     sendRequestWithQuery(query: string): Chainable<any>;
@@ -51,7 +48,7 @@ declare namespace Cypress {
       elementsGraphqlAlias: string,
       elementsName: string,
       elementsIds: string,
-      actionFunction
+      actionFunction,
     }): Chainable<any>;
     searchInTable(query: string): Chainable<any>;
     waitForRequestAndCheckIfNoErrors(alias: string): Chainable<any>;

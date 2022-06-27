@@ -10,63 +10,64 @@ import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
 import { isProductAvailableForPurchase } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
-import filterTests from "../../../support/filterTests";
 import { updateProductIsAvailableForPurchase } from "../../../support/pages/catalog/products/productDetailsPage";
 
-filterTests({ definedTags: ["all"] }, () => {
-  describe("Products available in listings", () => {
-    const startsWith = "CyAvailForPurchase-";
-    const name = `${startsWith}${faker.datatype.number()}`;
-    let productType;
-    let attribute;
-    let category;
-    let defaultChannel;
-    let warehouse;
+describe("Products available in listings", () => {
+  const startsWith = "CyAvailForPurchase-";
+  const name = `${startsWith}${faker.datatype.number()}`;
+  let productType;
+  let attribute;
+  let category;
+  let defaultChannel;
+  let warehouse;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      shippingUtils.deleteShippingStartsWith(startsWith);
-      productsUtils.deleteProductsStartsWith(startsWith);
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    shippingUtils.deleteShippingStartsWith(startsWith);
+    productsUtils.deleteProductsStartsWith(startsWith);
 
-      getDefaultChannel()
-        .then(channel => {
-          defaultChannel = channel;
-          cy.fixture("addresses");
-        })
-        .then(addressesFixture => {
-          shippingUtils.createShipping({
-            channelId: defaultChannel.id,
-            name,
-            address: addressesFixture.plAddress
-          });
-        })
-        .then(({ warehouse: warehouseResp }) => {
-          warehouse = warehouseResp;
+    getDefaultChannel()
+      .then(channel => {
+        defaultChannel = channel;
+        cy.fixture("addresses");
+      })
+      .then(addressesFixture => {
+        shippingUtils.createShipping({
+          channelId: defaultChannel.id,
+          name,
+          address: addressesFixture.plAddress,
         });
+      })
+      .then(({ warehouse: warehouseResp }) => {
+        warehouse = warehouseResp;
+      });
 
-      productsUtils
-        .createTypeAttributeAndCategoryForProduct({ name })
-        .then(
-          ({
-            attribute: attributeResp,
-            productType: productTypeResp,
-            category: categoryResp
-          }) => {
-            productType = productTypeResp;
-            attribute = attributeResp;
-            category = categoryResp;
-          }
-        );
-    });
-
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest(
-        "auth",
-        ONE_PERMISSION_USERS.product
+    productsUtils
+      .createTypeAttributeAndCategoryForProduct({ name })
+      .then(
+        ({
+          attribute: attributeResp,
+          productType: productTypeResp,
+          category: categoryResp,
+        }) => {
+          productType = productTypeResp;
+          attribute = attributeResp;
+          category = categoryResp;
+        },
       );
-    });
+  });
 
-    it("should update product to available for purchase", () => {
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest(
+      "auth",
+      ONE_PERMISSION_USERS.product,
+    );
+  });
+
+  it(
+    "should update product to available for purchase",
+    { tags: ["@products", "@allEnv"] },
+    () => {
       const productName = `${startsWith}${faker.datatype.number()}`;
       let product;
 
@@ -78,7 +79,7 @@ filterTests({ definedTags: ["all"] }, () => {
           productTypeId: productType.id,
           attributeId: attribute.id,
           categoryId: category.id,
-          isAvailableForPurchase: false
+          isAvailableForPurchase: false,
         })
         .then(({ product: productResp }) => {
           product = productResp;
@@ -91,9 +92,13 @@ filterTests({ definedTags: ["all"] }, () => {
         .then(resp => {
           expect(isProductAvailableForPurchase(resp)).to.be.eq(true);
         });
-    });
+    },
+  );
 
-    it("should update product to not available for purchase", () => {
+  it(
+    "should update product to not available for purchase",
+    { tags: ["@products", "@allEnv"] },
+    () => {
       const productName = `${startsWith}${faker.datatype.number()}`;
       let product;
 
@@ -104,7 +109,7 @@ filterTests({ definedTags: ["all"] }, () => {
           warehouseId: warehouse.id,
           productTypeId: productType.id,
           attributeId: attribute.id,
-          categoryId: category.id
+          categoryId: category.id,
         })
         .then(({ product: productResp }) => {
           product = productResp;
@@ -117,6 +122,6 @@ filterTests({ definedTags: ["all"] }, () => {
         .then(resp => {
           expect(isProductAvailableForPurchase(resp)).to.be.eq(false);
         });
-    });
-  });
+    },
+  );
 });

@@ -8,53 +8,54 @@ import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { voucherDetailsUrl } from "../../../fixtures/urlList";
 import {
   createVoucherInChannel,
-  deleteVouchersStartsWith
+  deleteVouchersStartsWith,
 } from "../../../support/api/utils/discounts/vouchersUtils";
 import { createCheckoutWithVoucher } from "../../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
-import filterTests from "../../../support/filterTests";
 import { formatDate, formatTime } from "../../../support/formatData/formatDate";
 import { setVoucherDate } from "../../../support/pages/discounts/vouchersPage";
 
-filterTests({ definedTags: ["all"] }, () => {
-  describe("As an admin I want to update vouchers", () => {
-    const startsWith = "CyVou-";
-    const productPrice = 100;
-    const shippingPrice = 100;
+describe("As an admin I want to update vouchers", () => {
+  const startsWith = "CyVou-";
+  const productPrice = 100;
+  const shippingPrice = 100;
 
-    let defaultChannel;
-    let product;
-    let dataForCheckout;
+  let defaultChannel;
+  let product;
+  let dataForCheckout;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteVouchersStartsWith(startsWith);
-      const name = `${startsWith}${faker.datatype.number()}`;
-      productsUtils
-        .createProductWithShipping({ name, productPrice, shippingPrice })
-        .then(
-          ({
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteVouchersStartsWith(startsWith);
+    const name = `${startsWith}${faker.datatype.number()}`;
+    productsUtils
+      .createProductWithShipping({ name, productPrice, shippingPrice })
+      .then(
+        ({
+          variantsList: variantsResp,
+          defaultChannel: channel,
+          shippingMethod: shippingMethodResp,
+          address: addressResp,
+          product: productResp,
+        }) => {
+          defaultChannel = channel;
+          product = productResp;
+
+          dataForCheckout = {
+            channelSlug: defaultChannel.slug,
             variantsList: variantsResp,
-            defaultChannel: channel,
-            shippingMethod: shippingMethodResp,
             address: addressResp,
-            product: productResp
-          }) => {
-            defaultChannel = channel;
-            product = productResp;
+            shippingMethodName: shippingMethodResp.name,
+            auth: "token",
+          };
+        },
+      );
+  });
 
-            dataForCheckout = {
-              channelSlug: defaultChannel.slug,
-              variantsList: variantsResp,
-              address: addressResp,
-              shippingMethodName: shippingMethodResp.name,
-              auth: "token"
-            };
-          }
-        );
-    });
-
-    it("should delete voucher. TC: SALEOR_1905", () => {
+  it(
+    "should delete voucher. TC: SALEOR_1905",
+    { tags: ["@vouchers", "@allEnv"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const voucherValue = 50;
 
@@ -65,7 +66,7 @@ filterTests({ definedTags: ["all"] }, () => {
         name,
         productId: product.id,
         channelId: defaultChannel.id,
-        value: voucherValue
+        value: voucherValue,
       })
         .then(voucherResp => {
           voucher = voucherResp;
@@ -84,9 +85,13 @@ filterTests({ definedTags: ["all"] }, () => {
           const errorField = addPromoCodeResp.errors[0].field;
           expect(errorField).to.be.eq("promoCode");
         });
-    });
+    },
+  );
 
-    it("should update voucher. TC: SALEOR_1906", () => {
+  it(
+    "should update voucher. TC: SALEOR_1906",
+    { tags: ["@vouchers", "@allEnv"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const voucherValue = 50;
       const voucherUpdatedValue = 20;
@@ -102,7 +107,7 @@ filterTests({ definedTags: ["all"] }, () => {
         name,
         productId: product.id,
         channelId: defaultChannel.id,
-        value: voucherValue
+        value: voucherValue,
       })
         .then(voucherResp => {
           voucher = voucherResp;
@@ -123,9 +128,13 @@ filterTests({ definedTags: ["all"] }, () => {
           const amount = addPromoCodeResp.checkout.totalPrice.gross.amount;
           expect(amount).to.be.eq(expectedOrderAmount);
         });
-    });
+    },
+  );
 
-    it("should set date on voucher. TC: SALEOR_1912", () => {
+  it(
+    "should set date on voucher. TC: SALEOR_1912",
+    { tags: ["@vouchers", "@allEnv", "@stable"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const voucherValue = 50;
       const today = new Date();
@@ -140,7 +149,7 @@ filterTests({ definedTags: ["all"] }, () => {
         name,
         productId: product.id,
         channelId: defaultChannel.id,
-        value: voucherValue
+        value: voucherValue,
       })
         .then(voucherResp => {
           voucher = voucherResp;
@@ -159,9 +168,13 @@ filterTests({ definedTags: ["all"] }, () => {
         .then(({ addPromoCodeResp }) => {
           expect(addPromoCodeResp.errors).to.be.empty;
         });
-    });
+    },
+  );
 
-    it("should set end date on voucher. TC: SALEOR_1913", () => {
+  it(
+    "should set end date on voucher. TC: SALEOR_1913",
+    { tags: ["@vouchers", "@allEnv"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const voucherValue = 50;
       const today = new Date();
@@ -176,7 +189,7 @@ filterTests({ definedTags: ["all"] }, () => {
         name,
         productId: product.id,
         channelId: defaultChannel.id,
-        value: voucherValue
+        value: voucherValue,
       })
         .then(voucherResp => {
           voucher = voucherResp;
@@ -185,7 +198,7 @@ filterTests({ definedTags: ["all"] }, () => {
             voucherId: voucher.id,
             endDate: todayDate,
             endTime: formatTime(today),
-            hasEndDate: true
+            hasEndDate: true,
           });
           dataForCheckout.voucherCode = voucher.code;
           createCheckoutWithVoucher(dataForCheckout);
@@ -196,7 +209,7 @@ filterTests({ definedTags: ["all"] }, () => {
           setVoucherDate({
             voucherId: voucher.id,
             endDate: tomorrowDate,
-            endTime: formatTime(tomorrow)
+            endTime: formatTime(tomorrow),
           });
           dataForCheckout.voucherCode = voucher.code;
           createCheckoutWithVoucher(dataForCheckout);
@@ -204,9 +217,13 @@ filterTests({ definedTags: ["all"] }, () => {
         .then(({ addPromoCodeResp }) => {
           expect(addPromoCodeResp.errors).to.be.empty;
         });
-    });
+    },
+  );
 
-    it("should set country on voucher. TC: SALEOR_1914", () => {
+  it(
+    "should set country on voucher. TC: SALEOR_1914",
+    { tags: ["@vouchers", "@allEnv"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const voucherValue = 50;
 
@@ -219,7 +236,7 @@ filterTests({ definedTags: ["all"] }, () => {
         channelId: defaultChannel.id,
         value: voucherValue,
         type: "SHIPPING",
-        country: "US"
+        country: "US",
       })
         .then(voucherResp => {
           voucher = voucherResp;
@@ -251,6 +268,6 @@ filterTests({ definedTags: ["all"] }, () => {
           const errorField = addPromoCodeResp.errors[0].field;
           expect(errorField).to.be.eq("promoCode");
         });
-    });
-  });
+    },
+  );
 });

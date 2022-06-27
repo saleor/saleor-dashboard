@@ -11,72 +11,73 @@ import { deleteSalesStartsWith } from "../../support/api/utils/discounts/salesUt
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
 import {
   createShipping,
-  deleteShippingStartsWith
+  deleteShippingStartsWith,
 } from "../../support/api/utils/shippingUtils";
 import { getProductPrice } from "../../support/api/utils/storeFront/storeFrontProductUtils";
-import filterTests from "../../support/filterTests";
 import {
   assignProducts,
   createSale,
   createSaleWithNewProduct,
-  discountOptions
+  discountOptions,
 } from "../../support/pages/discounts/salesPage";
 
-filterTests({ definedTags: ["all"] }, () => {
-  xdescribe("Sales discounts for products", () => {
-    const startsWith = "CySales-";
+xdescribe("Sales discounts for products", () => {
+  const startsWith = "CySales-";
 
-    let productType;
-    let attribute;
-    let category;
-    let defaultChannel;
-    let warehouse;
+  let productType;
+  let attribute;
+  let category;
+  let defaultChannel;
+  let warehouse;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      channelsUtils.deleteChannelsStartsWith(startsWith);
-      deleteSalesStartsWith(startsWith);
-      productsUtils.deleteProductsStartsWith(startsWith);
-      deleteShippingStartsWith(startsWith);
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    channelsUtils.deleteChannelsStartsWith(startsWith);
+    deleteSalesStartsWith(startsWith);
+    productsUtils.deleteProductsStartsWith(startsWith);
+    deleteShippingStartsWith(startsWith);
 
-      const name = `${startsWith}${faker.datatype.number()}`;
-      productsUtils
-        .createTypeAttributeAndCategoryForProduct({ name })
-        .then(
-          ({
-            productType: productTypeResp,
-            attribute: attributeResp,
-            category: categoryResp
-          }) => {
-            productType = productTypeResp;
-            attribute = attributeResp;
-            category = categoryResp;
+    const name = `${startsWith}${faker.datatype.number()}`;
+    productsUtils
+      .createTypeAttributeAndCategoryForProduct({ name })
+      .then(
+        ({
+          productType: productTypeResp,
+          attribute: attributeResp,
+          category: categoryResp,
+        }) => {
+          productType = productTypeResp;
+          attribute = attributeResp;
+          category = categoryResp;
 
-            channelsUtils.getDefaultChannel();
-          }
-        )
-        .then(channel => {
-          defaultChannel = channel;
-          cy.fixture("addresses");
-        })
-        .then(addresses => {
-          createShipping({
-            channelId: defaultChannel.id,
-            name,
-            address: addresses.plAddress,
-            price: 100
-          });
-        })
-        .then(({ warehouse: warehouseResp }) => {
-          warehouse = warehouseResp;
+          channelsUtils.getDefaultChannel();
+        },
+      )
+      .then(channel => {
+        defaultChannel = channel;
+        cy.fixture("addresses");
+      })
+      .then(addresses => {
+        createShipping({
+          channelId: defaultChannel.id,
+          name,
+          address: addresses.plAddress,
+          price: 100,
         });
-    });
+      })
+      .then(({ warehouse: warehouseResp }) => {
+        warehouse = warehouseResp;
+      });
+  });
 
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest();
-    });
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+  });
 
-    it("should create percentage discount", () => {
+  it(
+    "should create percentage discount",
+    { tags: ["@sales", "@allEnv"] },
+    () => {
       const saleName = `${startsWith}${faker.datatype.number()}`;
       const discountValue = 50;
       const productPrice = 100;
@@ -90,14 +91,18 @@ filterTests({ definedTags: ["all"] }, () => {
         categoryId: category.id,
         price: productPrice,
         discountOption: discountOptions.PERCENTAGE,
-        discountValue
+        discountValue,
       }).then(price => {
         const expectedPrice = (productPrice * discountValue) / 100;
         expect(expectedPrice).to.be.eq(price);
       });
-    });
+    },
+  );
 
-    it("should create fixed price discount", () => {
+  it(
+    "should create fixed price discount",
+    { tags: ["@sales", "@allEnv"] },
+    () => {
       const saleName = `${startsWith}${faker.datatype.number()}`;
       const discountValue = 50;
       const productPrice = 100;
@@ -111,14 +116,18 @@ filterTests({ definedTags: ["all"] }, () => {
         categoryId: category.id,
         price: productPrice,
         discountOption: discountOptions.FIXED,
-        discountValue
+        discountValue,
       }).then(price => {
         const expectedPrice = productPrice - discountValue;
         expect(expectedPrice).to.be.eq(price);
       });
-    });
+    },
+  );
 
-    it("should not displayed discount not assign to channel", () => {
+  it(
+    "should not displayed discount not assign to channel",
+    { tags: ["@sales", "@allEnv"] },
+    () => {
       const saleName = `${startsWith}${faker.datatype.number()}`;
       let channel;
       let product;
@@ -126,7 +135,7 @@ filterTests({ definedTags: ["all"] }, () => {
       const productPrice = 100;
 
       createChannel({ name: saleName }).then(
-        channelResp => (channel = channelResp)
+        channelResp => (channel = channelResp),
       );
       productsUtils
         .createProductInChannel({
@@ -136,13 +145,13 @@ filterTests({ definedTags: ["all"] }, () => {
           productTypeId: productType.id,
           attributeId: attribute.id,
           categoryId: category.id,
-          price: productPrice
+          price: productPrice,
         })
         .then(({ product: productResp }) => {
           product = productResp;
           updateChannelInProduct({
             productId: product.id,
-            channelId: channel.id
+            channelId: channel.id,
           });
         })
         .then(() => {
@@ -152,16 +161,16 @@ filterTests({ definedTags: ["all"] }, () => {
           */
 
           cy.visit(urlList.sales);
-          cy.softExpectSkeletonIsVisible();
+          cy.expectSkeletonIsVisible();
           createSale({
             saleName,
             channelName: channel.name,
-            discountValue
+            discountValue,
           });
           assignProducts(product.name);
           getProductPrice(product.id, defaultChannel.slug);
         })
         .then(price => expect(price).to.equal(productPrice));
-    });
-  });
+    },
+  );
 });

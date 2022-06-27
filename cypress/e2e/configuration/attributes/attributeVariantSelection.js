@@ -9,42 +9,43 @@ import { getVariant } from "../../../support/api/requests/Product";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import {
   createProductInChannelWithoutVariants,
-  deleteProductsStartsWith
+  deleteProductsStartsWith,
 } from "../../../support/api/utils/products/productsUtils";
 import { createProductTypeWithNewVariantSelectionAttribute } from "../../../support/api/utils/productTypeUtils";
-import filterTests from "../../../support/filterTests";
 import { fillUpVariantDetails } from "../../../support/pages/catalog/products/VariantsPage";
 
-filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
-  describe("As an admin I want to use attributes in variant selection", () => {
-    const startsWith = "VarSel";
+describe("As an admin I want to use attributes in variant selection", () => {
+  const startsWith = "VarSel";
 
-    const attributesTypes = [
-      { key: "DROPDOWN", TC: "SALEOR_0534" },
-      { key: "MULTISELECT", TC: "SALEOR_0535" },
-      { key: "BOOLEAN", TC: "SALEOR_0536" },
-      { key: "NUMERIC", TC: "SALEOR_0537" },
-      { key: "SWATCH", TC: "SALEOR_0538" }
-    ];
-    let channel;
-    let category;
-    let product;
+  const attributesTypes = [
+    { key: "DROPDOWN", TC: "SALEOR_0534" },
+    { key: "MULTISELECT", TC: "SALEOR_0535" },
+    { key: "BOOLEAN", TC: "SALEOR_0536" },
+    { key: "NUMERIC", TC: "SALEOR_0537" },
+    { key: "SWATCH", TC: "SALEOR_0538" },
+  ];
+  let channel;
+  let category;
+  let product;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteProductsStartsWith(startsWith);
-      getDefaultChannel().then(defaultChannel => (channel = defaultChannel));
-      createCategory({ name: startsWith }).then(
-        categoryResp => (category = categoryResp)
-      );
-    });
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteProductsStartsWith(startsWith);
+    getDefaultChannel().then(defaultChannel => (channel = defaultChannel));
+    createCategory({ name: startsWith }).then(
+      categoryResp => (category = categoryResp),
+    );
+  });
 
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest();
-    });
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+  });
 
-    attributesTypes.forEach(attributeType => {
-      it(`should create variant with ${attributeType.key} attribute. TC: ${attributeType.TC}`, () => {
+  attributesTypes.forEach(attributeType => {
+    it(
+      `should create variant with ${attributeType.key} attribute. TC: ${attributeType.TC}`,
+      { tags: ["@attribute", "@allEnv"] },
+      () => {
         const name = `${startsWith}${
           attributeType.key
         }${faker.datatype.number()}`;
@@ -55,7 +56,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         createProductTypeWithNewVariantSelectionAttribute({
           name,
           inputType,
-          attributeValues
+          attributeValues,
         })
           .then(({ productType: productTypeResp }) => {
             productType = productTypeResp;
@@ -64,20 +65,20 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
               categoryId: category.id,
               productTypeId: productType.id,
               name,
-              channelId: channel.id
+              channelId: channel.id,
             });
           })
           .then(productResp => {
             product = productResp;
 
             cy.visit(addVariantUrl(product.id)).addAliasToGraphRequest(
-              "VariantCreate"
+              "VariantCreate",
             );
 
             fillUpVariantDetails({
               sku: name,
               attributeName: attributeValues[0],
-              attributeType: inputType
+              attributeType: inputType,
             });
 
             cy.wait("@VariantCreate");
@@ -91,7 +92,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
             expect(attributes[0].attribute.inputType).to.eq(inputType);
             cy.confirmationMessageShouldAppear();
           });
-      });
-    });
+      },
+    );
   });
 });

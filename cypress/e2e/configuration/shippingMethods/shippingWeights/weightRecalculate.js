@@ -8,47 +8,48 @@ import { SHIPPING_RATE_DETAILS } from "../../../../elements/shipping/shipping-ra
 import { shippingRateUrl, urlList } from "../../../../fixtures/urlList";
 import {
   createShippingRate as createShippingRateViaApi,
-  createShippingZone
+  createShippingZone,
 } from "../../../../support/api/requests/ShippingMethod";
 import { updateShopWeightUnit } from "../../../../support/api/requests/ShopSettings";
 import { getDefaultChannel } from "../../../../support/api/utils/channelsUtils";
 import { deleteProductsStartsWith } from "../../../../support/api/utils/products/productsUtils";
 import { deleteShippingStartsWith } from "../../../../support/api/utils/shippingUtils";
-import filterTests from "../../../../support/filterTests";
 import { changeWeightUnit } from "../../../../support/pages/shippingMethodPage";
 
-filterTests({ definedTags: ["all"] }, () => {
-  xdescribe("As a staff user I want to change shop default weight unit", () => {
-    const startsWith = "RecalculateWeight";
-    const name = `${startsWith}${faker.datatype.number()}`;
+xdescribe("As a staff user I want to change shop default weight unit", () => {
+  const startsWith = "RecalculateWeight";
+  const name = `${startsWith}${faker.datatype.number()}`;
 
-    let defaultChannel;
-    let usAddress;
-    let shippingZone;
+  let defaultChannel;
+  let usAddress;
+  let shippingZone;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteShippingStartsWith(startsWith);
-      deleteProductsStartsWith(startsWith);
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteShippingStartsWith(startsWith);
+    deleteProductsStartsWith(startsWith);
 
-      updateShopWeightUnit("KG")
-        .then(() => {
-          getDefaultChannel().then(channel => {
-            defaultChannel = channel;
-            cy.fixture("addresses");
-          });
-        })
-        .then(({ usAddress: usAddressResp }) => {
-          usAddress = usAddressResp;
-          createShippingZone(name, "US", defaultChannel.id);
-        })
-        .then(shippingZoneResp => {
-          shippingZone = shippingZoneResp;
+    updateShopWeightUnit("KG")
+      .then(() => {
+        getDefaultChannel().then(channel => {
+          defaultChannel = channel;
+          cy.fixture("addresses");
         });
-    });
+      })
+      .then(({ usAddress: usAddressResp }) => {
+        usAddress = usAddressResp;
+        createShippingZone(name, "US", defaultChannel.id);
+      })
+      .then(shippingZoneResp => {
+        shippingZone = shippingZoneResp;
+      });
+  });
 
-    // Log in as user with shipping permissions after resolving SALEOR-3407 bug
-    it("should recalculate weight after changing shipping weight unit. TC: SALEOR_0901", () => {
+  // Log in as user with shipping permissions after resolving SALEOR-3407 bug
+  it(
+    "should recalculate weight after changing shipping weight unit. TC: SALEOR_0901",
+    { tags: ["@shipping", "@allEnv", "@stable"] },
+    () => {
       const rateName = `${startsWith}${faker.datatype.number()}`;
       const minWeightInKg = 1;
       const maxWeightInKg = 10;
@@ -63,7 +64,7 @@ filterTests({ definedTags: ["all"] }, () => {
         shippingZone: shippingZone.id,
         type: "WEIGHT",
         maxWeight: maxWeightInKg,
-        minWeight: minWeightInKg
+        minWeight: minWeightInKg,
       })
         .then(({ shippingMethod: shippingMethodResp }) => {
           shippingMethod = shippingMethodResp;
@@ -79,10 +80,10 @@ filterTests({ definedTags: ["all"] }, () => {
         })
         .then(responseArray => {
           const shippingMethods = responseArray.find(
-            element => element.data.shippingZone
+            element => element.data.shippingZone,
           ).data.shippingZone.shippingMethods;
           const rate = shippingMethods.find(
-            element => element.id === shippingMethod.id
+            element => element.id === shippingMethod.id,
           );
           cy.waitForProgressBarToNotBeVisible();
           expect(rate.minimumOrderWeight.unit).to.eq("G");
@@ -98,6 +99,6 @@ filterTests({ definedTags: ["all"] }, () => {
         .then(actualMaxWeight => {
           expect(parseInt(actualMaxWeight, 10)).to.eq(maxWeightInG);
         });
-    });
-  });
+    },
+  );
 });

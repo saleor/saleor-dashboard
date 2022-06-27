@@ -16,122 +16,123 @@ import { expectCorrectProductInformation } from "../../support/api/utils/product
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith
+  deleteProductsStartsWith,
 } from "../../support/api/utils/products/productsUtils";
-import filterTests from "../../support/filterTests";
 import { metadataForms } from "../../support/pages/catalog/metadataComponent";
 import { fillUpCommonFieldsForAllProductTypes } from "../../support/pages/catalog/products/productDetailsPage";
 
-filterTests({ definedTags: ["all"] }, () => {
-  describe("Update products", () => {
-    const startsWith = "CyUpdateProducts-";
-    const name = `${startsWith}${faker.datatype.number()}`;
-    const description = faker.lorem.sentences(2);
+describe("Update products", () => {
+  const startsWith = "CyUpdateProducts-";
+  const name = `${startsWith}${faker.datatype.number()}`;
+  const description = faker.lorem.sentences(2);
 
-    let defaultChannel;
-    let collection;
-    let product;
-    let attribute;
+  let defaultChannel;
+  let collection;
+  let product;
+  let attribute;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteProductsStartsWith(startsWith);
-      deleteCollectionsStartsWith(startsWith);
-      getDefaultChannel()
-        .then(channel => {
-          defaultChannel = channel;
-          createCollection(name);
-        })
-        .then(collectionResp => {
-          collection = collectionResp;
-          createTypeAttributeAndCategoryForProduct({ name });
-        })
-        .then(({ attribute: attributeResp, category, productType }) => {
-          attribute = attributeResp;
-          createProductInChannel({
-            attributeId: attribute.id,
-            categoryId: category.id,
-            productTypeId: productType.id,
-            channelId: defaultChannel.id,
-            name,
-            collectionId: collection.id,
-            description
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteProductsStartsWith(startsWith);
+    deleteCollectionsStartsWith(startsWith);
+    getDefaultChannel()
+      .then(channel => {
+        defaultChannel = channel;
+        createCollection(name);
+      })
+      .then(collectionResp => {
+        collection = collectionResp;
+        createTypeAttributeAndCategoryForProduct({ name });
+      })
+      .then(({ attribute: attributeResp, category, productType }) => {
+        attribute = attributeResp;
+        createProductInChannel({
+          attributeId: attribute.id,
+          categoryId: category.id,
+          productTypeId: productType.id,
+          channelId: defaultChannel.id,
+          name,
+          collectionId: collection.id,
+          description,
+        });
+      })
+      .then(({ product: productResp }) => {
+        product = productResp;
+      });
+  });
+
+  it("Should update product", { tags: ["@products", "@allEnv"] }, () => {
+    const updatedName = `${startsWith}${faker.random.number()}`;
+    let updatedCategory;
+    let updatedCollection;
+    createCategory({ name: updatedName })
+      .then(categoryResp => {
+        updatedCategory = categoryResp;
+        createCollection(updatedName);
+      })
+      .then(collectionResp => {
+        updatedCollection = collectionResp;
+        const productData = {
+          generalInfo: {
+            name: updatedName,
+            description: faker.lorem.sentence(),
+            rating: 3,
+          },
+          seo: {
+            slug: updatedName,
+            title: "newTitle",
+            description: "New description.",
+          },
+          metadata: {
+            private: {
+              metadataForm: metadataForms.private,
+              name: "newPrivate",
+              value: "value1",
+            },
+            public: {
+              metadataForm: metadataForms.public,
+              name: "newPublic",
+              value: "value2",
+            },
+          },
+          productOrganization: {
+            category: updatedCategory.name,
+            collection: updatedCollection.name,
+          },
+        };
+        cy.clearSessionData()
+          .loginUserViaRequest("auth", ONE_PERMISSION_USERS.product)
+          .visit(productDetailsUrl(product.id))
+          .get(PRODUCT_DETAILS.collectionRemoveButtons)
+          .click();
+        fillUpCommonFieldsForAllProductTypes(productData, false);
+        cy.addAliasToGraphRequest("UpdatePrivateMetadata")
+          .addAliasToGraphRequest("UpdateMetadata")
+          .addAliasToGraphRequest("ProductUpdate")
+          .get(BUTTON_SELECTORS.confirm)
+          .click()
+          .confirmationMessageShouldDisappear()
+          .waitForRequestAndCheckIfNoErrors("@ProductUpdate")
+          .waitForRequestAndCheckIfNoErrors("@UpdateMetadata")
+          .waitForRequestAndCheckIfNoErrors("@UpdatePrivateMetadata");
+        productData.productOrganization.productType = name;
+        productData.attribute = attribute;
+        cy.loginUserViaRequest("token")
+          .then(() => {
+            getProductDetails(product.id, defaultChannel.slug, "auth").its(
+              "body.data.product",
+            );
+          })
+          .then(resp => {
+            expectCorrectProductInformation(resp, productData);
           });
-        })
-        .then(({ product: productResp }) => {
-          product = productResp;
-        });
-    });
+      });
+  });
 
-    it("Should update product", () => {
-      const updatedName = `${startsWith}${faker.random.number()}`;
-      let updatedCategory;
-      let updatedCollection;
-      createCategory({ name: updatedName })
-        .then(categoryResp => {
-          updatedCategory = categoryResp;
-          createCollection(updatedName);
-        })
-        .then(collectionResp => {
-          updatedCollection = collectionResp;
-          const productData = {
-            generalInfo: {
-              name: updatedName,
-              description: faker.lorem.sentence(),
-              rating: 3
-            },
-            seo: {
-              slug: updatedName,
-              title: "newTitle",
-              description: "New description."
-            },
-            metadata: {
-              private: {
-                metadataForm: metadataForms.private,
-                name: "newPrivate",
-                value: "value1"
-              },
-              public: {
-                metadataForm: metadataForms.public,
-                name: "newPublic",
-                value: "value2"
-              }
-            },
-            productOrganization: {
-              category: updatedCategory.name,
-              collection: updatedCollection.name
-            }
-          };
-          cy.clearSessionData()
-            .loginUserViaRequest("auth", ONE_PERMISSION_USERS.product)
-            .visit(productDetailsUrl(product.id))
-            .get(PRODUCT_DETAILS.collectionRemoveButtons)
-            .click();
-          fillUpCommonFieldsForAllProductTypes(productData, false);
-          cy.addAliasToGraphRequest("UpdatePrivateMetadata")
-            .addAliasToGraphRequest("UpdateMetadata")
-            .addAliasToGraphRequest("ProductUpdate")
-            .get(BUTTON_SELECTORS.confirm)
-            .click()
-            .confirmationMessageShouldDisappear()
-            .waitForRequestAndCheckIfNoErrors("@ProductUpdate")
-            .waitForRequestAndCheckIfNoErrors("@UpdateMetadata")
-            .waitForRequestAndCheckIfNoErrors("@UpdatePrivateMetadata");
-          productData.productOrganization.productType = name;
-          productData.attribute = attribute;
-          cy.loginUserViaRequest("token")
-            .then(() => {
-              getProductDetails(product.id, defaultChannel.slug, "auth").its(
-                "body.data.product"
-              );
-            })
-            .then(resp => {
-              expectCorrectProductInformation(resp, productData);
-            });
-        });
-    });
-
-    it("should delete product", () => {
+  it(
+    "should delete product",
+    { tags: ["@products", "@allEnv", "@stable"] },
+    () => {
       cy.clearSessionData()
         .loginUserViaRequest("auth", ONE_PERMISSION_USERS.product)
         .visit(productDetailsUrl(product.id))
@@ -147,8 +148,8 @@ filterTests({ definedTags: ["all"] }, () => {
         })
         .then(
           productResp =>
-            expect(productResp.product, "Check if product exist").to.be.null
+            expect(productResp.product, "Check if product exist").to.be.null,
         );
-    });
-  });
+    },
+  );
 });

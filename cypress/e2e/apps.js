@@ -11,31 +11,29 @@ import { appDetailsUrl, urlList } from "../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../fixtures/users";
 import { createApp, getApp } from "../support/api/requests/Apps";
 import { deleteAppsStartsWith } from "../support/api/utils/appUtils";
-import filterTests from "../support/filterTests";
 
-filterTests({ definedTags: ["all"] }, () => {
-  describe("Tests for apps", () => {
-    const startsWith = "Apps";
-    const name = `${startsWith}${faker.datatype.number()}`;
+describe("Tests for apps", () => {
+  const startsWith = "Apps";
+  const name = `${startsWith}${faker.datatype.number()}`;
 
-    let createdApp;
+  let createdApp;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteAppsStartsWith(startsWith);
-      createApp(name, "MANAGE_APPS").then(app => {
-        createdApp = app;
-      });
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteAppsStartsWith(startsWith);
+    createApp(name, "MANAGE_APPS").then(app => {
+      createdApp = app;
     });
+  });
 
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest(
-        "auth",
-        ONE_PERMISSION_USERS.app
-      );
-    });
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest("auth", ONE_PERMISSION_USERS.app);
+  });
 
-    it("should create app", () => {
+  it(
+    "should create app. TC: SALEOR_3001",
+    { tags: ["@app", "@allEnv", "@stable"] },
+    () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
 
       cy.visit(urlList.apps)
@@ -59,9 +57,13 @@ filterTests({ definedTags: ["all"] }, () => {
           const token = app.tokens.find(element => element.name === "Default");
           expect(token).to.be.ok;
         });
-    });
+    },
+  );
 
-    it("should create webhook", () => {
+  it(
+    "should create webhook. TC: SALEOR_3002",
+    { tags: ["@app", "@allEnv", "@stable"] },
+    () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
       const targetUrl = `http://example.${randomName}`;
 
@@ -79,9 +81,13 @@ filterTests({ definedTags: ["all"] }, () => {
         expect(webhooks[0].name).to.eq(randomName);
         expect(webhooks[0].targetUrl).to.eq(targetUrl);
       });
-    });
+    },
+  );
 
-    it("should create token", () => {
+  it(
+    "should create token. TC: SALEOR_3003",
+    { tags: ["@app", "@allEnv", "@stable"] },
+    () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
       let expectedToken;
 
@@ -103,10 +109,10 @@ filterTests({ definedTags: ["all"] }, () => {
         .then(app => {
           const token = app.tokens.find(element => element.name === randomName);
           const tokenLastFourDigits = expectedToken.slice(
-            expectedToken.length - 4
+            expectedToken.length - 4,
           );
           expect(token.authToken).to.eq(tokenLastFourDigits);
         });
-    });
-  });
+    },
+  );
 });
