@@ -19,83 +19,81 @@ import {
   createShipping,
   deleteShippingStartsWith
 } from "../../support/api/utils/shippingUtils";
-import filterTests from "../../support/filterTests";
 
-filterTests({ definedTags: ["all"] }, () => {
-  describe("Products without shipment option", () => {
-    const startsWith = "WithoutShipmentCheckout-";
-    const name = `${startsWith}${faker.datatype.number()}`;
-    const nameProdWithoutShipping = `${startsWith}${faker.datatype.number()}`;
+describe("Products without shipment option", () => {
+  const startsWith = "WithoutShipmentCheckout-";
+  const name = `${startsWith}${faker.datatype.number()}`;
+  const nameProdWithoutShipping = `${startsWith}${faker.datatype.number()}`;
 
-    let channel;
-    let address;
-    let warehouse;
-    let shippingMethod;
-    let productWithShipping;
-    let productWithoutShipping;
+  let channel;
+  let address;
+  let warehouse;
+  let shippingMethod;
+  let productWithShipping;
+  let productWithoutShipping;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
 
-      deleteProductsStartsWith(startsWith);
-      deleteShippingStartsWith(startsWith);
-      deleteChannelsStartsWith(startsWith);
+    deleteProductsStartsWith(startsWith);
+    deleteShippingStartsWith(startsWith);
+    deleteChannelsStartsWith(startsWith);
 
-      createChannel({
-        name
+    createChannel({
+      name
+    })
+      .then(channelResp => {
+        channel = channelResp;
+        cy.fixture("addresses");
       })
-        .then(channelResp => {
-          channel = channelResp;
-          cy.fixture("addresses");
-        })
-        .then(({ usAddress }) => {
-          address = usAddress;
-          createShipping({
+      .then(({ usAddress }) => {
+        address = usAddress;
+        createShipping({
+          channelId: channel.id,
+          name,
+          address,
+          minProductPrice: 100
+        });
+      })
+      .then(
+        ({ warehouse: warehouseResp, shippingMethod: shippingMethodResp }) => {
+          warehouse = warehouseResp;
+          shippingMethod = shippingMethodResp;
+          createTypeAttributeAndCategoryForProduct({ name });
+        }
+      )
+      .then(
+        ({
+          attribute: attributeResp,
+          productType: productTypeResp,
+          category: categoryResp
+        }) => {
+          createProductInChannel({
+            attributeId: attributeResp.id,
+            categoryId: categoryResp.id,
             channelId: channel.id,
             name,
-            address,
-            minProductPrice: 100
-          });
-        })
-        .then(
-          ({
-            warehouse: warehouseResp,
-            shippingMethod: shippingMethodResp
-          }) => {
-            warehouse = warehouseResp;
-            shippingMethod = shippingMethodResp;
-            createTypeAttributeAndCategoryForProduct({ name });
-          }
-        )
-        .then(
-          ({
-            attribute: attributeResp,
-            productType: productTypeResp,
-            category: categoryResp
-          }) => {
-            createProductInChannel({
-              attributeId: attributeResp.id,
-              categoryId: categoryResp.id,
-              channelId: channel.id,
-              name,
-              productTypeId: productTypeResp.id,
-              warehouseId: warehouse.id
-            }).then(({ variantsList }) => (productWithShipping = variantsList));
-            createProductInChannel({
-              attributeId: attributeResp.id,
-              categoryId: categoryResp.id,
-              channelId: channel.id,
-              name: nameProdWithoutShipping,
-              productTypeId: productTypeResp.id,
-              warehouseId: warehouse.id
-            }).then(
-              ({ variantsList }) => (productWithoutShipping = variantsList)
-            );
-          }
-        );
-    });
+            productTypeId: productTypeResp.id,
+            warehouseId: warehouse.id
+          }).then(({ variantsList }) => (productWithShipping = variantsList));
+          createProductInChannel({
+            attributeId: attributeResp.id,
+            categoryId: categoryResp.id,
+            channelId: channel.id,
+            name: nameProdWithoutShipping,
+            productTypeId: productTypeResp.id,
+            warehouseId: warehouse.id
+          }).then(
+            ({ variantsList }) => (productWithoutShipping = variantsList)
+          );
+        }
+      );
+  });
 
-    it("should be not possible to buy product without shipping option", () => {
+  it(
+    "should be not possible to buy product without shipping option",
+    { tags: ["@checkout", "@allEnv", "@stable"] },
+    () => {
       createCheckout({
         channelSlug: channel.slug,
         email: "example@example.com",
@@ -122,6 +120,6 @@ filterTests({ definedTags: ["all"] }, () => {
             "shippingMethodId"
           );
         });
-    });
-  });
+    }
+  );
 });

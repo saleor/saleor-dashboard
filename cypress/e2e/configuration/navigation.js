@@ -8,33 +8,35 @@ import {
   getMenu
 } from "../../support/api/requests/Menu";
 import { deleteMenusStartsWith } from "../../support/api/utils/navigationUtils";
-import filterTests from "../../support/filterTests";
 import {
   createMenu,
   createNewMenuItem,
   MENU_ITEM_TYPES
 } from "../../support/pages/navigationPage";
 
-filterTests({ definedTags: ["all"] }, () => {
-  describe("Tests for menu navigation", () => {
-    const startsWith = "Navigation";
-    const randomName = `${startsWith}${faker.datatype.number()}`;
+describe("Tests for menu navigation", () => {
+  const startsWith = "Navigation";
+  const randomName = `${startsWith}${faker.datatype.number()}`;
+  let testCase = 1301;
 
-    let menu;
+  let menu;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteMenusStartsWith(startsWith);
-      createMenuViaApi(randomName).then(
-        ({ menu: menuResp }) => (menu = menuResp)
-      );
-    });
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteMenusStartsWith(startsWith);
+    createMenuViaApi(randomName).then(
+      ({ menu: menuResp }) => (menu = menuResp)
+    );
+  });
 
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest();
-    });
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+  });
 
-    it("should create a menu", () => {
+  it(
+    "should create a menu. TC: SALEOR_1301",
+    { tags: ["@menuNavigation", "@allEnv", "@stable"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createMenu(name)
@@ -44,10 +46,15 @@ filterTests({ definedTags: ["all"] }, () => {
         .then(menuResp => {
           expect(menuResp.name).to.eq(name);
         });
-    });
+    }
+  );
 
-    ["category", "collection", "page"].forEach(itemType => {
-      it(`should add new ${itemType} item to menu`, () => {
+  ["category", "collection", "page"].forEach(itemType => {
+    testCase += 1;
+    it(
+      `should add new ${itemType} item to menu. TC: SALEOR_${testCase}`,
+      { tags: ["@menuNavigation", "@allEnv", "@stable"] },
+      () => {
         const itemName = `${startsWith}${faker.datatype.number()}`;
         let selectedItem;
 
@@ -66,7 +73,7 @@ filterTests({ definedTags: ["all"] }, () => {
             const name = itemType !== "page" ? "name" : "title";
             expect(itemOfType[name]).to.eq(selectedItem);
           });
-      });
-    });
+      }
+    );
   });
 });

@@ -14,17 +14,18 @@ import {
   createShipping,
   deleteShippingStartsWith
 } from "../../support/api/utils/shippingUtils";
-import filterTests from "../../support/filterTests";
 
-filterTests({ definedTags: ["all"] }, () => {
-  describe("Warehouses in checkout", () => {
-    const startsWith = `CyWarehouseCheckout`;
-    let defaultChannel;
-    let usAddress;
-    let plAddress;
-    let warehouse;
+describe("Warehouses in checkout", () => {
+  const startsWith = `CyWarehouseCheckout`;
+  let defaultChannel;
+  let usAddress;
+  let plAddress;
+  let warehouse;
 
-    it("should not be possible to buy product for country not listed in warehouse", () => {
+  it(
+    "should not be possible to buy product for country not listed in warehouse",
+    { tags: ["@checkout", "@allEnv", "@stable"] },
+    () => {
       cy.clearSessionData().loginUserViaRequest();
       deleteShippingStartsWith(startsWith);
       deleteProductsStartsWith(startsWith);
@@ -69,6 +70,6 @@ filterTests({ definedTags: ["all"] }, () => {
         .then(({ errors }) => {
           expect(errors[0]).to.have.property("field", "quantity");
         });
-    });
-  });
+    }
+  );
 });

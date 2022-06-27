@@ -7,7 +7,6 @@ import {
   LEFT_MENU_SELECTORS
 } from "../elements/account/left-menu/left-menu-selectors";
 import { PERMISSIONS_OPTIONS } from "../fixtures/permissionsUsers";
-import filterTests from "../support/filterTests";
 import * as permissionsSteps from "../support/pages/permissionsPage";
 
 describe("As a staff user I want to navigate through shop using different permissions", () => {
@@ -45,50 +44,61 @@ describe("As a staff user I want to navigate through shop using different permis
   });
 
   Object.keys(permissionsOptions).forEach(key => {
-    const tags =
-      key === "all" ? ["critical", "all", "refactored"] : ["all", "refactored"];
-    filterTests({ definedTags: tags }, () => {
-      it(`should be able to navigate through shop as a staff member using ${key} permission. ${permissionsOptions[key].testCase}`, () => {
-        const permissionOption = permissionsOptions[key];
-        const permissions = permissionOption.permissions;
-        cy.clearSessionData();
-        permissionsSteps.navigateToAllAvailablePageAndCheckIfDisplayed(
-          permissionOption
-        );
-        if (key === "all") {
-          return;
-        }
-        permissionsSteps
-          .getDisplayedSelectors()
-          .then(selectors => {
-            permissionsSteps.expectAllSelectorsPermitted(
-              permissions,
-              selectors
-            );
-          })
-          .then(() => {
-            if (!permissions) {
-              return;
-            }
-            permissions.forEach(permission => {
-              if (permission.parent) {
-                cy.get(permission.parent.parentMenuSelector)
-                  .click()
-                  .then(() => {
-                    permissionsSteps.getDisplayedSelectors(
-                      permission.parent.parentSelectors
-                    );
-                  })
-                  .then(parentSelectors => {
-                    permissionsSteps.expectAllSelectorsPermitted(
-                      permissions,
-                      parentSelectors
-                    );
-                  });
+    if (key !== "all") {
+      it(
+        `should be able to navigate through shop as a staff member using ${key} permission. ${permissionsOptions[key].testCase}`,
+        { tags: ["@allEnv", "@navigation"] },
+        () => {
+          const permissionOption = permissionsOptions[key];
+          const permissions = permissionOption.permissions;
+          cy.clearSessionData();
+          permissionsSteps.navigateToAllAvailablePageAndCheckIfDisplayed(
+            permissionOption
+          );
+          permissionsSteps
+            .getDisplayedSelectors()
+            .then(selectors => {
+              permissionsSteps.expectAllSelectorsPermitted(
+                permissions,
+                selectors
+              );
+            })
+            .then(() => {
+              if (!permissions) {
+                return;
               }
+              permissions.forEach(permission => {
+                if (permission.parent) {
+                  cy.get(permission.parent.parentMenuSelector)
+                    .click()
+                    .then(() => {
+                      permissionsSteps.getDisplayedSelectors(
+                        permission.parent.parentSelectors
+                      );
+                    })
+                    .then(parentSelectors => {
+                      permissionsSteps.expectAllSelectorsPermitted(
+                        permissions,
+                        parentSelectors
+                      );
+                    });
+                }
+              });
             });
-          });
-      });
-    });
+        }
+      );
+    }
   });
+
+  it(
+    `should be able to navigate through shop as a staff member using all permissions. ${permissionsOptions.all.testCase}`,
+    { tags: ["@critical", "@allEnv", "@navigation", "@stable"] },
+    () => {
+      const permissionOption = permissionsOptions.all;
+      cy.clearSessionData();
+      permissionsSteps.navigateToAllAvailablePageAndCheckIfDisplayed(
+        permissionOption
+      );
+    }
+  );
 });

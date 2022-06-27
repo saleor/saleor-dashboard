@@ -16,9 +16,13 @@ import "cypress-file-upload";
 import "cypress-mochawesome-reporter/register";
 
 import { commandTimings } from "cypress-timings";
+
+import cypressGrep from "../support/cypress-grep/support";
 commandTimings();
 
 import { urlList } from "../fixtures/urlList";
+
+cypressGrep();
 
 Cypress.Commands.add("clearSessionData", () => {
   cy.clearCookies();

@@ -14,7 +14,6 @@ import {
   expectCorrectProductInformation,
   expectCorrectProductVariantInformation
 } from "../../support/api/utils/products/checkProductInfo";
-import filterTests from "../../support/filterTests";
 import { metadataForms } from "../../support/pages/catalog/metadataComponent";
 import {
   fillUpPriceList,
@@ -23,44 +22,46 @@ import {
 import { fillUpCommonFieldsForAllProductTypes } from "../../support/pages/catalog/products/productDetailsPage";
 import { selectChannelInDetailsPages } from "../../support/pages/channelsPage";
 
-filterTests({ definedTags: ["all", "critical"] }, () => {
-  describe("As an admin I should be able to create product", () => {
-    const startsWith = "CyCreateProduct-";
-    const name = `${startsWith}${faker.datatype.number()}`;
-    const generalInfo = {
-      name: `${startsWith}${faker.datatype.number()}`,
-      description: faker.lorem.sentence(),
-      rating: 2
-    };
-    const seo = {
-      title: "testTitle",
-      description: generalInfo.description
-    };
-    const metadata = {
-      public: {
-        metadataForm: metadataForms.public,
-        name: "metadataName",
-        value: "metadataValue"
-      },
-      private: {
-        metadataForm: metadataForms.private,
-        name: "privateMetadataName",
-        value: "privateMetadataValue"
-      }
-    };
-    let attribute;
+describe("As an admin I should be able to create product", () => {
+  const startsWith = "CyCreateProduct-";
+  const name = `${startsWith}${faker.datatype.number()}`;
+  const generalInfo = {
+    name: `${startsWith}${faker.datatype.number()}`,
+    description: faker.lorem.sentence(),
+    rating: 2
+  };
+  const seo = {
+    title: "testTitle",
+    description: generalInfo.description
+  };
+  const metadata = {
+    public: {
+      metadataForm: metadataForms.public,
+      name: "metadataName",
+      value: "metadataValue"
+    },
+    private: {
+      metadataForm: metadataForms.private,
+      name: "privateMetadataName",
+      value: "privateMetadataValue"
+    }
+  };
+  let attribute;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      createAttribute({ name }).then(attributeResp => {
-        attribute = attributeResp;
-      });
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    createAttribute({ name }).then(attributeResp => {
+      attribute = attributeResp;
     });
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest();
-    });
+  });
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+  });
 
-    it("should be able to create product with variants as an admin. SALEOR_2701", () => {
+  it(
+    "should be able to create product with variants as an admin. SALEOR_2701",
+    { tags: ["@products", "@allEnv", "@critical", "@stable"] },
+    () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
       seo.slug = randomName;
       const productData = {
@@ -90,9 +91,13 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
           }
           expectCorrectProductInformation(productResp, productData);
         });
-    });
+    }
+  );
 
-    it("should be able to create product without variants as an admin. SALEOR_2702", () => {
+  it(
+    "should be able to create product without variants as an admin. SALEOR_2702",
+    { tags: ["@products", "@allEnv", "@critical", "@stable"] },
+    () => {
       const prices = { sellingPrice: 6, costPrice: 3 };
       const randomName = `${startsWith}${faker.datatype.number()}`;
       seo.slug = randomName;
@@ -133,24 +138,24 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
             prices
           );
         });
-    });
-
-    function createTpeAndFillUpProductFields(
-      randomName,
-      hasVariants,
-      productData
-    ) {
-      createTypeProduct({
-        name: randomName,
-        attributeId: attribute.id,
-        hasVariants
-      });
-      cy.clearSessionData()
-        .loginUserViaRequest("auth", ONE_PERMISSION_USERS.product)
-        .visit(urlList.products)
-        .get(PRODUCTS_LIST.createProductBtn)
-        .click();
-      return fillUpCommonFieldsForAllProductTypes(productData);
     }
-  });
+  );
+
+  function createTpeAndFillUpProductFields(
+    randomName,
+    hasVariants,
+    productData
+  ) {
+    createTypeProduct({
+      name: randomName,
+      attributeId: attribute.id,
+      hasVariants
+    });
+    cy.clearSessionData()
+      .loginUserViaRequest("auth", ONE_PERMISSION_USERS.product)
+      .visit(urlList.products)
+      .get(PRODUCTS_LIST.createProductBtn)
+      .click();
+    return fillUpCommonFieldsForAllProductTypes(productData);
+  }
 });

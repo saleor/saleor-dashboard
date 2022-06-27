@@ -14,41 +14,42 @@ import { updateShopWeightUnit } from "../../../../support/api/requests/ShopSetti
 import { getDefaultChannel } from "../../../../support/api/utils/channelsUtils";
 import { deleteProductsStartsWith } from "../../../../support/api/utils/products/productsUtils";
 import { deleteShippingStartsWith } from "../../../../support/api/utils/shippingUtils";
-import filterTests from "../../../../support/filterTests";
 import { changeWeightUnit } from "../../../../support/pages/shippingMethodPage";
 
-filterTests({ definedTags: ["all"] }, () => {
-  xdescribe("As a staff user I want to change shop default weight unit", () => {
-    const startsWith = "RecalculateWeight";
-    const name = `${startsWith}${faker.datatype.number()}`;
+xdescribe("As a staff user I want to change shop default weight unit", () => {
+  const startsWith = "RecalculateWeight";
+  const name = `${startsWith}${faker.datatype.number()}`;
 
-    let defaultChannel;
-    let usAddress;
-    let shippingZone;
+  let defaultChannel;
+  let usAddress;
+  let shippingZone;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteShippingStartsWith(startsWith);
-      deleteProductsStartsWith(startsWith);
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteShippingStartsWith(startsWith);
+    deleteProductsStartsWith(startsWith);
 
-      updateShopWeightUnit("KG")
-        .then(() => {
-          getDefaultChannel().then(channel => {
-            defaultChannel = channel;
-            cy.fixture("addresses");
-          });
-        })
-        .then(({ usAddress: usAddressResp }) => {
-          usAddress = usAddressResp;
-          createShippingZone(name, "US", defaultChannel.id);
-        })
-        .then(shippingZoneResp => {
-          shippingZone = shippingZoneResp;
+    updateShopWeightUnit("KG")
+      .then(() => {
+        getDefaultChannel().then(channel => {
+          defaultChannel = channel;
+          cy.fixture("addresses");
         });
-    });
+      })
+      .then(({ usAddress: usAddressResp }) => {
+        usAddress = usAddressResp;
+        createShippingZone(name, "US", defaultChannel.id);
+      })
+      .then(shippingZoneResp => {
+        shippingZone = shippingZoneResp;
+      });
+  });
 
-    // Log in as user with shipping permissions after resolving SALEOR-3407 bug
-    it("should recalculate weight after changing shipping weight unit. TC: SALEOR_0901", () => {
+  // Log in as user with shipping permissions after resolving SALEOR-3407 bug
+  it(
+    "should recalculate weight after changing shipping weight unit. TC: SALEOR_0901",
+    { tags: ["@shipping", "@allEnv", "@stable"] },
+    () => {
       const rateName = `${startsWith}${faker.datatype.number()}`;
       const minWeightInKg = 1;
       const maxWeightInKg = 10;
@@ -98,6 +99,6 @@ filterTests({ definedTags: ["all"] }, () => {
         .then(actualMaxWeight => {
           expect(parseInt(actualMaxWeight, 10)).to.eq(maxWeightInG);
         });
-    });
-  });
+    }
+  );
 });

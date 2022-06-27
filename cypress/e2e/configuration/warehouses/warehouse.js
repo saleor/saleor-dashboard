@@ -19,51 +19,52 @@ import {
 } from "../../../support/api/requests/Warehouse";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
-import filterTests from "../../../support/filterTests";
 
-filterTests({ definedTags: ["all"] }, () => {
-  describe("Warehouse settings", () => {
-    const startsWith = "CyWarehouse";
-    let usAddress;
-    let secondUsAddress;
+describe("Warehouse settings", () => {
+  const startsWith = "CyWarehouse";
+  let usAddress;
+  let secondUsAddress;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteShippingStartsWith(startsWith);
-      cy.fixture("addresses").then(addresses => {
-        usAddress = addresses.usAddress;
-        secondUsAddress = addresses.secondUsAddress;
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteShippingStartsWith(startsWith);
+    cy.fixture("addresses").then(addresses => {
+      usAddress = addresses.usAddress;
+      secondUsAddress = addresses.secondUsAddress;
+    });
+  });
+
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+  });
+
+  it("should create warehouse", { tags: ["@warehouse", "@allEnv"] }, () => {
+    const name = `${startsWith}${faker.datatype.number()}`;
+    cy.visit(urlList.warehouses)
+      .get(WAREHOUSES_LIST.createNewButton)
+      .click()
+      .get(WAREHOUSES_DETAILS.nameInput)
+      .type(name)
+      .fillUpBasicAddress(usAddress)
+      .addAliasToGraphRequest("WarehouseCreate")
+      .get(BUTTON_SELECTORS.confirm)
+      .click()
+      .waitForRequestAndCheckIfNoErrors("@WarehouseCreate")
+      .its("response.body.data.createWarehouse.warehouse")
+      .then(warehouse => {
+        getWarehouse(warehouse.id);
+      })
+      .then(warehouse => {
+        const addressResp = warehouse.address;
+        expect(warehouse.name).to.be.eq(name);
+        cy.expectCorrectBasicAddress(addressResp, usAddress);
       });
-    });
+  });
 
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest();
-    });
-
-    it("should create warehouse", () => {
-      const name = `${startsWith}${faker.datatype.number()}`;
-      cy.visit(urlList.warehouses)
-        .get(WAREHOUSES_LIST.createNewButton)
-        .click()
-        .get(WAREHOUSES_DETAILS.nameInput)
-        .type(name)
-        .fillUpBasicAddress(usAddress)
-        .addAliasToGraphRequest("WarehouseCreate")
-        .get(BUTTON_SELECTORS.confirm)
-        .click()
-        .waitForRequestAndCheckIfNoErrors("@WarehouseCreate")
-        .its("response.body.data.createWarehouse.warehouse")
-        .then(warehouse => {
-          getWarehouse(warehouse.id);
-        })
-        .then(warehouse => {
-          const addressResp = warehouse.address;
-          chai.softExpect(warehouse.name).to.be.eq(name);
-          cy.expectCorrectBasicAddress(addressResp, usAddress);
-        });
-    });
-
-    it("should add warehouse to shipping zone", () => {
+  it(
+    "should add warehouse to shipping zone",
+    { tags: ["@warehouse", "@allEnv"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let defaultChannel;
       let warehouse;
@@ -99,26 +100,30 @@ filterTests({ definedTags: ["all"] }, () => {
             shippingZone.id
           );
         });
-    });
+    }
+  );
 
-    it("should delete warehouse", () => {
-      const name = `${startsWith}${faker.datatype.number()}`;
-      createWarehouseViaApi({
-        name,
-        address: usAddress
-      }).then(warehouse => {
-        cy.visit(warehouseDetailsUrl(warehouse.id))
-          .get(BUTTON_SELECTORS.deleteButton)
-          .click()
-          .addAliasToGraphRequest("WarehouseDelete")
-          .get(BUTTON_SELECTORS.submit)
-          .click()
-          .waitForRequestAndCheckIfNoErrors("@WarehouseDelete");
-        getWarehouse(warehouse.id).should("be.null");
-      });
+  it("should delete warehouse", { tags: ["@warehouse", "@allEnv"] }, () => {
+    const name = `${startsWith}${faker.datatype.number()}`;
+    createWarehouseViaApi({
+      name,
+      address: usAddress
+    }).then(warehouse => {
+      cy.visit(warehouseDetailsUrl(warehouse.id))
+        .get(BUTTON_SELECTORS.deleteButton)
+        .click()
+        .addAliasToGraphRequest("WarehouseDelete")
+        .get(BUTTON_SELECTORS.submit)
+        .click()
+        .waitForRequestAndCheckIfNoErrors("@WarehouseDelete");
+      getWarehouse(warehouse.id).should("be.null");
     });
+  });
 
-    it("should remove warehouse from shipping zone", () => {
+  it(
+    "should remove warehouse from shipping zone",
+    { tags: ["@warehouse", "@allEnv"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let defaultChannel;
       let warehouse;
@@ -151,34 +156,34 @@ filterTests({ definedTags: ["all"] }, () => {
         .then(warehouseResp => {
           expect(warehouseResp.shippingZones.edges).to.be.empty;
         });
-    });
+    }
+  );
 
-    it("should update warehouse", () => {
-      const name = `${startsWith}${faker.datatype.number()}`;
-      const updatedName = `${startsWith}${faker.datatype.number()}`;
-      let warehouse;
+  it("should update warehouse", { tags: ["@warehouse", "@allEnv"] }, () => {
+    const name = `${startsWith}${faker.datatype.number()}`;
+    const updatedName = `${startsWith}${faker.datatype.number()}`;
+    let warehouse;
 
-      createWarehouseViaApi({
-        name,
-        address: usAddress
+    createWarehouseViaApi({
+      name,
+      address: usAddress
+    })
+      .then(warehouseResp => {
+        warehouse = warehouseResp;
+        cy.visit(warehouseDetailsUrl(warehouse.id))
+          .get(WAREHOUSES_DETAILS.nameInput)
+          .clearAndType(updatedName)
+          .fillUpBasicAddress(secondUsAddress)
+          .addAliasToGraphRequest("WarehouseUpdate")
+          .get(BUTTON_SELECTORS.confirm)
+          .click()
+          .waitForRequestAndCheckIfNoErrors("@WarehouseUpdate");
+        getWarehouse(warehouse.id);
       })
-        .then(warehouseResp => {
-          warehouse = warehouseResp;
-          cy.visit(warehouseDetailsUrl(warehouse.id))
-            .get(WAREHOUSES_DETAILS.nameInput)
-            .clearAndType(updatedName)
-            .fillUpBasicAddress(secondUsAddress)
-            .addAliasToGraphRequest("WarehouseUpdate")
-            .get(BUTTON_SELECTORS.confirm)
-            .click()
-            .waitForRequestAndCheckIfNoErrors("@WarehouseUpdate");
-          getWarehouse(warehouse.id);
-        })
-        .then(warehouseResp => {
-          const addressResp = warehouseResp.address;
-          chai.softExpect(warehouseResp.name).to.be.eq(updatedName);
-          cy.expectCorrectBasicAddress(addressResp, secondUsAddress);
-        });
-    });
+      .then(warehouseResp => {
+        const addressResp = warehouseResp.address;
+        expect(warehouseResp.name).to.be.eq(updatedName);
+        cy.expectCorrectBasicAddress(addressResp, secondUsAddress);
+      });
   });
 });

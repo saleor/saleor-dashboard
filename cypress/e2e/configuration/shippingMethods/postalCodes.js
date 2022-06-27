@@ -16,80 +16,81 @@ import {
 } from "../../../support/api/utils/products/productsUtils";
 import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
 import { isShippingAvailableInCheckout } from "../../../support/api/utils/storeFront/checkoutUtils";
-import filterTests from "../../../support/filterTests";
 import {
   createRateWithPostalCode,
   postalCodesOptions
 } from "../../../support/pages/shippingMethodPage";
 
-filterTests({ definedTags: ["all"] }, () => {
-  describe("As a user I want to create shipping method with postal codes", () => {
-    const startsWith = "CyShippingMethods-";
-    const name = `${startsWith}${faker.datatype.number()}`;
+describe("As a user I want to create shipping method with postal codes", () => {
+  const startsWith = "CyShippingMethods-";
+  const name = `${startsWith}${faker.datatype.number()}`;
 
-    const price = 10;
+  const price = 10;
 
-    let defaultChannel;
-    let usAddress;
-    let secondUsAddress;
-    let shippingZone;
-    let warehouse;
-    let variantsList;
+  let defaultChannel;
+  let usAddress;
+  let secondUsAddress;
+  let shippingZone;
+  let warehouse;
+  let variantsList;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteShippingStartsWith(startsWith);
-      deleteProductsStartsWith(startsWith);
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteShippingStartsWith(startsWith);
+    deleteProductsStartsWith(startsWith);
 
-      getDefaultChannel()
-        .then(channel => {
-          defaultChannel = channel;
-          cy.fixture("addresses");
-        })
-        .then(
-          ({
-            usAddress: usAddressResp,
-            secondUsAddress: secondUsAddressResp
-          }) => {
-            usAddress = usAddressResp;
-            secondUsAddress = secondUsAddressResp;
-            createShippingZone(name, "US", defaultChannel.id);
-          }
-        )
-        .then(shippingZoneResp => {
-          shippingZone = shippingZoneResp;
-          createWarehouse({
-            name,
-            shippingZone: shippingZone.id,
-            address: usAddress
-          });
-        })
-        .then(warehouseResp => {
-          warehouse = warehouseResp;
-          createTypeAttributeAndCategoryForProduct({ name });
-        })
-        .then(({ attribute, productType, category }) => {
-          createProductInChannel({
-            name,
-            channelId: defaultChannel.id,
-            warehouseId: warehouse.id,
-            attributeId: attribute.id,
-            categoryId: category.id,
-            productTypeId: productType.id
-          });
-        })
-        .then(({ variantsList: variantsListResp }) => {
-          variantsList = variantsListResp;
+    getDefaultChannel()
+      .then(channel => {
+        defaultChannel = channel;
+        cy.fixture("addresses");
+      })
+      .then(
+        ({
+          usAddress: usAddressResp,
+          secondUsAddress: secondUsAddressResp
+        }) => {
+          usAddress = usAddressResp;
+          secondUsAddress = secondUsAddressResp;
+          createShippingZone(name, "US", defaultChannel.id);
+        }
+      )
+      .then(shippingZoneResp => {
+        shippingZone = shippingZoneResp;
+        createWarehouse({
+          name,
+          shippingZone: shippingZone.id,
+          address: usAddress
         });
-    });
+      })
+      .then(warehouseResp => {
+        warehouse = warehouseResp;
+        createTypeAttributeAndCategoryForProduct({ name });
+      })
+      .then(({ attribute, productType, category }) => {
+        createProductInChannel({
+          name,
+          channelId: defaultChannel.id,
+          warehouseId: warehouse.id,
+          attributeId: attribute.id,
+          categoryId: category.id,
+          productTypeId: productType.id
+        });
+      })
+      .then(({ variantsList: variantsListResp }) => {
+        variantsList = variantsListResp;
+      });
+  });
 
-    beforeEach(() => {
-      cy.clearSessionData()
-        .loginUserViaRequest("auth", ONE_PERMISSION_USERS.shipping)
-        .visit(shippingZoneDetailsUrl(shippingZone.id));
-    });
+  beforeEach(() => {
+    cy.clearSessionData()
+      .loginUserViaRequest("auth", ONE_PERMISSION_USERS.shipping)
+      .visit(shippingZoneDetailsUrl(shippingZone.id));
+  });
 
-    it("should be able to create shipping method with included postal codes. TC: SALEOR_0801", () => {
+  it(
+    "should be able to create shipping method with included postal codes. TC: SALEOR_0801",
+    { tags: ["@shipping", "@allEnv", "@stable"] },
+    () => {
       const rateName = `${startsWith}${faker.datatype.number()}`;
 
       createRateWithPostalCode({
@@ -105,9 +106,13 @@ filterTests({ definedTags: ["all"] }, () => {
       isShippingAvailableForAddress(secondUsAddress, rateName).then(
         isAvailable => expect(isAvailable).to.be.false
       );
-    });
+    }
+  );
 
-    it("should be able to create shipping method with excluded postal codes. TC: SALEOR_0802", () => {
+  it(
+    "should be able to create shipping method with excluded postal codes. TC: SALEOR_0802",
+    { tags: ["@shipping", "@allEnv", "@stable"] },
+    () => {
       const rateName = `${startsWith}${faker.datatype.number()}`;
 
       createRateWithPostalCode({
@@ -123,17 +128,17 @@ filterTests({ definedTags: ["all"] }, () => {
       isShippingAvailableForAddress(secondUsAddress, rateName).then(
         isAvailable => expect(isAvailable).to.be.true
       );
-    });
-
-    function isShippingAvailableForAddress(address, rateName) {
-      return createCheckout({
-        address,
-        channelSlug: defaultChannel.slug,
-        email: "example@example.com",
-        variantsList
-      }).then(({ checkout }) =>
-        isShippingAvailableInCheckout(checkout, rateName)
-      );
     }
-  });
+  );
+
+  function isShippingAvailableForAddress(address, rateName) {
+    return createCheckout({
+      address,
+      channelSlug: defaultChannel.slug,
+      email: "example@example.com",
+      variantsList
+    }).then(({ checkout }) =>
+      isShippingAvailableInCheckout(checkout, rateName)
+    );
+  }
 });

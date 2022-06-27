@@ -23,41 +23,42 @@ import {
   deleteProductsStartsWith
 } from "../../../support/api/utils/products/productsUtils";
 import { isProductVisible } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
-import filterTests from "../../../support/filterTests";
 
-filterTests({ definedTags: ["all"] }, () => {
-  describe("Tests on inactive channel", () => {
-    const channelStartsWith = `InactiveChannel`;
-    const randomName = `${channelStartsWith}${faker.datatype.number()}`;
-    const currency = "PLN";
+describe("Tests on inactive channel", () => {
+  const channelStartsWith = `InactiveChannel`;
+  const randomName = `${channelStartsWith}${faker.datatype.number()}`;
+  const currency = "PLN";
 
-    let address;
-    let defaultChannel;
-    let newChannel;
+  let address;
+  let defaultChannel;
+  let newChannel;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteChannelsStartsWith(channelStartsWith);
-      deleteProductsStartsWith(channelStartsWith);
-      cy.fixture("addresses").then(({ plAddress }) => {
-        address = plAddress;
-      });
-      getDefaultChannel().then(channel => (defaultChannel = channel));
-      createChannel({
-        isActive: false,
-        name: randomName,
-        slug: randomName,
-        currencyCode: currency
-      }).then(channel => {
-        newChannel = channel;
-      });
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteChannelsStartsWith(channelStartsWith);
+    deleteProductsStartsWith(channelStartsWith);
+    cy.fixture("addresses").then(({ plAddress }) => {
+      address = plAddress;
     });
-
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest();
+    getDefaultChannel().then(channel => (defaultChannel = channel));
+    createChannel({
+      isActive: false,
+      name: randomName,
+      slug: randomName,
+      currencyCode: currency
+    }).then(channel => {
+      newChannel = channel;
     });
+  });
 
-    it("should not be possible to add products to order with inactive channel", () => {
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+  });
+
+  it(
+    "should not be possible to add products to order with inactive channel. TC: SALEOR_0706",
+    { tags: ["@channel", "@allEnv"] },
+    () => {
       cy.visit(urlList.orders)
         .get(ORDERS_SELECTORS.createOrder)
         .click()
@@ -75,9 +76,13 @@ filterTests({ definedTags: ["all"] }, () => {
         })
         .get(DRAFT_ORDER_SELECTORS.addProducts)
         .should("not.exist");
-    });
+    }
+  );
 
-    it("should not be possible to create checkout with inactive channel", () => {
+  it(
+    "should not be possible to create checkout with inactive channel. TC: SALEOR_0707",
+    { tags: ["@channel", "@allEnv", "@stable"] },
+    () => {
       const randomChannel = `${channelStartsWith}${faker.datatype.number()}`;
       createTypeAttributeAndCategoryForProduct({ name: randomChannel })
         .then(({ productType, attribute, category }) => {
@@ -103,9 +108,13 @@ filterTests({ definedTags: ["all"] }, () => {
             "checkout shouldn't be created with error in field channel"
           ).to.have.property("field", "channel");
         });
-    });
+    }
+  );
 
-    it("products in inactive channel should not be displayed", () => {
+  it(
+    "products in inactive channel should not be displayed. TC: SALEOR_0708",
+    { tags: ["@channel", "@allEnv", "@stable"] },
+    () => {
       const randomChannel = `${channelStartsWith}${faker.datatype.number()}`;
       let channel;
       let product;
@@ -151,6 +160,6 @@ filterTests({ definedTags: ["all"] }, () => {
             "product with active channel should be visible"
           ).to.be.eq(true);
         });
-    });
-  });
+    }
+  );
 });

@@ -28,94 +28,87 @@ import {
   createShipping,
   deleteShippingStartsWith
 } from "../../support/api/utils/shippingUtils";
-import filterTests from "../../support/filterTests";
 import { selectChannelInPicker } from "../../support/pages/channelsPage";
 import { finalizeDraftOrder } from "../../support/pages/draftOrderPage";
 
-filterTests({ definedTags: ["all"] }, () => {
-  describe("Orders", () => {
-    const startsWith = "CyOrders-";
-    const randomName = startsWith + faker.datatype.number();
+describe("Orders", () => {
+  const startsWith = "CyOrders-";
+  const randomName = startsWith + faker.datatype.number();
 
-    let customer;
-    let defaultChannel;
-    let warehouse;
-    let shippingMethod;
-    let variantsList;
-    let address;
+  let customer;
+  let defaultChannel;
+  let warehouse;
+  let shippingMethod;
+  let variantsList;
+  let address;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteCustomersStartsWith(startsWith);
-      deleteShippingStartsWith(startsWith);
-      productsUtils.deleteProductsStartsWith(startsWith);
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteCustomersStartsWith(startsWith);
+    deleteShippingStartsWith(startsWith);
+    productsUtils.deleteProductsStartsWith(startsWith);
 
-      updateOrdersSettings();
-      getDefaultChannel()
-        .then(channel => {
-          defaultChannel = channel;
-        })
-        .then(() => {
-          cy.fixture("addresses");
-        })
-        .then(addresses => {
-          address = addresses.plAddress;
-          createCustomer(
-            `${randomName}@example.com`,
-            randomName,
-            address,
-            true
-          );
-        })
-        .then(customerResp => {
-          customer = customerResp.user;
-          createShipping({
-            channelId: defaultChannel.id,
-            name: randomName,
-            address
-          });
-        })
-        .then(
-          ({
-            warehouse: warehouseResp,
-            shippingMethod: shippingMethodResp
-          }) => {
-            shippingMethod = shippingMethodResp;
-            warehouse = warehouseResp;
-            productsUtils.createTypeAttributeAndCategoryForProduct({
-              name: randomName
-            });
-          }
-        )
-        .then(
-          ({
-            productType: productTypeResp,
-            attribute: attributeResp,
-            category: categoryResp
-          }) => {
-            productsUtils.createProductInChannel({
-              name: randomName,
-              channelId: defaultChannel.id,
-              warehouseId: warehouse.id,
-              productTypeId: productTypeResp.id,
-              attributeId: attributeResp.id,
-              categoryId: categoryResp.id
-            });
-          }
-        )
-        .then(({ variantsList: variantsResp }) => {
-          variantsList = variantsResp;
+    updateOrdersSettings();
+    getDefaultChannel()
+      .then(channel => {
+        defaultChannel = channel;
+      })
+      .then(() => {
+        cy.fixture("addresses");
+      })
+      .then(addresses => {
+        address = addresses.plAddress;
+        createCustomer(`${randomName}@example.com`, randomName, address, true);
+      })
+      .then(customerResp => {
+        customer = customerResp.user;
+        createShipping({
+          channelId: defaultChannel.id,
+          name: randomName,
+          address
         });
-    });
+      })
+      .then(
+        ({ warehouse: warehouseResp, shippingMethod: shippingMethodResp }) => {
+          shippingMethod = shippingMethodResp;
+          warehouse = warehouseResp;
+          productsUtils.createTypeAttributeAndCategoryForProduct({
+            name: randomName
+          });
+        }
+      )
+      .then(
+        ({
+          productType: productTypeResp,
+          attribute: attributeResp,
+          category: categoryResp
+        }) => {
+          productsUtils.createProductInChannel({
+            name: randomName,
+            channelId: defaultChannel.id,
+            warehouseId: warehouse.id,
+            productTypeId: productTypeResp.id,
+            attributeId: attributeResp.id,
+            categoryId: categoryResp.id
+          });
+        }
+      )
+      .then(({ variantsList: variantsResp }) => {
+        variantsList = variantsResp;
+      });
+  });
 
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest(
-        "auth",
-        ONE_PERMISSION_USERS.order
-      );
-    });
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest(
+      "auth",
+      ONE_PERMISSION_USERS.order
+    );
+  });
 
-    xit("should create order with selected channel", () => {
+  xit(
+    "should create order with selected channel",
+    { tags: ["@orders", "@allEnv"] },
+    () => {
       cy.visit(urlList.orders)
         .get(ORDERS_SELECTORS.createOrder)
         .click();
@@ -127,9 +120,13 @@ filterTests({ definedTags: ["all"] }, () => {
           "be.visible"
         );
       });
-    });
+    }
+  );
 
-    it("should not be possible to change channel in order", () => {
+  it(
+    "should not be possible to change channel in order",
+    { tags: ["@orders", "@allEnv", "@stable"] },
+    () => {
       createOrder({
         customerId: customer.id,
         channelId: defaultChannel.id,
@@ -143,43 +140,47 @@ filterTests({ definedTags: ["all"] }, () => {
           .find("[button]")
           .should("not.exist");
       });
-    });
+    }
+  );
 
-    it("should cancel fulfillment", () => {
-      let order;
-      createFulfilledOrder({
-        customerId: customer.id,
-        channelId: defaultChannel.id,
-        shippingMethodId: shippingMethod.id,
-        variantsList,
-        address,
-        warehouse: warehouse.id
+  it("should cancel fulfillment", { tags: ["@orders", "@allEnv"] }, () => {
+    let order;
+    createFulfilledOrder({
+      customerId: customer.id,
+      channelId: defaultChannel.id,
+      shippingMethodId: shippingMethod.id,
+      variantsList,
+      address,
+      warehouse: warehouse.id
+    })
+      .then(({ order: orderResp }) => {
+        order = orderResp;
+        cy.visit(urlList.orders);
+        cy.expectSkeletonIsVisible();
+        cy.contains(ORDERS_SELECTORS.orderRow, order.number).click();
+        cy.get(SHARED_ELEMENTS.skeleton)
+          .should("not.exist")
+          .get(ORDERS_SELECTORS.cancelFulfillment)
+          .click()
+          .fillAutocompleteSelect(
+            ORDERS_SELECTORS.cancelFulfillmentSelectField,
+            warehouse.name
+          )
+          .addAliasToGraphRequest("OrderFulfillmentCancel")
+          .get(BUTTON_SELECTORS.submit)
+          .click()
+          .waitForRequestAndCheckIfNoErrors("@OrderFulfillmentCancel");
+        getOrder(order.id);
       })
-        .then(({ order: orderResp }) => {
-          order = orderResp;
-          cy.visit(urlList.orders);
-          cy.softExpectSkeletonIsVisible();
-          cy.contains(ORDERS_SELECTORS.orderRow, order.number).click();
-          cy.get(SHARED_ELEMENTS.skeleton)
-            .should("not.exist")
-            .get(ORDERS_SELECTORS.cancelFulfillment)
-            .click()
-            .fillAutocompleteSelect(
-              ORDERS_SELECTORS.cancelFulfillmentSelectField,
-              warehouse.name
-            )
-            .addAliasToGraphRequest("OrderFulfillmentCancel")
-            .get(BUTTON_SELECTORS.submit)
-            .click()
-            .waitForRequestAndCheckIfNoErrors("@OrderFulfillmentCancel");
-          getOrder(order.id);
-        })
-        .then(orderResp => {
-          expect(orderResp.status).to.be.eq("UNFULFILLED");
-        });
-    });
+      .then(orderResp => {
+        expect(orderResp.status).to.be.eq("UNFULFILLED");
+      });
+  });
 
-    it("should make a refund", () => {
+  it(
+    "should make a refund",
+    { tags: ["@orders", "@allEnv", "@stable"] },
+    () => {
       let order;
       createReadyToFulfillOrder({
         customerId: customer.id,
@@ -191,7 +192,7 @@ filterTests({ definedTags: ["all"] }, () => {
         .then(({ order: orderResp }) => {
           order = orderResp;
           cy.visit(urlList.orders);
-          cy.softExpectSkeletonIsVisible();
+          cy.expectSkeletonIsVisible();
           cy.contains(ORDERS_SELECTORS.orderRow, order.number).click();
           cy.get(ORDERS_SELECTORS.refundButton)
             .click()
@@ -208,6 +209,6 @@ filterTests({ definedTags: ["all"] }, () => {
         .then(orderResp => {
           expect(orderResp.paymentStatus).to.be.eq("FULLY_REFUNDED");
         });
-    });
-  });
+    }
+  );
 });

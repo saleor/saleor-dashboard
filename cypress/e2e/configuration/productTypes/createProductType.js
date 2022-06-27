@@ -6,26 +6,27 @@ import faker from "faker";
 import { urlList } from "../../../fixtures/urlList";
 import { getProductType } from "../../../support/api/requests/ProductType";
 import { deleteProductsStartsWith } from "../../../support/api/utils/products/productsUtils";
-import filterTests from "../../../support/filterTests";
 import { createProductType } from "../../../support/pages/productTypePage";
 
-filterTests({ definedTags: ["all"] }, () => {
-  describe("As an admin I want to create product types", () => {
-    const startsWith = "productType";
+describe("As an admin I want to create product types", () => {
+  const startsWith = "productType";
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteProductsStartsWith(startsWith);
-    });
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteProductsStartsWith(startsWith);
+  });
 
-    beforeEach(() => {
-      cy.clearSessionData()
-        .loginUserViaRequest()
-        .visit(urlList.productTypes)
-        .softExpectSkeletonIsVisible();
-    });
+  beforeEach(() => {
+    cy.clearSessionData()
+      .loginUserViaRequest()
+      .visit(urlList.productTypes)
+      .expectSkeletonIsVisible();
+  });
 
-    it("should be able to create product type without shipping required. TC: SALEOR_1501", () => {
+  it(
+    "should be able to create product type without shipping required. TC: SALEOR_1501",
+    { tags: ["@productType", "@allEnv", "@stable"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createProductType({ name })
@@ -37,9 +38,13 @@ filterTests({ definedTags: ["all"] }, () => {
           expect(productType.isShippingRequired).to.be.false;
           expect(productType.kind).to.be.eq("NORMAL");
         });
-    });
+    }
+  );
 
-    it("should be able to create product type with shipping required. TC: SALEOR_1502", () => {
+  it(
+    "should be able to create product type with shipping required. TC: SALEOR_1502",
+    { tags: ["@productType", "@allEnv", "@stable"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const shippingWeight = 10;
 
@@ -53,9 +58,13 @@ filterTests({ definedTags: ["all"] }, () => {
           expect(productType.weight.value).to.eq(shippingWeight);
           expect(productType.kind).to.be.eq("NORMAL");
         });
-    });
+    }
+  );
 
-    it("should be able to create product type with gift card kind. TC: SALEOR_1510", () => {
+  it(
+    "should be able to create product type with gift card kind. TC: SALEOR_1510",
+    { tags: ["@productType", "@allEnv", "@stable"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createProductType({ name, giftCard: true })
@@ -67,6 +76,6 @@ filterTests({ definedTags: ["all"] }, () => {
           expect(productType.isShippingRequired).to.be.false;
           expect(productType.kind).to.be.eq("GIFT_CARD");
         });
-    });
-  });
+    }
+  );
 });

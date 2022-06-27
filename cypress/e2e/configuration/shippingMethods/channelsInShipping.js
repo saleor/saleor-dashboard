@@ -13,25 +13,26 @@ import {
 } from "../../../support/api/requests/ShippingMethod";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
-import filterTests from "../../../support/filterTests";
 import { selectChannelInHeader } from "../../../support/pages/channelsPage";
 import {
   enterAndSelectShippings,
   enterShippingZone
 } from "../../../support/pages/shippingZones";
 
-filterTests({ definedTags: ["all"] }, () => {
-  describe("As a staff user I want have different shipping method prices for each channel", () => {
-    const startsWith = "ChannelShippingMethod";
-    let defaultChannel;
+describe("As a staff user I want have different shipping method prices for each channel", () => {
+  const startsWith = "ChannelShippingMethod";
+  let defaultChannel;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      shippingUtils.deleteShippingStartsWith(startsWith);
-      channelsUtils.deleteChannelsStartsWith(startsWith);
-    });
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    shippingUtils.deleteShippingStartsWith(startsWith);
+    channelsUtils.deleteChannelsStartsWith(startsWith);
+  });
 
-    it("should be able to display different price for each channel. TC: SALEOR_0805", () => {
+  it(
+    "should be able to display different price for each channel. TC: SALEOR_0805",
+    { tags: ["@shipping", "@allEnv"] },
+    () => {
       const shippingName = `${startsWith}${faker.datatype.number()}`;
       const defaultChannelPrice = 11;
       const createdChannelPrice = 7;
@@ -114,6 +115,6 @@ filterTests({ definedTags: ["all"] }, () => {
               expect(text).to.includes(createdChannelCurrency);
             });
         });
-    });
-  });
+    }
+  );
 });

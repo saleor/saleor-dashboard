@@ -25,67 +25,68 @@ import {
   createShipping,
   deleteShippingStartsWith
 } from "../../support/api/utils/shippingUtils";
-import filterTests from "../../support/filterTests";
 
-filterTests({ definedTags: ["all"] }, () => {
-  describe("Create sale with assigned products", () => {
-    const startsWith = "CySales";
-    const saleValue = 10;
+describe("Create sale with assigned products", () => {
+  const startsWith = "CySales";
+  const saleValue = 10;
 
-    let channel;
-    let sale;
-    let warehouse;
-    let address;
-    let productData;
+  let channel;
+  let sale;
+  let warehouse;
+  let address;
+  let productData;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteProductsStartsWith(startsWith);
-      deleteShippingStartsWith(startsWith);
-      deleteSalesStartsWith(startsWith);
-      getDefaultChannel()
-        .then(defaultChannel => {
-          channel = defaultChannel;
-          createSaleInChannel({
-            name: startsWith,
-            type: "FIXED",
-            value: saleValue,
-            channelId: channel.id
-          });
-        })
-        .then(saleResp => (sale = saleResp));
-      cy.fixture("addresses")
-        .then(addresses => {
-          address = addresses.usAddress;
-          createShipping({
-            channelId: channel.id,
-            address,
-            name: startsWith
-          });
-        })
-        .then(({ warehouse: warehouseResp }) => {
-          warehouse = warehouseResp;
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteProductsStartsWith(startsWith);
+    deleteShippingStartsWith(startsWith);
+    deleteSalesStartsWith(startsWith);
+    getDefaultChannel()
+      .then(defaultChannel => {
+        channel = defaultChannel;
+        createSaleInChannel({
+          name: startsWith,
+          type: "FIXED",
+          value: saleValue,
+          channelId: channel.id
         });
-      createTypeAttributeAndCategoryForProduct({
-        name: startsWith,
-        attributeValues: ["value1", "value2"]
-      }).then(({ attribute, category, productType }) => {
-        productData = {
-          attributeId: attribute.id,
-          categoryId: category.id,
-          productTypeId: productType.id,
+      })
+      .then(saleResp => (sale = saleResp));
+    cy.fixture("addresses")
+      .then(addresses => {
+        address = addresses.usAddress;
+        createShipping({
           channelId: channel.id,
-          warehouseId: warehouse.id,
-          price: 30
-        };
+          address,
+          name: startsWith
+        });
+      })
+      .then(({ warehouse: warehouseResp }) => {
+        warehouse = warehouseResp;
       });
+    createTypeAttributeAndCategoryForProduct({
+      name: startsWith,
+      attributeValues: ["value1", "value2"]
+    }).then(({ attribute, category, productType }) => {
+      productData = {
+        attributeId: attribute.id,
+        categoryId: category.id,
+        productTypeId: productType.id,
+        channelId: channel.id,
+        warehouseId: warehouse.id,
+        price: 30
+      };
     });
+  });
 
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest();
-    });
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+  });
 
-    it("should discount only variants added to sale", () => {
+  it(
+    "should discount only variants added to sale",
+    { tags: ["@sales", "@allEnv", "@stable"] },
+    () => {
       const productName = `${startsWith}${faker.datatype.number()}`;
       const name = `${startsWith}${faker.datatype.number()}`;
 
@@ -132,52 +133,54 @@ filterTests({ definedTags: ["all"] }, () => {
             productData.price - saleValue
           );
         });
-    });
+    }
+  );
 
-    it("should delete sale", () => {
-      const name = `${startsWith}${faker.datatype.number()}`;
-      let variants;
-      let saleToDelete;
-      productData.name = name;
-      productData.sku = name;
-      createProductInChannel(productData)
-        .then(({ variantsList }) => {
-          variants = variantsList;
-          createSaleInChannelWithProduct({
-            name,
-            type: "FIXED",
-            value: saleValue,
-            channelId: channel.id,
-            variants
-          });
-        })
-        .then(saleResp => {
-          saleToDelete = saleResp;
-          getVariant(variants[0].id, channel.slug);
-        })
-        .then(variantResp => {
-          expect(variantResp.pricing.onSale).to.be.true;
-          expect(variantResp.pricing.price.gross.amount).to.eq(
-            productData.price - saleValue
-          );
-          cy.visit(saleDetailsUrl(saleToDelete.id))
-            .addAliasToGraphRequest("SaleDelete")
-            .get(BUTTON_SELECTORS.deleteButton)
-            .click()
-            .get(BUTTON_SELECTORS.submit)
-            .click()
-            .wait("@SaleDelete");
-          getVariant(variants[0].id, channel.slug);
-        })
-        .then(variantResp => {
-          expect(variantResp.pricing.onSale).to.be.false;
-          expect(variantResp.pricing.price.gross.amount).to.eq(
-            productData.price
-          );
+  it("should delete sale", { tags: ["@sales", "@allEnv", "@stable"] }, () => {
+    const name = `${startsWith}${faker.datatype.number()}`;
+    let variants;
+    let saleToDelete;
+    productData.name = name;
+    productData.sku = name;
+    createProductInChannel(productData)
+      .then(({ variantsList }) => {
+        variants = variantsList;
+        createSaleInChannelWithProduct({
+          name,
+          type: "FIXED",
+          value: saleValue,
+          channelId: channel.id,
+          variants
         });
-    });
+      })
+      .then(saleResp => {
+        saleToDelete = saleResp;
+        getVariant(variants[0].id, channel.slug);
+      })
+      .then(variantResp => {
+        expect(variantResp.pricing.onSale).to.be.true;
+        expect(variantResp.pricing.price.gross.amount).to.eq(
+          productData.price - saleValue
+        );
+        cy.visit(saleDetailsUrl(saleToDelete.id))
+          .addAliasToGraphRequest("SaleDelete")
+          .get(BUTTON_SELECTORS.deleteButton)
+          .click()
+          .get(BUTTON_SELECTORS.submit)
+          .click()
+          .wait("@SaleDelete");
+        getVariant(variants[0].id, channel.slug);
+      })
+      .then(variantResp => {
+        expect(variantResp.pricing.onSale).to.be.false;
+        expect(variantResp.pricing.price.gross.amount).to.eq(productData.price);
+      });
+  });
 
-    xit("should remove variant from sale", () => {
+  xit(
+    "should remove variant from sale",
+    { tags: ["@sales", "@allEnv"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let product;
       let variants;
@@ -216,6 +219,6 @@ filterTests({ definedTags: ["all"] }, () => {
             productData.price
           );
         });
-    });
-  });
+    }
+  );
 });

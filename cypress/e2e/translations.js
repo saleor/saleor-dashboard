@@ -9,30 +9,31 @@ import {
   updateCategoryTranslation
 } from "../support/api/requests/Category";
 import { deleteCategoriesStartsWith } from "../support/api/utils/catalog/categoryUtils";
-import filterTests from "../support/filterTests";
 import { updateTranslationToCategory } from "../support/pages/translationsPage";
 
-filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
-  xdescribe("As an admin I want to manage translations", () => {
-    const startsWith = "TestTranslations";
-    const randomNumber = faker.datatype.number();
-    const name = `${startsWith}${randomNumber}`;
+xdescribe("As an admin I want to manage translations", () => {
+  const startsWith = "TestTranslations";
+  const randomNumber = faker.datatype.number();
+  const name = `${startsWith}${randomNumber}`;
 
-    let category;
+  let category;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteCategoriesStartsWith(startsWith);
-      createCategory({ name: startsWith }).then(
-        categoryResp => (category = categoryResp)
-      );
-    });
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteCategoriesStartsWith(startsWith);
+    createCategory({ name: startsWith }).then(
+      categoryResp => (category = categoryResp)
+    );
+  });
 
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest();
-    });
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+  });
 
-    it("should be able to create new translation. TC:SALEOR_1701", () => {
+  it(
+    "should be able to create new translation. TC:SALEOR_1701",
+    { tags: ["@translations", "@stagedOnly"] },
+    () => {
       const translatedName = `TranslatedName${randomNumber}`;
       const translatedDescription = `TranslatedDescription${randomNumber}`;
       const translatedSeoTitle = `TranslatedSeoTitle${randomNumber}`;
@@ -55,9 +56,13 @@ filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
           `TranslatedSeoDescription${randomNumber}`
         );
       });
-    });
+    }
+  );
 
-    it("should be able to update translation. TC:SALEOR_1702", () => {
+  it(
+    "should be able to update translation. TC:SALEOR_1702",
+    { tags: ["@translations", "@stagedOnly"] },
+    () => {
       const randomNumber = faker.datatype.number();
       const startWithUpdate = `Translations_Update_${randomNumber}`;
       const seoTitleUpdate = `${startWithUpdate}_seoTitle`;
@@ -89,6 +94,6 @@ filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
           expect(translation.seoTitle).to.eq(seoTitleUpdate);
           expect(translation.seoDescription).to.includes(seoDescriptionUpdate);
         });
-    });
-  });
+    }
+  );
 });
