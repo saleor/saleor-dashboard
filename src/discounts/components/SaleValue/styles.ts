@@ -4,37 +4,37 @@ export const useStyles = makeStyles(
   () => ({
     card: {
       "&:last-child": {
-        paddingBottom: 0
-      }
+        paddingBottom: 0,
+      },
     },
     colValue: {
-      width: 300
+      width: 300,
     },
     colName: {
       fontSize: 14,
       paddingLeft: 0,
-      width: "auto"
+      width: "auto",
     },
     colType: {
       fontSize: 14,
       textAlign: "right",
-      width: 235
+      width: 235,
     },
     info: {
-      fontSize: 14
+      fontSize: 14,
     },
     row: {
       "&:last-child": {
         "& td": {
-          borderBottom: "none"
-        }
-      }
+          borderBottom: "none",
+        },
+      },
     },
     table: {
-      tableLayout: "fixed"
-    }
+      tableLayout: "fixed",
+    },
   }),
   {
-    name: "SaleValue"
-  }
+    name: "SaleValue",
+  },
 );

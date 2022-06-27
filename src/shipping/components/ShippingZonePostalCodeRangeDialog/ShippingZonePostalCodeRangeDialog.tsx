@@ -4,7 +4,7 @@ import {
   DialogContent,
   DialogTitle,
   TextField,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
@@ -24,26 +24,26 @@ export interface ShippingZonePostalCodeRangeDialogProps extends DialogProps {
 const useStyles = makeStyles(
   theme => ({
     info: {
-      marginBottom: theme.spacing(2)
-    }
+      marginBottom: theme.spacing(2),
+    },
   }),
   {
-    name: "ShippingZonePostalCodeRangeDialog"
-  }
+    name: "ShippingZonePostalCodeRangeDialog",
+  },
 );
 
 const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDialogProps> = ({
   confirmButtonState,
   open,
   onClose,
-  onSubmit
+  onSubmit,
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
 
   const initial: MinMax = {
     max: "",
-    min: ""
+    min: "",
   };
 
   return (
@@ -70,7 +70,7 @@ const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDia
                   label={intl.formatMessage({
                     id: "1T1fP8",
                     defaultMessage: "Postal codes (start)",
-                    description: "range input label"
+                    description: "range input label",
                   })}
                   name="min"
                   value={data.min}
@@ -80,7 +80,7 @@ const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDia
                   label={intl.formatMessage({
                     id: "axFFaD",
                     defaultMessage: "Postal codes (end)",
-                    description: "range input label"
+                    description: "range input label",
                   })}
                   name="max"
                   helperText={intl.formatMessage(commonMessages.optionalField)}

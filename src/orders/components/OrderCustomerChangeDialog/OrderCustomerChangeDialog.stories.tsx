@@ -3,13 +3,13 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import OrderCustomerChangeDialog, {
-  OrderCustomerChangeDialogProps
+  OrderCustomerChangeDialogProps,
 } from "./OrderCustomerChangeDialog";
 
 const props: OrderCustomerChangeDialogProps = {
   onClose: () => undefined,
   onConfirm: () => undefined,
-  open: true
+  open: true,
 };
 
 storiesOf("Orders / OrderCustomerChangeDialog", module)

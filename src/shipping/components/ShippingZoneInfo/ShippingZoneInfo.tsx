@@ -13,18 +13,18 @@ const messages = defineMessages({
   descriptionCharacterLimit: {
     id: "ChAjJu",
     defaultMessage: "{numberOfCharacters} of {maxCharacters} characters",
-    description: "character limit"
+    description: "character limit",
   },
   descriptionPlaceholder: {
     id: "FkRNk+",
     defaultMessage: "Description of a shipping zone.",
-    description: "field placeholder"
+    description: "field placeholder",
   },
   name: {
     id: "YpukUN",
     defaultMessage: "Shipping zone name",
-    description: "label"
-  }
+    description: "label",
+  },
 });
 
 export interface ShippingZoneInfoProps {
@@ -37,16 +37,16 @@ export interface ShippingZoneInfoProps {
 const useStyles = makeStyles(
   {
     label: {
-      flex: 1
+      flex: 1,
     },
     labelContainer: {
       "& span": {
-        paddingRight: 30
+        paddingRight: 30,
       },
-      display: "flex"
-    }
+      display: "flex",
+    },
   },
-  { name: "ShippingZoneCreatePage" }
+  { name: "ShippingZoneCreatePage" },
 );
 
 const MAX_DESCRIPTION_LENGTH = 300;
@@ -55,7 +55,7 @@ const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
   data,
   disabled,
   errors,
-  onChange
+  onChange,
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -75,7 +75,7 @@ const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
           helperText={getShippingErrorMessage(formErrors.name, intl)}
           label={intl.formatMessage(messages.name)}
           inputProps={{
-            "data-test-id": "name"
+            "data-test-id": "name",
           }}
           name="name"
           value={data.name}
@@ -96,7 +96,7 @@ const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
                     {...messages.descriptionCharacterLimit}
                     values={{
                       maxCharacters: MAX_DESCRIPTION_LENGTH,
-                      numberOfCharacters: data.description.length
+                      numberOfCharacters: data.description.length,
                     }}
                   />
                 </span>
@@ -105,8 +105,8 @@ const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
           }
           InputProps={{
             inputProps: {
-              maxLength: MAX_DESCRIPTION_LENGTH
-            }
+              maxLength: MAX_DESCRIPTION_LENGTH,
+            },
           }}
           value={data.description}
           onChange={onChange}

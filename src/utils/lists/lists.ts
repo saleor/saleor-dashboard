@@ -4,7 +4,7 @@ type Compare<TData> = (a: TData, b: TData) => boolean;
 export function isSelected<TData>(
   data: TData,
   list: List<TData>,
-  compare: Compare<TData>
+  compare: Compare<TData>,
 ) {
   return !!list.find(listElement => compare(listElement, data));
 }
@@ -16,7 +16,7 @@ export function add<TData>(data: TData, list: List<TData>) {
 export function addAtIndex<TData>(
   data: TData,
   list: List<TData>,
-  index: number
+  index: number,
 ) {
   return [...list.slice(0, index), data, ...list.slice(index)];
 }
@@ -25,7 +25,7 @@ export function move<TData>(
   data: TData,
   list: List<TData>,
   compare: Compare<TData>,
-  index: number
+  index: number,
 ) {
   return addAtIndex(data, remove(data, list, compare), index);
 }
@@ -33,7 +33,7 @@ export function move<TData>(
 export function update<TData>(
   data: TData,
   list: List<TData>,
-  compare: Compare<TData>
+  compare: Compare<TData>,
 ) {
   const index = list.findIndex(element => compare(data, element));
 
@@ -43,7 +43,7 @@ export function update<TData>(
 export function updateAtIndex<TData>(
   data: TData,
   list: List<TData>,
-  index: number
+  index: number,
 ) {
   if (!index.toFixed) {
     throw new Error("Index is not a number");
@@ -54,7 +54,7 @@ export function updateAtIndex<TData>(
 export function remove<TData>(
   data: TData,
   list: List<TData>,
-  compare: Compare<TData>
+  compare: Compare<TData>,
 ) {
   return list.filter(listElement => !compare(listElement, data));
 }
@@ -66,7 +66,7 @@ export function removeAtIndex<TData>(list: List<TData>, index: number) {
 export function toggle<TData>(
   data: TData,
   list: List<TData>,
-  compare: Compare<TData>
+  compare: Compare<TData>,
 ) {
   return isSelected(data, list, compare)
     ? remove(data, list, compare)

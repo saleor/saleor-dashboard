@@ -11,7 +11,7 @@ const CheckboxChecked = createSvgIcon(
       fill="white"
     />
   </>,
-  "CheckboxChecked"
+  "CheckboxChecked",
 );
 
 export default CheckboxChecked;

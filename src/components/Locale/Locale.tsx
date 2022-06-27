@@ -44,7 +44,7 @@ export enum Locale {
   UK = "uk",
   VI = "vi",
   ZH_HANS = "zh-Hans",
-  ZH_HANT = "zh-Hant"
+  ZH_HANT = "zh-Hant",
 }
 
 interface StructuredMessage {
@@ -95,7 +95,7 @@ export const localeNames: Record<Locale, string> = {
   [Locale.UK]: "Українська",
   [Locale.VI]: "Tiếng Việt",
   [Locale.ZH_HANS]: "简体中文",
-  [Locale.ZH_HANT]: "繁體中文"
+  [Locale.ZH_HANT]: "繁體中文",
 };
 
 const dotSeparator = "_dot_";
@@ -133,7 +133,7 @@ export interface LocaleContextType {
 }
 export const LocaleContext = React.createContext<LocaleContextType>({
   locale: defaultLocale,
-  setLocale: () => undefined
+  setLocale: () => undefined,
 });
 
 const { Consumer: LocaleConsumer, Provider: RawLocaleProvider } = LocaleContext;
@@ -141,7 +141,7 @@ const { Consumer: LocaleConsumer, Provider: RawLocaleProvider } = LocaleContext;
 const LocaleProvider: React.FC = ({ children }) => {
   const [locale, setLocale] = useLocalStorage(
     "locale",
-    getMatchingLocale(navigator.languages) || defaultLocale
+    getMatchingLocale(navigator.languages) || defaultLocale,
   );
   const [messages, setMessages] = React.useState(undefined);
 
@@ -174,7 +174,7 @@ const LocaleProvider: React.FC = ({ children }) => {
       <RawLocaleProvider
         value={{
           locale,
-          setLocale
+          setLocale,
         }}
       >
         {children}

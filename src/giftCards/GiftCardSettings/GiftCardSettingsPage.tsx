@@ -9,7 +9,7 @@ import {
   GiftCardSettingsExpiryTypeEnum,
   TimePeriodTypeEnum,
   useGiftCardSettingsQuery,
-  useGiftCardSettingsUpdateMutation
+  useGiftCardSettingsUpdateMutation,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
@@ -38,19 +38,19 @@ const GiftCardSettingsPage: React.FC = () => {
       settingsData?.expiryType === GiftCardSettingsExpiryTypeEnum.EXPIRY_PERIOD,
     expiryPeriodType:
       settingsData?.expiryPeriod?.type || TimePeriodTypeEnum.YEAR,
-    expiryPeriodAmount: settingsData?.expiryPeriod?.amount || 1
+    expiryPeriodAmount: settingsData?.expiryPeriod?.amount || 1,
   };
 
   const [
     updateGiftCardSettings,
-    updateGiftCardSettingsOpts
+    updateGiftCardSettingsOpts,
   ] = useGiftCardSettingsUpdateMutation({});
 
   const handleSubmit = (formData: GiftCardSettingsFormData) => {
     updateGiftCardSettings({
       variables: {
-        input: getGiftCardSettingsInputData(formData)
-      }
+        input: getGiftCardSettingsInputData(formData),
+      },
     });
   };
 

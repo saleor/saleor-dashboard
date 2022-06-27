@@ -9,49 +9,49 @@ import ArrowSort from "../../icons/ArrowSort";
 const useStyles = makeStyles(
   theme => ({
     arrow: {
-      transition: theme.transitions.duration.short + "ms"
+      transition: theme.transitions.duration.short + "ms",
     },
     arrowLeft: {
-      marginLeft: -24
+      marginLeft: -24,
     },
     arrowUp: {
-      transform: "rotate(180deg)"
+      transform: "rotate(180deg)",
     },
     disabled: {
       opacity: 0.7,
       "&&": {
-        cursor: "unset"
-      }
+        cursor: "unset",
+      },
     },
     label: {
       alignSelf: "center",
       display: "inline-block",
-      userSelect: "none"
+      userSelect: "none",
     },
     labelContainer: {
       "&:hover": {
-        color: theme.palette.text.primary
+        color: theme.palette.text.primary,
       },
       display: "flex",
-      height: 24
+      height: 24,
     },
     labelContainerActive: {
-      color: theme.palette.text.primary
+      color: theme.palette.text.primary,
     },
     labelContainerCenter: {
-      justifyContent: "center"
+      justifyContent: "center",
     },
     labelContainerRight: {
-      justifyContent: "flex-end"
+      justifyContent: "flex-end",
     },
     root: {
-      cursor: "pointer"
+      cursor: "pointer",
     },
     notSortable: {
-      cursor: "unset"
-    }
+      cursor: "unset",
+    },
   }),
-  { name: "TableCellHeader" }
+  { name: "TableCellHeader" },
 );
 
 export type TableCellHeaderArrowDirection = "asc" | "desc";
@@ -91,20 +91,20 @@ const TableCellHeader = React.forwardRef<unknown, TableCellHeaderProps>(
         }}
         className={classNames(classes.root, className, {
           [classes.disabled]: disabled,
-          [classes.notSortable]: !onClick
+          [classes.notSortable]: !onClick,
         })}
       >
         <div
           className={classNames(classes.labelContainer, {
             [classes.labelContainerActive]: !!direction && !!arrowPosition,
             [classes.labelContainerCenter]: textAlign === "center",
-            [classes.labelContainerRight]: textAlign === "right"
+            [classes.labelContainerRight]: textAlign === "right",
           })}
         >
           {!!direction && arrowPosition === "left" && (
             <ArrowSort
               className={classNames(classes.arrow, classes.arrowLeft, {
-                [classes.arrowUp]: direction === "asc"
+                [classes.arrowUp]: direction === "asc",
               })}
             />
           )}
@@ -112,19 +112,19 @@ const TableCellHeader = React.forwardRef<unknown, TableCellHeaderProps>(
           {!!direction && arrowPosition === "right" && (
             <ArrowSort
               className={classNames(classes.arrow, {
-                [classes.arrowUp]: direction === "asc"
+                [classes.arrowUp]: direction === "asc",
               })}
             />
           )}
         </div>
       </TableCell>
     );
-  }
+  },
 );
 
 TableCellHeader.displayName = "TableCellHeader";
 TableCellHeader.defaultProps = {
   arrowPosition: "left",
-  textAlign: "left"
+  textAlign: "left",
 };
 export default TableCellHeader;

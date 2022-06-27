@@ -7,10 +7,10 @@ import { commonMessages } from "@saleor/intl";
 import {
   extractMutationErrors,
   findValueInEnum,
-  getMutationStatus
+  getMutationStatus,
 } from "@saleor/misc";
 import WarehouseCreatePage, {
-  WarehouseCreatePageFormData
+  WarehouseCreatePageFormData,
 } from "@saleor/warehouses/components/WarehouseCreatePage";
 import { warehouseUrl } from "@saleor/warehouses/urls";
 import React from "react";
@@ -27,10 +27,10 @@ const WarehouseCreate: React.FC = () => {
         navigate(warehouseUrl(data.createWarehouse.warehouse.id));
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
+          text: intl.formatMessage(commonMessages.savedChanges),
         });
       }
-    }
+    },
   });
   const createWarehouseTransitionState = getMutationStatus(createWarehouseOpts);
 
@@ -48,12 +48,12 @@ const WarehouseCreate: React.FC = () => {
               phone: data.phone,
               postalCode: data.postalCode,
               streetAddress1: data.streetAddress1,
-              streetAddress2: data.streetAddress2
+              streetAddress2: data.streetAddress2,
             },
-            name: data.name
-          }
-        }
-      })
+            name: data.name,
+          },
+        },
+      }),
     );
 
   return (
@@ -62,7 +62,7 @@ const WarehouseCreate: React.FC = () => {
         title={intl.formatMessage({
           id: "GhcypC",
           defaultMessage: "Create Warehouse",
-          description: "header"
+          description: "header",
         })}
       />
       <WarehouseCreatePage

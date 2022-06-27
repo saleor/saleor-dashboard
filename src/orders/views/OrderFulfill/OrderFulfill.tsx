@@ -4,13 +4,13 @@ import {
   useOrderFulfillDataQuery,
   useOrderFulfillmentUpdateTrackingMutation,
   useOrderFulfillSettingsQuery,
-  useWarehouseDetailsQuery
+  useWarehouseDetailsQuery,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getMutationErrors } from "@saleor/misc";
 import OrderFulfillPage, {
-  OrderFulfillSubmitData
+  OrderFulfillSubmitData,
 } from "@saleor/orders/components/OrderFulfillPage";
 import { OrderFulfillUrlQueryParams, orderUrl } from "@saleor/orders/urls";
 import React from "react";
@@ -28,14 +28,14 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
 
   const {
     data: settings,
-    loading: settingsLoading
+    loading: settingsLoading,
   } = useOrderFulfillSettingsQuery({});
 
   const { data, loading } = useOrderFulfillDataQuery({
     displayLoader: true,
     variables: {
-      orderId
-    }
+      orderId,
+    },
   });
 
   const [updateTracking] = useOrderFulfillmentUpdateTrackingMutation();
@@ -49,17 +49,17 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
           text: intl.formatMessage({
             id: "CYEnGq",
             defaultMessage: "Fulfilled Items",
-            description: "order fulfilled success message"
-          })
+            description: "order fulfilled success message",
+          }),
         });
       }
-    }
+    },
   });
 
   const { data: warehouseData } = useWarehouseDetailsQuery({
     variables: {
-      id: params?.warehouse
-    }
+      id: params?.warehouse,
+    },
   });
 
   return (
@@ -71,16 +71,16 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
                 {
                   id: "2MKBk2",
                   defaultMessage: "Fulfill Order #{orderNumber}",
-                  description: "window title"
+                  description: "window title",
                 },
                 {
-                  orderNumber: data.order.number
-                }
+                  orderNumber: data.order.number,
+                },
               )
             : intl.formatMessage({
                 id: "NzifUg",
                 defaultMessage: "Fulfill Order",
-                description: "window title"
+                description: "window title",
               })
         }
       />
@@ -95,14 +95,14 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
                   .filter(line => !!line?.value)
                   .map(line => ({
                     orderLineId: line.id,
-                    stocks: line.value
+                    stocks: line.value,
                   })),
                 notifyCustomer:
                   settings?.shop?.fulfillmentAutoApprove && formData.sendInfo,
-                allowStockToBeExceeded: formData.allowStockToBeExceeded
+                allowStockToBeExceeded: formData.allowStockToBeExceeded,
               },
-              orderId
-            }
+              orderId,
+            },
           });
 
           const fulfillments = res?.data?.orderFulfill?.order?.fulfillments;
@@ -112,12 +112,12 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
                 id: fulfillments[fulfillments.length - 1].id,
                 input: {
                   ...(formData?.trackingNumber && {
-                    trackingNumber: formData.trackingNumber
+                    trackingNumber: formData.trackingNumber,
                   }),
                   notifyCustomer:
-                    settings?.shop?.fulfillmentAutoApprove && formData.sendInfo
-                }
-              }
+                    settings?.shop?.fulfillmentAutoApprove && formData.sendInfo,
+                },
+              },
             });
           }
           return getMutationErrors(res);

@@ -11,12 +11,12 @@ const useStyles = makeStyles(
     quantityField: {
       "& input": {
         padding: "12px 12px 10px",
-        textAlign: "right"
+        textAlign: "right",
       },
-      width: 100
-    }
+      width: 100,
+    },
   }),
-  { name: "TableLineForm" }
+  { name: "TableLineForm" },
 );
 
 export interface FormData {
@@ -30,7 +30,7 @@ interface TableLineFormProps {
 
 const TableLineForm: React.FC<TableLineFormProps> = ({
   line,
-  onOrderLineChange
+  onOrderLineChange,
 }) => {
   const classes = useStyles({});
   const { id, quantity } = line;
@@ -39,7 +39,7 @@ const TableLineForm: React.FC<TableLineFormProps> = ({
     <Form initial={{ quantity }} onSubmit={data => onOrderLineChange(id, data)}>
       {({ change, data, submit }) => {
         const handleQuantityChange = createNonNegativeValueChangeHandler(
-          change
+          change,
         );
 
         return (
@@ -58,7 +58,7 @@ const TableLineForm: React.FC<TableLineFormProps> = ({
                 onChange={debounce}
                 onBlur={submit}
                 inputProps={{
-                  min: 1
+                  min: 1,
                 }}
               />
             )}

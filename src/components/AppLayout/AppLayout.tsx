@@ -9,7 +9,7 @@ import {
   SidebarDrawer,
   useActionBar,
   useBacklink,
-  useTheme
+  useTheme,
 } from "@saleor/macaw-ui";
 import { isDarkTheme } from "@saleor/misc";
 import React from "react";
@@ -33,84 +33,86 @@ const useStyles = makeStyles(
     appAction: {
       [theme.breakpoints.down("sm")]: {
         left: 0,
-        width: "100%"
+        width: "100%",
       },
       bottom: 0,
       gridColumn: 2,
       position: "sticky",
-      zIndex: 10
+      zIndex: 10,
     },
     appLoader: {
       height: appLoaderHeight,
       marginBottom: theme.spacing(4),
-      zIndex: 1201
+      zIndex: 1201,
     },
     appLoaderPlaceholder: {
       height: appLoaderHeight,
-      marginBottom: theme.spacing(4)
+      marginBottom: theme.spacing(4),
     },
 
     content: {
       flex: 1,
       [theme.breakpoints.up("md")]: {
-        width: 0 // workaround for flex children width expansion affected by their contents
-      }
+        width: 0, // workaround for flex children width expansion affected by their contents
+      },
     },
     darkThemeSwitch: {
       [theme.breakpoints.down("sm")]: {
-        marginRight: theme.spacing(1)
+        marginRight: theme.spacing(1),
       },
-      marginRight: theme.spacing(2)
+      marginRight: theme.spacing(2),
     },
     header: {
       display: "grid",
       gridTemplateAreas: `"headerAnchor headerToolbar"`,
       [theme.breakpoints.down("sm")]: {
         gridTemplateAreas: `"headerToolbar" 
-        "headerAnchor"`
+        "headerAnchor"`,
       },
-      marginBottom: theme.spacing(6)
+      marginBottom: theme.spacing(6),
     },
     headerAnchor: {
-      gridArea: "headerAnchor"
+      gridArea: "headerAnchor",
     },
     headerToolbar: {
       display: "flex",
       gridArea: "headerToolbar",
       height: 40,
       [theme.breakpoints.down("sm")]: {
-        height: "auto"
-      }
+        height: "auto",
+      },
     },
     root: {
       isolation: "isolate",
       [theme.breakpoints.up("md")]: {
-        display: "flex"
+        display: "flex",
       },
-      width: `100%`
+      width: `100%`,
     },
     spacer: {
-      flex: 1
+      flex: 1,
     },
     userBar: {
       alignItems: "center",
-      display: "flex"
+      display: "flex",
     },
 
     view: {
       marginLeft: 0,
       paddingBottom: theme.spacing(),
       [theme.breakpoints.up("sm")]: {
-        paddingBottom: theme.spacing(3)
-      }
+        paddingBottom: theme.spacing(3),
+      },
     },
     viewContainer: {
-      minHeight: `calc(100vh - ${appLoaderHeight + 72}px - ${theme.spacing(4)})`
-    }
+      minHeight: `calc(100vh - ${appLoaderHeight + 72}px - ${theme.spacing(
+        4,
+      )})`,
+    },
   }),
   {
-    name: "AppLayout"
-  }
+    name: "AppLayout",
+  },
 );
 
 interface AppLayoutProps {
@@ -129,18 +131,18 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const { location } = useRouter();
   const [isNavigatorVisible, setNavigatorVisibility] = React.useState(false);
   const isMdUp = useMediaQuery((theme: SaleorTheme) =>
-    theme.breakpoints.up("md")
+    theme.breakpoints.up("md"),
   );
   const {
     availableChannels,
     channel,
     isPickerActive,
-    setChannel
+    setChannel,
   } = useAppChannel(false);
 
   const [menuStructure, handleMenuItemClick] = useMenuStructure(intl, user);
   const activeMenu = menuStructure.find(menuItem =>
-    isMenuActive(location.pathname, menuItem)
+    isMenuActive(location.pathname, menuItem),
   )?.id;
 
   const reloadWindow = () => {
@@ -151,9 +153,9 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     navigate("/", { replace: true });
     dispatchAppState({
       payload: {
-        error: null
+        error: null,
       },
-      type: "displayError"
+      type: "displayError",
     });
     reloadWindow();
   };

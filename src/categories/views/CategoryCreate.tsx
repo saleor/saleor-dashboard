@@ -3,7 +3,7 @@ import {
   CategoryCreateMutation,
   useCategoryCreateMutation,
   useUpdateMetadataMutation,
-  useUpdatePrivateMetadataMutation
+  useUpdatePrivateMetadataMutation,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -22,7 +22,7 @@ interface CategoryCreateViewProps {
 }
 
 export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
-  parentId
+  parentId,
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
@@ -36,15 +36,15 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
         status: "success",
         text: intl.formatMessage({
           id: "xl7Fag",
-          defaultMessage: "Category created"
-        })
+          defaultMessage: "Category created",
+        }),
       });
       navigate(categoryUrl(data.categoryCreate.category.id));
     }
   };
 
   const [createCategory, createCategoryResult] = useCategoryCreateMutation({
-    onCompleted: handleSuccess
+    onCompleted: handleSuccess,
   });
 
   const handleCreate = async (formData: CategoryCreateData) => {
@@ -55,24 +55,24 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
           name: formData.name,
           seo: {
             description: formData.seoDescription,
-            title: formData.seoTitle
+            title: formData.seoTitle,
           },
-          slug: formData.slug
+          slug: formData.slug,
         },
-        parent: parentId || null
-      }
+        parent: parentId || null,
+      },
     });
 
     return {
       id: result.data?.categoryCreate.category?.id || null,
-      errors: getMutationErrors(result)
+      errors: getMutationErrors(result),
     };
   };
 
   const handleSubmit = createMetadataCreateHandler(
     handleCreate,
     updateMetadata,
-    updatePrivateMetadata
+    updatePrivateMetadata,
   );
 
   return (
@@ -81,7 +81,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
         title={intl.formatMessage({
           id: "Irflxf",
           defaultMessage: "Create category",
-          description: "window title"
+          description: "window title",
         })}
       />
       <CategoryCreatePage

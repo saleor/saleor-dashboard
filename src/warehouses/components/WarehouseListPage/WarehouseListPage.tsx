@@ -8,19 +8,19 @@ import SearchBar from "@saleor/components/SearchBar";
 import { configurationMenuUrl } from "@saleor/configuration";
 import {
   RefreshLimitsQuery,
-  WarehouseWithShippingFragment
+  WarehouseWithShippingFragment,
 } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import {
   PageListProps,
   SearchPageProps,
   SortPage,
-  TabPageProps
+  TabPageProps,
 } from "@saleor/types";
 import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import {
   warehouseAddUrl,
-  WarehouseListUrlSortField
+  WarehouseListUrlSortField,
 } from "@saleor/warehouses/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -71,12 +71,12 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
             {
               id: "YkOzse",
               defaultMessage: "{count}/{max} warehouses used",
-              description: "used warehouses counter"
+              description: "used warehouses counter",
             },
             {
               count: limits.currentUsage.warehouses,
-              max: limits.allowedUsage.warehouses
-            }
+              max: limits.allowedUsage.warehouses,
+            },
           )
         }
       >
@@ -98,7 +98,7 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
           title={intl.formatMessage({
             id: "5HwLx9",
             defaultMessage: "Warehouse limit reached",
-            description: "alert"
+            description: "alert",
           })}
         >
           <FormattedMessage
@@ -112,13 +112,13 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
           allTabLabel={intl.formatMessage({
             id: "2yU+q9",
             defaultMessage: "All Warehouses",
-            description: "tab name"
+            description: "tab name",
           })}
           currentTab={currentTab}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
             id: "caMMWN",
-            defaultMessage: "Search Warehouse"
+            defaultMessage: "Search Warehouse",
           })}
           tabs={tabs}
           onAll={onAll}

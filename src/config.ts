@@ -13,12 +13,12 @@ export const MARKETPLACE_URL = process.env.MARKETPLACE_URL;
 export const DEFAULT_INITIAL_SEARCH_DATA: SearchVariables = {
   after: null,
   first: 20,
-  query: ""
+  query: "",
 };
 
 export const DEFAULT_INITIAL_PAGINATION_DATA: Pagination = {
   after: undefined,
-  before: undefined
+  before: undefined,
 };
 
 export const PAGINATE_BY = 20;
@@ -55,66 +55,66 @@ export interface AppListViewSettings {
 
 export const defaultListSettings: AppListViewSettings = {
   [ListViews.APPS_LIST]: {
-    rowNumber: 100
+    rowNumber: 100,
   },
   [ListViews.ATTRIBUTE_VALUE_LIST]: {
-    rowNumber: 10
+    rowNumber: 10,
   },
   [ListViews.CATEGORY_LIST]: {
-    rowNumber: PAGINATE_BY
+    rowNumber: PAGINATE_BY,
   },
   [ListViews.COLLECTION_LIST]: {
-    rowNumber: PAGINATE_BY
+    rowNumber: PAGINATE_BY,
   },
   [ListViews.CUSTOMER_LIST]: {
-    rowNumber: PAGINATE_BY
+    rowNumber: PAGINATE_BY,
   },
   [ListViews.DRAFT_LIST]: {
-    rowNumber: PAGINATE_BY
+    rowNumber: PAGINATE_BY,
   },
   [ListViews.NAVIGATION_LIST]: {
-    rowNumber: PAGINATE_BY
+    rowNumber: PAGINATE_BY,
   },
   [ListViews.ORDER_LIST]: {
-    rowNumber: PAGINATE_BY
+    rowNumber: PAGINATE_BY,
   },
   [ListViews.PAGES_LIST]: {
-    rowNumber: PAGINATE_BY
+    rowNumber: PAGINATE_BY,
   },
   [ListViews.PLUGINS_LIST]: {
-    rowNumber: PAGINATE_BY
+    rowNumber: PAGINATE_BY,
   },
   [ListViews.PRODUCT_LIST]: {
     columns: ["availability", "price", "productType", "date"],
-    rowNumber: PAGINATE_BY
+    rowNumber: PAGINATE_BY,
   },
   [ListViews.SALES_LIST]: {
-    rowNumber: PAGINATE_BY
+    rowNumber: PAGINATE_BY,
   },
   [ListViews.SHIPPING_METHODS_LIST]: {
-    rowNumber: PAGINATE_BY
+    rowNumber: PAGINATE_BY,
   },
   [ListViews.STAFF_MEMBERS_LIST]: {
-    rowNumber: PAGINATE_BY
+    rowNumber: PAGINATE_BY,
   },
   [ListViews.PERMISSION_GROUP_LIST]: {
-    rowNumber: PAGINATE_BY
+    rowNumber: PAGINATE_BY,
   },
   [ListViews.VOUCHER_LIST]: {
-    rowNumber: PAGINATE_BY
+    rowNumber: PAGINATE_BY,
   },
   [ListViews.WAREHOUSE_LIST]: {
-    rowNumber: PAGINATE_BY
+    rowNumber: PAGINATE_BY,
   },
   [ListViews.WEBHOOK_LIST]: {
-    rowNumber: PAGINATE_BY
+    rowNumber: PAGINATE_BY,
   },
   [ListViews.TRANSLATION_ATTRIBUTE_VALUE_LIST]: {
-    rowNumber: 10
+    rowNumber: 10,
   },
   [ListViews.GIFT_CARD_LIST]: {
-    rowNumber: PAGINATE_BY
-  }
+    rowNumber: PAGINATE_BY,
+  },
 };
 
 export const APP_VERSION = packageInfo.version;

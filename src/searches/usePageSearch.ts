@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 import {
   SearchPagesDocument,
   SearchPagesQuery,
-  SearchPagesQueryVariables
+  SearchPagesQueryVariables,
 } from "@saleor/graphql";
 import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
 
@@ -23,5 +23,5 @@ export const searchPages = gql`
 `;
 
 export default makeTopLevelSearch<SearchPagesQuery, SearchPagesQueryVariables>(
-  SearchPagesDocument
+  SearchPagesDocument,
 );

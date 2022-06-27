@@ -9,18 +9,18 @@ const storedValue = {
   ...defaultListSettings,
   [key]: {
     ...defaultListSettings[key],
-    rowNumber: 100
-  }
+    rowNumber: 100,
+  },
 };
 const valueWithoutKey = {
   ...defaultListSettings,
-  [key]: undefined
+  [key]: undefined,
 };
 const valueWithoutSettings = {
   ...defaultListSettings,
   [key]: {
-    foo: "bar"
-  }
+    foo: "bar",
+  },
 };
 
 beforeEach(() => {
@@ -39,7 +39,7 @@ describe("useListSettings", () => {
   it("omits init if value is present", () => {
     localStorage.setItem(listSettingsStorageKey, JSON.stringify(storedValue));
     expect(localStorage.getItem(listSettingsStorageKey)).toBe(
-      JSON.stringify(storedValue)
+      JSON.stringify(storedValue),
     );
 
     const { result } = renderHook(() => useListSettings(key));
@@ -50,10 +50,10 @@ describe("useListSettings", () => {
   it("properly merges new default values to saved ones", () => {
     localStorage.setItem(
       listSettingsStorageKey,
-      JSON.stringify(valueWithoutKey)
+      JSON.stringify(valueWithoutKey),
     );
     expect(localStorage.getItem(listSettingsStorageKey)).toBe(
-      JSON.stringify(valueWithoutKey)
+      JSON.stringify(valueWithoutKey),
     );
 
     const { result } = renderHook(() => useListSettings(key));
@@ -64,17 +64,17 @@ describe("useListSettings", () => {
   it("properly fills missing settings", () => {
     localStorage.setItem(
       listSettingsStorageKey,
-      JSON.stringify(valueWithoutSettings)
+      JSON.stringify(valueWithoutSettings),
     );
     expect(localStorage.getItem(listSettingsStorageKey)).toBe(
-      JSON.stringify(valueWithoutSettings)
+      JSON.stringify(valueWithoutSettings),
     );
 
     const { result } = renderHook(() => useListSettings(key));
 
     expect(result.current.settings).toStrictEqual({
       ...valueWithoutSettings[key],
-      ...defaultListSettings[key]
+      ...defaultListSettings[key],
     });
   });
 });

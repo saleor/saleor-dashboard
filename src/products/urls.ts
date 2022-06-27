@@ -12,7 +12,7 @@ import {
   Pagination,
   SingleAction,
   Sort,
-  TabActionDialog
+  TabActionDialog,
 } from "../types";
 import { stringifyQs } from "../utils/urls";
 
@@ -31,18 +31,18 @@ export enum ProductListUrlFiltersEnum {
   stockStatus = "stockStatus",
   query = "query",
   channel = "channel",
-  productKind = "productKind"
+  productKind = "productKind",
 }
 export enum ProductListUrlFiltersWithMultipleValues {
   categories = "categories",
   collections = "collections",
-  productTypes = "productTypes"
+  productTypes = "productTypes",
 }
 export enum ProductListUrlFiltersAsDictWithMultipleValues {
-  attributes = "attributes"
+  attributes = "attributes",
 }
 export enum ProductListUrlFiltersWithKeyValueValues {
-  metadata = "metadata"
+  metadata = "metadata",
 }
 export type ProductListUrlFilters = Filters<ProductListUrlFiltersEnum> &
   FiltersWithMultipleValues<ProductListUrlFiltersWithMultipleValues> &
@@ -57,7 +57,7 @@ export enum ProductListUrlSortField {
   status = "status",
   price = "price",
   rank = "rank",
-  date = "date"
+  date = "date",
 }
 export type ProductListUrlSort = Sort<ProductListUrlSortField>;
 export interface ProductListUrlQueryParams
@@ -98,11 +98,11 @@ export type ProductVariantEditUrlQueryParams = Dialog<
 export const productVariantEditUrl = (
   productId: string,
   variantId: string,
-  params?: ProductVariantEditUrlQueryParams
+  params?: ProductVariantEditUrlQueryParams,
 ) =>
   productVariantEditPath(
     encodeURIComponent(productId),
-    encodeURIComponent(variantId)
+    encodeURIComponent(variantId),
   ) +
   "?" +
   stringifyQs(params);
@@ -121,7 +121,7 @@ export const productVariantAddPath = (productId: string) =>
   urlJoin(productSection, productId, "variant/add");
 export const productVariantAddUrl = (
   productId: string,
-  params?: ProductVariantAddUrlQueryParams
+  params?: ProductVariantAddUrlQueryParams,
 ): string =>
   productVariantAddPath(encodeURIComponent(productId)) +
   "?" +
@@ -134,7 +134,7 @@ export type ProductImageUrlQueryParams = Dialog<"remove">;
 export const productImageUrl = (
   productId: string,
   imageId: string,
-  params?: ProductImageUrlQueryParams
+  params?: ProductImageUrlQueryParams,
 ) =>
   productImagePath(encodeURIComponent(productId), encodeURIComponent(imageId)) +
   "?" +

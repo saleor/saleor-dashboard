@@ -3,7 +3,7 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle
+  DialogTitle,
 } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import ConfirmButton from "@saleor/components/ConfirmButton";

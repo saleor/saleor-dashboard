@@ -10,13 +10,13 @@ const useStyles = makeStyles(
   theme => ({
     root: {
       "&:not(first-child)": {
-        paddingLeft: 0
+        paddingLeft: 0,
       },
       paddingRight: theme.spacing(3),
-      width: "1%"
-    }
+      width: "1%",
+    },
   }),
-  { name: "TableCellAvatar" }
+  { name: "TableCellAvatar" },
 );
 
 interface TableCellAvatarProps extends AvatarProps, TableCellProps {

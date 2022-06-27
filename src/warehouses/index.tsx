@@ -12,7 +12,7 @@ import {
   WarehouseListUrlQueryParams,
   WarehouseListUrlSortField,
   warehousePath,
-  WarehouseUrlQueryParams
+  WarehouseUrlQueryParams,
 } from "./urls";
 import WarehouseCreate from "./views/WarehouseCreate";
 import WarehouseDetailsComponent from "./views/WarehouseDetails";
@@ -22,7 +22,7 @@ const WarehouseList: React.FC<RouteComponentProps> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: WarehouseListUrlQueryParams = asSortParams(
     qs,
-    WarehouseListUrlSortField
+    WarehouseListUrlSortField,
   );
 
   return <WarehouseListComponent params={params} />;
@@ -30,7 +30,7 @@ const WarehouseList: React.FC<RouteComponentProps> = ({ location }) => {
 
 const WarehouseDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
   location,
-  match
+  match,
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: WarehouseUrlQueryParams = qs;

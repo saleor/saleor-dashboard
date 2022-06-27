@@ -12,7 +12,7 @@ import {
   PageListProps,
   RelayToFlat,
   SortPage,
-  TabPageProps
+  TabPageProps,
 } from "@saleor/types";
 import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
@@ -23,7 +23,7 @@ import OrderLimitReached from "../OrderLimitReached";
 import {
   createFilterStructure,
   OrderDraftFilterKeys,
-  OrderDraftListFilterOpts
+  OrderDraftListFilterOpts,
 } from "./filters";
 
 export interface OrderDraftListPageProps
@@ -67,12 +67,12 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
             {
               id: "w2eTzO",
               defaultMessage: "{count}/{max} orders",
-              description: "placed orders counter"
+              description: "placed orders counter",
             },
             {
               count: limits.currentUsage.orders,
-              max: limits.allowedUsage.orders
-            }
+              max: limits.allowedUsage.orders,
+            },
           )
         }
       >
@@ -94,14 +94,14 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
           allTabLabel={intl.formatMessage({
             id: "7a1S4K",
             defaultMessage: "All Drafts",
-            description: "tab name"
+            description: "tab name",
           })}
           currentTab={currentTab}
           filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
             id: "NJEe12",
-            defaultMessage: "Search Draft"
+            defaultMessage: "Search Draft",
           })}
           tabs={tabs}
           onAll={onAll}

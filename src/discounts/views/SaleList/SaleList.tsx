@@ -3,7 +3,7 @@ import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData
+  SaveFilterTabDialogFormData,
 } from "@saleor/components/SaveFilterTabDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { useSaleBulkDeleteMutation, useSaleListQuery } from "@saleor/graphql";
@@ -14,7 +14,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
-  PaginatorContext
+  PaginatorContext,
 } from "@saleor/hooks/usePaginator";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
@@ -32,7 +32,7 @@ import SaleListPage from "../../components/SaleListPage";
 import {
   saleListUrl,
   SaleListUrlDialog,
-  SaleListUrlQueryParams
+  SaleListUrlQueryParams,
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -42,7 +42,7 @@ import {
   getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab
+  saveFilterTab,
 } from "./filters";
 import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 
@@ -54,10 +54,10 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    params.ids
+    params.ids,
   );
   const { updateListSettings, settings } = useListSettings(
-    ListViews.SALES_LIST
+    ListViews.SALES_LIST,
   );
 
   usePaginationReset(saleListUrl, params, settings.rowNumber);
@@ -65,7 +65,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
   const intl = useIntl();
   const { availableChannels } = useAppChannel(false);
   const selectedChannel = availableChannels.find(
-    channel => channel.slug === params.channel
+    channel => channel.slug === params.channel,
   );
   const channelOpts = availableChannels
     ? mapNodeToChoice(availableChannels, channel => channel.slug)
@@ -82,13 +82,13 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
       ...paginationState,
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params),
-      channel: params.channel
+      channel: params.channel,
     }),
-    [params, settings.rowNumber]
+    [params, settings.rowNumber],
   );
   const { data, loading, refetch } = useSaleListQuery({
     displayLoader: true,
-    variables: queryVariables
+    variables: queryVariables,
   });
 
   const tabs = getFilterTabs();
@@ -98,13 +98,13 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
   const [
     changeFilters,
     resetFilters,
-    handleSearchChange
+    handleSearchChange,
   ] = createFilterHandlers({
     cleanupFn: reset,
     createUrl: saleListUrl,
     getFilterQueryParam,
     navigate,
-    params
+    params,
   });
 
   useEffect(() => {
@@ -112,8 +112,8 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
       navigate(
         saleListUrl({
           ...params,
-          sort: DEFAULT_SORT_KEY
-        })
+          sort: DEFAULT_SORT_KEY,
+        }),
       );
     }
   }, [params]);
@@ -123,8 +123,8 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
     navigate(
       saleListUrl({
         activeTab: tab.toString(),
-        ...getFilterTabs()[tab - 1].data
-      })
+        ...getFilterTabs()[tab - 1].data,
+      }),
     );
   };
 
@@ -144,7 +144,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
   const paginationValues = usePaginator({
     pageInfo: maybe(() => data.sales.pageInfo),
     paginationState,
-    queryString: params
+    queryString: params,
   });
 
   const [saleBulkDelete, saleBulkDeleteOpts] = useSaleBulkDeleteMutation({
@@ -152,13 +152,13 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
       if (data.saleBulkDelete.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
+          text: intl.formatMessage(commonMessages.savedChanges),
         });
         reset();
         closeModal();
         refetch();
       }
-    }
+    },
   });
 
   const handleSort = createSortHandler(navigate, saleListUrl, params);
@@ -166,8 +166,8 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
   const onSaleBulkDelete = () =>
     saleBulkDelete({
       variables: {
-        ids: params.ids
-      }
+        ids: params.ids,
+      },
     });
 
   return (
@@ -200,7 +200,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
             color="primary"
             onClick={() =>
               openModal("remove", {
-                ids: listElements
+                ids: listElements,
               })
             }
           >
@@ -217,7 +217,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         title={intl.formatMessage({
           id: "ZWIjvr",
           defaultMessage: "Delete Sales",
-          description: "dialog header"
+          description: "dialog header",
         })}
         variant="delete"
       >
@@ -229,7 +229,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
               description="dialog content"
               values={{
                 counter: params.ids.length,
-                displayQuantity: <strong>{params.ids.length}</strong>
+                displayQuantity: <strong>{params.ids.length}</strong>,
               }}
             />
           </DialogContentText>

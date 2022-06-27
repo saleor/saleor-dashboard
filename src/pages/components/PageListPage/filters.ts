@@ -4,29 +4,29 @@ import { SearchPageTypesQuery } from "@saleor/graphql";
 import {
   PageListUrlFilters,
   PageListUrlFiltersWithMultipleValues,
-  PageListUrlSort
+  PageListUrlSort,
 } from "@saleor/pages/urls";
 import {
   ActiveTab,
   AutocompleteFilterOpts,
   FilterOpts,
   Pagination,
-  Search
+  Search,
 } from "@saleor/types";
 import {
   createFilterTabUtils,
   createFilterUtils,
-  getMultipleValueQueryParam
+  getMultipleValueQueryParam,
 } from "@saleor/utils/filters";
 import { createAutocompleteField } from "@saleor/utils/filters/fields";
 import {
   mapNodeToChoice,
-  mapSingleValueNodeToChoice
+  mapSingleValueNodeToChoice,
 } from "@saleor/utils/maps";
 import { defineMessages, IntlShape } from "react-intl";
 
 export enum PageListFilterKeys {
-  pageTypes = "pageTypes"
+  pageTypes = "pageTypes",
 }
 
 export const PAGES_FILTERS_KEY = "pagesFilters";
@@ -39,8 +39,8 @@ const messages = defineMessages({
   pageType: {
     id: "Of19Pn",
     defaultMessage: "Page Types",
-    description: "Types"
-  }
+    description: "Types",
+  },
 });
 
 interface PageListFilterOptsProps {
@@ -52,7 +52,7 @@ interface PageListFilterOptsProps {
 export const getFilterOpts = ({
   params,
   pageTypes,
-  pageTypesProps
+  pageTypesProps,
 }: PageListFilterOptsProps): PageListFilterOpts => ({
   pageType: {
     active: !!params?.pageTypes,
@@ -63,13 +63,13 @@ export const getFilterOpts = ({
     hasMore: pageTypesProps.hasMore,
     loading: pageTypesProps.loading,
     onFetchMore: pageTypesProps.onFetchMore,
-    onSearchChange: pageTypesProps.onSearchChange
-  }
+    onSearchChange: pageTypesProps.onSearchChange,
+  },
 });
 
 export function createFilterStructure(
   intl: IntlShape,
-  opts: PageListFilterOpts
+  opts: PageListFilterOpts,
 ): IFilter<PageListFilterKeys> {
   return [
     {
@@ -85,16 +85,16 @@ export function createFilterStructure(
           initialSearch: "",
           loading: opts.pageType.loading,
           onFetchMore: opts.pageType.onFetchMore,
-          onSearchChange: opts.pageType.onSearchChange
-        }
+          onSearchChange: opts.pageType.onSearchChange,
+        },
       ),
-      active: opts.pageType.active
-    }
+      active: opts.pageType.active,
+    },
   ];
 }
 
 export function getFilterQueryParam(
-  filter: FilterElement<PageListFilterKeys>
+  filter: FilterElement<PageListFilterKeys>,
 ): PageListUrlFilters {
   const { name } = filter;
 
@@ -115,13 +115,13 @@ export type PageListUrlQueryParams = Pagination &
 export const {
   deleteFilterTab,
   getFilterTabs,
-  saveFilterTab
+  saveFilterTab,
 } = createFilterTabUtils<PageListUrlFilters>(PAGES_FILTERS_KEY);
 
 export const {
   areFiltersApplied,
   getActiveFilters,
-  getFiltersCurrentTab
+  getFiltersCurrentTab,
 } = createFilterUtils<PageListUrlQueryParams, PageListUrlFilters>(
-  PageListUrlFiltersWithMultipleValues
+  PageListUrlFiltersWithMultipleValues,
 );

@@ -11,7 +11,7 @@ interface DiscountedPriceProps {
 
 const DiscountedPrice: React.FC<DiscountedPriceProps> = ({
   regularPrice,
-  discountedPrice
+  discountedPrice,
 }) => {
   const classes = useStyles();
 

@@ -4,7 +4,7 @@ import {
   Pagination,
   SingleAction,
   Sort,
-  TabActionDialog
+  TabActionDialog,
 } from "@saleor/types";
 import { stringifyQs } from "@saleor/utils/urls";
 import urlJoin from "url-join";
@@ -15,7 +15,7 @@ export const permissionGroupListPath = permissionGroupSection;
 
 export type PermissionGroupListUrlDialog = "remove" | TabActionDialog;
 export enum PermissionGroupListUrlSortField {
-  name = "name"
+  name = "name",
 }
 export type PermissionGroupListUrlSort = Sort<PermissionGroupListUrlSortField>;
 export type PermissionGroupListUrlQueryParams = Dialog<
@@ -25,7 +25,7 @@ export type PermissionGroupListUrlQueryParams = Dialog<
   PermissionGroupListUrlSort &
   SingleAction;
 export const permissionGroupListUrl = (
-  params?: PermissionGroupListUrlQueryParams
+  params?: PermissionGroupListUrlQueryParams,
 ) => permissionGroupListPath + "?" + stringifyQs(params);
 
 export const permissionGroupAddPath = urlJoin(permissionGroupSection, "add");
@@ -33,7 +33,7 @@ export const permissionGroupAddUrl = permissionGroupAddPath;
 
 export enum MembersListUrlSortField {
   name = "name",
-  email = "email"
+  email = "email",
 }
 export type MembersListUrlSort = Sort<MembersListUrlSortField>;
 
@@ -51,7 +51,7 @@ export type PermissionGroupDetailsUrlQueryParams = BulkAction &
 
 export const permissionGroupDetailsUrl = (
   id: string,
-  params?: PermissionGroupDetailsUrlQueryParams
+  params?: PermissionGroupDetailsUrlQueryParams,
 ) =>
   permissionGroupDetailsPath(encodeURIComponent(id)) +
   "?" +

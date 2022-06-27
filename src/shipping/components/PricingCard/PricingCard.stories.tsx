@@ -8,11 +8,11 @@ import PricingCard, { PricingCardProps } from "./PricingCard";
 
 const props: PricingCardProps = {
   channels: createShippingChannelsFromRate(
-    shippingZone.shippingMethods[0].channelListings
+    shippingZone.shippingMethods[0].channelListings,
   ),
   disabled: false,
   errors: [],
-  onChange: () => undefined
+  onChange: () => undefined,
 };
 
 storiesOf("Shipping / Pricing Card", module)

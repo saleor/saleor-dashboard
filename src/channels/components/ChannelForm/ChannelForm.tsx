@@ -3,13 +3,13 @@ import {
   CardContent,
   InputAdornment,
   TextField,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import SingleAutocompleteSelectField, {
-  SingleAutocompleteChoiceType
+  SingleAutocompleteChoiceType,
 } from "@saleor/components/SingleAutocompleteSelectField";
 import { ChannelErrorFragment, CountryCode } from "@saleor/graphql";
 import useClipboard from "@saleor/hooks/useClipboard";
@@ -55,13 +55,13 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
   countries,
   onChange,
   onCurrencyCodeChange,
-  onDefaultCountryChange
+  onDefaultCountryChange,
 }) => {
   const intl = useIntl();
   const [copied, copy] = useClipboard();
   const formErrors = getFormErrors<keyof FormData, ChannelErrorFragment>(
     ["name", "slug", "currencyCode"],
-    errors
+    errors,
   );
   const classes = useStyles({});
   return (
@@ -79,7 +79,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             label={intl.formatMessage({
               id: "UymotP",
               defaultMessage: "Channel name",
-              description: "channel name"
+              description: "channel name",
             })}
             name="name"
             value={data.name}
@@ -93,13 +93,13 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             fullWidth
             FormHelperTextProps={
               {
-                "data-test-id": "slug-text-input-helper-text"
+                "data-test-id": "slug-text-input-helper-text",
               } as ExtendedFormHelperTextProps
             }
             label={intl.formatMessage({
               id: "74Zo/H",
               defaultMessage: "Slug",
-              description: "channel slug"
+              description: "channel slug",
             })}
             name="slug"
             value={data.slug}
@@ -126,7 +126,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
                     />
                   )}
                 </InputAdornment>
-              )
+              ),
             }}
           />
           <FormSpacer />
@@ -138,7 +138,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
           title={intl.formatMessage({
             id: "3y4r+z",
             defaultMessage: "Channel Settings",
-            description: "channel settings"
+            description: "channel settings",
           })}
         />
         <CardContent>
@@ -149,18 +149,18 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
               error={!!formErrors.currencyCode}
               FormHelperTextProps={
                 {
-                  "data-test-id": "currency-text-input-helper-text"
+                  "data-test-id": "currency-text-input-helper-text",
                 } as ExtendedFormHelperTextProps
               }
               helperText={getChannelsErrorMessage(
                 formErrors?.currencyCode,
-                intl
+                intl,
               )}
               disabled={disabled}
               label={intl.formatMessage({
                 id: "9Sz0By",
                 defaultMessage: "Currency",
-                description: "channel currency"
+                description: "channel currency",
               })}
               choices={currencyCodes}
               name="currencyCode"
@@ -186,17 +186,17 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             error={!!formErrors.defaultCountry}
             FormHelperTextProps={
               {
-                "data-test-id": "country-text-input-helper-text"
+                "data-test-id": "country-text-input-helper-text",
               } as ExtendedFormHelperTextProps
             }
             helperText={getChannelsErrorMessage(
               formErrors?.defaultCountry,
-              intl
+              intl,
             )}
             disabled={disabled}
             label={intl.formatMessage({
               id: "tV+Dcm",
-              defaultMessage: "Default country"
+              defaultMessage: "Default country",
             })}
             choices={countries}
             name="defaultCountry"

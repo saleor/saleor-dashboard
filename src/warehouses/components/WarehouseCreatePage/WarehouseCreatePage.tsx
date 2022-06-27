@@ -9,7 +9,7 @@ import Savebar from "@saleor/components/Savebar";
 import { AddressTypeInput } from "@saleor/customers/types";
 import {
   CountryWithCodeFragment,
-  WarehouseErrorFragment
+  WarehouseErrorFragment,
 } from "@saleor/graphql";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -45,7 +45,7 @@ const initialForm: WarehouseCreatePageFormData = {
   phone: "",
   postalCode: "",
   streetAddress1: "",
-  streetAddress2: ""
+  streetAddress2: "",
 };
 
 const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
@@ -53,7 +53,7 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
   disabled,
   errors,
   saveButtonBarState,
-  onSubmit
+  onSubmit,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -62,7 +62,7 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
 
   const {
     errors: validationErrors,
-    submit: handleSubmit
+    submit: handleSubmit,
   } = useAddressValidation(onSubmit);
 
   return (
@@ -72,7 +72,7 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
         const handleCountryChange = createSingleAutocompleteSelectHandler(
           change,
           setDisplayCountry,
-          countryChoices
+          countryChoices,
         );
 
         return (
@@ -84,7 +84,7 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
               title={intl.formatMessage({
                 id: "GhcypC",
                 defaultMessage: "Create Warehouse",
-                description: "header"
+                description: "header",
               })}
             />
             <Grid>
@@ -105,7 +105,7 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
                   header={intl.formatMessage({
                     id: "43Nlay",
                     defaultMessage: "Address Information",
-                    description: "warehouse"
+                    description: "warehouse",
                   })}
                   onChange={change}
                   onCountryChange={handleCountryChange}

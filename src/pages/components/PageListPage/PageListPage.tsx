@@ -8,7 +8,7 @@ import {
   pageCreateUrl,
   PageListUrlDialog,
   PageListUrlQueryParams,
-  PageListUrlSortField
+  PageListUrlSortField,
 } from "@saleor/pages/urls";
 import { ListActions, PageListProps, SortPage } from "@saleor/types";
 import React from "react";

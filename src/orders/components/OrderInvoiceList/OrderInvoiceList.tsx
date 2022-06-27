@@ -4,7 +4,7 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
@@ -21,34 +21,34 @@ import { FormattedMessage, useIntl } from "react-intl";
 const useStyles = makeStyles(
   () => ({
     card: {
-      overflow: "hidden"
+      overflow: "hidden",
     },
     cardContentTable: {
       "&:last-child": {
-        padding: 0
+        padding: 0,
       },
-      padding: 0
+      padding: 0,
     },
     colAction: {
       button: {
-        padding: "0"
+        padding: "0",
       },
       padding: "0 0.5rem",
-      width: "auto"
+      width: "auto",
     },
     colNumber: { width: "100%" },
     colNumberClickable: {
       cursor: "pointer",
-      width: "100%"
+      width: "100%",
     },
     invoicesTable: {
-      display: "flex"
+      display: "flex",
     },
     invoicesTableBody: {
-      width: "100%"
-    }
+      width: "100%",
+    },
   }),
-  { name: "OrderInvoiceList" }
+  { name: "OrderInvoiceList" },
 );
 
 export interface OrderInvoiceListProps {
@@ -66,7 +66,7 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
   const intl = useIntl();
 
   const generatedInvoices = invoices?.filter(
-    invoice => invoice.status === "SUCCESS"
+    invoice => invoice.status === "SUCCESS",
   );
 
   return (
@@ -75,7 +75,7 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
         title={intl.formatMessage({
           id: "Gzg8hy",
           defaultMessage: "Invoices",
-          description: "section header"
+          description: "section header",
         })}
         toolbar={
           onInvoiceGenerate && (
@@ -91,7 +91,7 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
       />
       <CardContent
         className={classNames({
-          [classes.cardContentTable]: generatedInvoices?.length
+          [classes.cardContentTable]: generatedInvoices?.length,
         })}
       >
         {!generatedInvoices ? (

@@ -13,7 +13,7 @@ interface TabsState {
 
 class Tabs extends React.Component<TabsProps, TabsState> {
   state: TabsState = {
-    currentTab: 0
+    currentTab: 0,
   };
 
   changeTab = (index: number) => this.setState({ currentTab: index });
@@ -21,7 +21,7 @@ class Tabs extends React.Component<TabsProps, TabsState> {
   render() {
     return this.props.children({
       changeTab: this.changeTab,
-      currentTab: this.state.currentTab
+      currentTab: this.state.currentTab,
     });
   }
 }

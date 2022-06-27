@@ -14,7 +14,7 @@ import AppInstallPage from "../../components/AppInstallPage";
 import {
   AppInstallUrlQueryParams,
   appsListUrl,
-  MANIFEST_ATTR
+  MANIFEST_ATTR,
 } from "../../urls";
 import { messages } from "./messages";
 
@@ -22,7 +22,7 @@ interface InstallAppCreateProps extends RouteComponentProps {
   params: AppInstallUrlQueryParams;
 }
 export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
-  params
+  params,
 }) => {
   const [, setActiveInstallations] = useLocalStorage("activeInstallations", []);
   const navigate = useNavigator();
@@ -36,11 +36,11 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
         data.appFetchManifest.errors.forEach(error => {
           notify({
             status: "error",
-            text: getAppErrorMessage(error, intl)
+            text: getAppErrorMessage(error, intl),
           });
         });
       }
-    }
+    },
   });
   const [installApp] = useAppInstallMutation({
     onCompleted: data => {
@@ -48,18 +48,18 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
       if (data.appInstall.errors.length === 0) {
         setActiveInstallations(activeInstallations => [
           ...activeInstallations,
-          { id: installationData.id, name: installationData.appName }
+          { id: installationData.id, name: installationData.appName },
         ]);
         navigateToAppsList();
       } else {
         data.appInstall.errors.forEach(error => {
           notify({
             status: "error",
-            text: getAppErrorMessage(error, intl)
+            text: getAppErrorMessage(error, intl),
           });
         });
       }
-    }
+    },
   });
 
   const navigateToAppsList = () => navigate(appsListUrl());
@@ -73,11 +73,11 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
             appName: manifest?.name,
             manifestUrl,
             permissions: manifest?.permissions.map(
-              permission => permission.code
-            )
-          }
-        }
-      })
+              permission => permission.code,
+            ),
+          },
+        },
+      }),
     );
   };
 

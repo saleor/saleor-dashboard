@@ -33,11 +33,11 @@ const ExtraInfoLines: React.FC<ExtraInfoLinesProps> = ({ fulfillment }) => {
               {intl.formatMessage(
                 status === FulfillmentStatus.RETURNED
                   ? extraInfoMessages.restocked
-                  : extraInfoMessages.fulfilled
+                  : extraInfoMessages.fulfilled,
               )}
               <Typography
                 className={classNames(classes.infoLabel, {
-                  [classes.infoLabelWithMargin]: !!trackingNumber
+                  [classes.infoLabelWithMargin]: !!trackingNumber,
                 })}
                 color="textPrimary"
                 variant="body2"
@@ -60,7 +60,7 @@ const ExtraInfoLines: React.FC<ExtraInfoLinesProps> = ({ fulfillment }) => {
                   >
                     {trackingNumber}
                   </Typography>
-                )
+                ),
               }}
             />
           )}

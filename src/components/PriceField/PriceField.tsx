@@ -11,25 +11,25 @@ import { findPriceSeparator, getCurrencyDecimalPoints } from "./utils";
 const useStyles = makeStyles(
   theme => ({
     currencySymbol: {
-      fontSize: "0.875rem"
+      fontSize: "0.875rem",
     },
     inputContainer: {
       display: "grid",
-      gridTemplateColumns: "1fr 2rem 1fr"
+      gridTemplateColumns: "1fr 2rem 1fr",
     },
     pullDown: {
-      marginTop: theme.spacing(2)
+      marginTop: theme.spacing(2),
     },
     separator: {
       marginTop: theme.spacing(3),
       textAlign: "center",
-      width: "100%"
+      width: "100%",
     },
     widgetContainer: {
-      marginTop: theme.spacing(2)
-    }
+      marginTop: theme.spacing(2),
+    },
   }),
-  { name: "PriceField" }
+  { name: "PriceField" },
 );
 
 interface PriceFieldProps {
@@ -60,7 +60,7 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
     required,
     value,
     InputProps,
-    inputProps
+    inputProps,
   } = props;
 
   const classes = useStyles(props);
@@ -68,7 +68,7 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
 
   const maxDecimalLength = useMemo(
     () => getCurrencyDecimalPoints(currencySymbol),
-    [currencySymbol]
+    [currencySymbol],
   );
 
   const handleChange: FormChange = e => {
@@ -89,8 +89,8 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
     onChange({
       target: {
         name: e.target.name,
-        value
-      }
+        value,
+      },
     });
   };
 
@@ -139,14 +139,14 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
         inputProps: {
           min: 0,
           step: 1 / Math.pow(10, maxDecimalLength),
-          ...InputProps?.inputProps
+          ...InputProps?.inputProps,
         },
-        type: "number"
+        type: "number",
       }}
       inputProps={{
         min: minValue,
         type: "number",
-        ...inputProps
+        ...inputProps,
       }}
       name={name}
       disabled={disabled}
@@ -157,7 +157,7 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
   );
 };
 PriceField.defaultProps = {
-  name: "price"
+  name: "price",
 };
 
 PriceField.displayName = "PriceField";

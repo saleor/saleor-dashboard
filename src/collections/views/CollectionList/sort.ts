@@ -6,7 +6,7 @@ export const DEFAULT_SORT_KEY = CollectionListUrlSortField.name;
 
 export function canBeSorted(
   sort: CollectionListUrlSortField,
-  isChannelSelected: boolean
+  isChannelSelected: boolean,
 ) {
   switch (sort) {
     case CollectionListUrlSortField.name:
@@ -20,7 +20,7 @@ export function canBeSorted(
 }
 
 export function getSortQueryField(
-  sort: CollectionListUrlSortField
+  sort: CollectionListUrlSortField,
 ): CollectionSortField {
   switch (sort) {
     case CollectionListUrlSortField.name:
@@ -35,5 +35,5 @@ export function getSortQueryField(
 }
 
 export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField
+  getSortQueryField,
 );

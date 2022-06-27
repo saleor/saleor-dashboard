@@ -9,7 +9,7 @@ import {
   TableCell,
   TableRow,
   TextField,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import BackButton from "@saleor/components/BackButton";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -18,7 +18,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { SearchStaffMembersQuery } from "@saleor/graphql";
 import useElementScroll, {
-  isScrolledToBottom
+  isScrolledToBottom,
 } from "@saleor/hooks/useElementScroll";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
@@ -28,7 +28,7 @@ import {
   DialogProps,
   FetchMoreProps,
   RelayToFlat,
-  SearchPageProps
+  SearchPageProps,
 } from "@saleor/types";
 import classNames from "classnames";
 import React from "react";
@@ -47,76 +47,76 @@ const useStyles = makeStyles(
       height: 32,
       justifyContent: "center",
       overflow: "hidden",
-      width: 32
+      width: 32,
     },
     avatarCell: {
       padding: 0,
-      width: 32
+      width: 32,
     },
     avatarDefault: {
       "& div": {
         color: "#fff",
         lineHeight: 2.8,
-        fontSize: "0.75rem"
+        fontSize: "0.75rem",
       },
       background: theme.palette.primary.main,
       height: 32,
       textAlign: "center",
-      width: 32
+      width: 32,
     },
     avatarImage: {
       pointerEvents: "none",
-      width: "100%"
+      width: "100%",
     },
     checkboxCell: {
       "&&:not(first-child)": {
         paddingLeft: 0,
         paddingRight: 0,
-        width: 48
-      }
+        width: 48,
+      },
     },
     colActions: {
-      textAlign: "right"
+      textAlign: "right",
     },
     colName: {
-      paddingLeft: theme.spacing()
+      paddingLeft: theme.spacing(),
     },
     dialogPaper: {
-      overflow: "hidden"
+      overflow: "hidden",
     },
     dropShadow: {
-      boxShadow: `0px -5px 10px 0px ${theme.palette.divider}`
+      boxShadow: `0px -5px 10px 0px ${theme.palette.divider}`,
     },
     inputContainer: {
-      overflowY: "visible"
+      overflowY: "visible",
     },
     loadMoreLoaderContainer: {
       alignItems: "center",
       display: "flex",
       gridColumnEnd: "span 3",
       height: theme.spacing(4),
-      justifyContent: "center"
+      justifyContent: "center",
     },
     overflow: {
-      overflowY: "visible"
+      overflowY: "visible",
     },
     scrollArea: {
       maxHeight: 400,
       overflowY: "scroll",
       paddingTop: 0,
-      paddingBottom: 0
+      paddingBottom: 0,
     },
     table: {
-      marginBottom: theme.spacing(3)
+      marginBottom: theme.spacing(3),
     },
     statusText: {
-      color: "#9E9D9D"
+      color: "#9E9D9D",
     },
     wideCell: {
-      width: "80%"
-    }
+      width: "80%",
+    },
   }),
-  { name: "AssignStaffMembersDialog" }
+  { name: "AssignStaffMembersDialog" },
 );
 
 export interface AssignMembersDialogProps
@@ -136,12 +136,12 @@ function handleStaffMemberAssign(
   isSelected: boolean,
   selectedMembers: RelayToFlat<SearchStaffMembersQuery["search"]>,
   setSelectedMembers: (
-    data: RelayToFlat<SearchStaffMembersQuery["search"]>
-  ) => void
+    data: RelayToFlat<SearchStaffMembersQuery["search"]>,
+  ) => void,
 ) {
   if (isSelected) {
     setSelectedMembers(
-      selectedMembers.filter(selectedMember => selectedMember.id !== member.id)
+      selectedMembers.filter(selectedMember => selectedMember.id !== member.id),
     );
   } else {
     setSelectedMembers([...selectedMembers, member]);
@@ -160,7 +160,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
   onSearchChange,
   onSubmit,
   open,
-  staffMembers
+  staffMembers,
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -181,7 +181,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
       maxWidth="sm"
       fullWidth
       classes={{
-        paper: classes.dialogPaper
+        paper: classes.dialogPaper,
       }}
     >
       <DialogTitle>
@@ -197,7 +197,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
           fullWidth
           InputProps={{
             autoComplete: "off",
-            endAdornment: loading && <CircularProgress size={16} />
+            endAdornment: loading && <CircularProgress size={16} />,
           }}
           disabled={disabled}
         />
@@ -231,7 +231,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
                     return null;
                   }
                   const isSelected = selectedMembers.some(
-                    selectedMember => selectedMember.id === member.id
+                    selectedMember => selectedMember.id === member.id,
                   );
 
                   return (
@@ -248,7 +248,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
                               member,
                               isSelected,
                               selectedMembers,
-                              setSelectedMembers
+                              setSelectedMembers,
                             )
                           }
                         />
@@ -296,7 +296,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
                         <FormattedMessage {...messages.noMembersFound} />
                       </TableCell>
                     </TableRow>
-                  )
+                  ),
               )}
             </TableBody>
           </ResponsiveTable>
@@ -304,7 +304,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
       </DialogContent>
       <DialogActions
         className={classNames({
-          [classes.dropShadow]: dropShadow
+          [classes.dropShadow]: dropShadow,
         })}
       >
         <BackButton onClick={onClose} />

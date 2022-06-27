@@ -5,12 +5,12 @@ export const useStyles = makeStyles(
     appSettingsHeader: {
       "& > button, & > a": {
         "&:last-child": {
-          marginRight: 0
+          marginRight: 0,
         },
-        marginRight: theme.spacing(2)
+        marginRight: theme.spacing(2),
       },
       display: "flex",
-      justifyContent: "flex-end"
+      justifyContent: "flex-end",
     },
     breadcrumb: {
       "&:not(:last-child)": {
@@ -19,28 +19,28 @@ export const useStyles = makeStyles(
           display: "block",
           position: "absolute",
           right: theme.spacing(-2),
-          top: 0
+          top: 0,
         },
         "&:not(:first-child):hover": {
           cursor: "pointer",
-          textDecoration: "underline"
-        }
+          textDecoration: "underline",
+        },
       },
       marginRight: theme.spacing(3),
-      position: "relative"
+      position: "relative",
     },
     breadcrumbContainer: {
       alignItems: "center",
-      display: "flex"
+      display: "flex",
     },
     breadcrumbDisabled: {
       "&:hover": {
-        textDecoration: "none"
+        textDecoration: "none",
       },
-      color: theme.palette.text.disabled
+      color: theme.palette.text.disabled,
     },
     breadcrumbs: {
-      display: "flex"
+      display: "flex",
     },
     hr: {
       border: "none",
@@ -48,15 +48,15 @@ export const useStyles = makeStyles(
       height: 0,
       marginBottom: 0,
       marginTop: 0,
-      width: "100%"
+      width: "100%",
     },
     iframeContainer: {
       "& > iframe": {
         border: "none",
         minHeight: "75vh",
-        width: "100%"
-      }
-    }
+        width: "100%",
+      },
+    },
   }),
-  { name: "AppPage" }
+  { name: "AppPage" },
 );

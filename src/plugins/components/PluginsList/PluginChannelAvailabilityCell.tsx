@@ -11,7 +11,7 @@ interface PluginChannelAvailabilityCellProps {
 }
 
 const PluginChannelAvailabilityCell: React.FC<PluginChannelAvailabilityCellProps> = ({
-  plugin
+  plugin,
 }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const popupAnchor = useRef<HTMLTableCellElement>(null);

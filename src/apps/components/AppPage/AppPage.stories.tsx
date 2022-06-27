@@ -9,7 +9,7 @@ const props: AppPageProps = {
   data: appDetails,
   url: appDetails.appUrl,
   aboutHref: "",
-  onError: () => undefined
+  onError: () => undefined,
 };
 
 storiesOf("Views / Apps / App", module)

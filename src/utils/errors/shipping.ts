@@ -7,18 +7,18 @@ const messages = defineMessages({
   alreadyExists: {
     id: "VIABHy",
     defaultMessage: "Default shipping zone already exists",
-    description: "error message"
+    description: "error message",
   },
   lessThanMin: {
     id: "AdmPca",
     defaultMessage: "Max value cannot be less than min value",
-    description: "error message"
-  }
+    description: "error message",
+  },
 });
 
 function getShippingErrorMessage(
   err: Omit<ShippingErrorFragment, "__typename"> | undefined,
-  intl: IntlShape
+  intl: IntlShape,
 ): string {
   if (err) {
     switch (err.code) {

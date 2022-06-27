@@ -11,7 +11,7 @@ const suggestions = countries.map(c => ({ label: c.name, value: c.code }));
 
 const props: Omit<LinkChoiceProps, "value" | "onChange"> = {
   choices: suggestions.slice(0, 10),
-  name: "country"
+  name: "country",
 };
 
 storiesOf("Generics / Link with choices", module)

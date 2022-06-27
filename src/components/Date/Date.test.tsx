@@ -11,7 +11,7 @@ test("Render plain date with timezone GMT-11", () => {
   const date = renderer.create(
     <TimezoneProvider value="Pacific/Midway">
       <Date date={testDate} plain />
-    </TimezoneProvider>
+    </TimezoneProvider>,
   );
   expect(date.toJSON()).toEqual(expectedDate);
 });
@@ -20,7 +20,7 @@ test("Render plain date with timezone GMT+13", () => {
   const date = renderer.create(
     <TimezoneProvider value="Pacific/Tongatapu">
       <Date date={testDate} plain />
-    </TimezoneProvider>
+    </TimezoneProvider>,
   );
   expect(date.toJSON()).toEqual(expectedDate);
 });
@@ -29,10 +29,10 @@ test("Render humanized date with timezone GMT-11", () => {
   const date = renderer.create(
     <TimezoneProvider value="Pacific/Midway">
       <Date date={testDate} />
-    </TimezoneProvider>
+    </TimezoneProvider>,
   );
   expect((date.toJSON() as ReactTestRendererJSON).props.dateTime).toEqual(
-    testDate
+    testDate,
   );
 });
 
@@ -40,9 +40,9 @@ test("Render humanized date with timezone GMT+13", () => {
   const date = renderer.create(
     <TimezoneProvider value="Pacific/Tongatapu">
       <Date date={testDate} />
-    </TimezoneProvider>
+    </TimezoneProvider>,
   );
   expect((date.toJSON() as ReactTestRendererJSON).props.dateTime).toEqual(
-    testDate
+    testDate,
   );
 });

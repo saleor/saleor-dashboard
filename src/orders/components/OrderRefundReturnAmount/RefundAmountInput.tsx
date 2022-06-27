@@ -12,30 +12,30 @@ import { OrderRefundFormData } from "../OrderRefundPage/form";
 const useStyles = makeStyles(
   theme => ({
     hr: {
-      margin: theme.spacing(1, 0)
+      margin: theme.spacing(1, 0),
     },
     maxRefundRow: {
-      fontWeight: 600
+      fontWeight: 600,
     },
     priceField: {
-      marginTop: theme.spacing(2)
+      marginTop: theme.spacing(2),
     },
     refundButton: {
-      marginTop: theme.spacing(2)
+      marginTop: theme.spacing(2),
     },
     refundCaution: {
-      marginTop: theme.spacing(1)
+      marginTop: theme.spacing(1),
     },
     root: {
       ...theme.typography.body1,
       lineHeight: 1.9,
-      width: "100%"
+      width: "100%",
     },
     textRight: {
-      textAlign: "right"
-    }
+      textAlign: "right",
+    },
   }),
-  { name: "OrderRefundAmount" }
+  { name: "OrderRefundAmount" },
 );
 
 interface RefundAmountInputProps {
@@ -53,18 +53,18 @@ const messages = defineMessages({
   amountTooBig: {
     id: "fbH51z",
     defaultMessage: "Amount cannot be bigger than max refund",
-    description: "Amount error message"
+    description: "Amount error message",
   },
   amountTooSmall: {
     id: "IKvOK+",
     defaultMessage: "Amount must be bigger than 0",
-    description: "Amount error message"
+    description: "Amount error message",
   },
   label: {
     id: "lrq8O6",
     defaultMessage: "Amount",
-    description: "order refund amount, input label"
-  }
+    description: "order refund amount, input label",
+  },
 });
 
 const RefundAmountInput: React.FC<RefundAmountInputProps> = props => {
@@ -76,7 +76,7 @@ const RefundAmountInput: React.FC<RefundAmountInputProps> = props => {
     currencySymbol,
     disabled,
     errors,
-    onChange
+    onChange,
   } = props;
   const intl = useIntl();
   const classes = useStyles(props);
@@ -96,7 +96,7 @@ const RefundAmountInput: React.FC<RefundAmountInputProps> = props => {
       InputProps={{ inputProps: { max: maxRefund?.amount } }}
       inputProps={{
         "data-test-id": "amountInput",
-        max: maxRefund?.amount
+        max: maxRefund?.amount,
       }}
       error={isError}
       hint={

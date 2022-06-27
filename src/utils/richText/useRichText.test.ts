@@ -9,12 +9,12 @@ const fixtures: Fixtures = {
     blocks: [
       {
         data: {
-          text: "Some text"
+          text: "Some text",
         },
-        type: "paragraph"
-      }
-    ]
-  }
+        type: "paragraph",
+      },
+    ],
+  },
 };
 
 const triggerChange = jest.fn();
@@ -25,7 +25,7 @@ describe("useRichText", () => {
     let initial: string | undefined;
     let loading = true;
     const { result, rerender } = renderHook(() =>
-      useRichText({ initial, loading, triggerChange })
+      useRichText({ initial, loading, triggerChange }),
     );
 
     expect(result.current.isReadyForMount).toBe(false);
@@ -43,7 +43,7 @@ describe("useRichText", () => {
     let initial: string | undefined;
     let loading = true;
     const { result, rerender } = renderHook(() =>
-      useRichText({ initial, loading, triggerChange })
+      useRichText({ initial, loading, triggerChange }),
     );
 
     expect(result.current.isReadyForMount).toBe(false);
@@ -59,13 +59,13 @@ describe("useRichText", () => {
   it("runs editorJS .save() when getValue is called", async () => {
     const saveFn = jest.fn(async () => fixtures.short);
     const { result } = renderHook(() =>
-      useRichText({ initial: "", triggerChange })
+      useRichText({ initial: "", triggerChange }),
     );
     result.current.editorRef.current = {
       save: saveFn,
       destroy: jest.fn(),
       clear: jest.fn(),
-      render: jest.fn()
+      render: jest.fn(),
     };
 
     expect(await result.current.getValue()).toStrictEqual(fixtures.short);
@@ -75,7 +75,7 @@ describe("useRichText", () => {
   it("calls triggerChange when change is made in the editor", () => {
     triggerChange.mockClear();
     const { result } = renderHook(() =>
-      useRichText({ initial: "", triggerChange })
+      useRichText({ initial: "", triggerChange }),
     );
 
     result.current.handleChange();

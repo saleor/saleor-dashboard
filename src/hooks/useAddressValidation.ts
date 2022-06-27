@@ -3,7 +3,7 @@ import {
   AccountErrorCode,
   AccountErrorFragment,
   AddressInput,
-  AddressTypeEnum
+  AddressTypeEnum,
 } from "@saleor/graphql";
 import { transformFormToAddressInput } from "@saleor/misc";
 import { add, remove } from "@saleor/utils/lists";
@@ -12,13 +12,13 @@ import { useState } from "react";
 interface UseAddressValidation<TInput, TOutput> {
   errors: AccountErrorFragment[];
   submit: (
-    data: TInput & AddressTypeInput
+    data: TInput & AddressTypeInput,
   ) => TOutput | Promise<AccountErrorFragment[]>;
 }
 
 function useAddressValidation<TInput, TOutput>(
   onSubmit: (address: TInput & AddressInput) => TOutput,
-  addressType?: AddressTypeEnum
+  addressType?: AddressTypeEnum,
 ): UseAddressValidation<TInput, TOutput> {
   const [validationErrors, setValidationErrors] = useState<
     AccountErrorFragment[]
@@ -29,7 +29,7 @@ function useAddressValidation<TInput, TOutput>(
     code: AccountErrorCode.REQUIRED,
     field: "country",
     addressType,
-    message: "Country required"
+    message: "Country required",
   };
 
   return {
@@ -40,8 +40,8 @@ function useAddressValidation<TInput, TOutput>(
           remove(
             countryRequiredError,
             validationErrors,
-            (a, b) => a.field === b.field
-          )
+            (a, b) => a.field === b.field,
+          ),
         );
         return onSubmit(transformFormToAddressInput(data));
       } catch {
@@ -50,7 +50,7 @@ function useAddressValidation<TInput, TOutput>(
         // since every onSubmit must return Promise<error>
         return Promise.resolve(errors);
       }
-    }
+    },
   };
 }
 

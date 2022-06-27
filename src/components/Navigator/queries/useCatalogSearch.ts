@@ -1,6 +1,6 @@
 import {
   SearchCatalogQueryHookResult,
-  useSearchCatalogQuery
+  useSearchCatalogQuery,
 } from "@saleor/graphql";
 import useDebounce from "@saleor/hooks/useDebounce";
 import { useState } from "react";
@@ -13,8 +13,8 @@ function useSearchCatalog(first: number): UseSearchCatalog {
     skip: query === "",
     variables: {
       first,
-      query
-    }
+      query,
+    },
   });
 
   return [result, setQueryDebounced];

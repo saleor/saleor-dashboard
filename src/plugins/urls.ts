@@ -8,7 +8,7 @@ import {
   Pagination,
   SingleAction,
   Sort,
-  TabActionDialog
+  TabActionDialog,
 } from "../types";
 
 export const pluginSection = "/plugins/";
@@ -19,7 +19,7 @@ export enum PluginListUrlFiltersEnum {
   query = "query",
   active = "active",
   channels = "channels",
-  type = "type"
+  type = "type",
 }
 
 export type PluginListUrlFilters = Filters<PluginListUrlFiltersEnum> & {
@@ -28,7 +28,7 @@ export type PluginListUrlFilters = Filters<PluginListUrlFiltersEnum> & {
 export type PluginListUrlDialog = TabActionDialog;
 export enum PluginListUrlSortField {
   name = "name",
-  active = "active"
+  active = "active",
 }
 export type PluginListUrlSort = Sort<PluginListUrlSortField>;
 export type PluginListUrlQueryParams = ActiveTab &

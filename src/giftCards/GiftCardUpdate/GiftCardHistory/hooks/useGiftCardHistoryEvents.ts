@@ -7,7 +7,7 @@ const useGiftCardHistoryEvents = () => {
 
   return {
     id: giftCard?.id,
-    events: giftCard?.events
+    events: giftCard?.events,
   };
 };
 

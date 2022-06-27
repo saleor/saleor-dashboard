@@ -5,7 +5,7 @@ import {
   AppsListQuery,
   AppTypeEnum,
   JobStatusEnum,
-  PermissionEnum
+  PermissionEnum,
 } from "@saleor/graphql";
 
 export const appsList: AppsListQuery["apps"]["edges"] = [
@@ -22,10 +22,10 @@ export const appsList: AppsListQuery["apps"]["edges"] = [
         {
           __typename: "Permission",
           code: PermissionEnum.MANAGE_USERS,
-          name: "Manage customers."
-        }
-      ]
-    }
+          name: "Manage customers.",
+        },
+      ],
+    },
   },
   {
     __typename: "AppCountableEdge",
@@ -40,16 +40,16 @@ export const appsList: AppsListQuery["apps"]["edges"] = [
         {
           __typename: "Permission",
           code: PermissionEnum.MANAGE_ORDERS,
-          name: "Manage orders."
+          name: "Manage orders.",
         },
         {
           __typename: "Permission",
           code: PermissionEnum.MANAGE_USERS,
-          name: "Manage customers."
-        }
-      ]
-    }
-  }
+          name: "Manage customers.",
+        },
+      ],
+    },
+  },
 ];
 
 export const customAppsList: AppsListQuery["apps"]["edges"] = [
@@ -66,16 +66,16 @@ export const customAppsList: AppsListQuery["apps"]["edges"] = [
         {
           __typename: "Permission",
           code: PermissionEnum.MANAGE_ORDERS,
-          name: "Manage orders."
+          name: "Manage orders.",
         },
         {
           __typename: "Permission",
           code: PermissionEnum.MANAGE_USERS,
-          name: "Manage customers."
-        }
-      ]
-    }
-  }
+          name: "Manage customers.",
+        },
+      ],
+    },
+  },
 ];
 
 export const appsInProgress: AppsInstallationsQuery["appsInstallations"] = [
@@ -85,7 +85,7 @@ export const appsInProgress: AppsInstallationsQuery["appsInstallations"] = [
     id: "QXBwSW5zdGFsbGF0aW9uOjk2",
     manifestUrl: "http://localhost:3000/manifest",
     message: "Failed to connect to app. Try later or contact with app support.",
-    status: JobStatusEnum.FAILED
+    status: JobStatusEnum.FAILED,
   },
   {
     __typename: "AppInstallation",
@@ -93,7 +93,7 @@ export const appsInProgress: AppsInstallationsQuery["appsInstallations"] = [
     id: "QXBwSW5zdGFsbGF0aW9uOjk2",
     manifestUrl: "http://localhost:3000/manifest",
     message: "Pending.",
-    status: JobStatusEnum.PENDING
+    status: JobStatusEnum.PENDING,
   },
   {
     __typename: "AppInstallation",
@@ -101,8 +101,8 @@ export const appsInProgress: AppsInstallationsQuery["appsInstallations"] = [
     id: "QXBwSW5zdGFsbGF0aW9uOjk2",
     manifestUrl: "http://localhost:3000/manifest",
     message: "Success.",
-    status: JobStatusEnum.SUCCESS
-  }
+    status: JobStatusEnum.SUCCESS,
+  },
 ];
 
 export const appDetails: AppQuery["app"] = {
@@ -123,20 +123,20 @@ export const appDetails: AppQuery["app"] = {
     {
       __typename: "Permission",
       code: PermissionEnum.MANAGE_ORDERS,
-      name: "Manage orders."
+      name: "Manage orders.",
     },
     {
       __typename: "Permission",
       code: PermissionEnum.MANAGE_USERS,
-      name: "Manage customers."
-    }
+      name: "Manage customers.",
+    },
   ],
   privateMetadata: [],
   supportUrl: "http://localhost:8888/support",
   tokens: [],
   type: AppTypeEnum.THIRDPARTY,
   version: "1.0.0",
-  webhooks: []
+  webhooks: [],
 };
 
 export const installApp: AppFetchMutation["appFetchManifest"]["manifest"] = {
@@ -153,15 +153,15 @@ export const installApp: AppFetchMutation["appFetchManifest"]["manifest"] = {
     {
       __typename: "Permission",
       code: PermissionEnum.MANAGE_USERS,
-      name: "Manage users"
+      name: "Manage users",
     },
     {
       __typename: "Permission",
       code: PermissionEnum.MANAGE_ORDERS,
-      name: "Manage orders"
-    }
+      name: "Manage orders",
+    },
   ],
   supportUrl: null,
   tokenTargetUrl: null,
-  version: "1.0"
+  version: "1.0",
 };

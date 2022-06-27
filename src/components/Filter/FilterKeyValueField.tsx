@@ -12,39 +12,39 @@ const useStyles = makeStyles(
     metadataField: {
       display: "flex",
       alignItems: "center",
-      gap: theme.spacing(0.5)
+      gap: theme.spacing(0.5),
     },
     fieldsWrapper: {
       display: "flex",
       flexDirection: "column",
       gap: theme.spacing(0.5),
-      marginBottom: theme.spacing(1)
+      marginBottom: theme.spacing(1),
     },
     formWrapper: {
       display: "flex",
-      flexDirection: "column"
+      flexDirection: "column",
     },
     addButton: {
-      alignSelf: "flex-end"
+      alignSelf: "flex-end",
     },
     deleteButton: {
       marginLeft: "0.25rem",
-      marginRight: "-0.75rem"
-    }
+      marginRight: "-0.75rem",
+    },
   }),
-  { name: "FilterKeyValueField" }
+  { name: "FilterKeyValueField" },
 );
 
 const getUpdateArrayFn = <T,>(key: "key" | "value") => (
   array: T[],
   index: number,
-  value: string
+  value: string,
 ) => {
   const item = array[index];
   return [
     ...array.slice(0, index),
     { ...item, [key]: value },
-    ...array.slice(index + 1)
+    ...array.slice(index + 1),
   ];
 };
 
@@ -59,7 +59,7 @@ type FilterKeyValueFieldProps<K extends string = string> = FilterFieldBaseProps<
 
 export const FilterKeyValueField = <K extends string = string>({
   filter,
-  onFilterPropertyChange
+  onFilterPropertyChange,
 }: FilterKeyValueFieldProps<K>) => {
   const intl = useIntl();
   const classes = useStyles();
@@ -83,10 +83,10 @@ export const FilterKeyValueField = <K extends string = string>({
                   payload: {
                     name: filter.name,
                     update: {
-                      value: updateKeyFn(values, index, event.target.value)
-                    }
+                      value: updateKeyFn(values, index, event.target.value),
+                    },
                   },
-                  type: "set-property"
+                  type: "set-property",
                 })
               }
             />
@@ -100,10 +100,10 @@ export const FilterKeyValueField = <K extends string = string>({
                   payload: {
                     name: filter.name,
                     update: {
-                      value: updateValueFn(values, index, event.target.value)
-                    }
+                      value: updateValueFn(values, index, event.target.value),
+                    },
                   },
-                  type: "set-property"
+                  type: "set-property",
                 })
               }
             />
@@ -115,10 +115,10 @@ export const FilterKeyValueField = <K extends string = string>({
                   payload: {
                     name: filter.name,
                     update: {
-                      value: values.filter((_, i) => i !== index)
-                    }
+                      value: values.filter((_, i) => i !== index),
+                    },
                   },
-                  type: "set-property"
+                  type: "set-property",
                 });
               }}
             >
@@ -135,10 +135,10 @@ export const FilterKeyValueField = <K extends string = string>({
             payload: {
               name: filter.name,
               update: {
-                value: createEmptyPair(values)
-              }
+                value: createEmptyPair(values),
+              },
             },
-            type: "set-property"
+            type: "set-property",
           });
         }}
       >

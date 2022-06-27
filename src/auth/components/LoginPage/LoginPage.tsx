@@ -2,7 +2,7 @@ import {
   CircularProgress,
   Divider,
   TextField,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { UserContextError } from "@saleor/auth/types";
 import { passwordResetUrl } from "@saleor/auth/urls";
@@ -36,7 +36,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
     loading,
     externalAuthentications = [],
     onExternalAuthentication,
-    onSubmit
+    onSubmit,
   } = props;
 
   const classes = useStyles(props);
@@ -76,7 +76,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
             onChange={handleChange}
             value={data.email}
             inputProps={{
-              "data-test-id": "email"
+              "data-test-id": "email",
             }}
             disabled={disabled}
           />
@@ -87,14 +87,14 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               autoComplete="password"
               label={intl.formatMessage({
                 id: "5sg7KC",
-                defaultMessage: "Password"
+                defaultMessage: "Password",
               })}
               name="password"
               onChange={handleChange}
               type={showPassword ? "text" : "password"}
               value={data.password}
               inputProps={{
-                "data-test-id": "password"
+                "data-test-id": "password",
               }}
               disabled={disabled}
             />

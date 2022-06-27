@@ -6,7 +6,7 @@ const CheckboxSemiChecked = createSvgIcon(
     <rect x="5" y="5" width="14" height="14" stroke="#06847B" />
     <rect x="8" y="11" width="8" height="2" fill="#06847B" />
   </svg>,
-  "CheckboxSemiChecked"
+  "CheckboxSemiChecked",
 );
 
 export default CheckboxSemiChecked;

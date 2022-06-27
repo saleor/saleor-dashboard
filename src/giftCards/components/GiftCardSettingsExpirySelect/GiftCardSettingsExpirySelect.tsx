@@ -4,7 +4,7 @@ import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import { getGiftCardSettingsErrorMessage } from "@saleor/giftCards/GiftCardSettings/messages";
 import {
   GiftCardSettingsErrorFragment,
-  TimePeriodTypeEnum
+  TimePeriodTypeEnum,
 } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
 import React from "react";
@@ -28,7 +28,7 @@ const GiftCardSettingsExpirySelect: React.FC<GiftCardSettingsExpirySelectProps> 
   disabled,
   expiryPeriodActive,
   expiryPeriodType,
-  expiryPeriodAmount
+  expiryPeriodAmount,
 }) => {
   const intl = useIntl();
 
@@ -57,7 +57,7 @@ const GiftCardSettingsExpirySelect: React.FC<GiftCardSettingsExpirySelectProps> 
             isError={!!errors?.expiryPeriod}
             helperText={getGiftCardSettingsErrorMessage(
               errors?.expiryPeriod,
-              intl
+              intl,
             )}
             change={change}
             periodType={expiryPeriodType}

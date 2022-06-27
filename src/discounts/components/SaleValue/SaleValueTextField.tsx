@@ -19,7 +19,7 @@ const SaleValueTextField: React.FC<SaleValueTextFieldProps> = ({
   helperText,
   disabled,
   listing,
-  onChange
+  onChange,
 }) => {
   const intl = useIntl();
 
@@ -39,16 +39,16 @@ const SaleValueTextField: React.FC<SaleValueTextFieldProps> = ({
       label={intl.formatMessage({
         id: "x3g4Ry",
         defaultMessage: "Discount Value",
-        description: "sale discount"
+        description: "sale discount",
       })}
       value={getTextFieldValue(dataType) || ""}
       type="number"
       fullWidth
       inputProps={{
-        min: 0
+        min: 0,
       }}
       InputProps={{
-        endAdornment: dataType === SaleType.FIXED ? listing.currency : "%"
+        endAdornment: dataType === SaleType.FIXED ? listing.currency : "%",
       }}
     />
   );

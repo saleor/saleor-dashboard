@@ -3,13 +3,13 @@ import {
   ApolloQueryResult,
   QueryHookOptions as BaseQueryHookOptions,
   QueryResult,
-  useQuery as useBaseQuery
+  useQuery as useBaseQuery,
 } from "@apollo/client";
 import { handleQueryAuthError, useUser } from "@saleor/auth";
 import { PrefixedPermissions } from "@saleor/graphql/extendedTypes";
 import {
   PermissionEnum,
-  UserPermissionFragment
+  UserPermissionFragment,
 } from "@saleor/graphql/types.generated";
 import { RequireAtLeastOne } from "@saleor/misc";
 import { DocumentNode } from "graphql";
@@ -24,30 +24,30 @@ const getPermissionKey = (permission: string) =>
   `PERMISSION_${permission}` as PrefixedPermissions;
 
 export const allPermissions: Record<PrefixedPermissions, boolean> = Object.keys(
-  PermissionEnum
+  PermissionEnum,
 ).reduce(
   (prev, code) => ({
     ...prev,
-    [getPermissionKey(code)]: false
+    [getPermissionKey(code)]: false,
   }),
-  {} as Record<PrefixedPermissions, boolean>
+  {} as Record<PrefixedPermissions, boolean>,
 );
 
 const getUserPermissions = (
-  userPermissions: UserPermissionFragment[]
+  userPermissions: UserPermissionFragment[],
 ): Record<PrefixedPermissions, boolean> =>
   userPermissions.reduce(
     (prev, permission) => ({
       ...prev,
-      [getPermissionKey(permission.code)]: true
+      [getPermissionKey(permission.code)]: true,
     }),
-    {} as Record<PrefixedPermissions, boolean>
+    {} as Record<PrefixedPermissions, boolean>,
   );
 
 export interface LoadMore<TData, TVariables> {
   loadMore: (
     mergeFunc: (prev: TData, next: TData) => TData,
-    extraVariables: Partial<TVariables>
+    extraVariables: Partial<TVariables>,
   ) => Promise<ApolloQueryResult<TData>>;
 }
 
@@ -61,7 +61,7 @@ export type QueryHookOptions<TData, TVariables> = Partial<
   }
 >;
 type UseQueryHook<TData, TVariables> = (
-  opts?: QueryHookOptions<TData, Omit<TVariables, PrefixedPermissions>>
+  opts?: QueryHookOptions<TData, Omit<TVariables, PrefixedPermissions>>,
 ) => UseQueryResult<TData, TVariables>;
 
 export function useQuery<TData, TVariables>(
@@ -73,7 +73,7 @@ export function useQuery<TData, TVariables>(
     fetchPolicy,
     handleError,
     ...opts
-  }: QueryHookOptions<TData, TVariables> = {}
+  }: QueryHookOptions<TData, TVariables> = {},
 ): UseQueryResult<TData, TVariables> {
   const notify = useNotifier();
   const intl = useIntl();
@@ -84,13 +84,13 @@ export function useQuery<TData, TVariables>(
   const variablesWithPermissions = {
     ...variables,
     ...allPermissions,
-    ...userPermissions
+    ...userPermissions,
   } as TVariables & Record<PrefixedPermissions, boolean>;
 
   const queryData = useBaseQuery(query, {
     ...opts,
     context: {
-      useBatching: true
+      useBatching: true,
     },
     errorPolicy: "all",
     fetchPolicy: fetchPolicy ?? "cache-and-network",
@@ -102,23 +102,23 @@ export function useQuery<TData, TVariables>(
       }
     },
     skip,
-    variables: variablesWithPermissions
+    variables: variablesWithPermissions,
   });
 
   useEffect(() => {
     if (displayLoader) {
       dispatchAppState({
         payload: {
-          value: queryData.loading
+          value: queryData.loading,
         },
-        type: "displayLoader"
+        type: "displayLoader",
       });
     }
   }, [queryData.loading]);
 
   const loadMore = (
     mergeFunc: (previousResults: TData, fetchMoreResult: TData) => TData,
-    extraVariables: RequireAtLeastOne<TVariables>
+    extraVariables: RequireAtLeastOne<TVariables>,
   ) =>
     queryData.fetchMore({
       query,
@@ -128,17 +128,17 @@ export function useQuery<TData, TVariables>(
         }
         return mergeFunc(previousResults, fetchMoreResult);
       },
-      variables: { ...variablesWithPermissions, ...extraVariables }
+      variables: { ...variablesWithPermissions, ...extraVariables },
     });
 
   return {
     ...queryData,
-    loadMore
+    loadMore,
   };
 }
 
 function makeQuery<TData, TVariables>(
-  query: DocumentNode
+  query: DocumentNode,
 ): UseQueryHook<TData, TVariables> {
   return (opts: QueryHookOptions<TData, TVariables>) =>
     useQuery<TData, TVariables>(query, opts);

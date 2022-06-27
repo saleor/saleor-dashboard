@@ -32,7 +32,7 @@ const TypeDeleteWarningDialogContent: React.FC<TypeDeleteWarningDialogContentPro
   hasAssignedItems,
   assignedItemsCount,
   onDelete,
-  showViewAssignedItemsButton
+  showViewAssignedItemsButton,
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
@@ -53,7 +53,7 @@ const TypeDeleteWarningDialogContent: React.FC<TypeDeleteWarningDialogContentPro
         description={intl.formatMessage(description, {
           typeName: singleItemSelectedName,
           assignedItemsCount,
-          b: (...chunks) => <b>{chunks}</b>
+          b: (...chunks) => <b>{chunks}</b>,
         })}
         consentLabel={consentLabel && intl.formatMessage(consentLabel)}
         isConsentChecked={isConsentChecked}

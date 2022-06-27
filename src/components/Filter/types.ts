@@ -14,7 +14,7 @@ export enum FieldType {
   price = "price",
   options = "options",
   text = "text",
-  keyValue = "keyValue"
+  keyValue = "keyValue",
 }
 
 interface FilterElementCommonData {
@@ -84,18 +84,18 @@ export type FilterElementGeneric<
   : FilterElementRegular<K> & { type: T };
 
 export const isFilterDateType = <K extends string = string>(
-  filter: FilterElement<K>
+  filter: FilterElement<K>,
 ): filter is FilterElementGeneric<K, FieldType.date | FieldType.dateTime> =>
   filter.type === FieldType.date || filter.type === FieldType.dateTime;
 
 export const isFilterNumericType = <K extends string = string>(
-  filter: FilterElement<K>
+  filter: FilterElement<K>,
 ): filter is FilterElementGeneric<K, FieldType.number | FieldType.price> =>
   filter.type === FieldType.number || filter.type === FieldType.price;
 
 export const isFilterType = <T extends FieldType, K extends string = string>(
   filter: FilterElement<K>,
-  type: T
+  type: T,
 ): filter is FilterElementGeneric<K, T> => filter.type === type;
 
 export interface FilterFieldBaseProps<
@@ -124,13 +124,13 @@ export type IFilter<
 
 export enum FilterType {
   MULTIPLE = "MULTIPLE",
-  SINGULAR = "SINGULAR"
+  SINGULAR = "SINGULAR",
 }
 
 export enum ValidationErrorCode {
   VALUE_REQUIRED = "VALUE_REQUIRED",
   DEPENDENCIES_MISSING = "DEPENDENCIES_MISSING",
-  UNKNOWN_ERROR = "UNKNOWN_ERROR"
+  UNKNOWN_ERROR = "UNKNOWN_ERROR",
 }
 
 export type InvalidFilters<T extends string> = Record<T, string[]>;

@@ -16,7 +16,7 @@ const SiteSettings = createSvgIcon(
       fill="currentColor"
     />
   </>,
-  "SiteSettings"
+  "SiteSettings",
 );
 
 export default (props: SvgIconProps) => (

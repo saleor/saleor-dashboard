@@ -28,18 +28,18 @@ const messages = defineMessages({
   countries: {
     id: "55LMJv",
     defaultMessage: "Countries",
-    description: "country list header"
+    description: "country list header",
   },
   createZone: {
     id: "6fxdUO",
     defaultMessage: "Create New Shipping Zone",
-    description: "section header"
+    description: "section header",
   },
   noCountriesAssigned: {
     id: "y7mfbl",
     defaultMessage:
-      "Currently, there are no countries assigned to this shipping zone"
-  }
+      "Currently, there are no countries assigned to this shipping zone",
+  },
 });
 
 export interface ShippingZoneCreatePageProps {
@@ -57,7 +57,7 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
   disabled,
   errors,
   onSubmit,
-  saveButtonBarState
+  saveButtonBarState,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -68,7 +68,7 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
   const initialForm: ShippingZoneCreateFormData = {
     countries: [],
     description: "",
-    name: ""
+    name: "",
   };
 
   return (
@@ -96,7 +96,7 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
                 <CardSpacer />
                 <CountryList
                   countries={data.countries.map(selectedCountry =>
-                    countries.find(country => country.code === selectedCountry)
+                    countries.find(country => country.code === selectedCountry),
                   )}
                   disabled={disabled}
                   emptyText={intl.formatMessage(messages.noCountriesAssigned)}
@@ -106,9 +106,9 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
                       target: {
                         name: "countries",
                         value: data.countries.filter(
-                          country => country !== countryCode
-                        )
-                      }
+                          country => country !== countryCode,
+                        ),
+                      },
                     } as any)
                   }
                   title={intl.formatMessage(messages.countries)}
@@ -128,8 +128,8 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
               change({
                 target: {
                   name: "countries",
-                  value: formData.countries
-                }
+                  value: formData.countries,
+                },
               } as any);
               toggleModal();
             }}

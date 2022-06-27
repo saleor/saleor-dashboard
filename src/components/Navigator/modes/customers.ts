@@ -10,7 +10,7 @@ import messages from "./messages";
 export function searchInCustomers(
   intl: IntlShape,
   navigate: UseNavigatorResult,
-  customers: RelayToFlat<SearchCustomersQuery["search"]>
+  customers: RelayToFlat<SearchCustomersQuery["search"]>,
 ): QuickSearchAction[] {
   return customers.map(customer => ({
     caption: customer.email,
@@ -18,7 +18,7 @@ export function searchInCustomers(
       customer.firstName && customer.lastName
         ? intl.formatMessage(messages.customerWithName, {
             firstName: customer.firstName,
-            lastName: customer.lastName
+            lastName: customer.lastName,
           })
         : customer.email,
     onClick: () => {
@@ -26,14 +26,14 @@ export function searchInCustomers(
       return false;
     },
     score: 1,
-    type: "customer"
+    type: "customer",
   }));
 }
 
 function getCustomersModeActions(
   intl: IntlShape,
   navigate: UseNavigatorResult,
-  customers: RelayToFlat<SearchCustomersQuery["search"]>
+  customers: RelayToFlat<SearchCustomersQuery["search"]>,
 ): QuickSearchAction[] {
   return searchInCustomers(intl, navigate, customers);
 }

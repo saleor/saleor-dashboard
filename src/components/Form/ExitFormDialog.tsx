@@ -13,20 +13,20 @@ const useStyles = makeStyles(
       height: "100vh",
       display: "flex",
       justifyContent: "center",
-      alignItems: "center"
+      alignItems: "center",
     },
     buttonsContainer: {
       display: "flex",
-      justifyContent: "flex-end"
+      justifyContent: "flex-end",
     },
     dialogContent: {
       "@media (min-width: 800px)": {
-        minWidth: 500
+        minWidth: 500,
       },
-      paddingTop: 0
-    }
+      paddingTop: 0,
+    },
   }),
-  { name: "ExitFormPrompt" }
+  { name: "ExitFormPrompt" },
 );
 
 interface ExitFormDialogProps {
@@ -42,7 +42,7 @@ const ExitFormDialog: React.FC<ExitFormDialogProps> = ({
   onLeave,
   onClose,
   isOpen,
-  isSubmitDisabled
+  isSubmitDisabled,
 }) => {
   const classes = useStyles();
   const intl = useIntl();
@@ -51,7 +51,7 @@ const ExitFormDialog: React.FC<ExitFormDialogProps> = ({
     <Dialog className={classes.container} open={isOpen} onClose={onClose}>
       <CardTitle
         title={intl.formatMessage(
-          isSubmitDisabled ? messages.unableToSaveTitle : messages.title
+          isSubmitDisabled ? messages.unableToSaveTitle : messages.title,
         )}
       />
       <DialogContent className={classes.dialogContent}>
@@ -69,7 +69,7 @@ const ExitFormDialog: React.FC<ExitFormDialogProps> = ({
             {intl.formatMessage(
               isSubmitDisabled
                 ? messages.continueEditingButton
-                : messages.confirmButton
+                : messages.confirmButton,
             )}
           </Button>
         </div>

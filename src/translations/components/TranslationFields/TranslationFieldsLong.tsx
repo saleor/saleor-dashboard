@@ -22,7 +22,7 @@ const TranslationFieldsLong: React.FC<TranslationFieldsLongProps> = ({
   initial,
   saveButtonState,
   onDiscard,
-  onSubmit
+  onSubmit,
 }) => {
   const intl = useIntl();
 
@@ -40,7 +40,7 @@ const TranslationFieldsLong: React.FC<TranslationFieldsLongProps> = ({
             multiline
             label={intl.formatMessage({
               id: "/vCXIP",
-              defaultMessage: "Translation"
+              defaultMessage: "Translation",
             })}
             name="translation"
             value={data.translation || ""}

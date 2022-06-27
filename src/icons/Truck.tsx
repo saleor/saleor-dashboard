@@ -8,7 +8,7 @@ const Truck = createSvgIcon(
       fill="#616161"
     />
   </>,
-  "Truck"
+  "Truck",
 );
 
 export default Truck;

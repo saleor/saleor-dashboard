@@ -4,11 +4,11 @@ import { useState } from "react";
 function useMetadataChangeTrigger() {
   const [isMetadataModified, setMetadataModified] = useState(false);
   const [isPrivateMetadataModified, setPrivateMetadataModified] = useState(
-    false
+    false,
   );
 
   const makeChangeHandler: (
-    onChange: FormChange
+    onChange: FormChange,
   ) => FormChange = onChange => event => {
     if (event.target.name === "metadata") {
       setMetadataModified(true);
@@ -27,7 +27,7 @@ function useMetadataChangeTrigger() {
     isMetadataModified,
     isPrivateMetadataModified,
     makeChangeHandler,
-    resetMetadataChanged
+    resetMetadataChanged,
   };
 }
 

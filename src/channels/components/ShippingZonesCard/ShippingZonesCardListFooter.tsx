@@ -13,8 +13,8 @@ const messages = defineMessages({
   addZoneTitle: {
     id: "8CbACQ",
     defaultMessage: "Add Shipping Zones",
-    description: "add shipping zone title"
-  }
+    description: "add shipping zone title",
+  },
 });
 
 type ShippingZonesCardListFooterProps = ShippingZonesProps;
@@ -24,7 +24,7 @@ const ShippingZonesCardListFooter: React.FC<ShippingZonesCardListFooterProps> = 
   searchShippingZones,
   fetchMoreShippingZones,
   addShippingZone,
-  shippingZones
+  shippingZones,
 }) => {
   const classes = useStyles();
 
@@ -73,7 +73,7 @@ const ShippingZonesCardListFooter: React.FC<ShippingZonesCardListFooterProps> = 
       title={messages.addZoneTitle}
       testIds={{
         link: "add-shipping-zone-link",
-        button: "add-shipping-zone-button"
+        button: "add-shipping-zone-button",
       }}
     />
   );

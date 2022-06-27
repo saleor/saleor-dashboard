@@ -9,16 +9,16 @@ const useStyles = makeStyles(
   theme => ({
     footer: {
       position: "absolute",
-      bottom: theme.spacing(4)
+      bottom: theme.spacing(4),
     },
     logo: {
       display: "block",
       height: 40,
-      marginBottom: theme.spacing(4)
+      marginBottom: theme.spacing(4),
     },
     mainPanel: {
       [theme.breakpoints.down("sm")]: {
-        padding: theme.spacing(2)
+        padding: theme.spacing(2),
       },
       background: theme.palette.background.paper,
       display: "flex",
@@ -26,27 +26,27 @@ const useStyles = makeStyles(
       height: "100vh",
       justifyContent: "center",
       padding: theme.spacing(5, 6, 4, 6),
-      width: "100%"
+      width: "100%",
     },
     mainPanelContent: {
       [theme.breakpoints.up("xs")]: {
-        width: "100%"
+        width: "100%",
       },
       [theme.breakpoints.up("sm")]: {
-        width: 328
+        width: 328,
       },
       "@media (min-width: 1440px)": {
-        width: 380
+        width: 380,
       },
       margin: "auto",
-      width: "100%"
+      width: "100%",
     },
     root: {
       [theme.breakpoints.up("lg")]: {
-        gridTemplateColumns: "560px 1fr"
+        gridTemplateColumns: "560px 1fr",
       },
       "@media (min-width: 1440px)": {
-        gridTemplateColumns: "780px 1fr"
+        gridTemplateColumns: "780px 1fr",
       },
       display: "grid",
       gridTemplateColumns: "1fr",
@@ -54,24 +54,24 @@ const useStyles = makeStyles(
       height: "100vh",
       overflow: "hidden",
       position: "relative",
-      width: "100vw"
+      width: "100vw",
     },
     sidebar: {
       [theme.breakpoints.up("lg")]: {
         alignItems: "center",
-        display: "flex"
+        display: "flex",
       },
-      display: "none"
+      display: "none",
     },
     sidebarArt: {
       "& svg": {
-        width: "100%"
-      }
-    }
+        width: "100%",
+      },
+    },
   }),
   {
-    name: "Layout"
-  }
+    name: "Layout",
+  },
 );
 
 const Layout: React.FC = props => {

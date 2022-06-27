@@ -8,21 +8,21 @@ import {
   Filters,
   Pagination,
   Sort,
-  TabActionDialog
+  TabActionDialog,
 } from "../types";
 
 const categorySectionUrl = "/categories/";
 
 export const categoryListPath = categorySectionUrl;
 export enum CategoryListUrlFiltersEnum {
-  query = "query"
+  query = "query",
 }
 export type CategoryListUrlFilters = Filters<CategoryListUrlFiltersEnum>;
 export type CategoryListUrlDialog = "delete" | TabActionDialog;
 export enum CategoryListUrlSortField {
   name = "name",
   productCount = "products",
-  subcategoryCount = "subcategories"
+  subcategoryCount = "subcategories",
 }
 export type CategoryListUrlSort = Sort<CategoryListUrlSortField>;
 export type CategoryListUrlQueryParams = ActiveTab &

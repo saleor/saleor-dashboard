@@ -31,7 +31,7 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
     usedByEmail,
     usedBy,
     product,
-    events
+    events,
   } = giftCard;
 
   const cardIssuedEvent = events.find(getByType(GiftCardEventsEnum.ISSUED));
@@ -51,7 +51,7 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
         return {
           label: messages.issuedByAppLabel,
           name: app?.name,
-          url: appUrl(app?.id)
+          url: appUrl(app?.id),
         };
       }
 
@@ -60,21 +60,21 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
       return {
         label: messages.issuedByLabel,
         name: userName || createdByEmail,
-        url: staffMemberDetailsUrl(createdBy?.id)
+        url: staffMemberDetailsUrl(createdBy?.id),
       };
     }
 
     if (createdByEmail) {
       return {
         label: messages.boughtByLabel,
-        name: createdByEmail
+        name: createdByEmail,
       };
     }
 
     return {
       label: messages.boughtByLabel,
       name: getFullName(createdBy),
-      url: customerUrl(createdBy?.id)
+      url: customerUrl(createdBy?.id),
     };
   };
 
@@ -88,7 +88,7 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
 
       return getOrderNumberLinkObject({
         id: orderId,
-        number: orderNumber
+        number: orderNumber,
       });
     }
 
@@ -97,7 +97,7 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
 
       return getOrderNumberLinkObject({
         id: orderId,
-        number: orderNumber
+        number: orderNumber,
       });
     }
 
@@ -107,7 +107,7 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
   const {
     label: buyerLabelMessage,
     name: buyerName,
-    url: buyerUrl
+    url: buyerUrl,
   } = getBuyerFieldData();
 
   const orderData = getOrderData();

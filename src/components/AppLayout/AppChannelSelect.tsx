@@ -9,19 +9,19 @@ import SingleSelectField from "../SingleSelectField";
 const useStyles = makeStyles(
   theme => ({
     input: {
-      height: 40
+      height: 40,
     },
     root: {
       "&& fieldset": {
-        borderColor: theme.palette.divider
+        borderColor: theme.palette.divider,
       },
       marginRight: theme.spacing(2),
-      width: 192
-    }
+      width: 192,
+    },
   }),
   {
-    name: "AppChannelSelect"
-  }
+    name: "AppChannelSelect",
+  },
 );
 
 export interface AppChannelSelectProps extends ChannelProps {
@@ -32,7 +32,7 @@ export interface AppChannelSelectProps extends ChannelProps {
 const AppChannelSelect: React.FC<AppChannelSelectProps> = ({
   channels,
   onChannelSelect,
-  selectedChannelId
+  selectedChannelId,
 }) => {
   const classes = useStyles({});
 
@@ -40,7 +40,7 @@ const AppChannelSelect: React.FC<AppChannelSelectProps> = ({
     <div className={classes.root}>
       <SingleSelectField
         InputProps={{
-          className: classes.input
+          className: classes.input,
         }}
         testId="app-channel-select"
         choices={mapNodeToChoice(channels)}

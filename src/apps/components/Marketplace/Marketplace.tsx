@@ -18,7 +18,7 @@ const Marketplace: React.FC<MarketplaceProps> = ({ link }) => {
           title={intl.formatMessage({
             id: "SwISVH",
             defaultMessage: "Saleor Marketplace",
-            description: "section header"
+            description: "section header",
           })}
         />
         <CardContent>

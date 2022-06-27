@@ -23,27 +23,27 @@ const TimePeriodField: React.FC<TimePeriodFieldProps> = ({
   amountFieldName,
   typeFieldName,
   helperText,
-  isError
+  isError,
 }) => {
   const intl = useIntl();
 
   const options = [
     {
       label: intl.formatMessage(messages.yearLabel),
-      value: TimePeriodTypeEnum.YEAR
+      value: TimePeriodTypeEnum.YEAR,
     },
     {
       label: intl.formatMessage(messages.monthLabel),
-      value: TimePeriodTypeEnum.MONTH
+      value: TimePeriodTypeEnum.MONTH,
     },
     {
       label: intl.formatMessage(messages.weekLabel),
-      value: TimePeriodTypeEnum.WEEK
+      value: TimePeriodTypeEnum.WEEK,
     },
     {
       label: intl.formatMessage(messages.dayLabel),
-      value: TimePeriodTypeEnum.DAY
-    }
+      value: TimePeriodTypeEnum.DAY,
+    },
   ];
 
   return (
@@ -56,11 +56,11 @@ const TimePeriodField: React.FC<TimePeriodFieldProps> = ({
         type: "number",
         name: amountFieldName,
         value: periodAmount,
-        minValue: 0
+        minValue: 0,
       }}
       selectFieldProps={{
         name: typeFieldName,
-        value: periodType
+        value: periodType,
       }}
     />
   );

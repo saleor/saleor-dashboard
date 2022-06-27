@@ -23,7 +23,7 @@ describe("Filtering query params", () => {
       priceFrom: "10",
       priceTo: "20",
       status: true.toString(),
-      stockStatus: StockAvailability.IN_STOCK
+      stockStatus: StockAvailability.IN_STOCK,
     };
     const filterVariables = getFilterVariables(params, true);
 
@@ -39,7 +39,7 @@ describe("Filtering URL params", () => {
   it("should be empty if no active filters", () => {
     const filterQueryParams = getFilterQueryParams(
       filters,
-      getFilterQueryParam
+      getFilterQueryParam,
     );
 
     expect(getExistingKeys(filterQueryParams)).toHaveLength(0);
@@ -48,7 +48,7 @@ describe("Filtering URL params", () => {
   it("should not be empty if active filters are present", () => {
     const filterQueryParams = getFilterQueryParams(
       setFilterOptsStatus(filters, true),
-      getFilterQueryParam
+      getFilterQueryParam,
     );
 
     expect(filterQueryParams).toMatchSnapshot();

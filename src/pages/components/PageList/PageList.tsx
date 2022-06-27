@@ -3,7 +3,7 @@ import {
   TableBody,
   TableCell,
   TableFooter,
-  TableRow
+  TableRow,
 } from "@material-ui/core";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -32,23 +32,23 @@ const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
       colSlug: {
-        width: 250
+        width: 250,
       },
       colTitle: {},
       colVisibility: {
-        width: 200
-      }
+        width: 200,
+      },
     },
     colSlug: {},
     colTitle: {
-      paddingLeft: 0
+      paddingLeft: 0,
     },
     colVisibility: {},
     link: {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   }),
-  { name: "PageList" }
+  { name: "PageList" },
 );
 
 const numberOfColumns = 4;
@@ -65,7 +65,7 @@ const PageList: React.FC<PageListProps> = props => {
     sort,
     toggle,
     toggleAll,
-    toolbar
+    toolbar,
   } = props;
   const classes = useStyles(props);
 
@@ -178,18 +178,18 @@ const PageList: React.FC<PageListProps> = props => {
                               ? intl.formatMessage({
                                   id: "G1KzEx",
                                   defaultMessage: "Published",
-                                  description: "page status"
+                                  description: "page status",
                                 })
                               : intl.formatMessage({
                                   id: "UN3qWD",
                                   defaultMessage: "Not Published",
-                                  description: "page status"
+                                  description: "page status",
                                 })
                           }
                           color={page.isPublished ? "success" : "error"}
                         />
                       ),
-                      <Skeleton />
+                      <Skeleton />,
                     )}
                   </TableCell>
                 </TableRowLink>
@@ -204,7 +204,7 @@ const PageList: React.FC<PageListProps> = props => {
                   />
                 </TableCell>
               </TableRow>
-            )
+            ),
           )}
         </TableBody>
       </ResponsiveTable>

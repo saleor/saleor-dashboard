@@ -7,7 +7,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import {
   SortableTableBody,
-  SortableTableRow
+  SortableTableRow,
 } from "@saleor/components/SortableTable";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@saleor/components/TableHead";
@@ -22,25 +22,25 @@ const useStyles = makeStyles(
   {
     colAction: {
       "&:last-child": {
-        paddingRight: 0
+        paddingRight: 0,
       },
-      width: 80
+      width: 80,
     },
     colGrab: {
-      width: 60
+      width: 60,
     },
     colName: {},
     colSlug: {
-      width: 300
+      width: 300,
     },
     link: {
-      cursor: "pointer"
+      cursor: "pointer",
     },
     textLeft: {
-      textAlign: "left"
-    }
+      textAlign: "left",
+    },
   },
-  { name: "PageTypeAttributes" }
+  { name: "PageTypeAttributes" },
 );
 
 interface PageTypeAttributesProps extends ListActions {
@@ -66,7 +66,7 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
     type,
     onAttributeAssign,
     onAttributeReorder,
-    onAttributeUnassign
+    onAttributeUnassign,
   } = props;
   const classes = useStyles(props);
 
@@ -78,7 +78,7 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
         title={intl.formatMessage({
           id: "iQxjow",
           defaultMessage: "Content Attributes",
-          description: "section header"
+          description: "section header",
         })}
         toolbar={
           <Button
@@ -177,7 +177,7 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
                   />
                 </TableCell>
               </TableRow>
-            )
+            ),
           )}
         </SortableTableBody>
       </ResponsiveTable>

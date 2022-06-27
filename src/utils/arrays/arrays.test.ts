@@ -20,7 +20,7 @@ describe("Validate diff results", () => {
     expect(diff).toStrictEqual({
       added: vegetables,
       removed: [],
-      common: []
+      common: [],
     });
   });
 
@@ -29,7 +29,7 @@ describe("Validate diff results", () => {
     expect(diff).toStrictEqual({
       added: vegetables,
       removed: [],
-      common: fruits
+      common: fruits,
     });
   });
 
@@ -38,7 +38,7 @@ describe("Validate diff results", () => {
     expect(diff).toStrictEqual({
       added: [],
       removed: vegetables,
-      common: fruits
+      common: fruits,
     });
   });
 
@@ -49,7 +49,7 @@ describe("Validate diff results", () => {
     expect(diff).toStrictEqual({
       added: ["e", "t"],
       removed: ["c", "d"],
-      common: ["a", "b"]
+      common: ["a", "b"],
     });
   });
 });

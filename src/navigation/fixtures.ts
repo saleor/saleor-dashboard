@@ -7,19 +7,19 @@ export const menuList: MenuFragment[] = [
     items: [
       { __typename: "MenuItem", id: "TWVudUl0ZW06MQ==" },
       { __typename: "MenuItem", id: "TWVudUl0ZW06Mg==" },
-      { __typename: "MenuItem", id: "TWVudUl0ZW06Mw==" }
+      { __typename: "MenuItem", id: "TWVudUl0ZW06Mw==" },
     ],
-    name: "navbar"
+    name: "navbar",
   },
   {
     __typename: "Menu",
     id: "TWVudToy",
     items: [
       { __typename: "MenuItem", id: "TWVudUl0ZW06NA==" },
-      { __typename: "MenuItem", id: "TWVudUl0ZW06Nw==" }
+      { __typename: "MenuItem", id: "TWVudUl0ZW06Nw==" },
     ],
-    name: "footer"
-  }
+    name: "footer",
+  },
 ];
 
 export const menu: MenuDetailsFragment = {
@@ -31,7 +31,7 @@ export const menu: MenuDetailsFragment = {
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6Nw==",
-        name: "Accessories"
+        name: "Accessories",
       },
       children: [
         {
@@ -39,7 +39,7 @@ export const menu: MenuDetailsFragment = {
           category: {
             __typename: "Category",
             id: "Q2F0ZWdvcnk6OAX==",
-            name: "Jewelry"
+            name: "Jewelry",
           },
           children: [],
           collection: null,
@@ -47,14 +47,14 @@ export const menu: MenuDetailsFragment = {
           level: 0,
           name: "Jewelry",
           page: null,
-          url: null
+          url: null,
         },
         {
           __typename: "MenuItem",
           category: {
             __typename: "Category",
             id: "Q2F0ZWdvcnk6OQX==",
-            name: "Glasses"
+            name: "Glasses",
           },
           children: [],
           collection: null,
@@ -62,22 +62,22 @@ export const menu: MenuDetailsFragment = {
           level: 0,
           name: "Glasses",
           page: null,
-          url: null
-        }
+          url: null,
+        },
       ],
       collection: null,
       id: "2accessories",
       level: 0,
       name: "Accessories",
       page: null,
-      url: null
+      url: null,
     },
     {
       __typename: "MenuItem",
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6OA==",
-        name: "Groceries"
+        name: "Groceries",
       },
       children: [],
       collection: null,
@@ -85,14 +85,14 @@ export const menu: MenuDetailsFragment = {
       level: 0,
       name: "Groceries",
       page: null,
-      url: null
+      url: null,
     },
     {
       __typename: "MenuItem",
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6OQ==",
-        name: "Apparel"
+        name: "Apparel",
       },
       children: [],
       collection: null,
@@ -100,8 +100,8 @@ export const menu: MenuDetailsFragment = {
       level: 0,
       name: "Apparel",
       page: null,
-      url: null
-    }
+      url: null,
+    },
   ],
-  name: "navbar"
+  name: "navbar",
 };

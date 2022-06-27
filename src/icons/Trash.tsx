@@ -21,7 +21,7 @@ const Trash: React.FC = () => {
         fillOpacity="0.6"
       />
     </svg>,
-    "Trash"
+    "Trash",
   );
 
   return <TrashComponent />;

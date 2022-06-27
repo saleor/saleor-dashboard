@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import GiftCardSettingsExpirySelect, {
-  GiftCardSettingsExpirySelectProps
+  GiftCardSettingsExpirySelectProps,
 } from "@saleor/giftCards/components/GiftCardSettingsExpirySelect";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -20,7 +20,7 @@ const GiftCardExpirySettingsCard: React.FC<GiftCardExpirySettingsCardProps> = ({
   data,
   disabled,
   errors,
-  onChange
+  onChange,
 }) => {
   const intl = useIntl();
 

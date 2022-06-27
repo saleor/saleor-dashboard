@@ -3,7 +3,7 @@ import { PermissionGroupListUrlSortField } from "@saleor/permissionGroups/urls";
 import { createGetSortQueryVariables } from "@saleor/utils/sort";
 
 export function getSortQueryField(
-  sort: PermissionGroupListUrlSortField
+  sort: PermissionGroupListUrlSortField,
 ): PermissionGroupSortField {
   switch (sort) {
     case PermissionGroupListUrlSortField.name:
@@ -14,5 +14,5 @@ export function getSortQueryField(
 }
 
 export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField
+  getSortQueryField,
 );

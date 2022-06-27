@@ -21,23 +21,23 @@ const messages = defineMessages({
   editMedia: {
     id: "Ihp4D3",
     defaultMessage: "Edit Media",
-    description: "header"
+    description: "header",
   },
   mediaInformation: {
     id: "9RvXNg",
     defaultMessage: "Media Information",
-    description: "section header"
+    description: "section header",
   },
   mediaView: {
     id: "cW1RIo",
     defaultMessage: "Media View",
-    description: "section header"
+    description: "section header",
   },
   optional: {
     id: "lzdvwp",
     defaultMessage: "Optional",
-    description: "field is optional"
-  }
+    description: "field is optional",
+  },
 });
 
 const useStyles = makeStyles(
@@ -45,21 +45,21 @@ const useStyles = makeStyles(
     image: {
       height: "100%",
       objectFit: "contain",
-      width: "100%"
+      width: "100%",
     },
     imageContainer: {
       "& iframe": {
         width: "100%",
-        maxHeight: 420
+        maxHeight: 420,
       },
       border: "1px solid #eaeaea",
       borderRadius: theme.spacing(),
       margin: `0 auto ${theme.spacing(2)}px`,
       width: "100%",
-      padding: theme.spacing(2)
-    }
+      padding: theme.spacing(2),
+    },
   }),
-  { name: "ProductMediaPage" }
+  { name: "ProductMediaPage" },
 );
 
 interface ProductMediaPageProps {
@@ -93,7 +93,7 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
     saveButtonBarState,
     onDelete,
     onRowClick,
-    onSubmit
+    onSubmit,
   } = props;
 
   const classes = useStyles(props);
@@ -153,7 +153,7 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
                       <div
                         className={classes.imageContainer}
                         dangerouslySetInnerHTML={{
-                          __html: JSON.parse(mediaObj?.oembedData)?.html
+                          __html: JSON.parse(mediaObj?.oembedData)?.html,
                         }}
                       />
                     )

@@ -8,10 +8,10 @@ const useStyles = makeStyles(
     root: {
       display: "grid",
       gridColumnGap: theme.spacing(2),
-      gridTemplateColumns: "5rem 1fr"
-    }
+      gridTemplateColumns: "5rem 1fr",
+    },
   }),
-  { name: "PhoneField" }
+  { name: "PhoneField" },
 );
 
 interface PhoneFieldProps {
@@ -30,7 +30,7 @@ const PhoneField: React.FC<PhoneFieldProps> = props => {
     prefix,
     prefixes,
     label,
-    onChange
+    onChange,
   } = props;
 
   const classes = useStyles(props);

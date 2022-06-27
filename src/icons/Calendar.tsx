@@ -23,6 +23,6 @@ export const Calendar = createSvgIcon(
       </linearGradient>
     </defs>
   </>,
-  "Calendar"
+  "Calendar",
 );
 export default Calendar;

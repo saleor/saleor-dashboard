@@ -1,7 +1,7 @@
 import { FilterFieldBaseProps, FilterType } from "@saleor/components/Filter";
 import {
   getIsFilterMultipleChoices,
-  useCommonStyles
+  useCommonStyles,
 } from "@saleor/components/Filter/FilterContent/utils";
 import FormSpacer from "@saleor/components/FormSpacer";
 import React from "react";
@@ -13,7 +13,7 @@ type FilterSingleSelectFieldProps = FilterFieldBaseProps<string>;
 
 export const FilterSingleSelectField: React.FC<FilterSingleSelectFieldProps> = ({
   filter,
-  onFilterPropertyChange
+  onFilterPropertyChange,
 }) => {
   const classes = useCommonStyles({});
   const intl = useIntl();
@@ -26,18 +26,18 @@ export const FilterSingleSelectField: React.FC<FilterSingleSelectFieldProps> = (
         value={filter.multiple ? FilterType.MULTIPLE : FilterType.SINGULAR}
         InputProps={{
           classes: {
-            input: classes.input
-          }
+            input: classes.input,
+          },
         }}
         onChange={event =>
           onFilterPropertyChange({
             payload: {
               name: filter.name,
               update: {
-                multiple: event.target.value === FilterType.MULTIPLE
-              }
+                multiple: event.target.value === FilterType.MULTIPLE,
+              },
             },
-            type: "set-property"
+            type: "set-property",
           })
         }
       />

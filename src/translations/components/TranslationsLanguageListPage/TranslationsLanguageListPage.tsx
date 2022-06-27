@@ -12,7 +12,7 @@ export interface TranslationsLanguageListPageProps {
 }
 
 const TranslationsLanguageListPage: React.FC<TranslationsLanguageListPageProps> = ({
-  languages
+  languages,
 }) => {
   const intl = useIntl();
 
@@ -21,7 +21,7 @@ const TranslationsLanguageListPage: React.FC<TranslationsLanguageListPageProps> 
       <PageHeader
         title={intl.formatMessage({
           id: "GsBRWL",
-          defaultMessage: "Languages"
+          defaultMessage: "Languages",
         })}
       >
         {/* <Button color="primary" variant="contained" onClick={onAdd}>

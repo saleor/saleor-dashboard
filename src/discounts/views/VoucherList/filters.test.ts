@@ -25,7 +25,7 @@ describe("Filtering query params", () => {
       status: [DiscountStatusEnum.ACTIVE, DiscountStatusEnum.EXPIRED],
       timesUsedFrom: date.from,
       timesUsedTo: date.to,
-      type: [VoucherDiscountType.FIXED, VoucherDiscountType.SHIPPING]
+      type: [VoucherDiscountType.FIXED, VoucherDiscountType.SHIPPING],
     };
     const filterVariables = getFilterVariables(params);
 
@@ -42,39 +42,39 @@ describe("Filtering URL params", () => {
       choices: [
         {
           value: "default-channel",
-          label: "Default channel"
-        }
+          label: "Default channel",
+        },
       ],
-      value: "default-channel"
+      value: "default-channel",
     },
     saleType: {
       active: false,
-      value: [VoucherDiscountType.FIXED, VoucherDiscountType.SHIPPING]
+      value: [VoucherDiscountType.FIXED, VoucherDiscountType.SHIPPING],
     },
     started: {
       active: false,
       value: {
         max: date.to,
-        min: date.from
-      }
+        min: date.from,
+      },
     },
     status: {
       active: false,
-      value: [DiscountStatusEnum.ACTIVE, DiscountStatusEnum.EXPIRED]
+      value: [DiscountStatusEnum.ACTIVE, DiscountStatusEnum.EXPIRED],
     },
     timesUsed: {
       active: false,
       value: {
         max: "6",
-        min: "1"
-      }
-    }
+        min: "1",
+      },
+    },
   });
 
   it("should be empty if no active filters", () => {
     const filterQueryParams = getFilterQueryParams(
       filters,
-      getFilterQueryParam
+      getFilterQueryParam,
     );
 
     expect(getExistingKeys(filterQueryParams)).toHaveLength(0);
@@ -83,7 +83,7 @@ describe("Filtering URL params", () => {
   it("should not be empty if active filters are present", () => {
     const filterQueryParams = getFilterQueryParams(
       setFilterOptsStatus(filters, true),
-      getFilterQueryParam
+      getFilterQueryParam,
     );
 
     expect(filterQueryParams).toMatchSnapshot();

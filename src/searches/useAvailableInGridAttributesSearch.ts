@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 import {
   SearchAvailableInGridAttributesDocument,
   SearchAvailableInGridAttributesQuery,
-  SearchAvailableInGridAttributesQueryVariables
+  SearchAvailableInGridAttributesQueryVariables,
 } from "@saleor/graphql";
 import makeSearch from "@saleor/hooks/makeSearch";
 
@@ -51,16 +51,16 @@ export default makeSearch<
             ...prev.availableInGrid,
             edges: [
               ...prev.availableInGrid.edges,
-              ...next.availableInGrid.edges
+              ...next.availableInGrid.edges,
             ],
-            pageInfo: next.availableInGrid.pageInfo
-          }
+            pageInfo: next.availableInGrid.pageInfo,
+          },
         } as SearchAvailableInGridAttributesQuery;
       },
       {
         ...result.variables,
-        after: result.data.availableInGrid.pageInfo.endCursor
-      }
+        after: result.data.availableInGrid.pageInfo.endCursor,
+      },
     );
   }
 });

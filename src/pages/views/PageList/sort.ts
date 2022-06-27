@@ -16,14 +16,14 @@ export function getSortQueryField(sort: PageListUrlSortField): PageSortField {
 }
 
 export function getFilterVariables(
-  params: PageListUrlFilters
+  params: PageListUrlFilters,
 ): PageFilterInput {
   return {
     search: params.query,
-    pageTypes: params.pageTypes
+    pageTypes: params.pageTypes,
   };
 }
 
 export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField
+  getSortQueryField,
 );

@@ -19,7 +19,7 @@ function treeToMap(tree: TreeItem[], parent: string): Record<string, string[]> {
   const childrenList = tree.map(node => node.id);
   const childrenMaps = tree.map(node => ({
     id: node.id,
-    mappedNodes: treeToMap(node.children as TreeItem[], node.id)
+    mappedNodes: treeToMap(node.children as TreeItem[], node.id),
   }));
 
   return {
@@ -27,15 +27,15 @@ function treeToMap(tree: TreeItem[], parent: string): Record<string, string[]> {
     ...childrenMaps.reduce(
       (acc, childMap) => ({
         ...acc,
-        ...childMap.mappedNodes
+        ...childMap.mappedNodes,
       }),
-      {}
-    )
+      {},
+    ),
   };
 }
 
 export function getItemType(
-  item: MenuDetailsFragment["items"][0]
+  item: MenuDetailsFragment["items"][0],
 ): MenuItemType {
   if (item.category) {
     return "category";
@@ -66,7 +66,7 @@ export function getItemId(item: MenuDetailsFragment["items"][0]): string {
 
 export function getDiff(
   originalTree: TreeItem[],
-  newTree: TreeItem[]
+  newTree: TreeItem[],
 ): TreeOperation[] {
   const originalMap = treeToMap(originalTree, "root");
   const newMap = treeToMap(newTree, "root");
@@ -99,7 +99,7 @@ export function getDiff(
               parentId: key === "root" ? undefined : key,
               sortOrder: newNode.length - 1,
               type: "move" as TreeOperationType,
-              simulatedMove: true
+              simulatedMove: true,
             },
             {
               id: addedNode.items[0],
@@ -108,8 +108,8 @@ export function getDiff(
                 sortOrder - newNode.length < 0
                   ? sortOrder - newNode.length + 1
                   : sortOrder - newNode.length - 1,
-              type: "move" as TreeOperationType
-            }
+              type: "move" as TreeOperationType,
+            },
           ];
         }
 
@@ -117,7 +117,7 @@ export function getDiff(
           id: addedNode.items[0],
           parentId: key === "root" ? undefined : key,
           sortOrder,
-          type: "move" as TreeOperationType
+          type: "move" as TreeOperationType,
         };
       }
     }
@@ -130,24 +130,24 @@ export function getNodeData(
   item: MenuDetailsFragment["items"][0],
   onChange: (operations: TreeOperation[]) => void,
   onClick: (id: string, type: MenuItemType) => void,
-  onEdit: (id: string) => void
+  onEdit: (id: string) => void,
 ): TreeItem {
   return {
     children: item.children.map(child =>
-      getNodeData(child, onChange, onClick, onEdit)
+      getNodeData(child, onChange, onClick, onEdit),
     ),
     expanded: true,
     id: item.id,
     onChange,
     onClick: () => onClick(getItemId(item), getItemType(item)),
     onEdit: () => onEdit(item.id),
-    title: item.name
+    title: item.name,
   };
 }
 
 export function getNodeQuantity(items: MenuDetailsFragment["items"]): number {
   return items.reduce(
     (acc, curr) => acc + getNodeQuantity(curr.children),
-    items.length
+    items.length,
   );
 }

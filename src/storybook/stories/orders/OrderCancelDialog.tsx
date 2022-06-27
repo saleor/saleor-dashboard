@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import OrderCancelDialog, {
-  OrderCancelDialogProps
+  OrderCancelDialogProps,
 } from "../../../orders/components/OrderCancelDialog";
 import Decorator from "../../Decorator";
 
@@ -13,7 +13,7 @@ const props: OrderCancelDialogProps = {
   number: "123",
   onClose: () => undefined,
   onSubmit: () => undefined,
-  open: true
+  open: true,
 };
 
 storiesOf("Orders / OrderCancelDialog", module)
@@ -37,8 +37,8 @@ storiesOf("Orders / OrderCancelDialog", module)
           code: OrderErrorCode.CANNOT_CANCEL_ORDER,
           field: null,
           addressType: null,
-          message: "Cannot cancel order"
-        }
+          message: "Cannot cancel order",
+        },
       ]}
     />
   ));

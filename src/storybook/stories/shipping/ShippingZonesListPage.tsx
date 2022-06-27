@@ -6,10 +6,10 @@ import React from "react";
 import {
   adminUserPermissions,
   listActionsProps,
-  pageListProps
+  pageListProps,
 } from "../../../fixtures";
 import ShippingZonesListPage, {
-  ShippingZonesListPageProps
+  ShippingZonesListPageProps,
 } from "../../../shipping/components/ShippingZonesListPage";
 import { shippingZones } from "../../../shipping/fixtures";
 import Decorator from "../../Decorator";
@@ -21,7 +21,7 @@ const props: ShippingZonesListPageProps = {
   onRemove: () => undefined,
   onSubmit: () => undefined,
   shippingZones,
-  userPermissions: adminUserPermissions
+  userPermissions: adminUserPermissions,
 };
 
 storiesOf("Views / Shipping / Shipping zones list", module)

@@ -23,7 +23,7 @@ const OrderDraftCancelDialog: React.FC<OrderDraftCancelDialogProps> = ({
   onClose,
   onConfirm,
   open,
-  orderNumber
+  orderNumber,
 }) => {
   const intl = useIntl();
   const errors = useModalDialogErrors(apiErrors, open);
@@ -37,7 +37,7 @@ const OrderDraftCancelDialog: React.FC<OrderDraftCancelDialogProps> = ({
       title={intl.formatMessage({
         id: "APcoSA",
         defaultMessage: "Delete Daft Order",
-        description: "dialog header"
+        description: "dialog header",
       })}
       variant="delete"
     >
@@ -46,7 +46,7 @@ const OrderDraftCancelDialog: React.FC<OrderDraftCancelDialogProps> = ({
           id="mxtAFx"
           defaultMessage="Are you sure you want to delete draft #{orderNumber}?"
           values={{
-            orderNumber: <strong>{orderNumber}</strong>
+            orderNumber: <strong>{orderNumber}</strong>,
           }}
         />
       </DialogContentText>

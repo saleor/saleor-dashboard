@@ -6,17 +6,17 @@ export const useStyles = makeStyles(
   theme => ({
     popper: {
       marginTop: theme.spacing(1),
-      zIndex: 2
+      zIndex: 2,
     },
     paper: {
       maxHeight: ITEM_HEIGHT * 4.5,
-      overflowY: "scroll"
+      overflowY: "scroll",
     },
     buttonIcon: {
-      margin: 0
-    }
+      margin: 0,
+    },
   }),
   {
-    name: "ButtonWithSelect"
-  }
+    name: "ButtonWithSelect",
+  },
 );

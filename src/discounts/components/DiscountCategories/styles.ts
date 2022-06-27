@@ -3,18 +3,18 @@ import { makeStyles } from "@saleor/macaw-ui";
 export const useStyles = makeStyles(
   {
     colActions: {
-      width: 84
+      width: 84,
     },
     colName: {
-      width: "auto"
+      width: "auto",
     },
     colProducts: {
       textAlign: "right",
-      width: 140
+      width: 140,
     },
     tableRow: {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   },
-  { name: "DiscountCategories" }
+  { name: "DiscountCategories" },
 );

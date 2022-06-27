@@ -4,12 +4,12 @@ import {
   pageListProps,
   searchPageProps,
   sortPageProps,
-  tabPageProps
+  tabPageProps,
 } from "@saleor/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
 import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import WarehouseListPage, {
-  WarehouseListPageProps
+  WarehouseListPageProps,
 } from "@saleor/warehouses/components/WarehouseListPage";
 import { WarehouseListUrlSortField } from "@saleor/warehouses/urls";
 import { storiesOf } from "@storybook/react";
@@ -26,9 +26,9 @@ const props: WarehouseListPageProps = {
   onRemove: () => undefined,
   sort: {
     ...sortPageProps.sort,
-    sort: WarehouseListUrlSortField.name
+    sort: WarehouseListUrlSortField.name,
   },
-  warehouses: warehouseList
+  warehouses: warehouseList,
 };
 
 storiesOf("Views / Warehouses / Warehouse list", module)

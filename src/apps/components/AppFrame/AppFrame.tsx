@@ -24,7 +24,7 @@ export const AppFrame: React.FC<Props> = ({
   appId,
   className,
   onLoad,
-  onError
+  onError,
 }) => {
   const shop = useShop();
   const frameRef = React.useRef<HTMLIFrameElement>();
@@ -38,8 +38,8 @@ export const AppFrame: React.FC<Props> = ({
       type: "handshake",
       payload: {
         token: appToken,
-        version: 1
-      }
+        version: 1,
+      },
     });
     sendThemeToExtension();
 
@@ -55,7 +55,11 @@ export const AppFrame: React.FC<Props> = ({
   return (
     <iframe
       ref={frameRef}
-      src={urlJoin(src, `?domain=${shop.domain.host}&id=${appId}`)}
+      src={urlJoin(
+        src,
+        window.location.search,
+        `?domain=${shop.domain.host}&id=${appId}`,
+      )}
       onError={onError}
       onLoad={handleLoad}
       className={clsx(classes.iframe, className)}

@@ -8,10 +8,10 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import SingleAutocompleteSelectField, {
-  SingleAutocompleteSelectFieldProps
+  SingleAutocompleteSelectFieldProps,
 } from "./SingleAutocompleteSelectField";
 import SingleAutocompleteSelectFieldContent, {
-  SingleAutocompleteSelectFieldContentProps
+  SingleAutocompleteSelectFieldContentProps,
 } from "./SingleAutocompleteSelectFieldContent";
 
 const suggestions = countries.map(c => ({ label: c.name, value: c.code }));
@@ -24,7 +24,7 @@ const props: SingleAutocompleteSelectFieldProps = {
   name: "country",
   onChange: () => undefined,
   placeholder: "Select country",
-  value: suggestions[0].value
+  value: suggestions[0].value,
 };
 
 const Story: React.FC<Partial<
@@ -36,7 +36,7 @@ const Story: React.FC<Partial<
   emptyOption,
   enableLoadMore,
   nakedInput,
-  disabled
+  disabled,
 }) => {
   const [displayValue, setDisplayValue] = React.useState(suggestions[0].label);
 
@@ -48,7 +48,7 @@ const Story: React.FC<Partial<
             const handleSelect = createSingleAutocompleteSelectHandler(
               change,
               setDisplayValue,
-              choices
+              choices,
             );
 
             return (
@@ -88,7 +88,7 @@ const contentProps: SingleAutocompleteSelectFieldContentProps = {
   isCustomValueSelected: false,
   loading: false,
   onFetchMore: () => undefined,
-  selectedItem: suggestions[0].value
+  selectedItem: suggestions[0].value,
 };
 
 storiesOf("Generics / Select with autocomplete", module)
@@ -102,7 +102,7 @@ storiesOf("Generics / Select with autocomplete", module)
       {...contentProps}
       add={{
         label: "Add New Collection",
-        onClick: () => undefined
+        onClick: () => undefined,
       }}
     />
   ))

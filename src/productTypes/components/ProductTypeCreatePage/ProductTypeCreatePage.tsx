@@ -9,7 +9,7 @@ import Savebar from "@saleor/components/Savebar";
 import {
   ProductTypeDetailsQuery,
   ProductTypeKindEnum,
-  WeightUnitsEnum
+  WeightUnitsEnum,
 } from "@saleor/graphql";
 import { ChangeEvent, FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -54,18 +54,19 @@ const formInitialData: ProductTypeForm = {
   kind: ProductTypeKindEnum.NORMAL,
   privateMetadata: [],
   taxType: "",
-  weight: 0
+  weight: 0,
 };
 
 function handleTaxTypeChange(
   event: ChangeEvent,
   taxTypes: ProductTypeDetailsQuery["taxTypes"],
   formChange: FormChange,
-  displayChange: (name: string) => void
+  displayChange: (name: string) => void,
 ) {
   formChange(event);
   displayChange(
-    taxTypes.find(taxType => taxType.taxCode === event.target.value).description
+    taxTypes.find(taxType => taxType.taxCode === event.target.value)
+      .description,
   );
 }
 
@@ -78,19 +79,19 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
   taxTypes,
   kind,
   onChangeKind,
-  onSubmit
+  onSubmit,
 }: ProductTypeCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
 
   const [taxTypeDisplayName, setTaxTypeDisplayName] = useStateFromProps("");
   const {
-    makeChangeHandler: makeMetadataChangeHandler
+    makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
 
   const initialData = {
     ...formInitialData,
-    kind: kind || formInitialData.kind
+    kind: kind || formInitialData.kind,
   };
 
   return (
@@ -105,7 +106,7 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
 
         const changeKind = makeProductTypeKindChangeHandler(
           change,
-          onChangeKind
+          onChangeKind,
         );
 
         return (
@@ -134,7 +135,7 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
                       event,
                       taxTypes,
                       change,
-                      setTaxTypeDisplayName
+                      setTaxTypeDisplayName,
                     )
                   }
                 />

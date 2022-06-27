@@ -10,7 +10,7 @@ function createMultiAutocompleteSelectHandler(
   change: FormChange,
   setSelected: (choices: MultiAutocompleteChoiceType[]) => void,
   selected: MultiAutocompleteChoiceType[],
-  choices: MultiAutocompleteChoiceType[]
+  choices: MultiAutocompleteChoiceType[],
 ): FormChange {
   return (event: ChangeEvent) => {
     change(event);

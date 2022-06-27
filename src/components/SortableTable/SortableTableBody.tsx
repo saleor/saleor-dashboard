@@ -6,7 +6,7 @@ import React from "react";
 import { SortableContainer } from "react-sortable-hoc";
 
 const InnerSortableTableBody = SortableContainer<TableBodyProps>(
-  ({ children, ...props }) => <TableBody {...props}>{children}</TableBody>
+  ({ children, ...props }) => <TableBody {...props}>{children}</TableBody>,
 );
 
 export interface SortableTableBodyProps {
@@ -17,16 +17,16 @@ const useStyles = makeStyles(
   theme => ({
     ghost: {
       "& td": {
-        borderBottom: "none"
+        borderBottom: "none",
       },
       background: theme.palette.background.paper,
       fontFamily: theme.typography.fontFamily,
       // FIXME: you damn know what
       // fontSize: theme.overrides.MuiTableCell.root.fontSize,
-      opacity: 0.5
-    }
+      opacity: 0.5,
+    },
   }),
-  { name: "SortableTableBody" }
+  { name: "SortableTableBody" },
 );
 
 const SortableTableBody: React.FC<Omit<

@@ -3,7 +3,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow
+  TableRow,
 } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import CardTitle from "@saleor/components/CardTitle";
@@ -21,7 +21,7 @@ import {
   Button,
   DeleteIcon,
   ICONBUTTON_SIZE,
-  makeStyles
+  makeStyles,
 } from "@saleor/macaw-ui";
 import { ChannelProps } from "@saleor/types";
 import React from "react";
@@ -43,20 +43,20 @@ const useStyles = makeStyles(
   theme => ({
     alignRight: {
       paddingRight: 24,
-      width: `calc(${ICONBUTTON_SIZE}px + ${theme.spacing(0.5)})`
+      width: `calc(${ICONBUTTON_SIZE}px + ${theme.spacing(0.5)})`,
     },
     buttonColumn: {
       padding: "4px 0",
-      width: "62px"
+      width: "62px",
     },
     nameColumn: {
-      width: "auto"
+      width: "auto",
     },
     valueColumn: {
-      width: "auto"
-    }
+      width: "auto",
+    },
   }),
-  { name: "ShippingZoneRates" }
+  { name: "ShippingZoneRates" },
 );
 const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
   const {
@@ -67,7 +67,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
     rates,
     selectedChannelId,
     variant,
-    testId
+    testId,
   } = props;
 
   const classes = useStyles(props);
@@ -83,12 +83,12 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
             ? intl.formatMessage({
                 id: "FjrExY",
                 defaultMessage: "Price Based Rates",
-                description: "price based shipping methods, section header"
+                description: "price based shipping methods, section header",
               })
             : intl.formatMessage({
                 id: "foB6wx",
                 defaultMessage: "Weight Based Rates",
-                description: "weight based shipping methods, section header"
+                description: "weight based shipping methods, section header",
               })
         }
         toolbar={
@@ -116,12 +116,12 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                 ? intl.formatMessage({
                     id: "njUQPz",
                     defaultMessage: "Value Range",
-                    description: "shipping method price range"
+                    description: "shipping method price range",
                   })
                 : intl.formatMessage({
                     id: "aYhcie",
                     defaultMessage: "Weight Range",
-                    description: "shipping method weight range"
+                    description: "shipping method weight range",
                   })}
             </TableCell>
             <TableCell className={classes.nameColumn}>
@@ -140,7 +140,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
             rates,
             rate => {
               const channel = rate?.channelListings?.find(
-                listing => listing.channel.id === selectedChannelId
+                listing => listing.channel.id === selectedChannelId,
               );
               return (
                 <TableRowLink
@@ -167,7 +167,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                             to={rate.maximumOrderWeight}
                           />
                         ),
-                      <Skeleton />
+                      <Skeleton />,
                     )}
                   </TableCell>
                   <TableCell data-test-id="shipping-rate-price">
@@ -178,7 +178,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                         ) : (
                           <Money money={channel.price} />
                         ),
-                      <Skeleton />
+                      <Skeleton />,
                     )}
                   </TableCell>
                   <TableButtonWrapper>
@@ -211,7 +211,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                   />
                 </TableCell>
               </TableRow>
-            )
+            ),
           )}
         </TableBody>
       </ResponsiveTable>

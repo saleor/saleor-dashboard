@@ -10,7 +10,7 @@ export const shop: SiteSettingsQuery["shop"] = {
     country: {
       __typename: "CountryDisplay",
       code: "UA",
-      country: "United Arab Emirates"
+      country: "United Arab Emirates",
     },
     countryArea: null,
     firstName: null,
@@ -19,14 +19,14 @@ export const shop: SiteSettingsQuery["shop"] = {
     phone: "+41 876-373-9137",
     postalCode: "89880-6342",
     streetAddress1: "01419 Bernhard Plain",
-    streetAddress2: null
+    streetAddress2: null,
   },
   countries: [
     {
       __typename: "CountryDisplay",
       code: "UA",
-      country: "United Arab Emirates"
-    }
+      country: "United Arab Emirates",
+    },
   ],
   customerSetPasswordUrl: "https://example.com/reset-password",
   defaultMailSenderAddress: "noreply@example.com",
@@ -34,10 +34,10 @@ export const shop: SiteSettingsQuery["shop"] = {
   description: "Lorem ipsum dolor sit amet",
   domain: {
     __typename: "Domain",
-    host: "localhost:8000"
+    host: "localhost:8000",
   },
   name: "Saleor e-commerce",
   reserveStockDurationAnonymousUser: 10,
   reserveStockDurationAuthenticatedUser: 10,
-  limitQuantityPerCheckout: 50
+  limitQuantityPerCheckout: 50,
 };

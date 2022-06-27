@@ -3,7 +3,7 @@ import {
   TableBody,
   TableCell,
   TableFooter,
-  TableRow
+  TableRow,
 } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
@@ -44,7 +44,7 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
     selected,
     toggle,
     toggleAll,
-    toolbar
+    toolbar,
   } = props;
   const classes = useStyles(props);
 
@@ -131,7 +131,7 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
                   >
                     {maybe<React.ReactNode>(
                       () => variant.product.name,
-                      <Skeleton />
+                      <Skeleton />,
                     )}
                   </TableCellAvatar>
                   <TableCell className={classes.colType}>
@@ -140,7 +140,7 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
                   <TableCell className={classes.colType}>
                     {maybe<React.ReactNode>(
                       () => variant.product.productType.name,
-                      <Skeleton />
+                      <Skeleton />,
                     )}
                   </TableCell>
                   <TableCell className={classes.colActions}>
@@ -166,7 +166,7 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
                   <FormattedMessage {...messages.discountVariantsNotFound} />
                 </TableCell>
               </TableRow>
-            )
+            ),
           )}
         </TableBody>
       </ResponsiveTable>

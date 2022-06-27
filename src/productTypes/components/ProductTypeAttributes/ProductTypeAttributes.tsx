@@ -7,7 +7,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import {
   SortableTableBody,
-  SortableTableRow
+  SortableTableRow,
 } from "@saleor/components/SortableTable";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@saleor/components/TableHead";
@@ -22,25 +22,25 @@ const useStyles = makeStyles(
   {
     colAction: {
       "&:last-child": {
-        paddingRight: 0
+        paddingRight: 0,
       },
-      width: 84
+      width: 84,
     },
     colGrab: {
-      width: 60
+      width: 60,
     },
     colName: {},
     colSlug: {
-      width: 300
+      width: 300,
     },
     link: {
-      cursor: "pointer"
+      cursor: "pointer",
     },
     textLeft: {
-      textAlign: "left"
-    }
+      textAlign: "left",
+    },
   },
-  { name: "ProductTypeAttributes" }
+  { name: "ProductTypeAttributes" },
 );
 
 interface ProductTypeAttributesProps extends ListActions {
@@ -69,7 +69,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
     testId,
     onAttributeAssign,
     onAttributeReorder,
-    onAttributeUnassign
+    onAttributeUnassign,
   } = props;
   const classes = useStyles(props);
 
@@ -81,7 +81,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
         title={intl.formatMessage({
           id: "9scTQ0",
           defaultMessage: "Product Attributes",
-          description: "section header"
+          description: "section header",
         })}
         toolbar={
           <Button
@@ -191,7 +191,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
                   />
                 </TableCell>
               </TableRow>
-            )
+            ),
           )}
         </SortableTableBody>
       </ResponsiveTable>

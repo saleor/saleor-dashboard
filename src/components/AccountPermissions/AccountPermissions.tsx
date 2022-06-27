@@ -6,7 +6,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { useUser } from "@saleor/auth";
 import CardTitle from "@saleor/components/CardTitle";
@@ -19,17 +19,17 @@ import { useIntl } from "react-intl";
 const useStyles = makeStyles(
   theme => ({
     checkboxContainer: {
-      marginTop: theme.spacing()
+      marginTop: theme.spacing(),
     },
     hr: {
       backgroundColor: theme.palette.divider,
       border: "none",
       height: 1,
       marginBottom: 0,
-      marginTop: 0
-    }
+      marginTop: 0,
+    },
   }),
-  { name: "AccountPermissions" }
+  { name: "AccountPermissions" },
 );
 
 interface AccountPermissionsProps {
@@ -55,7 +55,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
     onChange,
     description,
     fullAccessLabel,
-    errorMessage
+    errorMessage,
   } = props;
 
   const classes = useStyles(props);
@@ -66,14 +66,14 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
     onChange({
       target: {
         name: "permissions",
-        value: !data.hasFullAccess ? permissions.map(perm => perm.code) : []
-      }
+        value: !data.hasFullAccess ? permissions.map(perm => perm.code) : [],
+      },
     } as any);
     onChange({
       target: {
         name: "hasFullAccess",
-        value: !data.hasFullAccess
-      }
+        value: !data.hasFullAccess,
+      },
     } as any);
   };
   const handlePermissionChange = (key, value) => () => {
@@ -82,8 +82,8 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
         name: "permissions",
         value: !value
           ? data.permissions.concat([key])
-          : data.permissions.filter(perm => perm !== key)
-      }
+          : data.permissions.filter(perm => perm !== key),
+      },
     } as any);
   };
 
@@ -93,7 +93,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
         title={intl.formatMessage({
           id: "Fbr4Vp",
           defaultMessage: "Permissions",
-          description: "dialog header"
+          description: "dialog header",
         })}
       />
       {permissionsExceeded && (
@@ -104,7 +104,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
                 id: "MVU6ol",
                 defaultMessage:
                   "This groups permissions exceeds your own. You are able only to manage permissions that you have.",
-                description: "exceeded permissions description"
+                description: "exceeded permissions description",
               })}
             </Typography>
           </CardContent>
@@ -114,7 +114,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
               {intl.formatMessage({
                 id: "6cS4Rd",
                 defaultMessage: "Available permissions",
-                description: "card section description"
+                description: "card section description",
               })}
             </Typography>
             <List dense={true}>
@@ -169,8 +169,8 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
                       onClick={handlePermissionChange(
                         perm.code,
                         data.permissions.filter(
-                          userPerm => userPerm === perm.code
-                        ).length === 1
+                          userPerm => userPerm === perm.code,
+                        ).length === 1,
                       )}
                     >
                       <ListItemIcon>
@@ -179,7 +179,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
                           edge="start"
                           checked={
                             data.permissions.filter(
-                              userPerm => userPerm === perm.code
+                              userPerm => userPerm === perm.code,
                             ).length === 1
                           }
                           tabIndex={-1}
@@ -197,7 +197,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
                             id: "VmMDLN",
                             defaultMessage:
                               "This group is last source of that permission",
-                            description: "permission list item description"
+                            description: "permission list item description",
                           })
                         }
                       />

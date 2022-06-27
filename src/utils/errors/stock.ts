@@ -1,7 +1,7 @@
 import {
   BulkStockErrorFragment,
   StockErrorCode,
-  StockErrorFragment
+  StockErrorFragment,
 } from "@saleor/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
@@ -13,13 +13,13 @@ const messages = defineMessages({
     id: "QFBjlV",
     defaultMessage:
       "Stock for this warehouse already exists for this product variant",
-    description: "error message"
-  }
+    description: "error message",
+  },
 });
 
 function getStockErrorMessage(
   err: Omit<StockErrorFragment, "__typename"> | undefined,
-  intl: IntlShape
+  intl: IntlShape,
 ): string {
   if (err) {
     switch (err.code) {
@@ -33,7 +33,7 @@ function getStockErrorMessage(
 
 export function getBulkStockErrorMessage(
   err: Omit<BulkStockErrorFragment, "__typename"> | undefined,
-  intl: IntlShape
+  intl: IntlShape,
 ): string {
   return getProductErrorMessage(err, intl);
 }

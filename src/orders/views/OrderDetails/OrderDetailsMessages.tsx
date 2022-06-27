@@ -17,7 +17,7 @@ import {
   OrderMarkAsPaidMutation,
   OrderShippingMethodUpdateMutation,
   OrderUpdateMutation,
-  OrderVoidMutation
+  OrderVoidMutation,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -36,13 +36,13 @@ interface OrderDetailsMessages {
     handleNoteAdd: (data: OrderAddNoteMutation) => void;
     handleOrderCancel: (data: OrderCancelMutation) => void;
     handleOrderFulfillmentApprove: (
-      data: OrderFulfillmentApproveMutation
+      data: OrderFulfillmentApproveMutation,
     ) => void;
     handleOrderFulfillmentCancel: (
-      data: OrderFulfillmentCancelMutation
+      data: OrderFulfillmentCancelMutation,
     ) => void;
     handleOrderFulfillmentUpdate: (
-      data: OrderFulfillmentUpdateTrackingMutation
+      data: OrderFulfillmentUpdateTrackingMutation,
     ) => void;
     handleOrderLinesAdd: (data: OrderLinesAddMutation) => void;
     handleOrderLineDelete: (data: OrderLineDeleteMutation) => void;
@@ -51,7 +51,7 @@ interface OrderDetailsMessages {
     handleOrderVoid: (data: OrderVoidMutation) => void;
     handlePaymentCapture: (data: OrderCaptureMutation) => void;
     handleShippingMethodUpdate: (
-      data: OrderShippingMethodUpdateMutation
+      data: OrderShippingMethodUpdateMutation,
     ) => void;
     handleUpdate: (data: OrderUpdateMutation) => void;
     handleInvoiceGeneratePending: (data: InvoiceRequestMutation) => void;
@@ -65,7 +65,7 @@ interface OrderDetailsMessages {
 export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   children,
   id,
-  params
+  params,
 }) => {
   const navigate = useNavigator();
   const pushMessage = useNotifier();
@@ -74,7 +74,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const [, closeModal] = createDialogActionHandlers(
     navigate,
     params => orderUrl(id, params),
-    params
+    params,
   );
 
   const handlePaymentCapture = (data: OrderCaptureMutation) => {
@@ -84,8 +84,8 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
         status: "success",
         text: intl.formatMessage({
           id: "9RCuN3",
-          defaultMessage: "Payment successfully captured"
-        })
+          defaultMessage: "Payment successfully captured",
+        }),
       });
       closeModal();
     }
@@ -97,8 +97,8 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
         status: "success",
         text: intl.formatMessage({
           id: "lL1HTg",
-          defaultMessage: "Order marked as paid"
-        })
+          defaultMessage: "Order marked as paid",
+        }),
       });
       closeModal();
     }
@@ -110,8 +110,8 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
         status: "success",
         text: intl.formatMessage({
           id: "W/Es0H",
-          defaultMessage: "Order successfully cancelled"
-        })
+          defaultMessage: "Order successfully cancelled",
+        }),
       });
       closeModal();
     }
@@ -123,8 +123,8 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
         status: "success",
         text: intl.formatMessage({
           id: "W/Es0H",
-          defaultMessage: "Order successfully cancelled"
-        })
+          defaultMessage: "Order successfully cancelled",
+        }),
       });
       closeModal();
     }
@@ -136,8 +136,8 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
         status: "success",
         text: intl.formatMessage({
           id: "L87bp7",
-          defaultMessage: "Order payment successfully voided"
-        })
+          defaultMessage: "Order payment successfully voided",
+        }),
       });
       closeModal();
     }
@@ -149,8 +149,8 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
         status: "success",
         text: intl.formatMessage({
           id: "KmPicj",
-          defaultMessage: "Note successfully added"
-        })
+          defaultMessage: "Note successfully added",
+        }),
       });
     }
   };
@@ -161,8 +161,8 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
         status: "success",
         text: intl.formatMessage({
           id: "j2fPVo",
-          defaultMessage: "Order successfully updated"
-        })
+          defaultMessage: "Order successfully updated",
+        }),
       });
       closeModal();
     }
@@ -174,14 +174,14 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
         status: "success",
         text: intl.formatMessage({
           id: "j2fPVo",
-          defaultMessage: "Order successfully updated"
-        })
+          defaultMessage: "Order successfully updated",
+        }),
       });
       closeModal();
     }
   };
   const handleShippingMethodUpdate = (
-    data: OrderShippingMethodUpdateMutation
+    data: OrderShippingMethodUpdateMutation,
   ) => {
     const errs = data.orderUpdateShipping?.errors;
     if (errs.length === 0) {
@@ -189,8 +189,8 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
         status: "success",
         text: intl.formatMessage({
           id: "7U8GRy",
-          defaultMessage: "Shipping method successfully updated"
-        })
+          defaultMessage: "Shipping method successfully updated",
+        }),
       });
       closeModal();
     }
@@ -202,8 +202,8 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
         status: "success",
         text: intl.formatMessage({
           id: "9OtpHt",
-          defaultMessage: "Order line deleted"
-        })
+          defaultMessage: "Order line deleted",
+        }),
       });
     }
   };
@@ -214,8 +214,8 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
         status: "success",
         text: intl.formatMessage({
           id: "HlCkMT",
-          defaultMessage: "Order line added"
-        })
+          defaultMessage: "Order line added",
+        }),
       });
       closeModal();
     }
@@ -227,20 +227,20 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
         status: "success",
         text: intl.formatMessage({
           id: "Fn3bE0",
-          defaultMessage: "Order line updated"
-        })
+          defaultMessage: "Order line updated",
+        }),
       });
     } else {
       errs.forEach(error =>
         pushMessage({
           status: "error",
-          text: getOrderErrorMessage(error, intl)
-        })
+          text: getOrderErrorMessage(error, intl),
+        }),
       );
     }
   };
   const handleOrderFulfillmentApprove = (
-    data: OrderFulfillmentApproveMutation
+    data: OrderFulfillmentApproveMutation,
   ) => {
     const errs = data.orderFulfillmentApprove?.errors;
     if (errs.length === 0) {
@@ -248,14 +248,14 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
         status: "success",
         text: intl.formatMessage({
           id: "+sX7yS",
-          defaultMessage: "Fulfillment successfully approved"
-        })
+          defaultMessage: "Fulfillment successfully approved",
+        }),
       });
       closeModal();
     }
   };
   const handleOrderFulfillmentCancel = (
-    data: OrderFulfillmentCancelMutation
+    data: OrderFulfillmentCancelMutation,
   ) => {
     const errs = data.orderFulfillmentCancel?.errors;
     if (errs.length === 0) {
@@ -263,14 +263,14 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
         status: "success",
         text: intl.formatMessage({
           id: "uMpv1v",
-          defaultMessage: "Fulfillment successfully cancelled"
-        })
+          defaultMessage: "Fulfillment successfully cancelled",
+        }),
       });
       closeModal();
     }
   };
   const handleOrderFulfillmentUpdate = (
-    data: OrderFulfillmentUpdateTrackingMutation
+    data: OrderFulfillmentUpdateTrackingMutation,
   ) => {
     const errs = data.orderFulfillmentUpdateTracking?.errors;
     if (errs.length === 0) {
@@ -278,8 +278,8 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
         status: "success",
         text: intl.formatMessage({
           id: "CZmloB",
-          defaultMessage: "Fulfillment successfully updated"
-        })
+          defaultMessage: "Fulfillment successfully updated",
+        }),
       });
       closeModal();
     }
@@ -291,8 +291,8 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
         status: "success",
         text: intl.formatMessage({
           id: "c4gbXr",
-          defaultMessage: "Draft order successfully finalized"
-        })
+          defaultMessage: "Draft order successfully finalized",
+        }),
       });
     }
   };
@@ -303,12 +303,12 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
         text: intl.formatMessage({
           id: "ND5x+V",
           defaultMessage:
-            "We’re generating the invoice you requested. Please wait a couple of moments"
+            "We’re generating the invoice you requested. Please wait a couple of moments",
         }),
         title: intl.formatMessage({
           id: "PKJqcq",
-          defaultMessage: "Invoice is Generating"
-        })
+          defaultMessage: "Invoice is Generating",
+        }),
       });
       closeModal();
     }
@@ -319,7 +319,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       pushMessage({
         status: "success",
         text: intl.formatMessage(messages.invoiceGenerateFinishedText),
-        title: intl.formatMessage(messages.invoiceGenerateFinishedTitle)
+        title: intl.formatMessage(messages.invoiceGenerateFinishedTitle),
       });
       closeModal();
     }
@@ -330,8 +330,8 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       pushMessage({
         text: intl.formatMessage({
           id: "3u+4NZ",
-          defaultMessage: "Invoice email sent"
-        })
+          defaultMessage: "Invoice email sent",
+        }),
       });
       closeModal();
     }
@@ -356,6 +356,6 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     handleOrderVoid,
     handlePaymentCapture,
     handleShippingMethodUpdate,
-    handleUpdate
+    handleUpdate,
   });
 };

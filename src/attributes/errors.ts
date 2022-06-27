@@ -5,17 +5,17 @@ import { defineMessages, IntlShape } from "react-intl";
 const messages = defineMessages({
   attributeSlugUnique: {
     id: "eWV760",
-    defaultMessage: "Attribute with this slug already exists"
+    defaultMessage: "Attribute with this slug already exists",
   },
   attributeValueAlreadyExists: {
     id: "J/QqOI",
-    defaultMessage: "This value already exists within this attribute"
-  }
+    defaultMessage: "This value already exists within this attribute",
+  },
 });
 
 export function getAttributeSlugErrorMessage(
   err: AttributeErrorFragment,
-  intl: IntlShape
+  intl: IntlShape,
 ): string {
   switch (err?.code) {
     case AttributeErrorCode.UNIQUE:
@@ -27,7 +27,7 @@ export function getAttributeSlugErrorMessage(
 
 export function getAttributeValueErrorMessage(
   err: AttributeErrorFragment,
-  intl: IntlShape
+  intl: IntlShape,
 ): string {
   switch (err?.code) {
     case AttributeErrorCode.ALREADY_EXISTS:

@@ -3,7 +3,7 @@ import {
   AttributeErrorFragment,
   useAttributeCreateMutation,
   useUpdateMetadataMutation,
-  useUpdatePrivateMetadataMutation
+  useUpdatePrivateMetadataMutation,
 } from "@saleor/graphql";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useLocalPageInfo, { getMaxPage } from "@saleor/hooks/useLocalPageInfo";
@@ -18,14 +18,14 @@ import {
   isSelected,
   move,
   remove,
-  updateAtIndex
+  updateAtIndex,
 } from "@saleor/utils/lists";
 import React from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";
 
 import AttributePage, {
-  AttributePageFormData
+  AttributePageFormData,
 } from "../../components/AttributePage";
 import AttributeValueDeleteDialog from "../../components/AttributeValueDeleteDialog";
 import AttributeValueEditDialog from "../../components/AttributeValueEditDialog";
@@ -33,11 +33,11 @@ import {
   attributeAddUrl,
   AttributeAddUrlDialog,
   AttributeAddUrlQueryParams,
-  attributeUrl
+  attributeUrl,
 } from "../../urls";
 import {
   AttributeValueEditDialogFormData,
-  getAttributeData
+  getAttributeData,
 } from "../../utils/data";
 
 interface AttributeDetailsProps {
@@ -48,12 +48,12 @@ const attributeValueAlreadyExistsError: AttributeErrorFragment = {
   __typename: "AttributeError",
   code: AttributeErrorCode.ALREADY_EXISTS,
   field: "name",
-  message: ""
+  message: "",
 };
 
 function areValuesEqual(
   a: AttributeValueEditDialogFormData,
-  b: AttributeValueEditDialogFormData
+  b: AttributeValueEditDialogFormData,
 ) {
   return a.name === b.name;
 }
@@ -71,7 +71,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   >([]);
 
   const { updateListSettings, settings } = useListSettings(
-    ListViews.ATTRIBUTE_VALUE_LIST
+    ListViews.ATTRIBUTE_VALUE_LIST,
   );
 
   const {
@@ -79,7 +79,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     pageValues,
     loadNextPage,
     loadPreviousPage,
-    loadPage
+    loadPage,
   } = useLocalPageInfo(values, settings?.rowNumber);
 
   const [attributeCreate, attributeCreateOpts] = useAttributeCreateMutation({
@@ -89,12 +89,12 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
           status: "success",
           text: intl.formatMessage({
             id: "jTifz+",
-            defaultMessage: "Successfully created attribute"
-          })
+            defaultMessage: "Successfully created attribute",
+          }),
         });
         navigate(attributeUrl(data.attributeCreate.attribute.id));
       }
-    }
+    },
   });
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
@@ -150,27 +150,27 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
         values[pageInfo.startCursor + oldIndex],
         values,
         areValuesEqual,
-        pageInfo.startCursor + newIndex
-      )
+        pageInfo.startCursor + newIndex,
+      ),
     );
 
   const handleCreate = async (data: AttributePageFormData) => {
     const result = await attributeCreate({
       variables: {
-        input: getAttributeData(data, values)
-      }
+        input: getAttributeData(data, values),
+      },
     });
 
     return {
       id: result.data.attributeCreate?.attribute?.id || null,
-      errors: getMutationErrors(result)
+      errors: getMutationErrors(result),
     };
   };
 
   const handleSubmit = createMetadataCreateHandler(
     handleCreate,
     updateMetadata,
-    updatePrivateMetadata
+    updatePrivateMetadata,
   );
 
   return (
@@ -183,13 +183,13 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
       onValueAdd={() => openModal("add-value")}
       onValueDelete={id =>
         openModal("remove-value", {
-          id
+          id,
         })
       }
       onValueReorder={handleValueReorder}
       onValueUpdate={id =>
         openModal("edit-value", {
-          id
+          id,
         })
       }
       saveButtonBarState={attributeCreateOpts.status}
@@ -200,7 +200,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
           endCursor: "",
           hasNextPage: false,
           hasPreviousPage: false,
-          startCursor: ""
+          startCursor: "",
         },
         edges: pageValues.map((value, valueIndex) => ({
           __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -211,7 +211,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
               ? {
                   url: value.fileUrl,
                   contentType: value.contentType,
-                  __typename: "File"
+                  __typename: "File",
                 }
               : null,
             id: valueIndex.toString(),
@@ -223,9 +223,9 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
             boolean: null,
             date: null,
             dateTime: null,
-            ...value
-          }
-        }))
+            ...value,
+          },
+        })),
       }}
       settings={settings}
       onUpdateListSettings={updateListSettings}

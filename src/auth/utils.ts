@@ -9,10 +9,10 @@ import { isJwtError, isTokenExpired } from "./errors";
 
 export const displayDemoMessage = (
   intl: IntlShape,
-  notify: UseNotifierResult
+  notify: UseNotifierResult,
 ) => {
   notify({
-    text: intl.formatMessage(commonMessages.demo)
+    text: intl.formatMessage(commonMessages.demo),
   });
 };
 
@@ -37,12 +37,12 @@ const getNetworkErrors = (error: ApolloError): string[] => {
 
 const getAllErrorMessages = (error: ApolloError) => [
   ...(error.graphQLErrors?.map(err => err.message) || []),
-  ...getNetworkErrors(error)
+  ...getNetworkErrors(error),
 ];
 
 export const showAllErrors = ({
   notify,
-  error
+  error,
 }: {
   notify: IMessageContext;
   error: ApolloError;
@@ -51,7 +51,7 @@ export const showAllErrors = ({
     notify({
       text: error.message,
       status: "error",
-      apiMessage: message
+      apiMessage: message,
     });
   });
 };
@@ -59,7 +59,7 @@ export const showAllErrors = ({
 export const handleNestedMutationErrors = ({
   data,
   intl,
-  notify
+  notify,
 }: {
   data: any;
   intl: IntlShape;
@@ -75,8 +75,8 @@ export const handleNestedMutationErrors = ({
         apiMessage: parseLogMessage({
           intl,
           code: error.code,
-          field: error.field
-        })
+          field: error.field,
+        }),
       });
     });
   }
@@ -86,14 +86,14 @@ export async function handleQueryAuthError(
   error: ApolloError,
   notify: IMessageContext,
   logout: () => void,
-  intl: IntlShape
+  intl: IntlShape,
 ) {
   if (error.graphQLErrors.some(isJwtError)) {
     logout();
     if (error.graphQLErrors.every(isTokenExpired)) {
       notify({
         status: "error",
-        text: intl.formatMessage(commonMessages.sessionExpired)
+        text: intl.formatMessage(commonMessages.sessionExpired),
       });
     } else {
       showAllErrors({ notify, error });

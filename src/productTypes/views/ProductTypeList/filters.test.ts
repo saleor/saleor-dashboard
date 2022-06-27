@@ -20,7 +20,7 @@ describe("Filtering query params", () => {
   it("should not be empty object if params given", () => {
     const params: ProductTypeListUrlFilters = {
       configurable: ProductTypeConfigurable.CONFIGURABLE,
-      type: ProductTypeEnum.DIGITAL
+      type: ProductTypeEnum.DIGITAL,
     };
     const filterVariables = getFilterVariables(params);
 
@@ -34,18 +34,18 @@ describe("Filtering URL params", () => {
   const filters = createFilterStructure(intl, {
     configurable: {
       active: false,
-      value: ProductTypeConfigurable.CONFIGURABLE
+      value: ProductTypeConfigurable.CONFIGURABLE,
     },
     type: {
       active: false,
-      value: ProductTypeEnum.DIGITAL
-    }
+      value: ProductTypeEnum.DIGITAL,
+    },
   });
 
   it("should be empty if no active filters", () => {
     const filterQueryParams = getFilterQueryParams(
       filters,
-      getFilterQueryParam
+      getFilterQueryParam,
     );
 
     expect(getExistingKeys(filterQueryParams)).toHaveLength(0);
@@ -54,7 +54,7 @@ describe("Filtering URL params", () => {
   it("should not be empty if active filters are present", () => {
     const filterQueryParams = getFilterQueryParams(
       setFilterOptsStatus(filters, true),
-      getFilterQueryParam
+      getFilterQueryParam,
     );
 
     expect(filterQueryParams).toMatchSnapshot();

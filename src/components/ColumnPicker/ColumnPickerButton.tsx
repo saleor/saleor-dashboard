@@ -16,24 +16,24 @@ const useStyles = makeStyles(
   theme => ({
     icon: {
       marginLeft: theme.spacing(2),
-      transition: theme.transitions.duration.short + "ms"
+      transition: theme.transitions.duration.short + "ms",
     },
     root: {
       "& span": {
-        color: theme.palette.primary.main
+        color: theme.palette.primary.main,
       },
-      paddingRight: theme.spacing(1)
+      paddingRight: theme.spacing(1),
     },
     rootActive: {
-      background: fade(theme.palette.primary.main, 0.1)
+      background: fade(theme.palette.primary.main, 0.1),
     },
     rotate: {
-      transform: "rotate(180deg)"
-    }
+      transform: "rotate(180deg)",
+    },
   }),
   {
-    name: "ColumnPickerButton"
-  }
+    name: "ColumnPickerButton",
+  },
 );
 
 const ColumnPickerButton: React.FC<ColumnPickerButtonProps> = props => {
@@ -43,7 +43,7 @@ const ColumnPickerButton: React.FC<ColumnPickerButtonProps> = props => {
   return (
     <Button
       className={classNames(classes.root, className, {
-        [classes.rootActive]: active
+        [classes.rootActive]: active,
       })}
       onClick={onClick}
       variant="secondary"
@@ -55,7 +55,7 @@ const ColumnPickerButton: React.FC<ColumnPickerButtonProps> = props => {
       />
       <ArrowDropDownIcon
         className={classNames(classes.icon, {
-          [classes.rotate]: active
+          [classes.rotate]: active,
         })}
       />
     </Button>

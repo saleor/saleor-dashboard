@@ -5,33 +5,33 @@ export const useStyles = makeStyles(
     [theme.breakpoints.up("lg")]: {
       colName: {
         "&&": {
-          width: "auto"
-        }
-      }
+          width: "auto",
+        },
+      },
     },
     colAction: {
       "&&": {
-        paddingRight: theme.spacing(3)
+        paddingRight: theme.spacing(3),
       },
       textAlign: "right",
-      width: 140
+      width: 140,
     },
     colName: {
       paddingLeft: 0,
-      width: 250
+      width: 250,
     },
     colRight: {
-      textAlign: "right"
+      textAlign: "right",
     },
     columnPicker: {
-      marginRight: theme.spacing(3)
+      marginRight: theme.spacing(3),
     },
     table: {
-      tableLayout: "fixed"
+      tableLayout: "fixed",
     },
     tableRow: {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   }),
-  { name: "ChannelsListPage" }
+  { name: "ChannelsListPage" },
 );

@@ -3,23 +3,23 @@ import { makeStyles } from "@saleor/macaw-ui";
 export const useStyles = makeStyles(
   () => ({
     container: {
-      width: 400
+      width: 400,
     },
     innerContainer: {
-      width: "100%"
+      width: "100%",
     },
     textField: {
       width: "100%",
       paddingRight: 0,
       "& input": {
-        maxWidth: "100%"
-      }
+        maxWidth: "100%",
+      },
     },
     textFieldCentered: {
       "& input": {
         paddingTop: 17,
-        paddingBottom: 16
-      }
+        paddingBottom: 16,
+      },
     },
 
     // It may seem lazy to set these CSS properties with !important tags, but
@@ -29,14 +29,14 @@ export const useStyles = makeStyles(
     // to enforce these styles with !important.
     input: {
       boxShadow: "none !important",
-      border: "none"
+      border: "none",
     },
     noBorder: {
-      borderColor: "transparent !important"
+      borderColor: "transparent !important",
     },
     noBackground: {
-      backgroundColor: "transparent !important"
-    }
+      backgroundColor: "transparent !important",
+    },
   }),
-  { name: "TextWithSelectField" }
+  { name: "TextWithSelectField" },
 );

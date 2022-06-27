@@ -3,7 +3,7 @@ import { UserSortField } from "@saleor/graphql";
 import { createGetSortQueryVariables } from "@saleor/utils/sort";
 
 export function getSortQueryField(
-  sort: CustomerListUrlSortField
+  sort: CustomerListUrlSortField,
 ): UserSortField {
   switch (sort) {
     case CustomerListUrlSortField.email:
@@ -18,5 +18,5 @@ export function getSortQueryField(
 }
 
 export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField
+  getSortQueryField,
 );

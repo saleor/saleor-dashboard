@@ -16,7 +16,7 @@ import {
   useProductTypeDetailsQuery,
   useProductTypeUpdateMutation,
   useUpdateMetadataMutation,
-  useUpdatePrivateMetadataMutation
+  useUpdatePrivateMetadataMutation,
 } from "@saleor/graphql";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -33,12 +33,12 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductTypeDetailsPage, {
-  ProductTypeForm
+  ProductTypeForm,
 } from "../../components/ProductTypeDetailsPage";
 import {
   productTypeListUrl,
   productTypeUrl,
-  ProductTypeUrlQueryParams
+  ProductTypeUrlQueryParams,
 } from "../../urls";
 
 interface ProductTypeUpdateProps {
@@ -48,7 +48,7 @@ interface ProductTypeUpdateProps {
 
 export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
   id,
-  params
+  params,
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
@@ -58,18 +58,18 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
   const { loadMore, search, result } = useAvailableProductAttributeSearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
-      id
-    }
+      id,
+    },
   });
   const [errors, setErrors] = React.useState({
     addAttributeErrors: [],
     editAttributeErrors: [],
-    formErrors: []
+    formErrors: [],
   });
 
   const [
     updateProductType,
-    updateProductTypeOpts
+    updateProductTypeOpts,
   ] = useProductTypeUpdateMutation({
     onCompleted: updateData => {
       if (
@@ -78,7 +78,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
       ) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
+          text: intl.formatMessage(commonMessages.savedChanges),
         });
       } else if (
         updateData.productTypeUpdate.errors !== null &&
@@ -86,14 +86,14 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
       ) {
         setErrors(prevErrors => ({
           ...prevErrors,
-          formErrors: updateData.productTypeUpdate.errors
+          formErrors: updateData.productTypeUpdate.errors,
         }));
       }
-    }
+    },
   });
   const [
     updateProductAttributes,
-    updateProductAttributesOpts
+    updateProductAttributesOpts,
   ] = useProductAttributeAssignmentUpdateMutation({
     onCompleted: updateData => {
       if (
@@ -102,10 +102,10 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
       ) {
         setErrors(prevErrors => ({
           ...prevErrors,
-          formErrors: updateData.productAttributeAssignmentUpdate.errors
+          formErrors: updateData.productAttributeAssignmentUpdate.errors,
         }));
       }
-    }
+    },
   });
 
   const [updateMetadata] = useUpdateMetadataMutation({});
@@ -113,22 +113,22 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
 
   const [
     selectedVariantAttributes,
-    setSelectedVariantAttributes
+    setSelectedVariantAttributes,
   ] = React.useState<string[]>([]);
 
   const handleProductTypeUpdate = async (formData: ProductTypeForm) => {
     const operations = formData.variantAttributes.map(variantAttribute => ({
       id: variantAttribute.value,
       variantSelection: selectedVariantAttributes.includes(
-        variantAttribute.value
-      )
+        variantAttribute.value,
+      ),
     }));
 
     const productAttributeUpdateResult = await updateProductAttributes({
       variables: {
         productTypeId: id,
-        operations
-      }
+        operations,
+      },
     });
 
     const result = await updateProductType({
@@ -140,32 +140,32 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
           name: formData.name,
           kind: formData.kind,
           productAttributes: formData.productAttributes.map(
-            choice => choice.value
+            choice => choice.value,
           ),
           taxCode: formData.taxType,
           variantAttributes: formData.variantAttributes.map(
-            choice => choice.value
+            choice => choice.value,
           ),
-          weight: formData.weight
-        }
-      }
+          weight: formData.weight,
+        },
+      },
     });
 
     return [
       ...result.data.productTypeUpdate.errors,
       ...productAttributeUpdateResult.data.productAttributeAssignmentUpdate
-        .errors
+        .errors,
     ];
   };
 
   const productTypeDeleteData = useProductTypeDelete({
     singleId: id,
-    params
+    params,
   });
 
   const { data, loading: dataLoading } = useProductTypeDetailsQuery({
     displayLoader: true,
-    variables: { id }
+    variables: { id },
   });
 
   const productType = data?.productType;
@@ -173,12 +173,12 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
   const closeModal = () => navigate(productTypeUrl(id), { replace: true });
 
   const handleAttributeAssignSuccess = (
-    data: AssignProductAttributeMutation
+    data: AssignProductAttributeMutation,
   ) => {
     if (data.productAttributeAssign.errors.length === 0) {
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges)
+        text: intl.formatMessage(commonMessages.savedChanges),
       });
       closeModal();
     } else if (
@@ -187,17 +187,17 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
     ) {
       setErrors(prevErrors => ({
         ...prevErrors,
-        addAttributeErrors: data.productAttributeAssign.errors
+        addAttributeErrors: data.productAttributeAssign.errors,
       }));
     }
   };
   const handleAttributeUnassignSuccess = (
-    data: UnassignProductAttributeMutation
+    data: UnassignProductAttributeMutation,
   ) => {
     if (data.productAttributeUnassign.errors.length === 0) {
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges)
+        text: intl.formatMessage(commonMessages.savedChanges),
       });
       closeModal();
       productAttributeListActions.reset();
@@ -205,27 +205,27 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
     }
   };
   const handleProductTypeDeleteSuccess = (
-    deleteData: ProductTypeDeleteMutation
+    deleteData: ProductTypeDeleteMutation,
   ) => {
     if (deleteData.productTypeDelete.errors.length === 0) {
       notify({
         status: "success",
         text: intl.formatMessage({
           id: "F3Upht",
-          defaultMessage: "Product type deleted"
-        })
+          defaultMessage: "Product type deleted",
+        }),
       });
       navigate(productTypeListUrl(), { replace: true });
     }
   };
 
   const handleAttributeReorderSuccess = (
-    data: ProductTypeAttributeReorderMutation
+    data: ProductTypeAttributeReorderMutation,
   ) => {
     if (data.productTypeReorderAttributes.errors.length === 0) {
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges)
+        text: intl.formatMessage(commonMessages.savedChanges),
       });
     }
   };
@@ -234,20 +234,20 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
     assignAttribute,
     deleteProductType,
     unassignAttribute,
-    reorderAttribute
+    reorderAttribute,
   } = useProductTypeOperations({
     onAssignAttribute: handleAttributeAssignSuccess,
     onProductTypeAttributeReorder: handleAttributeReorderSuccess,
     onProductTypeDelete: handleProductTypeDeleteSuccess,
     onUnassignAttribute: handleAttributeUnassignSuccess,
-    productType: data?.productType
+    productType: data?.productType,
   });
 
   const handleSubmit = createMetadataUpdateHandler(
     data?.productType,
     handleProductTypeUpdate,
     variables => updateMetadata({ variables }),
-    variables => updatePrivateMetadata({ variables })
+    variables => updatePrivateMetadata({ variables }),
   );
 
   const handleProductTypeDelete = () => deleteProductType.mutate({ id });
@@ -256,29 +256,29 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
       variables: {
         id,
         input: {
-          hasVariants
-        }
-      }
+          hasVariants,
+        },
+      },
     });
   const handleAssignAttribute = () =>
     assignAttribute.mutate({
       id,
       operations: params.ids.map(id => ({
         id,
-        type: ProductAttributeType[params.type]
-      }))
+        type: ProductAttributeType[params.type],
+      })),
     });
 
   const handleAttributeUnassign = () =>
     unassignAttribute.mutate({
       id,
-      ids: [params.id]
+      ids: [params.id],
     });
 
   const handleBulkAttributeUnassign = () =>
     unassignAttribute.mutate({
       id,
-      ids: params.ids
+      ids: params.ids,
     });
 
   const loading =
@@ -288,7 +288,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
 
   const handleAttributeReorder = (
     event: ReorderEvent,
-    type: ProductAttributeType
+    type: ProductAttributeType,
   ) => {
     const attributes =
       type === ProductAttributeType.PRODUCT
@@ -298,10 +298,10 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
     reorderAttribute.mutate({
       move: {
         id: attributes[event.oldIndex].id,
-        sortOrder: event.newIndex - event.oldIndex
+        sortOrder: event.newIndex - event.oldIndex,
       },
       productTypeId: id,
-      type
+      type,
     });
   };
 
@@ -328,8 +328,8 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
           navigate(
             productTypeUrl(id, {
               action: "assign-attribute",
-              type
-            })
+              type,
+            }),
           )
         }
         onAttributeReorder={handleAttributeReorder}
@@ -337,15 +337,15 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
           navigate(
             productTypeUrl(id, {
               action: "unassign-attribute",
-              id: attributeId
-            })
+              id: attributeId,
+            }),
           )
         }
         onDelete={() =>
           navigate(
             productTypeUrl(id, {
-              action: "remove"
-            })
+              action: "remove",
+            }),
           )
         }
         onHasVariantsToggle={handleProductTypeVariantsToggle}
@@ -361,8 +361,8 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                 navigate(
                   productTypeUrl(id, {
                     action: "unassign-attributes",
-                    ids: productAttributeListActions.listElements
-                  })
+                    ids: productAttributeListActions.listElements,
+                  }),
                 )
               }
             >
@@ -372,7 +372,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                 description="unassign attribute from product type, button"
               />
             </Button>
-          )
+          ),
         }}
         variantAttributeList={{
           isChecked: variantAttributeListActions.isSelected,
@@ -385,8 +385,8 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                 navigate(
                   productTypeUrl(id, {
                     action: "unassign-attributes",
-                    ids: variantAttributeListActions.listElements
-                  })
+                    ids: variantAttributeListActions.listElements,
+                  }),
                 )
               }
             >
@@ -396,7 +396,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                 description="unassign attribute from product type, button"
               />
             </Button>
-          )
+          ),
         }}
       />
       {!dataLoading && (
@@ -404,15 +404,15 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
           {Object.keys(ProductAttributeType).map(key => (
             <AssignAttributeDialog
               attributes={mapEdgesToItems(
-                result?.data?.productType?.availableAttributes
+                result?.data?.productType?.availableAttributes,
               )}
               confirmButtonState={assignAttribute.opts.status}
               errors={maybe(
                 () =>
                   assignAttribute.opts.data.productAttributeAssign.errors.map(
-                    err => err.message
+                    err => err.message,
                   ),
-                []
+                [],
               )}
               loading={result.loading}
               onClose={closeModal}
@@ -424,7 +424,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                 () =>
                   result.data.productType.availableAttributes.pageInfo
                     .hasNextPage,
-                false
+                false,
               )}
               open={
                 params.action === "assign-attribute" &&
@@ -438,10 +438,10 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                     ...params,
                     ids: ids.includes(attributeId)
                       ? params.ids.filter(
-                          selectedId => selectedId !== attributeId
+                          selectedId => selectedId !== attributeId,
                         )
-                      : [...ids, attributeId]
-                  })
+                      : [...ids, attributeId],
+                  }),
                 );
               }}
               key={key}
@@ -464,7 +464,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
         title={intl.formatMessage({
           id: "r1aQ2f",
           defaultMessage: "Unassign Attribute from Product Type",
-          description: "dialog header"
+          description: "dialog header",
         })}
         attributeQuantity={maybe(() => params.ids.length)}
         confirmButtonState={unassignAttribute.opts.status}
@@ -477,15 +477,15 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
         title={intl.formatMessage({
           id: "UJnqdm",
           defaultMessage: "Unassign Attribute From Product Type",
-          description: "dialog header"
+          description: "dialog header",
         })}
         attributeName={maybe(
           () =>
             [
               ...data.productType.productAttributes,
-              ...data.productType.variantAttributes
+              ...data.productType.variantAttributes,
             ].find(attribute => attribute.id === params.id).name,
-          "..."
+          "...",
         )}
         confirmButtonState={unassignAttribute.opts.status}
         onClose={closeModal}

@@ -14,5 +14,5 @@ export function getSortQueryField(sort: StaffListUrlSortField): UserSortField {
 }
 
 export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField
+  getSortQueryField,
 );

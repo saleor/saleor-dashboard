@@ -4,7 +4,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
@@ -28,32 +28,32 @@ export interface FormData {
 const useStyles = makeStyles(
   theme => ({
     dialog: {
-      overflowY: "visible"
+      overflowY: "visible",
     },
     menuItem: {
       display: "flex",
       width: "100%",
-      flexWrap: "wrap"
+      flexWrap: "wrap",
     },
     price: {
-      marginRight: theme.spacing(3)
+      marginRight: theme.spacing(3),
     },
     root: {
       overflowY: "visible",
       width: theme.breakpoints.values.sm,
       margin: 0,
-      padding: theme.spacing(3)
+      padding: theme.spacing(3),
     },
     shippingMethodName: {
       flex: 1,
       overflowX: "hidden",
-      textOverflow: "ellipsis"
+      textOverflow: "ellipsis",
     },
     message: {
-      width: "100%"
-    }
+      width: "100%",
+    },
   }),
-  { name: "OrderShippingMethodEditDialog" }
+  { name: "OrderShippingMethodEditDialog" },
 );
 
 export interface OrderShippingMethodEditDialogProps {
@@ -74,7 +74,7 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
     shippingMethod,
     shippingMethods,
     onClose,
-    onSubmit
+    onSubmit,
   } = props;
   const classes = useStyles(props);
   const errors = useModalDialogErrors(apiErrors, open);
@@ -102,12 +102,12 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
             </div>
           ),
           disabled: !s.active,
-          value: s.id
+          value: s.id,
         }))
         .sort((x, y) => (x.disabled === y.disabled ? 0 : x.disabled ? 1 : -1))
     : [];
   const initialForm: FormData = {
-    shippingMethod
+    shippingMethod,
   };
 
   return (

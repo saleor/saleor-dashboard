@@ -8,7 +8,7 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  TextField
+  TextField,
 } from "@material-ui/core";
 import BackButton from "@saleor/components/BackButton";
 import Checkbox from "@saleor/components/Checkbox";
@@ -35,59 +35,59 @@ const useStyles = makeStyles(
   theme => ({
     avatar: {
       paddingLeft: 0,
-      width: 64
+      width: 64,
     },
     colName: {
-      paddingLeft: 0
+      paddingLeft: 0,
     },
     colVariantCheckbox: {
-      padding: 0
+      padding: 0,
     },
     content: {
       overflowY: "scroll",
       paddingTop: 0,
-      marginBottom: theme.spacing(3)
+      marginBottom: theme.spacing(3),
     },
     grayText: {
-      color: theme.palette.text.disabled
+      color: theme.palette.text.disabled,
     },
     loadMoreLoaderContainer: {
       alignItems: "center",
       display: "flex",
       height: theme.spacing(3),
       justifyContent: "center",
-      marginTop: theme.spacing(3)
+      marginTop: theme.spacing(3),
     },
     overflow: {
-      overflowY: "hidden"
+      overflowY: "hidden",
     },
     topArea: {
       overflowY: "hidden",
       paddingBottom: theme.spacing(6),
-      margin: theme.spacing(0, 3, 3, 3)
+      margin: theme.spacing(0, 3, 3, 3),
     },
     productCheckboxCell: {
       "&:first-child": {
         paddingLeft: 0,
-        paddingRight: 0
-      }
+        paddingRight: 0,
+      },
     },
     textRight: {
-      textAlign: "right"
+      textAlign: "right",
     },
     variantCheckbox: {
       left: theme.spacing(),
-      position: "relative"
+      position: "relative",
     },
     wideCell: {
-      width: "100%"
-    }
+      width: "100%",
+    },
   }),
-  { name: "OrderProductAddDialog" }
+  { name: "OrderProductAddDialog" },
 );
 
 type SetVariantsAction = (
-  data: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"]
+  data: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
 ) => void;
 
 export interface OrderProductAddDialogProps
@@ -100,30 +100,30 @@ export interface OrderProductAddDialogProps
   onClose: () => void;
   onFetch: (query: string) => void;
   onSubmit: (
-    data: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"]
+    data: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
   ) => void;
 }
 
 function hasAllVariantsSelected(
   productVariants: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
-  selectedVariantsToProductsMap: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"]
+  selectedVariantsToProductsMap: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
 ): boolean {
   return productVariants.reduce(
     (acc, productVariant) =>
       acc &&
       !!selectedVariantsToProductsMap.find(
-        selectedVariant => selectedVariant.id === productVariant.id
+        selectedVariant => selectedVariant.id === productVariant.id,
       ),
-    true
+    true,
   );
 }
 
 function isVariantSelected(
   variant: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"][0],
-  selectedVariantsToProductsMap: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"]
+  selectedVariantsToProductsMap: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
 ): boolean {
   return !!selectedVariantsToProductsMap.find(
-    selectedVariant => selectedVariant.id === variant.id
+    selectedVariant => selectedVariant.id === variant.id,
   );
 }
 
@@ -132,25 +132,25 @@ const onProductAdd = (
   productIndex: number,
   productsWithAllVariantsSelected: boolean[],
   variants: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
-  setVariants: SetVariantsAction
+  setVariants: SetVariantsAction,
 ) =>
   productsWithAllVariantsSelected[productIndex]
     ? setVariants(
         variants.filter(
           selectedVariant =>
             !product.variants.find(
-              productVariant => productVariant.id === selectedVariant.id
-            )
-        )
+              productVariant => productVariant.id === selectedVariant.id,
+            ),
+        ),
       )
     : setVariants([
         ...variants,
         ...product.variants.filter(
           productVariant =>
             !variants.find(
-              selectedVariant => selectedVariant.id === productVariant.id
-            )
-        )
+              selectedVariant => selectedVariant.id === productVariant.id,
+            ),
+        ),
       ]);
 
 const onVariantAdd = (
@@ -159,11 +159,11 @@ const onVariantAdd = (
   productIndex: number,
   variants: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
   selectedVariantsToProductsMap: boolean[][],
-  setVariants: SetVariantsAction
+  setVariants: SetVariantsAction,
 ) =>
   selectedVariantsToProductsMap[productIndex][variantIndex]
     ? setVariants(
-        variants.filter(selectedVariant => selectedVariant.id !== variant.id)
+        variants.filter(selectedVariant => selectedVariant.id !== variant.id),
       )
     : setVariants([...variants, variant]);
 
@@ -181,7 +181,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
     onFetch,
     onFetchMore,
     onClose,
-    onSubmit
+    onSubmit,
   } = props;
 
   const classes = useStyles(props);
@@ -193,14 +193,14 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
   const errors = useModalDialogErrors(apiErrors, open);
 
   useModalDialogOpen(open, {
-    onClose: () => setVariants([])
+    onClose: () => setVariants([]),
   });
 
   const isValidVariant = ({
-    channelListings
+    channelListings,
   }: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"][0]) => {
     const currentListing = channelListings.find(
-      listing => listing.channel.id === selectedChannelId
+      listing => listing.channel.id === selectedChannelId,
     );
 
     const listingPrice = currentListing?.price?.amount;
@@ -212,7 +212,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
   };
 
   const getValidProductVariants = ({
-    variants
+    variants,
   }: SearchOrderVariantQuery["search"]["edges"][0]["node"]) =>
     variants.filter(isValidVariant);
 
@@ -223,21 +223,21 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
   const selectedVariantsToProductsMap = productChoices
     ? productChoices.map(product =>
         getValidProductVariants(product).map(variant =>
-          isVariantSelected(variant, variants)
-        )
+          isVariantSelected(variant, variants),
+        ),
       )
     : [];
 
   const productsWithAllVariantsSelected = productChoices
     ? productChoices.map(product =>
-        hasAllVariantsSelected(getValidProductVariants(product), variants)
+        hasAllVariantsSelected(getValidProductVariants(product), variants),
       )
     : [];
 
   const handleSubmit = () => onSubmit(variants);
 
   const productChoicesWithValidVariants = productChoices.filter(
-    ({ variants }) => variants.some(isValidVariant)
+    ({ variants }) => variants.some(isValidVariant),
   );
 
   return (
@@ -262,17 +262,17 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
           onChange={onQueryChange}
           label={intl.formatMessage({
             id: "/TF6BZ",
-            defaultMessage: "Search Products"
+            defaultMessage: "Search Products",
           })}
           placeholder={intl.formatMessage({
             id: "SHm7ee",
             defaultMessage:
-              "Search by product name, attribute, product type etc..."
+              "Search by product name, attribute, product type etc...",
           })}
           fullWidth
           InputProps={{
             autoComplete: "off",
-            endAdornment: loading && <CircularProgress size={16} />
+            endAdornment: loading && <CircularProgress size={16} />,
           }}
         />
       </DialogContent>
@@ -311,7 +311,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                               productIndex,
                               productsWithAllVariantsSelected,
                               variants,
-                              setVariants
+                              setVariants,
                             )
                           }
                         />
@@ -345,7 +345,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                                   productIndex,
                                   variants,
                                   selectedVariantsToProductsMap,
-                                  setVariants
+                                  setVariants,
                                 )
                               }
                             />
@@ -359,7 +359,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                                   defaultMessage="SKU {sku}"
                                   description="variant sku"
                                   values={{
-                                    sku: variant.sku
+                                    sku: variant.sku,
                                   }}
                                 />
                               </div>
@@ -381,7 +381,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                       />
                     </TableCell>
                   </TableRow>
-                )
+                ),
               )}
             </TableBody>
           </ResponsiveTable>

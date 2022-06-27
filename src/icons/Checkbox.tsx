@@ -12,7 +12,7 @@ const Checkbox = createSvgIcon(
       fill="none"
     />
   </>,
-  "Checkbox"
+  "Checkbox",
 );
 
 export default Checkbox;

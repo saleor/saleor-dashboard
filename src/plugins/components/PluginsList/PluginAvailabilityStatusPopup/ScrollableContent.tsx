@@ -6,10 +6,10 @@ const useStyles = makeStyles(
   () => ({
     container: {
       maxHeight: 450,
-      overflow: "auto"
-    }
+      overflow: "auto",
+    },
   }),
-  { name: "ScrollableContent" }
+  { name: "ScrollableContent" },
 );
 
 interface ScrollableContentProps {

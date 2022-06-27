@@ -2,13 +2,13 @@ import { TableCell } from "@material-ui/core";
 import DeleteIconButton from "@saleor/components/DeleteIconButton";
 import TableCellHeader, {
   TableCellHeaderArrowDirection,
-  TableCellHeaderProps
+  TableCellHeaderProps,
 } from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TooltipTableCellHeader from "@saleor/components/TooltipTableCellHeader";
 import { commonTooltipMessages } from "@saleor/components/TooltipTableCellHeader/messages";
 import Label, {
-  LabelSizes
+  LabelSizes,
 } from "@saleor/orders/components/OrderHistory/Label";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
@@ -35,7 +35,7 @@ interface GiftCardsListTableHeaderProps {
 }
 
 const GiftCardsListTableHeader: React.FC<GiftCardsListTableHeaderProps> = ({
-  isCurrencySelected
+  isCurrencySelected,
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -45,7 +45,7 @@ const GiftCardsListTableHeader: React.FC<GiftCardsListTableHeaderProps> = ({
     numberOfColumns,
     loading,
     toggleAll,
-    listElements
+    listElements,
   } = useGiftCardList();
   const { openDeleteDialog } = useGiftCardListDialogs();
   const { onSort, sort } = useGiftCardList();
@@ -58,22 +58,22 @@ const GiftCardsListTableHeader: React.FC<GiftCardsListTableHeaderProps> = ({
       title: messages.giftCardsTableColumnGiftCardTitle,
       options: {
         className: classes.colCardCode,
-        textAlign: "left"
-      }
+        textAlign: "left",
+      },
     },
     {
-      title: messages.giftCardsTableColumnTagTitle
+      title: messages.giftCardsTableColumnTagTitle,
     },
     {
       title: messages.giftCardsTableColumnProductTitle,
       onClick: () => onSort(GiftCardUrlSortField.product),
-      direction: getDirection(GiftCardUrlSortField.product)
+      direction: getDirection(GiftCardUrlSortField.product),
     },
     {
       title: messages.giftCardsTableColumnCustomerTitle,
       onClick: () => onSort(GiftCardUrlSortField.usedBy),
-      direction: getDirection(GiftCardUrlSortField.usedBy)
-    }
+      direction: getDirection(GiftCardUrlSortField.usedBy),
+    },
   ];
 
   const headerTooltipItem: HeaderItem & {
@@ -83,14 +83,14 @@ const GiftCardsListTableHeader: React.FC<GiftCardsListTableHeaderProps> = ({
     title: messages.giftCardsTableColumnBalanceTitle,
     options: {
       className: classes.colBalance,
-      textAlign: "right"
+      textAlign: "right",
     },
     onClick: () => onSort(GiftCardUrlSortField.balance),
     direction: getDirection(GiftCardUrlSortField.balance),
     disabled: !canBeSorted(GiftCardUrlSortField.balance, isCurrencySelected),
     tooltip: intl.formatMessage(commonTooltipMessages.noFilterSelected, {
-      filterName: <b>{filterLabels.currencyLabel.defaultMessage}</b>
-    })
+      filterName: <b>{filterLabels.currencyLabel.defaultMessage}</b>,
+    }),
   };
 
   const { title, ...headerTooltipItemProps } = headerTooltipItem;

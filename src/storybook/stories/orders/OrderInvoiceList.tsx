@@ -1,5 +1,5 @@
 import OrderInvoiceList, {
-  OrderInvoiceListProps
+  OrderInvoiceListProps,
 } from "@saleor/orders/components/OrderInvoiceList";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -11,7 +11,7 @@ const props: OrderInvoiceListProps = {
   invoices: undefined,
   onInvoiceClick: () => undefined,
   onInvoiceGenerate: () => undefined,
-  onInvoiceSend: () => undefined
+  onInvoiceSend: () => undefined,
 };
 
 storiesOf("Orders / OrderInvoiceList", module)

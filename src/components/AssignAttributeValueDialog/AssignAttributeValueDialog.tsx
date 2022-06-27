@@ -3,30 +3,30 @@ import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import AssignContainerDialog, {
-  AssignContainerDialogProps
+  AssignContainerDialogProps,
 } from "../AssignContainerDialog";
 
 const messages = defineMessages({
   confirmBtn: {
     id: "ylobu9",
     defaultMessage: "Assign",
-    description: "assign reference to product, button"
+    description: "assign reference to product, button",
   },
   header: {
     id: "GUlwXU",
     defaultMessage: "Assign Attribute Value",
-    description: "dialog header"
+    description: "dialog header",
   },
   searchLabel: {
     id: "RoKOQJ",
     defaultMessage: "Search Attribute Value",
-    description: "label"
+    description: "label",
   },
   searchPlaceholder: {
     id: "NsgWhZ",
     defaultMessage: "Search by value name, etc...",
-    description: "placeholder"
-  }
+    description: "placeholder",
+  },
 });
 
 interface AssignAttributeValueDialogProps
@@ -47,13 +47,13 @@ const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({
     <AssignContainerDialog
       containers={attributeValues.map(value => ({
         id: value.value,
-        name: value.label
+        name: value.label,
       }))}
       labels={{
         confirmBtn: intl.formatMessage(messages.confirmBtn),
         label: intl.formatMessage(messages.searchLabel),
         placeholder: intl.formatMessage(messages.searchPlaceholder),
-        title: intl.formatMessage(messages.header)
+        title: intl.formatMessage(messages.header),
       }}
       confirmButtonState="default"
       {...rest}

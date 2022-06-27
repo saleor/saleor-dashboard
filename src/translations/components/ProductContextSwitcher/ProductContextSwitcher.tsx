@@ -6,7 +6,7 @@ import {
   MenuList as Menu,
   Paper,
   Popper,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import { useProductVariantListQuery } from "@saleor/graphql";
@@ -15,7 +15,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import {
   languageEntityUrl,
   productVariantUrl,
-  TranslatableEntities
+  TranslatableEntities,
 } from "@saleor/translations/urls";
 import classNames from "classnames";
 import React from "react";
@@ -31,16 +31,16 @@ const useStyles = makeStyles(
   theme => ({
     arrow: {
       color: theme.palette.primary.main,
-      transition: theme.transitions.duration.standard + "ms"
+      transition: theme.transitions.duration.standard + "ms",
     },
     container: {
       display: "flex",
       alignItems: "center",
       paddingBottom: theme.spacing(1),
-      marginRight: theme.spacing(1)
+      marginRight: theme.spacing(1),
     },
     label: {
-      paddingRight: theme.spacing(1)
+      paddingRight: theme.spacing(1),
     },
     menuContainer: {
       cursor: "pointer",
@@ -48,34 +48,34 @@ const useStyles = makeStyles(
       justifyContent: "space-between",
       minWidth: 90,
       padding: theme.spacing(),
-      position: "relative"
+      position: "relative",
     },
     menuItem: {
-      textAlign: "justify"
+      textAlign: "justify",
     },
     menuPaper: {
       maxHeight: `calc(100vh - ${theme.spacing(2)}px)`,
-      overflow: "scroll"
+      overflow: "scroll",
     },
     popover: {
-      zIndex: 1
+      zIndex: 1,
     },
     rotate: {
-      transform: "rotate(180deg)"
-    }
+      transform: "rotate(180deg)",
+    },
   }),
-  { name: "ProductContextSwitcher" }
+  { name: "ProductContextSwitcher" },
 );
 const ProductContextSwitcher: React.FC<ProductContextSwitcherProps> = ({
   languageCode,
   productId,
-  selectedId
+  selectedId,
 }) => {
   const classes = useStyles();
   const navigate = useNavigator();
   const intl = useIntl();
   const { data } = useProductVariantListQuery({
-    variables: { id: productId }
+    variables: { id: productId },
   });
 
   const [isExpanded, setExpandedState] = React.useState(false);
@@ -85,7 +85,7 @@ const ProductContextSwitcher: React.FC<ProductContextSwitcherProps> = ({
     {
       label: intl.formatMessage({
         id: "QUyUJy",
-        defaultMessage: "Main Product"
+        defaultMessage: "Main Product",
       }),
       value: productId,
       onClick: () =>
@@ -93,15 +93,15 @@ const ProductContextSwitcher: React.FC<ProductContextSwitcherProps> = ({
           languageEntityUrl(
             languageCode,
             TranslatableEntities.products,
-            productId
-          )
-        )
+            productId,
+          ),
+        ),
     },
     ...(data?.product?.variants?.map(({ name, sku, id }) => ({
       label: name || sku,
       value: id,
-      onClick: () => navigate(productVariantUrl(languageCode, productId, id))
-    })) || [])
+      onClick: () => navigate(productVariantUrl(languageCode, productId, id)),
+    })) || []),
   ];
 
   return (
@@ -119,7 +119,7 @@ const ProductContextSwitcher: React.FC<ProductContextSwitcherProps> = ({
           </Typography>
           <ArrowDropDown
             className={classNames(classes.arrow, {
-              [classes.rotate]: isExpanded
+              [classes.rotate]: isExpanded,
             })}
           />
         </Card>
@@ -136,7 +136,7 @@ const ProductContextSwitcher: React.FC<ProductContextSwitcherProps> = ({
               {...TransitionProps}
               style={{
                 transformOrigin:
-                  placement === "bottom" ? "right top" : "right bottom"
+                  placement === "bottom" ? "right top" : "right bottom",
               }}
             >
               <Paper className={classes.menuPaper}>

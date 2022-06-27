@@ -2,7 +2,7 @@ import {
   MenuDeleteMutation,
   MenuItemCreateMutation,
   MenuItemUpdateMutation,
-  MenuUpdateMutation
+  MenuUpdateMutation,
 } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { IntlShape } from "react-intl";
@@ -15,13 +15,13 @@ export function handleItemCreate(
   data: MenuItemCreateMutation,
   notify: UseNotifierResult,
   closeModal: () => void,
-  intl: IntlShape
+  intl: IntlShape,
 ) {
   if (data.menuItemCreate.errors.length === 0) {
     closeModal();
     notify({
       status: "success",
-      text: intl.formatMessage(commonMessages.savedChanges)
+      text: intl.formatMessage(commonMessages.savedChanges),
     });
   }
 }
@@ -31,18 +31,18 @@ export function handleItemUpdate(
   id: string,
   navigate: UseNavigatorResult,
   notify: UseNotifierResult,
-  intl: IntlShape
+  intl: IntlShape,
 ) {
   if (data.menuItemUpdate.errors.length === 0) {
     notify({
       status: "success",
-      text: intl.formatMessage(commonMessages.savedChanges)
+      text: intl.formatMessage(commonMessages.savedChanges),
     });
     navigate(
       menuUrl(id, {
         action: undefined,
-        id: undefined
-      })
+        id: undefined,
+      }),
     );
   }
 }
@@ -51,12 +51,12 @@ export function handleDelete(
   data: MenuDeleteMutation,
   navigate: UseNavigatorResult,
   notify: UseNotifierResult,
-  intl: IntlShape
+  intl: IntlShape,
 ) {
   if (data.menuDelete.errors.length === 0) {
     notify({
       status: "success",
-      text: intl.formatMessage(commonMessages.savedChanges)
+      text: intl.formatMessage(commonMessages.savedChanges),
     });
     navigate(menuListUrl(), { replace: true });
   }
@@ -66,7 +66,7 @@ export function handleUpdate(
   data: MenuUpdateMutation,
   notify: UseNotifierResult,
   refetch: () => void,
-  intl: IntlShape
+  intl: IntlShape,
 ) {
   if (
     data.menuItemBulkDelete.errors.length === 0 &&
@@ -75,7 +75,7 @@ export function handleUpdate(
   ) {
     notify({
       status: "success",
-      text: intl.formatMessage(commonMessages.savedChanges)
+      text: intl.formatMessage(commonMessages.savedChanges),
     });
     refetch();
   }

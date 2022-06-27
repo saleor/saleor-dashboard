@@ -3,7 +3,7 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle
+  DialogTitle,
 } from "@material-ui/core";
 import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
@@ -32,7 +32,7 @@ const OrderCancelDialog: React.FC<OrderCancelDialogProps> = props => {
     number: orderNumber,
     open,
     onSubmit,
-    onClose
+    onClose,
   } = props;
 
   const intl = useIntl();
@@ -54,7 +54,7 @@ const OrderCancelDialog: React.FC<OrderCancelDialogProps> = props => {
             defaultMessage="Cancelling this order will release unfulfilled stocks, so they can be bought by other customers. <b>Order will not be refunded when cancelling order - You need to do it manually.</b> Are you sure you want to cancel this order?"
             values={{
               b: (...chunks) => <b>{chunks}</b>,
-              orderNumber
+              orderNumber,
             }}
           />
         </DialogContentText>

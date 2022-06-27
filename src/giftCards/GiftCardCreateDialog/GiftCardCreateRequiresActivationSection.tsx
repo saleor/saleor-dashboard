@@ -1,6 +1,6 @@
 import { Typography } from "@material-ui/core";
 import ControlledCheckbox, {
-  ControlledCheckboxProps
+  ControlledCheckboxProps,
 } from "@saleor/components/ControlledCheckbox";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -14,7 +14,7 @@ type GiftCardCreateRequiresActivationSectionProps = Pick<
 
 const GiftCardCreateRequiresActivationSection: React.FC<GiftCardCreateRequiresActivationSectionProps> = ({
   checked,
-  onChange
+  onChange,
 }) => (
   <ControlledCheckbox
     name="requiresActivation"

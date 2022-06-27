@@ -21,7 +21,7 @@ const Image = createSvgIcon(
       </linearGradient>
     </defs>
   </>,
-  "Image"
+  "Image",
 );
 
 export default Image;

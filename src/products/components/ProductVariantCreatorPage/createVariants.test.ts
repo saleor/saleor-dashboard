@@ -1,6 +1,6 @@
 import {
   createVariantFlatMatrixDimension,
-  createVariants
+  createVariants,
 } from "./createVariants";
 import { attributes, channels, thirdStep } from "./fixtures";
 import { ChannelPrice, ProductVariantCreateFormData } from "./form";
@@ -12,7 +12,7 @@ describe("Creates variant matrix", () => {
     const matrix = createVariantFlatMatrixDimension([[]], attributes);
 
     expect(matrix).toHaveLength(
-      attributes.reduce((acc, attribute) => acc * attribute.values.length, 1)
+      attributes.reduce((acc, attribute) => acc * attribute.values.length, 1),
     );
   });
 
@@ -25,21 +25,21 @@ describe("Creates variant matrix", () => {
       price: {
         ...thirdStep.price,
         channels,
-        mode: "all"
+        mode: "all",
       },
       stock: {
         ...thirdStep.stock,
         mode: "all",
-        value: stock
-      }
+        value: stock,
+      },
     };
 
     const variants = createVariants(data);
     expect(variants).toHaveLength(
       thirdStep.attributes.reduce(
         (acc, attribute) => acc * attribute.values.length,
-        1
-      )
+        1,
+      ),
     );
 
     variants.forEach(variant => {
@@ -53,7 +53,7 @@ describe("Creates variant matrix", () => {
   it("with constant stock and attribute dependent price", () => {
     const stock = [80, 40, 30];
     const attribute = attributes.find(
-      attribute => attribute.id === thirdStep.attributes[0].id
+      attribute => attribute.id === thirdStep.attributes[0].id,
     );
 
     const data: ProductVariantCreateFormData = {
@@ -66,23 +66,23 @@ describe("Creates variant matrix", () => {
           slug: attributeValue.slug,
           value: channels.map(channel => ({
             channelId: channel.id,
-            price: (channel.price + index).toString()
-          }))
-        }))
+            price: (channel.price + index).toString(),
+          })),
+        })),
       },
       stock: {
         ...thirdStep.stock,
         mode: "all",
-        value: stock
-      }
+        value: stock,
+      },
     };
 
     const variants = createVariants(data);
     expect(variants).toHaveLength(
       thirdStep.attributes.reduce(
         (acc, attribute) => acc * attribute.values.length,
-        1
-      )
+        1,
+      ),
     );
 
     variants.forEach(variant => {
@@ -96,13 +96,13 @@ describe("Creates variant matrix", () => {
         .filter(
           variant =>
             variant.attributes.find(
-              variantAttribute => variantAttribute.id === attribute.id
-            ).values[0] === attributeValue.slug
+              variantAttribute => variantAttribute.id === attribute.id,
+            ).values[0] === attributeValue.slug,
         )
         .forEach(variant => {
           variant.channelListings.map((channel, index) => {
             expect(channel.price).toBe(
-              (channels[index].price + attributeValueIndex).toString()
+              (channels[index].price + attributeValueIndex).toString(),
             );
           });
         });
@@ -113,7 +113,7 @@ describe("Creates variant matrix", () => {
     const price: ChannelPrice[] = [{ channelId: "1", price: "2" }];
     const stock = [80, 40, 30];
     const attribute = attributes.find(
-      attribute => attribute.id === thirdStep.attributes[0].id
+      attribute => attribute.id === thirdStep.attributes[0].id,
     );
 
     const data: ProductVariantCreateFormData = {
@@ -121,7 +121,7 @@ describe("Creates variant matrix", () => {
       price: {
         ...thirdStep.price,
         channels: price,
-        mode: "all"
+        mode: "all",
       },
       stock: {
         ...thirdStep.stock,
@@ -130,18 +130,18 @@ describe("Creates variant matrix", () => {
         values: attribute.values.map((attributeValue, attributeValueIndex) => ({
           slug: attributeValue.slug,
           value: stock.map(
-            (_, stockIndex) => stock[stockIndex] * (attributeValueIndex + 1)
-          )
-        }))
-      }
+            (_, stockIndex) => stock[stockIndex] * (attributeValueIndex + 1),
+          ),
+        })),
+      },
     };
 
     const variants = createVariants(data);
     expect(variants).toHaveLength(
       thirdStep.attributes.reduce(
         (acc, attribute) => acc * attribute.values.length,
-        1
-      )
+        1,
+      ),
     );
 
     variants.forEach(variant => {
@@ -153,13 +153,13 @@ describe("Creates variant matrix", () => {
         .filter(
           variant =>
             variant.attributes.find(
-              variantAttribute => variantAttribute.id === attribute.id
-            ).values[0] === attributeValue.slug
+              variantAttribute => variantAttribute.id === attribute.id,
+            ).values[0] === attributeValue.slug,
         )
         .forEach(variant => {
           variant.stocks.forEach((_, stockIndex) => {
             expect(variant.stocks[stockIndex].quantity).toBe(
-              stock[stockIndex] * (attributeValueIndex + 1)
+              stock[stockIndex] * (attributeValueIndex + 1),
             );
           });
         });
@@ -169,7 +169,7 @@ describe("Creates variant matrix", () => {
   it("with attribute dependent price and stock", () => {
     const stock = [80, 40, 30];
     const attribute = attributes.find(
-      attribute => attribute.id === thirdStep.attributes[0].id
+      attribute => attribute.id === thirdStep.attributes[0].id,
     );
 
     const data: ProductVariantCreateFormData = {
@@ -182,9 +182,9 @@ describe("Creates variant matrix", () => {
           slug: attributeValue.slug,
           value: channels.map(channel => ({
             channelId: channel.id,
-            price: (channel.price + index).toString()
-          }))
-        }))
+            price: (channel.price + index).toString(),
+          })),
+        })),
       },
       stock: {
         ...thirdStep.stock,
@@ -193,18 +193,18 @@ describe("Creates variant matrix", () => {
         values: attribute.values.map((attributeValue, attributeValueIndex) => ({
           slug: attributeValue.slug,
           value: stock.map(
-            (_, stockIndex) => stock[stockIndex] * (attributeValueIndex + 1)
-          )
-        }))
-      }
+            (_, stockIndex) => stock[stockIndex] * (attributeValueIndex + 1),
+          ),
+        })),
+      },
     };
 
     const variants = createVariants(data);
     expect(variants).toHaveLength(
       thirdStep.attributes.reduce(
         (acc, attribute) => acc * attribute.values.length,
-        1
-      )
+        1,
+      ),
     );
 
     attribute.values.forEach((attributeValue, attributeValueIndex) => {
@@ -212,13 +212,13 @@ describe("Creates variant matrix", () => {
         .filter(
           variant =>
             variant.attributes.find(
-              variantAttribute => variantAttribute.id === attribute.id
-            ).values[0] === attributeValue.slug
+              variantAttribute => variantAttribute.id === attribute.id,
+            ).values[0] === attributeValue.slug,
         )
         .forEach(variant => {
           variant.channelListings.map((channel, index) => {
             expect(channel.price).toBe(
-              (channels[index].price + attributeValueIndex).toString()
+              (channels[index].price + attributeValueIndex).toString(),
             );
           });
         });
@@ -229,13 +229,13 @@ describe("Creates variant matrix", () => {
         .filter(
           variant =>
             variant.attributes.find(
-              variantAttribute => variantAttribute.id === attribute.id
-            ).values[0] === attributeValue.slug
+              variantAttribute => variantAttribute.id === attribute.id,
+            ).values[0] === attributeValue.slug,
         )
         .forEach(variant => {
           variant.stocks.forEach((_, stockIndex) => {
             expect(variant.stocks[stockIndex].quantity).toBe(
-              stock[stockIndex] * (attributeValueIndex + 1)
+              stock[stockIndex] * (attributeValueIndex + 1),
             );
           });
         });

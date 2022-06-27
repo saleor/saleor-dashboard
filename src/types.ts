@@ -43,7 +43,7 @@ export enum ListViews {
   WAREHOUSE_LIST = "WAREHOUSE_LIST",
   WEBHOOK_LIST = "WEBHOOK_LIST",
   TRANSLATION_ATTRIBUTE_VALUE_LIST = "TRANSLATION_ATTRIBUTE_VALUE_LIST",
-  GIFT_CARD_LIST = " GIFT_CARD_LIST"
+  GIFT_CARD_LIST = " GIFT_CARD_LIST",
 }
 
 export interface ListProps<TColumns extends string = string> {
@@ -51,7 +51,7 @@ export interface ListProps<TColumns extends string = string> {
   settings?: ListSettings<TColumns>;
   onUpdateListSettings?: <T extends keyof ListSettings<TColumns>>(
     key: T,
-    value: ListSettings<TColumns>[T]
+    value: ListSettings<TColumns>[T],
   ) => void;
   onListSettingsReset?: () => void;
   filterDependency?: FilterElement;
@@ -231,7 +231,7 @@ export enum StatusType {
   INFO = "info",
   ERROR = "error",
   WARNING = "warning",
-  SUCCESS = "success"
+  SUCCESS = "success",
 }
 
 export type RelayToFlat<T extends { edges: Array<{ node: any }> }> = Array<

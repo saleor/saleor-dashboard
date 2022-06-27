@@ -9,7 +9,7 @@ import { PageTypeFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import {
   pageTypeAddUrl,
-  PageTypeListUrlSortField
+  PageTypeListUrlSortField,
 } from "@saleor/pageTypes/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -19,7 +19,7 @@ import {
   PageListProps,
   SearchPageProps,
   SortPage,
-  TabPageProps
+  TabPageProps,
 } from "../../../types";
 import PageTypeList from "../PageTypeList";
 
@@ -67,13 +67,13 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
           allTabLabel={intl.formatMessage({
             id: "oVDZUb",
             defaultMessage: "All Page Types",
-            description: "tab name"
+            description: "tab name",
           })}
           currentTab={currentTab}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
             id: "umsU70",
-            defaultMessage: "Search Page Type"
+            defaultMessage: "Search Page Type",
           })}
           tabs={tabs}
           onAll={onAll}

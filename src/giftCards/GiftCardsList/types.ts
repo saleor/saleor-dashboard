@@ -4,7 +4,7 @@ import {
   Pagination,
   Search,
   SingleAction,
-  Sort
+  Sort,
 } from "@saleor/types";
 
 import { GiftCardListUrlFilters } from "./GiftCardListSearchAndFilters/types";
@@ -19,7 +19,7 @@ export type GiftCardListColummns =
 export enum GiftCardUrlSortField {
   usedBy = "usedBy",
   balance = "balance",
-  product = "product"
+  product = "product",
 }
 
 export type GiftCardUrlSort = Sort<GiftCardUrlSortField>;
@@ -30,7 +30,7 @@ export enum GiftCardListActionParamsEnum {
   SAVE_SEARCH = "save-search",
   DELETE_SEARCH = "delete-search",
   BULK_CREATE = "gift-card-bulk-create",
-  EXPORT = "gift-card-export"
+  EXPORT = "gift-card-export",
 }
 
 export type GiftCardListUrlQueryParams = Pagination &

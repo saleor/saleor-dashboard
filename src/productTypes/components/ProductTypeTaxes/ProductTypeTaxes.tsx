@@ -22,10 +22,10 @@ interface ProductTypeTaxesProps {
 const useStyles = makeStyles(
   {
     root: {
-      overflow: "visible"
-    }
+      overflow: "visible",
+    },
   },
-  { name: "ProductTypeTaxes" }
+  { name: "ProductTypeTaxes" },
 );
 
 const ProductTypeTaxes: React.FC<ProductTypeTaxesProps> = props => {
@@ -40,7 +40,7 @@ const ProductTypeTaxes: React.FC<ProductTypeTaxesProps> = props => {
         title={intl.formatMessage({
           id: "mUb8Gt",
           defaultMessage: "Taxes",
-          description: "section header"
+          description: "section header",
         })}
       />
       <CardContent>
@@ -49,7 +49,7 @@ const ProductTypeTaxes: React.FC<ProductTypeTaxesProps> = props => {
           displayValue={taxTypeDisplayName}
           label={intl.formatMessage({
             id: "9xUIAh",
-            defaultMessage: "Tax group"
+            defaultMessage: "Tax group",
           })}
           name={"taxType" as keyof ProductTypeForm}
           onChange={onChange}
@@ -57,10 +57,10 @@ const ProductTypeTaxes: React.FC<ProductTypeTaxesProps> = props => {
           choices={maybe(
             () =>
               taxTypes.map(c => ({ label: c.description, value: c.taxCode })),
-            []
+            [],
           )}
           InputProps={{
-            autoComplete: "off"
+            autoComplete: "off",
           }}
         />
       </CardContent>

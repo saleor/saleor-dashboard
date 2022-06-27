@@ -31,7 +31,7 @@ describe("Metadata editor", () => {
       wrapper
         .find(`[${expandDataEl}]`)
         .first()
-        .prop(expandDataEl)
+        .prop(expandDataEl),
     ).toEqual(false);
     wrapper
       .find(`[${expandButton}]`)
@@ -41,7 +41,7 @@ describe("Metadata editor", () => {
       wrapper
         .find(`[${expandDataEl}]`)
         .first()
-        .prop(expandDataEl)
+        .prop(expandDataEl),
     ).toEqual(true);
   });
 
@@ -60,7 +60,7 @@ describe("Metadata editor", () => {
       wrapper
         .find(inputNameSelector)
         .first()
-        .prop("value")
+        .prop("value"),
     ).toEqual(props.data.metadata[1].key);
 
     wrapper
@@ -72,7 +72,7 @@ describe("Metadata editor", () => {
       wrapper
         .find(inputNameSelector)
         .first()
-        .prop("value")
+        .prop("value"),
     ).toEqual("x");
   });
 
@@ -91,7 +91,7 @@ describe("Metadata editor", () => {
       wrapper
         .find(inputNameSelector)
         .first()
-        .prop("value")
+        .prop("value"),
     ).toEqual(props.data.metadata[1].value);
 
     wrapper
@@ -103,7 +103,7 @@ describe("Metadata editor", () => {
       wrapper
         .find(inputNameSelector)
         .first()
-        .prop("value")
+        .prop("value"),
     ).toEqual("x");
   });
 
@@ -120,7 +120,7 @@ describe("Metadata editor", () => {
       .simulate("click");
 
     expect(wrapper.find(fieldSelector).length).toEqual(
-      props.data.metadata.length
+      props.data.metadata.length,
     );
 
     wrapper
@@ -129,7 +129,7 @@ describe("Metadata editor", () => {
       .simulate("click");
 
     expect(wrapper.find(fieldSelector).length).toEqual(
-      props.data.metadata.length - 1
+      props.data.metadata.length - 1,
     );
   });
 
@@ -146,7 +146,7 @@ describe("Metadata editor", () => {
       .simulate("click");
 
     expect(wrapper.find(fieldSelector).length).toEqual(
-      props.data.metadata.length
+      props.data.metadata.length,
     );
 
     wrapper
@@ -155,7 +155,7 @@ describe("Metadata editor", () => {
       .simulate("click");
 
     expect(wrapper.find(fieldSelector).length).toEqual(
-      props.data.metadata.length + 1
+      props.data.metadata.length + 1,
     );
   });
 });

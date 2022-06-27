@@ -4,7 +4,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  TextField
+  TextField,
 } from "@material-ui/core";
 import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
@@ -38,7 +38,7 @@ const OrderFulfillmentTrackingDialog: React.FC<OrderFulfillmentTrackingDialogPro
   open,
   trackingNumber,
   onConfirm,
-  onClose
+  onClose,
 }) => {
   const intl = useIntl();
   const errors = useModalDialogErrors(apiErrors, open);
@@ -47,7 +47,7 @@ const OrderFulfillmentTrackingDialog: React.FC<OrderFulfillmentTrackingDialogPro
   const formErrors = getFormErrors(formFields, errors);
 
   const initialData: FormData = {
-    trackingNumber: trackingNumber || ""
+    trackingNumber: trackingNumber || "",
   };
 
   return (
@@ -67,11 +67,11 @@ const OrderFulfillmentTrackingDialog: React.FC<OrderFulfillmentTrackingDialogPro
                 error={!!formErrors.trackingNumber}
                 helperText={getOrderErrorMessage(
                   formErrors.trackingNumber,
-                  intl
+                  intl,
                 )}
                 label={intl.formatMessage({
                   id: "yT/GAp",
-                  defaultMessage: "Tracking number"
+                  defaultMessage: "Tracking number",
                 })}
                 name="trackingNumber"
                 onChange={change}

@@ -15,7 +15,7 @@ storiesOf("Generics / AddressEdit", module)
     <Card
       style={{
         margin: "auto",
-        width: 768
+        width: 768,
       }}
     >
       <CardContent>

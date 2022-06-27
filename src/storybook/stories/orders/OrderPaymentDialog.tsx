@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import OrderPaymentDialog, {
-  OrderPaymentDialogProps
+  OrderPaymentDialogProps,
 } from "../../../orders/components/OrderPaymentDialog";
 import Decorator from "../../Decorator";
 
@@ -13,7 +13,7 @@ const props: OrderPaymentDialogProps = {
   initial: 0,
   onClose: () => undefined,
   onSubmit: () => undefined,
-  open: true
+  open: true,
 };
 
 storiesOf("Orders / OrderPaymentDialog", module)
@@ -28,15 +28,15 @@ storiesOf("Orders / OrderPaymentDialog", module)
           code: OrderErrorCode.CAPTURE_INACTIVE_PAYMENT,
           field: null,
           addressType: null,
-          message: "Capture inactive payment"
+          message: "Capture inactive payment",
         },
         {
           __typename: "OrderError",
           code: OrderErrorCode.INVALID,
           field: "payment",
           addressType: null,
-          message: "Payment field invalid"
-        }
+          message: "Payment field invalid",
+        },
       ]}
     />
   ));

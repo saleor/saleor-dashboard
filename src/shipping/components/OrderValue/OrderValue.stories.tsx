@@ -8,13 +8,13 @@ import OrderValue, { OrderValueProps } from "./OrderValue";
 
 const props: OrderValueProps = {
   channels: createShippingChannelsFromRate(
-    shippingZone.shippingMethods[0].channelListings
+    shippingZone.shippingMethods[0].channelListings,
   ),
   disabled: false,
   errors: [],
   orderValueRestricted: true,
   onChange: () => undefined,
-  onChannelsChange: () => undefined
+  onChannelsChange: () => undefined,
 };
 
 storiesOf("Shipping / Order value rates", module)

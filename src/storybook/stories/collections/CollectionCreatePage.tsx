@@ -5,7 +5,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import CollectionCreatePage, {
-  CollectionCreatePageProps
+  CollectionCreatePageProps,
 } from "../../../collections/components/CollectionCreatePage";
 import Decorator from "../../Decorator";
 
@@ -20,7 +20,7 @@ const props: Omit<CollectionCreatePageProps, "classes"> = {
   onChannelsChange: () => undefined,
   onSubmit: () => undefined,
   openChannelsModal: () => undefined,
-  saveButtonBarState: "default"
+  saveButtonBarState: "default",
 };
 
 storiesOf("Views / Collections / Create collection", module)
@@ -34,16 +34,16 @@ storiesOf("Views / Collections / Create collection", module)
         {
           code: CollectionErrorCode.REQUIRED,
           field: "name",
-          message: "Collection field name required"
+          message: "Collection field name required",
         },
         {
           code: CollectionErrorCode.REQUIRED,
           field: "description",
-          message: "Collection field description required"
-        }
+          message: "Collection field description required",
+        },
       ].map(err => ({
         __typename: "CollectionError",
-        ...err
+        ...err,
       }))}
     />
   ));

@@ -5,7 +5,7 @@ import {
   getAttributesCaption,
   getFulfillmentFormsetQuantity,
   getOrderLineAvailableQuantity,
-  OrderFulfillStockInputFormsetData
+  OrderFulfillStockInputFormsetData,
 } from "@saleor/orders/utils/data";
 import React from "react";
 
@@ -28,7 +28,7 @@ const OrderFulfillStockExceededDialogLine: React.FC<OrderFulfillStockExceededDia
   const classes = useStyles(props);
 
   const stock = line?.variant?.stocks.find(
-    stock => stock.warehouse.id === warehouseId
+    stock => stock.warehouse.id === warehouseId,
   );
 
   return (

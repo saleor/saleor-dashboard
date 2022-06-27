@@ -34,10 +34,10 @@ export const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProp
   onConfirm,
   selected,
   title,
-  toggleAll
+  toggleAll,
 }) => {
   const { query, onQueryChange, filteredChannels } = useChannelsSearch(
-    channels
+    channels,
   );
 
   const handleToggleAll = () => toggleAll(channels, selected);

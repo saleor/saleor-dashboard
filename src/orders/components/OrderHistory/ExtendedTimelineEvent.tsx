@@ -13,130 +13,130 @@ import {
   getEmployeeNameLink,
   getOrderNumberLink,
   hasOrderLineDiscountWithNoPreviousValue,
-  isTimelineEventOfDiscountType
+  isTimelineEventOfDiscountType,
 } from "./utils";
 
 const useStyles = makeStyles(
   theme => ({
     eventSubtitle: {
       marginBottom: theme.spacing(0.5),
-      marginTop: theme.spacing(1)
+      marginTop: theme.spacing(1),
     },
     header: {
       fontWeight: 500,
-      marginBottom: theme.spacing(1)
+      marginBottom: theme.spacing(1),
     },
     linesTableCell: {
-      paddingRight: theme.spacing(3)
+      paddingRight: theme.spacing(3),
     },
     root: { marginTop: theme.spacing(4) },
     topSpacer: {
-      marginTop: theme.spacing(3)
+      marginTop: theme.spacing(3),
     },
     user: {
-      marginBottom: theme.spacing(1)
-    }
+      marginBottom: theme.spacing(1),
+    },
   }),
-  { name: "OrderHistory" }
+  { name: "OrderHistory" },
 );
 
 export const productTitles = defineMessages({
   draftCreatedFromReplace: {
     id: "a1uffz",
     defaultMessage: "Products replaced",
-    description: "draft created from replace products list title"
+    description: "draft created from replace products list title",
   },
   fulfillmentRefunded: {
     id: "sHON47",
     defaultMessage: "Products refunded",
-    description: "refunded products list title"
+    description: "refunded products list title",
   },
   fulfillmentReplaced: {
     id: "nki0o/",
     defaultMessage: "Products replaced",
-    description: "replaced products list title"
+    description: "replaced products list title",
   },
   fulfillmentReturned: {
     id: "L5io1l",
     defaultMessage: "Products returned",
-    description: "returned products list title"
-  }
+    description: "returned products list title",
+  },
 });
 
 export const titles = defineMessages({
   draftCreatedFromReplace: {
     id: "5R4VMl",
     defaultMessage: "Draft was reissued from order ",
-    description: "draft created from replace event title"
+    description: "draft created from replace event title",
   },
   fulfillmentRefunded: {
     id: "VDwkEZ",
     defaultMessage: "Products were refunded by ",
-    description: "refunded event title"
+    description: "refunded event title",
   },
   fulfillmentReplaced: {
     id: "1GTU/3",
     defaultMessage: "Products were replaced by ",
-    description: "replaced event title"
+    description: "replaced event title",
   },
   fulfillmentReturned: {
     id: "nayZY0",
     defaultMessage: "Products were returned by",
-    description: "returned event title"
+    description: "returned event title",
   },
   orderDiscountAdded: {
     id: "Zptsep",
     defaultMessage: "Order was discounted by",
-    description: "order was discounted event title"
+    description: "order was discounted event title",
   },
   orderDiscountAutomaticallyUpdated: {
     id: "AQSmqG",
     defaultMessage: "Order discount was updated automatically updated",
-    description: "order discount was updated automatically event title"
+    description: "order discount was updated automatically event title",
   },
   orderDiscountUpdated: {
     id: "/KWNJW",
     defaultMessage: "Order discount was updated by",
-    description: "order discount was updated event title"
+    description: "order discount was updated event title",
   },
   orderLineDiscountAdded: {
     id: "9TAzb5",
     defaultMessage: "{productName} discount was added by ",
-    description: "order line discount added title"
+    description: "order line discount added title",
   },
   orderLineDiscountUpdated: {
     id: "NgCb99",
     defaultMessage: "{productName} discount was updated by ",
-    description: "order line discount updated title"
+    description: "order line discount updated title",
   },
   orderMarkedAsPaid: {
     id: "/0JckE",
     defaultMessage: "Order was marked as paid by",
-    description: "order marked as paid event title"
-  }
+    description: "order marked as paid event title",
+  },
 });
 
 export const messages = defineMessages({
   by: {
     id: "xrPv2K",
     defaultMessage: "by",
-    description: "by preposition"
+    description: "by preposition",
   },
   refundedAmount: {
     id: "nngeI3",
     defaultMessage: "Refunded amount",
-    description: "amount title"
+    description: "amount title",
   },
   refundedShipment: {
     id: "Krzyo+",
     defaultMessage: "Shipment was refunded",
-    description: "shipment refund title"
+    description: "shipment refund title",
   },
   transactionReference: {
     id: "XWGZLL",
     defaultMessage: "Transaction reference",
-    description: "transaction reference subtitle"
-  }
+    description: "transaction reference subtitle",
+  },
 });
 
 interface ExtendedTimelineEventProps {
@@ -146,7 +146,7 @@ interface ExtendedTimelineEventProps {
 
 const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
   event,
-  orderCurrency
+  orderCurrency,
 }) => {
   const {
     id,
@@ -155,7 +155,7 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
     lines,
     amount,
     transactionReference,
-    shippingCostsIncluded
+    shippingCostsIncluded,
   } = event;
   const classes = useStyles({});
   const intl = useIntl();
@@ -185,9 +185,9 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
     title: {
       text: intl.formatMessage(
         getEventTitleMessageInCamelCase(),
-        getTitleProps()
-      )
-    }
+        getTitleProps(),
+      ),
+    },
   };
 
   const selectTitleElements = () => {
@@ -245,7 +245,7 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
               <Money
                 money={{
                   amount,
-                  currency: orderCurrency
+                  currency: orderCurrency,
                 }}
               />
             </>

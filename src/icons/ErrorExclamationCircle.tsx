@@ -19,7 +19,7 @@ const ErrorExclamationCircle = createSvgIcon(
       />
     </svg>
   </>,
-  "ErrorExclamationCircle"
+  "ErrorExclamationCircle",
 );
 
 export default ErrorExclamationCircle;

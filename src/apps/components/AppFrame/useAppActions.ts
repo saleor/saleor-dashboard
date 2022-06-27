@@ -7,25 +7,25 @@ import { useExternalApp } from "../ExternalAppContext";
 
 const sendResponseStatus = (
   actionId: string,
-  ok: boolean
+  ok: boolean,
 ): DispatchResponseEvent => ({
   type: "response",
   payload: {
     actionId,
-    ok
-  }
+    ok,
+  },
 });
 
 export const useAppActions = (
   frameEl: React.MutableRefObject<HTMLIFrameElement>,
-  appOrigin: string
+  appOrigin: string,
 ) => {
   const navigate = useNavigator();
   const { closeApp } = useExternalApp();
   const intl = useIntl();
 
   const actionReducer = (
-    action: Actions | undefined
+    action: Actions | undefined,
   ): DispatchResponseEvent => {
     switch (action?.type) {
       case "redirect": {
@@ -48,8 +48,8 @@ export const useAppActions = (
                 intl.formatMessage({
                   id: "MSItJD",
                   defaultMessage:
-                    "You are about to leave the Dashboard. Do you want to continue?"
-                })
+                    "You are about to leave the Dashboard. Do you want to continue?",
+                }),
               );
             }
 
@@ -92,6 +92,6 @@ export const useAppActions = (
   }, []);
 
   return {
-    postToExtension
+    postToExtension,
   };
 };

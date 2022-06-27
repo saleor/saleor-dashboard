@@ -1,13 +1,13 @@
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import {
   ChoiceValue,
-  SingleAutocompleteChoiceType
+  SingleAutocompleteChoiceType,
 } from "@saleor/components/SingleAutocompleteSelectField";
 import {
   CountryWithCodeFragment,
   MetadataInput,
   MetadataItemFragment,
-  SearchPagesQuery
+  SearchPagesQuery,
 } from "@saleor/graphql";
 import { getFullName } from "@saleor/misc";
 import { Node, RelayToFlat, SlugNode, TagNode } from "@saleor/types";
@@ -20,13 +20,13 @@ interface Connection<T> {
 }
 
 export function mapEdgesToItems<T>(
-  data: Connection<T> | undefined
+  data: Connection<T> | undefined,
 ): T[] | undefined {
   return data?.edges?.map(({ node }) => node);
 }
 
 export function mapCountriesToCountriesCodes(
-  countries?: CountryWithCodeFragment[]
+  countries?: CountryWithCodeFragment[],
 ) {
   return countries?.map(country => country.code);
 }
@@ -34,23 +34,23 @@ export function mapCountriesToCountriesCodes(
 export function mapCountriesToChoices(countries: CountryWithCodeFragment[]) {
   return countries.map(country => ({
     label: country.country,
-    value: country.code
+    value: country.code,
   }));
 }
 
 export function mapPagesToChoices(
-  pages: RelayToFlat<SearchPagesQuery["search"]>
+  pages: RelayToFlat<SearchPagesQuery["search"]>,
 ) {
   return pages.map(page => ({
     label: page.title,
-    value: page.id
+    value: page.id,
   }));
 }
 
 type ExtendedNode = Node & Record<"name", string>;
 
 export function mapNodeToChoice<T extends ExtendedNode>(
-  nodes: T[]
+  nodes: T[],
 ): Array<SingleAutocompleteChoiceType<string>>;
 export function mapNodeToChoice<
   T extends ExtendedNode | Node,
@@ -59,7 +59,7 @@ export function mapNodeToChoice<
 
 export function mapNodeToChoice<T extends ExtendedNode>(
   nodes: T[],
-  getterFn?: (node: T) => any
+  getterFn?: (node: T) => any,
 ) {
   if (!nodes) {
     return [];
@@ -67,34 +67,34 @@ export function mapNodeToChoice<T extends ExtendedNode>(
 
   return nodes.map(node => ({
     label: node.name,
-    value: getterFn ? getterFn(node) : node.id
+    value: getterFn ? getterFn(node) : node.id,
   }));
 }
 
 export function mapSlugNodeToChoice(
-  nodes: Array<ExtendedNode & SlugNode>
+  nodes: Array<ExtendedNode & SlugNode>,
 ): SingleAutocompleteChoiceType[] {
   return mapNodeToChoice(nodes, node => node.slug);
 }
 
 export function mapTagNodeToChoice(
-  nodes: Array<Node & TagNode>
+  nodes: Array<Node & TagNode>,
 ): SingleAutocompleteChoiceType[] {
   return mapNodeToChoice(nodes, node => node.tag);
 }
 
 export function mapMetadataItemToInput(
-  item: MetadataItemFragment
+  item: MetadataItemFragment,
 ): MetadataInput {
   return {
     key: item.key,
-    value: item.value
+    value: item.value,
   };
 }
 
 export function mapMultiValueNodeToChoice<T extends Record<string, any>>(
   nodes: T[] | string[],
-  key?: keyof T
+  key?: keyof T,
 ): MultiAutocompleteChoiceType[] {
   if (!nodes) {
     return [];
@@ -109,7 +109,7 @@ export function mapMultiValueNodeToChoice<T extends Record<string, any>>(
 
 export function mapSingleValueNodeToChoice<T extends Record<string, any>>(
   nodes: T[] | string[],
-  key?: keyof T
+  key?: keyof T,
 ): SingleAutocompleteChoiceType[] {
   if (!nodes) {
     return [];
@@ -129,7 +129,7 @@ interface Person {
 }
 
 export function mapPersonNodeToChoice<T extends Person>(
-  nodes: T[]
+  nodes: T[],
 ): SingleAutocompleteChoiceType[] {
   if (!nodes) {
     return [];
@@ -137,6 +137,6 @@ export function mapPersonNodeToChoice<T extends Person>(
 
   return nodes.map(({ firstName, lastName, id }) => ({
     value: id,
-    label: getFullName({ firstName, lastName })
+    label: getFullName({ firstName, lastName }),
   }));
 }

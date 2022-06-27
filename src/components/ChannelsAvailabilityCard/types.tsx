@@ -1,6 +1,6 @@
 import {
   CollectionChannelListingErrorFragment,
-  ProductChannelListingErrorFragment
+  ProductChannelListingErrorFragment,
 } from "@saleor/graphql";
 
 export interface ChannelOpts {

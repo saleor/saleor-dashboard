@@ -16,7 +16,7 @@ const DeleteWarningDialogConsentContent: React.FC<DeleteWarningDialogConsentCont
   description,
   consentLabel,
   isConsentChecked,
-  onConsentChange
+  onConsentChange,
 }) => {
   const classes = useStyles();
 

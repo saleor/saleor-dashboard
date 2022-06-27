@@ -3,7 +3,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow
+  TableRow,
 } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
@@ -24,13 +24,13 @@ import { maybe, renderCollection, transformPaymentStatus } from "../../../misc";
 const useStyles = makeStyles(
   {
     link: {
-      cursor: "pointer"
+      cursor: "pointer",
     },
     textRight: {
-      textAlign: "right"
-    }
+      textAlign: "right",
+    },
   },
-  { name: "CustomerOrders" }
+  { name: "CustomerOrders" },
 );
 
 export interface CustomerOrdersProps {
@@ -47,7 +47,7 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
   const orderList = orders
     ? orders.map(order => ({
         ...order,
-        paymentStatus: transformPaymentStatus(order.paymentStatus, intl)
+        paymentStatus: transformPaymentStatus(order.paymentStatus, intl),
       }))
     : undefined;
   return (
@@ -56,7 +56,7 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
         title={intl.formatMessage({
           id: "1LiVhv",
           defaultMessage: "Recent Orders",
-          description: "section header"
+          description: "section header",
         })}
         toolbar={
           <Button variant="tertiary" href={viewAllHref}>
@@ -155,7 +155,7 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
                   />
                 </TableCell>
               </TableRow>
-            )
+            ),
           )}
         </TableBody>
       </ResponsiveTable>

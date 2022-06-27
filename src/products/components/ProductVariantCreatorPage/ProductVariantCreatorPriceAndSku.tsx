@@ -2,13 +2,13 @@ import { ChannelPriceData } from "@saleor/channels/utils";
 import CardSpacer from "@saleor/components/CardSpacer";
 import {
   ProductVariantAttributesFragment,
-  WarehouseFragment
+  WarehouseFragment,
 } from "@saleor/graphql";
 import React from "react";
 
 import {
   ProductVariantCreateFormData,
-  VariantCreatorPricesAndSkuMode
+  VariantCreatorPricesAndSkuMode,
 } from "./form";
 import ProductVariantCreatorPrices from "./ProductVariantCreatorPrices";
 import ProductVariantCreatorStock from "./ProductVariantCreatorStock";
@@ -21,7 +21,7 @@ export interface ProductVariantCreatorPriceAndSkuProps {
   warehouses: WarehouseFragment[];
   onApplyToAllChange: (
     value: VariantCreatorPricesAndSkuMode,
-    type: PriceOrStock
+    type: PriceOrStock,
   ) => void;
   onApplyToAllPriceChange: (channelId: string, value: string) => void;
   onApplyToAllStockChange: (quantity: number, warehouseIndex: number) => void;
@@ -29,12 +29,12 @@ export interface ProductVariantCreatorPriceAndSkuProps {
   onAttributePriceChange: (
     id: string,
     value: string,
-    channelId: string
+    channelId: string,
   ) => void;
   onAttributeStockChange: (
     id: string,
     quantity: number,
-    warehouseIndex: number
+    warehouseIndex: number,
   ) => void;
   onWarehouseToggle: (id: string) => void;
 }
@@ -50,7 +50,7 @@ const ProductVariantCreatorPriceAndSku: React.FC<ProductVariantCreatorPriceAndSk
   onAttributeSelect,
   onAttributePriceChange,
   onAttributeStockChange,
-  onWarehouseToggle
+  onWarehouseToggle,
 }) => (
   <>
     <ProductVariantCreatorPrices

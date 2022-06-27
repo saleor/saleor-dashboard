@@ -2,7 +2,7 @@ import { DialogTitle } from "@material-ui/core";
 import {
   GiftCardCreateInput,
   useChannelCurrenciesQuery,
-  useGiftCardCreateMutation
+  useGiftCardCreateMutation,
 } from "@saleor/graphql";
 import useCurrentDate from "@saleor/hooks/useCurrentDate";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -13,13 +13,13 @@ import { useIntl } from "react-intl";
 import ContentWithProgress from "./ContentWithProgress";
 import GiftCardCreateDialogCodeContent from "./GiftCardCreateDialogCodeContent";
 import GiftCardCreateDialogForm, {
-  GiftCardCreateFormData
+  GiftCardCreateFormData,
 } from "./GiftCardCreateDialogForm";
 import { giftCardCreateMessages as messages } from "./messages";
 import { GiftCardCreateFormCustomer } from "./types";
 import {
   getGiftCardCreateOnCompletedMessage,
-  getGiftCardExpiryInputData
+  getGiftCardExpiryInputData,
 } from "./utils";
 
 interface GiftCardCreateDialogContentProps
@@ -31,7 +31,7 @@ interface GiftCardCreateDialogContentProps
 const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = ({
   onClose,
   refetchQueries,
-  initialCustomer
+  initialCustomer,
 }) => {
   const intl = useIntl();
   const notify = useNotifier();
@@ -43,7 +43,7 @@ const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = 
   const currentDate = useCurrentDate();
 
   const getParsedSubmitInputData = (
-    formData: GiftCardCreateFormData
+    formData: GiftCardCreateFormData,
   ): GiftCardCreateInput => {
     const {
       balanceAmount,
@@ -53,7 +53,7 @@ const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = 
       sendToCustomerSelected,
       selectedCustomer,
       requiresActivation,
-      channelSlug
+      channelSlug,
     } = formData;
 
     return {
@@ -63,10 +63,10 @@ const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = 
       channel: (sendToCustomerSelected && channelSlug) || null,
       balance: {
         amount: balanceAmount,
-        currency: balanceCurrency
+        currency: balanceCurrency,
       },
       expiryDate: getGiftCardExpiryInputData(formData, currentDate),
-      isActive: !requiresActivation
+      isActive: !requiresActivation,
     };
   };
 
@@ -80,14 +80,14 @@ const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = 
         setCardCode(data?.giftCardCreate?.giftCard?.code);
       }
     },
-    refetchQueries
+    refetchQueries,
   });
 
   const handleSubmit = (data: GiftCardCreateFormData) => {
     createGiftCard({
       variables: {
-        input: getParsedSubmitInputData(data)
-      }
+        input: getParsedSubmitInputData(data),
+      },
     });
   };
 

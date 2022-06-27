@@ -8,10 +8,10 @@ export interface VerticalSpacerProps {
 const useStyles = makeStyles(
   theme => ({
     container: ({ spacing }: VerticalSpacerProps) => ({
-      height: theme.spacing(spacing)
-    })
+      height: theme.spacing(spacing),
+    }),
   }),
-  { name: "VerticalSpacer" }
+  { name: "VerticalSpacer" },
 );
 
 const VerticalSpacer: React.FC<VerticalSpacerProps> = ({ spacing = 1 }) => {

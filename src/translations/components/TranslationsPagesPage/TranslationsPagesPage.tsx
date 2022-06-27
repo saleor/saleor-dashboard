@@ -8,12 +8,12 @@ import { commonMessages, sectionNames } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import {
   PageTranslationInputFieldName,
-  TranslationsEntitiesPageProps
+  TranslationsEntitiesPageProps,
 } from "@saleor/translations/types";
 import {
   languageEntitiesUrl,
   languageEntityUrl,
-  TranslatableEntities
+  TranslatableEntities,
 } from "@saleor/translations/urls";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -37,7 +37,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
   onDiscard,
   onEdit,
   onSubmit,
-  onAttributeValueSubmit
+  onAttributeValueSubmit,
 }) => {
   const intl = useIntl();
 
@@ -45,7 +45,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
     <Container>
       <Backlink
         href={languageEntitiesUrl(languageCode, {
-          tab: TranslatableEntities.pages
+          tab: TranslatableEntities.pages,
         })}
       >
         {intl.formatMessage(sectionNames.translations)}
@@ -55,12 +55,12 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
           {
             id: "oUWXLO",
             defaultMessage: 'Translation Page "{pageName}" - {languageCode}',
-            description: "header"
+            description: "header",
           },
           {
             languageCode,
-            pageName: getStringOrPlaceholder(data?.page?.title)
-          }
+            pageName: getStringOrPlaceholder(data?.page?.title),
+          },
         )}
       >
         <LanguageSwitch
@@ -80,24 +80,24 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
           {
             displayName: intl.formatMessage({
               id: "gvOzOl",
-              defaultMessage: "Page Title"
+              defaultMessage: "Page Title",
             }),
             name: PageTranslationInputFieldName.title,
             translation: data?.translation?.title || null,
             type: "short" as "short",
-            value: data?.page?.title
+            value: data?.page?.title,
           },
           {
             displayName: intl.formatMessage({
               id: "gMwpNC",
               defaultMessage: "Content",
-              description: "page content"
+              description: "page content",
             }),
             name: PageTranslationInputFieldName.content,
             translation: data?.translation?.content || null,
             type: "rich" as "rich",
-            value: data?.page?.content
-          }
+            value: data?.page?.content,
+          },
         ]}
         saveButtonState={saveButtonState}
         richTextResetKey={languageCode}
@@ -113,29 +113,29 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
         initialState={true}
         title={intl.formatMessage({
           id: "TGX4T1",
-          defaultMessage: "Search Engine Preview"
+          defaultMessage: "Search Engine Preview",
         })}
         fields={[
           {
             displayName: intl.formatMessage({
               id: "HlEpii",
-              defaultMessage: "Search Engine Title"
+              defaultMessage: "Search Engine Title",
             }),
             name: PageTranslationInputFieldName.seoTitle,
             translation: data?.translation?.seoTitle || null,
             type: "short" as "short",
-            value: data?.page?.seoTitle
+            value: data?.page?.seoTitle,
           },
           {
             displayName: intl.formatMessage({
               id: "US3IPU",
-              defaultMessage: "Search Engine Description"
+              defaultMessage: "Search Engine Description",
             }),
             name: PageTranslationInputFieldName.seoDescription,
             translation: data?.translation?.seoDescription || null,
             type: "long" as "long",
-            value: data?.page?.seoDescription
-          }
+            value: data?.page?.seoDescription,
+          },
         ]}
         saveButtonState={saveButtonState}
         richTextResetKey={languageCode}
@@ -158,16 +158,16 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
                   {
                     id: "PajjqE",
                     defaultMessage: "Attribute {number}",
-                    description: "attribute list"
+                    description: "attribute list",
                   },
                   {
-                    number: i + 1
-                  }
+                    number: i + 1,
+                  },
                 ),
                 name: attrVal?.name,
                 translation: attrVal?.translation?.richText || null,
                 type: "rich" as "rich",
-                value: attrVal?.richText
+                value: attrVal?.richText,
               })) || []
             }
             saveButtonState={saveButtonState}

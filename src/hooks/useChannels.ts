@@ -14,12 +14,12 @@ function useChannels<T extends Channel, A>(
   channels: T[],
   action: A | ChannelsAction,
   { closeModal, openModal }: Modal,
-  opts: WithFormId
+  opts: WithFormId,
 ) {
   const { formId } = opts;
 
   const { setIsDirty } = useExitFormDialog({
-    formId
+    formId,
   });
 
   const [currentChannels, setCurrentChannels] = useStateFromProps(channels);
@@ -28,7 +28,7 @@ function useChannels<T extends Channel, A>(
     isSelected: isChannelSelected,
     listElements: channelListElements,
     set: setChannels,
-    toggle: channelsToggle
+    toggle: channelsToggle,
   } = useListActions<T>(currentChannels, (a, b) => a.id === b.id);
 
   const handleChannelsModalClose = () => {
@@ -40,7 +40,7 @@ function useChannels<T extends Channel, A>(
 
   const handleChannelsConfirm = () => {
     const sortedChannelListElements = channelListElements.sort(
-      (channel, nextChannel) => channel.name.localeCompare(nextChannel.name)
+      (channel, nextChannel) => channel.name.localeCompare(nextChannel.name),
     );
     setCurrentChannels(sortedChannelListElements);
 
@@ -69,7 +69,7 @@ function useChannels<T extends Channel, A>(
     isChannelSelected,
     isChannelsModalOpen: action === "open-channels-picker",
     setCurrentChannels,
-    toggleAllChannels
+    toggleAllChannels,
   };
 }
 

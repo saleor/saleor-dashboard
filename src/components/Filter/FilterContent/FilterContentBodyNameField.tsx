@@ -9,12 +9,12 @@ const useStyles = makeStyles(
   theme => ({
     container: {
       "&:not(:last-of-type)": {
-        borderBottom: `1px solid ${theme.palette.divider}`
+        borderBottom: `1px solid ${theme.palette.divider}`,
       },
-      padding: theme.spacing(1, 2.5)
-    }
+      padding: theme.spacing(1, 2.5),
+    },
   }),
-  { name: "FilterContentBodyNameField" }
+  { name: "FilterContentBodyNameField" },
 );
 
 export interface FilterContentBodyNameFieldProps<K extends string = string> {
@@ -24,7 +24,7 @@ export interface FilterContentBodyNameFieldProps<K extends string = string> {
 
 const FilterContentBodyNameField: React.FC<FilterContentBodyNameFieldProps> = ({
   filter,
-  onFilterPropertyChange
+  onFilterPropertyChange,
 }) => {
   const classes = useStyles({});
 
@@ -44,10 +44,10 @@ const FilterContentBodyNameField: React.FC<FilterContentBodyNameFieldProps> = ({
             payload: {
               name: filter.name,
               update: {
-                active: !filter.active
-              }
+                active: !filter.active,
+              },
             },
-            type: "set-property"
+            type: "set-property",
           })
         }
       />

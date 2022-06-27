@@ -27,7 +27,7 @@ const GiftCardSendToCustomer: React.FC<GiftCardSendToCustomerProps> = ({
   selectedChannelSlug,
   selectedCustomer,
   setSelectedCustomer,
-  disabled = false
+  disabled = false,
 }) => {
   const { channel, availableChannels } = useAppChannel(false);
 
@@ -35,7 +35,7 @@ const GiftCardSendToCustomer: React.FC<GiftCardSendToCustomerProps> = ({
 
   useEffect(
     () => change({ target: { name: "channelSlug", value: channel?.slug } }),
-    []
+    [],
   );
 
   const intl = useIntl();
