@@ -6,6 +6,9 @@ const isAppPath = (pathname: string) =>
     path: `${appsSection}:id`,
   });
 
+/*
+ * Use detailed information about the current location.
+ */
 export const useLocationState = () => {
   const location = useLocation();
 

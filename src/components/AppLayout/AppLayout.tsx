@@ -127,7 +127,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({
   children,
   fullSize = false,
 }) => {
-  const classes = useStyles({ fullSize });
+  const classes = useStyles();
   const { themeType, setTheme } = useTheme();
   const { anchor: appActionAnchor } = useActionBar();
   const appHeaderAnchor = useBacklink();
