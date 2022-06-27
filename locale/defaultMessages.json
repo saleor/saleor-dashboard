@@ -7832,6 +7832,9 @@
     "context": "button",
     "string": "View products"
   },
+  "z9c6/C": {
+    "string": "Deprecated"
+  },
   "z9wQ/U": {
     "context": "no variant stock in warehouse",
     "string": "No Stock"
