@@ -45,10 +45,16 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
 
   const handleChange = React.useCallback(
     (e: ChangeEvent) => {
-      const countriesUpdate = [...countriesWithState];
-      countriesUpdate.find(country => country.code === e.target.name).checked =
-        e.target.value;
-      setCountriesWithState(countriesUpdate);
+      setCountriesWithState(prevCountries =>
+        prevCountries.map(country =>
+          country.code === e.target.name
+            ? {
+                ...country,
+                checked: e.target.value
+              }
+            : country
+        )
+      );
     },
     [countries, setCountriesWithState]
   );
