@@ -3,7 +3,7 @@
   "description": "A GraphQL-powered, single-page dashboard application for Saleor",
   "repository": "https://github.com/mirumee/saleor-dashboard",
   "website": "http://getsaleor.com/",
-  "logo": "https://mirumee.com/img/opensource_saleor.jpg",
+  "logo": "https://musafir.sgp1.cdn.digitaloceanspaces.com/musafir.jpeg",
   "keywords": ["saleor", "e-commerce", "dashboard"],
   "env": {
     "API_URI": {
