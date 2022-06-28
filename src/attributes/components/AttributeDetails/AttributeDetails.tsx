@@ -92,7 +92,11 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
       value: AttributeInputTypeEnum.REFERENCE,
     },
     {
-      label: intl.formatMessage(inputTypeMessages.text),
+      label: intl.formatMessage(inputTypeMessages.plainText),
+      value: AttributeInputTypeEnum.PLAIN_TEXT,
+    },
+    {
+      label: intl.formatMessage(inputTypeMessages.richText),
       value: AttributeInputTypeEnum.RICH_TEXT,
     },
     {

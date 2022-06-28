@@ -2394,6 +2394,10 @@
     "context": "voucher value requirement",
     "string": "Usage Limit"
   },
+  "HLr8KQ": {
+    "context": "plain text attribute type",
+    "string": "Plain Text"
+  },
   "HMD+ib": {
     "string": "Last order"
   },
@@ -5462,10 +5466,6 @@
     "context": "Amount error message",
     "string": "Amount cannot be bigger than max refund"
   },
-  "fdbqIs": {
-    "context": "text attribute type",
-    "string": "Text"
-  },
   "fehqPs": {
     "context": "order history message",
     "string": "Products were deleted from an order"
@@ -6003,6 +6003,10 @@
   "k9hf7F": {
     "context": "total order price",
     "string": "Total"
+  },
+  "kEAjZV": {
+    "context": "rich text attribute type",
+    "string": "Rich Text"
   },
   "kErneR": {
     "string": "This customer doesn’t have any adresses added to his address book. You can add address using the button below."

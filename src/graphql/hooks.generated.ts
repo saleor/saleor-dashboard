@@ -1570,6 +1570,7 @@ export const AttributeValueFragmentDoc = gql`
 export const AttributeValueDetailsFragmentDoc = gql`
     fragment AttributeValueDetails on AttributeValue {
   ...AttributeValue
+  plainText
   richText
 }
     ${AttributeValueFragmentDoc}`;

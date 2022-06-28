@@ -49,6 +49,7 @@ export const attribute: AttributeDetailsQuery["attribute"] = {
           name: "John Doe",
           reference: null,
           slug: "john-doe",
+          plainText: null,
           richText: null,
           boolean: null,
           date: null,
@@ -66,6 +67,7 @@ export const attribute: AttributeDetailsQuery["attribute"] = {
           name: "Milionare Pirate",
           reference: null,
           slug: "milionare-pirate",
+          plainText: null,
           richText: null,
           boolean: null,
           date: null,
@@ -114,6 +116,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "john-doe",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -132,6 +135,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "milionare-pirate",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -176,6 +180,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "100g",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -194,6 +199,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "250g",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -212,6 +218,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "500g",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -230,6 +237,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "1kg",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -274,6 +282,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "saleor",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -318,6 +327,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "100g",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -336,6 +346,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "250g",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -354,6 +365,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "500g",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -398,6 +410,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "arabica",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -416,6 +429,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "robusta",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -460,6 +474,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "round",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -478,6 +493,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "v-neck",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -496,6 +512,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "polo",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -540,6 +557,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "blue",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -558,6 +576,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "white",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -602,6 +621,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "soft",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -620,6 +640,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "hard",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -638,6 +659,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "middle-soft",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -656,6 +678,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "middle-hard",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -674,6 +697,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "middle",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -692,6 +716,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "very-hard",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -736,6 +761,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "sour",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -754,6 +780,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "sweet",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -798,6 +825,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "english",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -816,6 +844,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "pirate",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -860,6 +889,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "mirumee-press",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -878,6 +908,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "saleor-publishing",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -922,6 +953,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "xs",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -940,6 +972,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "s",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -958,6 +991,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "m",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -976,6 +1010,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "l",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -994,6 +1029,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "xl",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
@@ -1012,6 +1048,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "xxl",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,

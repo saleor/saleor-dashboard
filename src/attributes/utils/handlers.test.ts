@@ -25,6 +25,7 @@ const multipleValueAttributes: FormsetData<AttributeInputData, string[]> = [
           name: "Attribute 1 Value 1",
           reference: null,
           slug: "attr-1-v-1",
+          plainText: null,
           richText: null,
           boolean: null,
           date: null,
@@ -49,6 +50,7 @@ const multipleValueAttributes: FormsetData<AttributeInputData, string[]> = [
           name: "Attribute 2 Value 1",
           reference: null,
           slug: "attr-2-v-1",
+          plainText: null,
           richText: null,
           boolean: null,
           date: null,
@@ -62,6 +64,7 @@ const multipleValueAttributes: FormsetData<AttributeInputData, string[]> = [
           name: "Attribute 2 Value 2",
           reference: null,
           slug: "attr-2-v-2",
+          plainText: null,
           richText: null,
           boolean: null,
           date: null,
@@ -75,6 +78,7 @@ const multipleValueAttributes: FormsetData<AttributeInputData, string[]> = [
           name: "Attribute 2 Value 3",
           reference: null,
           slug: "attr-2-v-3",
+          plainText: null,
           richText: null,
           boolean: null,
           date: null,
@@ -103,6 +107,7 @@ const multipleValueAttributes: FormsetData<AttributeInputData, string[]> = [
           name: "File First Value",
           reference: null,
           slug: "file-first-value",
+          plainText: null,
           richText: null,
           boolean: null,
           date: null,
@@ -161,6 +166,9 @@ const createBooleanAttribute = (value: string) =>
     inputType: AttributeInputTypeEnum.BOOLEAN,
     value,
   });
+
+const createPlainTextAttribute = (value: string) =>
+  createAttribute({ inputType: AttributeInputTypeEnum.PLAIN_TEXT, value });
 
 const createRichTextAttribute = (value: string) =>
   createAttribute({ inputType: AttributeInputTypeEnum.RICH_TEXT, value });
@@ -313,6 +321,31 @@ describe("Sending only changed attributes", () => {
 
         const expectedResult =
           expected !== null ? [{ id: ATTR_ID, boolean: expected }] : [];
+        expect(result).toEqual(expectedResult);
+      },
+    );
+  });
+  describe("works with plain text attributes", () => {
+    test.each`
+      newAttr       | oldAttr       | expected
+      ${null}       | ${null}       | ${null}
+      ${"my value"} | ${"my value"} | ${null}
+      ${"my value"} | ${null}       | ${"my value"}
+      ${null}       | ${"my value"} | ${undefined}
+    `(
+      "$oldAttr -> $newAttr returns $expected",
+      ({ newAttr, oldAttr, expected }) => {
+        const attribute = createPlainTextAttribute(newAttr);
+        const prevAttribute = createPlainTextAttribute(oldAttr);
+
+        const result = prepareAttributesInput({
+          attributes: [attribute],
+          prevAttributes: [prevAttribute],
+          updatedFileAttributes: [],
+        });
+
+        const expectedResult =
+          expected !== null ? [{ id: ATTR_ID, plainText: expected }] : [];
         expect(result).toEqual(expectedResult);
       },
     );

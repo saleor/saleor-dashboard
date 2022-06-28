@@ -124,6 +124,22 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
           fetchMoreAttributeValues={fetchMoreAttributeValues}
         />
       );
+    case AttributeInputTypeEnum.PLAIN_TEXT:
+      return (
+        <BasicAttributeRow label={attribute.label}>
+          <TextField
+            fullWidth
+            disabled={disabled}
+            error={!!error}
+            helperText={getErrorMessage(error, intl)}
+            label={intl.formatMessage(attributeRowMessages.valueLabel)}
+            name={`attribute:${attribute.label}`}
+            onChange={event => onChange(attribute.id, event.target.value)}
+            type="text"
+            value={attribute.value[0]}
+          />
+        </BasicAttributeRow>
+      );
     case AttributeInputTypeEnum.RICH_TEXT:
       const {
         getShouldMount,
