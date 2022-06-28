@@ -1,97 +1,67 @@
 import { makeStyles } from "@saleor/macaw-ui";
 
-const cellHeight = 52;
-const headerCellHeight = 52;
-const actionBarWidth = 44;
-export const rowIndicatorWidth = 44;
-export const columnResizerWidth = 9;
-
 const useStyles = makeStyles(
-  theme => ({
-    actions: {
-      background: theme.palette.saleor.background.default,
-      position: "absolute",
-      tableLayout: "fixed",
-      borderCollapse: "collapse",
-      width: actionBarWidth + 1,
-      right: 0,
-      top: 0
-    },
-    actionRow: {
-      "&:first-child th": {
-        height: headerCellHeight
+  theme => {
+    const rowActionSelected = {
+      background: theme.palette.divider,
+      color: theme.palette.saleor.main[1]
+    };
+
+    return {
+      actionBtnBar: {
+        position: "absolute",
+        zIndex: 1,
+        background: theme.palette.background.default,
+        // Right and left toolbars
+        width: "calc(100% - 48px - 33px)",
+        marginLeft: 33,
+        height: 48,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "flex-end",
+        padding: theme.spacing(1)
       },
-      "& td": {
-        border: `1px solid ${theme.palette.saleor.main[5]}`,
-        borderRight: "none",
-        height: cellHeight
-      }
-    },
-    actionCol: {
-      width: actionBarWidth
-    },
-    columnResize: {
-      cursor: "e-resize",
-      width: columnResizerWidth,
-      height: "100%",
-      position: "absolute",
-      top: 0
-    },
-    cornerIndicator: {
-      height: headerCellHeight
-    },
-    rowIndicator: {
-      border: "1px solid var(--border-color)",
-      borderLeft: "none"
-    },
-    rowIndicatorCol: {
-      width: rowIndicatorWidth
-    },
-    scrollable: {
-      overflowX: "scroll",
-      position: "relative"
-    },
-    wrapper: {
-      position: "relative"
-    },
-    table: {
-      borderCollapse: "collapse",
-      border: "none",
-      tableLayout: "fixed",
-      width: "100%"
-    },
-    spreadsheet: {
-      "& th": {
-        fontWeight: 400,
-        height: headerCellHeight,
-        textAlign: "left",
-        whiteSpace: "nowrap",
-        overflow: "hidden",
-        textOverflow: "ellipsis"
+      columnPicker: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: 48
       },
-      "& .Spreadsheet__cell": {
-        height: cellHeight
+      columnPickerBtn: {
+        "&:hover": {
+          color: theme.palette.saleor.main[1]
+        }
       },
-      "& .Spreadsheet__active-cell": {
-        "& input": {
-          letterSpacing: "inherit"
+      root: {
+        borderTop: `1px solid ${theme.palette.divider}`,
+        borderBottom: `1px solid ${theme.palette.divider}`,
+        position: "relative"
+      },
+      rowActionBar: {
+        height: "100%",
+        background: theme.palette.background.default,
+        borderLeft: `1px solid ${theme.palette.divider}`,
+        width: 48
+      },
+      rowAction: {
+        "&:hover, $rowActionSelected": {
+          rowActionSelected
         },
-        fontWeight: 500
+        "&:not(:last-child)": {
+          marginBottom: -1
+        },
+        border: `1px solid ${theme.palette.divider}`,
+        cursor: "pointer",
+        color: theme.palette.saleor.main[5],
+        marginLeft: -1,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: 49
       },
-      "& .Spreadsheet__active-cell, .Spreadsheet__floating-rect--selected": {
-        borderWidth: 1
-      },
-      "--background-color": theme.palette.saleor.background.default,
-      "--text-color": "inherit",
-      "--border-color": theme.palette.saleor.main[5],
-      "--outline-background-color": "rgba(0,0,0,.05)",
-      "--outline-color": theme.palette.saleor.main[1],
-      "--elevation": "none",
-      display: "block",
-      fontWeight: 500,
-      width: "100%"
-    }
-  }),
+      rowActionSelected
+    };
+  },
   { name: "Datagrid" }
 );
 

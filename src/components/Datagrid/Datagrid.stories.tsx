@@ -103,6 +103,12 @@ const DefaultStory: React.FC = () => {
       <Datagrid
         availableColumns={availableColumns}
         getCellContent={getCellContent}
+        menuItems={() => [
+          {
+            label: "Do something",
+            onSelect: () => undefined
+          }
+        ]}
         onCellEdited={onCellEdited}
       >
         {selected => (
