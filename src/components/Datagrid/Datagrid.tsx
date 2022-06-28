@@ -5,12 +5,7 @@ import DataEditor, {
   Item,
   Theme
 } from "@glideapps/glide-data-grid";
-import {
-  Button,
-  IconButton,
-  MoreHorizontalIcon,
-  useTheme
-} from "@saleor/macaw-ui";
+import { MoreHorizontalIcon, useTheme } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { ThemeProvider } from "styled-components";
@@ -26,6 +21,7 @@ export interface DatagridProps {
   availableColumns: readonly AvailableColumn[];
   getCellContent: (item: Item) => GridCell;
   menuItems: (index: number) => CardMenuItem[];
+  rows: number;
   selectionActions: (selection: number[]) => React.ReactNode;
   onCellEdited: (item: Item, newValue: EditableGridCell) => void;
 }
@@ -34,6 +30,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   availableColumns,
   getCellContent,
   menuItems,
+  rows,
   selectionActions,
   onCellEdited
 }): React.ReactElement => {
@@ -104,125 +101,6 @@ export const Datagrid: React.FC<DatagridProps> = ({
     [selection, selectionActions]
   );
 
-  // return (
-  //   <div className={classes.wrapper}>
-  //     <div className={classes.scrollable}>
-  //       <Spreadsheet
-  //         data={data}
-  //         columnLabels={columns.map(c => c.label)}
-  //         className={classes.spreadsheet}
-  //         Table={({ children }) => (
-  //           <table className={classes.table}>
-  //             <colgroup>
-  //               <col className={classes.rowIndicatorCol} />
-  //               {columns.map(({ value, width }) => (
-  //                 <col key={value} style={{ width }} />
-  //               ))}
-  //               <col className={classes.actionCol} />
-  //             </colgroup>
-  //             <tbody>{children}</tbody>
-  //           </table>
-  //         )}
-  //         ColumnIndicator={({ column, label, onSelect }) =>
-  //           selected.length === 0 ? (
-  //             <Column
-  //               onClick={() => onSelect(column, true)}
-  //               draggable
-  //               data-column={column}
-  //               onDrop={e => {
-  //                 const targetIndex = parseInt(
-  //                   e.dataTransfer.getData("text/plain"),
-  //                   10
-  //                 );
-  //                 onColumnMove(column, targetIndex);
-  //               }}
-  //             >
-  //               {label}
-  //             </Column>
-  //           ) : column === 0 ? (
-  //             <th colSpan={columns.length}>toolbar</th>
-  //           ) : null
-  //         }
-  //         RowIndicator={({ row }) => (
-  //           <td className={classes.rowIndicator}>
-  //             <Checkbox
-  //               checked={selected.includes(data[row][0].id)}
-  //               onChange={() =>
-  //                 setSelected(
-  //                   toggle(data[row][0].id, selected, (a, b) => a === b)
-  //                 )
-  //               }
-  //             />
-  //           </td>
-  //         )}
-  //         CornerIndicator={() => (
-  //           <th className={classes.cornerIndicator}>
-  //             <Checkbox
-  //               checked={selected.length === data.length}
-  //               indeterminate={
-  //                 selected.length > 0 && selected.length !== data.length
-  //               }
-  //               onChange={() =>
-  //                 setSelected(prevSelected =>
-  //                   prevSelected.length === data.length
-  //                     ? []
-  //                     : hookOpts.data.map(d => d.id)
-  //                 )
-  //               }
-  //             />
-  //           </th>
-  //         )}
-  //         onCellCommit={onCellCommit}
-  //       />
-  //       {/* Skip the last element */}
-  //       {columns.slice(0, -1).map((column, index) => (
-  //         <ColumnResize
-  //           key={`${column.value}-${column.width}`}
-  //           offset={
-  //             rowIndicatorWidth +
-  //             columns.slice(0, index + 1).reduce((acc, v) => acc + v.width, 0) -
-  //             Math.ceil(columnResizerWidth / 2)
-  //           }
-  //           onDrop={(_, data) => onColumnResize(column, data.x)}
-  //         />
-  //       ))}
-  //     </div>
-  //     <table className={classes.actions}>
-  //       <tbody>
-  //         <tr className={classes.actionRow}>
-  //           <th>
-  //             {selected.length === 0 ? (
-  //
-  //             ) : (
-  //               <div
-  //                 style={{
-  //                   display: "flex",
-  //                   gap: 8,
-  //                   position: "absolute",
-  //                   top: 0,
-  //                   right: 0
-  //                 }}
-  //               >
-  //                 {children(selected)}
-  //               </div>
-  //             )}
-  //           </th>
-  //         </tr>
-  //         {data.map((_, rowIndex) => (
-  //           <tr key={rows[rowIndex]} className={classes.actionRow}>
-  //             <td>
-  //               <CardMenu
-  //                 Icon={MoreHorizontalIcon}
-  //                 menuItems={menuItems(rows[rowIndex])}
-  //               />
-  //             </td>
-  //           </tr>
-  //         ))}
-  //       </tbody>
-  //     </table>
-  //   </div>
-  // );
-
   return (
     <div className={classes.root}>
       <ThemeProvider theme={datagridTheme}>
@@ -236,7 +114,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
           getCellContent={getCellContentEnh}
           onCellEdited={onCellEditedEnh}
           columns={columns}
-          rows={10}
+          rows={rows}
           freezeColumns={0}
           smoothScrollX
           rowMarkers="checkbox"
@@ -250,6 +128,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
           onGridSelectionChange={data => {
             setSelection(data);
           }}
+          onFinishedEditing={() => undefined}
           gridSelection={selection}
           rowHeight={48}
           headerHeight={48}
@@ -274,7 +153,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   query={picker.query}
                 />
               </div>
-              {Array(10)
+              {Array(rows)
                 .fill(0)
                 .map((_, index) => (
                   <div
@@ -299,6 +178,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
           }
         />
       </ThemeProvider>
+      <div id="portal" style={{ position: "fixed", top: 0, left: 0 }} />
     </div>
   );
 };

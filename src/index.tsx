@@ -123,6 +123,7 @@ const Routes: React.FC = () => {
 
   return (
     <>
+      <style>{`#portal { position: fixed; top: 0; }`}</style>
       <WindowTitle title={intl.formatMessage(commonMessages.dashboard)} />
       {DEMO_MODE && <DemoBanner />}
       {homePageLoaded ? (

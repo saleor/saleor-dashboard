@@ -1,4 +1,6 @@
+import { Item } from "@glideapps/glide-data-grid";
 import Datagrid from "@saleor/components/Datagrid/Datagrid";
+import useDatagridChange from "@saleor/components/Datagrid/useDatagridChange";
 import {
   ChannelFragment,
   ProductDetailsVariantFragment,
@@ -53,35 +55,50 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
             ...variants[0]?.attributes.map(
               attribute => `attribute:${attribute.attribute.id}`,
             ),
-          ].map(c => getColumnData(c, variants, intl))
+          ].map(c => getColumnData(c, channels, warehouses, variants, intl))
         : [],
     [variants, warehouses, availableChannels],
+  );
+
+  const { onCellEdited, changes, getChangeIndex } = useDatagridChange(columns);
+
+  const getCellContent = React.useCallback(
+    ([column, row]: Item) =>
+      getData({
+        availableColumns: columns,
+        channels,
+        column,
+        row,
+        variants,
+        changes,
+        getChangeIndex,
+      }),
+    [columns, channels, variants],
   );
 
   return (
     <Datagrid
       availableColumns={columns}
-      data={variants}
-      getData={(variant, column) =>
-        getData({ channels: availableChannels, column, variant })
-      }
-      menuItems={id => [
+      getCellContent={getCellContent}
+      menuItems={index => [
         {
           label: "Edit Variant",
-          onSelect: () => onRowClick(id),
+          onSelect: () => onRowClick(variants[index].id),
         },
       ]}
-      onChange={() => undefined}
-    >
-      {selected => (
+      onCellEdited={onCellEdited}
+      rows={variants?.length ?? 0}
+      selectionActions={indexes => (
         <Button
           variant="tertiary"
-          onClick={() => onVariantBulkDelete(selected)}
+          onClick={() =>
+            onVariantBulkDelete(indexes.map(index => variants[index].id))
+          }
         >
           <FormattedMessage {...buttonMessages.delete} />
         </Button>
       )}
-    </Datagrid>
+    />
   );
 };
 ProductVariants.displayName = "ProductVariants";

@@ -1,6 +1,6 @@
 import { EditableGridCell, Item } from "@glideapps/glide-data-grid";
 import { updateAtIndex } from "@saleor/utils/lists";
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useRef } from "react";
 
 import { AvailableColumn } from "./types";
 
@@ -33,13 +33,7 @@ function useDatagridChange(availableColumns: readonly AvailableColumn[]) {
     [availableColumns]
   );
 
-  const output = useMemo(() => ({ changes, getChangeIndex, onCellEdited }), [
-    changes,
-    getChangeIndex,
-    onCellEdited
-  ]);
-
-  return output;
+  return { changes, getChangeIndex, onCellEdited };
 }
 
 export default useDatagridChange;

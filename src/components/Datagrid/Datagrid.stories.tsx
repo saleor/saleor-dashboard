@@ -89,7 +89,7 @@ const DefaultStory: React.FC = () => {
       };
     }
 
-    const data = initialData[row][columnId];
+    const data = change ?? initialData[row][columnId];
     return {
       ...baseProps,
       kind: GridCellKind.Text,
@@ -121,6 +121,7 @@ const DefaultStory: React.FC = () => {
           </Button>
         )}
         onCellEdited={onCellEdited}
+        rows={initialData.length}
       />
     </div>
   );
