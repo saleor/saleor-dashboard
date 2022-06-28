@@ -109,27 +109,19 @@ const DefaultStory: React.FC = () => {
             onSelect: () => undefined
           }
         ]}
-        onCellEdited={onCellEdited}
-      >
-        {selected => (
-          <>
-            <Button
-              variant="tertiary"
+        selectionActions={selection => (
+          <Button
+            variant="tertiary"
+            onClick={() =>
               // eslint-disable-next-line no-console
-              onClick={() => console.log("action 1", selected)}
-            >
-              Action 1
-            </Button>
-            <Button
-              variant="tertiary"
-              // eslint-disable-next-line no-console
-              onClick={() => console.log("action 2", selected)}
-            >
-              Action 2
-            </Button>
-          </>
+              console.log(selection.map(index => initialData[index]))
+            }
+          >
+            Action 1
+          </Button>
         )}
-      </Datagrid>
+        onCellEdited={onCellEdited}
+      />
     </div>
   );
 };

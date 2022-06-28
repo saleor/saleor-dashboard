@@ -26,6 +26,7 @@ export interface DatagridProps {
   availableColumns: readonly AvailableColumn[];
   getCellContent: (item: Item) => GridCell;
   menuItems: (index: number) => CardMenuItem[];
+  selectionActions: (selection: number[]) => React.ReactNode;
   onCellEdited: (item: Item, newValue: EditableGridCell) => void;
 }
 
@@ -33,6 +34,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   availableColumns,
   getCellContent,
   menuItems,
+  selectionActions,
   onCellEdited
 }): React.ReactElement => {
   const classes = useStyles();
@@ -93,6 +95,14 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const [selection, setSelection] = React.useState<GridSelection>();
 
   const props = useCells();
+
+  const selectionActionsComponent = React.useMemo(
+    () =>
+      selection?.rows.length > 0
+        ? selectionActions(Array.from(selection.rows))
+        : null,
+    [selection, selectionActions]
+  );
 
   // return (
   //   <div className={classes.wrapper}>
@@ -218,15 +228,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
       <ThemeProvider theme={datagridTheme}>
         {selection?.rows.length > 0 && (
           <div className={classes.actionBtnBar}>
-            <Button
-              variant="tertiary"
-              // onClick={() => {
-              //   const selected = Array.from(selection.rows);
-              //   console.log(selected);
-              // }}
-            >
-              Do it
-            </Button>
+            {selectionActionsComponent}
           </div>
         )}
         <DataEditor
