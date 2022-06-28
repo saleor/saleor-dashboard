@@ -32,6 +32,7 @@ const useStyles = makeStyles(
           color: theme.palette.saleor.main[1]
         }
       },
+      portal: { position: "fixed", top: 0, left: 0 },
       root: {
         borderTop: `1px solid ${theme.palette.divider}`,
         borderBottom: `1px solid ${theme.palette.divider}`,

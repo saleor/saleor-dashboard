@@ -125,10 +125,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
           getCellsForSelection
           onColumnMoved={onColumnMoved}
           onColumnResize={onColumnResize}
-          onGridSelectionChange={data => {
-            setSelection(data);
-          }}
-          onFinishedEditing={() => undefined}
+          onGridSelectionChange={setSelection}
           gridSelection={selection}
           rowHeight={48}
           headerHeight={48}
@@ -178,7 +175,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
           }
         />
       </ThemeProvider>
-      <div id="portal" style={{ position: "fixed", top: 0, left: 0 }} />
+      <div id="portal" className={classes.portal} />
     </div>
   );
 };
