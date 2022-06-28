@@ -20,7 +20,7 @@ jobs:
       SENTRY_URL_PREFIX: "~/dashboard/static"
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      MARKETPLACE_URL: "https://marketplace-gray.vercel.app/"
+      MARKETPLACE_URL: "https://apps.saleor.io/"
       ENVIRONMENT: demo-staging
       DEMO_MODE: true
     steps:
