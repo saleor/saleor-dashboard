@@ -2,12 +2,12 @@ import { FetchResult } from "@apollo/client";
 import {
   getAttributesAfterFileAttributesUpdate,
   mergeAttributeValueDeleteErrors,
-  mergeFileUploadErrors
+  mergeFileUploadErrors,
 } from "@saleor/attributes/utils/data";
 import {
   handleDeleteMultipleAttributeValues,
   handleUploadMultipleFiles,
-  prepareAttributesInput
+  prepareAttributesInput,
 } from "@saleor/attributes/utils/handlers";
 import { ChannelData } from "@saleor/channels/utils";
 import { VALUES_PAGINATE_BY } from "@saleor/config";
@@ -22,7 +22,7 @@ import {
   ProductFragment,
   ProductUpdateMutation,
   ProductUpdateMutationVariables,
-  UploadErrorFragment
+  UploadErrorFragment,
 } from "@saleor/graphql";
 import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
 import { getAttributeInputFromProduct } from "@saleor/products/utils/data";
@@ -40,39 +40,39 @@ export function createProductWithVariantsUpdateHandler(
   allChannels: ChannelData[],
   uploadFile: FileUploadMutationFn,
   updateProduct: (
-    variables: ProductUpdateMutationVariables
+    variables: ProductUpdateMutationVariables,
   ) => Promise<FetchResult<ProductUpdateMutation>>,
   updateChannels: (options: {
     variables: ProductChannelListingUpdateMutationVariables;
   }) => Promise<FetchResult<ProductChannelListingUpdateMutation>>,
   deleteAttributeValue: (
-    variables: AttributeValueDeleteMutationVariables
-  ) => Promise<FetchResult<AttributeValueDeleteMutation>>
+    variables: AttributeValueDeleteMutationVariables,
+  ) => Promise<FetchResult<AttributeValueDeleteMutation>>,
 ) {
   return async (
-    data: ProductUpdatePageSubmitData
+    data: ProductUpdatePageSubmitData,
   ): Promise<ProductWithVariantsUpdateError[]> => {
     let errors: ProductWithVariantsUpdateError[] = [];
 
     const uploadFilesResult = await handleUploadMultipleFiles(
       data.attributesWithNewFileValue,
-      variables => uploadFile({ variables })
+      variables => uploadFile({ variables }),
     );
 
     const deleteAttributeValuesResult = await handleDeleteMultipleAttributeValues(
       data.attributesWithNewFileValue,
       product?.attributes,
-      deleteAttributeValue
+      deleteAttributeValue,
     );
 
     errors = [
       ...errors,
       ...mergeFileUploadErrors(uploadFilesResult),
-      ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult)
+      ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
     ];
     const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
       data.attributesWithNewFileValue,
-      uploadFilesResult
+      uploadFilesResult,
     );
 
     const productVariables: ProductUpdateMutationVariables = {
@@ -81,7 +81,7 @@ export function createProductWithVariantsUpdateHandler(
         attributes: prepareAttributesInput({
           attributes: data.attributes,
           prevAttributes: getAttributeInputFromProduct(product),
-          updatedFileAttributes
+          updatedFileAttributes,
         }),
         category: data.category,
         chargeTaxes: data.chargeTaxes,
@@ -91,19 +91,19 @@ export function createProductWithVariantsUpdateHandler(
         rating: data.rating,
         seo: {
           description: data.seoDescription,
-          title: data.seoTitle
+          title: data.seoTitle,
         },
         slug: data.slug,
-        taxCode: data.changeTaxCode ? data.taxCode : null
+        taxCode: data.changeTaxCode ? data.taxCode : null,
       },
-      firstValues: VALUES_PAGINATE_BY
+      firstValues: VALUES_PAGINATE_BY,
     };
 
     const result = await updateProduct(productVariables);
     errors = [...errors, ...result.data.productUpdate.errors];
 
     await updateChannels({
-      variables: getChannelsVariables(product, allChannels, data)
+      variables: getChannelsVariables(product, allChannels, data),
     });
 
     return errors;

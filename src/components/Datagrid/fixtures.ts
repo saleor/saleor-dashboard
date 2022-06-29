@@ -9,8 +9,8 @@ export const initialData = [
     loan: {
       active: true,
       amount: 10.0,
-      currency: "USD"
-    }
+      currency: "USD",
+    },
   },
   {
     id: "2",
@@ -22,8 +22,8 @@ export const initialData = [
     loan: {
       active: true,
       amount: 151.0,
-      currency: "USD"
-    }
+      currency: "USD",
+    },
   },
   {
     id: "3",
@@ -35,8 +35,8 @@ export const initialData = [
     loan: {
       active: true,
       amount: 21.0,
-      currency: "USD"
-    }
+      currency: "USD",
+    },
   },
   {
     id: "4",
@@ -48,8 +48,8 @@ export const initialData = [
     loan: {
       active: true,
       amount: 52.0,
-      currency: "USD"
-    }
+      currency: "USD",
+    },
   },
   {
     id: "5",
@@ -61,8 +61,8 @@ export const initialData = [
     loan: {
       active: true,
       amount: 991.0,
-      currency: "USD"
-    }
+      currency: "USD",
+    },
   },
   {
     id: "6",
@@ -74,8 +74,8 @@ export const initialData = [
     loan: {
       active: true,
       amount: 82.0,
-      currency: "USD"
-    }
+      currency: "USD",
+    },
   },
   {
     id: "7",
@@ -87,8 +87,8 @@ export const initialData = [
     loan: {
       active: false,
       amount: null,
-      currency: "USD"
-    }
+      currency: "USD",
+    },
   },
   {
     id: "8",
@@ -100,8 +100,8 @@ export const initialData = [
     loan: {
       active: true,
       amount: 1.1,
-      currency: "USD"
-    }
+      currency: "USD",
+    },
   },
   {
     id: "9",
@@ -113,8 +113,8 @@ export const initialData = [
     loan: {
       active: true,
       amount: 1000.0,
-      currency: "USD"
-    }
+      currency: "USD",
+    },
   },
   {
     id: "10",
@@ -126,7 +126,7 @@ export const initialData = [
     loan: {
       active: false,
       amount: null,
-      currency: "USD"
-    }
-  }
+      currency: "USD",
+    },
+  },
 ];

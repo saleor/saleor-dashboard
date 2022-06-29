@@ -9,7 +9,7 @@ export function usePriceField(currency: string, onChange: FormChange) {
   const minValue = 0;
 
   const maxDecimalLength = useMemo(() => getCurrencyDecimalPoints(currency), [
-    currency
+    currency,
   ]);
 
   const handleChange: FormChange = e => {
@@ -30,8 +30,8 @@ export function usePriceField(currency: string, onChange: FormChange) {
     onChange({
       target: {
         name: e.target.name,
-        value: value ? parseFloat(value) : null
-      }
+        value: value ? parseFloat(value) : null,
+      },
     });
   };
 
@@ -55,6 +55,6 @@ export function usePriceField(currency: string, onChange: FormChange) {
     onChange: handleChange,
     onKeyDown: handleKeyDown,
     minValue,
-    step
+    step,
   };
 }

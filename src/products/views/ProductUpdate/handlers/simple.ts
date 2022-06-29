@@ -2,12 +2,12 @@ import { FetchResult } from "@apollo/client";
 import {
   getAttributesAfterFileAttributesUpdate,
   mergeAttributeValueDeleteErrors,
-  mergeFileUploadErrors
+  mergeFileUploadErrors,
 } from "@saleor/attributes/utils/data";
 import {
   handleDeleteMultipleAttributeValues,
   handleUploadMultipleFiles,
-  prepareAttributesInput
+  prepareAttributesInput,
 } from "@saleor/attributes/utils/handlers";
 import { ChannelData } from "@saleor/channels/utils";
 import { VALUES_PAGINATE_BY } from "@saleor/config";
@@ -30,12 +30,12 @@ import {
   StockErrorFragment,
   UploadErrorFragment,
   VariantCreateMutation,
-  VariantCreateMutationVariables
+  VariantCreateMutationVariables,
 } from "@saleor/graphql";
 import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
 import {
   getAttributeInputFromProduct,
-  mapFormsetStockToStockInput
+  mapFormsetStockToStockInput,
 } from "@saleor/products/utils/data";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
 
@@ -44,7 +44,7 @@ import {
   getSimpleChannelsVariables,
   getSimpleProductErrors,
   getSimpleProductVariables,
-  getVariantChannelsInput
+  getVariantChannelsInput,
 } from "./utils";
 
 export type SimpleProductUpdateError =
@@ -58,10 +58,10 @@ export function createSimpleProductUpdateHandler(
   product: ProductFragment,
   allChannels: ChannelData[],
   uploadFile: (
-    variables: FileUploadMutationVariables
+    variables: FileUploadMutationVariables,
   ) => Promise<FetchResult<FileUploadMutation>>,
   updateSimpleProduct: (
-    variables: SimpleProductUpdateMutationVariables
+    variables: SimpleProductUpdateMutationVariables,
   ) => Promise<FetchResult<SimpleProductUpdateMutation>>,
   updateChannels: (options: {
     variables: ProductChannelListingUpdateMutationVariables;
@@ -73,33 +73,33 @@ export function createSimpleProductUpdateHandler(
     variables: VariantCreateMutationVariables;
   }) => Promise<FetchResult<VariantCreateMutation>>,
   deleteAttributeValue: (
-    variables: AttributeValueDeleteMutationVariables
-  ) => Promise<FetchResult<AttributeValueDeleteMutation>>
+    variables: AttributeValueDeleteMutationVariables,
+  ) => Promise<FetchResult<AttributeValueDeleteMutation>>,
 ) {
   return async (
-    data: ProductUpdatePageSubmitData
+    data: ProductUpdatePageSubmitData,
   ): Promise<SimpleProductUpdateError[]> => {
     let errors: SimpleProductUpdateError[] = [];
 
     const uploadFilesResult = await handleUploadMultipleFiles(
       data.attributesWithNewFileValue,
-      uploadFile
+      uploadFile,
     );
 
     const deleteAttributeValuesResult = await handleDeleteMultipleAttributeValues(
       data.attributesWithNewFileValue,
       product?.attributes,
-      deleteAttributeValue
+      deleteAttributeValue,
     );
 
     errors = [
       ...errors,
       ...mergeFileUploadErrors(uploadFilesResult),
-      ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult)
+      ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
     ];
     const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
       data.attributesWithNewFileValue,
-      uploadFilesResult
+      uploadFilesResult,
     );
 
     const productVariables: ProductUpdateMutationVariables = {
@@ -108,7 +108,7 @@ export function createSimpleProductUpdateHandler(
         attributes: prepareAttributesInput({
           attributes: data.attributes,
           prevAttributes: getAttributeInputFromProduct(product),
-          updatedFileAttributes
+          updatedFileAttributes,
         }),
         category: data.category,
         chargeTaxes: data.chargeTaxes,
@@ -118,12 +118,12 @@ export function createSimpleProductUpdateHandler(
         rating: data.rating,
         seo: {
           description: data.seoDescription,
-          title: data.seoTitle
+          title: data.seoTitle,
         },
         slug: data.slug,
-        taxCode: data.changeTaxCode ? data.taxCode : null
+        taxCode: data.changeTaxCode ? data.taxCode : null,
       },
-      firstValues: VALUES_PAGINATE_BY
+      firstValues: VALUES_PAGINATE_BY,
     };
 
     if (product.variants.length) {
@@ -131,20 +131,20 @@ export function createSimpleProductUpdateHandler(
         getSimpleProductVariables(
           productVariables,
           data,
-          product.variants[0].id
-        )
+          product.variants[0].id,
+        ),
       );
       errors = [...errors, ...getSimpleProductErrors(result.data)];
 
       await updateChannels({
-        variables: getSimpleChannelsVariables(data, product)
+        variables: getSimpleChannelsVariables(data, product),
       });
 
       updateVariantChannels({
         variables: {
           id: product.variants[0].id,
-          input: getVariantChannelsInput(data)
-        }
+          input: getVariantChannelsInput(data),
+        },
       });
       // Failsafe if somehow product did not have any variant created before
     } else {
@@ -154,17 +154,17 @@ export function createSimpleProductUpdateHandler(
             attributes:
               product.productType.variantAttributes?.map(attribute => ({
                 id: attribute.id,
-                values: attribute.choices.edges.map(value => value.node.slug)
+                values: attribute.choices.edges.map(value => value.node.slug),
               })) || [],
             product: product.id,
             sku: data.sku,
-            stocks: data.updateStocks.map(mapFormsetStockToStockInput)
-          }
-        }
+            stocks: data.updateStocks.map(mapFormsetStockToStockInput),
+          },
+        },
       });
       errors = [
         ...errors,
-        ...productVariantResult.data.productVariantCreate.errors
+        ...productVariantResult.data.productVariantCreate.errors,
       ];
 
       const variantId =
@@ -174,16 +174,16 @@ export function createSimpleProductUpdateHandler(
         updateVariantChannels({
           variables: {
             id: variantId,
-            input: getVariantChannelsInput(data)
-          }
+            input: getVariantChannelsInput(data),
+          },
         });
 
         await updateChannels({
-          variables: getChannelsVariables(product, allChannels, data)
+          variables: getChannelsVariables(product, allChannels, data),
         });
 
         const result = await updateSimpleProduct(
-          getSimpleProductVariables(productVariables, data, variantId)
+          getSimpleProductVariables(productVariables, data, variantId),
         );
         errors = [...errors, ...getSimpleProductErrors(result.data)];
       }

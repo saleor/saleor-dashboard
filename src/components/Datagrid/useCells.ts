@@ -9,7 +9,7 @@ function useCells() {
   const { locale } = useLocale();
   const value = useMemo(
     () => [moneyCellRenderer(locale), numberCellRenderer(locale)],
-    [locale]
+    [locale],
   );
 
   return useCustomCells(value);

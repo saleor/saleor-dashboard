@@ -6,7 +6,7 @@ import { DatagridChange } from "@saleor/components/Datagrid/useDatagridChange";
 import {
   ChannelFragment,
   ProductDetailsVariantFragment,
-  WarehouseFragment
+  WarehouseFragment,
 } from "@saleor/graphql";
 import { MutableRefObject } from "react";
 import { IntlShape } from "react-intl";
@@ -34,12 +34,12 @@ export function getData({
   column,
   getChangeIndex,
   row,
-  variants
+  variants,
 }: GetData): GridCell {
   const columnId = availableColumns[column].id;
   const common = {
     allowOverlay: true,
-    readonly: false
+    readonly: false,
   };
   const change = changes.current[getChangeIndex(columnId, row)]?.data;
 
@@ -51,7 +51,7 @@ export function getData({
         ...common,
         data: value,
         displayData: value,
-        kind: GridCellKind.Text
+        kind: GridCellKind.Text,
       };
   }
 
@@ -59,7 +59,7 @@ export function getData({
     const value =
       change?.value ??
       variants[row].stocks.find(
-        stock => stock.warehouse.id === columnId.match(isStockColumn)[1]
+        stock => stock.warehouse.id === columnId.match(isStockColumn)[1],
       )?.quantity ??
       0;
 
@@ -67,17 +67,17 @@ export function getData({
       ...common,
       data: {
         kind: "number-cell",
-        value
+        value,
       },
       kind: GridCellKind.Custom,
-      copyData: value.toString()
+      copyData: value.toString(),
     } as NumberCell;
   }
 
   if (isChannelColumn.test(columnId)) {
     const channelId = columnId.match(isChannelColumn)[1];
     const listing = variants[row].channelListings.find(
-      listing => listing.channel.id === channelId
+      listing => listing.channel.id === channelId,
     );
     const value = change?.value ?? listing?.price?.amount ?? 0;
 
@@ -88,9 +88,9 @@ export function getData({
         kind: "money-cell",
         value,
         currency: channels.find(channel => channelId === channel.id)
-          ?.currencyCode
+          ?.currencyCode,
       },
-      copyData: value.toString()
+      copyData: value.toString(),
     } as MoneyCell;
   }
 
@@ -100,7 +100,7 @@ export function getData({
       variants[row].attributes
         .find(
           attribute =>
-            attribute.attribute.id === columnId.match(isAttributeColumn)[1]
+            attribute.attribute.id === columnId.match(isAttributeColumn)[1],
         )
         ?.values.map(v => v.name)
         .join(", ");
@@ -109,7 +109,7 @@ export function getData({
       ...common,
       data: value,
       displayData: value,
-      kind: GridCellKind.Text
+      kind: GridCellKind.Text,
     };
   }
 }
@@ -119,17 +119,17 @@ export function getColumnData(
   channels: ChannelFragment[],
   warehouses: WarehouseFragment[],
   variants: ProductDetailsVariantFragment[],
-  intl: IntlShape
+  intl: IntlShape,
 ): AvailableColumn {
   const common = {
     id: name,
-    width: 200
+    width: 200,
   };
 
   if (["name", "sku"].includes(name)) {
     return {
       ...common,
-      title: intl.formatMessage(messages[name])
+      title: intl.formatMessage(messages[name]),
     };
   }
 
@@ -138,19 +138,19 @@ export function getColumnData(
       ...common,
       width: 100,
       title: warehouses.find(
-        warehouse => warehouse.id === name.match(isStockColumn)[1]
-      )?.name
+        warehouse => warehouse.id === name.match(isStockColumn)[1],
+      )?.name,
     };
   }
 
   if (isChannelColumn.test(name)) {
     const channel = channels.find(
-      channel => channel.id === name.match(isChannelColumn)[1]
+      channel => channel.id === name.match(isChannelColumn)[1],
     );
     return {
       ...common,
       width: 150,
-      title: `${channel?.name} [${channel.currencyCode}]`
+      title: `${channel?.name} [${channel.currencyCode}]`,
     };
   }
 
@@ -159,10 +159,10 @@ export function getColumnData(
       ...common,
       title: variants
         .flatMap(variant =>
-          variant.attributes.map(attribute => attribute.attribute)
+          variant.attributes.map(attribute => attribute.attribute),
         )
         .find(attribute => attribute.id === name.match(isAttributeColumn)[1])
-        ?.name
+        ?.name,
     };
   }
 

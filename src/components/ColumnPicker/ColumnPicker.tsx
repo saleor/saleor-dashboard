@@ -6,7 +6,7 @@ import {
   ColumnsIcon,
   IconButton,
   IconButtonProps,
-  makeStyles
+  makeStyles,
 } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import { score } from "fuzzaldrin";

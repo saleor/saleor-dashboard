@@ -2,7 +2,7 @@ import {
   CustomCell,
   CustomCellRenderer,
   getMiddleCenterBias,
-  ProvideEditorCallback
+  ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -25,15 +25,15 @@ const useNumberCellStyles = makeStyles(
       border: "none",
       padding: theme.spacing(1.5, 1),
       outline: 0,
-      textAlign: "right"
-    }
+      textAlign: "right",
+    },
   }),
-  { name: "NumberCell" }
+  { name: "NumberCell" },
 );
 
 const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
   value: cell,
-  onChange
+  onChange,
 }) => {
   const classes = useNumberCellStyles();
 
@@ -46,8 +46,8 @@ const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
           ...cell,
           data: {
             ...cell.data,
-            value: event.target.value ? parseFloat(event.target.value) : null
-          }
+            value: event.target.value ? parseFloat(event.target.value) : null,
+          },
         })
       }
       value={cell.data.value}
@@ -57,7 +57,7 @@ const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
 };
 
 export const numberCellRenderer = (
-  locale: Locale
+  locale: Locale,
 ): CustomCellRenderer<NumberCell> => ({
   isMatch: (c): c is NumberCell => (c.data as any).kind === "number-cell",
   draw: (args, cell) => {
@@ -69,7 +69,7 @@ export const numberCellRenderer = (
     ctx.fillText(
       formatted,
       rect.x + rect.width - 8,
-      rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme)
+      rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
     );
 
     return true;
@@ -82,12 +82,12 @@ export const numberCellRenderer = (
       copyData: "",
       data: {
         ...cell.data,
-        value: cell.data.value ?? null
-      }
-    })
+        value: cell.data.value ?? null,
+      },
+    }),
   }),
   onPaste: (value, data) => ({
     ...data,
-    value: parseFloat(value)
-  })
+    value: parseFloat(value),
+  }),
 });

@@ -2,7 +2,7 @@ import {
   CustomCell,
   CustomCellRenderer,
   getMiddleCenterBias,
-  ProvideEditorCallback
+  ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -27,15 +27,15 @@ const useMoneyCellStyles = makeStyles(
       border: "none",
       padding: theme.spacing(1.5, 1),
       outline: 0,
-      textAlign: "right"
-    }
+      textAlign: "right",
+    },
   }),
-  { name: "MoneyCell" }
+  { name: "MoneyCell" },
 );
 
 const MoneyCellEdit: ReturnType<ProvideEditorCallback<MoneyCell>> = ({
   value: cell,
-  onChange: onChangeBase
+  onChange: onChangeBase,
 }) => {
   const classes = useMoneyCellStyles();
   const { onChange, onKeyDown, minValue, step } = usePriceField(
@@ -45,9 +45,9 @@ const MoneyCellEdit: ReturnType<ProvideEditorCallback<MoneyCell>> = ({
         ...cell,
         data: {
           ...cell.data,
-          value: event.target.value
-        }
-      })
+          value: event.target.value,
+        },
+      }),
   );
 
   return (
@@ -65,7 +65,7 @@ const MoneyCellEdit: ReturnType<ProvideEditorCallback<MoneyCell>> = ({
 };
 
 export const moneyCellRenderer = (
-  locale: Locale
+  locale: Locale,
 ): CustomCellRenderer<MoneyCell> => ({
   isMatch: (c): c is MoneyCell => (c.data as any).kind === "money-cell",
   draw: (args, cell) => {
@@ -73,12 +73,12 @@ export const moneyCellRenderer = (
     const { currency, value } = cell.data;
     const currencyFractionDigits = new Intl.NumberFormat(locale, {
       style: "currency",
-      currency
+      currency,
     }).resolvedOptions().maximumFractionDigits;
     const formatted =
       value?.toLocaleString(locale, {
         maximumFractionDigits: currencyFractionDigits,
-        minimumFractionDigits: currencyFractionDigits
+        minimumFractionDigits: currencyFractionDigits,
       }) ?? "-";
 
     ctx.fillStyle = theme.textDark;
@@ -86,7 +86,7 @@ export const moneyCellRenderer = (
     ctx.fillText(
       formatted,
       rect.x + rect.width - 8,
-      rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme)
+      rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
     );
 
     return true;
@@ -99,12 +99,12 @@ export const moneyCellRenderer = (
       copyData: "",
       data: {
         ...cell.data,
-        value: cell.data.value ?? null
-      }
-    })
+        value: cell.data.value ?? null,
+      },
+    }),
   }),
   onPaste: (value, data) => ({
     ...data,
-    value: parseFloat(value)
-  })
+    value: parseFloat(value),
+  }),
 });

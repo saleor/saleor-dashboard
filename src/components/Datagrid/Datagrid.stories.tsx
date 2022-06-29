@@ -17,12 +17,12 @@ const availableColumns = [
   { title: "Name", id: "name", width: 200 },
   { title: "Balance", id: "balance", width: 200 },
   { title: "Eye color", id: "eyeColor", width: 200 },
-  { title: "Age", id: "age", width: 80 }
+  { title: "Age", id: "age", width: 80 },
 ] as const;
 
 const DefaultStory: React.FC = () => {
   const { changes, onCellEdited, getChangeIndex } = useDatagridChange(
-    availableColumns
+    availableColumns,
   );
 
   const getCellContent = React.useCallback(([column, row]: Item): GridCell => {
@@ -33,13 +33,13 @@ const DefaultStory: React.FC = () => {
       allowOverlay: true,
       readonly: false,
       themeOverride: errors.find(
-        err => err.id === initialData[row].id && err.field === columnId
+        err => err.id === initialData[row].id && err.field === columnId,
       )
         ? {
             accentColor: "#FF0000",
-            bgCell: "#FF0000"
+            bgCell: "#FF0000",
           }
-        : undefined
+        : undefined,
     };
 
     if (columnId === "loan-active") {
@@ -48,7 +48,7 @@ const DefaultStory: React.FC = () => {
         ...baseProps,
         allowOverlay: false,
         kind: GridCellKind.Boolean,
-        data: value
+        data: value,
       };
     }
 
@@ -60,9 +60,9 @@ const DefaultStory: React.FC = () => {
         data: {
           kind: "money-cell",
           currency: initialData[row].loan.currency,
-          value
+          value,
         },
-        copyData: value
+        copyData: value,
       };
     }
 
@@ -72,7 +72,7 @@ const DefaultStory: React.FC = () => {
         ...baseProps,
         kind: GridCellKind.Number,
         data,
-        displayData: data?.toString()
+        displayData: data?.toString(),
       };
     }
 
@@ -83,9 +83,9 @@ const DefaultStory: React.FC = () => {
         kind: GridCellKind.Custom,
         data: {
           kind: "number-cell",
-          value
+          value,
         },
-        copyData: value
+        copyData: value,
       };
     }
 
@@ -94,7 +94,7 @@ const DefaultStory: React.FC = () => {
       ...baseProps,
       kind: GridCellKind.Text,
       data,
-      displayData: data
+      displayData: data,
     };
   }, []);
 
@@ -106,8 +106,8 @@ const DefaultStory: React.FC = () => {
         menuItems={() => [
           {
             label: "Do something",
-            onSelect: () => undefined
-          }
+            onSelect: () => undefined,
+          },
         ]}
         selectionActions={selection => (
           <Button

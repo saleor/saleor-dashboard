@@ -8,17 +8,17 @@ import { AvailableColumn } from "./types";
 function useColumns(availableColumns: readonly AvailableColumn[]) {
   const [query, setQuery] = useState("");
   const [displayedColumns, setDisplayedColumns] = useStateFromProps(
-    availableColumns.map(({ id }) => id)
+    availableColumns.map(({ id }) => id),
   );
   const [columnState, setColumnState] = useStateFromProps(availableColumns);
 
   const onColumnMoved = useCallback(
     (startIndex: number, endIndex: number): void => {
       setDisplayedColumns(old =>
-        addAtIndex(old[startIndex], removeAtIndex(old, startIndex), endIndex)
+        addAtIndex(old[startIndex], removeAtIndex(old, startIndex), endIndex),
       );
     },
-    []
+    [],
   );
   const onColumnResize = useCallback(
     (column: GridColumn, newSize: number) =>
@@ -26,10 +26,10 @@ function useColumns(availableColumns: readonly AvailableColumn[]) {
         prevColumns.map(prevColumn =>
           prevColumn.id === column.id
             ? { ...prevColumn, width: newSize }
-            : prevColumn
-        )
+            : prevColumn,
+        ),
       ),
-    []
+    [],
   );
   const onColumnsChange = useCallback(
     (picked: string[]) =>
@@ -37,33 +37,33 @@ function useColumns(availableColumns: readonly AvailableColumn[]) {
         ...prevColumns.filter(column => picked.includes(column)),
         ...picked
           .filter(column => !prevColumns.find(c => c === column))
-          .map(column => availableColumns.find(ac => ac.id === column).id)
+          .map(column => availableColumns.find(ac => ac.id === column).id),
       ]),
-    [availableColumns]
+    [availableColumns],
   );
 
   const columns = useMemo(
     () => displayedColumns.map(id => columnState.find(ac => ac.id === id)),
-    [displayedColumns, columnState]
+    [displayedColumns, columnState],
   );
   const columnChoices = useMemo(
     () =>
       columns.map(({ id, title }) => ({
         label: title,
-        value: id
+        value: id,
       })),
-    [columns]
+    [columns],
   );
   const availableColumnsChoices = useMemo(
     () =>
       availableColumns.map(({ id, title }) => ({
         label: title,
-        value: id
+        value: id,
       })),
-    [availableColumns]
+    [availableColumns],
   );
   const defaultColumns = useMemo(() => availableColumns.map(({ id }) => id), [
-    availableColumns
+    availableColumns,
   ]);
 
   return {
@@ -77,8 +77,8 @@ function useColumns(availableColumns: readonly AvailableColumn[]) {
     onColumnsChange,
     picker: {
       query,
-      setQuery
-    }
+      setQuery,
+    },
   };
 }
 

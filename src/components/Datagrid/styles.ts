@@ -4,7 +4,7 @@ const useStyles = makeStyles(
   theme => {
     const rowActionSelected = {
       background: theme.palette.divider,
-      color: theme.palette.saleor.main[1]
+      color: theme.palette.saleor.main[1],
     };
 
     return {
@@ -19,37 +19,37 @@ const useStyles = makeStyles(
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-end",
-        padding: theme.spacing(1)
+        padding: theme.spacing(1),
       },
       columnPicker: {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: 48
+        height: 48,
       },
       columnPickerBtn: {
         "&:hover": {
-          color: theme.palette.saleor.main[1]
-        }
+          color: theme.palette.saleor.main[1],
+        },
       },
       portal: { position: "fixed", top: 0, left: 0 },
       root: {
         borderTop: `1px solid ${theme.palette.divider}`,
         borderBottom: `1px solid ${theme.palette.divider}`,
-        position: "relative"
+        position: "relative",
       },
       rowActionBar: {
         height: "100%",
         background: theme.palette.background.default,
         borderLeft: `1px solid ${theme.palette.divider}`,
-        width: 48
+        width: 48,
       },
       rowAction: {
         "&:hover, $rowActionSelected": {
-          rowActionSelected
+          rowActionSelected,
         },
         "&:not(:last-child)": {
-          marginBottom: -1
+          marginBottom: -1,
         },
         border: `1px solid ${theme.palette.divider}`,
         cursor: "pointer",
@@ -58,12 +58,12 @@ const useStyles = makeStyles(
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: 49
+        height: 49,
       },
-      rowActionSelected
+      rowActionSelected,
     };
   },
-  { name: "Datagrid" }
+  { name: "Datagrid" },
 );
 
 export default useStyles;

@@ -13,7 +13,7 @@ import {
   useSimpleProductUpdateMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
-  useVariantCreateMutation
+  useVariantCreateMutation,
 } from "@saleor/graphql";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
@@ -24,17 +24,17 @@ import { useIntl } from "react-intl";
 
 import {
   createSimpleProductUpdateHandler,
-  SimpleProductUpdateError
+  SimpleProductUpdateError,
 } from "./simple";
 import {
   createProductWithVariantsUpdateHandler,
-  ProductWithVariantsUpdateError
+  ProductWithVariantsUpdateError,
 } from "./withVariants";
 
 export type UseProductUpdateHandlerError = ProductErrorWithAttributesFragment;
 
 type UseProductUpdateHandler = (
-  data: ProductUpdatePageSubmitData
+  data: ProductUpdatePageSubmitData,
 ) => Promise<
   Array<
     | SimpleProductUpdateError
@@ -51,7 +51,7 @@ interface UseProductUpdateHandlerOpts {
 
 export function useProductUpdateHandler(
   product: ProductFragment,
-  allChannels: ChannelData[]
+  allChannels: ChannelData[],
 ): [UseProductUpdateHandler, UseProductUpdateHandlerOpts] {
   const intl = useIntl();
   const notify = useNotifier();
@@ -59,11 +59,11 @@ export function useProductUpdateHandler(
   const [updateMetadata, updateMetadataOpts] = useUpdateMetadataMutation({});
   const [
     updatePrivateMetadata,
-    updatePrivateMetadataOpts
+    updatePrivateMetadataOpts,
   ] = useUpdatePrivateMetadataMutation({});
   const [
     productVariantCreate,
-    productVariantCreateOpts
+    productVariantCreateOpts,
   ] = useVariantCreateMutation({});
 
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
@@ -72,43 +72,43 @@ export function useProductUpdateHandler(
     if (data.productUpdate.errors.length === 0) {
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges)
+        text: intl.formatMessage(commonMessages.savedChanges),
       });
     }
   };
   const [updateProduct, updateProductOpts] = useProductUpdateMutation({
-    onCompleted: handleUpdate
+    onCompleted: handleUpdate,
   });
   const [
     updateSimpleProduct,
-    updateSimpleProductOpts
+    updateSimpleProductOpts,
   ] = useSimpleProductUpdateMutation({
-    onCompleted: handleUpdate
+    onCompleted: handleUpdate,
   });
   const [
     updateChannels,
-    updateChannelsOpts
+    updateChannelsOpts,
   ] = useProductChannelListingUpdateMutation({
     onCompleted: data => {
       if (!!data.productChannelListingUpdate.errors.length) {
         data.productChannelListingUpdate.errors.forEach(error =>
           notify({
             status: "error",
-            text: getProductErrorMessage(error, intl)
-          })
+            text: getProductErrorMessage(error, intl),
+          }),
         );
       }
-    }
+    },
   });
 
   const [
     updateVariantChannels,
-    updateVariantChannelsOpts
+    updateVariantChannelsOpts,
   ] = useProductVariantChannelListingUpdateMutation({});
 
   const [
     deleteAttributeValue,
-    deleteAttributeValueOpts
+    deleteAttributeValueOpts,
   ] = useAttributeValueDeleteMutation({});
 
   const submit = createMetadataUpdateHandler(
@@ -120,7 +120,7 @@ export function useProductUpdateHandler(
           uploadFile,
           variables => updateProduct({ variables }),
           updateChannels,
-          variables => deleteAttributeValue({ variables })
+          variables => deleteAttributeValue({ variables }),
         )
       : createSimpleProductUpdateHandler(
           product,
@@ -130,10 +130,10 @@ export function useProductUpdateHandler(
           updateChannels,
           updateVariantChannels,
           productVariantCreate,
-          variables => deleteAttributeValue({ variables })
+          variables => deleteAttributeValue({ variables }),
         ),
     variables => updateMetadata({ variables }),
-    variables => updatePrivateMetadata({ variables })
+    variables => updatePrivateMetadata({ variables }),
   );
 
   const called =
@@ -160,13 +160,13 @@ export function useProductUpdateHandler(
   const errors = [
     ...(updateProductOpts.data?.productUpdate.errors ?? []),
     ...(updateSimpleProductOpts.data?.productUpdate.errors ?? []),
-    ...(productVariantCreateOpts.data?.productVariantCreate.errors ?? [])
+    ...(productVariantCreateOpts.data?.productVariantCreate.errors ?? []),
   ];
 
   const channelsErrors = [
     ...(updateChannelsOpts?.data?.productChannelListingUpdate?.errors ?? []),
     ...(updateVariantChannelsOpts?.data?.productVariantChannelListingUpdate
-      ?.errors ?? [])
+      ?.errors ?? []),
   ];
 
   return [
@@ -175,7 +175,7 @@ export function useProductUpdateHandler(
       called,
       loading,
       channelsErrors,
-      errors
-    }
+      errors,
+    },
   ];
 }

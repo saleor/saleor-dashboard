@@ -15,9 +15,9 @@ function useDatagridChange(availableColumns: readonly AvailableColumn[]) {
   const getChangeIndex = useCallback(
     (column: string, row: number): number =>
       changes.current.findIndex(
-        change => change.column === column && change.row === row
+        change => change.column === column && change.row === row,
       ),
-    []
+    [],
   );
 
   const onCellEdited = useCallback(
@@ -30,7 +30,7 @@ function useDatagridChange(availableColumns: readonly AvailableColumn[]) {
           ? [...changes.current, update]
           : updateAtIndex(update, changes.current, existingIndex);
     },
-    [availableColumns]
+    [availableColumns],
   );
 
   return { changes, getChangeIndex, onCellEdited };

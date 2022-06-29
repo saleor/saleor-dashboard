@@ -3,7 +3,7 @@ import DataEditor, {
   GridCell,
   GridSelection,
   Item,
-  Theme
+  Theme,
 } from "@glideapps/glide-data-grid";
 import { MoreHorizontalIcon, useTheme } from "@saleor/macaw-ui";
 import classNames from "classnames";
@@ -32,7 +32,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   menuItems,
   rows,
   selectionActions,
-  onCellEdited
+  onCellEdited,
 }): React.ReactElement => {
   const classes = useStyles();
   const theme = useTheme();
@@ -51,9 +51,9 @@ export const Datagrid: React.FC<DatagridProps> = ({
       fontFamily: theme.typography.fontFamily,
       baseFontStyle: theme.typography.body1.fontSize as string,
       headerFontStyle: theme.typography.body2.fontSize as string,
-      editorFontSize: theme.typography.body1.fontSize as string
+      editorFontSize: theme.typography.body1.fontSize as string,
     }),
-    [theme]
+    [theme],
   );
 
   const {
@@ -65,16 +65,16 @@ export const Datagrid: React.FC<DatagridProps> = ({
     onColumnMoved,
     onColumnResize,
     onColumnsChange,
-    picker
+    picker,
   } = useColumns(availableColumns);
 
   const getCellContentEnh = React.useCallback(
     ([column, row]: Item): GridCell =>
       getCellContent([
         availableColumns.findIndex(ac => ac.id === displayedColumns[column]),
-        row
+        row,
       ]),
-    [getCellContent, availableColumns, displayedColumns]
+    [getCellContent, availableColumns, displayedColumns],
   );
 
   const onCellEditedEnh = React.useCallback(
@@ -82,11 +82,11 @@ export const Datagrid: React.FC<DatagridProps> = ({
       onCellEdited(
         [
           availableColumns.findIndex(ac => ac.id === displayedColumns[column]),
-          row
+          row,
         ],
-        newValue
+        newValue,
       ),
-    [getCellContent, availableColumns, displayedColumns]
+    [getCellContent, availableColumns, displayedColumns],
   );
 
   const [selection, setSelection] = React.useState<GridSelection>();
@@ -98,7 +98,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
       selection?.rows.length > 0
         ? selectionActions(Array.from(selection.rows))
         : null,
-    [selection, selectionActions]
+    [selection, selectionActions],
   );
 
   return (
@@ -137,7 +137,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   IconButtonProps={{
                     className: classes.columnPickerBtn,
                     variant: "secondary",
-                    hoverOutline: false
+                    hoverOutline: false,
                   }}
                   availableColumns={availableColumnsChoices}
                   initialColumns={columnChoices}
@@ -156,8 +156,8 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   <div
                     className={classNames(classes.rowAction, {
                       [classes.rowActionSelected]: selection?.rows.hasIndex(
-                        index
-                      )
+                        index,
+                      ),
                     })}
                   >
                     <CardMenu
@@ -165,7 +165,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                       IconButtonProps={{
                         className: classes.columnPickerBtn,
                         hoverOutline: false,
-                        state: "default"
+                        state: "default",
                       }}
                       menuItems={menuItems(index)}
                     />
