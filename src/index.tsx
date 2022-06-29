@@ -13,6 +13,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import AppsSection from "./apps";
 import { ExternalAppProvider } from "./apps/components/ExternalAppContext";
+import { useLocationState } from "./apps/hooks/useLocationState";
 import { appsSection } from "./apps/urls";
 import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
@@ -46,7 +47,6 @@ import GiftCardSection from "./giftCards";
 import { giftCardsSectionUrlName } from "./giftCards/urls";
 import { apolloClient, saleorClient } from "./graphql/client";
 import HomePage from "./home";
-import { useLocationState } from "./hooks/useLocationState";
 import { commonMessages } from "./intl";
 import MarketplaceSection from "./marketplace";
 import { marketplaceUrl } from "./marketplace/urls";
