@@ -18,6 +18,12 @@ const sendResponseStatus = (
   },
 });
 
+const isAppDeepUrlChange = (appId: string, from: string, to: string) => {
+  const appCompletePath = appPath(encodeURIComponent(appId));
+
+  return to.startsWith(appCompletePath) && from.startsWith(appCompletePath);
+};
+
 export const useAppActions = (
   frameEl: React.MutableRefObject<HTMLIFrameElement>,
   appOrigin: string,
@@ -36,15 +42,16 @@ export const useAppActions = (
         const { to, newContext, actionId } = action.payload;
 
         let success = true;
-        const appCompletePath = appPath(encodeURIComponent(appId));
-        const isAppDeepUrlChange =
-          to.startsWith(appCompletePath) &&
-          location.pathname.startsWith(appCompletePath);
+        const appDeepUrlChange = isAppDeepUrlChange(
+          appId,
+          location.pathname,
+          to,
+        );
 
         try {
           if (newContext) {
             window.open(to);
-          } else if (isAppDeepUrlChange) {
+          } else if (appDeepUrlChange) {
             // Change only url without reloading if we are in the same app
             window.history.pushState(null, "", to);
           } else if (to.startsWith("/")) {
