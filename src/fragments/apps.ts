@@ -9,6 +9,7 @@ export const appFragment = gql`
     type
     homepageUrl
     appUrl
+    manifestUrl
     configurationUrl
     supportUrl
     version
@@ -39,6 +40,7 @@ export const appListItemFragment = gql`
     isActive
     type
     appUrl
+    manifestUrl
     permissions {
       ...AppPermission
     }

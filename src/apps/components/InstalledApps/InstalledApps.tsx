@@ -75,12 +75,12 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                     </span>
                   </TableCell>
                   <TableCell className={classes.colAction}>
-                    {app.node.appUrl && (
+                    {app.node.manifestUrl && (
                       <Typography
-                        className={clsx(classes.text, classes.appUrl)}
+                        className={clsx(classes.text, classes.manifestUrl)}
                         variant="body2"
                       >
-                        {app.node.appUrl}
+                        {app.node.manifestUrl}
                       </Typography>
                     )}
                     <TableButtonWrapper>

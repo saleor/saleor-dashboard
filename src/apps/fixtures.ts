@@ -18,6 +18,7 @@ export const appsList: AppsListQuery["apps"]["edges"] = [
       name: "app",
       type: AppTypeEnum.THIRDPARTY,
       appUrl: null,
+      manifestUrl: "http://localhost:3000/api/manifest",
       permissions: [
         {
           __typename: "Permission",
@@ -36,6 +37,7 @@ export const appsList: AppsListQuery["apps"]["edges"] = [
       name: "app1",
       type: AppTypeEnum.THIRDPARTY,
       appUrl: "http://localhost:3000",
+      manifestUrl: "http://localhost:3000/api/manifest",
       permissions: [
         {
           __typename: "Permission",
@@ -62,6 +64,7 @@ export const customAppsList: AppsListQuery["apps"]["edges"] = [
       name: "app custom",
       type: AppTypeEnum.LOCAL,
       appUrl: null,
+      manifestUrl: null,
       permissions: [
         {
           __typename: "Permission",
@@ -110,6 +113,7 @@ export const appDetails: AppQuery["app"] = {
   aboutApp: "Lorem ipsum",
   accessToken: "token",
   appUrl: "http://localhost:8888/app",
+  manifestUrl: "http://localhost:8888/api/manifest",
   configurationUrl: "htpp://localhost:8888/configuration",
   created: "2020-06-02T12:24:26.818138+00:00",
   dataPrivacy: "Lorem ipsum",
