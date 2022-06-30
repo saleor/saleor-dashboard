@@ -56,7 +56,7 @@ const ShippingZonesCard: React.FC<ShippingZonesCardProps> = props => {
         removeItem={removeShippingZone}
         searchItems={searchShippingZones}
         fetchMoreItems={fetchMoreShippingZones}
-        dataTestId="shipping-zone"
+        dataTestId="shipping"
         inputName="shippingZone"
         itemsName={intl.formatMessage(messages.title)}
       />
