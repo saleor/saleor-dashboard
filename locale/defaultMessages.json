@@ -1450,10 +1450,6 @@
     "context": "order refund subtitle",
     "string": "Refunded items can't be fulfilled"
   },
-  "ANRRpG": {
-    "context": "card title",
-    "string": "Shipping Zones"
-  },
   "AOI4LW": {
     "context": "navigator placeholder",
     "string": "Search in Catalog"
@@ -4199,6 +4195,10 @@
   "V/YxJa": {
     "context": "dialog header",
     "string": "Edit Shipping Method"
+  },
+  "V1MytH": {
+    "context": "shipping zones section name",
+    "string": "Shipping Zones"
   },
   "V1mqpZ": {
     "context": "button",
@@ -7807,10 +7807,6 @@
   },
   "yuiyES": {
     "string": "General Settings"
-  },
-  "yv/bIV": {
-    "context": "card title",
-    "string": "Warehouses"
   },
   "yzYXW/": {
     "context": "header, dialog",

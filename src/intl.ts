@@ -443,6 +443,11 @@ export const sectionNames = defineMessages({
     defaultMessage: "Shipping Methods",
     description: "shipping section name",
   },
+  shippingZones: {
+    id: "V1MytH",
+    defaultMessage: "Shipping Zones",
+    description: "shipping zones section name",
+  },
   siteSettings: {
     id: "viFkCw",
     defaultMessage: "Site Settings",

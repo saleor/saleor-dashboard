@@ -2,6 +2,7 @@ import { Card, CardContent, Typography } from "@material-ui/core";
 import { ChannelShippingZones } from "@saleor/channels/pages/ChannelDetailsPage/types";
 import CardTitle from "@saleor/components/CardTitle";
 import { SearchShippingZonesQuery } from "@saleor/graphql";
+import { sectionNames } from "@saleor/intl";
 import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -9,11 +10,6 @@ import { defineMessages, useIntl } from "react-intl";
 import AssignmentList from "../AssignmentList";
 
 const messages = defineMessages({
-  title: {
-    id: "ANRRpG",
-    defaultMessage: "Shipping Zones",
-    description: "card title",
-  },
   subtitle: {
     id: "Ic7Wln",
     defaultMessage:
@@ -45,7 +41,7 @@ const ShippingZonesCard: React.FC<ShippingZonesCardProps> = props => {
 
   return (
     <Card>
-      <CardTitle title={intl.formatMessage(messages.title)} />
+      <CardTitle title={intl.formatMessage(sectionNames.shippingZones)} />
       <CardContent>
         <Typography>{intl.formatMessage(messages.subtitle)}</Typography>
       </CardContent>
@@ -58,7 +54,7 @@ const ShippingZonesCard: React.FC<ShippingZonesCardProps> = props => {
         fetchMoreItems={fetchMoreShippingZones}
         dataTestId="shipping"
         inputName="shippingZone"
-        itemsName={intl.formatMessage(messages.title)}
+        itemsName={intl.formatMessage(sectionNames.shippingZones)}
       />
     </Card>
   );

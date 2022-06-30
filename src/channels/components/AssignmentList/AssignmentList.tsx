@@ -38,7 +38,7 @@ const AssignmentList: React.FC<AssignmentListProps> = props => {
   const classes = useStyles();
   const expanderClasses = useExpanderStyles();
 
-  const hasMoreZonesToBeSelected = totalCount !== items.length;
+  const hasMoreItemsToBeSelected = totalCount !== items.length;
 
   return (
     <Accordion classes={expanderClasses}>
@@ -48,10 +48,10 @@ const AssignmentList: React.FC<AssignmentListProps> = props => {
         itemsName={itemsName}
       />
       <Divider />
-      {items.map(zone => (
-        <Item item={zone} onDelete={removeItem} />
+      {items.map(item => (
+        <Item key={item.id} item={item} onDelete={removeItem} />
       ))}
-      {hasMoreZonesToBeSelected ? (
+      {hasMoreItemsToBeSelected ? (
         <AssignmentListFooter {...props} />
       ) : (
         <Typography

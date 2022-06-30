@@ -2,6 +2,7 @@ import { Card, CardContent, Typography } from "@material-ui/core";
 import { ChannelWarehouses } from "@saleor/channels/pages/ChannelDetailsPage/types";
 import CardTitle from "@saleor/components/CardTitle";
 import { SearchWarehousesQuery } from "@saleor/graphql";
+import { sectionNames } from "@saleor/intl";
 import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -9,11 +10,6 @@ import { defineMessages, useIntl } from "react-intl";
 import AssignmentList from "../AssignmentList";
 
 const messages = defineMessages({
-  title: {
-    id: "yv/bIV",
-    defaultMessage: "Warehouses",
-    description: "card title",
-  },
   subtitle: {
     id: "ImTelT",
     defaultMessage:
@@ -45,7 +41,7 @@ const WarehousesCard: React.FC<WarehousesCardProps> = props => {
 
   return (
     <Card>
-      <CardTitle title={intl.formatMessage(messages.title)} />
+      <CardTitle title={intl.formatMessage(sectionNames.warehouses)} />
       <CardContent>
         <Typography>{intl.formatMessage(messages.subtitle)}</Typography>
       </CardContent>
@@ -58,7 +54,7 @@ const WarehousesCard: React.FC<WarehousesCardProps> = props => {
         fetchMoreItems={fetchMoreWarehouses}
         dataTestId="warehouse"
         inputName="warehouse"
-        itemsName={intl.formatMessage(messages.title)}
+        itemsName={intl.formatMessage(sectionNames.warehouses)}
       />
     </Card>
   );

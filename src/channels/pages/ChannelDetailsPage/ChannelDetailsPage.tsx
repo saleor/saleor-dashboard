@@ -135,7 +135,7 @@ const ChannelDetailsPage = function<TErrors>({
       initial={initialData}
       checkIfSaveIsDisabled={checkIfSaveIsDisabled}
     >
-      {({ change, data, submit, set, isSaveDisabled }) => {
+      {({ change, data, submit, set, isSaveDisabled, triggerChange }) => {
         const handleCurrencyCodeSelect = createSingleAutocompleteSelectHandler(
           change,
           setSelectedCurrencyCode,
@@ -148,6 +148,8 @@ const ChannelDetailsPage = function<TErrors>({
         );
 
         const addShippingZone = (zoneId: string) => {
+          triggerChange();
+
           set({
             ...data,
             shippingZonesIdsToRemove: getUpdatedIdsWithoutNewId(
@@ -169,6 +171,8 @@ const ChannelDetailsPage = function<TErrors>({
         };
 
         const removeShippingZone = (zoneId: string) => {
+          triggerChange();
+
           set({
             ...data,
             shippingZonesIdsToAdd: getUpdatedIdsWithoutNewId(
@@ -187,6 +191,8 @@ const ChannelDetailsPage = function<TErrors>({
         };
 
         const addWarehouse = (warehouseId: string) => {
+          triggerChange();
+
           set({
             ...data,
             warehousesIdsToRemove: getUpdatedIdsWithoutNewId(
@@ -208,6 +214,8 @@ const ChannelDetailsPage = function<TErrors>({
         };
 
         const removeWarehouse = (warehouseId: string) => {
+          triggerChange();
+
           set({
             ...data,
             warehousesIdsToAdd: getUpdatedIdsWithoutNewId(
