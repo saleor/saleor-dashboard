@@ -1964,7 +1964,7 @@
   },
   "EKoPNg": {
     "context": "shipping method price",
-    "string": "Price"
+    "string": "باھاسى"
   },
   "EM+30g": {
     "context": "navigator notification",
@@ -2426,7 +2426,7 @@
   },
   "HaQ8cg": {
     "context": "button",
-    "string": "Refund"
+    "string": "پۇل قايتۇرۇش"
   },
   "HcQEUk": {
     "context": "table column header, sold units preorder quantity",
@@ -3078,7 +3078,7 @@
   },
   "MgdgpT": {
     "context": "customer input label",
-    "string": "Customer"
+    "string": "خېرىدار"
   },
   "MjUyhA": {
     "context": "section subheader",
@@ -3327,7 +3327,7 @@
   },
   "OgFBAj": {
     "context": "input label",
-    "string": "Price"
+    "string": "باھاسى"
   },
   "OhFGpX": {
     "context": "button",
@@ -3495,7 +3495,7 @@
   },
   "PzXIXh": {
     "context": "order",
-    "string": "Customer"
+    "string": "خېرىدار"
   },
   "Q/Nbku": {
     "context": "product field",
@@ -3793,7 +3793,7 @@
   },
   "S/yAtJ": {
     "context": "total price",
-    "string": "Total"
+    "string": "جەمئىي"
   },
   "S22jIs": {
     "context": "button",
@@ -3971,7 +3971,7 @@
   },
   "TPCRKr": {
     "context": "variant price, header",
-    "string": "Price"
+    "string": "باھاسى"
   },
   "TPW2tP": {
     "string": "You have reached your order limit, you will be billed extra for orders above limit. If you would like to up your limit, contact your administration staff about raising your limits."
@@ -4631,7 +4631,7 @@
   },
   "Y299ST": {
     "context": "table column header",
-    "string": "Price"
+    "string": "باھاسى"
   },
   "Y3pCRX": {
     "context": "attribute can be searched in storefront",
@@ -4647,7 +4647,7 @@
   },
   "Y7M1YQ": {
     "context": "section header",
-    "string": "Customer"
+    "string": "خېرىدار"
   },
   "Y7UlMR": {
     "context": "app extensions subsection",
@@ -4993,7 +4993,7 @@
     "string": "There are still fulfillments created for this order. Cancel the fulfillments first before you cancel the order."
   },
   "b1zuN9": {
-    "string": "Price"
+    "string": "باھاسى"
   },
   "b6L9n7": {
     "context": "voucher is active until date",
@@ -5001,7 +5001,7 @@
   },
   "b810WJ": {
     "context": "product price",
-    "string": "Price"
+    "string": "باھاسى"
   },
   "bDHiYK": {
     "context": "gift card export success alert description",
@@ -5096,7 +5096,7 @@
   },
   "bp/i0x": {
     "context": "header",
-    "string": "Quantity"
+    "string": "مىقدارى"
   },
   "bq1eEx": {
     "context": "header",
@@ -5705,7 +5705,7 @@
     "string": "Support/FAQ"
   },
   "hkENym": {
-    "string": "Customer"
+    "string": "خېرىدار"
   },
   "hkSkNx": {
     "string": "Search Customers"
@@ -5777,7 +5777,7 @@
   },
   "iEeIhY": {
     "context": "draft order",
-    "string": "Customer"
+    "string": "خېرىدار"
   },
   "iJrw63": {
     "context": "section header",
@@ -6006,7 +6006,7 @@
   },
   "k9hf7F": {
     "context": "total order price",
-    "string": "Total"
+    "string": "جەمئىي"
   },
   "kErneR": {
     "string": "This customer doesn’t have any adresses added to his address book. You can add address using the button below."
@@ -6169,7 +6169,7 @@
   },
   "lVwmf5": {
     "context": "total price of ordered products",
-    "string": "Total"
+    "string": "جەمئىي"
   },
   "lW5uJO": {
     "context": "money",
@@ -6353,7 +6353,7 @@
   },
   "n02c9W": {
     "context": "product variant price",
-    "string": "Price"
+    "string": "باھاسى"
   },
   "n0RwMK": {
     "string": "سىز ساتقان مەھسۇلاتلارنىڭ تۈرىگە ئېنىقلىما بېرىڭ"
@@ -6465,7 +6465,7 @@
   },
   "nngeI3": {
     "context": "amount title",
-    "string": "Refunded amount"
+    "string": "قايتۇرۇلغان سومما"
   },
   "no3Ygn": {
     "string": "Are you sure you want to delete \"{name}\" value? If you delete it you won’t be able to assign it to any of the products with \"{attributeName}\" attribute."
@@ -6756,7 +6756,7 @@
   },
   "qT6YYk": {
     "context": "order line total price",
-    "string": "Total"
+    "string": "جەمئىي"
   },
   "qZHHed": {
     "context": "stock exceeded dialog title",
@@ -7164,7 +7164,7 @@
   },
   "taX/V3": {
     "context": "order total amount",
-    "string": "Total"
+    "string": "جەمئىي"
   },
   "toDL5R": {
     "context": "order status",
@@ -7791,7 +7791,7 @@
   },
   "ycMLN9": {
     "context": "warehouses section name",
-    "string": "Warehouses"
+    "string": "ئامبارلار"
   },
   "ychKsb": {
     "context": "error message",
@@ -7899,7 +7899,7 @@
   },
   "zb4eBO": {
     "context": "order total price",
-    "string": "Total"
+    "string": "جەمئىي"
   },
   "zbJHl7": {
     "context": "attribute type",
