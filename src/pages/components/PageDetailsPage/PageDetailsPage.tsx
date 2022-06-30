@@ -230,7 +230,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                       description: "page",
                     },
                     {
-                      date: localizeDate(data.publicationDate, "L"),
+                      date: localizeDate(data.publicationDate),
                     },
                   ),
                   visibleLabel: intl.formatMessage({
