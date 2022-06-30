@@ -125,7 +125,7 @@ export function getMatchingLocale(languages: readonly string[]): Locale {
   return undefined;
 }
 
-const defaultLocale = Locale.EN;
+const defaultLocale = (navigator.language as Locale) || Locale.EN;
 
 export interface LocaleContextType {
   locale: Locale;
