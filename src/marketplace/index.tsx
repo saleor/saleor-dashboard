@@ -24,7 +24,7 @@ const Component = () => {
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.marketplace)} />
       <Container>
-        <PreviewPill />
+        <PreviewPill className={classes.previewPill} />
         <AppFrame
           src={MARKETPLACE_URL}
           // Marketplace doesn't require app token nor id
