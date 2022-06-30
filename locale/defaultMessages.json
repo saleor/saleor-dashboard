@@ -27,10 +27,6 @@
     "context": "order shipping method name",
     "string": "Shipping"
   },
-  "+G9l7u": {
-    "context": "all selected zones card message",
-    "string": "All available shipping zones have been selected"
-  },
   "+HuipK": {
     "context": "variant sku",
     "string": "SKU {sku}"
@@ -1222,10 +1218,6 @@
     "context": "navigator placeholder",
     "string": "Order Number"
   },
-  "8CbACQ": {
-    "context": "add shipping zone title",
-    "string": "Add Shipping Zones"
-  },
   "8EGagh": {
     "context": "search box label",
     "string": "Filter Countries"
@@ -2033,6 +2025,10 @@
     "context": "header",
     "string": "{pluginName} Details"
   },
+  "EuOXmr": {
+    "context": "add items title",
+    "string": "Add {itemsName}"
+  },
   "Ev6SEF": {
     "string": "New Password"
   },
@@ -2576,6 +2572,10 @@
   "Ihp4D3": {
     "context": "header",
     "string": "Edit Media"
+  },
+  "ImTelT": {
+    "context": "card subtitle",
+    "string": "Select warehouses that will be used in this channel. You can assign warehouses to multiple channels."
   },
   "IoCMjg": {
     "context": "no collections",
@@ -5627,10 +5627,6 @@
     "context": "page header",
     "string": "Create Page"
   },
-  "gtKcPf": {
-    "context": "title",
-    "string": "{zonesCount} / {totalCount} shipping zones"
-  },
   "gvOzOl": {
     "string": "Page Title"
   },
@@ -7227,6 +7223,10 @@
     "context": "app has been removed",
     "string": "App successfully removed"
   },
+  "uKlrEk": {
+    "context": "all selected items message",
+    "string": "All available {itemsName} have been selected"
+  },
   "uMpv1v": {
     "string": "Fulfillment successfully cancelled"
   },
@@ -7807,6 +7807,10 @@
   },
   "yuiyES": {
     "string": "General Settings"
+  },
+  "yv/bIV": {
+    "context": "card title",
+    "string": "Warehouses"
   },
   "yzYXW/": {
     "context": "header, dialog",

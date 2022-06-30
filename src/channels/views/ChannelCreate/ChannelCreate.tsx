@@ -16,6 +16,7 @@ import useShop from "@saleor/hooks/useShop";
 import { sectionNames } from "@saleor/intl";
 import { extractMutationErrors } from "@saleor/misc";
 import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
+import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
 import currencyCodes from "currency-codes";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -44,6 +45,8 @@ export const ChannelCreateView = ({}) => {
   const handleSubmit = ({
     shippingZonesIdsToAdd,
     shippingZonesIdsToRemove,
+    warehousesIdsToAdd,
+    warehousesIdsToRemove,
     currencyCode,
     ...rest
   }: FormData) =>
@@ -54,6 +57,7 @@ export const ChannelCreateView = ({}) => {
             ...rest,
             currencyCode: currencyCode.toUpperCase(),
             addShippingZones: shippingZonesIdsToAdd,
+            addWarehouses: warehousesIdsToAdd,
           },
         },
       }),
@@ -64,6 +68,14 @@ export const ChannelCreateView = ({}) => {
     search: searchShippingZones,
     result: searchShippingZonesResult,
   } = useShippingZonesSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
+  });
+
+  const {
+    loadMore: fetchMoreWarehouses,
+    search: searchWarehouses,
+    result: searchWarehousesResult,
+  } = useWarehouseSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
 
@@ -108,6 +120,12 @@ export const ChannelCreateView = ({}) => {
           fetchMoreShippingZones={getSearchFetchMoreProps(
             searchShippingZonesResult,
             fetchMoreShippingZones,
+          )}
+          searchWarehouses={searchWarehouses}
+          searchWarehousesData={searchWarehousesResult.data}
+          fetchMoreWarehouses={getSearchFetchMoreProps(
+            searchWarehousesResult,
+            fetchMoreWarehouses,
           )}
           disabled={createChannelOpts.loading}
           errors={createChannelOpts?.data?.channelCreate?.errors || []}

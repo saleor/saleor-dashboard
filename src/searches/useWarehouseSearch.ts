@@ -14,6 +14,7 @@ export const searchWarehouses = gql`
       sortBy: { direction: ASC, field: NAME }
       filter: { search: $query }
     ) {
+      totalCount
       edges {
         node {
           id

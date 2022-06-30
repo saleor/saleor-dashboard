@@ -1,20 +1,12 @@
-import {
-  Accordion,
-  Card,
-  CardContent,
-  Divider,
-  makeStyles,
-  Typography,
-} from "@material-ui/core";
+import { Card, CardContent, Typography } from "@material-ui/core";
+import { ChannelShippingZones } from "@saleor/channels/pages/ChannelDetailsPage/types";
 import CardTitle from "@saleor/components/CardTitle";
+import { SearchShippingZonesQuery } from "@saleor/graphql";
+import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import ShippingZoneItem from "./ShippingZoneItem";
-import ShippingZonesCardListFooter from "./ShippingZonesCardListFooter";
-import ShippingZonesListHeader from "./ShippingZonesListHeader";
-import { useExpanderStyles } from "./styles";
-import { ShippingZonesProps } from "./types";
+import AssignmentList from "../AssignmentList";
 
 const messages = defineMessages({
   title: {
@@ -28,36 +20,28 @@ const messages = defineMessages({
       "Select shipping zones that will be supplied via this channel. You can assign shipping zones to multiple channels.",
     description: "card subtitle",
   },
-  allSelectedMessage: {
-    id: "+G9l7u",
-    defaultMessage: "All available shipping zones have been selected",
-    description: "all selected zones card message",
-  },
 });
 
-const useStyles = makeStyles(
-  theme => ({
-    infoMessage: {
-      padding: theme.spacing(3),
-    },
-  }),
-  { name: "ShippingZonesCard" },
-);
-
-type ShippingZonesCardProps = ShippingZonesProps;
+interface ShippingZonesCardProps {
+  addShippingZone: (id: string) => void;
+  removeShippingZone: (id: string) => void;
+  searchShippingZones: (searchPhrase: string) => void;
+  fetchMoreShippingZones: FetchMoreProps;
+  shippingZones: ChannelShippingZones;
+  shippingZonesChoices: RelayToFlat<SearchShippingZonesQuery["search"]>;
+}
 
 const ShippingZonesCard: React.FC<ShippingZonesCardProps> = props => {
   const {
-    shippingZones,
+    addShippingZone,
     removeShippingZone,
-    fetchMoreShippingZones: { totalCount },
+    searchShippingZones,
+    fetchMoreShippingZones,
+    shippingZones,
+    shippingZonesChoices,
   } = props;
 
-  const expanderClasses = useExpanderStyles({});
-  const classes = useStyles();
   const intl = useIntl();
-
-  const hasMoreZonesToBeSelected = totalCount !== shippingZones.length;
 
   return (
     <Card>
@@ -65,27 +49,17 @@ const ShippingZonesCard: React.FC<ShippingZonesCardProps> = props => {
       <CardContent>
         <Typography>{intl.formatMessage(messages.subtitle)}</Typography>
       </CardContent>
-      <Accordion classes={expanderClasses}>
-        <ShippingZonesListHeader
-          shippingZones={shippingZones}
-          totalCount={totalCount}
-        />
-        <Divider />
-        {shippingZones.map(zone => (
-          <ShippingZoneItem zone={zone} onDelete={removeShippingZone} />
-        ))}
-        {hasMoreZonesToBeSelected ? (
-          <ShippingZonesCardListFooter {...props} />
-        ) : (
-          <Typography
-            color="textSecondary"
-            variant="subtitle1"
-            className={classes.infoMessage}
-          >
-            {intl.formatMessage(messages.allSelectedMessage)}
-          </Typography>
-        )}
-      </Accordion>
+      <AssignmentList
+        items={shippingZones}
+        itemsChoices={shippingZonesChoices}
+        addItem={addShippingZone}
+        removeItem={removeShippingZone}
+        searchItems={searchShippingZones}
+        fetchMoreItems={fetchMoreShippingZones}
+        dataTestId="shipping-zone"
+        inputName="shippingZone"
+        itemsName={intl.formatMessage(messages.title)}
+      />
     </Card>
   );
 };

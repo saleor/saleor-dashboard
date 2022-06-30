@@ -17,6 +17,7 @@ import {
   useChannelShippingZonesQuery,
   useChannelsQuery,
   useChannelUpdateMutation,
+  useChannelWarehousesQuery,
 } from "@saleor/graphql";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -26,6 +27,7 @@ import useShop from "@saleor/hooks/useShop";
 import { sectionNames } from "@saleor/intl";
 import { extractMutationErrors } from "@saleor/misc";
 import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
+import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
 import getChannelsErrorMessage from "@saleor/utils/errors/channels";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
@@ -103,6 +105,8 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
     slug,
     shippingZonesIdsToRemove,
     shippingZonesIdsToAdd,
+    warehousesIdsToRemove,
+    warehousesIdsToAdd,
     defaultCountry,
   }: FormData) =>
     extractMutationErrors(
@@ -115,6 +119,8 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
             defaultCountry,
             addShippingZones: shippingZonesIdsToAdd,
             removeShippingZones: shippingZonesIdsToRemove,
+            addWarehouses: warehousesIdsToAdd,
+            removeWarehouses: warehousesIdsToRemove,
           },
         },
       }),
@@ -176,6 +182,25 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
 
+  const {
+    data: channelWarehousesData,
+    loading: channelsWarehousesLoading,
+  } = useChannelWarehousesQuery({
+    variables: {
+      filter: {
+        channels: [id],
+      },
+    },
+  });
+
+  const {
+    loadMore: fetchMoreWarehouses,
+    search: searchWarehouses,
+    result: searchWarehousesResult,
+  } = useWarehouseSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
+  });
+
   return (
     <>
       <WindowTitle
@@ -200,9 +225,21 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
             searchShippingZonesResult,
             fetchMoreShippingZones,
           )}
+          channelWarehouses={channelWarehousesData?.warehouses?.edges?.map(
+            ({ node }) => node,
+          )}
+          searchWarehouses={searchWarehouses}
+          searchWarehousesData={searchWarehousesResult.data}
+          fetchMoreWarehouses={getSearchFetchMoreProps(
+            searchWarehousesResult,
+            fetchMoreWarehouses,
+          )}
           channel={data?.channel}
           disabled={
-            updateChannelOpts.loading || loading || channelsShippingZonesLoading
+            updateChannelOpts.loading ||
+            loading ||
+            channelsShippingZonesLoading ||
+            channelsWarehousesLoading
           }
           disabledStatus={
             activateChannelOpts.loading || deactivateChannelOpts.loading

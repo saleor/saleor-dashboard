@@ -22,6 +22,8 @@ const props: ChannelDetailsPageProps<ChannelErrorFragment[]> = {
   updateChannelStatus: () => undefined,
   searchShippingZones: () => undefined,
   searchShippingZonesData: undefined,
+  searchWarehouses: () => undefined,
+  searchWarehousesData: undefined,
   countries: countries.map(({ name, code }) => ({
     code,
     country: name,
@@ -40,6 +42,24 @@ const props: ChannelDetailsPageProps<ChannelErrorFragment[]> = {
     },
   ],
   fetchMoreShippingZones: {
+    loading: false,
+    hasMore: false,
+    onFetchMore: () => undefined,
+    totalCount: 0,
+  },
+  channelWarehouses: [
+    {
+      __typename: "Warehouse",
+      id: "warehouse-1",
+      name: "Warehouse 1",
+    },
+    {
+      __typename: "Warehouse",
+      id: "warehouse-2",
+      name: "Warehouse 2",
+    },
+  ],
+  fetchMoreWarehouses: {
     loading: false,
     hasMore: false,
     onFetchMore: () => undefined,

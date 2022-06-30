@@ -2319,6 +2319,7 @@ export const shopOrderSettings: ShopOrderSettingsFragment = {
 };
 
 export const warehouseSearch: SearchWarehousesQuery["search"] = {
+  totalCount: 20,
   edges: [
     {
       node: {

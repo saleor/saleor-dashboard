@@ -2,7 +2,6 @@ import AddIcon from "@material-ui/icons/Add";
 import Link from "@saleor/components/Link";
 import { IconButton, makeStyles } from "@saleor/macaw-ui";
 import React, { MutableRefObject } from "react";
-import { MessageDescriptor, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
@@ -21,7 +20,7 @@ const useStyles = makeStyles(
 );
 
 interface CardAddItemsFooterProps {
-  title: MessageDescriptor;
+  title: string;
   onAdd: () => void;
   testIds: {
     link: string;
@@ -37,13 +36,12 @@ const CardAddItemsFooter: React.FC<CardAddItemsFooterProps> = ({
   ref,
   children,
 }) => {
-  const intl = useIntl();
   const classes = useStyles({});
 
   return (
     <div className={classes.container} ref={ref}>
       <Link data-test-id={testIds.link} onClick={onAdd}>
-        {intl.formatMessage(title)}
+        {title}
       </Link>
       <IconButton
         variant="secondary"
