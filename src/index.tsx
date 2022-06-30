@@ -13,6 +13,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import AppsSection from "./apps";
 import { ExternalAppProvider } from "./apps/components/ExternalAppContext";
+import { useLocationState } from "./apps/hooks/useLocationState";
 import { appsSection } from "./apps/urls";
 import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
@@ -121,12 +122,14 @@ const Routes: React.FC = () => {
 
   const homePageLoading = (authenticated && !channelLoaded) || authenticating;
 
+  const { isAppPath } = useLocationState();
+
   return (
     <>
       <WindowTitle title={intl.formatMessage(commonMessages.dashboard)} />
       {DEMO_MODE && <DemoBanner />}
       {homePageLoaded ? (
-        <AppLayout>
+        <AppLayout fullSize={isAppPath}>
           <ErrorBoundary
             onError={e => {
               const errorId = errorTracker.captureException(e);

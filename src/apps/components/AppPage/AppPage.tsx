@@ -87,7 +87,6 @@ export const AppPage: React.FC<AppPageProps> = ({
           />
         )}
       </div>
-      <CardSpacer />
     </Container>
   );
 };

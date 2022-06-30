@@ -51,10 +51,15 @@ export const useStyles = makeStyles(
       width: "100%",
     },
     iframeContainer: {
+      lineHeight: 0, // It removes extra space between iframe and container
       "& > iframe": {
         border: "none",
-        minHeight: "75vh",
+        minHeight: "60vh",
+        height: `calc(100vh - 27.8rem)`,
         width: "100%",
+        [theme.breakpoints.up("md")]: {
+          height: `calc(100vh - 23.4rem)`,
+        },
       },
     },
   }),
