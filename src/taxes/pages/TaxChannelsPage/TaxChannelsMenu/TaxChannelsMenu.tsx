@@ -23,28 +23,28 @@ export const TaxChannelsMenu: React.FC<TaxChannelsMenuProps> = ({
   const classes = useStyles();
   return (
     <Card>
-      <div className={classes.scrollWrapper}>
-        <List gridTemplate={["1fr"]}>
-          <ListHeader>
-            <ListItem>
-              <ListItemCell>
-                <FormattedMessage {...taxesMessages.channelList} />
-              </ListItemCell>
-            </ListItem>
-          </ListHeader>
-          {configurations?.map(configuration => (
-            <ListItemLink
-              key={configuration.id}
-              className={clsx(classes.clickable, {
-                [classes.selected]: configuration.id === selectedConfigurationId
-              })}
-              href={taxConfigurationListUrl(configuration.id)}
-            >
-              <ListItemCell>{configuration.channel.name}</ListItemCell>
-            </ListItemLink>
-          )) ?? <Skeleton />}
-        </List>
-      </div>
+      <List gridTemplate={["1fr"]}>
+        <ListHeader>
+          <ListItem>
+            <ListItemCell>
+              <FormattedMessage {...taxesMessages.channelList} />
+            </ListItemCell>
+          </ListItem>
+        </ListHeader>
+        {configurations?.map(configuration => (
+          <ListItemLink
+            key={configuration.id}
+            className={clsx(classes.clickable, {
+              [classes.selected]: configuration.id === selectedConfigurationId
+            })}
+            href={taxConfigurationListUrl(configuration.id)}
+          >
+            <ListItemCell className={classes.ellipsis}>
+              {configuration.channel.name}
+            </ListItemCell>
+          </ListItemLink>
+        )) ?? <Skeleton />}
+      </List>
     </Card>
   );
 };

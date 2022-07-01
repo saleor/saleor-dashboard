@@ -5,9 +5,9 @@ export const useStyles = makeStyles(
     clickable: {
       cursor: "pointer"
     },
-    scrollWrapper: {
-      overflowY: "scroll",
-      maxHeight: 600
+    ellipsis: {
+      textOverflow: "ellipsis",
+      overflow: "hidden"
     },
     selected: {
       "&&&&::before": {
