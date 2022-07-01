@@ -187,8 +187,8 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                             />
                           </ListItemCell>
                           <ListItemCell>
-                            {/* This is required for the header row to be aligned with list items
-                            <div className={classes.dummy}></div> */}
+                            {/* This is required for the header row to be aligned with list items */}
+                            <div className={classes.dummy}></div>
                           </ListItemCell>
                         </ListItem>
                       </ListHeader>
