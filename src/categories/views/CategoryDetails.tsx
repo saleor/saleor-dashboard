@@ -90,10 +90,6 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
 
   const category = data?.category;
 
-  if (category === null) {
-    return <NotFoundPage onBack={() => navigate(categoryListUrl())} />;
-  }
-
   const handleCategoryDelete = (data: CategoryDeleteMutation) => {
     if (data.categoryDelete.errors.length === 0) {
       notify({
@@ -207,6 +203,10 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     variables => updateMetadata({ variables }),
     variables => updatePrivateMetadata({ variables }),
   );
+
+  if (category === null) {
+    return <NotFoundPage onBack={() => navigate(categoryListUrl())} />;
+  }
 
   return (
     <PaginatorContext.Provider value={{ ...pageInfo, ...paginationFunctions }}>
