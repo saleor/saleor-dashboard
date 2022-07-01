@@ -1,6 +1,7 @@
 import { Item } from "@glideapps/glide-data-grid";
-import Datagrid from "@saleor/components/Datagrid/Datagrid";
-import useDatagridChange from "@saleor/components/Datagrid/useDatagridChange";
+import Datagrid, {
+  GetCellContentOpts,
+} from "@saleor/components/Datagrid/Datagrid";
 import {
   ChannelFragment,
   ProductDetailsVariantFragment,
@@ -33,7 +34,6 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
   listings,
   variants,
   warehouses,
-  onVariantBulkDelete,
   onRowClick,
 }) => {
   const intl = useIntl();
@@ -60,18 +60,15 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
     [variants, warehouses, availableChannels],
   );
 
-  const { onCellEdited, changes, getChangeIndex } = useDatagridChange(columns);
-
   const getCellContent = React.useCallback(
-    ([column, row]: Item) =>
+    ([column, row]: Item, opts: GetCellContentOpts) =>
       getData({
         availableColumns: columns,
         channels,
         column,
         row,
         variants,
-        changes,
-        getChangeIndex,
+        ...opts,
       }),
     [columns, channels, variants],
   );
@@ -86,15 +83,9 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
           onSelect: () => onRowClick(variants[index].id),
         },
       ]}
-      onCellEdited={onCellEdited}
       rows={variants?.length ?? 0}
-      selectionActions={indexes => (
-        <Button
-          variant="tertiary"
-          onClick={() =>
-            onVariantBulkDelete(indexes.map(index => variants[index].id))
-          }
-        >
+      selectionActions={(indexes, { removeRows }) => (
+        <Button variant="tertiary" onClick={() => removeRows(indexes)}>
           <FormattedMessage {...buttonMessages.delete} />
         </Button>
       )}

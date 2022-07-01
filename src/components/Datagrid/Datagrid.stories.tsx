@@ -4,9 +4,8 @@ import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import Datagrid from "./Datagrid";
+import Datagrid, { GetCellContentOpts } from "./Datagrid";
 import { initialData } from "./fixtures";
-import useDatagridChange from "./useDatagridChange";
 
 const errors = [{ id: "9", field: "balance" }];
 
@@ -21,82 +20,84 @@ const availableColumns = [
 ] as const;
 
 const DefaultStory: React.FC = () => {
-  const { changes, onCellEdited, getChangeIndex } = useDatagridChange(
-    availableColumns,
-  );
+  const getCellContent = React.useCallback(
+    (
+      [column, row]: Item,
+      { changes, getChangeIndex }: GetCellContentOpts,
+    ): GridCell => {
+      const columnId = availableColumns[column].id;
+      const change = changes.current[getChangeIndex(columnId, row)]?.data;
 
-  const getCellContent = React.useCallback(([column, row]: Item): GridCell => {
-    const columnId = availableColumns[column].id;
-    const change = changes.current[getChangeIndex(columnId, row)]?.data;
-
-    const baseProps = {
-      allowOverlay: true,
-      readonly: false,
-      themeOverride: errors.find(
-        err => err.id === initialData[row].id && err.field === columnId,
-      )
-        ? {
-            accentColor: "#FF0000",
-            bgCell: "#FF0000",
-          }
-        : undefined,
-    };
-
-    if (columnId === "loan-active") {
-      const value = change ?? initialData[row].loan.active;
-      return {
-        ...baseProps,
-        allowOverlay: false,
-        kind: GridCellKind.Boolean,
-        data: value,
+      const baseProps = {
+        allowOverlay: true,
+        readonly: false,
+        themeOverride: errors.find(
+          err => err.id === initialData[row].id && err.field === columnId,
+        )
+          ? {
+              accentColor: "#FF0000",
+              bgCell: "#FF0000",
+            }
+          : undefined,
       };
-    }
 
-    if (columnId === "loan") {
-      const value = change?.value ?? initialData[row][columnId].amount;
-      return {
-        ...baseProps,
-        kind: GridCellKind.Custom,
-        data: {
-          kind: "money-cell",
-          currency: initialData[row].loan.currency,
-          value,
-        },
-        copyData: value,
-      };
-    }
+      if (columnId === "loan-active") {
+        const value = change ?? initialData[row].loan.active;
+        return {
+          ...baseProps,
+          allowOverlay: false,
+          kind: GridCellKind.Boolean,
+          data: value,
+        };
+      }
 
-    if (columnId === "balance") {
+      if (columnId === "loan") {
+        const value = change?.value ?? initialData[row][columnId].amount;
+        return {
+          ...baseProps,
+          kind: GridCellKind.Custom,
+          data: {
+            kind: "money-cell",
+            currency: initialData[row].loan.currency,
+            value,
+          },
+          copyData: value,
+        };
+      }
+
+      if (columnId === "balance") {
+        const data = change ?? initialData[row][columnId];
+        return {
+          ...baseProps,
+          kind: GridCellKind.Number,
+          data,
+          displayData: data?.toString(),
+        };
+      }
+
+      if (columnId === "age") {
+        const value = change?.value ?? initialData[row][columnId];
+        return {
+          ...baseProps,
+          kind: GridCellKind.Custom,
+          data: {
+            kind: "number-cell",
+            value,
+          },
+          copyData: value,
+        };
+      }
+
       const data = change ?? initialData[row][columnId];
       return {
         ...baseProps,
-        kind: GridCellKind.Number,
+        kind: GridCellKind.Text,
         data,
-        displayData: data?.toString(),
+        displayData: data,
       };
-    }
-
-    if (columnId === "age") {
-      const value = change?.value ?? initialData[row][columnId];
-      return {
-        ...baseProps,
-        kind: GridCellKind.Custom,
-        data: {
-          kind: "number-cell",
-          value,
-        },
-        copyData: value,
-      };
-    }
-
-    const data = change ?? initialData[row][columnId];
-    return {
-      ...baseProps,
-      kind: GridCellKind.Text,
-      data,
-      displayData: data,
-    };
-  }, []);
+    },
+    [],
+  );
 
   return (
     <div style={{ width: 800, margin: "auto" }}>
@@ -120,7 +121,6 @@ const DefaultStory: React.FC = () => {
             Action 1
           </Button>
         )}
-        onCellEdited={onCellEdited}
         rows={initialData.length}
       />
     </div>

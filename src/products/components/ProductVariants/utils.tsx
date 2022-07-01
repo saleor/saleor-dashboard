@@ -24,12 +24,14 @@ interface GetData {
   row: number;
   variants: ProductDetailsVariantFragment[];
   changes: MutableRefObject<DatagridChange[]>;
+  removed: number[];
   getChangeIndex: (column: string, row: number) => number;
 }
 
 export function getData({
   availableColumns,
   changes,
+  removed,
   channels,
   column,
   getChangeIndex,
@@ -42,11 +44,13 @@ export function getData({
     readonly: false,
   };
   const change = changes.current[getChangeIndex(columnId, row)]?.data;
+  const rowOffsetted = row + removed.filter(r => r <= row).length;
+  const dataRow = variants[rowOffsetted];
 
   switch (columnId) {
     case "name":
     case "sku":
-      const value = change ?? variants[row][columnId] ?? "";
+      const value = change ?? dataRow[columnId] ?? "";
       return {
         ...common,
         data: value,
@@ -58,7 +62,7 @@ export function getData({
   if (isStockColumn.test(columnId)) {
     const value =
       change?.value ??
-      variants[row].stocks.find(
+      dataRow.stocks.find(
         stock => stock.warehouse.id === columnId.match(isStockColumn)[1],
       )?.quantity ??
       0;
@@ -76,7 +80,7 @@ export function getData({
 
   if (isChannelColumn.test(columnId)) {
     const channelId = columnId.match(isChannelColumn)[1];
-    const listing = variants[row].channelListings.find(
+    const listing = dataRow.channelListings.find(
       listing => listing.channel.id === channelId,
     );
     const value = change?.value ?? listing?.price?.amount ?? 0;
@@ -97,7 +101,7 @@ export function getData({
   if (isAttributeColumn.test(columnId)) {
     const value =
       change ??
-      variants[row].attributes
+      dataRow.attributes
         .find(
           attribute =>
             attribute.attribute.id === columnId.match(isAttributeColumn)[1],

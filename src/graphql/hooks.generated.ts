@@ -1933,7 +1933,6 @@ export const ProductDetailsVariantFragmentDoc = gql`
   id
   sku
   name
-  margin
   attributes {
     attribute {
       id
