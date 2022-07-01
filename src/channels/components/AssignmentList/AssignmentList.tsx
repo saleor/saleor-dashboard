@@ -1,12 +1,11 @@
 import { Accordion, Divider, Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import AssignmentListFooter from "./AssignmentListFooter";
 import AssignmentListHeader from "./AssignmentListHeader";
 import Item from "./Item";
-import { useExpanderStyles } from "./styles";
+import { useExpanderStyles, useStyles } from "./styles";
 import { AssignmentListProps } from "./types";
 
 const messages = defineMessages({
@@ -16,15 +15,6 @@ const messages = defineMessages({
     description: "all selected items message",
   },
 });
-
-const useStyles = makeStyles(
-  theme => ({
-    infoMessage: {
-      padding: theme.spacing(3),
-    },
-  }),
-  { name: "AssignmentList" },
-);
 
 const AssignmentList: React.FC<AssignmentListProps> = props => {
   const {

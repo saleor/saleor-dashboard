@@ -20,6 +20,39 @@ export const useExpanderStyles = makeStyles(
   { name: "Expander" },
 );
 
+export const useHeaderStyles = makeStyles(
+  theme => ({
+    container: {
+      width: "100%",
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    // empty expanded needed for mui to use root styles
+    expanded: {},
+    root: {
+      width: "100%",
+      border: "none",
+      marginRight: theme.spacing(1),
+      padding: 0,
+      paddingBottom: theme.spacing(2),
+      minHeight: 0,
+
+      "&$expanded": {
+        minHeight: 0,
+      },
+    },
+    content: {
+      margin: 0,
+
+      "&$expanded": {
+        margin: 0,
+      },
+    },
+  }),
+  { name: "AssignmentListHeader" },
+);
+
 export const useStyles = makeStyles(
   theme => ({
     container: {
@@ -31,6 +64,9 @@ export const useStyles = makeStyles(
     },
     root: {
       paddingRight: theme.spacing(1),
+    },
+    infoMessage: {
+      padding: theme.spacing(3),
     },
   }),
   { name: "AssignmentList" },

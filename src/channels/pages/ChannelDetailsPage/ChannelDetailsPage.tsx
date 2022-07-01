@@ -1,5 +1,5 @@
-import ShippingZonesCard from "@saleor/channels/components/ShippingZonesCard/ShippingZonesCard";
-import WarehousesCard from "@saleor/channels/components/WarehousesCard";
+import ShippingZones from "@saleor/channels/components/ShippingZones";
+import Warehouses from "@saleor/channels/components/Warehouses";
 import { channelsListUrl } from "@saleor/channels/urls";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Form from "@saleor/components/Form";
@@ -261,7 +261,7 @@ const ChannelDetailsPage = function<TErrors>({
                     <CardSpacer />
                   </>
                 )}
-                <ShippingZonesCard
+                <ShippingZones
                   shippingZonesChoices={getFilteredShippingZonesChoices()}
                   shippingZones={shippingZonesToDisplay}
                   addShippingZone={addShippingZone}
@@ -270,7 +270,7 @@ const ChannelDetailsPage = function<TErrors>({
                   fetchMoreShippingZones={fetchMoreShippingZones}
                 />
                 <CardSpacer />
-                <WarehousesCard
+                <Warehouses
                   warehousesChoices={getFilteredWarehousesChoices()}
                   warehouses={warehousesToDisplay}
                   addWarehouse={addWarehouse}
