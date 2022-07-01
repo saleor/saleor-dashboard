@@ -131,10 +131,7 @@ export const getAvailabilityVariables = (channels: ChannelData[]) =>
         : isAvailableForPurchase;
 
     return {
-      availableForPurchaseDate:
-        isAvailableForPurchase || availableForPurchase === ""
-          ? null
-          : availableForPurchase,
+      availableForPurchaseDate: null,
       channelId: channel.id,
       isAvailableForPurchase: isAvailable,
       isPublished: channel.isPublished,

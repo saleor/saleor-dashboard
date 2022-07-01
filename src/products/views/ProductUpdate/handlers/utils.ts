@@ -61,7 +61,6 @@ export const getChannelListingBaseInputData = ({
   isPublished,
   publicationDate,
   isAvailableForPurchase,
-  availableForPurchase,
   visibleInListings,
 }: ChannelData) => ({
   channelId,
@@ -69,7 +68,6 @@ export const getChannelListingBaseInputData = ({
   publicationDate,
   visibleInListings,
   isAvailableForPurchase,
-  availableForPurchaseDate: availableForPurchase,
 });
 
 export const getChannelListingUpdateInputFromData = (

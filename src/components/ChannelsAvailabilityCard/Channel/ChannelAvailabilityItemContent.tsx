@@ -50,7 +50,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
   const [isPublicationDate, setPublicationDate] = useState(
     publicationDate === null,
   );
-  const [isAvailableDate, setAvailableDate] = useState(false);
+
   const intl = useIntl();
   const classes = useStyles({});
 
@@ -67,10 +67,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
         date: localizeDate(date, "L"),
       },
     );
-  const formErrors = getFormErrors(
-    ["availableForPurchaseDate", "publicationDate"],
-    errors,
-  );
+  const formErrors = getFormErrors(["publicationDate"], errors);
   return (
     <div className={classes.container}>
       <RadioSwitchField
@@ -200,49 +197,6 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
               });
             }}
           />
-          {!isAvailable && (
-            <>
-              <Typography
-                className={classes.setPublicationDate}
-                onClick={() => setAvailableDate(!isAvailableDate)}
-              >
-                {messages.setAvailabilityDateLabel}
-              </Typography>
-              {isAvailableDate && (
-                <TextField
-                  error={!!formErrors.availableForPurchaseDate}
-                  disabled={disabled}
-                  label={intl.formatMessage({
-                    id: "Y7Vy19",
-                    defaultMessage: "Set available on",
-                    description: "available on date",
-                  })}
-                  name={`channel:availableForPurchase:${id}`}
-                  type="date"
-                  fullWidth={true}
-                  helperText={
-                    formErrors.availableForPurchaseDate
-                      ? getProductErrorMessage(
-                          formErrors.availableForPurchaseDate,
-                          intl,
-                        )
-                      : ""
-                  }
-                  value={availableForPurchase ? availableForPurchase : ""}
-                  onChange={e =>
-                    onChange(id, {
-                      ...formData,
-                      availableForPurchase: e.target.value,
-                    })
-                  }
-                  className={classes.date}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              )}
-            </>
-          )}
         </>
       )}
       {visibleInListings !== undefined && (
