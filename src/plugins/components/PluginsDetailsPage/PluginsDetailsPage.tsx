@@ -9,7 +9,7 @@ import {
   ConfigurationItemInput,
   PluginConfigurationExtendedFragment,
   PluginErrorFragment,
-  PluginsDetailsFragment
+  PluginsDetailsFragment,
 } from "@saleor/graphql";
 import { ChangeEvent, SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -52,7 +52,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
   onEdit,
   onSubmit,
   selectedConfig,
-  setSelectedChannelId
+  setSelectedChannelId,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -61,12 +61,13 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
     active: selectedConfig?.active,
     configuration: selectedConfig?.configuration
       ?.filter(
-        field => !isSecretField(selectedConfig?.configuration || [], field.name)
+        field =>
+          !isSecretField(selectedConfig?.configuration || [], field.name),
       )
       .map(field => ({
         ...field,
-        value: field.value || ""
-      }))
+        value: field.value || "",
+      })),
   };
 
   const selectedChannelId = selectedConfig?.channel?.id;
@@ -88,10 +89,10 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
               configItem.name === name
                 ? {
                     ...configItem,
-                    value
+                    value,
                   }
-                : configItem
-            )
+                : configItem,
+            ),
           };
 
           set(newData);
@@ -106,11 +107,11 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                 {
                   id: "EtGDeK",
                   defaultMessage: "{pluginName} Details",
-                  description: "header"
+                  description: "header",
                 },
                 {
-                  pluginName: getStringOrPlaceholder(plugin?.name)
-                }
+                  pluginName: getStringOrPlaceholder(plugin?.name),
+                },
               )}
             />
             <Grid variant="inverted">
@@ -140,7 +141,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                       onChange={onChange}
                     />
                     {selectedConfig?.configuration.some(field =>
-                      isSecretField(selectedConfig?.configuration, field.name)
+                      isSecretField(selectedConfig?.configuration, field.name),
                     ) && (
                       <>
                         <CardSpacer />

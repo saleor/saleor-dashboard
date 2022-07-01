@@ -18,17 +18,17 @@ const useStyles = makeStyles(
       borderBottom: `1px solid ${theme.palette.divider}`,
       display: "flex",
       flexWrap: "wrap",
-      padding: theme.spacing(1, 4)
+      padding: theme.spacing(1, 4),
     },
     tabActionButton: {
       marginLeft: theme.spacing(2),
       paddingLeft: theme.spacing(3),
-      paddingRight: theme.spacing(3)
-    }
+      paddingRight: theme.spacing(3),
+    },
   }),
   {
-    name: "SearchBar"
-  }
+    name: "SearchBar",
+  },
 );
 
 const SearchBar: React.FC<SearchBarProps> = props => {
@@ -42,7 +42,7 @@ const SearchBar: React.FC<SearchBarProps> = props => {
     onAll,
     onTabChange,
     onTabDelete,
-    onTabSave
+    onTabSave,
   } = props;
 
   const classes = useStyles(props);
@@ -71,7 +71,7 @@ const SearchBar: React.FC<SearchBarProps> = props => {
             onClick={() => undefined}
             label={intl.formatMessage({
               id: "qIgdO6",
-              defaultMessage: "Custom Filter"
+              defaultMessage: "Custom Filter",
             })}
           />
         )}

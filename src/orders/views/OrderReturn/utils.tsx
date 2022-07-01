@@ -2,12 +2,12 @@ import {
   OrderDetailsFragment,
   OrderReturnFulfillmentLineInput,
   OrderReturnLineInput,
-  OrderReturnProductsInput
+  OrderReturnProductsInput,
 } from "@saleor/graphql";
 import { OrderRefundAmountCalculationMode } from "@saleor/orders/components/OrderRefundPage/form";
 import {
   FormsetQuantityData,
-  OrderReturnFormData
+  OrderReturnFormData,
 } from "@saleor/orders/components/OrderReturnPage/form";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 
@@ -25,7 +25,7 @@ class ReturnFormDataParser {
       fulfilledItemsQuantities,
       waitingItemsQuantities,
       unfulfilledItemsQuantities,
-      refundShipmentCosts
+      refundShipmentCosts,
     } = this.formData;
 
     const fulfillmentLines = this.getParsedLineData<
@@ -38,7 +38,7 @@ class ReturnFormDataParser {
 
     const orderLines = this.getParsedLineData<OrderReturnLineInput>(
       unfulfilledItemsQuantities,
-      "orderLineId"
+      "orderLineId",
     );
 
     return {
@@ -46,7 +46,7 @@ class ReturnFormDataParser {
       fulfillmentLines: fulfillmentLines.concat(waitingLines),
       includeShippingCosts: refundShipmentCosts,
       orderLines,
-      refund: this.getShouldRefund(orderLines, fulfillmentLines)
+      refund: this.getShouldRefund(orderLines, fulfillmentLines),
     };
   };
 
@@ -60,7 +60,7 @@ class ReturnFormDataParser {
     T extends OrderReturnFulfillmentLineInput | OrderReturnLineInput
   >(
     itemsQuantities: FormsetQuantityData,
-    idKey: "fulfillmentLineId" | "orderLineId"
+    idKey: "fulfillmentLineId" | "orderLineId",
   ): T[] {
     const { itemsToBeReplaced } = this.formData;
 
@@ -73,14 +73,14 @@ class ReturnFormDataParser {
 
       return [
         ...result,
-        ({ [idKey]: id, quantity, replace: shouldReplace } as unknown) as T
+        ({ [idKey]: id, quantity, replace: shouldReplace } as unknown) as T,
       ];
     }, []);
   };
 
   private getShouldRefund = (
     orderLines: OrderReturnLineInput[],
-    fulfillmentLines: OrderReturnFulfillmentLineInput[]
+    fulfillmentLines: OrderReturnFulfillmentLineInput[],
   ) => {
     if (
       !this.order.totalCaptured?.amount ||

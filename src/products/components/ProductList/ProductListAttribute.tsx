@@ -12,7 +12,7 @@ export interface ProductListAttributeProps {
 
 const ProductListAttribute: React.FC<ProductListAttributeProps> = ({
   attribute: gridAttribute,
-  productAttributes
+  productAttributes,
 }) => {
   if (!productAttributes) {
     return <Skeleton />;
@@ -20,7 +20,7 @@ const ProductListAttribute: React.FC<ProductListAttributeProps> = ({
 
   const productAttribute = productAttributes.find(
     attribute =>
-      attribute.attribute.id === getAttributeIdFromColumnValue(gridAttribute)
+      attribute.attribute.id === getAttributeIdFromColumnValue(gridAttribute),
   );
   if (productAttribute) {
     if (productAttribute.values.length) {

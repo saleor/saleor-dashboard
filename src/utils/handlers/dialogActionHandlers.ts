@@ -13,7 +13,7 @@ function createDialogActionHandlers<
 >(
   navigate: UseNavigatorResult,
   url: Url<TParams>,
-  params: TParams
+  params: TParams,
 ): CreateCloseModal<TAction, TParams> {
   const close = () =>
     navigate(
@@ -21,17 +21,17 @@ function createDialogActionHandlers<
         ...params,
         action: undefined,
         id: undefined,
-        ids: undefined
+        ids: undefined,
       }),
-      { replace: true }
+      { replace: true },
     );
   const open = (action: TAction, newParams?: TParams) =>
     navigate(
       url({
         ...params,
         ...newParams,
-        action
-      })
+        action,
+      }),
     );
 
   return [open, close];

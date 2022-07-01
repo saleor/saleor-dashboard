@@ -5,21 +5,21 @@ import {
   getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab
+  saveFilterTab,
 } from "@saleor/attributes/views/AttributeList/filters";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData
+  SaveFilterTabDialogFormData,
 } from "@saleor/components/SaveFilterTabDialog";
 import {
   useAttributeBulkDeleteMutation,
-  useAttributeListQuery
+  useAttributeListQuery,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState,
-  PaginatorContext
+  PaginatorContext,
 } from "@saleor/hooks/usePaginator";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -38,7 +38,7 @@ import AttributeListPage from "../../components/AttributeListPage";
 import {
   attributeListUrl,
   AttributeListUrlDialog,
-  AttributeListUrlQueryParams
+  AttributeListUrlQueryParams,
 } from "../../urls";
 import { getFilterQueryParam } from "./filters";
 import { getSortQueryVariables } from "./sort";
@@ -51,7 +51,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    params.ids
+    params.ids,
   );
   const intl = useIntl();
 
@@ -60,17 +60,17 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
-      sort: getSortQueryVariables(params)
+      sort: getSortQueryVariables(params),
     }),
-    [params]
+    [params],
   );
   const { data, loading, refetch } = useAttributeListQuery({
-    variables: queryVariables
+    variables: queryVariables,
   });
 
   const [
     attributeBulkDelete,
-    attributeBulkDeleteOpts
+    attributeBulkDeleteOpts,
   ] = useAttributeBulkDeleteMutation({
     onCompleted: data => {
       if (data.attributeBulkDelete.errors.length === 0) {
@@ -80,13 +80,13 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
           text: intl.formatMessage({
             id: "lw9WIk",
             defaultMessage: "Attributes successfully delete",
-            description: "deleted multiple attributes"
-          })
+            description: "deleted multiple attributes",
+          }),
         });
         reset();
         refetch();
       }
-    }
+    },
   });
 
   const tabs = getFilterTabs();
@@ -101,13 +101,13 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
   const [
     changeFilters,
     resetFilters,
-    handleSearchChange
+    handleSearchChange,
   ] = createFilterHandlers({
     cleanupFn: reset,
     createUrl: attributeListUrl,
     getFilterQueryParam,
     navigate,
-    params
+    params,
   });
 
   const handleTabChange = (tab: number) => {
@@ -115,8 +115,8 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
     navigate(
       attributeListUrl({
         activeTab: tab.toString(),
-        ...getFilterTabs()[tab - 1].data
-      })
+        ...getFilterTabs()[tab - 1].data,
+      }),
     );
   };
 
@@ -134,7 +134,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
   const paginationValues = usePaginator({
     pageInfo: maybe(() => data.attributes.pageInfo),
     paginationState,
-    queryString: params
+    queryString: params,
   });
 
   const handleSort = createSortHandler(navigate, attributeListUrl, params);
@@ -166,7 +166,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
             color="primary"
             onClick={() =>
               openModal("remove", {
-                ids: listElements
+                ids: listElements,
               })
             }
           >

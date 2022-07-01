@@ -5,20 +5,20 @@ import { AutocompleteFilterOpts, FilterOpts } from "@saleor/types";
 import {
   createAutocompleteField,
   createBooleanField,
-  createOptionsField
+  createOptionsField,
 } from "@saleor/utils/filters/fields";
 import { defineMessages, IntlShape } from "react-intl";
 
 import {
   pluginChannelConfigurationCellMessages,
-  pluginStatusMessages
+  pluginStatusMessages,
 } from "../PluginsList/messages";
 
 export enum PluginFilterKeys {
   active = "active",
   channels = "channels",
   status = "status",
-  type = "type"
+  type = "type",
 }
 
 export interface PluginListFilterOpts {
@@ -32,23 +32,23 @@ const messages = defineMessages({
   channelStatusSectionTitle: {
     id: "TC/EOG",
     defaultMessage: "Status in channel",
-    description: "status section title"
+    description: "status section title",
   },
   channelStatusSectionSubtitle: {
     id: "zQnYKn",
     defaultMessage: "Channel status",
-    description: "status section subtitle"
+    description: "status section subtitle",
   },
   configTypeSectionTitle: {
     id: "cwoN25",
     defaultMessage: "Configuration Type",
-    description: "config type section title"
-  }
+    description: "config type section title",
+  },
 });
 
 export function createFilterStructure(
   intl: IntlShape,
-  opts: PluginListFilterOpts
+  opts: PluginListFilterOpts,
 ): IFilter<PluginFilterKeys> {
   return [
     {
@@ -65,9 +65,9 @@ export function createFilterStructure(
             opts.isActive.value,
             {
               negative: intl.formatMessage(pluginStatusMessages.deactivated),
-              positive: intl.formatMessage(pluginStatusMessages.active)
-            }
-          )
+              positive: intl.formatMessage(pluginStatusMessages.active),
+            },
+          ),
         },
         {
           required: true,
@@ -83,11 +83,11 @@ export function createFilterStructure(
               initialSearch: "",
               loading: opts.channels.loading,
               onFetchMore: opts.channels.onFetchMore,
-              onSearchChange: opts.channels.onSearchChange
-            }
-          )
-        }
-      ]
+              onSearchChange: opts.channels.onSearchChange,
+            },
+          ),
+        },
+      ],
     },
     {
       active: opts.type.active,
@@ -101,17 +101,17 @@ export function createFilterStructure(
           {
             value: PluginConfigurationType.GLOBAL,
             label: intl.formatMessage(
-              pluginChannelConfigurationCellMessages.globalLabel
-            )
+              pluginChannelConfigurationCellMessages.globalLabel,
+            ),
           },
           {
             value: PluginConfigurationType.PER_CHANNEL,
             label: intl.formatMessage(
-              pluginChannelConfigurationCellMessages.channelLabel
-            )
-          }
-        ]
-      )
-    }
+              pluginChannelConfigurationCellMessages.channelLabel,
+            ),
+          },
+        ],
+      ),
+    },
   ];
 }

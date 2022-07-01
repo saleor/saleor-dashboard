@@ -13,14 +13,14 @@ export const useStyles = makeStyles(
         position: "absolute",
         top: "50%",
         transform: "translateY(-50%)",
-        width: 8
+        width: 8,
       },
       color: theme.palette.error.main,
       display: "inline-block",
       marginLeft: theme.spacing(1.5),
       paddingLeft: theme.spacing(2),
-      position: "relative"
-    }
+      position: "relative",
+    },
   }),
-  { name: "DeactivatedText" }
+  { name: "DeactivatedText" },
 );

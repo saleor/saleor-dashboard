@@ -1,7 +1,7 @@
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import FilterBar from "@saleor/components/FilterBar";
 import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData
+  SaveFilterTabDialogFormData,
 } from "@saleor/components/SaveFilterTabDialog";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
@@ -22,7 +22,7 @@ import {
   getFilterQueryParam,
   getFiltersCurrentTab,
   getFilterTabs,
-  saveFilterTab
+  saveFilterTab,
 } from "./filters";
 import { pagesListSearchAndFiltersMessages as messages } from "./messages";
 import { PageListActionDialogOpts } from "./PageListPage";
@@ -34,7 +34,7 @@ interface PageListSearchAndFiltersProps {
 
 const PageListSearchAndFilters: React.FC<PageListSearchAndFiltersProps> = ({
   params,
-  actionDialogOpts
+  actionDialogOpts,
 }) => {
   const navigate = useNavigator();
   const intl = useIntl();
@@ -42,8 +42,8 @@ const PageListSearchAndFilters: React.FC<PageListSearchAndFiltersProps> = ({
   const defaultSearchVariables = {
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
-      first: 5
-    }
+      first: 5,
+    },
   };
 
   const { reset } = useBulkActions(params.ids);
@@ -51,7 +51,7 @@ const PageListSearchAndFilters: React.FC<PageListSearchAndFiltersProps> = ({
   const {
     loadMore: fetchMorePageTypes,
     search: searchPageTypes,
-    result: searchPageTypesResult
+    result: searchPageTypesResult,
   } = usePageTypeSearch(defaultSearchVariables);
 
   const filterOpts = getFilterOpts({
@@ -59,20 +59,20 @@ const PageListSearchAndFilters: React.FC<PageListSearchAndFiltersProps> = ({
     pageTypes: mapEdgesToItems(searchPageTypesResult?.data?.search),
     pageTypesProps: {
       ...getSearchFetchMoreProps(searchPageTypesResult, fetchMorePageTypes),
-      onSearchChange: searchPageTypes
-    }
+      onSearchChange: searchPageTypes,
+    },
   });
 
   const [
     changeFilters,
     resetFilters,
-    handleSearchChange
+    handleSearchChange,
   ] = createFilterHandlers({
     createUrl: pageListUrl,
     getFilterQueryParam,
     navigate,
     params,
-    cleanupFn: reset
+    cleanupFn: reset,
   });
 
   const filterStrucutre = createFilterStructure(intl, filterOpts);
@@ -83,8 +83,8 @@ const PageListSearchAndFilters: React.FC<PageListSearchAndFiltersProps> = ({
     navigate(
       pageListUrl({
         activeTab: tab.toString(),
-        ...getFilterTabs()[tab - 1].data
-      })
+        ...getFilterTabs()[tab - 1].data,
+      }),
     );
   };
 

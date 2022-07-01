@@ -19,10 +19,10 @@ const useStyles = makeStyles(
   {
     link: {
       all: "inherit",
-      display: "contents"
-    }
+      display: "contents",
+    },
   },
-  { name: "TableRowLink" }
+  { name: "TableRowLink" },
 );
 
 const TableRowLink = ({

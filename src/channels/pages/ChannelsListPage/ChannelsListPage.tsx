@@ -3,7 +3,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow
+  TableRow,
 } from "@material-ui/core";
 import { channelAddUrl, channelUrl } from "@saleor/channels/urls";
 import { Backlink } from "@saleor/components/Backlink";
@@ -38,7 +38,7 @@ const numberOfColumns = 2;
 export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
   channelsList,
   limits,
-  onRemove
+  onRemove,
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -58,12 +58,12 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
             {
               id: "rZMT44",
               defaultMessage: "{count}/{max} channels used",
-              description: "created channels counter"
+              description: "created channels counter",
             },
             {
               count: limits.currentUsage.channels,
-              max: limits.allowedUsage.channels
-            }
+              max: limits.allowedUsage.channels,
+            },
           )
         }
       >
@@ -85,7 +85,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
           title={intl.formatMessage({
             id: "PTW56s",
             defaultMessage: "Channel limit reached",
-            description: "alert"
+            description: "alert",
           })}
         >
           <FormattedMessage
@@ -157,7 +157,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
                     />
                   </TableCell>
                 </TableRow>
-              )
+              ),
             )}
           </TableBody>
         </ResponsiveTable>

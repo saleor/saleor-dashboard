@@ -3,7 +3,7 @@ import {
   AccordionSummary,
   CardContent,
   Divider,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import Skeleton from "@saleor/components/Skeleton";
 import { ProductVariantFragment } from "@saleor/graphql";
@@ -25,16 +25,16 @@ const useExpanderStyles = makeStyles(
       padding: 0,
 
       "&:before": {
-        content: "none"
+        content: "none",
       },
 
       "&$expanded": {
         margin: 0,
-        border: "none"
-      }
-    }
+        border: "none",
+      },
+    },
   }),
-  { name: "VariantDetailsChannelsAvailabilityCardExpander" }
+  { name: "VariantDetailsChannelsAvailabilityCardExpander" },
 );
 
 const useSummaryStyles = makeStyles(
@@ -48,27 +48,27 @@ const useSummaryStyles = makeStyles(
       minHeight: 0,
 
       "&$expanded": {
-        minHeight: 0
-      }
+        minHeight: 0,
+      },
     },
     content: {
       margin: 0,
 
       "&$expanded": {
-        margin: 0
-      }
-    }
+        margin: 0,
+      },
+    },
   }),
-  { name: "VariantDetailsChannelsAvailabilityCardExpanderSummary" }
+  { name: "VariantDetailsChannelsAvailabilityCardExpanderSummary" },
 );
 
 const useStyles = makeStyles(
   () => ({
     summaryContent: {
-      paddingTop: 0
-    }
+      paddingTop: 0,
+    },
   }),
-  { name: "VariantDetailsChannelsAvailabilityCard" }
+  { name: "VariantDetailsChannelsAvailabilityCard" },
 );
 
 interface VariantDetailsChannelsAvailabilityCardProps {
@@ -76,7 +76,7 @@ interface VariantDetailsChannelsAvailabilityCardProps {
 }
 
 const VariantDetailsChannelsAvailabilityCard: React.FC<VariantDetailsChannelsAvailabilityCardProps> = ({
-  variant
+  variant,
 }) => {
   const classes = useStyles();
   const expanderClasses = useExpanderStyles({});
@@ -86,13 +86,13 @@ const VariantDetailsChannelsAvailabilityCard: React.FC<VariantDetailsChannelsAva
 
   const getProductChannelListingByChannelId = (channelId: string) =>
     variant?.product.channelListings.find(
-      ({ channel }) => channel.id === channelId
+      ({ channel }) => channel.id === channelId,
     );
 
   const getItemSubtitle = (channelId: string) => {
     const {
       isPublished,
-      publicationDate
+      publicationDate,
     } = getProductChannelListingByChannelId(channelId);
 
     if (!isPublished) {
@@ -100,7 +100,7 @@ const VariantDetailsChannelsAvailabilityCard: React.FC<VariantDetailsChannelsAva
     }
 
     return intl.formatMessage(messages.itemSubtitlePublished, {
-      publicationDate: localizeDate(publicationDate)
+      publicationDate: localizeDate(publicationDate),
     });
   };
 
@@ -119,15 +119,15 @@ const VariantDetailsChannelsAvailabilityCard: React.FC<VariantDetailsChannelsAva
   const isAvailableInAnyChannels = !!channelListings.length;
 
   const variantChannelListingsChannelsIds = channelListings.map(
-    ({ channel: { id } }) => id
+    ({ channel: { id } }) => id,
   );
 
   const allAvailableChannelsListings = variant.product.channelListings.filter(
-    ({ channel }) => variantChannelListingsChannelsIds.includes(channel.id)
+    ({ channel }) => variantChannelListingsChannelsIds.includes(channel.id),
   );
 
   const publishedInChannelsListings = allAvailableChannelsListings.filter(
-    ({ isPublished }) => isPublished
+    ({ isPublished }) => isPublished,
   );
 
   if (!isAvailableInAnyChannels) {
@@ -154,7 +154,7 @@ const VariantDetailsChannelsAvailabilityCard: React.FC<VariantDetailsChannelsAva
             <Typography variant="caption">
               {intl.formatMessage(messages.subtitle, {
                 publishedInChannelsCount: publishedInChannelsListings.length,
-                availableChannelsCount: allAvailableChannelsListings.length
+                availableChannelsCount: allAvailableChannelsListings.length,
               })}
             </Typography>
           </AccordionSummary>

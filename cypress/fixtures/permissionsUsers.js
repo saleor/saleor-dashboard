@@ -9,7 +9,7 @@ export const PERMISSIONS_OPTIONS = {
   },
   app: {
     user: ONE_PERMISSION_USERS.app,
-    permissions: [PERMISSIONS.app],
+    permissions: [],
     testCase: "TC: SALEOR_3402"
   },
   channel: {

@@ -3,104 +3,104 @@ import { defineMessages } from "react-intl";
 const messages = defineMessages({
   category: {
     id: "ccXLVi",
-    defaultMessage: "Category"
+    defaultMessage: "Category",
   },
   collection: {
     id: "phAZoj",
-    defaultMessage: "Collection"
+    defaultMessage: "Collection",
   },
   collectionPublished: {
     id: "lL3YJO",
     defaultMessage: "Published",
-    description: "collection"
+    description: "collection",
   },
   collectionUnpublished: {
     id: "M1uijW",
     defaultMessage: "Not Published",
-    description: "collection"
+    description: "collection",
   },
   createCategory: {
     id: "CjSRT1",
     defaultMessage: "Create Category",
-    description: "button"
+    description: "button",
   },
   createCollection: {
     id: "VdDcxc",
     defaultMessage: "Create Collection",
-    description: "button"
+    description: "button",
   },
   createCustomer: {
     id: "QooeI/",
     defaultMessage: "Create Customer",
-    description: "button"
+    description: "button",
   },
   createOrder: {
     id: "cfQf0w",
     defaultMessage: "Create Order",
-    description: "button"
+    description: "button",
   },
   createPermissionGroup: {
     id: "V1mqpZ",
     defaultMessage: "Create Permission Group",
-    description: "button"
+    description: "button",
   },
   createProduct: {
     id: "JFmOfi",
     defaultMessage: "Create Product",
-    description: "button"
+    description: "button",
   },
   createVoucher: {
     id: "y9cvqE",
     defaultMessage: "Create Voucher",
-    description: "button"
+    description: "button",
   },
   customerWithName: {
     id: "1gzck6",
-    defaultMessage: "{firstName} {lastName}"
+    defaultMessage: "{firstName} {lastName}",
   },
   goToOrder: {
     id: "IyHQr0",
     defaultMessage: "Go to order #{orderNumber}",
-    description: "navigator action"
+    description: "navigator action",
   },
   helpCatalogMode: {
     id: "kbkjEc",
     defaultMessage: "Search in Catalog",
-    description: "navigator catalog mode description"
+    description: "navigator catalog mode description",
   },
   helpCommandsMode: {
     id: "3TlhJS",
     defaultMessage: "Search Command",
-    description: "navigator command mode description"
+    description: "navigator command mode description",
   },
   helpCustomersMode: {
     id: "DHBlFi",
     defaultMessage: "Search Customers",
-    description: "navigator customer mode description"
+    description: "navigator customer mode description",
   },
   helpDefaultMode: {
     id: "Xel9C+",
     defaultMessage: "Search Views and Actions",
-    description: "navigator default mode description"
+    description: "navigator default mode description",
   },
   helpMode: {
     id: "iAvKNf",
     defaultMessage: "Display Help",
-    description: "navigator help mode description"
+    description: "navigator help mode description",
   },
   helpOrdersMode: {
     id: "usSkzP",
     defaultMessage: "Search Orders",
-    description: "navigator order mode description"
+    description: "navigator order mode description",
   },
   noResults: {
     id: "k8bltk",
-    defaultMessage: "No Results"
+    defaultMessage: "No Results",
   },
   product: {
     id: "x/ZVlU",
-    defaultMessage: "Product"
-  }
+    defaultMessage: "Product",
+  },
 });
 
 export default messages;

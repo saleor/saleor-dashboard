@@ -3,7 +3,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import {
   useCreateMultipleVariantsDataQuery,
-  useProductVariantBulkCreateMutation
+  useProductVariantBulkCreateMutation,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -20,7 +20,7 @@ interface ProductVariantCreatorProps {
 }
 
 const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
-  id
+  id,
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
@@ -29,12 +29,12 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
     displayLoader: true,
     variables: {
       id,
-      firstValues: 10
-    }
+      firstValues: 10,
+    },
   });
   const [
     bulkProductVariantCreate,
-    bulkProductVariantCreateOpts
+    bulkProductVariantCreateOpts,
   ] = useProductVariantBulkCreateMutation({
     onCompleted: data => {
       if (data.productVariantBulkCreate.errors.length === 0) {
@@ -43,31 +43,31 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
           text: intl.formatMessage({
             id: "oChkS4",
             defaultMessage: "Successfully created variants",
-            description: "success message"
-          })
+            description: "success message",
+          }),
         });
         navigate(productUrl(id));
       }
-    }
+    },
   });
   const limitOpts = useShopLimitsQuery({
     variables: {
-      productVariants: true
-    }
+      productVariants: true,
+    },
   });
 
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
     reset: searchAttributeReset,
-    result: searchAttributeValuesOpts
+    result: searchAttributeValuesOpts,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
 
   const fetchMoreAttributeValues = {
     hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo
       ?.hasNextPage,
     loading: !!searchAttributeValuesOpts.loading,
-    onFetchMore: loadMoreAttributeValues
+    onFetchMore: loadMoreAttributeValues,
   };
 
   const attributeValues =
@@ -79,7 +79,7 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
         title={intl.formatMessage({
           id: "z+wMgQ",
           defaultMessage: "Create Variants",
-          description: "window title"
+          description: "window title",
         })}
       />
       <ProductVariantCreatorPage
@@ -91,7 +91,7 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
           currency: listing.channel.currencyCode,
           id: listing.channel.id,
           name: listing.channel.name,
-          price: ""
+          price: "",
         }))}
         attributes={data?.product?.productType?.variantAttributes || []}
         attributeValues={attributeValues}
@@ -100,7 +100,7 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
         limits={limitOpts.data?.shop?.limits}
         onSubmit={inputs =>
           bulkProductVariantCreate({
-            variables: { id, inputs }
+            variables: { id, inputs },
           })
         }
         onAttributeSelectBlur={searchAttributeReset}

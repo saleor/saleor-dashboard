@@ -14,35 +14,35 @@ export interface AppStateReducerAction {
 function displayError(
   prevState: IAppState,
   errorType: AppError["type"],
-  errorId?: AppError["id"]
+  errorId?: AppError["id"],
 ): IAppState {
   return {
     ...prevState,
     error: {
       id: errorId,
-      type: errorType
+      type: errorType,
     },
-    loading: false
+    loading: false,
   };
 }
 
 function displayLoader(prevState: IAppState, value: boolean): IAppState {
   return {
     ...prevState,
-    loading: value
+    loading: value,
   };
 }
 
 function reduceAppState(
   prevState: IAppState,
-  action: AppStateReducerAction
+  action: AppStateReducerAction,
 ): IAppState {
   switch (action.type) {
     case "displayError":
       return displayError(
         prevState,
         action.payload.error,
-        action.payload.errorId
+        action.payload.errorId,
       );
     case "displayLoader":
       return displayLoader(prevState, action.payload.value);

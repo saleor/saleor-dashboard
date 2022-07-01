@@ -4,7 +4,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import OrderDiscountCommonModal, {
-  OrderDiscountCommonModalProps
+  OrderDiscountCommonModalProps,
 } from "./OrderDiscountCommonModal";
 import { ORDER_DISCOUNT } from "./types";
 
@@ -20,13 +20,13 @@ const basicProps: OrderDiscountCommonModalProps = {
   maxPrice: {
     __typename: "Money",
     amount: 15,
-    currency: "PLN"
+    currency: "PLN",
   },
   modalType: ORDER_DISCOUNT,
   onClose: emptyFunction,
   onConfirm: emptyFunction,
   onRemove: emptyFunction,
-  removeStatus: "default"
+  removeStatus: "default",
 };
 
 storiesOf("Orders / Order Discount common modal", module)
@@ -40,7 +40,7 @@ storiesOf("Orders / Order Discount common modal", module)
       existingDiscount={{
         calculationMode: DiscountValueTypeEnum.PERCENTAGE,
         reason: "Cause customers want it cheap",
-        value: 25
+        value: 25,
       }}
     />
   ))
@@ -50,7 +50,7 @@ storiesOf("Orders / Order Discount common modal", module)
       existingDiscount={{
         calculationMode: DiscountValueTypeEnum.FIXED,
         reason: "Cause I say so",
-        value: 5.5
+        value: 5.5,
       }}
     />
   ))
@@ -61,7 +61,7 @@ storiesOf("Orders / Order Discount common modal", module)
       existingDiscount={{
         calculationMode: DiscountValueTypeEnum.FIXED,
         reason: "Cause I say so",
-        value: 5.5
+        value: 5.5,
       }}
     />
   ));

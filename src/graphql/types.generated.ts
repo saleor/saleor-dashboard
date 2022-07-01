@@ -374,6 +374,7 @@ export enum AttributeInputTypeEnum {
   REFERENCE = 'REFERENCE',
   NUMERIC = 'NUMERIC',
   RICH_TEXT = 'RICH_TEXT',
+  PLAIN_TEXT = 'PLAIN_TEXT',
   SWATCH = 'SWATCH',
   BOOLEAN = 'BOOLEAN',
   DATE = 'DATE',
@@ -444,8 +445,14 @@ export type AttributeUpdateInput = {
 export type AttributeValueCreateInput = {
   /** Represent value of the attribute value (e.g. color values for swatch attributes). */
   value?: InputMaybe<Scalars['String']>;
-  /** Represents the text (JSON) of the attribute value. */
+  /**
+   * Represents the text of the attribute value, includes formatting.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
   richText?: InputMaybe<Scalars['JSONString']>;
+  /** Represents the text of the attribute value, plain text without formating. */
+  plainText?: InputMaybe<Scalars['String']>;
   /** URL of the file attribute. Every time, a new value is created. */
   fileUrl?: InputMaybe<Scalars['String']>;
   /** File content type. */
@@ -472,6 +479,8 @@ export type AttributeValueInput = {
   references?: InputMaybe<Array<Scalars['ID']>>;
   /** Text content in JSON format. */
   richText?: InputMaybe<Scalars['JSONString']>;
+  /** Plain text content. */
+  plainText?: InputMaybe<Scalars['String']>;
   /** Represents the boolean value of the attribute value. */
   boolean?: InputMaybe<Scalars['Boolean']>;
   /** Represents the date value of the attribute value. */
@@ -482,14 +491,27 @@ export type AttributeValueInput = {
 
 export type AttributeValueTranslationInput = {
   name?: InputMaybe<Scalars['String']>;
+  /**
+   * Translated text.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
   richText?: InputMaybe<Scalars['JSONString']>;
+  /** Translated text. */
+  plainText?: InputMaybe<Scalars['String']>;
 };
 
 export type AttributeValueUpdateInput = {
   /** Represent value of the attribute value (e.g. color values for swatch attributes). */
   value?: InputMaybe<Scalars['String']>;
-  /** Represents the text (JSON) of the attribute value. */
+  /**
+   * Represents the text of the attribute value, includes formatting.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
   richText?: InputMaybe<Scalars['JSONString']>;
+  /** Represents the text of the attribute value, plain text without formating. */
+  plainText?: InputMaybe<Scalars['String']>;
   /** URL of the file attribute. Every time, a new value is created. */
   fileUrl?: InputMaybe<Scalars['String']>;
   /** File content type. */
@@ -538,7 +560,11 @@ export type CategoryFilterInput = {
 };
 
 export type CategoryInput = {
-  /** Category description (JSON). */
+  /**
+   * Category description.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
   description?: InputMaybe<Scalars['JSONString']>;
   /** Category name. */
   name?: InputMaybe<Scalars['String']>;
@@ -744,7 +770,11 @@ export type CollectionCreateInput = {
   name?: InputMaybe<Scalars['String']>;
   /** Slug of the collection. */
   slug?: InputMaybe<Scalars['String']>;
-  /** Description of the collection (JSON). */
+  /**
+   * Description of the collection.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
   description?: InputMaybe<Scalars['JSONString']>;
   /** Background image file. */
   backgroundImage?: InputMaybe<Scalars['Upload']>;
@@ -793,7 +823,11 @@ export type CollectionInput = {
   name?: InputMaybe<Scalars['String']>;
   /** Slug of the collection. */
   slug?: InputMaybe<Scalars['String']>;
-  /** Description of the collection (JSON). */
+  /**
+   * Description of the collection.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
   description?: InputMaybe<Scalars['JSONString']>;
   /** Background image file. */
   backgroundImage?: InputMaybe<Scalars['Upload']>;
@@ -2708,6 +2742,49 @@ export type OrderAddNoteInput = {
   message: Scalars['String'];
 };
 
+/**
+ * Determine a current authorize status for order.
+ *
+ *     We treat the order as fully authorized when the sum of authorized and charged funds
+ *     cover the order.total.
+ *     We treat the order as partially authorized when the sum of authorized and charged
+ *     funds covers only part of the order.total
+ *     We treat the order as not authorized when the sum of authorized and charged funds is
+ *     0.
+ *
+ *     NONE - the funds are not authorized
+ *     PARTIAL - the funds that are authorized or charged don't cover fully the order's
+ *     total
+ *     FULL - the funds that are authorized or charged fully cover the order's total
+ *
+ */
+export enum OrderAuthorizeStatusEnum {
+  NONE = 'NONE',
+  PARTIAL = 'PARTIAL',
+  FULL = 'FULL'
+}
+
+/**
+ * Determine the current charge status for the order.
+ *
+ *     We treat the order as overcharged when the charged amount is bigger that order.total
+ *     We treat the order as fully charged when the charged amount is equal to order.total.
+ *     We treat the order as partially charged when the charged amount covers only part of
+ *     the order.total
+ *
+ *     NONE - the funds are not charged.
+ *     PARTIAL - the funds that are charged don't cover the order's total
+ *     FULL - the funds that are charged fully cover the order's total
+ *     OVERCHARGED - the charged funds are bigger than order's total
+ *
+ */
+export enum OrderChargeStatusEnum {
+  NONE = 'NONE',
+  PARTIAL = 'PARTIAL',
+  FULL = 'FULL',
+  OVERCHARGED = 'OVERCHARGED'
+}
+
 /** An enumeration. */
 export enum OrderCreateFromCheckoutErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -2863,12 +2940,15 @@ export type OrderFilterInput = {
   search?: InputMaybe<Scalars['String']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
   channels?: InputMaybe<Array<Scalars['ID']>>;
+  authorizeStatus?: InputMaybe<Array<OrderAuthorizeStatusEnum>>;
+  chargeStatus?: InputMaybe<Array<OrderChargeStatusEnum>>;
   updatedAt?: InputMaybe<DateTimeRangeInput>;
   isClickAndCollect?: InputMaybe<Scalars['Boolean']>;
   isPreorder?: InputMaybe<Scalars['Boolean']>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
   giftCardUsed?: InputMaybe<Scalars['Boolean']>;
   giftCardBought?: InputMaybe<Scalars['Boolean']>;
+  numbers?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export type OrderFulfillInput = {
@@ -2984,6 +3064,8 @@ export type OrderSettingsUpdateInput = {
 export enum OrderSortField {
   /** Sort orders by number. */
   NUMBER = 'NUMBER',
+  /** Sort orders by rank. Note: This option is available only with the `search` filter. */
+  RANK = 'RANK',
   /**
    * Sort orders by creation date.
    *
@@ -3054,7 +3136,11 @@ export type PageCreateInput = {
   slug?: InputMaybe<Scalars['String']>;
   /** Page title. */
   title?: InputMaybe<Scalars['String']>;
-  /** Page content in JSON format. */
+  /**
+   * Page content.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
   content?: InputMaybe<Scalars['JSONString']>;
   /** List of attributes. */
   attributes?: InputMaybe<Array<AttributeValueInput>>;
@@ -3101,7 +3187,11 @@ export type PageInput = {
   slug?: InputMaybe<Scalars['String']>;
   /** Page title. */
   title?: InputMaybe<Scalars['String']>;
-  /** Page content in JSON format. */
+  /**
+   * Page content.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
   content?: InputMaybe<Scalars['JSONString']>;
   /** List of attributes. */
   attributes?: InputMaybe<Array<AttributeValueInput>>;
@@ -3157,6 +3247,11 @@ export type PageTranslationInput = {
   seoTitle?: InputMaybe<Scalars['String']>;
   seoDescription?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
+  /**
+   * Translated page content.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
   content?: InputMaybe<Scalars['JSONString']>;
 };
 
@@ -3275,6 +3370,7 @@ export enum PermissionEnum {
   MANAGE_STAFF = 'MANAGE_STAFF',
   IMPERSONATE_USER = 'IMPERSONATE_USER',
   MANAGE_APPS = 'MANAGE_APPS',
+  MANAGE_OBSERVABILITY = 'MANAGE_OBSERVABILITY',
   MANAGE_CHANNELS = 'MANAGE_CHANNELS',
   MANAGE_DISCOUNTS = 'MANAGE_DISCOUNTS',
   MANAGE_PLUGINS = 'MANAGE_PLUGINS',
@@ -3500,7 +3596,11 @@ export type ProductCreateInput = {
   chargeTaxes?: InputMaybe<Scalars['Boolean']>;
   /** List of IDs of collections that the product belongs to. */
   collections?: InputMaybe<Array<Scalars['ID']>>;
-  /** Product description (JSON). */
+  /**
+   * Product description.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
   description?: InputMaybe<Scalars['JSONString']>;
   /** Product name. */
   name?: InputMaybe<Scalars['String']>;
@@ -3590,7 +3690,11 @@ export type ProductInput = {
   chargeTaxes?: InputMaybe<Scalars['Boolean']>;
   /** List of IDs of collections that the product belongs to. */
   collections?: InputMaybe<Array<Scalars['ID']>>;
-  /** Product description (JSON). */
+  /**
+   * Product description.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
   description?: InputMaybe<Scalars['JSONString']>;
   /** Product name. */
   name?: InputMaybe<Scalars['String']>;
@@ -4089,7 +4193,11 @@ export type ShippingPriceInput = {
 
 export type ShippingPriceTranslationInput = {
   name?: InputMaybe<Scalars['String']>;
-  /** Translated shipping method description (JSON). */
+  /**
+   * Translated shipping method description.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
   description?: InputMaybe<Scalars['JSONString']>;
 };
 
@@ -4328,13 +4436,13 @@ export enum TimePeriodTypeEnum {
  * Represents possible actions on payment transaction.
  *
  *     The following actions are possible:
- *     CAPTURE - Represents the capture action.
+ *     CHARGE - Represents the charge action.
  *     REFUND - Represents a refund action.
  *     VOID - Represents a void action.
  *
  */
 export enum TransactionActionEnum {
-  CAPTURE = 'CAPTURE',
+  CHARGE = 'CHARGE',
   REFUND = 'REFUND',
   VOID = 'VOID'
 }
@@ -4359,8 +4467,8 @@ export type TransactionCreateInput = {
   availableActions?: InputMaybe<Array<TransactionActionEnum>>;
   /** Amount authorized by this transaction. */
   amountAuthorized?: InputMaybe<MoneyInput>;
-  /** Amount captured by this transaction. */
-  amountCaptured?: InputMaybe<MoneyInput>;
+  /** Amount charged by this transaction. */
+  amountCharged?: InputMaybe<MoneyInput>;
   /** Amount refunded by this transaction. */
   amountRefunded?: InputMaybe<MoneyInput>;
   /** Amount voided by this transaction. */
@@ -4429,8 +4537,8 @@ export type TransactionUpdateInput = {
   availableActions?: InputMaybe<Array<TransactionActionEnum>>;
   /** Amount authorized by this transaction. */
   amountAuthorized?: InputMaybe<MoneyInput>;
-  /** Amount captured by this transaction. */
-  amountCaptured?: InputMaybe<MoneyInput>;
+  /** Amount charged by this transaction. */
+  amountCharged?: InputMaybe<MoneyInput>;
   /** Amount refunded by this transaction. */
   amountRefunded?: InputMaybe<MoneyInput>;
   /** Amount voided by this transaction. */
@@ -4467,6 +4575,11 @@ export type TranslationInput = {
   seoTitle?: InputMaybe<Scalars['String']>;
   seoDescription?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  /**
+   * Translated description.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
   description?: InputMaybe<Scalars['JSONString']>;
 };
 
@@ -4784,6 +4897,26 @@ export enum WebhookErrorCode {
 export enum WebhookEventTypeAsyncEnum {
   /** All the events. */
   ANY_EVENTS = 'ANY_EVENTS',
+  /** A new address created. */
+  ADDRESS_CREATED = 'ADDRESS_CREATED',
+  /** An address updated. */
+  ADDRESS_UPDATED = 'ADDRESS_UPDATED',
+  /** An address deleted. */
+  ADDRESS_DELETED = 'ADDRESS_DELETED',
+  /** A new app installed. */
+  APP_INSTALLED = 'APP_INSTALLED',
+  /** An app updated. */
+  APP_UPDATED = 'APP_UPDATED',
+  /** An app deleted. */
+  APP_DELETED = 'APP_DELETED',
+  /** An app status is changed. */
+  APP_STATUS_CHANGED = 'APP_STATUS_CHANGED',
+  /** A new attribute is created. */
+  ATTRIBUTE_CREATED = 'ATTRIBUTE_CREATED',
+  /** An attribute is updated. */
+  ATTRIBUTE_UPDATED = 'ATTRIBUTE_UPDATED',
+  /** An attribute is deleted. */
+  ATTRIBUTE_DELETED = 'ATTRIBUTE_DELETED',
   /** A new category created. */
   CATEGORY_CREATED = 'CATEGORY_CREATED',
   /** A category is updated. */
@@ -4882,6 +5015,12 @@ export enum WebhookEventTypeAsyncEnum {
   PAGE_UPDATED = 'PAGE_UPDATED',
   /** A page is deleted. */
   PAGE_DELETED = 'PAGE_DELETED',
+  /** A new page type is created. */
+  PAGE_TYPE_CREATED = 'PAGE_TYPE_CREATED',
+  /** A page type is updated. */
+  PAGE_TYPE_UPDATED = 'PAGE_TYPE_UPDATED',
+  /** A page type is deleted. */
+  PAGE_TYPE_DELETED = 'PAGE_TYPE_DELETED',
   /** A new shipping price is created. */
   SHIPPING_PRICE_CREATED = 'SHIPPING_PRICE_CREATED',
   /** A shipping price is updated. */
@@ -4894,140 +5033,190 @@ export enum WebhookEventTypeAsyncEnum {
   SHIPPING_ZONE_UPDATED = 'SHIPPING_ZONE_UPDATED',
   /** A shipping zone is deleted. */
   SHIPPING_ZONE_DELETED = 'SHIPPING_ZONE_DELETED',
+  /** A staff user is deleted */
+  STAFF_CREATED = 'STAFF_CREATED',
+  STAFF_UPDATED = 'STAFF_UPDATED',
+  STAFF_DELETED = 'STAFF_DELETED',
   TRANSACTION_ACTION_REQUEST = 'TRANSACTION_ACTION_REQUEST',
   TRANSLATION_CREATED = 'TRANSLATION_CREATED',
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
-  /** A new voucher created. */
-  VOUCHER_CREATED = 'VOUCHER_CREATED',
-  /** A voucher is updated. */
-  VOUCHER_UPDATED = 'VOUCHER_UPDATED',
-  /** A voucher is deleted. */
-  VOUCHER_DELETED = 'VOUCHER_DELETED'
-}
-
-/** Enum determining type of webhook. */
-export enum WebhookEventTypeEnum {
-  /** All the events. */
-  ANY_EVENTS = 'ANY_EVENTS',
-  /** A new category created. */
-  CATEGORY_CREATED = 'CATEGORY_CREATED',
-  /** A category is updated. */
-  CATEGORY_UPDATED = 'CATEGORY_UPDATED',
-  /** A category is deleted. */
-  CATEGORY_DELETED = 'CATEGORY_DELETED',
-  /** A new channel created. */
-  CHANNEL_CREATED = 'CHANNEL_CREATED',
-  /** A channel is updated. */
-  CHANNEL_UPDATED = 'CHANNEL_UPDATED',
-  /** A channel is deleted. */
-  CHANNEL_DELETED = 'CHANNEL_DELETED',
-  /** A channel status is changed. */
-  CHANNEL_STATUS_CHANGED = 'CHANNEL_STATUS_CHANGED',
-  /** A new gift card created. */
-  GIFT_CARD_CREATED = 'GIFT_CARD_CREATED',
-  /** A gift card is updated. */
-  GIFT_CARD_UPDATED = 'GIFT_CARD_UPDATED',
-  /** A gift card is deleted. */
-  GIFT_CARD_DELETED = 'GIFT_CARD_DELETED',
-  /** A gift card status is changed. */
-  GIFT_CARD_STATUS_CHANGED = 'GIFT_CARD_STATUS_CHANGED',
-  /** A new menu created. */
-  MENU_CREATED = 'MENU_CREATED',
-  /** A menu is updated. */
-  MENU_UPDATED = 'MENU_UPDATED',
-  /** A menu is deleted. */
-  MENU_DELETED = 'MENU_DELETED',
-  /** A new menu item created. */
-  MENU_ITEM_CREATED = 'MENU_ITEM_CREATED',
-  /** A menu item is updated. */
-  MENU_ITEM_UPDATED = 'MENU_ITEM_UPDATED',
-  /** A menu item is deleted. */
-  MENU_ITEM_DELETED = 'MENU_ITEM_DELETED',
-  /** A new order is placed. */
-  ORDER_CREATED = 'ORDER_CREATED',
-  /** An order is confirmed (status change unconfirmed -> unfulfilled) by a staff user using the OrderConfirm mutation. It also triggers when the user completes the checkout and the shop setting `automatically_confirm_all_new_orders` is enabled. */
-  ORDER_CONFIRMED = 'ORDER_CONFIRMED',
-  /** Payment is made and an order is fully paid. */
-  ORDER_FULLY_PAID = 'ORDER_FULLY_PAID',
-  /** An order is updated; triggered for all changes related to an order; covers all other order webhooks, except for ORDER_CREATED. */
-  ORDER_UPDATED = 'ORDER_UPDATED',
-  /** An order is cancelled. */
-  ORDER_CANCELLED = 'ORDER_CANCELLED',
-  /** An order is fulfilled. */
-  ORDER_FULFILLED = 'ORDER_FULFILLED',
-  DRAFT_ORDER_CREATED = 'DRAFT_ORDER_CREATED',
-  DRAFT_ORDER_UPDATED = 'DRAFT_ORDER_UPDATED',
-  DRAFT_ORDER_DELETED = 'DRAFT_ORDER_DELETED',
-  SALE_CREATED = 'SALE_CREATED',
-  SALE_UPDATED = 'SALE_UPDATED',
-  SALE_DELETED = 'SALE_DELETED',
-  /** An invoice for order requested. */
-  INVOICE_REQUESTED = 'INVOICE_REQUESTED',
-  /** An invoice is deleted. */
-  INVOICE_DELETED = 'INVOICE_DELETED',
-  /** Invoice has been sent. */
-  INVOICE_SENT = 'INVOICE_SENT',
-  /** A new customer account is created. */
-  CUSTOMER_CREATED = 'CUSTOMER_CREATED',
-  /** A customer account is updated. */
-  CUSTOMER_UPDATED = 'CUSTOMER_UPDATED',
-  /** A new collection is created. */
-  COLLECTION_CREATED = 'COLLECTION_CREATED',
-  /** A collection is updated. */
-  COLLECTION_UPDATED = 'COLLECTION_UPDATED',
-  /** A collection is deleted. */
-  COLLECTION_DELETED = 'COLLECTION_DELETED',
-  /** A new product is created. */
-  PRODUCT_CREATED = 'PRODUCT_CREATED',
-  /** A product is updated. */
-  PRODUCT_UPDATED = 'PRODUCT_UPDATED',
-  /** A product is deleted. */
-  PRODUCT_DELETED = 'PRODUCT_DELETED',
-  /** A new product variant is created. */
-  PRODUCT_VARIANT_CREATED = 'PRODUCT_VARIANT_CREATED',
-  /** A product variant is updated. */
-  PRODUCT_VARIANT_UPDATED = 'PRODUCT_VARIANT_UPDATED',
-  /** A product variant is deleted. */
-  PRODUCT_VARIANT_DELETED = 'PRODUCT_VARIANT_DELETED',
-  PRODUCT_VARIANT_OUT_OF_STOCK = 'PRODUCT_VARIANT_OUT_OF_STOCK',
-  PRODUCT_VARIANT_BACK_IN_STOCK = 'PRODUCT_VARIANT_BACK_IN_STOCK',
-  /** A new checkout is created. */
-  CHECKOUT_CREATED = 'CHECKOUT_CREATED',
-  /** A checkout is updated. It also triggers all updates related to the checkout. */
-  CHECKOUT_UPDATED = 'CHECKOUT_UPDATED',
-  /** A new fulfillment is created. */
-  FULFILLMENT_CREATED = 'FULFILLMENT_CREATED',
-  /** A fulfillment is cancelled. */
-  FULFILLMENT_CANCELED = 'FULFILLMENT_CANCELED',
-  /** User notification triggered. */
-  NOTIFY_USER = 'NOTIFY_USER',
-  /** A new page is created. */
-  PAGE_CREATED = 'PAGE_CREATED',
-  /** A page is updated. */
-  PAGE_UPDATED = 'PAGE_UPDATED',
-  /** A page is deleted. */
-  PAGE_DELETED = 'PAGE_DELETED',
-  /** A new shipping price is created. */
-  SHIPPING_PRICE_CREATED = 'SHIPPING_PRICE_CREATED',
-  /** A shipping price is updated. */
-  SHIPPING_PRICE_UPDATED = 'SHIPPING_PRICE_UPDATED',
-  /** A shipping price is deleted. */
-  SHIPPING_PRICE_DELETED = 'SHIPPING_PRICE_DELETED',
-  /** A new shipping zone is created. */
-  SHIPPING_ZONE_CREATED = 'SHIPPING_ZONE_CREATED',
-  /** A shipping zone is updated. */
-  SHIPPING_ZONE_UPDATED = 'SHIPPING_ZONE_UPDATED',
-  /** A shipping zone is deleted. */
-  SHIPPING_ZONE_DELETED = 'SHIPPING_ZONE_DELETED',
-  TRANSACTION_ACTION_REQUEST = 'TRANSACTION_ACTION_REQUEST',
-  TRANSLATION_CREATED = 'TRANSLATION_CREATED',
-  TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
+  /** A new warehouse created. */
+  WAREHOUSE_CREATED = 'WAREHOUSE_CREATED',
+  /** A warehouse is updated. */
+  WAREHOUSE_UPDATED = 'WAREHOUSE_UPDATED',
+  /** A warehouse is deleted. */
+  WAREHOUSE_DELETED = 'WAREHOUSE_DELETED',
   /** A new voucher created. */
   VOUCHER_CREATED = 'VOUCHER_CREATED',
   /** A voucher is updated. */
   VOUCHER_UPDATED = 'VOUCHER_UPDATED',
   /** A voucher is deleted. */
   VOUCHER_DELETED = 'VOUCHER_DELETED',
+  /** An observability event is created. */
+  OBSERVABILITY = 'OBSERVABILITY'
+}
+
+/** Enum determining type of webhook. */
+export enum WebhookEventTypeEnum {
+  /** All the events. */
+  ANY_EVENTS = 'ANY_EVENTS',
+  /** A new address created. */
+  ADDRESS_CREATED = 'ADDRESS_CREATED',
+  /** An address updated. */
+  ADDRESS_UPDATED = 'ADDRESS_UPDATED',
+  /** An address deleted. */
+  ADDRESS_DELETED = 'ADDRESS_DELETED',
+  /** A new app installed. */
+  APP_INSTALLED = 'APP_INSTALLED',
+  /** An app updated. */
+  APP_UPDATED = 'APP_UPDATED',
+  /** An app deleted. */
+  APP_DELETED = 'APP_DELETED',
+  /** An app status is changed. */
+  APP_STATUS_CHANGED = 'APP_STATUS_CHANGED',
+  /** A new attribute is created. */
+  ATTRIBUTE_CREATED = 'ATTRIBUTE_CREATED',
+  /** An attribute is updated. */
+  ATTRIBUTE_UPDATED = 'ATTRIBUTE_UPDATED',
+  /** An attribute is deleted. */
+  ATTRIBUTE_DELETED = 'ATTRIBUTE_DELETED',
+  /** A new category created. */
+  CATEGORY_CREATED = 'CATEGORY_CREATED',
+  /** A category is updated. */
+  CATEGORY_UPDATED = 'CATEGORY_UPDATED',
+  /** A category is deleted. */
+  CATEGORY_DELETED = 'CATEGORY_DELETED',
+  /** A new channel created. */
+  CHANNEL_CREATED = 'CHANNEL_CREATED',
+  /** A channel is updated. */
+  CHANNEL_UPDATED = 'CHANNEL_UPDATED',
+  /** A channel is deleted. */
+  CHANNEL_DELETED = 'CHANNEL_DELETED',
+  /** A channel status is changed. */
+  CHANNEL_STATUS_CHANGED = 'CHANNEL_STATUS_CHANGED',
+  /** A new gift card created. */
+  GIFT_CARD_CREATED = 'GIFT_CARD_CREATED',
+  /** A gift card is updated. */
+  GIFT_CARD_UPDATED = 'GIFT_CARD_UPDATED',
+  /** A gift card is deleted. */
+  GIFT_CARD_DELETED = 'GIFT_CARD_DELETED',
+  /** A gift card status is changed. */
+  GIFT_CARD_STATUS_CHANGED = 'GIFT_CARD_STATUS_CHANGED',
+  /** A new menu created. */
+  MENU_CREATED = 'MENU_CREATED',
+  /** A menu is updated. */
+  MENU_UPDATED = 'MENU_UPDATED',
+  /** A menu is deleted. */
+  MENU_DELETED = 'MENU_DELETED',
+  /** A new menu item created. */
+  MENU_ITEM_CREATED = 'MENU_ITEM_CREATED',
+  /** A menu item is updated. */
+  MENU_ITEM_UPDATED = 'MENU_ITEM_UPDATED',
+  /** A menu item is deleted. */
+  MENU_ITEM_DELETED = 'MENU_ITEM_DELETED',
+  /** A new order is placed. */
+  ORDER_CREATED = 'ORDER_CREATED',
+  /** An order is confirmed (status change unconfirmed -> unfulfilled) by a staff user using the OrderConfirm mutation. It also triggers when the user completes the checkout and the shop setting `automatically_confirm_all_new_orders` is enabled. */
+  ORDER_CONFIRMED = 'ORDER_CONFIRMED',
+  /** Payment is made and an order is fully paid. */
+  ORDER_FULLY_PAID = 'ORDER_FULLY_PAID',
+  /** An order is updated; triggered for all changes related to an order; covers all other order webhooks, except for ORDER_CREATED. */
+  ORDER_UPDATED = 'ORDER_UPDATED',
+  /** An order is cancelled. */
+  ORDER_CANCELLED = 'ORDER_CANCELLED',
+  /** An order is fulfilled. */
+  ORDER_FULFILLED = 'ORDER_FULFILLED',
+  DRAFT_ORDER_CREATED = 'DRAFT_ORDER_CREATED',
+  DRAFT_ORDER_UPDATED = 'DRAFT_ORDER_UPDATED',
+  DRAFT_ORDER_DELETED = 'DRAFT_ORDER_DELETED',
+  SALE_CREATED = 'SALE_CREATED',
+  SALE_UPDATED = 'SALE_UPDATED',
+  SALE_DELETED = 'SALE_DELETED',
+  /** An invoice for order requested. */
+  INVOICE_REQUESTED = 'INVOICE_REQUESTED',
+  /** An invoice is deleted. */
+  INVOICE_DELETED = 'INVOICE_DELETED',
+  /** Invoice has been sent. */
+  INVOICE_SENT = 'INVOICE_SENT',
+  /** A new customer account is created. */
+  CUSTOMER_CREATED = 'CUSTOMER_CREATED',
+  /** A customer account is updated. */
+  CUSTOMER_UPDATED = 'CUSTOMER_UPDATED',
+  /** A new collection is created. */
+  COLLECTION_CREATED = 'COLLECTION_CREATED',
+  /** A collection is updated. */
+  COLLECTION_UPDATED = 'COLLECTION_UPDATED',
+  /** A collection is deleted. */
+  COLLECTION_DELETED = 'COLLECTION_DELETED',
+  /** A new product is created. */
+  PRODUCT_CREATED = 'PRODUCT_CREATED',
+  /** A product is updated. */
+  PRODUCT_UPDATED = 'PRODUCT_UPDATED',
+  /** A product is deleted. */
+  PRODUCT_DELETED = 'PRODUCT_DELETED',
+  /** A new product variant is created. */
+  PRODUCT_VARIANT_CREATED = 'PRODUCT_VARIANT_CREATED',
+  /** A product variant is updated. */
+  PRODUCT_VARIANT_UPDATED = 'PRODUCT_VARIANT_UPDATED',
+  /** A product variant is deleted. */
+  PRODUCT_VARIANT_DELETED = 'PRODUCT_VARIANT_DELETED',
+  PRODUCT_VARIANT_OUT_OF_STOCK = 'PRODUCT_VARIANT_OUT_OF_STOCK',
+  PRODUCT_VARIANT_BACK_IN_STOCK = 'PRODUCT_VARIANT_BACK_IN_STOCK',
+  /** A new checkout is created. */
+  CHECKOUT_CREATED = 'CHECKOUT_CREATED',
+  /** A checkout is updated. It also triggers all updates related to the checkout. */
+  CHECKOUT_UPDATED = 'CHECKOUT_UPDATED',
+  /** A new fulfillment is created. */
+  FULFILLMENT_CREATED = 'FULFILLMENT_CREATED',
+  /** A fulfillment is cancelled. */
+  FULFILLMENT_CANCELED = 'FULFILLMENT_CANCELED',
+  /** User notification triggered. */
+  NOTIFY_USER = 'NOTIFY_USER',
+  /** A new page is created. */
+  PAGE_CREATED = 'PAGE_CREATED',
+  /** A page is updated. */
+  PAGE_UPDATED = 'PAGE_UPDATED',
+  /** A page is deleted. */
+  PAGE_DELETED = 'PAGE_DELETED',
+  /** A new page type is created. */
+  PAGE_TYPE_CREATED = 'PAGE_TYPE_CREATED',
+  /** A page type is updated. */
+  PAGE_TYPE_UPDATED = 'PAGE_TYPE_UPDATED',
+  /** A page type is deleted. */
+  PAGE_TYPE_DELETED = 'PAGE_TYPE_DELETED',
+  /** A new shipping price is created. */
+  SHIPPING_PRICE_CREATED = 'SHIPPING_PRICE_CREATED',
+  /** A shipping price is updated. */
+  SHIPPING_PRICE_UPDATED = 'SHIPPING_PRICE_UPDATED',
+  /** A shipping price is deleted. */
+  SHIPPING_PRICE_DELETED = 'SHIPPING_PRICE_DELETED',
+  /** A new shipping zone is created. */
+  SHIPPING_ZONE_CREATED = 'SHIPPING_ZONE_CREATED',
+  /** A shipping zone is updated. */
+  SHIPPING_ZONE_UPDATED = 'SHIPPING_ZONE_UPDATED',
+  /** A shipping zone is deleted. */
+  SHIPPING_ZONE_DELETED = 'SHIPPING_ZONE_DELETED',
+  /** A staff user is deleted */
+  STAFF_CREATED = 'STAFF_CREATED',
+  STAFF_UPDATED = 'STAFF_UPDATED',
+  STAFF_DELETED = 'STAFF_DELETED',
+  TRANSACTION_ACTION_REQUEST = 'TRANSACTION_ACTION_REQUEST',
+  TRANSLATION_CREATED = 'TRANSLATION_CREATED',
+  TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
+  /** A new warehouse created. */
+  WAREHOUSE_CREATED = 'WAREHOUSE_CREATED',
+  /** A warehouse is updated. */
+  WAREHOUSE_UPDATED = 'WAREHOUSE_UPDATED',
+  /** A warehouse is deleted. */
+  WAREHOUSE_DELETED = 'WAREHOUSE_DELETED',
+  /** A new voucher created. */
+  VOUCHER_CREATED = 'VOUCHER_CREATED',
+  /** A voucher is updated. */
+  VOUCHER_UPDATED = 'VOUCHER_UPDATED',
+  /** A voucher is deleted. */
+  VOUCHER_DELETED = 'VOUCHER_DELETED',
+  /** An observability event is created. */
+  OBSERVABILITY = 'OBSERVABILITY',
   PAYMENT_AUTHORIZE = 'PAYMENT_AUTHORIZE',
   PAYMENT_CAPTURE = 'PAYMENT_CAPTURE',
   PAYMENT_CONFIRM = 'PAYMENT_CONFIRM',
@@ -5056,6 +5245,16 @@ export enum WebhookEventTypeSyncEnum {
 
 /** An enumeration. */
 export enum WebhookSampleEventTypeEnum {
+  ADDRESS_CREATED = 'ADDRESS_CREATED',
+  ADDRESS_UPDATED = 'ADDRESS_UPDATED',
+  ADDRESS_DELETED = 'ADDRESS_DELETED',
+  APP_INSTALLED = 'APP_INSTALLED',
+  APP_UPDATED = 'APP_UPDATED',
+  APP_DELETED = 'APP_DELETED',
+  APP_STATUS_CHANGED = 'APP_STATUS_CHANGED',
+  ATTRIBUTE_CREATED = 'ATTRIBUTE_CREATED',
+  ATTRIBUTE_UPDATED = 'ATTRIBUTE_UPDATED',
+  ATTRIBUTE_DELETED = 'ATTRIBUTE_DELETED',
   CATEGORY_CREATED = 'CATEGORY_CREATED',
   CATEGORY_UPDATED = 'CATEGORY_UPDATED',
   CATEGORY_DELETED = 'CATEGORY_DELETED',
@@ -5109,18 +5308,28 @@ export enum WebhookSampleEventTypeEnum {
   PAGE_CREATED = 'PAGE_CREATED',
   PAGE_UPDATED = 'PAGE_UPDATED',
   PAGE_DELETED = 'PAGE_DELETED',
+  PAGE_TYPE_CREATED = 'PAGE_TYPE_CREATED',
+  PAGE_TYPE_UPDATED = 'PAGE_TYPE_UPDATED',
+  PAGE_TYPE_DELETED = 'PAGE_TYPE_DELETED',
   SHIPPING_PRICE_CREATED = 'SHIPPING_PRICE_CREATED',
   SHIPPING_PRICE_UPDATED = 'SHIPPING_PRICE_UPDATED',
   SHIPPING_PRICE_DELETED = 'SHIPPING_PRICE_DELETED',
   SHIPPING_ZONE_CREATED = 'SHIPPING_ZONE_CREATED',
   SHIPPING_ZONE_UPDATED = 'SHIPPING_ZONE_UPDATED',
   SHIPPING_ZONE_DELETED = 'SHIPPING_ZONE_DELETED',
+  STAFF_CREATED = 'STAFF_CREATED',
+  STAFF_UPDATED = 'STAFF_UPDATED',
+  STAFF_DELETED = 'STAFF_DELETED',
   TRANSACTION_ACTION_REQUEST = 'TRANSACTION_ACTION_REQUEST',
   TRANSLATION_CREATED = 'TRANSLATION_CREATED',
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
+  WAREHOUSE_CREATED = 'WAREHOUSE_CREATED',
+  WAREHOUSE_UPDATED = 'WAREHOUSE_UPDATED',
+  WAREHOUSE_DELETED = 'WAREHOUSE_DELETED',
   VOUCHER_CREATED = 'VOUCHER_CREATED',
   VOUCHER_UPDATED = 'VOUCHER_UPDATED',
-  VOUCHER_DELETED = 'VOUCHER_DELETED'
+  VOUCHER_DELETED = 'VOUCHER_DELETED',
+  OBSERVABILITY = 'OBSERVABILITY'
 }
 
 export type WebhookUpdateInput = {
@@ -5168,14 +5377,14 @@ export type AppCreateMutationVariables = Exact<{
 }>;
 
 
-export type AppCreateMutation = { __typename: 'Mutation', appCreate: { __typename: 'AppCreate', authToken: string | null, app: { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, configurationUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks: Array<{ __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
+export type AppCreateMutation = { __typename: 'Mutation', appCreate: { __typename: 'AppCreate', authToken: string | null, app: { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, configurationUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks: Array<{ __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
 
 export type AppDeleteMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type AppDeleteMutation = { __typename: 'Mutation', appDelete: { __typename: 'AppDelete', app: { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, configurationUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks: Array<{ __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
+export type AppDeleteMutation = { __typename: 'Mutation', appDelete: { __typename: 'AppDelete', app: { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, configurationUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks: Array<{ __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
 
 export type AppDeleteFailedInstallationMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -5211,7 +5420,7 @@ export type AppUpdateMutationVariables = Exact<{
 }>;
 
 
-export type AppUpdateMutation = { __typename: 'Mutation', appUpdate: { __typename: 'AppUpdate', app: { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, configurationUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks: Array<{ __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null, errors: Array<{ __typename: 'AppError', message: string | null, permissions: Array<PermissionEnum> | null, field: string | null, code: AppErrorCode }> } | null };
+export type AppUpdateMutation = { __typename: 'Mutation', appUpdate: { __typename: 'AppUpdate', app: { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, configurationUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks: Array<{ __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null, errors: Array<{ __typename: 'AppError', message: string | null, permissions: Array<PermissionEnum> | null, field: string | null, code: AppErrorCode }> } | null };
 
 export type AppTokenCreateMutationVariables = Exact<{
   input: AppTokenInput;
@@ -5251,7 +5460,7 @@ export type AppsListQueryVariables = Exact<{
 }>;
 
 
-export type AppsListQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', totalCount: number | null, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, name: string | null, isActive: boolean | null, type: AppTypeEnum | null, appUrl: string | null, permissions: Array<{ __typename: 'Permission', name: string, code: PermissionEnum }> | null } }> } | null };
+export type AppsListQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', totalCount: number | null, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, name: string | null, isActive: boolean | null, type: AppTypeEnum | null, appUrl: string | null, manifestUrl: string | null, permissions: Array<{ __typename: 'Permission', name: string, code: PermissionEnum }> | null } }> } | null };
 
 export type AppsInstallationsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5263,7 +5472,7 @@ export type AppQueryVariables = Exact<{
 }>;
 
 
-export type AppQuery = { __typename: 'Query', app: { __typename: 'App', aboutApp: string | null, dataPrivacy: string | null, dataPrivacyUrl: string | null, id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, configurationUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks: Array<{ __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null };
+export type AppQuery = { __typename: 'Query', app: { __typename: 'App', aboutApp: string | null, dataPrivacy: string | null, dataPrivacyUrl: string | null, id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, configurationUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks: Array<{ __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null };
 
 export type ExtensionListQueryVariables = Exact<{
   filter: AppExtensionFilterInput;
@@ -5907,9 +6116,9 @@ export type FileUploadMutation = { __typename: 'Mutation', fileUpload: { __typen
 
 export type AddressFragment = { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } };
 
-export type AppFragment = { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, configurationUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks: Array<{ __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null };
+export type AppFragment = { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, configurationUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks: Array<{ __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null };
 
-export type AppListItemFragment = { __typename: 'App', id: string, name: string | null, isActive: boolean | null, type: AppTypeEnum | null, appUrl: string | null, permissions: Array<{ __typename: 'Permission', name: string, code: PermissionEnum }> | null };
+export type AppListItemFragment = { __typename: 'App', id: string, name: string | null, isActive: boolean | null, type: AppTypeEnum | null, appUrl: string | null, manifestUrl: string | null, permissions: Array<{ __typename: 'Permission', name: string, code: PermissionEnum }> | null };
 
 export type AppPermissionFragment = { __typename: 'Permission', name: string, code: PermissionEnum };
 

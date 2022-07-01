@@ -7,7 +7,7 @@ import {
   TableCell,
   TableRow,
   TextField,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import BackButton from "@saleor/components/BackButton";
 import Checkbox from "@saleor/components/Checkbox";
@@ -20,7 +20,7 @@ import { CountryWithCodeFragment } from "@saleor/graphql";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import {
   getCountrySelectionMap,
-  isRestWorldCountriesSelected
+  isRestWorldCountriesSelected,
 } from "@saleor/shipping/handlers";
 import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
 import { filter } from "fuzzaldrin";
@@ -29,7 +29,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import {
   createCountryChangeHandler,
-  createRestOfTheWorldChangeHandler
+  createRestOfTheWorldChangeHandler,
 } from "./handlers";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
@@ -57,7 +57,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
     restWorldCountries,
     open,
     initial,
-    onConfirm
+    onConfirm,
   } = props;
 
   const classes = useStyles(props);
@@ -66,7 +66,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
 
   const initialForm: FormData = {
     countries: initial,
-    query: ""
+    query: "",
   };
 
   return (
@@ -79,21 +79,21 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
         {({ data, change }) => {
           const countrySelectionMap = getCountrySelectionMap(
             countries,
-            data.countries
+            data.countries,
           );
           const isRestOfTheWorldSelected = isRestWorldCountriesSelected(
             restWorldCountries,
-            countrySelectionMap
+            countrySelectionMap,
           );
           const handleCountryChange = createCountryChangeHandler(
             data.countries,
-            change
+            change,
           );
           const handleRestOfTheWorldChange = createRestOfTheWorldChangeHandler(
             countrySelectionMap,
             data.countries,
             restWorldCountries,
-            change
+            change,
           );
 
           return (
@@ -112,7 +112,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
                   onChange={event => change(event)}
                   label={intl.formatMessage(messages.searchCountriesLabel)}
                   placeholder={intl.formatMessage(
-                    messages.searchCountriesPlaceholder
+                    messages.searchCountriesPlaceholder,
                   )}
                   fullWidth
                 />
@@ -131,7 +131,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
                           className={classes.clickableRow}
                           onClick={() =>
                             handleRestOfTheWorldChange(
-                              !isRestOfTheWorldSelected
+                              !isRestOfTheWorldSelected,
                             )
                           }
                         >
@@ -168,7 +168,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
                 <ResponsiveTable className={classes.table}>
                   <TableBody>
                     {filter(countries, data.query, {
-                      key: "country"
+                      key: "country",
                     }).map(country => {
                       const isChecked = countrySelectionMap[country.code];
 

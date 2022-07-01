@@ -3,7 +3,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 const useStyles = makeStyles(
   theme => ({
     popper: {
-      zIndex: 11
+      zIndex: 11,
     },
     tooltip: {
       // TO-FIX
@@ -20,13 +20,13 @@ const useStyles = makeStyles(
       marginTop: theme.spacing(1.5),
       padding: theme.spacing(2.5),
       maxWidth: 400,
-      position: "relative"
+      position: "relative",
     },
     tooltipText: {
-      color: theme.palette.common.black
-    }
+      color: theme.palette.common.black,
+    },
   }),
-  { name: "PreviewPill" }
+  { name: "PreviewPill" },
 );
 
 export default useStyles;

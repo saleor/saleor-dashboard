@@ -3,7 +3,7 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle
+  DialogTitle,
 } from "@material-ui/core";
 import BackButton from "@saleor/components/BackButton";
 import { Button } from "@saleor/components/Button";
@@ -16,15 +16,15 @@ const useStyles = makeStyles(
   theme => ({
     deleteButton: {
       "&:hover": {
-        backgroundColor: theme.palette.error.main
+        backgroundColor: theme.palette.error.main,
       },
       backgroundColor: theme.palette.error.main,
-      color: theme.palette.error.contrastText
-    }
+      color: theme.palette.error.contrastText,
+    },
   }),
   {
-    name: "CategoryDeleteDialog"
-  }
+    name: "CategoryDeleteDialog",
+  },
 );
 
 export interface CategoryDeleteDialogProps {
@@ -55,7 +55,7 @@ const CategoryDeleteDialog: React.FC<CategoryDeleteDialogProps> = props => {
             defaultMessage="Are you sure you want to delete {categoryName}?"
             description="delete category"
             values={{
-              categoryName: <strong>{name}</strong>
+              categoryName: <strong>{name}</strong>,
             }}
           />
         </DialogContentText>

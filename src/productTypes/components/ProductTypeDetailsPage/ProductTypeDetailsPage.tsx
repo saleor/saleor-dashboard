@@ -12,7 +12,7 @@ import {
   ProductAttributeType,
   ProductTypeDetailsQuery,
   ProductTypeKindEnum,
-  WeightUnitsEnum
+  WeightUnitsEnum,
 } from "@saleor/graphql";
 import { ChangeEvent, FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -73,11 +73,12 @@ function handleTaxTypeChange(
   event: ChangeEvent,
   taxTypes: ProductTypeDetailsQuery["taxTypes"],
   formChange: FormChange,
-  displayChange: (name: string) => void
+  displayChange: (name: string) => void,
 ) {
   formChange(event);
   displayChange(
-    taxTypes.find(taxType => taxType.taxCode === event.target.value).description
+    taxTypes.find(taxType => taxType.taxCode === event.target.value)
+      .description,
   );
 }
 
@@ -98,7 +99,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
   onHasVariantsToggle,
   onSubmit,
   setSelectedVariantAttributes,
-  selectedVariantAttributes
+  selectedVariantAttributes,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -106,11 +107,11 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
   const {
     isMetadataModified,
     isPrivateMetadataModified,
-    makeChangeHandler: makeMetadataChangeHandler
+    makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
 
   const [taxTypeDisplayName, setTaxTypeDisplayName] = useStateFromProps(
-    maybe(() => productType.taxType.description, "")
+    maybe(() => productType.taxType.description, ""),
   );
   const formInitialData: ProductTypeForm = {
     hasVariants:
@@ -129,7 +130,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
       maybe(() => productType.productAttributes) !== undefined
         ? productType.productAttributes.map(attribute => ({
             label: attribute.name,
-            value: attribute.id
+            value: attribute.id,
           }))
         : [],
     taxType: maybe(() => productType.taxType.taxCode, ""),
@@ -137,10 +138,10 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
       maybe(() => productType.variantAttributes) !== undefined
         ? productType.variantAttributes.map(attribute => ({
             label: attribute.name,
-            value: attribute.id
+            value: attribute.id,
           }))
         : [],
-    weight: maybe(() => productType.weight.value)
+    weight: maybe(() => productType.weight.value),
   };
 
   const handleSubmit = (data: ProductTypeForm) => {
@@ -152,7 +153,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
     return onSubmit({
       ...data,
       metadata,
-      privateMetadata
+      privateMetadata,
     });
   };
 
@@ -192,7 +193,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                       event,
                       taxTypes,
                       change,
-                      setTaxTypeDisplayName
+                      setTaxTypeDisplayName,
                     )
                   }
                 />
@@ -216,7 +217,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                   label={intl.formatMessage({
                     id: "5pHBSU",
                     defaultMessage: "Product type uses Variant Attributes",
-                    description: "switch button"
+                    description: "switch button",
                   })}
                   name="hasVariants"
                   onChange={event => onHasVariantsToggle(event.target.value)}

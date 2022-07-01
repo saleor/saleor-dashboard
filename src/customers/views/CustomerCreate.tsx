@@ -1,7 +1,7 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import {
   useCreateCustomerMutation,
-  useCustomerCreateDataQuery
+  useCustomerCreateDataQuery,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -10,7 +10,7 @@ import { useIntl } from "react-intl";
 
 import { extractMutationErrors, maybe } from "../../misc";
 import CustomerCreatePage, {
-  CustomerCreatePageSubmitData
+  CustomerCreatePageSubmitData,
 } from "../components/CustomerCreatePage";
 import { customerUrl } from "../urls";
 
@@ -20,7 +20,7 @@ export const CustomerCreate: React.FC = () => {
   const intl = useIntl();
 
   const { data, loading } = useCustomerCreateDataQuery({
-    displayLoader: true
+    displayLoader: true,
   });
 
   const [createCustomer, createCustomerOpts] = useCreateCustomerMutation({
@@ -30,12 +30,12 @@ export const CustomerCreate: React.FC = () => {
           status: "success",
           text: intl.formatMessage({
             id: "ftcHpD",
-            defaultMessage: "Customer created"
-          })
+            defaultMessage: "Customer created",
+          }),
         });
         navigate(customerUrl(data.customerCreate.user.id));
       }
-    }
+    },
   });
 
   const handleSubmit = (formData: CustomerCreatePageSubmitData) =>
@@ -48,10 +48,10 @@ export const CustomerCreate: React.FC = () => {
             email: formData.email,
             firstName: formData.customerFirstName,
             lastName: formData.customerLastName,
-            note: formData.note
-          }
-        }
-      })
+            note: formData.note,
+          },
+        },
+      }),
     );
 
   return (
@@ -60,7 +60,7 @@ export const CustomerCreate: React.FC = () => {
         title={intl.formatMessage({
           id: "nX2pCU",
           defaultMessage: "Create customer",
-          description: "window title"
+          description: "window title",
         })}
       />
       <CustomerCreatePage

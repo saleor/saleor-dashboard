@@ -1,7 +1,7 @@
 import {
   useOrderFulfillmentRefundProductsMutation,
   useOrderRefundDataQuery,
-  useOrderRefundMutation
+  useOrderRefundMutation,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -10,46 +10,46 @@ import OrderRefundPage from "@saleor/orders/components/OrderRefundPage";
 import {
   OrderRefundAmountCalculationMode,
   OrderRefundSubmitData,
-  OrderRefundType
+  OrderRefundType,
 } from "@saleor/orders/components/OrderRefundPage/form";
 import { orderUrl } from "@saleor/orders/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
 const getAutomaticallyCalculatedProductsRefundInput = (
-  formData: OrderRefundSubmitData
+  formData: OrderRefundSubmitData,
 ) => ({
   fulfillmentLines: formData.refundedFulfilledProductQuantities
     .filter(line => line.value !== "0")
     .map(line => ({
       fulfillmentLineId: line.id,
-      quantity: Number(line.value)
+      quantity: Number(line.value),
     })),
   includeShippingCosts: formData.refundShipmentCosts,
   orderLines: formData.refundedProductQuantities
     .filter(line => line.value !== "0")
     .map(line => ({
       orderLineId: line.id,
-      quantity: Number(line.value)
-    }))
+      quantity: Number(line.value),
+    })),
 });
 const getManuallySetProductsRefundInput = (
-  formData: OrderRefundSubmitData
+  formData: OrderRefundSubmitData,
 ) => ({
   amountToRefund: formData.amount,
   fulfillmentLines: formData.refundedFulfilledProductQuantities
     .filter(line => line.value !== "0")
     .map(line => ({
       fulfillmentLineId: line.id,
-      quantity: Number(line.value)
+      quantity: Number(line.value),
     })),
   includeShippingCosts: formData.refundShipmentCosts,
   orderLines: formData.refundedProductQuantities
     .filter(line => line.value !== "0")
     .map(line => ({
       orderLineId: line.id,
-      quantity: Number(line.value)
-    }))
+      quantity: Number(line.value),
+    })),
 });
 
 interface OrderRefundProps {
@@ -64,8 +64,8 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
   const { data, loading } = useOrderRefundDataQuery({
     displayLoader: true,
     variables: {
-      orderId
-    }
+      orderId,
+    },
   });
   const [refundOrder, refundOrderOpts] = useOrderRefundMutation({
     onCompleted: data => {
@@ -76,15 +76,15 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
           text: intl.formatMessage({
             id: "XRf1Bi",
             defaultMessage: "Refunded Items",
-            description: "order refunded success message"
-          })
+            description: "order refunded success message",
+          }),
         });
       }
-    }
+    },
   });
   const [
     refundOrderFulfillmentProducts,
-    refundOrderFulfillmentProductsOpts
+    refundOrderFulfillmentProductsOpts,
   ] = useOrderFulfillmentRefundProductsMutation({
     onCompleted: data => {
       if (data.orderFulfillmentRefundProducts.errors.length === 0) {
@@ -94,28 +94,28 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
           text: intl.formatMessage({
             id: "XRf1Bi",
             defaultMessage: "Refunded Items",
-            description: "order refunded success message"
-          })
+            description: "order refunded success message",
+          }),
         });
       }
-    }
+    },
   });
 
   const handleSubmitMiscellaneousRefund = async (
-    formData: OrderRefundSubmitData
+    formData: OrderRefundSubmitData,
   ) => {
     extractMutationErrors(
       refundOrder({
         variables: {
           amount: formData.amount,
-          id: orderId
-        }
-      })
+          id: orderId,
+        },
+      }),
     );
   };
 
   const handleSubmitProductsRefund = async (
-    formData: OrderRefundSubmitData
+    formData: OrderRefundSubmitData,
   ) => {
     const input =
       formData.amountCalculationMode ===
@@ -127,9 +127,9 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
       refundOrderFulfillmentProducts({
         variables: {
           input,
-          order: orderId
-        }
-      })
+          order: orderId,
+        },
+      }),
     );
   };
 
@@ -149,7 +149,7 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
       errors={[
         ...(refundOrderOpts.data?.orderRefund.errors || []),
         ...(refundOrderFulfillmentProductsOpts.data
-          ?.orderFulfillmentRefundProducts.errors || [])
+          ?.orderFulfillmentRefundProducts.errors || []),
       ]}
       onSubmit={handleSubmit}
     />

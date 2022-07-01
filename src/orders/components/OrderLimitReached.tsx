@@ -10,7 +10,7 @@ export const OrderLimitReached: React.FC = () => {
       title={intl.formatMessage({
         id: "+svQBN",
         defaultMessage: "Order limit reached",
-        description: "alert"
+        description: "alert",
       })}
     >
       <FormattedMessage

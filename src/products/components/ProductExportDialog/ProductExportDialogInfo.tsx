@@ -3,7 +3,7 @@ import {
   CircularProgress,
   FormControlLabel,
   TextField,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import Accordion, { AccordionProps } from "@saleor/components/Accordion";
 import { useChannelsSearch } from "@saleor/components/ChannelsAvailabilityDialog/utils";
@@ -16,7 +16,7 @@ import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocomplet
 import {
   ChannelFragment,
   ExportProductsInput,
-  ProductFieldEnum
+  ProductFieldEnum,
 } from "@saleor/graphql";
 import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
@@ -37,80 +37,80 @@ const inventoryFields = [
   ProductFieldEnum.PRODUCT_WEIGHT,
   ProductFieldEnum.VARIANT_ID,
   ProductFieldEnum.VARIANT_SKU,
-  ProductFieldEnum.VARIANT_WEIGHT
+  ProductFieldEnum.VARIANT_WEIGHT,
 ];
 
 const useStyles = makeStyles(
   theme => ({
     accordion: {
-      marginBottom: theme.spacing(2)
+      marginBottom: theme.spacing(2),
     },
     checkbox: {
       position: "relative",
-      right: theme.spacing(-1.5)
+      right: theme.spacing(-1.5),
     },
     chip: {
       marginBottom: theme.spacing(1),
-      marginRight: theme.spacing()
+      marginRight: theme.spacing(),
     },
     dialogLabel: {
-      marginBottom: theme.spacing(2)
+      marginBottom: theme.spacing(2),
     },
     hr: {
       marginBottom: theme.spacing(3),
-      marginTop: theme.spacing(3)
+      marginTop: theme.spacing(3),
     },
     hrWarehouses: {
       marginBottom: theme.spacing(3),
-      marginTop: theme.spacing(1)
+      marginTop: theme.spacing(1),
     },
     label: {
       "&&": {
-        overflow: "visible"
+        overflow: "visible",
       },
       "&:first-of-type": {
-        paddingTop: 0
+        paddingTop: 0,
       },
       "&:not(:last-of-type)": {
-        borderBottom: `1px solid ${theme.palette.divider}`
+        borderBottom: `1px solid ${theme.palette.divider}`,
       },
       justifyContent: "space-between",
       margin: theme.spacing(0),
       padding: theme.spacing(1, 0),
-      width: "100%"
+      width: "100%",
     },
     loadMoreContainer: {
       display: "flex",
       justifyContent: "center",
-      marginTop: theme.spacing(2)
+      marginTop: theme.spacing(2),
     },
     moreLabel: {
       display: "inline-block",
-      marginBottom: theme.spacing()
+      marginBottom: theme.spacing(),
     },
     optionLabel: {
       fontSize: 14,
-      marginLeft: 0
+      marginLeft: 0,
     },
     quickPeekContainer: {
-      marginBottom: theme.spacing(-1)
+      marginBottom: theme.spacing(-1),
     },
     warehousesLabel: {
-      marginBottom: theme.spacing(2)
+      marginBottom: theme.spacing(2),
     },
     scrollArea: {
       maxHeight: "calc(100vh - 350px)",
       minHeight: "auto",
       "@media (min-height: 800px)": {
-        minHeight: 440
+        minHeight: 440,
       },
       overflowY: "auto",
-      overflowX: "hidden"
-    }
+      overflowX: "hidden",
+    },
   }),
   {
-    name: "ProductExportDialogInfo"
-  }
+    name: "ProductExportDialogInfo",
+  },
 );
 
 const Option: React.FC<{
@@ -123,7 +123,7 @@ const Option: React.FC<{
   return (
     <FormControlLabel
       classes={{
-        label: classes.optionLabel
+        label: classes.optionLabel,
       }}
       color="primary"
       control={
@@ -151,11 +151,11 @@ const FieldAccordion: React.FC<AccordionProps & {
   const getFieldLabel = useProductExportFieldMessages();
 
   const selectedAll = fields.every(field =>
-    data.exportInfo.fields.includes(field)
+    data.exportInfo.fields.includes(field),
   );
 
   const selectedFields = data.exportInfo.fields.filter(field =>
-    fields.includes(field)
+    fields.includes(field),
   );
 
   return (
@@ -171,8 +171,8 @@ const FieldAccordion: React.FC<AccordionProps & {
                   onChange({
                     target: {
                       name: field,
-                      value: false
-                    }
+                      value: false,
+                    },
                   })
                 }
                 key={field}
@@ -185,7 +185,7 @@ const FieldAccordion: React.FC<AccordionProps & {
                   defaultMessage="and {number} more"
                   description="there are more elements of list that are hidden"
                   values={{
-                    number: selectedFields.length - maxChips
+                    number: selectedFields.length - maxChips,
                   }}
                 />
               </Typography>
@@ -252,7 +252,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
   onFetch,
   onFetchMore,
   onSelectAllChannels,
-  onSelectAllWarehouses
+  onSelectAllWarehouses,
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
@@ -261,7 +261,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
   const {
     query: channelsQuery,
     onQueryChange: onChannelsQueryChange,
-    filteredChannels
+    filteredChannels,
   } = useChannelsSearch(channels);
 
   const handleFieldChange = (event: ChangeEvent) =>
@@ -273,10 +273,10 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
           fields: toggle(
             event.target.name,
             data.exportInfo.fields,
-            (a, b) => a === b
-          )
-        }
-      }
+            (a, b) => a === b,
+          ),
+        },
+      },
     });
 
   const handleToggleAllFields = (fields: ProductFieldEnum[], setTo: boolean) =>
@@ -289,16 +289,16 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
             ? [
                 ...data.exportInfo.fields,
                 ...fields.filter(
-                  field => !data.exportInfo.fields.includes(field)
-                )
+                  field => !data.exportInfo.fields.includes(field),
+                ),
               ]
-            : data.exportInfo.fields.filter(field => !fields.includes(field))
-        }
-      }
+            : data.exportInfo.fields.filter(field => !fields.includes(field)),
+        },
+      },
     });
 
   const selectedInventoryFields = data.exportInfo.fields.filter(field =>
-    inventoryFields.includes(field)
+    inventoryFields.includes(field),
   );
   const selectedAllInventoryFields =
     selectedInventoryFields.length === inventoryFields.length;
@@ -337,7 +337,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
                       defaultMessage="and {number} more"
                       description="there are more elements of list that are hidden"
                       values={{
-                        number: selectedChannels.length - maxChips
+                        number: selectedChannels.length - maxChips,
                       }}
                     />
                   </Typography>
@@ -368,13 +368,13 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
           title={intl.formatMessage({
             id: "64aYF0",
             defaultMessage: "Product Organization",
-            description: "informations about product organization, header"
+            description: "informations about product organization, header",
           })}
           data={data}
           fields={[
             ProductFieldEnum.CATEGORY,
             ProductFieldEnum.COLLECTIONS,
-            ProductFieldEnum.PRODUCT_TYPE
+            ProductFieldEnum.PRODUCT_TYPE,
           ]}
           onChange={handleFieldChange}
           onToggleAll={handleToggleAllFields}
@@ -394,8 +394,8 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
                       onAttrtibuteSelect({
                         target: {
                           name: attributeNamePrefix + attribute.value,
-                          value: undefined
-                        }
+                          value: undefined,
+                        },
                       })
                     }
                     key={attribute.value}
@@ -408,7 +408,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
                       defaultMessage="and {number} more"
                       description="there are more elements of list that are hidden"
                       values={{
-                        number: selectedAttributes.length - maxChips
+                        number: selectedAttributes.length - maxChips,
                       }}
                     />
                   </Typography>
@@ -424,17 +424,17 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
             onChange={onQueryChange}
             label={intl.formatMessage({
               id: "YicEbK",
-              defaultMessage: "Search Atrtibuttes"
+              defaultMessage: "Search Atrtibuttes",
             })}
             placeholder={intl.formatMessage({
               id: "tIc2/h",
               defaultMessage: "Search by attribute name",
-              description: "input helper text, search attributes"
+              description: "input helper text, search attributes",
             })}
             fullWidth
             InputProps={{
               autoComplete: "off",
-              endAdornment: loading && <CircularProgress size={16} />
+              endAdornment: loading && <CircularProgress size={16} />,
             }}
           />
           <Hr className={classes.hr} />
@@ -468,7 +468,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
           title={intl.formatMessage({
             id: "jj3Cb8",
             defaultMessage: "Financial Information",
-            description: "informations about product prices etc, header"
+            description: "informations about product prices etc, header",
           })}
           data={data}
           fields={[ProductFieldEnum.CHARGE_TAXES]}
@@ -481,7 +481,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
           title={intl.formatMessage({
             id: "xjpTLF",
             defaultMessage: "Inventory Information",
-            description: "informations about product stock, header"
+            description: "informations about product stock, header",
           })}
           quickPeek={
             (data.exportInfo.warehouses.length > 0 ||
@@ -495,8 +495,8 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
                       onChange({
                         target: {
                           name: field,
-                          value: false
-                        }
+                          value: false,
+                        },
                       })
                     }
                   />
@@ -508,15 +508,15 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
                       className={classes.chip}
                       label={
                         warehouses.find(
-                          warehouse => warehouse.value === warehouseId
+                          warehouse => warehouse.value === warehouseId,
                         ).label
                       }
                       onClose={() =>
                         onWarehouseSelect({
                           target: {
                             name: warehouseNamePrefix + warehouseId,
-                            value: undefined
-                          }
+                            value: undefined,
+                          },
                         })
                       }
                     />
@@ -533,7 +533,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
                         number:
                           data.exportInfo.warehouses.length +
                           selectedInventoryFields.length -
-                          maxChips
+                          maxChips,
                       }}
                     />
                   </Typography>
@@ -550,7 +550,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
               onChange={() =>
                 handleToggleAllFields(
                   inventoryFields,
-                  !selectedAllInventoryFields
+                  !selectedAllInventoryFields,
                 )
               }
             >
@@ -581,7 +581,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
           <div>
             <Option
               checked={warehouses.every(warehouse =>
-                data.exportInfo.warehouses.includes(warehouse.value)
+                data.exportInfo.warehouses.includes(warehouse.value),
               )}
               name="all-warehouses"
               onChange={onSelectAllWarehouses}
@@ -616,14 +616,14 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
           title={intl.formatMessage({
             id: "6xC/Ls",
             defaultMessage: "SEO Information",
-            description: "informations about product seo, header"
+            description: "informations about product seo, header",
           })}
           data={data}
           fields={[
             ProductFieldEnum.DESCRIPTION,
             ProductFieldEnum.NAME,
             ProductFieldEnum.PRODUCT_MEDIA,
-            ProductFieldEnum.VARIANT_MEDIA
+            ProductFieldEnum.VARIANT_MEDIA,
           ]}
           onChange={handleFieldChange}
           onToggleAll={handleToggleAllFields}

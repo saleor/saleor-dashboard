@@ -1,16 +1,17 @@
 import {
   AttributeValueFragment,
   ProductVariantAttributesFragment,
-  SearchAttributeValuesQuery
+  SearchAttributeValuesQuery,
 } from "@saleor/graphql";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { RelayToFlat } from "@saleor/types";
+import uniqBy from "lodash/uniqBy";
 
 import { AttributeValue, ProductVariantCreateFormData } from "./form";
 
 export function getPriceAttributeValues(
   data: ProductVariantCreateFormData,
-  attributes: ProductVariantAttributesFragment["productType"]["variantAttributes"]
+  attributes: ProductVariantAttributesFragment["productType"]["variantAttributes"],
 ): AttributeValueFragment[] {
   return data.price.mode === "all"
     ? null
@@ -21,8 +22,8 @@ export function getPriceAttributeValues(
           data.attributes
             .find(attribute => attribute.id === data.price.attribute)
             .values.some(
-              attributeValue => attributeValue.slug === value.node.slug
-            )
+              attributeValue => attributeValue.slug === value.node.slug,
+            ),
         )
         .map(value => value.node)
     : [];
@@ -30,7 +31,7 @@ export function getPriceAttributeValues(
 
 export function getStockAttributeValues(
   data: ProductVariantCreateFormData,
-  attributes: ProductVariantAttributesFragment["productType"]["variantAttributes"]
+  attributes: ProductVariantAttributesFragment["productType"]["variantAttributes"],
 ): AttributeValueFragment[] {
   return data.stock.mode === "all"
     ? null
@@ -41,8 +42,8 @@ export function getStockAttributeValues(
           data.attributes
             .find(attribute => attribute.id === data.stock.attribute)
             .values.some(
-              attributeValue => attributeValue.slug === value.node.slug
-            )
+              attributeValue => attributeValue.slug === value.node.slug,
+            ),
         )
         .map(value => value.node)
     : [];
@@ -53,13 +54,13 @@ export const getBySlug = (slugToCompare: string) => (obj: { slug: string }) =>
 
 export const getBooleanAttributeValue = (
   attributeName: string,
-  attributeValue: boolean
+  attributeValue: boolean,
 ): AttributeValue<Partial<AttributeValueFragment>> => ({
   slug: attributeValue.toString(),
   value: {
     boolean: attributeValue,
-    name: `${attributeName}: ${attributeValue ? "Yes" : "No"}`
-  }
+    name: `${attributeName}: ${attributeValue ? "Yes" : "No"}`,
+  },
 });
 
 export const getBasicAttributeValue = (
@@ -68,7 +69,7 @@ export const getBasicAttributeValue = (
   attributeValues: RelayToFlat<
     SearchAttributeValuesQuery["attribute"]["choices"]
   >,
-  data: ProductVariantCreateFormData
+  data: ProductVariantCreateFormData,
 ): AttributeValue<Partial<AttributeValueFragment>> => {
   const dataAttribute = data.attributes.find(getById(attributeId));
 
@@ -76,6 +77,18 @@ export const getBasicAttributeValue = (
     slug: attributeValue,
     value:
       dataAttribute?.values.find(getBySlug(attributeValue))?.value ||
-      attributeValues.find(getBySlug(attributeValue))
+      attributeValues.find(getBySlug(attributeValue)),
   };
 };
+
+export function dedupeListings(
+  data: ProductVariantCreateFormData,
+): ProductVariantCreateFormData {
+  return {
+    ...data,
+    variants: data.variants.map(variant => ({
+      ...variant,
+      channelListings: uniqBy(variant.channelListings, "channelId"),
+    })),
+  };
+}

@@ -35,14 +35,14 @@ function makeTopLevelSearch<
             search: {
               ...prev.search,
               edges: [...prev.search.edges, ...next.search.edges],
-              pageInfo: next.search.pageInfo
-            }
+              pageInfo: next.search.pageInfo,
+            },
           };
         },
         {
           ...result.variables,
-          after: result.data.search.pageInfo.endCursor
-        }
+          after: result.data.search.pageInfo.endCursor,
+        },
       );
     }
   });

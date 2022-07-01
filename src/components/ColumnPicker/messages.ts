@@ -4,18 +4,18 @@ const messages = defineMessages({
   title: {
     defaultMessage: "Customize list",
     id: "p+HM56",
-    description: "header"
+    description: "header",
   },
   columnSubheader: {
     defaultMessage: "Column settings",
     id: "dS+SOT",
-    description: "header"
+    description: "header",
   },
   columnLabel: {
     defaultMessage: "Selected columns",
     id: "IHtOda",
-    description: "input label"
-  }
+    description: "input label",
+  },
 });
 
 export default messages;

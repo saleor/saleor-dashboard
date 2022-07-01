@@ -15,16 +15,16 @@ const useStyles = makeStyles(
   () => ({
     arrowIcon: {
       textAlign: "right",
-      width: 100
+      width: 100,
     },
     tableCard: {
-      overflow: "hidden"
+      overflow: "hidden",
     },
     tableRow: {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   }),
-  { name: "HomeNotificationTable" }
+  { name: "HomeNotificationTable" },
 );
 
 interface HomeNotificationTableProps {
@@ -47,7 +47,7 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
     ordersToCapture,
     ordersToFulfill,
     productsOutOfStock,
-    noChannel
+    noChannel,
   } = props;
 
   const classes = useStyles(props);
@@ -88,7 +88,7 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
                 ) : (
                   <Typography>
                     {intl.formatMessage(messages.orderReady, {
-                      amount: <strong>{ordersToFulfill}</strong>
+                      amount: <strong>{ordersToFulfill}</strong>,
                     })}
                   </Typography>
                 )}
@@ -108,7 +108,7 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
                 ) : (
                   <Typography>
                     {intl.formatMessage(messages.paymentCapture, {
-                      amount: <strong>{ordersToCapture}</strong>
+                      amount: <strong>{ordersToCapture}</strong>,
                     })}
                   </Typography>
                 )}
@@ -132,7 +132,7 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
                 ) : (
                   <Typography>
                     {intl.formatMessage(messages.productOut, {
-                      amount: <strong>{productsOutOfStock}</strong>
+                      amount: <strong>{productsOutOfStock}</strong>,
                     })}
                   </Typography>
                 )}

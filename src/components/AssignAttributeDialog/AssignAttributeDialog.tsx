@@ -9,14 +9,14 @@ import {
   TableCell,
   TableRow,
   TextField,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import Checkbox from "@saleor/components/Checkbox";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { AvailableAttributeFragment } from "@saleor/graphql";
 import useElementScroll, {
-  isScrolledToBottom
+  isScrolledToBottom,
 } from "@saleor/hooks/useElementScroll";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
@@ -35,40 +35,40 @@ import { messages } from "./messages";
 const useStyles = makeStyles(
   theme => ({
     actions: {
-      boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)"
+      boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
     },
     checkboxCell: {
-      paddingLeft: 0
+      paddingLeft: 0,
     },
     dialogPaper: {
-      overflow: "hidden"
+      overflow: "hidden",
     },
     dropShadow: {
-      boxShadow: `0px -5px 10px 0px ${theme.palette.divider}`
+      boxShadow: `0px -5px 10px 0px ${theme.palette.divider}`,
     },
     loadMoreLoaderContainer: {
       alignItems: "center",
       display: "flex",
       marginTop: theme.spacing(2),
       height: theme.spacing(3),
-      justifyContent: "center"
+      justifyContent: "center",
     },
     searchArea: {
       marginBottom: theme.spacing(3),
       overflowY: "hidden",
-      paddingBottom: theme.spacing(6)
+      paddingBottom: theme.spacing(6),
     },
     scrollArea: {
       maxHeight: 700,
       overflowY: "scroll",
       paddingTop: 0,
-      marginBottom: theme.spacing(3)
+      marginBottom: theme.spacing(3),
     },
     wideCell: {
-      width: "100%"
-    }
+      width: "100%",
+    },
   }),
-  { name: "AssignAttributeDialog" }
+  { name: "AssignAttributeDialog" },
 );
 
 export interface AssignAttributeDialogProps extends FetchMoreProps {
@@ -99,7 +99,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
   onFetchMore,
   onOpen,
   onSubmit,
-  onToggle
+  onToggle,
 }: AssignAttributeDialogProps) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -110,7 +110,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
 
   useModalDialogOpen(open, {
     onClose: resetQuery,
-    onOpen
+    onOpen,
   });
 
   return (
@@ -120,7 +120,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
       fullWidth
       maxWidth="sm"
       classes={{
-        paper: classes.dialogPaper
+        paper: classes.dialogPaper,
       }}
     >
       <DialogTitle>
@@ -136,7 +136,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
           fullWidth
           InputProps={{
             autoComplete: "off",
-            endAdornment: loading && <CircularProgress size={16} />
+            endAdornment: loading && <CircularProgress size={16} />,
           }}
         />
       </DialogContent>
@@ -166,7 +166,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
                     return null;
                   }
                   const isChecked = !!selected.find(
-                    selectedAttribute => selectedAttribute === attribute.id
+                    selectedAttribute => selectedAttribute === attribute.id,
                   );
 
                   return (
@@ -196,7 +196,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
                         <FormattedMessage {...messages.noMembersFound} />
                       </TableCell>
                     </TableRow>
-                  )
+                  ),
               )}
             </TableBody>
           </ResponsiveTable>
@@ -213,7 +213,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
       )}
       <DialogActions
         className={classNames(classes.actions, {
-          [classes.dropShadow]: !isScrolledToBottom(anchor, position)
+          [classes.dropShadow]: !isScrolledToBottom(anchor, position),
         })}
       >
         <BackButton onClick={onClose} />

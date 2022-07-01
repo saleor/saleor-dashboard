@@ -3,14 +3,14 @@ import { makeStyles } from "@saleor/macaw-ui";
 export const useStyles = makeStyles(
   {
     container: {
-      display: "block"
+      display: "block",
     },
     optionLabel: {
-      display: "block"
+      display: "block",
     },
     overflow: {
-      overflowY: "visible"
-    }
+      overflowY: "visible",
+    },
   },
-  { name: "OrderCustomerChangeDialog" }
+  { name: "OrderCustomerChangeDialog" },
 );

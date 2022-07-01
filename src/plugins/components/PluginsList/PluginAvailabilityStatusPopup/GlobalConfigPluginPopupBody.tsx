@@ -7,7 +7,7 @@ import { useIntl } from "react-intl";
 
 import {
   globalConfigPluginMessages as messages,
-  pluginStatusMessages
+  pluginStatusMessages,
 } from "../messages";
 
 interface GlobalConfigPluginPopupBodyProps {
@@ -15,7 +15,7 @@ interface GlobalConfigPluginPopupBodyProps {
 }
 
 const GlobalConfigPluginPopupBody: React.FC<GlobalConfigPluginPopupBodyProps> = ({
-  plugin
+  plugin,
 }) => {
   const intl = useIntl();
 
@@ -35,7 +35,7 @@ const GlobalConfigPluginPopupBody: React.FC<GlobalConfigPluginPopupBodyProps> = 
           label={intl.formatMessage(
             active
               ? pluginStatusMessages.active
-              : pluginStatusMessages.deactivated
+              : pluginStatusMessages.deactivated,
           )}
         />
       </CardContent>

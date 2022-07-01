@@ -16,7 +16,7 @@ export type FilterRangeFieldProps = FilterFieldBaseProps<
 const FilterRangeField: React.FC<FilterRangeFieldProps> = ({
   currencySymbol,
   filter,
-  onFilterPropertyChange
+  onFilterPropertyChange,
 }) => {
   const classes = useStyles();
 
@@ -29,10 +29,10 @@ const FilterRangeField: React.FC<FilterRangeFieldProps> = ({
         name={filter.name + "_min"}
         InputProps={{
           classes: {
-            input: classes.fieldInput
+            input: classes.fieldInput,
           },
           endAdornment: filter.type === FieldType.price && currencySymbol,
-          type: filter.type === FieldType.date ? "date" : "number"
+          type: filter.type === FieldType.date ? "date" : "number",
         }}
         value={filter.value[0]}
         onChange={event =>
@@ -40,10 +40,10 @@ const FilterRangeField: React.FC<FilterRangeFieldProps> = ({
             payload: {
               name: filter.name,
               update: {
-                value: [event.target.value, filter.value[1]]
-              }
+                value: [event.target.value, filter.value[1]],
+              },
             },
-            type: "set-property"
+            type: "set-property",
           })
         }
       />
@@ -61,10 +61,10 @@ const FilterRangeField: React.FC<FilterRangeFieldProps> = ({
         name={filter.name + "_max"}
         InputProps={{
           classes: {
-            input: classes.fieldInput
+            input: classes.fieldInput,
           },
           endAdornment: filter.type === FieldType.price && currencySymbol,
-          type: filter.type === FieldType.date ? "date" : "number"
+          type: filter.type === FieldType.date ? "date" : "number",
         }}
         value={filter.value[1]}
         onChange={event =>
@@ -72,10 +72,10 @@ const FilterRangeField: React.FC<FilterRangeFieldProps> = ({
             payload: {
               name: filter.name,
               update: {
-                value: [filter.value[0], event.target.value]
-              }
+                value: [filter.value[0], event.target.value],
+              },
             },
-            type: "set-property"
+            type: "set-property",
           })
         }
       />

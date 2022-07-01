@@ -5,5 +5,5 @@ export const triangle = (color: string, width: number): CSSProperties => ({
   borderLeft: `${width}px solid transparent`,
   borderRight: `${width}px solid transparent`,
   height: 0,
-  width: 0
+  width: 0,
 });

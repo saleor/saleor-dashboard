@@ -13,15 +13,15 @@ const useStyles = makeStyles(
     chip: {
       background: theme.palette.background.paper,
       color: theme.palette.primary.dark,
-      marginBottom: theme.spacing(1)
+      marginBottom: theme.spacing(1),
     },
     errorText: {
-      color: theme.palette.error.light
-    }
+      color: theme.palette.error.light,
+    },
   }),
   {
-    name: "SortableChipsField"
-  }
+    name: "SortableChipsField",
+  },
 );
 
 export interface SortableChipsFieldValueType {
@@ -45,7 +45,7 @@ const SortableChipsField: React.FC<SortableChipsFieldProps> = props => {
     error,
     helperText,
     onValueDelete,
-    onValueReorder
+    onValueReorder,
   } = props;
   const classes = useStyles(props);
 

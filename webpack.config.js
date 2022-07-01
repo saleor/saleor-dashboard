@@ -37,7 +37,9 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
   template: "./src/index.html"
 });
 const environmentPlugin = new webpack.EnvironmentPlugin({
+
   API_URI: "https://x.uyghur.store/graphql/",
+  MARKETPLACE_URL: "",
   APP_MOUNT_URI: "/",
   DEMO_MODE: false,
   ENVIRONMENT: "",

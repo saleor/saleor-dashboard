@@ -21,9 +21,9 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ user }) => {
           {
             id: "By5ZBp",
             defaultMessage: "Hello there, {userName}",
-            description: "header"
+            description: "header",
           },
-          { userName: user.email }
+          { userName: user.email },
         )}
       />
       <Card>
@@ -31,7 +31,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ user }) => {
           title={intl.formatMessage({
             id: "6L6Fy2",
             defaultMessage: "Disclaimer",
-            description: "header"
+            description: "header",
           })}
         />
         <CardContent>

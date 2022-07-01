@@ -1,18 +1,22 @@
-import { AttributeValueFragment, StockInput } from "@saleor/graphql";
+import {
+  AttributeValueFragment,
+  ProductVariantBulkCreateInput,
+  StockInput,
+} from "@saleor/graphql";
 import {
   add,
   remove,
   removeAtIndex,
   toggle,
   update,
-  updateAtIndex
+  updateAtIndex,
 } from "@saleor/utils/lists";
 
 import { createVariants } from "./createVariants";
 import {
   AttributeValue,
   ProductVariantCreateFormData,
-  VariantCreatorPricesAndSkuMode
+  VariantCreatorPricesAndSkuMode,
 } from "./form";
 
 export enum ProductVariantCreateReducerActionType {
@@ -32,7 +36,8 @@ export enum ProductVariantCreateReducerActionType {
   changeWarehouses,
   deleteVariant,
   reload,
-  selectValue
+  rebuild,
+  selectValue,
 }
 export interface ProductVariantCreateReducerAction {
   applyPriceOrStockToAll?: {
@@ -80,13 +85,51 @@ export interface ProductVariantCreateReducerAction {
   type: ProductVariantCreateReducerActionType;
 }
 
+function getVariantId(variant: ProductVariantBulkCreateInput): string {
+  return variant.attributes
+    .map(attribute => attribute.values.join(":"))
+    .join("-");
+}
+
+function merge(
+  prev: ProductVariantBulkCreateInput[],
+  update: ProductVariantBulkCreateInput[],
+): ProductVariantBulkCreateInput[] {
+  const prevIds = prev.map(getVariantId);
+  const updateIds = update.map(getVariantId);
+  return [
+    ...prev
+      .filter(variant => updateIds.includes(getVariantId(variant)))
+      .map(variant => {
+        const updatedVariant = update.find(
+          v => getVariantId(v) === getVariantId(variant),
+        );
+
+        return {
+          ...updatedVariant,
+          sku: variant.sku,
+        };
+      }),
+    ...update.filter(variant => !prevIds.includes(getVariantId(variant))),
+  ];
+}
+
+function rebuild(
+  state: ProductVariantCreateFormData,
+): ProductVariantCreateFormData {
+  return {
+    ...state,
+    variants: merge(state.variants, createVariants(state)),
+  };
+}
+
 function selectValue(
   prevState: ProductVariantCreateFormData,
   attributeId: string,
-  value: AttributeValue<Partial<AttributeValueFragment>>
+  value: AttributeValue<Partial<AttributeValueFragment>>,
 ): ProductVariantCreateFormData {
   const attribute = prevState.attributes.find(
-    attribute => attribute.id === attributeId
+    attribute => attribute.id === attributeId,
   );
 
   const values = toggle(value, attribute.values, (a, b) => a.slug === b.slug);
@@ -94,9 +137,9 @@ function selectValue(
     {
       id: attributeId,
       valueRequired: attribute.valueRequired,
-      values
+      values,
     },
-    remove(attribute, prevState.attributes, (a, b) => a.id === b.id)
+    remove(attribute, prevState.attributes, (a, b) => a.id === b.id),
   );
 
   const priceValues =
@@ -104,10 +147,10 @@ function selectValue(
       ? toggle(
           {
             slug: value.slug,
-            value: []
+            value: [],
           },
           prevState.price.values,
-          (a, b) => a.slug === b.slug
+          (a, b) => a.slug === b.slug,
         )
       : prevState.price.values;
 
@@ -116,10 +159,10 @@ function selectValue(
       ? toggle(
           {
             slug: value.slug,
-            value: []
+            value: [],
           },
           prevState.stock.values,
-          (a, b) => a.slug === b.slug
+          (a, b) => a.slug === b.slug,
         )
       : prevState.stock.values;
 
@@ -128,38 +171,38 @@ function selectValue(
     attributes: updatedAttributes,
     price: {
       ...prevState.price,
-      values: priceValues
+      values: priceValues,
     },
     stock: {
       ...prevState.stock,
-      values: stockValues
-    }
+      values: stockValues,
+    },
   };
 }
 
 function applyPriceToAll(
   state: ProductVariantCreateFormData,
-  mode: VariantCreatorPricesAndSkuMode
+  mode: VariantCreatorPricesAndSkuMode,
 ): ProductVariantCreateFormData {
   return {
     ...state,
     price: {
       ...state.price,
-      mode
-    }
+      mode,
+    },
   };
 }
 
 function applyStockToAll(
   state: ProductVariantCreateFormData,
-  mode: VariantCreatorPricesAndSkuMode
+  mode: VariantCreatorPricesAndSkuMode,
 ): ProductVariantCreateFormData {
   return {
     ...state,
     stock: {
       ...state.stock,
-      mode
-    }
+      mode,
+    },
   };
 }
 
@@ -167,10 +210,10 @@ function changeAttributeValuePrice(
   state: ProductVariantCreateFormData,
   attributeValueSlug: string,
   price: string,
-  channelId: string
+  channelId: string,
 ): ProductVariantCreateFormData {
   const index = state.price.values.findIndex(
-    value => value.slug === attributeValueSlug
+    value => value.slug === attributeValueSlug,
   );
 
   if (index === -1) {
@@ -179,24 +222,24 @@ function changeAttributeValuePrice(
 
   const channels = state.price.values[index].value;
   const channelIndex = channels.findIndex(
-    channel => channel.channelId === channelId
+    channel => channel.channelId === channelId,
   );
 
   const values = updateAtIndex(
     {
       slug: attributeValueSlug,
-      value: updateAtIndex({ channelId, price }, channels, channelIndex)
+      value: updateAtIndex({ channelId, price }, channels, channelIndex),
     },
     state.price.values,
-    index
+    index,
   );
 
   return {
     ...state,
     price: {
       ...state.price,
-      values
-    }
+      values,
+    },
   };
 }
 
@@ -204,10 +247,10 @@ function changeAttributeValueStock(
   state: ProductVariantCreateFormData,
   attributeValueSlug: string,
   quantity: number,
-  warehouseIndex: number
+  warehouseIndex: number,
 ): ProductVariantCreateFormData {
   const index = state.stock.values.findIndex(
-    value => value.slug === attributeValueSlug
+    value => value.slug === attributeValueSlug,
   );
 
   if (index === -1) {
@@ -220,32 +263,32 @@ function changeAttributeValueStock(
       value: updateAtIndex(
         quantity,
         state.stock.values[index].value,
-        warehouseIndex
-      )
+        warehouseIndex,
+      ),
     },
     state.stock.values,
-    index
+    index,
   );
 
   return {
     ...state,
     stock: {
       ...state.stock,
-      values
-    }
+      values,
+    },
   };
 }
 
 function changeApplyPriceToAttributeId(
   state: ProductVariantCreateFormData,
-  attributeId: string
+  attributeId: string,
 ): ProductVariantCreateFormData {
   const attribute = state.attributes.find(
-    attribute => attribute.id === attributeId
+    attribute => attribute.id === attributeId,
   );
   const values = attribute.values.map(value => ({
     slug: value.slug,
-    value: []
+    value: [],
   }));
 
   return {
@@ -253,21 +296,21 @@ function changeApplyPriceToAttributeId(
     price: {
       ...state.price,
       attribute: attributeId,
-      values
-    }
+      values,
+    },
   };
 }
 
 function changeApplyStockToAttributeId(
   state: ProductVariantCreateFormData,
-  attributeId: string
+  attributeId: string,
 ): ProductVariantCreateFormData {
   const attribute = state.attributes.find(
-    attribute => attribute.id === attributeId
+    attribute => attribute.id === attributeId,
   );
   const values = attribute.values.map(value => ({
     slug: value.slug,
-    value: []
+    value: [],
   }));
 
   return {
@@ -275,109 +318,109 @@ function changeApplyStockToAttributeId(
     stock: {
       ...state.stock,
       attribute: attributeId,
-      values
-    }
+      values,
+    },
   };
 }
 
 function changeApplyPriceToAllValue(
   state: ProductVariantCreateFormData,
   channelId: string,
-  price: string
+  price: string,
 ): ProductVariantCreateFormData {
   const prevChannels = [...state.price.channels];
   const channelIndex = prevChannels?.findIndex(
-    channel => channelId === channel.channelId
+    channel => channelId === channel.channelId,
   );
   prevChannels[channelIndex] = { channelId, price };
   return {
     ...state,
     price: {
       ...state.price,
-      channels: prevChannels
-    }
+      channels: prevChannels,
+    },
   };
 }
 
 function changeApplyStockToAllValue(
   state: ProductVariantCreateFormData,
   warehouseIndex: number,
-  quantity: number
+  quantity: number,
 ): ProductVariantCreateFormData {
   return {
     ...state,
     stock: {
       ...state.stock,
-      value: updateAtIndex(quantity, state.stock.value, warehouseIndex)
-    }
+      value: updateAtIndex(quantity, state.stock.value, warehouseIndex),
+    },
   };
 }
 
 function changeVariantSku(
   state: ProductVariantCreateFormData,
   value: string,
-  variantIndex: number
+  variantIndex: number,
 ): ProductVariantCreateFormData {
   const variant = {
-    ...state.variants[variantIndex]
+    ...state.variants[variantIndex],
   };
   variant.sku = value;
 
   return {
     ...state,
-    variants: updateAtIndex(variant, state.variants, variantIndex)
+    variants: updateAtIndex(variant, state.variants, variantIndex),
   };
 }
 
 function changeVariantStockData(
   state: ProductVariantCreateFormData,
   stock: StockInput,
-  variantIndex: number
+  variantIndex: number,
 ): ProductVariantCreateFormData {
   const variant = {
-    ...state.variants[variantIndex]
+    ...state.variants[variantIndex],
   };
   variant.stocks = update(
     stock,
     variant.stocks,
-    (a, b) => a.warehouse === b.warehouse
+    (a, b) => a.warehouse === b.warehouse,
   );
 
   return {
     ...state,
-    variants: updateAtIndex(variant, state.variants, variantIndex)
+    variants: updateAtIndex(variant, state.variants, variantIndex),
   };
 }
 
 function changeVariantPriceData(
   state: ProductVariantCreateFormData,
   value: { channelId: string; price: string },
-  variantIndex: number
+  variantIndex: number,
 ): ProductVariantCreateFormData {
   const { channelId, price } = value;
   const variant = {
-    ...state.variants[variantIndex]
+    ...state.variants[variantIndex],
   };
   const channelIndex = variant.channelListings.findIndex(
-    listing => listing.channelId === channelId
+    listing => listing.channelId === channelId,
   );
   const updatedVariant = {
     ...variant,
     channelListings: updateAtIndex(
       { channelId, price },
       [...variant.channelListings],
-      channelIndex
-    )
+      channelIndex,
+    ),
   };
   return {
     ...state,
-    variants: updateAtIndex(updatedVariant, [...state.variants], variantIndex)
+    variants: updateAtIndex(updatedVariant, [...state.variants], variantIndex),
   };
 }
 
 function changeWarehouses(
   state: ProductVariantCreateFormData,
-  warehouseId: string
+  warehouseId: string,
 ): ProductVariantCreateFormData {
   const warehouses = toggle(warehouseId, state.warehouses, (a, b) => a === b);
   const added = warehouses.length > state.warehouses.length;
@@ -390,10 +433,10 @@ function changeWarehouses(
         value: [...state.stock.value, 0],
         values: state.stock.values.map(stockValue => ({
           ...stockValue,
-          value: [...stockValue.value, 0]
-        }))
+          value: [...stockValue.value, 0],
+        })),
       },
-      warehouses
+      warehouses,
     };
   }
 
@@ -406,16 +449,16 @@ function changeWarehouses(
       value: removeAtIndex(state.stock.value, warehouseIndex),
       values: state.stock.values.map(stockValue => ({
         ...stockValue,
-        value: removeAtIndex(stockValue.value, warehouseIndex)
-      }))
+        value: removeAtIndex(stockValue.value, warehouseIndex),
+      })),
     },
-    warehouses
+    warehouses,
   };
 }
 
 function deleteVariant(
   state: ProductVariantCreateFormData,
-  variantIndex: number
+  variantIndex: number,
 ): ProductVariantCreateFormData {
   const variants = removeAtIndex(state.variants, variantIndex);
 
@@ -428,32 +471,32 @@ function deleteVariant(
           attributes: state.attributes.map(attribute => ({
             id: attribute.id,
             valueRequired: attribute.valueRequired,
-            values: []
+            values: [],
           })),
-          variants
-        })
+          variants,
+        }),
   };
 }
 
 function createVariantMatrix(
-  state: ProductVariantCreateFormData
+  state: ProductVariantCreateFormData,
 ): ProductVariantCreateFormData {
   return {
     ...state,
-    variants: createVariants(state)
+    variants: createVariants(state),
   };
 }
 
 function reduceProductVariantCreateFormData(
   prevState: ProductVariantCreateFormData,
-  action: ProductVariantCreateReducerAction
+  action: ProductVariantCreateReducerAction,
 ) {
   switch (action.type) {
     case ProductVariantCreateReducerActionType.selectValue:
       return selectValue(
         prevState,
         action.selectValue.attributeId,
-        action.selectValue.value
+        action.selectValue.value,
       );
     case ProductVariantCreateReducerActionType.applyPriceToAll:
       return applyPriceToAll(prevState, action.applyPriceOrStockToAll.mode);
@@ -464,54 +507,54 @@ function reduceProductVariantCreateFormData(
         prevState,
         action.changeAttributeValuePrice.valueId,
         action.changeAttributeValuePrice.price,
-        action.changeAttributeValuePrice.channelId
+        action.changeAttributeValuePrice.channelId,
       );
     case ProductVariantCreateReducerActionType.changeAttributeValueStock:
       return changeAttributeValueStock(
         prevState,
         action.changeAttributeValueStock.valueId,
         action.changeAttributeValueStock.quantity,
-        action.changeAttributeValueStock.warehouseIndex
+        action.changeAttributeValueStock.warehouseIndex,
       );
     case ProductVariantCreateReducerActionType.changeApplyPriceToAttributeId:
       return changeApplyPriceToAttributeId(
         prevState,
-        action.changeApplyPriceOrStockToAttributeId.attributeId
+        action.changeApplyPriceOrStockToAttributeId.attributeId,
       );
     case ProductVariantCreateReducerActionType.changeApplyStockToAttributeId:
       return changeApplyStockToAttributeId(
         prevState,
-        action.changeApplyPriceOrStockToAttributeId.attributeId
+        action.changeApplyPriceOrStockToAttributeId.attributeId,
       );
     case ProductVariantCreateReducerActionType.changeApplyPriceToAllValue:
       return changeApplyPriceToAllValue(
         prevState,
         action.changeApplyPriceToAllValue.channelId,
-        action.changeApplyPriceToAllValue.price
+        action.changeApplyPriceToAllValue.price,
       );
     case ProductVariantCreateReducerActionType.changeApplyStockToAllValue:
       return changeApplyStockToAllValue(
         prevState,
         action.changeApplyStockToAllValue.warehouseIndex,
-        action.changeApplyStockToAllValue.quantity
+        action.changeApplyStockToAllValue.quantity,
       );
     case ProductVariantCreateReducerActionType.changeVariantSku:
       return changeVariantSku(
         prevState,
         action.changeVariantSku.value,
-        action.changeVariantSku.variantIndex
+        action.changeVariantSku.variantIndex,
       );
     case ProductVariantCreateReducerActionType.changeVariantPriceData:
       return changeVariantPriceData(
         prevState,
         action.changeVariantPriceData.value,
-        action.changeVariantPriceData.variantIndex
+        action.changeVariantPriceData.variantIndex,
       );
     case ProductVariantCreateReducerActionType.changeVariantStockData:
       return changeVariantStockData(
         prevState,
         action.changeVariantStockData.stock,
-        action.changeVariantStockData.variantIndex
+        action.changeVariantStockData.variantIndex,
       );
     case ProductVariantCreateReducerActionType.changeWarehouses:
       return changeWarehouses(prevState, action.changeWarehouses.warehouseId);
@@ -519,6 +562,8 @@ function reduceProductVariantCreateFormData(
       return deleteVariant(prevState, action.deleteVariant.variantIndex);
     case ProductVariantCreateReducerActionType.reload:
       return action.reload?.data || createVariantMatrix(prevState);
+    case ProductVariantCreateReducerActionType.rebuild:
+      return rebuild(prevState);
     default:
       return prevState;
   }

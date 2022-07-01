@@ -5,10 +5,10 @@ import { FormSpacer } from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import Link from "@saleor/components/Link";
 import MultiAutocompleteSelectField, {
-  MultiAutocompleteChoiceType
+  MultiAutocompleteChoiceType,
 } from "@saleor/components/MultiAutocompleteSelectField";
 import SingleAutocompleteSelectField, {
-  SingleAutocompleteChoiceType
+  SingleAutocompleteChoiceType,
 } from "@saleor/components/SingleAutocompleteSelectField";
 import { ProductErrorFragment } from "@saleor/graphql";
 import { ChangeEvent } from "@saleor/hooks/useForm";
@@ -30,17 +30,17 @@ interface ProductType {
 const useStyles = makeStyles(
   theme => ({
     card: {
-      overflow: "visible"
+      overflow: "visible",
     },
     cardSubtitle: {
       fontSize: theme.typography.body1.fontSize,
-      marginBottom: theme.spacing(0.5)
+      marginBottom: theme.spacing(0.5),
     },
     label: {
-      marginBottom: theme.spacing(0.5)
-    }
+      marginBottom: theme.spacing(0.5),
+    },
   }),
-  { name: "ProductOrganization" }
+  { name: "ProductOrganization" },
 );
 
 interface ProductOrganizationProps {
@@ -91,7 +91,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
     productTypes,
     onCategoryChange,
     onCollectionChange,
-    onProductTypeChange
+    onProductTypeChange,
   } = props;
 
   const classes = useStyles(props);
@@ -99,7 +99,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
 
   const formErrors = getFormErrors(
     ["productType", "category", "collections"],
-    errors
+    errors,
   );
 
   return (
@@ -108,7 +108,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
         title={intl.formatMessage({
           id: "JjeZEG",
           defaultMessage: "Organize Product",
-          description: "section header"
+          description: "section header",
         })}
       />
       <CardContent>
@@ -121,7 +121,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
             disabled={disabled}
             label={intl.formatMessage({
               id: "anK7jD",
-              defaultMessage: "Product Type"
+              defaultMessage: "Product Type",
             })}
             choices={productTypes}
             value={data.productType?.id}
@@ -153,7 +153,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
                   productType.hasVariants
                     ? intl.formatMessage(commonMessages.yes)
                     : intl.formatMessage(commonMessages.no),
-                "..."
+                "...",
               )}
             </Typography>
           </>
@@ -168,7 +168,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
           disabled={disabled}
           label={intl.formatMessage({
             id: "ccXLVi",
-            defaultMessage: "Category"
+            defaultMessage: "Category",
           })}
           choices={disabled ? [] : categories}
           name="category"
@@ -186,7 +186,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
           error={!!formErrors.collections}
           label={intl.formatMessage({
             id: "ulh3kf",
-            defaultMessage: "Collections"
+            defaultMessage: "Collections",
           })}
           choices={disabled ? [] : collections}
           name="collections"
@@ -197,7 +197,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
               id: "v+Pkm+",
               defaultMessage:
                 "*Optional. Adding product to collection helps users find it.",
-              description: "field is optional"
+              description: "field is optional",
             })
           }
           onChange={onCollectionChange}

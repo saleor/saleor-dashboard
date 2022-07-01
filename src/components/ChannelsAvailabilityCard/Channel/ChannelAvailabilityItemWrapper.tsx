@@ -16,16 +16,16 @@ const useExpanderStyles = makeStyles(
       paddingBottom: theme.spacing(2),
 
       "&:before": {
-        content: "none"
+        content: "none",
       },
 
       "&$expanded": {
         margin: 0,
-        border: "none"
-      }
-    }
+        border: "none",
+      },
+    },
   }),
-  { name: "ChannelContentWrapperExpander" }
+  { name: "ChannelContentWrapperExpander" },
 );
 
 const useSummaryStyles = makeStyles(
@@ -41,18 +41,18 @@ const useSummaryStyles = makeStyles(
 
       "&$expanded": {
         minHeight: 0,
-        padding: theme.spacing(2, 0)
-      }
+        padding: theme.spacing(2, 0),
+      },
     },
     content: {
       margin: 0,
 
       "&$expanded": {
-        margin: 0
-      }
-    }
+        margin: 0,
+      },
+    },
   }),
-  { name: "ChannelContentWrapperExpanderSummary" }
+  { name: "ChannelContentWrapperExpanderSummary" },
 );
 
 export interface ChannelContentWrapperProps {
@@ -64,7 +64,7 @@ export interface ChannelContentWrapperProps {
 const ChannelContentWrapper: React.FC<ChannelContentWrapperProps> = ({
   data,
   messages,
-  children
+  children,
 }) => {
   const expanderClasses = useExpanderStyles({});
   const summaryClasses = useSummaryStyles({});

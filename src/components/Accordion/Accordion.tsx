@@ -10,29 +10,29 @@ import Hr from "../Hr";
 const useStyles = makeStyles(
   theme => ({
     content: {
-      padding: theme.spacing(3, 0)
+      padding: theme.spacing(3, 0),
     },
     expandButton: {
       position: "relative",
       right: theme.spacing(-2),
-      top: theme.spacing(0.5)
+      top: theme.spacing(0.5),
     },
     root: {
       border: `1px solid ${theme.palette.divider}`,
       borderRadius: 12,
-      padding: theme.spacing(0, 3)
+      padding: theme.spacing(0, 3),
     },
     title: {
       display: "flex",
-      justifyContent: "space-between"
+      justifyContent: "space-between",
     },
     titleText: {
-      padding: theme.spacing(2, 0)
-    }
+      padding: theme.spacing(2, 0),
+    },
   }),
   {
-    name: "Accordion"
-  }
+    name: "Accordion",
+  },
 );
 
 export interface AccordionProps {

@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { RouteComponentProps } from "react-router";
 
 import NewPasswordPage, {
-  NewPasswordPageFormData
+  NewPasswordPageFormData,
 } from "../components/NewPasswordPage";
 import { NewPasswordUrlQueryParams } from "../urls";
 
@@ -25,7 +25,7 @@ const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
     const result = await setPassword({
       email: params.email,
       password: data.password,
-      token: params.token
+      token: params.token,
     });
 
     const errors = result.data?.setPassword?.errors || [];

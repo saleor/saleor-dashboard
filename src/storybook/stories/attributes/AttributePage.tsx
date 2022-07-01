@@ -1,5 +1,5 @@
 import AttributePage, {
-  AttributePageProps
+  AttributePageProps,
 } from "@saleor/attributes/components/AttributePage";
 import { attribute } from "@saleor/attributes/fixtures";
 import { AttributeErrorCode, AttributeInputTypeEnum } from "@saleor/graphql";
@@ -23,10 +23,10 @@ const props: AttributePageProps = {
   values: attribute.choices,
   pageInfo: {
     hasNextPage: false,
-    hasPreviousPage: false
+    hasPreviousPage: false,
   },
   onNextPage: () => undefined,
-  onPreviousPage: () => undefined
+  onPreviousPage: () => undefined,
 };
 
 storiesOf("Views / Attributes / Attribute details", module)
@@ -54,7 +54,7 @@ storiesOf("Views / Attributes / Attribute details", module)
         __typename: "AttributeError",
         code: AttributeErrorCode.INVALID,
         field,
-        message: "Attribute code invalid"
+        message: "Attribute code invalid",
       }))}
     >
       {() => null}
@@ -65,7 +65,7 @@ storiesOf("Views / Attributes / Attribute details", module)
       {...props}
       attribute={{
         ...attribute,
-        inputType: AttributeInputTypeEnum.MULTISELECT
+        inputType: AttributeInputTypeEnum.MULTISELECT,
       }}
     >
       {() => null}

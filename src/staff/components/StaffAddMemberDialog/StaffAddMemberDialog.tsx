@@ -3,7 +3,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  TextField
+  TextField,
 } from "@material-ui/core";
 import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
@@ -11,7 +11,7 @@ import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import {
   SearchPermissionGroupsQuery,
-  StaffErrorFragment
+  StaffErrorFragment,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
@@ -34,7 +34,7 @@ const initialForm: AddMemberFormData = {
   email: "",
   firstName: "",
   lastName: "",
-  permissionGroups: []
+  permissionGroups: [],
 };
 
 const useStyles = makeStyles(
@@ -43,20 +43,20 @@ const useStyles = makeStyles(
       backgroundColor: "#eaeaea",
       border: "none",
       height: 1,
-      marginBottom: 0
+      marginBottom: 0,
     },
     sectionTitle: {
       fontWeight: 600 as 600,
       marginBottom: theme.spacing(),
-      marginTop: theme.spacing(2)
+      marginTop: theme.spacing(2),
     },
     textFieldGrid: {
       display: "grid",
       gridColumnGap: theme.spacing(2),
-      gridTemplateColumns: "1fr 1fr"
-    }
+      gridTemplateColumns: "1fr 1fr",
+    },
   }),
-  { name: "StaffAddMemberDialog" }
+  { name: "StaffAddMemberDialog" },
 );
 
 interface StaffAddMemberDialogProps extends SearchPageProps {
@@ -78,7 +78,7 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
   const intl = useIntl();
   const formErrors = getFormErrors(
     ["firstName", "lastName", "email"],
-    dialogErrors
+    dialogErrors,
   );
 
   return (

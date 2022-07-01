@@ -12,7 +12,7 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6Nw==",
-        name: "Accessories"
+        name: "Accessories",
       },
       children: [
         {
@@ -20,7 +20,7 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           category: {
             __typename: "Category",
             id: "Q2F0ZWdvcnk6OAX==",
-            name: "Jewelry"
+            name: "Jewelry",
           },
           children: [],
           collection: null,
@@ -28,14 +28,14 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           level: 0,
           name: "Jewelry",
           page: null,
-          url: null
+          url: null,
         },
         {
           __typename: "MenuItem",
           category: {
             __typename: "Category",
             id: "Q2F0ZWdvcnk6OQX==",
-            name: "Glasses"
+            name: "Glasses",
           },
           children: [],
           collection: null,
@@ -43,22 +43,22 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           level: 0,
           name: "Glasses",
           page: null,
-          url: null
-        }
+          url: null,
+        },
       ],
       collection: null,
       id: "2accessories",
       level: 0,
       name: "Accessories",
       page: null,
-      url: null
+      url: null,
     },
     {
       __typename: "MenuItem",
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6OA==",
-        name: "Groceries"
+        name: "Groceries",
       },
       children: [],
       collection: null,
@@ -66,14 +66,14 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       level: 0,
       name: "Groceries",
       page: null,
-      url: null
+      url: null,
     },
     {
       __typename: "MenuItem",
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6OQ==",
-        name: "Apparel"
+        name: "Apparel",
       },
       children: [],
       collection: null,
@@ -81,8 +81,8 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       level: 0,
       name: "Apparel",
       page: null,
-      url: null
-    }
+      url: null,
+    },
   ],
   // moves one in root
   [
@@ -91,7 +91,7 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6Nw==",
-        name: "Accessories"
+        name: "Accessories",
       },
       children: [
         {
@@ -99,7 +99,7 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           category: {
             __typename: "Category",
             id: "Q2F0ZWdvcnk6OAX==",
-            name: "Jewelry"
+            name: "Jewelry",
           },
           children: [],
           collection: null,
@@ -107,14 +107,14 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           level: 0,
           name: "Jewelry",
           page: null,
-          url: null
+          url: null,
         },
         {
           __typename: "MenuItem",
           category: {
             __typename: "Category",
             id: "Q2F0ZWdvcnk6OQX==",
-            name: "Glasses"
+            name: "Glasses",
           },
           children: [],
           collection: null,
@@ -122,22 +122,22 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           level: 0,
           name: "Glasses",
           page: null,
-          url: null
-        }
+          url: null,
+        },
       ],
       collection: null,
       id: "2accessories",
       level: 0,
       name: "Accessories",
       page: null,
-      url: null
+      url: null,
     },
     {
       __typename: "MenuItem",
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6OQ==",
-        name: "Apparel"
+        name: "Apparel",
       },
       children: [],
       collection: null,
@@ -145,14 +145,14 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       level: 0,
       name: "Apparel",
       page: null,
-      url: null
+      url: null,
     },
     {
       __typename: "MenuItem",
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6OA==",
-        name: "Groceries"
+        name: "Groceries",
       },
       children: [],
       collection: null,
@@ -160,8 +160,8 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       level: 0,
       name: "Groceries",
       page: null,
-      url: null
-    }
+      url: null,
+    },
   ],
   // moves two in root
   [
@@ -170,7 +170,7 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6OQ==",
-        name: "Apparel"
+        name: "Apparel",
       },
       children: [],
       collection: null,
@@ -178,14 +178,14 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       level: 0,
       name: "Apparel",
       page: null,
-      url: null
+      url: null,
     },
     {
       __typename: "MenuItem",
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6OA==",
-        name: "Groceries"
+        name: "Groceries",
       },
       children: [],
       collection: null,
@@ -193,14 +193,14 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       level: 0,
       name: "Groceries",
       page: null,
-      url: null
+      url: null,
     },
     {
       __typename: "MenuItem",
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6Nw==",
-        name: "Accessories"
+        name: "Accessories",
       },
       children: [
         {
@@ -208,7 +208,7 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           category: {
             __typename: "Category",
             id: "Q2F0ZWdvcnk6OAX==",
-            name: "Jewelry"
+            name: "Jewelry",
           },
           children: [],
           collection: null,
@@ -216,14 +216,14 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           level: 0,
           name: "Jewelry",
           page: null,
-          url: null
+          url: null,
         },
         {
           __typename: "MenuItem",
           category: {
             __typename: "Category",
             id: "Q2F0ZWdvcnk6OQX==",
-            name: "Glasses"
+            name: "Glasses",
           },
           children: [],
           collection: null,
@@ -231,16 +231,16 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           level: 0,
           name: "Glasses",
           page: null,
-          url: null
-        }
+          url: null,
+        },
       ],
       collection: null,
       id: "2accessories",
       level: 0,
       name: "Accessories",
       page: null,
-      url: null
-    }
+      url: null,
+    },
   ],
   // empty move
   [
@@ -249,7 +249,7 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6Nw==",
-        name: "Accessories"
+        name: "Accessories",
       },
       children: [
         {
@@ -257,7 +257,7 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           category: {
             __typename: "Category",
             id: "Q2F0ZWdvcnk6OAX==",
-            name: "Jewelry"
+            name: "Jewelry",
           },
           children: [],
           collection: null,
@@ -265,14 +265,14 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           level: 0,
           name: "Jewelry",
           page: null,
-          url: null
+          url: null,
         },
         {
           __typename: "MenuItem",
           category: {
             __typename: "Category",
             id: "Q2F0ZWdvcnk6OQX==",
-            name: "Glasses"
+            name: "Glasses",
           },
           children: [],
           collection: null,
@@ -280,22 +280,22 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           level: 0,
           name: "Glasses",
           page: null,
-          url: null
-        }
+          url: null,
+        },
       ],
       collection: null,
       id: "2accessories",
       level: 0,
       name: "Accessories",
       page: null,
-      url: null
+      url: null,
     },
     {
       __typename: "MenuItem",
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6OA==",
-        name: "Groceries"
+        name: "Groceries",
       },
       children: [],
       collection: null,
@@ -303,14 +303,14 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       level: 0,
       name: "Groceries",
       page: null,
-      url: null
+      url: null,
     },
     {
       __typename: "MenuItem",
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6OQ==",
-        name: "Apparel"
+        name: "Apparel",
       },
       children: [],
       collection: null,
@@ -318,8 +318,8 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       level: 0,
       name: "Apparel",
       page: null,
-      url: null
-    }
+      url: null,
+    },
   ],
   // moves every
   [
@@ -328,7 +328,7 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6OA==",
-        name: "Groceries"
+        name: "Groceries",
       },
       children: [],
       collection: null,
@@ -336,14 +336,14 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       level: 0,
       name: "Groceries",
       page: null,
-      url: null
+      url: null,
     },
     {
       __typename: "MenuItem",
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6OQ==",
-        name: "Apparel"
+        name: "Apparel",
       },
       children: [],
       collection: null,
@@ -351,7 +351,7 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       level: 0,
       name: "Apparel",
       page: null,
-      url: null
+      url: null,
     },
 
     {
@@ -359,7 +359,7 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6Nw==",
-        name: "Accessories"
+        name: "Accessories",
       },
       children: [
         {
@@ -367,7 +367,7 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           category: {
             __typename: "Category",
             id: "Q2F0ZWdvcnk6OAX==",
-            name: "Jewelry"
+            name: "Jewelry",
           },
           children: [],
           collection: null,
@@ -375,14 +375,14 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           level: 0,
           name: "Jewelry",
           page: null,
-          url: null
+          url: null,
         },
         {
           __typename: "MenuItem",
           category: {
             __typename: "Category",
             id: "Q2F0ZWdvcnk6OQX==",
-            name: "Glasses"
+            name: "Glasses",
           },
           children: [],
           collection: null,
@@ -390,16 +390,16 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           level: 0,
           name: "Glasses",
           page: null,
-          url: null
-        }
+          url: null,
+        },
       ],
       collection: null,
       id: "2accessories",
       level: 0,
       name: "Accessories",
       page: null,
-      url: null
-    }
+      url: null,
+    },
   ],
   // moves children
   [
@@ -408,7 +408,7 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6Nw==",
-        name: "Accessories"
+        name: "Accessories",
       },
       children: [
         {
@@ -416,7 +416,7 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           category: {
             __typename: "Category",
             id: "Q2F0ZWdvcnk6OQX==",
-            name: "Glasses"
+            name: "Glasses",
           },
           children: [],
           collection: null,
@@ -424,14 +424,14 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           level: 0,
           name: "Glasses",
           page: null,
-          url: null
+          url: null,
         },
         {
           __typename: "MenuItem",
           category: {
             __typename: "Category",
             id: "Q2F0ZWdvcnk6OAX==",
-            name: "Jewelry"
+            name: "Jewelry",
           },
           children: [],
           collection: null,
@@ -439,22 +439,22 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           level: 0,
           name: "Jewelry",
           page: null,
-          url: null
-        }
+          url: null,
+        },
       ],
       collection: null,
       id: "2accessories",
       level: 0,
       name: "Accessories",
       page: null,
-      url: null
+      url: null,
     },
     {
       __typename: "MenuItem",
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6OA==",
-        name: "Groceries"
+        name: "Groceries",
       },
       children: [],
       collection: null,
@@ -462,14 +462,14 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       level: 0,
       name: "Groceries",
       page: null,
-      url: null
+      url: null,
     },
     {
       __typename: "MenuItem",
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6OQ==",
-        name: "Apparel"
+        name: "Apparel",
       },
       children: [],
       collection: null,
@@ -477,8 +477,8 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       level: 0,
       name: "Apparel",
       page: null,
-      url: null
-    }
+      url: null,
+    },
   ],
   // moves child outside
   [
@@ -487,7 +487,7 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6OQX==",
-        name: "Glasses"
+        name: "Glasses",
       },
       children: [],
       collection: null,
@@ -495,14 +495,14 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       level: 0,
       name: "Glasses",
       page: null,
-      url: null
+      url: null,
     },
     {
       __typename: "MenuItem",
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6Nw==",
-        name: "Accessories"
+        name: "Accessories",
       },
       children: [
         {
@@ -510,7 +510,7 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           category: {
             __typename: "Category",
             id: "Q2F0ZWdvcnk6OAX==",
-            name: "Jewelry"
+            name: "Jewelry",
           },
           children: [],
           collection: null,
@@ -518,22 +518,22 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           level: 0,
           name: "Jewelry",
           page: null,
-          url: null
-        }
+          url: null,
+        },
       ],
       collection: null,
       id: "2accessories",
       level: 0,
       name: "Accessories",
       page: null,
-      url: null
+      url: null,
     },
     {
       __typename: "MenuItem",
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6OA==",
-        name: "Groceries"
+        name: "Groceries",
       },
       children: [],
       collection: null,
@@ -541,14 +541,14 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       level: 0,
       name: "Groceries",
       page: null,
-      url: null
+      url: null,
     },
     {
       __typename: "MenuItem",
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6OQ==",
-        name: "Apparel"
+        name: "Apparel",
       },
       children: [],
       collection: null,
@@ -556,8 +556,8 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       level: 0,
       name: "Apparel",
       page: null,
-      url: null
-    }
+      url: null,
+    },
   ],
   // moves child outside and puts it in location
   [
@@ -566,7 +566,7 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6Nw==",
-        name: "Accessories"
+        name: "Accessories",
       },
       children: [
         {
@@ -574,7 +574,7 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           category: {
             __typename: "Category",
             id: "Q2F0ZWdvcnk6OAX==",
-            name: "Jewelry"
+            name: "Jewelry",
           },
           children: [],
           collection: null,
@@ -582,22 +582,22 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           level: 0,
           name: "Jewelry",
           page: null,
-          url: null
-        }
+          url: null,
+        },
       ],
       collection: null,
       id: "2accessories",
       level: 0,
       name: "Accessories",
       page: null,
-      url: null
+      url: null,
     },
     {
       __typename: "MenuItem",
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6OA==",
-        name: "Groceries"
+        name: "Groceries",
       },
       children: [],
       collection: null,
@@ -605,14 +605,14 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       level: 0,
       name: "Groceries",
       page: null,
-      url: null
+      url: null,
     },
     {
       __typename: "MenuItem",
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6OQX==",
-        name: "Glasses"
+        name: "Glasses",
       },
       children: [],
       collection: null,
@@ -620,14 +620,14 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       level: 0,
       name: "Glasses",
       page: null,
-      url: null
+      url: null,
     },
     {
       __typename: "MenuItem",
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6OQ==",
-        name: "Apparel"
+        name: "Apparel",
       },
       children: [],
       collection: null,
@@ -635,8 +635,8 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       level: 0,
       name: "Apparel",
       page: null,
-      url: null
-    }
+      url: null,
+    },
   ],
   // moves child inside
   [
@@ -645,7 +645,7 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6Nw==",
-        name: "Accessories"
+        name: "Accessories",
       },
       children: [
         {
@@ -653,7 +653,7 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           category: {
             __typename: "Category",
             id: "Q2F0ZWdvcnk6OA==",
-            name: "Groceries"
+            name: "Groceries",
           },
           children: [],
           collection: null,
@@ -661,14 +661,14 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           level: 0,
           name: "Groceries",
           page: null,
-          url: null
+          url: null,
         },
         {
           __typename: "MenuItem",
           category: {
             __typename: "Category",
             id: "Q2F0ZWdvcnk6OAX==",
-            name: "Jewelry"
+            name: "Jewelry",
           },
           children: [],
           collection: null,
@@ -676,14 +676,14 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           level: 0,
           name: "Jewelry",
           page: null,
-          url: null
+          url: null,
         },
         {
           __typename: "MenuItem",
           category: {
             __typename: "Category",
             id: "Q2F0ZWdvcnk6OQX==",
-            name: "Glasses"
+            name: "Glasses",
           },
           children: [],
           collection: null,
@@ -691,22 +691,22 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           level: 0,
           name: "Glasses",
           page: null,
-          url: null
-        }
+          url: null,
+        },
       ],
       collection: null,
       id: "2accessories",
       level: 0,
       name: "Accessories",
       page: null,
-      url: null
+      url: null,
     },
     {
       __typename: "MenuItem",
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6OQ==",
-        name: "Apparel"
+        name: "Apparel",
       },
       children: [],
       collection: null,
@@ -714,8 +714,8 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       level: 0,
       name: "Apparel",
       page: null,
-      url: null
-    }
+      url: null,
+    },
   ],
   // moves child inside then outside then changes index
   [
@@ -724,7 +724,7 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6Nw==",
-        name: "Accessories"
+        name: "Accessories",
       },
       children: [
         {
@@ -732,7 +732,7 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           category: {
             __typename: "Category",
             id: "Q2F0ZWdvcnk6OA==",
-            name: "Groceries"
+            name: "Groceries",
           },
           children: [],
           collection: null,
@@ -740,14 +740,14 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           level: 0,
           name: "Groceries",
           page: null,
-          url: null
+          url: null,
         },
         {
           __typename: "MenuItem",
           category: {
             __typename: "Category",
             id: "Q2F0ZWdvcnk6OAX==",
-            name: "Jewelry"
+            name: "Jewelry",
           },
           children: [],
           collection: null,
@@ -755,14 +755,14 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           level: 0,
           name: "Jewelry",
           page: null,
-          url: null
+          url: null,
         },
         {
           __typename: "MenuItem",
           category: {
             __typename: "Category",
             id: "Q2F0ZWdvcnk6OQX==",
-            name: "Glasses"
+            name: "Glasses",
           },
           children: [],
           collection: null,
@@ -770,22 +770,22 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           level: 0,
           name: "Glasses",
           page: null,
-          url: null
-        }
+          url: null,
+        },
       ],
       collection: null,
       id: "2accessories",
       level: 0,
       name: "Accessories",
       page: null,
-      url: null
+      url: null,
     },
     {
       __typename: "MenuItem",
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6OQ==",
-        name: "Apparel"
+        name: "Apparel",
       },
       children: [],
       collection: null,
@@ -793,8 +793,8 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       level: 0,
       name: "Apparel",
       page: null,
-      url: null
-    }
+      url: null,
+    },
   ],
   // moves item as last child and moves it up
   [
@@ -803,7 +803,7 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6Nw==",
-        name: "Accessories"
+        name: "Accessories",
       },
       children: [
         {
@@ -811,7 +811,7 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           category: {
             __typename: "Category",
             id: "Q2F0ZWdvcnk6OAX==",
-            name: "Jewelry"
+            name: "Jewelry",
           },
           children: [],
           collection: null,
@@ -819,14 +819,14 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           level: 0,
           name: "Jewelry",
           page: null,
-          url: null
+          url: null,
         },
         {
           __typename: "MenuItem",
           category: {
             __typename: "Category",
             id: "Q2F0ZWdvcnk6OA==",
-            name: "Groceries"
+            name: "Groceries",
           },
           children: [],
           collection: null,
@@ -834,14 +834,14 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           level: 0,
           name: "Groceries",
           page: null,
-          url: null
+          url: null,
         },
         {
           __typename: "MenuItem",
           category: {
             __typename: "Category",
             id: "Q2F0ZWdvcnk6OQX==",
-            name: "Glasses"
+            name: "Glasses",
           },
           children: [],
           collection: null,
@@ -849,22 +849,22 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
           level: 0,
           name: "Glasses",
           page: null,
-          url: null
-        }
+          url: null,
+        },
       ],
       collection: null,
       id: "2accessories",
       level: 0,
       name: "Accessories",
       page: null,
-      url: null
+      url: null,
     },
     {
       __typename: "MenuItem",
       category: {
         __typename: "Category",
         id: "Q2F0ZWdvcnk6OQ==",
-        name: "Apparel"
+        name: "Apparel",
       },
       children: [],
       collection: null,
@@ -872,9 +872,9 @@ const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
       level: 0,
       name: "Apparel",
       page: null,
-      url: null
-    }
-  ]
+      url: null,
+    },
+  ],
 ];
 
 const secondTestTable: TreeOperation[][] = [
@@ -885,18 +885,18 @@ const secondTestTable: TreeOperation[][] = [
   // moves two in root
   [
     { id: "2accessories", sortOrder: 2, type: "move" },
-    { id: "4apparel", sortOrder: -1, type: "move" }
+    { id: "4apparel", sortOrder: -1, type: "move" },
   ],
   // empty move
   [
     { id: "2accessories", sortOrder: 0, type: "move" },
-    { id: "4apparel", sortOrder: 0, type: "move" }
+    { id: "4apparel", sortOrder: 0, type: "move" },
   ],
   // move every
   [
     { id: "2accessories", sortOrder: 1, type: "move" },
     { id: "4apparel", sortOrder: -2, type: "move" },
-    { id: "3groceries", sortOrder: -1, type: "move" }
+    { id: "3groceries", sortOrder: -1, type: "move" },
   ],
   // moves children
   [
@@ -904,8 +904,8 @@ const secondTestTable: TreeOperation[][] = [
       id: "1glasses",
       sortOrder: -1,
       type: "move",
-      parentId: "2accessories"
-    }
+      parentId: "2accessories",
+    },
   ],
   // moves children outside
   [
@@ -913,13 +913,13 @@ const secondTestTable: TreeOperation[][] = [
       id: "1glasses",
       sortOrder: 3,
       type: "move",
-      simulatedMove: true
+      simulatedMove: true,
     },
     {
       id: "1glasses",
       sortOrder: 0 - 3,
-      type: "move"
-    }
+      type: "move",
+    },
   ],
   // moves children outside and puts it in a location
   [
@@ -927,13 +927,13 @@ const secondTestTable: TreeOperation[][] = [
       id: "1glasses",
       sortOrder: 3,
       type: "move",
-      simulatedMove: true
+      simulatedMove: true,
     },
     {
       id: "1glasses",
       sortOrder: 2 - 3,
-      type: "move"
-    }
+      type: "move",
+    },
   ],
   // moves child inside
   [
@@ -942,14 +942,14 @@ const secondTestTable: TreeOperation[][] = [
       parentId: "2accessories",
       sortOrder: 2,
       type: "move",
-      simulatedMove: true
+      simulatedMove: true,
     },
     {
       id: "3groceries",
       parentId: "2accessories",
       sortOrder: 0 - 2,
-      type: "move"
-    }
+      type: "move",
+    },
   ],
   // moves child inside, moves it and puts it back
   [
@@ -957,29 +957,29 @@ const secondTestTable: TreeOperation[][] = [
       id: "3groceries",
       parentId: "2accessories",
       sortOrder: 0,
-      type: "move"
+      type: "move",
     },
     {
       id: "3groceries",
       sortOrder: 1,
-      type: "move"
+      type: "move",
     },
     {
       id: "3groceries",
       sortOrder: 1,
-      type: "move"
+      type: "move",
     },
     {
       id: "3groceries",
       sortOrder: -2,
-      type: "move"
+      type: "move",
     },
     {
       id: "3groceries",
       parentId: "2accessories",
       sortOrder: 0,
-      type: "move"
-    }
+      type: "move",
+    },
   ],
   // moves item as last child and moves it up
   [
@@ -987,15 +987,15 @@ const secondTestTable: TreeOperation[][] = [
       id: "3groceries",
       parentId: "2accessories",
       sortOrder: 2,
-      type: "move"
+      type: "move",
     },
     {
       id: "1glasses",
       parentId: "2accessories",
       sortOrder: 1,
-      type: "move"
-    }
-  ]
+      type: "move",
+    },
+  ],
 ];
 
 const testTable: TreeOperation[][] = [
@@ -1006,8 +1006,8 @@ const testTable: TreeOperation[][] = [
       id: "2accessories",
       parentId: "3groceries",
       sortOrder: 0,
-      type: "move"
-    }
+      type: "move",
+    },
   ],
   [
     { id: "1glasses", parentId: "0jewelry", sortOrder: 0, type: "move" },
@@ -1015,14 +1015,14 @@ const testTable: TreeOperation[][] = [
       id: "2accessories",
       parentId: "3groceries",
       sortOrder: 0,
-      type: "move"
+      type: "move",
     },
     {
       id: "3groceries",
       parentId: "4apparel",
       sortOrder: 0,
-      type: "move"
-    }
+      type: "move",
+    },
   ],
   [
     { id: "0jewelry", sortOrder: 1, type: "move" },
@@ -1031,23 +1031,23 @@ const testTable: TreeOperation[][] = [
       id: "4apparel",
       parentId: "3groceries",
       sortOrder: 0,
-      type: "move"
+      type: "move",
     },
     {
       id: "3groceries",
       parentId: "0jewelry",
       sortOrder: 0,
-      type: "move"
+      type: "move",
     },
     { id: "0jewelry", parentId: "1glasses", sortOrder: 0, type: "move" },
     {
       id: "1glasses",
       parentId: "2accessories",
       sortOrder: 0,
-      type: "move"
+      type: "move",
     },
     { id: "1glasses", sortOrder: 1, type: "move" },
-    { id: "0jewelry", sortOrder: 2, type: "move" }
+    { id: "0jewelry", sortOrder: 2, type: "move" },
   ],
   [
     { id: "1glasses", sortOrder: 1, type: "move" },
@@ -1057,14 +1057,14 @@ const testTable: TreeOperation[][] = [
       id: "0jewelry",
       parentId: "2accessories",
       sortOrder: 0,
-      type: "move"
+      type: "move",
     },
     { id: "3groceries", sortOrder: 0, type: "move" },
     {
       id: "2accessories",
       parentId: "3groceries",
       sortOrder: 0,
-      type: "move"
+      type: "move",
     },
     { id: "2accessories", sortOrder: 1, type: "move" },
     { id: "0jewelry", sortOrder: 2, type: "move" },
@@ -1076,62 +1076,62 @@ const testTable: TreeOperation[][] = [
       id: "4apparel",
       parentId: "2accessories",
       sortOrder: 0,
-      type: "move"
+      type: "move",
     },
     {
       id: "3groceries",
       parentId: "1glasses",
       sortOrder: 0,
-      type: "move"
+      type: "move",
     },
     { id: "0jewelry", sortOrder: 0, type: "move" },
     {
       id: "0jewelry",
       parentId: "2accessories",
       sortOrder: 0,
-      type: "move"
+      type: "move",
     },
     {
       id: "4apparel",
       parentId: "2accessories",
       sortOrder: 0,
-      type: "move"
+      type: "move",
     },
     {
       id: "0jewelry",
       parentId: "2accessories",
       sortOrder: 0,
-      type: "move"
+      type: "move",
     },
     {
       id: "1glasses",
       parentId: "2accessories",
       sortOrder: 2,
-      type: "move"
+      type: "move",
     },
     {
       id: "0jewelry",
       parentId: "2accessories",
       sortOrder: 2,
-      type: "move"
+      type: "move",
     },
     {
       id: "1glasses",
       parentId: "2accessories",
       sortOrder: 2,
-      type: "move"
+      type: "move",
     },
     {
       id: "4apparel",
       parentId: "2accessories",
       sortOrder: 2,
-      type: "move"
+      type: "move",
     },
     {
       id: "3groceries",
       parentId: "0jewelry",
       sortOrder: 0,
-      type: "move"
+      type: "move",
     },
     { id: "4apparel", parentId: "1glasses", sortOrder: 0, type: "move" },
     { id: "1glasses", sortOrder: 1, type: "move" },
@@ -1140,21 +1140,21 @@ const testTable: TreeOperation[][] = [
       id: "2accessories",
       parentId: "4apparel",
       sortOrder: 0,
-      type: "move"
-    }
+      type: "move",
+    },
   ],
   [{ id: "2accessories", type: "remove" }],
   [
     { id: "2accessories", type: "remove" },
     { id: "4apparel", sortOrder: 0, type: "move" },
-    { id: "3groceries", type: "remove" }
-  ]
+    { id: "3groceries", type: "remove" },
+  ],
 ];
 
 // Readability FTW
 function innerTreeToString(
   tree: MenuDetailsFragment["items"][0],
-  level: number
+  level: number,
 ): string {
   return (
     "\n" +
@@ -1162,7 +1162,7 @@ function innerTreeToString(
     tree.name +
     tree.children.reduce(
       (acc, node) => acc + innerTreeToString(node, level + 1),
-      ""
+      "",
     )
   );
 }
@@ -1175,7 +1175,7 @@ describe("Properly computes trees", () => {
     it("#", () => {
       const computedTree = computeRelativeTree(menu.items, testData);
       expect(treeToString(computedTree)).toMatchSnapshot();
-    })
+    }),
   );
 });
 

@@ -9,7 +9,7 @@ import { customerListUrl } from "@saleor/customers/urls";
 import {
   AccountErrorFragment,
   AddressInput,
-  CustomerCreateDataQuery
+  CustomerCreateDataQuery,
 } from "@saleor/graphql";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -53,7 +53,7 @@ const initialForm: CustomerCreatePageFormData & AddressTypeInput = {
   phone: "",
   postalCode: "",
   streetAddress1: "",
-  streetAddress2: ""
+  streetAddress2: "",
 };
 
 export interface CustomerCreatePageProps {
@@ -69,7 +69,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
   disabled,
   errors: apiErrors,
   saveButtonBar,
-  onSubmit
+  onSubmit,
 }: CustomerCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -78,7 +78,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
   const countryChoices = mapCountriesToChoices(countries);
   const {
     errors: validationErrors,
-    submit: handleSubmitWithAddress
+    submit: handleSubmitWithAddress,
   } = useAddressValidation<CustomerCreatePageFormData, void>(formData =>
     onSubmit({
       address: {
@@ -92,19 +92,19 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
         phone: formData.phone,
         postalCode: formData.postalCode,
         streetAddress1: formData.streetAddress1,
-        streetAddress2: formData.streetAddress2
+        streetAddress2: formData.streetAddress2,
       },
       customerFirstName: formData.customerFirstName,
       customerLastName: formData.customerLastName,
       email: formData.email,
-      note: formData.note
-    })
+      note: formData.note,
+    }),
   );
 
   const errors = [...apiErrors, ...validationErrors];
 
   const handleSubmit = (
-    formData: CustomerCreatePageFormData & AddressTypeInput
+    formData: CustomerCreatePageFormData & AddressTypeInput,
   ) => {
     const areAddressInputFieldsModified = ([
       "city",
@@ -116,7 +116,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
       "phone",
       "postalCode",
       "streetAddress1",
-      "streetAddress2"
+      "streetAddress2",
     ] as Array<keyof AddressTypeInput>)
       .map(key => formData[key])
       .some(field => field !== "");
@@ -131,8 +131,8 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
         customerFirstName: formData.customerFirstName,
         customerLastName: formData.customerLastName,
         email: formData.email,
-        note: formData.note
-      })
+        note: formData.note,
+      }),
     );
   };
 
@@ -147,7 +147,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
         const handleCountrySelect = createSingleAutocompleteSelectHandler(
           change,
           setCountryDisplayName,
-          countryChoices
+          countryChoices,
         );
 
         return (
@@ -159,7 +159,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
               title={intl.formatMessage({
                 id: "N76zUg",
                 defaultMessage: "Create Customer",
-                description: "page header"
+                description: "page header",
               })}
             />
             <Grid>

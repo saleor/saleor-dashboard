@@ -11,7 +11,7 @@ import {
   StaffListUrlQueryParams,
   StaffListUrlSortField,
   staffMemberDetailsPath,
-  StaffMemberDetailsUrlQueryParams
+  StaffMemberDetailsUrlQueryParams,
 } from "./urls";
 import StaffDetailsComponent from "./views/StaffDetails";
 import StaffListComponent from "./views/StaffList";
@@ -20,7 +20,7 @@ const StaffList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: StaffListUrlQueryParams = asSortParams(
     qs,
-    StaffListUrlSortField
+    StaffListUrlSortField,
   );
 
   return <StaffListComponent params={params} />;
@@ -30,7 +30,7 @@ interface StaffDetailsRouteProps {
   id: string;
 }
 const StaffDetails: React.FC<RouteComponentProps<StaffDetailsRouteProps>> = ({
-  match
+  match,
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: StaffMemberDetailsUrlQueryParams = qs;

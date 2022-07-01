@@ -1,6 +1,6 @@
 import CardSpacer from "@saleor/components/CardSpacer";
 import MultiAutocompleteSelectField, {
-  MultiAutocompleteChoiceType
+  MultiAutocompleteChoiceType,
 } from "@saleor/components/MultiAutocompleteSelectField";
 import { FormChange } from "@saleor/hooks/useForm";
 import { FetchMoreProps, SearchProps } from "@saleor/types";
@@ -12,23 +12,23 @@ const messages = defineMessages({
     id: "wjKYSU",
     defaultMessage:
       "Select warehouse from which you will ship products for this shipping zone. This warehouse address will also be used to calculate taxes.",
-    description: "WarehousesSection subtitle"
+    description: "WarehousesSection subtitle",
   },
   selectFieldAddText: {
     id: "n25d+d",
     defaultMessage: "Add New Warehouse",
-    description: "WarehousesSection select field add text"
+    description: "WarehousesSection select field add text",
   },
   selectFieldLabel: {
     id: "PV0SQd",
     defaultMessage: "Warehouse",
-    description: "WarehousesSection select field label"
+    description: "WarehousesSection select field label",
   },
   selectFieldPlaceholder: {
     id: "/cow4T",
     defaultMessage: "Select Warehouse",
-    description: "WarehousesSection select field placeholder"
-  }
+    description: "WarehousesSection select field placeholder",
+  },
 });
 
 interface WarehousesSectionProps extends FetchMoreProps, SearchProps {
@@ -48,7 +48,7 @@ const WarehousesSection: React.FC<WarehousesSectionProps> = ({
   choices,
   selectedWarehouses,
   hasMore,
-  loading
+  loading,
 }) => {
   const intl = useIntl();
 
@@ -59,7 +59,7 @@ const WarehousesSection: React.FC<WarehousesSectionProps> = ({
       <MultiAutocompleteSelectField
         add={{
           label: intl.formatMessage(messages.selectFieldAddText),
-          onClick: onAdd
+          onClick: onAdd,
         }}
         testId="warehouses"
         choices={choices}

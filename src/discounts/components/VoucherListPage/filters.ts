@@ -5,7 +5,7 @@ import { FilterOpts, MinMax } from "@saleor/types";
 import {
   createDateField,
   createNumberField,
-  createOptionsField
+  createOptionsField,
 } from "@saleor/utils/filters/fields";
 import { defineMessages, IntlShape } from "react-intl";
 
@@ -14,7 +14,7 @@ export enum VoucherFilterKeys {
   started = "started",
   status = "status",
   timesUsed = "timesUsed",
-  channel = "channel"
+  channel = "channel",
 }
 
 export interface VoucherListFilterOpts {
@@ -29,57 +29,57 @@ const messages = defineMessages({
   active: {
     id: "amQg6f",
     defaultMessage: "Active",
-    description: "voucher status"
+    description: "voucher status",
   },
   channel: {
     id: "NLybdq",
     defaultMessage: "Channel",
-    description: "voucher channel"
+    description: "voucher channel",
   },
   expired: {
     id: "t7UwLY",
     defaultMessage: "Expired",
-    description: "voucher status"
+    description: "voucher status",
   },
   fixed: {
     id: "XDBeA+",
     defaultMessage: "Fixed amount",
-    description: "discount type"
+    description: "discount type",
   },
   percentage: {
     id: "s17U7u",
     defaultMessage: "Percentage",
-    description: "discount type"
+    description: "discount type",
   },
   scheduled: {
     id: "Jj0de8",
     defaultMessage: "Scheduled",
-    description: "voucher status"
+    description: "voucher status",
   },
   started: {
     id: "ujFo4A",
     defaultMessage: "Started",
-    description: "voucher start date"
+    description: "voucher start date",
   },
   status: {
     id: "uy+tB8",
     defaultMessage: "Status",
-    description: "voucher status"
+    description: "voucher status",
   },
   timesUsed: {
     id: "h75GAF",
     defaultMessage: "Times used",
-    description: "voucher"
+    description: "voucher",
   },
   type: {
     id: "KHZlmi",
-    defaultMessage: "Discount Type"
-  }
+    defaultMessage: "Discount Type",
+  },
 });
 
 export function createFilterStructure(
   intl: IntlShape,
-  opts: VoucherListFilterOpts
+  opts: VoucherListFilterOpts,
 ): IFilter<VoucherFilterKeys> {
   return [
     {
@@ -88,25 +88,25 @@ export function createFilterStructure(
         intl.formatMessage(messages.channel),
         [opts.channel.value],
         false,
-        opts.channel.choices
+        opts.channel.choices,
       ),
-      active: opts.channel.active
+      active: opts.channel.active,
     },
     {
       ...createDateField(
         VoucherFilterKeys.started,
         intl.formatMessage(messages.started),
-        opts.started.value
+        opts.started.value,
       ),
-      active: opts.started.active
+      active: opts.started.active,
     },
     {
       ...createNumberField(
         VoucherFilterKeys.timesUsed,
         intl.formatMessage(messages.timesUsed),
-        opts.timesUsed.value
+        opts.timesUsed.value,
       ),
-      active: opts.timesUsed.active
+      active: opts.timesUsed.active,
     },
     {
       ...createOptionsField(
@@ -117,19 +117,19 @@ export function createFilterStructure(
         [
           {
             label: intl.formatMessage(messages.active),
-            value: DiscountStatusEnum.ACTIVE
+            value: DiscountStatusEnum.ACTIVE,
           },
           {
             label: intl.formatMessage(messages.expired),
-            value: DiscountStatusEnum.EXPIRED
+            value: DiscountStatusEnum.EXPIRED,
           },
           {
             label: intl.formatMessage(messages.scheduled),
-            value: DiscountStatusEnum.SCHEDULED
-          }
-        ]
+            value: DiscountStatusEnum.SCHEDULED,
+          },
+        ],
       ),
-      active: opts.status.active
+      active: opts.status.active,
     },
     {
       ...createOptionsField(
@@ -140,19 +140,19 @@ export function createFilterStructure(
         [
           {
             label: intl.formatMessage(messages.fixed),
-            value: VoucherDiscountType.FIXED
+            value: VoucherDiscountType.FIXED,
           },
           {
             label: intl.formatMessage(messages.percentage),
-            value: VoucherDiscountType.PERCENTAGE
+            value: VoucherDiscountType.PERCENTAGE,
           },
           {
             label: intl.formatMessage(messages.percentage),
-            value: VoucherDiscountType.SHIPPING
-          }
-        ]
+            value: VoucherDiscountType.SHIPPING,
+          },
+        ],
       ),
-      active: opts.saleType.active
-    }
+      active: opts.saleType.active,
+    },
   ];
 }

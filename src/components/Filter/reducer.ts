@@ -18,22 +18,22 @@ export interface FilterReducerAction<K extends string, T extends FieldType> {
 export type UpdateStateFunction<K extends string = string> = <
   T extends FieldType
 >(
-  value: FilterReducerAction<K, T>
+  value: FilterReducerAction<K, T>,
 ) => void;
 
 function merge<T extends string>(
   prevState: IFilter<T>,
-  newState: IFilter<T>
+  newState: IFilter<T>,
 ): IFilter<T> {
   return newState.map(newFilter => {
     const prevFilter = prevState.find(
-      prevFilter => prevFilter.name === newFilter.name
+      prevFilter => prevFilter.name === newFilter.name,
     );
     if (!!prevFilter) {
       return {
         ...newFilter,
         active: prevFilter.active,
-        value: prevFilter.value
+        value: prevFilter.value,
       };
     }
 
@@ -44,12 +44,12 @@ function merge<T extends string>(
 function setProperty<K extends string, T extends FieldType>(
   prevState: IFilter<K, T>,
   filter: K,
-  updateData: Partial<IFilterElementMutableDataGeneric<T>>
+  updateData: Partial<IFilterElementMutableDataGeneric<T>>,
 ): IFilter<K> {
   const field = prevState.find(f => f.name === filter);
   const updatedField = {
     ...field,
-    ...updateData
+    ...updateData,
   };
 
   return update(updatedField, prevState, (a, b) => a.name === b.name);
@@ -57,14 +57,14 @@ function setProperty<K extends string, T extends FieldType>(
 
 function reduceFilter<K extends string, T extends FieldType>(
   prevState: IFilter<K, T>,
-  action: FilterReducerAction<K, T>
+  action: FilterReducerAction<K, T>,
 ): IFilter<K> {
   switch (action.type) {
     case "set-property":
       return setProperty<K, T>(
         prevState,
         action.payload.name,
-        action.payload.update
+        action.payload.update,
       );
     case "merge":
       return merge(prevState, action.payload.new);

@@ -23,7 +23,7 @@ const AttributeUnassignDialog: React.FC<AttributeUnassignDialogProps> = ({
   open,
   itemTypeName,
   onClose,
-  onConfirm
+  onConfirm,
 }) => {
   const intl = useIntl();
 
@@ -41,7 +41,7 @@ const AttributeUnassignDialog: React.FC<AttributeUnassignDialogProps> = ({
           {...messages.content}
           values={{
             attributeName: <strong>{attributeName}</strong>,
-            itemTypeName: <strong>{itemTypeName}</strong>
+            itemTypeName: <strong>{itemTypeName}</strong>,
           }}
         />
       </DialogContentText>

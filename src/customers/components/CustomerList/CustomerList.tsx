@@ -2,7 +2,7 @@ import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
 import { useUserPermissions } from "@saleor/auth/hooks/useUserPermissions";
 import Checkbox from "@saleor/components/Checkbox";
 import RequirePermissions, {
-  hasPermissions
+  hasPermissions,
 } from "@saleor/components/RequirePermissions";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
@@ -25,21 +25,21 @@ const useStyles = makeStyles(
       colEmail: {},
       colName: {},
       colOrders: {
-        width: 200
-      }
+        width: 200,
+      },
     },
     colEmail: {},
     colName: {
-      paddingLeft: 0
+      paddingLeft: 0,
     },
     colOrders: {
-      textAlign: "center"
+      textAlign: "center",
     },
     tableRow: {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   }),
-  { name: "CustomerList" }
+  { name: "CustomerList" },
 );
 
 export interface CustomerListProps
@@ -61,13 +61,13 @@ const CustomerList: React.FC<CustomerListProps> = props => {
     toggleAll,
     selected,
     sort,
-    isChecked
+    isChecked,
   } = props;
 
   const userPermissions = useUserPermissions();
 
   const numberOfColumns = hasPermissions(userPermissions, [
-    PermissionEnum.MANAGE_ORDERS
+    PermissionEnum.MANAGE_ORDERS,
   ])
     ? 4
     : 3;
@@ -180,7 +180,7 @@ const CustomerList: React.FC<CustomerListProps> = props => {
                 />
               </TableCell>
             </TableRow>
-          )
+          ),
         )}
       </TableBody>
     </ResponsiveTable>

@@ -19,14 +19,20 @@ export type AppListUrlQueryParams = ActiveTab &
   SingleAction &
   Pagination;
 
+export interface AppDetailsUrlMountQueryParams {
+  productId?: string;
+  orderId?: string;
+}
+
 export type AppDetailsUrlQueryParams = Dialog<AppDetailsUrlDialog> &
-  SingleAction;
+  SingleAction &
+  AppDetailsUrlMountQueryParams;
 
 export type AppInstallUrlQueryParams = Partial<{ [MANIFEST_ATTR]: string }>;
 
 export enum AppListUrlSortField {
   name = "name",
-  active = "active"
+  active = "active",
 }
 
 export type CustomAppUrlDialog =
@@ -55,28 +61,25 @@ export const appInstallUrl = appInstallPath;
 export const appDetailsUrl = (id: string, params?: AppDetailsUrlQueryParams) =>
   appDetailsPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
-export const appSettingsUrl = (id: string, params?: AppDetailsUrlQueryParams) =>
-  appSettingsPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
-
 export const appUrl = (id: string, params?: AppDetailsUrlQueryParams) =>
   appPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 export const appDeepUrl = (
   id: string,
   subPath: string,
-  params?: AppDetailsUrlQueryParams
+  params?: AppDetailsUrlQueryParams,
 ) => appDeepPath(encodeURIComponent(id), subPath) + "?" + stringifyQs(params);
 
 export const getAppCompleteUrlFromDashboardUrl = (
   dashboardUrl: string,
   appUrl?: string,
-  appId?: string
+  appId?: string,
 ) => {
   if (!appUrl || !appId) {
     return appUrl;
   }
   const deepSubPath = dashboardUrl.replace(
     appPath(encodeURIComponent(appId)),
-    ""
+    "",
   );
   const appCompleteUrl = urlJoin(appUrl, deepSubPath);
   return appCompleteUrl;
@@ -84,7 +87,7 @@ export const getAppCompleteUrlFromDashboardUrl = (
 export const getDashboardUrFromAppCompleteUrl = (
   appCompleteUrl: string,
   appUrl?: string,
-  appId?: string
+  appId?: string,
 ) => {
   if (!appUrl || !appId) {
     return appUrl;

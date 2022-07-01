@@ -12,13 +12,13 @@ import { FormattedMessage, useIntl } from "react-intl";
 const useStyles = makeStyles(
   theme => ({
     label: {
-      marginBottom: theme.spacing(1)
+      marginBottom: theme.spacing(1),
     },
     value: {
-      fontSize: 24
-    }
+      fontSize: 24,
+    },
   }),
-  { name: "CustomerStats" }
+  { name: "CustomerStats" },
 );
 
 export interface CustomerStatsProps {
@@ -37,7 +37,7 @@ const CustomerStats: React.FC<CustomerStatsProps> = props => {
         title={intl.formatMessage({
           id: "e7Nyu7",
           defaultMessage: "Customer History",
-          description: "section header"
+          description: "section header",
         })}
       />
       <CardContent>

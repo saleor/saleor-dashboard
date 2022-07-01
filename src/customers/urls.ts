@@ -9,7 +9,7 @@ import {
   Pagination,
   SingleAction,
   Sort,
-  TabActionDialog
+  TabActionDialog,
 } from "../types";
 
 export const customerSection = "/customers/";
@@ -20,14 +20,14 @@ export enum CustomerListUrlFiltersEnum {
   joinedTo = "joinedTo",
   numberOfOrdersFrom = "numberOfOrdersFrom",
   numberOfOrdersTo = "numberOfOrdersTo",
-  query = "query"
+  query = "query",
 }
 export type CustomerListUrlFilters = Filters<CustomerListUrlFiltersEnum>;
 export type CustomerListUrlDialog = "remove" | TabActionDialog;
 export enum CustomerListUrlSortField {
   name = "name",
   email = "email",
-  orders = "orders"
+  orders = "orders",
 }
 export type CustomerListUrlSort = Sort<CustomerListUrlSortField>;
 export type CustomerListUrlQueryParams = ActiveTab &
@@ -57,5 +57,5 @@ export type CustomerAddressesUrlQueryParams = Dialog<
   SingleAction;
 export const customerAddressesUrl = (
   id: string,
-  params?: CustomerAddressesUrlQueryParams
+  params?: CustomerAddressesUrlQueryParams,
 ) => customerAddressesPath(encodeURIComponent(id)) + "?" + stringifyQs(params);

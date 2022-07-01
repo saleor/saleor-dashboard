@@ -6,21 +6,21 @@ import { useEffect, useState } from "react";
 
 import {
   ChannelsWithLoadMoreProps,
-  useChannelsSearch
+  useChannelsSearch,
 } from "./useChannelsSearch";
 
 const DEFAULT_ITEMS_PER_PAGE = 6;
 const INITIAL_INDEX = 0;
 
 export const useChannelsSearchWithLoadMore = (
-  itemsPerPage: number = DEFAULT_ITEMS_PER_PAGE
+  itemsPerPage: number = DEFAULT_ITEMS_PER_PAGE,
 ): ChannelsWithLoadMoreProps => {
   const { data, loading } = useBaseChannelsQuery({});
 
   const {
     query,
     onQueryChange: onSearchChange,
-    filteredChannels
+    filteredChannels,
   } = useChannelsSearch(data?.channels);
 
   const allChannelsChunks = chunk(filteredChannels, itemsPerPage);
@@ -61,6 +61,6 @@ export const useChannelsSearchWithLoadMore = (
     hasMore,
     totalCount,
     onFetchMore,
-    loading
+    loading,
   };
 };

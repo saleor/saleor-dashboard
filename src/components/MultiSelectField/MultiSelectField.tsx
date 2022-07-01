@@ -4,7 +4,7 @@ import {
   FormHelperText,
   InputLabel,
   MenuItem,
-  Select
+  Select,
 } from "@material-ui/core";
 import { SelectProps } from "@material-ui/core/Select";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -16,19 +16,19 @@ import Checkbox from "../Checkbox";
 const useStyles = makeStyles(
   theme => ({
     checkbox: {
-      marginRight: theme.spacing(-2)
+      marginRight: theme.spacing(-2),
     },
     formControl: {
-      width: "100%"
+      width: "100%",
     },
     menuItem: {
       alignItems: "center",
       display: "flex",
       justifyContent: "space-between",
-      width: "100%"
-    }
+      width: "100%",
+    },
   }),
-  { name: "MultiSelectField" }
+  { name: "MultiSelectField" },
 );
 
 interface MultiSelectFieldProps {
@@ -56,7 +56,7 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = props => {
     onChange,
     name,
     hint,
-    selectProps
+    selectProps,
   } = props;
   const classes = useStyles(props);
 
@@ -91,7 +91,7 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = props => {
         {choices.length > 0 ? (
           choices.map(choice => {
             const isSelected = !!value.find(
-              selectedChoice => selectedChoice === choice.value
+              selectedChoice => selectedChoice === choice.value,
             );
 
             return (
@@ -119,7 +119,7 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = props => {
   );
 };
 MultiSelectField.defaultProps = {
-  value: []
+  value: [],
 };
 
 MultiSelectField.displayName = "MultiSelectField";

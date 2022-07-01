@@ -4,7 +4,7 @@ import {
   DialogProps,
   DialogTitle,
   IconButton,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import React from "react";

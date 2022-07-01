@@ -10,7 +10,7 @@ const choices = [
   { label: "Apparel", value: "1" },
   { label: "Groceries", value: "2" },
   { label: "Books", value: "3" },
-  { label: "Accessories", value: "4" }
+  { label: "Accessories", value: "4" },
 ];
 
 storiesOf("Generics / MultiSelectField", module)

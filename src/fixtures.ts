@@ -2,7 +2,7 @@ import {
   PermissionEnum,
   ShopInfoQuery,
   ShopLimitFragment,
-  UserDetailsQuery
+  UserDetailsQuery,
 } from "@saleor/graphql";
 
 import { PaginatorContextValues } from "./hooks/usePaginator";
@@ -12,12 +12,12 @@ import {
   ListActions,
   SearchPageProps,
   SortPage,
-  TabPageProps
+  TabPageProps,
 } from "./types";
 
 const pageInfo = {
   hasNextPage: true,
-  hasPreviousPage: false
+  hasPreviousPage: false,
 };
 export const pageListProps = {
   default: {
@@ -28,7 +28,7 @@ export const pageListProps = {
     onPreviousPage: undefined,
     getRowHref: () => "",
     pageInfo,
-    settings: { rowNumber: 20 }
+    settings: { rowNumber: 20 },
   },
   loading: {
     disabled: true,
@@ -38,15 +38,15 @@ export const pageListProps = {
     onPreviousPage: undefined,
     getRowHref: () => "",
     pageInfo,
-    settings: undefined
-  }
+    settings: undefined,
+  },
 };
 export const listActionsProps: ListActions = {
   isChecked: () => undefined,
   selected: 0,
   toggle: () => undefined,
   toggleAll: () => undefined,
-  toolbar: null
+  toolbar: null,
 };
 
 export const countries = [
@@ -293,7 +293,7 @@ export const countries = [
   { code: "EH", name: "Western Sahara" },
   { code: "YE", name: "Yemen" },
   { code: "ZM", name: "Zambia" },
-  { code: "ZW", name: "Zimbabwe" }
+  { code: "ZW", name: "Zimbabwe" },
 ];
 
 export const tabPageProps: TabPageProps = {
@@ -302,7 +302,7 @@ export const tabPageProps: TabPageProps = {
   onTabChange: () => undefined,
   onTabDelete: () => undefined,
   onTabSave: () => undefined,
-  tabs: ["Tab X"]
+  tabs: ["Tab X"],
 };
 
 export const paginatorContextValues: PaginatorContextValues = {
@@ -312,12 +312,12 @@ export const paginatorContextValues: PaginatorContextValues = {
   hasPreviousPage: false,
   nextPageHref: "",
   prevPageHref: "",
-  paginatorType: "link"
+  paginatorType: "link",
 };
 
 export const searchPageProps: SearchPageProps = {
   initialSearch: "",
-  onSearchChange: () => undefined
+  onSearchChange: () => undefined,
 };
 
 export const filterPageProps: FilterPageProps<string, {}> = {
@@ -325,183 +325,183 @@ export const filterPageProps: FilterPageProps<string, {}> = {
   ...tabPageProps,
   filterOpts: {
     status: { value: undefined, active: false },
-    channel: { value: undefined, active: false }
+    channel: { value: undefined, active: false },
   },
-  onFilterChange: () => undefined
+  onFilterChange: () => undefined,
 };
 
 export const fetchMoreProps: FetchMoreProps = {
   hasMore: true,
   loading: false,
-  onFetchMore: () => undefined
+  onFetchMore: () => undefined,
 };
 
 export const sortPageProps: SortPage<string> = {
   onSort: () => undefined,
   sort: {
-    asc: true
-  }
+    asc: true,
+  },
 };
 
 export const permissions: ShopInfoQuery["shop"]["permissions"] = [
   {
     code: PermissionEnum.MANAGE_DISCOUNTS,
-    name: "Manage sales and vouchers."
+    name: "Manage sales and vouchers.",
   },
   {
     code: PermissionEnum.MANAGE_MENUS,
-    name: "Manage navigation."
+    name: "Manage navigation.",
   },
   {
     code: PermissionEnum.MANAGE_ORDERS,
-    name: "Manage orders."
+    name: "Manage orders.",
   },
   {
     code: PermissionEnum.MANAGE_PAGES,
-    name: "Manage pages."
+    name: "Manage pages.",
   },
   {
     code: PermissionEnum.MANAGE_PRODUCTS,
-    name: "Manage products."
+    name: "Manage products.",
   },
   {
     code: PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
-    name: "Manage product types and attributes."
+    name: "Manage product types and attributes.",
   },
   {
     code: PermissionEnum.MANAGE_SETTINGS,
-    name: "Manage settings."
+    name: "Manage settings.",
   },
   {
     code: PermissionEnum.MANAGE_SHIPPING,
-    name: "Manage shipping."
+    name: "Manage shipping.",
   },
   {
     code: PermissionEnum.MANAGE_STAFF,
-    name: "Manage staff."
+    name: "Manage staff.",
   },
   {
     code: PermissionEnum.MANAGE_USERS,
-    name: "Manage customers."
+    name: "Manage customers.",
   },
   {
     code: PermissionEnum.MANAGE_PLUGINS,
-    name: "Manage plugins."
+    name: "Manage plugins.",
   },
   {
     code: PermissionEnum.MANAGE_APPS,
-    name: "Manage apps."
+    name: "Manage apps.",
   },
   {
     code: PermissionEnum.MANAGE_APPS,
-    name: "Manage webhooks."
-  }
+    name: "Manage webhooks.",
+  },
 ].map(perm => ({
   __typename: "Permission" as "Permission",
-  ...perm
+  ...perm,
 }));
 
 export const date = {
   from: "2019-12-09",
-  to: "2019-12-38"
+  to: "2019-12-38",
 };
 
 export const adminUserPermissions: UserDetailsQuery["me"]["userPermissions"] = [
   {
     __typename: "UserPermission",
     code: PermissionEnum.MANAGE_CHECKOUTS,
-    name: "Manage checkouts"
+    name: "Manage checkouts",
   },
   {
     __typename: "UserPermission",
     code: PermissionEnum.MANAGE_CHECKOUTS,
-    name: "Manage checkouts"
+    name: "Manage checkouts",
   },
   {
     __typename: "UserPermission",
     code: PermissionEnum.MANAGE_DISCOUNTS,
-    name: "Manage sales and vouchers."
+    name: "Manage sales and vouchers.",
   },
   {
     __typename: "UserPermission",
     code: PermissionEnum.MANAGE_GIFT_CARD,
-    name: "Manage gift cards."
+    name: "Manage gift cards.",
   },
   {
     __typename: "UserPermission",
     code: PermissionEnum.MANAGE_GIFT_CARD,
-    name: "Manage gift cards."
+    name: "Manage gift cards.",
   },
   {
     __typename: "UserPermission",
     code: PermissionEnum.MANAGE_MENUS,
-    name: "Manage navigation."
+    name: "Manage navigation.",
   },
   {
     __typename: "UserPermission",
     code: PermissionEnum.MANAGE_ORDERS,
-    name: "Manage orders."
+    name: "Manage orders.",
   },
   {
     __typename: "UserPermission",
     code: PermissionEnum.MANAGE_ORDERS,
-    name: "Manage orders."
+    name: "Manage orders.",
   },
   {
     __typename: "UserPermission",
     code: PermissionEnum.MANAGE_PAGES,
-    name: "Manage pages."
+    name: "Manage pages.",
   },
   {
     __typename: "UserPermission",
     code: PermissionEnum.MANAGE_PLUGINS,
-    name: "Manage plugins"
+    name: "Manage plugins",
   },
   {
     __typename: "UserPermission",
     code: PermissionEnum.MANAGE_PRODUCTS,
-    name: "Manage products."
+    name: "Manage products.",
   },
   {
     __typename: "UserPermission",
     code: PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
-    name: "Manage product types and attributes."
+    name: "Manage product types and attributes.",
   },
   {
     __typename: "UserPermission",
     code: PermissionEnum.MANAGE_SETTINGS,
-    name: "Manage settings."
+    name: "Manage settings.",
   },
   {
     __typename: "UserPermission",
     code: PermissionEnum.MANAGE_SHIPPING,
-    name: "Manage shipping."
+    name: "Manage shipping.",
   },
   {
     __typename: "UserPermission",
     code: PermissionEnum.MANAGE_STAFF,
-    name: "Manage staff."
+    name: "Manage staff.",
   },
   {
     __typename: "UserPermission",
     code: PermissionEnum.MANAGE_STAFF,
-    name: "Manage staff."
+    name: "Manage staff.",
   },
   {
     __typename: "UserPermission",
     code: PermissionEnum.MANAGE_TRANSLATIONS,
-    name: "Manage translations."
+    name: "Manage translations.",
   },
   {
     __typename: "UserPermission",
     code: PermissionEnum.MANAGE_USERS,
-    name: "Manage customers."
+    name: "Manage customers.",
   },
   {
     __typename: "UserPermission",
     code: PermissionEnum.MANAGE_USERS,
-    name: "Manage customers."
-  }
+    name: "Manage customers.",
+  },
 ];
 
 export const address = {
@@ -512,7 +512,7 @@ export const address = {
   country: {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "SE",
-    country: "Szwecja"
+    country: "Szwecja",
   },
   countryArea: "",
   firstName: "Elizabeth",
@@ -521,7 +521,7 @@ export const address = {
   phone: "",
   postalCode: "52203",
   streetAddress1: "419 Ruiz Orchard Apt. 199",
-  streetAddress2: "0238 Cremin Freeway"
+  streetAddress2: "0238 Cremin Freeway",
 };
 
 export const limits: ShopLimitFragment["limits"] = {
@@ -532,7 +532,7 @@ export const limits: ShopLimitFragment["limits"] = {
     orders: 500,
     productVariants: 1000,
     staffUsers: 10,
-    warehouses: 3
+    warehouses: 3,
   },
   currentUsage: {
     __typename: "Limits",
@@ -540,8 +540,8 @@ export const limits: ShopLimitFragment["limits"] = {
     orders: 230,
     productVariants: 100,
     staffUsers: 7,
-    warehouses: 1
-  }
+    warehouses: 1,
+  },
 };
 export const limitsReached: ShopLimitFragment["limits"] = {
   __typename: "LimitInfo",
@@ -551,7 +551,7 @@ export const limitsReached: ShopLimitFragment["limits"] = {
     orders: 500,
     productVariants: 1000,
     staffUsers: 10,
-    warehouses: 3
+    warehouses: 3,
   },
   currentUsage: {
     __typename: "Limits",
@@ -559,6 +559,6 @@ export const limitsReached: ShopLimitFragment["limits"] = {
     orders: 500,
     productVariants: 1000,
     staffUsers: 10,
-    warehouses: 3
-  }
+    warehouses: 3,
+  },
 };

@@ -13,7 +13,7 @@ import { SALE_CREATE_FORM_ID } from "@saleor/discounts/views/SaleCreate/consts";
 import {
   DiscountErrorFragment,
   PermissionEnum,
-  SaleType as SaleTypeEnum
+  SaleType as SaleTypeEnum,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
@@ -61,11 +61,11 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
   onSubmit,
   openChannelsModal,
   saveButtonBarState,
-  onBack
+  onBack,
 }) => {
   const intl = useIntl();
   const {
-    makeChangeHandler: makeMetadataChangeHandler
+    makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
 
   const initialForm: FormData = {
@@ -79,7 +79,7 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
     type: SaleTypeEnum.FIXED,
     value: "",
     metadata: [],
-    privateMetadata: []
+    privateMetadata: [],
   };
 
   const checkIfSaveIsDisabled = (data: FormData) =>
@@ -99,7 +99,7 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
           data.channelListings,
           onChannelsChange,
           triggerChange,
-          data.type
+          data.type,
         );
         const changeMetadata = makeMetadataChangeHandler(change);
 
@@ -112,7 +112,7 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
               title={intl.formatMessage({
                 id: "2E1xZ0",
                 defaultMessage: "Create Sale",
-                description: "page header"
+                description: "page header",
               })}
             />
             <Grid>
@@ -143,11 +143,10 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
               <div>
                 <ChannelsAvailabilityCard
                   managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
-                  selectedChannelsCount={data.channelListings.length}
                   allChannelsCount={allChannelsCount}
                   channelsList={data.channelListings.map(channel => ({
                     id: channel.id,
-                    name: channel.name
+                    name: channel.name,
                   }))}
                   disabled={disabled}
                   openModal={openChannelsModal}

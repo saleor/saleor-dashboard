@@ -1,7 +1,7 @@
 import { Card } from "@material-ui/core";
 import {
   attributeAddUrl,
-  AttributeListUrlSortField
+  AttributeListUrlSortField,
 } from "@saleor/attributes/urls";
 import { Backlink } from "@saleor/components/Backlink";
 import { Button } from "@saleor/components/Button";
@@ -19,13 +19,13 @@ import {
   ListActions,
   PageListProps,
   SortPage,
-  TabPageProps
+  TabPageProps,
 } from "../../../types";
 import AttributeList from "../AttributeList/AttributeList";
 import {
   AttributeFilterKeys,
   AttributeListFilterOpts,
-  createFilterStructure
+  createFilterStructure,
 } from "./filters";
 
 export interface AttributeListPageProps
@@ -77,14 +77,14 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
           allTabLabel={intl.formatMessage({
             id: "dKPMyh",
             defaultMessage: "All Attributes",
-            description: "tab name"
+            description: "tab name",
           })}
           currentTab={currentTab}
           filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
             id: "1div9r",
-            defaultMessage: "Search Attribute"
+            defaultMessage: "Search Attribute",
           })}
           tabs={tabs}
           onAll={onAll}

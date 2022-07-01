@@ -19,7 +19,7 @@ describe("Filtering query params", () => {
 
   it("should not be empty object if params given", () => {
     const params: CollectionListUrlFilters = {
-      status: CollectionPublished.PUBLISHED
+      status: CollectionPublished.PUBLISHED,
     };
     const filterVariables = getFilterVariables(params);
 
@@ -33,15 +33,15 @@ describe("Filtering URL params", () => {
   const filters = createFilterStructure(intl, {
     status: {
       active: false,
-      value: CollectionPublished.PUBLISHED
+      value: CollectionPublished.PUBLISHED,
     },
-    channel: undefined
+    channel: undefined,
   });
 
   it("should be empty if no active filters", () => {
     const filterQueryParams = getFilterQueryParams(
       filters,
-      getFilterQueryParam
+      getFilterQueryParam,
     );
 
     expect(getExistingKeys(filterQueryParams)).toHaveLength(0);
@@ -51,14 +51,14 @@ describe("Filtering URL params", () => {
     const filters = createFilterStructure(intl, {
       status: {
         active: true,
-        value: CollectionPublished.PUBLISHED
+        value: CollectionPublished.PUBLISHED,
       },
-      channel: undefined
+      channel: undefined,
     });
 
     const filterQueryParams = getFilterQueryParams(
       setFilterOptsStatus(filters, true),
-      getFilterQueryParam
+      getFilterQueryParam,
     );
 
     expect(filterQueryParams).toMatchSnapshot();

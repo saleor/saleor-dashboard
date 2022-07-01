@@ -6,12 +6,12 @@ import { CommonSearchOpts } from "./types";
 
 export const getSearchFetchMoreProps = (
   { data, loading }: CommonSearchOpts,
-  onFetchMore: any
+  onFetchMore: any,
 ): FetchMoreProps => ({
   hasMore: !!data?.search?.pageInfo?.hasNextPage,
   totalCount: data?.search?.totalCount,
   loading: !!loading,
-  onFetchMore
+  onFetchMore,
 });
 
 export const getParsedSearchData = ({ data }: ResultSearchData) =>

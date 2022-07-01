@@ -12,7 +12,7 @@ import {
   BulkProductErrorFragment,
   ProductFragment,
   ProductVariantBulkCreateInput,
-  WarehouseFragment
+  WarehouseFragment,
 } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
@@ -33,7 +33,7 @@ export interface ProductVariantCreatorSummaryProps {
   onVariantStockDataChange: (
     variantIndex: number,
     warehouseId: string,
-    value: string
+    value: string,
   ) => void;
   onVariantDelete: (variantIndex: number) => void;
   onVariantPriceDataChange: (variantIndex: number, value: ChannelPrice) => void;
@@ -58,42 +58,42 @@ const useStyles = makeStyles<ProductVariantCreatorSummaryProps, ClassKey>(
   theme => ({
     attributeValue: {
       display: "inline-block",
-      marginRight: theme.spacing(1)
+      marginRight: theme.spacing(1),
     },
     card: {
-      paddingBottom: theme.spacing()
+      paddingBottom: theme.spacing(),
     },
     col: {
       ...theme.typography.body1,
-      fontSize: 14
+      fontSize: 14,
     },
     colHeader: {
       ...theme.typography.body1,
       fontSize: 14,
-      paddingTop: theme.spacing(3)
+      paddingTop: theme.spacing(3),
     },
     colName: {
       "&:not($colHeader)": {
-        paddingTop: theme.spacing(2)
+        paddingTop: theme.spacing(2),
       },
-      paddingLeft: theme.spacing(3)
+      paddingLeft: theme.spacing(3),
     },
     colPrice: {},
     colSku: {},
     colStock: {},
     delete: {
-      marginTop: theme.spacing(0.5)
+      marginTop: theme.spacing(0.5),
     },
     hr: {
       gridColumn: props =>
         `span ${4 +
           props.data.variants[0].stocks.length +
-          props.data.variants[0].channelListings.length}`
+          props.data.variants[0].channelListings.length}`,
     },
     input: {
       "& input": {
-        padding: "16px 12px 17px"
-      }
+        padding: "16px 12px 17px",
+      },
     },
     summary: {
       columnGap: theme.spacing(3),
@@ -102,35 +102,35 @@ const useStyles = makeStyles<ProductVariantCreatorSummaryProps, ClassKey>(
         `minmax(180px, auto) repeat(${props.data.variants[0].channelListings
           .length +
           props.data.variants[0].stocks
-            .length}, minmax(180px, auto)) 140px 64px`,
+            .length}, minmax(180px, auto)) 220px 64px`,
       overflowX: "scroll",
       rowGap: theme.spacing(),
-      paddingBottom: 3
-    }
+      paddingBottom: 3,
+    },
   }),
   {
-    name: "ProductVariantCreatorSummary"
-  }
+    name: "ProductVariantCreatorSummary",
+  },
 );
 
 function getVariantName(
   variant: ProductVariantBulkCreateInput,
-  attributes: Attribute[]
+  attributes: Attribute[],
 ): string[] {
   return attributes.reduce(
     (acc, attribute) => [
       ...acc,
       attribute.values?.find(value => {
         const variantAttributeValue = variant.attributes.find(
-          variantAttribute => variantAttribute.id === attribute.id
+          variantAttribute => variantAttribute.id === attribute.id,
         );
         return (
           variantAttributeValue.values?.[0] === value?.slug ||
           variantAttributeValue.boolean === value.value.boolean
         );
-      })?.value?.name
+      })?.value?.name,
     ],
-    []
+    [],
   );
 }
 
@@ -143,7 +143,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
     onVariantPriceDataChange,
     onVariantSkuChange,
     onVariantDelete,
-    onVariantStockDataChange
+    onVariantStockDataChange,
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -154,7 +154,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
         title={intl.formatMessage({
           id: "S5PVx1",
           defaultMessage: "Created Variants",
-          description: "variant creator summary card header"
+          description: "variant creator summary card header",
         })}
       />
       <div className={classes.summary}>
@@ -162,7 +162,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
           className={classNames(
             classes.col,
             classes.colHeader,
-            classes.colName
+            classes.colName,
           )}
         >
           <FormattedMessage
@@ -178,7 +178,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
             className={classNames(
               classes.col,
               classes.colHeader,
-              classes.colPrice
+              classes.colPrice,
             )}
           >
             <FormattedMessage
@@ -186,7 +186,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
               defaultMessage="{channel} Price"
               description="variant channel price"
               values={{
-                channel: listing.name
+                channel: listing.name,
               }}
             />
           </div>
@@ -197,7 +197,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
             className={classNames(
               classes.col,
               classes.colHeader,
-              classes.colStock
+              classes.colStock,
             )}
             key={warehouseId}
           >
@@ -213,11 +213,11 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
         <Hr className={classes.hr} />
         {data.variants.map((variant, variantIndex) => {
           const variantErrors = errors.filter(
-            error => error.index === variantIndex
+            error => error.index === variantIndex,
           );
           const variantFormErrors = getFormErrors(
             ["price", "quantity", "sku"],
-            variantErrors
+            variantErrors,
           );
           return (
             <React.Fragment
@@ -231,18 +231,18 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
                     <span
                       className={classes.attributeValue}
                       style={{
-                        color: colors[valueIndex % colors.length]
+                        color: colors[valueIndex % colors.length],
                       }}
                       key={`${value}:${valueIndex}`}
                     >
                       {value}
                     </span>
-                  )
+                  ),
                 )}
               </div>
               {channelListings.map(listing => {
                 const error = variantFormErrors.price?.channels?.find(
-                  id => id === listing.id
+                  id => id === listing.id,
                 );
                 return (
                   <div
@@ -257,20 +257,20 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
                         error
                           ? getBulkProductErrorMessage(
                               variantFormErrors.price,
-                              intl
+                              intl,
                             )
                           : ""
                       }
                       value={
                         variant.channelListings?.find(
-                          channel => channel.channelId === listing.id
+                          channel => channel.channelId === listing.id,
                         )?.price
                       }
                       required
                       onChange={event =>
                         onVariantPriceDataChange(variantIndex, {
                           channelId: listing.id,
-                          price: event.target.value
+                          price: event.target.value,
                         })
                       }
                     />
@@ -287,11 +287,11 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
                     error={!!variantFormErrors.quantity}
                     helperText={getBulkProductErrorMessage(
                       variantFormErrors.quantity,
-                      intl
+                      intl,
                     )}
                     inputProps={{
                       min: 0,
-                      type: "number"
+                      type: "number",
                     }}
                     fullWidth
                     value={stock.quantity}
@@ -299,7 +299,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
                       onVariantStockDataChange(
                         variantIndex,
                         stock.warehouse,
-                        event.target.value
+                        event.target.value,
                       )
                     }
                   />
@@ -312,7 +312,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
                   error={!!variantFormErrors.sku}
                   helperText={getBulkProductErrorMessage(
                     variantFormErrors.sku,
-                    intl
+                    intl,
                   )}
                   fullWidth
                   value={variant.sku}

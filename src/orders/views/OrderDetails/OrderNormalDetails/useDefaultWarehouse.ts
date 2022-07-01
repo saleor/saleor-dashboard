@@ -1,7 +1,7 @@
 import { OrderDetailsFragment, WarehouseFragment } from "@saleor/graphql";
 import {
   getToFulfillOrderLines,
-  isLineAvailableInWarehouse
+  isLineAvailableInWarehouse,
 } from "@saleor/orders/utils/data";
 import React from "react";
 
@@ -18,7 +18,7 @@ interface WarehousesAvailibility {
 
 export function useDefaultWarehouse(
   { warehouses, order, setter }: UseDefaultWarehouseOpts,
-  deps: unknown[]
+  deps: unknown[],
 ) {
   React.useEffect(() => {
     const warehousesAvailability: WarehousesAvailibility[] = warehouses?.map(
@@ -29,18 +29,18 @@ export function useDefaultWarehouse(
         const linesToFulfill = getToFulfillOrderLines(order.lines);
 
         const linesAvailable = linesToFulfill.filter(line =>
-          isLineAvailableInWarehouse(line, warehouse)
+          isLineAvailableInWarehouse(line, warehouse),
         ).length;
 
         return {
           warehouse,
-          linesAvailable
+          linesAvailable,
         };
-      }
+      },
     );
     const defaultWarehouse = order?.lines
       ? warehousesAvailability?.reduce((prev, curr) =>
-          curr.linesAvailable > prev.linesAvailable ? curr : prev
+          curr.linesAvailable > prev.linesAvailable ? curr : prev,
         ).warehouse
       : undefined;
     setter(defaultWarehouse);

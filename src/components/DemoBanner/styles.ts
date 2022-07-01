@@ -8,7 +8,7 @@ const useStyles = makeStyles(
       width: "100%",
       backgroundColor: "inherit",
       padding: `0 13px`,
-      fontSize: theme.spacing(1.5)
+      fontSize: theme.spacing(1.5),
     },
     borderedWrapper: {
       display: "flex",
@@ -21,35 +21,35 @@ const useStyles = makeStyles(
       backgroundImage: `linear-gradient(to right,  ${greyDark} 13%, rgba(255, 255, 255, 0) 0%)`,
       backgroundPosition: "bottom",
       backgroundSize: theme.spacing(1.5, 0.125),
-      backgroundRepeat: "repeat-x"
+      backgroundRepeat: "repeat-x",
     },
     logoWrapper: {
-      lineHeight: 0
+      lineHeight: 0,
     },
     linkList: {
       display: "flex",
-      alignItems: "center"
+      alignItems: "center",
     },
     link: {
       display: "flex",
       padding: theme.spacing(2),
-      color: textColor
+      color: textColor,
     },
     textEmphasis: {
       color: emphasisedTextBlue,
       textTransform: "uppercase",
       fontWeight: 600,
       fontStyle: "normal",
-      paddingLeft: "5px"
+      paddingLeft: "5px",
     },
     divider: {
       borderRight: `1px solid  ${greyDark}`,
-      height: theme.spacing(2)
-    }
+      height: theme.spacing(2),
+    },
   }),
   {
-    name: "DemoBanner"
-  }
+    name: "DemoBanner",
+  },
 );
 
 export default useStyles;

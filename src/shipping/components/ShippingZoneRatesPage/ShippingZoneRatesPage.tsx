@@ -15,7 +15,7 @@ import {
   ShippingErrorFragment,
   ShippingMethodTypeEnum,
   ShippingMethodTypeFragment,
-  ShippingZoneQuery
+  ShippingZoneQuery,
 } from "@saleor/graphql";
 import useForm, { SubmitPromise } from "@saleor/hooks/useForm";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
@@ -56,11 +56,11 @@ export interface ShippingZoneRatesPageProps
   onDelete?: () => void;
   onSubmit: (data: ShippingZoneRateUpdateFormData) => SubmitPromise;
   onPostalCodeInclusionChange: (
-    inclusion: PostalCodeRuleInclusionTypeEnum
+    inclusion: PostalCodeRuleInclusionTypeEnum,
   ) => void;
   onPostalCodeAssign: () => void;
   onPostalCodeUnassign: (
-    code: ShippingMethodTypeFragment["postalCodeRules"][0]
+    code: ShippingMethodTypeFragment["postalCodeRules"][0],
   ) => void;
   onChannelsChange: (data: ChannelShippingData[]) => void;
   openChannelsModal: () => void;
@@ -111,42 +111,42 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
       name: rate?.name || "",
       orderValueRestricted: !!rate?.channelListings.length,
       privateMetadata: rate?.privateMetadata.map(mapMetadataItemToInput),
-      type: rate?.type || null
+      type: rate?.type || null,
     }),
-    [shippingChannels, rate]
+    [shippingChannels, rate],
   );
 
   const {
     change,
     data: formData,
     setIsSubmitDisabled,
-    triggerChange
+    triggerChange,
   } = useForm(initialForm, undefined, { confirmLeave: true, formId });
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit
+    onSubmit,
   });
 
   const richText = useRichText({
     initial: rate?.description,
     loading: !rate,
-    triggerChange
+    triggerChange,
   });
 
   const {
-    makeChangeHandler: makeMetadataChangeHandler
+    makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
 
   const data: ShippingZoneRateUpdateFormData = {
     ...formData,
-    description: null
+    description: null,
   };
 
   // Prevents closing ref in submit functions
   const getData = async (): Promise<ShippingZoneRateUpdateFormData> => ({
     ...data,
-    description: await richText.getValue()
+    description: await richText.getValue(),
   });
 
   const handleFormElementSubmit: FormEventHandler = async event => {
@@ -158,10 +158,10 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   const handleChannelsChange = createChannelsChangeHandler(
     shippingChannels,
     onChannelsChange,
-    triggerChange
+    triggerChange,
   );
   const isValid = !formData.channelListings?.some(channel =>
-    validatePrice(channel.price)
+    validatePrice(channel.price),
   );
 
   const changeMetadata = makeMetadataChangeHandler(change);
@@ -235,10 +235,9 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
               <ChannelsAvailabilityCard
                 managePermissions={[PermissionEnum.MANAGE_SHIPPING]}
                 allChannelsCount={allChannelsCount}
-                selectedChannelsCount={shippingChannels?.length}
                 channelsList={data.channelListings.map(channel => ({
                   id: channel.id,
-                  name: channel.name
+                  name: channel.name,
                 }))}
                 openModal={openChannelsModal}
               />

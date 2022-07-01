@@ -15,28 +15,28 @@ export const tools: Record<string, ToolConstructable | ToolSettings> = {
     class: Header,
     config: {
       defaultLevel: 1,
-      levels: [1, 2, 3]
+      levels: [1, 2, 3],
     },
-    inlineToolbar
+    inlineToolbar,
   },
   list: {
     class: List,
-    inlineToolbar
+    inlineToolbar,
   },
   quote: {
     class: Quote,
-    inlineToolbar
+    inlineToolbar,
   },
   paragraph: {
     class: Paragraph,
-    inlineToolbar
+    inlineToolbar,
   },
   strikethrough: createGenericInlineTool({
     sanitize: {
-      s: {}
+      s: {},
     },
     shortcut: "CMD+S",
     tagName: "s",
-    toolboxIcon: strikethroughIcon
-  })
+    toolboxIcon: strikethroughIcon,
+  }),
 };

@@ -11,5 +11,5 @@ export interface OrderCustomerAddressesEditDialogOutput {
 export enum AddressEditDialogVariant {
   CHANGE_CUSTOMER,
   CHANGE_SHIPPING_ADDRESS,
-  CHANGE_BILLING_ADDRESS
+  CHANGE_BILLING_ADDRESS,
 }

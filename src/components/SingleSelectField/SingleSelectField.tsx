@@ -5,7 +5,7 @@ import {
   MenuItem,
   OutlinedInput,
   OutlinedInputProps,
-  Select
+  Select,
 } from "@material-ui/core";
 import { SelectProps } from "@material-ui/core/Select";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -20,24 +20,24 @@ const useStyles = makeStyles(
   theme => ({
     formControl: {
       "& label": {
-        top: "-3px"
+        top: "-3px",
       },
-      width: "100%"
+      width: "100%",
     },
     label: {
-      zIndex: 3
+      zIndex: 3,
     },
     noLabel: {
-      padding: theme.spacing(2, 1.5)
+      padding: theme.spacing(2, 1.5),
     },
     paper: {
-      maxHeight: `calc(${singleSelectFieldItemHeight}px * 10 + ${singleSelectFieldItemHeight}px * 0.5)`
+      maxHeight: `calc(${singleSelectFieldItemHeight}px * 10 + ${singleSelectFieldItemHeight}px * 0.5)`,
     },
     disabledMenuItem: {
-      pointerEvents: "none"
-    }
+      pointerEvents: "none",
+    },
   }),
-  { name: "SingleSelectField" }
+  { name: "SingleSelectField" },
 );
 
 export interface Choice<T = string, L = string | React.ReactNode> {
@@ -77,7 +77,7 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
     selectProps,
     placeholder,
     InputProps,
-    testId
+    testId,
   } = props;
   const classes = useStyles(props);
 
@@ -115,16 +115,16 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
             classes={{
               ...(InputProps?.classes || {}),
               input: classNames(InputProps?.classes?.input, {
-                [classes.noLabel]: !label
-              })
+                [classes.noLabel]: !label,
+              }),
             }}
           />
         }
         {...selectProps}
         MenuProps={{
           classes: {
-            paper: classes.paper
-          }
+            paper: classes.paper,
+          },
         }}
       >
         {choices.length > 0 ? (

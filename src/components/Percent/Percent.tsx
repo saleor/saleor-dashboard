@@ -12,7 +12,7 @@ const Percent: React.FC<PercentProps> = ({ amount }) => (
       amount
         ? (amount / 100).toLocaleString(locale, {
             maximumFractionDigits: 2,
-            style: "percent"
+            style: "percent",
           })
         : "-"
     }

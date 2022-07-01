@@ -2,7 +2,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle
+  DialogTitle,
 } from "@material-ui/core";
 import BackButton from "@saleor/components/BackButton";
 import { ProductMediaFragment } from "@saleor/graphql";
@@ -17,7 +17,7 @@ const useStyles = makeStyles(
       height: "100%",
       objectFit: "contain",
       userSelect: "none",
-      width: "100%"
+      width: "100%",
     },
     imageContainer: {
       background: "transparent",
@@ -28,7 +28,7 @@ const useStyles = makeStyles(
       overflow: "hidden",
       padding: theme.spacing(2),
       position: "relative",
-      transitionDuration: theme.transitions.duration.standard + "ms"
+      transitionDuration: theme.transitions.duration.standard + "ms",
     },
     root: {
       display: "grid",
@@ -38,15 +38,15 @@ const useStyles = makeStyles(
       maxWidth: "100%",
       width: theme.breakpoints.values.lg,
       [theme.breakpoints.down("sm")]: {
-        gridTemplateColumns: "repeat(2, 1fr)"
-      }
+        gridTemplateColumns: "repeat(2, 1fr)",
+      },
     },
     selectedImageContainer: {
       borderColor: theme.palette.primary.main,
-      borderWidth: "2px"
-    }
+      borderWidth: "2px",
+    },
   }),
-  { name: "ProductVariantImageSelectDialog" }
+  { name: "ProductVariantImageSelectDialog" },
 );
 
 interface ProductVariantImageSelectDialogProps {
@@ -84,8 +84,8 @@ const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogP
                     classes.imageContainer,
                     {
                       [classes.selectedImageContainer]:
-                        selectedMedia.indexOf(mediaObj.id) !== -1
-                    }
+                        selectedMedia.indexOf(mediaObj.id) !== -1,
+                    },
                   ])}
                   onClick={onMediaSelect(mediaObj.id)}
                   key={mediaObj.id}

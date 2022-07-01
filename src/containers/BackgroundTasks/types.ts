@@ -1,12 +1,12 @@
 export enum Task {
   CUSTOM,
   EXPORT,
-  INVOICE_GENERATE
+  INVOICE_GENERATE,
 }
 export enum TaskStatus {
   FAILURE,
   PENDING,
-  SUCCESS
+  SUCCESS,
 }
 export interface InvoiceGenerateParams {
   orderId: string;

@@ -3,23 +3,23 @@ import { makeStyles } from "@saleor/macaw-ui";
 export const useStyles = makeStyles(
   () => ({
     fileField: {
-      float: "right"
+      float: "right",
     },
     pullRight: {
       display: "flex",
-      justifyContent: "flex-end"
+      justifyContent: "flex-end",
     },
     swatchInput: {
       paddingTop: 16.5,
-      paddingBottom: 16.5
+      paddingBottom: 16.5,
     },
     swatchPreview: {
       width: 32,
       height: 32,
       borderRadius: 4,
       backgroundSize: "cover",
-      backgroundPosition: "center"
-    }
+      backgroundPosition: "center",
+    },
   }),
-  { name: "AttributeRow" }
+  { name: "AttributeRow" },
 );

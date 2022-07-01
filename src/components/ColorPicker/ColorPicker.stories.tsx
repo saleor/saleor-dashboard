@@ -10,7 +10,7 @@ const props: ColorPickerProps = {
   setError: () => null,
   errors: {},
   clearErrors: () => null,
-  onColorChange: () => null
+  onColorChange: () => null,
 };
 
 storiesOf("Generics / ColorPicker", module)

@@ -19,19 +19,19 @@ export interface GiftCardCustomerSelectFieldProps {
 const GiftCardCustomerSelectField: React.FC<GiftCardCustomerSelectFieldProps> = ({
   selectedCustomer,
   setSelectedCustomer,
-  disabled = false
+  disabled = false,
 }) => {
   const intl = useIntl();
 
   const { loadMore, search, result } = useCustomerSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
 
   const customers = mapEdgesToItems(result?.data?.search);
 
   const choices = customers?.map(({ email, firstName, lastName }) => ({
     value: email,
-    label: getFullName({ firstName, lastName })
+    label: getFullName({ firstName, lastName }),
   }));
 
   const handleSelect = (event: React.ChangeEvent<any>) => {
@@ -42,7 +42,7 @@ const GiftCardCustomerSelectField: React.FC<GiftCardCustomerSelectFieldProps> = 
   };
 
   const label = `${intl.formatMessage(
-    messages.customerLabel
+    messages.customerLabel,
   )} *${intl.formatMessage(commonMessages.optionalField)}`;
 
   return (

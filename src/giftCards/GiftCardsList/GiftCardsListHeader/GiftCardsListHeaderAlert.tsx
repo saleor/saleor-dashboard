@@ -11,7 +11,7 @@ const GiftCardsListHeaderAlert: React.FC = () => {
 
   const {
     data: giftCardProductsCount,
-    loading: giftCardProductsCountLoading
+    loading: giftCardProductsCountLoading,
   } = useGiftCardProductsCountQuery();
 
   const giftCardProductTypesExist =

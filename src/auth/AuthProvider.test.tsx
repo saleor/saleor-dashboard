@@ -11,12 +11,12 @@ const apolloClient = setupApi();
 
 function renderAuthProvider() {
   const intl = {
-    formatMessage: ({ defaultMessage }) => defaultMessage
+    formatMessage: ({ defaultMessage }) => defaultMessage,
   };
   const notify = jest.fn();
   const saleorClient = createSaleorClient({
     apiUrl: process.env.API_URI,
-    channel: ""
+    channel: "",
   });
   const wrapper = ({ children }) => (
     <IntlProvider defaultLocale="en" locale="en">
@@ -28,7 +28,7 @@ function renderAuthProvider() {
 
   const { result } = renderHook(
     () => useAuthProvider({ intl: intl as any, notify, apolloClient }),
-    { wrapper }
+    { wrapper },
   );
 
   return result;
@@ -37,12 +37,12 @@ function renderAuthProvider() {
 const adminCredentials = {
   email: "admin@example.com",
   password: "admin",
-  token: null
+  token: null,
 };
 
 const nonStaffUserCredentials = {
   email: "client@example.com",
-  password: "password"
+  password: "password",
 };
 
 beforeEach(() => {
@@ -57,7 +57,7 @@ xdescribe("User", () => {
     await act(async () => {
       const result = await hook.current.login(
         adminCredentials.email,
-        adminCredentials.password
+        adminCredentials.password,
       );
       expect(result.user?.email).toBe(adminCredentials.email);
     });
@@ -72,7 +72,7 @@ xdescribe("User", () => {
     await act(async () => {
       const result = await hook.current.login(
         adminCredentials.email,
-        "NotAValidPassword123!"
+        "NotAValidPassword123!",
       );
       expect(result.user).toBe(null);
     });
@@ -87,7 +87,7 @@ xdescribe("User", () => {
     await act(async () => {
       const result = await hook.current.login(
         nonStaffUserCredentials.email,
-        nonStaffUserCredentials.password
+        nonStaffUserCredentials.password,
       );
       expect(result.user).toBe(null);
     });

@@ -117,22 +117,22 @@ storiesOf("Views / Products / Product variant details", module)
         {
           attributes: [variant.selectionAttributes[0].attribute.id],
           code: ProductErrorCode.REQUIRED,
-          field: "attributes"
+          field: "attributes",
         },
         {
           attributes: null,
           code: ProductErrorCode.UNIQUE,
-          field: "attributes"
+          field: "attributes",
         },
         {
           attributes: null,
           code: ProductErrorCode.ALREADY_EXISTS,
-          field: "sku"
-        }
+          field: "sku",
+        },
       ].map(error => ({
         __typename: "ProductError",
         message: "Generic form error",
-        ...error
+        ...error,
       }))}
       channelErrors={[
         {
@@ -140,8 +140,8 @@ storiesOf("Views / Products / Product variant details", module)
           channels: ["Q2hhbm5lbDox"],
           code: ProductErrorCode.INVALID,
           field: "price",
-          message: "Product price cannot be lower than 0."
-        }
+          message: "Product price cannot be lower than 0.",
+        },
       ]}
       warehouses={warehouseList}
       onWarehouseConfigure={() => undefined}

@@ -1,13 +1,13 @@
 import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
 import {
   CollectionListUrlSortField,
-  collectionUrl
+  collectionUrl,
 } from "@saleor/collections/urls";
 import { canBeSorted } from "@saleor/collections/views/CollectionList/sort";
 import { ChannelsAvailabilityDropdown } from "@saleor/components/ChannelsAvailabilityDropdown";
 import {
   getChannelAvailabilityColor,
-  getChannelAvailabilityLabel
+  getChannelAvailabilityLabel,
 } from "@saleor/components/ChannelsAvailabilityDropdown/utils";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -26,7 +26,7 @@ import {
   ListActions,
   ListProps,
   RelayToFlat,
-  SortPage
+  SortPage,
 } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
@@ -36,25 +36,25 @@ const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
       colAvailability: {
-        width: 240
+        width: 240,
       },
       colName: {
-        paddingLeft: 0
+        paddingLeft: 0,
       },
       colProducts: {
-        width: 240
-      }
+        width: 240,
+      },
     },
     colAvailability: {},
     colName: {},
     colProducts: {
-      textAlign: "center"
+      textAlign: "center",
     },
     tableRow: {
-      cursor: "pointer" as "pointer"
-    }
+      cursor: "pointer" as "pointer",
+    },
   }),
-  { name: "CollectionList" }
+  { name: "CollectionList" },
 );
 
 export interface CollectionListProps
@@ -81,7 +81,7 @@ const CollectionList: React.FC<CollectionListProps> = props => {
     toggle,
     toggleAll,
     toolbar,
-    filterDependency
+    filterDependency,
   } = props;
 
   const classes = useStyles(props);
@@ -131,11 +131,11 @@ const CollectionList: React.FC<CollectionListProps> = props => {
           disabled={
             !canBeSorted(
               CollectionListUrlSortField.available,
-              !!selectedChannelId
+              !!selectedChannelId,
             )
           }
           tooltip={intl.formatMessage(commonTooltipMessages.noFilterSelected, {
-            filterName: filterDependency.label
+            filterName: filterDependency.label,
           })}
         >
           <FormattedMessage
@@ -160,7 +160,7 @@ const CollectionList: React.FC<CollectionListProps> = props => {
           collection => {
             const isSelected = collection ? isChecked(collection.id) : false;
             const channel = collection?.channelListings?.find(
-              listing => listing?.channel?.id === selectedChannelId
+              listing => listing?.channel?.id === selectedChannelId,
             );
             return (
               <TableRowLink
@@ -185,7 +185,7 @@ const CollectionList: React.FC<CollectionListProps> = props => {
                 <TableCell className={classes.colProducts}>
                   {maybe<React.ReactNode>(
                     () => collection.products.totalCount,
-                    <Skeleton />
+                    <Skeleton />,
                   )}
                 </TableCell>
                 <TableCell
@@ -197,7 +197,7 @@ const CollectionList: React.FC<CollectionListProps> = props => {
                     (channel ? (
                       <Pill
                         label={intl.formatMessage(
-                          getChannelAvailabilityLabel(channel)
+                          getChannelAvailabilityLabel(channel),
                         )}
                         color={getChannelAvailabilityColor(channel)}
                       />
@@ -219,7 +219,7 @@ const CollectionList: React.FC<CollectionListProps> = props => {
                 />
               </TableCell>
             </TableRow>
-          )
+          ),
         )}
       </TableBody>
     </ResponsiveTable>

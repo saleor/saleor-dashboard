@@ -22,10 +22,10 @@ export interface UseFormsetOutput<TData = {}, TValue = any> {
   remove: (id: string) => void;
 }
 function useFormset<TData = {}, TValue = any>(
-  initial: FormsetData<TData, TValue>
+  initial: FormsetData<TData, TValue>,
 ): UseFormsetOutput<TData, TValue> {
   const [data, setData] = useStateFromProps<FormsetData<TData, TValue>>(
-    initial || []
+    initial || [],
   );
 
   function addItem(itemData: FormsetAtomicData<TData, TValue>) {
@@ -40,8 +40,8 @@ function useFormset<TData = {}, TValue = any>(
     setData(prevData =>
       removeAtIndex(
         prevData,
-        prevData.findIndex(item => item.id === id)
-      )
+        prevData.findIndex(item => item.id === id),
+      ),
     );
   }
 
@@ -52,9 +52,9 @@ function useFormset<TData = {}, TValue = any>(
         ...data.slice(0, itemIndex),
         {
           ...data[itemIndex],
-          value
+          value,
         },
-        ...data.slice(itemIndex + 1)
+        ...data.slice(itemIndex + 1),
       ];
     });
   }
@@ -65,7 +65,7 @@ function useFormset<TData = {}, TValue = any>(
     data,
     get: getItem,
     remove: removeItem,
-    set: setData
+    set: setData,
   };
 }
 

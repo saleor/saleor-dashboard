@@ -2,7 +2,7 @@ import { DialogContentText, Typography } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import {
   PermissionGroupErrorCode,
-  PermissionGroupErrorFragment
+  PermissionGroupErrorFragment,
 } from "@saleor/graphql";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import getPermissionGroupErrorMessage from "@saleor/utils/errors/permissionGroups";
@@ -24,7 +24,7 @@ const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
   name,
   onClose,
   onConfirm,
-  open
+  open,
 }) => {
   const intl = useIntl();
 
@@ -34,7 +34,7 @@ const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
       id: "O22NIZ",
       defaultMessage:
         "Cant's delete group which is out of your permission scope",
-      description: "deletion error message"
+      description: "deletion error message",
     });
   } else if (!!error) {
     errorMessage = getPermissionGroupErrorMessage(error, intl);
@@ -49,7 +49,7 @@ const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
       title={intl.formatMessage({
         id: "L6+p8a",
         defaultMessage: "Delete permission group",
-        description: "dialog title"
+        description: "dialog title",
       })}
       variant="delete"
     >
@@ -59,7 +59,7 @@ const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
           defaultMessage="Are you sure you want to delete {name}?"
           description="dialog content"
           values={{
-            name: <strong>{name}</strong>
+            name: <strong>{name}</strong>,
           }}
         />
       </DialogContentText>

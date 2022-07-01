@@ -6,12 +6,12 @@ export const errorMessages = defineMessages({
     id: "tTtoKd",
     defaultMessage:
       "Sorry, your username and/or password are incorrect. Please try again.",
-    description: "error message"
+    description: "error message",
   },
   externalLoginError: {
     id: "M4q0Ye",
     defaultMessage: "Sorry, login went wrong. Please try again.",
-    description: "error message"
+    description: "error message",
   },
   serverError: {
     id: "ChGI4V",
@@ -23,7 +23,7 @@ export const errorMessages = defineMessages({
 
 export function getErrorMessage(
   err: UserContextError,
-  intl: IntlShape
+  intl: IntlShape,
 ): string {
   switch (err) {
     case "loginError":

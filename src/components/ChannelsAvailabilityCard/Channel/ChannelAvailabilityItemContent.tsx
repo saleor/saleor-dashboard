@@ -24,7 +24,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
   disabled,
   errors,
   messages,
-  onChange
+  onChange,
 }) => {
   const {
     availableForPurchase,
@@ -32,7 +32,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
     isPublished,
     publicationDate,
     visibleInListings,
-    id
+    id,
   } = data;
   const formData = {
     ...(availableForPurchase !== undefined ? { availableForPurchase } : {}),
@@ -41,14 +41,14 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
       : {}),
     isPublished,
     publicationDate,
-    ...(visibleInListings !== undefined ? { visibleInListings } : {})
+    ...(visibleInListings !== undefined ? { visibleInListings } : {}),
   };
   const dateNow = useCurrentDate();
   const localizeDate = useDateLocalize();
   const hasAvailableProps =
     isAvailable !== undefined && availableForPurchase !== undefined;
   const [isPublicationDate, setPublicationDate] = useState(
-    publicationDate === null
+    publicationDate === null,
   );
   const [isAvailableDate, setAvailableDate] = useState(false);
   const intl = useIntl();
@@ -61,21 +61,21 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
       {
         id: "UjsI4o",
         defaultMessage: "since {date}",
-        description: "date"
+        description: "date",
       },
       {
-        date: localizeDate(date, "L")
-      }
+        date: localizeDate(date, "L"),
+      },
     );
   const formErrors = getFormErrors(
     ["availableForPurchaseDate", "publicationDate"],
-    errors
+    errors,
   );
   return (
     <div className={classes.container}>
       <RadioSwitchField
         classes={{
-          radioLabel: classes.radioLabel
+          radioLabel: classes.radioLabel,
         }}
         className={classes.radioField}
         disabled={disabled}
@@ -111,7 +111,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
             ...formData,
             isPublished: !isPublished,
             publicationDate:
-              !isPublished && !publicationDate ? todayDate : publicationDate
+              !isPublished && !publicationDate ? todayDate : publicationDate,
           });
         }}
       />
@@ -123,7 +123,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
           >
             {intl.formatMessage({
               id: "U3BQKA",
-              defaultMessage: "Set publication date"
+              defaultMessage: "Set publication date",
             })}
           </Typography>
           {isPublicationDate && (
@@ -133,7 +133,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
               label={intl.formatMessage({
                 id: "Jt3DwJ",
                 defaultMessage: "Publish on",
-                description: "publish on date"
+                description: "publish on date",
               })}
               name={`channel:publicationDate:${id}`}
               type="date"
@@ -147,12 +147,12 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
               onChange={e =>
                 onChange(id, {
                   ...formData,
-                  publicationDate: e.target.value || null
+                  publicationDate: e.target.value || null,
                 })
               }
               className={classes.date}
               InputLabelProps={{
-                shrink: true
+                shrink: true,
               }}
             />
           )}
@@ -163,7 +163,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
           <Hr />
           <RadioSwitchField
             classes={{
-              radioLabel: classes.radioLabel
+              radioLabel: classes.radioLabel,
             }}
             className={classes.radioField}
             disabled={disabled}
@@ -196,7 +196,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
               return onChange(id, {
                 ...formData,
                 availableForPurchase: !value ? null : availableForPurchase,
-                isAvailableForPurchase: value
+                isAvailableForPurchase: value,
               });
             }}
           />
@@ -215,7 +215,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
                   label={intl.formatMessage({
                     id: "Y7Vy19",
                     defaultMessage: "Set available on",
-                    description: "available on date"
+                    description: "available on date",
                   })}
                   name={`channel:availableForPurchase:${id}`}
                   type="date"
@@ -224,7 +224,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
                     formErrors.availableForPurchaseDate
                       ? getProductErrorMessage(
                           formErrors.availableForPurchaseDate,
-                          intl
+                          intl,
                         )
                       : ""
                   }
@@ -232,12 +232,12 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
                   onChange={e =>
                     onChange(id, {
                       ...formData,
-                      availableForPurchase: e.target.value
+                      availableForPurchase: e.target.value,
                     })
                   }
                   className={classes.date}
                   InputLabelProps={{
-                    shrink: true
+                    shrink: true,
                   }}
                 />
               )}
@@ -258,14 +258,14 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
                 <p className={classNames(classes.label, classes.listingLabel)}>
                   {intl.formatMessage({
                     id: "0cVk9I",
-                    defaultMessage: "Show in product listings"
+                    defaultMessage: "Show in product listings",
                   })}
                 </p>
                 <span className={classes.secondLabel}>
                   {intl.formatMessage({
                     id: "5ukAFZ",
                     defaultMessage:
-                      "Disabling this checkbox will remove product from search and category pages. It will be available on collection pages."
+                      "Disabling this checkbox will remove product from search and category pages. It will be available on collection pages.",
                   })}
                 </span>
               </>
@@ -273,7 +273,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
             onChange={e =>
               onChange(id, {
                 ...formData,
-                visibleInListings: e.target.value
+                visibleInListings: e.target.value,
               })
             }
           />

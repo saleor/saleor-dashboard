@@ -14,5 +14,5 @@ export function getSortQueryField(sort: MenuListUrlSortField): MenuSortField {
 }
 
 export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField
+  getSortQueryField,
 );

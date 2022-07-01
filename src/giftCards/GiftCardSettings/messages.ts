@@ -6,13 +6,13 @@ export const giftCardSettingsPageMessages = defineMessages({
   title: {
     id: "xHj9Qe",
     defaultMessage: "Gift Cards Settings",
-    description: "gift card settings header"
-  }
+    description: "gift card settings header",
+  },
 });
 
 export function getGiftCardSettingsErrorMessage(
   error: Omit<GiftCardSettingsErrorFragment, "__typename"> | undefined,
-  intl: IntlShape
+  intl: IntlShape,
 ): string {
   return getCommonFormFieldErrorMessage(error, intl);
 }

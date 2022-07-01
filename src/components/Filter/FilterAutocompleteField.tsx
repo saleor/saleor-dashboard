@@ -26,28 +26,28 @@ const useStyles = makeStyles(
   theme => ({
     hr: {
       backgroundColor: theme.palette.primary.light,
-      margin: theme.spacing(1, 0)
+      margin: theme.spacing(1, 0),
     },
     input: {
-      padding: "12px 0 9px 12px"
+      padding: "12px 0 9px 12px",
     },
     inputContainer: {
       marginBottom: theme.spacing(1),
-      paddingTop: theme.spacing(1)
+      paddingTop: theme.spacing(1),
     },
     noResults: {
-      marginTop: theme.spacing(1)
+      marginTop: theme.spacing(1),
     },
     option: {
       left: theme.spacing(-0.5),
-      position: "relative"
+      position: "relative",
     },
     showMore: {
       display: "inline-block",
-      marginTop: theme.spacing(1)
-    }
+      marginTop: theme.spacing(1),
+    },
   }),
-  { name: "FilterAutocompleteField" }
+  { name: "FilterAutocompleteField" },
 );
 
 const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
@@ -64,8 +64,8 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
   const initialFieldDisplayValues = initialDisplayValues[filter.name];
   const availableOptions = filter.options.filter(option =>
     fieldDisplayValues.every(
-      displayValue => displayValue.value !== option.value
-    )
+      displayValue => displayValue.value !== option.value,
+    ),
   );
   const displayNoResults =
     availableOptions.length === 0 && fieldDisplayValues.length === 0;
@@ -84,10 +84,10 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
         name: filter.name,
         update: {
           active: true,
-          value: getUpdatedFilterValue(option)
-        }
+          value: getUpdatedFilterValue(option),
+        },
       },
-      type: "set-property"
+      type: "set-property",
     });
 
     if (filter.multiple) {
@@ -96,8 +96,8 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
         [filter.name]: toggle(
           option,
           fieldDisplayValues,
-          (a, b) => a.value === b.value
-        )
+          (a, b) => a.value === b.value,
+        ),
       });
     }
   };
@@ -106,11 +106,11 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
     filter.value.includes(displayValue.value);
 
   const filteredValuesChecked = initialFieldDisplayValues.filter(
-    isValueChecked
+    isValueChecked,
   );
 
   const filteredValuesUnchecked = fieldDisplayValues.filter(
-    displayValue => !isValueChecked(displayValue)
+    displayValue => !isValueChecked(displayValue),
   );
 
   const displayHr = !!filteredValuesChecked.length;
@@ -125,8 +125,8 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
           name={filter.name + "_autocomplete"}
           InputProps={{
             classes: {
-              input: classes.input
-            }
+              input: classes.input,
+            },
           }}
           onChange={event => filter.onSearchChange(event.target.value)}
         />

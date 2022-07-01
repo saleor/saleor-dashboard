@@ -4,13 +4,13 @@ import {
   FetchMoreProps,
   KeyValue,
   MinMax,
-  SearchPageProps
+  SearchPageProps,
 } from "@saleor/types";
 
 export function createPriceField<K extends string = string>(
   name: K,
   label: string,
-  defaultValue: MinMax
+  defaultValue: MinMax,
 ): FilterElementGeneric<K, FieldType.price> {
   return {
     active: false,
@@ -18,14 +18,14 @@ export function createPriceField<K extends string = string>(
     multiple: defaultValue.min !== defaultValue.max,
     name,
     type: FieldType.price,
-    value: [defaultValue.min, defaultValue.max]
+    value: [defaultValue.min, defaultValue.max],
   };
 }
 
 export function createKeyValueField<K extends string = string>(
   name: K,
   label: string,
-  defaultValue: KeyValue[]
+  defaultValue: KeyValue[],
 ): FilterElementGeneric<K, FieldType.keyValue> {
   return {
     active: false,
@@ -33,14 +33,14 @@ export function createKeyValueField<K extends string = string>(
     multiple: false,
     name,
     type: FieldType.keyValue,
-    value: defaultValue
+    value: defaultValue,
   };
 }
 
 export function createDateField<K extends string>(
   name: K,
   label: string,
-  defaultValue: MinMax
+  defaultValue: MinMax,
 ): FilterElementGeneric<K, FieldType.date> {
   return {
     active: false,
@@ -48,14 +48,14 @@ export function createDateField<K extends string>(
     multiple: defaultValue.min !== defaultValue.max,
     name,
     type: FieldType.date,
-    value: [defaultValue.min, defaultValue.max]
+    value: [defaultValue.min, defaultValue.max],
   };
 }
 
 export function createDateTimeField<K extends string>(
   name: K,
   label: string,
-  defaultValue: MinMax
+  defaultValue: MinMax,
 ): FilterElementGeneric<K, FieldType.dateTime> {
   return {
     active: false,
@@ -63,14 +63,14 @@ export function createDateTimeField<K extends string>(
     multiple: defaultValue.min !== defaultValue.max,
     name,
     type: FieldType.dateTime,
-    value: [defaultValue.min, defaultValue.max]
+    value: [defaultValue.min, defaultValue.max],
   };
 }
 
 export function createNumberField<K extends string>(
   name: K,
   label: string,
-  defaultValue: MinMax
+  defaultValue: MinMax,
 ): FilterElementGeneric<K, FieldType.number> {
   return {
     active: false,
@@ -78,7 +78,7 @@ export function createNumberField<K extends string>(
     multiple: true,
     name,
     type: FieldType.number,
-    value: [defaultValue.min, defaultValue.max]
+    value: [defaultValue.min, defaultValue.max],
   };
 }
 
@@ -87,7 +87,7 @@ export function createOptionsField<K extends string>(
   label: string,
   defaultValue: string[],
   multiple: boolean,
-  options: MultiAutocompleteChoiceType[]
+  options: MultiAutocompleteChoiceType[],
 ): FilterElementGeneric<K, FieldType.options> {
   return {
     active: false,
@@ -96,7 +96,7 @@ export function createOptionsField<K extends string>(
     name,
     options,
     type: FieldType.options,
-    value: defaultValue
+    value: defaultValue,
   };
 }
 
@@ -108,7 +108,7 @@ export function createAutocompleteField<K extends string>(
   multiple: boolean,
   options: MultiAutocompleteChoiceType[],
   opts: FetchMoreProps & SearchPageProps,
-  id?: string
+  id?: string,
 ): FilterElementGeneric<K, FieldType.autocomplete> {
   return {
     ...opts,
@@ -120,14 +120,14 @@ export function createAutocompleteField<K extends string>(
     options,
     type: FieldType.autocomplete,
     value: defaultValue,
-    id
+    id,
   };
 }
 
 export function createTextField<K extends string>(
   name: K,
   label: string,
-  defaultValue: string
+  defaultValue: string,
 ): FilterElementGeneric<K, FieldType.text> {
   return {
     active: false,
@@ -135,7 +135,7 @@ export function createTextField<K extends string>(
     multiple: false,
     name,
     type: FieldType.text,
-    value: [defaultValue]
+    value: [defaultValue],
   };
 }
 
@@ -143,7 +143,7 @@ export function createBooleanField<K extends string>(
   name: K,
   label: string,
   defaultValue: boolean | undefined,
-  labels: Record<"positive" | "negative", string>
+  labels: Record<"positive" | "negative", string>,
 ): FilterElementGeneric<K, FieldType.boolean> {
   return {
     active: false,
@@ -153,14 +153,14 @@ export function createBooleanField<K extends string>(
     options: [
       {
         label: labels.positive,
-        value: true.toString()
+        value: true.toString(),
       },
       {
         label: labels.negative,
-        value: false.toString()
-      }
+        value: false.toString(),
+      },
     ],
     type: FieldType.boolean,
-    value: [defaultValue?.toString()]
+    value: [defaultValue?.toString()],
   };
 }

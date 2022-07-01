@@ -9,7 +9,7 @@ interface VersionInfoProps {
 
 const VersionInfo: React.FC<VersionInfoProps> = ({
   dashboardVersion,
-  coreVersion
+  coreVersion,
 }) => {
   const classes = useStyles({});
 

@@ -5,7 +5,7 @@ import RadioGroupField from "@saleor/components/RadioGroupField";
 import TimePeriodField from "@saleor/giftCards/components/TimePeriodField";
 import {
   GiftCardBulkCreateFormErrors,
-  GiftCardCreateCommonFormData
+  GiftCardCreateCommonFormData,
 } from "@saleor/giftCards/GiftCardBulkCreateDialog/types";
 import { GiftCardExpiryType } from "@saleor/giftCards/GiftCardCreateDialog/types";
 import { getExpiryPeriodTerminationDate } from "@saleor/giftCards/GiftCardCreateDialog/utils";
@@ -26,12 +26,12 @@ interface UntranslatedOption {
 const options: UntranslatedOption[] = [
   {
     label: messages.expiryPeriodLabel,
-    value: "EXPIRY_PERIOD"
+    value: "EXPIRY_PERIOD",
   },
   {
     label: messages.expiryDateLabel,
-    value: "EXPIRY_DATE"
-  }
+    value: "EXPIRY_DATE",
+  },
 ];
 
 interface GiftCardCreateExpirySelectProps {
@@ -55,15 +55,15 @@ const GiftCardCreateExpirySelect: React.FC<GiftCardCreateExpirySelectProps> = ({
     expiryPeriodType,
     expiryPeriodAmount,
     expiryType,
-    expiryDate
-  }
+    expiryDate,
+  },
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
 
   const translatedOptions = options.map(({ label, value }) => ({
     value,
-    label: intl.formatMessage(label)
+    label: intl.formatMessage(label),
   }));
 
   const currentDate = useCurrentDate();
@@ -99,7 +99,7 @@ const GiftCardCreateExpirySelect: React.FC<GiftCardCreateExpirySelectProps> = ({
               label={intl.formatMessage(messages.expiryDateLabel)}
               value={expiryDate}
               InputLabelProps={{
-                shrink: true
+                shrink: true,
               }}
               type="date"
             />
@@ -124,7 +124,7 @@ const GiftCardCreateExpirySelect: React.FC<GiftCardCreateExpirySelectProps> = ({
                   {getExpiryPeriodTerminationDate(
                     currentDate,
                     expiryPeriodType,
-                    expiryPeriodAmount
+                    expiryPeriodAmount,
                   )?.format("L")}
                 </Typography>
               </div>

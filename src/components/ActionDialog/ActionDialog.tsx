@@ -30,7 +30,7 @@ const ActionDialog: React.FC<ActionDialogProps> = props => {
 };
 
 ActionDialog.defaultProps = {
-  maxWidth: "xs"
+  maxWidth: "xs",
 };
 
 ActionDialog.displayName = "ActionDialog";

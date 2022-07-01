@@ -3,7 +3,7 @@ import {
   getRichTextAttributesFromMap,
   getRichTextDataFromAttributes,
   mergeAttributes,
-  RichTextProps
+  RichTextProps,
 } from "@saleor/attributes/utils/data";
 import {
   createAttributeChangeHandler,
@@ -12,7 +12,7 @@ import {
   createAttributeReferenceChangeHandler,
   createAttributeValueReorderHandler,
   createFetchMoreReferencesHandler,
-  createFetchReferencesHandler
+  createFetchReferencesHandler,
 } from "@saleor/attributes/utils/handlers";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
@@ -21,16 +21,16 @@ import {
   ProductVariantCreateDataQuery,
   SearchPagesQuery,
   SearchProductsQuery,
-  SearchWarehousesQuery
+  SearchWarehousesQuery,
 } from "@saleor/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
-  FormErrors
+  FormErrors,
 } from "@saleor/hooks/useForm";
 import useFormset, {
   FormsetChange,
-  FormsetData
+  FormsetData,
 } from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import { errorMessages } from "@saleor/intl";
@@ -116,14 +116,14 @@ const initial: ProductVariantCreateFormData = {
   globalSoldUnits: 0,
   hasPreorderEndDate: false,
   preorderEndDateTime: "",
-  quantityLimitPerCustomer: null
+  quantityLimitPerCustomer: null,
 };
 
 function useProductVariantCreateForm(
   product: ProductVariantCreateDataQuery["product"],
   onSubmit: (data: ProductVariantCreateData) => void,
   disabled: boolean,
-  opts: UseProductVariantCreateFormOpts
+  opts: UseProductVariantCreateFormOpts,
 ): UseProductVariantCreateFormOutput {
   const intl = useIntl();
   const attributeInput = getVariantAttributeInputFromProduct(product);
@@ -135,75 +135,75 @@ function useProductVariantCreateForm(
     handleChange,
     data: formData,
     formId,
-    setIsSubmitDisabled
+    setIsSubmitDisabled,
   } = form;
 
   const attributes = useFormset(attributeInput);
   const {
     getters: attributeRichTextGetters,
-    getValues: getAttributeRichTextValues
+    getValues: getAttributeRichTextValues,
   } = useMultipleRichText({
     initial: getRichTextDataFromAttributes(attributes.data),
-    triggerChange
+    triggerChange,
   });
   const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset<ProductStockFormsetData, string>([]);
 
   const { setExitDialogSubmitRef } = useExitFormDialog({
-    formId
+    formId,
   });
 
   const {
-    makeChangeHandler: makeMetadataChangeHandler
+    makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
 
   const changeMetadata = makeMetadataChangeHandler(handleChange);
   const handleAttributeChange = createAttributeChangeHandler(
     attributes.change,
-    triggerChange
+    triggerChange,
   );
   const handleAttributeMultiChange = createAttributeMultiChangeHandler(
     attributes.change,
     attributes.data,
-    triggerChange
+    triggerChange,
   );
   const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(
     attributes.change,
-    triggerChange
+    triggerChange,
   );
   const handleFetchReferences = createFetchReferencesHandler(
     attributes.data,
     opts.assignReferencesAttributeId,
     opts.fetchReferencePages,
-    opts.fetchReferenceProducts
+    opts.fetchReferenceProducts,
   );
   const handleFetchMoreReferences = createFetchMoreReferencesHandler(
     attributes.data,
     opts.assignReferencesAttributeId,
     opts.fetchMoreReferencePages,
-    opts.fetchMoreReferenceProducts
+    opts.fetchMoreReferenceProducts,
   );
   const handleAttributeFileChange = createAttributeFileChangeHandler(
     attributes.change,
     attributesWithNewFileValue.data,
     attributesWithNewFileValue.add,
     attributesWithNewFileValue.change,
-    triggerChange
+    triggerChange,
   );
   const handleAttributeValueReorder = createAttributeValueReorderHandler(
     attributes.change,
     attributes.data,
-    triggerChange
+    triggerChange,
   );
   const handleStockAdd = (id: string) => {
     triggerChange();
     stocks.add({
       data: {
-        quantityAllocated: 0
+        quantityAllocated: 0,
       },
       id,
       label: opts.warehouses.find(warehouse => warehouse.id === id).name,
-      value: "0"
+      value: "0",
     });
   };
   const handleStockChange = (id: string, value: string) => {
@@ -218,7 +218,7 @@ function useProductVariantCreateForm(
   const handlePreorderEndDateChange = createPreorderEndDateChangeHandler(
     form,
     triggerChange,
-    intl.formatMessage(errorMessages.preorderEndDateInFutureErrorText)
+    intl.formatMessage(errorMessages.preorderEndDateInFutureErrorText),
   );
 
   const data: ProductVariantCreateData = {
@@ -227,10 +227,10 @@ function useProductVariantCreateForm(
       attributes.data,
       attributesWithNewFileValue.data,
       opts.referencePages,
-      opts.referenceProducts
+      opts.referenceProducts,
     ),
     attributesWithNewFileValue: attributesWithNewFileValue.data,
-    stocks: stocks.data
+    stocks: stocks.data,
   };
 
   const getSubmitData = async (): Promise<ProductVariantCreateData> => ({
@@ -239,14 +239,14 @@ function useProductVariantCreateForm(
       attributes.data,
       getRichTextAttributesFromMap(
         attributes.data,
-        await getAttributeRichTextValues()
-      )
-    )
+        await getAttributeRichTextValues(),
+      ),
+    ),
   });
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit
+    onSubmit,
   });
 
   const submit = async () => handleFormSubmit(await getSubmitData());
@@ -278,11 +278,11 @@ function useProductVariantCreateForm(
       selectAttribute: handleAttributeChange,
       selectAttributeFile: handleAttributeFileChange,
       selectAttributeMultiple: handleAttributeMultiChange,
-      selectAttributeReference: handleAttributeReferenceChange
+      selectAttributeReference: handleAttributeReferenceChange,
     },
     submit,
     isSaveDisabled,
-    attributeRichTextGetters
+    attributeRichTextGetters,
   };
 }
 

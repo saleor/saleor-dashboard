@@ -2,17 +2,17 @@ import placeholderImage from "@assets/images/placeholder60x60.png";
 import {
   FulfillmentStatus,
   OrderStatus,
-  PaymentChargeStatusEnum
+  PaymentChargeStatusEnum,
 } from "@saleor/graphql";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import OrderDetailsPage, {
-  OrderDetailsPageProps
+  OrderDetailsPageProps,
 } from "../../../orders/components/OrderDetailsPage";
 import {
   order as orderFixture,
-  shop as shopFixture
+  shop as shopFixture,
 } from "../../../orders/fixtures";
 import Decorator from "../../Decorator";
 
@@ -43,7 +43,7 @@ const props: Omit<OrderDetailsPageProps, "classes"> = {
   onSubmit: () => undefined,
   order,
   shop: shopFixture,
-  saveButtonBarState: "default"
+  saveButtonBarState: "default",
 };
 
 storiesOf("Views / Orders / Order details", module)
@@ -55,7 +55,7 @@ storiesOf("Views / Orders / Order details", module)
       {...props}
       order={{
         ...props.order,
-        paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED
+        paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
       }}
     />
   ))
@@ -64,7 +64,7 @@ storiesOf("Views / Orders / Order details", module)
       {...props}
       order={{
         ...props.order,
-        paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED
+        paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
       }}
     />
   ))
@@ -73,7 +73,7 @@ storiesOf("Views / Orders / Order details", module)
       {...props}
       order={{
         ...props.order,
-        paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED
+        paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
       }}
     />
   ))
@@ -82,7 +82,7 @@ storiesOf("Views / Orders / Order details", module)
       {...props}
       order={{
         ...props.order,
-        paymentStatus: null
+        paymentStatus: null,
       }}
     />
   ))
@@ -91,7 +91,7 @@ storiesOf("Views / Orders / Order details", module)
       {...props}
       order={{
         ...props.order,
-        paymentStatus: PaymentChargeStatusEnum.FULLY_REFUNDED
+        paymentStatus: PaymentChargeStatusEnum.FULLY_REFUNDED,
       }}
     />
   ))
@@ -100,7 +100,7 @@ storiesOf("Views / Orders / Order details", module)
       {...props}
       order={{
         ...props.order,
-        paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED
+        paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
       }}
     />
   ))
@@ -111,9 +111,9 @@ storiesOf("Views / Orders / Order details", module)
         ...props.order,
         fulfillments: props.order.fulfillments.map(fulfillment => ({
           ...fulfillment,
-          status: FulfillmentStatus.CANCELED
+          status: FulfillmentStatus.CANCELED,
         })),
-        status: OrderStatus.CANCELED
+        status: OrderStatus.CANCELED,
       }}
     />
   ))
@@ -122,7 +122,7 @@ storiesOf("Views / Orders / Order details", module)
       {...props}
       order={{
         ...props.order,
-        status: OrderStatus.FULFILLED
+        status: OrderStatus.FULFILLED,
       }}
     />
   ))
@@ -131,7 +131,7 @@ storiesOf("Views / Orders / Order details", module)
       {...props}
       order={{
         ...props.order,
-        status: OrderStatus.PARTIALLY_FULFILLED
+        status: OrderStatus.PARTIALLY_FULFILLED,
       }}
     />
   ))
@@ -140,7 +140,7 @@ storiesOf("Views / Orders / Order details", module)
       {...props}
       order={{
         ...props.order,
-        status: OrderStatus.UNFULFILLED
+        status: OrderStatus.UNFULFILLED,
       }}
     />
   ))
@@ -149,7 +149,7 @@ storiesOf("Views / Orders / Order details", module)
       {...props}
       order={{
         ...props.order,
-        shippingAddress: null
+        shippingAddress: null,
       }}
     />
   ))
@@ -158,7 +158,7 @@ storiesOf("Views / Orders / Order details", module)
       {...props}
       order={{
         ...props.order,
-        customerNote: ""
+        customerNote: "",
       }}
     />
   ));

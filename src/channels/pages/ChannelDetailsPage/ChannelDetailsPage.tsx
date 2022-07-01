@@ -10,7 +10,7 @@ import {
   ChannelErrorFragment,
   CountryCode,
   CountryFragment,
-  SearchShippingZonesQuery
+  SearchShippingZonesQuery,
 } from "@saleor/graphql";
 import { SearchData } from "@saleor/hooks/makeTopLevelSearch";
 import { getParsedSearchData } from "@saleor/hooks/makeTopLevelSearch/utils";
@@ -20,7 +20,7 @@ import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import {
   getById,
-  getByUnmatchingId
+  getByUnmatchingId,
 } from "@saleor/orders/components/OrderReturnPage/utils";
 import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
@@ -63,14 +63,14 @@ const ChannelDetailsPage = function<TErrors>({
   searchShippingZonesData,
   fetchMoreShippingZones,
   countries,
-  channelShippingZones = []
+  channelShippingZones = [],
 }: ChannelDetailsPageProps<TErrors>) {
   const navigate = useNavigator();
 
   const [selectedCurrencyCode, setSelectedCurrencyCode] = useState("");
   const [
     selectedCountryDisplayName,
-    setSelectedCountryDisplayName
+    setSelectedCountryDisplayName,
   ] = useStateFromProps(channel?.defaultCountry.country || "");
 
   const [shippingZonesToDisplay, setShippingZonesToDisplay] = useStateFromProps<
@@ -87,13 +87,13 @@ const ChannelDetailsPage = function<TErrors>({
     shippingZonesIdsToAdd: [],
     shippingZonesIdsToRemove: [],
     defaultCountry: (defaultCountry?.code || "") as CountryCode,
-    ...formData
+    ...formData,
   };
 
   const getFilteredShippingZonesChoices = (): RelayToFlat<SearchShippingZonesQuery["search"]> =>
     getParsedSearchData({ data: searchShippingZonesData }).filter(
       ({ id: searchedZoneId }) =>
-        !shippingZonesToDisplay.some(({ id }) => id === searchedZoneId)
+        !shippingZonesToDisplay.some(({ id }) => id === searchedZoneId),
     );
 
   const checkIfSaveIsDisabled = (data: FormData) => {
@@ -118,12 +118,12 @@ const ChannelDetailsPage = function<TErrors>({
         const handleCurrencyCodeSelect = createSingleAutocompleteSelectHandler(
           change,
           setSelectedCurrencyCode,
-          currencyCodes
+          currencyCodes,
         );
         const handleDefaultCountrySelect = createSingleAutocompleteSelectHandler(
           change,
           setSelectedCountryDisplayName,
-          countryChoices
+          countryChoices,
         );
 
         const addShippingZone = (zoneId: string) => {
@@ -131,19 +131,19 @@ const ChannelDetailsPage = function<TErrors>({
             ...data,
             shippingZonesIdsToRemove: getUpdatedIdsWithoutNewId(
               data.shippingZonesIdsToRemove,
-              zoneId
+              zoneId,
             ),
             shippingZonesIdsToAdd: getUpdatedIdsWithNewId(
               data.shippingZonesIdsToAdd,
-              zoneId
-            )
+              zoneId,
+            ),
           });
 
           setShippingZonesToDisplay([
             ...shippingZonesToDisplay,
             getParsedSearchData({ data: searchShippingZonesData }).find(
-              getById(zoneId)
-            )
+              getById(zoneId),
+            ),
           ]);
         };
 
@@ -152,16 +152,16 @@ const ChannelDetailsPage = function<TErrors>({
             ...data,
             shippingZonesIdsToAdd: getUpdatedIdsWithoutNewId(
               data.shippingZonesIdsToAdd,
-              zoneId
+              zoneId,
             ),
             shippingZonesIdsToRemove: getUpdatedIdsWithNewId(
               data.shippingZonesIdsToRemove,
-              zoneId
-            )
+              zoneId,
+            ),
           });
 
           setShippingZonesToDisplay(
-            shippingZonesToDisplay.filter(getByUnmatchingId(zoneId))
+            shippingZonesToDisplay.filter(getByUnmatchingId(zoneId)),
           );
         };
 

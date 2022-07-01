@@ -5,16 +5,16 @@ describe("filteredConditionalItems", () => {
     const items = [
       {
         item: { id: "#1" },
-        shouldExist: false
+        shouldExist: false,
       },
       {
         item: { id: "#2" },
-        shouldExist: false
+        shouldExist: false,
       },
       {
         item: { id: "#3" },
-        shouldExist: false
-      }
+        shouldExist: false,
+      },
     ];
 
     expect(filteredConditionalItems(items)).toEqual([]);
@@ -24,21 +24,21 @@ describe("filteredConditionalItems", () => {
     const items = [
       {
         item: { id: "#1" },
-        shouldExist: false
+        shouldExist: false,
       },
       {
         item: { id: "#2" },
-        shouldExist: true
+        shouldExist: true,
       },
       {
         item: { id: "#3" },
-        shouldExist: true
-      }
+        shouldExist: true,
+      },
     ];
 
     expect(filteredConditionalItems(items)).toEqual([
       { id: "#2" },
-      { id: "#3" }
+      { id: "#3" },
     ]);
   });
 });

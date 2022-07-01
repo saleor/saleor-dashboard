@@ -8,7 +8,7 @@ import {
   useCollectionChannelListingUpdateMutation,
   useCreateCollectionMutation,
   useUpdateMetadataMutation,
-  useUpdatePrivateMetadataMutation
+  useUpdatePrivateMetadataMutation,
 } from "@saleor/graphql";
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -26,7 +26,7 @@ import { CollectionCreateData } from "../components/CollectionCreatePage/form";
 import {
   collectionAddUrl,
   CollectionCreateUrlQueryParams,
-  collectionUrl
+  collectionUrl,
 } from "../urls";
 import { COLLECTION_CREATE_FORM_ID } from "./consts";
 
@@ -35,7 +35,7 @@ interface CollectionCreateProps {
 }
 
 export const CollectionCreate: React.FC<CollectionCreateProps> = ({
-  params
+  params,
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
@@ -50,14 +50,14 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
 
   const [
     updateChannels,
-    updateChannelsOpts
+    updateChannelsOpts,
   ] = useCollectionChannelListingUpdateMutation({});
   const { availableChannels } = useAppChannel(false);
 
   const allChannels = createCollectionChannels(
-    availableChannels
+    availableChannels,
   )?.sort((channel, nextChannel) =>
-    channel.name.localeCompare(nextChannel.name)
+    channel.name.localeCompare(nextChannel.name),
   );
 
   const {
@@ -70,12 +70,12 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
     isChannelSelected,
     isChannelsModalOpen,
     setCurrentChannels,
-    toggleAllChannels
+    toggleAllChannels,
   } = useChannels(
     allChannels,
     params?.action,
     { closeModal, openModal },
-    { formId: COLLECTION_CREATE_FORM_ID }
+    { formId: COLLECTION_CREATE_FORM_ID },
   );
 
   const [createCollection, createCollectionOpts] = useCreateCollectionMutation({
@@ -83,22 +83,22 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
       if (data.collectionCreate.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
+          text: intl.formatMessage(commonMessages.savedChanges),
         });
         navigate(collectionUrl(data.collectionCreate.collection.id));
       } else {
         const backgroundImageError = data.collectionCreate.errors.find(
           error =>
-            error.field === ("backgroundImage" as keyof CollectionCreateInput)
+            error.field === ("backgroundImage" as keyof CollectionCreateInput),
         );
         if (backgroundImageError) {
           notify({
             status: "error",
-            text: intl.formatMessage(commonMessages.somethingWentWrong)
+            text: intl.formatMessage(commonMessages.somethingWentWrong),
           });
         }
       }
-    }
+    },
   });
 
   const handleCreate = async (formData: CollectionCreateData) => {
@@ -111,10 +111,10 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
           name: formData.name,
           seo: {
             description: formData.seoDescription,
-            title: formData.seoTitle
-          }
-        }
-      }
+            title: formData.seoTitle,
+          },
+        },
+      },
     });
 
     const id = result.data?.collectionCreate.collection?.id || null;
@@ -126,11 +126,11 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
             addChannels: formData.channelListings.map(channel => ({
               channelId: channel.id,
               isPublished: channel.isPublished,
-              publicationDate: channel.publicationDate
+              publicationDate: channel.publicationDate,
             })),
-            removeChannels: []
-          }
-        }
+            removeChannels: [],
+          },
+        },
       });
     }
 
@@ -140,7 +140,7 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
   const handleSubmit = createMetadataCreateHandler(
     handleCreate,
     updateMetadata,
-    updatePrivateMetadata
+    updatePrivateMetadata,
   );
 
   return (
@@ -149,7 +149,7 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
         title={intl.formatMessage({
           id: "ttMauu",
           defaultMessage: "Create collection",
-          description: "window title"
+          description: "window title",
         })}
       />
       {!!allChannels?.length && (
@@ -162,7 +162,7 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
           open={isChannelsModalOpen}
           title={intl.formatMessage({
             id: "I1Mz7h",
-            defaultMessage: "Manage Collection Channel Availability"
+            defaultMessage: "Manage Collection Channel Availability",
           })}
           confirmButtonState="default"
           selected={channelListElements.length}

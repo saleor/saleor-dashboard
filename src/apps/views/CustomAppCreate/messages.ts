@@ -4,6 +4,6 @@ export const messages = defineMessages({
   createApp: {
     id: "agZQkB",
     defaultMessage: "Create App",
-    description: "window title"
-  }
+    description: "window title",
+  },
 });

@@ -7,7 +7,7 @@ import {
   removeAtIndex,
   toggle,
   update,
-  updateAtIndex
+  updateAtIndex,
 } from "./lists";
 
 const initialArray = ["lorem", "ipsum", "dolor"];
@@ -27,14 +27,14 @@ describe("Properly calculates output arrays", () => {
       update(
         {
           name: "amet",
-          value: 32
+          value: 32,
         },
         initialArray.map((el, index) => ({
           name: el,
-          value: index
+          value: index,
         })),
-        (a, b) => a.name === b.name
-      )
+        (a, b) => a.name === b.name,
+      ),
     ).toMatchSnapshot();
   });
 

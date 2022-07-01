@@ -11,7 +11,7 @@ const props: OrderWeightProps = {
   maxValue: "2",
   minValue: "1",
   orderValueRestricted: true,
-  onChange: () => undefined
+  onChange: () => undefined,
 };
 
 storiesOf("Shipping / Order weight rates", module)
@@ -26,7 +26,7 @@ storiesOf("Shipping / Order weight rates", module)
         __typename: "ShippingError",
         code: ShippingErrorCode.INVALID,
         field,
-        message: "Shipping code invalid"
+        message: "Shipping code invalid",
       }))}
     />
   ));

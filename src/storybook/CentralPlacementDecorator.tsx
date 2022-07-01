@@ -9,7 +9,7 @@ const CentralPlacementDecorator = storyFn => (
       width: 400,
       display: "flex",
       justifyContent: "center",
-      alignItems: "center"
+      alignItems: "center",
     }}
   >
     {storyFn()}

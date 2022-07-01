@@ -4,16 +4,16 @@ import { defineMessages, IntlShape } from "react-intl";
 const commonErrorMessages = defineMessages({
   graphqlError: {
     id: "c5pMZ8",
-    defaultMessage: "API error"
+    defaultMessage: "API error",
   },
   invalid: {
     id: "577R2r",
-    defaultMessage: "Invalid value"
+    defaultMessage: "Invalid value",
   },
   unknownError: {
     id: "qDwvZ4",
-    defaultMessage: "Unknown error"
-  }
+    defaultMessage: "Unknown error",
+  },
 });
 
 type CommonErrorCode = "GRAPHQL_ERROR" | "INVALID" | "REQUIRED";
@@ -25,7 +25,7 @@ interface CommonError<ErrorCode> {
 
 export function getCommonFormFieldErrorMessage<ErrorCode>(
   error: CommonError<ErrorCode> | undefined,
-  intl: IntlShape
+  intl: IntlShape,
 ): string {
   if (error) {
     switch (error.code) {

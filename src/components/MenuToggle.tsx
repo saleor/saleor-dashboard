@@ -17,7 +17,7 @@ interface MenuToggleState {
 
 class MenuToggle extends React.Component<MenuToggleProps, MenuToggleState> {
   state = {
-    open: false
+    open: false,
   };
 
   handleClick = () => {
@@ -34,7 +34,7 @@ class MenuToggle extends React.Component<MenuToggleProps, MenuToggleState> {
 
     return children({
       actions: { close: this.handleClose, open: this.handleClick },
-      open
+      open,
     });
   }
 }

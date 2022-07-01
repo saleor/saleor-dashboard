@@ -27,7 +27,7 @@ const CustomerAddressChoiceCard: React.FC<CustomerAddressChoiceCardProps> = prop
     <Card
       className={classNames(classes.card, {
         [classes.cardSelected]: selected,
-        [classes.selectableCard]: !editable && !selected
+        [classes.selectableCard]: !editable && !selected,
       })}
       onClick={onSelect}
     >

@@ -13,7 +13,7 @@ export type TablePaginationWithContextProps = Omit<
   | "onPreviousPage"
 >;
 export const TablePaginationWithContext = (
-  props: TablePaginationWithContextProps
+  props: TablePaginationWithContextProps,
 ) => {
   const {
     hasNextPage,

@@ -21,7 +21,7 @@ function getModeActions(
     createOrder: MutationFunction<OrderDraftCreateMutation, {}>;
     navigate: UseNavigatorResult;
     setMode: (mode: QuickSearchMode) => void;
-  }
+  },
 ): QuickSearchAction[] {
   switch (mode) {
     case "catalog":
@@ -32,7 +32,7 @@ function getModeActions(
         intl,
         cbs.navigate,
         cbs.createOrder,
-        cbs.setMode
+        cbs.setMode,
       );
     case "customers":
       return getCustomersModeActions(intl, cbs.navigate, queries.customers);
@@ -46,7 +46,7 @@ function getModeActions(
         intl,
         cbs.navigate,
         cbs.createOrder,
-        cbs.setMode
+        cbs.setMode,
       );
   }
 }

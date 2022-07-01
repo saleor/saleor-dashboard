@@ -1,5 +1,5 @@
 import SortableChip, {
-  SortableChipProps
+  SortableChipProps,
 } from "@saleor/components/SortableChip";
 import CardDecorator from "@saleor/storybook/CardDecorator";
 import Decorator from "@saleor/storybook/Decorator";
@@ -11,7 +11,7 @@ const Container = SortableContainer(props => props.children);
 
 const props: SortableChipProps = {
   index: 0,
-  label: "Lorem Ipsum"
+  label: "Lorem Ipsum",
 };
 
 storiesOf("Generics / Sortable chip", module)

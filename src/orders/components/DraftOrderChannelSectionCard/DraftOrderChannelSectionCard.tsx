@@ -9,7 +9,7 @@ export interface DraftOrderChannelSectionCardProps {
 }
 
 export const DraftOrderChannelSectionCard: React.FC<DraftOrderChannelSectionCardProps> = ({
-  channelName
+  channelName,
 }) => {
   const intl = useIntl();
 
@@ -19,7 +19,7 @@ export const DraftOrderChannelSectionCard: React.FC<DraftOrderChannelSectionCard
         title={intl.formatMessage({
           id: "aY0HAT",
           defaultMessage: "Sales channel",
-          description: "section header"
+          description: "section header",
         })}
       />
       <CardContent data-test-id="sales-channel">

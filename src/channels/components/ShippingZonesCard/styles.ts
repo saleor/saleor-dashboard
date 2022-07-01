@@ -8,16 +8,16 @@ export const useExpanderStyles = makeStyles(
       padding: theme.spacing(1, 4),
 
       "&:before": {
-        content: "none"
+        content: "none",
       },
 
       "&$expanded": {
         margin: 0,
-        border: "none"
-      }
-    }
+        border: "none",
+      },
+    },
   }),
-  { name: "Expander" }
+  { name: "Expander" },
 );
 
 const useStyles = makeStyles(
@@ -27,13 +27,13 @@ const useStyles = makeStyles(
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-between",
-      alignItems: "center"
+      alignItems: "center",
     },
     root: {
-      paddingRight: theme.spacing(1)
-    }
+      paddingRight: theme.spacing(1),
+    },
   }),
-  { name: "ShippingZonesCard" }
+  { name: "ShippingZonesCard" },
 );
 
 export default useStyles;

@@ -4,21 +4,21 @@ const getNumberFormatting = (currency: string = "USD") => {
   try {
     return new Intl.NumberFormat("en-GB", {
       style: "currency",
-      currency
+      currency,
     });
   } catch (e) {
     try {
       // fallback to "USD" if currency wasn't recognised
       return new Intl.NumberFormat("en-GB", {
         style: "currency",
-        currency: "USD"
+        currency: "USD",
       });
     } catch {
       // everything is broken - try to return something that makes sense
       return {
         resolvedOptions: () => ({
-          maximumFractionDigits: 2
-        })
+          maximumFractionDigits: 2,
+        }),
       };
     }
   }

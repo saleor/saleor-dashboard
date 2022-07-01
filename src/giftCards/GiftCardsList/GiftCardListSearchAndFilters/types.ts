@@ -6,7 +6,7 @@ import {
   FiltersWithMultipleValues,
   MinMax,
   Search,
-  SearchProps
+  SearchProps,
 } from "@saleor/types";
 
 export enum GiftCardListUrlFiltersEnum {
@@ -15,13 +15,13 @@ export enum GiftCardListUrlFiltersEnum {
   initialBalanceAmountTo = "initialBalanceAmountTo",
   currentBalanceAmountFrom = "currentBalanceAmountFrom",
   currentBalanceAmountTo = "currentBalanceAmountTo",
-  status = "status"
+  status = "status",
 }
 
 export enum GiftCardListUrlFiltersWithMultipleValuesEnum {
   tag = "tag",
   product = "product",
-  usedBy = "usedBy"
+  usedBy = "usedBy",
 }
 
 export enum GiftCardListFilterKeys {
@@ -34,7 +34,7 @@ export enum GiftCardListFilterKeys {
   tag = "tag",
   product = "product",
   usedBy = "usedBy",
-  status = "status"
+  status = "status",
 }
 
 export type GiftCardListUrlFilters = Filters<GiftCardListUrlFiltersEnum> &
@@ -54,5 +54,5 @@ export type SearchWithFetchMoreProps = FetchMoreProps & Search & SearchProps;
 
 export enum GiftCardStatusFilterEnum {
   enabled = "enabled",
-  disabled = "disabled"
+  disabled = "disabled",
 }

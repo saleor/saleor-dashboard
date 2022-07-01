@@ -13,7 +13,7 @@ import {
   CollectionListUrlQueryParams,
   CollectionListUrlSortField,
   collectionPath,
-  CollectionUrlQueryParams
+  CollectionUrlQueryParams,
 } from "./urls";
 import CollectionCreateView from "./views/CollectionCreate";
 import CollectionDetailsView from "./views/CollectionDetails";
@@ -23,7 +23,7 @@ const CollectionList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: CollectionListUrlQueryParams = asSortParams(
     qs,
-    CollectionListUrlSortField
+    CollectionListUrlSortField,
   );
   return <CollectionListView params={params} />;
 };

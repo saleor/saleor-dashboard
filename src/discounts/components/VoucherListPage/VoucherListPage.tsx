@@ -13,7 +13,7 @@ import {
   ListActions,
   PageListProps,
   SortPage,
-  TabPageProps
+  TabPageProps,
 } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -22,7 +22,7 @@ import VoucherList from "../VoucherList";
 import {
   createFilterStructure,
   VoucherFilterKeys,
-  VoucherListFilterOpts
+  VoucherListFilterOpts,
 } from "./filters";
 
 export interface VoucherListPageProps
@@ -72,14 +72,14 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
           allTabLabel={intl.formatMessage({
             id: "pNrF72",
             defaultMessage: "All Vouchers",
-            description: "tab name"
+            description: "tab name",
           })}
           currentTab={currentTab}
           filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
             id: "IruP2T",
-            defaultMessage: "Search Voucher"
+            defaultMessage: "Search Voucher",
           })}
           tabs={tabs}
           onAll={onAll}

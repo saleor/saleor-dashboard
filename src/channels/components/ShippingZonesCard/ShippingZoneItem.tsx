@@ -12,7 +12,7 @@ interface ShippingZoneItemProps {
 
 const ShippingZoneItem: React.FC<ShippingZoneItemProps> = ({
   zone,
-  onDelete
+  onDelete,
 }) => {
   const { id, name } = zone;
   const classes = useStyles({});

@@ -23,7 +23,7 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
   data,
   disabled,
   errors,
-  onChange
+  onChange,
 }) => {
   const intl = useIntl();
 

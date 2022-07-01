@@ -5,7 +5,7 @@ import {
   TableHead,
   TableRow,
   TextField,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { Backlink } from "@saleor/components/Backlink";
 import CardTitle from "@saleor/components/CardTitle";
@@ -24,7 +24,7 @@ import {
   OrderFulfillLineFragment,
   OrderFulfillStockInput,
   ShopOrderSettingsFragment,
-  WarehouseFragment
+  WarehouseFragment,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
@@ -35,7 +35,7 @@ import { renderCollection } from "@saleor/misc";
 import { orderUrl } from "@saleor/orders/urls";
 import {
   getAttributesCaption,
-  getToFulfillOrderLines
+  getToFulfillOrderLines,
 } from "@saleor/orders/utils/data";
 import classNames from "classnames";
 import React from "react";
@@ -67,7 +67,7 @@ export interface OrderFulfillPageProps {
 const initialFormData: OrderFulfillFormData = {
   sendInfo: true,
   trackingNumber: "",
-  allowStockToBeExceeded: false
+  allowStockToBeExceeded: false,
 };
 
 const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
@@ -78,7 +78,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     saveButtonBar,
     warehouse,
     shopSettings,
-    onSubmit
+    onSubmit,
   } = props;
 
   const intl = useIntl();
@@ -99,21 +99,21 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
           : [
               {
                 quantity: line.quantityToFulfill,
-                warehouse: warehouse?.id
-              }
-            ]
-      })
-    )
+                warehouse: warehouse?.id,
+              },
+            ],
+      }),
+    ),
   );
 
   const [
     displayStockExceededDialog,
-    setDisplayStockExceededDialog
+    setDisplayStockExceededDialog,
   ] = React.useState(false);
 
   const handleSubmit = ({
     formData,
-    allowStockToBeExceeded
+    allowStockToBeExceeded,
   }: {
     formData: OrderFulfillFormData;
     allowStockToBeExceeded: boolean;
@@ -122,7 +122,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     return onSubmit({
       ...formData,
       allowStockToBeExceeded,
-      items: formsetData.filter(item => !!item.value)
+      items: formsetData.filter(item => !!item.value),
     });
   };
   React.useEffect(() => {
@@ -149,7 +149,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     }
 
     const isAtLeastOneFulfilled = formsetData?.some(
-      el => el.value?.[0]?.quantity > 0
+      el => el.value?.[0]?.quantity > 0,
     );
 
     const overfulfill = formsetData
@@ -157,7 +157,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
       .some(item => {
         const formQuantityFulfilled = item?.value?.[0]?.quantity;
         const quantityToFulfill = order?.lines?.find(
-          line => line.id === item.id
+          line => line.id === item.id,
         ).quantityToFulfill;
         return formQuantityFulfilled > quantityToFulfill;
       });
@@ -170,13 +170,13 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
       <Backlink href={orderUrl(order?.id)}>
         {order?.number
           ? intl.formatMessage(messages.headerOrderNumber, {
-              orderNumber: order.number
+              orderNumber: order.number,
             })
           : intl.formatMessage(messages.headerOrder)}
       </Backlink>
       <PageHeader
         title={intl.formatMessage(messages.headerOrderNumberAddFulfillment, {
-          orderNumber: order?.number
+          orderNumber: order?.number,
         })}
       />
       <Typography className={classes.warehouseLabel}>
@@ -191,7 +191,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
         onSubmit={formData =>
           handleSubmit({
             formData,
-            allowStockToBeExceeded: displayStockExceededDialog
+            allowStockToBeExceeded: displayStockExceededDialog,
           })
         }
       >
@@ -215,7 +215,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                         <TableCell
                           className={classNames(
                             classes.colQuantity,
-                            classes.colQuantityHeader
+                            classes.colQuantityHeader,
                           )}
                         >
                           <FormattedMessage {...messages.quantity} />
@@ -236,7 +236,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                             formsetData={formsetData}
                             formsetChange={formsetChange}
                           />
-                        )
+                        ),
                       )}
                     </TableBody>
                   </ResponsiveTable>
@@ -272,13 +272,13 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
               labels={{
                 confirm: shopSettings?.fulfillmentAutoApprove
                   ? intl.formatMessage(messages.submitFulfillment)
-                  : intl.formatMessage(messages.submitPrepareFulfillment)
+                  : intl.formatMessage(messages.submitPrepareFulfillment),
               }}
               state={saveButtonBar}
               tooltips={{
                 confirm:
                   notAllowedToFulfillUnpaid &&
-                  intl.formatMessage(commonMessages.cannotFullfillUnpaidOrder)
+                  intl.formatMessage(commonMessages.cannotFullfillUnpaidOrder),
               }}
               onSubmit={submit}
               onCancel={() => navigate(orderUrl(order?.id))}

@@ -11,26 +11,26 @@ export const replacementCreatedMessages = defineMessages({
   description: {
     id: "kvSYZh",
     defaultMessage: "was created for replaced products",
-    description: "replacement created order history message description"
+    description: "replacement created order history message description",
   },
   draftNumber: {
     id: "kkIw+l",
     defaultMessage: "Draft #{orderNumber} ",
-    description: "replacement created order history message draft number"
-  }
+    description: "replacement created order history message draft number",
+  },
 });
 
 export const discountRemovedMessages = defineMessages({
   orderDiscountRemoved: {
     id: "KXkdMH",
     defaultMessage: "Order discount was removed by ",
-    description: "order discount removed title"
+    description: "order discount removed title",
   },
   productDiscountRemoved: {
     id: "A0Wlg7",
     defaultMessage: "{productName} discount was removed by",
-    description: "product discount removed title"
-  }
+    description: "product discount removed title",
+  },
 });
 
 interface LinkedTimelineEventProps {
@@ -49,20 +49,20 @@ const LinkedTimelineEvent: React.FC<LinkedTimelineEventProps> = ({ event }) => {
           {
             link: orderUrl(relatedOrder?.id),
             text: intl.formatMessage(replacementCreatedMessages.draftNumber, {
-              orderNumber: relatedOrder?.number
-            })
+              orderNumber: relatedOrder?.number,
+            }),
           },
-          { text: intl.formatMessage(replacementCreatedMessages.description) }
+          { text: intl.formatMessage(replacementCreatedMessages.description) },
         ];
       }
       case OrderEventsEnum.ORDER_DISCOUNT_DELETED: {
         return [
           {
             text: intl.formatMessage(
-              discountRemovedMessages.orderDiscountRemoved
-            )
+              discountRemovedMessages.orderDiscountRemoved,
+            ),
           },
-          getEmployeeNameLink(event)
+          getEmployeeNameLink(event),
         ];
       }
       case OrderEventsEnum.ORDER_LINE_DISCOUNT_REMOVED: {
@@ -70,10 +70,10 @@ const LinkedTimelineEvent: React.FC<LinkedTimelineEventProps> = ({ event }) => {
           {
             text: intl.formatMessage(
               discountRemovedMessages.productDiscountRemoved,
-              { productName: lines[0].itemName }
-            )
+              { productName: lines[0].itemName },
+            ),
           },
-          getEmployeeNameLink(event)
+          getEmployeeNameLink(event),
         ];
       }
     }

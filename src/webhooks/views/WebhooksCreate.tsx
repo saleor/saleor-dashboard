@@ -2,7 +2,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import {
   useAppQuery,
   useWebhookCreateMutation,
-  WebhookEventTypeAsyncEnum
+  WebhookEventTypeAsyncEnum,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -30,11 +30,11 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = ({ id }) => {
       if (data.webhookCreate.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
+          text: intl.formatMessage(commonMessages.savedChanges),
         });
         navigate(webhookUrl(data.webhookCreate.webhook.id));
       }
-    }
+    },
   });
 
   const handleSubmit = (data: FormData) =>
@@ -45,17 +45,17 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = ({ id }) => {
             app: id,
             syncEvents: data.syncEvents,
             asyncEvents: data.asyncEvents.includes(
-              WebhookEventTypeAsyncEnum.ANY_EVENTS
+              WebhookEventTypeAsyncEnum.ANY_EVENTS,
             )
               ? [WebhookEventTypeAsyncEnum.ANY_EVENTS]
               : data.asyncEvents,
             isActive: data.isActive,
             name: data.name,
             secretKey: data.secretKey,
-            targetUrl: data.targetUrl
-          }
-        }
-      })
+            targetUrl: data.targetUrl,
+          },
+        },
+      }),
     );
 
   return (
@@ -64,7 +64,7 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = ({ id }) => {
         title={intl.formatMessage({
           id: "JVaz1C",
           defaultMessage: "Create Webhook",
-          description: "window title"
+          description: "window title",
         })}
       />
       <WebhookDetailsPage

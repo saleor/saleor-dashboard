@@ -5,18 +5,18 @@ import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
 import {
   LanguageCodeEnum,
-  ProductVariantTranslationFragment
+  ProductVariantTranslationFragment,
 } from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import {
   TranslationInputFieldName,
-  TranslationsEntitiesPageProps
+  TranslationsEntitiesPageProps,
 } from "@saleor/translations/types";
 import {
   languageEntitiesUrl,
   productVariantUrl,
-  TranslatableEntities
+  TranslatableEntities,
 } from "@saleor/translations/urls";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -45,7 +45,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
   onDiscard,
   onEdit,
   onSubmit,
-  onAttributeValueSubmit
+  onAttributeValueSubmit,
 }) => {
   const intl = useIntl();
 
@@ -53,7 +53,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
     <Container>
       <Backlink
         href={languageEntitiesUrl(languageCode, {
-          tab: TranslatableEntities.products
+          tab: TranslatableEntities.products,
         })}
       >
         {intl.formatMessage(sectionNames.products)}
@@ -64,12 +64,12 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
             id: "98WMlR",
             defaultMessage:
               'Translation Product Variant "{productName}" - {languageCode}',
-            description: "header"
+            description: "header",
           },
           {
             languageCode,
-            productName: getStringOrPlaceholder(data?.name)
-          }
+            productName: getStringOrPlaceholder(data?.name),
+          },
         )}
       >
         <ProductContextSwitcher
@@ -94,13 +94,13 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
           {
             displayName: intl.formatMessage({
               id: "T1f2Yl",
-              defaultMessage: "Variant Name"
+              defaultMessage: "Variant Name",
             }),
             name: TranslationInputFieldName.name,
             translation: data?.translation?.name || null,
             type: "short" as "short",
-            value: data?.name
-          }
+            value: data?.name,
+          },
         ]}
         saveButtonState={saveButtonState}
         richTextResetKey={languageCode}
@@ -123,16 +123,16 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
                   {
                     id: "PajjqE",
                     defaultMessage: "Attribute {number}",
-                    description: "attribute list"
+                    description: "attribute list",
                   },
                   {
-                    number: i + 1
-                  }
+                    number: i + 1,
+                  },
                 ),
                 name: attrVal?.name,
                 translation: attrVal?.translation?.richText || null,
                 type: "rich" as "rich",
-                value: attrVal?.richText
+                value: attrVal?.richText,
               })) || []
             }
             saveButtonState={saveButtonState}

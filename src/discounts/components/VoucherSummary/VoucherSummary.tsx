@@ -23,14 +23,14 @@ export interface VoucherSummaryProps extends ChannelProps {
 
 const VoucherSummary: React.FC<VoucherSummaryProps> = ({
   selectedChannelId,
-  voucher
+  voucher,
 }) => {
   const intl = useIntl();
   const classes = useStyles();
 
   const translatedVoucherTypes = translateVoucherTypes(intl);
   const channel = voucher?.channelListings?.find(
-    listing => listing.channel.id === selectedChannelId
+    listing => listing.channel.id === selectedChannelId,
   );
 
   return (
@@ -59,7 +59,7 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({
         <Typography>
           {maybe<React.ReactNode>(
             () => translatedVoucherTypes[voucher.type],
-            <Skeleton />
+            <Skeleton />,
           )}
         </Typography>
         <FormSpacer />
@@ -78,7 +78,7 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({
               <Money
                 money={{
                   amount: channel?.discountValue,
-                  currency: channel?.channel.currencyCode
+                  currency: channel?.channel.currencyCode,
                 }}
               />
             ) : channel?.discountValue ? (
@@ -103,7 +103,7 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({
             () => (
               <Date date={voucher.startDate} plain />
             ),
-            <Skeleton />
+            <Skeleton />,
           )}
         </Typography>
         <FormSpacer />
@@ -119,7 +119,7 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({
               ) : (
                 <Date date={voucher.endDate} plain />
               ),
-            <Skeleton />
+            <Skeleton />,
           )}
         </Typography>
 
@@ -157,7 +157,7 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({
         <Typography>
           {maybe<React.ReactNode>(
             () => (voucher.usageLimit === null ? "-" : voucher.usageLimit),
-            <Skeleton />
+            <Skeleton />,
           )}
         </Typography>
       </CardContent>

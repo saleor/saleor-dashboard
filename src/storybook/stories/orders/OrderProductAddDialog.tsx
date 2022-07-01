@@ -5,7 +5,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import OrderProductAddDialog, {
-  OrderProductAddDialogProps
+  OrderProductAddDialogProps,
 } from "../../../orders/components/OrderProductAddDialog";
 import { orderLineSearch } from "../../../orders/fixtures";
 import Decorator from "../../Decorator";
@@ -21,7 +21,7 @@ const props: OrderProductAddDialogProps = {
   onSubmit: () => undefined,
   open: true,
   products,
-  selectedChannelId: products[0].variants[0].channelListings[0].channel.id
+  selectedChannelId: products[0].variants[0].channelListings[0].channel.id,
 };
 
 storiesOf("Orders / OrderProductAddDialog", module)
@@ -36,8 +36,8 @@ storiesOf("Orders / OrderProductAddDialog", module)
           code: OrderErrorCode.GRAPHQL_ERROR,
           field: null,
           addressType: null,
-          message: "Graphql Error"
-        }
+          message: "Graphql Error",
+        },
       ]}
     />
   ));

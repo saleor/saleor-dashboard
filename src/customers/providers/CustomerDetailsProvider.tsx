@@ -16,18 +16,18 @@ export const CustomerDetailsContext = createContext<
 
 export const CustomerDetailsProvider: React.FC<CustomerDetailsProviderProps> = ({
   children,
-  id
+  id,
 }) => {
   const { data, loading } = useCustomerDetailsQuery({
     displayLoader: true,
     variables: {
-      id
-    }
+      id,
+    },
   });
 
   const providerValues: CustomerDetailsConsumerProps = {
     customer: data,
-    loading
+    loading,
   };
 
   return (

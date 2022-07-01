@@ -17,13 +17,13 @@ const messages = defineMessages({
   media: {
     id: "/Mcvt4",
     defaultMessage: "Media",
-    description: "section header"
+    description: "section header",
   },
   upload: {
     id: "mGiA6q",
     defaultMessage: "Upload",
-    description: "modal button upload"
-  }
+    description: "modal button upload",
+  },
 });
 
 const useStyles = makeStyles(
@@ -31,26 +31,26 @@ const useStyles = makeStyles(
     card: {
       marginTop: theme.spacing(2),
       [theme.breakpoints.down("sm")]: {
-        marginTop: 0
-      }
+        marginTop: 0,
+      },
     },
     fileField: {
-      display: "none"
+      display: "none",
     },
     icon: {
-      color: "rgba(255, 255, 255, 0.54)"
+      color: "rgba(255, 255, 255, 0.54)",
     },
     image: {
       height: "100%",
       objectFit: "contain",
       userSelect: "none",
-      width: "100%"
+      width: "100%",
     },
     imageContainer: {
       "&:hover, &.dragged": {
         "& $imageOverlay": {
-          display: "block"
-        }
+          display: "block",
+        },
       },
       background: "#ffffff",
       border: "1px solid #eaeaea",
@@ -60,10 +60,10 @@ const useStyles = makeStyles(
       overflow: "hidden",
       padding: theme.spacing(2),
       position: "relative",
-      width: 140
+      width: 140,
     },
     imageGridContainer: {
-      position: "relative"
+      position: "relative",
     },
     imageOverlay: {
       background: "rgba(0, 0, 0, 0.6)",
@@ -74,14 +74,14 @@ const useStyles = makeStyles(
       padding: theme.spacing(2),
       position: "absolute",
       top: 0,
-      width: 140
+      width: 140,
     },
     imageOverlayToolbar: {
       alignContent: "flex-end",
       display: "flex",
       position: "relative",
       right: theme.spacing(-3),
-      top: theme.spacing(-2)
+      top: theme.spacing(-2),
     },
     imageUpload: {
       height: "100%",
@@ -89,13 +89,13 @@ const useStyles = makeStyles(
       outline: 0,
       position: "absolute",
       top: 0,
-      width: "100%"
+      width: "100%",
     },
     imageUploadActive: {
-      zIndex: 1
+      zIndex: 1,
     },
     imageUploadIconActive: {
-      display: "block"
+      display: "block",
     },
     root: {
       display: "grid",
@@ -103,17 +103,17 @@ const useStyles = makeStyles(
       gridRowGap: theme.spacing(2),
       gridTemplateColumns: "repeat(4, 1fr)",
       [theme.breakpoints.down("sm")]: {
-        gridTemplateColumns: "repeat(3, 1fr)"
+        gridTemplateColumns: "repeat(3, 1fr)",
       },
       [theme.breakpoints.down("xs")]: {
-        gridTemplateColumns: "repeat(2, 1fr)"
-      }
+        gridTemplateColumns: "repeat(2, 1fr)",
+      },
     },
     rootDragActive: {
-      opacity: 0.2
-    }
+      opacity: 0.2,
+    },
   }),
-  { name: "ProductMedia" }
+  { name: "ProductMedia" },
 );
 
 interface SortableMediaProps {
@@ -129,7 +129,7 @@ interface SortableMediaProps {
 const SortableMedia = SortableElement<SortableMediaProps>(
   ({ media, editHref, onDelete }) => (
     <MediaTile media={media} editHref={editHref} onDelete={onDelete} />
-  )
+  ),
 );
 
 interface MediaListContainerProps {
@@ -158,7 +158,7 @@ const MediaListContainer = SortableContainer<MediaListContainerProps>(
           <MediaTile loading={true} media={mediaObj} key={index} />
         ))}
     </div>
-  )
+  ),
 );
 
 interface ProductMediaProps {
@@ -180,7 +180,7 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
     onImageDelete,
     onImageReorder,
     onImageUpload,
-    openMediaUrlModal
+    openMediaUrlModal,
   } = props;
 
   const classes = useStyles(props);
@@ -208,13 +208,13 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
               sortOrder: fileIndex,
               type: ProductMediaType.IMAGE,
               url: event.target.result as string,
-              oembedData: null
-            }
+              oembedData: null,
+            },
           ]);
         };
         reader.readAsDataURL(file);
       });
-    }
+    },
   });
 
   return (
@@ -282,7 +282,7 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
                     onSortEnd={onImageReorder}
                     className={classNames({
                       [classes.root]: true,
-                      [classes.rootDragActive]: isDragActive
+                      [classes.rootDragActive]: isDragActive,
                     })}
                     onDelete={onImageDelete}
                     getEditHref={getImageEditUrl}

@@ -21,7 +21,7 @@ const TestAdapter = (): TrackerMethods => {
   return {
     captureException,
     init,
-    setUserData
+    setUserData,
   };
 };
 
@@ -59,7 +59,7 @@ describe("Error Tracking", () => {
     const userData = {
       email: "john@example.com",
       id: "id",
-      username: "John Doe"
+      username: "John Doe",
     };
     errorTracking.setUserData(userData);
 
@@ -68,13 +68,13 @@ describe("Error Tracking", () => {
 
   it("Does save user data with proper permission", () => {
     const errorTracking = ErrorTrackerFactory(TestAdapter(), [
-      TrackerPermission.USER_DATA
+      TrackerPermission.USER_DATA,
     ]);
     errorTracking.init();
     const userData = {
       email: "john@example.com",
       id: "id",
-      username: "John Doe"
+      username: "John Doe",
     };
     errorTracking.setUserData(userData);
 

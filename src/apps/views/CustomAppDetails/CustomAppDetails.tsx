@@ -17,7 +17,7 @@ import {
   useAppTokenDeleteMutation,
   useAppUpdateMutation,
   useWebhookDeleteMutation,
-  WebhookDeleteMutation
+  WebhookDeleteMutation,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -32,13 +32,13 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import CustomAppDetailsPage, {
-  CustomAppDetailsPageFormData
+  CustomAppDetailsPageFormData,
 } from "../../components/CustomAppDetailsPage";
 import {
   appsListUrl,
   customAppUrl,
   CustomAppUrlDialog,
-  CustomAppUrlQueryParams
+  CustomAppUrlQueryParams,
 } from "../../urls";
 
 interface OrderListProps {
@@ -52,7 +52,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
   id,
   params,
   token,
-  onTokenClose
+  onTokenClose,
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
@@ -68,7 +68,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
 
   const { data, loading, refetch } = useAppQuery({
     displayLoader: true,
-    variables: { id }
+    variables: { id },
   });
   const [activateApp, activateAppResult] = useAppActivateMutation({
     onCompleted: data => {
@@ -76,7 +76,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
       if (errors?.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(appMessages.appActivated)
+          text: intl.formatMessage(appMessages.appActivated),
         });
         refetch();
         closeModal();
@@ -84,11 +84,11 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
         errors.forEach(error =>
           notify({
             status: "error",
-            text: getAppErrorMessage(error, intl)
-          })
+            text: getAppErrorMessage(error, intl),
+          }),
         );
       }
-    }
+    },
   });
   const [deactivateApp, deactivateAppResult] = useAppDeactivateMutation({
     onCompleted: data => {
@@ -96,7 +96,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
       if (errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(appMessages.appDeactivated)
+          text: intl.formatMessage(appMessages.appDeactivated),
         });
         refetch();
         closeModal();
@@ -104,18 +104,18 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
         errors.forEach(error =>
           notify({
             status: "error",
-            text: getAppErrorMessage(error, intl)
-          })
+            text: getAppErrorMessage(error, intl),
+          }),
         );
       }
-    }
+    },
   });
 
   const onWebhookDelete = (data: WebhookDeleteMutation) => {
     if (data.webhookDelete.errors.length === 0) {
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges)
+        text: intl.formatMessage(commonMessages.savedChanges),
       });
       navigate(customAppUrl(id));
       closeModal();
@@ -124,14 +124,14 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
   };
 
   const [webhookDelete, webhookDeleteOpts] = useWebhookDeleteMutation({
-    onCompleted: onWebhookDelete
+    onCompleted: onWebhookDelete,
   });
 
   const handleRemoveWebhookConfirm = () => {
     webhookDelete({
       variables: {
-        id: params.id
-      }
+        id: params.id,
+      },
     });
   };
 
@@ -139,7 +139,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
     if (data?.appUpdate?.errors?.length === 0) {
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges)
+        text: intl.formatMessage(commonMessages.savedChanges),
       });
     }
   };
@@ -158,7 +158,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
     if (data?.appTokenDelete?.errors.length === 0) {
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges)
+        text: intl.formatMessage(commonMessages.savedChanges),
       });
       refetch();
       closeModal();
@@ -166,13 +166,13 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
   };
 
   const [updateApp, updateAppOpts] = useAppUpdateMutation({
-    onCompleted: onAppUpdate
+    onCompleted: onAppUpdate,
   });
   const [createToken, createTokenOpts] = useAppTokenCreateMutation({
-    onCompleted: onTokenCreate
+    onCompleted: onTokenCreate,
   });
   const [deleteToken, deleteTokenOpts] = useAppTokenDeleteMutation({
-    onCompleted: onTokenDelete
+    onCompleted: onTokenDelete,
   });
 
   const handleSubmit = async (data: CustomAppDetailsPageFormData) =>
@@ -184,10 +184,10 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
             name: data.name,
             permissions: data.hasFullAccess
               ? shop.permissions.map(permission => permission.code)
-              : data.permissions
-          }
-        }
-      })
+              : data.permissions,
+          },
+        },
+      }),
     );
 
   const handleTokenCreate = (name: string) =>
@@ -195,16 +195,16 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
       variables: {
         input: {
           app: id,
-          name
-        }
-      }
+          name,
+        },
+      },
     });
 
   const handleTokenDelete = () =>
     deleteToken({
       variables: {
-        id: params.id
-      }
+        id: params.id,
+      },
     });
 
   const handleActivateConfirm = () => {
@@ -230,13 +230,13 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
         onTokenCreate={() => openModal("create-token")}
         onTokenDelete={id =>
           openModal("remove-token", {
-            id
+            id,
           })
         }
         webhookCreateHref={webhookAddPath(id)}
         onWebhookRemove={id =>
           openModal("remove-webhook", {
-            id
+            id,
           })
         }
         onAppActivateOpen={() => openModal("app-activate")}

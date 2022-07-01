@@ -9,29 +9,29 @@ import {
   useAssignProductAttributeMutation,
   useProductTypeAttributeReorderMutation,
   useProductTypeDeleteMutation,
-  useUnassignProductAttributeMutation
+  useUnassignProductAttributeMutation,
 } from "@saleor/graphql";
 
 import { getMutationProviderData } from "../../misc";
 
 function moveAttribute(
   attributes: ProductTypeDetailsFragment["productAttributes"],
-  move: ReorderInput
+  move: ReorderInput,
 ) {
   const attributeIndex = attributes.findIndex(
-    attribute => attribute.id === move.id
+    attribute => attribute.id === move.id,
   );
   const newIndex = attributeIndex + move.sortOrder;
 
   const attributesWithoutMovedOne = [
     ...attributes.slice(0, attributeIndex),
-    ...attributes.slice(attributeIndex + 1)
+    ...attributes.slice(attributeIndex + 1),
   ];
 
   return [
     ...attributesWithoutMovedOne.slice(0, newIndex),
     attributes[attributeIndex],
-    ...attributesWithoutMovedOne.slice(newIndex)
+    ...attributesWithoutMovedOne.slice(newIndex),
   ];
 }
 
@@ -40,7 +40,7 @@ interface ProductTypeOperationsProps {
   onAssignAttribute: (data: AssignProductAttributeMutation) => void;
   onUnassignAttribute: (data: UnassignProductAttributeMutation) => void;
   onProductTypeAttributeReorder: (
-    data: ProductTypeAttributeReorderMutation
+    data: ProductTypeAttributeReorderMutation,
   ) => void;
   onProductTypeDelete: (data: ProductTypeDeleteMutation) => void;
 }
@@ -50,16 +50,16 @@ function useProductTypeOperations({
   onProductTypeAttributeReorder,
   onProductTypeDelete,
   onUnassignAttribute,
-  productType
+  productType,
 }: ProductTypeOperationsProps) {
   const deleteProductType = useProductTypeDeleteMutation({
-    onCompleted: onProductTypeDelete
+    onCompleted: onProductTypeDelete,
   });
   const assignAttribute = useAssignProductAttributeMutation({
-    onCompleted: onAssignAttribute
+    onCompleted: onAssignAttribute,
   });
   const unassignAttribute = useUnassignProductAttributeMutation({
-    onCompleted: onUnassignAttribute
+    onCompleted: onUnassignAttribute,
   });
   const [...reorderAttribute] = useProductTypeAttributeReorderMutation({
     onCompleted: onProductTypeAttributeReorder,
@@ -77,17 +77,17 @@ function useProductTypeOperations({
           variantAttributes:
             variables.type === ProductAttributeType.VARIANT
               ? moveAttribute(productType.variantAttributes, variables.move)
-              : productType.variantAttributes
-        }
-      }
-    })
+              : productType.variantAttributes,
+        },
+      },
+    }),
   });
 
   return {
     assignAttribute: getMutationProviderData(...assignAttribute),
     deleteProductType: getMutationProviderData(...deleteProductType),
     reorderAttribute: getMutationProviderData(...reorderAttribute),
-    unassignAttribute: getMutationProviderData(...unassignAttribute)
+    unassignAttribute: getMutationProviderData(...unassignAttribute),
   };
 }
 

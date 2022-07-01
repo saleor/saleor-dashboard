@@ -11,16 +11,16 @@ const useStyles = makeStyles(
       alignItems: "center",
       display: "flex",
       justifyContent: "space-between",
-      padding: theme.spacing(1, 3)
+      padding: theme.spacing(1, 3),
     },
     clear: {
-      marginRight: theme.spacing(1)
+      marginRight: theme.spacing(1),
     },
     label: {
-      fontWeight: 600
-    }
+      fontWeight: 600,
+    },
   }),
-  { name: "FilterContentHeader" }
+  { name: "FilterContentHeader" },
 );
 
 interface FilterContentHeaderProps {
@@ -28,7 +28,7 @@ interface FilterContentHeaderProps {
 }
 
 const FilterContentHeader: React.FC<FilterContentHeaderProps> = ({
-  onClear
+  onClear,
 }) => {
   const classes = useStyles({});
 

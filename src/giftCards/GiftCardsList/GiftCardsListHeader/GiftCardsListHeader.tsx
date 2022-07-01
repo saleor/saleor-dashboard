@@ -19,7 +19,7 @@ const GiftCardsListHeader: React.FC = () => {
   const {
     openCreateDialog,
     openBulkCreateDialog,
-    openExportDialog
+    openExportDialog,
   } = useGiftCardListDialogs();
 
   const openSettings = () => navigate(giftCardSettingsUrl);
@@ -28,18 +28,18 @@ const GiftCardsListHeader: React.FC = () => {
     {
       label: intl.formatMessage(messages.settings),
       testId: "settingsMenuItem",
-      onSelect: openSettings
+      onSelect: openSettings,
     },
     {
       label: intl.formatMessage(messages.bulkIssue),
       testId: "bulkIssueMenuItem",
-      onSelect: openBulkCreateDialog
+      onSelect: openBulkCreateDialog,
     },
     {
       label: intl.formatMessage(messages.exportCodes),
       testId: "exportCodesMenuItem",
-      onSelect: openExportDialog
-    }
+      onSelect: openExportDialog,
+    },
   ];
 
   return (

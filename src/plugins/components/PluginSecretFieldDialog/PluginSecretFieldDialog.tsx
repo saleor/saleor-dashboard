@@ -3,7 +3,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  TextField
+  TextField,
 } from "@material-ui/core";
 import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
@@ -11,7 +11,7 @@ import Form from "@saleor/components/Form";
 import Skeleton from "@saleor/components/Skeleton";
 import {
   ConfigurationItemFragment,
-  ConfigurationTypeFieldEnum
+  ConfigurationTypeFieldEnum,
 } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -34,12 +34,12 @@ const PluginSecretFieldDialog: React.FC<PluginSecretFieldDialogProps> = ({
   field,
   onClose,
   onConfirm,
-  open
+  open,
 }) => {
   const intl = useIntl();
 
   const initialForm: PluginSecretFieldDialogFormData = {
-    value: ""
+    value: "",
   };
 
   return (
@@ -50,13 +50,13 @@ const PluginSecretFieldDialog: React.FC<PluginSecretFieldDialogProps> = ({
             intl.formatMessage({
               id: "qCH2eZ",
               defaultMessage: "Add Value to Authorization Field",
-              description: "header"
+              description: "header",
             })
           ) : (
             intl.formatMessage({
               id: "Xy2T+y",
               defaultMessage: "Edit Authorization Field",
-              description: "header"
+              description: "header",
             })
           )
         ) : (

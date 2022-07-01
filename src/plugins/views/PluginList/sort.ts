@@ -3,7 +3,7 @@ import { PluginListUrlSortField } from "@saleor/plugins/urls";
 import { createGetSortQueryVariables } from "@saleor/utils/sort";
 
 export function getSortQueryField(
-  sort: PluginListUrlSortField
+  sort: PluginListUrlSortField,
 ): PluginSortField {
   switch (sort) {
     case PluginListUrlSortField.name:
@@ -16,5 +16,5 @@ export function getSortQueryField(
 }
 
 export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField
+  getSortQueryField,
 );

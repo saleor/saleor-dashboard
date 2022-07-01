@@ -15,7 +15,7 @@ const GiftCardUpdateDetailsBalanceSection: React.FC = () => {
   const intl = useIntl();
 
   const {
-    giftCard: { currentBalance, initialBalance }
+    giftCard: { currentBalance, initialBalance },
   } = useGiftCardDetails();
 
   const progressBarWidth = !!currentBalance.amount

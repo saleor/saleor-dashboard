@@ -10,7 +10,7 @@ const props: AppDeleteDialogProps = {
   onClose: () => undefined,
   onConfirm: () => undefined,
   open: true,
-  type: "EXTERNAL"
+  type: "EXTERNAL",
 };
 
 storiesOf("Views / Apps / Delete app", module)

@@ -7,25 +7,25 @@ const useStyles = makeStyles(
   theme => ({
     selectedTabLabel: {
       "&$tabLabel": {
-        color: theme.typography.body1.color
-      }
+        color: theme.typography.body1.color,
+      },
     },
     tabLabel: {
       "&:hover": {
-        color: theme.typography.body1.color
+        color: theme.typography.body1.color,
       },
       color: theme.typography.caption.color,
       fontSize: theme.typography.body1.fontSize,
-      fontWeight: 400
+      fontWeight: 400,
     },
     tabRoot: {
       minWidth: "80px",
       opacity: 1,
       paddingTop: theme.spacing(1),
-      textTransform: "initial" as "initial"
-    }
+      textTransform: "initial" as "initial",
+    },
   }),
-  { name: "FilterTab" }
+  { name: "FilterTab" },
 );
 
 interface FilterTabProps {
@@ -47,8 +47,8 @@ export const FilterTab: React.FC<FilterTabProps> = props => {
       classes={{
         root: classes.tabRoot,
         wrapper: classNames(classes.tabLabel, {
-          [classes.selectedTabLabel]: selected
-        })
+          [classes.selectedTabLabel]: selected,
+        }),
       }}
       onClick={onClick}
       value={value}

@@ -8,19 +8,19 @@ const useStyles = makeStyles(
   theme => ({
     attributeSection: {
       "&:last-of-type": {
-        paddingBottom: 0
+        paddingBottom: 0,
       },
-      padding: theme.spacing(2, 0)
+      padding: theme.spacing(2, 0),
     },
     attributeSectionButton: {
-      float: "right"
+      float: "right",
     },
     attributeSectionLabel: {
       alignItems: "center",
-      display: "flex"
-    }
+      display: "flex",
+    },
   }),
-  { name: "ExtendedAttributeRow" }
+  { name: "ExtendedAttributeRow" },
 );
 
 interface ExtendedAttributeRowProps {

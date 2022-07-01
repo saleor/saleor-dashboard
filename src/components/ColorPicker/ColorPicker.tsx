@@ -14,12 +14,12 @@ import { useIntl } from "react-intl";
 const useStyles = makeStyles(
   theme => ({
     picker: {
-      display: "flex"
+      display: "flex",
     },
 
     saturation: {
       width: "220px !important",
-      height: "220px !important"
+      height: "220px !important",
     },
 
     colorInput: {
@@ -29,11 +29,11 @@ const useStyles = makeStyles(
 
       "& input": {
         textAlign: "right",
-        padding: "15px"
-      }
-    }
+        padding: "15px",
+      },
+    },
   }),
-  { name: "ColorPicker" }
+  { name: "ColorPicker" },
 );
 
 export type ColorPickerProps<T = any> = Pick<
@@ -46,12 +46,12 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
   setError,
   errors,
   onColorChange,
-  data
+  data,
 }) => {
   const classes = useStyles();
   const intl = useIntl();
   const [hex, setHex] = useState<string>(
-    data.value ? data.value.replace("#", "") : "000000"
+    data.value ? data.value.replace("#", "") : "000000",
   );
   const [hue, setHue] = useState<number>(convert.hex.hsv(hex)[0]);
 
@@ -60,7 +60,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
   const isValidColor = hex.match(/^(?:[0-9a-fA-F]{3}){1,2}$/);
 
   const handleRGBChange = (
-    rgbColor: RequireOnlyOne<{ r: string; g: string; b: string }>
+    rgbColor: RequireOnlyOne<{ r: string; g: string; b: string }>,
   ) => {
     const getValue = (val: string): number => {
       if (!val) {
@@ -74,8 +74,8 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
       convert.rgb.hex([
         getValue(rgbColor.r),
         getValue(rgbColor.g),
-        getValue(rgbColor.b)
-      ] as RGB)
+        getValue(rgbColor.b),
+      ] as RGB),
     );
   };
 

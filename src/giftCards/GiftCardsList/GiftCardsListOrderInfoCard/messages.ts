@@ -5,6 +5,6 @@ export const giftCardListOrderCardMessages = defineMessages({
     id: "31hYP2",
     defaultMessage:
       "Gift cards will appear after their order is fullfilled. <link>View Orders with Gift Cards</link>",
-    description: "alert card message"
-  }
+    description: "alert card message",
+  },
 });

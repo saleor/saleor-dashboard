@@ -34,8 +34,8 @@ jest.mock("@saleor/utils/richText/useRichText");
   setEnd: () => {},
   commonAncestorContainer: {
     nodeName: "BODY",
-    ownerDocument: document
-  }
+    ownerDocument: document,
+  },
 });
 
 const props: ProductUpdatePageProps = {
@@ -86,13 +86,13 @@ const props: ProductUpdatePageProps = {
   taxTypes,
   variants: product.variants,
   warehouses: warehouseList,
-  attributeValues: []
+  attributeValues: [],
 };
 
 const selectors = {
   dropdown: `[data-test-id="autocomplete-dropdown"]`,
   empty: `[data-test-type="empty"]`,
-  input: `[data-test-id="attribute-value"] input`
+  input: `[data-test-id="attribute-value"] input`,
 };
 
 describe("Product details page", () => {
@@ -103,7 +103,7 @@ describe("Product details page", () => {
         <Wrapper>
           <ProductUpdatePage {...props} />
         </Wrapper>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     expect(component.find(selectors.dropdown).exists()).toBeFalsy();
 
@@ -125,7 +125,7 @@ describe("Product details page", () => {
       component
         .find(selectors.input)
         .first()
-        .prop("value")
+        .prop("value"),
     ).toEqual("");
 
     await act(async () => {

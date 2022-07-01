@@ -14,7 +14,7 @@ const Wrapper: React.FC = ({ children }) => (
       <RawLocaleProvider
         value={{
           locale: Locale.EN,
-          setLocale: () => undefined
+          setLocale: () => undefined,
         }}
       >
         <DateProvider value={+new Date("2018-08-07T14:30:44+00:00")}>

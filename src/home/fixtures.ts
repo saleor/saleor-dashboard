@@ -1,7 +1,7 @@
 import { HomeQuery, OrderEventsEnum } from "@saleor/graphql";
 
 export const shop: (placeholderImage: string) => HomeQuery = (
-  placeholderImage: string
+  placeholderImage: string,
 ) => ({
   __typename: "Query",
   activities: {
@@ -25,9 +25,9 @@ export const shop: (placeholderImage: string) => HomeQuery = (
           user: {
             __typename: "User",
             email: "admin@example.com",
-            id: "VXNlcjoyMQ=="
-          }
-        }
+            id: "VXNlcjoyMQ==",
+          },
+        },
       },
       {
         __typename: "OrderEventCountableEdge",
@@ -44,8 +44,8 @@ export const shop: (placeholderImage: string) => HomeQuery = (
           oversoldItems: null,
           quantity: null,
           type: OrderEventsEnum.PLACED,
-          user: null
-        }
+          user: null,
+        },
       },
       {
         __typename: "OrderEventCountableEdge",
@@ -62,8 +62,8 @@ export const shop: (placeholderImage: string) => HomeQuery = (
           oversoldItems: null,
           quantity: null,
           type: OrderEventsEnum.ORDER_FULLY_PAID,
-          user: null
-        }
+          user: null,
+        },
       },
       {
         __typename: "OrderEventCountableEdge",
@@ -83,9 +83,9 @@ export const shop: (placeholderImage: string) => HomeQuery = (
           user: {
             __typename: "User",
             email: "admin@example.com",
-            id: "VXNlcjoyMQ=="
-          }
-        }
+            id: "VXNlcjoyMQ==",
+          },
+        },
       },
       {
         __typename: "OrderEventCountableEdge",
@@ -105,9 +105,9 @@ export const shop: (placeholderImage: string) => HomeQuery = (
           user: {
             __typename: "User",
             email: "admin@example.com",
-            id: "VXNlcjoyMQ=="
-          }
-        }
+            id: "VXNlcjoyMQ==",
+          },
+        },
       },
       {
         __typename: "OrderEventCountableEdge",
@@ -127,9 +127,9 @@ export const shop: (placeholderImage: string) => HomeQuery = (
           user: {
             __typename: "User",
             email: "admin@example.com",
-            id: "VXNlcjoyMQ=="
-          }
-        }
+            id: "VXNlcjoyMQ==",
+          },
+        },
       },
       {
         __typename: "OrderEventCountableEdge",
@@ -149,9 +149,9 @@ export const shop: (placeholderImage: string) => HomeQuery = (
           user: {
             __typename: "User",
             email: "admin@example.com",
-            id: "VXNlcjoyMQ=="
-          }
-        }
+            id: "VXNlcjoyMQ==",
+          },
+        },
       },
       {
         __typename: "OrderEventCountableEdge",
@@ -168,8 +168,8 @@ export const shop: (placeholderImage: string) => HomeQuery = (
           oversoldItems: null,
           quantity: null,
           type: OrderEventsEnum.PLACED,
-          user: null
-        }
+          user: null,
+        },
       },
       {
         __typename: "OrderEventCountableEdge",
@@ -189,9 +189,9 @@ export const shop: (placeholderImage: string) => HomeQuery = (
           user: {
             __typename: "User",
             email: "admin@example.com",
-            id: "VXNlcjoyMQ=="
-          }
-        }
+            id: "VXNlcjoyMQ==",
+          },
+        },
       },
       {
         __typename: "OrderEventCountableEdge",
@@ -211,9 +211,9 @@ export const shop: (placeholderImage: string) => HomeQuery = (
           user: {
             __typename: "User",
             email: null,
-            id: "VXNlcjoyMQ=="
-          }
-        }
+            id: "VXNlcjoyMQ==",
+          },
+        },
       },
       {
         __typename: "OrderEventCountableEdge",
@@ -230,8 +230,8 @@ export const shop: (placeholderImage: string) => HomeQuery = (
           oversoldItems: null,
           quantity: null,
           type: OrderEventsEnum.PLACED,
-          user: null
-        }
+          user: null,
+        },
       },
       {
         __typename: "OrderEventCountableEdge",
@@ -248,8 +248,8 @@ export const shop: (placeholderImage: string) => HomeQuery = (
           oversoldItems: null,
           quantity: null,
           type: OrderEventsEnum.PLACED,
-          user: null
-        }
+          user: null,
+        },
       },
       {
         __typename: "OrderEventCountableEdge",
@@ -266,8 +266,8 @@ export const shop: (placeholderImage: string) => HomeQuery = (
           oversoldItems: null,
           quantity: null,
           type: OrderEventsEnum.ORDER_FULLY_PAID,
-          user: null
-        }
+          user: null,
+        },
       },
       {
         __typename: "OrderEventCountableEdge",
@@ -284,22 +284,22 @@ export const shop: (placeholderImage: string) => HomeQuery = (
           oversoldItems: null,
           quantity: null,
           type: OrderEventsEnum.ORDER_FULLY_PAID,
-          user: null
-        }
-      }
-    ]
+          user: null,
+        },
+      },
+    ],
   },
   ordersToCapture: {
     __typename: "OrderCountableConnection",
-    totalCount: 0
+    totalCount: 0,
   },
   ordersToFulfill: {
     __typename: "OrderCountableConnection",
-    totalCount: 1
+    totalCount: 1,
   },
   ordersToday: {
     __typename: "OrderCountableConnection",
-    totalCount: 1
+    totalCount: 1,
   },
   productTopToday: {
     __typename: "ProductVariantCountableConnection",
@@ -316,10 +316,10 @@ export const shop: (placeholderImage: string) => HomeQuery = (
                   __typename: "AttributeValue",
                   id: "QXR0cmlidXRlVmFsdWU6OTI=",
                   name: "XS",
-                  sortOrder: 0
-                }
-              ]
-            }
+                  sortOrder: 0,
+                },
+              ],
+            },
           ],
           id: "UHJvZHVjdFZhcmlhbnQ6NDM=",
           product: {
@@ -328,8 +328,8 @@ export const shop: (placeholderImage: string) => HomeQuery = (
             name: "Gardner-Martin",
             thumbnail: {
               __typename: "Image",
-              url: placeholderImage
-            }
+              url: placeholderImage,
+            },
           },
           quantityOrdered: 1,
           revenue: {
@@ -337,23 +337,23 @@ export const shop: (placeholderImage: string) => HomeQuery = (
             gross: {
               __typename: "Money",
               amount: 37.65,
-              currency: "USD"
-            }
-          }
-        }
-      }
-    ]
+              currency: "USD",
+            },
+          },
+        },
+      },
+    ],
   },
   productsOutOfStock: {
     __typename: "ProductCountableConnection",
-    totalCount: 0
+    totalCount: 0,
   },
   salesToday: {
     __typename: "TaxedMoney",
     gross: {
       __typename: "Money",
       amount: 57.15,
-      currency: "USD"
-    }
-  }
+      currency: "USD",
+    },
+  },
 });

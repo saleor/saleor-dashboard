@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import RadioGroupField, {
-  RadioGroupFieldChoice
+  RadioGroupFieldChoice,
 } from "@saleor/components/RadioGroupField";
 import { SaleType as SaleTypeEnum } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
@@ -21,13 +21,13 @@ const useStyles = makeStyles(
   theme => ({
     root: {
       "&&": {
-        paddingBottom: theme.spacing(1.5)
-      }
-    }
+        paddingBottom: theme.spacing(1.5),
+      },
+    },
   }),
   {
-    name: "SaleType"
-  }
+    name: "SaleType",
+  },
 );
 
 function createChoices(intl: IntlShape): RadioGroupFieldChoice[] {
@@ -36,18 +36,18 @@ function createChoices(intl: IntlShape): RadioGroupFieldChoice[] {
       label: intl.formatMessage({
         id: "s17U7u",
         defaultMessage: "Percentage",
-        description: "discount type"
+        description: "discount type",
       }),
-      value: SaleTypeEnum.PERCENTAGE
+      value: SaleTypeEnum.PERCENTAGE,
     },
     {
       label: intl.formatMessage({
         id: "JnzDrI",
         defaultMessage: "Fixed Amount",
-        description: "discount type"
+        description: "discount type",
       }),
-      value: SaleTypeEnum.FIXED
-    }
+      value: SaleTypeEnum.FIXED,
+    },
   ];
 }
 
@@ -65,7 +65,7 @@ const SaleType: React.FC<SaleTypeProps> = props => {
         title={intl.formatMessage({
           id: "WkxE8/",
           defaultMessage: "Discount Type",
-          description: "percentage or fixed, header"
+          description: "percentage or fixed, header",
         })}
       />
       <CardContent className={classes.root}>

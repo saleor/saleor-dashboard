@@ -18,18 +18,18 @@ const useStyles = makeStyles(
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "baseline",
-      width: "100%"
-    }
+      width: "100%",
+    },
   }),
-  { name: "ExtendedDiscountTimelineEvent" }
+  { name: "ExtendedDiscountTimelineEvent" },
 );
 
 export const messages = defineMessages({
   reasonLabel: {
     id: "kVOslW",
     defaultMessage: "Reason for discount",
-    description: "reason for discount label"
-  }
+    description: "reason for discount label",
+  },
 });
 
 interface ExtendedTimelineEventProps {
@@ -39,7 +39,7 @@ interface ExtendedTimelineEventProps {
 
 const ExtendedDiscountTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
   event,
-  titleElements
+  titleElements,
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
@@ -58,7 +58,7 @@ const ExtendedDiscountTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
     amount: moneyData,
     oldValueType: oldCalculationMode,
     oldValue,
-    oldAmount: oldMoneyData
+    oldAmount: oldMoneyData,
   } = parsedDiscount;
 
   const shouldDisplayOldNewSections = !!oldValue;

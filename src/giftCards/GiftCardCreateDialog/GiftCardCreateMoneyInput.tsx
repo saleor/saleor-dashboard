@@ -9,7 +9,7 @@ import { useIntl } from "react-intl";
 
 import {
   GiftCardBulkCreateFormErrors,
-  GiftCardCreateCommonFormData
+  GiftCardCreateCommonFormData,
 } from "../GiftCardBulkCreateDialog/types";
 import { getGiftCardErrorMessage } from "../GiftCardUpdate/messages";
 import { giftCardCreateMessages as messages } from "./messages";
@@ -26,7 +26,7 @@ const GiftCardCreateMoneyInput: React.FC<GiftCardCreateMoneyInputProps> = ({
   errors,
   data: { balanceAmount, balanceCurrency },
   change,
-  set
+  set,
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -37,7 +37,7 @@ const GiftCardCreateMoneyInput: React.FC<GiftCardCreateMoneyInputProps> = ({
 
   const [savedCurrency, setCurrency] = useLocalStorage(
     "giftCardCreateCurrency",
-    undefined
+    undefined,
   );
 
   const getInitialCurrency = () => {
@@ -53,7 +53,7 @@ const GiftCardCreateMoneyInput: React.FC<GiftCardCreateMoneyInputProps> = ({
 
   useEffect(() => {
     set({
-      balanceCurrency: getInitialCurrency()
+      balanceCurrency: getInitialCurrency(),
     });
   }, []);
 
@@ -77,12 +77,12 @@ const GiftCardCreateMoneyInput: React.FC<GiftCardCreateMoneyInputProps> = ({
         label: intl.formatMessage(messages.amountLabel),
         name: "balanceAmount",
         value: balanceAmount,
-        minValue: 0
+        minValue: 0,
       }}
       selectFieldProps={{
         name: "balanceCurrency",
         value: balanceCurrency,
-        className: classes.currencySelectField
+        className: classes.currencySelectField,
       }}
     />
   );

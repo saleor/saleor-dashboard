@@ -7,36 +7,36 @@ import { getCommonFormFieldErrorMessage } from "./common";
 const messages = defineMessages({
   invalidPassword: {
     id: "eu98dw",
-    defaultMessage: "Invalid password"
+    defaultMessage: "Invalid password",
   },
   outOfScopeGroup: {
     id: "1n1tOR",
-    defaultMessage: "Group is out of your permission scope"
+    defaultMessage: "Group is out of your permission scope",
   },
   outOfScopeUser: {
     id: "KRqgfo",
-    defaultMessage: "User is out of your permissions scope"
+    defaultMessage: "User is out of your permissions scope",
   },
   passwordNumeric: {
     id: "cY42ht",
-    defaultMessage: "Password cannot be entirely numeric"
+    defaultMessage: "Password cannot be entirely numeric",
   },
   tooCommon: {
     id: "wn3di2",
-    defaultMessage: "This password is too commonly used"
+    defaultMessage: "This password is too commonly used",
   },
   tooShort: {
     id: "LR3HlT",
-    defaultMessage: "This password is too short"
+    defaultMessage: "This password is too short",
   },
   tooSimilar: {
     id: "1wyZpQ",
-    defaultMessage: "These passwords are too similar"
+    defaultMessage: "These passwords are too similar",
   },
   unique: {
     id: "TDhHMi",
-    defaultMessage: "This needs to be unique"
-  }
+    defaultMessage: "This needs to be unique",
+  },
 });
 
 interface ErrorFragment {

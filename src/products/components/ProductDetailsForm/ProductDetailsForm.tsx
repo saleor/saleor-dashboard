@@ -29,14 +29,14 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
   data,
   disabled,
   errors,
-  onChange
+  onChange,
 }) => {
   const intl = useIntl();
   const {
     editorRef,
     defaultValue,
     isReadyForMount,
-    handleChange
+    handleChange,
   } = useRichTextContext();
 
   const formErrors = getFormErrors(["name", "description", "rating"], errors);
@@ -54,7 +54,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
           label={intl.formatMessage({
             id: "6AMFki",
             defaultMessage: "Name",
-            description: "product name"
+            description: "product name",
           })}
           name="name"
           value={data.name}
@@ -90,7 +90,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
             label={intl.formatMessage({
               id: "L7N+0y",
               defaultMessage: "Product Rating",
-              description: "product rating"
+              description: "product rating",
             })}
             name="rating"
             value={data.rating || ""}

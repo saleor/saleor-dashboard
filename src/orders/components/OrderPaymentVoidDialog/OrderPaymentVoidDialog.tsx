@@ -3,7 +3,7 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle
+  DialogTitle,
 } from "@material-ui/core";
 import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
@@ -28,7 +28,7 @@ const OrderPaymentVoidDialog: React.FC<OrderPaymentVoidDialogProps> = ({
   errors,
   open,
   onConfirm,
-  onClose
+  onClose,
 }) => {
   const intl = useIntl();
 

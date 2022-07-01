@@ -6,7 +6,7 @@ import { MemoryRouter } from "react-router-dom";
 
 import {
   ExitFormDialogContext,
-  useExitFormDialogProvider
+  useExitFormDialogProvider,
 } from "./ExitFormDialogProvider";
 import { useExitFormDialog } from "./useExitFormDialog";
 
@@ -34,7 +34,7 @@ const setup = (submitFn: () => SubmitPromise, confirmLeave = true) =>
       return {
         form,
         exit,
-        history
+        history,
       };
     },
     {
@@ -42,8 +42,8 @@ const setup = (submitFn: () => SubmitPromise, confirmLeave = true) =>
         <MemoryRouter initialEntries={[{ pathname: "/" }]}>
           <MockExitFormDialogProvider>{children}</MockExitFormDialogProvider>
         </MemoryRouter>
-      )
-    }
+      ),
+    },
   );
 
 describe("useExitFormDialog", () => {
@@ -55,7 +55,7 @@ describe("useExitFormDialog", () => {
     // When
     act(() => {
       result.current.form.change({
-        target: { name: "field", value: "something" }
+        target: { name: "field", value: "something" },
       });
     });
     act(() => {
@@ -75,7 +75,7 @@ describe("useExitFormDialog", () => {
     // When
     act(() => {
       result.current.form.change({
-        target: { name: "field", value: "something" }
+        target: { name: "field", value: "something" },
       });
     });
     act(() => {
@@ -90,14 +90,14 @@ describe("useExitFormDialog", () => {
   it("blocks navigation if an error occured", async () => {
     // Given
     const submitFn = jest.fn(() =>
-      Promise.resolve([{ field: "field", code: "code" }])
+      Promise.resolve([{ field: "field", code: "code" }]),
     );
     const { result } = setup(submitFn);
 
     // When
     act(() => {
       result.current.form.change({
-        target: { name: "field", value: "something" }
+        target: { name: "field", value: "something" },
       });
       result.current.history.push(targetPath);
     });
@@ -110,14 +110,14 @@ describe("useExitFormDialog", () => {
   it("allows navigation if an error occured, but confirmation is not needed", async () => {
     // Given
     const submitFn = jest.fn(() =>
-      Promise.resolve([{ field: "field", code: "code" }])
+      Promise.resolve([{ field: "field", code: "code" }]),
     );
     const { result } = setup(submitFn, false);
 
     // When
     act(() => {
       result.current.form.change({
-        target: { name: "field", value: "something" }
+        target: { name: "field", value: "something" },
       });
       result.current.history.push(targetPath);
     });
@@ -130,14 +130,14 @@ describe("useExitFormDialog", () => {
   it("blocks navigation if an error occured and user tries to leave anyway", async () => {
     // Given
     const submitFn = jest.fn(() =>
-      Promise.resolve([{ field: "field", code: "code" }])
+      Promise.resolve([{ field: "field", code: "code" }]),
     );
     const { result } = setup(submitFn);
 
     // When
     act(() => {
       result.current.form.change({
-        target: { name: "field", value: "something" }
+        target: { name: "field", value: "something" },
       });
       result.current.history.push(targetPath);
     });
@@ -161,7 +161,7 @@ describe("useExitFormDialog", () => {
     // When
     act(() => {
       result.current.form.change({
-        target: { name: "field", value: "something" }
+        target: { name: "field", value: "something" },
       });
     });
     act(() => {

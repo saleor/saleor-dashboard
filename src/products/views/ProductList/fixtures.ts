@@ -16,8 +16,8 @@ export const productListFilterOpts: ProductListFilterOpts = {
     slug: attr.slug,
     value: [
       attr.choices.edges[0].node.slug,
-      attr.choices.edges.length > 2 && attr.choices.edges[2].node.slug
-    ]
+      attr.choices.edges.length > 2 && attr.choices.edges[2].node.slug,
+    ],
   })),
   attributeChoices: {
     ...fetchMoreProps,
@@ -25,7 +25,7 @@ export const productListFilterOpts: ProductListFilterOpts = {
     active: false,
     value: null,
     choices: mapSlugNodeToChoice(mapEdgesToItems(attributes[0].choices)),
-    displayValues: mapSlugNodeToChoice(mapEdgesToItems(attributes[0].choices))
+    displayValues: mapSlugNodeToChoice(mapEdgesToItems(attributes[0].choices)),
   },
   categories: {
     ...fetchMoreProps,
@@ -33,15 +33,15 @@ export const productListFilterOpts: ProductListFilterOpts = {
     active: false,
     choices: categories.slice(5).map(category => ({
       label: category.name,
-      value: category.id
+      value: category.id,
     })),
     displayValues: [
       {
         label: categories[5].name,
-        value: categories[5].id
-      }
+        value: categories[5].id,
+      },
     ],
-    value: [categories[5].id]
+    value: [categories[5].id],
   },
   channel: {
     active: false,
@@ -49,13 +49,13 @@ export const productListFilterOpts: ProductListFilterOpts = {
     choices: [
       {
         value: "default-channel",
-        label: "Default channel"
-      }
-    ]
+        label: "Default channel",
+      },
+    ],
   },
   metadata: {
     active: false,
-    value: [{ key: "metadataKey", value: "metadataValue" }]
+    value: [{ key: "metadataKey", value: "metadataValue" }],
   },
   productKind: {
     active: false,
@@ -63,9 +63,9 @@ export const productListFilterOpts: ProductListFilterOpts = {
     choices: [
       {
         value: "NORMAL",
-        label: "Normal"
-      }
-    ]
+        label: "Normal",
+      },
+    ],
   },
   collections: {
     ...fetchMoreProps,
@@ -73,22 +73,22 @@ export const productListFilterOpts: ProductListFilterOpts = {
     active: false,
     choices: collections.slice(5).map(category => ({
       label: category.name,
-      value: category.id
+      value: category.id,
     })),
     displayValues: [
       {
         label: collections[5].name,
-        value: collections[5].id
-      }
+        value: collections[5].id,
+      },
     ],
-    value: [collections[5].id]
+    value: [collections[5].id],
   },
   price: {
     active: false,
     value: {
       max: "20",
-      min: "10"
-    }
+      min: "10",
+    },
   },
   productType: {
     ...fetchMoreProps,
@@ -96,18 +96,18 @@ export const productListFilterOpts: ProductListFilterOpts = {
     active: false,
     choices: productTypes.slice(3).map(category => ({
       label: category.name,
-      value: category.id
+      value: category.id,
     })),
     displayValues: [
       {
         label: productTypes[3].name,
-        value: productTypes[3].id
-      }
+        value: productTypes[3].id,
+      },
     ],
-    value: [productTypes[4].id]
+    value: [productTypes[4].id],
   },
   stockStatus: {
     active: false,
-    value: StockAvailability.IN_STOCK
-  }
+    value: StockAvailability.IN_STOCK,
+  },
 };

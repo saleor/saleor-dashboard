@@ -2,7 +2,7 @@ import { UserFragment } from "@saleor/graphql";
 import {
   GetExternalAccessTokenData,
   GetExternalAuthUrlData,
-  LoginData
+  LoginData,
 } from "@saleor/sdk";
 
 export interface RequestExternalLoginInput {
@@ -27,12 +27,12 @@ export interface UserContext {
   login: (username: string, password: string) => Promise<LoginData>;
   loginByExternalPlugin: (
     pluginId: string,
-    input: ExternalLoginInput
+    input: ExternalLoginInput,
   ) => Promise<GetExternalAccessTokenData>;
   logout: () => Promise<void>;
   requestLoginByExternalPlugin: (
     pluginId: string,
-    input: RequestExternalLoginInput
+    input: RequestExternalLoginInput,
   ) => Promise<GetExternalAuthUrlData>;
   user?: UserFragment;
   authenticating: boolean;

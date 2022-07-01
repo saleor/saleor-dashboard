@@ -5,7 +5,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
@@ -14,7 +14,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import {
   PostalCodeRuleInclusionTypeEnum,
-  ShippingMethodTypeFragment
+  ShippingMethodTypeFragment,
 } from "@saleor/graphql";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
@@ -28,10 +28,10 @@ export interface ShippingZonePostalCodesProps {
   initialExpanded?: boolean;
   postalCodes: ShippingMethodTypeFragment["postalCodeRules"] | undefined;
   onPostalCodeInclusionChange: (
-    inclusion: PostalCodeRuleInclusionTypeEnum
+    inclusion: PostalCodeRuleInclusionTypeEnum,
   ) => void;
   onPostalCodeDelete: (
-    code: ShippingMethodTypeFragment["postalCodeRules"][0]
+    code: ShippingMethodTypeFragment["postalCodeRules"][0],
   ) => void;
   onPostalCodeRangeAdd: () => void;
 }
@@ -39,29 +39,29 @@ export interface ShippingZonePostalCodesProps {
 const useStyles = makeStyles(
   theme => ({
     arrow: {
-      transition: theme.transitions.create("transform")
+      transition: theme.transitions.create("transform"),
     },
     arrowRotate: {
-      transform: "scale(-1)"
+      transform: "scale(-1)",
     },
     colAction: {
-      width: 80
+      width: 80,
     },
     colCode: {},
     option: {
       marginBottom: theme.spacing(2),
-      width: 400
+      width: 400,
     },
     radioContainer: {
-      paddingBottom: 0
+      paddingBottom: 0,
     },
     skeleton: {
-      width: 80
-    }
+      width: 80,
+    },
   }),
   {
-    name: "ShippingZonePostalCodes"
-  }
+    name: "ShippingZonePostalCodes",
+  },
 );
 
 const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
@@ -70,7 +70,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
   postalCodes,
   onPostalCodeDelete,
   onPostalCodeInclusionChange,
-  onPostalCodeRangeAdd
+  onPostalCodeRangeAdd,
 }) => {
   const [expanded, setExpanded] = React.useState(initialExpanded);
   const [inclusionType, setInclusionType] = React.useState(null);
@@ -93,7 +93,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
   };
 
   const getPostalCodeRangeLabel = (
-    postalCodeRange: ShippingMethodTypeFragment["postalCodeRules"][0]
+    postalCodeRange: ShippingMethodTypeFragment["postalCodeRules"][0],
   ) => {
     if (!postalCodeRange?.start) {
       return <Skeleton />;
@@ -110,7 +110,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
         title={intl.formatMessage({
           id: "FcTTvh",
           defaultMessage: "Postal codes",
-          description: "postal codes, header"
+          description: "postal codes, header",
         })}
         toolbar={
           <Button
@@ -147,7 +147,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
                   </Typography>
                 </div>
               ),
-              value: PostalCodeRuleInclusionTypeEnum.EXCLUDE
+              value: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
             },
             {
               label: (
@@ -167,8 +167,8 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
                   </Typography>
                 </div>
               ),
-              value: PostalCodeRuleInclusionTypeEnum.INCLUDE
-            }
+              value: PostalCodeRuleInclusionTypeEnum.INCLUDE,
+            },
           ]}
           name="includePostalCodes"
           value={getInclusionType()}
@@ -192,7 +192,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
                     defaultMessage="{number} postal code ranges"
                     description="number of postal code ranges"
                     values={{
-                      number: postalCodes.length
+                      number: postalCodes.length,
                     }}
                   />
                 </Typography>
@@ -205,7 +205,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
               >
                 <ArrowDropdown
                   className={classNames(classes.arrow, {
-                    [classes.arrowRotate]: expanded
+                    [classes.arrowRotate]: expanded,
                   })}
                 />
               </IconButton>
@@ -244,7 +244,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
                     </Typography>
                   </TableCell>
                 </TableRow>
-              )
+              ),
             )}
           </TableBody>
         )}

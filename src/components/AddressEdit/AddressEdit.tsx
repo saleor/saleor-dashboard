@@ -11,7 +11,7 @@ import { IntlShape, useIntl } from "react-intl";
 
 import FormSpacer from "../FormSpacer";
 import SingleAutocompleteSelectField, {
-  SingleAutocompleteChoiceType
+  SingleAutocompleteChoiceType,
 } from "../SingleAutocompleteSelectField";
 
 const useStyles = makeStyles(
@@ -19,10 +19,10 @@ const useStyles = makeStyles(
     root: {
       display: "grid",
       gridColumnGap: theme.spacing(2),
-      gridTemplateColumns: "1fr 1fr"
-    }
+      gridTemplateColumns: "1fr 1fr",
+    },
   }),
-  { name: "AddressEdit" }
+  { name: "AddressEdit" },
 );
 
 interface AddressEditProps {
@@ -37,7 +37,7 @@ interface AddressEditProps {
 
 function getErrorMessage(
   err: AccountErrorFragment | OrderErrorFragment,
-  intl: IntlShape
+  intl: IntlShape,
 ): string {
   if (err?.__typename === "AccountError") {
     return getAccountErrorMessage(err, intl);
@@ -54,7 +54,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
     disabled,
     errors,
     onChange,
-    onCountryChange
+    onCountryChange,
   } = props;
 
   const classes = useStyles(props);
@@ -71,7 +71,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
     "phone",
     "postalCode",
     "streetAddress1",
-    "streetAddress2"
+    "streetAddress2",
   ];
 
   const formErrors = getFormErrors<
@@ -95,7 +95,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             InputProps={{
               // Setting 'autoComplete: "new-password"' is the only way to
               // disable Chrome's autofill on forms as of early 2022
-              autoComplete: "new-password"
+              autoComplete: "new-password",
             }}
           />
         </div>
@@ -110,7 +110,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             value={data.lastName}
             fullWidth
             InputProps={{
-              autoComplete: "new-password"
+              autoComplete: "new-password",
             }}
           />
         </div>
@@ -124,14 +124,14 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             helperText={getErrorMessage(formErrors.companyName, intl)}
             label={intl.formatMessage({
               id: "9YazHG",
-              defaultMessage: "Company"
+              defaultMessage: "Company",
             })}
             name="companyName"
             onChange={onChange}
             value={data.companyName}
             fullWidth
             InputProps={{
-              autoComplete: "new-password"
+              autoComplete: "new-password",
             }}
           />
         </div>
@@ -143,13 +143,13 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             helperText={getErrorMessage(formErrors.phone, intl)}
             label={intl.formatMessage({
               id: "O95R3Z",
-              defaultMessage: "Phone"
+              defaultMessage: "Phone",
             })}
             name="phone"
             value={data.phone}
             onChange={onChange}
             InputProps={{
-              autoComplete: "new-password"
+              autoComplete: "new-password",
             }}
           />
         </div>
@@ -161,14 +161,14 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
         helperText={getErrorMessage(formErrors.streetAddress1, intl)}
         label={intl.formatMessage({
           id: "B52Em/",
-          defaultMessage: "Address line 1"
+          defaultMessage: "Address line 1",
         })}
         name="streetAddress1"
         onChange={onChange}
         value={data.streetAddress1}
         fullWidth
         InputProps={{
-          autoComplete: "new-password"
+          autoComplete: "new-password",
         }}
       />
       <FormSpacer />
@@ -178,14 +178,14 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
         helperText={getErrorMessage(formErrors.streetAddress2, intl)}
         label={intl.formatMessage({
           id: "oQY0a2",
-          defaultMessage: "Address line 2"
+          defaultMessage: "Address line 2",
         })}
         name="streetAddress2"
         onChange={onChange}
         value={data.streetAddress2}
         fullWidth
         InputProps={{
-          autoComplete: "new-password"
+          autoComplete: "new-password",
         }}
       />
       <FormSpacer />
@@ -197,14 +197,14 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             helperText={getErrorMessage(formErrors.city, intl)}
             label={intl.formatMessage({
               id: "TE4fIS",
-              defaultMessage: "City"
+              defaultMessage: "City",
             })}
             name="city"
             onChange={onChange}
             value={data.city}
             fullWidth
             InputProps={{
-              autoComplete: "new-password"
+              autoComplete: "new-password",
             }}
           />
         </div>
@@ -215,14 +215,14 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             helperText={getErrorMessage(formErrors.postalCode, intl)}
             label={intl.formatMessage({
               id: "oYGfnY",
-              defaultMessage: "ZIP / Postal code"
+              defaultMessage: "ZIP / Postal code",
             })}
             name="postalCode"
             onChange={onChange}
             value={data.postalCode}
             fullWidth
             InputProps={{
-              autoComplete: "new-password"
+              autoComplete: "new-password",
             }}
           />
         </div>
@@ -239,7 +239,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             helperText={getErrorMessage(formErrors.country, intl)}
             label={intl.formatMessage({
               id: "vONi+O",
-              defaultMessage: "Country"
+              defaultMessage: "Country",
             })}
             name="country"
             onChange={onCountryChange}
@@ -254,14 +254,14 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             helperText={getErrorMessage(formErrors.countryArea, intl)}
             label={intl.formatMessage({
               id: "AuwpCm",
-              defaultMessage: "Country area"
+              defaultMessage: "Country area",
             })}
             name="countryArea"
             onChange={onChange}
             value={data.countryArea}
             fullWidth
             InputProps={{
-              autoComplete: "new-password"
+              autoComplete: "new-password",
             }}
           />
         </div>

@@ -4,13 +4,13 @@ import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData
+  SaveFilterTabDialogFormData,
 } from "@saleor/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@saleor/components/Shop/queries";
 import {
   useOrderDraftBulkCancelMutation,
   useOrderDraftCreateMutation,
-  useOrderDraftListQuery
+  useOrderDraftListQuery,
 } from "@saleor/graphql";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
@@ -19,7 +19,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
-  PaginatorContext
+  PaginatorContext,
 } from "@saleor/hooks/usePaginator";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
@@ -37,7 +37,7 @@ import {
   orderDraftListUrl,
   OrderDraftListUrlDialog,
   OrderDraftListUrlQueryParams,
-  orderUrl
+  orderUrl,
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -47,7 +47,7 @@ import {
   getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab
+  saveFilterTab,
 } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
@@ -59,10 +59,10 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    params.ids
+    params.ids,
   );
   const { updateListSettings, settings } = useListSettings(
-    ListViews.DRAFT_LIST
+    ListViews.DRAFT_LIST,
   );
 
   usePaginationReset(orderDraftListUrl, params, settings.rowNumber);
@@ -71,7 +71,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
 
   const [
     orderDraftBulkDelete,
-    orderDraftBulkDeleteOpts
+    orderDraftBulkDeleteOpts,
   ] = useOrderDraftBulkCancelMutation({
     onCompleted: data => {
       if (data.draftOrderBulkDelete.errors.length === 0) {
@@ -79,14 +79,14 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
           status: "success",
           text: intl.formatMessage({
             id: "ra2O4j",
-            defaultMessage: "Deleted draft orders"
-          })
+            defaultMessage: "Deleted draft orders",
+          }),
         });
         refetch();
         reset();
         closeModal();
       }
-    }
+    },
   });
 
   const [createOrder] = useOrderDraftCreateMutation({
@@ -95,18 +95,18 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         status: "success",
         text: intl.formatMessage({
           id: "6udlH+",
-          defaultMessage: "Order draft successfully created"
-        })
+          defaultMessage: "Order draft successfully created",
+        }),
       });
       navigate(orderUrl(data.draftOrderCreate.order.id));
-    }
+    },
   });
 
   const { channel, availableChannels } = useAppChannel(false);
   const limitOpts = useShopLimitsQuery({
     variables: {
-      orders: true
-    }
+      orders: true,
+    },
   });
 
   const tabs = getFilterTabs();
@@ -116,13 +116,13 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   const [
     changeFilters,
     resetFilters,
-    handleSearchChange
+    handleSearchChange,
   ] = createFilterHandlers({
     cleanupFn: reset,
     createUrl: orderDraftListUrl,
     getFilterQueryParam,
     navigate,
-    params
+    params,
   });
 
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -135,8 +135,8 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     navigate(
       orderDraftListUrl({
         activeTab: tab.toString(),
-        ...getFilterTabs()[tab - 1].data
-      })
+        ...getFilterTabs()[tab - 1].data,
+      }),
     );
   };
 
@@ -156,19 +156,19 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
-      sort: getSortQueryVariables(params)
+      sort: getSortQueryVariables(params),
     }),
-    [params, settings.rowNumber]
+    [params, settings.rowNumber],
   );
   const { data, loading, refetch } = useOrderDraftListQuery({
     displayLoader: true,
-    variables: queryVariables
+    variables: queryVariables,
   });
 
   const paginationValues = usePaginator({
     pageInfo: maybe(() => data.draftOrders.pageInfo),
     paginationState,
-    queryString: params
+    queryString: params,
   });
 
   const handleSort = createSortHandler(navigate, orderDraftListUrl, params);
@@ -176,8 +176,8 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   const onOrderDraftBulkDelete = () =>
     orderDraftBulkDelete({
       variables: {
-        ids: params.ids
-      }
+        ids: params.ids,
+      },
     });
 
   return (
@@ -211,7 +211,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
             color="primary"
             onClick={() =>
               openModal("remove", {
-                ids: listElements
+                ids: listElements,
               })
             }
           >
@@ -227,7 +227,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         title={intl.formatMessage({
           id: "qbmeUI",
           defaultMessage: "Delete Order Drafts",
-          description: "dialog header"
+          description: "dialog header",
         })}
         variant="delete"
       >
@@ -238,7 +238,9 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
             description="dialog content"
             values={{
               counter: maybe(() => params.ids.length),
-              displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>
+              displayQuantity: (
+                <strong>{maybe(() => params.ids.length)}</strong>
+              ),
             }}
           />
         </DialogContentText>
@@ -265,8 +267,8 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         onConfirm={channelId =>
           createOrder({
             variables: {
-              input: { channelId }
-            }
+              input: { channelId },
+            },
           })
         }
       />

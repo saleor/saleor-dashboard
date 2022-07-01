@@ -7,7 +7,7 @@ import { defineMessages, IntlShape } from "react-intl";
 
 export enum ProductTypeFilterKeys {
   configurable = "configurable",
-  type = "type"
+  type = "type",
 }
 
 export interface ProductTypeListFilterOpts {
@@ -19,28 +19,28 @@ const messages = defineMessages({
   configurable: {
     id: "X90t9n",
     defaultMessage: "Configurable",
-    description: "product type"
+    description: "product type",
   },
   digital: {
     id: "dS8Adx",
     defaultMessage: "Digital",
-    description: "product"
+    description: "product",
   },
   shippable: {
     id: "U5aVd8",
     defaultMessage: "Shippable",
-    description: "product"
+    description: "product",
   },
   type: {
     id: "Jsh6+U",
     defaultMessage: "Type",
-    description: "product type is digital or physical"
-  }
+    description: "product type is digital or physical",
+  },
 });
 
 export function createFilterStructure(
   intl: IntlShape,
-  opts: ProductTypeListFilterOpts
+  opts: ProductTypeListFilterOpts,
 ): IFilter<ProductTypeFilterKeys> {
   return [
     {
@@ -52,15 +52,15 @@ export function createFilterStructure(
         [
           {
             label: intl.formatMessage(commonMessages.yes),
-            value: ProductTypeConfigurable.CONFIGURABLE
+            value: ProductTypeConfigurable.CONFIGURABLE,
           },
           {
             label: intl.formatMessage(commonMessages.no),
-            value: ProductTypeConfigurable.SIMPLE
-          }
-        ]
+            value: ProductTypeConfigurable.SIMPLE,
+          },
+        ],
       ),
-      active: opts.configurable.active
+      active: opts.configurable.active,
     },
     {
       ...createOptionsField(
@@ -71,15 +71,15 @@ export function createFilterStructure(
         [
           {
             label: intl.formatMessage(messages.digital),
-            value: ProductTypeEnum.DIGITAL
+            value: ProductTypeEnum.DIGITAL,
           },
           {
             label: intl.formatMessage(messages.shippable),
-            value: ProductTypeEnum.SHIPPABLE
-          }
-        ]
+            value: ProductTypeEnum.SHIPPABLE,
+          },
+        ],
       ),
-      active: opts.type.active
-    }
+      active: opts.type.active,
+    },
   ];
 }

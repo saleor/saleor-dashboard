@@ -4,7 +4,7 @@ import {
   CardContent,
   Divider,
   makeStyles,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import React from "react";
@@ -20,28 +20,28 @@ const messages = defineMessages({
   title: {
     id: "ANRRpG",
     defaultMessage: "Shipping Zones",
-    description: "card title"
+    description: "card title",
   },
   subtitle: {
     id: "Ic7Wln",
     defaultMessage:
       "Select shipping zones that will be supplied via this channel. You can assign shipping zones to multiple channels.",
-    description: "card subtitle"
+    description: "card subtitle",
   },
   allSelectedMessage: {
     id: "+G9l7u",
     defaultMessage: "All available shipping zones have been selected",
-    description: "all selected zones card message"
-  }
+    description: "all selected zones card message",
+  },
 });
 
 const useStyles = makeStyles(
   theme => ({
     infoMessage: {
-      padding: theme.spacing(3)
-    }
+      padding: theme.spacing(3),
+    },
   }),
-  { name: "ShippingZonesCard" }
+  { name: "ShippingZonesCard" },
 );
 
 type ShippingZonesCardProps = ShippingZonesProps;
@@ -50,7 +50,7 @@ const ShippingZonesCard: React.FC<ShippingZonesCardProps> = props => {
   const {
     shippingZones,
     removeShippingZone,
-    fetchMoreShippingZones: { totalCount }
+    fetchMoreShippingZones: { totalCount },
   } = props;
 
   const expanderClasses = useExpanderStyles({});

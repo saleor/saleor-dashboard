@@ -5,7 +5,7 @@ import React from "react";
 
 import { channelsList } from "../../fixtures";
 import ChannelDeleteDialog, {
-  ChannelDeleteDialogProps
+  ChannelDeleteDialogProps,
 } from "./ChannelDeleteDialog";
 
 const props: ChannelDeleteDialogProps = {
@@ -15,7 +15,7 @@ const props: ChannelDeleteDialogProps = {
   onBack: () => undefined,
   onClose: () => undefined,
   onConfirm: () => undefined,
-  open: true
+  open: true,
 };
 
 storiesOf("Views / Channels / Delete channel", module)

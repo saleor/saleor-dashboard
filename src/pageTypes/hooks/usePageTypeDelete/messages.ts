@@ -5,14 +5,14 @@ export const baseMessages = defineMessages({
     id: "oHbgcK",
     defaultMessage:
       "Delete page {selectedTypesCount,plural,one{type} other{types}}",
-    description: "PageTypeDeleteWarningDialog title"
+    description: "PageTypeDeleteWarningDialog title",
   },
   viewAssignedItemsButtonLabel: {
     id: "I8mqqj",
     defaultMessage: "View pages",
     description:
-      "PageTypeDeleteWarningDialog single assigned items button label"
-  }
+      "PageTypeDeleteWarningDialog single assigned items button label",
+  },
 });
 
 export const singleWithItemsMessages = defineMessages({
@@ -20,13 +20,14 @@ export const singleWithItemsMessages = defineMessages({
     id: "tQxBXs",
     defaultMessage:
       "You are about to delete page type <b>{typeName}</b>. It is assigned to {assignedItemsCount} {assignedItemsCount,plural,one{page} other{pages}}. Deleting this page type will also delete those pages. Are you sure you want to do this?",
-    description: "PageTypeDeleteWarningDialog single assigned items description"
+    description:
+      "PageTypeDeleteWarningDialog single assigned items description",
   },
   consentLabel: {
     id: "RZ32u5",
     defaultMessage: "Yes, I want to delete this page type and assigned pages",
-    description: "PageTypeDeleteWarningDialog single consent label"
-  }
+    description: "PageTypeDeleteWarningDialog single consent label",
+  },
 });
 
 export const multipleWithItemsMessages = defineMessages({
@@ -34,14 +35,14 @@ export const multipleWithItemsMessages = defineMessages({
     id: "TnyLrZ",
     defaultMessage:
       "You are about to delete multiple page types. Some of them are assigned to pages. Deleting those page types will also delete those pages",
-    description: "PageTypeDeleteWarningDialog with items multiple description"
+    description: "PageTypeDeleteWarningDialog with items multiple description",
   },
   consentLabel: {
     id: "qu8b3v",
     defaultMessage:
       "Yes, I want to delete those pages types and assigned pages",
-    description: "PageTypeDeleteWarningDialog multiple consent label"
-  }
+    description: "PageTypeDeleteWarningDialog multiple consent label",
+  },
 });
 
 export const singleWithoutItemsMessages = defineMessages({
@@ -50,8 +51,8 @@ export const singleWithoutItemsMessages = defineMessages({
     defaultMessage:
       "Are you sure you want to delete <b>{typeName}</b>? If you remove it you won’t be able to assign it to created pages.",
     description:
-      "PageTypeDeleteWarningDialog single no assigned items description"
-  }
+      "PageTypeDeleteWarningDialog single no assigned items description",
+  },
 });
 
 export const multipleWithoutItemsMessages = defineMessages({
@@ -60,6 +61,6 @@ export const multipleWithoutItemsMessages = defineMessages({
     defaultMessage:
       "Are you sure you want to delete selected page types? If you remove them you won’t be able to assign them to created pages.",
     description:
-      "PageTypeDeleteWarningDialog multiple assigned items description"
-  }
+      "PageTypeDeleteWarningDialog multiple assigned items description",
+  },
 });

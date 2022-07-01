@@ -6,7 +6,7 @@ import React from "react";
 import ProductVariantMediaSelectDialog from "../../../products/components/ProductVariantImageSelectDialog";
 import {
   variantMedia as variantImagesFixture,
-  variantProductImages as variantProductImagesFixture
+  variantProductImages as variantProductImagesFixture,
 } from "../../../products/fixtures";
 
 const variantImages = variantImagesFixture(placeholderImage);

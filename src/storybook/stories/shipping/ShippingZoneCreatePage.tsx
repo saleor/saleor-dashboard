@@ -4,7 +4,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import ShippingZoneCreatePage, {
-  ShippingZoneCreatePageProps
+  ShippingZoneCreatePageProps,
 } from "../../../shipping/components/ShippingZoneCreatePage";
 import Decorator from "../../Decorator";
 
@@ -12,28 +12,28 @@ const countries = [
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "DE",
-    country: "Germany"
+    country: "Germany",
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "GB",
-    country: "Great Britain"
+    country: "Great Britain",
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "PL",
-    country: "Poland"
+    country: "Poland",
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "CZ",
-    country: "Czech Republic"
+    country: "Czech Republic",
   },
   {
     __typename: "CountryDisplay" as "CountryDisplay",
     code: "FR",
-    country: "France"
-  }
+    country: "France",
+  },
 ];
 
 const props: ShippingZoneCreatePageProps = {
@@ -42,7 +42,7 @@ const props: ShippingZoneCreatePageProps = {
   disabled: false,
   errors: [],
   onSubmit: () => undefined,
-  saveButtonBarState: "default"
+  saveButtonBarState: "default",
 };
 
 storiesOf("Views / Shipping / Create shipping zone", module)
@@ -57,7 +57,7 @@ storiesOf("Views / Shipping / Create shipping zone", module)
         channels: [],
         code: ShippingErrorCode.INVALID,
         field,
-        message: "Name field invalid"
+        message: "Name field invalid",
       }))}
     />
   ));

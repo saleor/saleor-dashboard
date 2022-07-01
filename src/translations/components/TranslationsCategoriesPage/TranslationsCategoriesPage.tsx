@@ -8,12 +8,12 @@ import { commonMessages, sectionNames } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import {
   TranslationInputFieldName,
-  TranslationsEntitiesPageProps
+  TranslationsEntitiesPageProps,
 } from "@saleor/translations/types";
 import {
   languageEntitiesUrl,
   languageEntityUrl,
-  TranslatableEntities
+  TranslatableEntities,
 } from "@saleor/translations/urls";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -35,7 +35,7 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
   saveButtonState,
   onDiscard,
   onEdit,
-  onSubmit
+  onSubmit,
 }) => {
   const intl = useIntl();
 
@@ -43,7 +43,7 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
     <Container>
       <Backlink
         href={languageEntitiesUrl(languageCode, {
-          tab: TranslatableEntities.categories
+          tab: TranslatableEntities.categories,
         })}
       >
         {intl.formatMessage(sectionNames.translations)}
@@ -53,12 +53,12 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
           {
             id: "XitW/z",
             defaultMessage:
-              'Translation Category "{categoryName}" - {languageCode}'
+              'Translation Category "{categoryName}" - {languageCode}',
           },
           {
             categoryName: getStringOrPlaceholder(data?.category?.name),
-            languageCode
-          }
+            languageCode,
+          },
         )}
       >
         <LanguageSwitch
@@ -68,7 +68,7 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
             languageEntityUrl(
               lang,
               TranslatableEntities.categories,
-              translationId
+              translationId,
             )
           }
         />
@@ -82,20 +82,20 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
           {
             displayName: intl.formatMessage({
               id: "vEYtiq",
-              defaultMessage: "Category Name"
+              defaultMessage: "Category Name",
             }),
             name: TranslationInputFieldName.name,
             translation: data?.translation?.name || null,
             type: "short" as "short",
-            value: data?.category?.name
+            value: data?.category?.name,
           },
           {
             displayName: intl.formatMessage(commonMessages.description),
             name: TranslationInputFieldName.description,
             translation: data?.translation?.description || null,
             type: "rich" as "rich",
-            value: data?.category?.description
-          }
+            value: data?.category?.description,
+          },
         ]}
         saveButtonState={saveButtonState}
         richTextResetKey={languageCode}
@@ -110,29 +110,29 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
         initialState={true}
         title={intl.formatMessage({
           id: "TGX4T1",
-          defaultMessage: "Search Engine Preview"
+          defaultMessage: "Search Engine Preview",
         })}
         fields={[
           {
             displayName: intl.formatMessage({
               id: "HlEpii",
-              defaultMessage: "Search Engine Title"
+              defaultMessage: "Search Engine Title",
             }),
             name: TranslationInputFieldName.seoTitle,
             translation: data?.translation?.seoTitle || null,
             type: "short" as "short",
-            value: data?.category?.seoTitle
+            value: data?.category?.seoTitle,
           },
           {
             displayName: intl.formatMessage({
               id: "US3IPU",
-              defaultMessage: "Search Engine Description"
+              defaultMessage: "Search Engine Description",
             }),
             name: TranslationInputFieldName.seoDescription,
             translation: data?.translation?.seoDescription || null,
             type: "long" as "long",
-            value: data?.category?.seoDescription
-          }
+            value: data?.category?.seoDescription,
+          },
         ]}
         saveButtonState={saveButtonState}
         richTextResetKey={languageCode}

@@ -1,6 +1,6 @@
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData
+  SaveFilterTabDialogFormData,
 } from "@saleor/components/SaveFilterTabDialog";
 import { usePluginsQuery } from "@saleor/graphql";
 import { useChannelsSearchWithLoadMore } from "@saleor/hooks/useChannelsSearchWithLoadMore";
@@ -9,7 +9,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
-  PaginatorContext
+  PaginatorContext,
 } from "@saleor/hooks/usePaginator";
 import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
@@ -24,7 +24,7 @@ import PluginsListPage from "../../components/PluginsListPage/PluginsListPage";
 import {
   pluginListUrl,
   PluginListUrlDialog,
-  PluginListUrlQueryParams
+  PluginListUrlQueryParams,
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -34,7 +34,7 @@ import {
   getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab
+  saveFilterTab,
 } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
@@ -45,7 +45,7 @@ interface PluginsListProps {
 export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
   const navigate = useNavigator();
   const { updateListSettings, settings } = useListSettings(
-    ListViews.PLUGINS_LIST
+    ListViews.PLUGINS_LIST,
   );
 
   usePaginationReset(pluginListUrl, params, settings.rowNumber);
@@ -55,13 +55,13 @@ export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
-      sort: getSortQueryVariables(params)
+      sort: getSortQueryVariables(params),
     }),
-    [params, settings.rowNumber]
+    [params, settings.rowNumber],
   );
   const { data, loading } = usePluginsQuery({
     displayLoader: true,
-    variables: queryVariables
+    variables: queryVariables,
   });
 
   const tabs = getFilterTabs();
@@ -71,12 +71,12 @@ export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
   const [
     changeFilters,
     resetFilters,
-    handleSearchChange
+    handleSearchChange,
   ] = createFilterHandlers({
     createUrl: pluginListUrl,
     getFilterQueryParam,
     navigate,
-    params
+    params,
   });
 
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -88,8 +88,8 @@ export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
     navigate(
       pluginListUrl({
         activeTab: tab.toString(),
-        ...getFilterTabs()[tab - 1].data
-      })
+        ...getFilterTabs()[tab - 1].data,
+      }),
     );
   };
 
@@ -106,7 +106,7 @@ export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
   const paginationValues = usePaginator({
     pageInfo: maybe(() => data.plugins.pageInfo),
     paginationState,
-    queryString: params
+    queryString: params,
   });
 
   const handleSort = createSortHandler(navigate, pluginListUrl, params);

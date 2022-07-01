@@ -5,32 +5,32 @@ import { UseChannelsWithProductVariants } from "./types";
 import useChannelVariantListings from "./useChannelVariantListings";
 import {
   addAllVariantsToAllChannels,
-  getChannelVariantToggleData
+  getChannelVariantToggleData,
 } from "./utils";
 
 const useChannelsWithProductVariants = (
   channels: ChannelData[],
-  variants: string[]
+  variants: string[],
 ): UseChannelsWithProductVariants => {
   const {
     channelsWithVariantsData,
     setChannelVariantListing,
     channelVariantListing,
-    reset
+    reset,
   } = useChannelVariantListings(channels);
 
   const handleAddVariant = (channelId: string, variantId: string) =>
     setChannelVariantListing(listings => ({
       ...listings,
-      [channelId]: uniq([...listings[channelId], variantId])
+      [channelId]: uniq([...listings[channelId], variantId]),
     }));
 
   const handleRemoveVariant = (channelId: string, variantId: string) =>
     setChannelVariantListing(listings => ({
       ...listings,
       [channelId]: listings[channelId].filter(
-        selectedVariantId => selectedVariantId !== variantId
-      )
+        selectedVariantId => selectedVariantId !== variantId,
+      ),
     }));
 
   const toggleAllChannelVariants = (channelId: string) => {
@@ -38,13 +38,13 @@ const useChannelsWithProductVariants = (
 
     setChannelVariantListing({
       ...channelVariantListing,
-      [channelId]: getChannelVariantToggleData(variants, isChannelSelected)
+      [channelId]: getChannelVariantToggleData(variants, isChannelSelected),
     });
   };
 
   const toggleAllChannels = () =>
     setChannelVariantListing(listings =>
-      addAllVariantsToAllChannels(listings, variants)
+      addAllVariantsToAllChannels(listings, variants),
     );
 
   return {
@@ -55,7 +55,7 @@ const useChannelsWithProductVariants = (
     toggleAllChannelVariants,
     toggleAllChannels,
     setChannelVariantListing,
-    reset
+    reset,
   };
 };
 

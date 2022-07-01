@@ -19,7 +19,7 @@ export interface Pill {
 }
 
 export const ChannelsAvailabilityMenuContent: React.FC<ChannelsAvailabilityMenuContentProps> = ({
-  pills
+  pills,
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
