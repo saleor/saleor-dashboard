@@ -32,6 +32,7 @@ import { taxesMessages } from "@saleor/taxes/messages";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { useStyles } from "./styles";
 import TaxChannelsMenu from "./TaxChannelsMenu";
 import TaxCountryExceptionListItem from "./TaxCountryExceptionListItem";
 import TaxSettingsCard from "./TaxSettingsCard";
@@ -72,6 +73,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
   } = props;
 
   const intl = useIntl();
+  const classes = useStyles();
   const navigate = useNavigator();
 
   const currentTaxConfiguration = taxConfigurations?.find(
@@ -174,15 +176,19 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                               {...taxesMessages.countryNameHeader}
                             />
                           </ListItemCell>
-                          <ListItemCell>
+                          <ListItemCell className={classes.center}>
                             <FormattedMessage
                               {...taxesMessages.chargeTaxesHeader}
                             />
                           </ListItemCell>
-                          <ListItemCell>
+                          <ListItemCell className={classes.center}>
                             <FormattedMessage
                               {...taxesMessages.showGrossHeader}
                             />
+                          </ListItemCell>
+                          <ListItemCell>
+                            {/* This is required for the header row to be aligned with list items */}
+                            <div className={classes.dummy}></div>
                           </ListItemCell>
                         </ListItem>
                       </ListHeader>
