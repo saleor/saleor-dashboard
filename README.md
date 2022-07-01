@@ -61,7 +61,7 @@ $ npm i
 
 ### Configuration
 
-Create ```.env``` file in a root directory with the following variables:
+Create ```.env``` file in a root directory or set environment variables with following values:
 
 - `API_URI` (required) - URI of a running instance of Saleor GraphQL API.
   If you are running Saleor locally with the default settings, set `API_URI` to: `http://localhost:8000/graphql/`.
