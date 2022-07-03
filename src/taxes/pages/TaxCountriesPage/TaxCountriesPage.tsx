@@ -37,10 +37,13 @@ interface TaxCountriesPageProps {
 }
 
 const useStyles = makeStyles(
-  () => ({
+  theme => ({
     inputPadding: {
-      padding: "16px 0 16px 0",
+      padding: "16px 0 16px 0"
     },
+    greyText: {
+      color: theme.palette.text.hint
+    }
   }),
   { name: "TaxCountriesPage" },
 );
@@ -97,47 +100,57 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
           <CardTitle
             title={intl.formatMessage(taxesMessages.taxClassRatesHeader)}
           />
-          <CardContent>
-            <TextField
-              value={query}
-              variant="outlined"
-              onChange={e => setQuery(e.target.value)}
-              placeholder={intl.formatMessage(taxesMessages.searchTaxClasses)}
-              fullWidth
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-              }}
-              inputProps={{ className: classes.inputPadding }}
-            />
-          </CardContent>
-          <List gridTemplate={["5fr 2fr"]}>
-            <ListHeader>
-              <ListItem>
-                <ListItemCell>
-                  <FormattedMessage {...taxesMessages.taxNameHeader} />
-                </ListItemCell>
-                <ListItemCell>
-                  <FormattedMessage {...taxesMessages.taxRateHeader} />
-                </ListItemCell>
-              </ListItem>
-            </ListHeader>
-            {filteredRates?.map(rate => (
-              <ListItem key={rate.taxClass.id} hover={false}>
-                <ListItemCell>{rate.taxClass.name}</ListItemCell>
-                <ListItemCell>
-                  <TaxInput
-                    placeholder={filteredRates[0].rate}
-                    value={(rate.rate * 100).toString()}
-                    change={() => null} // TODO: add change function from form
-                  />
-                </ListItemCell>
-              </ListItem>
-            )) ?? <Skeleton />}
-          </List>
+          {countryTaxesData?.length === 0 ? (
+            <CardContent className={classes.greyText}>
+              <FormattedMessage {...taxesMessages.addCountryToAccessClass} />
+            </CardContent>
+          ) : (
+            <>
+              <CardContent>
+                <TextField
+                  value={query}
+                  variant="outlined"
+                  onChange={e => setQuery(e.target.value)}
+                  placeholder={intl.formatMessage(
+                    taxesMessages.searchTaxClasses
+                  )}
+                  fullWidth
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SearchIcon />
+                      </InputAdornment>
+                    )
+                  }}
+                  inputProps={{ className: classes.inputPadding }}
+                />
+              </CardContent>
+              <List gridTemplate={["5fr 2fr"]}>
+                <ListHeader>
+                  <ListItem>
+                    <ListItemCell>
+                      <FormattedMessage {...taxesMessages.taxNameHeader} />
+                    </ListItemCell>
+                    <ListItemCell>
+                      <FormattedMessage {...taxesMessages.taxRateHeader} />
+                    </ListItemCell>
+                  </ListItem>
+                </ListHeader>
+                {filteredRates?.map(rate => (
+                  <ListItem key={rate.taxClass.id} hover={false}>
+                    <ListItemCell>{rate.taxClass.name}</ListItemCell>
+                    <ListItemCell>
+                      <TaxInput
+                        placeholder={filteredRates[0].rate}
+                        value={(rate.rate * 100).toString()}
+                        change={() => null} // TODO: add change function from form
+                      />
+                    </ListItemCell>
+                  </ListItem>
+                )) ?? <Skeleton />}
+              </List>
+            </>
+          )}
         </Card>
       </Grid>
     </Container>
