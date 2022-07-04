@@ -1130,6 +1130,10 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               id: "dsfsfuhb",
               quantityAvailable: 10,
               preorder: null,
+              product: {
+                __typename: "Product",
+                productType: { __typename: "ProductType", name: "Clothing" },
+              },
               stocks: [
                 {
                   id: "stock_test_id1",
@@ -1238,6 +1242,10 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               id: "dsfsfuhb",
               quantityAvailable: 10,
               preorder: null,
+              product: {
+                __typename: "Product",
+                productType: { __typename: "ProductType", name: "Clothing" },
+              },
               stocks: [
                 {
                   id: "stock_test_id1",
@@ -1354,6 +1362,10 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         id: "dsfsfuhb",
         quantityAvailable: 10,
         preorder: null,
+        product: {
+          __typename: "Product",
+          productType: { __typename: "ProductType", name: "Clothing" },
+        },
         stocks: [
           {
             id: "stock_test_id1",
@@ -1448,6 +1460,10 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         id: "dsfsfuhb",
         quantityAvailable: 10,
         preorder: null,
+        product: {
+          __typename: "Product",
+          productType: { __typename: "ProductType", name: "Clothing" },
+        },
         stocks: [
           {
             id: "stock_test_id1",
@@ -1680,6 +1696,10 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         id: "dsfsfuhb",
         quantityAvailable: 10,
         preorder: null,
+        product: {
+          __typename: "Product",
+          productType: { __typename: "ProductType", name: "Clothing" },
+        },
         stocks: [
           {
             id: "stock_test_id1",
@@ -1773,6 +1793,10 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         id: "dsfsfuhb",
         quantityAvailable: 10,
         preorder: null,
+        product: {
+          __typename: "Product",
+          productType: { __typename: "ProductType", name: "Clothing" },
+        },
         stocks: [
           {
             id: "stock_test_id1",

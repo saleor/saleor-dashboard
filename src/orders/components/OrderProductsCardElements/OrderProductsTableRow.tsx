@@ -1,4 +1,4 @@
-import { TableCell, TableRow } from "@material-ui/core";
+import { TableCell, TableRow, Typography } from "@material-ui/core";
 import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
@@ -79,6 +79,11 @@ const TableLine: React.FC<TableLineProps> = ({
         thumbnail={maybe(() => line.orderLine.thumbnail.url)}
       >
         {maybe(() => line.orderLine.productName) || <Skeleton />}
+        {maybe(() => line.orderLine.variant.product.productType.name) ? (
+          <Typography color="textSecondary" variant="subtitle2">
+            {line.orderLine.variant.product.productType.name}
+          </Typography>
+        ) : null}
       </TableCellAvatar>
       <TableCell className={classes.colSku}>
         {line?.orderLine ? line.orderLine.productSku : <Skeleton />}

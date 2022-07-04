@@ -538,6 +538,10 @@ describe("Get the total value of all replaced products", () => {
           quantityAvailable: 50,
           preorder: null,
           __typename: "ProductVariant",
+          product: {
+            __typename: "Product",
+            productType: { __typename: "ProductType", name: "Audio File" },
+          },
           stocks: [
             {
               id: "stock_test_id1",
@@ -631,6 +635,10 @@ describe("Get the total value of all replaced products", () => {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           quantityAvailable: 50,
           preorder: null,
+          product: {
+            __typename: "Product",
+            productType: { __typename: "ProductType", name: "Audio File" },
+          },
           stocks: [
             {
               id: "stock_test_id1",
@@ -725,6 +733,10 @@ describe("Get the total value of all replaced products", () => {
           id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
           quantityAvailable: 50,
           preorder: null,
+          product: {
+            __typename: "Product",
+            productType: { __typename: "ProductType", name: "Clothing" },
+          },
           stocks: [
             {
               id: "stock_test_id1",
@@ -825,6 +837,10 @@ describe("Get the total value of all replaced products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
             preorder: null,
+            product: {
+              __typename: "Product",
+              productType: { __typename: "ProductType", name: "Audio File" },
+            },
             stocks: [
               {
                 id: "stock_test_id1",
@@ -924,6 +940,10 @@ describe("Get the total value of all replaced products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
             preorder: null,
+            product: {
+              __typename: "Product",
+              productType: { __typename: "ProductType", name: "Audio File" },
+            },
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1023,6 +1043,10 @@ describe("Get the total value of all replaced products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
             quantityAvailable: 50,
             preorder: null,
+            product: {
+              __typename: "Product",
+              productType: { __typename: "ProductType", name: "Clothing" },
+            },
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1122,6 +1146,10 @@ describe("Get the total value of all replaced products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
             preorder: null,
+            product: {
+              __typename: "Product",
+              productType: { __typename: "ProductType", name: "Audio File" },
+            },
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1221,6 +1249,10 @@ describe("Get the total value of all replaced products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
             preorder: null,
+            product: {
+              __typename: "Product",
+              productType: { __typename: "ProductType", name: "Audio File" },
+            },
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1454,6 +1486,10 @@ describe("Get the total value of all selected products", () => {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           quantityAvailable: 50,
           preorder: null,
+          product: {
+            __typename: "Product",
+            productType: { __typename: "ProductType", name: "Audio File" },
+          },
           stocks: [
             {
               id: "stock_test_id1",
@@ -1548,6 +1584,10 @@ describe("Get the total value of all selected products", () => {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           quantityAvailable: 50,
           preorder: null,
+          product: {
+            __typename: "Product",
+            productType: { __typename: "ProductType", name: "Audio File" },
+          },
           stocks: [
             {
               id: "stock_test_id1",
@@ -1642,6 +1682,10 @@ describe("Get the total value of all selected products", () => {
           id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
           quantityAvailable: 50,
           preorder: null,
+          product: {
+            __typename: "Product",
+            productType: { __typename: "ProductType", name: "Clothing" },
+          },
           stocks: [
             {
               id: "stock_test_id1",
@@ -1742,6 +1786,10 @@ describe("Get the total value of all selected products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
             preorder: null,
+            product: {
+              __typename: "Product",
+              productType: { __typename: "ProductType", name: "Audio File" },
+            },
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1841,6 +1889,10 @@ describe("Get the total value of all selected products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
             preorder: null,
+            product: {
+              __typename: "Product",
+              productType: { __typename: "ProductType", name: "Audio File" },
+            },
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1940,6 +1992,10 @@ describe("Get the total value of all selected products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
             quantityAvailable: 50,
             preorder: null,
+            product: {
+              __typename: "Product",
+              productType: { __typename: "ProductType", name: "Clothing" },
+            },
             stocks: [
               {
                 id: "stock_test_id1",
@@ -2167,6 +2223,10 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
             preorder: null,
+            product: {
+              __typename: "Product",
+              productType: { __typename: "ProductType", name: "Audio File" },
+            },
             stocks: [
               {
                 id: "stock_test_id1",
@@ -2266,6 +2326,10 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
             preorder: null,
+            product: {
+              __typename: "Product",
+              productType: { __typename: "ProductType", name: "Audio File" },
+            },
             stocks: [
               {
                 id: "stock_test_id1",
@@ -2365,6 +2429,10 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
             quantityAvailable: 50,
             preorder: null,
+            product: {
+              __typename: "Product",
+              productType: { __typename: "ProductType", name: "Clothing" },
+            },
             stocks: [
               {
                 id: "stock_test_id1",
