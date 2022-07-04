@@ -112,12 +112,6 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     result: searchAttributeValuesOpts,
     reset: searchAttributeReset,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
-  const warehouses = useWarehouseListQuery({
-    displayLoader: true,
-    variables: {
-      first: 50,
-    },
-  });
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const taxTypes = useTaxTypeListQuery({});
@@ -159,6 +153,16 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
       formId: PRODUCT_CREATE_FORM_ID,
     },
   );
+
+  const warehouses = useWarehouseListQuery({
+    displayLoader: true,
+    variables: {
+      first: 50,
+      filter: {
+        channels: currentChannels.map(channel => channel.id),
+      },
+    },
+  });
 
   const handleSuccess = (productId: string) => {
     notify({
