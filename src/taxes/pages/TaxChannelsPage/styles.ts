@@ -15,6 +15,11 @@ export const useStyles = makeStyles(
     },
     noDivider: {
       "&::after": { display: "none" }
+    },
+    toolbarMargin: {
+      "&:last-child": {
+        marginRight: 0
+      }
     }
   }),
   { name: "TaxChannelsPage" }

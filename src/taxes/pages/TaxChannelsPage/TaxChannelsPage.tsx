@@ -151,6 +151,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                 <VerticalSpacer spacing={3} />
                 <Card>
                   <CardTitle
+                    className={classes.toolbarMargin}
                     title={intl.formatMessage(taxesMessages.countryExceptions)}
                     toolbar={
                       <Button
