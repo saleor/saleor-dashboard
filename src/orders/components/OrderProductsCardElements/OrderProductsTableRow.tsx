@@ -80,7 +80,7 @@ const TableLine: React.FC<TableLineProps> = ({
       >
         {maybe(() => line.orderLine.productName) || <Skeleton />}
         {maybe(() => line.orderLine.variant.product.productType.name) ? (
-          <Typography color="textSecondary" variant="subtitle2">
+          <Typography color="textSecondary" variant="caption">
             {line.orderLine.variant.product.productType.name}
           </Typography>
         ) : null}
