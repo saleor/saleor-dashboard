@@ -12,6 +12,9 @@ export const useStyles = makeStyles(
       width: "40px",
       height: "40px",
       visiblity: "hidden"
+    },
+    noDivider: {
+      "&::after": { display: "none" }
     }
   }),
   { name: "TaxChannelsPage" }

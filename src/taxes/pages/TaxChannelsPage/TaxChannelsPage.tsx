@@ -194,6 +194,9 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                       </ListHeader>
                       {countryExceptions?.map((country, countryIndex) => (
                         <TaxCountryExceptionListItem
+                          divider={
+                            countryIndex + 1 !== countryExceptions.length
+                          }
                           country={country}
                           key={country.country.code}
                           onDelete={() => {

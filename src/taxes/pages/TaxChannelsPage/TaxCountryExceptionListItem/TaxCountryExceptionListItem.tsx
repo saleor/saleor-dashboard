@@ -18,16 +18,18 @@ interface TaxCountryExceptionListItemProps {
   country: TaxConfigurationPerCountryFragment | undefined;
   onDelete: () => void;
   onChange: FormChange;
+  divider: boolean;
 }
 
 export const TaxCountryExceptionListItem: React.FC<TaxCountryExceptionListItemProps> = ({
   country,
   onDelete,
-  onChange
+  onChange,
+  divider = true
 }) => {
   const classes = useStyles();
   return (
-    <ListItem hover={false}>
+    <ListItem hover={false} className={divider ? undefined : classes.noDivider}>
       <ListItemCell>{country.country.country}</ListItemCell>
       <ListItemCell className={classes.center}>
         <ControlledCheckbox
