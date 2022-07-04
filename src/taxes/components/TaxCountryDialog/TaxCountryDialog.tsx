@@ -108,6 +108,7 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
           variant="primary"
           onClick={() => {
             onConfirm(countriesWithState.filter(country => country.checked));
+            onClose();
           }}
         >
           <FormattedMessage {...buttonMessages.select} />
