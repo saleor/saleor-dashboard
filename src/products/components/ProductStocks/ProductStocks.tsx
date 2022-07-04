@@ -28,6 +28,7 @@ import PreviewPill from "@saleor/components/PreviewPill";
 import { ProductErrorFragment, WarehouseFragment } from "@saleor/graphql";
 import { FormChange, FormErrors } from "@saleor/hooks/useForm";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
+import { sectionNames } from "@saleor/intl";
 import { Button, DeleteIcon, IconButton, PlusIcon } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
@@ -346,12 +347,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
       {data.isPreorder && (
         <CardContent>
           <Typography variant="caption" className={classes.caption}>
-            {intl.formatMessage({
-              id: "REVk27",
-              defaultMessage:
-                "Set up an end date of preorder. When end date will be reached product will be automatically taken from preorder to standard selling",
-              description: "info text",
-            })}
+            <FormattedMessage {...messages.preorderEndDateSetup} />
           </Typography>
 
           {data.hasPreorderEndDate && (
@@ -388,22 +384,11 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
             }
           >
             {data.hasPreorderEndDate
-              ? intl.formatMessage({
-                  id: "2qJc9y",
-                  defaultMessage: "CANCEL END DATE",
-                })
-              : intl.formatMessage({
-                  id: "7Ii5ZQ",
-                  defaultMessage: "SETUP END DATE",
-                })}
+              ? intl.formatMessage(messages.endDateCancel)
+              : intl.formatMessage(messages.endDateSetup)}
           </Button>
           <Typography variant="caption" className={classes.preorderLimitInfo}>
-            {intl.formatMessage({
-              id: "Gz+4CI",
-              defaultMessage:
-                "Preordered products will be available in all warehouses. You can set a threshold for sold quantity. Leaving input blank will be interpreted as no limit to sale. Sold items will be allocated at the warehouse assigned to chosen shipping zone.",
-              description: "info text",
-            })}
+            <FormattedMessage {...messages.preorderProductsAvailability} />
           </Typography>
           <div className={classes.thresholdRow}>
             <TextField
@@ -412,15 +397,10 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
               }}
               disabled={disabled}
               fullWidth
-              helperText={intl.formatMessage({
-                id: "NcY4ph",
-                defaultMessage:
-                  "Threshold that cannot be exceeded even if per channel thresholds are still available",
-              })}
-              label={intl.formatMessage({
-                id: "RJ5QxE",
-                defaultMessage: "Global threshold",
-              })}
+              helperText={intl.formatMessage(
+                messages.preorderTresholdDescription,
+              )}
+              label={intl.formatMessage(messages.preorderTresholdLabel)}
               name="globalThreshold"
               onChange={onThresholdChange}
               value={data.globalThreshold ?? ""}
@@ -432,19 +412,10 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                 className={classes.preorderItemsLeftCount}
               >
                 {data.globalThreshold
-                  ? intl.formatMessage(
-                      {
-                        id: "7wkGxW",
-                        defaultMessage: "{unitsLeft} units left",
-                        description: "app has been installed",
-                      },
-                      { unitsLeft },
-                    )
-                  : intl.formatMessage({
-                      id: "CEavJt",
-                      defaultMessage: "Unlimited",
-                      description: "section header",
-                    })}
+                  ? intl.formatMessage(messages.preorderTresholdUnitsLeft, {
+                      unitsLeft,
+                    })
+                  : intl.formatMessage(messages.preorderTresholdUnlimited)}
               </Typography>
             )}
           </div>
@@ -461,25 +432,13 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
           <TableHead>
             <TableRow>
               <TableCell className={classes.colName}>
-                <FormattedMessage
-                  id="JyQEHU"
-                  defaultMessage="Channels"
-                  description="tabel column header"
-                />
+                <FormattedMessage {...sectionNames.channels} />
               </TableCell>
               <TableCell className={classes.colSoldUnits}>
-                <FormattedMessage
-                  id="HcQEUk"
-                  defaultMessage="Sold units"
-                  description="table column header, sold units preorder quantity"
-                />
+                <FormattedMessage {...messages.soldUnits} />
               </TableCell>
               <TableCell className={classes.colThreshold}>
-                <FormattedMessage
-                  id="MNZY28"
-                  defaultMessage="Channel threshold"
-                  description="table column header"
-                />
+                <FormattedMessage {...messages.channelTreshold} />
               </TableCell>
             </TableRow>
           </TableHead>
@@ -507,10 +466,9 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                         min: 0,
                         type: "number",
                       }}
-                      placeholder={intl.formatMessage({
-                        id: "ekXood",
-                        defaultMessage: "Unlimited",
-                      })}
+                      placeholder={intl.formatMessage(
+                        messages.preorderTresholdUnlimited,
+                      )}
                       onChange={e => {
                         onVariantChannelListingChange(listing.id, {
                           costPrice: listing.costPrice,
