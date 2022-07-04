@@ -28,14 +28,7 @@ import PreviewPill from "@saleor/components/PreviewPill";
 import { ProductErrorFragment, WarehouseFragment } from "@saleor/graphql";
 import { FormChange, FormErrors } from "@saleor/hooks/useForm";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
-import {
-  Button,
-  DeleteIcon,
-  IconButton,
-  ICONBUTTON_SIZE,
-  makeStyles,
-  PlusIcon,
-} from "@saleor/macaw-ui";
+import { Button, DeleteIcon, IconButton, PlusIcon } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 import createNonNegativeValueChangeHandler from "@saleor/utils/handlers/nonNegativeValueChangeHandler";
@@ -46,6 +39,8 @@ import { ProductCreateData } from "../ProductCreatePage";
 import { ProductUpdateSubmitData } from "../ProductUpdatePage/form";
 import { ProductVariantCreateData } from "../ProductVariantCreatePage/form";
 import { ProductVariantUpdateData } from "../ProductVariantPage/form";
+import { messages } from "./messages";
+import { useStyles } from "./styles";
 
 export interface ProductStockFormsetData {
   quantityAllocated: number;
@@ -90,98 +85,6 @@ export interface ProductStocksProps {
   onWarehouseConfigure: () => void;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    colAction: {
-      padding: 0,
-      width: `calc(${ICONBUTTON_SIZE}px + ${theme.spacing(1)})`,
-    },
-    colName: {},
-    colQuantity: {
-      textAlign: "right",
-      width: 150,
-    },
-    colSoldUnits: {
-      textAlign: "right",
-      width: 150,
-    },
-    colThreshold: {
-      textAlign: "right",
-      width: 180,
-    },
-    editWarehouses: {
-      marginRight: theme.spacing(-1),
-    },
-    input: {
-      padding: theme.spacing(1.5),
-      textAlign: "right",
-    },
-    menuItem: {
-      "&:not(:last-of-type)": {
-        marginBottom: theme.spacing(2),
-      },
-    },
-    noWarehouseInfo: {
-      marginTop: theme.spacing(),
-    },
-    paper: {
-      padding: theme.spacing(2),
-    },
-    popper: {
-      marginTop: theme.spacing(1),
-      zIndex: 2,
-    },
-    quantityContainer: {
-      paddingTop: theme.spacing(),
-    },
-    quantityHeader: {
-      alignItems: "center",
-      display: "flex",
-      justifyContent: "space-between",
-    },
-    skuInputContainer: {
-      display: "grid",
-      gridColumnGap: theme.spacing(3),
-      gridTemplateColumns: "repeat(2, 1fr)",
-    },
-    dateTimeInputs: {
-      marginTop: theme.spacing(2),
-      marginBottom: theme.spacing(2),
-    },
-    preorderInfo: {
-      marginBottom: theme.spacing(2),
-      marginTop: theme.spacing(2),
-      display: "block",
-    },
-    caption: {
-      fontSize: 14,
-    },
-    thresholdRow: {
-      display: "grid",
-      gridColumnGap: theme.spacing(3),
-      gridTemplateColumns: "3fr 1fr",
-      marginTop: theme.spacing(1),
-    },
-    thresholdInput: {
-      maxWidth: 400,
-    },
-    preorderItemsLeftCount: {
-      fontSize: 14,
-      paddingTop: theme.spacing(2),
-      textAlign: "center",
-    },
-    preorderLimitInfo: {
-      marginTop: theme.spacing(3),
-    },
-    preview: {
-      marginLeft: theme.spacing(1),
-    },
-  }),
-  {
-    name: "ProductStocks",
-  },
-);
-
 const ProductStocks: React.FC<ProductStocksProps> = ({
   data,
   disabled,
@@ -200,7 +103,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
   onWarehouseStockDelete,
   onWarehouseConfigure,
 }) => {
-  const classes = useStyles({});
+  const classes = useStyles();
   const intl = useIntl();
   const anchor = React.useRef<HTMLDivElement>();
   const [isExpanded, setExpansionState] = React.useState(false);
@@ -218,13 +121,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
 
   return (
     <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "4qe6hO",
-          defaultMessage: "Inventory",
-          description: "product stock, section header",
-        })}
-      />
+      <CardTitle title={intl.formatMessage(messages.title)} />
       <CardContent>
         <div className={classes.skuInputContainer}>
           <TextField
@@ -232,10 +129,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
             error={!!formErrors.sku}
             fullWidth
             helperText={getProductErrorMessage(formErrors.sku, intl)}
-            label={intl.formatMessage({
-              id: "xB7BTp",
-              defaultMessage: "SKU (Stock Keeping Unit)",
-            })}
+            label={intl.formatMessage(messages.sku)}
             name="sku"
             onChange={onFormDataChange}
             value={data.sku}
@@ -252,11 +146,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
           disabled={disabled}
           label={
             <>
-              <FormattedMessage
-                id="eAFU/E"
-                defaultMessage="Variant currently in preorder"
-                description="product inventory, checkbox"
-              />
+              <FormattedMessage {...messages.variantInPreorder} />
               <PreviewPill className={classes.preview} />
             </>
           }
@@ -272,16 +162,9 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
               disabled={disabled}
               label={
                 <>
-                  <FormattedMessage
-                    id="TjGYna"
-                    defaultMessage="Track Inventory"
-                    description="product inventory, checkbox"
-                  />
+                  <FormattedMessage {...messages.trackInventory} />
                   <Typography variant="caption">
-                    <FormattedMessage
-                      id="jABdx1"
-                      defaultMessage="Active inventory tracking will automatically calculate changes of stock"
-                    />
+                    <FormattedMessage {...messages.trackInventoryDescription} />
                   </Typography>
                 </>
               }
@@ -295,14 +178,18 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
           <Typography>
             <div className={classes.quantityHeader}>
               <span>
-                <FormattedMessage
-                  id="bp/i0x"
-                  defaultMessage="Quantity"
-                  description="header"
-                />
+                <FormattedMessage {...messages.quantity} />
               </span>
             </div>
           </Typography>
+          {!productVariantChannelListings?.length && (
+            <>
+              <FormSpacer />
+              <Typography variant="caption">
+                <FormattedMessage {...messages.noChannelWarehousesAllocation} />
+              </Typography>
+            </>
+          )}
 
           {!warehouses?.length && (
             <Typography
@@ -312,9 +199,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
               {hasVariants ? (
                 <>
                   <FormattedMessage
-                    id="D8nsBc"
-                    defaultMessage="There are no warehouses set up for your store. To add stock quantity to the variant please <a>configure a warehouse</a>"
-                    description="no warehouses info"
+                    {...messages.configureWarehouseForVariant}
                     values={{
                       a: chunks => (
                         <Link onClick={onWarehouseConfigure}>{chunks}</Link>
@@ -325,9 +210,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
               ) : (
                 <>
                   <FormattedMessage
-                    id="RLBLPQ"
-                    defaultMessage="There are no warehouses set up for your store. To add stock quantity to the product please <a>configure a warehouse</a>"
-                    description="no warehouses info"
+                    {...messages.configureWarehouseForProduct}
                     values={{
                       a: chunks => (
                         <Link onClick={onWarehouseConfigure}>{chunks}</Link>
@@ -340,140 +223,126 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
           )}
         </CardContent>
       )}
-      {warehouses?.length > 0 && !data.isPreorder && (
-        <Table>
-          <colgroup>
-            <col className={classes.colName} />
-            <col className={classes.colQuantity} />
-            <col className={classes.colQuantity} />
-          </colgroup>
-          <TableHead>
-            <TableRow>
-              <TableCell className={classes.colName}>
-                <FormattedMessage
-                  id="KTAg0f"
-                  defaultMessage="Warehouse Name"
-                  description="tabel column header"
-                />
-              </TableCell>
-              <TableCell className={classes.colQuantity}>
-                <FormattedMessage
-                  id="g/FRtd"
-                  defaultMessage="Allocated"
-                  description="table column header, allocated product quantity"
-                />
-              </TableCell>
-              <TableCell className={classes.colQuantity}>
-                <FormattedMessage
-                  id="ge/xFX"
-                  defaultMessage="Quantity"
-                  description="table column header"
-                />
-              </TableCell>
-              <TableCell className={classes.colAction} />
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {renderCollection(stocks, stock => {
-              const handleQuantityChange = createNonNegativeValueChangeHandler(
-                event => onChange(stock.id, event.target.value),
-              );
+      {productVariantChannelListings?.length > 0 &&
+        warehouses?.length > 0 &&
+        !data.isPreorder && (
+          <Table>
+            <colgroup>
+              <col className={classes.colName} />
+              <col className={classes.colQuantity} />
+              <col className={classes.colQuantity} />
+            </colgroup>
+            <TableHead>
+              <TableRow>
+                <TableCell className={classes.colName}>
+                  <FormattedMessage {...messages.warehouseName} />
+                </TableCell>
+                <TableCell className={classes.colQuantity}>
+                  <FormattedMessage {...messages.allocated} />
+                </TableCell>
+                <TableCell className={classes.colQuantity}>
+                  <FormattedMessage {...messages.quantity} />
+                </TableCell>
+                <TableCell className={classes.colAction} />
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {renderCollection(stocks, stock => {
+                const handleQuantityChange = createNonNegativeValueChangeHandler(
+                  event => onChange(stock.id, event.target.value),
+                );
 
-              return (
-                <TableRow key={stock.id}>
-                  <TableCell className={classes.colName}>
-                    {stock.label}
-                  </TableCell>
-                  <TableCell className={classes.colQuantity}>
-                    {stock.data?.quantityAllocated || 0}
-                  </TableCell>
-                  <TableCell className={classes.colQuantity}>
-                    <TextField
-                      data-test-id="stock-input"
-                      disabled={disabled}
-                      fullWidth
-                      inputProps={{
-                        className: classes.input,
-                        min: 0,
-                        type: "number",
-                      }}
-                      onChange={handleQuantityChange}
-                      value={stock.value}
-                    />
+                return (
+                  <TableRow key={stock.id}>
+                    <TableCell className={classes.colName}>
+                      {stock.label}
+                    </TableCell>
+                    <TableCell className={classes.colQuantity}>
+                      {stock.data?.quantityAllocated || 0}
+                    </TableCell>
+                    <TableCell className={classes.colQuantity}>
+                      <TextField
+                        data-test-id="stock-input"
+                        disabled={disabled}
+                        fullWidth
+                        inputProps={{
+                          className: classes.input,
+                          min: 0,
+                          type: "number",
+                        }}
+                        onChange={handleQuantityChange}
+                        value={stock.value}
+                      />
+                    </TableCell>
+                    <TableCell className={classes.colAction}>
+                      <IconButton
+                        variant="secondary"
+                        color="primary"
+                        onClick={() => onWarehouseStockDelete(stock.id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+              {warehousesToAssign.length > 0 && (
+                <TableRow>
+                  <TableCell colSpan={3}>
+                    <Typography variant="body2">
+                      <FormattedMessage {...messages.assignWarehouse} />
+                    </Typography>
                   </TableCell>
                   <TableCell className={classes.colAction}>
-                    <IconButton
-                      variant="secondary"
-                      color="primary"
-                      onClick={() => onWarehouseStockDelete(stock.id)}
+                    <ClickAwayListener
+                      onClickAway={() => setExpansionState(false)}
                     >
-                      <DeleteIcon />
-                    </IconButton>
+                      <div ref={anchor}>
+                        <IconButton
+                          data-test-id="add-warehouse"
+                          color="primary"
+                          variant="secondary"
+                          onClick={() => setExpansionState(!isExpanded)}
+                        >
+                          <PlusIcon />
+                        </IconButton>
+                        <Popper
+                          className={classes.popper}
+                          open={isExpanded}
+                          anchorEl={anchor.current}
+                          transition
+                          placement="top-end"
+                        >
+                          {({ TransitionProps }) => (
+                            <Grow
+                              {...TransitionProps}
+                              style={{
+                                transformOrigin: "right top",
+                              }}
+                            >
+                              <Paper className={classes.paper} elevation={8}>
+                                {warehousesToAssign.map(warehouse => (
+                                  <MenuItem
+                                    className={classes.menuItem}
+                                    onClick={() =>
+                                      onWarehouseStockAdd(warehouse.id)
+                                    }
+                                  >
+                                    {warehouse.name}
+                                  </MenuItem>
+                                ))}
+                              </Paper>
+                            </Grow>
+                          )}
+                        </Popper>
+                      </div>
+                    </ClickAwayListener>
                   </TableCell>
                 </TableRow>
-              );
-            })}
-            {warehousesToAssign.length > 0 && (
-              <TableRow>
-                <TableCell colSpan={3}>
-                  <Typography variant="body2">
-                    <FormattedMessage
-                      id="cBHRxx"
-                      defaultMessage="Assign Warehouse"
-                      description="button"
-                    />
-                  </Typography>
-                </TableCell>
-                <TableCell className={classes.colAction}>
-                  <ClickAwayListener
-                    onClickAway={() => setExpansionState(false)}
-                  >
-                    <div ref={anchor}>
-                      <IconButton
-                        data-test-id="add-warehouse"
-                        color="primary"
-                        variant="secondary"
-                        onClick={() => setExpansionState(!isExpanded)}
-                      >
-                        <PlusIcon />
-                      </IconButton>
-                      <Popper
-                        className={classes.popper}
-                        open={isExpanded}
-                        anchorEl={anchor.current}
-                        transition
-                        placement="top-end"
-                      >
-                        {({ TransitionProps }) => (
-                          <Grow
-                            {...TransitionProps}
-                            style={{
-                              transformOrigin: "right top",
-                            }}
-                          >
-                            <Paper className={classes.paper} elevation={8}>
-                              {warehousesToAssign.map(warehouse => (
-                                <MenuItem
-                                  className={classes.menuItem}
-                                  onClick={() =>
-                                    onWarehouseStockAdd(warehouse.id)
-                                  }
-                                >
-                                  {warehouse.name}
-                                </MenuItem>
-                              ))}
-                            </Paper>
-                          </Grow>
-                        )}
-                      </Popper>
-                    </div>
-                  </ClickAwayListener>
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      )}
+              )}
+            </TableBody>
+          </Table>
+        )}
       {data.isPreorder && (
         <CardContent>
           <Typography variant="caption" className={classes.caption}>

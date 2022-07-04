@@ -166,6 +166,10 @@
     "context": "dialog header",
     "string": "Add Tracking Code"
   },
+  "/C//FB": {
+    "context": "header, allocated product quantity",
+    "string": "Allocated"
+  },
   "/JENWS": {
     "string": "Reduced Tax Rates"
   },
@@ -2013,6 +2017,10 @@
   "ErNH3D": {
     "string": "Define where this attribute should be used in Saleor system"
   },
+  "ErvPaM": {
+    "context": "header",
+    "string": "Warehouse Name"
+  },
   "EsZH44": {
     "context": "VariantDetailsChannelsAvailabilityCard item subtitle hidden",
     "string": "Hidden"
@@ -2834,10 +2842,6 @@
   "KSp+8B": {
     "context": "product available for purchase date",
     "string": "will become available on {date}"
-  },
-  "KTAg0f": {
-    "context": "tabel column header",
-    "string": "Warehouse Name"
   },
   "KXkdMH": {
     "context": "order discount removed title",
@@ -3821,6 +3825,10 @@
   "SKFr04": {
     "string": "Attribute not found."
   },
+  "SM+yG0": {
+    "context": "input label",
+    "string": "SKU (Stock Keeping Unit)"
+  },
   "SMakqb": {
     "context": "customer contact section, header",
     "string": "Contact Information"
@@ -4457,6 +4465,10 @@
   "WyPitj": {
     "context": "gift card bulk create success dialog title",
     "string": "Bulk Issue Gift Cards"
+  },
+  "Wyl25+": {
+    "context": "product inventory, checkbox description",
+    "string": "Active inventory tracking will automatically calculate changes of stock"
   },
   "WzA5Ll": {
     "string": "Cannot remove user from last group"
@@ -5534,10 +5546,6 @@
   "g/BrOt": {
     "string": "Url has invalid format"
   },
-  "g/FRtd": {
-    "context": "table column header, allocated product quantity",
-    "string": "Allocated"
-  },
   "g1WQlC": {
     "context": "page title",
     "string": "Summary"
@@ -5595,10 +5603,6 @@
   "gZHmaV": {
     "context": "plugin filters error messages channels",
     "string": "No channels selected"
-  },
-  "ge/xFX": {
-    "context": "table column header",
-    "string": "Quantity"
   },
   "ghGLbJ": {
     "context": "OrderPayment click&collect shipping method",
@@ -5865,9 +5869,6 @@
   "j8PV7E": {
     "context": "attribute values",
     "string": "Values"
-  },
-  "jABdx1": {
-    "string": "Active inventory tracking will automatically calculate changes of stock"
   },
   "jBu2yj": {
     "context": "acre-inch unit",
@@ -7150,6 +7151,10 @@
     "context": "Header row stock label",
     "string": "Stock"
   },
+  "taS/08": {
+    "context": "variant stocks section subtitle",
+    "string": "Assign this variant to a channel in the product channel manager to define warehouses allocation"
+  },
   "taX/V3": {
     "context": "order total amount",
     "string": "Total"
@@ -7607,9 +7612,6 @@
   "xAHOGV": {
     "context": "dialog header",
     "string": "Assign Variant"
-  },
-  "xB7BTp": {
-    "string": "SKU (Stock Keeping Unit)"
   },
   "xHj9Qe": {
     "context": "gift card settings header",
