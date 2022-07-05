@@ -1,7 +1,9 @@
+import { getAppDeepPathFromDashboardUrl } from "@saleor/apps/urls";
 import useShop from "@saleor/hooks/useShop";
 import { useTheme } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React from "react";
+import React, { useEffect } from "react";
+import { useLocation } from "react-router";
 import urlJoin from "url-join";
 
 import { useStyles } from "./styles";
@@ -31,7 +33,17 @@ export const AppFrame: React.FC<Props> = ({
   const { sendThemeToExtension } = useTheme();
   const classes = useStyles();
   const appOrigin = getOrigin(src);
-  const { postToExtension } = useAppActions(frameRef, appOrigin);
+  const { postToExtension } = useAppActions(frameRef, appOrigin, appId);
+  const location = useLocation();
+
+  useEffect(() => {
+    postToExtension({
+      type: "redirect",
+      payload: {
+        path: getAppDeepPathFromDashboardUrl(location.pathname, appId),
+      },
+    });
+  }, [location.pathname]);
 
   const handleLoad = () => {
     postToExtension({

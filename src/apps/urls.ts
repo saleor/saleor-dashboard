@@ -69,6 +69,16 @@ export const appDeepUrl = (
   params?: AppDetailsUrlQueryParams,
 ) => appDeepPath(encodeURIComponent(id), subPath) + "?" + stringifyQs(params);
 
+export const getAppDeepPathFromDashboardUrl = (
+  dashboardUrl: string,
+  appId: string,
+) => {
+  const deepSubPath = dashboardUrl.replace(
+    appPath(encodeURIComponent(appId)),
+    "",
+  );
+  return deepSubPath || "/";
+};
 export const getAppCompleteUrlFromDashboardUrl = (
   dashboardUrl: string,
   appUrl?: string,
