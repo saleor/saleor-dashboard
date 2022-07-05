@@ -48,6 +48,7 @@ const timelineEventTypes = {
   rawMessage: [
     OrderEventsEnum.OTHER,
     OrderEventsEnum.EXTERNAL_SERVICE_NOTIFICATION,
+    OrderEventsEnum.TRANSACTION_EVENT,
   ],
   secondaryTitle: [OrderEventsEnum.ORDER_MARKED_AS_PAID],
 };
