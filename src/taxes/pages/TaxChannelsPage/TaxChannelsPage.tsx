@@ -142,10 +142,12 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
             </PageTabs>
             <VerticalSpacer spacing={2} />
             <Grid variant="inverted">
-              <TaxChannelsMenu
-                configurations={taxConfigurations}
-                selectedConfigurationId={selectedConfigurationId}
-              />
+              <div>
+                <TaxChannelsMenu
+                  configurations={taxConfigurations}
+                  selectedConfigurationId={selectedConfigurationId}
+                />
+              </div>
               <div>
                 <TaxSettingsCard values={data} onChange={change} />
                 <VerticalSpacer spacing={3} />
