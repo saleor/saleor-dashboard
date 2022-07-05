@@ -24,6 +24,7 @@ interface GetData {
   row: number;
   variants: ProductDetailsVariantFragment[];
   changes: MutableRefObject<DatagridChange[]>;
+  added: number[];
   removed: number[];
   getChangeIndex: (column: string, row: number) => number;
 }
@@ -31,6 +32,7 @@ interface GetData {
 export function getData({
   availableColumns,
   changes,
+  added,
   removed,
   channels,
   column,
@@ -44,13 +46,14 @@ export function getData({
     readonly: false,
   };
   const change = changes.current[getChangeIndex(columnId, row)]?.data;
-  const rowOffsetted = row + removed.filter(r => r <= row).length;
-  const dataRow = variants[rowOffsetted];
+  const dataRow = added.includes(row)
+    ? undefined
+    : variants[row + removed.filter(r => r <= row).length];
 
   switch (columnId) {
     case "name":
     case "sku":
-      const value = change ?? dataRow[columnId] ?? "";
+      const value = change ?? (dataRow ? dataRow[columnId] : "");
       return {
         ...common,
         data: value,
@@ -62,7 +65,7 @@ export function getData({
   if (isStockColumn.test(columnId)) {
     const value =
       change?.value ??
-      dataRow.stocks.find(
+      dataRow?.stocks.find(
         stock => stock.warehouse.id === columnId.match(isStockColumn)[1],
       )?.quantity ??
       0;
@@ -80,7 +83,7 @@ export function getData({
 
   if (isChannelColumn.test(columnId)) {
     const channelId = columnId.match(isChannelColumn)[1];
-    const listing = dataRow.channelListings.find(
+    const listing = dataRow?.channelListings.find(
       listing => listing.channel.id === channelId,
     );
     const value = change?.value ?? listing?.price?.amount ?? 0;
@@ -101,13 +104,14 @@ export function getData({
   if (isAttributeColumn.test(columnId)) {
     const value =
       change ??
-      dataRow.attributes
+      dataRow?.attributes
         .find(
           attribute =>
             attribute.attribute.id === columnId.match(isAttributeColumn)[1],
         )
         ?.values.map(v => v.name)
-        .join(", ");
+        .join(", ") ??
+      "";
 
     return {
       ...common,

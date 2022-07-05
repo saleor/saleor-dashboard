@@ -11,14 +11,17 @@ export interface DatagridChange {
 }
 
 export type OnDatagridChange = (opts: {
+  added: number[];
   removed: number[];
   updates: DatagridChange[];
 }) => void;
 
 function useDatagridChange(
   availableColumns: readonly AvailableColumn[],
+  rows: number,
   onChange?: OnDatagridChange,
 ) {
+  const [added, setAdded] = useState<number[]>([]);
   const [removed, setRemoved] = useState<number[]>([]);
   const changes = useRef<DatagridChange[]>([]);
   const getChangeIndex = useCallback(
@@ -30,11 +33,12 @@ function useDatagridChange(
   );
 
   const notify = useCallback(
-    (updates: DatagridChange[], removed: number[]) => {
+    (updates: DatagridChange[], added: number[], removed: number[]) => {
       if (onChange) {
         onChange({
           updates,
           removed,
+          added,
         });
       }
     },
@@ -50,17 +54,22 @@ function useDatagridChange(
         existingIndex === -1
           ? [...changes.current, update]
           : updateAtIndex(update, changes.current, existingIndex);
-      notify(changes.current, removed);
+      notify(changes.current, added, removed);
     },
-    [availableColumns, notify, removed],
+    [availableColumns, notify, added, removed],
   );
 
   const onRowsRemoved = useCallback(
     (rows: number[]) => {
-      const getRowOffset = (row: number) => removed.filter(r => r < row).length;
+      const getRowOffset = (row: number) => rows.filter(r => r < row).length;
+      const newAdded = added
+        .filter(row => !rows.includes(row))
+        .map(row => row - getRowOffset(row));
       const newRemoved = [
         ...removed,
-        ...rows.map(row => row + getRowOffset(row)),
+        ...rows
+          .filter(row => !added.includes(row))
+          .map(row => row + removed.filter(r => r <= row).length),
       ];
 
       setRemoved(newRemoved);
@@ -70,13 +79,28 @@ function useDatagridChange(
           ...change,
           row: change.row - getRowOffset(change.row),
         }));
+      setAdded(newAdded);
 
-      notify(changes.current, newRemoved);
+      notify(changes.current, newAdded, newRemoved);
     },
-    [removed, notify],
+    [added, removed, notify],
   );
 
-  return { changes, removed, getChangeIndex, onCellEdited, onRowsRemoved };
+  const onRowAdded = useCallback(() => {
+    const newAdded = [...added, rows - removed.length + added.length];
+    setAdded(newAdded);
+    notify(changes.current, newAdded, removed);
+  }, [added, notify, removed, rows]);
+
+  return {
+    added,
+    changes,
+    removed,
+    getChangeIndex,
+    onCellEdited,
+    onRowsRemoved,
+    onRowAdded,
+  };
 }
 
 export default useDatagridChange;

@@ -5,7 +5,7 @@ import DataEditor, {
   Item,
   Theme,
 } from "@glideapps/glide-data-grid";
-import { MoreHorizontalIcon, useTheme } from "@saleor/macaw-ui";
+import { Button, MoreHorizontalIcon, useTheme } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { ThemeProvider } from "styled-components";
@@ -23,6 +23,7 @@ import useDatagridChange, {
 
 export interface GetCellContentOpts {
   changes: React.MutableRefObject<DatagridChange[]>;
+  added: number[];
   removed: number[];
   getChangeIndex: (column: string, row: number) => number;
 }
@@ -86,12 +87,14 @@ export const Datagrid: React.FC<DatagridProps> = ({
   } = useColumns(availableColumns);
 
   const {
+    added,
     onCellEdited,
     onRowsRemoved,
     changes,
     removed,
     getChangeIndex,
-  } = useDatagridChange(availableColumns, onChange);
+    onRowAdded,
+  } = useDatagridChange(availableColumns, rows, onChange);
 
   const getCellContentEnh = React.useCallback(
     ([column, row]: Item): GridCell =>
@@ -100,9 +103,9 @@ export const Datagrid: React.FC<DatagridProps> = ({
           availableColumns.findIndex(ac => ac.id === displayedColumns[column]),
           row,
         ],
-        { changes, removed, getChangeIndex },
+        { changes, added, removed, getChangeIndex },
       ),
-    [getCellContent, availableColumns, displayedColumns, removed],
+    [getCellContent, availableColumns, displayedColumns, added, removed],
   );
 
   const onCellEditedEnh = React.useCallback(
@@ -141,6 +144,9 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   return (
     <div className={classes.root}>
+      <Button variant="tertiary" onClick={onRowAdded}>
+        Add
+      </Button>
       <ThemeProvider theme={datagridTheme}>
         {selection?.rows.length > 0 && (
           <div className={classes.actionBtnBar}>
@@ -152,7 +158,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
           getCellContent={getCellContentEnh}
           onCellEdited={onCellEditedEnh}
           columns={columns}
-          rows={rows - removed.length}
+          rows={rows - removed.length + added.length}
           freezeColumns={0}
           smoothScrollX
           rowMarkers="checkbox"
