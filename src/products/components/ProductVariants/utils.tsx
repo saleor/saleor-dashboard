@@ -1,11 +1,15 @@
-import { GridCell, GridCellKind } from "@glideapps/glide-data-grid";
-import { MoneyCell } from "@saleor/components/Datagrid/MoneyCell";
-import { NumberCell } from "@saleor/components/Datagrid/NumberCell";
+import { GridCell } from "@glideapps/glide-data-grid";
+import {
+  moneyCell,
+  numberCell,
+  textCell,
+} from "@saleor/components/Datagrid/cells";
 import { AvailableColumn } from "@saleor/components/Datagrid/types";
 import { DatagridChange } from "@saleor/components/Datagrid/useDatagridChange";
 import {
   ChannelFragment,
   ProductDetailsVariantFragment,
+  ProductFragment,
   WarehouseFragment,
 } from "@saleor/graphql";
 import { MutableRefObject } from "react";
@@ -41,10 +45,6 @@ export function getData({
   variants,
 }: GetData): GridCell {
   const columnId = availableColumns[column].id;
-  const common = {
-    allowOverlay: true,
-    readonly: false,
-  };
   const change = changes.current[getChangeIndex(columnId, row)]?.data;
   const dataRow = added.includes(row)
     ? undefined
@@ -54,12 +54,7 @@ export function getData({
     case "name":
     case "sku":
       const value = change ?? (dataRow ? dataRow[columnId] : "");
-      return {
-        ...common,
-        data: value,
-        displayData: value,
-        kind: GridCellKind.Text,
-      };
+      return textCell(value);
   }
 
   if (isStockColumn.test(columnId)) {
@@ -70,15 +65,7 @@ export function getData({
       )?.quantity ??
       0;
 
-    return {
-      ...common,
-      data: {
-        kind: "number-cell",
-        value,
-      },
-      kind: GridCellKind.Custom,
-      copyData: value.toString(),
-    } as NumberCell;
+    return numberCell(value);
   }
 
   if (isChannelColumn.test(columnId)) {
@@ -86,19 +73,11 @@ export function getData({
     const listing = dataRow?.channelListings.find(
       listing => listing.channel.id === channelId,
     );
+    const currency = channels.find(channel => channelId === channel.id)
+      ?.currencyCode;
     const value = change?.value ?? listing?.price?.amount ?? 0;
 
-    return {
-      ...common,
-      kind: GridCellKind.Custom,
-      data: {
-        kind: "money-cell",
-        value,
-        currency: channels.find(channel => channelId === channel.id)
-          ?.currencyCode,
-      },
-      copyData: value.toString(),
-    } as MoneyCell;
+    return moneyCell(value, currency);
   }
 
   if (isAttributeColumn.test(columnId)) {
@@ -113,12 +92,7 @@ export function getData({
         .join(", ") ??
       "";
 
-    return {
-      ...common,
-      data: value,
-      displayData: value,
-      kind: GridCellKind.Text,
-    };
+    return textCell(value);
   }
 }
 
@@ -126,7 +100,7 @@ export function getColumnData(
   name: string,
   channels: ChannelFragment[],
   warehouses: WarehouseFragment[],
-  variants: ProductDetailsVariantFragment[],
+  variantAttributes: ProductFragment["productType"]["variantAttributes"],
   intl: IntlShape,
 ): AvailableColumn {
   const common = {
@@ -165,12 +139,9 @@ export function getColumnData(
   if (isAttributeColumn.test(name)) {
     return {
       ...common,
-      title: variants
-        .flatMap(variant =>
-          variant.attributes.map(attribute => attribute.attribute),
-        )
-        .find(attribute => attribute.id === name.match(isAttributeColumn)[1])
-        ?.name,
+      title: variantAttributes.find(
+        attribute => attribute.id === name.match(isAttributeColumn)[1],
+      )?.name,
     };
   }
 

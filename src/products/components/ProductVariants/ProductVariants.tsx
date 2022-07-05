@@ -3,6 +3,7 @@ import Datagrid, {
   GetCellContentOpts,
 } from "@saleor/components/Datagrid/Datagrid";
 import {
+  AttributeInputTypeEnum,
   ChannelFragment,
   ProductDetailsVariantFragment,
   ProductFragment,
@@ -22,6 +23,7 @@ interface ProductVariantsProps {
   channels: ChannelFragment[];
   limits: RefreshLimitsQuery["shop"]["limits"];
   listings: ProductFragment["channelListings"];
+  variantAttributes: ProductFragment["productType"]["variantAttributes"];
   variants: ProductDetailsVariantFragment[];
   warehouses: WarehouseFragment[];
   onVariantBulkDelete: (ids: string[]) => void;
@@ -34,6 +36,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
   listings,
   variants,
   warehouses,
+  variantAttributes,
   onRowClick,
 }) => {
   const intl = useIntl();
@@ -41,23 +44,30 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
 
   // Display only channels that product has listing in
   const availableChannels = React.useMemo(
-    () => listings.map(listing => channels.find(getById(listing.channel.id))),
+    () => listings?.map(listing => channels.find(getById(listing.channel.id))),
     [channels, listings],
   );
   const columns = React.useMemo(
     () =>
-      variants?.length > 0
+      availableChannels && variantAttributes && warehouses
         ? [
             "name",
             "sku",
             ...availableChannels?.map(channel => `channel:${channel.id}`),
             ...warehouses?.map(warehouse => `stock:${warehouse.id}`),
-            ...variants[0]?.attributes.map(
-              attribute => `attribute:${attribute.attribute.id}`,
-            ),
-          ].map(c => getColumnData(c, channels, warehouses, variants, intl))
+            ...variantAttributes
+              .filter(attribute =>
+                [
+                  AttributeInputTypeEnum.DROPDOWN,
+                  AttributeInputTypeEnum.PLAIN_TEXT,
+                ].includes(attribute.inputType),
+              )
+              .map(attribute => `attribute:${attribute.id}`),
+          ].map(c =>
+            getColumnData(c, channels, warehouses, variantAttributes, intl),
+          )
         : [],
-    [variants, warehouses, availableChannels],
+    [variantAttributes, warehouses, availableChannels],
   );
 
   const getCellContent = React.useCallback(

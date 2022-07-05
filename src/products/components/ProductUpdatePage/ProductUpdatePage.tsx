@@ -332,64 +332,17 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   />
                 )}
                 <CardSpacer />
-                {isSimpleProduct && (
-                  <>
-                    <ProductVariantPrice
-                      ProductVariantChannelListings={data.channelListings}
-                      errors={channelsErrors}
-                      loading={disabled}
-                      onChange={handlers.changeChannelPrice}
-                    />
-                    <CardSpacer />
-                  </>
-                )}
-                {hasVariants ? (
-                  <ProductVariants
-                    channels={channels}
-                    limits={limits}
-                    listings={product.channelListings}
-                    variants={variants}
-                    warehouses={warehouses}
-                    onVariantBulkDelete={onVariantBulkDelete}
-                    onRowClick={onVariantShow}
-                    onSetDefaultVariant={onSetDefaultVariant}
-                  />
-                ) : (
-                  <>
-                    <ProductShipping
-                      data={data}
-                      disabled={disabled}
-                      errors={errors}
-                      weightUnit={product?.weight?.unit || defaultWeightUnit}
-                      onChange={change}
-                    />
-                    <CardSpacer />
-                    <ProductStocks
-                      onVariantChannelListingChange={
-                        handlers.changeChannelPreorder
-                      }
-                      productVariantChannelListings={data.channelListings}
-                      onEndPreorderTrigger={
-                        !!variants?.[0]?.preorder
-                          ? () => onVariantEndPreorderDialogOpen()
-                          : null
-                      }
-                      data={data}
-                      disabled={disabled}
-                      hasVariants={false}
-                      errors={errors}
-                      formErrors={formErrors}
-                      stocks={data.stocks}
-                      warehouses={warehouses}
-                      onChange={handlers.changeStock}
-                      onFormDataChange={change}
-                      onChangePreorderEndDate={handlers.changePreorderEndDate}
-                      onWarehouseStockAdd={handlers.addStock}
-                      onWarehouseStockDelete={handlers.deleteStock}
-                      onWarehouseConfigure={onWarehouseConfigure}
-                    />
-                  </>
-                )}
+                <ProductVariants
+                  channels={channels}
+                  limits={limits}
+                  listings={product?.channelListings}
+                  variants={variants}
+                  variantAttributes={product?.productType.variantAttributes}
+                  warehouses={warehouses}
+                  onVariantBulkDelete={onVariantBulkDelete}
+                  onRowClick={onVariantShow}
+                  onSetDefaultVariant={onSetDefaultVariant}
+                />
                 <CardSpacer />
                 <SeoForm
                   errors={errors}
