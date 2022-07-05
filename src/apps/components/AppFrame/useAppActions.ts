@@ -1,9 +1,11 @@
 import { Actions, DispatchResponseEvent, Events } from "@saleor/app-bridge";
 import { appPath } from "@saleor/apps/urls";
+import { APP_MOUNT_URI } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
 import React from "react";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
+import urlJoin from "url-join";
 
 import { useExternalApp } from "../ExternalAppContext";
 
@@ -52,8 +54,10 @@ export const useAppActions = (
           if (newContext) {
             window.open(to);
           } else if (appDeepUrlChange) {
+            const exactLocation = urlJoin(APP_MOUNT_URI, to);
+
             // Change only url without reloading if we are in the same app
-            window.history.pushState(null, "", to);
+            window.history.pushState(null, "", exactLocation);
           } else if (to.startsWith("/")) {
             navigate(to);
             closeApp();
