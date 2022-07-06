@@ -1,9 +1,10 @@
+import { useTaxClassesListQuery } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 
-import { taxClasses } from "../fixtures";
 import TaxClassesPage from "../pages/TaxClassesPage";
-import { taxClassesListUrl, taxTabSectionUrl } from "../urls";
+import { taxClassesListUrl, TaxTab, taxTabPath } from "../urls";
 import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
 
 interface TaxClassesListProps {
@@ -13,9 +14,12 @@ interface TaxClassesListProps {
 export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
   const navigate = useNavigator();
 
-  const handleTabChange = (tab: string) => {
-    navigate(taxTabSectionUrl(tab));
+  const handleTabChange = (tab: TaxTab) => {
+    navigate(taxTabPath(tab));
   };
+
+  const { data } = useTaxClassesListQuery({ variables: { first: 20 } });
+  const taxClasses = mapEdgesToItems(data?.taxClasses);
 
   useTaxUrlRedirect({
     id,

@@ -27,3 +27,19 @@ export const fetchTaxes = gql`
     }
   }
 `;
+
+export const taxConfigurationUpdate = gql`
+  mutation TaxConfigurationUpdate(
+    $id: ID!
+    $input: TaxConfigurationUpdateInput!
+  ) {
+    taxConfigurationUpdate(id: $id, input: $input) {
+      errors {
+        ...TaxConfigurationUpdateErrorFragment
+      }
+      taxConfiguration {
+        ...TaxConfiguration
+      }
+    }
+  }
+`;
