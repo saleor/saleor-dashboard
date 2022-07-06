@@ -6506,6 +6506,8 @@ export type AttributeValueTranslateErrorFragmentFragment = { __typename: 'Transl
 
 export type ShippingPriceTranslateErrorFragmentFragment = { __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null };
 
+export type TaxConfigurationUpdateErrorFragmentFragment = { __typename: 'TaxConfigurationUpdateError', field: string | null, code: TaxConfigurationUpdateErrorCode };
+
 export type FileFragment = { __typename: 'File', url: string, contentType: string | null };
 
 export type GiftCardsSettingsFragment = { __typename: 'GiftCardSettings', expiryType: GiftCardSettingsExpiryTypeEnum, expiryPeriod: { __typename: 'TimePeriod', type: TimePeriodTypeEnum, amount: number } | null };
@@ -8287,6 +8289,14 @@ export type FetchTaxesMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type FetchTaxesMutation = { __typename: 'Mutation', shopFetchTaxRates: { __typename: 'ShopFetchTaxRates', errors: Array<{ __typename: 'ShopError', code: ShopErrorCode, field: string | null, message: string | null }>, shop: { __typename: 'Shop', countries: Array<{ __typename: 'CountryDisplay', country: string, code: string }> } | null } | null };
 
+export type TaxConfigurationUpdateMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: TaxConfigurationUpdateInput;
+}>;
+
+
+export type TaxConfigurationUpdateMutation = { __typename: 'Mutation', taxConfigurationUpdate: { __typename: 'TaxConfigurationUpdate', errors: Array<{ __typename: 'TaxConfigurationUpdateError', field: string | null, code: TaxConfigurationUpdateErrorCode }>, taxConfiguration: { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } }> } | null } | null };
+
 export type CountryListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -8296,6 +8306,34 @@ export type TaxTypeListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type TaxTypeListQuery = { __typename: 'Query', taxTypes: Array<{ __typename: 'TaxType', description: string | null, taxCode: string | null }> | null };
+
+export type TaxConfigurationsListQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']>;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  filter?: InputMaybe<TaxConfigurationFilterInput>;
+}>;
+
+
+export type TaxConfigurationsListQuery = { __typename: 'Query', taxConfigurations: { __typename: 'TaxConfigurationCountableConnection', edges: Array<{ __typename: 'TaxConfigurationCountableEdge', node: { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } }> } }> } | null };
+
+export type TaxCountriesListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TaxCountriesListQuery = { __typename: 'Query', taxCountryConfigurations: Array<{ __typename: 'TaxCountryConfiguration', country: { __typename: 'CountryDisplay', country: string, code: string }, taxClassCountryRates: Array<{ __typename: 'TaxClassCountryRate', rate: number, taxClass: { __typename: 'TaxClass', id: string, name: string, isDefault: boolean } }> }> | null };
+
+export type TaxClassesListQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']>;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  filter?: InputMaybe<TaxClassFilterInput>;
+  sortBy?: InputMaybe<TaxClassSortingInput>;
+}>;
+
+
+export type TaxClassesListQuery = { __typename: 'Query', taxClasses: { __typename: 'TaxClassCountableConnection', edges: Array<{ __typename: 'TaxClassCountableEdge', node: { __typename: 'TaxClass', id: string, name: string, isDefault: boolean, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }> } }> } | null };
 
 export type UpdateProductTranslationsMutationVariables = Exact<{
   id: Scalars['ID'];
