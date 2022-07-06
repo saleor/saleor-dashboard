@@ -173,7 +173,7 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COMMIT_INFO_MESSAGE: Critical triggered via release - ${{github.event.client_payload.project}} ${{github.event.client_payload.version}}, ${{github.event.client_payload.pullRequestUrl}}
-          CYPRESS_grepTags: '@critical'
+          CYPRESS_grepTags: '@stable'
         with:
           parallel: true
           group: 'UI - Chrome'
