@@ -238,7 +238,7 @@ const parseFilterValue = (
   params: ProductListUrlFilters,
   key: string,
 ): {
-  type: "boolean" | "date" | "dateTime" | "string";
+  type: "boolean" | "date" | "dateTime" | "numeric" | "string";
   isMulti: boolean;
   value: string[];
 } => {
@@ -253,6 +253,7 @@ const parseFilterValue = (
   const isDateTimeValue = (isMulti ? value : [value]).some(val =>
     moment(val, moment.ISO_8601, true).isValid(),
   );
+  const isNumericValue = (isMulti ? value : [value]).some(val => !isNaN(val));
 
   const data = { isMulti, value: (isMulti ? value : [value]) as string[] };
 
@@ -262,6 +263,8 @@ const parseFilterValue = (
     return { ...data, type: "date" };
   } else if (isDateTimeValue) {
     return { ...data, type: "dateTime" };
+  } else if (isNumericValue) {
+    return { ...data, type: "numeric" };
   }
   return { ...data, type: "string" };
 };
@@ -316,6 +319,15 @@ function getFilteredAttributeValue(
                 gte: value[0] || null,
                 lte: isMulti ? value[1] || null : value[0],
               }),
+            };
+
+          case "numeric":
+            return {
+              ...name,
+              valuesRange: {
+                gte: value[0] || undefined,
+                lte: isMulti ? value[1] || undefined : value[0],
+              },
             };
 
           default:

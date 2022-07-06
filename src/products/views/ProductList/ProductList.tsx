@@ -462,8 +462,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         confirmButtonState={exportProductsOpts.status}
         errors={exportProductsOpts.data?.exportProducts.errors || []}
         productQuantity={{
-          all: countAllProducts.data?.products.totalCount,
-          filter: data?.products.totalCount,
+          all: countAllProducts.data?.products?.totalCount,
+          filter: data?.products?.totalCount,
         }}
         selectedProducts={listElements.length}
         warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
