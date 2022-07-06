@@ -120,6 +120,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
             [name]: value
           };
           currentExceptions[index] = exceptionToChange;
+          triggerChange();
           set({ updateCountriesConfiguration: currentExceptions });
         };
 
