@@ -109,7 +109,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
 
   return (
     <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
-      {({ data, change, submit, set }) => {
+      {({ data, change, submit, set, triggerChange }) => {
         const countryExceptions = data.updateCountriesConfiguration;
 
         const handleExceptionChange = (event, index) => {
@@ -219,6 +219,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                                   country.country.code
                               )
                             });
+                            triggerChange();
                           }}
                           onChange={event =>
                             handleExceptionChange(event, countryIndex)
@@ -255,6 +256,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                     displayGrossPrices: data.displayGrossPrices
                   })) as TaxConfigurationPerCountryFragment[];
                   const currentExceptions = data.updateCountriesConfiguration;
+                  triggerChange();
                   set({
                     updateCountriesConfiguration: [
                       ...currentExceptions,
