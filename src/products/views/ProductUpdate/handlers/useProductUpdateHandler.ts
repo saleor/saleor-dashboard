@@ -10,14 +10,13 @@ import {
   useProductChannelListingUpdateMutation,
   useProductUpdateMutation,
   useProductVariantChannelListingUpdateMutation,
-  useSimpleProductUpdateMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
   useVariantCreateMutation,
 } from "@saleor/graphql";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
+import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/form";
 import { getProductErrorMessage } from "@saleor/utils/errors";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { useIntl } from "react-intl";
@@ -34,7 +33,7 @@ import {
 export type UseProductUpdateHandlerError = ProductErrorWithAttributesFragment;
 
 type UseProductUpdateHandler = (
-  data: ProductUpdatePageSubmitData,
+  data: ProductUpdateSubmitData,
 ) => Promise<
   Array<
     | SimpleProductUpdateError
@@ -80,12 +79,6 @@ export function useProductUpdateHandler(
     onCompleted: handleUpdate,
   });
   const [
-    updateSimpleProduct,
-    updateSimpleProductOpts,
-  ] = useSimpleProductUpdateMutation({
-    onCompleted: handleUpdate,
-  });
-  const [
     updateChannels,
     updateChannelsOpts,
   ] = useProductChannelListingUpdateMutation({
@@ -118,7 +111,7 @@ export function useProductUpdateHandler(
           product,
           allChannels,
           uploadFile,
-          variables => updateProduct({ variables }),
+          updateProduct,
           updateChannels,
           variables => deleteAttributeValue({ variables }),
         )
@@ -126,7 +119,7 @@ export function useProductUpdateHandler(
           product,
           allChannels,
           variables => uploadFile({ variables }),
-          variables => updateSimpleProduct({ variables }),
+          updateProduct,
           updateChannels,
           updateVariantChannels,
           productVariantCreate,
@@ -142,7 +135,6 @@ export function useProductUpdateHandler(
     productVariantCreateOpts.called ||
     uploadFileOpts.called ||
     updateProductOpts.called ||
-    updateSimpleProductOpts.called ||
     updateChannelsOpts.called ||
     updateVariantChannelsOpts.called ||
     deleteAttributeValueOpts.called;
@@ -152,14 +144,12 @@ export function useProductUpdateHandler(
     productVariantCreateOpts.loading ||
     uploadFileOpts.loading ||
     updateProductOpts.loading ||
-    updateSimpleProductOpts.loading ||
     updateChannelsOpts.loading ||
     updateVariantChannelsOpts.loading ||
     deleteAttributeValueOpts.loading;
 
   const errors = [
     ...(updateProductOpts.data?.productUpdate.errors ?? []),
-    ...(updateSimpleProductOpts.data?.productUpdate.errors ?? []),
     ...(productVariantCreateOpts.data?.productVariantCreate.errors ?? []),
   ];
 

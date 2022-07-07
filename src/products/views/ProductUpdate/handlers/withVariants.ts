@@ -1,16 +1,13 @@
 import { FetchResult } from "@apollo/client";
 import {
-  getAttributesAfterFileAttributesUpdate,
   mergeAttributeValueDeleteErrors,
   mergeFileUploadErrors,
 } from "@saleor/attributes/utils/data";
 import {
   handleDeleteMultipleAttributeValues,
   handleUploadMultipleFiles,
-  prepareAttributesInput,
 } from "@saleor/attributes/utils/handlers";
 import { ChannelData } from "@saleor/channels/utils";
-import { VALUES_PAGINATE_BY } from "@saleor/config";
 import {
   AttributeErrorFragment,
   AttributeValueDeleteMutation,
@@ -20,15 +17,12 @@ import {
   ProductChannelListingUpdateMutationVariables,
   ProductErrorWithAttributesFragment,
   ProductFragment,
-  ProductUpdateMutation,
-  ProductUpdateMutationVariables,
+  ProductUpdateMutationFn,
   UploadErrorFragment,
 } from "@saleor/graphql";
-import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
-import { getAttributeInputFromProduct } from "@saleor/products/utils/data";
-import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
+import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/form";
 
-import { getChannelsVariables } from "./utils";
+import { getChannelsVariables, getProductUpdateVariables } from "./utils";
 
 export type ProductWithVariantsUpdateError =
   | ProductErrorWithAttributesFragment
@@ -39,9 +33,7 @@ export function createProductWithVariantsUpdateHandler(
   product: ProductFragment,
   allChannels: ChannelData[],
   uploadFile: FileUploadMutationFn,
-  updateProduct: (
-    variables: ProductUpdateMutationVariables,
-  ) => Promise<FetchResult<ProductUpdateMutation>>,
+  updateProduct: ProductUpdateMutationFn,
   updateChannels: (options: {
     variables: ProductChannelListingUpdateMutationVariables;
   }) => Promise<FetchResult<ProductChannelListingUpdateMutation>>,
@@ -50,7 +42,7 @@ export function createProductWithVariantsUpdateHandler(
   ) => Promise<FetchResult<AttributeValueDeleteMutation>>,
 ) {
   return async (
-    data: ProductUpdatePageSubmitData,
+    data: ProductUpdateSubmitData,
   ): Promise<ProductWithVariantsUpdateError[]> => {
     let errors: ProductWithVariantsUpdateError[] = [];
 
@@ -70,36 +62,10 @@ export function createProductWithVariantsUpdateHandler(
       ...mergeFileUploadErrors(uploadFilesResult),
       ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
     ];
-    const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
-      data.attributesWithNewFileValue,
-      uploadFilesResult,
-    );
 
-    const productVariables: ProductUpdateMutationVariables = {
-      id: product.id,
-      input: {
-        attributes: prepareAttributesInput({
-          attributes: data.attributes,
-          prevAttributes: getAttributeInputFromProduct(product),
-          updatedFileAttributes,
-        }),
-        category: data.category,
-        chargeTaxes: data.chargeTaxes,
-        collections: data.collections,
-        description: getParsedDataForJsonStringField(data.description),
-        name: data.name,
-        rating: data.rating,
-        seo: {
-          description: data.seoDescription,
-          title: data.seoTitle,
-        },
-        slug: data.slug,
-        taxCode: data.changeTaxCode ? data.taxCode : null,
-      },
-      firstValues: VALUES_PAGINATE_BY,
-    };
-
-    const result = await updateProduct(productVariables);
+    const result = await updateProduct({
+      variables: getProductUpdateVariables(product, data, uploadFilesResult),
+    });
     errors = [...errors, ...result.data.productUpdate.errors];
 
     await updateChannels({

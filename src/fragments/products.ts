@@ -147,7 +147,7 @@ export const productVariantAttributesFragment = gql`
     }
     productType {
       id
-      variantAttributes(variantSelection: VARIANT_SELECTION) {
+      variantAttributes {
         id
         name
         inputType

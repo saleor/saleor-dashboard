@@ -1,13 +1,8 @@
 import { GridCell } from "@glideapps/glide-data-grid";
-import {
-  moneyCell,
-  numberCell,
-  textCell,
-} from "@saleor/components/Datagrid/cells";
+import { numberCell, textCell } from "@saleor/components/Datagrid/cells";
 import { AvailableColumn } from "@saleor/components/Datagrid/types";
 import { DatagridChange } from "@saleor/components/Datagrid/useDatagridChange";
 import {
-  ChannelFragment,
   ProductDetailsVariantFragment,
   ProductFragment,
   WarehouseFragment,
@@ -18,12 +13,11 @@ import { IntlShape } from "react-intl";
 import messages from "./messages";
 
 const isStockColumn = /^stock:(.*)/;
-const isChannelColumn = /^channel:(.*)/;
+// const isChannelColumn = /^channel:(.*)/;
 const isAttributeColumn = /^attribute:(.*)/;
 
 interface GetData {
   availableColumns: AvailableColumn[];
-  channels: ChannelFragment[];
   column: number;
   row: number;
   variants: ProductDetailsVariantFragment[];
@@ -38,7 +32,6 @@ export function getData({
   changes,
   added,
   removed,
-  channels,
   column,
   getChangeIndex,
   row,
@@ -54,7 +47,7 @@ export function getData({
     case "name":
     case "sku":
       const value = change ?? (dataRow ? dataRow[columnId] : "");
-      return textCell(value);
+      return textCell(value || "");
   }
 
   if (isStockColumn.test(columnId)) {
@@ -68,17 +61,18 @@ export function getData({
     return numberCell(value);
   }
 
-  if (isChannelColumn.test(columnId)) {
-    const channelId = columnId.match(isChannelColumn)[1];
-    const listing = dataRow?.channelListings.find(
-      listing => listing.channel.id === channelId,
-    );
-    const currency = channels.find(channel => channelId === channel.id)
-      ?.currencyCode;
-    const value = change?.value ?? listing?.price?.amount ?? 0;
+  // TODO: We'll add channels later
+  // if (isChannelColumn.test(columnId)) {
+  //   const channelId = columnId.match(isChannelColumn)[1];
+  //   const listing = dataRow?.channelListings.find(
+  //     listing => listing.channel.id === channelId,
+  //   );
+  //   const currency = channels.find(channel => channelId === channel.id)
+  //     ?.currencyCode;
+  //   const value = change?.value ?? listing?.price?.amount ?? 0;
 
-    return moneyCell(value, currency);
-  }
+  //   return moneyCell(value, currency);
+  // }
 
   if (isAttributeColumn.test(columnId)) {
     const value =
@@ -92,13 +86,13 @@ export function getData({
         .join(", ") ??
       "";
 
-    return textCell(value);
+    return textCell(value || "");
   }
 }
 
 export function getColumnData(
   name: string,
-  channels: ChannelFragment[],
+  // channels: ChannelData[],
   warehouses: WarehouseFragment[],
   variantAttributes: ProductFragment["productType"]["variantAttributes"],
   intl: IntlShape,
@@ -125,16 +119,16 @@ export function getColumnData(
     };
   }
 
-  if (isChannelColumn.test(name)) {
-    const channel = channels.find(
-      channel => channel.id === name.match(isChannelColumn)[1],
-    );
-    return {
-      ...common,
-      width: 150,
-      title: `${channel?.name} [${channel.currencyCode}]`,
-    };
-  }
+  // if (isChannelColumn.test(name)) {
+  //   const channel = channels.find(
+  //     channel => channel.id === name.match(isChannelColumn)[1],
+  //   );
+  //   return {
+  //     ...common,
+  //     width: 150,
+  //     title: `${channel?.name} [${channel.currency}]`,
+  //   };
+  // }
 
   if (isAttributeColumn.test(name)) {
     return {

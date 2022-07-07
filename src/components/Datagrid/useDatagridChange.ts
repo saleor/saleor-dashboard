@@ -10,11 +10,12 @@ export interface DatagridChange {
   column: string;
 }
 
-export type OnDatagridChange = (opts: {
+export interface DatagridChangeOpts {
   added: number[];
   removed: number[];
   updates: DatagridChange[];
-}) => void;
+}
+export type OnDatagridChange = (opts: DatagridChangeOpts) => void;
 
 function useDatagridChange(
   availableColumns: readonly AvailableColumn[],

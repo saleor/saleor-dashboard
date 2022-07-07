@@ -2,9 +2,9 @@ import { Item } from "@glideapps/glide-data-grid";
 import Datagrid, {
   GetCellContentOpts,
 } from "@saleor/components/Datagrid/Datagrid";
+import { DatagridChangeOpts } from "@saleor/components/Datagrid/useDatagridChange";
 import {
   AttributeInputTypeEnum,
-  ChannelFragment,
   ProductDetailsVariantFragment,
   ProductFragment,
   RefreshLimitsQuery,
@@ -12,7 +12,6 @@ import {
 } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
 import { Button } from "@saleor/macaw-ui";
-import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 // import { isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -20,40 +19,31 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { getColumnData, getData } from "./utils";
 
 interface ProductVariantsProps {
-  channels: ChannelFragment[];
   limits: RefreshLimitsQuery["shop"]["limits"];
-  listings: ProductFragment["channelListings"];
   variantAttributes: ProductFragment["productType"]["variantAttributes"];
   variants: ProductDetailsVariantFragment[];
   warehouses: WarehouseFragment[];
-  onVariantBulkDelete: (ids: string[]) => void;
+  onChange: (data: DatagridChangeOpts) => void;
   onRowClick: (id: string) => void;
-  onSetDefaultVariant: (id: string) => void;
 }
 
 export const ProductVariants: React.FC<ProductVariantsProps> = ({
-  channels,
-  listings,
   variants,
   warehouses,
   variantAttributes,
+  onChange,
   onRowClick,
 }) => {
   const intl = useIntl();
   // const limitReached = isLimitReached(limits, "productVariants");
 
-  // Display only channels that product has listing in
-  const availableChannels = React.useMemo(
-    () => listings?.map(listing => channels.find(getById(listing.channel.id))),
-    [channels, listings],
-  );
   const columns = React.useMemo(
     () =>
-      availableChannels && variantAttributes && warehouses
+      variantAttributes && warehouses
         ? [
             "name",
             "sku",
-            ...availableChannels?.map(channel => `channel:${channel.id}`),
+            // ...channels?.map(channel => `channel:${channel.id}`),
             ...warehouses?.map(warehouse => `stock:${warehouse.id}`),
             ...variantAttributes
               .filter(attribute =>
@@ -63,24 +53,21 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
                 ].includes(attribute.inputType),
               )
               .map(attribute => `attribute:${attribute.id}`),
-          ].map(c =>
-            getColumnData(c, channels, warehouses, variantAttributes, intl),
-          )
+          ].map(c => getColumnData(c, warehouses, variantAttributes, intl))
         : [],
-    [variantAttributes, warehouses, availableChannels],
+    [variantAttributes, warehouses],
   );
 
   const getCellContent = React.useCallback(
     ([column, row]: Item, opts: GetCellContentOpts) =>
       getData({
         availableColumns: columns,
-        channels,
         column,
         row,
         variants,
         ...opts,
       }),
-    [columns, channels, variants],
+    [columns, variants],
   );
 
   return (
@@ -99,6 +86,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
           <FormattedMessage {...buttonMessages.delete} />
         </Button>
       )}
+      onChange={onChange}
     />
   );
 };

@@ -1,8 +1,13 @@
+import { FetchResult } from "@apollo/client";
+import { getAttributesAfterFileAttributesUpdate } from "@saleor/attributes/utils/data";
+import { prepareAttributesInput } from "@saleor/attributes/utils/handlers";
 import {
   ChannelData,
   createSortedChannelsDataFromProduct,
 } from "@saleor/channels/utils";
+import { VALUES_PAGINATE_BY } from "@saleor/config";
 import {
+  FileUploadMutation,
   ProductChannelListingAddInput,
   ProductChannelListingUpdateMutationVariables,
   ProductDetailsVariantFragment,
@@ -12,11 +17,11 @@ import {
 } from "@saleor/graphql";
 import { weight } from "@saleor/misc";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
-import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
 import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/form";
-import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
+import { getAttributeInputFromProduct } from "@saleor/products/utils/data";
 import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
 import { arrayDiff } from "@saleor/utils/arrays";
+import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
 import isEqual from "lodash/isEqual";
 import pick from "lodash/pick";
 
@@ -25,12 +30,10 @@ import { getParsedChannelsWithVariantsDataFromChannels } from "../utils";
 
 export const getSimpleProductVariables = (
   productVariables: ProductUpdateMutationVariables,
-  data: ProductUpdatePageSubmitData,
+  data: ProductUpdateSubmitData,
   productId: string,
 ) => ({
   ...productVariables,
-  addStocks: data.addStocks.map(mapFormsetStockToStockInput),
-  deleteStocks: data.removeStocks,
   input: {
     ...productVariables.input,
     weight: weight(data.weight),
@@ -48,7 +51,6 @@ export const getSimpleProductVariables = (
         }
       : undefined,
   },
-  updateStocks: data.updateStocks.map(mapFormsetStockToStockInput),
 });
 
 export const getSimpleProductErrors = (data: SimpleProductUpdateMutation) => [
@@ -96,6 +98,41 @@ const shouldUpdateChannel = (
 
   return hasDataChanged && !isRemovingChannel;
 };
+
+export function getProductUpdateVariables(
+  product: ProductFragment,
+  data: ProductUpdateSubmitData,
+  uploadFilesResult: Array<FetchResult<FileUploadMutation>>,
+) {
+  const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
+    data.attributesWithNewFileValue,
+    uploadFilesResult,
+  );
+
+  return {
+    id: product.id,
+    input: {
+      attributes: prepareAttributesInput({
+        attributes: data.attributes,
+        prevAttributes: getAttributeInputFromProduct(product),
+        updatedFileAttributes,
+      }),
+      category: data.category,
+      chargeTaxes: data.chargeTaxes,
+      collections: data.collections,
+      description: getParsedDataForJsonStringField(data.description),
+      name: data.name,
+      rating: data.rating,
+      seo: {
+        description: data.seoDescription,
+        title: data.seoTitle,
+      },
+      slug: data.slug,
+      taxCode: data.changeTaxCode ? data.taxCode : null,
+    },
+    firstValues: VALUES_PAGINATE_BY,
+  };
+}
 
 export const getChannelsVariables = (
   { id, variants }: Pick<ProductFragment, "id" | "variants">,
@@ -153,7 +190,7 @@ export const getChannelsVariables = (
 };
 
 export const getSimpleChannelsVariables = (
-  data: ProductUpdatePageSubmitData,
+  data: ProductUpdateSubmitData,
   product: ProductFragment,
 ): ProductChannelListingUpdateMutationVariables => {
   const productChannels = createSortedChannelsDataFromProduct(product);
@@ -175,7 +212,7 @@ export const getSimpleChannelsVariables = (
 
 export const getVariantChannelsInput = ({
   channelListings,
-}: ProductUpdatePageSubmitData) =>
+}: ProductUpdateSubmitData) =>
   channelListings.map(listing => ({
     channelId: listing.id,
     costPrice: listing.costPrice || null,
