@@ -108,7 +108,7 @@ function searchInViews(
     },
     {
       label: intl.formatMessage(sectionNames.taxes),
-      url: taxConfigurationListUrl()
+      url: taxConfigurationListUrl(),
     },
     {
       label: intl.formatMessage(sectionNames.translations),

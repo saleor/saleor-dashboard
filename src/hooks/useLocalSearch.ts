@@ -20,7 +20,7 @@ const parseQuery = (query: string) =>
  */
 export function useLocalSearch<T>(
   array: T[] | undefined,
-  getStringToSearch: (element: T) => string
+  getStringToSearch: (element: T) => string,
 ) {
   const [query, setQuery] = React.useState("");
   const searchResult = React.useMemo(
@@ -28,10 +28,10 @@ export function useLocalSearch<T>(
       array?.filter(
         element =>
           getStringToSearch(element).search(
-            new RegExp(parseQuery(query), "i")
-          ) >= 0
+            new RegExp(parseQuery(query), "i"),
+          ) >= 0,
       ),
-    [array, query]
+    [array, query],
   );
   return { query, setQuery, searchResult };
 }

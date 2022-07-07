@@ -5,7 +5,7 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
@@ -26,7 +26,7 @@ export interface TaxSettingsCardProps {
 
 export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = ({
   values,
-  onChange
+  onChange,
 }) => {
   const intl = useIntl();
   const classes = useStyles();
@@ -55,8 +55,8 @@ export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = ({
               onChange({
                 target: {
                   name: e.target.name,
-                  value: e.target.value === "true"
-                }
+                  value: e.target.value === "true",
+                },
               });
             }}
             className={classes.showCheckboxShadows}

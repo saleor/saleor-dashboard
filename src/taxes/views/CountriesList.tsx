@@ -24,7 +24,7 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id }) => {
     id,
     data: taxCountryConfigurations,
     navigate,
-    urlFunction: countriesListUrl
+    urlFunction: countriesListUrl,
   });
 
   if (id === "undefined" && taxCountryConfigurations?.length) {

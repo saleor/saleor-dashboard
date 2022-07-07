@@ -2,7 +2,7 @@ import {
   Card,
   CardContent,
   InputAdornment,
-  TextField
+  TextField,
 } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import CardTitle from "@saleor/components/CardTitle";
@@ -19,7 +19,7 @@ import {
   ListItemCell,
   PageTab,
   PageTabs,
-  SearchIcon
+  SearchIcon,
 } from "@saleor/macaw-ui";
 import { parseQuery } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/utils";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
@@ -47,7 +47,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
 
   const currentTaxClass = React.useMemo(
     () => taxClasses?.find(getById(selectedTaxClassId)),
-    [selectedTaxClassId, taxClasses]
+    [selectedTaxClassId, taxClasses],
   );
 
   const filteredRates: TaxRateFragment[] = React.useMemo(
@@ -55,9 +55,9 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
       currentTaxClass?.countries.filter(
         country =>
           country.country.country.search(new RegExp(parseQuery(query), "i")) >=
-          0
+          0,
       ),
-    [currentTaxClass, query]
+    [currentTaxClass, query],
   );
 
   return (
@@ -118,7 +118,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                     <InputAdornment position="start">
                       <SearchIcon />
                     </InputAdornment>
-                  )
+                  ),
                 }}
                 inputProps={{ className: classes.searchPadding }}
               />
@@ -141,7 +141,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                     <TaxInput
                       placeholder={getDefaultTaxRateInCountry(
                         taxClasses,
-                        countryRate.country
+                        countryRate.country,
                       )}
                       value={(countryRate.rate * 100).toString()}
                       change={() => null} // TODO: add change function from form
