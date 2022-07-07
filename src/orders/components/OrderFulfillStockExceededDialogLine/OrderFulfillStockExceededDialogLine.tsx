@@ -38,7 +38,7 @@ const OrderFulfillStockExceededDialogLine: React.FC<OrderFulfillStockExceededDia
         thumbnail={line?.thumbnail?.url}
       >
         {line?.productName}
-        {"attributes" in line.variant && (
+        {line.variant && "attributes" in line.variant && (
           <Typography color="textSecondary" variant="caption">
             {getAttributesCaption(line.variant?.attributes)}
           </Typography>
