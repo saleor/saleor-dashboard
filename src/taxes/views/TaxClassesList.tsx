@@ -25,7 +25,7 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
     id,
     data: taxClasses,
     navigate,
-    urlFunction: taxClassesListUrl
+    urlFunction: taxClassesListUrl,
   });
 
   if (id === "undefined" && taxClasses) {

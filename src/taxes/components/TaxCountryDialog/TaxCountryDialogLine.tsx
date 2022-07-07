@@ -22,5 +22,5 @@ export const TaxCountryDialogLine: React.FC<TaxCountryDialogLineProps> = React.m
       />
       <Divider />
     </>
-  )
+  ),
 );

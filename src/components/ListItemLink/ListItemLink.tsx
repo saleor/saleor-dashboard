@@ -15,10 +15,10 @@ const useStyles = makeStyles(
   {
     link: {
       all: "inherit",
-      display: "contents"
-    }
+      display: "contents",
+    },
   },
-  { name: "ListItemLink" }
+  { name: "ListItemLink" },
 );
 
 export const ListItemLink: React.FC<ListItemLinkProps> = ({

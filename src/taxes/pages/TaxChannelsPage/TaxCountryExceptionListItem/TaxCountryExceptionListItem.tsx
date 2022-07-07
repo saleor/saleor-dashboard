@@ -1,14 +1,14 @@
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import {
   TaxConfigurationPerCountryFragment,
-  TaxConfigurationUpdateInput
+  TaxConfigurationUpdateInput,
 } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
 import {
   DeleteIcon,
   IconButton,
   ListItem,
-  ListItemCell
+  ListItemCell,
 } from "@saleor/macaw-ui";
 import React from "react";
 
@@ -25,7 +25,7 @@ export const TaxCountryExceptionListItem: React.FC<TaxCountryExceptionListItemPr
   country,
   onDelete,
   onChange,
-  divider = true
+  divider = true,
 }) => {
   const classes = useStyles();
   return (

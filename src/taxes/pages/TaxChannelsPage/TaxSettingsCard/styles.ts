@@ -7,13 +7,13 @@ export const useStyles = makeStyles(
       fontSize: "12px",
       lineHeight: "160%",
       letterSpacing: "0.1em",
-      textTransform: "uppercase"
+      textTransform: "uppercase",
     },
     showCheckboxShadows: {
       "&&": {
-        overflow: "visible"
-      }
-    }
+        overflow: "visible",
+      },
+    },
   }),
-  { name: "TaxSettingsCard" }
+  { name: "TaxSettingsCard" },
 );

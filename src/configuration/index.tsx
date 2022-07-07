@@ -84,9 +84,9 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           permissions: [PermissionEnum.MANAGE_SETTINGS],
           title: intl.formatMessage(sectionNames.taxes),
           url: taxConfigurationListUrl(),
-          testId: "configuration-menu-taxes"
-        }
-      ]
+          testId: "configuration-menu-taxes",
+        },
+      ],
     },
     {
       label: intl.formatMessage({
