@@ -324,6 +324,10 @@
     "context": "field is optional",
     "string": "(Optional)"
   },
+  "0kPdlb": {
+    "context": "deprecated secret key toolbar label",
+    "string": "Use RS256 signature instead."
+  },
   "0krqBj": {
     "context": "page header",
     "string": "Order no. {orderNumber} - Refund"
@@ -5710,6 +5714,10 @@
     "context": "copied to clipboard alert title",
     "string": "Copied to clipboard"
   },
+  "hnRRUe": {
+    "context": "docs link label",
+    "string": "Learn more..."
+  },
   "ho75Lr": {
     "context": "status label deactivated",
     "string": "Deactivated"
@@ -7831,6 +7839,9 @@
   "z8jo8h": {
     "context": "button",
     "string": "View products"
+  },
+  "z9c6/C": {
+    "string": "Deprecated"
   },
   "z9wQ/U": {
     "context": "no variant stock in warehouse",

@@ -32,4 +32,14 @@ export const messages = defineMessages({
       "secret key is used to create a hash signature with each payload. *optional field",
     description: "webhook input help text",
   },
+  useSignature: {
+    id: "0kPdlb",
+    defaultMessage: "Use RS256 signature instead.",
+    description: "deprecated secret key toolbar label",
+  },
+  learnMore: {
+    id: "hnRRUe",
+    defaultMessage: "Learn more...",
+    description: "docs link label",
+  },
 });
