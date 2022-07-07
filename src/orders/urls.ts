@@ -50,6 +50,7 @@ export enum OrderListUrlSortField {
   fulfillment = "status",
   payment = "payment",
   total = "total",
+  rank = "rank",
 }
 export type OrderListUrlSort = Sort<OrderListUrlSortField>;
 export type OrderListUrlQueryParams = BulkAction &

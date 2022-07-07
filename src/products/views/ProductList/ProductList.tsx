@@ -65,6 +65,7 @@ import { getSortUrlVariables } from "@saleor/utils/sort";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { useSortRedirects } from "../../../hooks/useSortRedirects";
 import ProductListPage from "../../components/ProductListPage";
 import {
   deleteFilterTab,
@@ -76,8 +77,7 @@ import {
   getFilterVariables,
   saveFilterTab,
 } from "./filters";
-import { getSortQueryVariables } from "./sort";
-import { useSortRedirects } from "./useSortRedirects";
+import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 import { getAvailableProductKinds, getProductKindOpts } from "./utils";
 
 interface ProductListProps {
@@ -176,7 +176,12 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     channel => channel.slug === params.channel,
   );
 
-  useSortRedirects(params, !!selectedChannel);
+  useSortRedirects<ProductListUrlSortField>({
+    params,
+    defaultSortField: DEFAULT_SORT_KEY,
+    urlFunc: productListUrl,
+    resetToDefault: !canBeSorted(params.sort, !!selectedChannel),
+  });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductListUrlDialog,
