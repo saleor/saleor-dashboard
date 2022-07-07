@@ -10,7 +10,7 @@ import {
   List,
   ListHeader,
   ListItem,
-  ListItemCell
+  ListItemCell,
 } from "@saleor/macaw-ui";
 import { taxesMessages } from "@saleor/taxes/messages";
 import { countriesListUrl } from "@saleor/taxes/urls";
@@ -29,7 +29,7 @@ interface TaxCountriesMenuProps {
 export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
   configurations,
   selectedCountryId,
-  onCountryDelete
+  onCountryDelete,
 }) => {
   const classes = useStyles();
   const intl = useIntl();
@@ -57,7 +57,7 @@ export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
             <ListItemLink
               key={config.country.code}
               className={clsx(classes.clickable, classes.tableRow, {
-                [classes.selected]: config.country.code === selectedCountryId
+                [classes.selected]: config.country.code === selectedCountryId,
               })}
               href={countriesListUrl(config.country.code)}
             >

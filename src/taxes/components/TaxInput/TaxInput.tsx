@@ -13,7 +13,7 @@ interface TaxInputProps {
 export const TaxInput: React.FC<TaxInputProps> = ({
   placeholder,
   value,
-  change
+  change,
 }) => {
   const classes = useStyles();
 
@@ -25,7 +25,7 @@ export const TaxInput: React.FC<TaxInputProps> = ({
       value={value}
       InputProps={{
         startAdornment: <InputAdornment position="start">%</InputAdornment>,
-        className: classes.hideSpinboxes
+        className: classes.hideSpinboxes,
       }}
       inputProps={{ className: classes.inputPadding, min: 0, max: 100 }}
       onChange={change}

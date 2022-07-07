@@ -1,7 +1,7 @@
 import {
   TaxClassFragment,
   TaxConfigurationFragment,
-  TaxCountryConfigurationFragment
+  TaxCountryConfigurationFragment,
 } from "@saleor/graphql";
 
 export const taxConfigurations: TaxConfigurationFragment[] = [
@@ -11,7 +11,7 @@ export const taxConfigurations: TaxConfigurationFragment[] = [
     channel: {
       __typename: "Channel",
       id: "taxChannel1",
-      name: "Channel USD"
+      name: "Channel USD",
     },
     displayGrossPrices: true,
     pricesEnteredWithTax: false,
@@ -22,22 +22,22 @@ export const taxConfigurations: TaxConfigurationFragment[] = [
         country: {
           __typename: "CountryDisplay",
           code: "AF",
-          country: "Afghanistan"
+          country: "Afghanistan",
         },
         chargeTaxes: false,
-        displayGrossPrices: false
+        displayGrossPrices: false,
       },
       {
         __typename: "TaxConfigurationPerCountry",
         country: {
           __typename: "CountryDisplay",
           code: "AX",
-          country: "Åland Islands"
+          country: "Åland Islands",
         },
         chargeTaxes: true,
-        displayGrossPrices: true
-      }
-    ]
+        displayGrossPrices: true,
+      },
+    ],
   },
   {
     __typename: "TaxConfiguration",
@@ -45,7 +45,7 @@ export const taxConfigurations: TaxConfigurationFragment[] = [
     channel: {
       __typename: "Channel",
       id: "taxChannel2",
-      name: "Channel PLN"
+      name: "Channel PLN",
     },
     displayGrossPrices: false,
     pricesEnteredWithTax: true,
@@ -56,23 +56,23 @@ export const taxConfigurations: TaxConfigurationFragment[] = [
         country: {
           __typename: "CountryDisplay",
           code: "AL",
-          country: "Albania"
+          country: "Albania",
         },
         chargeTaxes: true,
-        displayGrossPrices: true
+        displayGrossPrices: true,
       },
       {
         __typename: "TaxConfigurationPerCountry",
         country: {
           __typename: "CountryDisplay",
           code: "DZ",
-          country: "Algeria"
+          country: "Algeria",
         },
         chargeTaxes: false,
-        displayGrossPrices: false
-      }
-    ]
-  }
+        displayGrossPrices: false,
+      },
+    ],
+  },
 ];
 
 export const taxCountryConfigurations: TaxCountryConfigurationFragment[] = [
@@ -81,7 +81,7 @@ export const taxCountryConfigurations: TaxCountryConfigurationFragment[] = [
     country: {
       __typename: "CountryDisplay",
       code: "AF",
-      country: "Afghanistan"
+      country: "Afghanistan",
     },
     taxClassCountryRates: [
       {
@@ -91,8 +91,8 @@ export const taxCountryConfigurations: TaxCountryConfigurationFragment[] = [
           __typename: "TaxClass",
           id: "taxCountryConfigurations.0.taxClassCountryRates.0.taxClass.id",
           isDefault: true,
-          name: "Default tax class"
-        }
+          name: "Default tax class",
+        },
       },
       {
         __typename: "TaxClassCountryRate",
@@ -101,17 +101,17 @@ export const taxCountryConfigurations: TaxCountryConfigurationFragment[] = [
           __typename: "TaxClass",
           id: "taxCountryConfigurations.0.taxClassCountryRates.0.taxClass.id",
           isDefault: false,
-          name: "Perfume"
-        }
-      }
-    ]
+          name: "Perfume",
+        },
+      },
+    ],
   },
   {
     __typename: "TaxCountryConfiguration",
     country: {
       __typename: "CountryDisplay",
       code: "AX",
-      country: "Åland Islands"
+      country: "Åland Islands",
     },
     taxClassCountryRates: [
       {
@@ -121,8 +121,8 @@ export const taxCountryConfigurations: TaxCountryConfigurationFragment[] = [
           __typename: "TaxClass",
           id: "taxCountryConfigurations.0.taxClassCountryRates.0.taxClass.id",
           name: "Default tax class",
-          isDefault: true
-        }
+          isDefault: true,
+        },
       },
       {
         __typename: "TaxClassCountryRate",
@@ -131,11 +131,11 @@ export const taxCountryConfigurations: TaxCountryConfigurationFragment[] = [
           __typename: "TaxClass",
           id: "taxCountryConfigurations.0.taxClassCountryRates.0.taxClass.id",
           name: "Food",
-          isDefault: false
-        }
-      }
-    ]
-  }
+          isDefault: false,
+        },
+      },
+    ],
+  },
 ];
 
 export const taxClasses: TaxClassFragment[] = [
@@ -150,20 +150,20 @@ export const taxClasses: TaxClassFragment[] = [
         country: {
           __typename: "CountryDisplay",
           code: "AX",
-          country: "Åland Islands"
+          country: "Åland Islands",
         },
-        rate: 0.2
+        rate: 0.2,
       },
       {
         __typename: "TaxClassCountryRate",
         country: {
           __typename: "CountryDisplay",
           code: "AF",
-          country: "Afghanistan"
+          country: "Afghanistan",
         },
-        rate: 0.15
-      }
-    ]
+        rate: 0.15,
+      },
+    ],
   },
   {
     __typename: "TaxClass",
@@ -176,19 +176,19 @@ export const taxClasses: TaxClassFragment[] = [
         country: {
           __typename: "CountryDisplay",
           code: "AX",
-          country: "Åland Islands"
+          country: "Åland Islands",
         },
-        rate: 0.05
+        rate: 0.05,
       },
       {
         __typename: "TaxClassCountryRate",
         country: {
           __typename: "CountryDisplay",
           code: "AF",
-          country: "Afghanistan"
+          country: "Afghanistan",
         },
-        rate: 0.0
-      }
-    ]
-  }
+        rate: 0.0,
+      },
+    ],
+  },
 ];

@@ -9,7 +9,7 @@ import {
   countriesListUrl,
   taxClassesListUrl,
   taxConfigurationListPath,
-  TaxesUrlQueryParams
+  TaxesUrlQueryParams,
 } from "./urls";
 import ChannelsListComponent from "./views/ChannelsList";
 import CountriesListComponent from "./views/CountriesList";
@@ -17,7 +17,7 @@ import TaxClassesListComponent from "./views/TaxClassesList";
 
 const ChannelsList: React.FC<RouteComponentProps<{ id: string }>> = ({
   match,
-  location
+  location,
 }) => {
   const qs: TaxesUrlQueryParams = parseQs(location.search.substring(1));
 
@@ -30,11 +30,11 @@ const ChannelsList: React.FC<RouteComponentProps<{ id: string }>> = ({
 };
 
 const CountriesList: React.FC<RouteComponentProps<{ id: string }>> = ({
-  match
+  match,
 }) => <CountriesListComponent id={decodeURIComponent(match.params.id)} />;
 
 const TaxClassesList: React.FC<RouteComponentProps<{ id: string }>> = ({
-  match
+  match,
 }) => <TaxClassesListComponent id={decodeURIComponent(match.params.id)} />;
 
 const Component = () => {

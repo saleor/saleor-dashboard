@@ -2,7 +2,7 @@ import {
   Card,
   CardContent,
   InputAdornment,
-  TextField
+  TextField,
 } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import CardTitle from "@saleor/components/CardTitle";
@@ -20,7 +20,7 @@ import {
   makeStyles,
   PageTab,
   PageTabs,
-  SearchIcon
+  SearchIcon,
 } from "@saleor/macaw-ui";
 import { parseQuery } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/utils";
 import { taxesMessages } from "@saleor/taxes/messages";
@@ -39,10 +39,10 @@ interface TaxCountriesPageProps {
 const useStyles = makeStyles(
   () => ({
     inputPadding: {
-      padding: "16px 0 16px 0"
-    }
+      padding: "16px 0 16px 0",
+    },
   }),
-  { name: "TaxCountriesPage" }
+  { name: "TaxCountriesPage" },
 );
 
 export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
@@ -55,18 +55,18 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
   const currentCountry = React.useMemo(
     () =>
       countryTaxesData?.find(
-        country => country.country.code === selectedCountryId
+        country => country.country.code === selectedCountryId,
       ),
-    [selectedCountryId, countryTaxesData]
+    [selectedCountryId, countryTaxesData],
   );
 
   const filteredRates = React.useMemo(
     () =>
       currentCountry?.taxClassCountryRates.filter(
         rate =>
-          rate.taxClass.name.search(new RegExp(parseQuery(query), "i")) >= 0
+          rate.taxClass.name.search(new RegExp(parseQuery(query), "i")) >= 0,
       ),
-    [currentCountry, query]
+    [currentCountry, query],
   );
 
   return (
@@ -109,7 +109,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
                   <InputAdornment position="start">
                     <SearchIcon />
                   </InputAdornment>
-                )
+                ),
               }}
               inputProps={{ className: classes.inputPadding }}
             />
