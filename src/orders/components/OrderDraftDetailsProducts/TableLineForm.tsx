@@ -1,7 +1,7 @@
 import { TextField } from "@material-ui/core";
 import DebounceForm from "@saleor/components/DebounceForm";
 import Form from "@saleor/components/Form";
-import { OrderLineFragment } from "@saleor/graphql";
+import { OrderLineFragment, OrderLineInput } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import createNonNegativeValueChangeHandler from "@saleor/utils/handlers/nonNegativeValueChangeHandler";
 import React from "react";
@@ -18,14 +18,9 @@ const useStyles = makeStyles(
   }),
   { name: "TableLineForm" },
 );
-
-export interface FormData {
-  quantity: number;
-}
-
 interface TableLineFormProps {
   line: OrderLineFragment;
-  onOrderLineChange: (id: string, data: FormData) => void;
+  onOrderLineChange: (id: string, data: OrderLineInput) => void;
 }
 
 const TableLineForm: React.FC<TableLineFormProps> = ({
@@ -35,9 +30,14 @@ const TableLineForm: React.FC<TableLineFormProps> = ({
   const classes = useStyles({});
   const { id, quantity } = line;
 
+  const handleSubmit = (id: string, data: OrderLineInput) => {
+    const quantity = data?.quantity >= 1 ? Math.floor(data.quantity) : 1;
+    onOrderLineChange(id, { quantity });
+  };
+
   return (
-    <Form initial={{ quantity }} onSubmit={data => onOrderLineChange(id, data)}>
-      {({ change, data, submit }) => {
+    <Form initial={{ quantity }} onSubmit={data => handleSubmit(id, data)}>
+      {({ change, data, submit, set }) => {
         const handleQuantityChange = createNonNegativeValueChangeHandler(
           change,
         );
@@ -56,10 +56,13 @@ const TableLineForm: React.FC<TableLineFormProps> = ({
                 type="number"
                 value={data.quantity}
                 onChange={debounce}
-                onBlur={submit}
-                inputProps={{
-                  min: 1,
+                onBlur={() => {
+                  if (data.quantity < 1) {
+                    set({ quantity: 1 });
+                  }
+                  submit();
                 }}
+                inputProps={{ min: 1 }}
               />
             )}
           </DebounceForm>
