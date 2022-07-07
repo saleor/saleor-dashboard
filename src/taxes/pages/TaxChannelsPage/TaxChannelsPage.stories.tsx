@@ -11,8 +11,8 @@ const castedCountries = countries.map(
   ({ code, name }): CountryFragment => ({
     code,
     country: name,
-    __typename: "CountryDisplay"
-  })
+    __typename: "CountryDisplay",
+  }),
 );
 
 const props = {
@@ -25,7 +25,7 @@ const props = {
   closeDialog: () => undefined,
   onSubmit: () => undefined,
   savebarState: "default" as const,
-  disabled: false
+  disabled: false,
 };
 
 storiesOf("Views / Taxes / Channels view", module)
