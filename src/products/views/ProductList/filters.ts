@@ -245,8 +245,7 @@ const parseFilterValue = (
   const value = params.attributes[key];
   const isMulti = isArray(params.attributes[key]);
 
-  const isBooleanValue =
-    !isMulti && ["true", "false"].includes((value as unknown) as string);
+  const isBooleanValue = value.every(val => val === "true" || val === "false");
   const isDateValue = (isMulti ? value : [value]).some(val =>
     moment(val, moment.HTML5_FMT.DATE, true).isValid(),
   );
