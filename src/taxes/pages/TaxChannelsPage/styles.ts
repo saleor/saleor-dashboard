@@ -6,21 +6,21 @@ export const useStyles = makeStyles(
       margin: 0,
       display: "flex",
       placeContent: "center",
-      textAlign: "center"
+      textAlign: "center",
     },
     dummy: {
       width: "40px",
       height: "40px",
-      visiblity: "hidden"
+      visiblity: "hidden",
     },
     noDivider: {
-      "&::after": { display: "none" }
+      "&::after": { display: "none" },
     },
     toolbarMargin: {
       "&:last-child": {
-        marginRight: 0
-      }
-    }
+        marginRight: 0,
+      },
+    },
   }),
-  { name: "TaxChannelsPage" }
+  { name: "TaxChannelsPage" },
 );

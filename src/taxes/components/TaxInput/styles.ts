@@ -11,16 +11,16 @@ export const useStyles = makeStyles(
       // chrome, safari
       "& input::-webkit-outer-spin-button, input::-webkit-inner-spin-button": {
         appearance: "none",
-        margin: 0
+        margin: 0,
       },
       // firefox
       "& input": {
-        "-moz-appearance": "textfield"
-      }
+        "-moz-appearance": "textfield",
+      },
     },
     inputPadding: {
-      padding: "16px 0 16px 0"
-    }
+      padding: "16px 0 16px 0",
+    },
   }),
-  { name: "TaxInput" }
+  { name: "TaxInput" },
 );

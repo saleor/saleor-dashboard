@@ -10,7 +10,7 @@ import {
   List,
   ListHeader,
   ListItem,
-  ListItemCell
+  ListItemCell,
 } from "@saleor/macaw-ui";
 import { taxesMessages } from "@saleor/taxes/messages";
 import { taxClassesListUrl } from "@saleor/taxes/urls";
@@ -29,7 +29,7 @@ interface TaxClassesMenuProps {
 export const TaxClassesMenu: React.FC<TaxClassesMenuProps> = ({
   taxClasses,
   selectedTaxClassId,
-  onTaxClassDelete
+  onTaxClassDelete,
 }) => {
   const classes = useStyles();
   const intl = useIntl();
@@ -57,7 +57,7 @@ export const TaxClassesMenu: React.FC<TaxClassesMenuProps> = ({
             <ListItemLink
               key={taxClass.id}
               className={clsx(classes.clickable, classes.tableRow, {
-                [classes.selected]: taxClass.id === selectedTaxClassId
+                [classes.selected]: taxClass.id === selectedTaxClassId,
               })}
               href={taxClassesListUrl(taxClass.id)}
             >

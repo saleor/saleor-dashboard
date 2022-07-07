@@ -3,7 +3,7 @@ import {
   DialogActions,
   DialogContent,
   InputAdornment,
-  TextField
+  TextField,
 } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import { CountryFragment } from "@saleor/graphql";
@@ -33,7 +33,7 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
   open,
   countries,
   onConfirm,
-  onClose
+  onClose,
 }) => {
   const classes = useStyles();
   const intl = useIntl();
@@ -50,20 +50,20 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
           country.code === e.target.name
             ? {
                 ...country,
-                checked: e.target.value
+                checked: e.target.value,
               }
-            : country
-        )
+            : country,
+        ),
       );
     },
-    [countries, setCountriesWithState]
+    [countries, setCountriesWithState],
   );
 
   useModalDialogOpen(open, {
     onClose: () => {
       setCountriesWithState([]);
       setQuery("");
-    }
+    },
   });
 
   const { query, setQuery, searchResult: filteredCountries } = useLocalSearch<
@@ -87,7 +87,7 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
               <InputAdornment position="start">
                 <SearchIcon />
               </InputAdornment>
-            )
+            ),
           }}
           inputProps={{ className: classes.inputPadding }}
         />

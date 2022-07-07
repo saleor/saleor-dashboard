@@ -18,7 +18,7 @@ interface TaxChannelsMenuProps {
 
 export const TaxChannelsMenu: React.FC<TaxChannelsMenuProps> = ({
   configurations,
-  selectedConfigurationId
+  selectedConfigurationId,
 }) => {
   const classes = useStyles();
   return (
@@ -35,7 +35,7 @@ export const TaxChannelsMenu: React.FC<TaxChannelsMenuProps> = ({
           <ListItemLink
             key={configuration.id}
             className={clsx(classes.clickable, {
-              [classes.selected]: configuration.id === selectedConfigurationId
+              [classes.selected]: configuration.id === selectedConfigurationId,
             })}
             href={taxConfigurationListUrl(configuration.id)}
           >

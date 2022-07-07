@@ -30,7 +30,7 @@ export function useTaxUrlRedirect({
   id,
   data,
   navigate,
-  urlFunction
+  urlFunction,
 }: UseTaxUrlRedirectOpts): void {
   React.useEffect(() => {
     if (id === "undefined" && data?.length) {

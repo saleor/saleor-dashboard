@@ -1,6 +1,6 @@
 import {
   useTaxConfigurationsListQuery,
-  useTaxConfigurationUpdateMutation
+  useTaxConfigurationUpdateMutation,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -17,7 +17,7 @@ import {
   TaxesUrlDialog,
   TaxesUrlQueryParams,
   TaxTab,
-  taxTabPath
+  taxTabPath,
 } from "../urls";
 import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
 
@@ -37,17 +37,17 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ id, params }) => {
 
   const [
     taxConfigurationUpdateMutation,
-    { status: mutationStatus, loading: mutationInProgress }
+    { status: mutationStatus, loading: mutationInProgress },
   ] = useTaxConfigurationUpdateMutation({
     onCompleted: data => {
       const errors = data?.taxConfigurationUpdate?.errors;
       if (errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
+          text: intl.formatMessage(commonMessages.savedChanges),
         });
       }
-    }
+    },
   });
 
   const shop = useShop();
@@ -65,7 +65,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ id, params }) => {
     id,
     data: taxConfigurations,
     urlFunction: taxConfigurationListUrl,
-    navigate
+    navigate,
   });
 
   if (id === "undefined" && taxConfigurations) {
@@ -85,8 +85,8 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ id, params }) => {
         taxConfigurationUpdateMutation({
           variables: {
             id,
-            input
-          }
+            input,
+          },
         })
       }
       savebarState={mutationStatus}
