@@ -8,7 +8,7 @@ import TaxCountriesPage from "./TaxCountriesPage";
 const props = {
   countryTaxesData: taxCountryConfigurations,
   selectedCountryId: taxCountryConfigurations[0].country.code,
-  handleTabChange: () => undefined
+  handleTabChange: () => undefined,
 };
 
 storiesOf("Views / Taxes / Countries view", module)

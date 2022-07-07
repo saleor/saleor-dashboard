@@ -17,7 +17,7 @@ export const taxConfigurationListPath = (id?: string) =>
 
 export const taxConfigurationListUrl = (
   id?: string,
-  params?: TaxesUrlQueryParams
+  params?: TaxesUrlQueryParams,
 ) =>
   taxConfigurationListPath(encodeURIComponentOptional(id)) +
   "?" +
