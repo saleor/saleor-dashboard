@@ -69,3 +69,17 @@ export function activateChannel(channelId) {
   }`;
   return cy.sendRequestWithQuery(mutation);
 }
+
+export function updateChannelWarehouses(channelId, warehouseId){
+  const mutation = `mutation{
+    channelUpdate(id:"${channelId}", input:{
+      addWarehouses:"${warehouseId}"
+    }){
+      errors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation);
+}
