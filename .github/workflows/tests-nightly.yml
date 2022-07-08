@@ -73,7 +73,7 @@ jobs:
       - name: revert snapshot
         env:
           SALEOR_CLI_ENV: staging
-        run: npx saleor backup restore MbdG5UXd --skip-webhooks-update
+        run: npx saleor backup restore 6tOoEwCh --skip-webhooks-update
 
       - name: Notify Slack
         if: ${{ failure() }}
