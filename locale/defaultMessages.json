@@ -1903,6 +1903,10 @@
   "DRMMDs": {
     "string": "Attribute Name"
   },
+  "DRwqnt": {
+    "context": "order history message",
+    "string": "Transaction capture requested"
+  },
   "DTL7sE": {
     "context": "dialog content",
     "string": "Are you sure you want to delete {warehouseName}?"
@@ -4794,6 +4798,10 @@
   "ZIc5lM": {
     "string": "Product Name"
   },
+  "ZKuzRy": {
+    "context": "order history message",
+    "string": "Transaction void requested"
+  },
   "ZMy18J": {
     "string": "You have reached your channel limit, you will be no longer able to add channels to your store. If you would like to up your limit, contact your administration staff about raising your limits."
   },
@@ -5504,6 +5512,10 @@
   "foNlhn": {
     "context": "custom app name",
     "string": "App Name"
+  },
+  "fqJXzO": {
+    "context": "order history message",
+    "string": "Transaction refund requested"
   },
   "ftcHpD": {
     "string": "Customer created"
