@@ -1,6 +1,16 @@
 import { defineMessages, IntlShape } from "react-intl";
 
 export const commonMessages = defineMessages({
+  active: {
+    id: "c24hjq",
+    defaultMessage: "Active",
+    description: "status",
+  },
+  notActive: {
+    id: "NwQXZp",
+    defaultMessage: "Not active",
+    description: "status",
+  },
   availability: {
     id: "hOxIeP",
     defaultMessage: "Availability",
@@ -84,6 +94,10 @@ export const commonMessages = defineMessages({
   limitReached: {
     id: "8oIbMI",
     defaultMessage: "Reached limit for this plan",
+  },
+  name: {
+    id: "HAlOn1",
+    defaultMessage: "Name",
   },
   no: {
     id: "oUWADl",
