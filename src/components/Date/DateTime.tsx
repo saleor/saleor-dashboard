@@ -6,6 +6,7 @@ import ReactMoment from "react-moment";
 import { LocaleConsumer } from "../Locale";
 import { TimezoneConsumer } from "../Timezone";
 import { Consumer } from "./DateContext";
+import { useStyles } from "./styles";
 
 interface DateTimeProps {
   date: string;
@@ -13,6 +14,8 @@ interface DateTimeProps {
 }
 
 export const DateTime: React.FC<DateTimeProps> = ({ date, plain }) => {
+  const classes = useStyles();
+
   const getTitle = (value: string, locale?: string, tz?: string) => {
     let date = moment(value).locale(locale);
     if (tz !== undefined) {
@@ -20,6 +23,7 @@ export const DateTime: React.FC<DateTimeProps> = ({ date, plain }) => {
     }
     return date.format("lll");
   };
+
   return (
     <TimezoneConsumer>
       {tz => (
@@ -30,7 +34,12 @@ export const DateTime: React.FC<DateTimeProps> = ({ date, plain }) => {
                 plain ? (
                   getTitle(date, locale, tz)
                 ) : (
-                  <Tooltip title={getTitle(date, locale, tz)}>
+                  <Tooltip
+                    title={getTitle(date, locale, tz)}
+                    PopperProps={{
+                      className: classes.tooltip,
+                    }}
+                  >
                     <ReactMoment from={currentDate} locale={locale} tz={tz}>
                       {date}
                     </ReactMoment>
