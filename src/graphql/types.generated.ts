@@ -7377,6 +7377,23 @@ export type VariantDeleteMutationVariables = Exact<{
 
 export type VariantDeleteMutation = { __typename: 'Mutation', productVariantDelete: { __typename: 'ProductVariantDelete', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }>, productVariant: { __typename: 'ProductVariant', id: string } | null } | null };
 
+export type VariantDatagridUpdateMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: ProductVariantInput;
+}>;
+
+
+export type VariantDatagridUpdateMutation = { __typename: 'Mutation', productVariantUpdate: { __typename: 'ProductVariantUpdate', errors: Array<{ __typename: 'ProductError', attributes: Array<string> | null, code: ProductErrorCode, field: string | null, message: string | null }> } | null };
+
+export type VariantDatagridStockUpdateMutationVariables = Exact<{
+  stocks: Array<StockInput> | StockInput;
+  removeStocks: Array<Scalars['ID']> | Scalars['ID'];
+  id: Scalars['ID'];
+}>;
+
+
+export type VariantDatagridStockUpdateMutation = { __typename: 'Mutation', productVariantStocksDelete: { __typename: 'ProductVariantStocksDelete', errors: Array<{ __typename: 'StockError', code: StockErrorCode, field: string | null, message: string | null }> } | null, productVariantStocksUpdate: { __typename: 'ProductVariantStocksUpdate', errors: Array<{ __typename: 'BulkStockError', code: ProductErrorCode, field: string | null, index: number | null, message: string | null }> } | null };
+
 export type VariantUpdateMutationVariables = Exact<{
   addStocks: Array<StockInput> | StockInput;
   removeStocks: Array<Scalars['ID']> | Scalars['ID'];

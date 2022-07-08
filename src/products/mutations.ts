@@ -127,6 +127,35 @@ export const variantDeleteMutation = gql`
   }
 `;
 
+export const variantDatagridUpdateMutation = gql`
+  mutation VariantDatagridUpdate($id: ID!, $input: ProductVariantInput!) {
+    productVariantUpdate(id: $id, input: $input) {
+      errors {
+        ...ProductErrorWithAttributes
+      }
+    }
+  }
+`;
+
+export const variantDatagridStockUpdateMutation = gql`
+  mutation VariantDatagridStockUpdate(
+    $stocks: [StockInput!]!
+    $removeStocks: [ID!]!
+    $id: ID!
+  ) {
+    productVariantStocksDelete(warehouseIds: $removeStocks, variantId: $id) {
+      errors {
+        ...ProductVariantStocksDeleteError
+      }
+    }
+    productVariantStocksUpdate(stocks: $stocks, variantId: $id) {
+      errors {
+        ...BulkStockError
+      }
+    }
+  }
+`;
+
 export const variantUpdateMutation = gql`
   mutation VariantUpdate(
     $addStocks: [StockInput!]!

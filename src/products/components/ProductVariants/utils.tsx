@@ -1,10 +1,18 @@
 import { GridCell } from "@glideapps/glide-data-grid";
 import { numberCell, textCell } from "@saleor/components/Datagrid/cells";
+import {
+  NumberCell,
+  numberCellEmptyValue,
+} from "@saleor/components/Datagrid/NumberCell";
 import { AvailableColumn } from "@saleor/components/Datagrid/types";
-import { DatagridChange } from "@saleor/components/Datagrid/useDatagridChange";
+import {
+  DatagridChange,
+  DatagridChangeOpts,
+} from "@saleor/components/Datagrid/useDatagridChange";
 import {
   ProductDetailsVariantFragment,
   ProductFragment,
+  VariantDatagridStockUpdateMutationVariables,
   WarehouseFragment,
 } from "@saleor/graphql";
 import { MutableRefObject } from "react";
@@ -15,6 +23,38 @@ import messages from "./messages";
 const isStockColumn = /^stock:(.*)/;
 // const isChannelColumn = /^channel:(.*)/;
 const isAttributeColumn = /^attribute:(.*)/;
+
+export function getStocks(
+  variants: ProductFragment["variants"],
+  data: DatagridChangeOpts,
+): VariantDatagridStockUpdateMutationVariables[] {
+  const stockChanges = data.updates.filter(change =>
+    isStockColumn.test(change.column),
+  );
+
+  return variants.map((variant, variantIndex) => {
+    const variantChanges = stockChanges
+      .filter(
+        change =>
+          change.row ===
+          variantIndex + data.removed.filter(r => r <= variantIndex).length,
+      )
+      .map(change => ({
+        warehouse: change.column.match(isStockColumn)[1],
+        quantity: change.data.value,
+      }));
+
+    return {
+      id: variant.id,
+      stocks: variantChanges.filter(
+        change => change.quantity !== numberCellEmptyValue,
+      ),
+      removeStocks: variantChanges
+        .filter(change => change.quantity === numberCellEmptyValue)
+        .map(({ warehouse }) => warehouse),
+    };
+  });
+}
 
 interface GetData {
   availableColumns: AvailableColumn[];
@@ -56,7 +96,7 @@ export function getData({
       dataRow?.stocks.find(
         stock => stock.warehouse.id === columnId.match(isStockColumn)[1],
       )?.quantity ??
-      0;
+      numberCellEmptyValue;
 
     return numberCell(value);
   }

@@ -19,8 +19,11 @@ import {
   ProductFragment,
   ProductUpdateMutationFn,
   UploadErrorFragment,
+  VariantDatagridStockUpdateMutationFn,
 } from "@saleor/graphql";
+import { getMutationErrors } from "@saleor/misc";
 import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/form";
+import { getStocks } from "@saleor/products/components/ProductVariants/utils";
 
 import { getChannelsVariables, getProductUpdateVariables } from "./utils";
 
@@ -40,6 +43,7 @@ export function createProductWithVariantsUpdateHandler(
   deleteAttributeValue: (
     variables: AttributeValueDeleteMutationVariables,
   ) => Promise<FetchResult<AttributeValueDeleteMutation>>,
+  updateStocks: VariantDatagridStockUpdateMutationFn,
 ) {
   return async (
     data: ProductUpdateSubmitData,
@@ -67,6 +71,15 @@ export function createProductWithVariantsUpdateHandler(
       variables: getProductUpdateVariables(product, data, uploadFilesResult),
     });
     errors = [...errors, ...result.data.productUpdate.errors];
+
+    const stockUpdateResult = await Promise.all(
+      getStocks(product.variants, data.variants).map(variables =>
+        updateStocks({
+          variables,
+        }),
+      ),
+    );
+    errors = [...errors, ...stockUpdateResult.map(getMutationErrors).flat()];
 
     await updateChannels({
       variables: getChannelsVariables(product, allChannels, data),

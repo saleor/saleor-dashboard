@@ -17,7 +17,7 @@ export function textCell(value: string): GridCell {
   };
 }
 
-export function numberCell(value: number): NumberCell {
+export function numberCell(value: number | null): NumberCell {
   return {
     ...common,
     data: {
@@ -25,7 +25,7 @@ export function numberCell(value: number): NumberCell {
       value,
     },
     kind: GridCellKind.Custom,
-    copyData: value.toString(),
+    copyData: value !== null ? value.toString() : "",
   };
 }
 
