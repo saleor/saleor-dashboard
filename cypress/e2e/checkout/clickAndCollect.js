@@ -67,7 +67,7 @@ describe("Warehouses in checkout", () => {
           channelSlug: defaultChannel.slug,
           email: "example@example.com",
           address: secondUsAddress,
-          billingAddress: usAddress
+          billingAddress: usAddress,
         };
         createShipping({
           channelId: defaultChannel.id,

@@ -52,6 +52,7 @@ describe("As an admin I want to create voucher", () => {
             shippingMethodName: shippingMethod.name,
             auth: "token",
           };
+          cy.clearSessionData();
         },
       );
   });
@@ -63,6 +64,7 @@ describe("As an admin I want to create voucher", () => {
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
       const voucherValue = 50;
       const usageLimit = 1;
+      dataForCheckout.auth = "auth";
       let firstCheckout;
 
       loginAndCreateCheckoutForVoucherWithDiscount({
@@ -100,7 +102,7 @@ describe("As an admin I want to create voucher", () => {
     () => {
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
       const voucherValue = 50;
-      dataForCheckout.auth = "token";
+      dataForCheckout.auth = "auth";
       let firstCheckout;
 
       loginAndCreateCheckoutForVoucherWithDiscount({
@@ -132,7 +134,8 @@ describe("As an admin I want to create voucher", () => {
 
           // Create new checkout as other not logged in customer - voucher should be available for other customer
 
-          cy.clearSessionData();
+          window.sessionStorage.setItem("token", "");
+          dataForCheckout.auth = "token";
           dataForCheckout.email = "newUser@example.com";
           createCheckoutWithVoucher(dataForCheckout);
         })

@@ -13,6 +13,7 @@ import {
   createProductWithShipping,
   deleteProductsStartsWith,
 } from "../../support/api/utils/products/productsUtils";
+import { deleteShippingStartsWith } from "../../support/api/utils/shippingUtils";
 import { saveVariant } from "../../support/pages/catalog/products/VariantsPage";
 
 describe("Stocks and threshold in preorder variants", () => {
@@ -30,6 +31,7 @@ describe("Stocks and threshold in preorder variants", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
+    deleteShippingStartsWith(startsWith);
     deleteProductsStartsWith(startsWith);
     deleteCollectionsStartsWith(startsWith);
     createProductWithShipping({

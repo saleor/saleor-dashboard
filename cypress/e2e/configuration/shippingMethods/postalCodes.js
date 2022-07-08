@@ -5,6 +5,7 @@ import faker from "faker";
 
 import { shippingZoneDetailsUrl } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
+import { updateChannelWarehouses } from "../../../support/api/requests/Channels";
 import { createCheckout } from "../../../support/api/requests/Checkout";
 import { createShippingZone } from "../../../support/api/requests/ShippingMethod";
 import { createWarehouse } from "../../../support/api/requests/Warehouse";
@@ -16,6 +17,7 @@ import {
 } from "../../../support/api/utils/products/productsUtils";
 import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
 import { isShippingAvailableInCheckout } from "../../../support/api/utils/storeFront/checkoutUtils";
+import { returnValueDependsOnShopVersion } from "../../../support/formatData/dataDependingOnVersion";
 import {
   createRateWithPostalCode,
   postalCodesOptions,
@@ -64,6 +66,9 @@ describe("As a user I want to create shipping method with postal codes", () => {
       })
       .then(warehouseResp => {
         warehouse = warehouseResp;
+        if (returnValueDependsOnShopVersion("3.5", true, false)) {
+          updateChannelWarehouses(defaultChannel.id, warehouse.id);
+        }
         createTypeAttributeAndCategoryForProduct({ name });
       })
       .then(({ attribute, productType, category }) => {
