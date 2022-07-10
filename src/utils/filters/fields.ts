@@ -70,15 +70,15 @@ export function createDateTimeField<K extends string>(
 export function createNumberField<K extends string>(
   name: K,
   label: string,
-  defaultValue: MinMax,
+  value: string[],
 ): FilterElementGeneric<K, FieldType.number> {
   return {
     active: false,
     label,
-    multiple: true,
+    multiple: value.length > 1,
     name,
     type: FieldType.number,
-    value: [defaultValue.min, defaultValue.max],
+    value,
   };
 }
 

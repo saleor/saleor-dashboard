@@ -279,10 +279,7 @@ export function createFilterStructure(
       group: ProductFilterKeys.attributes,
     })),
     ...numericAttributes.map(attr => ({
-      ...createNumberField(attr.slug, attr.name, {
-        min: attr.value[0],
-        max: attr.value[1] ?? attr.value[0],
-      }),
+      ...createNumberField(attr.slug, attr.name, attr.value),
       active: attr.active,
       group: ProductFilterKeys.attributes,
     })),

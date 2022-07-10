@@ -27,7 +27,6 @@ import {
   mapNodeToChoice,
   mapSlugNodeToChoice,
 } from "@saleor/utils/maps";
-import isArray from "lodash/isArray";
 import moment from "moment-timezone";
 
 import {
@@ -243,7 +242,7 @@ const parseFilterValue = (
   value: string[];
 } => {
   const value = params.attributes[key];
-  const isMulti = isArray(params.attributes[key]);
+  const isMulti = params.attributes[key].length > 1;
 
   const isBooleanValue =
     !isMulti && ["true", "false"].includes((value as unknown) as string);
@@ -253,9 +252,9 @@ const parseFilterValue = (
   const isDateTimeValue = (isMulti ? value : [value]).some(val =>
     moment(val, moment.ISO_8601, true).isValid(),
   );
-  const isNumericValue = (isMulti ? value : [value]).some(val => !isNaN(val));
+  const isNumericValue = value.some(value => !isNaN(parseFloat(value)));
 
-  const data = { isMulti, value: (isMulti ? value : [value]) as string[] };
+  const data = { isMulti, value };
 
   if (isBooleanValue) {
     return { ...data, type: "boolean" };
@@ -326,7 +325,7 @@ function getFilteredAttributeValue(
               ...name,
               valuesRange: {
                 gte: value[0] || undefined,
-                lte: isMulti ? value[1] || undefined : value[0],
+                lte: isMulti ? value[1] || undefined : value[0] || undefined,
               },
             };
 
