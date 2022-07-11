@@ -13,7 +13,7 @@ import {
   ListItemCell,
 } from "@saleor/macaw-ui";
 import { taxesMessages } from "@saleor/taxes/messages";
-import { countriesListUrl } from "@saleor/taxes/urls";
+import { taxCountriesListUrl } from "@saleor/taxes/urls";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -64,7 +64,7 @@ export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
                 className={clsx(classes.clickable, classes.tableRow, {
                   [classes.selected]: config.country.code === selectedCountryId
                 })}
-                href={countriesListUrl(config.country.code)}
+                href={taxCountriesListUrl(config.country.code)}
               >
                 <ListItemCell>
                   <div className={classes.spaceBetween}>

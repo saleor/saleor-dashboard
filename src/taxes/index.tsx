@@ -6,10 +6,10 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
-  countriesListUrl,
   taxClassesListUrl,
   taxConfigurationListPath,
-  TaxesUrlQueryParams,
+  taxCountriesListPath,
+  TaxesUrlQueryParams
 } from "./urls";
 import ChannelsListComponent from "./views/ChannelsList";
 import CountriesListComponent from "./views/CountriesList";
@@ -49,8 +49,8 @@ const Component = () => {
           component={ChannelsList}
         />
         <Route path={taxConfigurationListPath()} component={ChannelsList} />
-        <Route path={countriesListUrl(":id")} component={CountriesList} />
-        <Route path={countriesListUrl()} component={CountriesList} />
+        <Route path={taxCountriesListPath(":id")} component={CountriesList} />
+        <Route path={taxCountriesListPath()} component={CountriesList} />
         <Route path={taxClassesListUrl(":id")} component={TaxClassesList} />
         <Route path={taxClassesListUrl()} component={TaxClassesList} />
       </Switch>

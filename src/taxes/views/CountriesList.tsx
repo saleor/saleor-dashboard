@@ -3,7 +3,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import React from "react";
 
 import TaxCountriesPage from "../pages/TaxCountriesPage";
-import { countriesListUrl, TaxTab, taxTabPath } from "../urls";
+import { taxCountriesListUrl, TaxTab, taxTabPath } from "../urls";
 import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
 
 interface CountriesListProps {
@@ -24,7 +24,7 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id }) => {
     id,
     data: taxCountryConfigurations,
     navigate,
-    urlFunction: countriesListUrl,
+    urlFunction: taxCountriesListUrl
   });
 
   if (id === "undefined" && taxCountryConfigurations?.length) {

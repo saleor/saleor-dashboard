@@ -23,8 +23,16 @@ export const taxConfigurationListUrl = (
   "?" +
   stringifyQs(params);
 
-export const countriesListUrl = (id?: string) =>
+export const taxCountriesListPath = (id?: string) =>
   id ? urlJoin(taxTabPath("countries"), id) : taxTabPath("countries");
+
+export const taxCountriesListUrl = (
+  id?: string,
+  params?: TaxesUrlQueryParams
+) =>
+  taxCountriesListPath(encodeURIComponentOptional(id)) +
+  "?" +
+  stringifyQs(params);
 
 export const taxClassesListUrl = (id?: string) =>
   id ? urlJoin(taxTabPath("tax-classes"), id) : taxTabPath("tax-classes");
