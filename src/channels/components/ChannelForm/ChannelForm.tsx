@@ -29,6 +29,8 @@ export interface FormData {
   slug: string;
   shippingZonesIdsToAdd: string[];
   shippingZonesIdsToRemove: string[];
+  warehousesIdsToAdd: string[];
+  warehousesIdsToRemove: string[];
   defaultCountry: CountryCode;
 }
 

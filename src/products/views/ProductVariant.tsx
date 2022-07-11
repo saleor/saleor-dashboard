@@ -82,13 +82,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     setErrors([]);
   }, [variantId]);
 
-  const warehouses = useWarehouseListQuery({
-    displayLoader: true,
-    variables: {
-      first: 50,
-    },
-  });
-
   const { data, loading } = useProductVariantDetailsQuery({
     displayLoader: true,
     variables: {
@@ -195,6 +188,16 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
 
   const variant = data?.productVariant;
   const channels = createVariantChannels(variant);
+
+  const warehouses = useWarehouseListQuery({
+    displayLoader: true,
+    variables: {
+      first: 50,
+      filter: {
+        channels: channels.map(channel => channel.id),
+      },
+    },
+  });
 
   const [
     deactivatePreorder,

@@ -12,6 +12,8 @@ const props: ChannelFormProps = {
     currencyCode: "euro",
     shippingZonesIdsToAdd: [],
     shippingZonesIdsToRemove: [],
+    warehousesIdsToAdd: [],
+    warehousesIdsToRemove: [],
     name: "Test",
     slug: "test",
     defaultCountry: CountryCode.PL,

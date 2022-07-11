@@ -156,12 +156,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     result: searchAttributeValuesOpts,
     reset: searchAttributeReset,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
-  const warehouses = useWarehouseListQuery({
-    displayLoader: true,
-    variables: {
-      first: 50,
-    },
-  });
   const shop = useShop();
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
@@ -323,6 +317,16 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     },
     { formId: PRODUCT_UPDATE_FORM_ID },
   );
+
+  const warehouses = useWarehouseListQuery({
+    displayLoader: true,
+    variables: {
+      first: 50,
+      filter: {
+        channels: currentChannels.map(channel => channel.id),
+      },
+    },
+  });
 
   const [
     updateChannels,

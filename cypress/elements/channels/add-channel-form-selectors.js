@@ -9,7 +9,10 @@ export const ADD_CHANNEL_FORM_SELECTORS = {
   slugValidationMessage: "[data-test-id='slug-text-input-helper-text']",
   currencyAutocompleteDropdown:
     "[data-test-id='single-autocomplete-select-option'][data-test-type='custom']",
-  addShippingZoneButton: '[data-test-id="add-shipping-zone-button"]',
+  addShippingZoneButton: '[data-test-id="shipping-add-button"]',
+  addWarehouseButton: '[data-test-id="warehouse-add-button"]',
   shippingAutocompleteSelect: "[data-test-id='shipping-auto-complete-select']",
-  countryAutocompleteInput: '[data-test-id="country-select-input"]'
+  warehouseAutocompleteSelect:
+    "[data-test-id='warehouse-auto-complete-select']",
+  countryAutocompleteInput: '[data-test-id="country-select-input"]',
 };

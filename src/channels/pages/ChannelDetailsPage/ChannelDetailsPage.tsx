@@ -1,4 +1,5 @@
-import ShippingZonesCard from "@saleor/channels/components/ShippingZonesCard/ShippingZonesCard";
+import ShippingZones from "@saleor/channels/components/ShippingZones";
+import Warehouses from "@saleor/channels/components/Warehouses";
 import { channelsListUrl } from "@saleor/channels/urls";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Form from "@saleor/components/Form";
@@ -11,6 +12,7 @@ import {
   CountryCode,
   CountryFragment,
   SearchShippingZonesQuery,
+  SearchWarehousesQuery,
 } from "@saleor/graphql";
 import { SearchData } from "@saleor/hooks/makeTopLevelSearch";
 import { getParsedSearchData } from "@saleor/hooks/makeTopLevelSearch/utils";
@@ -29,7 +31,7 @@ import React, { useState } from "react";
 
 import { ChannelForm, FormData } from "../../components/ChannelForm";
 import { ChannelStatus } from "../../components/ChannelStatus/ChannelStatus";
-import { ChannelShippingZones } from "./types";
+import { ChannelShippingZones, ChannelWarehouses } from "./types";
 import { getUpdatedIdsWithNewId, getUpdatedIdsWithoutNewId } from "./utils";
 
 export interface ChannelDetailsPageProps<TErrors> {
@@ -42,11 +44,15 @@ export interface ChannelDetailsPageProps<TErrors> {
   searchShippingZonesData?: SearchData;
   fetchMoreShippingZones: FetchMoreProps;
   channelShippingZones?: ChannelShippingZones;
+  searchWarehousesData?: SearchData;
+  fetchMoreWarehouses: FetchMoreProps;
+  channelWarehouses?: ChannelWarehouses;
   countries: CountryFragment[];
   onDelete?: () => void;
   onSubmit: (data: FormData) => SubmitPromise<TErrors[]>;
   updateChannelStatus?: () => void;
   searchShippingZones: (query: string) => void;
+  searchWarehouses: (query: string) => void;
 }
 
 const ChannelDetailsPage = function<TErrors>({
@@ -62,8 +68,12 @@ const ChannelDetailsPage = function<TErrors>({
   searchShippingZones,
   searchShippingZonesData,
   fetchMoreShippingZones,
-  countries,
   channelShippingZones = [],
+  searchWarehouses,
+  searchWarehousesData,
+  fetchMoreWarehouses,
+  channelWarehouses = [],
+  countries,
 }: ChannelDetailsPageProps<TErrors>) {
   const navigate = useNavigator();
 
@@ -76,6 +86,9 @@ const ChannelDetailsPage = function<TErrors>({
   const [shippingZonesToDisplay, setShippingZonesToDisplay] = useStateFromProps<
     ChannelShippingZones
   >(channelShippingZones);
+  const [warehousesToDisplay, setWarehousesToDisplay] = useStateFromProps<
+    ChannelWarehouses
+  >(channelWarehouses);
 
   const countryChoices = mapCountriesToChoices(countries || []);
 
@@ -86,6 +99,8 @@ const ChannelDetailsPage = function<TErrors>({
     slug: "",
     shippingZonesIdsToAdd: [],
     shippingZonesIdsToRemove: [],
+    warehousesIdsToAdd: [],
+    warehousesIdsToRemove: [],
     defaultCountry: (defaultCountry?.code || "") as CountryCode,
     ...formData,
   };
@@ -94,6 +109,12 @@ const ChannelDetailsPage = function<TErrors>({
     getParsedSearchData({ data: searchShippingZonesData }).filter(
       ({ id: searchedZoneId }) =>
         !shippingZonesToDisplay.some(({ id }) => id === searchedZoneId),
+    );
+
+  const getFilteredWarehousesChoices = (): RelayToFlat<SearchWarehousesQuery["search"]> =>
+    getParsedSearchData({ data: searchWarehousesData }).filter(
+      ({ id: searchedWarehouseId }) =>
+        !warehousesToDisplay.some(({ id }) => id === searchedWarehouseId),
     );
 
   const checkIfSaveIsDisabled = (data: FormData) => {
@@ -114,7 +135,7 @@ const ChannelDetailsPage = function<TErrors>({
       initial={initialData}
       checkIfSaveIsDisabled={checkIfSaveIsDisabled}
     >
-      {({ change, data, submit, set, isSaveDisabled }) => {
+      {({ change, data, submit, set, isSaveDisabled, triggerChange }) => {
         const handleCurrencyCodeSelect = createSingleAutocompleteSelectHandler(
           change,
           setSelectedCurrencyCode,
@@ -127,6 +148,8 @@ const ChannelDetailsPage = function<TErrors>({
         );
 
         const addShippingZone = (zoneId: string) => {
+          triggerChange();
+
           set({
             ...data,
             shippingZonesIdsToRemove: getUpdatedIdsWithoutNewId(
@@ -148,6 +171,8 @@ const ChannelDetailsPage = function<TErrors>({
         };
 
         const removeShippingZone = (zoneId: string) => {
+          triggerChange();
+
           set({
             ...data,
             shippingZonesIdsToAdd: getUpdatedIdsWithoutNewId(
@@ -162,6 +187,49 @@ const ChannelDetailsPage = function<TErrors>({
 
           setShippingZonesToDisplay(
             shippingZonesToDisplay.filter(getByUnmatchingId(zoneId)),
+          );
+        };
+
+        const addWarehouse = (warehouseId: string) => {
+          triggerChange();
+
+          set({
+            ...data,
+            warehousesIdsToRemove: getUpdatedIdsWithoutNewId(
+              data.warehousesIdsToRemove,
+              warehouseId,
+            ),
+            warehousesIdsToAdd: getUpdatedIdsWithNewId(
+              data.warehousesIdsToAdd,
+              warehouseId,
+            ),
+          });
+
+          setWarehousesToDisplay([
+            ...warehousesToDisplay,
+            getParsedSearchData({ data: searchWarehousesData }).find(
+              getById(warehouseId),
+            ),
+          ]);
+        };
+
+        const removeWarehouse = (warehouseId: string) => {
+          triggerChange();
+
+          set({
+            ...data,
+            warehousesIdsToAdd: getUpdatedIdsWithoutNewId(
+              data.warehousesIdsToAdd,
+              warehouseId,
+            ),
+            warehousesIdsToRemove: getUpdatedIdsWithNewId(
+              data.warehousesIdsToRemove,
+              warehouseId,
+            ),
+          });
+
+          setWarehousesToDisplay(
+            warehousesToDisplay.filter(getByUnmatchingId(warehouseId)),
           );
         };
 
@@ -193,13 +261,22 @@ const ChannelDetailsPage = function<TErrors>({
                     <CardSpacer />
                   </>
                 )}
-                <ShippingZonesCard
+                <ShippingZones
                   shippingZonesChoices={getFilteredShippingZonesChoices()}
                   shippingZones={shippingZonesToDisplay}
                   addShippingZone={addShippingZone}
                   removeShippingZone={removeShippingZone}
                   searchShippingZones={searchShippingZones}
                   fetchMoreShippingZones={fetchMoreShippingZones}
+                />
+                <CardSpacer />
+                <Warehouses
+                  warehousesChoices={getFilteredWarehousesChoices()}
+                  warehouses={warehousesToDisplay}
+                  addWarehouse={addWarehouse}
+                  removeWarehouse={removeWarehouse}
+                  searchWarehouses={searchWarehouses}
+                  fetchMoreWarehouses={fetchMoreWarehouses}
                 />
               </div>
             </Grid>
