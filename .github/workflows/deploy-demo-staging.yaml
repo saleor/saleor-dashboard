@@ -2,7 +2,7 @@ name: Deploy to staging demo
 on:
   push:
     tags:
-      - 3.4**
+      - 3.5**
   workflow_dispatch:
     inputs:
       git_ref:
