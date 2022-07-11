@@ -840,6 +840,23 @@ type AppManifestExtension {
   target: AppExtensionTargetEnum!
 }
 
+type AppManifestWebhook {
+  """The name of the webhook."""
+  name: String!
+
+  """The asynchronous events that webhook wants to subscribe."""
+  asyncEvents: [WebhookEventTypeAsyncEnum!]
+
+  """The synchronous events that webhook wants to subscribe."""
+  syncEvents: [WebhookEventTypeSyncEnum!]
+
+  """Subscription query of a webhook"""
+  query: String!
+
+  """The url to receive the payload."""
+  targetUrl: String!
+}
+
 """
 Retry failed installation of new app. 
 
@@ -7686,6 +7703,15 @@ type Manifest {
   homepageUrl: String
   supportUrl: String
   extensions: [AppManifestExtension!]!
+
+  """
+  List of the app's webhooks.
+  
+  Added in Saleor 3.5.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  webhooks: [AppManifestWebhook!]!
 }
 
 type Margin {
@@ -18666,6 +18692,39 @@ input SaleSortingInput {
   field: SaleSortField!
 }
 
+"""
+The event informs about the start or end of the sale.
+
+Added in Saleor 3.5.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type SaleToggle implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """
+  The sale the event relates to.
+  
+  Added in Saleor 3.5.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  sale(
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+  ): Sale
+}
+
 type SaleTranslatableContent implements Node {
   id: ID!
   name: String!
@@ -22537,6 +22596,7 @@ enum WebhookEventTypeAsyncEnum {
   SALE_CREATED
   SALE_UPDATED
   SALE_DELETED
+  SALE_TOGGLE
 
   """An invoice for order requested."""
   INVOICE_REQUESTED
@@ -22790,6 +22850,7 @@ enum WebhookEventTypeEnum {
   SALE_CREATED
   SALE_UPDATED
   SALE_DELETED
+  SALE_TOGGLE
 
   """An invoice for order requested."""
   INVOICE_REQUESTED
@@ -22989,6 +23050,7 @@ enum WebhookSampleEventTypeEnum {
   SALE_CREATED
   SALE_UPDATED
   SALE_DELETED
+  SALE_TOGGLE
   INVOICE_REQUESTED
   INVOICE_DELETED
   INVOICE_SENT
