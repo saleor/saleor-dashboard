@@ -79,6 +79,8 @@ describe("As an admin I want to update vouchers", () => {
             .click()
             .wait("@VoucherDelete");
           dataForCheckout.voucherCode = voucher.code;
+          window.sessionStorage.setItem("token", "");
+          dataForCheckout.auth = "token";
           createCheckoutWithVoucher(dataForCheckout);
         })
         .then(({ addPromoCodeResp }) => {
@@ -122,6 +124,8 @@ describe("As an admin I want to update vouchers", () => {
             .click()
             .wait("@VoucherUpdate");
           dataForCheckout.voucherCode = voucher.code;
+          window.sessionStorage.setItem("token", "");
+          dataForCheckout.auth = "token";
           createCheckoutWithVoucher(dataForCheckout);
         })
         .then(({ addPromoCodeResp }) => {
@@ -163,6 +167,8 @@ describe("As an admin I want to update vouchers", () => {
           expect(errorField).to.be.eq("promoCode");
           setVoucherDate({ voucherId: voucher.id, startDate: todayDate });
           dataForCheckout.voucherCode = voucher.code;
+          window.sessionStorage.setItem("token", "");
+          dataForCheckout.auth = "token";
           createCheckoutWithVoucher(dataForCheckout);
         })
         .then(({ addPromoCodeResp }) => {
@@ -201,6 +207,8 @@ describe("As an admin I want to update vouchers", () => {
             hasEndDate: true,
           });
           dataForCheckout.voucherCode = voucher.code;
+          window.sessionStorage.setItem("token", "");
+          dataForCheckout.auth = "token";
           createCheckoutWithVoucher(dataForCheckout);
         })
         .then(({ addPromoCodeResp }) => {
@@ -242,6 +250,8 @@ describe("As an admin I want to update vouchers", () => {
           voucher = voucherResp;
           expect(voucher.id).to.be.ok;
           dataForCheckout.voucherCode = voucher.code;
+          window.sessionStorage.setItem("token", "");
+          dataForCheckout.auth = "token";
           createCheckoutWithVoucher(dataForCheckout);
         })
         .then(({ addPromoCodeResp }) => {
