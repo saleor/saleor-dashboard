@@ -4,7 +4,6 @@ import {
   ProductChannelListingErrorFragment,
   ProductErrorWithAttributesFragment,
   ProductFragment,
-  ProductUpdateMutation,
   useAttributeValueDeleteMutation,
   useFileUploadMutation,
   useProductChannelListingUpdateMutation,
