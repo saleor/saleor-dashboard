@@ -2,7 +2,7 @@ import placeholderImage from "@assets/images/placeholder255x255.png";
 import { channelsList } from "@saleor/channels/fixtures";
 import { createChannelsData } from "@saleor/channels/utils";
 import { collections } from "@saleor/collections/fixtures";
-import { fetchMoreProps, limits, listActionsProps } from "@saleor/fixtures";
+import { fetchMoreProps, limits } from "@saleor/fixtures";
 import { product as productFixture } from "@saleor/products/fixtures";
 import { taxTypes } from "@saleor/storybook/stories/taxes/fixtures";
 import { warehouseList } from "@saleor/warehouses/fixtures";
@@ -39,7 +39,7 @@ jest.mock("@saleor/utils/richText/useRichText");
 });
 
 const props: ProductUpdatePageProps = {
-  ...listActionsProps,
+  channels: channelsList,
   productId: "123",
   allChannelsCount: 5,
   categories: [product.category],
@@ -72,7 +72,8 @@ const props: ProductUpdatePageProps = {
   onMediaUrlUpload: () => undefined,
   onSetDefaultVariant: () => undefined,
   onSubmit,
-  onVariantReorder: () => undefined,
+  onVariantBulkDelete: () => undefined,
+  onVariantShow: () => undefined,
   onVariantEndPreorderDialogOpen: () => undefined,
   onWarehouseConfigure: () => undefined,
   openChannelsModal: () => undefined,
@@ -81,7 +82,6 @@ const props: ProductUpdatePageProps = {
   referencePages: [],
   referenceProducts: [],
   saveButtonBarState: "default",
-  selectedChannelId: "123",
   taxTypes,
   variants: product.variants,
   warehouses: warehouseList,

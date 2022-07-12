@@ -79,17 +79,17 @@ const props: ChannelsWithVariantsAvailabilityCardProps = {
   ] as ProductDetailsVariantFragment[],
   channelsWithVariantsData: {
     ["1"]: {
-      selectedVariantsIds: ["variantA", "variantB"],
+      availableVariants: ["variantA", "variantB"],
       variantsIdsToRemove: [],
       variantsIdsToAdd: [],
     },
     ["2"]: {
-      selectedVariantsIds: ["variantA", "variantC"],
+      availableVariants: ["variantA", "variantC"],
       variantsIdsToRemove: [],
       variantsIdsToAdd: [],
     },
     ["3"]: {
-      selectedVariantsIds: [],
+      availableVariants: [],
       variantsIdsToRemove: [],
       variantsIdsToAdd: [],
     },

@@ -26,7 +26,7 @@ function useChannelVariantListings(channels: ChannelData[]) {
         );
 
         return {
-          selectedVariantsIds: updatedChannelVariantListing[channel.id],
+          availableVariants: updatedChannelVariantListing[channel.id],
           variantsIdsToAdd: diff.added,
           variantsIdsToRemove: diff.removed,
         };
